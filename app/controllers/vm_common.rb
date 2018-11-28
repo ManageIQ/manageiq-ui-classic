@@ -23,8 +23,8 @@ module VmCommon
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
+    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    @refresh_div = "main_div"                               # Default div for button.rjs to refresh
 
     case params[:pressed]
     when 'custom_button'
@@ -45,17 +45,16 @@ module VmCommon
       add_flash(_("Button not yet implemented"), :error)
       @refresh_partial = "layouts/flash_msg"
       @refresh_div = "flash_msg_div"
-    else    # Figure out what was showing to refresh it
-      if @lastaction == "show" && ["vmtree"].include?(@showtype)
-        @refresh_partial = @showtype
-      elsif @lastaction == "show" && ["config"].include?(@showtype)
-        @refresh_partial = @showtype
-      elsif @lastaction == "show_list"
-        # default to the gtl_type already set
-      else
-        @refresh_partial = "layouts/flash_msg"
-        @refresh_div = "flash_msg_div"
-      end
+    # Figure out what was showing to refresh it
+    elsif @lastaction == "show" && ["vmtree"].include?(@showtype)
+      @refresh_partial = @showtype
+    elsif @lastaction == "show" && ["config"].include?(@showtype)
+      @refresh_partial = @showtype
+    elsif @lastaction == "show_list"
+      # default to the gtl_type already set
+    else
+      @refresh_partial = "layouts/flash_msg"
+      @refresh_div = "flash_msg_div"
     end
     @vm = @record = identify_record(params[:id], VmOrTemplate) unless @lastaction == "show_list"
 
@@ -63,21 +62,17 @@ module VmCommon
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit")
       if @redirect_controller
-        javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
+        javascript_redirect(:controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller)
       else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
+        javascript_redirect(:action => @refresh_partial, :id => @redirect_id)
       end
+    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
+    elsif @refresh_div == "flash_msg_div"
+      javascript_flash(:spinner_off => true)
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        if @refresh_div == "flash_msg_div"
-          javascript_flash(:spinner_off => true)
-        else
-          options
-          partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
-        end
-      end
+      options
+      partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
     end
   end
 
@@ -98,7 +93,7 @@ module VmCommon
     @record = find_record_with_rbac(db, session[:tl_record_id])
     @timeline = @timeline_filter = true
     @lastaction = "show_timeline"
-    tl_build_timeline                       # Create the timeline report
+    tl_build_timeline # Create the timeline report
     drop_breadcrumb(:name => _("Timelines"), :url => "/#{db}/show_timeline/#{@record.id}?refresh=n")
     if @explorer
       @refresh_partial = "layouts/tl_show"
@@ -141,8 +136,8 @@ module VmCommon
     @showtype = "config"
     @record = identify_record(id || params[:id], VmOrTemplate)
     if @record.nil?
-      referrer = Rails.application.routes.recognize_path(request.referrer)
-      redirect_to :controller => referrer[:controller], :action => referrer[:action]
+      referrer = Rails.application.routes.recognize_path(request.referer)
+      redirect_to(:controller => referrer[:controller], :action => referrer[:action])
       return
     end
     return if record_no_longer_exists?(@record)
@@ -157,14 +152,12 @@ module VmCommon
       # or redirect them to the one they have access to
       case controller_name
       when "vm_infra"
-        redirect_controller = role_allows?(:feature => "vandt_accord") || role_allows?(:feature => "vms_filter_accord") ?
-                                "vm_infra" : nil
+        redirect_controller = role_allows?(:feature => "vandt_accord") || role_allows?(:feature => "vms_filter_accord") ? "vm_infra" : nil
       when "vm_cloud"
-        redirect_controller = role_allows?(:feature => "instances_accord") || role_allows?(:feature => "instances_filter_accord") ?
-                                "vm_cloud" : nil
+        redirect_controller = role_allows?(:feature => "instances_accord") || role_allows?(:feature => "instances_filter_accord") ? "vm_cloud" : nil
       end
 
-      redirect_controller = role_allows?(:feature => "vms_instances_filter_accord") ? "vm_or_template" : nil unless redirect_controller
+      redirect_controller ||= role_allows?(:feature => "vms_instances_filter_accord") ? "vm_or_template" : nil
 
       if redirect_controller
         action = "explorer"
@@ -176,8 +169,7 @@ module VmCommon
         action               = url[4]
       end
 
-      redirect_to :controller => redirect_controller,
-                  :action     => action
+      redirect_to(:controller => redirect_controller, :action => action)
       return
     end
 
@@ -254,7 +246,7 @@ module VmCommon
       @showtype = "performance"
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Initialize perf chart options, charts will be generated async
+      perf_gen_init_options # Initialize perf chart options, charts will be generated async
     elsif @display == "disks"
       @showtype = "disks"
       disks
@@ -278,7 +270,7 @@ module VmCommon
   def genealogy_tree_selected
     base = node_id(params[:id])
     @display = "vmtree_info"
-    javascript_redirect :action => "show", :id => base, :vm_tree => "vmtree_info"
+    javascript_redirect(:action => "show", :id => base, :vm_tree => "vmtree_info")
   end
 
   def snap_pressed
@@ -306,7 +298,7 @@ module VmCommon
   end
 
   def processes
-    show_association('processes', _('Running Processes'), [:operating_system, :processes], OsProcess,
+    show_association('processes', _('Running Processes'), %i(operating_system processes), OsProcess,
                      'processes')
   end
 
@@ -432,9 +424,7 @@ module VmCommon
         render_missing_field(session, "Description")
       else
         flash_error = false
-        #       audit = {:event=>"vm_genealogy_change", :target_id=>@record.id, :target_class=>@record.class.base_class.name, :userid => session[:userid]}
         begin
-          # @record.create_snapshot(params[:name], params[:description], params[:snap_memory])
           Vm.process_tasks(:ids         => [@record.id],
                            :task        => "create_snapshot",
                            :userid      => session[:userid],
@@ -445,14 +435,11 @@ module VmCommon
           puts bang.backtrace.join("\n")
           flash = _("Error during 'Create Snapshot': %{message}") % {:message => bang.message}
           flash_error = true
-        #         AuditEvent.failure(audit.merge(:message=>"[#{@record.name} -- #{@record.location}] Update returned: #{bang}"))
         else
           flash = _("Create Snapshot for VM and Instance \"%{name}\" was started") % {:name => @record.name}
-          #         AuditEvent.success(build_saved_vm_audit(@record))
         end
         add_flash(flash, flash_error ? :error : :success)
-        params[:id] = @record.id.to_s   # reset id in params for show
-        # params[:display] = "snapshot_info"
+        params[:id] = @record.id.to_s # reset id in params for show
         if session[:edit] && session[:edit][:explorer]
           @_params[:display] = "snapshot_info"
           show
@@ -540,7 +527,7 @@ module VmCommon
     @rightsize = true
     @in_a_form = true
     if params[:button] == "back"
-      javascript_prologue( previous_breadcrumb_url)
+      javascript_prologue(previous_breadcrumb_url)
     end
     if !@explorer && params[:button] != "back"
       drop_breadcrumb(:name => _("Right Size VM '%{name}''") % {:name => @record.name}, :url => "/vm/right_size")
@@ -549,7 +536,7 @@ module VmCommon
   end
 
   def evm_relationship
-    @record = find_record_with_rbac(VmOrTemplate, params[:id])  # Set the VM object
+    @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
     @edit = {}
     @edit[:vm_id] = @record.id
     @edit[:key] = "evm_relationship_edit__new"
@@ -572,9 +559,9 @@ module VmCommon
 
   # Build the evm_relationship assignment screen
   def evm_relationship_build_screen
-    @servers = {}   # Users array for first chooser
+    @servers = {} # Users array for first chooser
     MiqServer.all.each { |s| @servers["#{s.name} (#{s.id})"] = s.id.to_s }
-    @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil            # Set to first category, if not already set
+    @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil # Set to first category, if not already set
   end
 
   def evm_relationship_field_changed
@@ -633,12 +620,12 @@ module VmCommon
 
   def delete
     @lastaction = "delete"
-    redirect_to :action => 'show_list', :layout => false
+    redirect_to(:action => 'show_list', :layout => false)
   end
 
   def destroy
     find_record_with_rbac(VmOrTemplate, params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to(:action => 'list')
   end
 
   def profile_build
@@ -689,14 +676,14 @@ module VmCommon
   end
 
   def edit
-    @record = find_record_with_rbac(VmOrTemplate, params[:id])  # Set the VM object
+    @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
     set_form_vars
     build_edit_screen
     session[:changed] = false
 
     @active_tab = "edit"
     @tab_id = @record.id.to_s
-    @tabs = [["edit", "Information"]]
+    @tabs = [%w(edit Information)]
 
     @refresh_partial = "vm_common/form"
   end
@@ -712,7 +699,7 @@ module VmCommon
     @in_a_form = true
     @active_tab = "edit"
     @tab_id = @record.id.to_s
-    @tabs = [["edit", "Information"]]
+    @tabs = [%w(edit Information)]
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -741,7 +728,7 @@ module VmCommon
         replace_right_cell
       else
         flash_to_session(_("Edit of VM and Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
-        javascript_redirect previous_breadcrumb_url
+        javascript_redirect(previous_breadcrumb_url)
       end
     when "save"
       if @edit[:new][:parent] != -1 && @edit[:new][:kids].invert.include?(@edit[:new][:parent]) # Check if parent is a kid, if selected
@@ -754,21 +741,21 @@ module VmCommon
           render :action => "edit"
         end
       else
-        current = @record.parents.length == 0 ? -1 : @record.parents.first.id                             # get current parent id
-        chosen = @edit[:new][:parent].to_i                                                          # get the chosen parent id
+        current = @record.parents.empty? ? -1 : @record.parents.first.id # get current parent id
+        chosen = @edit[:new][:parent].to_i                               # get the chosen parent id
         @record.custom_1 = @edit[:new][:custom_1]
-        @record.description = @edit[:new][:description]                                                 # add vm description
+        @record.description = @edit[:new][:description]                     # add vm description
         if current != chosen
-          @record.remove_parent(@record.parents.first) unless current == -1                           # Remove existing parent, if there is one
-          @record.set_parent(VmOrTemplate.find(chosen)) unless chosen == -1                                   # Set new parent, if one was chosen
+          @record.remove_parent(@record.parents.first) unless current == -1 # Remove existing parent, if there is one
+          @record.set_parent(VmOrTemplate.find(chosen)) unless chosen == -1 # Set new parent, if one was chosen
         end
-        vms = @record.children                                                                                      # Get the VM's child VMs
-        kids = @edit[:new][:kids].invert                                                                        # Get the VM ids from the kids list box
+        vms = @record.children                                              # Get the VM's child VMs
+        kids = @edit[:new][:kids].invert                                    # Get the VM ids from the kids list box
         audit = {:event => "vm_genealogy_change", :target_id => @record.id, :target_class => @record.class.base_class.name, :userid => session[:userid]}
         begin
           @record.save!
-          vms.each { |v| @record.remove_child(v) unless kids.include?(v.id) }                                # Remove any VMs no longer in the kids list box
-          kids.each_key { |k| @record.set_child(VmOrTemplate.find(k)) }                                             # Add all VMs in kids hash, dups will not be re-added
+          vms.each { |v| @record.remove_child(v) unless kids.include?(v.id) } # Remove any VMs no longer in the kids list box
+          kids.each_key { |k| @record.set_child(VmOrTemplate.find(k)) }       # Add all VMs in kids hash, dups will not be re-added
         rescue => bang
           add_flash(_("Error during '%{name} update': %{message}") % {:name    => @record.class.base_model.name,
                                                                       :message => bang.message}, :error)
@@ -777,7 +764,7 @@ module VmCommon
           flash = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @record.class.base_model.name), :name => @record.name}
           AuditEvent.success(build_saved_vm_audit(@record))
         end
-        params[:id] = @record.id.to_s   # reset id in params for show
+        params[:id] = @record.id.to_s # reset id in params for show
         @record = nil
         add_flash(flash)
         if @edit[:explorer]
@@ -785,7 +772,7 @@ module VmCommon
           replace_right_cell
         else
           flash_to_session
-          javascript_redirect previous_breadcrumb_url
+          javascript_redirect(previous_breadcrumb_url)
         end
       end
     when "reset"
@@ -797,7 +784,7 @@ module VmCommon
       if @edit[:explorer]
         replace_right_cell
       else
-        javascript_redirect :action => "edit", :controller => "vm", :id => params[:id]
+        javascript_redirect(:action => "edit", :controller => "vm", :id => params[:id])
       end
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
@@ -867,7 +854,7 @@ module VmCommon
       id = params[:show] ? params[:show] : params[:x_show]
       @item = ScanHistory.find(id)
       drop_breadcrumb(:name => time_ago_in_words(@item.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/scan_history/#{@scan_history.vm_or_template_id}?show=#{@item.id}")
-      @view = get_db_view(ScanHistory)          # Instantiate the MIQ Report view object
+      @view = get_db_view(ScanHistory) # Instantiate the MIQ Report view object
       show_item
     else
       drop_breadcrumb({:name => time_ago_in_words(@scan_history.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/show/#{@scan_history.vm_or_template_id}"}, true)
@@ -894,9 +881,6 @@ module VmCommon
       else
         TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
       end
-
-    else
-      nil # no selection if VmOrTemplate has no parent
     end
   end
 
@@ -918,7 +902,7 @@ module VmCommon
 
       search_id = @nodetype == "root" ? 0 : id
       adv_search_build(model_from_active_tree(x_active_tree))
-      session[:edit] = @edit              # Set because next method will restore @edit from session
+      session[:edit] = @edit # Set because next method will restore @edit from session
       listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&
          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
@@ -961,17 +945,15 @@ module VmCommon
   # Check for parent nodes missing from vandt tree and return them if any
   def open_parent_nodes(record)
     add_nodes = nil
-    existing_node = nil                     # Init var
+    existing_node = nil # Init var
 
-    if record.orphaned? || record.archived?
-      parents = [{:type => "x", :id => (record.orphaned ? "orph" : "arch")}]
-    else
-      if x_active_tree == :instances_tree
-        parents = record.kind_of?(ManageIQ::Providers::CloudManager::Vm) && record.availability_zone ? [record.availability_zone] : [record.ext_management_system]
-      else
-        parents = record.parent_blue_folders(:exclude_non_display_folders => true)
-      end
-    end
+    parents = if record.orphaned? || record.archived?
+                [{:type => "x", :id => (record.orphaned ? "orph" : "arch")}]
+              elsif x_active_tree == :instances_tree
+                record.kind_of?(ManageIQ::Providers::CloudManager::Vm) && record.availability_zone ? [record.availability_zone] : [record.ext_management_system]
+              else
+                record.parent_blue_folders(:exclude_non_display_folders => true)
+              end
 
     # Go up thru the parents and find the highest level unopened, mark all as opened along the way
     unless parents.empty? || # Skip if no parents or parent already open
@@ -1016,7 +998,7 @@ module VmCommon
   def get_node_info(treenodeid, show_list = true)
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
-    @nodetype, id = if (treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't')  && hide_vms
+    @nodetype, id = if (treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't') && hide_vms
                       @sb[@sb[:active_accord]] = treenodeid
                       parse_nodetype_and_id(treenodeid)
                     else
@@ -1046,7 +1028,7 @@ module VmCommon
                       [nil, nil]
                     end
     case TreeBuilder.get_model_for_prefix(@nodetype)
-    when "Vm", "MiqTemplate"  # VM or Template record, show the record
+    when "Vm", "MiqTemplate" # VM or Template record, show the record
       show_record(id)
       if @record.nil?
         self.x_node = "root"
@@ -1057,9 +1039,9 @@ module VmCommon
           @breadcrumbs.clear
           drop_breadcrumb({:name => breadcrumb_name(model), :url => "/#{controller_name}/explorer"}, false)
         end
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => (ui_lookup(:model => model && model != "VmOrTemplate" ? model : TreeBuilder.get_model_for_prefix(@nodetype))).to_s}
+        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => model && model != "VmOrTemplate" ? model : TreeBuilder.get_model_for_prefix(@nodetype)).to_s}
       end
-    else      # Get list of child VMs of this node
+    else # Get list of child VMs of this node
       options = {:model => model}
       if model == "ManageIQ::Providers::CloudManager::Template"
         options[:named_scope] = [:without_volume_templates]
@@ -1077,51 +1059,50 @@ module VmCommon
                            else
                              _("All VMs & Templates")
                            end
-      else
-        if TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
-          if x_active_tree == :vandt_tree
-            klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-            options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
-          end
-          if id == "orph"
-            options[:named_scope] ||= []
-            options[:named_scope] << :orphaned
-            process_show_list(options) if show_list
-            @right_cell_text = if model
-                                 _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
-                               else
-                                 _("Orphaned VMs & Templates")
-                               end
-          elsif id == "arch"
-            options[:named_scope] ||= []
-            options[:named_scope] << :archived
-            process_show_list(options) if show_list
-            @right_cell_text = if model
-                                 _("Archived %{models}") % {:models => ui_lookup(:models => model)}
-                               else
-                                 _("Archived VMs & Templates")
-                               end
-          end
-        elsif TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
-          process_show_list(options) if show_list # Get all VMs & Templates
-          @right_cell_text = if model
-                               _("All %{models}") % {:models => ui_lookup(:models => model)}
-                             else
-                               _("All VMs & Templates")
-                             end
-        else
-          rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
-          options.merge!({:association => (@nodetype == "az" ? "vms" : "all_vms_and_templates"), :parent => rec})
-          options[:named_scope] ||= []
-          options[:named_scope] << :with_ems
-          process_show_list(options) if show_list
-          model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
-          @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
-            :object_types               => model ? ui_lookup(:models => model) : _("VMs & Templates"),
-            :datastore_or_provider      => model_name,
-            :provider_or_datastore_name => rec.name
-          }
+      elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
+        if x_active_tree == :vandt_tree
+          klass = ManageIQ::Providers::InfraManager::VmOrTemplate
+          options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
         end
+        if id == "orph"
+          options[:named_scope] ||= []
+          options[:named_scope] << :orphaned
+          process_show_list(options) if show_list
+          @right_cell_text = if model
+                               _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
+                             else
+                               _("Orphaned VMs & Templates")
+                             end
+        elsif id == "arch"
+          options[:named_scope] ||= []
+          options[:named_scope] << :archived
+          process_show_list(options) if show_list
+          @right_cell_text = if model
+                               _("Archived %{models}") % {:models => ui_lookup(:models => model)}
+                             else
+                               _("Archived VMs & Templates")
+                             end
+        end
+      elsif TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
+        process_show_list(options) if show_list # Get all VMs & Templates
+        @right_cell_text = if model
+                             _("All %{models}") % {:models => ui_lookup(:models => model)}
+                           else
+                             _("All VMs & Templates")
+                           end
+      else
+        rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
+        options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
+        options[:parent] = rec
+        options[:named_scope] ||= []
+        options[:named_scope] << :with_ems
+        process_show_list(options) if show_list
+        model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
+        @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
+          :object_types               => model ? ui_lookup(:models => model) : _("VMs & Templates"),
+          :datastore_or_provider      => model_name,
+          :provider_or_datastore_name => rec.name
+        }
       end
       # Add adv search filter to header
       @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
@@ -1132,17 +1113,17 @@ module VmCommon
                              end
     end
 
-    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
+    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
     else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text)  # Add to history pulldown array
+      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
 
     # After adding to history, add name filter suffix if showing a list
-    unless ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype))
-      unless @search_text.blank?
+    unless %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+      if @search_text.present?
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
     end
@@ -1167,8 +1148,7 @@ module VmCommon
       # set @delete_node since we don't rebuild vm tree
       @delete_node = params[:id] if @replace_trees  # get_node_info might set this
 
-
-      record_showing = type && ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(type))
+      record_showing = type && %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
@@ -1177,7 +1157,7 @@ module VmCommon
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
-    elsif ["compare", "drift"].include?(@sb[:action])
+    elsif %w(compare drift).include?(@sb[:action])
       @in_a_form = true # Turn on Cancel button
       c_tb = build_toolbar("#{@sb[:action]}_center_tb")
       v_tb = build_toolbar("#{@sb[:action]}_view_tb")
@@ -1238,7 +1218,7 @@ module VmCommon
       end
 
       if %w(ownership protect reconfigure retire tag).include?(@sb[:action])
-        locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there
+        locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids][0] if @sb[:action] == "tag"
         unless %w(ownership retire).include?(@sb[:action])
           presenter[:build_calendar] = {
@@ -1250,7 +1230,7 @@ module VmCommon
 
       add_ajax = true
 
-      if ['compare', 'drift'].include?(@sb[:action])
+      if %w(compare drift).include?(@sb[:action])
         presenter.update(:custom_left_cell, r[
           :partial => 'layouts/listnav/x_compare_sections', :locals => {:truncate_length => 23}])
         presenter.show(:custom_left_cell).hide(:default_left_cell)
@@ -1258,7 +1238,7 @@ module VmCommon
     elsif @sb[:action] || params[:display]
       partial_locals = { :controller => 'vm' }
       if partial == 'layouts/x_gtl'
-        partial_locals[:action_url]  = @lastaction
+        partial_locals[:action_url] = @lastaction
 
         # Set parent record id & class for JS function miqGridSort to build URL
         presenter[:parent_id]    = @record.id.to_s
@@ -1283,7 +1263,7 @@ module VmCommon
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div, r[
       :partial => 'layouts/x_adv_searchbox',
-      :locals  => {:nameonly => ([:images_tree, :instances_tree, :vandt_tree].include?(x_active_tree))}
+      :locals  => {:nameonly => %i(images_tree instances_tree vandt_tree).include?(x_active_tree)}
     ])
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
@@ -1340,7 +1320,7 @@ module VmCommon
     presenter.set_visibility(!(@record || @in_a_form), :adv_searchbox_div)
     presenter[:clear_search_toggle] = clear_search_status
 
-    presenter[:osf_node] = x_node  # Open, select, and focus on this node
+    presenter[:osf_node] = x_node # Open, select, and focus on this node
 
     presenter.hide(:blocker_div) unless @edit && @edit[:adv_search_open]
     presenter[:hide_modal] = true
@@ -1357,7 +1337,7 @@ module VmCommon
   def get_host_for_vm(vm)
     if vm.host
       @hosts = []
-      @hosts.push vm.host
+      @hosts.push(vm.host)
     end
   end
 
@@ -1372,15 +1352,11 @@ module VmCommon
 
     @edit[:current][:custom_1] = @edit[:new][:custom_1] = @record.custom_1.to_s
     @edit[:current][:description] = @edit[:new][:description] = @record.description.to_s
-    if @record.parents.length == 0                                            # Set the currently selected parent
-      @edit[:new][:parent] = -1
-    else
-      @edit[:new][:parent] = @record.parents.first.id
-    end
+    @edit[:new][:parent] = @record.parents.empty? ? -1 : @record.parents.first.id # Set the currently selected parent
 
-    vms = @record.children                                                      # Get the child VMs
+    vms = @record.children # Get the child VMs
     @edit[:new][:kids] = {}
-    vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id }      # Build a hash for the kids list box
+    vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id } # Build a hash for the kids list box
 
     @edit[:choices] = {}
 
@@ -1445,7 +1421,7 @@ module VmCommon
 
   # return correct node to right cell
   def x_node_right_cell
-    @sb[@sb[:active_accord]].present? ? @sb[@sb[:active_accord]] : x_node
+    @sb[@sb[:active_accord]].presence || x_node
   end
 
   # set partial name and cell header for edit screens
@@ -1466,12 +1442,11 @@ module VmCommon
       action = "detach_volume"
     when "compare", "drift"
       partial = "layouts/compare"
-      if @sb[:action] == "compare"
-        header = _("Compare %{vm_or_template}") % {:vm_or_template => ui_lookup(:model => @sb[:compare_db])}
-      else
-        header = _("Drift for %{vm_or_template} \"%{name}\"") %
-          {:name => name, :vm_or_template => ui_lookup(:model => @sb[:compare_db])}
-      end
+      header = if @sb[:action] == "compare"
+                 _("Compare %{vm_or_template}") % {:vm_or_template => ui_lookup(:model => @sb[:compare_db])}
+               else
+                 _("Drift for %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => ui_lookup(:model => @sb[:compare_db])}
+               end
       action = nil
     when "live_migrate"
       partial = "vm_common/live_migrate"
@@ -1519,8 +1494,7 @@ module VmCommon
       locals = options[:dialog_locals]
     when "edit"
       partial = "vm_common/form"
-      header = _("Editing %{vm_or_template} \"%{name}\"") %
-        {:name => name, :vm_or_template => ui_lookup(:table => table)}
+      header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => ui_lookup(:table => table)}
       action = "edit_vm"
     when 'chargeback'
       partial = @refresh_partial
@@ -1528,8 +1502,9 @@ module VmCommon
       action = 'vm_chargeback'
     when "evm_relationship"
       partial = "vm_common/evm_relationship"
-      header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") %
-        {:vm_or_template => ui_lookup(:table => table), :name => name, :product => Vmdb::Appliance.PRODUCT_NAME}
+      header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table),
+                                                                                             :name           => name,
+                                                                                             :product        => Vmdb::Appliance.PRODUCT_NAME}
       action = "evm_relationship_update"
     when "miq_request_new"
       partial = "miq_request/pre_prov"
@@ -1553,23 +1528,16 @@ module VmCommon
       action = "ownership_update"
     when "performance"
       partial = "layouts/performance"
-      header = _("Capacity & Utilization data for %{vm_or_template} \"%{name}\"") %
-        {:vm_or_template => ui_lookup(:table => table), :name => name}
+      header = _("Capacity & Utilization data for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table), :name => name}
       x_history_add_item(:id      => x_node_right_cell,
                          :text    => header,
                          :button  => params[:pressed],
                          :display => params[:display])
       action = nil
     when "policy_sim"
-      if params[:action] == "policies"
-        partial = "vm_common/policies"
-        header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => table)}
-        action = nil
-      else
-        partial = "layouts/policy_sim"
-        header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => table)}
-        action = nil
-      end
+      action = nil
+      header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => table)}
+      partial = params[:action] == "policies" ? "vm_common/policies" : "layouts/policy_sim"
     when "protect"
       partial = "layouts/protect"
       header = _("%{vm_or_template} Policy Assignment") % {:vm_or_template => ui_lookup(:table => table)}
@@ -1584,8 +1552,7 @@ module VmCommon
       action = 'rename_vm'
     when "resize"
       partial = "vm_common/resize"
-      header = _("Reconfiguring %{vm_or_template} \"%{name}\"") %
-        {:vm_or_template => ui_lookup(:table => table), :name => name}
+      header = _("Reconfiguring %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table), :name => name}
       action = "resize_vm"
     when "retire"
       partial = "shared/views/retire"
@@ -1593,8 +1560,7 @@ module VmCommon
       action = "retire"
     when "right_size"
       partial = "vm_common/right_size"
-      header = _("Right Size Recommendation for %{vm_or_template} \"%{name}\"") %
-        {:vm_or_template => ui_lookup(:table => table), :name => name}
+      header = _("Right Size Recommendation for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table), :name => name}
       action = nil
     when "tag"
       partial = "layouts/tagging"
@@ -1606,8 +1572,7 @@ module VmCommon
       action = "snap_vm"
     when "timeline"
       partial = "layouts/tl_show"
-      header = _("Timelines for %{virtual_machine} \"%{name}\"") %
-        {:virtual_machine => ui_lookup(:table => table), :name => name}
+      header = _("Timelines for %{virtual_machine} \"%{name}\"") % {:virtual_machine => ui_lookup(:table => table), :name => name}
       x_history_add_item(:id     => x_node_right_cell,
                          :text   => header,
                          :button => params[:pressed])
@@ -1682,7 +1647,7 @@ module VmCommon
         end
       end
     elsif params["allright.x"] || params[:button] == "allright"
-      if @edit[:new][:kids].length == 0
+      if @edit[:new][:kids].empty?
         add_flash(_("No child VMs to move right, no action taken"), :error)
       else
         @edit[:new][:kids].each do |key, value|
@@ -1710,20 +1675,19 @@ module VmCommon
     event = "vm_genealogy_change"
     i = 0
     @edit[:new].each_key do |k|
-      if @edit[:new][k] != @edit[:current][k]
-        msg += ", " if i > 0
-        i += 1
-        if k == :kids
-          # if @edit[:new][k].is_a?(Hash)
-          msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
-        elsif k == :parent
-          parent_choices_invert = parent_choices_with_no_parent_choice.invert
-          current_parent_choice = parent_choices_invert[@edit[:current][k]]
-          new_parent_choice     = parent_choices_invert[@edit[:new][k]]
-          msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
-        else
-          msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
-        end
+      next if @edit[:new][k] == @edit[:current][k]
+      msg += ", " if i.positive?
+      i += 1
+      if k == :kids
+        # if @edit[:new][k].is_a?(Hash)
+        msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
+      elsif k == :parent
+        parent_choices_invert = parent_choices_with_no_parent_choice.invert
+        current_parent_choice = parent_choices_invert[@edit[:current][k]]
+        new_parent_choice     = parent_choices_invert[@edit[:new][k]]
+        msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
+      else
+        msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
       end
     end
     msg += ")"
