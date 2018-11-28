@@ -239,7 +239,7 @@ function miqSparkle(status) {
   }
 }
 
-function miqSparkleOn() {
+window.miqSparkleOn = function() {
   if (miqDomElementExists('advsearchModal') &&
       ($('#advsearchModal').hasClass('modal fade in'))) {
     if (miqDomElementExists('searching_spinner_center')) {
