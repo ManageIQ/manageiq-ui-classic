@@ -23,7 +23,7 @@ class FlavorController < ApplicationController
   def ems_list
     assert_privileges('flavor_create')
     ems_list = Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager).select do |ems|
-      ems.class::Flavor.supports?(:create)
+      ems.class::Flavor.supports?(:create) if ems.class.constants.include?(:Flavor)
     end
     ems_list.each do |ems|
       {:name => ems.name, :id => ems.id}
