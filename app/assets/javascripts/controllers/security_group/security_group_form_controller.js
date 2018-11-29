@@ -7,6 +7,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       name: '',
       description: '',
       firewall_rules: [],
+      ems_id: ''
     };
     vm.ems = [];
 
@@ -30,10 +31,11 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     } else {
       miqService.sparkleOn();
 
-      $q.all([getSecurityGroup(securityGroupFormId), getSecurityGroups()])
+      $q.all([getSecurityGroup(securityGroupFormId)])
         .then(function() {
           vm.afterGet = true;
           vm.modelCopy = _.cloneDeep(vm.securityGroupModel);
+          getSecurityGroups();
           miqService.sparkleOff();
         })
         .catch(miqService.handleFailure);
@@ -41,7 +43,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   };
 
   function getSecurityGroup(id) {
-    return API.get('/api/security_groups/' + id + '?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules')
+    return API.get('/api/security_groups/' + id + '?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules,ems_id')
       .then(function(data) {
         Object.assign(vm.securityGroupModel, data);
         vm.securityGroupModel.firewall_rules_delete = false;
@@ -49,7 +51,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   }
 
   function getSecurityGroups() {
-    return API.get('/api/security_groups/?expand=resources&attributes=ems_ref,id,name')
+    return API.get('/api/providers/' + vm.securityGroupModel.ems_id + '/security_groups/?expand=resources&attributes=ems_ref,id,name')
       .then(function(data) {
         vm.security_groups_list = data.resources;
       });
