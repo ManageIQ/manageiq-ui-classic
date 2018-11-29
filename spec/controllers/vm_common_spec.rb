@@ -113,7 +113,7 @@ describe VmOrTemplateController do
       expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
     end
 
-    it "Redirects user to the referrer controller/action" do
+    it "Redirects user to the referer controller/action" do
       login_as FactoryGirl.create(:user)
       request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
       allow(controller).to receive(:find_record_with_rbac).and_return(nil)
