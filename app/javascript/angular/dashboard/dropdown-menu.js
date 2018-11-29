@@ -19,7 +19,7 @@ ManageIQ.angular.app.component('dropdownMenu', {
       </button>
       <ul aria-labelledby="{{vm.dropdown_id}}" class="dropdown-menu dropdown-menu-right">
         <li ng-repeat="button in vm.buttons">
-          <a data-confirm="{{button.confirm}}" data-method="{{button.dataMethod}}" data-miq_sparkle_on="{{button.sparkleOn ? "true" : "false"}}" href="{{button.href}}" id="{{button.id}}" ng-attr-data-remote="{{button.dataRemote}}" ng-attr-target="{{button.target}}" title="{{button.title}}">
+          <a data-confirm="{{button.confirm}}" data-method="{{button.dataMethod}}" data-miq_sparkle_on="{{button.sparkleOn ? 'true' : 'false'}}" href="{{button.href}}" id="{{button.id}}" ng-attr-data-remote="{{button.dataRemote}}" ng-attr-target="{{button.target}}" title="{{button.title}}">
             <span ng-class="button.fonticon"></span>
             {{button.name}}
           </a>
