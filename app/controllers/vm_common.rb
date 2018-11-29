@@ -136,8 +136,8 @@ module VmCommon
     @showtype = "config"
     @record = identify_record(id || params[:id], VmOrTemplate)
     if @record.nil?
-      referrer = Rails.application.routes.recognize_path(request.referer)
-      redirect_to(:controller => referrer[:controller], :action => referrer[:action])
+      referer = Rails.application.routes.recognize_path(request.referer)
+      redirect_to(:controller => referer[:controller], :action => referer[:action])
       return
     end
     return if record_no_longer_exists?(@record)

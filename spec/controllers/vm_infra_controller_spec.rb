@@ -576,8 +576,8 @@ describe VmInfraController do
     end
   end
 
-  it "gets explorer when the request.referrer action is of type 'post'" do
-    allow(request).to receive(:referrer).and_return("http://localhost:3000/configuration/update")
+  it "gets explorer when the request.referer action is of type 'post'" do
+    allow(request).to receive(:referer).and_return("http://localhost:3000/configuration/update")
     get :explorer
     expect(response.status).to eq(200)
   end
