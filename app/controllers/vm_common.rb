@@ -683,7 +683,7 @@ module VmCommon
 
     @active_tab = "edit"
     @tab_id = @record.id.to_s
-    @tabs = [%w(edit Information)]
+    @tabs = [['edit', _('Information')]]
 
     @refresh_partial = "vm_common/form"
   end
@@ -699,7 +699,7 @@ module VmCommon
     @in_a_form = true
     @active_tab = "edit"
     @tab_id = @record.id.to_s
-    @tabs = [%w(edit Information)]
+    @tabs = [['edit', _('Information')]]
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
