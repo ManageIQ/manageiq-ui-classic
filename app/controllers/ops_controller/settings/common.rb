@@ -578,6 +578,7 @@ module OpsController::Settings::Common
   end
 
   def settings_server_validate
+    return unless @sb[:active_tab] == "settings_server" && @edit[:new][:server]
     if @edit[:new][:server][:name].blank?
       add_flash(_("Appliance name must be entered."), :error)
     end
