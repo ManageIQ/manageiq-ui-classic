@@ -5,7 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer RC-1
+## Hammer RC-2
+
+### Fixed
+- Remove all validation specific code from Proxy/Advanced tabs [(#4884)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4884)
+- Enabled password editing if log protocol has changed. [(#4885)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4885)
+- Add babel-polyfill [(#4888)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4888)
+- Corrected logic for rendering custom buttons [(#4887)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4887)
+- Replaced missing timeline attributes in performance controller. [(#4899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4899)
+- Allow apostrophes in custom button names [(#4900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4900)
+- Reset session on failed CSRF token verification [(#4901)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4901)
+- Fixed JS error, bottlenecks timeline does not have group levels. [(#4902)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4902)
+- Use EmsCloud.authentication_for_providers to determine topology view status [(#4897)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4897)
+- Reset session on failed CSRF token verification [(#4901)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4901)
+- Fixed code to show Bottlenecks report download buttons. [(#4903)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4903)
+- Add any product product feature for Customization in menu [(#4782)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4782)
+- Remove S3 and Swift From List of Log Collection Types [(#4926)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4926)
+- Fix GCE validation [(#4911)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4911)
+- Removed an extra observer from Edit Selected Element type drop down [(#4922)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4922)
+- Rescue error messages when executing retire action [(#4874)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4874)
+- Fixed if condition to prevent undefined js error [(#4929)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4929)
+- Fixed to enable the download buttons on Utilization Report tab [(#4934)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4934)
+- VmCloud volume detach: Let replace_right_cell turn off the spinner [(#4910)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4910)
+- Fixed required description for snapshot if vendor is openstack. [(#4928)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4928)
+- Fixed disabled password input. [(#4932)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4932)
+- Load ui-components for printing with asset pipeline require [(#4941)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4941)
+- Make print button consistent on VM infra and cloud screens [(#4938)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4938)
+- Add missing quadicon definition for generic object definitions [(#4940)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4940)
+- Configuration - notify backend when `quad_truncate` gets changed [(#4942)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4942)
+- VM CLoud: floating ips to associate must be a list [(#4944)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4944)
+- Add X-UA-Compatible header [(#4946)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4946)
+- Add delete_flavors method to EmsCloudController [(#4954)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4954)
+- Adds email validation for schedule and alerts forms [(#4947)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4947)
+- Fixed saving of custom button role visibility [(#4956)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4956)
+- Display the web console for OpenStack instances [(#4960)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4960)
+- Do not store download_summary_pdf using remember tab [(#4945)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4945)
+- Cloud Volume creation fixes [(#4908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4908)
+- Fix Delete message to display the entity type - "Generic Object Class" [(#4930)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4930)
+- Don't translate audit messages [(#4952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4952)
+- Stop spinner after rendering flash message [(#4990)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4990)
+- Fix save in region replication form [(#4977)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4977)
+
+## Hammer RC-1 - Released 2018-11-16
 
 ### Added
 - Add physical switches to the Physical Server page Relationships table [(#4811)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4811)
