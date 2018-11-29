@@ -27,6 +27,7 @@ module ApplicationController::Filter
       # Copy back the latest expression or empty expression, if nil
       @edit[@expkey].val1 = nil
       @edit[@expkey].val2 = nil
+      @edit[@expkey][:exp_tag] = nil if @edit[@expkey][:exp_tag]
       @edit[@expkey][:expression] = @edit[:new][@expkey].nil? ? {"???" => "???"} : copy_hash(@edit[:new][@expkey])
       @edit.delete(:edit_exp)
     else

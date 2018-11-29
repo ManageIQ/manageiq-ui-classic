@@ -44,6 +44,23 @@ describe ApplicationController, "::Filter" do
       end
     end
 
+    it "resets exp_tag when discard button is pressed" do
+      exp = ApplicationController::Filter::Expression.new.tap do |e|
+        e.val1 = {}
+        e.val2 = {}
+        e.expression = {}
+        e.exp_tag = "managed-aws_reservation_statud"
+      end
+      edit = {:filter_expression => exp}
+      edit[:new] = {:filter_expression => {:test => "foo", :token => 1}}
+      session[:edit] = edit
+      controller.instance_variable_set(:@_params, :pressed => "discard")
+      controller.instance_variable_set(:@expkey, :filter_expression)
+      expect(controller).to receive(:render)
+      controller.send(:exp_button)
+      expect(assigns(:edit)[:filter_expression][:exp_tag]).to be_nil
+    end
+
     it "removes tokens if present" do
       exp = {'???' => '???'}
       edit = {:expression => expression, :edit_exp => exp}
