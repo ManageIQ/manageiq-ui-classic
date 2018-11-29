@@ -1,8 +1,17 @@
 module.exports = {
+  parserOptions: {
+    "sourceType": "module",
+  },
   env: {
     browser: true,
     es6: true,
     'jest/globals': true,
+  },
+  globals: {
+    miqAjaxButton: true,
+    miqSparkleOff: true,
+    miqSparkleOn: true,
+    add_flash: true,
   },
   extends: ['airbnb', 'plugin:jest/recommended'],
   plugins: ['jest', 'react'],

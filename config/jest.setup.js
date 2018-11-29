@@ -5,6 +5,13 @@ window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 window.sprintf = require('sprintf-js').sprintf;
+window.miqSparkleOn = () => {};
+window.miqSparkleOff = () => {};
+window.miqAjaxButton = () => {};
+window.add_flash = () => {};
+
+// mock async requests
+require('whatwg-fetch');
 
 require('../app/assets/javascripts/miq_global');
 require('../app/assets/javascripts/miq_application');
@@ -21,3 +28,8 @@ window.listenToRx = listenToRx;
 
 import getJSONFixture from '../app/javascript/spec/helpers/getJSONFixtures';
 window.getJSONFixture = getJSONFixture;
+
+// configure enzyme adapter
+import Enzyme from 'enzyme';
+import EnzymeAdapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new EnzymeAdapter() });
