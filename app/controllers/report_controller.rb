@@ -720,7 +720,7 @@ class ReportController < ApplicationController
             presenter[:init_dashboard] = true
           end
           @right_cell_text = @widget.id ?
-              _("Editing Widget \"%{name}\"") % {:name => @widget.name} :
+              _("Editing Widget \"%{title}\"") % {:title => @widget.title} :
               _("Adding a new Widget")
         end
       end
