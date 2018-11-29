@@ -19,8 +19,8 @@ class AutomateImportService
     }
     ae_import = MiqAeImport.new(domain_name_to_import_from, import_options)
 
-    namespace_list = namespace_or_class_list.select do |namespace_or_class|
-      !namespace_or_class.match(/\.class/)
+    namespace_list = namespace_or_class_list.reject do |namespace_or_class|
+      namespace_or_class.match(/\.class/)
     end
 
     class_list = namespace_or_class_list.select do |namespace_or_class|
