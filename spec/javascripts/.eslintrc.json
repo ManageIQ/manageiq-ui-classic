@@ -1,14 +1,16 @@
 {
   "globals": {
-    "describe": false,
-    "context": false,
-    "it": false,
-    "beforeEach": false,
     "afterEach": false,
-    "inject": false,
-    "spyOn": false,
+    "beforeEach": false,
+    "context": false,
+    "describe": false,
     "expect": false,
+    "getJSONFixture": false,
+    "inject": false,
+    "it": false,
     "jasmine": false,
-    "setFixtures": false
+    "module": false,
+    "setFixtures": false,
+    "spyOn": false
   }
 }

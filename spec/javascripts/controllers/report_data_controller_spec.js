@@ -1,4 +1,4 @@
-describe('reportDataController', function () {
+describe('reportDataController', function() {
   beforeEach(module('ManageIQ.report_data'));
 
   var $controller, $httpBackend, $scope;
@@ -14,14 +14,16 @@ describe('reportDataController', function () {
     sortDir: 'DESC',
     isExplorer: false,
     showUrl: 'some_url/show',
-  }
+  };
 
   beforeEach(inject(function($injector) {
-     $scope = $injector.get('$rootScope').$new();
-     $httpBackend = $injector.get('$httpBackend');
-     var injectedCtrl = $injector.get('$controller');
-     $controller = injectedCtrl('reportDataController', {$scope: $scope});
-   }));
+    $scope = $injector.get('$rootScope').$new();
+    $httpBackend = $injector.get('$httpBackend');
+    var injectedCtrl = $injector.get('$controller');
+    $controller = injectedCtrl('reportDataController', {
+      $scope: $scope,
+    });
+  }));
 
   describe('receive data', function() {
     beforeEach(function() {
@@ -40,30 +42,30 @@ describe('reportDataController', function () {
 
     it('should get data', function(done) {
       var settings = {isLoading: true};
-      var result = $controller
-          .getData(initObject.modelName, initObject.activeTree, initObject.parentId, initObject.isExplorer, settings);
-      result.then(function(data) {
-        expect($controller.gtlData.cols.length).toEqual(report_data.data.head.length);
-        expect(angular.equals($controller.gtlData.rows, report_data.data.rows)).toBeTruthy();
-        expect(angular.equals($controller.settings, report_data.settings)).toBeTruthy();
-        expect(angular.equals($controller.perPage.value, report_data.settings.perpage)).toBeTruthy();
-        expect(angular.equals($controller.perPage.text, report_data.settings.perpage)).toBeTruthy();
-        done();
-      });
+      $controller
+        .getData(initObject.modelName, initObject.activeTree, initObject.parentId, initObject.isExplorer, settings)
+        .then(function() {
+          expect($controller.gtlData.cols.length).toEqual(report_data.data.head.length);
+          expect(angular.equals($controller.gtlData.rows, report_data.data.rows)).toBeTruthy();
+          expect(angular.equals($controller.settings, report_data.settings)).toBeTruthy();
+          expect(angular.equals($controller.perPage.value, report_data.settings.perpage)).toBeTruthy();
+          expect(angular.equals($controller.perPage.text, report_data.settings.perpage)).toBeTruthy();
+          done();
+        });
       $httpBackend.flush();
       $scope.$apply();
     });
 
     it('should init controller', function(done) {
-      var result = $controller.initController(initObject);
-      result.then(function() {
-        expect($controller.settings.isLoading).toBeFalsy();
-        expect(report_data.settings.sort_dir === "ASC").toBe($controller.settings.sortBy.isAscending);
-        expect($controller.settings.sortBy.sortObject.col_idx).toBe(report_data.settings.sort_col);
-        expect($controller.perPage.enabled).toBeTruthy();
-        expect($controller.perPage.hidden).toBeFalsy();
-        done();
-      });
+      $controller.initController(initObject)
+        .then(function() {
+          expect($controller.settings.isLoading).toBeFalsy();
+          expect(report_data.settings.sort_dir === 'ASC').toBe($controller.settings.sortBy.isAscending);
+          expect($controller.settings.sortBy.sortObject.col_idx).toBe(report_data.settings.sort_col);
+          expect($controller.perPage.enabled).toBeTruthy();
+          expect($controller.perPage.hidden).toBeFalsy();
+          done();
+        });
       $httpBackend.flush();
       $scope.$apply();
     });
@@ -125,12 +127,12 @@ describe('reportDataController', function () {
     });
 
     it('should select item and call rowSelect', function() {
-      var itemId = "10";
-      var itemLongId = "10";
+      var itemId = '10';
+      var itemLongId = '10';
       var selected = true;
       spyOn(window, 'sendDataWithRx');
       $controller.onItemSelect({id: itemId, long_id: itemLongId}, selected);
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
+      var selectedItem = $controller.gtlData.rows.filter(function(item) {
         return item.long_id === itemLongId;
       });
       expect(selectedItem[0].checked).toBe(selected);
@@ -140,12 +142,12 @@ describe('reportDataController', function () {
     });
 
     it('should deselect item and call rowSelect', function() {
-      var itemId = "10";
-      var itemLongId = "10";
+      var itemId = '10';
+      var itemLongId = '10';
       var selected = false;
       spyOn(window, 'sendDataWithRx');
       $controller.onItemSelect({id: itemId, long_id: itemLongId}, selected);
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
+      var selectedItem = $controller.gtlData.rows.filter(function(item) {
         return item.long_id === itemLongId;
       });
       expect(selectedItem[0].checked).toBe(selected);
@@ -155,14 +157,13 @@ describe('reportDataController', function () {
     });
 
     it('should create redirect for non explorer click on item', function() {
-      var itemId = "10";
-      var itemLongId = "10";
+      var itemLongId = '10';
       var clickEvent = $.Event('click');
       initObject.isExplorer = false;
       spyOn(clickEvent, 'stopPropagation');
       spyOn(clickEvent, 'preventDefault');
       spyOn(window, 'DoNav');
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
+      var selectedItem = $controller.gtlData.rows.filter(function(item) {
         return item.long_id === itemLongId;
       });
       $controller.onItemClicked(selectedItem[0], clickEvent);
