@@ -7,12 +7,12 @@ class AnsibleTowerJobTemplateDialogService
       group_pos = 0
       add_options_group(tab, group_pos, template)
 
-      unless template.survey_spec.blank?
+      if template.survey_spec.present?
         group_pos += 1
         add_survey_group(tab, group_pos, template)
       end
 
-      unless template.variables.blank?
+      if template.variables.present?
         group_pos += 1
         add_variables_group(tab, group_pos, template)
       end
