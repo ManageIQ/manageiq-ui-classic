@@ -4,7 +4,6 @@ import { formFieldsMapper, layoutMapper } from '@data-driven-forms/pf3-component
 
 const MiqFormRenderer = props => (
   <FormRender
-    disableSubmit
     formFieldsMapper={formFieldsMapper}
     layoutMapper={layoutMapper}
     {...props}

@@ -4,15 +4,15 @@ import fetchMock from 'fetch-mock';
 import FormRender from '@data-driven-forms/react-form-renderer';
 import ServiceForm from '../../components/service-form';
 
-describe('Cloud tenant form component', () => {
+describe('Service form component', () => {
   let initialProps;
   let submitSpy;
   let flashSpy;
 
   beforeEach(() => {
     initialProps = {
-      maxNameLen: 1,
-      maxDescLen: 2,
+      maxNameLen: 10,
+      maxDescLen: 20,
       serviceFormId: 3,
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
