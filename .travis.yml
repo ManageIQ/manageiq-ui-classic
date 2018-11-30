@@ -3,34 +3,37 @@ rvm:
 - 2.4.4
 - 2.3.6
 cache:
-  bundler: true
+  directories:
+    - vendor/bundle
   yarn: true
-  timeout: 600
+before_cache:
+  - bundle clean
+  - rm -rf vendor/bundle/bundler/gems/*
 addons:
   postgresql: '9.5'
 env:
   matrix:
   - TEST_SUITE=spec
-  - TEST_SUITE=spec:javascript
-  - TEST_SUITE=spec:compile
-  - TEST_SUITE=spec:jest
-matrix:
-  exclude:
-  - rvm: 2.4.4
-    env: TEST_SUITE=spec:javascript
-  - rvm: 2.4.4
-    env: TEST_SUITE=spec:compile
-  - rvm: 2.4.4
-    env: TEST_SUITE=spec:jest
+  # - TEST_SUITE=spec:javascript
+  # - TEST_SUITE=spec:compile
+  # - TEST_SUITE=spec:jest
+# matrix:
+#   exclude:
+#   - rvm: 2.4.4
+#     env: TEST_SUITE=spec:javascript
+#   - rvm: 2.4.4
+#     env: TEST_SUITE=spec:compile
+#   - rvm: 2.4.4
+#     env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 install: true
-script: bundle exec rake $TEST_SUITE
+script: echo 'Hi'
 after_script: source tools/ci/after_install.sh
-notifications:
-  webhooks:
-    urls:
-    - https://webhooks.gitter.im/e/9a9f972a1225d28e0f05
-    on_success: change
-    on_failure: always
-    on_start: never
+# notifications:
+#   webhooks:
+#     urls:
+#     - https://webhooks.gitter.im/e/9a9f972a1225d28e0f05
+#     on_success: change
+#     on_failure: always
+#     on_start: never
