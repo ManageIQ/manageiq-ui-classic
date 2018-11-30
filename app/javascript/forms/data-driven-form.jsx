@@ -10,5 +10,4 @@ const MiqFormRenderer = props => (
     {...props}
   />
 );
-
 export default MiqFormRenderer;
