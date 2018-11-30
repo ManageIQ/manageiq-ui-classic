@@ -38,7 +38,10 @@ mock.ok = function(url, data) {
   // resolves with data
   return mock.handle(url, Promise.resolve({
     status: 200,
-    data,
+    clone: function() {
+      return this;
+    },
+    json: () => Promise.resolve(data),
   }));
 };
 
@@ -46,7 +49,10 @@ mock.err = function(url, data) {
   // rejects with data
   return mock.handle(url, Promise.reject({
     status: 400,
-    data,
+    clone: function() {
+      return this;
+    },
+    json: () => Promise.resolve(data),
   }));
 };
 
