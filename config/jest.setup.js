@@ -1,3 +1,6 @@
+// needs to load before api, and jest hoists imports but not requires
+import 'whatwg-fetch';
+
 window.angular = require('angular');
 window.Rx = require('rxjs');
 window.$ = require('jquery');

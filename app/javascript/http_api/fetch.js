@@ -13,7 +13,7 @@ export function miqFetch(options, data = null) {
 }
 
 // allow mocking
-miqFetch.fetch = window.fetch;
+miqFetch.fetch = window.fetch.bind(window);
 
 export function mock(options) {
   mock.matches = [];
@@ -32,7 +32,7 @@ export function mock(options) {
 mock.handle = function(url, promise) {
   mock.matches[url] = promise;
   return mock;
-}
+};
 
 mock.ok = function(url, data) {
   // resolves with data
