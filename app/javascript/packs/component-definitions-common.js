@@ -6,7 +6,7 @@ import GenericGroupWrapper from '../react/generic_group_wrapper';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import MiqAboutModal from '../components/miq-about-modal';
-import CloudTennantForm from '../components/cloud-tenant-form/cloud-tenant-form';
+import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ServiceForm from '../components/service-form';
 
 /**
@@ -24,5 +24,5 @@ ManageIQ.component.addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
-ManageIQ.component.addReact('CloudTennantForm', CloudTennantForm);
+ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
