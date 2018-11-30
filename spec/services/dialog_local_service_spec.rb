@@ -64,98 +64,98 @@ describe DialogLocalService do
     end
 
     context "when the object is a AvailabilityZone" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::AvailabilityZone, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::CloudManager::AvailabilityZone, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "availability_zone", "availability_zones", "/availability_zone"
     end
 
     context "when the object is a CloudNetwork" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudNetwork, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::CloudNetwork, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_network", "cloud_networks", "/cloud_network"
     end
 
     context "when the object is a CloudObjectStoreContainer" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudObjectStoreContainer, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::StorageManager::S3::CloudObjectStoreContainer, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_object_store_container", "cloud_object_store_containers", "/cloud_object_store_container"
     end
 
     context "when the object is a CloudSubnet" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudSubnet, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::CloudSubnet, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_subnet", "cloud_subnets", "/cloud_subnet"
     end
 
     context "when the object is a CloudTenant" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudTenant, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::CloudManager::CloudTenant, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_tenant", "cloud_tenants", "/cloud_tenant"
     end
 
     context "when the object is a CloudVolume" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::CloudVolume, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::CloudManager::CloudVolume, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_volume", "cloud_volumes", "/cloud_volume"
     end
 
     context "when the object is a ContainerGroup" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerGroup, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Kubernetes::ContainerManager::ContainerGroup, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_group", "container_groups", "/container_group"
     end
 
     context "when the object is a ContainerImage" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerImage, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openshift::ContainerManager::ContainerImage, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_image", "container_images", "/container_image"
     end
 
     context "when the object is a ContainerNode" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerNode, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Kubernetes::ContainerManager::ContainerNode, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_node", "container_nodes", "/container_node"
     end
 
     context "when the object is a ContainerProject" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerProject, :id => 123) }
+      let(:obj) { double(:class => ContainerProject, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_project", "container_projects", "/container_project"
     end
 
     context "when the object is a ContainerTemplate" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerTemplate, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Kubernetes::ContainerManager::ContainerTemplate, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_template", "container_templates", "/container_template"
     end
 
     context "when the object is a ContainerVolume" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerVolume, :id => 123) }
+      let(:obj) { double(:class => ContainerVolume, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "container_volume", "container_volumes", "/container_volume"
     end
 
     context "when the object is an EmsCluster" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::EmsCluster, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::InfraManager::EmsCluster, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "ems_cluster", "clusters", "/ems_cluster"
     end
 
     context "when the object is a GenericObject" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::GenericObject, :id => 123) }
+      let(:obj) { double(:class => GenericObject, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "generic_object", "generic_objects", "/service/explorer"
@@ -176,84 +176,84 @@ describe DialogLocalService do
     end
 
     context "when the object is a LoadBalancer" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::LoadBalancer, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::LoadBalancer, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "load_balancer", "load_balancers", "/load_balancer"
     end
 
     context "when the object is a NetworkRouter" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::NetworkRouter, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::NetworkRouter, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "network_router", "network_routers", "/network_router"
     end
 
     context "when the object is an OrchestrationStack" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::OrchestrationStack, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::CloudManager::OrchestrationStack, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "orchestration_stack", "orchestration_stacks", "/orchestration_stack"
     end
 
     context "when the object is a SecurityGroup" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::SecurityGroup, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::SecurityGroup, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "security_group", "security_groups", "/security_group"
     end
 
     context "when the object is a Service" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Service, :id => 123) }
+      let(:obj) { double(:class => Service, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a ServiceAnsiblePlaybook" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceAnsiblePlaybook, :id => 123) }
+      let(:obj) { double(:class => ServiceAnsiblePlaybook, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a ServiceAnsibleTower" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceAnsibleTower, :id => 123) }
+      let(:obj) { double(:class => ServiceAnsibleTower, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a ServiceContainerTemplate" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceContainerTemplate, :id => 123) }
+      let(:obj) { double(:class => ServiceContainerTemplate, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a ServiceGeneric" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceGeneric, :id => 123) }
+      let(:obj) { double(:class => ServiceGeneric, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a ServiceOrchestration" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ServiceOrchestration, :id => 123) }
+      let(:obj) { double(:class => ServiceOrchestration, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "service", "services", "/service/explorer"
     end
 
     context "when the object is a Storage" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Storage, :id => 123) }
+      let(:obj) { double(:class => Storage, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "storage", "data_stores", "/storage/explorer"
     end
 
     context "when the object is a Switch" do
-      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Switch, :id => 123) }
+      let(:obj) { double(:class => Switch, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "switch", "switches", "/infra_networking/explorer"
@@ -261,7 +261,7 @@ describe DialogLocalService do
 
     context "when the object is a Template" do
       context "when there is a cancel endpoint in the display options" do
-        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Template, :id => 123) }
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::CloudManager::Template, :id => 123) }
         let(:display_options) { {:cancel_endpoint => "/vm_cloud/explorer"} }
 
         include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
@@ -278,7 +278,7 @@ describe DialogLocalService do
 
     context "when the object is a Vm" do
       context "when there is a cancel endpoint in the display options" do
-        let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Vm, :id => 123) }
+        let(:obj) { double(:class => ManageIQ::Providers::Vmware::CloudManager::Vm, :id => 123) }
         let(:display_options) { {:cancel_endpoint => "/vm_cloud/explorer"} }
 
         include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",

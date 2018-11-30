@@ -17,7 +17,7 @@ describe ApplicationHelper::Button::NewFlavor do
 
     context 'provider available' do
       before do
-        provider = FactoryGirl.create(:ems_cloud)
+        provider = FactoryGirl.create(:ems_openstack)
         allow(provider.class::Flavor).to receive(:create).and_return(true)
         button.calculate_properties
       end
