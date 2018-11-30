@@ -11,8 +11,8 @@ describe('Cloud tenant form component', () => {
 
   beforeEach(() => {
     initialProps = {
-      maxNameLen: 1,
-      maxDescLen: 2,
+      maxNameLen: 10,
+      maxDescLen: 20,
       serviceFormId: 3,
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
