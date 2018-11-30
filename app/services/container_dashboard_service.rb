@@ -13,9 +13,9 @@ class ContainerDashboardService < DashboardService
 
   def all_data
     {
-      :status          => status,
-      :providers       => providers,
-      :alerts          => alerts,
+      :status    => status,
+      :providers => providers,
+      :alerts    => alerts,
     }.compact
   end
 
@@ -50,11 +50,11 @@ class ContainerDashboardService < DashboardService
   end
 
   def status
-    if @ems.present?
-      routes_count = @ems.respond_to?(:container_routes) ? @ems.container_routes.count : 0 # ems might not have routes
-    else
-      routes_count = ContainerRoute.count
-    end
+    routes_count = if @ems.present?
+                     @ems.respond_to?(:container_routes) ? @ems.container_routes.count : 0 # ems might not have routes
+                   else
+                     ContainerRoute.count
+                   end
 
     {
       :nodes      => {
@@ -109,10 +109,10 @@ class ContainerDashboardService < DashboardService
   end
 
   def providers
-    provider_classes_to_ui_types = ManageIQ::Providers::ContainerManager.subclasses.each_with_object({}) { |subclass, h|
+    provider_classes_to_ui_types = ManageIQ::Providers::ContainerManager.subclasses.each_with_object({}) do |subclass, h|
       name = subclass.name.split('::')[2]
       h[subclass.name] = name.to_sym
-    }
+    end
     providers = @ems.present? ? {@ems.type => 1} : ManageIQ::Providers::ContainerManager.group(:type).count
 
     result = {}
@@ -137,9 +137,9 @@ class ContainerDashboardService < DashboardService
     errors = alerts_status[0] || 0
     warnings = alerts_status[1] || 0
 
-    errors_struct = errors > 0 ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
-    warnings_struct = warnings > 0 ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
-    notifications = if (errors + warnings) > 0
+    errors_struct = errors.positive? ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
+    warnings_struct = warnings.positive? ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
+    notifications = if (errors + warnings).positive?
                       [errors_struct, warnings_struct].compact
                     elsif alerts_status == [nil, nil]
                       [{}]
@@ -148,7 +148,7 @@ class ContainerDashboardService < DashboardService
                     end
 
     {
-      :count         => (errors + warnings) > 0 ? (errors + warnings) : nil,
+      :count         => (errors + warnings).positive? ? (errors + warnings) : nil,
       :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
       :notifications => notifications,
       :dataAvailable => has_alerts
@@ -173,8 +173,7 @@ class ContainerDashboardService < DashboardService
     if @ems.present?
       @controller.polymorphic_url(@ems, :display => entity.to_s.pluralize)
     else
-      @controller.url_for_only_path(:action     => 'show_list',
-                          :controller => entity)
+      @controller.url_for_only_path(:action => 'show_list', :controller => entity)
     end
   end
 
@@ -182,7 +181,7 @@ class ContainerDashboardService < DashboardService
     node_ids = @ems.present? ? @ems.container_nodes : ContainerNode.active
     metrics = Metric::Helper.latest_metrics(ContainerNode.name, REALTIME_TIME_RANGE.minutes.ago.utc, node_ids)
     metrics = metrics.includes(:resource)
-    metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
+    metrics = metrics.includes(:resource => [:ext_management_system]) if @ems.blank?
     heatmaps_data(metrics)
   end
 
@@ -191,7 +190,7 @@ class ContainerDashboardService < DashboardService
     node_ids = @ems.present? ? @ems.container_nodes : ContainerNode.active
     metrics = MetricRollup.latest_rollups(ContainerNode.name, node_ids)
     metrics = metrics.where('timestamp > ?', 1.day.ago.utc).includes(:resource)
-    metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
+    metrics = metrics.includes(:resource => [:ext_management_system]) if @ems.blank?
 
     data = heatmaps_data(metrics)
     data if data[:nodeCpuUsage]
@@ -261,8 +260,7 @@ class ContainerDashboardService < DashboardService
     daily_image_metrics = Hash.new(0)
     daily_metrics.each do |m|
       day = m.timestamp.beginning_of_day.utc
-      daily_image_metrics[day] +=
-        m.stat_container_image_registration_rate if m.stat_container_image_registration_rate.present?
+      daily_image_metrics[day] += m.stat_container_image_registration_rate if m.stat_container_image_registration_rate.present?
     end
 
     if daily_image_metrics.size > 1
