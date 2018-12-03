@@ -1,4 +1,10 @@
-import { push, replace, go, goBack, goForward } from 'connected-react-router';
+import {
+  push,
+  replace,
+  go,
+  goBack,
+  goForward,
+} from 'connected-react-router';
 
 const createReduxRoutingActions = ({ dispatch }) => ({
   push: where => dispatch(push(where)),

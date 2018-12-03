@@ -38,4 +38,3 @@ const initializeStore = () => {
 };
 
 export default initializeStore;
-

@@ -3,22 +3,21 @@
 /* eslint global-require: 0 */
 /* eslint import/no-dynamic-require: 0 */
 
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const { basename, dirname, join, relative, resolve } = require('path')
-const { sync } = require('glob')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const extname = require('path-complete-extname')
-const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+const webpack = require('webpack');
+const { basename, dirname, join, resolve } = require('path');
+const { sync } = require('glob');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const extname = require('path-complete-extname');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
 
-const { env, settings, output, engines } = require('./configuration.js')
-const loaders = require('./loaders.js')
-const RailsEnginesPlugin = require('./RailsEnginesPlugin')
+const { env, settings, output, engines } = require('./configuration.js');
+const loaders = require('./loaders.js');
+const RailsEnginesPlugin = require('./RailsEnginesPlugin');
 
-const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
-const entryPath = join(settings.source_path, settings.source_entry_path)
-const moduleDir = engines['manageiq-ui-classic'].node_modules
+const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
+const entryPath = join(settings.source_path, settings.source_entry_path);
+const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
 const sharedPackages = [
   'jquery',
@@ -31,30 +30,30 @@ const sharedPackages = [
   'graphql', // TODO remove once this gets added in manageiq-graphql
 ];
 
-let packPaths = {}
+let packPaths = {};
 
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k].root
-  let glob = join(root, entryPath, extensionGlob)
-  packPaths[k] = sync(glob)
-})
+  let root = engines[k].root;
+  let glob = join(root, entryPath, extensionGlob);
+  packPaths[k] = sync(glob);
+});
 
 const nodeModulesNotShims = (module) => {
   const inNodeModules = SplitChunksPlugin.checkTest(/node_modules/, module);
   const inShims = SplitChunksPlugin.checkTest(/shims/, module);
 
-  return inNodeModules && ! inShims;
+  return inNodeModules && !inShims;
 };
-const notShims = (module) => (! SplitChunksPlugin.checkTest(/shims/, module));
+const notShims = (module) => (!SplitChunksPlugin.checkTest(/shims/, module));
 
 module.exports = {
   entry: {
     ...Object.keys(packPaths).reduce(
       (map, pluginName) => {
         packPaths[pluginName].forEach(function(entry) {
-          map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
-        })
-        return map
+          map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry);
+        });
+        return map;
       }, {}
     ),
     'shims': [
@@ -68,7 +67,7 @@ module.exports = {
   output: {
     filename: '[name]-[chunkhash].js',
     path: output.path,
-    publicPath: output.publicPath
+    publicPath: output.publicPath,
   },
 
   module: {
@@ -135,4 +134,4 @@ module.exports = {
     // only read loaders from ui-classic
     modules: [moduleDir],
   },
-}
+};

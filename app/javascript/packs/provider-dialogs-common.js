@@ -10,13 +10,13 @@ ManageIQ.angular.app.component('providerDialogUser', {
   },
   template: '<dialog-user dialog="$ctrl.dialog" refresh-field="$ctrl.refreshField(field)" on-update="$ctrl.setDialogData(data)"></dialog-user>',
   controller: [function providerDialogsCommonController() {
-    let formData = {};
+    this.formData = {};
 
     // dynamic fields are not supported in this context
     this.refreshField = () => Promise.resolve({ values: [], options: [] });
 
     this.setDialogData = (data) => {
-      formData = data.data;
+      this.formData = data.data;
 
       ManageIQ.redux.store.dispatch({
         type: 'FormButtons.saveable',
@@ -124,4 +124,3 @@ window.listenToRx((buttonData) => {
     apiCall(buttonData);
   }
 });
-
