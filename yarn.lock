@@ -52,7 +52,7 @@
     redux-form-validators "^2.7.0"
     redux-mock-store "^1.5.1"
 
-"@manageiq/ui-components@1.1.18":
+"@manageiq/ui-components@~1.1.18":
   version "1.1.18"
   resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.1.18.tgz#e8ee8325fb0f7aa8d5d173fbd4fabd7d2b35c2db"
   integrity sha512-7xtGx091jlsQMKKUZ3eBXhFFqbNPNjI4X2xfKRJdZxv15Lvnu08GS6t5gtXrqTpYpfEdhBHvvy74es8jXzN4IQ==
@@ -65,6 +65,11 @@
     es7-shim "^6.0.0"
     eslint "~3.9.1"
     sprintf-js "^1.1.1"
+
+"@pf3/select@~1.12.6":
+  version "1.12.6"
+  resolved "https://registry.yarnpkg.com/@pf3/select/-/select-1.12.6.tgz#8beec7e016e2c501b8ff1222c2c673e57b24de43"
+  integrity sha512-xWGufPx1+H8LFMgmTPzmdgSiv9Zo7y/quFneo6Qon6yJcYdZtaJ+rv5oBzQoTgZNxIqEzVozJ+cykKGrGsxDZQ==
 
 "@pf3/timeline@~1.0.8":
   version "1.0.8"
