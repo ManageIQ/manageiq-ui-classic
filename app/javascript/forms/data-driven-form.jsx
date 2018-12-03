@@ -6,6 +6,10 @@ const MiqFormRenderer = props => (
   <FormRender
     formFieldsMapper={formFieldsMapper}
     layoutMapper={layoutMapper}
+    disableSubmit={[
+      'pristine',
+      'invalid',
+    ]}
     {...props}
   />
 );
