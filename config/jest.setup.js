@@ -9,8 +9,6 @@ window.n__ = (x) => x;
 require('whatwg-fetch');
 
 require('../app/assets/javascripts/miq_global');
-require('../app/assets/javascripts/miq_application');
-require('../app/assets/javascripts/miq_angular_application');
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;
