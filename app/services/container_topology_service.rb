@@ -21,18 +21,16 @@ class ContainerTopologyService < TopologyService
       "Pod"
     else
       name = entity.class.name.demodulize
-      if name.start_with? "Container"
+      if name.start_with?('Container')
         if name.length > "Container".length # container related entities such as ContainerService
           name["Container".length..-1]
         else
           "Container" # the container entity itself
         end
+      elsif entity.kind_of?(Vm)
+        name.upcase # turn Vm to VM because it's an abbreviation
       else
-        if entity.kind_of?(Vm)
-          name.upcase # turn Vm to VM because it's an abbreviation
-        else
-          name # non container entities such as Host
-        end
+        name # non container entities such as Host
       end
     end
   end
