@@ -18,7 +18,7 @@ class HawkularProxyService
     @controller = controller
 
     @params = controller.params
-    @ems = ExtManagementSystem.find(@provider_id.to_i) unless @provider_id.blank?
+    @ems = ExtManagementSystem.find(@provider_id.to_i) if @provider_id.present?
     @tenant = @params['tenant'] || '_system'
 
     @cli = ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::HawkularClient.new(@ems, @tenant)
@@ -96,7 +96,7 @@ class HawkularProxyService
   def metric_tags(params)
     definitions = metric_definitions(params)
     tags = definitions.map do |x|
-      x["tags"].keys if x["tags"]
+      x["tags"]&.keys
     end
 
     tags.compact.flatten.uniq.sort.map do |tag|
@@ -188,11 +188,7 @@ class HawkularProxyService
 
   def _params
     ends = @params['ends'] || (DateTime.now.utc.to_i * 1000)
-    starts = if @params['starts'].blank?
-               ends.to_i - 8 * 60 * 60 * 1000
-             else
-               @params['starts']
-             end
+    starts = @params['starts'].presence || ends.to_i - 8 * 60 * 60 * 1000
 
     {
       :type           => @params['type'],
