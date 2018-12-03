@@ -7514,7 +7514,7 @@ exports[`Ansible playbook fields form component should render correctly 1`] = `
                                 }
                               }
                             >
-
+                               
                             </span>
                             <span
                               className="bootstrap-switch-handle-off bootstrap-switch-default"
