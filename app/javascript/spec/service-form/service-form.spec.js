@@ -1,6 +1,7 @@
 require('../helpers/addFlashHelper.js');
 require('../helpers/miqSparkleHelper.js');
 require('../helpers/miqAjaxButtonHelper.js');
+require('../helpers/mockAsyncRequestHelper.js');
 
 import React from 'react';
 import { mount } from 'enzyme';

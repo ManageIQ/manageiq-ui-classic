@@ -5,9 +5,6 @@ window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 
-// mock async requests
-require('whatwg-fetch');
-
 require('../app/assets/javascripts/miq_global');
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
