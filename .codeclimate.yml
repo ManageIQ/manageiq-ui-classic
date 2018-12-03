@@ -49,7 +49,7 @@ engines:
         javascript:
   eslint:
     enabled: true
-    channel: "eslint-3"
+    channel: "eslint-5"
     checks:
       key-spacing:
         enabled: false
