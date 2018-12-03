@@ -344,7 +344,7 @@ module ApplicationHelper
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           if @tagging
-            return false # when tagging Users, Groups, Roles and Tennants, the table is non-clickable
+            return false # when tagging Users, Groups, Roles and Tenants, the table is non-clickable
           else
             return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
           end

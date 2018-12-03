@@ -6,7 +6,7 @@ import { http } from '../../http_api';
 import createSchema from './create-form-schema';
 
 
-class CloudTennantForm extends Component {
+class CloudTenantForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,16 +46,16 @@ class CloudTennantForm extends Component {
   }
 }
 
-CloudTennantForm.propTypes = {
+CloudTenantForm.propTypes = {
   cloudTenantFormId: PropTypes.number,
   emsChoices: PropTypes.shape({
     [PropTypes.string]: PropTypes.number,
   }),
 };
 
-CloudTennantForm.defaultProps = {
+CloudTenantForm.defaultProps = {
   cloudTenantFormId: undefined,
   emsChoices: undefined,
 };
 
-export default CloudTennantForm;
+export default CloudTenantForm;
