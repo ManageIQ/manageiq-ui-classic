@@ -8,6 +8,7 @@
     "jest/globals": true
   },
   "globals": {
+    "miqAjax": true,
     "miqAjaxButton": true,
     "miqSparkleOff": true,
     "miqSparkleOn": true,
