@@ -4,11 +4,9 @@ window.$ = require('jquery');
 window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
-window.sprintf = require('sprintf-js').sprintf;
 window.miqSparkleOn = () => {};
 window.miqSparkleOff = () => {};
 window.miqAjaxButton = () => {};
-window.add_flash = () => {};
 
 // mock async requests
 require('whatwg-fetch');

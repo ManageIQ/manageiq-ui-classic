@@ -1,3 +1,6 @@
+require('../helpers/addFlashHelper.js');
+require('../helpers/sprintfHelper.js');
+
 import 'angular-mocks';
 import getGridChecks from '../../packs/toolbar-actions-common';
 import * as deleteActions from '../../toolbar-actions/delete';
