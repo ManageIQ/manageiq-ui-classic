@@ -1,3 +1,5 @@
+require('../helpers/APIHelper.js');
+
 import 'angular-mocks';
 import getGridChecks from '../../packs/toolbar-actions-common';
 import { onCustomAction } from '../../toolbar-actions/custom-action';
