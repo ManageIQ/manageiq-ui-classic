@@ -1,8 +1,8 @@
+require('../helpers/angularHelper.js');
 require('../helpers/addFlashHelper.js');
 require('../helpers/sprintfHelper.js');
 require('../helpers/miqAjaxButtonHelper.js');
-
-import 'angular-mocks';
+require('angular-mocks');
 import getGridChecks from '../../packs/toolbar-actions-common';
 import * as deleteActions from '../../toolbar-actions/delete';
 

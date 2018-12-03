@@ -1,4 +1,3 @@
-window.angular = require('angular');
 window.Rx = require('rxjs');
 window.$ = require('jquery');
 window.__ = (x) => x;

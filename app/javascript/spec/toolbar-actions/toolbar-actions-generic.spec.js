@@ -1,8 +1,8 @@
+require('../helpers/angularHelper.js');
 require('../helpers/APIHelper.js');
 require('../helpers/addFlashHelper.js');
 require('../helpers/sprintfHelper.js');
-
-import 'angular-mocks';
+require('angular-mocks');
 import getGridChecks from '../../packs/toolbar-actions-common';
 import { onCustomAction } from '../../toolbar-actions/custom-action';
 
