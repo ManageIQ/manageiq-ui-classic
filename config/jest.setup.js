@@ -26,9 +26,6 @@ ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
 window.listenToRx = listenToRx;
 
-import getJSONFixture from '../app/javascript/spec/helpers/getJSONFixtures';
-window.getJSONFixture = getJSONFixture;
-
 // configure enzyme adapter
 import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';

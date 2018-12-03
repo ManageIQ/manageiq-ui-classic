@@ -1,3 +1,5 @@
+require('../helpers/getJSONFixtures.js');
+
 import { module, inject } from './mocks';
 
 describe('widget-wrapper', () => {
