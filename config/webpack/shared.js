@@ -122,7 +122,10 @@ module.exports = {
   },
 
   resolve: {
-    alias: { 'react': resolve(dirname(__filename), '../../node_modules', 'react') },
+    alias: {
+      'react': resolve(dirname(__filename), '../../node_modules', 'react'),
+      'bootstrap-select': '@pf3/select',  // never use vanilla bootstrap-select
+    },
     extensions: settings.extensions,
     modules: [],
     plugins: [
