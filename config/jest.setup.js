@@ -4,8 +4,7 @@ window.$ = require('jquery');
 window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
-window.miqSparkleOn = () => {};
-window.miqSparkleOff = () => {};
+
 window.miqAjaxButton = () => {};
 
 // mock async requests

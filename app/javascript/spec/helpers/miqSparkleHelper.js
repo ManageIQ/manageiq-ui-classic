@@ -1,0 +1,2 @@
+window.miqSparkleOn = () => {};
+window.miqSparkleOff = () => {};
