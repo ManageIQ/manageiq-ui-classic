@@ -6,7 +6,7 @@ window.provisioningListenToRx = () => {
 
     const { action, item } = event.payload;
 
-    sendDataWithRx({ item: item, type: 'gtlSetOneRowActive' });
+    sendDataWithRx({ item, type: 'gtlSetOneRowActive' });
     miqAjax(`${action.url}${item.id}`);
   });
 };

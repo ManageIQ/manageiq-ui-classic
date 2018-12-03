@@ -59,7 +59,6 @@ engines:
         enabled: false
     config:
       ignore_warnings: true
-      config: '.eslintrc.json'
   fixme:
     # let's enable later
     enabled: false
