@@ -1,5 +1,4 @@
 describe "layouts/listnav/_floating_ip.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

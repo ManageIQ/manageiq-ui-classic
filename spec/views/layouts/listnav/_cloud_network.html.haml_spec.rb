@@ -1,5 +1,4 @@
 describe "layouts/listnav/_cloud_network.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

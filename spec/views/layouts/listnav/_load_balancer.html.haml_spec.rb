@@ -1,5 +1,4 @@
 describe "layouts/listnav/_load_balancer.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

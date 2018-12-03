@@ -1,5 +1,4 @@
 describe "layouts/listnav/_orchestration_stack.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

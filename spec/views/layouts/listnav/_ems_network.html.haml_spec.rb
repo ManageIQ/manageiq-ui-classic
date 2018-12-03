@@ -1,5 +1,4 @@
 describe "layouts/listnav/_ems_network.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

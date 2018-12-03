@@ -1,5 +1,4 @@
 describe "layouts/listnav/_security_group.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do
