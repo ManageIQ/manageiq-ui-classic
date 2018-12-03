@@ -1,4 +1,5 @@
 require('../helpers/miqSparkleHelper.js');
+require('../helpers/miqAjaxButtonHelper.js');
 
 import React from 'react';
 import { mount, shallow } from 'enzyme';

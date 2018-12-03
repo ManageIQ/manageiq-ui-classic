@@ -1,5 +1,6 @@
 require('../helpers/addFlashHelper.js');
 require('../helpers/sprintfHelper.js');
+require('../helpers/miqAjaxButtonHelper.js');
 
 import 'angular-mocks';
 import getGridChecks from '../../packs/toolbar-actions-common';

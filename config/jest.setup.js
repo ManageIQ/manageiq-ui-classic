@@ -5,8 +5,6 @@ window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 
-window.miqAjaxButton = () => {};
-
 // mock async requests
 require('whatwg-fetch');
 
