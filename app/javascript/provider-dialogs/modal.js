@@ -46,6 +46,7 @@ function modal(title, Inner, closed, removeId) {
       >
         <Modal.Header>
           <button
+            type="button"
             className="close"
             onClick={closed}
             aria-hidden="true"

@@ -3,7 +3,7 @@
 // and the only pack loaded before the asset pipeline
 
 // packs linting errors should be fixed once all packages are moved to package.json
-window.$ = window.jQuery = require('jquery');
+window.$ = window.jQuery = require('jquery'); // eslint-disable-line no-multi-assign
 require('bootstrap');
 require('bootstrap-datepicker');
 require('bootstrap-filestyle');

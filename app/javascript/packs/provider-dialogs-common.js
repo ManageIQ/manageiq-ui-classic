@@ -124,4 +124,3 @@ window.listenToRx((buttonData) => {
     apiCall(buttonData);
   }
 });
-

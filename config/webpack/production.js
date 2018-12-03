@@ -2,10 +2,9 @@
 
 /* eslint global-require: 0 */
 
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const CompressionPlugin = require('compression-webpack-plugin')
-const sharedConfig = require('./shared.js')
+const merge = require('webpack-merge');
+const CompressionPlugin = require('compression-webpack-plugin');
+const sharedConfig = require('./shared.js');
 
 module.exports = merge(sharedConfig, {
   mode: 'production',
@@ -20,7 +19,7 @@ module.exports = merge(sharedConfig, {
     new CompressionPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/
-    })
-  ]
-})
+      test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/,
+    }),
+  ],
+});

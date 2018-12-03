@@ -22,6 +22,7 @@
       "code": 150,
       "ignoreComments": true
     }],
+    "implicit-arrow-linebreak": "off",
     "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off"
