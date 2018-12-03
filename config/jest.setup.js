@@ -1,7 +1,6 @@
 window.angular = require('angular');
 window.Rx = require('rxjs');
 window.$ = require('jquery');
-window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 
