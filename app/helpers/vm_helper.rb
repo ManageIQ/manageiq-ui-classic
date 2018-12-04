@@ -55,6 +55,8 @@ module VmHelper
       "Hard Disk (SCSI #{disk.location})"
     when "scsi-passthru"
       "Generic SCSI (#{disk.location})"
+    when "floppy"
+      "Floppy Drive (SIO #{disk.location})"
     else
       "#{disk.controller_type} #{disk.location}"
     end
