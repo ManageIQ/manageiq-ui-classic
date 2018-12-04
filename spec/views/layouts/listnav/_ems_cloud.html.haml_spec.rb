@@ -1,5 +1,4 @@
 describe "layouts/listnav/_ems_cloud.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do

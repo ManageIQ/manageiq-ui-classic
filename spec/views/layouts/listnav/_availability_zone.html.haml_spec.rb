@@ -1,5 +1,4 @@
 describe "layouts/listnav/_availability_zone.html.haml" do
-  helper ImageEncodeHelper
   helper QuadiconHelper
 
   before :each do
