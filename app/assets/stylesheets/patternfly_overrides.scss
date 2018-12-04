@@ -1054,6 +1054,11 @@ table.table-compressed tr td .piechart {
   color: #fff;
 }
 
+/* make sure uib-tooltip respects newlines */
+.tooltip-inner {
+  white-space: pre-wrap;
+}
+
 /// ===================================================================
 /// end misc styling
 /// ===================================================================
