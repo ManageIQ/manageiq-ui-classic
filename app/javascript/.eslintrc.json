@@ -17,14 +17,23 @@
   "extends": ["airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],
   "rules": {
-    "react/jsx-filename-extension": "off",
+    "func-names": 0,
+    "implicit-arrow-linebreak": "off",
+    "import/prefer-default-export": "off",
     "max-len": ["error", {
       "code": 150,
       "ignoreComments": true
     }],
-    "implicit-arrow-linebreak": "off",
-    "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "no-unused-vars": ["error", {
+      "args": "after-used",
+      "argsIgnorePattern": "^_",
+      "vars": "local",
+      "caughtErrors": "all",
+      "caughtErrorsIgnorePattern": "^_"
+    }],
+    "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "react/jsx-filename-extension": "off",
+    "space-before-function-paren": [2, "never"]
   }
 }

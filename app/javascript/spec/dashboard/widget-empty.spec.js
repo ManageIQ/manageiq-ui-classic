@@ -6,9 +6,7 @@ describe('widget-empty', () => {
   let $compile;
 
   beforeEach(module('ManageIQ'));
-  beforeEach(inject((_$compile_, $rootScope, $templateCache) => {
-    // FIXME: templateRequest is using $http to get the template, but angular-mocks prevents it
-    $templateCache.put('/static/dropdown-menu.html.haml', '<div></div>');
+  beforeEach(inject((_$compile_, $rootScope) => {
     $scope = $rootScope;
     $scope.miqButtonClicked = () => null;
     $scope.validForm = true;
