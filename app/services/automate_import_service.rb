@@ -10,33 +10,35 @@ class AutomateImportService
                        domain_name_to_import_from,
                        domain_name_to_import_to,
                        namespace_or_class_list)
-    File.open("automate_temporary_zip.zip", "wb") { |file| file.write(import_file_upload.binary_blob.binary) }
+    Tempfile.open(['automate_temporary_zip', '.zip']) do |zip_file|
+      zip_file.binmode
+      zip_file.write(import_file_upload.binary_blob.binary)
+      zip_file.flush
 
-    import_options = {
-      "import_as" => domain_name_to_import_to.presence || domain_name_to_import_from,
-      "overwrite" => true,
-      "zip_file"  => "automate_temporary_zip.zip",
-      "tenant_id" => User.current_user.current_tenant.id
-    }
-    ae_import = MiqAeImport.new(domain_name_to_import_from, import_options)
+      import_options = {
+        "import_as" => domain_name_to_import_to.presence || domain_name_to_import_from,
+        "overwrite" => true,
+        "zip_file"  => zip_file.path,
+        "tenant_id" => User.current_user.current_tenant.id
+      }
+      ae_import = MiqAeImport.new(domain_name_to_import_from, import_options)
 
-    namespace_list = namespace_or_class_list.reject do |namespace_or_class|
-      namespace_or_class.match(/\.class/)
+      namespace_list = namespace_or_class_list.select do |namespace_or_class|
+        namespace_or_class.match(/\.class/)
+      end
+
+      class_list = namespace_or_class_list.select do |namespace_or_class|
+        namespace_or_class.match(/\.class/)
+      end
+
+      ae_import.remove_unrelated_entries(domain_name_to_import_from)
+      reject_unrelated_namespaces(ae_import, domain_name_to_import_from, namespace_list)
+      reject_unrelated_classes(ae_import, domain_name_to_import_from, class_list)
+
+      result = ae_import.import
+
+      result.nil? ? nil : ae_import.import_stats
     end
-
-    class_list = namespace_or_class_list.select do |namespace_or_class|
-      namespace_or_class.match(/\.class/)
-    end
-
-    ae_import.remove_unrelated_entries(domain_name_to_import_from)
-    reject_unrelated_namespaces(ae_import, domain_name_to_import_from, namespace_list)
-    reject_unrelated_classes(ae_import, domain_name_to_import_from, class_list)
-
-    result = ae_import.import
-
-    result.nil? ? nil : ae_import.import_stats
-    ensure
-      File.delete("automate_temporary_zip.zip")
   end
 
   def store_for_import(file_contents)
