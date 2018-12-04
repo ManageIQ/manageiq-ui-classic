@@ -102,5 +102,4 @@ class DialogFieldVisibilityService
     @field_names_to_edit += visibility_hash[:edit] if visibility_hash[:edit]
     @field_names_to_show += visibility_hash[:show] if visibility_hash[:show]
   end
-
 end

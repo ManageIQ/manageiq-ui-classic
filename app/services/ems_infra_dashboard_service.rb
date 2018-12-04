@@ -86,8 +86,7 @@ class EmsInfraDashboardService < EmsDashboardService
         :provider => provider_name,
         :unit     => "Cores",
         :total    => m.derived_vm_numvcpus.present? ? m.derived_vm_numvcpus.round : nil,
-        :percent  => m.cpu_usage_rate_average.present? ?
-          (m.cpu_usage_rate_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
+        :percent  => m.cpu_usage_rate_average.present? ? (m.cpu_usage_rate_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
 
       cluster_memory_usage << {
@@ -96,8 +95,7 @@ class EmsInfraDashboardService < EmsDashboardService
         :provider => m.resource.ext_management_system.name,
         :unit     => "GB",
         :total    => m.derived_memory_available.present? ? (m.derived_memory_available / 1024).round : nil,
-        :percent  => m.mem_usage_absolute_average.present? ?
-          (m.mem_usage_absolute_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
+        :percent  => m.mem_usage_absolute_average.present? ? (m.mem_usage_absolute_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
     end
 
