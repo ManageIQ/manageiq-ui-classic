@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 100 ending 2018-12-03
+
+### Added
+- Adds authentication_status to Host.yaml [(#4924)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4924)
+
+### Fixed
+- Service catalog  icon fix [(#5017)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5017)
+- filter security group list based on provider [(#5013)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5013)
+- Allow apostrophes in custom button names [(#5010)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5010)
+- Show widget's title as page title when editing widget [(#5005)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5005)
+- When redirecting to a specific storage RBAC check storage_show [(#5004)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5004)
+- Replace `virtualization_tab` references with `kubevirt_tab` [(#5001)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5001)
+- Reset `exp_tag` key when discard button is pressed. [(#5000)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5000)
+- Stop spinner after rendering flash message [(#4990)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4990)
+- Replace service form [(#4985)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4985)
+- Fix save in region replication form [(#4977)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4977)
+- Display the web console for OpenStack instances [(#4960)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4960)
+- Fixed saving of custom button role visibility [(#4956)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4956)
+- Add delete_flavors method to EmsCloudController [(#4954)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4954)
+- Don't translate audit messages [(#4952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4952)
+- Adds email validation for schedule and alerts forms [(#4947)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4947)
+- Add X-UA-Compatible header [(#4946)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4946)
+- Do not store download_summary_pdf using remember tab [(#4945)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4945)
+- VM CLoud: floating ips to associate must be a list [(#4944)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4944)
+- Configuration - notify backend when `quad_truncate` gets changed [(#4942)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4942)
+- Add missing quadicon definition for generic object definitions [(#4940)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4940)
+- Make print button consistent on VM infra and cloud screens [(#4938)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4938)
+- Fix Delete message to display the entity type - "Generic Object Class" [(#4930)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4930)
+- Cloud Volume creation fixes [(#4908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4908)
+- Let Select Provision Template screen use GTL [(#4509)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4509)
+
 ## Unreleased as of Sprint 99 ending 2018-11-19
 
 ### Added
