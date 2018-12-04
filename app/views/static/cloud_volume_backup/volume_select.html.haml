@@ -11,11 +11,11 @@
       %label.col-md-2.control-label
         = _('Volume')
       .col-md-8
-        = select_tag('volume_id',
-                '',
+        %select{:id          => 'volume_id',
+                :name        => 'volume_id',
                 'ng-model'   => 'vm.cloudVolumeBackupModel.volume',
                 'ng-options' => 'volume.name for volume in vm.volume_choices track by volume.id',
                 :required    => '',
-                'miq-select' => true)
+                'miq-select' => '{ noneSelectedText: "&lt;#{_('Choose a volume')}&gt;" }'}
 
   = render :partial => 'layouts/angular/generic_form_buttons'
