@@ -1,5 +1,4 @@
 class PrivilegeCheckerService
-
   def valid_session?(session, current_user)
     user_signed_in?(current_user) && session_active?(session) && server_ready?(current_user)
   end
