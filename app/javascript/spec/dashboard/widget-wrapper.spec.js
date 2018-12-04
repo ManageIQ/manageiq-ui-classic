@@ -8,21 +8,21 @@ describe('widget-wrapper', () => {
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject((_$compile_, $rootScope, $templateCache, $http) => {
+  beforeEach(inject((_$compile_, $rootScope, $http) => {
     $scope = $rootScope;
 
     $compile = _$compile_;
-    spyOn($http, 'get').and.callFake((url) => {
-      return Promise.resolve({
-        data: {
-          content: '<div></div>',
-          minimized: false,
-          shortcuts: [],
-        },
-        status: 200,
-        statusText: 'OK',
-      });
-    });
+
+    const response = {
+      data: {
+        content: '<div></div>',
+        minimized: false,
+        shortcuts: [],
+      },
+      status: 200,
+      statusText: 'OK',
+    };
+    spyOn($http, 'get').and.callFake(() => Promise.resolve(response));
   }));
 
   widgetTypes.forEach((widget) => {

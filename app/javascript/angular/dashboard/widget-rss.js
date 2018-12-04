@@ -4,12 +4,10 @@ ManageIQ.angular.app.component('widgetRss', {
     widgetModel: '<',
   },
   controllerAs: 'vm',
-  controller: function() {
-    var vm = this;
+  controller() {
+    const vm = this;
 
-    vm.contentPresent = function() {
-      return vm.widgetModel && vm.widgetModel.content !== undefined;
-    };
+    vm.contentPresent = () => vm.widgetModel && vm.widgetModel.content !== undefined;
   },
   template: `
     <div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent()">

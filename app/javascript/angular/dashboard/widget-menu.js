@@ -4,8 +4,8 @@ ManageIQ.angular.app.component('widgetMenu', {
     widgetModel: '<',
   },
   controllerAs: 'vm',
-  controller: function() {
-    var vm = this;
+  controller() {
+    const vm = this;
 
     vm.shortcutsMissing = function() {
       return vm.widgetModel.shortcuts.length === 0;

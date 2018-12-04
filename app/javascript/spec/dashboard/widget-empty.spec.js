@@ -6,7 +6,7 @@ describe('widget-empty', () => {
   let $compile;
 
   beforeEach(module('ManageIQ'));
-  beforeEach(inject((_$compile_, $rootScope, $templateCache) => {
+  beforeEach(inject((_$compile_, $rootScope) => {
     $scope = $rootScope;
     $scope.miqButtonClicked = () => null;
     $scope.validForm = true;
