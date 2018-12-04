@@ -24,7 +24,8 @@
                 - else
                   %img{:src => image_path('100/template-no-host.png')}
               - else
-                %img{:src => image_path("svg/currentstate-#{h(@drift_obj.current_state.downcase)}.svg")}
+                - state_path = image_path("svg/currentstate-#{h(@drift_obj.current_state.downcase)}.svg")
+                .stretch{:style => "background-image: url('#{state_path}')"}
             %div{:class => "flobj c72"}
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg")}
             %div{:class => "flobj a72"}
@@ -49,7 +50,8 @@
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vmm_vendor_display.downcase)}.svg")}
             - unless @drift_obj.power_state.blank?
               %div{:class => "flobj b72"}
-                %img{:src => image_path("svg/currentstate-#{h(@drift_obj.power_state.downcase)}.svg")}
+                - state_path = image_path("svg/current_state-#{h(@drift_obj.power_state.downcase)}.svg")
+                .stretch{:style => "background-image: url('#{state_path}')"}
             %div{:class => "flobj a72"}
               %p
                 = @drift_obj.vms.count
