@@ -353,6 +353,35 @@ describe ApplicationController do
     end
   end
 
+  describe '#perpage_key' do
+    {
+      'miqreportresult' => :reports,
+      'job'             => :job_task,
+      'miqtask'         => :job_task
+    }.each do |dbname, response|
+      context "key is #{dbname}" do
+        it "returns with #{response}" do
+          expect(controller.send(:perpage_key, dbname)).to eq(response)
+        end
+      end
+    end
+
+    {
+      'grid'   => :grid,
+      'list'   => :list,
+      'tile'   => :tile,
+      'foobar' => nil
+    }.each do |gtl_type, response|
+      context "gtl_type is #{gtl_type}" do
+        before { controller.instance_variable_set(:@gtl_type, gtl_type) }
+
+        it "returns with #{response}" do
+          expect(controller.send(:perpage_key, 'foobar')).to eq(response)
+        end
+      end
+    end
+  end
+
   describe "#replace_trees_by_presenter" do
     let(:tree_1) { double(:name => 'tree_1', :type => 'tree_1') }
     let(:tree_2) { double(:name => 'tree_2', :type => 'tree_2') }
