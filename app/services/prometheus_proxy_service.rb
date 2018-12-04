@@ -5,7 +5,7 @@ class PrometheusProxyService < HawkularProxyService
     @db_name = "Prometheus"
     @provider_id = provider_id
     @controller = controller
-    @ems = ExtManagementSystem.find(@provider_id.to_i) unless @provider_id.blank?
+    @ems = ExtManagementSystem.find(@provider_id.to_i) if @provider_id.present?
     @hostname = @ems.hostname
 
     @params = controller.params
