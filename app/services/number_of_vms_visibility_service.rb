@@ -4,7 +4,7 @@ class NumberOfVmsVisibilityService
     field_names_to_edit = []
 
     if number_of_vms > 1
-      field_names_to_hide += [:sysprep_computer_name, :linux_host_name, :floating_ip_address]
+      field_names_to_hide += %i(sysprep_computer_name linux_host_name floating_ip_address)
       field_names_to_edit += [:ip_addr]
     else
       field_names_to_hide += [:ip_addr]
