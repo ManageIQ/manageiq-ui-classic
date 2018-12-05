@@ -5,8 +5,8 @@ module OpsController::Settings::Zones
     case params[:button]
     when "cancel"
       @edit = nil
-      @zone = Zone.find_by_id(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
-      if @zone && @zone.id
+      @zone = Zone.find(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
+      if @zone.try(:id)
         add_flash(_("Edit of Zone \"%{name}\" was cancelled by the user") % {:name => @zone.name})
       else
         add_flash(_("Add of new Zone was cancelled by the user"))
@@ -17,7 +17,7 @@ module OpsController::Settings::Zones
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
-      @zone = @edit[:zone_id] ? Zone.find_by_id(@edit[:zone_id]) : Zone.new
+      @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
       if @edit[:new][:name] == ""
         add_flash(_("Zone name is required"), :error)
       end
@@ -39,10 +39,9 @@ module OpsController::Settings::Zones
           add_flash(_("Zone \"%{name}\" was added") % {:name => @edit[:new][:name]})
         end
         @edit = nil
-        self.x_node = params[:button] == "save" ?
-              "z-#{@zone.id}" : "xx-z"
+        self.x_node = params[:button] == "save" ? "z-#{@zone.id}" : "xx-z"
         get_node_info(x_node)
-        replace_right_cell(:nodetype => "root", :replace_trees => [:settings, :diagnostics])
+        replace_right_cell(:nodetype => "root", :replace_trees => %i(settings diagnostics))
       else
         @in_a_form = true
         @edit[:errors].each { |msg| add_flash(msg, :error) }
@@ -77,7 +76,7 @@ module OpsController::Settings::Zones
       @sb[:active_tab] = "settings_list"
       self.x_node = "xx-z"
       get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node, :replace_trees => [:settings, :diagnostics])
+      replace_right_cell(:nodetype => x_node, :replace_trees => %i(settings diagnostics))
     end
   end
 
@@ -88,8 +87,10 @@ module OpsController::Settings::Zones
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace(@refresh_div, :partial => @refresh_partial,
-                                 :locals  => {:type => "zones", :action_url => 'zone_field_changed'}) if @refresh_div
+      if @refresh_div
+        page.replace(@refresh_div, :partial => @refresh_partial,
+                                   :locals  => {:type => "zones", :action_url => 'zone_field_changed'})
+      end
 
       # checking to see if password/verify pwd fields either both have value or are both blank
       password_fields_changed = !(@edit[:new][:password].blank? ^ @edit[:new][:verify].blank?)
@@ -122,7 +123,6 @@ module OpsController::Settings::Zones
     else
       zone.remove_settings_path_for_resource(:ntp)
     end
-
     zone.ntp_reload_queue
   end
 
@@ -130,7 +130,7 @@ module OpsController::Settings::Zones
   def valid_record?(zone)
     valid = true
     @edit[:errors] = []
-    if !zone.authentication_password.blank? && zone.authentication_userid.blank?
+    if zone.authentication_password.present? && zone.authentication_userid.blank?
       @edit[:errors].push(_("Username must be entered if Password is entered"))
       valid = false
     end
@@ -143,7 +143,7 @@ module OpsController::Settings::Zones
 
   # Get variables from zone edit form
   def zone_get_form_vars
-    @zone = @edit[:zone_id] ? Zone.find_by_id(@edit[:zone_id]) : Zone.new
+    @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:description] = params[:description] if params[:description]
     @edit[:new][:proxy_server_ip] = params[:proxy_server_ip] if params[:proxy_server_ip]
@@ -157,7 +157,7 @@ module OpsController::Settings::Zones
   end
 
   def zone_build_edit_screen
-    @zone = params[:id] ? Zone.find(params[:id]) : Zone.new           # Get existing or new record
+    @zone = params[:id] ? Zone.find(params[:id]) : Zone.new # Get existing or new record
     zone_set_form_vars
     @in_a_form = true
     session[:changed] = false

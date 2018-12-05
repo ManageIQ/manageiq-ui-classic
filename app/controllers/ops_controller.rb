@@ -12,7 +12,7 @@ class OpsController < ApplicationController
   after_action :cleanup_action
 
   def index
-    redirect_to :action => 'explorer'
+    redirect_to(:action => 'explorer')
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
@@ -120,7 +120,7 @@ class OpsController < ApplicationController
 
     @sb[:active_tab] = 'settings_rhn' if @sb[:active_tab] == 'settings_rhn_edit' # cannot return to the edit state
     @timeline = @timeline_filter = true # Load timeline JS modules
-    return unless load_edit(params[:edit_key], "explorer") if params[:edit_key]
+    return if params[:edit_key] && !load_edit(params[:edit_key], "explorer")
     @breadcrumbs = []
     build_accordions_and_trees
 
@@ -150,7 +150,7 @@ class OpsController < ApplicationController
   def accordion_select
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
     self.x_active_accord = params[:id].sub(/_accord$/, '')
-    self.x_active_tree   = "#{self.x_active_accord}_tree"
+    self.x_active_tree   = "#{x_active_accord}_tree"
     session[:changed] = false
     set_active_tab(x_node)
     get_node_info(x_node)
@@ -172,7 +172,7 @@ class OpsController < ApplicationController
   def change_tab(new_tab_id = nil)
     @explorer = true
     session[:changed] = false
-    session[:flash_msgs] = @flash_array = nil       # clear out any messages from previous screen i.e import tab
+    session[:flash_msgs] = @flash_array = nil # clear out any messages from previous screen i.e import tab
     if params[:tab]
       @edit = session[:edit]
       @scan = @edit[:scan]
@@ -197,7 +197,7 @@ class OpsController < ApplicationController
 
       @sb[:user] = nil
       @ldap_group = nil
-      @flash_array = nil if MiqServer.my_server(true).logon_status == :ready  # don't reset if flash array
+      @flash_array = nil if MiqServer.my_server(true).logon_status == :ready # don't reset if flash array
       if x_active_tree == :settings_tree
         settings_get_info
         replace_right_cell(:nodetype => "root")
@@ -252,23 +252,22 @@ class OpsController < ApplicationController
   private ############################
 
   def features
-    [{:role     => "ops_settings",
-      :name     => :settings,
-      :title    => _("Settings")},
+    [{:role  => "ops_settings",
+      :name  => :settings,
+      :title => _("Settings")},
 
      {:role     => "ops_rbac",
       :role_any => true,
       :name     => :rbac,
       :title    => _("Access Control")},
 
-     {:role     => "ops_diagnostics",
-      :name     => :diagnostics,
-      :title    => _("Diagnostics")},
+     {:role  => "ops_diagnostics",
+      :name  => :diagnostics,
+      :title => _("Diagnostics")},
 
-     {:role     => "ops_db",
-      :name     => :vmdb,
-      :title    => _("Database")},
-    ].map do |hsh|
+     {:role  => "ops_db",
+      :name  => :vmdb,
+      :title => _("Database")}].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
@@ -327,8 +326,7 @@ class OpsController < ApplicationController
   end
 
   def rbac_and_user_make_subarrays
-    unless @set_filter_values.blank?
-      temp_categories = []
+    if @set_filter_values.present?
       temp1arr = []
       @set_filter_values = @set_filter_values.flatten
       temp_categories = @set_filter_values.dup
@@ -472,7 +470,7 @@ class OpsController < ApplicationController
         record_id = @edit[:group_id] ? @edit[:group_id] : nil
       elsif %w(rbac_group_tags_edit rbac_user_tags_edit rbac_tenant_tags_edit).include?(@sb[:action])
         action_url = "rbac_tags_edit"
-        locals[:multi_record] = true    # need save/cancel buttons on edit screen even tho @record.id is not there
+        locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         record_id = @edit[:object_ids][0]
       elsif @sb[:action] == "rbac_group_seq_edit"
         action_url = "rbac_group_seq_edit"
@@ -517,9 +515,9 @@ class OpsController < ApplicationController
   end
 
   def open_parent_nodes
-    existing_node = nil                     # Init var
+    existing_node = nil # Init var
 
-    parent_rec = VmdbTableEvm.find_by_id(@record.vmdb_table_id)
+    parent_rec = VmdbTableEvm.find(@record.vmdb_table_id)
     parents = [parent_rec, {:id => @record.vmdb_table_id.to_s}]
     # Go up thru the parents and find the highest level unopened, mark all as opened along the way
     # Skip if no parents or parent already open
@@ -535,7 +533,8 @@ class OpsController < ApplicationController
     end
   end
 
-  def replace_right_cell(options = {}) # replace_trees can be an array of tree symbols to be replaced
+  # replace_trees can be an array of tree symbols to be replaced
+  def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
     if params[:pressed] == "custom_button"
       presenter = set_custom_button_dialog_presenter(options)
@@ -600,7 +599,7 @@ class OpsController < ApplicationController
 
   def settings_replace_right_cell(nodetype, presenter)
     case nodetype
-    when "ze"     # zone edit
+    when "ze" # zone edit
       # when editing zone in settings tree
       if @zone.id.blank?
         partial_div = :settings_list
@@ -608,52 +607,45 @@ class OpsController < ApplicationController
       else
         partial_div = :settings_evm_servers
         @editing = !!@edit
-        @right_cell_text = @edit ?
-          _("Editing Zone \"%{name}\"") % {:name => @zone.description} :
-          _("Zone \"%{name}\"") % {:name => @zone.description}
+        @right_cell_text = @edit ? _("Editing Zone \"%{name}\"") % {:name => @zone.description} : _("Zone \"%{name}\"") % {:name => @zone.description}
       end
       presenter[:update_partials][partial_div] = r[:partial => "zone_form"]
-    when "ce"     # category edit
+    when "ce" # category edit
       # when editing/adding category in settings tree
       presenter.update(:settings_co_categories, r[:partial => "category_form"])
-      if !@category
-        @right_cell_text = _("Adding a new Category")
-      else
-        @right_cell_text = _("Editing %{model} \"%{name}\"") % {:name => @category.description, :model => "Category"}
-      end
+      @right_cell_text = if !@category
+                           _("Adding a new Category")
+                         else
+                           _("Editing %{model} \"%{name}\"") % {:name => @category.description, :model => "Category"}
+                         end
     when "ltme" # label tag mapping edit
       # when editing/adding label tag mapping in settings tree
       presenter.update(:settings_label_tag_mapping, r[:partial => "label_tag_mapping_form"])
-      if !@lt_map
-        @right_cell_text = _("Adding a new Mapping")
-      else
-        @right_cell_text = _("Editing tag mapping from label \"%{name}\"") % {:name  => @lt_map.label_name}
-      end
-    when "sie"        # scanitemset edit
+      @right_cell_text = if !@lt_map
+                           _("Adding a new Mapping")
+                         else
+                           _("Editing tag mapping from label \"%{name}\"") % {:name => @lt_map.label_name}
+                         end
+    when "sie" # scanitemset edit
       #  editing/adding scanitem in settings tree
       presenter.update(:settings_list, r[:partial => "ap_form"])
-      if !@scan.id
-        @right_cell_text = _("Adding a new Analysis Profile")
-      else
-        @right_cell_text = @edit ?
-          _("Editing Analysis Profile \"%{name}\"") % {:name => @scan.name} :
-          _("Analysis Profile \"%{name}\"") % {:name => @scan.name}
-      end
-    when "se"         # schedule edit
+      @right_cell_text = if !@scan.id
+                           _("Adding a new Analysis Profile")
+                         else
+                           @edit ? _("Editing Analysis Profile \"%{name}\"") % {:name => @scan.name} : _("Analysis Profile \"%{name}\"") % {:name => @scan.name}
+                         end
+    when "se" # schedule edit
       # when editing/adding schedule in settings tree
       presenter.update(:settings_list, r[:partial => "schedule_form"])
       presenter[:build_calendar] = {
         :date_from => (Time.zone.now - 1.month).in_time_zone(@edit[:tz]),
       }
-      if !@schedule.id
-        @right_cell_text = _("Adding a new Schedule")
-      else
-        model = _('Schedule')
-        @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @schedule.name, :model => model} :
-          _("%{model} \"%{name}\"") % {:model => model, :name => @schedule.name}
-      end
-    when 'rhn'          # rhn subscription edit
+      @right_cell_text = if !@schedule.id
+                           _("Adding a new Schedule")
+                         else
+                           @edit ? _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} : _("Schedule \"%{name}\"") % {:name => @schedule.name}
+                         end
+    when 'rhn' # rhn subscription edit
       presenter[:update_partials][:settings_rhn] = r[:partial => "#{@sb[:active_tab]}_tab"]
     else
       if %w(accordion_select change_tab tree_select).include?(params[:action]) &&
@@ -669,11 +661,11 @@ class OpsController < ApplicationController
       # server node
       if x_node.split("-").first == "svr" && my_server.id == active_id.to_i
         # show all the tabs if on current server node
-        @selected_server ||= MiqServer.find(@sb[:selected_server_id])  # Reread the server record
+        @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
         presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
       elsif x_node.split("-").first == "svr" && my_server.id != active_id.to_i
         # show only 4 tabs if not on current server node
-        @selected_server ||= MiqServer.find(@sb[:selected_server_id])  # Reread the server record
+        @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       end
     end
   end
@@ -683,25 +675,28 @@ class OpsController < ApplicationController
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
       presenter.update(:rbac_details, r[:partial => "ldap_seq_form"])
-    elsif nodetype == "tenant_edit"         # schedule edit
+    elsif nodetype == "tenant_edit" # schedule edit
       # when editing/adding schedule in settings tree
       presenter.update(:rbac_details, r[:partial => "tenant_form"])
       if !@tenant.id
-        @right_cell_text = _("Adding a new %{tenant}") %
-          {:tenant => tenant_type_title_string(params[:tenant_type] == "tenant")}
+        @right_cell_text = _("Adding a new %{tenant}") % {:tenant => tenant_type_title_string(params[:tenant_type] == "tenant")}
       else
         model = tenant_type_title_string(@tenant.divisible)
-        @right_cell_text = @edit ?
-          _("Editing %{model} \"%{name}\"") % {:name => @tenant.name, :model => model} :
-          _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+        @right_cell_text = if @edit
+                             _("Editing %{model} \"%{name}\"") % {:name => @tenant.name, :model => model}
+                           else
+                             _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+                           end
       end
-    elsif nodetype == "tenant_manage_quotas"         # manage quotas
+    elsif nodetype == "tenant_manage_quotas" # manage quotas
       # when managing quotas for a tenant
       presenter.update(:rbac_details, r[:partial => "tenant_quota_form"])
       model = tenant_type_title_string(@tenant.divisible)
-      @right_cell_text = @edit ?
-          _("Manage quotas for %{model} \"%{name}\"") % {:name => @tenant.name, :model => model} :
-          _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+      @right_cell_text = if @edit
+                           _("Manage quotas for %{model} \"%{name}\"") % {:name => @tenant.name, :model => model}
+                         else
+                           _("%{model} \"%{name}\"") % {:model => model, :name => @tenant.name}
+                         end
     elsif nodetype == 'dialog_return'
       presenter.update(:main_div, r[:partial => "detail_page"])
     else
@@ -792,29 +787,29 @@ class OpsController < ApplicationController
     i = 0
     @edit[:new].each_key do |k|
       if @edit[:new][k] != @edit[:current][k]
-        if k.to_s.ends_with?("password2", "verify")      # do nothing
-        elsif k.to_s.ends_with?("password", "_pwd")  # Asterisk out password fields
+        if k.to_s.ends_with?("password2", "verify") # do nothing
+        elsif k.to_s.ends_with?("password", "_pwd") # Asterisk out password fields
           msg = "%{message} %{key}:[*] to [*]" % {:message => msg, :key => k.to_s}
         else
-          msg += ", " if i > 0
+          msg += ", " if i.positive?
           i += 1
-          if k == :members
-            msg = "%{message} %{key}:[%{old_value}] to [new_value]" %
-                  {:message   => msg,
-                   :key       => k.to_s,
-                   :old_value => @edit[:current][k].keys.join(","),
-                   :new_value => @edit[:new][k].keys.join(",")}
-          else
-            msg = "%{message} %{key}:[%{old_value}] to [%{new_value}]" % {:message   => msg,
+          msg = if k == :members
+                  "%{message} %{key}:[%{old_value}] to [new_value]" %
+                    {:message   => msg,
+                     :key       => k.to_s,
+                     :old_value => @edit[:current][k].keys.join(","),
+                     :new_value => @edit[:new][k].keys.join(",")}
+                else
+                  "%{message} %{key}:[%{old_value}] to [%{new_value}]" % {:message   => msg,
                                                                           :key       => k.to_s,
                                                                           :old_value => @edit[:current][k].to_s,
                                                                           :new_value => @edit[:new][k].to_s}
-          end
+                end
         end
       end
     end
     msg += ")"
-    audit = {:event => event, :target_id => record.id, :target_class => record.class.base_class.name, :userid => session[:userid], :message => msg}
+    {:event => event, :target_id => record.id, :target_class => record.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   def identify_tl_or_perf_record

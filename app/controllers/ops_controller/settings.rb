@@ -48,7 +48,7 @@ module OpsController::Settings
   end
 
   def forest_form_field_changed
-    @edit = session[:edit]  # Need to reload @edit so it stays in the session
+    @edit = session[:edit] # Need to reload @edit so it stays in the session
     port = params[:user_proxies_mode] == "ldap" ? "389" : "636"
     render :update do |page|
       page << javascript_prologue
@@ -104,15 +104,15 @@ module OpsController::Settings
     if @ldap_info[:ldaphost] == ""
       add_flash(_("LDAP Host is required"), :error)
       no_changes = false
-    elsif @edit[:new][:authentication][:user_proxies].blank? || @edit[:new][:authentication][:user_proxies][0].blank?   # if adding forest first time, delete a blank record
+    elsif @edit[:new][:authentication][:user_proxies].blank? || @edit[:new][:authentication][:user_proxies][0].blank? # if adding forest first time, delete a blank record
       @edit[:new][:authentication][:user_proxies].delete_at(0)
     else
       @edit[:new][:authentication][:user_proxies].each do |f|
-        if f[:ldaphost] == @ldap_info[:ldaphost] && session[:entry] == 'new' # check to make sure ldaphost already doesn't exist and ignore if existing record is being edited.
-          no_changes = false
-          add_flash(_("LDAP Host should be unique"), :error)
-          break
-        end
+        # check to make sure ldaphost already doesn't exist and ignore if existing record is being edited.
+        next unless f[:ldaphost] == @ldap_info[:ldaphost] && session[:entry] == 'new'
+        no_changes = false
+        add_flash(_("LDAP Host should be unique"), :error)
+        break
       end
     end
     if no_changes
@@ -129,7 +129,7 @@ module OpsController::Settings
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false})  if no_changes
+      page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false}) if no_changes
     end
   end
 
@@ -155,7 +155,7 @@ module OpsController::Settings
       @edit[:region].description = @edit[:new][:description]
       begin
         @edit[:region].save!
-      rescue => bang
+      rescue
         @edit[:region].errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
@@ -164,7 +164,7 @@ module OpsController::Settings
       else
         add_flash(_("Region \"%{name}\" was saved") % {:name => @edit[:region].description})
         AuditEvent.success(build_saved_audit(@edit[:region], params[:button] == "edit"))
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
       end
     when "reset", nil # Reset or first time in

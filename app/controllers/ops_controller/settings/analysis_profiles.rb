@@ -70,7 +70,7 @@ module OpsController::Settings::AnalysisProfiles
       end
     elsif params[:edit_entry] == "edit_registry"
       session[:reg_data] = {}
-      session[:reg_data][:key] = params[:reg_key]  if params[:reg_key]
+      session[:reg_data][:key] = params[:reg_key] if params[:reg_key]
       session[:reg_data][:value] = params[:reg_value] if params[:reg_value]
       render :update do |page|
         page << javascript_prologue
@@ -82,15 +82,13 @@ module OpsController::Settings::AnalysisProfiles
     elsif params[:edit_entry] == "edit_nteventlog"
       session[:nteventlog_data] = {}
       session[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |nteventlog, i|
-        if i == params[:entry_id].to_i
-          session[:nteventlog_data][:selected] = i
-          session[:nteventlog_data][:name] = nteventlog[:name]
-          session[:nteventlog_data][:message] = nteventlog[:filter][:message]
-          session[:nteventlog_data][:level] = nteventlog[:filter][:level]
-          session[:nteventlog_data][:num_days] = nteventlog[:filter][:num_days].to_i
-          # session[:nteventlog_data][:rec_count] = nteventlog[:filter][:rec_count].to_i
-          session[:nteventlog_data][:source] = nteventlog[:filter][:source]
-        end
+        next unless i == params[:entry_id].to_i
+        session[:nteventlog_data][:selected] = i
+        session[:nteventlog_data][:name] = nteventlog[:name]
+        session[:nteventlog_data][:message] = nteventlog[:filter][:message]
+        session[:nteventlog_data][:level] = nteventlog[:filter][:level]
+        session[:nteventlog_data][:num_days] = nteventlog[:filter][:num_days].to_i
+        session[:nteventlog_data][:source] = nteventlog[:filter][:source]
       end
 
       render :update do |page|
@@ -133,7 +131,7 @@ module OpsController::Settings::AnalysisProfiles
       session[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |nteventlog, i|
         if i == params[:entry_id].to_i
           session[:nteventlog_entries].delete(nteventlog)
-          @edit[:nteventlog_entries].delete(nteventlog) unless @edit[:nteventlog_entries].blank?
+          @edit[:nteventlog_entries].delete(nteventlog) if @edit[:nteventlog_entries].present?
         end
       end
       @edit[:new]["nteventlog"][:definition]["content"].sort_by { |r| r[:name] }.each_with_index do |nteventlog_keys, i|
@@ -170,16 +168,16 @@ module OpsController::Settings::AnalysisProfiles
     event = "scanitemset_record_add"
     i = 0
     @edit[:new].each_key do |k|
-      msg += ", " if i > 0
+      msg += ", " if i.positive?
       i += 1
-      if k == :members    # Check for members array
-        msg = msg + k.to_s + ":[" + @edit[:new][k].keys.join(",") + "]"
-      else
-        msg = msg + k.to_s + ":[" + @edit[:new][k].to_s + "]"
-      end
+      msg = if k == :members # Check for members array
+              msg + k.to_s + ":[" + @edit[:new][k].keys.join(",") + "]"
+            else
+              msg + k.to_s + ":[" + @edit[:new][k].to_s + "]"
+            end
     end
     msg += ")"
-    audit = {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
+    {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   # Build the audit object when a record is saved, including all of the changed fields
@@ -188,14 +186,13 @@ module OpsController::Settings::AnalysisProfiles
     event = "scanitemset_record_update"
     i = 0
     @edit[:new].each_key do |k|
-      if @edit[:new][k] != @edit[:current][k]
-        msg += ", " if i > 0
-        i += 1
-        msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
-      end
+      next if @edit[:new][k] == @edit[:current][k]
+      msg += ", " if i.positive?
+      i += 1
+      msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
     end
     msg += ")"
-    audit = {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
+    {:event => event, :target_id => scanitemset.id, :target_class => scanitemset.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   def ap_copy
@@ -223,7 +220,7 @@ module OpsController::Settings::AnalysisProfiles
     else
       case params[:button]
       when "cancel"
-        @scan = ScanItemSet.find_by_id(session[:edit][:scan_id]) if session[:edit][:scan_id]
+        @scan = ScanItemSet.find(session[:edit][:scan_id]) if session[:edit][:scan_id]
         if @scan
           add_flash(_("Edit of Analysis Profile \"%{name}\" was cancelled by the user") % {:name => @scan.name})
         else
@@ -253,7 +250,7 @@ module OpsController::Settings::AnalysisProfiles
           @changed = session[:changed] = (@edit[:new] != @edit[:current])
           javascript_flash
         else
-          scanitemset = params[:button] == "add" ? ScanItemSet.new : ScanItemSet.find_by_id(@edit[:scan_id])    # get the current record
+          scanitemset = params[:button] == "add" ? ScanItemSet.new : ScanItemSet.find(@edit[:scan_id]) # get the current record
           ap_set_record_vars_set(scanitemset)
 
           if scanitemset.valid? && !@flash_array
@@ -276,7 +273,7 @@ module OpsController::Settings::AnalysisProfiles
             add_flash(_("Analysis Profile \"%{name}\" was saved") % {:name => get_record_display_name(scanitemset)})
             aps_list
             @scan = @edit[:scan_id] = nil
-            @edit = session[:edit] = nil  # clean out the saved info
+            @edit = session[:edit] = nil # clean out the saved info
             self.x_node = "xx-sis" if params[:button] == "add"
             get_node_info(x_node)
             replace_right_cell(:nodetype => x_node, :replace_trees => [:settings])
@@ -335,7 +332,7 @@ module OpsController::Settings::AnalysisProfiles
         else
           ap_set_form_vars unless params[:tab]
         end
-        if params[:tab]   # only if tab was changed
+        if params[:tab] # only if tab was changed
           return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
         end
         ap_build_edit_screen
@@ -426,13 +423,12 @@ module OpsController::Settings::AnalysisProfiles
   def ap_sort_array(hashin, skip_key = nil)
     hashout = {}
     hashin.each do |key, value|
-      if skip_key && key == skip_key      # Skip this key, if passed in
+      if skip_key && key == skip_key # Skip this key, if passed in
         next
       elsif value.kind_of?(Hash)
         hashout[key] = ap_sort_array(value, skip_key)
       elsif value.kind_of?(Array)
-        @items = []
-        value.sort_by do |item|
+        @items = value.sort_by do |item|
           if item.key?("target")
             item["target"].to_s
           elsif item.key?(:name)
@@ -440,8 +436,6 @@ module OpsController::Settings::AnalysisProfiles
           else
             item["key"].to_s
           end
-        end.each do |arr|
-          @items.push(arr)
         end
         hashout[key] = @items
       else
@@ -468,28 +462,26 @@ module OpsController::Settings::AnalysisProfiles
     end
 
     [
-      ["category",   "content"],
-      ["file",       "stats"],
-      ["registry",   "content"],
-      ["nteventlog", "content"]
+      %w(category content),
+      %w(file stats),
+      %w(registry content),
+      %w(nteventlog content)
     ].each do |key, definition_key|
-      unless @edit[:new][key].blank?
-        scanitem             = ScanItem.new
-        scanitem.name        = "#{scanitemset.name}_#{@edit[:new][key][:type]}"
-        scanitem.description = "#{scanitemset.description} #{@edit[:new][key][:type]} Scan"
-        scanitem.item_type   = @edit[:new][key][:type]
-        scanitem.definition  = copy_hash(@edit[:new][key][:definition])
-        unless scanitem.definition[definition_key].empty?
-          begin
-            scanitem.save
-            scanitemset.add_member(scanitem)
-            # resetting flash_array to not show a message for each memmber that is saved for a scanitemset
-            @flash_array = []
-          rescue => bang
-            add_flash(_("Analysis Profile \"%{name}\": Error during 'update': %{message}") %
-                        {:name => scanitem.name, :message => bang.message}, :error)
-          end
-        end
+      next if @edit[:new][key].blank?
+      scanitem             = ScanItem.new
+      scanitem.name        = "#{scanitemset.name}_#{@edit[:new][key][:type]}"
+      scanitem.description = "#{scanitemset.description} #{@edit[:new][key][:type]} Scan"
+      scanitem.item_type   = @edit[:new][key][:type]
+      scanitem.definition  = copy_hash(@edit[:new][key][:definition])
+      next if scanitem.definition[definition_key].empty?
+      begin
+        scanitem.save
+        scanitemset.add_member(scanitem)
+        # resetting flash_array to not show a message for each memmber that is saved for a scanitemset
+        @flash_array = []
+      rescue => bang
+        add_flash(_("Analysis Profile \"%{name}\": Error during 'update': %{message}") %
+                    {:name => scanitem.name, :message => bang.message}, :error)
       end
     end
   end
@@ -509,7 +501,7 @@ module OpsController::Settings::AnalysisProfiles
     @edit[:new][:scan_mode] = @scan.mode
     @edit[:new][:description] = @scan.description
 
-    scanitems = @scan.members     # Get the member sets
+    scanitems = @scan.members # Get the member sets
 
     # @edit[:new][:items] = Array.new
     scanitems.each_with_index do |scanitem, _i|
@@ -535,12 +527,11 @@ module OpsController::Settings::AnalysisProfiles
     @edit[:new][item_type][:definition] = {} if @edit[:new][item_type][:definition].nil?
     @edit[:new][item_type][:definition]["content"] ||= []
     temp = {}
-    CATEGORY_CHOICES.each do |checkbox_name, _checkbox_value|
+    CATEGORY_CHOICES.each_key do |checkbox_name|
       if params["check_#{checkbox_name}"]
         if params["check_#{checkbox_name}"] != "null"
           temp["target"] = checkbox_name
         else
-          temp["target"] = checkbox_name
           @edit[:new][item_type][:definition]["content"].delete(temp)
           temp = {}
         end
@@ -551,7 +542,7 @@ module OpsController::Settings::AnalysisProfiles
   end
 
   def ap_get_form_vars_file
-    unless params[:entry]['fname'].present?
+    if params[:entry]['fname'].blank?
       add_flash(_("File Entry is required"), :error)
       return
     end
@@ -617,12 +608,14 @@ module OpsController::Settings::AnalysisProfiles
       end
     end
 
-    @edit[:reg_entries].push(
-      'depth' => 0,
-      'hive'  => 'HKLM',
-      'value' => params[:entry]['value'],
-      'key'   => params[:entry]['kname'],
-    ) unless found
+    unless found
+      @edit[:reg_entries].push(
+        'depth' => 0,
+        'hive'  => 'HKLM',
+        'value' => params[:entry]['value'],
+        'key'   => params[:entry]['kname'],
+      )
+    end
 
     session[:reg_entries] = @edit[:reg_entries].dup
     @edit[:new][item_type] = {
@@ -636,8 +629,8 @@ module OpsController::Settings::AnalysisProfiles
   end
 
   def ap_get_form_vars_event_log
+    session[:nteventlog_data] = {}
     if params[:entry]["name"] == ""
-      session[:nteventlog_data] = {}
       session[:nteventlog_data][:name] = params[:entry]["name"]
       session[:nteventlog_data][:message] = params[:entry]["message"]
       session[:nteventlog_data][:level] = params[:entry]["level"]
@@ -646,25 +639,21 @@ module OpsController::Settings::AnalysisProfiles
       session[:nteventlog_data][:source] = params[:entry]["source"]
       add_flash(_("Event log name is required"), :error)
       return
-    else
-      session[:nteventlog_data] = {}
     end
     item_type = params[:item]["type3"]
     @edit[:new][item_type] = {}
     @edit[:nteventlog_entries] = [] if @edit[:nteventlog_entries].nil?
-    @edit[:nteventlog_entries] = session[:nteventlog_entries].dup unless session[:nteventlog_entries].blank?
+    @edit[:nteventlog_entries] = session[:nteventlog_entries].dup if session[:nteventlog_entries].present?
     temp = {}
     unless @edit[:nteventlog_entries].nil?
       if params[:item]["id"]
         @edit[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |_nteventlog, i|
-          if i == params[:item]["id"].to_i
-            @edit[:nteventlog_entries][i][:name] = params[:entry]["name"]
-            @edit[:nteventlog_entries][i][:filter][:message] = params[:entry]["message"]
-            @edit[:nteventlog_entries][i][:filter][:level] = params[:entry]["level"]
-            # @edit[:nteventlog_entries][i][:filter][:rec_count] = params[:entry]["rec_count"].to_i
-            @edit[:nteventlog_entries][i][:filter][:num_days] = params[:entry]["num_days"].to_i
-            @edit[:nteventlog_entries][i][:filter][:source] = params[:entry]["source"]
-          end
+          next unless i == params[:item]["id"].to_i
+          @edit[:nteventlog_entries][i][:name] = params[:entry]["name"]
+          @edit[:nteventlog_entries][i][:filter][:message] = params[:entry]["message"]
+          @edit[:nteventlog_entries][i][:filter][:level] = params[:entry]["level"]
+          @edit[:nteventlog_entries][i][:filter][:num_days] = params[:entry]["num_days"].to_i
+          @edit[:nteventlog_entries][i][:filter][:source] = params[:entry]["source"]
         end
       else
         temp[:name] = params[:entry]["name"]
@@ -689,14 +678,14 @@ module OpsController::Settings::AnalysisProfiles
 
   # Get variables from edit form
   def ap_get_form_vars
-    @scan = @edit[:scan_id] ? ScanItemSet.find_by_id(@edit[:scan_id]) : ScanItemSet.new
+    @scan = @edit[:scan_id] ? ScanItemSet.find(@edit[:scan_id]) : ScanItemSet.new
     @edit[:new][:name]        = params[:name]        if params[:name]
     @edit[:new][:description] = params[:description] if params[:description]
 
     if params[:item].present? || params[:item_type].present?
       ap_get_form_vars_category if @sb[:ap_active_tab] == "category"
       if @edit[:new]["category"]
-        @edit[:new]["category"][:name]        = "#{params[:name]}_category"             if params[:name]
+        @edit[:new]["category"][:name] = "#{params[:name]}_category" if params[:name]
         if params[:description]
           @edit[:new]["category"][:description] = _("%{description} category Scan") %
                                                   {:description => params[:description]}
@@ -705,7 +694,7 @@ module OpsController::Settings::AnalysisProfiles
 
       ap_get_form_vars_file if @sb[:ap_active_tab] == "file" && params[:item] && params[:item]["type1"]
       if @edit[:new]["file"]
-        @edit[:new]["file"][:name]        = "#{params[:name]}_file"             if params[:name]
+        @edit[:new]["file"][:name] = "#{params[:name]}_file" if params[:name]
         if params[:description]
           @edit[:new]["file"][:description] = "%{description} file Scan" % {:description => params[:description]}
         end
@@ -713,7 +702,7 @@ module OpsController::Settings::AnalysisProfiles
 
       ap_get_form_vars_registry if @sb[:ap_active_tab] == "registry"
       if @edit[:new]["registry"]
-        @edit[:new]["registry"][:name]        = "#{params[:name]}_registry"             if params[:name]
+        @edit[:new]["registry"][:name] = "#{params[:name]}_registry" if params[:name]
         if params[:description]
           @edit[:new]["registry"][:description] = _("%{description} registry Scan") %
                                                   {:description => params[:description]}
@@ -729,10 +718,10 @@ module OpsController::Settings::AnalysisProfiles
   end
 
   def ap_build_edit_screen
-    @embedded = true            # don't show flash msg or check boxes in analysis profiles partial
-    @scan = @edit[:scan_id] ? ScanItemSet.find_by_id(@edit[:scan_id]) : ScanItemSet.new
-    @sb[:req] = "new" if ["new", "copy", "create"].include?(request.parameters["action"]) || ["copy", "Host", "Vm"].include?(params[:typ])
-    @sb[:req] = "edit" if ["edit", "update"].include?(request.parameters["action"]) || params[:typ] == "edit"
+    @embedded = true # don't show flash msg or check boxes in analysis profiles partial
+    @scan = @edit[:scan_id] ? ScanItemSet.find(@edit[:scan_id]) : ScanItemSet.new
+    @sb[:req] = "new" if %w(new copy create).include?(request.parameters["action"]) || %w(copy Host Vm).include?(params[:typ])
+    @sb[:req] = "edit" if %w(edit update).include?(request.parameters["action"]) || params[:typ] == "edit"
     @scan.members.each do |a|
       case a.item_type
       when "category"

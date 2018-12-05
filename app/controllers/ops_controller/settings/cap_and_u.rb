@@ -19,15 +19,15 @@ module OpsController::Settings::CapAndU
 
       set_perf_collection_for_clusters if @edit[:new] != @edit[:current]
 
-      unless @edit[:current][:non_cl_hosts].blank?   # if there are any hosts without clusters
+      if @edit[:current][:non_cl_hosts].present? # if there are any hosts without clusters
         @edit[:current][:non_cl_hosts].each_with_index do |h_id, i|
-          h = Host.find_by_id(h_id[:id])
+          h = Host.find(h_id[:id])
           h.perf_capture_enabled = @edit[:new][:non_cl_hosts][i][:capture]
         end
       end
 
       unless @edit[:new][:storages] == @edit[:current][:storages] # Check for storage changes
-        @st_recs = Storage.all.inject({}) { |h, st| h[st.id] = st; h }
+        @st_recs = Storage.all.each_with_object({}) { |st, h| h[st.id] = st }
         @edit[:new][:storages].each_with_index do |s, si|
           if s[:capture] != @edit[:current][:storages][si][:capture]
             ds = @st_recs[s[:id]]
@@ -85,17 +85,13 @@ module OpsController::Settings::CapAndU
     @edit[:current][:clusters] = []
     @cl_hash = EmsCluster.get_perf_collection_object_list
     @cl_hash.each_with_index do |h, j|
-      cid, cl_hash = h
+      _cid, cl_hash = h
       c = cl_hash[:cl_rec]
       enabled = cl_hash[:ho_enabled]
       enabled_host_ids = enabled.collect(&:id)
       hosts = (cl_hash[:ho_enabled] + cl_hash[:ho_disabled]).sort_by { |ho| ho.name.downcase }
       cl_enabled = enabled_host_ids.length == hosts.length
-      if cl_enabled && !enabled.empty?
-        en_flg = true
-      else
-        en_flg = false
-      end
+      en_flg = cl_enabled && !enabled.empty?
       cname = c.name
       @edit[:current][:clusters].push(:name    => cname,
                                       :id      => c.id,
@@ -112,7 +108,7 @@ module OpsController::Settings::CapAndU
       @edit[:current][c.id].each do |host|
         unless host[:capture]
           count += 1 # checking if all hosts are unchecked then cluster capture will be false else undefined
-          flg = (count == @edit[:current][c.id].length) ? false : "undefined"
+          flg = count == @edit[:current][c.id].length ? false : "undefined"
         end
         @edit[:current][:clusters][j][:capture] = flg
       end
@@ -129,15 +125,17 @@ module OpsController::Settings::CapAndU
                                            :capture => h.perf_capture_enabled?}
       end
     end
-    @cluster_tree = TreeBuilderClusters.new(:cluster,
-                                            :cluster_tree,
-                                            @sb,
-                                            true,
-                                            @edit[:current]) unless @edit[:current][:clusters].blank?
+    if @edit[:current][:clusters].present?
+      @cluster_tree = TreeBuilderClusters.new(:cluster,
+                                              :cluster_tree,
+                                              @sb,
+                                              true,
+                                              @edit[:current])
+    end
     @edit[:current][:storages] = []
     @st_recs = {}
     Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :store_type, :location)
-      .sort_by { |s| s.name.downcase }.each do |s|
+           .sort_by { |s| s.name.downcase }.each do |s|
       @st_recs[s.id] = s
       @edit[:current][:storages].push(:name       => s.name,
                                       :id         => s.id,
@@ -145,11 +143,13 @@ module OpsController::Settings::CapAndU
                                       :store_type => s.store_type,
                                       :location   => s.location) # fields we need
     end
-    @datastore_tree = TreeBuilderDatastores.new(:datastore,
-                                                :datastore_tree,
-                                                @sb,
-                                                true,
-                                                @edit[:current][:storages]) unless @edit[:current][:storages].blank?
+    if @edit[:current][:storages].present?
+      @datastore_tree = TreeBuilderDatastores.new(:datastore,
+                                                  :datastore_tree,
+                                                  @sb,
+                                                  true,
+                                                  @edit[:current][:storages])
+    end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
   end
@@ -209,16 +209,15 @@ module OpsController::Settings::CapAndU
             end
           end
         end
-        if node_type[0] == "Host"
-          flg = true
-          count = 0
-          @edit[:new][c[:id]].each do |h|
-            unless h[:capture]
-              count += 1 # checking if all hosts are unchecked then cluster capture will be false else undefined
-              flg = (count == @edit[:new][c[:id]].length) ? false : "undefined"
-            end
-            c[:capture] = flg
+        next unless node_type[0] == "Host"
+        flg = true
+        count = 0
+        @edit[:new][c[:id]].each do |h|
+          unless h[:capture]
+            count += 1 # checking if all hosts are unchecked then cluster capture will be false else undefined
+            flg = count == @edit[:new][c[:id]].length ? false : "undefined"
           end
+          c[:capture] = flg
         end
       end
     end

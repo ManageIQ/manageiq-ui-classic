@@ -38,7 +38,7 @@ module OpsController::OpsRbac
 
   def rbac_user_copy
     # get users id either from gtl check or detail id
-    user_id = params[:miq_grid_checks].present? ? params[:miq_grid_checks] : params[:id]
+    user_id = params[:miq_grid_checks].presence || params[:id]
     user = User.find(user_id)
     # check if it is allowed to copy the user
     if rbac_user_copy_restriction?(user)
@@ -384,7 +384,7 @@ module OpsController::OpsRbac
 
   def move_cols_up
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].empty? || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       return
     end
@@ -392,7 +392,7 @@ module OpsController::OpsRbac
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:new][:ldap_groups_list][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:new][:ldap_groups_list].delete(field)
           @edit[:new][:ldap_groups_list].insert(first_idx - 1, pulled)
@@ -406,7 +406,7 @@ module OpsController::OpsRbac
 
   def move_cols_down
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].empty? || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       return
     end
@@ -754,9 +754,11 @@ module OpsController::OpsRbac
                        :partial => "ops/rbac_group_selected")
         end
         # only do following for groups
-        page.replace(@refresh_div,
-                     :partial => @refresh_partial,
-                     :locals  => {:type => "classifications", :action_url => 'rbac_group_field_changed'}) if @refresh_div
+        if @refresh_div
+          page.replace(@refresh_div,
+                       :partial => @refresh_partial,
+                       :locals  => {:type => "classifications", :action_url => 'rbac_group_field_changed'})
+        end
 
         page.replace("customer_tags_div", :partial => "ops/rbac_group/customer_tags") if params[:use_filter_expression].present?
 
@@ -1080,11 +1082,11 @@ module OpsController::OpsRbac
     @assigned_filters = []
     @group = @record
     @edit = {
-      :new => {
-        :filters     => {},
+      :new                 => {
+        :filters           => {},
         :filter_expression => {},
-        :belongsto   => {},
-        :description => @group.description,
+        :belongsto         => {},
+        :description       => @group.description,
       },
       :ldap_groups_by_user => [],
       :projects_tenants    => [],
@@ -1111,11 +1113,11 @@ module OpsController::OpsRbac
     Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
     end
-    if @group.miq_user_role.nil? # If adding, set to first role
-      @edit[:new][:role] = @edit[:roles][@edit[:roles].keys.sort[0]]
-    else
-      @edit[:new][:role] = @group.miq_user_role.id
-    end
+    @edit[:new][:role] = if @group.miq_user_role.nil? # If adding, set to first role
+                           @edit[:roles][@edit[:roles].keys.sort[0]]
+                         else
+                           @group.miq_user_role.id
+                         end
 
     all_tenants, all_projects = Tenant.tenant_and_project_names
     placeholder_text_tenant = _('Choose a Project/Tenant')
@@ -1123,8 +1125,8 @@ module OpsController::OpsRbac
                                          :selected => "<#{placeholder_text_tenant}>",
                                          :disabled => "<#{placeholder_text_tenant}>",
                                          :style    => 'display:none']]])
-    @edit[:projects_tenants].push(["Projects", all_projects]) unless all_projects.blank?
-    @edit[:projects_tenants].push(["Tenants", all_tenants]) unless all_tenants.blank?
+    @edit[:projects_tenants].push(["Projects", all_projects]) if all_projects.present?
+    @edit[:projects_tenants].push(["Tenants", all_tenants]) if all_tenants.present?
     @edit[:new][:group_tenant] = @group.tenant_id
 
     rbac_group_filter_expression_vars(:filter_expression, :filter_expression_table)
@@ -1140,11 +1142,11 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)
-    if @group && @group.entitlement && @group.entitlement[field_expression].kind_of?(MiqExpression)
-      @edit[:new][field_expression] = @group.entitlement[field_expression].exp
-    else
-      @edit[:new][field_expression] = nil
-    end
+    @edit[:new][field_expression] = if @group&.entitlement && @group.entitlement[field_expression].kind_of?(MiqExpression)
+                                      @group.entitlement[field_expression].exp
+                                    else
+                                      @edit[:new][field_expression] = nil
+                                    end
     @edit[:new][:use_filter_expression] = true
     # Populate exp editor fields for the expression column
     @edit[field_expression] ||= ApplicationController::Filter::Expression.new
@@ -1189,7 +1191,7 @@ module OpsController::OpsRbac
     else
       group.entitlement.filter_expression = nil if group.entitlement.filter_expression
       @set_filter_values = []
-      @edit[:new][:filters].each do |_key, value|
+      @edit[:new][:filters].each_value do |value|
         @set_filter_values.push(value)
       end
       rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
