@@ -1,11 +1,11 @@
+import getGridChecks from '../../packs/toolbar-actions-common';
+import { onCustomAction } from '../../toolbar-actions/custom-action';
+
 require('../helpers/angularHelper.js');
 require('../helpers/APIHelper.js');
 require('../helpers/addFlashHelper.js');
 require('../helpers/sprintfHelper.js');
 require('angular-mocks');
-import getGridChecks from '../../packs/toolbar-actions-common';
-import { onCustomAction } from '../../toolbar-actions/custom-action';
-
 
 describe('Toolbar actions', () => {
   beforeEach(() => {

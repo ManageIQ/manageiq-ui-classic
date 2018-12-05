@@ -1,6 +1,6 @@
-require('../helpers/getJSONFixtures.js');
-
 import { module, inject } from './mocks';
+
+require('../helpers/getJSONFixtures.js');
 
 describe('widget-wrapper', () => {
   let $scope;

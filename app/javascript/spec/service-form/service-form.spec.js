@@ -1,13 +1,13 @@
-require('../helpers/addFlashHelper.js');
-require('../helpers/miqSparkleHelper.js');
-require('../helpers/miqAjaxButtonHelper.js');
-require('../helpers/mockAsyncRequestHelper.js');
-
 import React from 'react';
 import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import FormRender from '@data-driven-forms/react-form-renderer';
 import ServiceForm from '../../components/service-form';
+
+require('../helpers/addFlashHelper.js');
+require('../helpers/miqSparkleHelper.js');
+require('../helpers/miqAjaxButtonHelper.js');
+require('../helpers/mockAsyncRequestHelper.js');
 
 describe('Service form component', () => {
   let initialProps;

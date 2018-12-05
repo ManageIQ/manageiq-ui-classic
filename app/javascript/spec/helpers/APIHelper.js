@@ -1,4 +1,5 @@
+import { API } from '../../http_api';
+
 require('../../../assets/javascripts/miq_api.js');
 
-import { API } from '../../http_api';
 window.vanillaJsAPI = API;

@@ -1,12 +1,12 @@
-require('../helpers/miqSparkleHelper.js');
-require('../helpers/miqAjaxButtonHelper.js');
-require('../helpers/mockAsyncRequestHelper.js');
-
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import CloudTenantForm from '../../components/cloud-tenant-form/cloud-tenant-form';
+
+require('../helpers/miqSparkleHelper.js');
+require('../helpers/miqAjaxButtonHelper.js');
+require('../helpers/mockAsyncRequestHelper.js');
 
 describe('Cloud tenant form component', () => {
   let emsChoices;
