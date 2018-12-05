@@ -28,6 +28,9 @@ include:
   ext_management_system:
     columns:
     - name
+  cloud_tenant:
+    columns:
+    - name
 
 # Included tables and columns for query performance
 include_for_find:
@@ -37,6 +40,7 @@ col_order:
 - name
 - description
 - total_vms
+- cloud_tenant.name
 - ext_management_system.name
 
 # Column titles, in order
@@ -44,6 +48,7 @@ headers:
 - Name
 - Description
 - Instances
+- Cloud Tenant
 - Cloud Provider
 
 # Condition(s) string for the SQL query
