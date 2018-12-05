@@ -9,5 +9,5 @@
     -# Load the required JS based on the console type
     = javascript_include_tag 'jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}", 'remote_console'
   %body
-    #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret]}
+    #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret], 'data-is-vcloud' => @console[:is_vcloud], 'data-vmx' => @console[:vmx]}
     = render :partial => 'shared/remote_console_footer', :layout   => false, :locals   => { :console_type => @console[:type].upcase }
