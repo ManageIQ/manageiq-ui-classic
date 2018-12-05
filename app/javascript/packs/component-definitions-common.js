@@ -8,6 +8,7 @@ import FormButtonsRedux from '../forms/form-buttons-redux';
 import MiqAboutModal from '../components/miq-about-modal';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ServiceForm from '../components/service-form';
+import SetServiceOwnershipForm from '../components/set-service-ownership-form';
 
 /**
 * Add component definitions to this file.
@@ -26,3 +27,4 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
+ManageIQ.component.addReact('SetServiceOwnershipForm', SetServiceOwnershipForm);
