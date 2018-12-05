@@ -27,20 +27,16 @@ module VmRemote
   def launch_vmrc_console
     console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
-    options = case console_type
-              when "vmrc"
-                host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
-                vmid = @record.ems_ref
-                {
-                  :host        => host,
-                  :vmid        => @record.ems_ref,
-                  :ticket      => j(params[:ticket]),
-                  :api_version => @record.ext_management_system.api_version.to_s,
-                  :os          => browser_info(:os),
-                  :name        => @record.name,
-                  :vmrc_uri    => build_vmrc_uri(host, vmid, params[:ticket])
-                }
-              end
+    host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
+    options = {
+      :host        => host,
+      :vmid        => @record.ems_ref,
+      :ticket      => j(params[:ticket]),
+      :api_version => @record.ext_management_system.api_version.to_s,
+      :os          => browser_info(:os),
+      :name        => @record.name,
+      :vmrc_uri    => build_vmrc_uri(host, @record.ems_ref, params[:ticket])
+    }
     render :template => "vm_common/console_#{console_type}",
            :layout   => false,
            :locals   => options
