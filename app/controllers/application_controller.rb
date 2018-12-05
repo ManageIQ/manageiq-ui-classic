@@ -1350,7 +1350,7 @@ class ApplicationController < ActionController::Base
     when "job", "miqtask"
       :job_task
     else
-      PERPAGE_TYPES[dbname]
+      PERPAGE_TYPES[@gtl_type]
     end
   end
 
