@@ -37,7 +37,7 @@ describe VmOrTemplateController do
     drift_to_pdf
     drift_to_txt
     launch_html5_console
-    launch_vmware_console
+    launch_vmrc_console
     retirement_info
     vm_show
   ).each do |path|

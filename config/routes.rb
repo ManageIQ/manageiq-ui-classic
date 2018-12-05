@@ -3022,8 +3022,8 @@ Rails.application.routes.draw do
         filesystem_download
         retirement_info
         reconfigure_form_fields
-        launch_vmware_console
         launch_html5_console
+        launch_vmrc_console
         perf_chart_chooser
         protect
         retire
@@ -3134,8 +3134,8 @@ Rails.application.routes.draw do
         filesystem_download
         retirement_info
         reconfigure_form_fields
-        launch_vmware_console
         launch_html5_console
+        launch_vmrc_console
         perf_chart_chooser
         policies
         protect
@@ -3225,9 +3225,9 @@ Rails.application.routes.draw do
         drift_to_txt
         explorer
         launch_html5_console
+        launch_vmrc_console
         retirement_info
         reconfigure_form_fields
-        launch_vmware_console
         protect
         retire
         show

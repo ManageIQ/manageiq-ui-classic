@@ -24,7 +24,7 @@ module VmRemote
     params[:task_id] ? console_after_task('html5') : console_before_task('html5')
   end
 
-  def launch_vmware_console
+  def launch_vmrc_console
     console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     options = case console_type
@@ -108,7 +108,7 @@ module VmRemote
       url = if miq_task.task_results[:remote_url]
               miq_task.task_results[:remote_url]
             else
-              console_action = %w(html5 webmks).include?(console_type) ? 'launch_html5_console' : 'launch_vmware_console'
+              console_action = %w(html5 webmks).include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
               url_for_only_path(:controller => controller_name,
                                 :action     => console_action,
                                 :id         => j(params[:id]),
