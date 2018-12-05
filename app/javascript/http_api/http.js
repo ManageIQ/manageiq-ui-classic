@@ -16,9 +16,13 @@ function get(url, options = {}) {
   });
 }
 
-function post(url, data, options = {}) {
+function post(url, data, { headers, ...options } = {}) {
   return miqFetch({
     ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
     url,
     method: 'POST',
     csrf: true,
