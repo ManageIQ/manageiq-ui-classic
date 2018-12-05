@@ -76,7 +76,7 @@ module ReportController::Widgets
       if !@widget || @widget.id.blank?
         add_flash(_("Add of new Widget was cancelled by the user"))
       else
-        add_flash(_("Edit of Widget \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@widget)})
+        add_flash(_("Edit of Widget \"%{title}\" was cancelled by the user") % {:title => @widget.title})
       end
       get_node_info
       @widget = nil
@@ -90,7 +90,7 @@ module ReportController::Widgets
       widget_set_record_vars(@widget)
       if widget_validate_entries && @widget.save_with_shortcuts(@edit[:new][:shortcuts].to_a)
         AuditEvent.success(build_saved_audit(@widget, @edit))
-        add_flash(_("Widget \"%{name}\" was saved") % {:name => get_record_display_name(@widget)})
+        add_flash(_("Widget \"%{title}\" was saved") % {:title => @widget.title})
         params[:id] = @widget.id.to_s # reset id in params for show
         # Build the filter expression and attach widget to schedule filter
         exp = {}
