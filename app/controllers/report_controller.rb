@@ -73,7 +73,9 @@ class ReportController < ApplicationController
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
       @sb[:overwrite] = params[:overwrite].present?
       begin
-        _reps, mri = MiqReport.import(params[:upload][:file], :save => true, :overwrite => @sb[:overwrite], :userid => session[:userid])
+        _reps, mri = MiqReport.import(params[:upload][:file], :save => true, :overwrite => @sb[:overwrite],
+                                                            :userid => session[:userid],
+                                                            :preserve_owner => @sb[:preserve_owner])
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         @sb[:flash_msg] = @flash_array
@@ -101,6 +103,7 @@ class ReportController < ApplicationController
     when "saved_reports"
       redirect_to(:action => params[:tab])
     when "menueditor"
+      # redirect_to(:controller=>"configuration", :action=>"change_tab", :tab=>6)
       redirect_to(:action => "menu_edit")
     else
       redirect_to(:action => params[:tab], :id => params[:id])
