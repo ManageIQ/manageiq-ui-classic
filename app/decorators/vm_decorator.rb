@@ -14,7 +14,7 @@ class VmDecorator < MiqDecorator
   def quadicon
     icon = {
       :top_left     => {
-        :tooltip  => os_image_name.humanize.downcase
+        :tooltip => os_image_name.humanize.downcase
       }.merge(QuadiconHelper.os_icon(os_image_name.downcase)),
       :top_right    => {
         :tooltip => normalized_state
