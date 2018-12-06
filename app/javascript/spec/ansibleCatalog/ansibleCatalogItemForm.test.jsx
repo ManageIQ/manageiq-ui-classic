@@ -9,7 +9,7 @@ import { reduxStore, sampleForm } from './test.fixtures';
 import { ANSIBLE_FIELDS } from '../../react/ansibleCatalog/constants';
 import AnsibleCatalogItemForm from '../../react/ansibleCatalog';
 import { AnsibleCatalogItemForm as AnsibleCatalogItemForm1 } from '../../react/ansibleCatalog/ansibleCatalogItemForm';
-
+import '../helpers/mockAsyncRequest';
 
 describe('Ansible catalog item form component', () => {
   const mockStore = configureStore([thunk]);
@@ -101,10 +101,10 @@ describe('Ansible catalog item form component', () => {
     expect(loadCatalogItem).toHaveBeenCalledWith(1234);
     wrapper.update();
     setImmediate(() => {
-      done();
       expect(loadCloudCredential).toHaveBeenCalledWith(123);
       const formValues = wrapper.state().initialValues;
       expect(formValues).toEqual(sampleForm);
+      done();
     });
   });
   it('should allow a form to be submitted', () => {
@@ -122,7 +122,7 @@ describe('Ansible catalog item form component', () => {
     wrapper.instance().submitForm(values);
     expect(fetchMock.called('/api/service_templates/')).toBe(true);
   });
-  it('should report an error if submitting failed', () => {
+  it('should report an error if submitting failed', (done) => {
     // eslint-disable-next-line no-console
     console.error = jest.fn();
     const spy = jest.spyOn(window, 'add_flash');
@@ -144,6 +144,7 @@ describe('Ansible catalog item form component', () => {
     wrapper.update();
     setImmediate(() => {
       expect(spy).toHaveBeenCalledWith('Catalog item failed to be added. ', 'error');
+      done();
     });
   });
   it('should close a popup', () => {
