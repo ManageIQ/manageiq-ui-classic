@@ -645,11 +645,10 @@ module MiqPolicyController::Alerts
         add_flash(_("At least one E-mail recipient must be configured"), :error)
       elsif alert.options[:notifications][:email][:to].find { |i| !i.to_s.email? }
         add_flash(_("One of e-mail addresses 'To' is not valid"), :error)
+      elsif alert.options[:notifications][:email][:from].present? &&
+            !alert.options[:notifications][:email][:from].email?
+        add_flash(_("E-mail address 'From' is not valid"), :error)
       end
-    end
-    if alert.options[:notifications][:email][:from].present? &&
-       !alert.options[:notifications][:email][:from].email?
-      add_flash(_("E-mail address 'From' is not valid"), :error)
     end
     if alert.options[:notifications][:snmp]
       validate_snmp_options(alert.options[:notifications][:snmp])
