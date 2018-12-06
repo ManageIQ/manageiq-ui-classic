@@ -4,10 +4,10 @@ import fetchMock from 'fetch-mock';
 import FormRender from '@data-driven-forms/react-form-renderer';
 import ServiceForm from '../../components/service-form';
 
-require('../helpers/addFlashHelper.js');
-require('../helpers/miqSparkleHelper.js');
-require('../helpers/miqAjaxButtonHelper.js');
-require('../helpers/mockAsyncRequestHelper.js');
+require('../helpers/addFlash.js');
+require('../helpers/miqSparkle.js');
+require('../helpers/miqAjaxButton.js');
+require('../helpers/mockAsyncRequest.js');
 
 describe('Service form component', () => {
   let initialProps;
