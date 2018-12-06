@@ -10,7 +10,7 @@ module ApplicationHelper::Dialogs
   end
 
   def dialog_dropdown_selected_value(field)
-    if !field.values || field.values.empty?
+    if field.values.blank?
       return field.value
     end
     if field.value.kind_of?(String) && field.value.include?(',')
@@ -65,8 +65,8 @@ module ApplicationHelper::Dialogs
 
   def textarea_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {
-      :class     => "dynamic-text-area-#{field.id} form-control",
-      :size      => "50x6"
+      :class => "dynamic-text-area-#{field.id} form-control",
+      :size  => "50x6"
     }
 
     extra_options = {"data-miq_observe" => {
@@ -108,7 +108,7 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def drop_down_options(field, url)
+  def drop_down_options(field, _url)
     tag_options = {:class => "dynamic-drop-down-#{field.id} selectpicker"}
     multiple = field.force_multi_value ? true : false
     extra_options = {
@@ -121,7 +121,7 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def radio_options(field, url, value, selected_value)
+  def radio_options(field, _url, value, selected_value)
     tag_options = {
       :type    => 'radio',
       :class   => field.id,
