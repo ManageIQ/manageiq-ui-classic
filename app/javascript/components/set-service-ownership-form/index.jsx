@@ -18,7 +18,7 @@ class SetServiceOwnershipForm extends Component {
   }
 
   loadInitialData = objectIds =>
-    http.post('/service/ownership_form_fields', { object_ids: objectIds })
+    http.post(`/${ManageIQ.controller}/ownership_form_fields`, { object_ids: objectIds })
       .then(data => this.setState({ initialValues: data }))
 
 
@@ -30,8 +30,8 @@ class SetServiceOwnershipForm extends Component {
   render() {
     const { groupOptions, ownerOptions, ownershipIds } = this.props;
     const { initialValues } = this.state;
-    const cancelUrl = '/service/ownership_update/?button=cancel';
-    const submitUrl = '/service/ownership_update/?button=save';
+    const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel`;
+    const submitUrl = `/${ManageIQ.controller}/ownership_update/?button=save`;
 
     return (
       <Grid fluid id="set-ownership-form">

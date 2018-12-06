@@ -17,11 +17,13 @@ describe('Set service ownership form component', () => {
       groupOptions: [['Foo', '1'], ['Bar', '2']],
       ownerOptions: [['Baz', '3'], ['Quxx', '4']],
     };
+    global.ManageIQ.controller = 'service';
   });
 
   afterEach(() => {
     submitSpy.mockReset();
     flashSpy.mockReset();
+    global.ManageIQ.controller = null;
   });
 
   it('should correctly map group and owner options ', () => {
