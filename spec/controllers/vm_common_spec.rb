@@ -1,6 +1,6 @@
 describe VmOrTemplateController do
   context "#snap_pressed" do
-    before :each do
+    before do
       stub_user(:features => :all)
       @vm = FactoryGirl.create(:vm_vmware)
       @snapshot = FactoryGirl.create(:snapshot, :vm_or_template_id => @vm.id,
@@ -72,7 +72,7 @@ describe VmOrTemplateController do
   end
 
   context "#show" do
-    before :each do
+    before do
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
@@ -123,7 +123,7 @@ describe VmOrTemplateController do
     end
 
     context 'set session[:snap_selected]' do
-      before :each do
+      before do
         tree_hash = {
           :trees         => {
             :vandt_tree => {
@@ -309,7 +309,7 @@ describe VmOrTemplateController do
   end
 
   context '#evm_relationship_get_form_vars' do
-    before :each do
+    before do
       @vm = FactoryGirl.create(:vm_vmware)
       edit = {:vm_id => @vm.id, :new => {:server => nil}}
       controller.instance_variable_set(:@edit, edit)

@@ -7,7 +7,7 @@ describe NetworkTopologyService do
     let(:ems_cloud) { FactoryGirl.create(:ems_openstack) }
     let(:ems) { ems_cloud.network_manager }
 
-    before :each do
+    before do
       @cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack)
       @availability_zone = FactoryGirl.create(:availability_zone_openstack,
                                               :name                  => "AZ name",

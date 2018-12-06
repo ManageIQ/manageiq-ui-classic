@@ -1,5 +1,5 @@
 describe ApplicationController, "::Filter" do
-  before :each do
+  before do
     controller.instance_variable_set(:@sb, {})
   end
 
@@ -105,7 +105,7 @@ describe ApplicationController, "::Filter" do
        :qs_prev_x_node             => nil}
     end
 
-    before :each do
+    before do
       controller.instance_variable_set(:@expkey, :expression)
       controller.instance_variable_set(:@edit, edit)
       allow(controller).to receive(:render)

@@ -6,7 +6,7 @@ shared_examples :shared_examples_for_ems_object_storage_controller do |providers
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_storage_manager_context, t
-      before :each do
+      before do
         stub_user(:features => :all)
         setup_zone
       end
@@ -33,7 +33,7 @@ shared_examples :shared_examples_for_ems_object_storage_controller do |providers
 
     context "for #{t}" do
       include_context :shared_storage_manager_context, t
-      before :each do
+      before do
         stub_user(:features => :all)
         setup_zone
       end

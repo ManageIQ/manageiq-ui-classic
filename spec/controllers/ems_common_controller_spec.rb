@@ -79,7 +79,7 @@ describe EmsCloudController do
     let(:pdf_options) { controller.instance_variable_get(:@options) }
 
     context "download pdf file" do
-      before :each do
+      before do
         stub_user(:features => :all)
         allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary.css').and_return("")
         get :download_summary_pdf, :params => {:id => ems_openstack.id}
@@ -290,7 +290,7 @@ describe EmsContainerController do
       let(:pdf_options) { controller.instance_variable_get(:@options) }
 
       context "download pdf file" do
-        before :each do
+        before do
           stub_user(:features => :all)
           allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary.css').and_return("")
           get :download_summary_pdf, :params => {:id => ems_kubernetes_container.id}

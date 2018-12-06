@@ -6,7 +6,7 @@ describe Mixins::CheckedIdMixin do
     let(:user_role) { FactoryGirl.create(:miq_user_role) }
     let(:group) { FactoryGirl.create(:miq_group, :miq_user_role => user_role) }
     let(:current_user) { FactoryGirl.create(:user, :miq_groups => [group]) }
-    before :each do
+    before do
       allow(mixin).to receive(:current_user).and_return(current_user)
       allow(current_user).to receive(:get_timezone).and_return("Prague")
     end

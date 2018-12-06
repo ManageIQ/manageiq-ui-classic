@@ -1,5 +1,5 @@
 describe Menu::CustomLoader do
-  before :each do
+  before do
     Singleton.__init__(Menu::Manager)
     Singleton.__init__(Menu::CustomLoader)
   end

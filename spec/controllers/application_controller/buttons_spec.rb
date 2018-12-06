@@ -44,7 +44,7 @@ describe ApplicationController do
     end
 
     context "with a button with open_url" do
-      before :each do
+      before do
         resource_action.update_attribute(:dialog_id, nil)
         button.update_attributes(:options => {:open_url => true})
         expect(controller).to receive(:render)
@@ -61,7 +61,7 @@ describe ApplicationController do
     end
 
     context "without a resource_action dialog" do
-      before :each do
+      before do
         resource_action.update_attribute(:dialog_id, nil)
         expect(controller).to receive(:render)
       end

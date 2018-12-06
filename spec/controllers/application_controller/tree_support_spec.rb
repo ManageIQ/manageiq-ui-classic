@@ -1,7 +1,7 @@
 describe ApplicationController do
   context "#tree_autoload" do
     describe "verify @edit object" do
-      before :each do
+      before do
         expect(controller).to receive(:tree_add_child_nodes)
         expect(controller).to receive(:render)
         controller.instance_variable_set(:@sb,

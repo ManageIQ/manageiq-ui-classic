@@ -1,7 +1,7 @@
 describe MiqPolicyController do
   context "::Events" do
     context "#event_edit" do
-      before :each do
+      before do
         stub_user(:features => :all)
         @action = FactoryGirl.create(:miq_action, :name => "compliance_failed")
         @event = FactoryGirl.create(:miq_event_definition, :name => "vm_compliance_check")

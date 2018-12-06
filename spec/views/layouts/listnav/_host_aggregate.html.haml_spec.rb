@@ -1,7 +1,7 @@
 describe "layouts/listnav/_host_aggregate.html.haml" do
   helper QuadiconHelper
 
-  before :each do
+  before do
     set_controller_for_view("host_aggregate")
     assign(:panels, "ems_prop" => true, "ems_rel" => true)
     allow(view).to receive(:truncate_length).and_return(15)

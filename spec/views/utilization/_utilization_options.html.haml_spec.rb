@@ -1,5 +1,5 @@
 describe "utilization/_utilization_options.html.haml" do
-  before :each do
+  before do
     set_controller_for_view("utilization")
     assign(:record, Struct.new(:id).new(2))
     assign(:sb, :options => {:days         => 2,

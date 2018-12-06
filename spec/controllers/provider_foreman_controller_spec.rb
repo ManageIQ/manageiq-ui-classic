@@ -698,7 +698,7 @@ describe ProviderForemanController do
   context 'download pdf file' do
     let(:pdf_options) { controller.instance_variable_get(:@options) }
 
-    before :each do
+    before do
       @record = @config_profile
       allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       allow(controller).to receive(:tagdata).and_return(nil)

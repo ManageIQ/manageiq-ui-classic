@@ -5,7 +5,7 @@ describe RestfulRedirectController do
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
-  before :each do
+  before do
     post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => user.password }
   end
 

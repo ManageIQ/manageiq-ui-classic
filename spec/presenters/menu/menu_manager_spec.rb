@@ -1,7 +1,7 @@
 describe Menu::Manager do
   include Spec::Support::MenuHelper
 
-  before :each do
+  before do
     Singleton.__init__(Menu::YamlLoader)
     Singleton.__init__(Menu::Manager)
   end

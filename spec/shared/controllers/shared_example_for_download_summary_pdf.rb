@@ -3,7 +3,7 @@ shared_examples '#download_summary_pdf' do |object|
     let(:record) { FactoryGirl.create(object) }
     let(:pdf_options) { controller.instance_variable_get(:@options) }
 
-    before :each do
+    before do
       allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       allow(controller).to receive(:server_timezone).and_return('UTC')
       allow(controller).to receive(:tagdata).and_return(nil)

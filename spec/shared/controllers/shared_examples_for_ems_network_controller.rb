@@ -6,7 +6,7 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_network_manager_context, t
-      before :each do
+      before do
         stub_user(:features => :all)
         setup_zone
       end

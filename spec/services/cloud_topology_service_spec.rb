@@ -6,7 +6,7 @@ describe CloudTopologyService do
 
     let(:ems) { FactoryGirl.create(:ems_openstack) }
 
-    before :each do
+    before do
       @availability_zone = FactoryGirl.create(:availability_zone_openstack, :ext_management_system => ems)
       @cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems)
       @vm = FactoryGirl.create(:vm_openstack, :cloud_tenant => @cloud_tenant, :ext_management_system => ems)

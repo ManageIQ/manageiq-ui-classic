@@ -106,7 +106,7 @@ describe CatalogController do
     end
 
     describe "#atomic_form_field_changed" do
-      before :each do
+      before do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@record, ServiceTemplate.new(:prov_type => "generic"))
         edit = {
@@ -861,7 +861,7 @@ describe CatalogController do
         let(:user_role) { FactoryGirl.create(:miq_user_role) }
         let(:miq_group) { FactoryGirl.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
 
-        before :each do
+        before do
           @st1 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
           @st2 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
           @st3 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
@@ -1046,7 +1046,7 @@ describe CatalogController do
       let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
       let(:dialog) { FactoryGirl.create(:dialog) }
 
-      before :each do
+      before do
         controller.instance_variable_set(:@sb, {})
         ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns")
         cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls")

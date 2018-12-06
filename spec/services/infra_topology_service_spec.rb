@@ -6,7 +6,7 @@ describe InfraTopologyService do
 
     let(:ems) { FactoryGirl.create(:ems_openstack_infra) }
 
-    before :each do
+    before do
       @cluster = FactoryGirl.create(:ems_cluster_openstack, :ext_management_system => ems)
       @host = FactoryGirl.create(:host_openstack_infra, :ems_cluster => @cluster, :ext_management_system => ems)
     end
