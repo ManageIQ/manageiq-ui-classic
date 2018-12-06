@@ -126,6 +126,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
+    miqService.miqFlashClear(); // remove previous messages
     var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
     return API.put('/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), {skipErrors: [400]})
       .then(function() {
@@ -136,6 +137,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   vm.addClicked = function() {
     miqService.sparkleOn();
+    miqService.miqFlashClear(); // remove previous messages
     var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.customButtonModel.name);
     return API.post('/api/custom_buttons/', vm.prepSaveObject(), {skipErrors: [400]})
       .then(function(response) {
@@ -205,6 +207,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
   // private functions
   function handleErrorMessages(error) {
+    miqSparkleOff();
     if (error.status === 400) {
       var errorMessages = error.data.error.message.split(',');
       errorMessages.forEach(function(message) {
