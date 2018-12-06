@@ -49,7 +49,7 @@ describe('Ansible playbook fields form component', () => {
     });
     // eslint-disable-next-line no-console
     console.error = jest.fn();
-    const wrapper = mount(
+    const wrapper = shallow(
       <ConnectedAnsiblePlaybookFields {...initialProps} />,
       {
         context: { store },

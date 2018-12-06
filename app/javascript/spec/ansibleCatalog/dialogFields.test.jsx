@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { DialogFields } from '../../react/ansibleCatalog/dialogFields';
 
@@ -10,7 +10,7 @@ describe('DialogField component', () => {
   it('should render correctly', () => {
     // eslint-disable-next-line no-console
     console.error = jest.fn();
-    const wrapper = mount(<DialogFields dropdownOptions={initialProps} />);
+    const wrapper = shallow(<DialogFields dropdownOptions={initialProps} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('should verify dialog name is unique', () => {
