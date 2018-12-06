@@ -79,17 +79,17 @@ function apiCall(buttonData, dialogData) {
 
 // careful: the dialogDefinigion is string, not an object here
 function dialogModal(dialogDefinition, buttonData) {
-  const elem = $('<provider-dialog-user></provider-dialog-user>');
-  elem.attr('dialog', dialogDefinition);
-  elem.attr('action-name', buttonData.action_name);
-  elem.attr('entity-name', buttonData.entity_name);
-  elem.attr('success-message', buttonData.success_message);
+  const elem = document.createElement('provider-dialog-user');
+  elem.setAttribute('dialog', dialogDefinition);
+  elem.setAttribute('action-name', buttonData.action_name);
+  elem.setAttribute('entity-name', buttonData.entity_name);
+  elem.setAttribute('success-message', buttonData.success_message);
 
   const id = 'angular-provider-dialog';
 
   const inner = class extends React.Component {
     componentDidMount() {
-      elem.appendTo(`#${id}`);
+      document.querySelector(`#${id}`).appendChild(elem);
       miq_bootstrap(`#${id}`);
     }
 
