@@ -24,34 +24,19 @@ module VmRemote
     params[:task_id] ? console_after_task('html5') : console_before_task('html5')
   end
 
-  def launch_vmware_console
+  def launch_vmrc_console
     console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
-    options = case console_type
-              when "webmks"
-                # TODO: move this part to the launch_html5_console method
-                override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w(data: 'self'))
-                %i(secret url).each { |p| params.require(p) }
-                @console = {
-                  :url       => j(params[:url]),
-                  :secret    => j(params[:secret]),
-                  :is_vcloud => j(params[:is_vcloud].to_s), # vcloud specific
-                  :vmx       => j(params[:vmx].to_s)        # vcloud specific
-                }
-                {} # This is just for compatibility, see the TODO above
-              when "vmrc"
-                host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
-                vmid = @record.ems_ref
-                {
-                  :host        => host,
-                  :vmid        => @record.ems_ref,
-                  :ticket      => j(params[:ticket]),
-                  :api_version => @record.ext_management_system.api_version.to_s,
-                  :os          => browser_info(:os),
-                  :name        => @record.name,
-                  :vmrc_uri    => build_vmrc_uri(host, vmid, params[:ticket])
-                }
-              end
+    host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
+    options = {
+      :host        => host,
+      :vmid        => @record.ems_ref,
+      :ticket      => j(params[:ticket]),
+      :api_version => @record.ext_management_system.api_version.to_s,
+      :os          => browser_info(:os),
+      :name        => @record.name,
+      :vmrc_uri    => build_vmrc_uri(host, @record.ems_ref, params[:ticket])
+    }
     render :template => "vm_common/console_#{console_type}",
            :layout   => false,
            :locals   => options
@@ -61,12 +46,14 @@ module VmRemote
     override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w(data: 'self'))
     %i(secret url proto).each { |p| params.require(p) }
 
-    proto = j(params[:proto])
-    if %w(vnc spice).include?(proto) # VMWare, RHEV
+    proto = j(params[:proto]).sub(/\-.*$/, '') # -suffix should be omitted from the protocol name
+    if %w(vnc spice webmks).include?(proto)
       @console = {
-        :url    => j(params[:url]),
-        :secret => j(params[:secret]),
-        :type   => proto
+        :url       => j(params[:url]),
+        :secret    => j(params[:secret]),
+        :is_vcloud => j(params[:is_vcloud]), # vCloud specific
+        :vmx       => j(params[:vmx]), # vCloud specific
+        :type      => proto
       }
       render(:template => 'layouts/remote_console', :layout => false)
     else
@@ -105,7 +92,7 @@ module VmRemote
     end
   end
 
-  # Task complete, show error or launch console using VNC/WebMKS/VMRC task info
+  # Task complete, show error or launch console using VNC/SPICE/WebMKS/VMRC task info
   def console_after_task(console_type)
     miq_task = MiqTask.find(params[:task_id])
     unless miq_task.results_ready?
@@ -113,11 +100,11 @@ module VmRemote
     end
     if @flash_array
       javascript_flash(:spinner_off => true)
-    else # open a window to show a VNC or VMWare console
+    else
       url = if miq_task.task_results[:remote_url]
               miq_task.task_results[:remote_url]
             else
-              console_action = console_type == 'html5' ? 'launch_html5_console' : 'launch_vmware_console'
+              console_action = %w(html5 webmks).include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
               url_for_only_path(:controller => controller_name,
                                 :action     => console_action,
                                 :id         => j(params[:id]),

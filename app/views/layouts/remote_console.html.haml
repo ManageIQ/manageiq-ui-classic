@@ -9,5 +9,16 @@
     -# Load the required JS based on the console type
     = javascript_include_tag 'jquery/dist/jquery.js', "remote_consoles/#{@console[:type]}", 'remote_console'
   %body
-    #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret]}
-    = render :partial => 'shared/remote_console_footer', :layout   => false, :locals   => { :console_type => @console[:type].upcase }
+    #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret], 'data-is-vcloud' => @console[:is_vcloud], 'data-vmx' => @console[:vmx]}
+    %footer.remote-console
+      .pull-left
+        %span#console-type.label.label-info= j @console[:type].upcase
+        %span#connection-status.label.label-warning= _('Connecting')
+      .pull-right
+        - if @console[:type] == 'webmks'
+          = select_tag(:keymap, options_for_select(VmwareConsoleHelper::KEYBOARD_LAYOUTS), :id => 'keymap')
+        %button#ctrlaltdel.btn.btn-default{:title => _('Send CTRL+ALT+DEL')}
+          %i.fa.fa-keyboard-o
+        %button#fullscreen.btn.btn-default{:title => _('Toggle Fullscreen')}
+          %i.fa.fa-arrows-alt
+

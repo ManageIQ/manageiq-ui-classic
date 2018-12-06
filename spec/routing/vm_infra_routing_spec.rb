@@ -34,9 +34,9 @@ describe 'routes for VmInfra' do
     end
   end
 
-  describe '#launch_vmware_console' do
+  describe '#launch_vmrc_console' do
     it 'routes with GET' do
-      expect(get("/#{controller_name}/launch_vmware_console")).to route_to("#{controller_name}#launch_vmware_console")
+      expect(get("/#{controller_name}/launch_vmrc_console")).to route_to("#{controller_name}#launch_vmrc_console")
     end
   end
 
