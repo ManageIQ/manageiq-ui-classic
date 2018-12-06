@@ -1,7 +1,7 @@
 describe MiqPolicyController do
   context "::MiqActions" do
     context "#action_edit" do
-      before :each do
+      before do
         @action = FactoryGirl.create(:miq_action, :name => "Test_Action")
         controller.instance_variable_set(:@sb, {})
         allow(controller).to receive(:replace_right_cell)

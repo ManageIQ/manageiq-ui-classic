@@ -41,7 +41,7 @@ describe ReportController do
     end
 
     context "handle input fields" do
-      before :each do
+      before do
         controller.instance_variable_set(:@edit, :new => {}) # Editor methods need @edit[:new]
         allow(controller).to receive(:build_edit_screen) # Don't actually build the edit screen
       end
@@ -459,7 +459,7 @@ describe ReportController do
         P1 = "Vm-name".freeze
         P2 = "Vm-boot_time".freeze
         P3 = "Vm-hostname".freeze
-        before :each do
+        before do
           edit = assigns(:edit)
           edit[:pivot_cols] = {}
           controller.instance_variable_set(:@edit, edit)
@@ -550,7 +550,7 @@ describe ReportController do
       context "handle summary field changes" do
         S1 = "Vm-test1".freeze
         S2 = "Vm-test2".freeze
-        before :each do
+        before do
           edit = assigns(:edit)
           edit[:new][:sortby1] = S1               # Set an initial sort by col
           edit[:new][:sortby2] = S2               # Set no second sort col
@@ -680,7 +680,7 @@ describe ReportController do
       end
 
       context "handle timeline field changes" do
-        before :each do
+        before do
           col = "Vm-created_on"
           controller.instance_variable_set(:@_params, :chosen_tl => col)
           controller.send(:gfv_timeline) # This will set the @edit timeline unit hash keys
@@ -819,7 +819,7 @@ describe ReportController do
     include_context "valid session"
     render_views
 
-    before :each do
+    before do
       login_as(FactoryGirl.create(:user))
       allow(controller).to receive(:x_active_tree) { :export_tree }
     end
@@ -1295,7 +1295,7 @@ describe ReportController do
       end
 
       context "User2 generates report under Group1" do
-        before :each do
+        before do
           os = OperatingSystem.create(:name => "RHEL 7", :product_name => "RHEL7")
           FactoryGirl.create(:vm_vmware, :operating_system => os)
           @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")

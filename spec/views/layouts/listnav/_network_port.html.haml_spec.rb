@@ -1,7 +1,7 @@
 describe "layouts/listnav/_network_port.html.haml" do
   helper QuadiconHelper
 
-  before :each do
+  before do
     set_controller_for_view("network_port")
     assign(:panels, "ems_prop" => true, "ems_rel" => true)
     allow(view).to receive(:truncate_length).and_return(15)
@@ -9,7 +9,7 @@ describe "layouts/listnav/_network_port.html.haml" do
   end
 
   %w(openstack google).each do |t|
-    before :each do
+    before do
       allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
       provider       = FactoryGirl.create("ems_#{t}".to_sym)
       security_group = FactoryGirl.create("security_group_#{t}".to_sym,

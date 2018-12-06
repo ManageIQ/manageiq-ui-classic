@@ -10,7 +10,7 @@ describe ReportController do
     # Configuration Management/Virtual Machines/VMs with Free Space > 50% by Department report
     let(:report_id) { 100_000_000_000_01 }
 
-    before :each do
+    before do
       @previous_count_of_widgets = MiqWidget.count
       allow(controller).to receive_messages(:load_edit => true)
       allow(controller).to receive(:widget_graph_menus)
@@ -20,12 +20,12 @@ describe ReportController do
     end
 
     context "add new widget" do
-      before :each do
+      before do
         controller.instance_variable_set(:@_params, :button => "add")
       end
 
       context "valid attributes" do
-        before :each do
+        before do
           timer = ReportHelper::Timer.new('Hourly', 1, 1, 1, 1, '11/13/2015', '00', '10')
           controller.instance_variable_set(:@edit,
                                            :schedule => miq_schedule, :new => {:title => "NewCustomWidget",
@@ -52,7 +52,7 @@ describe ReportController do
       end
 
       context "invalid attributes" do
-        before :each do
+        before do
           timer = ReportHelper::Timer.new('Hourly', 1, 1, 1, 1, '11/13/2015', '00', '10')
           controller.instance_variable_set(:@edit,
                                            :schedule => miq_schedule, :new => {:title => "",

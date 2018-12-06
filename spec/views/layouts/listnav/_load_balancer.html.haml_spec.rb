@@ -1,7 +1,7 @@
 describe "layouts/listnav/_load_balancer.html.haml" do
   helper QuadiconHelper
 
-  before :each do
+  before do
     set_controller_for_view("load_balancer")
     assign(:panels, "ems_prop" => true, "ems_rel" => true)
     allow(view).to receive(:truncate_length).and_return(15)
@@ -9,7 +9,7 @@ describe "layouts/listnav/_load_balancer.html.haml" do
   end
 
   %w(amazon).each do |t|
-    before :each do
+    before do
       allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
       provider                   = FactoryGirl.create("ems_#{t}".to_sym)
       @load_balancer             = FactoryGirl.create("load_balancer_#{t}".to_sym,

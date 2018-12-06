@@ -26,7 +26,7 @@ describe MiqRequestController do
   let(:request_body) { {:requester => user_child_tenant, :source_type => 'VmOrTemplate', :source_id => template.id} }
 
   describe "#get_view" do
-    before :each do
+    before do
       EvmSpecHelper.local_miq_server
 
       login_as user_child_tenant

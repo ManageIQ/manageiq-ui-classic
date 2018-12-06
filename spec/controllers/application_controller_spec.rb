@@ -293,7 +293,7 @@ describe ApplicationController do
   end
 
   describe "#build_user_emails_for_edit" do
-    before :each do
+    before do
       EvmSpecHelper.local_miq_server
       MiqUserRole.seed
 

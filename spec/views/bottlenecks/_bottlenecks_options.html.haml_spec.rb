@@ -1,5 +1,5 @@
 describe 'bottlenecks/_bottlenecks_options.html.haml' do
-  before :each do
+  before do
     set_controller_for_view('bottlenecks')
     assign(:sb, :groups     => %w(Capacity Utilization),
                 :tl_options => {:filter1 => 'ALL'})

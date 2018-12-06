@@ -313,7 +313,7 @@ describe NetworkRouterController do
         let(:user)    { FactoryGirl.create(:user, :features => "network_router_add_interface") }
         let(:tag)     { "/managed/environment/prod" }
 
-        before :each do
+        before do
           allow(controller).to receive(:drop_breadcrumb)
           controller.instance_variable_set(:@router, @router)
           controller.instance_variable_set(:@_params, :id => @router.id)

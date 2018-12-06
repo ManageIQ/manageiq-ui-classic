@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
   let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
 
   describe '#calculate_properties' do
-    before :each do
+    before do
       stub_user(:features => :all)
       button.calculate_properties
     end

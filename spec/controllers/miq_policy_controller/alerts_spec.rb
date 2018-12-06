@@ -27,7 +27,7 @@ describe MiqPolicyController do
         login_as FactoryGirl.create(:user, :features => "alert_admin")
       end
 
-      before :each do
+      before do
         @miq_alert = FactoryGirl.create(:miq_alert)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
@@ -49,7 +49,7 @@ describe MiqPolicyController do
       end
 
       context "#alert_field_changed" do
-        before :each do
+        before do
           controller.params = {:id => 0, :exp_name => ""}
           session[:edit] = {:key => "alert_edit__0", :new => {}}
           allow(controller).to receive(:send_button_changes).and_return(nil)
@@ -81,7 +81,7 @@ describe MiqPolicyController do
       end
 
       context "#alert_edit_cancel" do
-        before :each do
+        before do
           allow(controller).to receive(:replace_right_cell).and_return(true)
         end
 
@@ -140,7 +140,7 @@ describe MiqPolicyController do
         login_as FactoryGirl.create(:user, :features => "alert_admin")
       end
 
-      before :each do
+      before do
         expression = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
         @miq_alert = FactoryGirl.create(
           :miq_alert,

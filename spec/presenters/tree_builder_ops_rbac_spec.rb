@@ -50,7 +50,7 @@ describe TreeBuilderOpsRbac do
     let(:other_group) { FactoryGirl.create(:miq_group) }
     let(:other_user) { FactoryGirl.create(:user, :miq_groups => [other_group]) }
 
-    before :each do
+    before do
       login_as user
     end
 

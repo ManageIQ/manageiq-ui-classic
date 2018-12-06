@@ -299,7 +299,7 @@ describe EmsContainerController do
 
     context "Provider update with kubevirt provider" do
       context "update when virtualization selection is enabled" do
-        before :each do
+        before do
           stub_user(:features => :all)
           session[:edit] = assigns(:edit)
         end

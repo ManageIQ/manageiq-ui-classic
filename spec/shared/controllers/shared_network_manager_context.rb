@@ -1,5 +1,5 @@
 shared_context :shared_network_manager_context do |t|
-  before :each do
+  before do
     @ems_cloud      = FactoryGirl.create("ems_#{t}".to_sym,
                                          :name => "Cloud Manager")
     @ems            = @ems_cloud.network_manager

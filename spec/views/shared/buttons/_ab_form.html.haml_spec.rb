@@ -1,5 +1,5 @@
 describe "shared/buttons/_ab_form.html.haml" do
-  before :each do
+  before do
     set_controller_for_view("miq_ae_customization")
     assign(:sb, :active_tab => "ab_options_tab")
     assign(:edit, :new => {:target_class => "Cloud Network"})

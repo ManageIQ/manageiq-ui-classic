@@ -1,7 +1,7 @@
 describe ReportController do
   render_views
   let(:user) { FactoryGirl.create(:user, :features => "none") }
-  before :each do
+  before do
     login_as user
     EvmSpecHelper.create_guid_miq_server_zone
   end

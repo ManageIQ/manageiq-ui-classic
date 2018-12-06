@@ -1,6 +1,6 @@
 describe MiqPolicyController do
   render_views
-  before :each do
+  before do
     EvmSpecHelper.local_miq_server
     stub_user(:features => :all)
   end

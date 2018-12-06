@@ -484,7 +484,7 @@ describe MiqAeCustomizationController do
   end
 
   context "#x_button" do
-    before :each do
+    before do
       controller.instance_variable_set(:@sb, :applies_to_class => "EmsCluster")
       session[:sandboxes] = {
         "miq_ae_customization" => {

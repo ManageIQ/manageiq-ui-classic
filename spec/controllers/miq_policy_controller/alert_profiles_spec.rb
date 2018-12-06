@@ -5,7 +5,7 @@ describe MiqPolicyController do
     end
 
     context "#alert_profile_assign" do
-      before :each do
+      before do
         @ap = FactoryGirl.create(:miq_alert_set)
         controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree)
         allow(controller).to receive(:replace_right_cell)
@@ -52,7 +52,7 @@ describe MiqPolicyController do
     end
 
     context '#alert_profile_delete' do
-      before :each do
+      before do
         @ap = FactoryGirl.create(:miq_alert_set)
         controller.instance_variable_set(:@sb, :trees => {:alert_profile_tree => {:active_node => "xx-Vm_ap-#{@ap.id}"}}, :active_tree => :alert_profile_tree)
         allow(controller).to receive(:replace_right_cell)
@@ -73,7 +73,7 @@ describe MiqPolicyController do
     end
 
     context "#alert_profile_edit" do
-      before :each do
+      before do
         controller.instance_variable_set(:@sb,
                                          :trees       => {
                                            :alert_profile_tree => {:active_node => "xx-Vm"}
