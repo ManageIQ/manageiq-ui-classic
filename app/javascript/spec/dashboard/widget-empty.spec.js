@@ -1,5 +1,7 @@
 import { module, inject } from './mocks';
 
+require('../helpers/getJSONFixtures.js');
+
 describe('widget-empty', () => {
   let $scope;
   let element;

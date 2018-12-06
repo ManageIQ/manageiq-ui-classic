@@ -4,6 +4,11 @@ import fetchMock from 'fetch-mock';
 import FormRender from '@data-driven-forms/react-form-renderer';
 import ServiceForm from '../../components/service-form';
 
+require('../helpers/addFlash.js');
+require('../helpers/miqSparkle.js');
+require('../helpers/miqAjaxButton.js');
+require('../helpers/mockAsyncRequest.js');
+
 describe('Service form component', () => {
   let initialProps;
   let submitSpy;

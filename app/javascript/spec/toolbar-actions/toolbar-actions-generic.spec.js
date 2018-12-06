@@ -1,6 +1,11 @@
-import 'angular-mocks';
 import getGridChecks from '../../packs/toolbar-actions-common';
 import { onCustomAction } from '../../toolbar-actions/custom-action';
+
+require('../helpers/angular.js');
+require('../helpers/API.js');
+require('../helpers/addFlash.js');
+require('../helpers/sprintf.js');
+require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
