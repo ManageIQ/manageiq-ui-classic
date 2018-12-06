@@ -7,5 +7,11 @@ module ManageIQ::Providers::EmbeddedAnsible
     def self.fileicon
       'svg/vendor-ansible.svg'
     end
+
+    def single_quad
+      {
+        :fileicon => fileicon
+      }
+    end
   end
 end
