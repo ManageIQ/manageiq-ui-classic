@@ -74,7 +74,7 @@ module AutomateTreeHelper
           selected_path = @edit[:new][:retire_fqname]
         end
         if @edit[:domain_prefix_check].nil? &&
-           !selected_path.blank? &&
+           selected_path.present? &&
            MiqAeDatastore.path_includes_domain?(selected_path)
           page << javascript_checked('include_domain_prefix_chk')
           @edit[:include_domain_prefix] = true
@@ -101,9 +101,9 @@ module AutomateTreeHelper
   def at_tree_select(edit_key)
     id = parse_nodetype_and_id(params[:id]).last
     if params[:id].start_with?("aei-")
-      record = MiqAeInstance.find_by_id(id)
+      record = MiqAeInstance.find_by(:id => id)
     elsif params[:id].start_with?("aen-") && controller_name == "miq_ae_class"
-      record = MiqAeNamespace.find_by_id(id)
+      record = MiqAeNamespace.find_by(:id => id)
       record = nil if record.domain?
     end
     @edit[:new][edit_key] = @edit[edit_key] if @edit[:new][edit_key].nil?
@@ -119,7 +119,7 @@ module AutomateTreeHelper
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed, 'automate')
-      @changed ? page << javascript_enable_field(inc_domain_chk) : page << javascript_disable_field(inc_domain_chk)
+      page << (@changed ? javascript_enable_field(inc_domain_chk) : javascript_disable_field(inc_domain_chk))
     end
   end
 end
