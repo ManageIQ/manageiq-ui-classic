@@ -6,7 +6,7 @@ class StorageDecorator < MiqDecorator
   def quadicon
     {
       :top_left     => {
-        :tooltip  => store_type.to_s
+        :tooltip => store_type.to_s
       }.merge(store_type_icon),
       :top_right    => {
         :text    => t = v_total_vms,
