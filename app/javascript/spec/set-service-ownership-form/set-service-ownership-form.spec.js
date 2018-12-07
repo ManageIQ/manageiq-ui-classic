@@ -4,6 +4,8 @@ import FormRenderer from '@data-driven-forms/react-form-renderer';
 import SetServiceOwnershipForm from '../../components/set-service-ownership-form';
 import createSchema from '../../components/set-service-ownership-form/schema';
 import { http } from '../../http_api';
+import '../helpers/miqAjaxButton';
+import '../helpers/addFlash';
 
 describe('Set service ownership form component', () => {
   let initialProps;
