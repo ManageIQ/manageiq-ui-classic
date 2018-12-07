@@ -43,7 +43,7 @@ class MiqTaskController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    @tabform = "tasks_#{params[:tab]}"
+    @tabform = "tasks_#{params[:'uib-tab']}"
     jobs
     render :action => "jobs"
   end
