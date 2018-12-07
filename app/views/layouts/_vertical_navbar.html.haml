@@ -18,7 +18,7 @@
               %ul.list-group
                 - menu_section.items.each do |menu_item|
                   - if menu_item.visible? && menu_item.leaf?
-                    %li.list-group-item{:class => item_nav_class(menu_item)}
+                    %li.list-group-item{:class => item_nav_class(menu_item), :id => "menu_item_#{menu_item.id}"}
                       %a{menu_item.link_params}
                         %span.list-group-item-value
                           = _(menu_item.name)
@@ -37,7 +37,7 @@
                         %ul.list-group
                           - menu_item.items.each do |menu_item_deep|
                             - if menu_item_deep.visible?
-                              %li.list-group-item{:class => item_nav_class(menu_item_deep)}
+                              %li.list-group-item{:class => item_nav_class(menu_item_deep), :id => "menu_item_#{menu_item_deep.id}"}
                                 %a{menu_item_deep.link_params}
                                   %span.list-group-item-value
                                     = _(menu_item_deep.name)
@@ -51,7 +51,7 @@
               %ul.list-group
                 - menu_section.items.each do |menu_item|
                   - if menu_item.visible?
-                    %li.list-group-item{:class => item_nav_class(menu_item)}
+                    %li.list-group-item{:class => item_nav_class(menu_item), :id => "menu_item_#{menu_item.id}"}
                       %a{menu_item.link_params}
                         %span.list-group-item-value
                           = _(menu_item.name)
