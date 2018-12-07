@@ -1,11 +1,13 @@
-/* global miqHttpInject */
+/* global miqHttpInject, miqSparkleOn, miqSparkleOff */
 
 angular.module('alertsCenter').controller('alertsMostRecentController',
-  ['$window', 'alertsCenterService', '$interval', '$timeout',
-    function($window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval',
+    function($window, alertsCenterService, $interval) {
       var vm = this;
 
       vm.alertsList = [];
+      vm.loadingDone = false;
+      miqSparkleOn();
 
       function processData(response) {
         var updatedAlerts = alertsCenterService.convertToAlertsList(response);
@@ -24,8 +26,7 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
         vm.alerts = updatedAlerts;
         vm.loadingDone = true;
         vm.filterChange();
-
-        $timeout();
+        miqSparkleOff();
       }
 
       function setupConfig() {
