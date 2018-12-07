@@ -31,8 +31,6 @@ class ApplicationHelper::ToolbarChooser
       @showtype == 'main' ? 'x_summary_view_tb' : nil
     elsif @layout == 'automation_manager'
       @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "x_gtl_view_tb"
-    else
-      nil
     end
   end
 
@@ -48,11 +46,9 @@ class ApplicationHelper::ToolbarChooser
     elsif %w(container_project).include?(@layout)
       'container_project_view_tb'
     elsif !%w(all_tasks timeline diagnostics my_tasks miq_server usage).include?(@layout) &&
-          (!@layout.starts_with?("miq_request")) && @display == "main" &&
+          !@layout.starts_with?("miq_request") && @display == "main" &&
           @showtype == "main" && !@in_a_form
       'summary_view_tb'
-    else
-      nil
     end
   end
 
@@ -130,8 +126,6 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_report
     elsif @layout == "miq_ae_customization"
       center_toolbar_filename_automate_customization
-    else
-      nil
     end
   end
 
@@ -157,8 +151,6 @@ class ApplicationHelper::ToolbarChooser
       "miq_ae_domain_center_tb"
     elsif !ns.domain?
       "miq_ae_namespace_center_tb"
-    else
-      nil
     end
   end
 
@@ -183,7 +175,7 @@ class ApplicationHelper::ToolbarChooser
           return "custom_button_center_tb"      # button node is selected
         end
       end
-    elsif @in_a_form      # to show buttons on dialog add/edit screens
+    elsif @in_a_form # to show buttons on dialog add/edit screens
       return "dialog_center_tb"
     end
     nil
@@ -192,7 +184,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_services
     if x_active_tree == :sandt_tree
       if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate"
-        return "servicetemplate_center_tb"
+        "servicetemplate_center_tb"
       elsif @sb[:buttons_node]
         nodes = x_node.split('_')
         if nodes.length == 3 && nodes[2].split('-').first == "xx"
@@ -203,27 +195,27 @@ class ApplicationHelper::ToolbarChooser
           return "catalogitem_button_center_tb"
         end
       else
-        return "servicetemplates_center_tb"
+        "servicetemplates_center_tb"
       end
     elsif x_active_tree == :stcat_tree
       if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplateCatalog"
-        return "servicetemplatecatalog_center_tb"
+        "servicetemplatecatalog_center_tb"
       else
-        return "servicetemplatecatalogs_center_tb"
+        "servicetemplatecatalogs_center_tb"
       end
     elsif x_active_tree == :svcs_tree
       if TreeBuilder.get_model_for_prefix(@nodetype) == "Service"
-        return "service_center_tb"
+        "service_center_tb"
       elsif x_node == 'xx-rsrv'
-        return "retired_services_center_tb"
+        "retired_services_center_tb"
       else
-        return "services_center_tb"
+        "services_center_tb"
       end
     elsif x_active_tree == :ot_tree
       if %w(root xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap).include?(x_node)
-        return "orchestration_templates_center_tb"
+        "orchestration_templates_center_tb"
       else
-        return "orchestration_template_center_tb"
+        "orchestration_template_center_tb"
       end
     end
   end
@@ -236,7 +228,7 @@ class ApplicationHelper::ToolbarChooser
     if @report && x_active_tree == :cb_reports_tree
       return "chargeback_center_tb"
     elsif x_active_tree == :cb_rates_tree && x_node != "root"
-      if ["Compute", "Storage"].include?(x_node.split('-').last)
+      if %w(Compute Storage).include?(x_node.split('-').last)
         return "chargebacks_center_tb"
       else
         return "chargeback_center_tb"
@@ -327,7 +319,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_report
     if x_active_tree == :db_tree
       node = x_node
-      if node == "root" || node == "xx-g"
+      if %w(node xx-g).include?(node)
         return nil
       elsif node.split('-').length == 3
         return "miq_widget_sets_center_tb"
@@ -353,12 +345,10 @@ class ApplicationHelper::ToolbarChooser
         return "miq_reports_center_tb"
       end
     elsif x_active_tree == :schedules_tree
-      return x_node == "root" ?
-          "miq_report_schedules_center_tb" : "miq_report_schedule_center_tb"
+      return x_node == "root" ? "miq_report_schedules_center_tb" : "miq_report_schedule_center_tb"
     elsif x_active_tree == :widgets_tree
       node = x_node
-      return node == "root" || node.split('-').length == 2 ?
-          "miq_widgets_center_tb" : "miq_widget_center_tb"
+      return node == "root" || node.split('-').length == 2 ? "miq_widgets_center_tb" : "miq_widget_center_tb"
     end
     nil
   end
@@ -367,14 +357,12 @@ class ApplicationHelper::ToolbarChooser
     if x_active_tree == :pxe_servers_tree
       if x_node == "root"
         return "pxe_servers_center_tb"
+      elsif x_node.split('-').first == "pi"
+        return "pxe_image_center_tb"
+      elsif x_node.split('-').first == "wi"
+        return "windows_image_center_tb"
       else
-        if x_node.split('-').first == "pi"
-          return "pxe_image_center_tb"
-        elsif x_node.split('-').first == "wi"
-          return "windows_image_center_tb"
-        else
-          return "pxe_server_center_tb"
-        end
+        return "pxe_server_center_tb"
       end
     elsif x_active_tree == :customization_templates_tree
       if x_node == "root" ||
@@ -394,7 +382,7 @@ class ApplicationHelper::ToolbarChooser
       if x_node == "root"
         return "iso_datastores_center_tb"
       elsif x_node_split.first == "isi"
-         # on image node
+        # on image node
         return "iso_image_center_tb"
       else
         return "iso_datastore_center_tb"
@@ -631,24 +619,18 @@ class ApplicationHelper::ToolbarChooser
   def infra_networking_tree_center_tb(nodes)
     if %w(root e h c).include?(nodes.first)
       "infra_networkings_center_tb"
-    else
-      nil
     end
   end
 
   def configuration_profile_center_tb
     if @sb[:active_tab] == "configured_systems"
       "unassigned_profiles_group_center_tb"
-    else
-      nil
     end
   end
 
   def inventory_group_center_tb
     if @sb[:active_tab] == "configured_systems"
       "configured_systems_ansible_center_tb"
-    else
-      nil
     end
   end
 

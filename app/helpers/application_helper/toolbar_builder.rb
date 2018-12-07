@@ -132,11 +132,11 @@ class ApplicationHelper::ToolbarBuilder
 
     button[:enabled] = input[:enabled]
     %i(title text confirm enabled).each do |key|
-      unless input[key].blank?
+      if input[key].present?
         button[key] = button.localized(key, input[key])
       end
     end
-    button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) unless input[:url_parms].blank?
+    button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) if input[:url_parms].present?
 
     if input[:popup] # special behavior: button opens window_url in a new window
       button[:popup] = true
@@ -389,7 +389,7 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
-    return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
+    return true if id.starts_with?("view_") && id.ends_with?("textual") # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
     return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare).to_s)
@@ -425,8 +425,8 @@ class ApplicationHelper::ToolbarBuilder
     return url_parm unless url_parm =~ /=/
 
     keep_parms = %w(bc escape menu_click sb_controller)
-    query_string = Rack::Utils.parse_query URI("?#{request.query_string}").query
-    query_string.delete_if { |k, _v| !keep_parms.include? k }
+    query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
+    query_string.delete_if { |k, _v| !keep_parms.include?(k) }
 
     url_parm_hash = preprocess_url_param(url_parm)
     query_string.merge!(url_parm_hash)
@@ -439,7 +439,7 @@ class ApplicationHelper::ToolbarBuilder
     url_parm = parse_questionmark.post_match if parse_questionmark.present?
     url_parm = parse_ampersand.post_match if parse_ampersand.present?
     encoded_url = URI.encode(url_parm)
-    Rack::Utils.parse_query URI("?#{encoded_url}").query
+    Rack::Utils.parse_query(URI("?#{encoded_url}").query)
   end
 
   def build_toolbar_setup

@@ -20,7 +20,7 @@ module ApplicationHelper
   VALID_PERF_PARENTS = {
     "EmsCluster" => :ems_cluster,
     "Host"       => :host
-  }
+  }.freeze
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -129,7 +129,7 @@ module ApplicationHelper
       MiqTask
       MiqRequest
       PxeServer
-    ).include? type
+    ).include?(type)
   end
 
   CONTROLLER_TO_MODEL = {
@@ -197,7 +197,7 @@ module ApplicationHelper
   end
 
   def restful_routed_action?(controller = controller_name, action = action_name)
-    restful_routed?(("#{controller.camelize}Controller").constantize.model) && !%w(explorer show_list).include?(action)
+    restful_routed?("#{controller.camelize}Controller".constantize.model) && !%w(explorer show_list).include?(action)
   rescue
     false
   end
@@ -222,7 +222,8 @@ module ApplicationHelper
     unsupported_record.nil?
   end
 
-  def url_for_record(record, action = "show") # Default action is show
+  # Default action is show
+  def url_for_record(record, action = "show")
     @id = record.id
     db  = if controller.kind_of?(VmOrTemplateController)
             "vm_or_template"
@@ -248,17 +249,16 @@ module ApplicationHelper
   end
 
   # Create a url for a record that links to the proper controller
-  def url_for_db(db, action = "show", item = nil) # Default action is show
+  def url_for_db(db, action = "show", item = nil)
     if item && restful_routed?(item)
       return polymorphic_path(item)
     end
-    if @vm && ["Account", "User", "Group", "Patch", "GuestApplication"].include?(db)
+    if @vm && %w(Account User Group Patch GuestApplication).include?(db)
       return url_for_only_path(:controller => "vm_or_template",
-                     :action     => @lastaction,
-                     :id         => @vm,
-                     :show       => @id
-                    )
-    elsif @host && ["Patch", "GuestApplication"].include?(db)
+                               :action     => @lastaction,
+                               :id         => @vm,
+                               :show       => @id)
+    elsif @host && %w(Patch GuestApplication).include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
     elsif %w(ConfiguredSystem ConfigurationProfile).include?(db)
       return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
@@ -318,8 +318,7 @@ module ApplicationHelper
               CloudNetwork
               CloudSubnet
               LoadBalancer
-              CloudVolume
-              ).include?(view.db)
+              CloudVolume).include?(view.db)
           return url_for_only_path(:controller => controller, :action => "show") + "/"
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
@@ -375,8 +374,8 @@ module ApplicationHelper
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
       return url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
-                     :action     => association,
-                     :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
+                               :action     => association,
+                               :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
     end
   end
 
@@ -695,7 +694,7 @@ module ApplicationHelper
   # checking if any of the toolbar is visible
   def toolbars_visible?
     (@toolbars['history_tb'] || @toolbars['center_tb'] || @toolbars['view_tb']) &&
-    (@toolbars['history_tb'] != 'blank_view_tb' && @toolbars['history_tb'] != 'blank_view_tb' && @toolbars['view_tb'] != 'blank_view_tb')
+      (@toolbars['history_tb'] != 'blank_view_tb' && @toolbars['history_tb'] != 'blank_view_tb' && @toolbars['view_tb'] != 'blank_view_tb')
   end
 
   # Format a column in a report view for display on the screen
@@ -703,8 +702,7 @@ module ApplicationHelper
     tz ||= ["miqschedule"].include?(view.db.downcase) ? MiqServer.my_server.server_timezone : Time.zone
     celltext = view.format(col,
                            row[col],
-                           :tz => tz
-                          ).gsub(/\\/, '\&')    # Call format, then escape any backslashes
+                           :tz => tz).gsub(/\\/, '\&') # Call format, then escape any backslashes
     celltext
   end
 
@@ -721,21 +719,13 @@ module ApplicationHelper
   end
 
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no center toolbar to be shown
-  def center_toolbar_filename
-    _toolbar_chooser.center_toolbar_filename
-  end
+  delegate :center_toolbar_filename, :to => :_toolbar_chooser
 
-  def history_toolbar_filename
-    _toolbar_chooser.history_toolbar_filename
-  end
+  delegate :history_toolbar_filename, :to => :_toolbar_chooser
 
-  def x_view_toolbar_filename
-    _toolbar_chooser.x_view_toolbar_filename
-  end
+  delegate :x_view_toolbar_filename, :to => :_toolbar_chooser
 
-  def view_toolbar_filename
-    _toolbar_chooser.view_toolbar_filename
-  end
+  delegate :view_toolbar_filename, :to => :_toolbar_chooser
 
   def _toolbar_chooser
     ToolbarChooser.new(
@@ -862,21 +852,20 @@ module ApplicationHelper
        services
        storage
        templates
-       vm
-      ).include?(@layout)
+       vm).include?(@layout)
   end
 
   # Do we show or hide the clear_search link in the list view title
   def clear_search_status
-    !!(@edit && @edit.fetch_path(:adv_search_applied, :text))
+    !!(@edit&.fetch_path(:adv_search_applied, :text))
   end
 
   # Should we allow the user input checkbox be shown for an atom in the expression editor
-  QS_VALID_USER_INPUT_OPERATORS = ["=", "!=", ">", ">=", "<", "<=", "INCLUDES", "STARTS WITH", "ENDS WITH", "CONTAINS"]
-  QS_VALID_FIELD_TYPES = [:string, :boolean, :integer, :float, :percent, :bytes, :megabytes]
+  QS_VALID_USER_INPUT_OPERATORS = ["=", "!=", ">", ">=", "<", "<=", "INCLUDES", "STARTS WITH", "ENDS WITH", "CONTAINS"].freeze
+  QS_VALID_FIELD_TYPES = %i(string boolean integer float percent bytes megabytes).freeze
   def qs_show_user_input_checkbox?
     return true if @edit[:expression_method]
-    return false unless @edit[:adv_search_open]  # Only allow user input for advanced searches
+    return false unless @edit[:adv_search_open] # Only allow user input for advanced searches
     return false unless QS_VALID_USER_INPUT_OPERATORS.include?(@edit[@expkey][:exp_key])
     val = (@edit[@expkey][:exp_typ] == "field" && # Field atoms with certain field types return true
            QS_VALID_FIELD_TYPES.include?(@edit[@expkey][:val1][:type])) ||
@@ -889,7 +878,7 @@ module ApplicationHelper
 
   # Should we allow the field alias checkbox to be shown for an atom in the expression editor
   def adv_search_show_alias_checkbox?
-    @edit[:adv_search_open]  # Only allow field aliases for advanced searches
+    @edit[:adv_search_open] # Only allow field aliases for advanced searches
   end
 
   def pressed2model_action(pressed)
@@ -1014,7 +1003,7 @@ module ApplicationHelper
     # there's no model for ResourceController - defaulting to traditional routing
     begin
       model = self.class.model
-    rescue => _err
+    rescue StandardError => _err
       model = nil
     end
     if model && args.class == Hash && args[:action] == 'show' && restful_routed?(model)
@@ -1028,7 +1017,7 @@ module ApplicationHelper
   def javascript_redirect(args)
     render :update do |page|
       page << javascript_prologue
-      page.redirect_to args
+      page.redirect_to(args)
     end
   end
 
@@ -1073,7 +1062,8 @@ module ApplicationHelper
         else
           _("Error: Record no longer exists in the database")
         end,
-        :error, true)
+        :error, true
+      )
       session[:flash_msgs] = @flash_array
     end
 
@@ -1172,8 +1162,7 @@ module ApplicationHelper
                         security_group
                         services
                         storage
-                        templates
-                      )
+                        templates).freeze
 
   def render_gtl_view_tb?
     GTL_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
@@ -1195,9 +1184,9 @@ module ApplicationHelper
 
   def update_query_string_params(update_this_param)
     exclude_params = %w(button flash_msg page ppsetting pressed sortby sort_choice type)
-    query_string = Rack::Utils.parse_query URI("?#{request.query_string}").query
+    query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
     updated_query_string = query_string.symbolize_keys
-    updated_query_string.delete_if { |k, _v| exclude_params.include? k.to_s }
+    updated_query_string.delete_if { |k, _v| exclude_params.include?(k.to_s) }
     updated_query_string.merge!(update_this_param)
   end
 
@@ -1257,8 +1246,7 @@ module ApplicationHelper
        templates_images_filter
        vandt
        vms_filter
-       vms_instances_filter
-      ).include?(x_tree[:type])
+       vms_instances_filter).include?(x_tree[:type])
   end
 
   def fonticon_or_fileicon(item)
@@ -1408,7 +1396,7 @@ module ApplicationHelper
     if text == "Region"
       Vmdb::Appliance.PRODUCT_NAME + " " + _(text)
     else
-     _(text)
+      _(text)
     end
   end
 
@@ -1428,13 +1416,13 @@ module ApplicationHelper
 
   # redirect to show_list (after succesfully deleted the entity being displayed)
   def single_delete_redirect
-    javascript_redirect :action      => 'show_list',
+    javascript_redirect(:action      => 'show_list',
                         :flash_msg   => @flash_array[0][:message],
-                        :flash_error => @flash_array[0][:level] == :error
+                        :flash_error => @flash_array[0][:level] == :error)
   end
 
   def accessible_select_event_types
-    ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}
+    ApplicationController::Timelines::SELECT_EVENT_TYPE.map { |key, value| [_(key), value] }
   end
 
   def unique_html_id(prefix = 'unknown')
