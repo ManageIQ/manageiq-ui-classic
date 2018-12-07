@@ -3,6 +3,8 @@ window.$ = require('jquery');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 
+require('whatwg-fetch');
+
 require('../app/assets/javascripts/miq_global');
 
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
