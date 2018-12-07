@@ -1,3 +1,4 @@
+import { isString, isPlainObject } from 'lodash';
 import { sendDataWithRx } from '../miq_observable';
 
 const { redirectLogin } = window;
@@ -46,11 +47,11 @@ function processOptions(options) {
 }
 
 function processData(o) {
-  if (!o || _.isString(o)) {
+  if (!o || isString(o)) {
     return o;
   }
 
-  if (_.isPlainObject(o)) {
+  if (isPlainObject(o)) {
     return JSON.stringify(o);
   }
 
