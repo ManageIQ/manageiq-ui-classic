@@ -34,8 +34,7 @@
           .card-pf.card-pf-aggregate-status{"ng-repeat" => "item in group.itemsList track by item.name"}
             %a{"href" => "#", "ng-click" => "vm.showGroupAlerts(item)"}
               %span.h2.card-pf-title
-                %img.card-view-type-img{"ng-if" => "item.objectTypeImg",
-                                        "ng-src" => "{{item.objectTypeImg}}"}
+                %i{:class => "{{item.objectTypeImg}}", "ng-if" => "item.objectTypeImg"}
                 {{item.name}}
             .card-pf-body
               %p.card-pf-aggregate-status-notifications
