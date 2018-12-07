@@ -11,7 +11,6 @@ module.exports = {
             "> 1%",
             "last 2 versions",
             "Firefox ESR",
-            "IE 10",
             "IE 11",
           ],
         },
