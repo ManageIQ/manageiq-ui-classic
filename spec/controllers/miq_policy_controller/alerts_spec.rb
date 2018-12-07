@@ -1,11 +1,9 @@
 describe MiqPolicyController do
   context "::Alerts" do
     describe '#alert_delete' do
-      before do
-        login_as FactoryGirl.create(:user, :features => "alert_delete")
-      end
-
       let(:alert) { FactoryGirl.create(:miq_alert, :read_only => readonly) }
+
+      before { login_as FactoryGirl.create(:user, :features => "alert_delete") }
 
       context 'read only alert' do
         let(:readonly) { true }
@@ -25,16 +23,13 @@ describe MiqPolicyController do
     context "alert edit" do
       before do
         login_as FactoryGirl.create(:user, :features => "alert_admin")
-      end
-
-      before do
         @miq_alert = FactoryGirl.create(:miq_alert)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
                                          :active_tree => :alert_tree)
       end
 
-      context "#alert_build_edit_screen" do
+      describe "#alert_build_edit_screen" do
         it "it should skip id when copying all attributes of an existing alert" do
           controller.instance_variable_set(:@_params, :id => @miq_alert.id, :copy => "copy")
           controller.send(:alert_build_edit_screen)
@@ -48,7 +43,7 @@ describe MiqPolicyController do
         end
       end
 
-      context "#alert_field_changed" do
+      describe "#alert_field_changed" do
         before do
           controller.params = {:id => 0, :exp_name => ""}
           session[:edit] = {:key => "alert_edit__0", :new => {}}
@@ -80,10 +75,8 @@ describe MiqPolicyController do
         end
       end
 
-      context "#alert_edit_cancel" do
-        before do
-          allow(controller).to receive(:replace_right_cell).and_return(true)
-        end
+      describe "#alert_edit_cancel" do
+        before { allow(controller).to receive(:replace_right_cell).and_return(true) }
 
         it "it should correctly cancel edit screen of existing alert" do
           session[:edit] = {:alert_id => @miq_alert.id}
@@ -135,12 +128,9 @@ describe MiqPolicyController do
       end
     end
 
-    context "alert_valid_record?" do
+    describe "#alert_valid_record?" do
       before do
         login_as FactoryGirl.create(:user, :features => "alert_admin")
-      end
-
-      before do
         expression = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
         @miq_alert = FactoryGirl.create(
           :miq_alert,
@@ -174,6 +164,23 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@edit, edit)
         controller.send(:alert_valid_record?, @miq_alert)
         expect(assigns(:flash_array)).to be_nil
+      end
+
+      context 'not choosing Send an E-mail option while adding new Alert' do
+        let(:alert) do
+          FactoryGirl.create(:miq_alert,
+                             :expression         => {:eval_method => 'nothing'},
+                             :options            => {:notifications => {:delay_next_evaluation => 3600, :evm_event => {}}},
+                             :responds_to_events => '_hourly_timer_')
+        end
+        let(:edit) { {:new => {:db => 'ContainerNode', :expression => {:eval_method => 'nothing'}}} }
+
+        before { controller.instance_variable_set(:@edit, edit) }
+
+        it 'returns empty flash array' do
+          controller.send(:alert_valid_record?, alert)
+          expect(assigns(:flash_array)).to be_nil
+        end
       end
     end
   end
