@@ -6,7 +6,6 @@ import CloudTenantForm from '../../components/cloud-tenant-form/cloud-tenant-for
 
 require('../helpers/miqSparkle.js');
 require('../helpers/miqAjaxButton.js');
-require('../helpers/mockAsyncRequest.js');
 
 describe('Cloud tenant form component', () => {
   let emsChoices;
