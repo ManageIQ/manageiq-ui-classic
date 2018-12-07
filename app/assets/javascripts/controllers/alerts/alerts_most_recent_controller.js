@@ -14,11 +14,11 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
 
         // update display data for the alerts from the current alert settings
         angular.forEach(updatedAlerts, function(nextUpdate) {
-          matchingAlert = _.find(vm.alerts, function(existingAlert) {
+          var matchingAlert = _.find(vm.alerts, function(existingAlert) {
             return nextUpdate.id === existingAlert.id;
           });
 
-          if (matchingAlert !== undefined) {
+          if (matchingAlert) {
             nextUpdate.isExpanded = matchingAlert.isExpanded;
           }
         });

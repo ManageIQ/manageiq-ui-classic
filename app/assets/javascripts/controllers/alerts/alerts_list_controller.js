@@ -18,7 +18,7 @@ angular.module('alertsCenter').controller('alertsListController',
             return nextUpdate.id === existingAlert.id;
           });
 
-          if (matchingAlert !== undefined) {
+          if (matchingAlert) {
             nextUpdate.isExpanded = matchingAlert.isExpanded;
           }
         });

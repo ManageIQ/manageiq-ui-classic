@@ -115,9 +115,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         var filtered = true;
         if (item.info.length + item.warning.length + item.error.length > 0) {
           var filter = _.find(vm.filterConfig.appliedFilters, function(filter) {
-            if (!alertsCenterService.matchesFilter(item, filter)) {
-              return true;
-            }
+            return !alertsCenterService.matchesFilter(item, filter);
           });
           filtered = filter != undefined;
         }
