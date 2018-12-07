@@ -383,7 +383,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
     return deferred.promise;
   };
 
-  _this.updateAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+  _this.updateAlertsData = function(limit, offset, sortField, sortAscending) {
     // Update data then get the alerts data
     return _this.getCurrentUser()
       .then(_this.updateExistingUsers)
@@ -391,7 +391,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       .then(_this.updateTags)
       .then(_this.updateIcons)
       .then(function() {
-        return _this.getAlertsData(limit, offset, filters, sortField, sortAscending);
+        return _this.getAlertsData(limit, offset, sortField, sortAscending);
       });
   };
 
@@ -403,7 +403,7 @@ angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$ti
       });
   };
 
-  _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+  _this.getAlertsData = function(limit, offset, sortField, sortAscending) {
     var deferred = $q.defer();
     var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource&filter[]=resolved=false&filter[]=or+resolved=nil';
     var limitOptions = '';

@@ -105,12 +105,12 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
       }
 
       function getAlerts() {
-        alertsCenterService.updateAlertsData(vm.showCount, 0, undefined, 'evaluated_on', false).then(processData);
+        alertsCenterService.updateAlertsData(vm.showCount, 0, 'evaluated_on', false).then(processData);
 
         if (alertsCenterService.refreshInterval > 0) {
           $interval(
             function() {
-              alertsCenterService.updateAlertsData(vm.showCount, 0, undefined, 'evaluated_on', false).then(processData);
+              alertsCenterService.updateAlertsData(vm.showCount, 0, 'evaluated_on', false).then(processData);
             },
             alertsCenterService.refreshInterval
           );
