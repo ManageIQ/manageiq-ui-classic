@@ -13,20 +13,21 @@ function closeModal(id) {
    * yay
    */
 
-
+  // FIXME: rewrite it without using jQuery and add some tests
   const divs = $(`#${id}`).parents('div');
   divs[divs.length - 1].remove(); // the div closest to body
 }
 
 export default function renderModal(title = __('Modal'), Inner = () => <div>Empty?</div>) {
-  const div = $('<div></div>').appendTo('body');
+  const div = document.createElement('div');
+  document.body.appendChild(div);
   const removeId = 'provider-dialogs';
 
   const close = () => closeModal(removeId);
 
   const output = modal(title, Inner, close, removeId);
 
-  ReactDOM.render(output, div[0]);
+  ReactDOM.render(output, div);
 }
 
 function modal(title, Inner, closed, removeId) {

@@ -35,7 +35,8 @@ function processOptions(options) {
   }
 
   if (o.csrf) {
-    o.headers['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+    const elem = document.querySelector("meta[name=csrf-token]");
+    o.headers['X-CSRF-Token'] = elem ? elem.getAttribute('content') : '';
     delete o.csrf;
   }
 

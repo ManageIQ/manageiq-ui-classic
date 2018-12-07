@@ -8,8 +8,9 @@ export default function textualSummaryGenericClick(item, event) {
   if (item.external) {
     window.open(item.link, '_blank');
   } else if (item.explorer) {
+    const tokenElement = document.querySelector("meta[name=csrf-token]");
     $.ajax({
-      data: `authenticity_token=${encodeURIComponent($('meta[name=csrf-token]').attr('content'))}`,
+      data: `authenticity_token=${encodeURIComponent(tokenElement ? tokenElement.getAttribute('content') : '')}`,
       dataType: 'script',
       type: 'post',
       url: item.link,
