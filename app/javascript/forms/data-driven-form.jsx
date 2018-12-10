@@ -1,6 +1,11 @@
 import React from 'react';
-import FormRender from '@data-driven-forms/react-form-renderer';
+import FormRender, { Validators } from '@data-driven-forms/react-form-renderer';
 import { formFieldsMapper, layoutMapper } from '@data-driven-forms/pf3-component-mapper';
+
+Validators.messages = {
+  ...Validators.messages,
+  required: __('Required'),
+};
 
 const buttonLabels = {
   submitLabel: __('Save'),
