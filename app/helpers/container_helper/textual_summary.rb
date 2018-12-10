@@ -92,13 +92,17 @@ module ContainerHelper::TextualSummary
   end
 
   def textual_privileged
-    {:label => _("Privileged"),
-     :value => @record.privileged} unless @record.privileged.nil?
+    unless @record.privileged.nil?
+      {:label => _("Privileged"),
+       :value => @record.privileged}
+    end
   end
 
   def textual_run_as_user
-    {:label => _("Run As User"),
-     :value => @record.run_as_user} if @record.run_as_user
+    if @record.run_as_user
+      {:label => _("Run As User"),
+       :value => @record.run_as_user}
+    end
   end
 
   def textual_se_linux_user
@@ -122,8 +126,10 @@ module ContainerHelper::TextualSummary
   end
 
   def textual_run_as_non_root
-    {:label => _("Run As Non Root"),
-     :value => @record.run_as_non_root} unless @record.run_as_non_root.nil?
+    unless @record.run_as_non_root.nil?
+      {:label => _("Run As Non Root"),
+       :value => @record.run_as_non_root}
+    end
   end
 
   def textual_group_env
@@ -149,6 +155,7 @@ module ContainerHelper::TextualSummary
       :values => [[_("Limit CPU cores"), @record.limit_cpu_cores],
                   [_("Limit Memory bytes"), @record.limit_memory_bytes],
                   [_("Request CPU cores"), @record.request_cpu_cores],
-                  [_("Request Memory bytes"), @record.request_memory_bytes]])
+                  [_("Request Memory bytes"), @record.request_memory_bytes]]
+    )
   end
 end
