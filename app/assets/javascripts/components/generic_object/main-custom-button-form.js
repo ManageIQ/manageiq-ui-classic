@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('mainCustomButtonFormComponent', {
+ManageIQ.angular.app.component('mainCustomButtonForm', {
   bindings: {
     genericObjectDefinitionRecordId: '@?',
     customButtonGroupRecordId: '@?',

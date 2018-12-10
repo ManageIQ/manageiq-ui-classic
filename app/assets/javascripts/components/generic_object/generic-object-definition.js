@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('genericObjectDefinitionComponent', {
+ManageIQ.angular.app.component('genericObjectDefinition', {
   bindings: {
     recordId: '@?',
     redirectUrl: '@',
