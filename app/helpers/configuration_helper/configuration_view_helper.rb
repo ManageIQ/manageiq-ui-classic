@@ -32,9 +32,9 @@ module ConfigurationHelper
                 {:action   => "view_selected",
                  :resource => resource,
                  :view     => view},
-                :remote       => true,
-                'data-method' => :post,
-                :title        => text)
+                {:remote       => true,
+                 'data-method' => :post,
+                 :title        => text})
       end
     end
 
