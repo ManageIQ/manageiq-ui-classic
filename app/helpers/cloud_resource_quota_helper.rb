@@ -7,6 +7,7 @@ module CloudResourceQuotaHelper
     CloudResourceQuota.where(
       :cloud_tenant_id => cloud_tenant_id,
       :service_name    => service_name,
-      :name            => quota_name).first
+      :name            => quota_name
+    ).first
   end
 end
