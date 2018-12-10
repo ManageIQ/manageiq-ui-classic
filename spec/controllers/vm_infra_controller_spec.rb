@@ -402,6 +402,20 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  context 'Mixins::Actions::VmActions::Ownership' do
+    let(:vm) { FactoryGirl.create(:vm_vmware) }
+
+    it 'handles dont-change vs nil' do
+      expect(VmOrTemplate).to receive(:set_ownership).with([vm.id], {:group => nil})
+      post :ownership_update, :params => {
+        :user => "dont-change",
+        :group => "",
+        :objectIds => [vm.id],
+        :button => 'save',
+      }
+    end
+  end
+
   context 'transform VM dialog' do
     let(:dialog)           { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
     let!(:resource_action) { FactoryGirl.create(:resource_action, :dialog => dialog) }
