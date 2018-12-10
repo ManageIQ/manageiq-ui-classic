@@ -5,7 +5,7 @@ module ComplianceSummaryHelper
 
   def textual_compliance_status
     h = {:label => _("Status")}
-    if @record.number_of(:compliances) == 0
+    if @record.number_of(:compliances).zero?
       h[:value] = _("Never Verified")
     else
       compliant = @record.last_compliance_status
@@ -13,10 +13,10 @@ module ComplianceSummaryHelper
       h[:icon]  = compliant ? "pficon pficon-ok" : "pficon pficon-error-circle-o"
       h[:value] = if !compliant
                     _("Non-Compliant as of %{time} Ago") %
-                    {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
+                      {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
                   else
                     _("Compliant as of %{time} Ago") %
-                    {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
+                      {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
                   end
       h[:title] = _("Show Details of Compliance Check on %{date}") % {:date => format_timezone(date)}
       h[:explorer] = true if @explorer
@@ -32,7 +32,7 @@ module ComplianceSummaryHelper
 
   def textual_compliance_history(options_if_available = {})
     h = {:label => _("History")}
-    if @record.number_of(:compliances) == 0
+    if @record.number_of(:compliances).zero?
       h[:value] = _("Not Available")
     else
       h[:icon]  = "pficon pficon-history"
@@ -44,7 +44,8 @@ module ComplianceSummaryHelper
         :controller => controller.controller_name,
         :action     => 'show',
         :id         => @record,
-        :display    => 'compliance_history')
+        :display    => 'compliance_history'
+      )
       h.merge!(options_if_available)
     end
     h
