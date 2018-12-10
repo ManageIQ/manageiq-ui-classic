@@ -111,9 +111,9 @@ module ContainerSummaryHelper
     textual_link(@record.guest_applications, :feature => "container_image_show",
                                              :label   => _("Packages"),
                                              :link    => url_for_only_path(:controller => controller.controller_name,
-                                                                 :action     => 'guest_applications',
-                                                                 :id         => @record,
-                                                                 :db         => controller.controller_name))
+                                                                           :action     => 'guest_applications',
+                                                                           :id         => @record,
+                                                                           :db         => controller.controller_name))
   end
 
   def textual_openscap
