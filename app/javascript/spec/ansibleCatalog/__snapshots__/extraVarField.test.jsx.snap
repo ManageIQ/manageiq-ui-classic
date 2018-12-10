@@ -1,15 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExtraVarField component should render correctly 1`] = `
-<_class
+<Field
+  format={[Function]}
   inputColumnSize={12}
   label=""
   labelColumnSize={0}
   name="provision[0].key"
+  parse={[Function]}
   placeholder="Variable"
   validate={[Function]}
   validateOnMount={true}
 >
   <Component />
-</_class>
+</Field>
 `;

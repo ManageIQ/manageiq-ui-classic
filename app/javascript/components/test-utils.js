@@ -37,7 +37,7 @@ export const testComponentSnapshotsWithFixtures = (Component, fixtures) =>
  * @param  {Function}  runAction  Action runner function
  * @return {Promise}
  */
-export const testActionSnapshot = async (runAction) => {
+export const testActionSnapshot = async(runAction) => {
   const actionResults = runAction();
 
   // if it's an async action

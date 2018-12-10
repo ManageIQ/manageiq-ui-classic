@@ -1,9 +1,19 @@
 /* global miqFlashLater */
 import React from 'react';
 import { Field } from 'react-final-form';
-import { FinalFormSelect, FinalFormTextArea, FinalFormField, FinalFormSwitch } from '@manageiq/react-ui-components/dist/forms';
+import {
+  FinalFormSelect,
+  FinalFormTextArea,
+  FinalFormField,
+  FinalFormSwitch,
+} from '@manageiq/react-ui-components/dist/forms';
 import { required } from 'redux-form-validators';
-import { DROPDOWN_OPTIONS, DEFAULT_PLACEHOLDER, PROVISIONING_FORM_FIELDS, FORM_DEFAULTS } from './constants';
+import {
+  DROPDOWN_OPTIONS,
+  DEFAULT_PLACEHOLDER,
+  PROVISIONING_FORM_FIELDS,
+  FORM_DEFAULTS,
+} from './constants';
 import { API } from '../../http_api';
 
 export const buildDropDown = (data = [], label, value) => data.map(item => (
@@ -13,8 +23,9 @@ export const renderFormField = (field, formData) => {
   const id = (field.id ? field.id : field.name);
   let displayField = true;
   if (field.condition) {
-    displayField = (field.condition.is ? (formData[field.condition.when] === field.condition.is) :
-      (formData[field.condition.when] !== field.condition.not));
+    displayField = (field.condition.is
+      ? (formData[field.condition.when] === field.condition.is)
+      : (formData[field.condition.when] !== field.condition.not));
   }
 
   return displayField ? (

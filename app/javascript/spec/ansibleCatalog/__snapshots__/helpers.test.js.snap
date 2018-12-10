@@ -1,24 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Ansible catalog form helpers can render a form field 1`] = `
-<_class
+<Field
   component={[Function]}
+  format={[Function]}
   inputColumnSize={8}
   label="Max TTL (mins)"
   labelColumnSize={3}
   name="test_execution_ttl"
+  parse={[Function]}
 >
-  <Field
-    component={[Function]}
-    format={[Function]}
+  <FinalFormField
+    input={
+      Object {
+        "name": "test_execution_ttl",
+        "onBlur": [Function],
+        "onChange": [Function],
+        "onFocus": [Function],
+        "value": "",
+      }
+    }
     inputColumnSize={8}
     label="Max TTL (mins)"
     labelColumnSize={3}
-    name="test_execution_ttl"
-    parse={[Function]}
-    reactFinalForm={null}
+    meta={
+      Object {
+        "active": undefined,
+        "data": undefined,
+        "dirty": undefined,
+        "dirtySinceLastSubmit": undefined,
+        "error": undefined,
+        "initial": undefined,
+        "invalid": undefined,
+        "pristine": undefined,
+        "submitError": undefined,
+        "submitFailed": undefined,
+        "submitSucceeded": undefined,
+        "submitting": undefined,
+        "touched": undefined,
+        "valid": undefined,
+        "visited": undefined,
+      }
+    }
   >
-    <FinalFormField
+    <FinalFormComponent
+      clearable={false}
+      componentType="textfield"
+      disabled={false}
       input={
         Object {
           "name": "test_execution_ttl",
@@ -31,6 +59,7 @@ exports[`Ansible catalog form helpers can render a form field 1`] = `
       inputColumnSize={8}
       label="Max TTL (mins)"
       labelColumnSize={3}
+      labelKey="label"
       meta={
         Object {
           "active": undefined,
@@ -50,79 +79,54 @@ exports[`Ansible catalog form helpers can render a form field 1`] = `
           "visited": undefined,
         }
       }
+      multi={false}
+      placeholder=""
+      searchable={false}
+      validateOnMount={false}
+      valueKey="value"
     >
-      <FinalFormComponent
-        clearable={false}
-        componentType="textfield"
-        disabled={false}
-        input={
-          Object {
-            "name": "test_execution_ttl",
-            "onBlur": [Function],
-            "onChange": [Function],
-            "onFocus": [Function],
-            "value": "",
-          }
-        }
-        inputColumnSize={8}
-        label="Max TTL (mins)"
-        labelColumnSize={3}
-        labelKey="label"
-        meta={
-          Object {
-            "active": undefined,
-            "data": undefined,
-            "dirty": undefined,
-            "dirtySinceLastSubmit": undefined,
-            "error": undefined,
-            "initial": undefined,
-            "invalid": undefined,
-            "pristine": undefined,
-            "submitError": undefined,
-            "submitFailed": undefined,
-            "submitSucceeded": undefined,
-            "submitting": undefined,
-            "touched": undefined,
-            "valid": undefined,
-            "visited": undefined,
-          }
-        }
-        multi={false}
-        placeholder=""
-        searchable={false}
-        validateOnMount={false}
-        valueKey="value"
+      <FormGroup
+        bsClass="form-group"
+        validationState={null}
       >
-        <FormGroup
-          bsClass="form-group"
-          validationState={null}
+        <div
+          className="form-group"
         >
-          <div
-            className="form-group"
+          <Col
+            bsClass="col"
+            className="control-label"
+            componentClass="label"
+            xs={3}
           >
-            <Col
-              bsClass="col"
-              className="control-label"
-              componentClass="label"
-              xs={3}
+            <label
+              className="control-label col-xs-3"
             >
-              <label
-                className="control-label col-xs-3"
-              >
-                Max TTL (mins)
-              </label>
-            </Col>
-            <Col
-              bsClass="col"
-              componentClass="div"
-              xs={8}
+              Max TTL (mins)
+            </label>
+          </Col>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            xs={8}
+          >
+            <div
+              className="col-xs-8"
             >
-              <div
-                className="col-xs-8"
+              <FormControl
+                bsClass="form-control"
+                componentClass="input"
+                disabled={false}
+                id="test_execution_ttl"
+                name="test_execution_ttl"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder=""
+                type="text"
+                value=""
               >
-                <FormControl
-                  bsClass="form-control"
-                  componentClass="input"
+                <input
+                  className="form-control"
                   disabled={false}
                   id="test_execution_ttl"
                   name="test_execution_ttl"
@@ -132,28 +136,15 @@ exports[`Ansible catalog form helpers can render a form field 1`] = `
                   placeholder=""
                   type="text"
                   value=""
-                >
-                  <input
-                    className="form-control"
-                    disabled={false}
-                    id="test_execution_ttl"
-                    name="test_execution_ttl"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    placeholder=""
-                    type="text"
-                    value=""
-                  />
-                </FormControl>
-              </div>
-            </Col>
-          </div>
-        </FormGroup>
-      </FinalFormComponent>
-    </FinalFormField>
-  </Field>
-</_class>
+                />
+              </FormControl>
+            </div>
+          </Col>
+        </div>
+      </FormGroup>
+    </FinalFormComponent>
+  </FinalFormField>
+</Field>
 `;
 
 exports[`Ansible catalog form helpers should build an extra vars object 1`] = `

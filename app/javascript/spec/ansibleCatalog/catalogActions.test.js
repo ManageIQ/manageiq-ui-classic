@@ -47,7 +47,7 @@ describe('Catalog Actions', () => {
         },
         status: 500,
       });
-    store.dispatch(actions.loadDialogs()).then(() => {
+    return store.dispatch(actions.loadDialogs()).then(() => {
       expect(spy).toHaveBeenCalledWith('Request failed', 'error');
     });
   });

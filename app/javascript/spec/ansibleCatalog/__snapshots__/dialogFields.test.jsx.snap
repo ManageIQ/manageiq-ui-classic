@@ -2,8 +2,9 @@
 
 exports[`DialogField component should render correctly 1`] = `
 <div>
-  <_class
+  <Field
     component={[Function]}
+    format={[Function]}
     label="Dialog"
     name="dialogOption"
     options={
@@ -18,13 +19,15 @@ exports[`DialogField component should render correctly 1`] = `
         },
       ]
     }
+    parse={[Function]}
   />
   <Condition
     is="existing"
     when="dialogOption"
   >
-    <_class
+    <Field
       component={[Function]}
+      format={[Function]}
       label="Select Dialog"
       name="dialog_id"
       options={
@@ -35,6 +38,7 @@ exports[`DialogField component should render correctly 1`] = `
           },
         ]
       }
+      parse={[Function]}
       placeholder="<Choose>"
       validate={[Function]}
       validateOnMount={true}
@@ -44,10 +48,12 @@ exports[`DialogField component should render correctly 1`] = `
     is="new"
     when="dialogOption"
   >
-    <_class
+    <Field
       component={[Function]}
+      format={[Function]}
       label="New"
       name="dialog_name"
+      parse={[Function]}
       validate={[Function]}
       validateOnMount={true}
     />
