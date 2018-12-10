@@ -53,8 +53,8 @@ module CloudObjectStoreObjectHelper::TextualSummary
     if object_store_container && role_allows?(:feature => "cloud_object_store_container_show")
       h[:title] = _("Show this Cloud Object's parent Cloud Object Store Container")
       h[:link]  = url_for_only_path(:controller => 'cloud_object_store_container',
-                          :action     => 'show',
-                          :id         => object_store_container)
+                                    :action     => 'show',
+                                    :id         => object_store_container)
     end
     h
   end
