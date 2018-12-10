@@ -1,12 +1,14 @@
-/* global miqHttpInject */
+/* global miqHttpInject, miqSparkleOn, miqSparkleOff */
 
 angular.module('alertsCenter').controller('alertsListController',
-  ['$window', 'alertsCenterService', '$interval', '$timeout',
-    function($window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval',
+    function($window, alertsCenterService, $interval) {
       var vm = this;
 
       vm.alerts = [];
       vm.alertsList = [];
+      vm.loadingDone = false;
+      miqSparkleOn();
 
       function processData(response) {
         var updatedAlerts = alertsCenterService.convertToAlertsList(response);
@@ -16,7 +18,7 @@ angular.module('alertsCenter').controller('alertsListController',
             return nextUpdate.id === existingAlert.id;
           });
 
-          if (matchingAlert !== undefined) {
+          if (matchingAlert) {
             nextUpdate.isExpanded = matchingAlert.isExpanded;
           }
         });
@@ -24,8 +26,7 @@ angular.module('alertsCenter').controller('alertsListController',
         vm.alerts = updatedAlerts;
         vm.loadingDone = true;
         vm.filterChange();
-
-        $timeout();
+        miqSparkleOff();
       }
 
       function setupConfig() {

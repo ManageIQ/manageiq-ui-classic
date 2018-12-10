@@ -1,22 +1,24 @@
-/* global miqHttpInject */
+/* global miqHttpInject, miqSparkleOn, miqSparkleOff */
 
 angular.module('alertsCenter').controller('alertsMostRecentController',
-  ['$window', 'alertsCenterService', '$interval', '$timeout',
-    function($window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval',
+    function($window, alertsCenterService, $interval) {
       var vm = this;
 
       vm.alertsList = [];
+      vm.loadingDone = false;
+      miqSparkleOn();
 
       function processData(response) {
         var updatedAlerts = alertsCenterService.convertToAlertsList(response);
 
         // update display data for the alerts from the current alert settings
         angular.forEach(updatedAlerts, function(nextUpdate) {
-          matchingAlert = _.find(vm.alerts, function(existingAlert) {
+          var matchingAlert = _.find(vm.alerts, function(existingAlert) {
             return nextUpdate.id === existingAlert.id;
           });
 
-          if (matchingAlert !== undefined) {
+          if (matchingAlert) {
             nextUpdate.isExpanded = matchingAlert.isExpanded;
           }
         });
@@ -24,8 +26,7 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
         vm.alerts = updatedAlerts;
         vm.loadingDone = true;
         vm.filterChange();
-
-        $timeout();
+        miqSparkleOff();
       }
 
       function setupConfig() {
@@ -104,12 +105,12 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
       }
 
       function getAlerts() {
-        alertsCenterService.updateAlertsData(vm.showCount, 0, undefined, 'evaluated_on', false).then(processData);
+        alertsCenterService.updateAlertsData(vm.showCount, 0, 'evaluated_on', false).then(processData);
 
         if (alertsCenterService.refreshInterval > 0) {
           $interval(
             function() {
-              alertsCenterService.updateAlertsData(vm.showCount, 0, undefined, 'evaluated_on', false).then(processData);
+              alertsCenterService.updateAlertsData(vm.showCount, 0, 'evaluated_on', false).then(processData);
             },
             alertsCenterService.refreshInterval
           );

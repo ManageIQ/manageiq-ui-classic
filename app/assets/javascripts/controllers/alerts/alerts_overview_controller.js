@@ -1,11 +1,13 @@
-/* global miqHttpInject */
+/* global miqHttpInject, miqSparkleOn, miqSparkleOff */
 
 angular.module('alertsCenter').controller('alertsOverviewController',
-  ['$window', 'alertsCenterService', '$interval', '$timeout',
-    function($window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval',
+    function($window, alertsCenterService, $interval) {
       var vm = this;
+
       vm.alertData = [];
       vm.loadingDone = false;
+      miqSparkleOn();
 
       function setupInitialValues() {
         document.getElementById('center_div').className += ' miq-body';
@@ -113,9 +115,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         var filtered = true;
         if (item.info.length + item.warning.length + item.error.length > 0) {
           var filter = _.find(vm.filterConfig.appliedFilters, function(filter) {
-            if (!alertsCenterService.matchesFilter(item, filter)) {
-              return true;
-            }
+            return !alertsCenterService.matchesFilter(item, filter);
           });
           filtered = filter != undefined;
         }
@@ -240,10 +240,9 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         vm.displayFilters = alertsCenterService.displayFilters;
         vm.categories = alertsCenterService.categories;
 
-        vm.filterChange();
         vm.loadingDone = true;
-
-        $timeout();
+        vm.filterChange();
+        miqSparkleOff();
       }
 
       vm.onHoverAlerts = function(alerts) {
