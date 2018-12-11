@@ -344,7 +344,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def upload_file_valid?
-    params.fetch_path(:upload, :file).respond_to?(:read)
+    params.dig(:upload, :file).respond_to?(:read)
   end
 
   def peca_get_all(what, get_view)
@@ -1045,7 +1045,7 @@ class MiqPolicyController < ApplicationController
     @edit[:new][subkey][:trap_id]      = params[:trap_id] if params[:trap_id]
     refresh = true if params[:snmp_version]
     if process_variables
-      params.each_key do |var|
+      params.each do |var, _value|
         vars = var.split("__")
         next unless %w(oid var_type value).include?(vars[0])
 

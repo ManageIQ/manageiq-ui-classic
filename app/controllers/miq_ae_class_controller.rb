@@ -840,7 +840,7 @@ class MiqAeClassController < ApplicationController
           session[:field_data][:default_value] =
             @edit[:new_field][:default_value] = ''
         end
-        params.each_key do |field|
+        params.each do |field, _value|
           next unless field.to_s.starts_with?("fields_datatype")
 
           f = field.split('fields_datatype')
@@ -938,7 +938,7 @@ class MiqAeClassController < ApplicationController
           end
         end
 
-        params.each_key do |field|
+        params.each do |field, _value|
           if field.to_s.starts_with?("cls_fields_datatype_")
             f = field.split('cls_fields_datatype_')
             def_field = "cls_fields_value_" << f[1].to_s

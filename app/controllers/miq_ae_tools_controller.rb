@@ -177,7 +177,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
   def upload_import_file
     redirect_options = {:action => :review_import}
 
-    upload_file = params.fetch_path(:upload, :file)
+    upload_file = params.dig(:upload, :file)
 
     if upload_file.blank?
       add_flash(_("Use the Choose file button to locate an import file"), :warning)

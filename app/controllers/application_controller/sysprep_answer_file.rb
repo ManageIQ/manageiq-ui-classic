@@ -5,7 +5,7 @@ class ApplicationController
       @upload_sysprep_file = true
       @edit = session[:edit]
       build_grid
-      if params.fetch_path(:upload, :file).respond_to?(:read)
+      if params.dig(:upload, :file).respond_to?(:read)
         @edit[:new][:sysprep_upload_file] = params[:upload][:file].original_filename
         begin
           @edit[:new][:sysprep_upload_text] = SysprepFile.new(params[:upload][:file]).content

@@ -236,7 +236,7 @@ class CloudSubnetController < ApplicationController
       options[:gateway_ip] = params[:gateway].presence
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params.fetch_path(:cloud_tenant, :id)
+    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params.dig(:cloud_tenant, :id)
     options[:network_id] = params[:network_id] if params[:network_id]
     options[:enable_dhcp] = params[:dhcp_enabled]
     # TODO: Add dns_nameservers, allocation_pools, host_routes

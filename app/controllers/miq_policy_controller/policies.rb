@@ -167,7 +167,7 @@ module MiqPolicyController::Policies
       @edit[:new][:notes] = params[:notes].presence if params[:notes]
       @edit[:new][:active] = (params[:active] == "1") if params.key?(:active)
     when "events"
-      params.each_key do |field|
+      params.each do |field, _value|
         if field.to_s.starts_with?("event_")
           event = field.to_s.split("_").last
           if params[field] == "true"

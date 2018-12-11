@@ -64,7 +64,7 @@ class ReportController < ApplicationController
 
   def upload
     @sb[:flash_msg] = []
-    if params.fetch_path(:upload, :file) && File.size(params[:upload][:file].tempfile).zero?
+    if params.dig(:upload, :file) && File.size(params[:upload][:file].tempfile).zero?
       redirect_to(:action      => 'explorer',
                   :flash_msg   => _("Import file cannot be empty"),
                   :flash_error => true)
@@ -219,7 +219,7 @@ class ReportController < ApplicationController
   end
 
   def upload_widget_import_file
-    upload_file = params.fetch_path(:upload, :file)
+    upload_file = params.dig(:upload, :file)
 
     if upload_file.blank?
       add_flash("Use the Choose file button to locate an import file", :warning)

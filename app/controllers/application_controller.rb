@@ -972,7 +972,7 @@ class ApplicationController < ActionController::Base
 
       # Clickable should be false only when it's explicitly set to false
       not_clickable = if params
-                        (params.fetch_path(:additional_options, :clickable) == false)
+                        (params.dig(:additional_options, :clickable) == false)
                       else
                         false
                       end

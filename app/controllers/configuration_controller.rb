@@ -565,7 +565,7 @@ class ConfigurationController < ApplicationController
     when "ui_2" # Visual Settings tab
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
-      @edit[:new][:display][:display_vms] = params[:display_vms] unless params.fetch_path(:display_vms)
+      @edit[:new][:display][:display_vms] = params[:display_vms] unless params.dig(:display_vms)
     when "ui_3" # Visual Settings tab
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?

@@ -387,7 +387,7 @@ class NetworkRouterController < ApplicationController
         subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
         options[:external_gateway_info][:external_fixed_ips] = [{:subnet_id => subnet.ems_ref}]
       end
-      if params.fetch_path(:extra_attributes, :external_gateway_info, :enable_snat)
+      if params.dig(:extra_attributes, :external_gateway_info, :enable_snat)
         options[:external_gateway_info][:enable_snat] = params[:extra_attributes][:external_gateway_info][:enable_snat]
       end
     end
