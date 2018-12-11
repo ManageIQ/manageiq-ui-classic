@@ -6,7 +6,7 @@ window.$ = window.jQuery = require('jquery');
 require('bootstrap');
 require('bootstrap-datepicker');
 require('bootstrap-filestyle');
-require('bootstrap-select');
+require('@pf3/select');
 require('bootstrap-switch');
 require('bootstrap-touchspin');
 require('eonasdan-bootstrap-datetimepicker');
