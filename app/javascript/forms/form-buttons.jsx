@@ -12,11 +12,11 @@ function FormButtons(props) {
 
   return (
     <React.Fragment>
-      <div className="clearfix"></div>
+      <div className="clearfix" />
       <div className="pull-right button-group edit_buttons">
-        <MiqButton name={primaryTitle} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary={true} />
+        <MiqButton name={primaryTitle} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary />
         {props.newRecord || <MiqButton name={resetTitle} title={resetTitle} enabled={! props.pristine} onClick={props.resetClicked} />}
-        <MiqButton name={cancelTitle} title={cancelTitle} enabled={true} onClick={props.cancelClicked} />
+        <MiqButton name={cancelTitle} title={cancelTitle} enabled onClick={props.cancelClicked} />
 
       </div>
     </React.Fragment>
