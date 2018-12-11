@@ -84,7 +84,7 @@ module EmsContainerHelper::TextualSummary
   def textual_volumes
     count_of_volumes = @record.number_of(:persistent_volumes)
     h = {:label => _('Volumes'), :icon => "pficon pficon-volume", :value => count_of_volumes}
-    if count_of_volumes > 0 && role_allows?(:feature => "persistent_volume_show_list")
+    if count_of_volumes.positive? && role_allows?(:feature => "persistent_volume_show_list")
       h[:link]  = ems_container_path(@record.id, :display => 'persistent_volumes')
       h[:title] = _("Show all Volumes")
     end
