@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import MiqButton from './miq-button';
 
 function FormButtons(props) {
-  let primaryTitle = props.customLabel || (props.newRecord ? __('Add') : __('Save'));
-  let primaryHandler = (props.newRecord ? props.addClicked : props.saveClicked) || props.addClicked || props.saveClicked;
+  const primaryTitle = props.customLabel || (props.newRecord ? __('Add') : __('Save'));
+  const primaryHandler = (props.newRecord ? props.addClicked : props.saveClicked) || props.addClicked || props.saveClicked;
 
-  let resetTitle = __("Reset");
-  let cancelTitle = __("Cancel");
+  const resetTitle = __('Reset');
+  const cancelTitle = __('Cancel');
 
   return (
     <React.Fragment>
