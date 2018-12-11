@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('vmCloudRemoveSecurityGroupComponent', {
+ManageIQ.angular.app.component('vmCloudRemoveSecurityGroup', {
   bindings: {
     recordId: '@',
     redirectUrl: '@',

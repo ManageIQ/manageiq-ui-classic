@@ -18,5 +18,5 @@ ManageIQ.angular.app.component('aeResolveOptions', {
   controller: function() {
 
   },
-  templateUrl: '/static/ae_resolve_options/ae-resolve-options-component.html.haml',
+  templateUrl: '/static/ae_resolve_options/ae-resolve-options.html.haml',
 });
