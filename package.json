@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:current": "jest --watch",
-    "lint": "eslint -c app/javascript/.eslintrc.js --fix app/javascript || exit 0",
+    "lint": "eslint --ext=js,jsx .",
     "stylelint": "stylelint 'app/**/*css'"
   },
   "repository": {
