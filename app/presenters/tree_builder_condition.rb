@@ -45,16 +45,9 @@ class TreeBuilderCondition < TreeBuilder
   end
 
   # level 2 - conditions
-<<<<<<< HEAD
   def x_get_tree_custom_kids(parent, count_only)
     towhat = parent[:id].camelize
-    return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(towhat)
-=======
-  def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :condition)
-    resource_type = parent[:id].camelize
     return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(resource_type)
->>>>>>> Rename towhat to resource_type
 
     objects = Condition.where(:resource_type => resource_type)
     count_only_or_objects(count_only, objects, :description)

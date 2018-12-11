@@ -163,10 +163,10 @@ module MiqPolicyController::Conditions
     @edit[:rec_id] = @condition.id || nil
 
     @edit[:new][:resource_type] = if params[:id] && params[:typ] != "new" # If editing existing condition, grab model
-                             Condition.find(params[:id]).resource_type
-                           else
-                             x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).resource_type
-                           end
+      Condition.find(params[:id]).resource_type
+    else
+      x_active_tree == :condition_tree ? @sb[:folder].camelize : MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]).resource_type
+    end
 
     @edit[:condition_id] = @condition.id
     @edit[:new][:description] = @condition.description
@@ -206,7 +206,7 @@ module MiqPolicyController::Conditions
     @edit[@expkey].history.reset(@edit[:applies_to_exp][:expression])
     @edit[:applies_to_exp][:exp_table] = exp_build_table(@edit[:applies_to_exp][:expression])
     @expkey = :expression                                                           # Reset to default to editing the expression column
-    @edit[:applies_to_exp][:exp_model] = @edit[:new][:resource_type]                       # Set model for the exp editor
+    @edit[:applies_to_exp][:exp_model] = @edit[:new][:resource_type] # Set model for the exp editor
 
     @edit[:current] = copy_hash(@edit[:new])
 

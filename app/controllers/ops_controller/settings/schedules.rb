@@ -499,7 +499,7 @@ module OpsController::Settings::Schedules
 
   def schedule_set_record_vars(schedule)
     schedule.resource_type = schedule_resource_type_from_params_action
-    schedule.sched_action = {:method => schedule_method_from_params_action}
+    schedule.sched_action  = { :method => schedule_method_from_params_action }
 
     if params[:action_typ] == "db_backup"
       schedule.filter = nil
