@@ -2,10 +2,10 @@ describe TreeBuilderPolicySimulationResults do
   context 'TreeBuilderPolicySimulationResults' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
-      login_as FactoryGirl.create(:user, :userid => 'policy_simulation_results_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
+      login_as FactoryBot.create(:user, :userid => 'policy_simulation_results_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
-      @event = FactoryGirl.create(:miq_event_definition, :id => 123)
+      @event = FactoryBot.create(:miq_event_definition, :id => 123)
       @data = {:event_value => 123, :results => [{:id => 76, :name => "DevRHEL002", :result => "allow", :profiles => []},
                                                  {:id       => 69,
                                                   :name     => "DevLin002",

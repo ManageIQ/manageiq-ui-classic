@@ -2,13 +2,13 @@ describe TreeBuilderVat do
   context 'TreeBuilderVat' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Vat Group")
-      login_as FactoryGirl.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
-      cluster = FactoryGirl.create(:ems_cluster)
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Vat Group")
+      login_as FactoryBot.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
+      cluster = FactoryBot.create(:ems_cluster)
       class << cluster
         def children
-          [OpenStruct.new(:datacenters_only => [FactoryGirl.create(:datacenter)],
-                          :folders_only     => [FactoryGirl.create(:ems_folder)],
+          [OpenStruct.new(:datacenters_only => [FactoryBot.create(:datacenter)],
+                          :folders_only     => [FactoryBot.create(:ems_folder)],
                           :name             => 'Datacenters',)]
         end
 

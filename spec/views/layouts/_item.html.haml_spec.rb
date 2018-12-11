@@ -1,8 +1,8 @@
 describe "layouts/_item.html.haml" do
   it "check if correct items are being rendered for filesystem" do
     set_controller_for_view("host")
-    fs = FactoryGirl.create(:filesystem, :contents => "contents")
-    assign(:view, FactoryGirl.create(:miq_report_filesystem))
+    fs = FactoryBot.create(:filesystem, :contents => "contents")
+    assign(:view, FactoryBot.create(:miq_report_filesystem))
     assign(:item, fs)
     assign(:lastaction, 'filesystems')
     render

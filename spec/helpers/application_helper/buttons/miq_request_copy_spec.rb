@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::MiqRequestCopy do
     end
 
     let(:view_context) { setup_view_context_with_sandbox({}) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     %w(MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
       let(:request) { "MiqProvisionRequest" }

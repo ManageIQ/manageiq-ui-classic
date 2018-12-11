@@ -10,11 +10,11 @@ describe "layouts/listnav/_cloud_tenant.html.haml" do
 
   let(:provider) do
     allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
-    FactoryGirl.create(:ems_openstack)
+    FactoryBot.create(:ems_openstack)
   end
 
   it "link to parent cloud provider uses restful path" do
-    @record = FactoryGirl.create(:cloud_tenant, :ext_management_system => provider)
+    @record = FactoryBot.create(:cloud_tenant, :ext_management_system => provider)
     render
     expect(response).to include("Show this Cloud Tenant&#39;s parent Cloud Provider\" href=\"/ems_cloud/#{@record.ext_management_system.id}\">")
   end

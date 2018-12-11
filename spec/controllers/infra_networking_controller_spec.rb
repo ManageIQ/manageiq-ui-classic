@@ -1,15 +1,15 @@
 describe InfraNetworkingController do
-  let!(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
-  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryGirl.create(:classification_tag, :name   => "tag1", :parent => classification) }
-  let(:tag2) { FactoryGirl.create(:classification_tag, :name   => "tag2", :parent => classification) }
-  let(:ems) { FactoryGirl.create(:ems_vmware) }
-  let(:cluster) { FactoryGirl.create(:ems_cluster, :ems_id => ems.id) }
+  let!(:switch) { FactoryBot.create(:switch, :name => 'test_switch1', :shared => 'true') }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name   => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name   => "tag2", :parent => classification) }
+  let(:ems) { FactoryBot.create(:ems_vmware) }
+  let(:cluster) { FactoryBot.create(:ems_cluster, :ems_id => ems.id) }
 
   before do
     stub_user(:features => :all)
-    FactoryGirl.create(:tagging, :tag => tag1.tag, :taggable => switch)
-    FactoryGirl.create(:tagging, :tag => tag2.tag, :taggable => switch)
+    FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => switch)
+    FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => switch)
   end
 
   describe 'render_views' do

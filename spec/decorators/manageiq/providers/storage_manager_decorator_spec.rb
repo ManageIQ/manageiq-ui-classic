@@ -3,7 +3,7 @@ describe ManageIQ::Providers::StorageManagerDecorator do
     subject { model.decorate.quadicon }
 
     context 'block storage' do
-      let(:model) { FactoryGirl.create(:ems_cinder) }
+      let(:model) { FactoryBot.create(:ems_cinder) }
 
       it 'includes cloud volumes and snapshots' do
         expect(subject[:top_left][:tooltip]).to include("Cloud Volume")
@@ -12,7 +12,7 @@ describe ManageIQ::Providers::StorageManagerDecorator do
     end
 
     context 'object storage' do
-      let(:model) { FactoryGirl.create(:ems_swift) }
+      let(:model) { FactoryBot.create(:ems_swift) }
 
       it 'includes cloud object store containers' do
         expect(subject[:top_left][:tooltip]).to include("Cloud Object Store Container")

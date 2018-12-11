@@ -32,7 +32,7 @@ describe AutomateImportService do
     let(:miq_ae_import) { double("MiqAeYamlImportZipfs", :import_stats => "import stats") }
     let(:removable_entry) { double(:name => "carrot/something_else/namespace.yaml") }
     let(:removable_class_entry) { double(:name => "carrot/something_else.class/class.yaml") }
-    let(:user) { FactoryGirl.create(:user_with_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
 
     before do
       User.current_user = user

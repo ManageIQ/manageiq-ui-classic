@@ -1,11 +1,11 @@
 describe 'miq_request/_prov_vm_grid.html.haml' do
   context 'check for links' do
     before do
-      @vm_user = FactoryGirl.create(:user, :role => "vm_user")
-      @vms = [FactoryGirl.create(:vm_vmware)]
+      @vm_user = FactoryBot.create(:user, :role => "vm_user")
+      @vms = [FactoryBot.create(:vm_vmware)]
       edit = {:req_id     => "foo",
               :new        => {},
-              :wf         => FactoryGirl.create(:miq_provision_workflow, :requester => @vm_user),
+              :wf         => FactoryBot.create(:miq_provision_workflow, :requester => @vm_user),
               :vm_sortcol => 'name',
               :vm_sortdir => 'ASC',
               :vm_columns => %w(name),
@@ -23,10 +23,10 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
   end
 
   context 'prints tenant name' do
-    let(:admin_user) { FactoryGirl.create(:user_with_group, :role => 'super_administrator') }
+    let(:admin_user) { FactoryBot.create(:user_with_group, :role => 'super_administrator') }
 
     before do
-      @vm = [FactoryGirl.create(:template_openstack, :tenant => Tenant.root_tenant)]
+      @vm = [FactoryBot.create(:template_openstack, :tenant => Tenant.root_tenant)]
       allow(@vm).to receive(:name).and_return('name')
       allow(@vm).to receive(:operating_system).and_return('linux')
       allow(@vm).to receive(:platform).and_return('platform')
@@ -39,7 +39,7 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
 
       edit = {:req_id     => 'foo',
               :new        => {},
-              :wf         => FactoryGirl.create(:miq_provision_workflow, :requester => admin_user),
+              :wf         => FactoryBot.create(:miq_provision_workflow, :requester => admin_user),
               :vm_sortcol => 'name',
               :vm_sortdir => 'ASC',
               :vm_columns => %w(name),
@@ -51,7 +51,7 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
     end
 
     it 'validates tenant name is printed out' do
-      allow(@vm).to receive(:cloud_tenant).and_return(FactoryGirl.create(:cloud_tenant, :name => 'cloud_tenant_name'))
+      allow(@vm).to receive(:cloud_tenant).and_return(FactoryBot.create(:cloud_tenant, :name => 'cloud_tenant_name'))
       login_as admin_user
       render :partial => 'miq_request/prov_vm_grid.html.haml', :locals => {:field_id => 'service__src_vm_id'},
              :params => { 'tab_id' => 'service' }

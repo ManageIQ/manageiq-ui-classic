@@ -2,8 +2,8 @@ describe HostAggregateController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @aggregate = FactoryGirl.create(:host_aggregate)
-      login_as FactoryGirl.create(:user_admin)
+      @aggregate = FactoryBot.create(:host_aggregate)
+      login_as FactoryBot.create(:user_admin)
     end
 
     subject do
@@ -26,8 +26,8 @@ describe HostAggregateController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @aggregate = FactoryGirl.create(:host_aggregate_openstack)
+      @ems = FactoryBot.create(:ems_openstack)
+      @aggregate = FactoryBot.create(:host_aggregate_openstack)
     end
 
     let(:task_options) do
@@ -62,8 +62,8 @@ describe HostAggregateController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @aggregate = FactoryGirl.create(:host_aggregate_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @aggregate = FactoryBot.create(:host_aggregate_openstack,
                                       :ext_management_system => @ems)
     end
 
@@ -100,8 +100,8 @@ describe HostAggregateController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @aggregate = FactoryGirl.create(:host_aggregate_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @aggregate = FactoryBot.create(:host_aggregate_openstack,
                                       :ext_management_system => @ems)
     end
 
@@ -135,10 +135,10 @@ describe HostAggregateController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @aggregate = FactoryGirl.create(:host_aggregate_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @aggregate = FactoryBot.create(:host_aggregate_openstack,
                                       :ext_management_system => @ems)
-      @host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => @ems)
+      @host = FactoryBot.create(:host_openstack_infra, :ext_management_system => @ems)
     end
 
     context "#add_host" do
@@ -176,10 +176,10 @@ describe HostAggregateController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @aggregate = FactoryGirl.create(:host_aggregate_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @aggregate = FactoryBot.create(:host_aggregate_openstack,
                                       :ext_management_system => @ems)
-      @host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => @ems)
+      @host = FactoryBot.create(:host_openstack_infra, :ext_management_system => @ems)
     end
 
     context "#remove_host" do

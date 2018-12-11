@@ -14,8 +14,8 @@ describe VmCloudController do
       %w(Images images_filter_tree)
     ].each do |elements, tree|
       it "renders list of #{elements} for #{tree} root node" do
-        FactoryGirl.create(:vm_openstack)
-        FactoryGirl.create(:template_openstack)
+        FactoryBot.create(:vm_openstack)
+        FactoryBot.create(:template_openstack)
 
         session[:settings] = {}
         seed_session_trees('vm_cloud', tree.to_sym)
@@ -34,7 +34,7 @@ describe VmCloudController do
       %w(vm_amazon Amazon)
     ].each do |instance, name|
       it "renders Instance details for #{name} node" do
-        instance = FactoryGirl.create(instance.to_sym, :with_provider)
+        instance = FactoryBot.create(instance.to_sym, :with_provider)
 
         session[:settings] = {}
         seed_session_trees('vm_cloud', 'instances_tree')

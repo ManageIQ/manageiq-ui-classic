@@ -1,7 +1,7 @@
 describe SecurityGroupController do
   include_examples :shared_examples_for_security_group_controller, %w(openstack azure google amazon)
 
-  let(:ems) { FactoryGirl.create(:ems_openstack).network_manager }
+  let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
@@ -9,10 +9,10 @@ describe SecurityGroupController do
   end
 
   describe "#tags_edit" do
-    let(:ct) { FactoryGirl.create(:security_group, :name => "security-group-01") }
-    let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-    let(:tag1) { FactoryGirl.create(:classification_tag, :name => "tag1", :parent => classification) }
-    let(:tag2) { FactoryGirl.create(:classification_tag, :name => "tag2", :parent => classification) }
+    let(:ct) { FactoryBot.create(:security_group, :name => "security-group-01") }
+    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+    let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+    let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
 
     before do
       session[:tag_db] = "SecurityGroup"
@@ -54,7 +54,7 @@ describe SecurityGroupController do
   end
 
   describe "#delete_security_groups" do
-    let(:security_group) { FactoryGirl.create(:security_group) }
+    let(:security_group) { FactoryBot.create(:security_group) }
 
     before do
       allow(controller).to receive(:assert_privileges)
@@ -75,7 +75,7 @@ describe SecurityGroupController do
   end
 
   describe "#show" do
-    let(:security_group) { FactoryGirl.create(:security_group_with_firewall_rules) }
+    let(:security_group) { FactoryBot.create(:security_group_with_firewall_rules) }
 
     render_views
     it "render" do
@@ -120,7 +120,7 @@ describe SecurityGroupController do
   end
 
   describe "#edit" do
-    let(:security_group) { FactoryGirl.create(:security_group_with_firewall_rules_openstack, :ext_management_system => ems) }
+    let(:security_group) { FactoryBot.create(:security_group_with_firewall_rules_openstack, :ext_management_system => ems) }
     let(:security_group_task_options) do
       {
         :action => "updating Security Group for user #{controller.current_user.userid}",
@@ -176,7 +176,7 @@ describe SecurityGroupController do
   end
 
   describe "#delete" do
-    let(:security_group) { FactoryGirl.create(:security_group_openstack, :ext_management_system => ems) }
+    let(:security_group) { FactoryBot.create(:security_group_openstack, :ext_management_system => ems) }
     let(:task_options) do
       {
         :action => "deleting Security Group for user #{controller.current_user.userid}",

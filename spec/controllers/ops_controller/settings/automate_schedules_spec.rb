@@ -3,7 +3,7 @@ describe OpsController do
   let(:session) { {} }
   let(:zone) { double("Zone", :name => "foo") }
   let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
-  let(:schedule) { FactoryGirl.create(:miq_automate_schedule) }
+  let(:schedule) { FactoryBot.create(:miq_automate_schedule) }
   let(:schedule_new) { MiqSchedule.new }
   let(:user) { stub_user(:features => :all) }
 

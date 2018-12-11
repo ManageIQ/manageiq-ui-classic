@@ -5,7 +5,7 @@ describe DashboardController do
     end
 
     let(:user_with_role) do
-      FactoryGirl.create(:user, :role => "random")
+      FactoryBot.create(:user, :role => "random")
     end
 
     it "has secure headers" do
@@ -39,7 +39,7 @@ describe DashboardController do
 
     it "remembers group" do
       group1 = user_with_role.current_group
-      group2 = FactoryGirl.create(:miq_group)
+      group2 = FactoryBot.create(:miq_group)
       user_with_role.update_attributes(:miq_groups => [group1, group2])
 
       skip_data_checks
@@ -59,7 +59,7 @@ describe DashboardController do
       expect_successful_login(user_with_role)
 
       # no longer has access to this group
-      group2 = FactoryGirl.create(:miq_group)
+      group2 = FactoryBot.create(:miq_group)
       user_with_role.update_attributes(:current_group => group2, :miq_groups => [group2])
 
       controller.instance_variable_set(:@current_user, nil) # force the controller to lookup the user record again
@@ -68,13 +68,13 @@ describe DashboardController do
     end
 
     it "requires group" do
-      user = FactoryGirl.create(:user, :current_group => nil)
+      user = FactoryBot.create(:user, :current_group => nil)
       post :authenticate, :params => { :user_name => user.userid, :user_password => "dummy" }
       expect_failed_login('Group')
     end
 
     it "requires role" do
-      user = FactoryGirl.create(:user_with_group)
+      user = FactoryBot.create(:user_with_group)
       post :authenticate, :params => { :user_name => user.userid, :user_password => "dummy" }
       expect_failed_login('Role')
     end
@@ -116,7 +116,7 @@ describe DashboardController do
 
     %i(saml oidc).each do |protocol|
       it "#{protocol.upcase} protected page should render the #{protocol}_login page with the proper validation_url and api token" do
-        user           = FactoryGirl.create(:user, :userid => "johndoe", :role => "test")
+        user           = FactoryBot.create(:user, :userid => "johndoe", :role => "test")
         auth_token     = "aabbccddeeff"
         validation_url = "/user_validation_url"
 
@@ -147,21 +147,21 @@ describe DashboardController do
     end
 
     it "returns flash message when user's group is missing" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       allow(User).to receive(:authenticate).and_return(user)
       validation = controller.send(:validate_user, user)
       expect(validation.flash_msg).to include('User\'s Group is missing')
     end
 
     it "returns flash message when user's role is missing" do
-      user = FactoryGirl.create(:user_with_group)
+      user = FactoryBot.create(:user_with_group)
       allow(User).to receive(:authenticate).and_return(user)
       validation = controller.send(:validate_user, user)
       expect(validation.flash_msg).to include('User\'s Role is missing')
     end
 
     it "returns flash message when user does not have access to any features" do
-      user = FactoryGirl.create(:user, :role => "test")
+      user = FactoryBot.create(:user, :role => "test")
       allow(User).to receive(:authenticate).and_return(user)
       validation = controller.send(:validate_user, user)
       expect(validation.flash_msg).to include("The user's role is not authorized for any access")
@@ -173,14 +173,14 @@ describe DashboardController do
       allow(controller).to receive(:check_privileges).and_return(true)
       EvmSpecHelper.seed_specific_product_features("container")
       feature_id = MiqProductFeature.find_all_by_identifier(["container"])
-      user = FactoryGirl.create(:user, :features => feature_id)
+      user = FactoryBot.create(:user, :features => feature_id)
       allow(User).to receive(:authenticate).and_return(user)
       validation = controller.send(:validate_user, user)
       expect(validation.flash_msg).to be_nil
     end
 
     it "returns url for the user and sets user's group/role id in session" do
-      user = FactoryGirl.create(:user, :role => "test")
+      user = FactoryBot.create(:user, :role => "test")
       allow(User).to receive(:authenticate).and_return(user)
       skip_data_checks('some_url')
       validation = controller.send(:validate_user, user)
@@ -193,19 +193,19 @@ describe DashboardController do
   context "Create Dashboard" do
     it "dashboard show" do
       # create dashboard for a group
-      ws = FactoryGirl.create(:miq_widget_set, :name     => "default",
+      ws = FactoryBot.create(:miq_widget_set, :name     => "default",
                                                :set_data => {:last_group_db_updated => Time.now.utc,
                               :col1 => [1], :col2 => [], :col3 => []})
 
-      ur = FactoryGirl.create(:miq_user_role)
-      group = FactoryGirl.create(:miq_group, :miq_user_role => ur, :settings => {:dashboard_order => [ws.id]})
-      user = FactoryGirl.create(:user, :miq_groups => [group])
+      ur = FactoryBot.create(:miq_user_role)
+      group = FactoryBot.create(:miq_group, :miq_user_role => ur, :settings => {:dashboard_order => [ws.id]})
+      user = FactoryBot.create(:user, :miq_groups => [group])
 
       controller.instance_variable_set(:@sb, :active_db => ws.name)
       controller.instance_variable_set(:@tabs, [])
       login_as user
       # create a user's dashboard using group dashboard name.
-      FactoryGirl.create(:miq_widget_set,
+      FactoryBot.create(:miq_widget_set,
                          :name     => "#{user.userid}|#{group.id}|#{ws.name}",
                          :set_data => {:last_group_db_updated => Time.now.utc, :col1 => [1], :col2 => [], :col3 => []})
       controller.show
@@ -213,11 +213,11 @@ describe DashboardController do
     end
 
     it "widget_add" do
-      ur = FactoryGirl.create(:miq_user_role)
-      group = FactoryGirl.create(:miq_group, :miq_user_role => ur)
-      user = FactoryGirl.create(:user, :miq_groups => [group])
-      wi = FactoryGirl.create(:miq_widget)
-      ws = FactoryGirl.create(:miq_widget_set, :name     => "default",
+      ur = FactoryBot.create(:miq_user_role)
+      group = FactoryBot.create(:miq_group, :miq_user_role => ur)
+      user = FactoryBot.create(:user, :miq_groups => [group])
+      wi = FactoryBot.create(:miq_widget)
+      ws = FactoryBot.create(:miq_widget_set, :name     => "default",
                                                :set_data => {:last_group_db_updated => Time.now.utc,
                                                              :col1 => [], :col2 => [], :col3 => []},
                                                :userid   => user.userid,
@@ -250,7 +250,7 @@ describe DashboardController do
     }
     main_tabs.each do |tab, (feature, url)|
       it "for tab ':#{tab}'" do
-        login_as FactoryGirl.create(:user, :features => feature)
+        login_as FactoryBot.create(:user, :features => feature)
         session[:tab_url] = {}
         post :maintab, :params => { :tab => tab }
         expect(response.body).to include(url)
@@ -264,7 +264,7 @@ describe DashboardController do
       allow(controller).to receive(:check_privileges).and_return(true)
       EvmSpecHelper.seed_specific_product_features("rbac_tenant")
       feature_id = MiqProductFeature.find_all_by_identifier(["rbac_tenant"])
-      login_as FactoryGirl.create(:user, :features => feature_id)
+      login_as FactoryBot.create(:user, :features => feature_id)
     end
 
     it "for Configure maintab" do
@@ -281,7 +281,7 @@ describe DashboardController do
     end
 
     it "retuns start page url that user has set as startpage in settings" do
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
       controller.instance_variable_set(:@settings, :display => {:startpage => "/dashboard/show"})
 
       allow(controller).to receive(:role_allows?).and_return(true)
@@ -290,7 +290,7 @@ describe DashboardController do
     end
 
     it "returns first url that user has access to as start page when user doesn't have access to startpage set in settings" do
-      login_as FactoryGirl.create(:user, :features => "vm_cloud_explorer")
+      login_as FactoryBot.create(:user, :features => "vm_cloud_explorer")
       controller.instance_variable_set(:@settings, :display => {:startpage => "/dashboard/show"})
       url = controller.send(:start_url_for_user, nil)
       expect(url).to eq("/vm_cloud/explorer?accordion=instances")
@@ -349,7 +349,7 @@ describe DashboardController do
       allow(controller).to receive(:check_privileges).and_return(true)
     end
     it "redirects a restful link correctly" do
-      ems_cloud_amz = FactoryGirl.create(:ems_amazon)
+      ems_cloud_amz = FactoryBot.create(:ems_amazon)
       breadcrumbs = [{:name => "Name", :url => "/controller/action"}]
       session[:breadcrumbs] = breadcrumbs
       session[:tab_url] = {:clo => "/ems_cloud/#{ems_cloud_amz.id}"}
@@ -378,16 +378,16 @@ describe DashboardController do
 
   describe "building tabs" do
     let(:group) do
-      role = FactoryGirl.create(:miq_user_role)
-      FactoryGirl.create(:miq_group, :miq_user_role => role)
+      role = FactoryBot.create(:miq_user_role)
+      FactoryBot.create(:miq_group, :miq_user_role => role)
     end
 
     let(:user) do
-      FactoryGirl.create(:user, :miq_groups => [group])
+      FactoryBot.create(:user, :miq_groups => [group])
     end
 
     let(:wset) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :miq_widget_set,
         :name     => "Widgets",
         :userid   => user.userid,

@@ -9,7 +9,7 @@ describe "layouts/listnav/_ems_container.html.haml" do
   end
 
   it "link to Capacity & Utilization uses restful path" do
-    @record = FactoryGirl.create(:ems_openshift)
+    @record = FactoryBot.create(:ems_openshift)
     allow(@record).to receive(:has_perf_data?).and_return(true)
     render
     expect(response)

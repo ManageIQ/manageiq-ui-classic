@@ -1,6 +1,6 @@
 describe TreeNode::Compliance do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:compliance, :compliant => compliant) }
+  let(:object) { FactoryBot.create(:compliance, :compliant => compliant) }
   let(:compliant) { true }
 
   include_examples 'TreeNode::Node#key prefix', 'cm-'

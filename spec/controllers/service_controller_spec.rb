@@ -4,13 +4,13 @@ describe ServiceController do
   end
 
   let(:go_definition) do
-    FactoryGirl.create(:generic_object_definition, :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
+    FactoryBot.create(:generic_object_definition, :properties => {:associations => {"vms" => "Vm", "services" => "Service"}})
   end
 
   let(:service_with_go) do
-    service = FactoryGirl.create(:service, :name => 'Services with a GO')
+    service = FactoryBot.create(:service, :name => 'Services with a GO')
 
-    go = FactoryGirl.create(
+    go = FactoryBot.create(
       :generic_object,
       :generic_object_definition => go_definition,
       :name                      => 'go_assoc',
@@ -52,8 +52,8 @@ describe ServiceController do
 
   describe "#service_delete" do
     it "display flash message with description of deleted Service" do
-      st  = FactoryGirl.create(:service_template)
-      svc = FactoryGirl.create(:service, :service_template => st, :name => "GemFire", :description => "VMware vFabric GEMFIRE")
+      st  = FactoryBot.create(:service_template)
+      svc = FactoryBot.create(:service, :service_template => st, :name => "GemFire", :description => "VMware vFabric GEMFIRE")
 
       controller.instance_variable_set(:@record, svc)
       controller.instance_variable_set(:@sb,
@@ -76,7 +76,7 @@ describe ServiceController do
     end
 
     it "replaces right cell after service is deleted" do
-      service = FactoryGirl.create(:service)
+      service = FactoryBot.create(:service)
       allow(controller).to receive(:x_build_tree)
       controller.instance_variable_set(:@settings, {})
       controller.instance_variable_set(:@sb, {})
@@ -91,7 +91,7 @@ describe ServiceController do
     end
 
     context 'setting x_node properly after deleting a service from its details page' do
-      let(:service) { FactoryGirl.create(:service) }
+      let(:service) { FactoryBot.create(:service) }
 
       before do
         allow(controller).to receive(:replace_right_cell)
@@ -136,7 +136,7 @@ describe ServiceController do
 
     it 'contains the associated tags for the ansible service template' do
       EvmSpecHelper.local_miq_server
-      record = FactoryGirl.create(:service_ansible_playbook)
+      record = FactoryBot.create(:service_ansible_playbook)
       get :explorer, :params => { :id => "s-#{record.id}" }
       expect(response.status).to eq(200)
       expect(response.body).to include('Smart Management')
@@ -144,8 +144,8 @@ describe ServiceController do
 
     it 'displays the associated custom attributes for the ansible service template' do
       EvmSpecHelper.local_miq_server
-      record = FactoryGirl.create(:service_ansible_playbook)
-      record.custom_attributes << FactoryGirl.build(:miq_custom_attribute,
+      record = FactoryBot.create(:service_ansible_playbook)
+      record.custom_attributes << FactoryBot.build(:miq_custom_attribute,
                                                     :resource_type => "ServiceAnsiblePlaybook",
                                                     :resource_id   => record.id,
                                                     :name          => "custom_attribute_1",
@@ -157,7 +157,7 @@ describe ServiceController do
 
     it 'displays generic objects as a nested list' do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
 
       get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'}
@@ -167,16 +167,16 @@ describe ServiceController do
 
     it 'displays the selected generic object' do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
-      service = FactoryGirl.create(:service, :name => "Abc")
-      go1 = FactoryGirl.create(:generic_object,
+      service = FactoryBot.create(:service, :name => "Abc")
+      go1 = FactoryBot.create(:generic_object,
                                :generic_object_definition => go_definition,
                                :name                      => 'GOTest_1',
                                :services                  => [service])
       go1.add_to_service(service)
 
-      go2 = FactoryGirl.create(:generic_object,
+      go2 = FactoryBot.create(:generic_object,
                                :generic_object_definition => go_definition,
                                :name                      => 'GOTest_2',
                                :services                  => [service])
@@ -189,10 +189,10 @@ describe ServiceController do
 
     it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
       controller.instance_variable_set(:@breadcrumbs, [])
-      service = FactoryGirl.create(:service, :name => "Abc")
-      go = FactoryGirl.create(
+      service = FactoryBot.create(:service, :name => "Abc")
+      go = FactoryBot.create(
         :generic_object,
         :generic_object_definition => go_definition,
         :name                      => 'GOTest',
@@ -220,8 +220,8 @@ describe ServiceController do
       end
 
       it "when Generic Object Tag is pressed for the generic object nested list" do
-        service = FactoryGirl.create(:service, :name => "Service with Generic Objects")
-        go = FactoryGirl.create(
+        service = FactoryBot.create(:service, :name => "Service with Generic Objects")
+        go = FactoryBot.create(
           :generic_object,
           :generic_object_definition => go_definition,
           :name                      => 'go_assoc',
@@ -247,10 +247,10 @@ describe ServiceController do
   end
 
   context 'displaying a service with associated VMs' do
-    let(:service) { FactoryGirl.create(:service) }
+    let(:service) { FactoryBot.create(:service) }
 
     let!(:vm) do
-      vm = FactoryGirl.create(:vm)
+      vm = FactoryBot.create(:vm)
       vm.add_to_service(service)
       vm
     end
@@ -326,13 +326,13 @@ describe ServiceController do
 
   context "Generic Object instances in Textual Summary" do
     it "displays Generic Objects in Ansible Playbook Service Textual Summary" do
-      record = FactoryGirl.create(:service_ansible_playbook)
+      record = FactoryBot.create(:service_ansible_playbook)
       controller.instance_variable_set(:@record, record)
       expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
     end
 
     it "displays Generic Objects for all other Services" do
-      record = FactoryGirl.create(:service)
+      record = FactoryBot.create(:service)
       controller.instance_variable_set(:@record, record)
       expect(controller.send(:textual_group_list)).to include(array_including(:generic_objects))
     end
@@ -342,7 +342,7 @@ describe ServiceController do
     describe '#tree_select' do
       render_views
 
-      let(:service_search) { FactoryGirl.create(:miq_search, :description => 'a', :db => 'Service') }
+      let(:service_search) { FactoryBot.create(:miq_search, :description => 'a', :db => 'Service') }
 
       it 'renders GTL of All Services, filtered by choosen filter from accordion' do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(

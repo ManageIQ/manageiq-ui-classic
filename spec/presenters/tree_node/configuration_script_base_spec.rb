@@ -1,6 +1,6 @@
 describe TreeNode::ConfigurationScriptBase do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:ansible_configuration_script) }
+  let(:object) { FactoryBot.create(:ansible_configuration_script) }
 
   include_examples 'TreeNode::Node#key prefix', 'cf-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-template'

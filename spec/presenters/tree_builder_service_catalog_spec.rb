@@ -1,22 +1,22 @@
 describe TreeBuilderServiceCatalog do
   before do
     Tenant.seed
-    @catalog = FactoryGirl.create(:service_template_catalog, :name => "My Catalog")
+    @catalog = FactoryBot.create(:service_template_catalog, :name => "My Catalog")
 
-    FactoryGirl.create(:service_template_ansible_playbook,
+    FactoryBot.create(:service_template_ansible_playbook,
                        :name                     => "Display in Catalog",
                        :service_template_catalog => @catalog,
                        :display                  => true)
-    FactoryGirl.create(:service_template,
+    FactoryBot.create(:service_template,
                        :name                     => "Do not Display in Catalog",
                        :service_template_catalog => @catalog,
                        :display                  => false)
-    FactoryGirl.create(:service_template,
+    FactoryBot.create(:service_template,
                        :name                     => "Display in Catalog too",
                        :service_type             => 'generic_ansible_tower',
                        :service_template_catalog => @catalog,
                        :display                  => true)
-    FactoryGirl.create(:service_template_ansible_playbook,
+    FactoryBot.create(:service_template_ansible_playbook,
                        :service_type             => 'generic_ansible_playbook',
                        :name                     => "Display in Catalog Playbook",
                        :service_template_catalog => @catalog,

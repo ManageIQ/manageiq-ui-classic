@@ -1,10 +1,10 @@
 describe ApplicationHelper::Button::WidgetGenerateContent do
   let(:view_context) { setup_view_context_with_sandbox(:wtype => wtype) }
   let(:record) do
-    rec = FactoryGirl.create(:miq_widget)
-    set = FactoryGirl.create(:miq_widget_set)
-    w_set_rel = FactoryGirl.create(:relationship_miq_widget_set_with_membership, :resource_id => set.id)
-    FactoryGirl.create(:relationship_miq_widget_with_membership, :resource_id => rec.id, :ancestry => w_set_rel.id)
+    rec = FactoryBot.create(:miq_widget)
+    set = FactoryBot.create(:miq_widget_set)
+    w_set_rel = FactoryBot.create(:relationship_miq_widget_set_with_membership, :resource_id => set.id)
+    FactoryBot.create(:relationship_miq_widget_with_membership, :resource_id => rec.id, :ancestry => w_set_rel.id)
     rec
   end
   let(:widget_running) { false }
@@ -23,7 +23,7 @@ describe ApplicationHelper::Button::WidgetGenerateContent do
 
   describe '#disabled?' do
     context 'when widget is not assigned to any dashboard' do
-      let(:record) { FactoryGirl.create(:miq_widget) }
+      let(:record) { FactoryBot.create(:miq_widget) }
       it { expect(subject.disabled?).to be_truthy }
     end
     context 'when widget is assigned to some dashboards' do

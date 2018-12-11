@@ -1,6 +1,6 @@
 describe TreeNode::MiqWidget do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:miq_widget) }
+  let(:object) { FactoryBot.create(:miq_widget) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
   include_examples 'TreeNode::Node#icon', 'fa fa-file-text-o'

@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
 
   context 'Embedded Ansible role is turned on and provider is present' do
     before do
-      server_role = FactoryGirl.create(
+      server_role = FactoryBot.create(
         :server_role,
         :name              => "embedded_ansible",
         :description       => "Embedded Ansible",
@@ -17,7 +17,7 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
         :external_failover => false,
         :role_scope        => "zone"
       )
-      FactoryGirl.create(
+      FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => MiqServer.first.id,
         :server_role_id => server_role.id,
@@ -25,7 +25,7 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
         :priority       => 1
       )
       # Add embedded Ansible provider if there is none
-      FactoryGirl.create(:provider_embedded_ansible) if ManageIQ::Providers::EmbeddedAnsible::Provider.count == 0
+      FactoryBot.create(:provider_embedded_ansible) if ManageIQ::Providers::EmbeddedAnsible::Provider.count == 0
     end
     it '#disabled? returns false' do
       expect(subject.disabled?).to be false

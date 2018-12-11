@@ -1,6 +1,6 @@
 describe TreeNode::DialogTab do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:dialog_tab) }
+  let(:object) { FactoryBot.create(:dialog_tab) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
   include_examples 'TreeNode::Node#icon', 'ff ff-tab'

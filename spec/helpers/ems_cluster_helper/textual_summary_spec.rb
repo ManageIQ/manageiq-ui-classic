@@ -1,6 +1,6 @@
 describe EmsClusterHelper::TextualSummary do
   before do
-    instance_variable_set(:@record, FactoryGirl.create(:ems_cluster))
+    instance_variable_set(:@record, FactoryBot.create(:ems_cluster))
     allow(@record).to receive(:ha_enabled).and_return("something")
     allow(@record).to receive(:ha_admit_control).and_return("something")
     allow(@record).to receive(:drs_enabled).and_return("something")

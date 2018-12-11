@@ -2,9 +2,9 @@ describe ChargebackController do
   before { stub_user(:features => :all) }
 
   context "returns current rate assignments or set them to blank if category/tag is deleted" do
-    let(:category) { FactoryGirl.create(:classification) }
-    let(:tag)      { FactoryGirl.create(:classification, :parent_id => category.id) }
-    let(:entry)    { FactoryGirl.create(:classification, :parent_id => tag.id) }
+    let(:category) { FactoryBot.create(:classification) }
+    let(:tag)      { FactoryBot.create(:classification, :parent_id => category.id) }
+    let(:entry)    { FactoryBot.create(:classification, :parent_id => tag.id) }
 
     describe "#get_tags_all" do
       before { entry }
@@ -21,7 +21,7 @@ describe ChargebackController do
 
     describe "#cb_assign_set_form_vars" do
       before do
-        cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage")
+        cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage")
         ChargebackRate.set_assignments(:Storage, [{:cb_rate => cbr, :tag => [tag, "vm"]}])
         sandbox = {:active_tree => :cb_assignments_tree, :trees => {:cb_assignments_tree => {:active_node => 'xx-Storage'}}}
         controller.instance_variable_set(:@sb, sandbox)
@@ -66,7 +66,7 @@ describe ChargebackController do
 
   context "Saved chargeback rendering" do
     it "Saved chargeback reports renders paginagion buttons correctly" do
-      report = FactoryGirl.create(:miq_report_with_results, :miq_group => User.current_user.current_group)
+      report = FactoryBot.create(:miq_report_with_results, :miq_group => User.current_user.current_group)
       report.extras = {:total_html_rows => 100}
       rp_id = report.id
       rr_id = report.miq_report_results[0].id
@@ -93,8 +93,8 @@ describe ChargebackController do
     end
 
     describe "#cb_rpt_build_folder_nodes" do
-      let!(:admin_user)        { FactoryGirl.create(:user_admin) }
-      let!(:chargeback_report) { FactoryGirl.create(:miq_report_chargeback_with_results) }
+      let!(:admin_user)        { FactoryBot.create(:user_admin) }
+      let!(:chargeback_report) { FactoryBot.create(:miq_report_chargeback_with_results) }
 
       before { login_as admin_user }
 
@@ -123,7 +123,7 @@ describe ChargebackController do
 
   describe "#process_cb_rates" do
     it "delete unassigned" do
-      cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
 
       rates = [cbr.id]
       controller.send(:process_cb_rates, rates, "destroy")
@@ -135,8 +135,8 @@ describe ChargebackController do
     end
 
     it "delete assigned" do
-      cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
-      host = FactoryGirl.create(:host)
+      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      host = FactoryBot.create(:host)
       cbr.assign_to_objects(host)
 
       rates = [cbr.id]
@@ -150,8 +150,8 @@ describe ChargebackController do
   end
 
   describe "#get_cis_all" do
-    let!(:storage) { FactoryGirl.create(:storage) }
-    let!(:miq_enterprise) { FactoryGirl.create(:miq_enterprise) }
+    let!(:storage) { FactoryBot.create(:storage) }
+    let!(:miq_enterprise) { FactoryBot.create(:miq_enterprise) }
 
     it "returns names of instances of enterprise" do
       names_miqent = {}
@@ -209,7 +209,7 @@ describe ChargebackController do
 
     render_views
 
-    let(:chargeback_rate) { FactoryGirl.create(:chargeback_rate, :with_details, :description => "foo") }
+    let(:chargeback_rate) { FactoryBot.create(:chargeback_rate, :with_details, :description => "foo") }
 
     # this index represent first rate detail( "Allocated Memory in MB") chargeback_rate
     let(:index_to_rate_type) { "0" }
@@ -593,10 +593,10 @@ describe ChargebackController do
     let(:current_user) { User.current_user }
     let(:miq_task)     { MiqTask.new(:name => "Generate Report result", :userid => current_user.userid) }
     let(:miq_report_result) do
-      FactoryGirl.create(:miq_chargeback_report_result, :miq_group => current_user.current_group, :miq_task => miq_task)
+      FactoryBot.create(:miq_chargeback_report_result, :miq_group => current_user.current_group, :miq_task => miq_task)
     end
 
-    let(:chargeback_report) { FactoryGirl.create(:miq_report_chargeback, :miq_report_results => [miq_report_result]) }
+    let(:chargeback_report) { FactoryBot.create(:miq_report_chargeback, :miq_report_results => [miq_report_result]) }
 
     before do
       miq_task.state_finished
@@ -634,7 +634,7 @@ describe ChargebackController do
 
   describe '#cb_rates_delete' do
     let(:params) { {:id => rate.id} }
-    let(:rate) { FactoryGirl.create(:chargeback_rate, :rate_type => "Compute") }
+    let(:rate) { FactoryBot.create(:chargeback_rate, :rate_type => "Compute") }
     let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => "xx-#{rate.rate_type}_cr-#{rate.id}"}}} }
 
     before do

@@ -1,10 +1,10 @@
 describe ApplicationHelper::Button::NewHostAggregate do
-  let(:user)   { FactoryGirl.create(:user, :miq_groups => [group]) }
-  let(:group)  { FactoryGirl.create(:miq_group, :tenant => tenant, :entitlement => entitlement) }
-  let(:tenant) { FactoryGirl.create(:tenant) }
+  let(:user)   { FactoryBot.create(:user, :miq_groups => [group]) }
+  let(:group)  { FactoryBot.create(:miq_group, :tenant => tenant, :entitlement => entitlement) }
+  let(:tenant) { FactoryBot.create(:tenant) }
   let(:entitlement) { nil }
 
-  let!(:provider) { FactoryGirl.create(:ems_openstack, :tenant => tenant) }
+  let!(:provider) { FactoryBot.create(:ems_openstack, :tenant => tenant) }
 
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:button)       { described_class.new(view_context, {}, {}, {}) }
@@ -25,7 +25,7 @@ describe ApplicationHelper::Button::NewHostAggregate do
     end
 
     context 'provider is not available due to RBAC rules' do
-      let(:entitlement) { FactoryGirl.create(:entitlement) }
+      let(:entitlement) { FactoryBot.create(:entitlement) }
 
       before do
         entitlement.set_managed_filters([["/managed/environment/prod"]])

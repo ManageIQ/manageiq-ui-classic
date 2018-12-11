@@ -2,14 +2,14 @@ describe TreeBuilderSections do
   context 'TreeBuilderSections' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "All sections")
-      login_as FactoryGirl.create(:user, :userid => 'all_sections_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "All sections")
+      login_as FactoryBot.create(:user, :userid => 'all_sections_wilma', :miq_groups => [@group])
       @controller_name = 'controller_name'
       @current_tenant = 'Current tenant name'
-      first_vm = FactoryGirl.create(:vm)
-      second_vm = FactoryGirl.create(:vm)
-      report = FactoryGirl.create(:miq_report_filesystem)
-      @compare = FactoryGirl.build(:miq_compare,
+      first_vm = FactoryBot.create(:vm)
+      second_vm = FactoryBot.create(:vm)
+      report = FactoryBot.create(:miq_report_filesystem)
+      @compare = FactoryBot.build(:miq_compare,
                                    :report  => report,
                                    :options => {:ids     => [first_vm, second_vm],
                                                 :include => {:hardware            => {:fetch   => false,

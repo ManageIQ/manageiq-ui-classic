@@ -1,5 +1,5 @@
 describe 'report/_form_filter.html.haml' do
-  let(:report) { FactoryGirl.create(:miq_report) }
+  let(:report) { FactoryBot.create(:miq_report) }
   let(:exp_table) { [["Example AFTER \"value1\"", 1]] }
   let(:expression) { {"after" => {"field" => "field_example", "value" => "value1"}, :token => 1} }
   let(:edit) { { :rpt_id => report.id, :record_filter => {:exp_table => exp_table, :expression => expression}} }

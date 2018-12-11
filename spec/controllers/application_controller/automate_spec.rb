@@ -2,7 +2,7 @@ describe MiqAeCustomizationController, "ApplicationController::Automate" do
   context "#resolve" do
     before do
       stub_user(:features => :all)
-      @custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+      @custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
       target_classes = {}
       CustomButton.button_classes.each { |db| target_classes[db] = ui_lookup(:model => db) }
       resolve = {
@@ -19,7 +19,7 @@ describe MiqAeCustomizationController, "ApplicationController::Automate" do
     end
 
     it "targets should be set correctly when simulate button is pressed from custom button summary screen" do
-      host = FactoryGirl.create(:host)
+      host = FactoryBot.create(:host)
       expect(controller).to receive(:render)
       controller.send(:resolve_button_simulate)
       expect(assigns(:resolve)[:targets]).to eq([[host.name, host.id.to_s]])
@@ -29,7 +29,7 @@ end
 
 describe MiqAeToolsController, "ApplicationController::Automate" do
   context "#build_results" do
-    let(:custom_button) { FactoryGirl.create(:custom_button, :applies_to_class => "Host") }
+    let(:custom_button) { FactoryBot.create(:custom_button, :applies_to_class => "Host") }
     let(:workspace) { double("MiqAeEngine::MiqAeWorkspaceRuntime", :root => options) }
     before do
       stub_user(:features => :all)

@@ -11,21 +11,21 @@ describe "layouts/listnav/_ems_network.html.haml" do
   %w(openstack amazon google).each do |t|
     before do
       allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
-      @provider      = FactoryGirl.create("ems_#{t}".to_sym)
-      security_group = FactoryGirl.create("security_group_#{t}".to_sym,
+      @provider      = FactoryBot.create("ems_#{t}".to_sym)
+      security_group = FactoryBot.create("security_group_#{t}".to_sym,
                                           :ext_management_system => @provider.network_manager,
                                           :name                  => 'A test')
-      vm             = FactoryGirl.create("vm_#{t}".to_sym)
-      network        = FactoryGirl.create("cloud_network_#{t}".to_sym)
-      subnet         = FactoryGirl.create("cloud_subnet_#{t}".to_sym,
+      vm             = FactoryBot.create("vm_#{t}".to_sym)
+      network        = FactoryBot.create("cloud_network_#{t}".to_sym)
+      subnet         = FactoryBot.create("cloud_subnet_#{t}".to_sym,
                                           :cloud_network         => network,
                                           :ext_management_system => @provider.network_manager)
-      floating_ip    = FactoryGirl.create("floating_ip_#{t}".to_sym, :ext_management_system => @provider.network_manager)
-      vm.network_ports << network_port = FactoryGirl.create("network_port_#{t}".to_sym,
+      floating_ip    = FactoryBot.create("floating_ip_#{t}".to_sym, :ext_management_system => @provider.network_manager)
+      vm.network_ports << network_port = FactoryBot.create("network_port_#{t}".to_sym,
                                                             :device          => vm,
                                                             :security_groups => [security_group],
                                                             :floating_ip     => floating_ip)
-      FactoryGirl.create(:cloud_subnet_network_port, :cloud_subnet => subnet, :network_port => network_port)
+      FactoryBot.create(:cloud_subnet_network_port, :cloud_subnet => subnet, :network_port => network_port)
     end
 
     context "for #{t}" do

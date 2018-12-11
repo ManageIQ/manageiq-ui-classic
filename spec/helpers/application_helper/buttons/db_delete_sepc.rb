@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::DbDelete do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:dashboard) { FactoryGirl.create(:miq_widget_set, :read_only => read_only) }
+  let(:dashboard) { FactoryBot.create(:miq_widget_set, :read_only => read_only) }
   let(:button) { described_class.new(view_context, {}, {'db' => dashboard}, {}) }
 
   describe '#calculate_properties' do

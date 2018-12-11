@@ -1,14 +1,14 @@
 describe AuthKeyPairCloudController do
-  let(:kp) { FactoryGirl.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-01") }
-  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryGirl.create(:classification_tag, :name => "tag1", :parent => classification) }
-  let(:tag2) { FactoryGirl.create(:classification_tag, :name => "tag2", :parent => classification) }
+  let(:kp) { FactoryBot.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-01") }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
 
   before do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
-    FactoryGirl.create(:tagging, :tag => tag1.tag, :taggable => kp)
-    FactoryGirl.create(:tagging, :tag => tag2.tag, :taggable => kp)
+    FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => kp)
+    FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => kp)
   end
 
   describe "#tags_edit" do

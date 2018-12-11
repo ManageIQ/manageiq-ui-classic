@@ -122,8 +122,8 @@ describe TreeBuilder do
     end
 
     it 'counts things in a Relation' do
-      a = FactoryGirl.create(:user_with_email)
-      FactoryGirl.create(:user_with_email)
+      a = FactoryBot.create(:user_with_email)
+      FactoryBot.create(:user_with_email)
 
       expect(builder.count_only_or_objects(true, User.none)).to eq(0)
       expect(builder.count_only_or_objects(true, User.where(:id => a.id))).to eq(1)
@@ -138,8 +138,8 @@ describe TreeBuilder do
     end
 
     it 'returns a collection when not counting' do
-      a = FactoryGirl.create(:user_with_email)
-      b = FactoryGirl.create(:user_with_email)
+      a = FactoryBot.create(:user_with_email)
+      b = FactoryBot.create(:user_with_email)
 
       expect(builder.count_only_or_objects(false, User.none)).to eq([])
       expect(builder.count_only_or_objects(false, User.where(:id => a.id))).to eq([a])
@@ -189,7 +189,7 @@ describe TreeBuilder do
 
   context "#build_node_cid" do
     it "returns correct cid for VM" do
-      vm = FactoryGirl.create(:vm)
+      vm = FactoryBot.create(:vm)
       expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{vm.id}")
     end
   end
@@ -197,8 +197,8 @@ describe TreeBuilder do
   context "#hide_vms" do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "TreeBuilder")
-      login_as FactoryGirl.create(:user, :userid => 'treebuilder_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "TreeBuilder")
+      login_as FactoryBot.create(:user, :userid => 'treebuilder_wilma', :miq_groups => [@group])
     end
 
     it "hide vms if User didn't set it" do

@@ -1,9 +1,9 @@
 describe ReportHelper do
   describe '#cb_entities_by_provider_id' do
-    let(:project) { FactoryGirl.create(:container_project) }
-    let(:image) { FactoryGirl.create(:container_image) }
+    let(:project) { FactoryBot.create(:container_project) }
+    let(:image) { FactoryBot.create(:container_image) }
     let(:provider) do
-      FactoryGirl.build(:ems_container).tap do |e|
+      FactoryBot.build(:ems_container).tap do |e|
         e.container_projects = [project]
         e.container_images = [image]
         e.save!

@@ -9,7 +9,7 @@ describe OrchestrationStackController do
 
   describe '#show' do
     context "instances" do
-      let(:record) { FactoryGirl.create(:orchestration_stack_cloud) }
+      let(:record) { FactoryBot.create(:orchestration_stack_cloud) }
 
       before do
         session[:settings] = {
@@ -29,7 +29,7 @@ describe OrchestrationStackController do
     end
 
     context "infra" do
-      let(:record) { FactoryGirl.create(:orchestration_stack_openstack_infra) }
+      let(:record) { FactoryBot.create(:orchestration_stack_openstack_infra) }
 
       before do
         session[:settings] = {
@@ -49,8 +49,8 @@ describe OrchestrationStackController do
     end
 
     context "orchestration templates" do
-      let(:ems) { FactoryGirl.create(:ems_cloud) }
-      let(:record) { FactoryGirl.create(:orchestration_stack_cloud_with_template, :ext_management_system => ems, :name => 'stack01') }
+      let(:ems) { FactoryBot.create(:ems_cloud) }
+      let(:record) { FactoryBot.create(:orchestration_stack_cloud_with_template, :ext_management_system => ems, :name => 'stack01') }
 
       before do
         session[:settings] = {
@@ -91,9 +91,9 @@ describe OrchestrationStackController do
 
     context "orchestration stack listing hides ansible jobs" do
       before do
-        @os_cloud  = FactoryGirl.create(:orchestration_stack_cloud, :name => "cloudstack1")
-        @os_infra  = FactoryGirl.create(:orchestration_stack_openstack_infra, :name => "infrastack1")
-        @tower_job = FactoryGirl.create(:ansible_tower_job, :name => "towerjob1")
+        @os_cloud  = FactoryBot.create(:orchestration_stack_cloud, :name => "cloudstack1")
+        @os_infra  = FactoryBot.create(:orchestration_stack_openstack_infra, :name => "infrastack1")
+        @tower_job = FactoryBot.create(:ansible_tower_job, :name => "towerjob1")
 
         get :show_list
       end
@@ -107,7 +107,7 @@ describe OrchestrationStackController do
 
   describe "#stacks_ot_info" do
     it "returns all the orchestration template attributes" do
-      stack = FactoryGirl.create(:orchestration_stack_cloud_with_template)
+      stack = FactoryBot.create(:orchestration_stack_cloud_with_template)
       get :stacks_ot_info, :params => { :id => stack.id }
       expect(response.status).to eq(200)
       ret = JSON.parse(response.body)
@@ -120,7 +120,7 @@ describe OrchestrationStackController do
   end
 
   describe "#stacks_ot_copy" do
-    let(:record) { FactoryGirl.create(:orchestration_stack_cloud_with_template) }
+    let(:record) { FactoryBot.create(:orchestration_stack_cloud_with_template) }
 
     it "correctly cancels the orchestration template copying form" do
       post :stacks_ot_copy, :params => {:id => record.id, :button => "cancel"}
@@ -152,12 +152,12 @@ describe OrchestrationStackController do
           nil
         end
       end)
-      FactoryGirl.create(:orchestration_template, :type => 'OrchestrationTemplateTest', :orderable => false)
+      FactoryBot.create(:orchestration_template, :type => 'OrchestrationTemplateTest', :orderable => false)
     end
 
     context "make stack's orchestration template orderable" do
       it "won't allow making stack's orchestration template orderable when already orderable" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
+        record = FactoryBot.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
         expect(record.orchestration_template.orderable?).to be_truthy
         expect(response.status).to eq(200)
@@ -166,7 +166,7 @@ describe OrchestrationStackController do
       end
 
       it "makes stack's orchestration template orderable" do
-        record = FactoryGirl.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
+        record = FactoryBot.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
         expect(record.orchestration_template.orderable?).to be_falsey
         expect(response.status).to eq(200)
@@ -177,7 +177,7 @@ describe OrchestrationStackController do
 
     context "copy stack's orchestration template as orderable" do
       it "won't allow copying stack's orchestration template orderable when already orderable" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
+        record = FactoryBot.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
         expect(record.orchestration_template.orderable?).to be_truthy
         expect(response.status).to eq(200)
@@ -186,7 +186,7 @@ describe OrchestrationStackController do
       end
 
       it "renders orchestration template copying form" do
-        record = FactoryGirl.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
+        record = FactoryBot.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
         expect(record.orchestration_template.orderable?).to be_falsey
         expect(response.status).to eq(200)
@@ -196,7 +196,7 @@ describe OrchestrationStackController do
 
     context "view stack's orchestration template in catalog" do
       it "redirects to catalog controller" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
+        record = FactoryBot.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_templates_view"}
         expect(response.status).to eq(200)
         expect(response.body).to include("window.location.href")
@@ -206,7 +206,7 @@ describe OrchestrationStackController do
 
     context "retire orchestration stack" do
       it "set retirement date redirects to retirement screen" do
-        record = FactoryGirl.create(:orchestration_stack_cloud)
+        record = FactoryBot.create(:orchestration_stack_cloud)
         post :button, :params => {:miq_grid_checks => record.id, :pressed => "orchestration_stack_retire"}
         expect(response.status).to eq(200)
         expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -214,7 +214,7 @@ describe OrchestrationStackController do
       end
 
       it "retires the orchestration stack now" do
-        record = FactoryGirl.create(:orchestration_stack_cloud)
+        record = FactoryBot.create(:orchestration_stack_cloud)
         session[:orchestration_stack_lastaction] = 'show_list'
         expect(controller).to receive(:render).at_least(:once)
         post :button, :params => {:miq_grid_checks => record.id, :pressed => "orchestration_stack_retire_now"}
@@ -222,7 +222,7 @@ describe OrchestrationStackController do
       end
 
       it "retires the orchestration stack now when called from the summary page" do
-        record = FactoryGirl.create(:orchestration_stack_cloud)
+        record = FactoryBot.create(:orchestration_stack_cloud)
         session[:orchestration_stack_lastaction] = 'show'
         expect(controller).to receive(:render).at_least(:once)
         post :button, :params => {:id => record.id, :pressed => "orchestration_stack_retire_now"}

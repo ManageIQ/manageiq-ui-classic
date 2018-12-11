@@ -1,14 +1,14 @@
 describe CloudSubnetController do
-  let(:ems) { FactoryGirl.create(:ems_openstack).network_manager }
-  let(:cloud_subnet) { FactoryGirl.create(:cloud_subnet_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
+  let(:cloud_subnet) { FactoryBot.create(:cloud_subnet_openstack, :ext_management_system => ems) }
 
   before { EvmSpecHelper.create_guid_miq_server_zone }
 
   describe "#tags_edit" do
-    let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-    let(:tag1) { FactoryGirl.create(:classification_tag, :name => "tag1", :parent => classification) }
-    let(:tag2) { FactoryGirl.create(:classification_tag, :name => "tag2", :parent => classification) }
-    let(:ct) { FactoryGirl.create(:cloud_subnet, :name => "cloud-subnet-01") }
+    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+    let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+    let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
+    let(:ct) { FactoryBot.create(:cloud_subnet, :name => "cloud-subnet-01") }
 
     before do
       stub_user(:features => :all)
@@ -51,9 +51,9 @@ describe CloudSubnetController do
   end
 
   describe "#show" do
-    let(:subnet) { FactoryGirl.create(:cloud_subnet) }
+    let(:subnet) { FactoryBot.create(:cloud_subnet) }
 
-    before { login_as FactoryGirl.create(:user) }
+    before { login_as FactoryBot.create(:user) }
 
     render_views
 
@@ -72,9 +72,9 @@ describe CloudSubnetController do
       EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new ems_network_show_list cloud_network_show_list cloud_tenant_show_list))
 
       feature = MiqProductFeature.find_all_by_identifier(%w(cloud_subnet_new))
-      role = FactoryGirl.create(:miq_user_role, :miq_product_features => feature)
-      group = FactoryGirl.create(:miq_group, :miq_user_role => role)
-      login_as FactoryGirl.create(:user, :miq_groups => [group])
+      role = FactoryBot.create(:miq_user_role, :miq_product_features => feature)
+      group = FactoryBot.create(:miq_group, :miq_user_role => role)
+      login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
     it "raises exception wheh used have not privilege" do
@@ -99,15 +99,15 @@ describe CloudSubnetController do
   end
 
   describe "#create" do
-    let(:cloud_subnet) { FactoryGirl.create(:cloud_subnet_openstack) }
+    let(:cloud_subnet) { FactoryBot.create(:cloud_subnet_openstack) }
     let(:task_options) do
       {
         :action => "creating Cloud Subnet for user %{user}" % {:user => controller.current_user.userid},
         :userid => controller.current_user.userid
       }
     end
-    let(:cloud_tenant) { FactoryGirl.create(:cloud_tenant) }
-    let(:cloud_network) { FactoryGirl.create(:cloud_network_openstack) }
+    let(:cloud_tenant) { FactoryBot.create(:cloud_tenant) }
+    let(:cloud_network) { FactoryBot.create(:cloud_network_openstack) }
     let(:queue_options) do
       {
         :class_name  => ems.class.name,

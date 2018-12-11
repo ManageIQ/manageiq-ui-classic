@@ -41,7 +41,7 @@ describe 'ops/_label_tag_mapping_form.html.haml' do
 
   context 'edit existing mapping' do
     before do
-      @lt_map = FactoryGirl.create(:tag_mapping_with_category)
+      @lt_map = FactoryBot.create(:tag_mapping_with_category)
       @edit = {:id  => nil,
                :new => {:options    => [["<All>", nil]],
                         :entity     => nil,

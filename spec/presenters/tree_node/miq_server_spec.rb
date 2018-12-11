@@ -1,8 +1,8 @@
 describe TreeNode::MiqServer do
   subject { described_class.new(object, nil, {}) }
   let(:object) do
-    zone = FactoryGirl.create(:zone)
-    FactoryGirl.create(:miq_server, :zone => zone)
+    zone = FactoryBot.create(:zone)
+    FactoryBot.create(:miq_server, :zone => zone)
   end
 
   include_examples 'TreeNode::Node#key prefix', 'svr-'

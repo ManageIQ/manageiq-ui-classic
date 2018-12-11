@@ -1,6 +1,6 @@
 describe TreeNode::DialogGroup do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:dialog_group) }
+  let(:object) { FactoryBot.create(:dialog_group) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
   include_examples 'TreeNode::Node#icon', 'fa fa-comments-o'

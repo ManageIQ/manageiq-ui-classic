@@ -4,12 +4,12 @@ describe CloudTopologyService do
   describe "#build_topology" do
     subject { cloud_topology_service.build_topology }
 
-    let(:ems) { FactoryGirl.create(:ems_openstack) }
+    let(:ems) { FactoryBot.create(:ems_openstack) }
 
     before do
-      @availability_zone = FactoryGirl.create(:availability_zone_openstack, :ext_management_system => ems)
-      @cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems)
-      @vm = FactoryGirl.create(:vm_openstack, :cloud_tenant => @cloud_tenant, :ext_management_system => ems)
+      @availability_zone = FactoryBot.create(:availability_zone_openstack, :ext_management_system => ems)
+      @cloud_tenant = FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems)
+      @vm = FactoryBot.create(:vm_openstack, :cloud_tenant => @cloud_tenant, :ext_management_system => ems)
     end
 
     it "topology contains only the expected keys" do
@@ -17,7 +17,7 @@ describe CloudTopologyService do
     end
 
     it "provider has unknown status when no authentication exists" do
-      ems = FactoryGirl.create(:ems_openstack)
+      ems = FactoryBot.create(:ems_openstack)
 
       allow(cloud_topology_service)
         .to receive(:retrieve_providers)

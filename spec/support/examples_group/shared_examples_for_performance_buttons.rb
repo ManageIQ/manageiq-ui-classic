@@ -10,7 +10,7 @@ shared_examples_for 'a performance button' do |entity|
       it_behaves_like 'a disabled button', "No Capacity & Utilization data has been collected for this #{entity}"
     end
     context 'when performance data are available' do
-      let(:metric_rollup) { FactoryGirl.create(:metric_rollup_storage_hr) }
+      let(:metric_rollup) { FactoryBot.create(:metric_rollup_storage_hr) }
       it_behaves_like 'an enabled button'
     end
   end

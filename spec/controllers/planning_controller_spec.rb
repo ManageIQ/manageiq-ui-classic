@@ -6,13 +6,13 @@ describe PlanningController do
 
   describe "#option_changed" do
     before do
-      @host1 = FactoryGirl.create(:host, :name => 'Host1')
-      @host2 = FactoryGirl.create(:host, :name => 'Host2')
+      @host1 = FactoryBot.create(:host, :name => 'Host1')
+      @host2 = FactoryBot.create(:host, :name => 'Host2')
 
-      @vm1 = FactoryGirl.create(:vm_vmware, :name => 'Name1', :host => @host1)
-      @vm2 = FactoryGirl.create(:vm_vmware, :name => 'Name2', :host => @host2)
-      @vm3 = FactoryGirl.create(:vm_vmware, :name => 'Name3', :host => @host1)
-      @vm4 = FactoryGirl.create(:vm_vmware, :name => 'Name4', :host => @host1)
+      @vm1 = FactoryBot.create(:vm_vmware, :name => 'Name1', :host => @host1)
+      @vm2 = FactoryBot.create(:vm_vmware, :name => 'Name2', :host => @host2)
+      @vm3 = FactoryBot.create(:vm_vmware, :name => 'Name3', :host => @host1)
+      @vm4 = FactoryBot.create(:vm_vmware, :name => 'Name4', :host => @host1)
     end
 
     it 'displays all Vms and no flash message is set' do
@@ -29,8 +29,8 @@ describe PlanningController do
     end
 
     it 'displays Vms with the same name' do
-      ems = FactoryGirl.create(:ems_vmware, :name => "ProviderName")
-      vm5 = FactoryGirl.create(:vm_vmware,  :name => 'Name1', :host => @host2, :ext_management_system => ems)
+      ems = FactoryBot.create(:ems_vmware, :name => "ProviderName")
+      vm5 = FactoryBot.create(:vm_vmware,  :name => 'Name1', :host => @host2, :ext_management_system => ems)
       allow(controller).to receive(:render)
       controller.instance_variable_set(:@sb, :vms => {}, :options => {})
       controller.instance_variable_set(:@_params, :filter_typ => "all")

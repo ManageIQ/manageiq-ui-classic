@@ -1,6 +1,6 @@
 shared_context :shared_storage_manager_context do |t|
   before do
-    @ems_cloud = FactoryGirl.create("ems_#{t}".to_sym,
+    @ems_cloud = FactoryBot.create("ems_#{t}".to_sym,
                                     :name => "Test Cloud Manager")
     if t == 'openstack'
       @swift_manager    = @cinder_manager = nil

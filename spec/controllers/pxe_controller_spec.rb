@@ -24,7 +24,7 @@ describe PxeController do
 
   describe 'x_button' do
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryGirl.create(:zone) }
+    let(:zone) { FactoryBot.create(:zone) }
 
     before do
       ApplicationController.handle_exceptions = true
@@ -44,7 +44,7 @@ describe PxeController do
     end
 
     it "Pressing Refresh button should show display name in the flash message" do
-      pxe = FactoryGirl.create(:pxe_server)
+      pxe = FactoryBot.create(:pxe_server)
       controller.instance_variable_set(:@_params, :id => pxe.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {
@@ -75,7 +75,7 @@ describe PxeController do
   end
 
   describe "#tree_select" do
-    before { login_as FactoryGirl.create(:user_admin) }
+    before { login_as FactoryBot.create(:user_admin) }
 
     subject { post :tree_select, :params => {:id => 'root'} }
 

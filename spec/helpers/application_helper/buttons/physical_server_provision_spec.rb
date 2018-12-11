@@ -2,8 +2,8 @@ describe ApplicationHelper::Button::PhysicalServerProvision do
   describe '#disabled?' do
     context "button should not be disabled" do
       before do
-        ems = FactoryGirl.create(:ems_physical_infra)
-        @record = FactoryGirl.create(:physical_server, :ems_id => ems.id)
+        ems = FactoryBot.create(:ems_physical_infra)
+        @record = FactoryBot.create(:physical_server, :ems_id => ems.id)
       end
 
       it "does not disable the Provision button" do
@@ -24,7 +24,7 @@ describe ApplicationHelper::Button::PhysicalServerProvision do
 
     context "button should be disabled when there are no Physical Servers" do
       before do
-        FactoryGirl.create(:ems_physical_infra)
+        FactoryBot.create(:ems_physical_infra)
       end
 
       it "disable the Provision button" do
@@ -36,8 +36,8 @@ describe ApplicationHelper::Button::PhysicalServerProvision do
 
     context "button should be disabled when there are no Physical infrastructure providers that support VM Provisioning" do
       before do
-        ems = FactoryGirl.create(:ems_physical_infra)
-        @record = FactoryGirl.create(:physical_server, :ems_id => ems.id)
+        ems = FactoryBot.create(:ems_physical_infra)
+        @record = FactoryBot.create(:physical_server, :ems_id => ems.id)
       end
 
       it "disable the Provision button" do

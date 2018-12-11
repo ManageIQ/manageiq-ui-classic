@@ -1,9 +1,9 @@
 describe ReportFormatter::TimelineMessage do
   describe '#message_html on container event' do
     row = {}
-    let(:ems) { FactoryGirl.create(:ems_redhat, :id => 42) }
+    let(:ems) { FactoryBot.create(:ems_redhat, :id => 42) }
     let(:event) do
-      FactoryGirl.create(:ems_event,
+      FactoryBot.create(:ems_event,
                          :event_type            => 'CONTAINER_CREATED',
                          :ems_id                => 6,
                          :container_group_name  => 'hawkular-cassandra-1-wb1z6',
@@ -30,9 +30,9 @@ describe ReportFormatter::TimelineMessage do
 
   describe '#message_html on vm event' do
     row = {}
-    let(:vm) { FactoryGirl.create(:vm_redhat, :id => 42) }
+    let(:vm) { FactoryBot.create(:vm_redhat, :id => 42) }
     let(:event) do
-      FactoryGirl.create(:ems_event,
+      FactoryBot.create(:ems_event,
                          :event_type     => 'VM_CREATED',
                          :vm_or_template => vm)
     end
@@ -55,9 +55,9 @@ describe ReportFormatter::TimelineMessage do
 
   describe '#message_html on bottleneck event' do
     row = {}
-    let(:ems_cluster) { FactoryGirl.create(:ems_cluster, :id => 42, :name => 'Test Cluster') }
+    let(:ems_cluster) { FactoryBot.create(:ems_cluster, :id => 42, :name => 'Test Cluster') }
     let(:event) do
-      FactoryGirl.create(:bottleneck_event,
+      FactoryBot.create(:bottleneck_event,
                          :event_type    => 'MemoryUsage',
                          :resource_id   => 42,
                          :resource_name => ems_cluster.name,
@@ -78,9 +78,9 @@ describe ReportFormatter::TimelineMessage do
 
   describe '#message_html on policy event' do
     row = {}
-    let(:vm) { FactoryGirl.create(:vm_redhat, :id => 42, :name => 'Test VM') }
+    let(:vm) { FactoryBot.create(:vm_redhat, :id => 42, :name => 'Test VM') }
     let(:event) do
-      FactoryGirl.create(:policy_event,
+      FactoryBot.create(:policy_event,
                          :event_type   => 'vm_poweroff',
                          :target_id    => 42,
                          :target_name  => vm.name,
@@ -91,8 +91,8 @@ describe ReportFormatter::TimelineMessage do
              'target_name' => 'Test VM<br><b>VM or Template:</b>&nbsp;<a href=/vm_or_template/show/42>Test VM</a><br/><b>Assigned Profiles:</b>&nbsp;'}
 
     context 'policy profile assigned' do
-      let(:event_content) { FactoryGirl.create(:policy_event_content, :resource => policy_set) }
-      let(:policy_set) { FactoryGirl.create(:miq_policy_set) }
+      let(:event_content) { FactoryBot.create(:policy_event_content, :resource => policy_set) }
+      let(:policy_set) { FactoryBot.create(:miq_policy_set) }
 
       before { event.contents << event_content }
 
@@ -113,14 +113,14 @@ describe ReportFormatter::TimelineMessage do
   end
 
   describe '#events count for different categories' do
-    let(:ems) { FactoryGirl.create(:ems_redhat, :name => 'foobar') }
+    let(:ems) { FactoryBot.create(:ems_redhat, :name => 'foobar') }
 
     def stub_ems_event(event_type)
       EventStream.new(:event_type => event_type, :ems_id => ems.id)
     end
 
     before do
-      @report = FactoryGirl.create(:miq_report,
+      @report = FactoryBot.create(:miq_report,
                                    :db        => "EventStream",
                                    :col_order => %w(id name event_type timestamp),
                                    :headers   => %w(id name event_type timestamp),
@@ -179,14 +179,14 @@ describe ReportFormatter::TimelineMessage do
   end
 
   describe '#events count for regex categories' do
-    let(:ems) { FactoryGirl.create(:ems_redhat) }
+    let(:ems) { FactoryBot.create(:ems_redhat) }
 
     def stub_ems_event(event_type)
       EventStream.new(:event_type => event_type, :ems_id => ems.id)
     end
 
     before do
-      @report = FactoryGirl.create(
+      @report = FactoryBot.create(
         :miq_report,
         :db        => "EventStream",
         :col_order => %w(id name event_type timestamp),
@@ -265,14 +265,14 @@ describe ReportFormatter::TimelineMessage do
 end
 
 describe '#set data for headers that exist in col headers' do
-  let(:ems) { FactoryGirl.create(:ems_amazon) }
+  let(:ems) { FactoryBot.create(:ems_amazon) }
 
   def stub_ems_event(event_type)
     EventStream.create!(:event_type => event_type, :ems_id => ems.id)
   end
 
   before do
-    @report = FactoryGirl.create(:miq_report,
+    @report = FactoryBot.create(:miq_report,
                                  :db        => "EventStream",
                                  :col_order => %w(id name event_type timestamp vm_location),
                                  :headers   => %w(id name event_type timestamp vm_location),

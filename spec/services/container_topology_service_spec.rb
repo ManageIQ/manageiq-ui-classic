@@ -11,10 +11,10 @@ describe ContainerTopologyService do
     let(:container) { Container.create(:name => "ruby-example", :state => 'running') }
     let(:container_condition) { ContainerCondition.create(:name => 'Ready', :status => 'True') }
     let(:container_node) { ContainerNode.create(:ext_management_system => ems_kube, :name => "127.0.0.1", :ems_ref => "905c90ba-3e00-11e5-a0d2-18037327aaeb", :container_conditions => [container_condition], :lives_on => vm_rhev) }
-    let(:ems_kube) { FactoryGirl.create(:ems_kubernetes_with_authentication_err) }
-    let(:ems_openshift) { FactoryGirl.create(:ems_openshift) }
-    let(:ems_rhev) { FactoryGirl.create(:ems_redhat) }
-    let(:vm_rhev) { FactoryGirl.create(:vm_redhat, :uid_ems => "558d9a08-7b13-11e5-8546-129aa6621998", :ext_management_system => ems_rhev) }
+    let(:ems_kube) { FactoryBot.create(:ems_kubernetes_with_authentication_err) }
+    let(:ems_openshift) { FactoryBot.create(:ems_openshift) }
+    let(:ems_rhev) { FactoryBot.create(:ems_redhat) }
+    let(:vm_rhev) { FactoryBot.create(:vm_redhat, :uid_ems => "558d9a08-7b13-11e5-8546-129aa6621998", :ext_management_system => ems_rhev) }
 
     it "provider has unknown status when no authentication exists" do
       allow(container_topology_service).to receive(:retrieve_providers).with(anything, ManageIQ::Providers::ContainerManager).and_return([ems_openshift])
@@ -32,8 +32,8 @@ describe ContainerTopologyService do
 
     it "topology contains the expected structure and content" do
       # vm and host test cross provider correlation to infra provider
-      hardware = FactoryGirl.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8)
-      host = FactoryGirl.create(:host_redhat,
+      hardware = FactoryBot.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8)
+      host = FactoryBot.create(:host_redhat,
                                 :uid_ems               => "abcd9a08-7b13-11e5-8546-129aa6621999",
                                 :ext_management_system => ems_rhev,
                                 :hardware              => hardware)
@@ -209,7 +209,7 @@ describe ContainerTopologyService do
 
   describe '#entity_status' do
     context 'entity is a container' do
-      let(:entity) { FactoryGirl.create(:container) }
+      let(:entity) { FactoryBot.create(:container) }
 
       context 'state is not defined' do
         before { allow(entity).to receive(:state).and_return(nil) }

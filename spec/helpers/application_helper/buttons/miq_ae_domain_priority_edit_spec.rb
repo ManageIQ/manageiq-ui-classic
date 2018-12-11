@@ -3,10 +3,10 @@ describe ApplicationHelper::Button::MiqAeDomainPriorityEdit do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_domain_priority_edit'}) }
 
-  before { login_as FactoryGirl.create(:user, :with_miq_edit_features) }
+  before { login_as FactoryBot.create(:user, :with_miq_edit_features) }
 
   describe '#disabled?' do
-    let(:record) { FactoryGirl.create(:miq_ae_domain) }
+    let(:record) { FactoryBot.create(:miq_ae_domain) }
     before { allow(User).to receive(:current_tenant).and_return(Tenant.first) }
 
     context 'when number of visible domains < 2' do

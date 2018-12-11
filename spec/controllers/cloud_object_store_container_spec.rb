@@ -1,7 +1,7 @@
 describe CloudObjectStoreContainerController do
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-    @container = FactoryGirl.create(:cloud_object_store_container, :name => "cloud-object-store-container-01")
+    @container = FactoryBot.create(:cloud_object_store_container, :name => "cloud-object-store-container-01")
     allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
   end
 
@@ -9,11 +9,11 @@ describe CloudObjectStoreContainerController do
     let!(:user) { stub_user(:features => :all) }
     before do
       allow(@container).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@container).and_return([@tag1, @tag2])
@@ -54,7 +54,7 @@ describe CloudObjectStoreContainerController do
 
   context "delete object store container" do
     before do
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_container"
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
@@ -183,7 +183,7 @@ describe CloudObjectStoreContainerController do
             }
           }
         )
-        @cloud_manager = FactoryGirl.create(:ems_amazon)
+        @cloud_manager = FactoryBot.create(:ems_amazon)
         @ems = @cloud_manager.s3_storage_manager
 
         @form_params = {

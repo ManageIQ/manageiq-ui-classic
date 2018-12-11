@@ -6,7 +6,7 @@ describe GitBasedDomainImportService do
                               :url          => 'http://www.example.com')
     end
     let(:user) { double("User", :userid => userid, :id => 123) }
-    let(:domain) { FactoryGirl.build(:miq_ae_git_domain, :id => 999) }
+    let(:domain) { FactoryBot.build(:miq_ae_git_domain, :id => 999) }
     let(:userid) { "fred" }
     let(:task) { double("MiqTask", :id => 123) }
     let(:ref_name) { 'the_branch_name' }

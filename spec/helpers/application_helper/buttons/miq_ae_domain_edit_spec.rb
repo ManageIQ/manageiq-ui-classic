@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::MiqAeDomainEdit do
 
   describe '#visible?' do
     context 'when domain is locked' do
-      let(:record) { FactoryGirl.create(:miq_ae_domain_disabled) }
+      let(:record) { FactoryBot.create(:miq_ae_domain_disabled) }
       it { expect(subject.visible?).to be_truthy }
     end
   end

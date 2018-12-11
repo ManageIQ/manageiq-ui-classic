@@ -2,9 +2,9 @@ describe ApplicationHelper::Button::RoleSuspend do
   describe '#disabled?' do
     context "record has regional role" do
       before do
-        @record = FactoryGirl.create(
+        @record = FactoryBot.create(
           :assigned_server_role,
-          :server_role => FactoryGirl.create(
+          :server_role => FactoryBot.create(
             :server_role,
             :name => "terminator",
           )
@@ -24,15 +24,15 @@ describe ApplicationHelper::Button::RoleSuspend do
 
     context "record is active and max_concurrent is 1" do
       before do
-        @record = FactoryGirl.create(
+        @record = FactoryBot.create(
           :assigned_server_role,
           :active      => true,
-          :server_role => FactoryGirl.create(
+          :server_role => FactoryBot.create(
             :server_role,
             :name        => "terminator",
             :description => "cyborg"
           ),
-          :miq_server  => FactoryGirl.create(
+          :miq_server  => FactoryBot.create(
             :miq_server,
             :name => "ratman"
           )
@@ -53,15 +53,15 @@ describe ApplicationHelper::Button::RoleSuspend do
 
     context "record is inactive" do
       before do
-        @record = FactoryGirl.create(
+        @record = FactoryBot.create(
           :assigned_server_role,
           :active      => false,
-          :server_role => FactoryGirl.create(
+          :server_role => FactoryBot.create(
             :server_role,
             :name        => "terminator",
             :description => "cyborg"
           ),
-          :miq_server  => FactoryGirl.create(
+          :miq_server  => FactoryBot.create(
             :miq_server,
             :name => "ratman"
           )

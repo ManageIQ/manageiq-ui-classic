@@ -2,16 +2,16 @@ describe PhysicalServerController do
   render_views
 
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
   before do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryGirl.create(:user)
-    ems = FactoryGirl.create(:ems_physical_infra)
-    asset_detail = FactoryGirl.create(:asset_detail)
-    computer_system = FactoryGirl.create(:computer_system, :hardware => FactoryGirl.create(:hardware))
-    @physical_server = FactoryGirl.create(:physical_server,
+    login_as FactoryBot.create(:user)
+    ems = FactoryBot.create(:ems_physical_infra)
+    asset_detail = FactoryBot.create(:asset_detail)
+    computer_system = FactoryBot.create(:computer_system, :hardware => FactoryBot.create(:hardware))
+    @physical_server = FactoryBot.create(:physical_server,
                                           :asset_detail    => asset_detail,
                                           :computer_system => computer_system,
                                           :ems_id          => ems.id,
@@ -28,7 +28,7 @@ describe PhysicalServerController do
 
   describe "#show_list" do
     before do
-      FactoryGirl.create(:physical_server)
+      FactoryBot.create(:physical_server)
     end
 
     subject { get :show_list }

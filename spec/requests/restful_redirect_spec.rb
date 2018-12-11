@@ -1,5 +1,5 @@
 describe RestfulRedirectController do
-  let(:user) { FactoryGirl.create(:user_with_email, :role => 'super_administrator', :password => 'x') }
+  let(:user) { FactoryBot.create(:user_with_email, :role => 'super_administrator', :password => 'x') }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
@@ -10,9 +10,9 @@ describe RestfulRedirectController do
   end
 
   context 'for MiqRequest' do
-    let(:ems)      { FactoryGirl.create(:ems_vmware_with_authentication) }
-    let(:template) { FactoryGirl.create(:template_vmware, :ext_management_system => ems) }
-    let(:req) { FactoryGirl.create(:miq_provision_request, :requester => user, :source => template) }
+    let(:ems)      { FactoryBot.create(:ems_vmware_with_authentication) }
+    let(:template) { FactoryBot.create(:template_vmware, :ext_management_system => ems) }
+    let(:req) { FactoryBot.create(:miq_provision_request, :requester => user, :source => template) }
 
     before do
       # Load just one dialog instead of calling `MiqDialog.seed`

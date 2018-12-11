@@ -3,7 +3,7 @@ describe TreeBuilderRolesByServer do
     before do
       MiqRegion.seed
       @miq_server = EvmSpecHelper.local_miq_server
-      @server_role = FactoryGirl.create(
+      @server_role = FactoryBot.create(
         :server_role,
         :name              => "smartproxy",
         :description       => "SmartProxy",
@@ -12,7 +12,7 @@ describe TreeBuilderRolesByServer do
         :role_scope        => "zone"
       )
 
-      @assigned_server_role1 = FactoryGirl.create(
+      @assigned_server_role1 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,
@@ -20,7 +20,7 @@ describe TreeBuilderRolesByServer do
         :priority       => 1
       )
 
-      @assigned_server_role2 = FactoryGirl.create(
+      @assigned_server_role2 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,

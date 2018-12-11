@@ -13,7 +13,7 @@ describe ApplicationHelper::Button::NewCloudTenant do
 
     context 'provider available' do
       before do
-        FactoryGirl.create(:ems_openstack)
+        FactoryBot.create(:ems_openstack)
         button.calculate_properties
       end
 

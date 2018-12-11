@@ -1,7 +1,7 @@
 describe CatalogHelper::TextualSummary do
   context '#textual_tags without tags' do
     before do
-      @record = FactoryGirl.create(:orchestration_template)
+      @record = FactoryBot.create(:orchestration_template)
       session[:customer_name] = 'RspecName'
     end
     it 'returns Hash if no tags found' do
@@ -13,9 +13,9 @@ describe CatalogHelper::TextualSummary do
   end
   context '#textual_tags with tags' do
     before do
-      @record = FactoryGirl.create(:orchestration_template)
-      parent = FactoryGirl.create(:classification, :description => 'Label')
-      value = FactoryGirl.create(:classification, :description => 'Value', :parent_id => parent.id)
+      @record = FactoryBot.create(:orchestration_template)
+      parent = FactoryBot.create(:classification, :description => 'Label')
+      value = FactoryBot.create(:classification, :description => 'Value', :parent_id => parent.id)
       tag = Tag.find_by(:id => value[:tag_id])
       tag[:name] = '/managed/description/name'
       tag.save!

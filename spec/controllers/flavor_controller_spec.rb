@@ -2,7 +2,7 @@ describe FlavorController do
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     stub_user(:features => :all)
-    @flavor = FactoryGirl.create(:flavor)
+    @flavor = FactoryBot.create(:flavor)
   end
 
   describe "#show" do

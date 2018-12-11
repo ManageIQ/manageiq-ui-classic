@@ -1,5 +1,5 @@
 describe AnsibleTowerJobTemplateDialogService do
-  let(:template) { FactoryGirl.create(:ansible_configuration_script) }
+  let(:template) { FactoryBot.create(:ansible_configuration_script) }
 
   describe "#create_dialog" do
     it "creates a dialog from a job template" do

@@ -12,7 +12,7 @@ describe NetworkTopologyController do
 
   it "renders show screen per provider id" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openstack)
+    ems = FactoryBot.create(:ems_openstack)
     get :show, :params => { :id => ems.network_manager.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty

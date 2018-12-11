@@ -1,10 +1,10 @@
 describe EmsPhysicalInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
   describe "#create" do
     before do
-      user = FactoryGirl.create(:user, :features => "ems_physical_infra_new")
+      user = FactoryBot.create(:user, :features => "ems_physical_infra_new")
 
       allow(user).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
@@ -23,8 +23,8 @@ describe EmsPhysicalInfraController do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
-      @ems = FactoryGirl.create(:ems_physical_infra)
+      login_as FactoryBot.create(:user, :features => "none")
+      @ems = FactoryBot.create(:ems_physical_infra)
     end
 
     let(:url_params) { {} }
@@ -49,7 +49,7 @@ describe EmsPhysicalInfraController do
     end
 
     it "shows associated datastores" do
-      @datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      @datastore = FactoryBot.create(:storage, :name => 'storage_name')
       @datastore.parent = @ems
       controller.instance_variable_set(:@breadcrumbs, [])
       get :show, :params => {:id => @ems.id, :display => 'storages'}
@@ -64,7 +64,7 @@ describe EmsPhysicalInfraController do
 
     it " can tag associated datastores" do
       stub_user(:features => :all)
-      datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      datastore = FactoryBot.create(:storage, :name => 'storage_name')
       datastore.parent = @ems
       controller.instance_variable_set(:@_orig_action, "x_history")
       get :show, :params => {:id => @ems.id, :display => 'storages'}
@@ -84,7 +84,7 @@ describe EmsPhysicalInfraController do
   describe "#show_list" do
     before do
       stub_user(:features => :all)
-      FactoryGirl.create(:ems_vmware)
+      FactoryBot.create(:ems_vmware)
       get :show_list
     end
     it { expect(response.status).to eq(200) }
@@ -97,7 +97,7 @@ describe EmsPhysicalInfraController do
     end
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Physical Infrastructure Providers -> (Dashboard)' breadcrumb path" do
-        ems = FactoryGirl.create(:ems_physical_infra)
+        ems = FactoryBot.create(:ems_physical_infra)
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
@@ -107,7 +107,7 @@ describe EmsPhysicalInfraController do
 
   describe "#build_credentials" do
     before do
-      @ems = FactoryGirl.create(:ems_physical_infra)
+      @ems = FactoryBot.create(:ems_physical_infra)
     end
     context "#build_credentials only contains credentials that it supports and has a username for in params" do
       let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
@@ -132,7 +132,7 @@ describe EmsPhysicalInfraController do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_physical_infra_new")
+      login_as FactoryBot.create(:user, :features => "ems_physical_infra_new")
     end
 
     render_views

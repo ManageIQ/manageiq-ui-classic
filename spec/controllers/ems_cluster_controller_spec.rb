@@ -64,8 +64,8 @@ describe EmsClusterController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @cluster = FactoryGirl.create(:ems_cluster)
-      login_as FactoryGirl.create(:user, :features => "none")
+      @cluster = FactoryBot.create(:ems_cluster)
+      login_as FactoryBot.create(:user, :features => "none")
     end
 
     subject do

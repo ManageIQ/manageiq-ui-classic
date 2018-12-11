@@ -11,33 +11,33 @@ describe PhysicalInfraTopologyService do
   #         - Server C
   #   - Server D
 
-  let(:server_a) { FactoryGirl.create(:physical_server, :name => 'Server A', :health_state => 'Error') }
-  let(:server_b) { FactoryGirl.create(:physical_server, :name => 'Server B', :health_state => 'Warning') }
-  let(:server_c) { FactoryGirl.create(:physical_server, :name => 'Server C', :health_state => 'Valid') }
-  let(:server_d) { FactoryGirl.create(:physical_server, :name => 'Server D', :health_state => 'Error') }
+  let(:server_a) { FactoryBot.create(:physical_server, :name => 'Server A', :health_state => 'Error') }
+  let(:server_b) { FactoryBot.create(:physical_server, :name => 'Server B', :health_state => 'Warning') }
+  let(:server_c) { FactoryBot.create(:physical_server, :name => 'Server C', :health_state => 'Valid') }
+  let(:server_d) { FactoryBot.create(:physical_server, :name => 'Server D', :health_state => 'Error') }
 
   let(:chassis_a) do
-    FactoryGirl.create(:physical_chassis,
+    FactoryBot.create(:physical_chassis,
                        :name             => 'Chassis A',
                        :health_state     => 'Valid',
                        :physical_servers => [server_a])
   end
 
   let(:chassis_b) do
-    FactoryGirl.create(:physical_chassis,
+    FactoryBot.create(:physical_chassis,
                        :name         => 'Chassis B',
                        :health_state => 'Error')
   end
 
   let(:chassis_c) do
-    FactoryGirl.create(:physical_chassis,
+    FactoryBot.create(:physical_chassis,
                        :name                    => 'Chassis C',
                        :health_state            => 'Valid',
                        :parent_physical_chassis => chassis_b)
   end
 
   let(:chassis_d) do
-    FactoryGirl.create(:physical_chassis,
+    FactoryBot.create(:physical_chassis,
                        :name                    => 'Chassis D',
                        :health_state            => 'Warning',
                        :parent_physical_chassis => chassis_c,
@@ -45,21 +45,21 @@ describe PhysicalInfraTopologyService do
   end
 
   let(:rack_a) do
-    FactoryGirl.create(:physical_rack,
+    FactoryBot.create(:physical_rack,
                        :name             => 'Rack A',
                        :physical_chassis => [chassis_a],
                        :physical_servers => [server_a, server_b])
   end
 
   let(:auth) do
-    FactoryGirl.create(:authentication,
+    FactoryBot.create(:authentication,
                        :userid   => 'admin',
                        :password => 'password',
                        :authtype => 'default')
   end
 
   let(:ems) do
-    ems = FactoryGirl.create(:physical_infra,
+    ems = FactoryBot.create(:physical_infra,
                              :name      => 'LXCA',
                              :hostname  => 'example.com',
                              :port      => '443',

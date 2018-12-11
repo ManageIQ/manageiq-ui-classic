@@ -1,15 +1,15 @@
 describe VmCloudController do
   let(:vm_openstack) do
-    FactoryGirl.create(:vm_openstack,
-                       :ext_management_system => FactoryGirl.create(:ems_openstack))
+    FactoryBot.create(:vm_openstack,
+                       :ext_management_system => FactoryBot.create(:ems_openstack))
   end
   let(:vm_openstack_tmd) do
-    FactoryGirl.create(:vm_openstack,
-                       :ext_management_system => FactoryGirl.create(:ems_openstack, :tenant_mapping_enabled => false))
+    FactoryBot.create(:vm_openstack,
+                       :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => false))
   end
   let(:vm_openstack_tme) do
-    FactoryGirl.create(:vm_openstack,
-                       :ext_management_system => FactoryGirl.create(:ems_openstack, :tenant_mapping_enabled => true))
+    FactoryBot.create(:vm_openstack,
+                       :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => true))
   end
 
   before do
@@ -81,7 +81,7 @@ describe VmCloudController do
     end
 
     it 'can resize an instance' do
-      flavor = FactoryGirl.create(:flavor_openstack)
+      flavor = FactoryBot.create(:flavor_openstack)
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
       expect(VmCloudReconfigureRequest).to receive(:make_request)

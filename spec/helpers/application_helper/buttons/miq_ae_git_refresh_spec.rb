@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::MiqAeGitRefresh do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:miq_ae_git_domain) }
+  let(:record) { FactoryBot.create(:miq_ae_git_domain) }
   subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_git_refresh'}) }
 
   before { MiqRegion.seed }

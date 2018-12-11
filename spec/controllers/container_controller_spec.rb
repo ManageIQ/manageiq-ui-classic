@@ -12,12 +12,12 @@ describe ContainerController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_project = ContainerProject.create(:ext_management_system => ems)
     container_group = ContainerGroup.create(:ext_management_system => ems,
                                             :container_project     => container_project,
                                             :name                  => "Test Group")
-    container = FactoryGirl.create(:container, :container_group => container_group, :name => "Test Container")
+    container = FactoryBot.create(:container, :container_group => container_group, :name => "Test Container")
 
     get :show, :params => { :id => container.id }
     expect(response.status).to eq(200)
@@ -31,14 +31,14 @@ describe ContainerController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
 
-      ems = FactoryGirl.create(:ems_kubernetes)
+      ems = FactoryBot.create(:ems_kubernetes)
       container_project = ContainerProject.create(:ext_management_system => ems)
       container_group = ContainerGroup.create(:ext_management_system => ems,
                                               :container_project     => container_project,
                                               :name                  => "Test Group")
-      @container = FactoryGirl.create(:container, :container_group => container_group, :name => "Test Container")
+      @container = FactoryBot.create(:container, :container_group => container_group, :name => "Test Container")
     end
 
     subject { get :show, :params => { :id => @container.id } }

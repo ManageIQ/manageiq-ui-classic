@@ -1,39 +1,39 @@
 describe ServiceHelper::TextualSummary do
   describe ".textual_orchestration_stack" do
-    let(:os_cloud) { FactoryGirl.create(:orchestration_stack_cloud, :name => "cloudstack1") }
-    let(:os_infra) { FactoryGirl.create(:orchestration_stack_openstack_infra, :name => "infrastack1") }
+    let(:os_cloud) { FactoryBot.create(:orchestration_stack_cloud, :name => "cloudstack1") }
+    let(:os_infra) { FactoryBot.create(:orchestration_stack_openstack_infra, :name => "infrastack1") }
 
     before do
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
     end
 
     subject { textual_orchestration_stack }
     it 'contains the link to the associated cloud stack' do
-      @record = FactoryGirl.create(:service)
+      @record = FactoryBot.create(:service)
       allow(@record).to receive(:orchestration_stack).and_return(os_cloud)
       expect(textual_orchestration_stack).to eq(os_cloud)
     end
 
     it 'contains the link to the associated infra stack' do
-      @record = FactoryGirl.create(:service)
+      @record = FactoryBot.create(:service)
       allow(@record).to receive(:orchestration_stack).and_return(os_infra)
       expect(textual_orchestration_stack).to eq(os_infra)
     end
 
     it 'contains no link for an invalid stack' do
       os_infra.id = nil
-      @record = FactoryGirl.create(:service)
+      @record = FactoryBot.create(:service)
       allow(@record).to receive(:orchestration_stack).and_return(os_infra)
       expect(textual_orchestration_stack[:link]).to be_nil
     end
   end
 
   describe ".textual_agregate_all_vms" do
-    let(:vm) { FactoryGirl.create(:vm_vmwware, :name => "vm1") }
+    let(:vm) { FactoryBot.create(:vm_vmwware, :name => "vm1") }
 
     before do
-      login_as FactoryGirl.create(:user)
-      @record = FactoryGirl.create(:service)
+      login_as FactoryBot.create(:user)
+      @record = FactoryBot.create(:service)
     end
 
     subject { textual_aggregate_all_vm_cpus }
@@ -76,9 +76,9 @@ describe ServiceHelper::TextualSummary do
   describe ".textual_cloud_credential" do
     subject { textual_cloud_credential }
     it 'displays only cloud credentials if available' do
-      @job = FactoryGirl.create(:embedded_ansible_job)
-      machine_credential = FactoryGirl.create(:embedded_ansible_machine_credential)
-      cloud_credential = FactoryGirl.create(:embedded_ansible_amazon_credential)
+      @job = FactoryBot.create(:embedded_ansible_job)
+      machine_credential = FactoryBot.create(:embedded_ansible_machine_credential)
+      cloud_credential = FactoryBot.create(:embedded_ansible_amazon_credential)
       allow(@job).to receive(:authentications).and_return([cloud_credential, machine_credential])
       allow(self).to receive(:url_for_only_path).and_return('link')
       expect(textual_cloud_credential).to eq(:label => "Cloud", :value => nil, :title => "Credential (Amazon)", :link => "link")
@@ -88,8 +88,8 @@ describe ServiceHelper::TextualSummary do
   describe ".textual_vault_credential" do
     subject { textual_vault_credential }
     it 'displays only vault credentials if available' do
-      @job = FactoryGirl.create(:embedded_ansible_job)
-      vault_credential = FactoryGirl.create(:embedded_ansible_vault_credential)
+      @job = FactoryBot.create(:embedded_ansible_job)
+      vault_credential = FactoryBot.create(:embedded_ansible_vault_credential)
       allow(@job).to receive(:authentications).and_return(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential.where(:id => vault_credential.id))
       allow(self).to receive(:url_for_only_path).and_return('link')
       expect(textual_vault_credential).to eq(:label => "Vault", :value => nil, :title => "Credential (Vault)", :link => "link")

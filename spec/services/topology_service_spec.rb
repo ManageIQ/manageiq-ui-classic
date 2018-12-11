@@ -43,7 +43,7 @@ describe TopologyService do
   end
 
   describe '#entity_id' do
-    let(:host) { FactoryGirl.create(:host) }
+    let(:host) { FactoryBot.create(:host) }
 
     it 'output begins with class name' do
       expect(subject.entity_id(host)).to start_with(host.class.to_s)
@@ -72,9 +72,9 @@ describe TopologyService do
   end
 
   describe '#map_to_graph' do
-    let(:provider) { FactoryGirl.create(:ext_management_system) }
-    let(:tag) { FactoryGirl.create(:tag) }
-    let(:vm) { FactoryGirl.create(:vm, :ext_management_system => provider, :tags => [tag]) }
+    let(:provider) { FactoryBot.create(:ext_management_system) }
+    let(:tag) { FactoryBot.create(:tag) }
+    let(:vm) { FactoryBot.create(:vm, :ext_management_system => provider, :tags => [tag]) }
     let(:graph) { {:vms => {:tags => nil}} }
 
     before do
@@ -134,7 +134,7 @@ describe TopologyService do
     let(:name) { subject.send(:entity_name, entity) }
 
     context 'entity is not a tag' do
-      let(:entity) { FactoryGirl.create(:vm_vmware) }
+      let(:entity) { FactoryBot.create(:vm_vmware) }
 
       it 'returns with the name of the entity' do
         expect(name).to eq(entity.name)
@@ -142,9 +142,9 @@ describe TopologyService do
     end
 
     context 'entity is a tag' do
-      let(:parent_cls) { FactoryGirl.create(:classification, :description => 'foo') }
-      let(:cls) { FactoryGirl.create(:classification, :parent => parent_cls, :description => 'bar') }
-      let(:entity) { FactoryGirl.create(:tag, :classification => cls) }
+      let(:parent_cls) { FactoryBot.create(:classification, :description => 'foo') }
+      let(:cls) { FactoryBot.create(:classification, :parent => parent_cls, :description => 'bar') }
+      let(:entity) { FactoryBot.create(:tag, :classification => cls) }
 
       it 'returns with the parent and the child classification description' do
         expect(name).to eq('foo: bar')

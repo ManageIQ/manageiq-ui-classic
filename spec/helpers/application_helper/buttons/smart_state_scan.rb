@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::SmartStateScan do
     context "when only SmartProxy role is set" do
       before do
         SSAButtonHelper.create_server_role(MiqServer.my_server, 'SmartProxy')
-        @record = FactoryGirl.create(:container_image)
+        @record = FactoryBot.create(:container_image)
       end
 
       it "will not be disabled" do
@@ -20,7 +20,7 @@ describe ApplicationHelper::Button::SmartStateScan do
     context "when only SmartState role is set" do
       before do
         SSAButtonHelper.create_server_role(MiqServer.my_server, 'SmartState')
-        @record = FactoryGirl.create(:container_image)
+        @record = FactoryBot.create(:container_image)
       end
 
       it "will not be disabled" do
@@ -33,7 +33,7 @@ describe ApplicationHelper::Button::SmartStateScan do
     context "when both proxy roles are set" do
       before do
         SSAButtonHelper.create_server_smart_roles
-        @record = FactoryGirl.create(:container_image)
+        @record = FactoryBot.create(:container_image)
       end
 
       it "will not be disabled" do

@@ -3,7 +3,7 @@ describe EmsBlockStorageController do
 
   describe "#check_generic_rbac" do
     let(:feature) { %w(cloud_subnet_new) }
-    let(:user)    { FactoryGirl.create(:user, :features => feature) }
+    let(:user)    { FactoryBot.create(:user, :features => feature) }
 
     before do
       setup_zone
@@ -31,7 +31,7 @@ describe EmsBlockStorageController do
 
     it 'renders the view and the Block Storage Managers toolbar' do
       setup_zone
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
       expect(ApplicationHelper::Toolbar::GtlView).to receive(:definition).and_call_original
       expect(ApplicationHelper::Toolbar::EmsBlockStoragesCenter).to receive(:definition).and_call_original
       post :show_list

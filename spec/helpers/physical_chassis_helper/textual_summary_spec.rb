@@ -2,7 +2,7 @@ describe PhysicalChassisHelper::TextualSummary do
   include ApplicationHelper
 
   let(:ems) do
-    FactoryGirl.create(:physical_infra,
+    FactoryBot.create(:physical_infra,
                        :name      => 'LXCA',
                        :hostname  => 'my.physicalinfra.com',
                        :port      => '443',
@@ -10,7 +10,7 @@ describe PhysicalChassisHelper::TextualSummary do
   end
 
   let(:asset_detail) do
-    FactoryGirl.create(:asset_detail,
+    FactoryBot.create(:asset_detail,
                        :product_name       => 'Lenovo XYZ Chassis x1000',
                        :manufacturer       => 'Lenovo',
                        :serial_number      => 'A1B2C3D4E5F6',
@@ -20,43 +20,43 @@ describe PhysicalChassisHelper::TextualSummary do
   end
 
   let(:network) do
-    FactoryGirl.build(:network, :ipaddress => '192.168.1.1')
+    FactoryBot.build(:network, :ipaddress => '192.168.1.1')
   end
 
   let(:guest_device) do
-    FactoryGirl.build(:guest_device,
+    FactoryBot.build(:guest_device,
                       :device_type => 'management',
                       :network     => network)
   end
 
   let(:hardware) do
-    FactoryGirl.build(:hardware, :guest_devices => [guest_device])
+    FactoryBot.build(:hardware, :guest_devices => [guest_device])
   end
 
   let(:computer_system) do
-    FactoryGirl.build(:computer_system, :hardware => hardware)
+    FactoryBot.build(:computer_system, :hardware => hardware)
   end
 
   let(:physical_rack) do
-    FactoryGirl.create(:physical_rack, :name => 'Rack XYZ')
+    FactoryBot.create(:physical_rack, :name => 'Rack XYZ')
   end
 
   let(:physical_servers) do
     [
-      FactoryGirl.create(:physical_server, :name => 'Physical Server I'),
-      FactoryGirl.create(:physical_server, :name => 'Physical Server J'),
-      FactoryGirl.create(:physical_server, :name => 'Physical Server K')
+      FactoryBot.create(:physical_server, :name => 'Physical Server I'),
+      FactoryBot.create(:physical_server, :name => 'Physical Server J'),
+      FactoryBot.create(:physical_server, :name => 'Physical Server K')
     ]
   end
 
   let(:physical_storages) do
     [
-      FactoryGirl.create(:physical_storage, :name => 'Physical Storage A')
+      FactoryBot.create(:physical_storage, :name => 'Physical Storage A')
     ]
   end
 
   let(:physical_chassis) do
-    FactoryGirl.create(:physical_chassis,
+    FactoryBot.create(:physical_chassis,
                        :ems_id                       => ems.id,
                        :uid_ems                      => 'NVH20GH0T4HN268902G6Y2N-G28Y8YWG',
                        :name                         => 'Chassis ABC',

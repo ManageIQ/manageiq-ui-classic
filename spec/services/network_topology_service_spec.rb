@@ -4,30 +4,30 @@ describe NetworkTopologyService do
   describe "#build_topology" do
     subject { network_topology_service.build_topology }
 
-    let(:ems_cloud) { FactoryGirl.create(:ems_openstack) }
+    let(:ems_cloud) { FactoryBot.create(:ems_openstack) }
     let(:ems) { ems_cloud.network_manager }
 
     before do
-      @cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack)
-      @availability_zone = FactoryGirl.create(:availability_zone_openstack,
+      @cloud_tenant = FactoryBot.create(:cloud_tenant_openstack)
+      @availability_zone = FactoryBot.create(:availability_zone_openstack,
                                               :name                  => "AZ name",
                                               :ext_management_system => ems_cloud)
-      @vm = FactoryGirl.create(:vm_openstack,
+      @vm = FactoryBot.create(:vm_openstack,
                                :cloud_tenant          => @cloud_tenant,
                                :ext_management_system => ems_cloud,
                                :availability_zone     => @availability_zone)
-      @cloud_network = FactoryGirl.create(:cloud_network_openstack)
-      @public_network = FactoryGirl.create(:cloud_network_openstack)
-      @cloud_subnet = FactoryGirl.create(:cloud_subnet_openstack, :cloud_network         => @cloud_network,
+      @cloud_network = FactoryBot.create(:cloud_network_openstack)
+      @public_network = FactoryBot.create(:cloud_network_openstack)
+      @cloud_subnet = FactoryBot.create(:cloud_subnet_openstack, :cloud_network         => @cloud_network,
                                                                   :ext_management_system => ems)
-      @network_router = FactoryGirl.create(:network_router_openstack, :cloud_subnets => [@cloud_subnet],
+      @network_router = FactoryBot.create(:network_router_openstack, :cloud_subnets => [@cloud_subnet],
                                                                       :cloud_network => @public_network)
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack, :vm => @vm, :cloud_network => @public_network)
-      @security_group = FactoryGirl.create(:security_group_openstack)
-      @network_port = FactoryGirl.create(:network_port_openstack, :device          => @vm,
+      @floating_ip = FactoryBot.create(:floating_ip_openstack, :vm => @vm, :cloud_network => @public_network)
+      @security_group = FactoryBot.create(:security_group_openstack)
+      @network_port = FactoryBot.create(:network_port_openstack, :device          => @vm,
                                                                   :security_groups => [@security_group],
                                                                   :floating_ip     => @floating_ip)
-      @cloud_subnet_network_port = FactoryGirl.create(:cloud_subnet_network_port, :cloud_subnet => @cloud_subnet,
+      @cloud_subnet_network_port = FactoryBot.create(:cloud_subnet_network_port, :cloud_subnet => @cloud_subnet,
                                                                                   :network_port => @network_port)
     end
 
@@ -36,7 +36,7 @@ describe NetworkTopologyService do
     end
 
     it "provider has unknown status when no authentication exists" do
-      ems = FactoryGirl.create(:ems_openstack).network_manager
+      ems = FactoryBot.create(:ems_openstack).network_manager
 
       allow(network_topology_service).to receive(:retrieve_providers).with(
         anything, ManageIQ::Providers::NetworkManager

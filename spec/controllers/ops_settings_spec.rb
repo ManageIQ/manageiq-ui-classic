@@ -1,6 +1,6 @@
 describe OpsController do
   context "OpsSettings::Schedules" do
-    let(:user) { FactoryGirl.create(:user, :features => %w(schedule_enable schedule_disable)) }
+    let(:user) { FactoryBot.create(:user, :features => %w(schedule_enable schedule_disable)) }
     before do
       login_as user
       allow(User).to receive(:server_timezone).and_return("UTC")
@@ -28,7 +28,7 @@ describe OpsController do
         allow(server).to receive_messages(:zone_id => 1)
         allow(MiqServer).to receive(:my_server).and_return(server)
 
-        @sch = FactoryGirl.create(:miq_schedule)
+        @sch = FactoryBot.create(:miq_schedule)
         silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST'.freeze }
 
         controller.params["check_#{@sch.id}"] = '1'
@@ -85,7 +85,7 @@ describe OpsController do
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)
-        @schedule = FactoryGirl.create(:miq_schedule, :userid => user.userid, :resource_type => "Vm")
+        @schedule = FactoryBot.create(:miq_schedule, :userid => user.userid, :resource_type => "Vm")
         @params = {
           :action      => "schedule_edit",
           :button      => "add",
@@ -119,7 +119,7 @@ describe OpsController do
         @params[:id] = @schedule.id
         @params[:name] = "schedule01"
         controller.instance_variable_set(:@_params, @params)
-        FactoryGirl.create(:miq_schedule, :name => @params[:name], :userid => user.userid, :resource_type => "Vm")
+        FactoryBot.create(:miq_schedule, :name => @params[:name], :userid => user.userid, :resource_type => "Vm")
         controller.send(:schedule_edit)
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
@@ -130,7 +130,7 @@ describe OpsController do
   render_views
   context "OpsController::Settings" do
     context "zone addition" do
-      let(:user) { FactoryGirl.create(:user, :features => %w(zone_edit zone_new)) }
+      let(:user) { FactoryBot.create(:user, :features => %w(zone_edit zone_new)) }
       before do
         login_as user
       end
@@ -140,7 +140,7 @@ describe OpsController do
         MiqRegion.seed
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)
-        @zone = FactoryGirl.create(:zone, :name => 'zoneName', :description => "description1")
+        @zone = FactoryBot.create(:zone, :name => 'zoneName', :description => "description1")
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:x_node).and_return('root')
 

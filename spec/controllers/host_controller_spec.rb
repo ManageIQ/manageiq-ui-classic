@@ -1,6 +1,6 @@
 describe HostController do
-  let(:h1) { FactoryGirl.create(:host, :name => 'foobar') }
-  let(:h2) { FactoryGirl.create(:host, :name => 'bar') }
+  let(:h1) { FactoryBot.create(:host, :name => 'foobar') }
+  let(:h2) { FactoryBot.create(:host, :name => 'bar') }
 
   describe "#button" do
     render_views
@@ -20,7 +20,7 @@ describe HostController do
 
     it "renders show_list and does not include hidden column" do
       allow(controller).to receive(:render)
-      report = FactoryGirl.create(:miq_report,
+      report = FactoryBot.create(:miq_report,
                                   :name        => 'Hosts',
                                   :title       => 'Hosts',
                                   :cols        => %w(name ipaddress v_total_vms),
@@ -36,7 +36,7 @@ describe HostController do
 
     it "renders show_list and includes all columns" do
       allow(controller).to receive(:render)
-      report = FactoryGirl.create(:miq_report,
+      report = FactoryBot.create(:miq_report,
                                   :name      => 'Hosts',
                                   :title     => 'Hosts',
                                   :cols      => %w(name ipaddress v_total_vms),
@@ -108,12 +108,12 @@ describe HostController do
     end
 
     it "when Custom Button is pressed" do
-      host = FactoryGirl.create(:host)
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
-      d = FactoryGirl.create(:dialog, :label => "Some Label")
-      dt = FactoryGirl.create(:dialog_tab, :label => "Some Tab", :order => 0)
+      host = FactoryBot.create(:host)
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
+      d = FactoryBot.create(:dialog, :label => "Some Label")
+      dt = FactoryBot.create(:dialog_tab, :label => "Some Tab", :order => 0)
       d.dialog_tabs << dt
-      ra = FactoryGirl.create(:resource_action, :dialog_id => d.id)
+      ra = FactoryBot.create(:resource_action, :dialog_id => d.id)
       custom_button.resource_action = ra
       custom_button.save
       post :button, :params => {:pressed => "custom_button", :id => host.id, :button_id => custom_button.id}
@@ -205,9 +205,9 @@ describe HostController do
   describe "#show_association" do
     before do
       stub_user(:features => :all)
-      @host = FactoryGirl.create(:host, :name =>'hostname1')
-      @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
-      @datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      @host = FactoryBot.create(:host, :name =>'hostname1')
+      @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host_id => @host.id)
+      @datastore = FactoryBot.create(:storage, :name => 'storage_name')
       @datastore.parent = @host
     end
 
@@ -238,7 +238,7 @@ describe HostController do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
 
-      @host = FactoryGirl.create(:host, :name =>'hostname1')
+      @host = FactoryBot.create(:host, :name =>'hostname1')
     end
 
     # http://localhost:3000/host/users/10000000000005?db=host
@@ -255,7 +255,7 @@ describe HostController do
 
     # http://localhost:3000/host/guest_applications/10000000000005?db=host
     it "renders a grid of associated GuestApplications" do
-      @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
+      @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name      => 'GuestApplication',
         :parent_id       => @host.id.to_s,
@@ -268,7 +268,7 @@ describe HostController do
 
     # http://localhost:3000/host/filesystems/10000000000005?db=host
     it "renders a grid of all associated Filesystems" do
-      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      @host_service_group = FactoryBot.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'Filesystem',
         :parent_id                      => @host.id.to_s,
@@ -284,7 +284,7 @@ describe HostController do
 
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=all
     it "renders a grid of all associated SystemServices" do
-      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      @host_service_group = FactoryBot.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
@@ -300,7 +300,7 @@ describe HostController do
 
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=running
     it "renders a grid of running associated SystemServices" do
-      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      @host_service_group = FactoryBot.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
@@ -316,7 +316,7 @@ describe HostController do
 
     # http://localhost:3000/host/guest_applications/10000000000005?db=host?status=failed
     it "renders a grid of failed associated SystemServices" do
-      @host_service_group = FactoryGirl.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
+      @host_service_group = FactoryBot.create(:host_service_group, :name => "host_service_group1", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name                     => 'SystemService',
         :parent_id                      => @host.id.to_s,
@@ -334,9 +334,9 @@ describe HostController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
-      @host = FactoryGirl.create(:host,
-                                 :hardware => FactoryGirl.create(:hardware,
+      login_as FactoryBot.create(:user, :features => "none")
+      @host = FactoryBot.create(:host,
+                                 :hardware => FactoryBot.create(:hardware,
                                                                  :cpu_sockets          => 2,
                                                                  :cpu_cores_per_socket => 4,
                                                                  :cpu_total_cores      => 8))

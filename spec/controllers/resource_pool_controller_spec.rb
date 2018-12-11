@@ -59,8 +59,8 @@ describe ResourcePoolController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
-      @resource_pool = FactoryGirl.create(:resource_pool)
+      login_as FactoryBot.create(:user, :features => "none")
+      @resource_pool = FactoryBot.create(:resource_pool)
     end
 
     let(:url_params) { {} }

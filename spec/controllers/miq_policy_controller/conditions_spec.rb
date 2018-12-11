@@ -2,9 +2,9 @@ describe MiqPolicyController do
   context "::Conditions" do
     context '#condition_remove' do
       it 'removes condition successfully' do
-        login_as FactoryGirl.create(:user, :features => "condition_remove")
-        condition = FactoryGirl.create(:condition)
-        policy = FactoryGirl.create(:miq_policy, :name => "test_policy", :conditions => [condition])
+        login_as FactoryBot.create(:user, :features => "condition_remove")
+        condition = FactoryBot.create(:condition)
+        policy = FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition])
         controller.instance_variable_set(:@_params, :policy_id => policy.id, :id => condition.id)
         controller.instance_variable_set(:@sb, {})
         controller.x_node = "pp_pp-1r36_p-#{policy.id}_co-#{condition.id}"

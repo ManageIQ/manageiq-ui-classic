@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::TenantEdit do
   describe '#disabled?' do
-    let(:tenant_with_cloud_tenant)    { FactoryGirl.create(:tenant_with_cloud_tenant) }
-    let(:tenant_without_cloud_tenant) { FactoryGirl.create(:tenant) }
+    let(:tenant_with_cloud_tenant)    { FactoryBot.create(:tenant_with_cloud_tenant) }
+    let(:tenant_without_cloud_tenant) { FactoryBot.create(:tenant) }
 
     before do
       @view_context = setup_view_context_with_sandbox({})

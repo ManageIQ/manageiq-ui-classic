@@ -1,5 +1,5 @@
 describe OpsController do
-  let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
+  let(:user) { FactoryBot.create(:user, :role => "super_administrator") }
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     MiqRegion.seed
@@ -34,7 +34,7 @@ describe OpsController do
 
       context 'with using real user' do
         let(:feature) { %w(rbac_group_edit) }
-        let(:user)    { FactoryGirl.create(:user, :features => feature) }
+        let(:user)    { FactoryBot.create(:user, :features => feature) }
 
         before do
           EvmSpecHelper.seed_specific_product_features(%w(rbac_group_edit))
@@ -140,7 +140,7 @@ describe OpsController do
     end
 
     it 'does not update the user without validation' do
-      user1 = FactoryGirl.create(:user, :name => "User1", :userid => "User1", :miq_groups => [group], :email => "user1@test.com")
+      user1 = FactoryBot.create(:user, :name => "User1", :userid => "User1", :miq_groups => [group], :email => "user1@test.com")
 
       session[:edit] = {:key => "rbac_user_edit__#{user1.id}",
                         :new => {:name     => 'test8',
@@ -163,7 +163,7 @@ describe OpsController do
     it "posts db_backup action" do
       session[:settings] = {:default_search => ''}
 
-      miq_schedule = FactoryGirl.create(:miq_schedule,
+      miq_schedule = FactoryBot.create(:miq_schedule,
                                         :name          => "test_db_schedule",
                                         :description   => "test_db_schedule_desc",
                                         :resource_type => "DatabaseBackup",
@@ -225,7 +225,7 @@ describe OpsController do
   end
 
   it "executes action schedule_edit" do
-    schedule = FactoryGirl.create(:miq_schedule, :name => "test_schedule", :description => "old_schedule_desc")
+    schedule = FactoryBot.create(:miq_schedule, :name => "test_schedule", :description => "old_schedule_desc")
     allow(controller).to receive(:get_node_info)
     allow(controller).to receive(:replace_right_cell)
     allow(controller).to receive(:render)
@@ -253,7 +253,7 @@ describe OpsController do
       it "updates the server's zone" do
         server = MiqServer.first
 
-        zone = FactoryGirl.create(:zone,
+        zone = FactoryBot.create(:zone,
                                   :name        => "not the default",
                                   :description => "Not the Default Zone")
 
@@ -283,7 +283,7 @@ describe OpsController do
   before do
     MiqRegion.seed
     EvmSpecHelper.local_miq_server
-    login_as FactoryGirl.create(:user, :features => "ops_rbac")
+    login_as FactoryBot.create(:user, :features => "ops_rbac")
   end
 
   context "#explorer" do
@@ -392,7 +392,7 @@ describe OpsController do
   context '#dialog_replace_right_cell' do
     describe 'for an User' do
       before do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         allow(controller).to receive(:x_node).and_return("u-#{user.id}")
       end
 
@@ -403,7 +403,7 @@ describe OpsController do
     end
 
     describe 'for a Group' do
-      let(:group) { FactoryGirl.create(:miq_group) }
+      let(:group) { FactoryBot.create(:miq_group) }
 
       before do
         allow(controller).to receive(:x_node).and_return("g-#{group.id}")

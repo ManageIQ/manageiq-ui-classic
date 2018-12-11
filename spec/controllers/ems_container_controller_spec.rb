@@ -14,8 +14,8 @@ describe EmsContainerController do
     before do
       session[:settings] = {:views => {}, :quadicons => {}}
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @container = FactoryGirl.create(:ems_kubernetes)
+      login_as FactoryBot.create(:user)
+      @container = FactoryBot.create(:ems_kubernetes)
     end
 
     context "render" do
@@ -60,8 +60,8 @@ describe EmsContainerController do
   end
 
   describe ".update_ems_button_detect" do
-    let(:kubernetes_manager) { FactoryGirl.create(:ems_kubernetes) }
-    let(:openshift_manager) { FactoryGirl.create(:ems_openshift) }
+    let(:kubernetes_manager) { FactoryBot.create(:ems_kubernetes) }
+    let(:openshift_manager) { FactoryBot.create(:ems_openshift) }
     let(:hawkular_route) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
     let(:mock_client) { double('kubeclient') }
 
@@ -158,7 +158,7 @@ describe EmsContainerController do
   end
 
   describe "create with provider options" do
-    let(:zone) { FactoryGirl.build(:zone) }
+    let(:zone) { FactoryBot.build(:zone) }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
 
     before do
@@ -189,7 +189,7 @@ describe EmsContainerController do
   end
 
   describe "Hawkular Disabled/Enabled" do
-    let(:zone) { FactoryGirl.build(:zone) }
+    let(:zone) { FactoryBot.build(:zone) }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
 
     before do
@@ -243,7 +243,7 @@ describe EmsContainerController do
   end
 
   describe "Kubevirt Disabled/Enabled" do
-    let(:zone) { FactoryGirl.build(:zone) }
+    let(:zone) { FactoryBot.build(:zone) }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
 
     before do

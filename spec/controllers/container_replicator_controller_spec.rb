@@ -12,7 +12,7 @@ describe ContainerReplicatorController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_replicator = ContainerReplicator.create(
       :ext_management_system => ems,
       :container_project     => ContainerProject.create(:ext_management_system => ems, :name => "test"),
@@ -30,8 +30,8 @@ describe ContainerReplicatorController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @replicator = FactoryGirl.create(:replicator_with_assoc)
+      login_as FactoryBot.create(:user)
+      @replicator = FactoryBot.create(:replicator_with_assoc)
     end
 
     subject { get :show, :params => { :id => @replicator.id } }

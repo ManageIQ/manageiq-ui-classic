@@ -1,7 +1,7 @@
 describe ReportController do
   describe "#menu_update" do
-    let(:user) { FactoryGirl.create(:user_with_group) }
-    let(:report) { FactoryGirl.create(:miq_report, :rpt_type => "Default", :rpt_group => 'foo - bar', :miq_group => user.current_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
+    let(:report) { FactoryBot.create(:miq_report, :rpt_type => "Default", :rpt_group => 'foo - bar', :miq_group => user.current_group) }
 
     before do
       controller.instance_variable_set(:@edit, :new => {})

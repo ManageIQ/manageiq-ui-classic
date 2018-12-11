@@ -2,8 +2,8 @@ describe TreeBuilderPolicySimulation do
   context 'TreeBuilderPolicySimulation' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
-      login_as FactoryGirl.create(:user, :userid => 'policy_simulation_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
+      login_as FactoryBot.create(:user, :userid => 'policy_simulation_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
       exp = {"FIND"   => {"checkcount" => {">=" => {"value" => "1", "field" => "<count>"}},
                           "search"     => {"INCLUDES" => {"value" => "nb", "field" => "Vm.filesystems-name"}}},
@@ -117,8 +117,8 @@ describe TreeBuilderPolicySimulation do
   context 'TreeBuilderPolicySimulation without data' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "No node Group")
-      login_as FactoryGirl.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "No node Group")
+      login_as FactoryBot.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
       @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
                                                                 :policy_simulaton,

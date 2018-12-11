@@ -1,10 +1,10 @@
 describe ApplicationController do
   context "#perf_planning_gen_data" do
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryGirl.create(:zone) }
+    let(:zone) { FactoryBot.create(:zone) }
 
     it "should not get nil error when submitting up Manual Input data" do
-      _enterprise = FactoryGirl.create(:miq_enterprise)
+      _enterprise = FactoryBot.create(:miq_enterprise)
       sb = {
         :options => {
           :target_typ => "EmsCluster",
@@ -47,7 +47,7 @@ describe ApplicationController do
     describe 'perf_gen_tag_data_before_wait' do
       %w(Hourly Daily).each do |type|
         it "calls initiate_wait_for_task for '#{type}'" do
-          controller.instance_variable_set(:@perf_record, FactoryGirl.create(:host))
+          controller.instance_variable_set(:@perf_record, FactoryBot.create(:host))
           controller.instance_variable_set(
             :@perf_options,
             :typ          => type,
@@ -76,7 +76,7 @@ describe ApplicationController do
         expect(Classification).to receive(:find_by_name).with('cat').and_return(cat)
 
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@perf_record, FactoryGirl.create(:host))
+        controller.instance_variable_set(:@perf_record, FactoryBot.create(:host))
         controller.instance_variable_set(
           :@perf_options,
           :typ   => 'Hourly',

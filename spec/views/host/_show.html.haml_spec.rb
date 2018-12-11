@@ -10,7 +10,7 @@ describe "host/show.html.haml" do
     end
   end
 
-  let(:host) { FactoryGirl.create(:host_vmware, :name => 'My Host') }
+  let(:host) { FactoryBot.create(:host_vmware, :name => 'My Host') }
   let(:action) { 'index' }
 
   before do

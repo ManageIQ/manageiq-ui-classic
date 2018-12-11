@@ -1,9 +1,9 @@
 describe StorageController do
-  let(:storage) { FactoryGirl.create(:storage, :name => 'test_storage1') }
-  let(:storage_cluster) { FactoryGirl.create(:storage_cluster, :name => 'test_storage_cluster1') }
+  let(:storage) { FactoryBot.create(:storage, :name => 'test_storage1') }
+  let(:storage_cluster) { FactoryBot.create(:storage_cluster, :name => 'test_storage_cluster1') }
   let(:storage_with_miq_templates) do
-    st = FactoryGirl.create(:storage)
-    2.times { st.all_miq_templates << FactoryGirl.create(:miq_template) }
+    st = FactoryBot.create(:storage)
+    2.times { st.all_miq_templates << FactoryBot.create(:miq_template) }
     st
   end
   before { stub_user(:features => :all) }
@@ -76,9 +76,9 @@ describe StorageController do
      "host_stop"     => "Power Off",
      "host_reset"    => "Reset"}.each do |button, description|
       it "when Host #{description} button is pressed" do
-        login_as FactoryGirl.create(:user, :features => button)
+        login_as FactoryBot.create(:user, :features => button)
 
-        host = FactoryGirl.create(:host)
+        host = FactoryBot.create(:host)
         command = button.split('_', 2)[1]
         allow_any_instance_of(Host).to receive(:is_available?).with(command).and_return(true)
 
@@ -138,14 +138,14 @@ describe StorageController do
       end
 
       it "it handles x_button tagging" do
-        ems = FactoryGirl.create(:ems_vmware)
-        datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+        ems = FactoryBot.create(:ems_vmware)
+        datastore = FactoryBot.create(:storage, :name => 'storage_name')
         datastore.parent = ems
-        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryGirl.create(:classification_tag,
+        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryBot.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification)
-        @tag2 = FactoryGirl.create(:classification_tag,
+        @tag2 = FactoryBot.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
@@ -159,14 +159,14 @@ describe StorageController do
       end
 
       it "tagging has no clickable quadicons" do
-        ems = FactoryGirl.create(:ems_vmware)
-        datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+        ems = FactoryBot.create(:ems_vmware)
+        datastore = FactoryBot.create(:storage, :name => 'storage_name')
         datastore.parent = ems
-        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryGirl.create(:classification_tag,
+        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryBot.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification)
-        @tag2 = FactoryGirl.create(:classification_tag,
+        @tag2 = FactoryBot.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
@@ -267,7 +267,7 @@ describe StorageController do
       end
 
       context 'getting the right tags of a datastore' do
-        let(:datastore) { FactoryGirl.create(:storage, :name => 'storage_name') }
+        let(:datastore) { FactoryBot.create(:storage, :name => 'storage_name') }
 
         before do
           allow(controller).to receive(:render).and_return(true)
@@ -344,13 +344,13 @@ describe StorageController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ds = FactoryGirl.create(:storage, :name => "Datastore-01")
+      @ds = FactoryBot.create(:storage, :name => "Datastore-01")
       allow(@ds).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ds).and_return([@tag1, @tag2])
@@ -398,7 +398,7 @@ describe StorageController do
 
   describe '#get_node_info' do
     context 'resetting session' do
-      let(:datastore) { FactoryGirl.create(:storage, :name => 'storage_name') }
+      let(:datastore) { FactoryBot.create(:storage, :name => 'storage_name') }
 
       before do
         allow(controller).to receive(:session).and_return(:edit => {}, :adv_search => {'Storage' => {}})

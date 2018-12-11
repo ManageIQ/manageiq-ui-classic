@@ -22,7 +22,7 @@ describe StorageHelper do
   describe '#textual methods' do
     context 'for zero VMs' do
       before do
-        @record = FactoryGirl.create(:storage)
+        @record = FactoryBot.create(:storage)
       end
 
       it 'returns correct Hash' do
@@ -45,7 +45,7 @@ describe StorageHelper do
 
     context 'for any number of VMs' do
       before do
-        @record = FactoryGirl.create(:storage)
+        @record = FactoryBot.create(:storage)
         allow(self).to receive(:role_allows?).and_return(true)
         allow(self).to receive(:url_for_only_path).and_return('link')
       end

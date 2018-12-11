@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::VmVmrcConsole do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm_vmware) }
+  let(:record) { FactoryBot.create(:vm_vmware) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do

@@ -7,7 +7,7 @@ describe "vm/show.html.haml" do
     end
   end
 
-  let(:vm) { FactoryGirl.create(:vm, :name => 'vm', :description => 'vm description') }
+  let(:vm) { FactoryBot.create(:vm, :name => 'vm', :description => 'vm description') }
   let(:action) { 'show' }
 
   before do

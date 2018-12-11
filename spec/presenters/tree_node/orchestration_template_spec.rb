@@ -9,7 +9,7 @@ describe TreeNode::OrchestrationTemplate do
     :orchestration_template_vmware_cloud_in_xml => %w(ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate vapp)
   }.each do |factory, config|
     context(config.first) do
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'ot-'
       include_examples 'TreeNode::Node#icon', "pficon pficon-template"

@@ -1,10 +1,10 @@
 describe PersistentVolumeHelper::TextualSummary do
   describe ".textual_group_properties" do
     before do
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
     end
 
-    let(:ems) { FactoryGirl.create(:ems_openshift) }
+    let(:ems) { FactoryBot.create(:ems_openshift) }
     subject { textual_group_properties }
     it 'produces capacity data in the correct format' do
       @record = PersistentVolume.create(:parent => ems, :name => 'Test Volume', :capacity => {:storage => 123_456_789, :foo => 'something'})
@@ -14,10 +14,10 @@ describe PersistentVolumeHelper::TextualSummary do
 
   describe ".textual_group_capacity" do
     before do
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
     end
 
-    let(:ems) { FactoryGirl.create(:ems_openshift) }
+    let(:ems) { FactoryBot.create(:ems_openshift) }
     subject { textual_group_capacity }
     it 'produces capacity data in the correct format' do
       @record = PersistentVolume.create(:parent => ems, :name => 'Test Volume', :capacity => {:storage => 123_456_789, :foo => 'something'})
@@ -29,7 +29,7 @@ describe PersistentVolumeHelper::TextualSummary do
 
   context "#textual_groups" do
     before do
-      instance_variable_set(:@record, FactoryGirl.create(:persistent_volume))
+      instance_variable_set(:@record, FactoryBot.create(:persistent_volume))
       allow(@record).to receive(:persistent_volume_claim).and_return(true)
     end
 

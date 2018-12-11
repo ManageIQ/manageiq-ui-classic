@@ -1,7 +1,7 @@
 describe ApplicationController do
   describe "#assign_policies" do
-    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-    let(:host)       { FactoryGirl.create(:host) }
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let(:host)       { FactoryBot.create(:host) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone

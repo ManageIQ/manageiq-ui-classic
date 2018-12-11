@@ -2,7 +2,7 @@ describe ApplicationController, "#Timelines" do
   describe EmsInfraController do
     context "#tl_chooser" do
       before do
-        @ems = FactoryGirl.create(:ems_openstack_infra)
+        @ems = FactoryBot.create(:ems_openstack_infra)
         controller.instance_variable_set(:@tl_options,
                                          ApplicationController::Timelines::Options.new)
       end
