@@ -13,12 +13,14 @@ class ServiceForm extends Component {
       schema: createSchema(props.maxNameLen, props.maxDescLen),
     };
   }
+
   componentDidMount() {
     cleanVirtualDom();
     miqSparkleOn();
     http.get(`/service/service_form_fields/${this.props.serviceFormId}`)
       .then(data => this.setState({ initialValues: { ...data } }, miqSparkleOff()));
   }
+
   render() {
     const { serviceFormId } = this.props;
     const cancelUrl = `/service/service_edit/${serviceFormId}?button=cancel`;

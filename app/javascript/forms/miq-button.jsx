@@ -29,10 +29,12 @@ function MiqButton(props) {
   };
 
   return (
-    <button className={klass}
+    <button
+      className={klass}
       onClick={buttonClicked}
       title={title}
-      alt={title}>
+      alt={title}
+    >
       {props.name}
     </button>
   );

@@ -36,7 +36,7 @@ FormButtons.propTypes = {
 
 const noop = () => null;
 
-FormButtons.defaultProps =  {
+FormButtons.defaultProps = {
   newRecord: false,
   customLabel: '',
   saveable: false,
@@ -45,6 +45,6 @@ FormButtons.defaultProps =  {
   saveClicked: noop,
   resetClicked: noop,
   cancelClicked: noop,
-}
+};
 
 export default FormButtons;
