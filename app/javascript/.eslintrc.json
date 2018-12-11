@@ -34,6 +34,7 @@
     }],
     "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "react/jsx-filename-extension": "off",
+    "react/destructuring-assignment": [1, "always"],
     "space-before-function-paren": [2, "never"],
     "no-extra-boolean-cast": "off"
   }
