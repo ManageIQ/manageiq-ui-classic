@@ -124,13 +124,34 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   };
 
   vm.saveClicked = function() {
+    miqService.sparkleOn();
+    miqService.miqFlashClear(); // remove previous messages
     var saveMsg = sprintf(__('%s "%s" has been successfully saved.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('put', '/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), saveMsg);
+    return API.put('/api/custom_buttons/' + vm.customButtonRecordId, vm.prepSaveObject(), {skipErrors: [400]})
+      .then(function() {
+        miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
+      })
+      .catch(handleErrorMessages);
   };
 
   vm.addClicked = function() {
+    miqService.sparkleOn();
+    miqService.miqFlashClear(); // remove previous messages
     var saveMsg = sprintf(__('%s "%s" has been successfully added.'), vm.entity, vm.customButtonModel.name);
-    vm.saveWithAPI('post', '/api/custom_buttons/', vm.prepSaveObject(), saveMsg);
+    return API.post('/api/custom_buttons/', vm.prepSaveObject(), {skipErrors: [400]})
+      .then(function(response) {
+        if (vm.customButtonGroupRecordId) {
+          var saveMsgBtnInGrp = sprintf(__('%s "%s" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
+          return $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
+            .then(function() {
+              miqService.redirectBack(saveMsgBtnInGrp, 'success', vm.redirectUrl);
+            })
+            .catch(miqService.handleFailure);
+        } else {
+          miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
+        }
+      })
+      .catch(handleErrorMessages);
   };
 
   vm.prepSaveObject = function() {
@@ -182,26 +203,27 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     };
   };
 
-  vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
-    miqService.sparkleOn();
-
-    if (vm.customButtonGroupRecordId) {
-      var saveCustomButtonPromise = API[method](url, saveObject);
-      var saveMsgBtnInGrp = sprintf(__('%s "%s" has been successfully added under the selected button group.'), vm.entity, vm.customButtonModel.name);
-
-      saveCustomButtonPromise.then(function(response) {
-        $http.post('/generic_object_definition/add_button_in_group/' + vm.customButtonGroupRecordId + '?button_id=' + response.results[0].id)
-          .then(miqService.redirectBack.bind(vm, saveMsgBtnInGrp, 'success', vm.redirectUrl))
-          .catch(miqService.handleFailure);
+  // private functions
+  function handleErrorMessages(error) {
+    miqSparkleOff();
+    if (error.status === 400) {
+      var errorMessages = error.data.error.message.split(',');
+      errorMessages.forEach(function(message) {
+        if (message.includes("Name has already been taken")) {
+          add_flash(__("Name has already been taken"), "error");
+          return Promise.reject();
+        } else if (message.includes("Description has already been taken")) {
+          add_flash(__("Description has already been taken"), "error");
+          return Promise.reject();
+        } else {
+          return miqService.handleFailure();
+        }
       });
     } else {
-      API[method](url, saveObject)
-        .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
-        .catch(miqService.handleFailure);
+      return miqService.handleFailure();
     }
-  };
+  }
 
-  // private functions
   function getCustomButtonFormData(response) {
     Object.assign(vm.customButtonModel, response);
 
