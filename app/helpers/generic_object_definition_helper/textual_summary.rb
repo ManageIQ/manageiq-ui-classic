@@ -24,7 +24,7 @@ module GenericObjectDefinitionHelper::TextualSummary
   def textual_generic_objects
     num = @record.number_of(:generic_objects)
     h = {:label => _("Instances"), :value => num}
-    if role_allows?(:feature => "generic_object_view") && num > 0
+    if role_allows?(:feature => "generic_object_view") && num.positive?
       h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'generic_objects'),
                :title => _('Show all Instances'))
     end
