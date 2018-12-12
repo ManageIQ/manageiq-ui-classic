@@ -1,28 +1,27 @@
 module NumberHelper
   def number_to_human_size(number, *args)
     options = args.extract_options!.reverse_merge(:significant => false, :precision => 1)
-    NumberHelper.handling_negatives(number) do |number|
-      super(number, options)
+    NumberHelper.handling_negatives(number) do |num|
+      super(num, options)
     end
   end
 
   # Converts "1 MB" to "1.megabytes"
   def human_size_to_rails_method(size)
     s = size.dup
-    case
-    when size.ends_with?(" Byte")
+    if size.ends_with?(" Byte")
       s[-5..-1] = ""
-    when size.ends_with?(" Bytes")
+    elsif size.ends_with?(" Bytes")
       s[-6..-1] = ""
-    when size.ends_with?(" KB")
+    elsif size.ends_with?(" KB")
       s[-3..-1] = ".kilobytes"
-    when size.ends_with?(" MB")
+    elsif size.ends_with?(" MB")
       s[-3..-1] = ".megabytes"
-    when size.ends_with?(" GB")
+    elsif size.ends_with?(" GB")
       s[-3..-1] = ".gigabytes"
-    when size.ends_with?(" TB")
+    elsif size.ends_with?(" TB")
       s[-3..-1] = ".terabytes"
-    when size.ends_with?(" PB")
+    elsif size.ends_with?(" PB")
       s[-3..-1] = ".petabytes"
     end
     return s
@@ -36,13 +35,15 @@ module NumberHelper
     precision = precision[:precision] if precision.kind_of?(Hash)
     precision ||= 1
 
-    NumberHelper.handling_negatives(size) do |size|
-      size = size.abs * 1000**2
-      ret = case
-            when size < 1000**3 then "%.#{precision}f MHz" % (size / (1000**2))
-            when size < 1000**4 then "%.#{precision}f GHz" % (size / (1000**3))
-            else                     "%.#{precision}f THz" % (size / (1000**4))
-            end.sub(".%0#{precision}d" % 0, '')
+    NumberHelper.handling_negatives(size) do |s|
+      s = s.abs * 1000**2
+      if s < 1000**3
+        "%.#{precision}f MHz" % (s / (1000**2))
+      elsif s < 1000**4
+        "%.#{precision}f GHz" % (s / (1000**3))
+      else
+        "%.#{precision}f THz" % (s / (1000**4))
+      end.sub(".%0#{precision}d" % 0, '')
     end
   rescue
     nil
@@ -51,7 +52,7 @@ module NumberHelper
   def self.handling_negatives(number)
     return nil if number.nil?
     number = Float(number)
-    is_negative = number < 0
+    is_negative = number.negative?
     ret = yield number.abs
     ret.insert(0, "-") if is_negative
     ret
