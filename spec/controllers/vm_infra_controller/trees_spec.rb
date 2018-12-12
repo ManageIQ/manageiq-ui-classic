@@ -8,7 +8,7 @@ describe VmInfraController do
 
   context "VMs & Templates #tree_select" do
     it "renders list Archived nodes in VMs & Templates tree" do
-      FactoryGirl.create(:vm_vmware)
+      FactoryBot.create(:vm_vmware)
 
       session[:settings] = {}
       seed_session_trees('vm_infra', :vandt_tree)
@@ -27,8 +27,8 @@ describe VmInfraController do
       %w(Templates templates_filter_tree),
     ].each do |elements, tree|
       it "renders list of #{elements} for #{tree} root node" do
-        FactoryGirl.create(:vm_vmware)
-        FactoryGirl.create(:template_vmware)
+        FactoryBot.create(:vm_vmware)
+        FactoryBot.create(:template_vmware)
 
         session[:settings] = {}
         seed_session_trees('vm_infra', tree.to_sym)
@@ -41,7 +41,7 @@ describe VmInfraController do
     end
 
     it "renders VM details for VM node" do
-      vm = FactoryGirl.create(:vm_vmware)
+      vm = FactoryBot.create(:vm_vmware)
 
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')
@@ -53,7 +53,7 @@ describe VmInfraController do
     end
 
     it "renders Template details for Template node" do
-      template = FactoryGirl.create(:template_vmware)
+      template = FactoryBot.create(:template_vmware)
 
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')

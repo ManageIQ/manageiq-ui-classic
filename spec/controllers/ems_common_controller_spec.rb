@@ -27,10 +27,10 @@ describe EmsCloudController do
 
       it "when Retire Button is pressed for a Cloud provider Instance" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create(:ems_vmware)
-        vm = FactoryGirl.create(:vm_vmware,
+        ems = FactoryBot.create(:ems_vmware)
+        vm = FactoryBot.create(:vm_vmware,
                                 :ext_management_system => ems,
-                                :storage               => FactoryGirl.create(:storage))
+                                :storage               => FactoryBot.create(:storage))
         post :button, :params => { :pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
         expect(response.status).to eq 200
         expect(response.body).to include('vm/retire')
@@ -38,8 +38,8 @@ describe EmsCloudController do
 
       it "when Retire Button is pressed for an Orchestration Stack" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create(:ems_amazon)
-        ost = FactoryGirl.create(:orchestration_stack_cloud, :ext_management_system => ems)
+        ems = FactoryBot.create(:ems_amazon)
+        ost = FactoryBot.create(:orchestration_stack_cloud, :ext_management_system => ems)
         post :button, :params => { :pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks' }
         expect(response.status).to eq 200
         expect(response.body).to include('orchestration_stack/retire')
@@ -47,10 +47,10 @@ describe EmsCloudController do
 
       it "when the Tagging Button is pressed for a Cloud provider Instance" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create(:ems_vmware)
-        vm = FactoryGirl.create(:vm_vmware,
+        ems = FactoryBot.create(:ems_vmware)
+        vm = FactoryBot.create(:vm_vmware,
                                 :ext_management_system => ems,
-                                :storage               => FactoryGirl.create(:storage))
+                                :storage               => FactoryBot.create(:storage))
         post :button, :params => { :pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
         expect(response.status).to eq 200
         expect(response.body).to include('ems_cloud/tagging_edit')
@@ -58,8 +58,8 @@ describe EmsCloudController do
 
       it "call tagging_edit when tha Tagging Button is pressed for one or more Cloud provider Image(s)" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create(:ems_amazon)
-        vm = FactoryGirl.create(:vm_amazon,
+        ems = FactoryBot.create(:ems_amazon)
+        vm = FactoryBot.create(:vm_amazon,
                                 :ext_management_system => ems)
         post :button, :params => { :pressed => "image_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'images' }
         expect(response.status).to eq 200
@@ -74,8 +74,8 @@ describe EmsCloudController do
   end
 
   describe "#download_summary_pdf" do
-    let(:provider_openstack) { FactoryGirl.create(:provider_openstack, :name => "Undercloud") }
-    let(:ems_openstack) { FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => provider_openstack) }
+    let(:provider_openstack) { FactoryBot.create(:provider_openstack, :name => "Undercloud") }
+    let(:ems_openstack) { FactoryBot.create(:ems_openstack, :name => "overcloud", :provider => provider_openstack) }
     let(:pdf_options) { controller.instance_variable_get(:@options) }
 
     context "download pdf file" do
@@ -210,25 +210,25 @@ describe EmsContainerController do
 
       it "when VM Migrate is pressed for unsupported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_microsoft)
+        vm = FactoryBot.create(:vm_microsoft)
         post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include('does not apply')
       end
 
-      let(:ems)     { FactoryGirl.create(:ext_management_system) }
-      let(:storage) { FactoryGirl.create(:storage) }
+      let(:ems)     { FactoryBot.create(:ext_management_system) }
+      let(:storage) { FactoryBot.create(:storage) }
 
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
+        vm = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
         post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
 
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware)
+        vm = FactoryBot.create(:vm_vmware)
         post :button, :params => { :pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
@@ -251,7 +251,7 @@ describe EmsContainerController do
           'container_group'      => 'Container Pods'
         }.each do |display_s, items|
           context "displaying #{items}" do
-            let(:item) { FactoryGirl.create(display_s.to_sym) }
+            let(:item) { FactoryBot.create(display_s.to_sym) }
             let(:display) { display_s.pluralize }
 
             context "tagging selected #{items}" do
@@ -286,7 +286,7 @@ describe EmsContainerController do
     end
 
     describe "#download_summary_pdf" do
-      let(:ems_kubernetes_container) { FactoryGirl.create(:ems_kubernetes, :name => "test") }
+      let(:ems_kubernetes_container) { FactoryBot.create(:ems_kubernetes, :name => "test") }
       let(:pdf_options) { controller.instance_variable_get(:@options) }
 
       context "download pdf file" do
@@ -330,7 +330,7 @@ describe EmsNetworkController do
 
       it "when edit is pressed for unsupported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        google_net = FactoryGirl.create(:ems_google_network)
+        google_net = FactoryBot.create(:ems_google_network)
         get :edit, :params => { :id => google_net.id}
         expect(response.status).to eq(302)
         expect(session['flash_msgs']).not_to be_empty
@@ -339,7 +339,7 @@ describe EmsNetworkController do
 
       it "when edit is pressed for supported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        nuage_net = FactoryGirl.create(:ems_nuage_network)
+        nuage_net = FactoryBot.create(:ems_nuage_network)
         get :edit, :params => { :id => nuage_net.id}
         expect(response.status).to eq(200)
         expect(session['flash_msgs']).to be_nil

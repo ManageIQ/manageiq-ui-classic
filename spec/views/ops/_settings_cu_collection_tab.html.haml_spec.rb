@@ -2,16 +2,16 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
   before do
     assign(:sb, :active_tab => "settings_cu_collection")
 
-    @host = FactoryGirl.create(:host, :name => 'Host Name')
-    FactoryGirl.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
+    @host = FactoryBot.create(:host, :name => 'Host Name')
+    FactoryBot.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
     @datastore = [{:id       => 1,
                    :name     => 'Datastore',
                    :location => 'Location',
                    :capture  => false}]
     @datastore_tree = TreeBuilderDatastores.new(:datastore, :datastore_tree, {}, true, @datastore)
 
-    @ho_enabled = [FactoryGirl.create(:host)]
-    @ho_disabled = [FactoryGirl.create(:host)]
+    @ho_enabled = [FactoryBot.create(:host)]
+    @ho_disabled = [FactoryBot.create(:host)]
     allow(EmsCluster).to receive(:get_perf_collection_object_list).and_return(:'1'.to_i =>
                                                                                            {:id          => 1,
                                                                                             :name        => 'Name',

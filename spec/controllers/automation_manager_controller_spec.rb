@@ -3,9 +3,9 @@ describe AutomationManagerController do
 
   let(:zone) { EvmSpecHelper.local_miq_server.zone }
   let(:tags) { ["/managed/quota_max_memory/2048"] }
-  let(:automation_provider1) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest", :url => "10.8.96.107", :zone => zone) }
-  let(:automation_provider2) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
-  let(:automation_provider3) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
+  let(:automation_provider1) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest", :url => "10.8.96.107", :zone => zone) }
+  let(:automation_provider2) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
+  let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
 
   before do
     Tag.find_or_create_by(:name => tags.first)
@@ -31,9 +31,9 @@ describe AutomationManagerController do
       cs.tag_with(tags, :namespace => '')
     end
 
-    @ans_job_template1 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @automation_manager1.id)
-    @ans_job_template2 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript2", :manager_id => @automation_manager2.id)
-    @ans_job_template3 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript3", :manager_id => @automation_manager1.id)
+    @ans_job_template1 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @automation_manager1.id)
+    @ans_job_template2 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript2", :manager_id => @automation_manager2.id)
+    @ans_job_template3 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript3", :manager_id => @automation_manager1.id)
   end
 
   it "renders index" do
@@ -57,8 +57,8 @@ describe AutomationManagerController do
 
   it "renders explorer sorted by url" do
     login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
-    FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest3", :url => "z_url", :zone => zone)
-    FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest4", :url => "a_url", :zone => zone)
+    FactoryBot.create(:provider_ansible_tower, :name => "ansibletest3", :url => "z_url", :zone => zone)
+    FactoryBot.create(:provider_ansible_tower, :name => "ansibletest4", :url => "a_url", :zone => zone)
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
@@ -138,7 +138,7 @@ describe AutomationManagerController do
     end
 
     it "should display the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, automation_provider1)
       post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
@@ -146,7 +146,7 @@ describe AutomationManagerController do
     end
 
     it "should save the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, automation_provider1)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
@@ -387,7 +387,7 @@ describe AutomationManagerController do
     end
 
     it 'renders tree_select for one job template' do
-      record = FactoryGirl.create(:ansible_configuration_script,
+      record = FactoryBot.create(:ansible_configuration_script,
                                   :name        => "ConfigScriptTest1",
                                   :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
                                                                'type' => 'text'}]})
@@ -440,9 +440,9 @@ describe AutomationManagerController do
     session[:tag_items] = [@ans_configured_system.id]
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:automation_manager_cs_filter)
-    parent = FactoryGirl.create(:classification, :name => "test_category")
-    FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification, :name => "test_category")
+    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
     post :tagging, :params => { :id => @ans_configured_system.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -512,7 +512,7 @@ describe AutomationManagerController do
     render_views
 
     it 'can render details for a job template' do
-      @record = FactoryGirl.create(:ansible_configuration_script,
+      @record = FactoryBot.create(:ansible_configuration_script,
                                    :name        => "ConfigScript1",
                                    :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
                                                                 'min' => nil, 'default' => nil, 'max' => nil,
@@ -602,7 +602,7 @@ describe AutomationManagerController do
   context "#configscript_service_dialog" do
     before do
       stub_user(:features => :all)
-      @cs = FactoryGirl.create(:ansible_configuration_script)
+      @cs = FactoryBot.create(:ansible_configuration_script)
       @dialog_label = "New Dialog 01"
       session[:edit] = {
         :new    => {:dialog_name => @dialog_label},
@@ -639,9 +639,9 @@ describe AutomationManagerController do
       session[:assigned_filters] = []
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       allow(controller).to receive(:tagging_explorer_controller?).and_return(true)
-      parent = FactoryGirl.create(:classification, :name => "test_category")
-      FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-      FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+      parent = FactoryBot.create(:classification, :name => "test_category")
+      FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+      FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
       post :tagging, :params => {:id => @cs.id, :format => :js}
       expect(response.status).to eq(200)
       expect(response.body).to include('Template (Ansible Tower) Being Tagged')
@@ -653,11 +653,11 @@ describe AutomationManagerController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@ans_configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ans_configured_system).and_return([@tag1, @tag2])
@@ -697,7 +697,7 @@ describe AutomationManagerController do
 
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
-    FactoryGirl.create(:user, :features => features)
+    FactoryBot.create(:user, :features => features)
   end
 
   def find_treenode_for_provider(provider, tree_json)

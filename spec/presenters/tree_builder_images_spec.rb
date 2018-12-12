@@ -1,12 +1,12 @@
 describe TreeBuilderImages do
   before do
-    @template_cloud_with_az = FactoryGirl.create(:template_cloud,
-                                                 :ext_management_system => FactoryGirl.create(:ems_google),
-                                                 :storage               => FactoryGirl.create(:storage))
+    @template_cloud_with_az = FactoryBot.create(:template_cloud,
+                                                 :ext_management_system => FactoryBot.create(:ems_google),
+                                                 :storage               => FactoryBot.create(:storage))
 
-    login_as FactoryGirl.create(:user_with_group, :role => "operator", :settings => {})
+    login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})
 
-    allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
+    allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
 
     @images_tree = TreeBuilderImages.new(:images, :images_tree, {}, nil)
   end

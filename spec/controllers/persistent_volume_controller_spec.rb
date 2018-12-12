@@ -22,7 +22,7 @@ describe PersistentVolumeController do
     expect(response.body).to_not be_empty
   end
 
-  let(:ems) { FactoryGirl.create(:ems_openshift) }
+  let(:ems) { FactoryBot.create(:ems_openshift) }
   let(:persistent_volume) { PersistentVolume.create(:parent => ems, :name => "Test Volume") }
 
   it "renders grid view" do

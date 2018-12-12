@@ -24,8 +24,8 @@ describe OpsController do
     end
 
     it 'should have tree data set when there are clusters/storage records in db' do
-      FactoryGirl.create(:ems_cluster, :name => "My Cluster")
-      FactoryGirl.create(:storage_vmware, :name => "My Datastore")
+      FactoryBot.create(:ems_cluster, :name => "My Cluster")
+      FactoryBot.create(:storage_vmware, :name => "My Datastore")
       controller.send(:cu_build_edit_screen)
       expect(assigns(:cluster_tree)).to_not eq(nil)
       expect(assigns(:datastore_tree)).to_not eq(nil)

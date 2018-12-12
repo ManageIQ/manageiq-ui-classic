@@ -2,10 +2,10 @@ describe MiqAeCustomizationController do
   context "::OldDialogs" do
     context "#old_dialogs_button_operation" do
       it "Only non-default dialogs should get deleted" do
-        dialog1 = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog1",
+        dialog1 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog1",
                                                   :description => "Test Description 1",
                                                   :default     => true)
-        dialog2 = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog2",
+        dialog2 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog2",
                                                   :description => "Test Description 2",
                                                   :default     => false)
         controller.instance_variable_set(:@sb,
@@ -30,7 +30,7 @@ describe MiqAeCustomizationController do
       end
 
       it "Default Dialog should not be deleted" do
-        dialog = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog",
+        dialog = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog",
                                                  :description => "Test Description",
                                                  :default     => true)
         controller.instance_variable_set(:@sb,

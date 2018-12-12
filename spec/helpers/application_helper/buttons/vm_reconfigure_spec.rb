@@ -2,7 +2,7 @@ describe ApplicationHelper::Button::VmReconfigure do
   describe '#visible?' do
     context "record is vmware vm" do
       before do
-        @record = FactoryGirl.create(:vm_vmware)
+        @record = FactoryBot.create(:vm_vmware)
       end
 
       it_behaves_like "will not be skipped for this record"
@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::VmReconfigure do
 
     context "record is vmware template" do
       before do
-        @record = FactoryGirl.create(:template_vmware)
+        @record = FactoryBot.create(:template_vmware)
       end
 
       it_behaves_like "will be skipped for this record"

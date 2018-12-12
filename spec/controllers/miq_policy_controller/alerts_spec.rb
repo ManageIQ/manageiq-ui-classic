@@ -1,9 +1,9 @@
 describe MiqPolicyController do
   context "::Alerts" do
     describe '#alert_delete' do
-      let(:alert) { FactoryGirl.create(:miq_alert, :read_only => readonly) }
+      let(:alert) { FactoryBot.create(:miq_alert, :read_only => readonly) }
 
-      before { login_as FactoryGirl.create(:user, :features => "alert_delete") }
+      before { login_as FactoryBot.create(:user, :features => "alert_delete") }
 
       context 'read only alert' do
         let(:readonly) { true }
@@ -22,8 +22,8 @@ describe MiqPolicyController do
 
     context "alert edit" do
       before do
-        login_as FactoryGirl.create(:user, :features => "alert_admin")
-        @miq_alert = FactoryGirl.create(:miq_alert)
+        login_as FactoryBot.create(:user, :features => "alert_admin")
+        @miq_alert = FactoryBot.create(:miq_alert)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
                                          :active_tree => :alert_tree)
@@ -95,16 +95,16 @@ describe MiqPolicyController do
     context 'test click on toolbar button' do
       before do
         EvmSpecHelper.local_miq_server
-        login_as FactoryGirl.create(:user, :features => %w(alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
-        # login_as FactoryGirl.create(:user, :features => "alert_admin")
-        @miq_alert = FactoryGirl.create(:miq_alert)
+        login_as FactoryBot.create(:user, :features => %w(alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
+        # login_as FactoryBot.create(:user, :features => "alert_admin")
+        @miq_alert = FactoryBot.create(:miq_alert)
         allow(controller).to receive(:x_active_tree).and_return(:alert_tree)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
                                          :active_tree => :alert_tree,)
       end
 
-      let(:alert) { FactoryGirl.create(:miq_alert, :read_only => false) }
+      let(:alert) { FactoryBot.create(:miq_alert, :read_only => false) }
 
       it "alert edit" do
         post :x_button, :params => { :pressed => 'alert_edit', :id => alert.id }
@@ -130,9 +130,9 @@ describe MiqPolicyController do
 
     describe "#alert_valid_record?" do
       before do
-        login_as FactoryGirl.create(:user, :features => "alert_admin")
+        login_as FactoryBot.create(:user, :features => "alert_admin")
         expression = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
-        @miq_alert = FactoryGirl.create(
+        @miq_alert = FactoryBot.create(
           :miq_alert,
           :db         => "Host",
           :options    => {:notifications => {:email => {:to => ["fred@test.com"]}}},
@@ -168,7 +168,7 @@ describe MiqPolicyController do
 
       context 'not choosing Send an E-mail option while adding new Alert' do
         let(:alert) do
-          FactoryGirl.create(:miq_alert,
+          FactoryBot.create(:miq_alert,
                              :expression         => {:eval_method => 'nothing'},
                              :options            => {:notifications => {:delay_next_evaluation => 3600, :evm_event => {}}},
                              :responds_to_events => '_hourly_timer_')

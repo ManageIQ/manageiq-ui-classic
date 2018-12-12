@@ -9,8 +9,8 @@ describe OpsController do
     end
 
     describe "rbac_edit_tags_reset" do
-      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-      let(:another_tenant) { FactoryGirl.create(:tenant) }
+      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+      let(:another_tenant) { FactoryBot.create(:tenant) }
 
       before do
         allow(controller).to receive(:checked_or_params).and_return(Tenant.all.ids)
@@ -37,7 +37,7 @@ describe OpsController do
       end
 
       it "renders tenants partial when tenant node is selected" do
-        tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
+        tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
         post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
@@ -47,7 +47,7 @@ describe OpsController do
       end
 
       it "does not display tenant groups in the details paged" do
-        tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
+        tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
         post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
@@ -58,7 +58,7 @@ describe OpsController do
       end
 
       it "renders quota usage table for tenant" do
-        tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
+        tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
         tenant.set_quotas(:cpu_allocated => {:value => 1024},
                           :vms_allocated => {:value => 27},
                           :mem_allocated => {:value => four_terabytes})
@@ -82,7 +82,7 @@ describe OpsController do
 
     context "#rbac_tenant_get_details" do
       it "sets @tenant record" do
-        t = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant, :subdomain => "foo")
+        t = FactoryBot.create(:tenant, :parent => Tenant.root_tenant, :subdomain => "foo")
         controller.send(:rbac_tenant_get_details, t.id)
         expect(assigns(:tenant)).to eq(t)
       end
@@ -91,7 +91,7 @@ describe OpsController do
     context "#rbac_tenant_delete" do
       before do
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-        @t = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
+        @t = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
         sb_hash = {
           :trees       => {:rbac_tree => {:active_node => "tn-#{@t.id}"}},
           :active_tree => :rbac_tree,
@@ -113,7 +113,7 @@ describe OpsController do
       end
 
       it "returns error flash when tenant cannot be deleted" do
-        FactoryGirl.create(:miq_group, :tenant => @t)
+        FactoryBot.create(:miq_group, :tenant => @t)
         controller.send(:rbac_tenant_delete)
 
         expect(response.status).to eq(200)
@@ -124,7 +124,7 @@ describe OpsController do
 
       it "deletes checked tenant records successfully" do
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
-        t = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
+        t = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
         sb_hash = {
           :trees       => {:rbac_tree => {:active_node => "tn-#{t.id}"}},
           :active_tree => :rbac_tree,
@@ -166,7 +166,7 @@ describe OpsController do
 
     context "#rbac_tenant_manage_quotas" do
       before do
-        @tenant = FactoryGirl.create(:tenant,
+        @tenant = FactoryBot.create(:tenant,
                                      :name      => "OneTenant",
                                      :parent    => Tenant.root_tenant,
                                      :domain    => "test",
@@ -222,7 +222,7 @@ describe OpsController do
     describe "#tags_edit" do
       let!(:user) { stub_user(:features => :all) }
       before do
-        @tenant = FactoryGirl.create(:tenant,
+        @tenant = FactoryBot.create(:tenant,
                                      :name      => "OneTenant",
                                      :parent    => Tenant.root_tenant,
                                      :domain    => "test",
@@ -233,11 +233,11 @@ describe OpsController do
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         allow(@tenant).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryGirl.create(:classification_tag,
+        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryBot.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification)
-        @tag2 = FactoryGirl.create(:classification_tag,
+        @tag2 = FactoryBot.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@tenant).and_return([@tag1, @tag2])
@@ -300,13 +300,13 @@ describe OpsController do
       Tenant.seed
 
       stub_user(:features => :all)
-      @group = FactoryGirl.create(:miq_group)
+      @group = FactoryBot.create(:miq_group)
       @role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      FactoryGirl.create(
+      FactoryBot.create(
         :classification,
         :name        => "env",
         :description => "Environment",
-        :children    => [FactoryGirl.create(:classification)]
+        :children    => [FactoryBot.create(:classification)]
       )
       @exp = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
       allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
@@ -458,7 +458,7 @@ describe OpsController do
       MiqGroup.seed
       MiqRegion.seed
       stub_user(:features => :all)
-      @vm_role = FactoryGirl.create(:miq_user_role, :features => %w(embedded_automation_manager))
+      @vm_role = FactoryBot.create(:miq_user_role, :features => %w(embedded_automation_manager))
     end
 
     it "the feature list to edit should contain the children roles" do
@@ -492,17 +492,17 @@ describe OpsController do
       MiqGroup.seed
       MiqRegion.seed
       role = MiqUserRole.find_by(:name => "EvmRole-SuperAdministrator")
-      @t1 = FactoryGirl.create(:tenant, :name => "ten1", :parent => root_tenant)
-      @g1 = FactoryGirl.create(:miq_group, :description => 'group1', :tenant => @t1, :miq_user_role => role)
-      @u1 = FactoryGirl.create(:user, :miq_groups => [@g1])
-      @t2 = FactoryGirl.create(:tenant, :name => "ten2", :parent => root_tenant)
-      @g2a  = FactoryGirl.create(:miq_group, :description => 'gr2a', :tenant => @t2, :miq_user_role => role)
-      @g2b  = FactoryGirl.create(:miq_group, :description => 'gr2b1', :tenant => @t2, :miq_user_role => role)
-      @u2a = FactoryGirl.create(:user, :miq_groups => [@g2a])
-      @u2a2 = FactoryGirl.create(:user, :miq_groups => [@g2a])
-      @u2b = FactoryGirl.create(:user, :miq_groups => [@g2b])
-      @u2b2 = FactoryGirl.create(:user, :miq_groups => [@g2b])
-      @u2b3 = FactoryGirl.create(:user, :miq_groups => [@g2b])
+      @t1 = FactoryBot.create(:tenant, :name => "ten1", :parent => root_tenant)
+      @g1 = FactoryBot.create(:miq_group, :description => 'group1', :tenant => @t1, :miq_user_role => role)
+      @u1 = FactoryBot.create(:user, :miq_groups => [@g1])
+      @t2 = FactoryBot.create(:tenant, :name => "ten2", :parent => root_tenant)
+      @g2a  = FactoryBot.create(:miq_group, :description => 'gr2a', :tenant => @t2, :miq_user_role => role)
+      @g2b  = FactoryBot.create(:miq_group, :description => 'gr2b1', :tenant => @t2, :miq_user_role => role)
+      @u2a = FactoryBot.create(:user, :miq_groups => [@g2a])
+      @u2a2 = FactoryBot.create(:user, :miq_groups => [@g2a])
+      @u2b = FactoryBot.create(:user, :miq_groups => [@g2b])
+      @u2b2 = FactoryBot.create(:user, :miq_groups => [@g2b])
+      @u2b3 = FactoryBot.create(:user, :miq_groups => [@g2b])
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
     end
@@ -577,9 +577,9 @@ describe OpsController do
   end
 
   describe "#rbac_get_info" do
-    let!(:root_tenant) { FactoryGirl.create(:tenant) } # creates first root Tenant in active region
-    let(:group) { FactoryGirl.create(:miq_group) }
-    let(:inactive_region) { FactoryGirl.create(:miq_region) }
+    let!(:root_tenant) { FactoryBot.create(:tenant) } # creates first root Tenant in active region
+    let(:group) { FactoryBot.create(:miq_group) }
+    let(:inactive_region) { FactoryBot.create(:miq_region) }
     let!(:root_tenant_in_inactive_region) do
       root_tenant_in_inactive_region = Tenant.root_tenant.dup
       root_tenant_in_inactive_region.id = Tenant.id_in_region(Tenant.count + 1_000_000, inactive_region.region)
@@ -592,7 +592,7 @@ describe OpsController do
       group_in_inactive_region.save!
       group_in_inactive_region
     end
-    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
 
     before do
       EvmSpecHelper.local_miq_server

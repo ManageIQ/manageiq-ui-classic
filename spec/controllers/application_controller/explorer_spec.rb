@@ -13,7 +13,7 @@ describe VmInfraController do
       end
 
       it "valid node" do
-        rec = FactoryGirl.create(:service_template_catalog)
+        rec = FactoryBot.create(:service_template_catalog)
         active_node = "stc-#{rec.id}"
 
         controller.instance_variable_set(:@sb, :trees => {active_tree => {:active_node => active_node}}, :active_tree => active_tree)
@@ -23,7 +23,7 @@ describe VmInfraController do
       end
 
       it "node no longer exists" do
-        rec = FactoryGirl.create(:service_template_catalog)
+        rec = FactoryBot.create(:service_template_catalog)
         active_node = "stc-#{rec.id + 1}"
 
         controller.instance_variable_set(:@sb, :trees => {active_tree => {:active_node => active_node}}, :active_tree => active_tree)
@@ -34,10 +34,10 @@ describe VmInfraController do
     end
 
     context "#rbac_filtered_objects" do
-      let(:ems_folder) { FactoryGirl.create(:ems_folder) }
-      let!(:ems) { FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder]) }
-      let(:user)       { FactoryGirl.create(:user_admin) }
-      let(:vm)         { FactoryGirl.create(:vm_vmware, :ext_management_system => ems) }
+      let(:ems_folder) { FactoryBot.create(:ems_folder) }
+      let!(:ems) { FactoryBot.create(:ems_vmware, :ems_folders => [ems_folder]) }
+      let(:user)       { FactoryBot.create(:user_admin) }
+      let(:vm)         { FactoryBot.create(:vm_vmware, :ext_management_system => ems) }
 
       before do
         EvmSpecHelper.create_guid_miq_server_zone
@@ -106,7 +106,7 @@ end
 describe ReportController do
   context '#tree_add_child_nodes' do
     it 'calls tree_add_child_nodes TreeBuilder method' do
-      widget = FactoryGirl.create(:miq_widget, :description => "Foo", :title => "Foo", :content_type => "report")
+      widget = FactoryBot.create(:miq_widget, :description => "Foo", :title => "Foo", :content_type => "report")
       controller.instance_variable_set(:@sb,
                                        :trees       => {:widgets_tree => {:active_node => "root",
                                                                           :klass_name  => "TreeBuilderReportWidgets",

@@ -12,7 +12,7 @@ describe ContainerBuildController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_build = ContainerBuild.create(:ext_management_system => ems, :name => "Test Build")
     get :show, :params => { :id => container_build.id }
     expect(response.status).to eq(200)
@@ -38,7 +38,7 @@ describe ContainerBuildController do
 
   it "renders grid view" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_build = ContainerBuild.create(:ext_management_system => ems, :name => "Test Build")
 
     session[:settings] = {

@@ -2,11 +2,11 @@ describe PhysicalSwitchController do
   render_views
 
   let(:physical_switch) do
-    ems = FactoryGirl.create(:ems_physical_infra)
-    hardware = FactoryGirl.create(:hardware)
-    asset_detail = FactoryGirl.create(:asset_detail)
+    ems = FactoryBot.create(:ems_physical_infra)
+    hardware = FactoryBot.create(:hardware)
+    asset_detail = FactoryBot.create(:asset_detail)
 
-    FactoryGirl.create(
+    FactoryBot.create(
       :physical_switch,
       :hardware     => hardware,
       :asset_detail => asset_detail,
@@ -16,10 +16,10 @@ describe PhysicalSwitchController do
   end
 
   before do
-    EvmSpecHelper.local_miq_server(:zone => FactoryGirl.build(:zone))
+    EvmSpecHelper.local_miq_server(:zone => FactoryBot.build(:zone))
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryGirl.create(:user)
+    login_as FactoryBot.create(:user)
   end
 
   describe "#show_list" do

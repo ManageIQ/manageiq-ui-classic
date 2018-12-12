@@ -1,10 +1,10 @@
 describe PhysicalServerHelper::TextualSummary do
   it "#textual_ipv4" do
-    network = FactoryGirl.build(:network, :ipaddress => "192.168.1.1")
-    guest_device = FactoryGirl.build(:guest_device, :network => network)
-    hardware = FactoryGirl.build(:hardware, :guest_devices => [guest_device])
-    computer_system = FactoryGirl.build(:computer_system, :hardware => hardware)
-    @record = FactoryGirl.build(:physical_server, :computer_system => computer_system)
+    network = FactoryBot.build(:network, :ipaddress => "192.168.1.1")
+    guest_device = FactoryBot.build(:guest_device, :network => network)
+    hardware = FactoryBot.build(:hardware, :guest_devices => [guest_device])
+    computer_system = FactoryBot.build(:computer_system, :hardware => hardware)
+    @record = FactoryBot.build(:physical_server, :computer_system => computer_system)
 
     result = helper.textual_ipv4
     expect(result[:label]).to eq("IPv4 Address")

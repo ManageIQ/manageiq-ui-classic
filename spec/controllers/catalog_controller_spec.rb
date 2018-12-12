@@ -1,16 +1,16 @@
 describe CatalogController do
   context "tests that needs all rbac features access" do
-    let(:user)                { FactoryGirl.create(:user_with_group) }
-    let(:admin_user)          { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:user)                { FactoryBot.create(:user_with_group) }
+    let(:admin_user)          { FactoryBot.create(:user, :role => "super_administrator") }
     let(:root_tenant)         { user.current_tenant }
-    let(:tenant_role)         { FactoryGirl.create(:miq_user_role) }
-    let(:child_tenant)        { FactoryGirl.create(:tenant, :parent => root_tenant) }
-    let(:child_tenant_group)  { FactoryGirl.create(:miq_group, :tenant => child_tenant, :miq_user_role => tenant_role) }
-    let(:child_tenant_user)   { FactoryGirl.create(:user, :miq_groups => [child_tenant_group]) }
+    let(:tenant_role)         { FactoryBot.create(:miq_user_role) }
+    let(:child_tenant)        { FactoryBot.create(:tenant, :parent => root_tenant) }
+    let(:child_tenant_group)  { FactoryBot.create(:miq_group, :tenant => child_tenant, :miq_user_role => tenant_role) }
+    let(:child_tenant_user)   { FactoryBot.create(:user, :miq_groups => [child_tenant_group]) }
 
-    let!(:service_template_with_root_tenant) { FactoryGirl.create(:service_template, :tenant => root_tenant) }
+    let!(:service_template_with_root_tenant) { FactoryBot.create(:service_template, :tenant => root_tenant) }
     let!(:service_template_with_child_tenant) do
-      FactoryGirl.create(:service_template, :miq_group => child_tenant_group, :tenant => child_tenant)
+      FactoryBot.create(:service_template, :miq_group => child_tenant_group, :tenant => child_tenant)
     end
 
     before do
@@ -157,11 +157,11 @@ describe CatalogController do
       it "Atomic Service Template and its valid Resource Actions are saved" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "save")
-        st = FactoryGirl.create(:service_template)
+        st = FactoryBot.create(:service_template)
         3.times.each do |i|
-          ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns#{i}")
-          cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
-          FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
+          ns = FactoryBot.create(:miq_ae_namespace, :name => "ns#{i}")
+          cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
+          FactoryBot.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
         end
         retire_fqname    = 'ns0/cls0/inst0'
         provision_fqname = 'ns1/cls1/inst1'
@@ -191,7 +191,7 @@ describe CatalogController do
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => 'save')
-        st = FactoryGirl.create(:service_template)
+        st = FactoryBot.create(:service_template)
         retire_fqname    = 'ns/cls/inst'
         provision_fqname = 'ns1/cls1/inst1'
         recon_fqname     = 'ns2/cls2/inst2'
@@ -223,10 +223,10 @@ describe CatalogController do
 
     describe "#x_button catalogitem_edit" do
       before do
-        vm = FactoryGirl.create(:vm_vmware,
-                                :ext_management_system => FactoryGirl.create(:ems_vmware),
-                                :storage               => FactoryGirl.create(:storage))
-        @miq_request = FactoryGirl.create(:miq_provision_request, :requester => admin_user, :src_vm_id => vm.id)
+        vm = FactoryBot.create(:vm_vmware,
+                                :ext_management_system => FactoryBot.create(:ems_vmware),
+                                :storage               => FactoryBot.create(:storage))
+        @miq_request = FactoryBot.create(:miq_provision_request, :requester => admin_user, :src_vm_id => vm.id)
         service_template_with_root_tenant.update_attributes(:prov_type => 'vmware')
         service_template_with_root_tenant.add_resource(@miq_request)
         service_template_with_root_tenant.save
@@ -249,7 +249,7 @@ describe CatalogController do
       it "@record is cleared out after Service Template is added" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "add")
-        st = FactoryGirl.create(:service_template)
+        st = FactoryBot.create(:service_template)
         controller.instance_variable_set(:@record, st)
         provision_fqname = 'ns1/cls1/inst1'
         edit = {
@@ -275,11 +275,11 @@ describe CatalogController do
 
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "save")
-        @st = FactoryGirl.create(:service_template)
+        @st = FactoryBot.create(:service_template)
         3.times.each do |i|
-          ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns#{i}")
-          cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
-          FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
+          ns = FactoryBot.create(:miq_ae_namespace, :name => "ns#{i}")
+          cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls#{i}")
+          FactoryBot.create(:miq_ae_instance, :class_id => cls.id, :name => "inst#{i}")
         end
         retire_fqname    = 'ns0/cls0/inst0'
         provision_fqname = 'ns1/cls1/inst1'
@@ -338,7 +338,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template name and description are edited" do
-        ot = FactoryGirl.create(:orchestration_template_amazon)
+        ot = FactoryBot.create(:orchestration_template_amazon)
         controller.instance_variable_set(:@record, ot)
         controller.params.merge!(:id => ot.id, :template_content => @new_content)
         session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -356,7 +356,7 @@ describe CatalogController do
       end
 
       it "Azure Orchestration Template name and description are edited" do
-        ot = FactoryGirl.create(:orchestration_template_azure_in_json)
+        ot = FactoryBot.create(:orchestration_template_azure_in_json)
         controller.instance_variable_set(:@record, ot)
         controller.params.merge!(:id => ot.id, :template_content => @new_content)
         session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -374,7 +374,7 @@ describe CatalogController do
       end
 
       it "Read-only Orchestration Template content cannot be edited" do
-        ot = FactoryGirl.create(:orchestration_template_amazon_with_stacks)
+        ot = FactoryBot.create(:orchestration_template_amazon_with_stacks)
         original_content = ot.content
         controller.params.merge!(:id => ot.id, :template_content => @new_content)
         session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -390,7 +390,7 @@ describe CatalogController do
       it "Orchestration Template content cannot be empty during edit" do
         controller.instance_variable_set(:@_params, :button => "save")
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-        ot = FactoryGirl.create(:orchestration_template)
+        ot = FactoryBot.create(:orchestration_template)
         session[:edit][:key] = "ot_edit__#{ot.id}"
         session[:edit][:rec_id] = ot.id
         original_content = ot.content
@@ -405,7 +405,7 @@ describe CatalogController do
       end
 
       it "Draft flag is set for an Orchestration Template" do
-        ot = FactoryGirl.create(:orchestration_template)
+        ot = FactoryBot.create(:orchestration_template)
         controller.params.merge!(:id => ot.id, :template_content => @new_content)
         session[:edit][:key] = "ot_edit__#{ot.id}"
         session[:edit][:rec_id] = ot.id
@@ -423,7 +423,7 @@ describe CatalogController do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_params, :button => "add")
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-        ot = FactoryGirl.create(:orchestration_template_amazon)
+        ot = FactoryBot.create(:orchestration_template_amazon)
         controller.x_node = "xx-otcfn_ot-#{ot.id}"
         @new_name = "New Name"
         new_description = "New Description"
@@ -463,7 +463,7 @@ describe CatalogController do
       it "Orchestration Template is copied but name is changed" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-        ot = FactoryGirl.create(:orchestration_template_amazon)
+        ot = FactoryBot.create(:orchestration_template_amazon)
         controller.x_node = "xx-otcfn_ot-#{ot.id}"
         name = "New Name"
         description = "New Description"
@@ -507,7 +507,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template is deleted" do
-        ot = FactoryGirl.create(:orchestration_template)
+        ot = FactoryBot.create(:orchestration_template)
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@_params, :id => ot.id)
         controller.send(:ot_remove_submit)
@@ -517,7 +517,7 @@ describe CatalogController do
       end
 
       it "Read-only Orchestration Template cannot deleted" do
-        ot = FactoryGirl.create(:orchestration_template_with_stacks)
+        ot = FactoryBot.create(:orchestration_template_with_stacks)
         controller.params[:id] = ot.id
         controller.send(:ot_remove_submit)
         expect(controller.send(:flash_errors?)).to be_truthy
@@ -585,13 +585,13 @@ describe CatalogController do
 
     describe "#tags_edit" do
       before do
-        @ot = FactoryGirl.create(:orchestration_template, :name => "foo")
+        @ot = FactoryBot.create(:orchestration_template, :name => "foo")
         allow(@ot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryGirl.create(:classification_tag,
+        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryBot.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification)
-        @tag2 = FactoryGirl.create(:classification_tag,
+        @tag2 = FactoryBot.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@ot).and_return([@tag1, @tag2])
@@ -642,7 +642,7 @@ describe CatalogController do
 
     describe "#service_dialog_create_from_ot" do
       before do
-        @ot = FactoryGirl.create(:orchestration_template_amazon_in_json)
+        @ot = FactoryBot.create(:orchestration_template_amazon_in_json)
         @dialog_label = "New Dialog 01"
         session[:edit] = {
           :new    => {:dialog_name => @dialog_label},
@@ -681,9 +681,9 @@ describe CatalogController do
           }
         }
 
-        FactoryGirl.create(:orchestration_template_amazon_in_json)
-        FactoryGirl.create(:orchestration_template_openstack_in_yaml)
-        FactoryGirl.create(:orchestration_template_azure_in_json)
+        FactoryBot.create(:orchestration_template_amazon_in_json)
+        FactoryBot.create(:orchestration_template_openstack_in_yaml)
+        FactoryBot.create(:orchestration_template_azure_in_json)
       end
 
       after(:each) do
@@ -709,7 +709,7 @@ describe CatalogController do
       end
 
       it "Renders an orchestration template textual summary" do
-        ot = FactoryGirl.create(:orchestration_template_amazon)
+        ot = FactoryBot.create(:orchestration_template_amazon)
         seed_session_trees('catalog', :ot_tree, "xx-otcfn_ot-#{ot.id}")
         post :explorer
 
@@ -720,8 +720,8 @@ describe CatalogController do
 
     describe "#set_resource_action" do
       before do
-        @st = FactoryGirl.create(:service_template)
-        dialog = FactoryGirl.create(:dialog,
+        @st = FactoryBot.create(:service_template)
+        dialog = FactoryBot.create(:dialog,
                                     :label       => "Test Label",
                                     :description => "Test Description",
                                     :buttons     => "submit,reset,cancel")
@@ -754,8 +754,8 @@ describe CatalogController do
 
     describe "#st_set_record_vars" do
       before do
-        @st = FactoryGirl.create(:service_template)
-        @catalog = FactoryGirl.create(:service_template_catalog,
+        @st = FactoryBot.create(:service_template)
+        @catalog = FactoryBot.create(:service_template_catalog,
                                       :name        => "foo",
                                       :description => "FOO")
         edit = {
@@ -778,7 +778,7 @@ describe CatalogController do
 
     describe "#st_set_form_vars" do
       before do
-        bundle = FactoryGirl.create(:service_template)
+        bundle = FactoryBot.create(:service_template)
         controller.instance_variable_set(:@record, bundle)
       end
 
@@ -812,7 +812,7 @@ describe CatalogController do
     describe "#need_ansible_locals?" do
       before do
         controller.instance_variable_set(:@nodetype, 'st')
-        st = FactoryGirl.create(:service_template,
+        st = FactoryBot.create(:service_template,
                                 :type      => "ServiceTemplateAnsiblePlaybook",
                                 :prov_type => "generic_ansible_playbook")
         controller.instance_variable_set(:@record, st)
@@ -833,7 +833,7 @@ describe CatalogController do
       end
 
       it "returns false for any other Service Template in Catalog Items accordions" do
-        controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+        controller.instance_variable_set(:@record, FactoryBot.create(:service_template))
         controller.instance_variable_set(:@sb,
                                          :trees       => {:svccat_tree => {:open_nodes => []}},
                                          :active_tree => :svccat_tree)
@@ -841,7 +841,7 @@ describe CatalogController do
       end
 
       it "returns false for any other Service Template in other accordions" do
-        controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+        controller.instance_variable_set(:@record, FactoryBot.create(:service_template))
         controller.instance_variable_set(:@sb,
                                          :trees       => {:svccat_tree => {:open_nodes => []}},
                                          :active_tree => :svccat_tree)
@@ -851,27 +851,27 @@ describe CatalogController do
 
     describe "#get_available_resources" do
       it "list of available resources should not include Ansible Playbook Service Templates" do
-        FactoryGirl.create(:service_template, :type => "ServiceTemplateAnsiblePlaybook")
+        FactoryBot.create(:service_template, :type => "ServiceTemplateAnsiblePlaybook")
         controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
         controller.send(:get_available_resources, "ServiceTemplate")
         expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
       end
 
       context "#get_available_resources" do
-        let(:user_role) { FactoryGirl.create(:miq_user_role) }
-        let(:miq_group) { FactoryGirl.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
+        let(:user_role) { FactoryBot.create(:miq_user_role) }
+        let(:miq_group) { FactoryBot.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
 
         before do
-          @st1 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
-          @st2 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
-          @st3 = FactoryGirl.create(:service_template, :type => "ServiceTemplate")
+          @st1 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
+          @st2 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
+          @st3 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
           @st1.tag_with('/managed/service_level/one', :ns => '*')
           @st2.tag_with('/managed/service_level/one', :ns => '*')
           @st3.tag_with('/managed/service_level/two', :ns => '*')
         end
 
         it "list of available resources should contain the ones for the group matching tag Rbac" do
-          user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+          user = FactoryBot.create(:user, :miq_groups => [miq_group])
           user.current_group.entitlement = Entitlement.create!
           user.current_group.entitlement.set_managed_filters([["/managed/service_level/one"]])
           user.current_group.save
@@ -882,7 +882,7 @@ describe CatalogController do
         end
 
         it "list of available resources should not contain the ones for the group not matching tag Rbac" do
-          user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+          user = FactoryBot.create(:user, :miq_groups => [miq_group])
           user.current_group.entitlement = Entitlement.create!
           user.current_group.entitlement.set_managed_filters([["/managed/service_level/zero"]])
           user.current_group.save
@@ -893,7 +893,7 @@ describe CatalogController do
         end
 
         it "list of available resources for all tags matching Rbac" do
-          user = FactoryGirl.create(:user, :miq_groups => [miq_group])
+          user = FactoryBot.create(:user, :miq_groups => [miq_group])
           user.current_group.entitlement = Entitlement.create!
           user.current_group.entitlement.set_managed_filters([])
           user.current_group.save
@@ -906,15 +906,15 @@ describe CatalogController do
     end
 
     describe "#fetch_playbook_details" do
-      let(:auth) { FactoryGirl.create(:authentication, :name => "machine_cred", :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
-      let(:repository) { FactoryGirl.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
-      let(:inventory_root_group) { FactoryGirl.create(:inventory_root_group, :name => 'Demo Inventory') }
+      let(:auth) { FactoryBot.create(:authentication, :name => "machine_cred", :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
+      let(:repository) { FactoryBot.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
+      let(:inventory_root_group) { FactoryBot.create(:inventory_root_group, :name => 'Demo Inventory') }
       let(:ems) do
-        FactoryGirl.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryGirl.create(:provider_embedded_ansible))
+        FactoryBot.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryBot.create(:provider_embedded_ansible))
       end
-      let(:dialog) { FactoryGirl.create(:dialog, :label => "Some Label") }
+      let(:dialog) { FactoryBot.create(:dialog, :label => "Some Label") }
       let(:playbook) do
-        FactoryGirl.create(:embedded_playbook,
+        FactoryBot.create(:embedded_playbook,
                            :configuration_script_source => repository,
                            :manager                     => ems,
                            :inventory_root_group        => inventory_root_group)
@@ -1036,21 +1036,21 @@ describe CatalogController do
     end
 
     describe "#atomic_req_submit" do
-      let(:ems) { FactoryGirl.create(:ems_openshift) }
+      let(:ems) { FactoryBot.create(:ems_openshift) }
       let(:container_template) do
-        FactoryGirl.create(:container_template,
+        FactoryBot.create(:container_template,
                            :ext_management_system => ems,
                            :name                  => "Test Template")
       end
 
-      let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
-      let(:dialog) { FactoryGirl.create(:dialog) }
+      let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
+      let(:dialog) { FactoryBot.create(:dialog) }
 
       before do
         controller.instance_variable_set(:@sb, {})
-        ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns")
-        cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls")
-        FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst")
+        ns = FactoryBot.create(:miq_ae_namespace, :name => "ns")
+        cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls")
+        FactoryBot.create(:miq_ae_instance, :class_id => cls.id, :name => "inst")
         edit = {
           :key          => "prov_edit__new",
           :st_prov_type => "generic_container_template",
@@ -1078,15 +1078,15 @@ describe CatalogController do
     end
 
     describe "#fetch_ct_details" do
-      let(:ems) { FactoryGirl.create(:ems_openshift) }
+      let(:ems) { FactoryBot.create(:ems_openshift) }
       let(:container_template) do
-        FactoryGirl.create(:container_template,
+        FactoryBot.create(:container_template,
                            :ext_management_system => ems,
                            :name                  => "Test Template")
       end
 
-      let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
-      let(:dialog) { FactoryGirl.create(:dialog) }
+      let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
+      let(:dialog) { FactoryBot.create(:dialog) }
 
       let(:catalog_item_options) do
         {
@@ -1113,7 +1113,7 @@ describe CatalogController do
       end
 
       describe '#replace_right_cell' do
-        let(:dialog) { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+        let(:dialog) { FactoryBot.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
         before do
           allow(controller).to receive(:params).and_return(:action => 'dialog_provision')
           controller.instance_variable_set(:@in_a_form, true)
@@ -1161,11 +1161,11 @@ describe CatalogController do
 
     describe '#available_job_templates' do
       it "" do
-        ems = FactoryGirl.create(:automation_manager_ansible_tower)
-        cs = FactoryGirl.create(:configuration_script,
+        ems = FactoryBot.create(:automation_manager_ansible_tower)
+        cs = FactoryBot.create(:configuration_script,
                                 :type => 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript',
                                 :name => 'fred job template')
-        cf = FactoryGirl.create(:configuration_workflow, :name => 'wilma workflow template')
+        cf = FactoryBot.create(:configuration_workflow, :name => 'wilma workflow template')
         ems.configuration_scripts = [cs, cf]
         controller.instance_variable_set(:@edit, :new => {})
         controller.send(:available_job_templates, ems.id)
@@ -1182,16 +1182,16 @@ describe CatalogController do
   context "tests that need only specific rbac feature access" do
     describe "#st_tags_edit" do
       before do
-        user = FactoryGirl.create(:user, :features => "catalogitem_tag")
+        user = FactoryBot.create(:user, :features => "catalogitem_tag")
         login_as user
 
-        @st = FactoryGirl.create(:service_template, :name => "foo")
+        @st = FactoryBot.create(:service_template, :name => "foo")
         allow(@st).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryGirl.create(:classification_tag,
+        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        @tag1 = FactoryBot.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification)
-        @tag2 = FactoryGirl.create(:classification_tag,
+        @tag2 = FactoryBot.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@st).and_return([@tag1, @tag2])
@@ -1245,7 +1245,7 @@ describe CatalogController do
     before do
       allow(controller).to receive(:build_ae_tree)
       controller.instance_variable_set(:@edit, :new => {})
-      controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+      controller.instance_variable_set(:@record, FactoryBot.create(:service_template))
     end
 
     context 'getting all available catalogs with tenants and ancestors' do
@@ -1270,7 +1270,7 @@ describe CatalogController do
   end
 
   describe '#common_st_record_vars' do
-    let(:st) { FactoryGirl.create(:service_template) }
+    let(:st) { FactoryBot.create(:service_template) }
 
     before { controller.instance_variable_set(:@edit, edit) }
 
@@ -1286,7 +1286,7 @@ describe CatalogController do
 
     context 'Service Catalog Item with Catalog' do
       let(:edit) { {:new => {:catalog_id => stc.id}} }
-      let(:stc) { FactoryGirl.create(:service_template_catalog) }
+      let(:stc) { FactoryBot.create(:service_template_catalog) }
 
       it 'sets service_template_catalog for Service Catalog Item to nil' do
         controller.send(:common_st_record_vars, st)

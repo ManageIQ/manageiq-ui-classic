@@ -14,7 +14,7 @@ describe OpsController do
   end
 
   context 'set record data before calling record.valid?' do
-    let(:group) { FactoryGirl.create(:miq_group) }
+    let(:group) { FactoryBot.create(:miq_group) }
 
     it "calls both record.valid? and rbac_user_set_record_vars or neither" do
       new_user_edit(
@@ -25,7 +25,7 @@ describe OpsController do
         :verify   => "bar",
       )
 
-      user = FactoryGirl.build(:user)
+      user = FactoryBot.build(:user)
       allow(User).to receive(:new).and_return(user)
 
       done_valid = false
@@ -61,8 +61,8 @@ describe OpsController do
   end
 
   context 'don\'t change groups on cancel' do
-    let(:user) { FactoryGirl.create(:user_with_group) }
-    let(:group) { FactoryGirl.create(:miq_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
+    let(:group) { FactoryBot.create(:miq_group) }
 
     it "should not unset groups on cancel" do
       old_groups = user.miq_groups.pluck(:id).sort
@@ -103,7 +103,7 @@ describe OpsController do
   end
 
   context 'update record fields when editing' do
-    let(:user) { FactoryGirl.create(:user_with_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
 
     it "updates record even for existing users" do
       existing_user_edit(user, :name => "changed")
@@ -125,8 +125,8 @@ describe OpsController do
   end
 
   context 'set current_group' do
-    let(:user) { FactoryGirl.create(:user_with_group) }
-    let(:group) { FactoryGirl.create(:miq_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
+    let(:group) { FactoryBot.create(:miq_group) }
 
     it "should set current_group for new item" do
       new_user_edit(

@@ -19,7 +19,7 @@ describe "ops/_all_tabs.html.haml" do
     end
 
     it "should render tabs only for non-current server" do
-      assign(:selected_server, FactoryGirl.create(:miq_server))
+      assign(:selected_server, FactoryBot.create(:miq_server))
       assign(:sb,
              :active_tab         => "diagnostics_roles_servers",
              :active_tree        => :diagnostics_tree,
@@ -31,7 +31,7 @@ describe "ops/_all_tabs.html.haml" do
     end
 
     it "should render tabs only specific to zone node" do
-      assign(:selected_server, FactoryGirl.create(:miq_server))
+      assign(:selected_server, FactoryBot.create(:miq_server))
       assign(:sb,
              :active_tab         => "diagnostics_roles_servers",
              :active_tree        => :diagnostics_tree,

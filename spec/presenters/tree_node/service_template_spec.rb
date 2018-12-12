@@ -1,13 +1,13 @@
 describe TreeNode::ServiceTemplate do
   subject { described_class.new(object, nil, {}) }
-  let(:tenant) { FactoryGirl.create(:tenant) }
+  let(:tenant) { FactoryBot.create(:tenant) }
   %i(
     service_template
     service_template_ansible_tower
     service_template_orchestration
   ).each do |factory|
     context(factory.to_s.camelize) do
-      let(:object) { FactoryGirl.create(factory, :name => 'foo', :tenant => tenant, :service_type => stype) }
+      let(:object) { FactoryBot.create(factory, :name => 'foo', :tenant => tenant, :service_type => stype) }
       let(:stype) { 'atomic' }
 
       include_examples 'TreeNode::Node#key prefix', 'st-'

@@ -5,7 +5,7 @@ describe MiqAeCustomizationController do
   context "::CustomButtons" do
     context "#ab_get_node_info" do
       it "correct target class gets set when assigned button node is clicked" do
-        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host", :name => "Some Name")
+        custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host", :name => "Some Name")
         target_classes = {}
         CustomButton.button_classes.each { |db| target_classes[ui_lookup(:model => db)] = db }
         controller.instance_variable_set(:@sb, :target_classes => target_classes)

@@ -73,16 +73,16 @@ describe ReportController do
       MiqUserRole.seed
 
       role = MiqUserRole.find_by(:name => "EvmRole-administrator")
-      current_group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Current Group")
-      @current_user = FactoryGirl.create(:user, :userid => "Current User", :miq_groups => [current_group],
+      current_group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Current Group")
+      @current_user = FactoryBot.create(:user, :userid => "Current User", :miq_groups => [current_group],
                                          :email => "current_user@test.com")
 
       login_as @current_user
-      FactoryGirl.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
-      FactoryGirl.create(:miq_report, :name => "Provisioning 1", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
-      FactoryGirl.create(:miq_report, :name => "Provisioning 2", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
-      FactoryGirl.create(:miq_report, :name => "custom report 1", :rpt_group => "Custom", :rpt_type => "Custom")
-      FactoryGirl.create(:miq_report, :name => "custom report 2", :rpt_group => "Custom", :rpt_type => "Custom")
+      FactoryBot.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
+      FactoryBot.create(:miq_report, :name => "Provisioning 1", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
+      FactoryBot.create(:miq_report, :name => "Provisioning 2", :rpt_group => "Provisioning - Folder Bar", :rpt_type => "Default")
+      FactoryBot.create(:miq_report, :name => "custom report 1", :rpt_group => "Custom", :rpt_type => "Custom")
+      FactoryBot.create(:miq_report, :name => "custom report 2", :rpt_group => "Custom", :rpt_type => "Custom")
 
       controller.instance_variable_set(:@edit,
                                        :new => [

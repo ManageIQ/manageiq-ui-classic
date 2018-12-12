@@ -1,6 +1,6 @@
 describe TreeNode::CustomButton do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:custom_button, :applies_to_class => 'Host') }
+  let(:object) { FactoryBot.create(:custom_button, :applies_to_class => 'Host') }
 
   include_examples 'TreeNode::Node#key prefix', 'cb-'
   include_examples 'TreeNode::Node#icon', 'fa fa-file-o'

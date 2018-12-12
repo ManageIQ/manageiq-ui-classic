@@ -1,16 +1,16 @@
 describe GenericObjectDefinitionController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
   describe "#show" do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "none")
     end
 
     it "should redirect to #show_list" do
-      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
       get :show, :params => {:id => generic_obj_defn.id}
       expect(response.status).to eq(302)
       expect(response).to redirect_to(:action => 'show_list')
@@ -22,7 +22,7 @@ describe GenericObjectDefinitionController do
         allow_any_instance_of(GenericObjectDefinition).to receive(:generic_objects)
       end
       it "show the generic_object_definition record when display=main" do
-        generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+        generic_obj_defn = FactoryBot.create(:generic_object_definition)
         get :show, :params => {:id => generic_obj_defn.id, :display => "main"}
         expect(response.status).to eq(200)
       end
@@ -30,8 +30,8 @@ describe GenericObjectDefinitionController do
 
     context "#show when @display=generic_objects" do
       it "renders the generic objects list" do
-        generic_obj_defn = FactoryGirl.create(:generic_object_definition)
-        FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+        generic_obj_defn = FactoryBot.create(:generic_object_definition)
+        FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
         controller.instance_variable_set(:@display, 'generic_objects')
         controller.instance_variable_set(:@breadcrumbs, [])
         controller.instance_variable_set(:@settings, {})
@@ -47,7 +47,7 @@ describe GenericObjectDefinitionController do
   describe "#show_list" do
     before do
       stub_user(:features => :all)
-      FactoryGirl.create(:generic_object_definition)
+      FactoryBot.create(:generic_object_definition)
       allow(controller).to receive(:build_tree)
       allow(controller).to receive(:exp_build_table)
       get :show_list
@@ -66,8 +66,8 @@ describe GenericObjectDefinitionController do
     end
 
     it "when Generic Object Tag is pressed for the generic object nested list" do
-      definition = FactoryGirl.create(:generic_object_definition)
-      go = FactoryGirl.create(:generic_object, :generic_object_definition_id => definition.id)
+      definition = FactoryBot.create(:generic_object_definition)
+      go = FactoryBot.create(:generic_object, :generic_object_definition_id => definition.id)
       get :show, :params => {:id => definition.id, :display => 'generic_objects'}
       post :button, :params => {:pressed => "generic_object_tag", "check_#{go.id}" => "1", :id => definition.id, :display => 'generic_objects', :format => :js}
       expect(response.status).to eq(200)
@@ -78,7 +78,7 @@ describe GenericObjectDefinitionController do
   context "#process_root_node" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "none")
     end
 
     it "renders the toolbar for 'show_list'" do
@@ -101,8 +101,8 @@ describe GenericObjectDefinitionController do
   context "GTL rendering for various node types" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+      login_as FactoryBot.create(:user)
+      @generic_obj_defn = FactoryBot.create(:generic_object_definition)
     end
 
     it "renders the toolbar for root node with gtl icons" do
@@ -127,7 +127,7 @@ describe GenericObjectDefinitionController do
     end
 
     it "renders the toolbar for custom_button_group node with no gtl icons" do
-      custom_button_set = FactoryGirl.create(:custom_button_set, :description => "custom button set description")
+      custom_button_set = FactoryBot.create(:custom_button_set, :description => "custom button set description")
       allow(controller).to receive(:x_node).and_return("cbg-#{custom_button_set.id}")
       controller.send(:show_list)
       gtl_type = controller.instance_variable_get(:@gtl_type)
@@ -135,7 +135,7 @@ describe GenericObjectDefinitionController do
     end
 
     it "renders the toolbar for custom_button node with no gtl icons" do
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :name => "Some Name")
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :name => "Some Name")
       allow(controller).to receive(:x_node).and_return("cb-#{custom_button.id}")
       controller.send(:show_list)
       gtl_type = controller.instance_variable_get(:@gtl_type)
@@ -154,7 +154,7 @@ describe GenericObjectDefinitionController do
     end
 
     it "does not display toolbar and paging div when custom button is edited" do
-      custom_button = FactoryGirl.create(:custom_button,
+      custom_button = FactoryBot.create(:custom_button,
                                          :applies_to_class => "GenericObjectDefinition",
                                          :name             => "Default",
                                          :options          => {

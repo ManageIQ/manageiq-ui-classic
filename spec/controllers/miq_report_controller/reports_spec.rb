@@ -1,14 +1,14 @@
 describe ReportController, "::Reports" do
   describe "#miq_report_delete" do
-    let(:user) { FactoryGirl.create(:user, :features => :miq_report_delete) }
+    let(:user) { FactoryBot.create(:user, :features => :miq_report_delete) }
     before do
       EvmSpecHelper.local_miq_server # timezone stuff
       login_as user
     end
 
     it "deletes the report" do
-      FactoryGirl.create(:miq_report)
-      report = FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
+      FactoryBot.create(:miq_report)
+      report = FactoryBot.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
       session['sandboxes'] = {
         controller.controller_name => { :active_tree => 'report_1',
                                         :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
@@ -20,8 +20,8 @@ describe ReportController, "::Reports" do
     end
 
     it "cant delete default reports" do
-      FactoryGirl.create(:miq_report)
-      report = FactoryGirl.create(:miq_report, :rpt_type => "Default")
+      FactoryBot.create(:miq_report)
+      report = FactoryBot.create(:miq_report, :rpt_type => "Default")
       session['sandboxes'] = {
         controller.controller_name => { :active_tree => 'report_1',
                                         :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
@@ -33,8 +33,8 @@ describe ReportController, "::Reports" do
     end
 
     # it "fails if widgets exist" do
-    #   report = FactoryGirl.create(:miq_report)
-    #   FactoryGirl.create(:miq_widget, :resource => report)
+    #   report = FactoryBot.create(:miq_report)
+    #   FactoryBot.create(:miq_widget, :resource => report)
     # end
   end
 end

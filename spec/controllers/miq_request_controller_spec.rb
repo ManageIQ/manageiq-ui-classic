@@ -17,12 +17,12 @@ describe MiqRequestController do
     end
   end
 
-  let(:parent_tenant)      { FactoryGirl.create(:tenant) }
-  let(:child_tenant)       { FactoryGirl.create(:tenant, :parent=> parent_tenant) }
-  let(:user_child_tenant)  { FactoryGirl.create(:user_with_group, :tenant => child_tenant) }
-  let(:user_parent_tenant) { FactoryGirl.create(:user_with_group, :tenant => parent_tenant) }
+  let(:parent_tenant)      { FactoryBot.create(:tenant) }
+  let(:child_tenant)       { FactoryBot.create(:tenant, :parent=> parent_tenant) }
+  let(:user_child_tenant)  { FactoryBot.create(:user_with_group, :tenant => child_tenant) }
+  let(:user_parent_tenant) { FactoryBot.create(:user_with_group, :tenant => parent_tenant) }
 
-  let(:template)     { FactoryGirl.create(:template_amazon) }
+  let(:template)     { FactoryBot.create(:template_amazon) }
   let(:request_body) { {:requester => user_child_tenant, :source_type => 'VmOrTemplate', :source_id => template.id} }
 
   describe "#get_view" do
@@ -30,7 +30,7 @@ describe MiqRequestController do
       EvmSpecHelper.local_miq_server
 
       login_as user_child_tenant
-      FactoryGirl.create(:miq_provision_request, request_body)
+      FactoryBot.create(:miq_provision_request, request_body)
     end
 
     it "displays miq_request for parent_tenant, when request was added by child_parent" do
@@ -44,7 +44,7 @@ describe MiqRequestController do
   end
 
   describe "#prov_scope" do
-    let(:user) { FactoryGirl.create(:user_miq_request_approver, :userid => "Approver") }
+    let(:user) { FactoryBot.create(:user_miq_request_approver, :userid => "Approver") }
     let(:options) { {} }
     subject { controller.send(:prov_scope, options) }
     before { login_as user }
@@ -61,11 +61,11 @@ describe MiqRequestController do
         it { is_expected.not_to include [:with_requester, user.id] }
       end
       context "logged without approval privileges" do
-        let(:user) { FactoryGirl.create(:user, :features => "none") }
+        let(:user) { FactoryBot.create(:user, :features => "none") }
         it { is_expected.to include [:with_requester, user.id] }
       end
       context "selected 'another_user'" do
-        let(:another_user) { FactoryGirl.create(:user) }
+        let(:another_user) { FactoryBot.create(:user) }
         let(:options) do
           { :user_choice => another_user.id }
         end
@@ -160,10 +160,10 @@ describe MiqRequestController do
   end
 
   describe '#report_data' do
-    let(:user1) { FactoryGirl.create(:user) }
+    let(:user1) { FactoryBot.create(:user) }
     let(:user2) { create_user_in_other_region(user1.userid) }
     let(:miq_request1) do
-      FactoryGirl.create(:miq_provision_request, :with_approval,
+      FactoryBot.create(:miq_provision_request, :with_approval,
                          :source_type    => 'VmOrTemplate',
                          :source_id      => template.id,
                          :created_on     => 2.days.ago,
@@ -173,17 +173,17 @@ describe MiqRequestController do
                          :reason         => "abcdef")
     end
     let(:miq_request2) do
-      FactoryGirl.create(:miq_provision_request, :with_approval,
+      FactoryBot.create(:miq_provision_request, :with_approval,
                          :source_type    => 'VmOrTemplate',
                          :source_id      => template.id,
                          :created_on     => 10.days.ago,
-                         :requester      => FactoryGirl.create(:user),
+                         :requester      => FactoryBot.create(:user),
                          :approval_state => "approved",
                          :request_type   => "clone_to_vm",
                          :reason         => "abc")
     end
     let(:miq_request3) do
-      FactoryGirl.create(:miq_provision_request, :with_approval,
+      FactoryBot.create(:miq_provision_request, :with_approval,
                          :source_type    => 'VmOrTemplate',
                          :source_id      => template.id,
                          :created_on     => 45.days.ago,
@@ -246,11 +246,11 @@ describe MiqRequestController do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    let(:vm) { FactoryGirl.create(:vm) }
-    let!(:other_vm) { FactoryGirl.create(:vm) }
+    let(:vm) { FactoryBot.create(:vm) }
+    let!(:other_vm) { FactoryBot.create(:vm) }
 
     let(:reconfigure_request) do
-      FactoryGirl.create(:vm_reconfigure_request, :options => {:src_ids => [vm.id]})
+      FactoryBot.create(:vm_reconfigure_request, :options => {:src_ids => [vm.id]})
     end
 
     # http://localhost:3000/miq_request/show/10000000000342
@@ -272,17 +272,17 @@ describe MiqRequestController do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    let(:vm1)     { FactoryGirl.create(:vm_cloud) }
-    let(:vm2)     { FactoryGirl.create(:vm_cloud) } # not part of the stack
-    let(:stack)   { FactoryGirl.create(:orchestration_stack).tap { |stack| stack.direct_vms = [vm1] } }
-    let(:service) { FactoryGirl.create(:service_orchestration).tap { |service| service.add_resource!(stack) } }
+    let(:vm1)     { FactoryBot.create(:vm_cloud) }
+    let(:vm2)     { FactoryBot.create(:vm_cloud) } # not part of the stack
+    let(:stack)   { FactoryBot.create(:orchestration_stack).tap { |stack| stack.direct_vms = [vm1] } }
+    let(:service) { FactoryBot.create(:service_orchestration).tap { |service| service.add_resource!(stack) } }
     let(:request) do
-      FactoryGirl.create(:service_retire_request,
+      FactoryBot.create(:service_retire_request,
                          :type      => 'ServiceRetireRequest',
                          :requester => @user,
                          :options   => {:src_ids => [service.id]})
     end
-    # let(:request) { FactoryGirl.create(:miq_service_retirement_request, :options => {:src_ids => [service.id]}) }
+    # let(:request) { FactoryBot.create(:miq_service_retirement_request, :options => {:src_ids => [service.id]}) }
 
     let(:payload) { { :model_name => 'Vm', :parent_id => service.id.to_s, additional_key => additional_val } }
     let(:additional_val) do
@@ -389,19 +389,19 @@ describe MiqRequestController do
       stub_settings(:server => {}, :session => {})
 
       # Create users
-      @admin = FactoryGirl.create(:user, :role => "super_administrator")
+      @admin = FactoryBot.create(:user, :role => "super_administrator")
       allow(@admin).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
-      @vm_user = FactoryGirl.create(:user, :role => "vm_user")
-      @desktop = FactoryGirl.create(:user, :role => "desktop")
-      @approver = FactoryGirl.create(:user, :role => "approver")
+      @vm_user = FactoryBot.create(:user, :role => "vm_user")
+      @desktop = FactoryBot.create(:user, :role => "desktop")
+      @approver = FactoryBot.create(:user, :role => "approver")
       allow(@approver).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
       @users = [@admin, @vm_user, @desktop, @approver]
 
       # Create requests
-      FactoryGirl.create(:vm_migrate_request, :requester => @admin)
-      FactoryGirl.create(:vm_migrate_request, :requester => @vm_user)
-      FactoryGirl.create(:vm_migrate_request, :requester => @desktop)
-      FactoryGirl.create(:vm_migrate_request, :requester => @approver)
+      FactoryBot.create(:vm_migrate_request, :requester => @admin)
+      FactoryBot.create(:vm_migrate_request, :requester => @vm_user)
+      FactoryBot.create(:vm_migrate_request, :requester => @desktop)
+      FactoryBot.create(:vm_migrate_request, :requester => @approver)
     end
 
     subject { controller.send(:miq_request_initial_options) }
@@ -429,11 +429,11 @@ describe MiqRequestController do
       stub_settings(:server => {}, :session => {})
 
       # Create user
-      @approver = FactoryGirl.create(:user, :role => "approver")
+      @approver = FactoryBot.create(:user, :role => "approver")
       allow(@approver).to receive(:role_allows?).with(:identifier => 'miq_request_approval').and_return(true)
 
       # Create request
-      @request = FactoryGirl.create(:vm_migrate_request, :requester => @approver)
+      @request = FactoryBot.create(:vm_migrate_request, :requester => @approver)
     end
 
     it "returns label with requester_name" do
@@ -452,7 +452,7 @@ describe MiqRequestController do
 
   def create_user_in_other_region(userid)
     other_region_id = ApplicationRecord.id_in_region(1, MiqRegion.my_region_number + 1)
-    FactoryGirl.create(:user, :id => other_region_id).tap do |u|
+    FactoryBot.create(:user, :id => other_region_id).tap do |u|
       u.update_column(:userid, userid) # Bypass validation for test purposes
     end
   end

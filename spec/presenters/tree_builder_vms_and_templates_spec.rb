@@ -1,11 +1,11 @@
 describe TreeBuilderVmsAndTemplates do
-  let(:ems) { FactoryGirl.create(:ems_vmware, :zone => FactoryGirl.create(:zone)) }
-  let(:folder) { FactoryGirl.create(:ems_folder, :ext_management_system => ems) }
-  let(:subfolder1) { FactoryGirl.create(:ems_folder) }
+  let(:ems) { FactoryBot.create(:ems_vmware, :zone => FactoryBot.create(:zone)) }
+  let(:folder) { FactoryBot.create(:ems_folder, :ext_management_system => ems) }
+  let(:subfolder1) { FactoryBot.create(:ems_folder) }
 
   let(:tree) do
-    subfolder2 = FactoryGirl.create(:ems_folder)
-    subfolder3 = FactoryGirl.create(:datacenter)
+    subfolder2 = FactoryBot.create(:ems_folder)
+    subfolder3 = FactoryBot.create(:datacenter)
 
     ems.with_relationship_type("ems_metadata") { ems.add_child(folder) }
     folder.with_relationship_type("ems_metadata") { folder.add_child(subfolder1) }
@@ -25,9 +25,9 @@ describe TreeBuilderVmsAndTemplates do
   describe "#tree" do
     it "returns vms with display_vms=true" do
       EvmSpecHelper.local_miq_server
-      User.current_user = FactoryGirl.create(:user, :settings => {:display => {:display_vms => true}})
+      User.current_user = FactoryBot.create(:user, :settings => {:display => {:display_vms => true}})
       tree
-      vms = FactoryGirl.create_list(:vm_vmware, 2, :ext_management_system => ems)
+      vms = FactoryBot.create_list(:vm_vmware, 2, :ext_management_system => ems)
       subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
@@ -48,9 +48,9 @@ describe TreeBuilderVmsAndTemplates do
 
     it "returns no vms with display_vms=false" do
       EvmSpecHelper.local_miq_server
-      User.current_user = FactoryGirl.create(:user, :settings => {:display => {:display_vms => false}})
+      User.current_user = FactoryBot.create(:user, :settings => {:display => {:display_vms => false}})
       tree
-      vms = FactoryGirl.create_list(:vm_vmware, 2, :ext_management_system => ems)
+      vms = FactoryBot.create_list(:vm_vmware, 2, :ext_management_system => ems)
       subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree

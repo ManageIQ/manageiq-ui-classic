@@ -6,11 +6,11 @@ describe ApplicationHelper::Button::RbacUserCopy do
     before { button.calculate_properties }
 
     context 'when user is an administrator' do
-      let(:record) { FactoryGirl.create(:user_admin) }
+      let(:record) { FactoryBot.create(:user_admin) }
       it_behaves_like 'a disabled button', 'Super Administrator can not be copied'
     end
     context 'when user is not an administrator' do
-      let(:record) { FactoryGirl.create(:user) }
+      let(:record) { FactoryBot.create(:user) }
       it_behaves_like 'an enabled button'
     end
   end

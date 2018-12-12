@@ -6,8 +6,8 @@ describe ApplicationHelper::Toolbar::EmsNetworkCenter do
     let(:button_hash)   { ems_network_vmdb_choice[:items].detect { |b| b[:id] == 'ems_network_edit' } }
     let(:button_klass)  { button_hash[:klass] }
     let(:button)        { button_klass.new(nil, nil, {}, {}) }
-    let(:ems_nuage)     { FactoryGirl.create(:ems_nuage_network) }
-    let(:ems_openstack) { FactoryGirl.create(:ems_openstack) }
+    let(:ems_nuage)     { FactoryBot.create(:ems_nuage_network) }
+    let(:ems_openstack) { FactoryBot.create(:ems_openstack) }
 
     it 'appropriate button class' do
       expect(button_klass).to eq(ApplicationHelper::Button::EmsNetwork)

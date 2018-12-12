@@ -10,7 +10,7 @@ describe "miq_ae_class/_ns_list.html.haml" do
 
     describe "Git domain" do
       before do
-        dom = FactoryGirl.create(:miq_ae_git_domain)
+        dom = FactoryBot.create(:miq_ae_git_domain)
         setup_namespace_form(dom)
       end
 
@@ -33,7 +33,7 @@ describe "miq_ae_class/_ns_list.html.haml" do
 
     describe "User domain" do
       before do
-        dom = FactoryGirl.create(:miq_ae_domain)
+        dom = FactoryBot.create(:miq_ae_domain)
         setup_namespace_form(dom)
       end
 
@@ -56,7 +56,7 @@ describe "miq_ae_class/_ns_list.html.haml" do
 
     describe "Namespace" do
       before do
-        dom = FactoryGirl.create(:miq_ae_namespace, :parent => FactoryGirl.create(:miq_ae_domain))
+        dom = FactoryBot.create(:miq_ae_namespace, :parent => FactoryBot.create(:miq_ae_domain))
         assign(:sb, :namespace_path => 'namespace/path')
         setup_namespace_form(dom)
       end

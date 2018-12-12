@@ -2,10 +2,10 @@ describe ComplianceSummaryHelper do
   include ApplicationHelper
 
   before do
-    server  = FactoryGirl.build(:miq_server, :id => 0)
-    @record = FactoryGirl.build(:vm_vmware, :miq_server => server)
-    @compliance1 = FactoryGirl.build(:compliance)
-    @compliance2 = FactoryGirl.build(:compliance)
+    server  = FactoryBot.build(:miq_server, :id => 0)
+    @record = FactoryBot.build(:vm_vmware, :miq_server => server)
+    @compliance1 = FactoryBot.build(:compliance)
+    @compliance2 = FactoryBot.build(:compliance)
     allow(self).to receive(:role_allows?).and_return(true)
   end
 

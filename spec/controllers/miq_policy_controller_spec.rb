@@ -161,7 +161,7 @@ describe MiqPolicyController do
 
     context 'when profile param is valid' do
       it 'renders explorer w/o flash and assigns to x_node' do
-        profile = FactoryGirl.create(:miq_policy_set)
+        profile = FactoryBot.create(:miq_policy_set)
         allow(controller).to receive(:get_node_info).and_return(true)
         post :explorer, :params => { :profile => profile.id }
         expect(response).to render_template('explorer')

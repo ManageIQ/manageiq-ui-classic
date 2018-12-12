@@ -1,6 +1,6 @@
 describe EmsInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
   context "#button" do
     before do
       stub_user(:features => :all)
@@ -10,7 +10,7 @@ describe EmsInfraController do
     end
 
     it "EmsInfra check compliance is called when Compliance is pressed" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
+      ems_infra = FactoryBot.create(:ems_vmware)
       expect(controller).to receive(:check_compliance).and_call_original
       post :button, :params => {:pressed => "ems_infra_check_compliance", :format => :js, :id => ems_infra.id}
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -30,8 +30,8 @@ describe EmsInfraController do
     end
 
     it "when VM Migrate is pressed" do
-      ems = FactoryGirl.create(:ems_vmware)
-      vm = FactoryGirl.create(:vm_vmware, :ext_management_system => ems)
+      ems = FactoryBot.create(:ems_vmware)
+      vm = FactoryBot.create(:vm_vmware, :ext_management_system => ems)
       post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => 1, :id => ems.id }
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(response.body).to include("/miq_request/prov_edit?")
@@ -69,8 +69,8 @@ describe EmsInfraController do
     end
 
     it "should set correct VM for right-sizing when on list of VM's of another CI" do
-      ems_infra = FactoryGirl.create(:ext_management_system)
-      vm = FactoryGirl.create(:vm_vmware, :ext_management_system => ems_infra)
+      ems_infra = FactoryBot.create(:ext_management_system)
+      vm = FactoryBot.create(:vm_vmware, :ext_management_system => ems_infra)
       allow(controller).to receive(:find_records_with_rbac) { [vm] }
       post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -78,14 +78,14 @@ describe EmsInfraController do
     end
 
     it "when Host Analyze then Check Compliance is pressed" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
+      ems_infra = FactoryBot.create(:ems_vmware)
       expect(controller).to receive(:analyze_check_compliance_hosts)
       post :button, :params => {:pressed => "host_analyze_check_compliance", :id => ems_infra.id, :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when vm_transform_mass is pressed" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
+      ems_infra = FactoryBot.create(:ems_vmware)
       expect(controller).to receive(:vm_transform_mass)
       post :button, :params => {:pressed => "vm_transform_mass", :id => ems_infra.id, :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -95,7 +95,7 @@ describe EmsInfraController do
   describe "#create" do
     before do
       # USE: stub_user :features => %w(ems_infra_new ems_infra_edit)
-      user = FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      user = FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
 
       allow(user).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
@@ -119,7 +119,7 @@ describe EmsInfraController do
       stack_parameters = [p1, p2]
       @orchestration_stack = instance_double("mock stack", :id => 1, :parameters => stack_parameters, :update_ready? => true)
       allow(@ems).to receive(:direct_orchestration_stacks).and_return([@orchestration_stack])
-      @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
+      @orchestration_stack_parameter_compute = FactoryBot.create(:orchestration_stack_parameter_openstack_infra_compute)
     end
 
     it "when values are not changed" do
@@ -178,7 +178,7 @@ describe EmsInfraController do
       allow(@ems).to receive(:direct_orchestration_stacks).and_return([@orchestration_stack])
       allow(@ems).to receive(:orchestration_stacks).and_return([@orchestration_stack])
       allow(controller).to receive(:find_record_with_rbac).and_return(@orchestration_stack)
-      @orchestration_stack_parameter_compute = FactoryGirl.create(:orchestration_stack_parameter_openstack_infra_compute)
+      @orchestration_stack_parameter_compute = FactoryBot.create(:orchestration_stack_parameter_openstack_infra_compute)
     end
 
     it "when no compute hosts are selected" do
@@ -211,7 +211,7 @@ describe EmsInfraController do
     end
 
     it "when no orchestration stack is available" do
-      @ems = FactoryGirl.create(:ems_openstack_infra)
+      @ems = FactoryBot.create(:ems_openstack_infra)
       allow(controller).to receive(:get_infra_provider).and_return(@ems)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "", :orchestration_stack_id => nil}
       expect(controller.send(:flash_errors?)).to be_truthy
@@ -223,7 +223,7 @@ describe EmsInfraController do
   describe "#register_and_configure_nodes" do
     before do
       stub_user(:features => :all)
-      @ems = FactoryGirl.create(:ems_openstack_infra_with_stack_and_compute_nodes)
+      @ems = FactoryBot.create(:ems_openstack_infra_with_stack_and_compute_nodes)
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager)
         .to receive(:openstack_handle).and_return([])
       allow_any_instance_of(EmsInfraController)
@@ -273,8 +273,8 @@ describe EmsInfraController do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
-      @ems = FactoryGirl.create(:ems_vmware)
+      login_as FactoryBot.create(:user, :features => "none")
+      @ems = FactoryBot.create(:ems_vmware)
     end
 
     let(:url_params) { {} }
@@ -283,12 +283,12 @@ describe EmsInfraController do
 
     context "display=hosts" do
       it 'renders custom buttons for hosts accessed from relationship screen' do
-        custom_button = FactoryGirl.create(
+        custom_button = FactoryBot.create(
           :custom_button, :name => "My Button", :applies_to_class => "Host",
           :visibility => {:roles => ["_ALL_"]},
           :options => {:display => true, :open_url => false, :display_for => "both"}
         )
-        custom_button_set = FactoryGirl.create(
+        custom_button_set = FactoryBot.create(
           :custom_button_set, :set_data => {
             :applies_to_class => "Host", :button_order => [custom_button.id]
           }
@@ -336,7 +336,7 @@ describe EmsInfraController do
     end
 
     it "shows associated datastores" do
-      @datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      @datastore = FactoryBot.create(:storage, :name => 'storage_name')
       @datastore.parent = @ems
       controller.instance_variable_set(:@breadcrumbs, [])
       get :show, :params => {:id => @ems.id, :display => 'storages'}
@@ -350,7 +350,7 @@ describe EmsInfraController do
 
     it " can tag associated datastores" do
       stub_user(:features => :all)
-      datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      datastore = FactoryBot.create(:storage, :name => 'storage_name')
       datastore.parent = @ems
       controller.instance_variable_set(:@_orig_action, "x_history")
       get :show, :params => {:id => @ems.id, :display => 'storages'}
@@ -384,7 +384,7 @@ describe EmsInfraController do
   describe "#show_list" do
     before do
       stub_user(:features => :all)
-      FactoryGirl.create(:ems_vmware)
+      FactoryBot.create(:ems_vmware)
       get :show_list
     end
     it { expect(response.status).to eq(200) }
@@ -397,7 +397,7 @@ describe EmsInfraController do
     end
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Infrastructure Providers -> (Summary)' breadcrumb path" do
-        ems = FactoryGirl.create(:ems_vmware)
+        ems = FactoryBot.create(:ems_vmware)
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_infra/#{ems.id}"}])
@@ -407,7 +407,7 @@ describe EmsInfraController do
 
   describe "#build_credentials" do
     before do
-      @ems = FactoryGirl.create(:ems_openstack_infra)
+      @ems = FactoryBot.create(:ems_openstack_infra)
     end
     context "#build_credentials only contains credentials that it supports and has a username for in params" do
       let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
@@ -452,7 +452,7 @@ describe EmsInfraController do
 
   describe "SCVMM - create, update, validate, cancel" do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -542,7 +542,7 @@ describe EmsInfraController do
 
   describe "Openstack - create, update" do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -623,7 +623,7 @@ describe EmsInfraController do
 
   describe "Redhat - create, update" do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
       allow_any_instance_of(ManageIQ::Providers::Redhat::InfraManager)
         .to receive(:supported_api_versions).and_return([3, 4])
     end
@@ -726,7 +726,7 @@ describe EmsInfraController do
 
   describe "Kubevirt - update" do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views
@@ -801,7 +801,7 @@ describe EmsInfraController do
 
   describe "VMWare - create, update" do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      login_as FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
     end
 
     render_views

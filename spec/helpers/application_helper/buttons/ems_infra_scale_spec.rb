@@ -1,5 +1,5 @@
 describe ApplicationHelper::Button::EmsInfraScale do
-  let(:record) { FactoryGirl.create(:ems_openstack_infra) }
+  let(:record) { FactoryBot.create(:ems_openstack_infra) }
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#visible?' do
@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::EmsInfraScale do
         it { expect(subject).to be_falsey }
       end
       context 'and orchestration stack is not empty' do
-        let(:record) { FactoryGirl.create(:ems_openstack_infra_with_stack) }
+        let(:record) { FactoryBot.create(:ems_openstack_infra_with_stack) }
         it { expect(subject).to be_truthy }
       end
     end

@@ -1,17 +1,17 @@
 describe ApplicationController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.create(:zone) }
+  let(:zone) { FactoryBot.create(:zone) }
 
   before do
     EvmSpecHelper.local_miq_server
-    login_as FactoryGirl.create(:user, :features => "everything")
+    login_as FactoryBot.create(:user, :features => "everything")
     allow(controller).to receive(:role_allows?).and_return(true)
   end
 
   describe "#generic_button_operation" do
-    let(:vm1) { FactoryGirl.create(:vm_redhat) }
-    let(:vm2) { FactoryGirl.create(:vm_microsoft) }
-    let(:vm3) { FactoryGirl.create(:vm_vmware) }
+    let(:vm1) { FactoryBot.create(:vm_redhat) }
+    let(:vm2) { FactoryBot.create(:vm_microsoft) }
+    let(:vm3) { FactoryBot.create(:vm_vmware) }
     let(:controller_name) { VmOrTemplate }
 
     context 'record does not support the action' do
@@ -35,7 +35,7 @@ describe ApplicationController do
   end
 
   describe "action_to_feature" do
-    let(:record) { FactoryGirl.create(:vm_redhat) }
+    let(:record) { FactoryBot.create(:vm_redhat) }
 
     context 'the UI action is also a queryable feature' do
       before do
@@ -105,11 +105,11 @@ describe ApplicationController do
     end
 
     let :container1 do
-      FactoryGirl.create(:cloud_object_store_container)
+      FactoryBot.create(:cloud_object_store_container)
     end
 
     let :container2 do
-      FactoryGirl.create(:cloud_object_store_container)
+      FactoryBot.create(:cloud_object_store_container)
     end
 
     context "from list view" do
@@ -184,7 +184,7 @@ describe ApplicationController do
       end
 
       let :container do
-        FactoryGirl.create(:cloud_object_store_container)
+        FactoryBot.create(:cloud_object_store_container)
       end
 
       it "get_rec_cls" do
@@ -250,11 +250,11 @@ describe ApplicationController do
     end
 
     let :object1 do
-      FactoryGirl.create(:cloud_object_store_object)
+      FactoryBot.create(:cloud_object_store_object)
     end
 
     let :object2 do
-      FactoryGirl.create(:cloud_object_store_object)
+      FactoryBot.create(:cloud_object_store_object)
     end
 
     context "from list view" do
@@ -335,7 +335,7 @@ describe ApplicationController do
       end
 
       let :object do
-        FactoryGirl.create(:cloud_object_store_object)
+        FactoryBot.create(:cloud_object_store_object)
       end
 
       it "get_rec_cls" do
@@ -398,7 +398,7 @@ describe ApplicationController do
 
   context "Delete object store object" do
     let :object1 do
-      FactoryGirl.create(:cloud_object_store_object)
+      FactoryBot.create(:cloud_object_store_object)
     end
 
     before do
@@ -433,11 +433,11 @@ describe ApplicationController do
     end
 
     let :container1 do
-      FactoryGirl.create(:cloud_object_store_container)
+      FactoryBot.create(:cloud_object_store_container)
     end
 
     let :container2 do
-      FactoryGirl.create(:cloud_object_store_container)
+      FactoryBot.create(:cloud_object_store_container)
     end
 
     context "from list view" do
@@ -518,7 +518,7 @@ describe ApplicationController do
       end
 
       let :container do
-        FactoryGirl.create(:cloud_object_store_container)
+        FactoryBot.create(:cloud_object_store_container)
       end
 
       it "get_rec_cls" do
@@ -598,7 +598,7 @@ describe ApplicationController do
   end
 
   it "Certain actions should not be allowed for a MiqTemplate record" do
-    template = FactoryGirl.create(:template_vmware)
+    template = FactoryBot.create(:template_vmware)
     controller.instance_variable_set(:@_params, :id => template.id)
     actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
@@ -611,8 +611,8 @@ describe ApplicationController do
 
   it "Certain actions should be allowed only for a VM record" do
     feature = MiqProductFeature.find_all_by_identifier(["everything"])
-    login_as FactoryGirl.create(:user, :features => feature)
-    vm = FactoryGirl.create(:vm_vmware)
+    login_as FactoryBot.create(:user, :features => feature)
+    vm = FactoryBot.create(:vm_vmware)
     controller.instance_variable_set(:@_params, :id => vm.id)
     actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
@@ -624,7 +624,7 @@ describe ApplicationController do
 
   context "Verify the reconfigurable flag for VMs" do
     it "Reconfigure VM action should be allowed only for a VM marked as reconfigurable" do
-      vm = FactoryGirl.create(:vm_vmware)
+      vm = FactoryBot.create(:vm_vmware)
       controller.instance_variable_set(:@_params, :id => vm.id)
       record = controller.send(:get_record, "vm")
       action = :vm_reconfigure
@@ -636,7 +636,7 @@ describe ApplicationController do
       end
     end
     it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
-      vm = FactoryGirl.create(:vm_microsoft)
+      vm = FactoryBot.create(:vm_microsoft)
       controller.instance_variable_set(:@_params, :id => vm.id)
       record = controller.send(:get_record, "vm")
       action = :vm_reconfigure
@@ -650,7 +650,7 @@ describe ApplicationController do
   end
 
   describe "#supports_reconfigure_disks?" do
-    let(:vm) { FactoryGirl.create(:vm_redhat) }
+    let(:vm) { FactoryBot.create(:vm_redhat) }
 
     context "when a single is vm selected" do
       let(:supports_reconfigure_disks) { true }
@@ -673,7 +673,7 @@ describe ApplicationController do
     end
 
     context "when multiple vms selected" do
-      let(:vm1) { FactoryGirl.create(:vm_redhat) }
+      let(:vm1) { FactoryBot.create(:vm_redhat) }
       it "disables reconfigure disks" do
         controller.instance_variable_set(:@reconfigitems, [vm, vm1])
         expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
@@ -722,13 +722,13 @@ describe ApplicationController do
 
   context "#process_elements" do
     it "shows passed in display name in flash message" do
-      pxe = FactoryGirl.create(:pxe_server)
+      pxe = FactoryBot.create(:pxe_server)
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue', 'Refresh Relationships')
       expect(assigns(:flash_array).first[:message]).to include("Refresh Relationships successfully initiated")
     end
 
     it "shows task name in flash message when display name is not passed in" do
-      pxe = FactoryGirl.create(:pxe_server)
+      pxe = FactoryBot.create(:pxe_server)
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue')
       expect(assigns(:flash_array).first[:message])
         .to include("synchronize_advertised_images_queue successfully initiated")
@@ -743,7 +743,7 @@ describe ApplicationController do
     end
 
     it "Verify @record is set for passed in ID" do
-      ems = FactoryGirl.create(:ext_management_system)
+      ems = FactoryBot.create(:ext_management_system)
       record = controller.send(:identify_record, ems.id, ExtManagementSystem)
       expect(record).to be_a_kind_of(ExtManagementSystem)
     end
@@ -751,7 +751,7 @@ describe ApplicationController do
 
   context "#get_record" do
     it "use passed in db to set class for identify_record call" do
-      host = FactoryGirl.create(:host)
+      host = FactoryBot.create(:host)
       controller.instance_variable_set(:@_params, :id => host.id)
       record = controller.send(:get_record, "host")
       expect(record).to be_a_kind_of(Host)
@@ -759,31 +759,31 @@ describe ApplicationController do
   end
 
   describe "#build_ownership_info" do
-    let(:child_role)                     { FactoryGirl.create(:miq_user_role, :name => "Role_1") }
-    let(:grand_child_tenant_role)        { FactoryGirl.create(:miq_user_role, :name => "Role_2") }
-    let(:great_grand_child_tenant_role)  { FactoryGirl.create(:miq_user_role, :name => "Role_3") }
+    let(:child_role)                     { FactoryBot.create(:miq_user_role, :name => "Role_1") }
+    let(:grand_child_tenant_role)        { FactoryBot.create(:miq_user_role, :name => "Role_2") }
+    let(:great_grand_child_tenant_role)  { FactoryBot.create(:miq_user_role, :name => "Role_3") }
 
-    let(:child_tenant)             { FactoryGirl.create(:tenant) }
-    let(:grand_child_tenant)       { FactoryGirl.create(:tenant, :parent => child_tenant) }
-    let(:great_grand_child_tenant) { FactoryGirl.create(:tenant, :parent => grand_child_tenant) }
+    let(:child_tenant)             { FactoryBot.create(:tenant) }
+    let(:grand_child_tenant)       { FactoryBot.create(:tenant, :parent => child_tenant) }
+    let(:great_grand_child_tenant) { FactoryBot.create(:tenant, :parent => grand_child_tenant) }
 
     let(:child_group) do
-      FactoryGirl.create(:miq_group, :description => "Child group", :role => child_role, :tenant => child_tenant)
+      FactoryBot.create(:miq_group, :description => "Child group", :role => child_role, :tenant => child_tenant)
     end
 
     let(:grand_child_group) do
-      FactoryGirl.create(:miq_group, :description => "Grand child group", :role => grand_child_tenant_role,
+      FactoryBot.create(:miq_group, :description => "Grand child group", :role => grand_child_tenant_role,
                                      :tenant => grand_child_tenant)
     end
 
     let(:great_grand_child_group) do
-      FactoryGirl.create(:miq_group, :description => "Great Grand Child group", :role => great_grand_child_tenant_role,
+      FactoryBot.create(:miq_group, :description => "Great Grand Child group", :role => great_grand_child_tenant_role,
                                      :tenant => great_grand_child_tenant)
     end
-    let(:admin_user) { FactoryGirl.create(:user_admin) }
+    let(:admin_user) { FactoryBot.create(:user_admin) }
 
     it "lists all non-tenant groups when (admin user is logged)" do
-      @vm_or_template = FactoryGirl.create(:vm_or_template)
+      @vm_or_template = FactoryBot.create(:vm_or_template)
       @ownership_items = [@vm_or_template.id]
       login_as(admin_user)
       controller.instance_variable_set(:@_params, :controller => 'vm_or_template')
@@ -798,15 +798,15 @@ end
 
 describe HostController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.create(:zone) }
+  let(:zone) { FactoryBot.create(:zone) }
 
   context "#show_association" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @host = FactoryGirl.create(:host)
-      @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
-      @datastore = FactoryGirl.create(:storage, :name => 'storage_name')
+      @host = FactoryBot.create(:host)
+      @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host_id => @host.id)
+      @datastore = FactoryBot.create(:storage, :name => 'storage_name')
       @datastore.parent = @host
     end
 
@@ -848,9 +848,9 @@ describe HostController do
 
   context "#process_objects" do
     it "returns array of object ids " do
-      vm1 = FactoryGirl.create(:vm_vmware)
-      vm2 = FactoryGirl.create(:vm_vmware)
-      vm3 = FactoryGirl.create(:vm_vmware)
+      vm1 = FactoryBot.create(:vm_vmware)
+      vm2 = FactoryBot.create(:vm_vmware)
+      vm3 = FactoryBot.create(:vm_vmware)
       vms = [vm1.id, vm2.id, vm3.id]
       controller.send(:process_objects, vms, 'refresh_ems', 'Refresh Provider')
       flash_messages = assigns(:flash_array)
@@ -860,8 +860,8 @@ describe HostController do
 
   context "#process_hosts" do
     before do
-      @host1 = FactoryGirl.create(:host)
-      @host2 = FactoryGirl.create(:host)
+      @host1 = FactoryBot.create(:host)
+      @host2 = FactoryBot.create(:host)
       allow(controller).to receive(:filter_ids_in_region).and_return([[@host1, @host2], nil])
     end
 
@@ -889,8 +889,8 @@ describe HostController do
     end
 
     it "when the vm_or_template supports scan,  returns false" do
-      vm1 =  FactoryGirl.create(:vm_microsoft)
-      vm2 =  FactoryGirl.create(:vm_vmware)
+      vm1 =  FactoryBot.create(:vm_microsoft)
+      vm2 =  FactoryBot.create(:vm_vmware)
       controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm1.id}, #{vm2.id}")
       controller.send(:generic_button_operation,
                       'scan',
@@ -901,9 +901,9 @@ describe HostController do
     end
 
     it "when the vm_or_template supports scan,  returns true" do
-      vm = FactoryGirl.create(:vm_vmware,
-                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage))
+      vm = FactoryBot.create(:vm_vmware,
+                              :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+                              :storage               => FactoryBot.create(:storage))
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
       process_proc = controller.send(:vm_button_action)
       expect(process_proc).to receive(:call)
@@ -917,22 +917,22 @@ end
 
 describe ServiceController do
   context "#vm_button_operation" do
-    let(:user) { FactoryGirl.create(:user_admin) }
+    let(:user) { FactoryBot.create(:user_admin) }
 
     before do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
-      allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
+      allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
       controller.instance_variable_set(:@lastaction, "show_list")
       login_as user
       allow(user).to receive(:role_allows?).and_return(true)
     end
 
     it "should continue to retire a service and does not render flash message 'xxx does not apply xxx' " do
-      service = FactoryGirl.create(:service)
-      template = FactoryGirl.create(:template,
-                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                    :storage               => FactoryGirl.create(:storage))
+      service = FactoryBot.create(:service)
+      template = FactoryBot.create(:template,
+                                    :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+                                    :storage               => FactoryBot.create(:storage))
       service.update_attribute(:id, template.id)
       service.reload
       controller.instance_variable_set(:@_params, :miq_grid_checks => service.id.to_s)
@@ -957,9 +957,9 @@ describe MiqTemplateController do
     it "should continue to set ownership for a template" do
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:drop_breadcrumb)
-      template = FactoryGirl.create(:template,
-                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                    :storage               => FactoryGirl.create(:storage))
+      template = FactoryBot.create(:template,
+                                    :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+                                    :storage               => FactoryBot.create(:storage))
       controller.instance_variable_set(:@_params,
                                        :miq_grid_checks => template.id.to_s,
                                        :pressed         => 'miq_template_set_ownership')
@@ -974,12 +974,12 @@ end
 
 describe VmOrTemplateController do
   context "#vm_button_operation" do
-    let(:user) { FactoryGirl.create(:user_admin) }
+    let(:user) { FactoryBot.create(:user_admin) }
 
     before do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
-      allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
+      allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
       allow(controller).to receive(:render)
       controller.instance_variable_set(:@lastaction, "show_list")
       login_as user
@@ -987,15 +987,15 @@ describe VmOrTemplateController do
     end
 
     it "should render flash message when trying to retire a template" do
-      vm = FactoryGirl.create(
+      vm = FactoryBot.create(
         :vm_vmware,
-        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-        :storage               => FactoryGirl.create(:storage)
+        :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+        :storage               => FactoryBot.create(:storage)
       )
-      template = FactoryGirl.create(
+      template = FactoryBot.create(
         :template,
-        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-        :storage               => FactoryGirl.create(:storage)
+        :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+        :storage               => FactoryBot.create(:storage)
       )
       controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
       process_proc = controller.send(:vm_button_action)
@@ -1011,10 +1011,10 @@ describe VmOrTemplateController do
     end
 
     it "should continue to retire a vm" do
-      vm = FactoryGirl.create(
+      vm = FactoryBot.create(
         :vm_vmware,
-        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-        :storage               => FactoryGirl.create(:storage)
+        :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+        :storage               => FactoryBot.create(:storage)
       )
 
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
@@ -1030,12 +1030,12 @@ end
 
 describe OrchestrationStackController do
   context "#orchestration_stack_delete" do
-    let(:orchestration_stack) { FactoryGirl.create(:orchestration_stack_cloud) }
-    let(:orchestration_stack_deleted) { FactoryGirl.create(:orchestration_stack_cloud) }
+    let(:orchestration_stack) { FactoryBot.create(:orchestration_stack_cloud) }
+    let(:orchestration_stack_deleted) { FactoryBot.create(:orchestration_stack_cloud) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user_admin)
+      login_as FactoryBot.create(:user_admin)
       controller.instance_variable_set(:@lastaction, "show_list")
       allow(controller).to receive(:role_allows?).and_return(true)
     end
@@ -1064,7 +1064,7 @@ end
 
 describe EmsCloudController do
   describe "#delete_flavor" do
-    let!(:flavor) { FactoryGirl.create(:flavor) }
+    let!(:flavor) { FactoryBot.create(:flavor) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       stub_user(:features => :all)

@@ -1,6 +1,6 @@
 describe TreeNode::DialogField do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:dialog_field) }
+  let(:object) { FactoryBot.create(:dialog_field) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
   include_examples 'TreeNode::Node#icon', 'ff ff-field'

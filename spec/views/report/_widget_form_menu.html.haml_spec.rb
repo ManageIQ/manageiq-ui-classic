@@ -1,6 +1,6 @@
 describe "report/_widget_form_menu.html.haml" do
   before do
-    w = FactoryGirl.create(:miq_widget)
+    w = FactoryBot.create(:miq_widget)
     assign(:widget, w)
     assign(:edit, :avail_shortcuts => %w(xx yy), :read_only => 0, :new => {:shortcuts => %w(id desc)})
   end

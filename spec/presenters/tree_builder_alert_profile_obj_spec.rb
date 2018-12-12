@@ -1,22 +1,22 @@
 describe TreeBuilderAlertProfileObj do
   before do
     role = MiqUserRole.find_by(:name => "EvmRole-operator")
-    group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
+    group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
+    login_as FactoryBot.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
-  let(:tag1a) { FactoryGirl.create(:classification, :name => 'tag1a') }
-  let(:tag2a) { FactoryGirl.create(:classification, :name => 'tag2a') }
-  let(:tag3a) { FactoryGirl.create(:classification, :name => 'tag3a') }
+  let(:tag1a) { FactoryBot.create(:classification, :name => 'tag1a') }
+  let(:tag2a) { FactoryBot.create(:classification, :name => 'tag2a') }
+  let(:tag3a) { FactoryBot.create(:classification, :name => 'tag3a') }
   let(:folder1a) do
-    f1 = FactoryGirl.create(:classification, :name => 'folder1a', :show => true)
+    f1 = FactoryBot.create(:classification, :name => 'folder1a', :show => true)
     f1.entries.push(tag1a)
     f1.entries.push(tag2a)
     f1.entries.push(tag3a)
     f1
   end
-  let!(:tag1b) { FactoryGirl.create(:tenant, :name => 'tag1b') }
-  let!(:tag2b) { FactoryGirl.create(:tenant, :name => 'tag2b') }
-  let!(:tag3b) { FactoryGirl.create(:tenant, :name => 'tag3b') }
+  let!(:tag1b) { FactoryBot.create(:tenant, :name => 'tag1b') }
+  let!(:tag2b) { FactoryBot.create(:tenant, :name => 'tag2b') }
+  let!(:tag3b) { FactoryBot.create(:tenant, :name => 'tag3b') }
 
   context 'classification tree' do
     subject do

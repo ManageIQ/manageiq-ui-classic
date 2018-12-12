@@ -1,8 +1,8 @@
 describe Mixins::EmsCommonAngular do
   context '.retrieve_event_stream_selection' do
     let(:network_controller) { EmsNetworkController.new }
-    let(:ems_nuage) { FactoryGirl.create(:ems_nuage_network_with_authentication) }
-    let(:ems_openstack) { FactoryGirl.create(:ems_openstack_with_authentication) }
+    let(:ems_nuage) { FactoryBot.create(:ems_nuage_network_with_authentication) }
+    let(:ems_openstack) { FactoryBot.create(:ems_openstack_with_authentication) }
 
     it 'when amqp' do
       # remove default endpoints
@@ -226,7 +226,7 @@ describe Mixins::EmsCommonAngular do
           :default_password => "abc",
           :default_url      => "http://abc.test/mypath"
         }
-        @ems = FactoryGirl.create(:ems_amazon)
+        @ems = FactoryBot.create(:ems_amazon)
         allow(@ems).to receive(:to_s).and_return('ManageIQ::Providers::Amazon::CloudManager')
       end
 

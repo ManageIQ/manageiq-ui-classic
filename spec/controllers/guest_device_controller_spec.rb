@@ -2,18 +2,18 @@ describe GuestDeviceController do
   render_views
 
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
   before do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryGirl.create(:user)
-    @guest_device = FactoryGirl.create(:guest_device, :id => 1)
+    login_as FactoryBot.create(:user)
+    @guest_device = FactoryBot.create(:guest_device, :id => 1)
   end
 
   describe "#show_list" do
     before do
-      FactoryGirl.create(:guest_device)
+      FactoryBot.create(:guest_device)
     end
 
     subject { get :show_list }

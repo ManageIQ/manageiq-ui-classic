@@ -4,7 +4,7 @@ describe ReportController do
     stub_user(:features => :all)
   end
   describe "#widget_edit" do
-    let(:miq_schedule) { FactoryGirl.build(:miq_schedule, :run_at => {}, :sched_action => {}) }
+    let(:miq_schedule) { FactoryBot.build(:miq_schedule, :run_at => {}, :sched_action => {}) }
     let(:new_widget) { controller.instance_variable_get(:@widget) }
 
     # Configuration Management/Virtual Machines/VMs with Free Space > 50% by Department report
@@ -112,7 +112,7 @@ describe ReportController do
         let(:default_row_count_value) { 5 }
 
         it 'can change type from external to internal' do
-          external_widget = FactoryGirl.create(:miq_widget, :content_type => 'rss')
+          external_widget = FactoryBot.create(:miq_widget, :content_type => 'rss')
           controller.instance_variable_set(:@edit, :schedule  => miq_schedule,
                                                    :widget_id => external_widget.id,
                                                    :new       => {})

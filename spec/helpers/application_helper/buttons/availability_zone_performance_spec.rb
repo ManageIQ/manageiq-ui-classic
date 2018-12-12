@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::AvailabilityZonePerformance do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do

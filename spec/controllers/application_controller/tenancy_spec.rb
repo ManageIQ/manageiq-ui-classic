@@ -12,8 +12,8 @@ describe DashboardController do
     end
 
     it "uses the user's tenant" do
-      tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
-      user = FactoryGirl.create(:user_with_group, :tenant => tenant)
+      tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
+      user = FactoryBot.create(:user_with_group, :tenant => tenant)
       login_as user
       get :login
       expect(controller.send(:current_tenant)).to eq(tenant)

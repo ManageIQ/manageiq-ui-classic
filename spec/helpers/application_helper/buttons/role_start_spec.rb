@@ -8,27 +8,27 @@ describe ApplicationHelper::Button::RoleStart do
   describe '#visible?' do
     context 'when record is assigned server role and miq server is started' do
       let(:record) do
-        FactoryGirl.create(:assigned_server_role,
-                           :miq_server => FactoryGirl.create(:miq_server))
+        FactoryBot.create(:assigned_server_role,
+                           :miq_server => FactoryBot.create(:miq_server))
       end
       before { allow(record.miq_server).to receive(:started?).and_return(true) }
       it { expect(subject.visible?).to be_truthy }
     end
 
     context 'when record is server role' do
-      let(:record) { FactoryGirl.create(:server_role, :name => 'server_role') }
+      let(:record) { FactoryBot.create(:server_role, :name => 'server_role') }
       it { expect(subject.visible?).to be_falsey }
     end
 
     context 'when record is miq server' do
-      let(:record) { FactoryGirl.create(:miq_server) }
+      let(:record) { FactoryBot.create(:miq_server) }
       it { expect(subject.visible?).to be_falsey }
     end
   end
 
   describe '#disabled?' do
     context 'when record is assigned server role' do
-      let(:record) { FactoryGirl.create(:assigned_server_role) }
+      let(:record) { FactoryBot.create(:assigned_server_role) }
       before { allow(record).to receive(:active?).and_return(true) }
       before { subject.calculate_properties }
       it { expect(subject.disabled?).to be_truthy }
@@ -37,9 +37,9 @@ describe ApplicationHelper::Button::RoleStart do
 
     context 'when record is inactive assigned server role' do
       let(:record) do
-        FactoryGirl.create(:assigned_server_role,
+        FactoryBot.create(:assigned_server_role,
                            :active     => false,
-                           :miq_server => FactoryGirl.create(:miq_server))
+                           :miq_server => FactoryBot.create(:miq_server))
       end
       before { allow(record.miq_server).to receive(:started?).and_return(false) }
       before { subject.calculate_properties }
@@ -49,10 +49,10 @@ describe ApplicationHelper::Button::RoleStart do
 
     context 'when record is inactive assigned server role' do
       let(:record) do
-        FactoryGirl.create(:assigned_server_role,
+        FactoryBot.create(:assigned_server_role,
                            :active      => false,
-                           :miq_server  => FactoryGirl.create(:miq_server),
-                           :server_role => FactoryGirl.create(:server_role,
+                           :miq_server  => FactoryBot.create(:miq_server),
+                           :server_role => FactoryBot.create(:server_role,
                                                               :name => "server_role"))
       end
       before { allow(record.server_role).to receive(:regional_role?).and_return(true) }

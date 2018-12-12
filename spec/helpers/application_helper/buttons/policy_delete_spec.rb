@@ -12,7 +12,7 @@ describe ApplicationHelper::Button::PolicyDelete do
     let(:view_context) { setup_view_context_with_sandbox({}) }
 
     before do
-      @record = FactoryGirl.create(:miq_policy)
+      @record = FactoryBot.create(:miq_policy)
     end
 
     it "that supports policy_copy will not be skipped" do

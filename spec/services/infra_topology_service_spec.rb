@@ -4,11 +4,11 @@ describe InfraTopologyService do
   describe "#build_topology" do
     subject { infra_topology_service.build_topology }
 
-    let(:ems) { FactoryGirl.create(:ems_openstack_infra) }
+    let(:ems) { FactoryBot.create(:ems_openstack_infra) }
 
     before do
-      @cluster = FactoryGirl.create(:ems_cluster_openstack, :ext_management_system => ems)
-      @host = FactoryGirl.create(:host_openstack_infra, :ems_cluster => @cluster, :ext_management_system => ems)
+      @cluster = FactoryBot.create(:ems_cluster_openstack, :ext_management_system => ems)
+      @host = FactoryBot.create(:host_openstack_infra, :ems_cluster => @cluster, :ext_management_system => ems)
     end
 
     it "topology contains only the expected keys" do
@@ -16,7 +16,7 @@ describe InfraTopologyService do
     end
 
     it "provider has unknown status when no authentication exists" do
-      ems = FactoryGirl.create(:ems_openstack_infra)
+      ems = FactoryBot.create(:ems_openstack_infra)
 
       allow(infra_topology_service).to receive(:retrieve_providers)
         .with(anything, ManageIQ::Providers::InfraManager)

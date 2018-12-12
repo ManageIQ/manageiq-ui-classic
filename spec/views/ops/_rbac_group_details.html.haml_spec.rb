@@ -1,17 +1,17 @@
 describe 'ops/_rbac_group_details.html.haml' do
   context 'add new group' do
     before do
-      miq_server = FactoryGirl.create(:miq_server)
+      miq_server = FactoryBot.create(:miq_server)
       edit = {:new                 => {:description => ''},
               :key                 => "settings_authentication_edit__#{miq_server.id}",
               :ldap_groups_by_user => [],
               :roles               => %w(fred wilma),
               :projects_tenants    => [["projects", %w(foo bar)]]}
       view.instance_variable_set(:@edit, edit)
-      @group = FactoryGirl.create(:miq_group, :description => 'flintstones')
+      @group = FactoryBot.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
       allow(view).to receive(:session).and_return(:assigned_filters => [])
-      FactoryGirl.create(:classification, :name => 'folder_selected', :show => true)
+      FactoryBot.create(:classification, :name => 'folder_selected', :show => true)
 
       sb = {
         :trees                 => {},
@@ -26,7 +26,7 @@ describe 'ops/_rbac_group_details.html.haml' do
                                        :edit    => {},
                                        :filters => {},
                                        :group   => @group)
-      @ems_azure_network = FactoryGirl.create(:ems_azure_network)
+      @ems_azure_network = FactoryBot.create(:ems_azure_network)
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               :hac,
                                               sb,

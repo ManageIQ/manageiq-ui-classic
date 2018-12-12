@@ -1,11 +1,11 @@
 describe AnsiblePlaybookController do
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryGirl.create(:user_admin)
+    login_as FactoryBot.create(:user_admin)
   end
 
   describe "#show" do
-    let(:playbook) { FactoryGirl.create(:embedded_playbook) }
+    let(:playbook) { FactoryBot.create(:embedded_playbook) }
     subject { get :show, :params => {:id => playbook.id} }
     render_views
 

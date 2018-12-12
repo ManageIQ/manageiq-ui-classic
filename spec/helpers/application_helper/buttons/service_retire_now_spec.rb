@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::ServiceRetireNow do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:service, :retired => retired) }
+  let(:record) { FactoryBot.create(:service, :retired => retired) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#calculate_properties' do

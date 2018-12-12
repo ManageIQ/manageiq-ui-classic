@@ -2,21 +2,21 @@ describe TreeBuilderSmartproxyAffinity do
   context 'TreeBuilderSmartproxyAffinity' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "SmartProxy Affinity Group")
-      login_as FactoryGirl.create(:user, :userid => 'smartproxy_affinity_wilma', :miq_groups => [@group])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "SmartProxy Affinity Group")
+      login_as FactoryBot.create(:user, :userid => 'smartproxy_affinity_wilma', :miq_groups => [@group])
 
-      @selected_zone = FactoryGirl.create(:zone, :name => 'zone1')
+      @selected_zone = FactoryBot.create(:zone, :name => 'zone1')
 
-      @storage1 = FactoryGirl.create(:storage)
-      @storage2 = FactoryGirl.create(:storage)
+      @storage1 = FactoryBot.create(:storage)
+      @storage2 = FactoryBot.create(:storage)
 
-      @host1 = FactoryGirl.create(:host, :name => 'host1', :storages => [@storage1])
-      @host2 = FactoryGirl.create(:host, :name => 'host2', :storages => [@storage2])
+      @host1 = FactoryBot.create(:host, :name => 'host1', :storages => [@storage1])
+      @host2 = FactoryBot.create(:host, :name => 'host2', :storages => [@storage2])
 
-      @ems = FactoryGirl.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @selected_zone)
+      @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @selected_zone)
 
-      @svr1 = FactoryGirl.create(:miq_server, :name => 'svr1', :zone => @selected_zone)
-      @svr2 = FactoryGirl.create(:miq_server, :name => 'svr2', :zone => @selected_zone)
+      @svr1 = FactoryBot.create(:miq_server, :name => 'svr1', :zone => @selected_zone)
+      @svr2 = FactoryBot.create(:miq_server, :name => 'svr2', :zone => @selected_zone)
 
       @svr1.vm_scan_host_affinity = [@host1]
       @svr2.vm_scan_host_affinity = [@host2]

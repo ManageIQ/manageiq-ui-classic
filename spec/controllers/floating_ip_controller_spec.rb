@@ -5,13 +5,13 @@ describe FloatingIpController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ct = FactoryGirl.create(:floating_ip)
+      @ct = FactoryBot.create(:floating_ip)
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
@@ -31,8 +31,8 @@ describe FloatingIpController do
     end
 
     describe "#delete_floating_ips" do
-      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-      let!(:floating_ip) { FactoryGirl.create(:floating_ip) }
+      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+      let!(:floating_ip) { FactoryBot.create(:floating_ip) }
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         login_as admin_user
@@ -70,8 +70,8 @@ describe FloatingIpController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @floating_ip = FactoryGirl.create(:floating_ip)
-      login_as FactoryGirl.create(:user)
+      @floating_ip = FactoryBot.create(:floating_ip)
+      login_as FactoryBot.create(:user)
     end
 
     subject do
@@ -91,8 +91,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack)
       stub_user(:features => :all)
     end
 
@@ -132,8 +132,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
     end
 
     context "#edit" do
@@ -172,8 +172,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
     end
 
     context "#delete" do

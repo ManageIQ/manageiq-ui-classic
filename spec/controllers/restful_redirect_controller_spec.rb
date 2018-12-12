@@ -7,14 +7,14 @@ describe RestfulRedirectController do
     end
 
     it "redirects to ems_infra controller" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
+      ems_infra = FactoryBot.create(:ems_vmware)
       link = "/ems_infra/#{ems_infra.id}"
       get :index, :params => { :model => "ExtManagementSystem", :id => ems_infra.id }
       expect(response).to redirect_to(link)
     end
 
     it "redirects to ems_container controller" do
-      ems_container = FactoryGirl.create(:ems_kubernetes)
+      ems_container = FactoryBot.create(:ems_kubernetes)
       link = "/ems_container/#{ems_container.id}"
       get :index, :params => { :model => "ExtManagementSystem", :id => ems_container.id }
       expect(response).to redirect_to(link)
@@ -33,13 +33,13 @@ describe RestfulRedirectController do
     end
 
     it "redirects to vm_infra controller" do
-      vm_infra = FactoryGirl.create(:vm_vmware)
+      vm_infra = FactoryBot.create(:vm_vmware)
       get :index, :params => { :model => "VmOrTemplate", :id => vm_infra.id }
       expect(response).to redirect_to(:controller => "vm_infra", :action => "show", :id => vm_infra.id)
     end
 
     it "redirects to vm_cloud controller" do
-      vm_cloud = FactoryGirl.create(:vm_openstack)
+      vm_cloud = FactoryBot.create(:vm_openstack)
       get :index, :params => { :model => "VmOrTemplate", :id => vm_cloud.id }
       expect(response).to redirect_to(:controller => "vm_cloud", :action => "show", :id => vm_cloud.id)
     end

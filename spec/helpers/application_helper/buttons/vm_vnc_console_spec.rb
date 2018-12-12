@@ -1,12 +1,12 @@
 describe ApplicationHelper::Button::VmVncConsole do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     subject { button.visible? }
     context 'when record.vendor == vmware' do
-      let(:record) { FactoryGirl.create(:vm_vmware) }
+      let(:record) { FactoryBot.create(:vm_vmware) }
       it_behaves_like 'vm_console_visible?', 'VNC', :vm_vmware => true
     end
     context 'when record.vendor != vmware' do
@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::VmVncConsole do
     end
 
     context 'vm console button is not visible' do
-      let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => nil) }
+      let(:record) { FactoryBot.create(:vm_vmware, :ems_id => nil) }
       it_behaves_like 'vm_console_not_visible?'
     end
   end
@@ -30,8 +30,8 @@ describe ApplicationHelper::Button::VmVncConsole do
 
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }
-      let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
-      let(:record) { FactoryGirl.create(:vm_vmware, :host => host) }
+      let(:host) { FactoryBot.create(:host_vmware_esx, :vmm_version => api_version) }
+      let(:record) { FactoryBot.create(:vm_vmware, :host => host) }
 
       context 'and vendor api is not supported' do
         let(:api_version) { 6.5 }

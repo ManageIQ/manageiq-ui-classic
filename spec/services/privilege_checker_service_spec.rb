@@ -22,7 +22,7 @@ describe PrivilegeCheckerService do
     end
 
     context "when the user is signed in" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       context "when the session is timed out" do
         let(:last_trans_time) { 2.hours.ago }
@@ -63,7 +63,7 @@ describe PrivilegeCheckerService do
     end
 
     context "when a user exists" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       context "when the session is timed out" do
         let(:last_trans_time) { 2.hours.ago }

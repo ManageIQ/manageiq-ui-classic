@@ -10,11 +10,11 @@ describe "layouts/listnav/_persistent_volume.html.haml" do
 
   let(:provider) do
     allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
-    FactoryGirl.create(:ems_openshift)
+    FactoryBot.create(:ems_openshift)
   end
 
   it "link to parent containers provider uses restful path" do
-    @record = FactoryGirl.create(:persistent_volume, :parent => provider)
+    @record = FactoryBot.create(:persistent_volume, :parent => provider)
     render
     expect(response).to include("Show this persistent volume&#39;s parent Containers Provider\" href=\"/ems_container/#{@record.parent.id}\">")
   end

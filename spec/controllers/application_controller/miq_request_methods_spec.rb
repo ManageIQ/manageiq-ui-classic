@@ -1,7 +1,7 @@
 describe MiqRequestController do
   describe "#dialog_partial_for_workflow" do
     before do
-      @wf = FactoryGirl.create(:miq_provision_virt_workflow)
+      @wf = FactoryBot.create(:miq_provision_virt_workflow)
     end
 
     it "calculates partial using wf from @edit hash" do
@@ -24,18 +24,18 @@ describe MiqRequestController do
     end
 
     it "calculates partial using wf from @edit hash when both @edit & @options are present" do
-      controller.instance_variable_set(:@edit, :wf => FactoryGirl.create(:miq_provision_configured_system_foreman_workflow))
+      controller.instance_variable_set(:@edit, :wf => FactoryBot.create(:miq_provision_configured_system_foreman_workflow))
       controller.instance_variable_set(:@options, :wf => @wf)
       partial = controller.send(:dialog_partial_for_workflow)
       expect(partial).to eq('prov_configured_system_foreman_dialog')
     end
 
     it "clears the request datacenter name field when the source VM is changed" do
-      datacenter = FactoryGirl.create(:datacenter, :name => 'dcname')
-      ems_folder = FactoryGirl.create(:ems_folder)
-      ems = FactoryGirl.create(:ems_vmware)
-      template = FactoryGirl.create(:template_vmware)
-      vm2 = FactoryGirl.create(:vm_vmware)
+      datacenter = FactoryBot.create(:datacenter, :name => 'dcname')
+      ems_folder = FactoryBot.create(:ems_folder)
+      ems = FactoryBot.create(:ems_vmware)
+      template = FactoryBot.create(:template_vmware)
+      vm2 = FactoryBot.create(:vm_vmware)
       datacenter.ext_management_system = ems
       ems_folder.ext_management_system = ems
       @wf.instance_variable_set(:@dialogs, :dialogs => {:environment => {:fields => {:placement_dc_name => {:values => {datacenter.id.to_s => datacenter.name}}}}})

@@ -1,7 +1,7 @@
 describe "ops/_settings_evm_servers_tab.html.haml" do
   before do
     assign(:sb, :active_tab => "settings_evm_servers")
-    @selected_zone = FactoryGirl.create(:zone, :name => 'One Zone', :description => " One Description", :settings =>
+    @selected_zone = FactoryBot.create(:zone, :name => 'One Zone', :description => " One Description", :settings =>
                                                 {:proxy_server_ip => '1.2.3.4', :concurrent_vm_scans => 0, :ntp => {:server => ['Server 1']}})
     @servers = []
   end

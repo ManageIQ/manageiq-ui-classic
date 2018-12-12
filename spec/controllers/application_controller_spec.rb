@@ -5,10 +5,10 @@ describe ApplicationController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       controller.instance_variable_set(:@sb, {})
-      ur = FactoryGirl.create(:miq_user_role)
+      ur = FactoryBot.create(:miq_user_role)
       rptmenu = {:report_menus => [["Configuration Management", ["Hosts", ["Hosts Summary", "Hosts Summary"]]]]}
-      group = FactoryGirl.create(:miq_group, :miq_user_role => ur, :settings => rptmenu)
-      login_as FactoryGirl.create(:user, :miq_groups => [group])
+      group = FactoryBot.create(:miq_group, :miq_user_role => ur, :settings => rptmenu)
+      login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
     it "Verify Invalid input flash error message when invalid id is passed in" do
@@ -20,7 +20,7 @@ describe ApplicationController do
     end
 
     it "Verify record gets set when valid id is passed in" do
-      ems = FactoryGirl.create(:ext_management_system)
+      ems = FactoryBot.create(:ext_management_system)
       expect(controller.send(:find_record_with_rbac, ExtManagementSystem, ems.id)).to eq(ems)
     end
   end
@@ -29,7 +29,7 @@ describe ApplicationController do
     before do
       EvmSpecHelper.seed_specific_product_features("host_new", "host_edit", "perf_reload")
       feature = MiqProductFeature.find_all_by_identifier(["host_new"])
-      login_as FactoryGirl.create(:user, :features => feature)
+      login_as FactoryBot.create(:user, :features => feature)
     end
 
     it "should not raise an error for feature that user has access to" do
@@ -101,7 +101,7 @@ describe ApplicationController do
   end
 
   describe "#prov_redirect" do
-    let(:user) { FactoryGirl.create(:user, :features => "vm_migrate") }
+    let(:user) { FactoryBot.create(:user, :features => "vm_migrate") }
     before do
       allow(User).to receive(:server_timezone).and_return("UTC")
       login_as user
@@ -109,8 +109,8 @@ describe ApplicationController do
     end
 
     it "returns flash message when Migrate button is pressed with list containing SCVMM VM" do
-      vm1 = FactoryGirl.create(:vm_vmware)
-      vm2 = FactoryGirl.create(:vm_microsoft)
+      vm1 = FactoryBot.create(:vm_vmware)
+      vm2 = FactoryBot.create(:vm_microsoft)
       controller.instance_variable_set(:@_params, :pressed         => "vm_migrate",
                                                   :miq_grid_checks => "#{vm1.id},#{vm2.id}")
       controller.set_response!(response)
@@ -118,12 +118,12 @@ describe ApplicationController do
       expect(assigns(:flash_array).first[:message]).to include("does not apply to at least one of the selected")
     end
 
-    let(:ems)     { FactoryGirl.create(:ext_management_system) }
-    let(:storage) { FactoryGirl.create(:storage) }
+    let(:ems)     { FactoryBot.create(:ext_management_system) }
+    let(:storage) { FactoryBot.create(:storage) }
 
     it "sets variables when Migrate button is pressed with list of VMware VMs" do
-      vm1 = FactoryGirl.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
-      vm2 = FactoryGirl.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
+      vm1 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
+      vm2 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
       controller.instance_variable_set(:@_params, :pressed         => "vm_migrate",
                                                   :miq_grid_checks => "#{vm1.id},#{vm2.id}")
       controller.set_response!(response)
@@ -135,14 +135,14 @@ describe ApplicationController do
 
   describe "#prov_redirect" do
     before do
-      login_as FactoryGirl.create(:user, :features => "image_miq_request_new")
+      login_as FactoryBot.create(:user, :features => "image_miq_request_new")
       allow(User).to receive(:server_timezone).and_return("UTC")
       controller.request.parameters[:pressed] = "image_miq_request_new"
       controller.instance_variable_set(:@explorer, true)
     end
 
     it "returns flash message when Provisioning button is pressed from list and selected Image is archived" do
-      template = FactoryGirl.create(:miq_template,
+      template = FactoryBot.create(:miq_template,
                                     :name     => "template 1",
                                     :vendor   => "vmware",
                                     :location => "template1.vmtx")
@@ -155,11 +155,11 @@ describe ApplicationController do
       expect(assigns(:flash_array).first[:message]).to include("does not apply to at least one of the selected")
     end
 
-    let(:ems)     { FactoryGirl.create(:ems_openstack) }
-    let(:storage) { FactoryGirl.create(:storage) }
+    let(:ems)     { FactoryBot.create(:ems_openstack) }
+    let(:storage) { FactoryBot.create(:storage) }
 
     it "sets provisioning data and skips pre provisioning dialog" do
-      template = FactoryGirl.create(:template_openstack,
+      template = FactoryBot.create(:template_openstack,
                                     :name                  => "template 1",
                                     :vendor                => "vmware",
                                     :location              => "template1.vmtx",
@@ -276,8 +276,8 @@ describe ApplicationController do
 
   describe "#get_view" do
     before do
-      search = FactoryGirl.create(:miq_search, :name => 'sds')
-      user = FactoryGirl.create(:user_with_group, :settings => {:default_search => {:Host => search.id}})
+      search = FactoryBot.create(:miq_search, :name => 'sds')
+      user = FactoryBot.create(:user_with_group, :settings => {:default_search => {:Host => search.id}})
       login_as user
       session[:settings] = {:default_search => {:Host => search.id},
                             :views          => {:persistentvolume => 'list'},
@@ -299,14 +299,14 @@ describe ApplicationController do
 
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
-      group1 = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Group1")
-      @user1 = FactoryGirl.create(:user, :userid => "User1", :miq_groups => [group1], :email => "user1@test.com")
+      group1 = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Group1")
+      @user1 = FactoryBot.create(:user, :userid => "User1", :miq_groups => [group1], :email => "user1@test.com")
 
-      group2 = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Group2")
-      @user2 = FactoryGirl.create(:user, :userid => "User2", :miq_groups => [group2], :email => "user2@test.com")
+      group2 = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Group2")
+      @user2 = FactoryBot.create(:user, :userid => "User2", :miq_groups => [group2], :email => "user2@test.com")
 
-      current_group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Current Group")
-      @current_user = FactoryGirl.create(:user, :userid => "Current User", :miq_groups => [current_group, group1],
+      current_group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Current Group")
+      @current_user = FactoryBot.create(:user, :userid => "Current User", :miq_groups => [current_group, group1],
                                                 :email => "current_user@test.com")
 
       login_as @current_user

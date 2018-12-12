@@ -3,13 +3,13 @@ describe CloudVolumeSnapshotController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @snapshot = FactoryGirl.create(:cloud_volume_snapshot, :name => "cloud-volume-snapshot-01")
+      @snapshot = FactoryBot.create(:cloud_volume_snapshot, :name => "cloud-volume-snapshot-01")
       allow(@snapshot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@snapshot).and_return([@tag1, @tag2])
@@ -52,8 +52,8 @@ describe CloudVolumeSnapshotController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @snapshot = FactoryGirl.create(:cloud_volume_snapshot_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @snapshot = FactoryBot.create(:cloud_volume_snapshot_openstack,
                                      :ext_management_system => @ems)
     end
 
@@ -84,8 +84,8 @@ describe CloudVolumeSnapshotController do
   end
 
   describe "#delete_cloud_volume_snapshots" do
-    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-    let!(:snapshot) { FactoryGirl.create(:cloud_volume_snapshot) }
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:snapshot) { FactoryBot.create(:cloud_volume_snapshot) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
 

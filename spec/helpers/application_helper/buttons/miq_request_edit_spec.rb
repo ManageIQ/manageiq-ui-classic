@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::MiqRequestEdit do
     end
 
     let(:view_context) { setup_view_context_with_sandbox({}) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:request) { "SomeRequest" }
     let(:username) { user.name }
     let(:state) { "xx" }

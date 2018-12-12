@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe MiqTaskController do
   context "#tasks_condition" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     subject { controller.send(:tasks_condition, @opts) }
     before do
       allow(controller).to receive_messages(:session => user)

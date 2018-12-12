@@ -13,7 +13,7 @@ describe TreeBuilderOpsRbacFeatures do
   end
 
   let(:role) do
-    FactoryGirl.create(:miq_user_role, :id => 100_000_002, :features => features)
+    FactoryBot.create(:miq_user_role, :id => 100_000_002, :features => features)
   end
 
   let(:tree) do

@@ -1,7 +1,7 @@
 describe ApplicationController do
   describe "#get_tagdata" do
     let(:record) { double("Host") }
-    let(:user) { FactoryGirl.create(:user, :userid => "testuser") }
+    let(:user) { FactoryBot.create(:user, :userid => "testuser") }
 
     before do
       login_as user
@@ -42,7 +42,7 @@ describe ApplicationController do
                      :single_value => cat.single_value,
                      :ns           => cat.ns)
       options[:parent_id] = cat.id # Ugly way to set up a child
-      FactoryGirl.create(:classification, options)
+      FactoryBot.create(:classification, options)
     end
 
     # creating record in different region
@@ -57,12 +57,12 @@ describe ApplicationController do
 
     before do
       # setup classification/entries with same name in different regions
-      clergy = FactoryGirl.create(:classification, :description => "Clergy")
+      clergy = FactoryBot.create(:classification, :description => "Clergy")
       add_entry(clergy, :name => "bishop", :description => "Bishop")
 
       # add another classification with different description,
       # then change description to be same as above after updating region id of record
-      clergy2 = FactoryGirl.create(:classification, :description => "Clergy2")
+      clergy2 = FactoryBot.create(:classification, :description => "Clergy2")
       update_record_region(clergy2)
       clergy2.update_column(:description, "Clergy")
 
@@ -70,7 +70,7 @@ describe ApplicationController do
       update_record_region(clergy_bishop2)
 
       allow(Classification).to receive(:my_region_number).and_return(convert_to_region_id(clergy_bishop2.id))
-      @st = FactoryGirl.create(:service_template, :name => 'foo')
+      @st = FactoryBot.create(:service_template, :name => 'foo')
     end
 
     it "region id of classification/entries should match" do
@@ -114,7 +114,7 @@ describe ApplicationController do
 
   describe EmsInfraController do
     before do
-      login_as FactoryGirl.create(:user, :features => %w(storage_tag))
+      login_as FactoryBot.create(:user, :features => %w(storage_tag))
       controller.instance_variable_set(:@_params, params)
       controller.instance_variable_set(:@display, "storages")
     end

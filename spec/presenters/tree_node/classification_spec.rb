@@ -20,12 +20,12 @@ describe TreeNode::Classification do
   end
 
   context 'Classification' do
-    let(:object) { FactoryGirl.create(:classification) }
+    let(:object) { FactoryBot.create(:classification) }
     it_behaves_like 'TreeNode::Classification'
   end
 
   context 'Category' do
-    let(:object) { FactoryGirl.create(:category) }
+    let(:object) { FactoryBot.create(:category) }
     it_behaves_like 'TreeNode::Classification'
   end
 end

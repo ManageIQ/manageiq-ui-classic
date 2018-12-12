@@ -1,16 +1,16 @@
 describe ReportController do
   describe "#schedule_edit" do
-    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
 
-    let(:schedule) { FactoryGirl.create(:miq_schedule, :name => "tester1") }
-    let(:report) { FactoryGirl.create(:miq_report, :name => "report1") }
+    let(:schedule) { FactoryBot.create(:miq_schedule, :name => "tester1") }
+    let(:report) { FactoryBot.create(:miq_report, :name => "report1") }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as admin_user
 
       schedule
-      FactoryGirl.create(:miq_schedule, :name => "tester2")
+      FactoryBot.create(:miq_schedule, :name => "tester2")
 
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:checked_or_params).and_return(MiqSchedule.all.ids)

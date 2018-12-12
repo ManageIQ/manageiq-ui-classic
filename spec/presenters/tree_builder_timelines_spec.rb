@@ -1,6 +1,6 @@
 describe TreeBuilderTimelines do
   let!(:report) do
-    FactoryGirl.create(:miq_report,
+    FactoryBot.create(:miq_report,
                        :name          => 'name',
                        :timeline      => 'something',
                        :template_type => 'report',

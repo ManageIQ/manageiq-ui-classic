@@ -1,11 +1,11 @@
 describe ApplicationHelper::Button::VmSnapshotRemoveOne do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
-  let(:ems) { FactoryGirl.create(:ems_redhat, :zone => zone, :name => 'Test EMS') }
-  let(:host) { FactoryGirl.create(:host) }
+  let(:ems) { FactoryBot.create(:ems_redhat, :zone => zone, :name => 'Test EMS') }
+  let(:host) { FactoryBot.create(:host) }
   let(:record) do
-    record = FactoryGirl.create(:vm_redhat, :ems_id => ems.id, :host_id => host.id)
-    record.snapshots = [FactoryGirl.create(:snapshot,
+    record = FactoryBot.create(:vm_redhat, :ems_id => ems.id, :host_id => host.id)
+    record.snapshots = [FactoryBot.create(:snapshot,
                                            :create_time       => 1.minute.ago,
                                            :vm_or_template_id => record.id,
                                            :name              => 'EvmSnapshot',
@@ -31,8 +31,8 @@ describe ApplicationHelper::Button::VmSnapshotRemoveOne do
     end
     context 'when !record.kind_of?(ManageIQ::Providers::Redhat::InfraManager::Vm)' do
       let(:record) do
-        record = FactoryGirl.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
-        record.snapshots = [FactoryGirl.create(:snapshot,
+        record = FactoryBot.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
+        record.snapshots = [FactoryBot.create(:snapshot,
                                                :create_time       => 1.minute.ago,
                                                :vm_or_template_id => record.id,
                                                :name              => 'EvmSnapshot',

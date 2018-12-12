@@ -12,7 +12,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
   end
 
   describe "custom_buttons" do
-    let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:user) { FactoryBot.create(:user, :role => "super_administrator") }
 
     shared_examples "no custom buttons" do
       it "#get_custom_buttons" do
@@ -39,9 +39,9 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
 
       before do
-        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
+        @button_set = FactoryBot.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
-        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
+        @button1 = FactoryBot.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
         add_button_to_set(@button_set, @button1)
       end
 
@@ -138,7 +138,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     context "for VM" do
       let(:applies_to_class) { 'Vm' }
-      subject { FactoryGirl.create(:vm_vmware) }
+      subject { FactoryBot.create(:vm_vmware) }
 
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
@@ -146,8 +146,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     context "for Service" do
       let(:applies_to_class) { 'ServiceTemplate' }
-      let(:service_template) { FactoryGirl.create(:service_template) }
-      subject                { FactoryGirl.create(:service, :service_template => service_template) }
+      let(:service_template) { FactoryBot.create(:service_template) }
+      subject                { FactoryBot.create(:service, :service_template => service_template) }
 
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
@@ -403,7 +403,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     it "Enables edit and remove buttons for read-write orchestration templates" do
-      @record = FactoryGirl.create(:orchestration_template)
+      @record = FactoryBot.create(:orchestration_template)
       buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
       edit_btn = buttons.find { |b| b[:id].end_with?("_edit") }
       remove_btn = buttons.find { |b| b[:id].end_with?("_remove") }
@@ -412,7 +412,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     it "Disables edit and remove buttons for read-only orchestration templates" do
-      @record = FactoryGirl.create(:orchestration_template_with_stacks)
+      @record = FactoryBot.create(:orchestration_template_with_stacks)
       buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
       edit_btn = buttons.find { |b| b[:id].end_with?("_edit") }
       remove_btn = buttons.find { |b| b[:id].end_with?("_remove") }
@@ -434,8 +434,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       let(:toolbar_to_build) { 'generic_objects_center_tb' }
 
       before do
-        go_def = FactoryGirl.create(:generic_object_definition)
-        @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => go_def.id)
+        go_def = FactoryBot.create(:generic_object_definition)
+        @record = FactoryBot.create(:generic_object, :generic_object_definition_id => go_def.id)
         allow(Rbac).to receive(:role_allows?).and_return(true)
       end
 
@@ -467,7 +467,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       let(:toolbar_to_build) { 'generic_object_definitions_center_tb' }
 
       before do
-        @record = FactoryGirl.create(:generic_object_definition)
+        @record = FactoryBot.create(:generic_object_definition)
         allow(Rbac).to receive(:role_allows?).and_return(true)
       end
 

@@ -2,17 +2,17 @@ describe TreeBuilderSnapshots do
   context 'TreeBuilderSnaphots' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Snapshot Group")
-      login_as FactoryGirl.create(:user, :userid => 'snapshot_wilma', :miq_groups => [@group])
-      snapshot_kid = FactoryGirl.create(:snapshot,
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Snapshot Group")
+      login_as FactoryBot.create(:user, :userid => 'snapshot_wilma', :miq_groups => [@group])
+      snapshot_kid = FactoryBot.create(:snapshot,
                                         :description => 'Snapshot Kid',
                                         :create_time => Time.zone.local(2000, "jan", 1, 20, 15, 1))
-      snapshot = FactoryGirl.create(:snapshot,
+      snapshot = FactoryBot.create(:snapshot,
                                     :description => 'Snapshot',
                                     :create_time => Time.zone.local(2000, "jan", 1, 20, 15, 1),
                                     :children    => [snapshot_kid])
       snapshot_kid.parent_id = snapshot.id
-      @record = FactoryGirl.create(:vm_infra, :snapshots => [snapshot])
+      @record = FactoryBot.create(:vm_infra, :snapshots => [snapshot])
       @s_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, {}, true, :root => @record)
     end
     it 'sets root correctly' do

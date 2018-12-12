@@ -6,11 +6,11 @@ shared_examples 'an rbac_group_action button' do |action|
     before { button.calculate_properties }
 
     context 'record is read-only' do
-      let(:record) { FactoryGirl.create(:miq_group, :system_type) }
+      let(:record) { FactoryBot.create(:miq_group, :system_type) }
       it_behaves_like 'a disabled button', "This Group is Read Only and can not be #{action}"
     end
     context 'record is writable' do
-      let(:record) { FactoryGirl.create(:miq_group) }
+      let(:record) { FactoryBot.create(:miq_group) }
       it_behaves_like 'an enabled button'
     end
   end

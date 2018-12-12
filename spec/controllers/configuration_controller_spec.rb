@@ -16,7 +16,7 @@ describe ConfigurationController do
   describe "building tabs" do
     before do
       controller.instance_variable_set(:@tabform, "ui_2")
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
     end
 
     it 'sets the active tab' do

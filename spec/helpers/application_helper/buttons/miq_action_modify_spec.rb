@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::MiqActionModify do
   let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
-  let(:record) { FactoryGirl.create(:miq_event_definition) }
+  let(:record) { FactoryBot.create(:miq_event_definition) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
   let(:tree) { :policy_tree }
 
@@ -21,11 +21,11 @@ describe ApplicationHelper::Button::MiqActionModify do
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_ev-1") }
 
     context 'when policy is read_only' do
-      let(:policy) { FactoryGirl.create(:miq_policy_read_only) }
+      let(:policy) { FactoryBot.create(:miq_policy_read_only) }
       it { expect(subject).to be_truthy }
     end
     context 'when policy is not read-only' do
-      let(:policy) { FactoryGirl.create(:miq_policy) }
+      let(:policy) { FactoryBot.create(:miq_policy) }
       it { expect(subject).to be_falsey }
     end
   end
@@ -36,7 +36,7 @@ describe ApplicationHelper::Button::MiqActionModify do
        'This Event belongs to a read only Policy and cannot be modified',
        nil]
     end
-    let(:policy) { FactoryGirl.create(:miq_policy_read_only) }
+    let(:policy) { FactoryBot.create(:miq_policy_read_only) }
     subject { button[:title] }
 
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_#{type}-1") }

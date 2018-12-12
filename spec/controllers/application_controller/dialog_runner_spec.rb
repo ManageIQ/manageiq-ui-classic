@@ -135,7 +135,7 @@ describe CatalogController do
 
   describe "#dialog_form_button_pressed" do
     let(:dialog) { double("Dialog") }
-    let(:workflow) { FactoryGirl.build(:miq_provision_workflow) }
+    let(:workflow) { FactoryBot.build(:miq_provision_workflow) }
     let(:wf) { double(:dialog => dialog) }
 
     before do
@@ -160,7 +160,7 @@ describe CatalogController do
 
     it "stay on the current model page after the dialog is submitted if a request is not created" do
       controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
-      st = FactoryGirl.create(:service_template)
+      st = FactoryBot.create(:service_template)
       controller.x_node = "xx-st st-#{st.id}"
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:get_node_info)

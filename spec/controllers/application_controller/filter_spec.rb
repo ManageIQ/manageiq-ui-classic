@@ -78,9 +78,9 @@ describe ApplicationController, "::Filter" do
   end
 
   describe "#save_default_search" do
-    let(:user) { FactoryGirl.create(:user_with_group, :settings => {:default_search => {}}) }
+    let(:user) { FactoryBot.create(:user_with_group, :settings => {:default_search => {}}) }
     it "saves settings" do
-      search = FactoryGirl.create(:miq_search, :name => 'sds')
+      search = FactoryBot.create(:miq_search, :name => 'sds')
 
       login_as user
       controller.instance_variable_set(:@settings, {})

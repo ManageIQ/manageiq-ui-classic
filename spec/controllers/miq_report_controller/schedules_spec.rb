@@ -1,5 +1,5 @@
 describe ReportController, "::Schedules" do
-  let(:user) { FactoryGirl.create(:user, :features => %w(miq_report_schedule_delete)) }
+  let(:user) { FactoryBot.create(:user, :features => %w(miq_report_schedule_delete)) }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
@@ -14,7 +14,7 @@ describe ReportController, "::Schedules" do
     end
 
     context 'deleting a single schedule' do
-      let(:schedule) { FactoryGirl.create(:miq_schedule) }
+      let(:schedule) { FactoryBot.create(:miq_schedule) }
       let(:schedules) { [schedule] }
 
       it 'returns with the name of the schedule in the flash' do
@@ -24,8 +24,8 @@ describe ReportController, "::Schedules" do
     end
 
     context 'deleting multiple schedules' do
-      let(:schedule1) { FactoryGirl.create(:miq_schedule) }
-      let(:schedule2) { FactoryGirl.create(:miq_schedule) }
+      let(:schedule1) { FactoryBot.create(:miq_schedule) }
+      let(:schedule2) { FactoryBot.create(:miq_schedule) }
       let(:schedules) { [schedule1, schedule2] }
 
       it 'returns with a plural form in the flash' do

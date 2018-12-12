@@ -1,6 +1,6 @@
 describe VmCloudHelper::TextualSummary do
   before do
-    instance_variable_set(:@record, FactoryGirl.create(:vm))
+    instance_variable_set(:@record, FactoryBot.create(:vm))
   end
 
   include_examples "textual_group", "Properties", %i(

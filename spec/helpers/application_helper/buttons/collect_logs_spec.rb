@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::CollectLogs do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:file_depot) { FactoryGirl.create(:file_depot) }
-  let(:record) { FactoryGirl.create(:miq_server, :status => server_status, :log_file_depot => file_depot) }
+  let(:file_depot) { FactoryBot.create(:file_depot) }
+  let(:record) { FactoryBot.create(:miq_server, :status => server_status, :log_file_depot => file_depot) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   def tear_down
@@ -22,7 +22,7 @@ describe ApplicationHelper::Button::CollectLogs do
     context 'when server is started' do
       let(:server_status) { 'started' }
       let(:setup_log_files) do
-        log_file = FactoryGirl.create(:log_file, :resource => record, :state => log_state)
+        log_file = FactoryBot.create(:log_file, :resource => record, :state => log_state)
         log_file.save
         record.log_files << log_file
       end
@@ -43,7 +43,7 @@ describe ApplicationHelper::Button::CollectLogs do
 
         context 'and has an unfinished task' do
           let(:setup_tasks) do
-            task = FactoryGirl.create(:miq_task, :name => 'Zipped log retrieval for XXX', :miq_server_id => record.id)
+            task = FactoryBot.create(:miq_task, :name => 'Zipped log retrieval for XXX', :miq_server_id => record.id)
             task.save
           end
           it_behaves_like 'a disabled button', 'Log collection is already in progress for this Server'

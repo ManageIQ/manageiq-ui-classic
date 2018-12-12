@@ -3,12 +3,12 @@ describe MiqAeCustomizationController do
     context "#dialog_delete" do
       before do
         EvmSpecHelper.local_miq_server
-        login_as FactoryGirl.create(:user, :features => "dialog_delete")
+        login_as FactoryBot.create(:user, :features => "dialog_delete")
         allow(controller).to receive(:check_privileges).and_return(true)
       end
 
       it "flash message displays Dialog Label being deleted" do
-        dialog = FactoryGirl.create(:dialog, :label       => "Test Label",
+        dialog = FactoryBot.create(:dialog, :label       => "Test Label",
                                              :description => "Test Description",
                                              :buttons     => "submit,reset,cancel")
 

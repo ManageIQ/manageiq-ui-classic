@@ -13,8 +13,8 @@ describe ContainerNodeController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
-    container_node = FactoryGirl.create(:container_node, :ext_management_system => ems, :name => "Test Node")
+    ems = FactoryBot.create(:ems_kubernetes)
+    container_node = FactoryBot.create(:container_node, :ext_management_system => ems, :name => "Test Node")
     get :show, :params => { :id => container_node.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
@@ -27,8 +27,8 @@ describe ContainerNodeController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @node = FactoryGirl.create(:container_node)
+      login_as FactoryBot.create(:user)
+      @node = FactoryBot.create(:container_node)
     end
 
     subject { get :show, :params => { :id => @node.id } }
@@ -45,12 +45,12 @@ describe ContainerNodeController do
   end
 
   describe "#button" do
-    let(:node) { FactoryGirl.create(:container_node) }
+    let(:node) { FactoryBot.create(:container_node) }
 
     context "container_node_check_compliance" do
       before do
         EvmSpecHelper.create_guid_miq_server_zone
-        login_as FactoryGirl.create(:user)
+        login_as FactoryBot.create(:user)
       end
 
       it 'displays a flash message' do

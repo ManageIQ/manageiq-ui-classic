@@ -1,12 +1,12 @@
 describe ContainerSummaryHelper do
-  let(:container_project)     { FactoryGirl.create(:container_project) }
+  let(:container_project)     { FactoryBot.create(:container_project) }
   let(:rel_hash_with_link)    { %i(label value link title) }
   let(:rel_hash_without_link) { %i(label value) }
 
   before do
     self.class.send(:include, ApplicationHelper)
 
-    @record = FactoryGirl.build(:container_group, :container_project => container_project)
+    @record = FactoryBot.build(:container_group, :container_project => container_project)
   end
 
   context ".textual_container_project" do
@@ -26,7 +26,7 @@ describe ContainerSummaryHelper do
   end
 
   context ".textual_containers" do
-    before  { 2.times { FactoryGirl.create(:container, :container_group => @record) } }
+    before  { 2.times { FactoryBot.create(:container, :container_group => @record) } }
     subject { textual_containers }
 
     it 'show link when role allows' do

@@ -1,7 +1,7 @@
 describe ReportController do
   context "::Dashboards" do
-    let(:miq_widget_set) { FactoryGirl.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [], :col2 => [], :col3 => []}) }
-    let(:user)           { FactoryGirl.create(:user, :features => "db_edit") }
+    let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [], :col2 => [], :col3 => []}) }
+    let(:user)           { FactoryBot.create(:user, :features => "db_edit") }
 
     before do
       login_as user
@@ -25,7 +25,7 @@ describe ReportController do
 
     describe "#db_save_members" do
       let(:set_data) do
-        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryGirl.create(:miq_widget))] }.to_h
+        Array.new(3) { |n| ["col#{(n + 1)}".to_sym, Array.new(2, FactoryBot.create(:miq_widget))] }.to_h
       end
 
       before do
@@ -48,14 +48,14 @@ describe ReportController do
 
     describe "#db_fields_validation" do
       before do
-        @widget1 = FactoryGirl.create(:miq_widget)
-        @widget2 = FactoryGirl.create(:miq_widget)
-        @miq_widget_set = FactoryGirl.create(:miq_widget_set,
+        @widget1 = FactoryBot.create(:miq_widget)
+        @widget2 = FactoryBot.create(:miq_widget)
+        @miq_widget_set = FactoryBot.create(:miq_widget_set,
                                              :owner       => user.current_group,
                                              :name        => "fred",
                                              :description => "FRED",
                                              :set_data    => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
-        FactoryGirl.create(:miq_widget_set,
+        FactoryBot.create(:miq_widget_set,
                            :owner       => user.current_group,
                            :name        => "wilma",
                            :description => "WILMA",
@@ -83,7 +83,7 @@ describe ReportController do
       end
 
       it 'No flash message set when tab title is changed for Default Dashboard' do
-        default_dashboard = FactoryGirl.create(:miq_widget_set, :read_only => true, :name => "default", :description => "Default Dashboard", :set_data => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
+        default_dashboard = FactoryBot.create(:miq_widget_set, :read_only => true, :name => "default", :description => "Default Dashboard", :set_data => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
         controller.instance_variable_set(:@sb, :nodes => ["xx", default_dashboard.id])
         controller.instance_variable_set(:@edit, :db_id => @miq_widget_set.id, :read_only => true, :type => "db_edit", :key => "db_edit__#{@miq_widget_set.id}",
                                                  :new => {:name => "default", :description => "NEW Default Dashboard", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},

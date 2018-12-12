@@ -8,18 +8,18 @@ describe OpsController do
 
     context "SmartProxy Affinity" do
       before do
-        @zone = FactoryGirl.create(:zone, :name => 'zone1')
+        @zone = FactoryBot.create(:zone, :name => 'zone1')
 
-        @storage1 = FactoryGirl.create(:storage)
-        @storage2 = FactoryGirl.create(:storage)
+        @storage1 = FactoryBot.create(:storage)
+        @storage2 = FactoryBot.create(:storage)
 
-        @host1 = FactoryGirl.create(:host, :name => 'host1', :storages => [@storage1])
-        @host2 = FactoryGirl.create(:host, :name => 'host2', :storages => [@storage2])
+        @host1 = FactoryBot.create(:host, :name => 'host1', :storages => [@storage1])
+        @host2 = FactoryBot.create(:host, :name => 'host2', :storages => [@storage2])
 
-        @ems = FactoryGirl.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
+        @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
 
-        @svr1 = FactoryGirl.create(:miq_server, :name => 'svr1', :zone => @zone)
-        @svr2 = FactoryGirl.create(:miq_server, :name => 'svr2', :zone => @zone)
+        @svr1 = FactoryBot.create(:miq_server, :name => 'svr1', :zone => @zone)
+        @svr2 = FactoryBot.create(:miq_server, :name => 'svr2', :zone => @zone)
 
         @svr1.vm_scan_host_affinity = [@host1]
         @svr2.vm_scan_host_affinity = [@host2]
@@ -166,7 +166,7 @@ describe OpsController do
 
     context "#settings_get_form_vars" do
       before do
-        miq_server = FactoryGirl.create(:miq_server)
+        miq_server = FactoryBot.create(:miq_server)
         current = ::Settings.to_hash
         current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
         edit = {:current => current,
@@ -277,7 +277,7 @@ describe OpsController do
 
       context 'get advanced config settings' do
         it 'for selected server' do
-          miq_server = FactoryGirl.create(:miq_server)
+          miq_server = FactoryBot.create(:miq_server)
           enc_pass = MiqPassword.encrypt('pa$$word')
           Vmdb::Settings.save!(
             miq_server,
@@ -302,7 +302,7 @@ describe OpsController do
         end
 
         it 'for selected zone' do
-          zone = FactoryGirl.create(:zone)
+          zone = FactoryBot.create(:zone)
           enc_pass = MiqPassword.encrypt('pa$$word')
           Vmdb::Settings.save!(
             zone,
@@ -331,7 +331,7 @@ describe OpsController do
     describe '#settings_update_save' do
       context "save config settings" do
         it 'for selected server' do
-          miq_server = FactoryGirl.create(:miq_server)
+          miq_server = FactoryBot.create(:miq_server)
           allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
@@ -353,7 +353,7 @@ describe OpsController do
         end
 
         it 'for selected zone' do
-          zone = FactoryGirl.create(:zone)
+          zone = FactoryBot.create(:zone)
           allow(controller).to receive(:x_node).and_return("z-#{zone.id}")
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
@@ -377,7 +377,7 @@ describe OpsController do
 
       context "save server name in server settings" do
         before do
-          @miq_server = FactoryGirl.create(:miq_server)
+          @miq_server = FactoryBot.create(:miq_server)
           allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_server',
@@ -412,8 +412,8 @@ describe OpsController do
     describe '#settings_set_form_vars_server' do
       context 'sets values correctly' do
         it 'for server in non-current zone' do
-          zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
-          server = FactoryGirl.create(:miq_server, :zone => zone)
+          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
+          server = FactoryBot.create(:miq_server, :zone => zone)
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
@@ -421,7 +421,7 @@ describe OpsController do
         end
 
         it 'for server in default zone' do
-          server = FactoryGirl.create(:miq_server, :zone => Zone.find_by(:name => "default"))
+          server = FactoryBot.create(:miq_server, :zone => Zone.find_by(:name => "default"))
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
@@ -429,8 +429,8 @@ describe OpsController do
         end
 
         it 'sets the server name' do
-          zone = FactoryGirl.create(:zone, :name => 'Foo Zone')
-          server = FactoryGirl.create(:miq_server, :zone => zone, :name => 'ServerName')
+          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
+          server = FactoryBot.create(:miq_server, :zone => zone, :name => 'ServerName')
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)

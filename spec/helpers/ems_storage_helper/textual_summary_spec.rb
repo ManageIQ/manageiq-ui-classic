@@ -1,6 +1,6 @@
 describe EmsStorageHelper::TextualSummary do
   before do
-    instance_variable_set(:@record, FactoryGirl.create(:ems_infra))
+    instance_variable_set(:@record, FactoryBot.create(:ems_infra))
     allow(self).to receive(:textual_authentications).and_return([])
   end
 

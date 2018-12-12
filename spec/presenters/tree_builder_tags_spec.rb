@@ -1,17 +1,17 @@
 describe TreeBuilderTags do
   before do
     role = MiqUserRole.find_by(:name => "EvmRole-operator")
-    @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [@group])
-    @tag_selected = FactoryGirl.create(:classification, :name => 'tag_selected', :show => false)
-    @folder_selected = FactoryGirl.create(:classification, :name => 'folder_selected', :show => true)
+    @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
+    login_as FactoryBot.create(:user, :userid => 'tags_wilma', :miq_groups => [@group])
+    @tag_selected = FactoryBot.create(:classification, :name => 'tag_selected', :show => false)
+    @folder_selected = FactoryBot.create(:classification, :name => 'folder_selected', :show => true)
     @folder_selected.entries.push(@tag_selected)
-    @tag_not_selected = FactoryGirl.create(:classification, :name => 'tag_not_selected', :show => false)
-    @folder_not_selected = FactoryGirl.create(:classification, :name => 'folder_not_selected', :show => true)
+    @tag_not_selected = FactoryBot.create(:classification, :name => 'tag_not_selected', :show => false)
+    @folder_not_selected = FactoryBot.create(:classification, :name => 'folder_not_selected', :show => true)
     @folder_not_selected.entries.push(@tag_not_selected)
     @filters = {"#{@folder_selected.name}-#{@tag_selected.name}" =>
                                                                     "/managed/#{@folder_selected.name}/#{@tag_selected.name}"}
-    @group = FactoryGirl.create(:miq_group)
+    @group = FactoryBot.create(:miq_group)
   end
   context 'read-only mode' do
     before do

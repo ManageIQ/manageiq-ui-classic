@@ -2,9 +2,9 @@ describe TreeNode::EmsCluster do
   subject { described_class.new(object, nil, {}) }
 
   %i(ems_cluster ems_cluster_openstack).each do |factory|
-    klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
+    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'c-'
       include_examples 'TreeNode::Node#icon', 'pficon pficon-cluster'

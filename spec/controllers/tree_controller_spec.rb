@@ -24,13 +24,13 @@ describe TreeController do
   end
 
   describe '#automate_entrypoint' do
-    let(:record) { FactoryGirl.create(:miq_ae_namespace) }
+    let(:record) { FactoryBot.create(:miq_ae_namespace) }
 
     include_examples 'valid HTTP JSON response', :automate_entrypoint
   end
 
   describe '#automate_inline_methods' do
-    let(:record) { FactoryGirl.create(:miq_ae_namespace) }
+    let(:record) { FactoryBot.create(:miq_ae_namespace) }
 
     include_examples 'valid HTTP JSON response', :automate_inline_methods
   end

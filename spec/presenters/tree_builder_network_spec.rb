@@ -2,15 +2,15 @@ describe TreeBuilderNetwork do
   context 'TreeBuilderNetwork' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Network Group")
-      login_as FactoryGirl.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
-      vm = FactoryGirl.create(:vm)
-      hardware = FactoryGirl.create(:hardware, :vm_or_template => vm)
-      guest_device_with_vm = FactoryGirl.create(:guest_device, :hardware => hardware)
-      guest_device = FactoryGirl.create(:guest_device)
-      lan = FactoryGirl.create(:lan, :guest_devices => [guest_device_with_vm])
-      switch = FactoryGirl.create(:switch, :guest_devices => [guest_device], :lans => [lan])
-      network = FactoryGirl.create(:host, :switches => [switch])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Network Group")
+      login_as FactoryBot.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
+      vm = FactoryBot.create(:vm)
+      hardware = FactoryBot.create(:hardware, :vm_or_template => vm)
+      guest_device_with_vm = FactoryBot.create(:guest_device, :hardware => hardware)
+      guest_device = FactoryBot.create(:guest_device)
+      lan = FactoryBot.create(:lan, :guest_devices => [guest_device_with_vm])
+      switch = FactoryBot.create(:switch, :guest_devices => [guest_device], :lans => [lan])
+      network = FactoryBot.create(:host, :switches => [switch])
       @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, network)
     end
 

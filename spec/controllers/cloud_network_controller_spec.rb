@@ -1,14 +1,14 @@
 describe CloudNetworkController do
-  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryGirl.create(:classification_tag, :name   => "tag1", :parent => classification) }
-  let(:tag2) { FactoryGirl.create(:classification_tag, :name   => "tag2", :parent => classification) }
-  let(:ct) { FactoryGirl.create(:cloud_network, :name => "cloud-network-01") }
-  let(:network) { FactoryGirl.create(:cloud_network) }
-  let(:ems) { FactoryGirl.create(:ems_openstack).network_manager }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name   => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name   => "tag2", :parent => classification) }
+  let(:ct) { FactoryBot.create(:cloud_network, :name => "cloud-network-01") }
+  let(:network) { FactoryBot.create(:cloud_network) }
+  let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
 
   before do
-    FactoryGirl.create(:tagging, :tag => tag1.tag, :taggable => ct)
-    FactoryGirl.create(:tagging, :tag => tag2.tag, :taggable => ct)
+    FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => ct)
+    FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => ct)
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
@@ -56,7 +56,7 @@ describe CloudNetworkController do
   end
 
   describe "#show" do
-    before { login_as FactoryGirl.create(:user) }
+    before { login_as FactoryBot.create(:user) }
 
     context "render listnav partial" do
       render_views
@@ -77,9 +77,9 @@ describe CloudNetworkController do
       EvmSpecHelper.seed_specific_product_features(%w(cloud_network_new ems_network_show_list))
 
       feature = MiqProductFeature.find_all_by_identifier(%w(cloud_network_new))
-      role = FactoryGirl.create(:miq_user_role, :miq_product_features => feature)
-      group = FactoryGirl.create(:miq_group, :miq_user_role => role)
-      login_as FactoryGirl.create(:user, :miq_groups => [group])
+      role = FactoryBot.create(:miq_user_role, :miq_product_features => feature)
+      group = FactoryBot.create(:miq_group, :miq_user_role => role)
+      login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
     it "raises exception when user don't have privilege" do
@@ -96,14 +96,14 @@ describe CloudNetworkController do
   end
 
   describe "#create" do
-    let(:network) { FactoryGirl.create(:cloud_network_openstack) }
+    let(:network) { FactoryBot.create(:cloud_network_openstack) }
     let(:task_options) do
       {
         :action => "creating Cloud Network for user %{user}" % {:user => controller.current_user.userid},
         :userid => controller.current_user.userid
       }
     end
-    let(:cloud_tenant) { FactoryGirl.create(:cloud_tenant) }
+    let(:cloud_tenant) { FactoryBot.create(:cloud_tenant) }
     let(:queue_options) do
       {
         :class_name  => ems.class.name,
@@ -151,7 +151,7 @@ describe CloudNetworkController do
   end
 
   describe "#edit" do
-    let(:network) { FactoryGirl.create(:cloud_network_openstack, :ext_management_system => ems) }
+    let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems) }
     let(:task_options) do
       {
         :action => "updating Cloud Network for user %{user}" % {:user => controller.current_user.userid},
@@ -186,7 +186,7 @@ describe CloudNetworkController do
   end
 
   describe "#delete" do
-    let(:network) { FactoryGirl.create(:cloud_network_openstack, :ext_management_system => ems) }
+    let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems) }
     let(:task_options) do
       {
         :action => "deleting Cloud Network for user %{user}" % {:user => controller.current_user.userid},
@@ -252,7 +252,7 @@ describe CloudNetworkController do
 
   describe "#delete_networks" do
     before do
-      login_as FactoryGirl.create(:user, :role => "super_administrator")
+      login_as FactoryBot.create(:user, :role => "super_administrator")
       controller.instance_variable_set(:@_params, :id => network.id, :pressed => 'cloud_network_delete')
       allow(controller).to receive(:process_cloud_networks).with([network], "destroy")
     end

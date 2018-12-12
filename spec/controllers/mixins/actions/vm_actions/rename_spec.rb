@@ -1,5 +1,5 @@
 describe Mixins::Actions::VmActions::Rename do
-  let(:vm) { FactoryGirl.create(:vm_vmware) }
+  let(:vm) { FactoryBot.create(:vm_vmware) }
 
   describe '#rename_cancel' do
     before do
@@ -43,7 +43,7 @@ describe Mixins::Actions::VmActions::Rename do
   describe '#rename_save' do
     let(:controller) { VmInfraController.new }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryGirl.create(:zone) }
+    let(:zone) { FactoryBot.create(:zone) }
 
     before do
       allow(controller).to receive(:session).and_return(:userid => 'admin')

@@ -2,8 +2,8 @@ describe VmOrTemplateController do
   context "#snap_pressed" do
     before do
       stub_user(:features => :all)
-      @vm = FactoryGirl.create(:vm_vmware)
-      @snapshot = FactoryGirl.create(:snapshot, :vm_or_template_id => @vm.id,
+      @vm = FactoryBot.create(:vm_vmware)
+      @snapshot = FactoryBot.create(:snapshot, :vm_or_template_id => @vm.id,
                                                 :name              => 'EvmSnapshot',
                                                 :description       => "Some Description")
       @vm.snapshots = [@snapshot]
@@ -48,10 +48,10 @@ describe VmOrTemplateController do
 
   context '#reload ' do
     before do
-      login_as FactoryGirl.create(:user_with_group, :role => "operator")
+      login_as FactoryBot.create(:user_with_group, :role => "operator")
       allow(controller).to receive(:tree_select).and_return(nil)
-      @folder = FactoryGirl.create(:ems_folder)
-      @vm = FactoryGirl.create(:vm_cloud)
+      @folder = FactoryBot.create(:ems_folder)
+      @vm = FactoryBot.create(:vm_cloud)
     end
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
@@ -77,12 +77,12 @@ describe VmOrTemplateController do
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
       EvmSpecHelper.seed_specific_product_features("vandt_accord", "vms_instances_filter_accord")
-      @vm = FactoryGirl.create(:vm_vmware)
+      @vm = FactoryBot.create(:vm_vmware)
     end
 
     it "redirects user to explorer that they have access to" do
       feature = MiqProductFeature.find_all_by_identifier(["vandt_accord"])
-      login_as FactoryGirl.create(:user, :features => feature)
+      login_as FactoryBot.create(:user, :features => feature)
       controller.instance_variable_set(:@sb, {})
       get :show, :params => {:id => @vm.id}
       expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
@@ -90,7 +90,7 @@ describe VmOrTemplateController do
 
     it "redirects user to Workloads explorer when user does not have access to Infra Explorer" do
       feature = MiqProductFeature.find_all_by_identifier(["vms_instances_filter_accord"])
-      login_as FactoryGirl.create(:user, :features => feature)
+      login_as FactoryBot.create(:user, :features => feature)
       controller.instance_variable_set(:@sb, {})
       get :show, :params => {:id => @vm.id}
       expect(response).to redirect_to(:controller => "vm_or_template", :action => 'explorer')
@@ -98,7 +98,7 @@ describe VmOrTemplateController do
 
     it "redirects user back to the url they came from when user does not have access to any of VM Explorers" do
       feature = MiqProductFeature.find_all_by_identifier(["dashboard_show"])
-      login_as FactoryGirl.create(:user, :features => feature)
+      login_as FactoryBot.create(:user, :features => feature)
       controller.instance_variable_set(:@sb, {})
       request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
       get :show, :params => {:id => @vm.id}
@@ -114,7 +114,7 @@ describe VmOrTemplateController do
     end
 
     it "Redirects user to the referer controller/action" do
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user)
       request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
       allow(controller).to receive(:find_record_with_rbac).and_return(nil)
       get :show, :params => {:id => @vm.id}
@@ -140,7 +140,7 @@ describe VmOrTemplateController do
       end
 
       it 'to snap_selected.id if a Snapshot exists' do
-        @snapshot = FactoryGirl.create(:snapshot,
+        @snapshot = FactoryBot.create(:snapshot,
                                        :vm_or_template_id => @vm.id,
                                        :name              => 'EvmSnapshot',
                                        :description       => 'Some Description')
@@ -158,8 +158,8 @@ describe VmOrTemplateController do
   end
 
   describe '#console_after_task' do
-    let(:vm) { FactoryGirl.create(:vm_vmware) }
-    let(:task) { FactoryGirl.create(:miq_task, :task_results => task_results) }
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+    let(:task) { FactoryBot.create(:miq_task, :task_results => task_results) }
     subject { controller.send(:console_after_task, 'html5') }
 
     before do
@@ -189,7 +189,7 @@ describe VmOrTemplateController do
 
   context '#replace_right_cell' do
     it 'should display form button on Migrate request screen' do
-      vm = FactoryGirl.create(:vm_infra)
+      vm = FactoryBot.create(:vm_infra)
       allow(controller).to receive(:params).and_return(:action => 'vm_migrate')
       controller.instance_eval { @sb = {:active_tree => :vandt_tree, :action => "migrate"} }
       controller.instance_eval { @record = vm }
@@ -213,53 +213,53 @@ describe VmOrTemplateController do
 
   context '#parent_folder_id' do
     it 'returns id of orphaned folder for orphaned VM/Template' do
-      vm_orph = FactoryGirl.create(:vm_infra, :storage => FactoryGirl.create(:storage))
-      template_orph = FactoryGirl.create(:template_infra, :storage => FactoryGirl.create(:storage))
+      vm_orph = FactoryBot.create(:vm_infra, :storage => FactoryBot.create(:storage))
+      template_orph = FactoryBot.create(:template_infra, :storage => FactoryBot.create(:storage))
       expect(controller.parent_folder_id(vm_orph)).to eq('xx-orph')
       expect(controller.parent_folder_id(template_orph)).to eq('xx-orph')
     end
 
     it 'returns id of archived folder for archived VM/Template' do
-      vm_arch = FactoryGirl.create(:vm_infra)
-      template_arch = FactoryGirl.create(:template_infra)
+      vm_arch = FactoryBot.create(:vm_infra)
+      template_arch = FactoryBot.create(:template_infra)
       expect(controller.parent_folder_id(vm_arch)).to eq('xx-arch')
       expect(controller.parent_folder_id(template_arch)).to eq('xx-arch')
     end
 
     it 'returns id of Availability Zone folder for Cloud VM that has one' do
-      vm_cloud_with_az = FactoryGirl.create(:vm_cloud,
-                                            :ext_management_system => FactoryGirl.create(:ems_google),
-                                            :storage               => FactoryGirl.create(:storage),
-                                            :availability_zone     => FactoryGirl.create(:availability_zone_google))
+      vm_cloud_with_az = FactoryBot.create(:vm_cloud,
+                                            :ext_management_system => FactoryBot.create(:ems_google),
+                                            :storage               => FactoryBot.create(:storage),
+                                            :availability_zone     => FactoryBot.create(:availability_zone_google))
       expect(controller.parent_folder_id(vm_cloud_with_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_with_az.availability_zone))
     end
 
     it 'returns id of Provider folder for Cloud VM without Availability Zone' do
-      vm_cloud_without_az = FactoryGirl.create(:vm_cloud,
-                                               :ext_management_system => FactoryGirl.create(:ems_google),
-                                               :storage               => FactoryGirl.create(:storage),
+      vm_cloud_without_az = FactoryBot.create(:vm_cloud,
+                                               :ext_management_system => FactoryBot.create(:ems_google),
+                                               :storage               => FactoryBot.create(:storage),
                                                :availability_zone     => nil)
       expect(controller.parent_folder_id(vm_cloud_without_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_without_az.ext_management_system))
     end
 
     it 'returns id of Provider folder for Cloud Template' do
-      template_cloud = FactoryGirl.create(:template_cloud,
-                                          :ext_management_system => FactoryGirl.create(:ems_google),
-                                          :storage               => FactoryGirl.create(:storage))
+      template_cloud = FactoryBot.create(:template_cloud,
+                                          :ext_management_system => FactoryBot.create(:ems_google),
+                                          :storage               => FactoryBot.create(:storage))
       expect(controller.parent_folder_id(template_cloud)).to eq(TreeBuilder.build_node_cid(template_cloud.ext_management_system))
     end
 
     it 'returns id of Provider folder for infra VM/Template without blue folder' do
-      vm_infra = FactoryGirl.create(:vm_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
-      template_infra = FactoryGirl.create(:template_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
+      vm_infra = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
+      template_infra = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_infra))
       expect(controller.parent_folder_id(vm_infra)).to eq(TreeBuilder.build_node_cid(vm_infra.ext_management_system))
       expect(controller.parent_folder_id(template_infra)).to eq(TreeBuilder.build_node_cid(template_infra.ext_management_system))
     end
 
     it 'returns id of Datacenter folder for infra VM/Template without blue folder but with Datacenter parent' do
-      datacenter = FactoryGirl.create(:datacenter, :hidden => true)
-      vm_infra_datacenter = FactoryGirl.create(:vm_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
-      template_infra_datacenter = FactoryGirl.create(:template_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
+      datacenter = FactoryBot.create(:datacenter, :hidden => true)
+      vm_infra_datacenter = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
+      template_infra_datacenter = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_infra))
       vm_infra_datacenter.with_relationship_type("ems_metadata") { vm_infra_datacenter.parent = datacenter }
       allow(vm_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
       template_infra_datacenter.with_relationship_type("ems_metadata") { template_infra_datacenter.parent = datacenter }
@@ -269,11 +269,11 @@ describe VmOrTemplateController do
     end
 
     it 'returns id of blue folder for VM/Template with one' do
-      folder = FactoryGirl.create(:ems_folder)
-      vm_infra_folder = FactoryGirl.create(:vm_infra, :ext_management_system => FactoryGirl.create(:ems_infra))
+      folder = FactoryBot.create(:ems_folder)
+      vm_infra_folder = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
       vm_infra_folder.with_relationship_type("ems_metadata") { vm_infra_folder.parent = folder } # add folder
-      template_infra_folder = FactoryGirl.create(:template_infra,
-                                                 :ext_management_system => FactoryGirl.create(:ems_infra))
+      template_infra_folder = FactoryBot.create(:template_infra,
+                                                 :ext_management_system => FactoryBot.create(:ems_infra))
       template_infra_folder.with_relationship_type("ems_metadata") { template_infra_folder.parent = folder } # add folder
       expect(controller.parent_folder_id(vm_infra_folder)).to eq(TreeBuilder.build_node_cid(folder))
       expect(controller.parent_folder_id(template_infra_folder)).to eq(TreeBuilder.build_node_cid(folder))
@@ -287,8 +287,8 @@ describe VmOrTemplateController do
       end
     end
     before do
-      login_as FactoryGirl.create(:user_with_group, :role => "operator")
-      @vm_arch = FactoryGirl.create(:vm)
+      login_as FactoryBot.create(:user_with_group, :role => "operator")
+      @vm_arch = FactoryBot.create(:vm)
     end
 
     it 'when VM hidden select parent in tree but show VMs info' do
@@ -310,7 +310,7 @@ describe VmOrTemplateController do
 
   context '#evm_relationship_get_form_vars' do
     before do
-      @vm = FactoryGirl.create(:vm_vmware)
+      @vm = FactoryBot.create(:vm_vmware)
       edit = {:vm_id => @vm.id, :new => {:server => nil}}
       controller.instance_variable_set(:@edit, edit)
     end

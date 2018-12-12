@@ -2,22 +2,22 @@ describe TreeBuilderComplianceHistory do
   context 'TreeBuilderComplianceHistory' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Compliance History Group")
-      login_as FactoryGirl.create(:user, :userid => 'comliance_history__wilma', :miq_groups => [@group])
-      compliance_detail_one = FactoryGirl.create(:compliance_detail,
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Compliance History Group")
+      login_as FactoryBot.create(:user, :userid => 'comliance_history__wilma', :miq_groups => [@group])
+      compliance_detail_one = FactoryBot.create(:compliance_detail,
                                                  :miq_policy_id  => 1234,
                                                  :condition_desc => "I am first condition")
-      compliance_detail_two = FactoryGirl.create(:compliance_detail,
+      compliance_detail_two = FactoryBot.create(:compliance_detail,
                                                  :miq_policy_id  => 1234,
                                                  :condition_desc => "I am second condition")
-      compliance_detail_negative = FactoryGirl.create(:compliance_detail,
+      compliance_detail_negative = FactoryBot.create(:compliance_detail,
                                                       :miq_policy_id     => 1111,
                                                       :miq_policy_result => false,
                                                       :condition_result  => false)
       compliance_details = [compliance_detail_one, compliance_detail_two, compliance_detail_negative]
-      empty_compliance = FactoryGirl.create(:compliance)
-      compliance = FactoryGirl.create(:compliance, :compliance_details => compliance_details)
-      root = FactoryGirl.create(:host, :compliances => [empty_compliance, compliance])
+      empty_compliance = FactoryBot.create(:compliance)
+      compliance = FactoryBot.create(:compliance, :compliance_details => compliance_details)
+      root = FactoryBot.create(:host, :compliances => [empty_compliance, compliance])
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, {}, true, root)
     end
     it 'is not lazy' do
