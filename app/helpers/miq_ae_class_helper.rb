@@ -35,9 +35,7 @@ module MiqAeClassHelper
   def record_name(rec)
     column   = rec.display_name.blank? ? :name : :display_name
     rec_name = if rec.kind_of?(MiqAeNamespace) && rec.domain?
-                 editable_domain?(rec) && rec.enabled ? rec.send(column) : add_read_only_suffix(rec.send(column),
-                                                                                                editable_domain?(rec),
-                                                                                                rec.enabled)
+                 editable_domain?(rec) && rec.enabled ? rec.send(column) : add_read_only_suffix(rec.send(column), editable_domain?(rec), rec.enabled)
                else
                  rec.send(column)
                end
@@ -64,7 +62,7 @@ module MiqAeClassHelper
   end
 
   def nonblank(*items)
-    items.detect { |item| !item.blank? }
+    items.detect(&:present?)
   end
 
   def ae_field_fonticon(field)
