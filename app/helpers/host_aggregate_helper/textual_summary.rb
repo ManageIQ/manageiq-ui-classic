@@ -16,7 +16,7 @@ module HostAggregateHelper::TextualSummary
   def textual_hosts
     num   = @record.number_of(:hosts)
     h     = {:label => _('Hosts'), :icon => "pficon pficon-container-node", :value => num}
-    if num > 0 && role_allows?(:feature => "host_show_list")
+    if num.positive? && role_allows?(:feature => "host_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hosts')
       h[:title] = _("Show all Hosts")
     end
@@ -26,7 +26,7 @@ module HostAggregateHelper::TextualSummary
   def textual_instances
     num   = @record.number_of(:vms)
     h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
       h[:title] = _("Show all Instances")
     end
