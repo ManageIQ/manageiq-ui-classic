@@ -13,8 +13,7 @@ module ProviderConfigurationManagerHelper
   def textual_hostname
     {:label => _("Hostname"),
      :icon  => "ff ff-configured-system",
-     :value => @record.hostname,
-    }
+     :value => @record.hostname, }
   end
 
   def textual_ipmi_present
@@ -33,8 +32,7 @@ module ProviderConfigurationManagerHelper
     {:label    => _("Provider"),
      :image    => @record.configuration_manager.decorate.fileicon,
      :value    => @record.configuration_manager.try(:name),
-     :explorer => true
-    }
+     :explorer => true}
   end
 
   def textual_zone
