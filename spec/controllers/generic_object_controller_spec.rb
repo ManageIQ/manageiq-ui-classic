@@ -1,20 +1,20 @@
 describe GenericObjectController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
   describe "#show" do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
-      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
-      generic_obj = FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      login_as FactoryBot.create(:user, :features => "none")
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show, :params => {:id => generic_obj.id}
     end
     it { expect(response.status).to eq(200) }
 
     it 'displays Generic Object association in the nested display list' do
-      generic_obj_defn = FactoryGirl.create(
+      generic_obj_defn = FactoryBot.create(
         :generic_object_definition,
         :name       => "test_definition",
         :properties => {
@@ -29,7 +29,7 @@ describe GenericObjectController do
           :methods      => %w(some_method)
         }
       )
-      generic_obj = FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show, :params => { :display => "cp", :id => generic_obj.id }
       expect(response.status).to eq(200)
 
@@ -41,8 +41,8 @@ describe GenericObjectController do
   describe "#show_list" do
     before do
       stub_user(:features => :all)
-      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
-      FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show_list
     end
     it { expect(response.status).to eq(200) }
@@ -51,16 +51,16 @@ describe GenericObjectController do
   describe "#tags_edit" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      user = FactoryGirl.create(:user_with_group)
+      user = FactoryBot.create(:user_with_group)
       stub_user(:features => :all)
-      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
-      @gobj = FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      @gobj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       allow(@gobj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag_1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag_2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@gobj).and_return([@tag1, @tag2])

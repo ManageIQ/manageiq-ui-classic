@@ -1,14 +1,14 @@
 describe CloudObjectStoreObjectController do
-  let(:object) { FactoryGirl.create(:cloud_object_store_object, :name => "cloud-object-store-container-01") }
-  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryGirl.create(:classification_tag, :name => "tag1", :parent => classification) }
-  let(:tag2) { FactoryGirl.create(:classification_tag, :name => "tag2", :parent => classification) }
+  let(:object) { FactoryBot.create(:cloud_object_store_object, :name => "cloud-object-store-container-01") }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
-    FactoryGirl.create(:tagging, :tag => tag1.tag, :taggable => object)
-    FactoryGirl.create(:tagging, :tag => tag2.tag, :taggable => object)
+    FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => object)
+    FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => object)
     stub_user(:features => :all)
   end
 
@@ -54,7 +54,7 @@ describe CloudObjectStoreObjectController do
 
   describe "delete object store object" do
     before do
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_object"
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")

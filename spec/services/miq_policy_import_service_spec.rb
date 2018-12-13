@@ -2,7 +2,7 @@ describe MiqPolicyImportService do
   let(:miq_policy_import_service) { described_class.new }
   let(:import_file_upload) { double("ImportFileUpload") }
   let(:miq_queue) do
-    FactoryGirl.create(:miq_queue, :class_name => "ImportFileUpload", :instance_id => 123, :method_name => "destroy")
+    FactoryBot.create(:miq_queue, :class_name => "ImportFileUpload", :instance_id => 123, :method_name => "destroy")
   end
 
   describe "#cancel_import" do

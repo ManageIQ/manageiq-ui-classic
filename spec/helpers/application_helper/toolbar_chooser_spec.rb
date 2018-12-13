@@ -29,20 +29,20 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
 
       it "should return namespaces toolbar on domain node" do
-        n1 = FactoryGirl.create(:miq_ae_namespace, :name => 'ns1', :priority => 10)
+        n1 = FactoryBot.create(:miq_ae_namespace, :name => 'ns1', :priority => 10)
         x_node_set("aen-#{n1.id}", :ae_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_automate)).to eq("miq_ae_domain_center_tb")
       end
 
       it "should return namespace toolbar on namespace node" do
-        n1 = FactoryGirl.create(:miq_ae_namespace, :parent => FactoryGirl.create(:miq_ae_domain))
+        n1 = FactoryBot.create(:miq_ae_namespace, :parent => FactoryBot.create(:miq_ae_domain))
         x_node_set("aen-#{n1.id}", :ae_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_automate)).to eq("miq_ae_namespace_center_tb")
       end
 
       it "should return tab specific toolbar on class node" do
-        n1 = FactoryGirl.create(:miq_ae_namespace, :parent => FactoryGirl.create(:miq_ae_domain))
-        c1 = FactoryGirl.create(:miq_ae_class, :namespace_id => n1.id, :name => "foo")
+        n1 = FactoryBot.create(:miq_ae_namespace, :parent => FactoryBot.create(:miq_ae_domain))
+        c1 = FactoryBot.create(:miq_ae_class, :namespace_id => n1.id, :name => "foo")
         x_node_set("aec-#{c1.id}", :ae_tree)
 
         @sb[:active_tab] = "props"
@@ -68,7 +68,7 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
 
       it "should return storage toolbar on root node" do
-        c1 = FactoryGirl.create(:storage, :name => "foo")
+        c1 = FactoryBot.create(:storage, :name => "foo")
         x_node_set("ds-#{c1.id}", :storage_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_storage)).to eq("storage_center_tb")
       end
@@ -83,13 +83,13 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
 
       it "should return storages_center toolbar on a datastore cluster node" do
-        d1 = FactoryGirl.create(:storage_cluster, :name => "foo")
+        d1 = FactoryBot.create(:storage_cluster, :name => "foo")
         x_node_set("dsc-#{d1.id}", :storage_pod_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_storage)).to eq("storages_center_tb")
       end
 
       it "should return storage toolbar on datastore node" do
-        c1 = FactoryGirl.create(:storage, :name => "foo")
+        c1 = FactoryBot.create(:storage, :name => "foo")
         x_node_set("ds-#{c1.id}", :storage_pod_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_storage)).to eq("storage_center_tb")
       end
@@ -156,7 +156,7 @@ describe ApplicationHelper, "ToolbarChooser" do
 
   describe '#x_view_toolbar_filename' do
     before do
-      @record = FactoryGirl.create(:inventory_root_group)
+      @record = FactoryBot.create(:inventory_root_group)
     end
 
     context 'when the active tab is summary' do

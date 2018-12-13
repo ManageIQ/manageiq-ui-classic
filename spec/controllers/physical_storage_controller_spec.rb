@@ -2,16 +2,16 @@ describe PhysicalStorageController do
   render_views
 
   let(:physical_storage) do
-    ems = FactoryGirl.create(:ems_physical_infra)
-    asset_detail = FactoryGirl.create(:asset_detail)
-    FactoryGirl.create(:physical_storage, :ems_id => ems.id, :id => 1, :asset_detail => asset_detail)
+    ems = FactoryBot.create(:ems_physical_infra)
+    asset_detail = FactoryBot.create(:asset_detail)
+    FactoryBot.create(:physical_storage, :ems_id => ems.id, :id => 1, :asset_detail => asset_detail)
   end
 
   before do
     stub_user(:features => :all)
-    EvmSpecHelper.local_miq_server(:zone => FactoryGirl.build(:zone))
+    EvmSpecHelper.local_miq_server(:zone => FactoryBot.build(:zone))
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryGirl.create(:user)
+    login_as FactoryBot.create(:user)
   end
 
   describe "#show_list" do

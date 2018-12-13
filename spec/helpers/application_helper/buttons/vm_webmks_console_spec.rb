@@ -1,12 +1,12 @@
 describe ApplicationHelper::Button::VmWebmksConsole do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     subject { button.visible? }
     context 'when record.vendor == vmware' do
-      let(:record) { FactoryGirl.create(:vm_vmware) }
+      let(:record) { FactoryBot.create(:vm_vmware) }
       it_behaves_like 'vm_console_visible?', 'WebMKS', :vm_vmware => true
     end
     context 'when record.vendor != vmware' do
@@ -26,8 +26,8 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     context 'when record.vendor == vmware (infra)' do
       let(:power_state) { 'on' }
       let(:api_version) { 6.5 }
-      let(:host) { FactoryGirl.create(:host_vmware_esx, :vmm_version => api_version) }
-      let(:record) { FactoryGirl.create(:vm_vmware, :host => host) }
+      let(:host) { FactoryBot.create(:host_vmware_esx, :vmm_version => api_version) }
+      let(:record) { FactoryBot.create(:vm_vmware, :host => host) }
 
       context 'and the power is on' do
         it_behaves_like 'vm_console_with_power_state_on_off',
@@ -58,8 +58,8 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     context 'when record.vendor == vmware (cloud)' do
       let(:power_state) { 'on' }
       let(:api_version) { 5.5 }
-      let(:ems) { FactoryGirl.create(:ems_vmware_cloud, :api_version => api_version) }
-      let(:record) { FactoryGirl.create(:vm_vmware_cloud, :ext_management_system => ems) }
+      let(:ems) { FactoryBot.create(:ems_vmware_cloud, :api_version => api_version) }
+      let(:record) { FactoryBot.create(:vm_vmware_cloud, :ext_management_system => ems) }
 
       context 'and the power is on' do
         it_behaves_like 'vm_console_with_power_state_on_off',

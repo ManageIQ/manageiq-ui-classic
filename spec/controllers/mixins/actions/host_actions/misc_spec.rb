@@ -3,8 +3,8 @@ describe Mixins::Actions::HostActions::Misc do
     let(:controller) do
       return HostController.new
     end
-    let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
-    let!(:host) { FactoryGirl.create(:host) }
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let!(:host) { FactoryBot.create(:host) }
 
     before do
       stub_user(:features => :all)

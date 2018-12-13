@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::UtilizationDownload do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:report) { FactoryGirl.create(:miq_report, :miq_report_results => []) }
+  let(:report) { FactoryBot.create(:miq_report, :miq_report_results => []) }
   let!(:button) { described_class.new(view_context, {}, {'layout' => 'miq_capacity_bottlenecks'}, {}) }
 
   context "Bottlenecks explorer" do

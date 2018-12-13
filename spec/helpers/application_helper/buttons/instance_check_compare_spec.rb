@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::InstanceCheckCompare do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:display) { nil }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   subject { described_class.new(view_context, {}, {'record' => record, 'display' => display}, {}) }
 
   describe '#visible?' do
@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::InstanceCheckCompare do
       it { expect(subject.visible?).to be_truthy }
     end
     context 'when record is kind of OrchestrationStack && display != instances' do
-      let(:record) { FactoryGirl.create(:orchestration_stack) }
+      let(:record) { FactoryBot.create(:orchestration_stack) }
       it { expect(subject.visible?).to be_truthy }
     end
     context 'when record is an OrchestrationStack && display == instances' do
-      let(:record) { FactoryGirl.create(:orchestration_stack) }
+      let(:record) { FactoryBot.create(:orchestration_stack) }
       let(:display) { 'instances' }
       it { expect(subject.visible?).to be_falsey }
     end

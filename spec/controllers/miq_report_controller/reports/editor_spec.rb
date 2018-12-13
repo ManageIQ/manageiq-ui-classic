@@ -33,7 +33,7 @@ describe ReportController do
       let(:user) { stub_user(:features => :all) }
 
       let(:chargeback_report) do
-        FactoryGirl.create(:miq_report,
+        FactoryBot.create(:miq_report,
                            :db         => "ChargebackVm",
                            :name       => 'name',
                            :title      => 'title',
@@ -122,7 +122,7 @@ describe ReportController do
         user.save!
         ApplicationController.handle_exceptions = true
 
-        rep = FactoryGirl.create(
+        rep = FactoryBot.create(
           :miq_report,
           :rpt_type   => "Custom",
           :miq_group  => user.current_group,
@@ -161,12 +161,12 @@ describe ReportController do
       end
 
       it "should allow user with miq_report_edit access to edit a report" do
-        user = FactoryGirl.create(:user, :features => %w(miq_report_edit))
+        user = FactoryBot.create(:user, :features => %w(miq_report_edit))
         login_as user
         EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
         ApplicationController.handle_exceptions = true
 
-        rep = FactoryGirl.create(
+        rep = FactoryBot.create(
           :miq_report,
           :rpt_type   => "Custom",
           :miq_group  => user.current_group,
@@ -187,7 +187,7 @@ describe ReportController do
       end
 
       it "should allow user with miq_report_new access to add a new report" do
-        login_as FactoryGirl.create(:user, :features => %w(miq_report_new))
+        login_as FactoryBot.create(:user, :features => %w(miq_report_new))
         EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
         ApplicationController.handle_exceptions = true
 
@@ -201,9 +201,9 @@ describe ReportController do
     end
 
     describe "set_form_vars" do
-      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:chargeback_report) do
-        FactoryGirl.create(:miq_report, :db => "ChargebackVm", :col_order => ["name"], :headers => ["Name"])
+        FactoryBot.create(:miq_report, :db => "ChargebackVm", :col_order => ["name"], :headers => ["Name"])
       end
 
       let(:fake_id) { 999_999_999 }
@@ -243,14 +243,14 @@ describe ReportController do
     end
 
     def non_empty_category(attrs = {})
-      cat = FactoryGirl.create(:classification, :name => "non_empty", :description => "Has entries", **attrs)
+      cat = FactoryBot.create(:classification, :name => "non_empty", :description => "Has entries", **attrs)
       cat.add_entry(:name => "foo", :description => "Foo")
       cat.add_entry(:name => "bar", :description => "Bar")
       cat
     end
 
     def empty_category(attrs = {})
-      FactoryGirl.create(:classification, :name => "empty", :description => "Zero entries", **attrs)
+      FactoryBot.create(:classification, :name => "empty", :description => "Zero entries", **attrs)
     end
 
     describe "#categories_hash" do
@@ -292,7 +292,7 @@ describe ReportController do
                                                         :cb_show_typ => 'entity',
                                                         :cb_model    => 'ContainerProject'})
       controller.instance_variable_set(:@sb, {})
-      rpt = FactoryGirl.create(:miq_report_chargeback)
+      rpt = FactoryBot.create(:miq_report_chargeback)
       controller.send(:valid_report?, rpt)
       flash_messages = assigns(:flash_array)
       flash_str = 'A specific Container Project or all must be selected'
@@ -307,7 +307,7 @@ describe ReportController do
 
   describe '#build_edit_screen' do
     let(:default_tenant) { Tenant.seed }
-    let(:user) { FactoryGirl.create(:user_with_group, :tenant => default_tenant) }
+    let(:user) { FactoryBot.create(:user_with_group, :tenant => default_tenant) }
     let(:user_group) do
       group = user.miq_groups.first
       group.tenant = default_tenant
@@ -316,7 +316,7 @@ describe ReportController do
     end
 
     let(:chargeback_report) do
-      FactoryGirl.create(:miq_report, :db => 'ChargebackVm', :db_options => {:options => {:owner => user.userid}},
+      FactoryBot.create(:miq_report, :db => 'ChargebackVm', :db_options => {:options => {:owner => user.userid}},
                                     :col_order => ['name'], :headers => ['Name'])
     end
 

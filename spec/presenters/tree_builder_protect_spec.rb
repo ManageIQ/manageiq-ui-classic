@@ -2,17 +2,17 @@ describe TreeBuilderProtect do
   context 'TreeBuilderProtect' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Select Policy Profiles")
-      login_as FactoryGirl.create(:user, :userid => 'policy_profile_wilma', :miq_groups => [@group])
-      policy1 = FactoryGirl.create(:miq_policy, :mode => 'compliance', :active => false)
-      set1 = FactoryGirl.create(:miq_policy_set, :description => 'first')
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Select Policy Profiles")
+      login_as FactoryBot.create(:user, :userid => 'policy_profile_wilma', :miq_groups => [@group])
+      policy1 = FactoryBot.create(:miq_policy, :mode => 'compliance', :active => false)
+      set1 = FactoryBot.create(:miq_policy_set, :description => 'first')
       set1.add_member(policy1)
       set1.save!
       allow(set1).to receive(:active).and_return(true)
       allow(set1).to receive(:members).and_return([policy1])
-      set2 = FactoryGirl.create(:miq_policy_set, :description => 'second')
+      set2 = FactoryBot.create(:miq_policy_set, :description => 'second')
       allow(set2).to receive(:active).and_return(true)
-      set3 = FactoryGirl.create(:miq_policy_set, :description => 'third')
+      set3 = FactoryBot.create(:miq_policy_set, :description => 'third')
       allow(set3).to receive(:active).and_return(false)
       @roots = [set1, set2, set3].sort_by! { |profile| profile.description.downcase }
       @kids = [policy1]

@@ -9,7 +9,7 @@ describe MiqPolicyController do
     it "first time on RSOP screen, session[:changed] should be false" do
       session[:changed] = true
       controller.instance_variable_set(:@current_user,
-                                       FactoryGirl.create(:user,
+                                       FactoryBot.create(:user,
                                                           :name       => "foo",
                                                           :miq_groups => [],
                                                           :userid     => "foo"))

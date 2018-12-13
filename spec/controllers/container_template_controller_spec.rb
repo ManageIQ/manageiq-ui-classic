@@ -12,7 +12,7 @@ describe ContainerTemplateController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_template = ContainerTemplate.create(:ext_management_system => ems, :name => "Test Template")
     get :show, :params => { :id => container_template.id }
     expect(response.status).to eq(200)
@@ -38,7 +38,7 @@ describe ContainerTemplateController do
 
   it "renders grid view" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_template = ContainerTemplate.create(:ext_management_system => ems, :name => "Test Template")
 
     session[:settings] = {

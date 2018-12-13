@@ -1,8 +1,8 @@
 describe MiqAeClassController do
   context "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       ns_id = cls.namespace_id
       new = {:name => "New Name", :description => "New Description", :display_name => "Display Name", :inherits => "Some_Class"}
       controller.instance_variable_set(:@sb,
@@ -18,8 +18,8 @@ describe MiqAeClassController do
 
   context "#set_right_cell_text" do
     it "check if correct namespace_path is being set" do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       controller.instance_variable_set(:@sb, {})
       id = "aec-#{cls.id}"
       fq_name = cls.fqname
@@ -36,7 +36,7 @@ describe MiqAeClassController do
   context "#domain_lock" do
     it "Marks domain as locked/readonly" do
       stub_user(:features => :all)
-      ns = FactoryGirl.create(:miq_ae_domain_enabled)
+      ns = FactoryBot.create(:miq_ae_domain_enabled)
       controller.instance_variable_set(:@_params, :id => ns.id)
       allow(controller).to receive(:replace_right_cell)
       controller.send(:domain_lock)
@@ -48,7 +48,7 @@ describe MiqAeClassController do
   context "#domain_unlock" do
     it "Marks domain as unlocked/editable" do
       stub_user(:features => :all)
-      ns = FactoryGirl.create(:miq_ae_domain_disabled)
+      ns = FactoryBot.create(:miq_ae_domain_disabled)
       controller.instance_variable_set(:@_params, :id => ns.id)
       allow(controller).to receive(:replace_right_cell)
       controller.send(:domain_unlock)
@@ -60,10 +60,10 @@ describe MiqAeClassController do
   context "#domains_priority_edit" do
     it "sets priority of domains" do
       stub_user(:features => :all)
-      FactoryGirl.create(:miq_ae_domain, :name => "test1", :parent => nil, :priority => 1)
-      FactoryGirl.create(:miq_ae_domain, :name => "test2", :parent => nil, :priority => 2)
-      FactoryGirl.create(:miq_ae_domain, :name => "test3", :parent => nil, :priority => 3)
-      FactoryGirl.create(:miq_ae_domain, :name => "test4", :parent => nil, :priority => 4)
+      FactoryBot.create(:miq_ae_domain, :name => "test1", :parent => nil, :priority => 1)
+      FactoryBot.create(:miq_ae_domain, :name => "test2", :parent => nil, :priority => 2)
+      FactoryBot.create(:miq_ae_domain, :name => "test3", :parent => nil, :priority => 3)
+      FactoryBot.create(:miq_ae_domain, :name => "test4", :parent => nil, :priority => 4)
       order = %w(test3 test2 test4 test1)
       edit = {
         :new     => {:domain_order => order},
@@ -85,9 +85,9 @@ describe MiqAeClassController do
   context "#copy_objects" do
     it "do not replace left side explorer tree when copy form is loaded initially" do
       stub_user(:features => :all)
-      d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-      cls1 = FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+      d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       node = "aec-#{cls1.id}"
       controller.instance_variable_set(:@sb,
@@ -104,12 +104,12 @@ describe MiqAeClassController do
 
     it "copies class under specified namespace" do
       stub_user(:features => :all)
-      d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-      cls1 = FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+      d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
-      d2 = FactoryGirl.create(:miq_ae_domain, :name => "domain2")
-      ns2 = FactoryGirl.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
+      d2 = FactoryBot.create(:miq_ae_domain, :name => "domain2")
+      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
 
       new = {:domain => d2.id, :namespace => ns2.fqname, :overwrite_location => false}
       selected_items = {cls1.id => cls1.name}
@@ -134,9 +134,9 @@ describe MiqAeClassController do
 
     it "copy class under same namespace returns error when class exists" do
       stub_user(:features => :all)
-      d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-      cls1 = FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+      d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       new = {:domain => d1.id, :namespace => ns1.fqname, :overwrite_location => false}
       selected_items = {cls1.id => cls1.name}
@@ -161,12 +161,12 @@ describe MiqAeClassController do
 
     it "overwrite class under same namespace when class exists" do
       stub_user(:features => :all)
-      d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-      cls1 = FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+      d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
-      d2 = FactoryGirl.create(:miq_ae_domain)
-      ns2 = FactoryGirl.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
+      d2 = FactoryBot.create(:miq_ae_domain)
+      ns2 = FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => d2.id)
 
       new = {:domain => d2.id, :namespace => ns2.fqname, :override_existing => true}
       selected_items = {cls1.id => cls1.name}
@@ -190,9 +190,9 @@ describe MiqAeClassController do
 
     it "copies a class with new name under same domain" do
       stub_user(:features => :all)
-      d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-      ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-      cls1 = FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+      d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+      ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+      cls1 = FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
 
       new = {:domain => d1.id, :namespace => ns1.fqname, :override_existing => true, :new_name => 'foo'}
       selected_items = {cls1.id => cls1.name}
@@ -273,7 +273,7 @@ describe MiqAeClassController do
     end
 
     before do
-      @user =  FactoryGirl.create(:user_with_group)
+      @user =  FactoryBot.create(:user_with_group)
       login_as @user
       allow(MiqAeDomain).to receive(:find_by_name).with("another_fqname").and_return(miq_ae_domain)
       allow(MiqAeDomain).to receive(:find_by_name).with("another_fqname2").and_return(miq_ae_domain2)
@@ -282,10 +282,10 @@ describe MiqAeClassController do
     context "#node_info" do
       it "collect namespace info" do
         stub_user(:features => :all)
-        d1 = FactoryGirl.create(:miq_ae_domain, :name => "domain1")
-        ns1 = FactoryGirl.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
-        FactoryGirl.create(:miq_ae_namespace, :name => "ns2", :parent_id => ns1.id)
-        FactoryGirl.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
+        d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
+        ns1 = FactoryBot.create(:miq_ae_namespace, :name => "ns1", :parent_id => d1.id)
+        FactoryBot.create(:miq_ae_namespace, :name => "ns2", :parent_id => ns1.id)
+        FactoryBot.create(:miq_ae_class, :name => "cls1", :namespace_id => ns1.id)
         node = "aen-#{ns1.id}"
         controller.instance_variable_set(:@sb,
                                          :active_tree => :ae_tree,
@@ -396,9 +396,9 @@ describe MiqAeClassController do
   end
 
   context "#delete_domain" do
-    let(:domain1) { FactoryGirl.create(:miq_ae_system_domain_enabled) }
-    let(:domain2) { FactoryGirl.create(:miq_ae_domain_enabled) }
-    let(:domain3) { FactoryGirl.create(:miq_ae_git_domain) }
+    let(:domain1) { FactoryBot.create(:miq_ae_system_domain_enabled) }
+    let(:domain2) { FactoryBot.create(:miq_ae_domain_enabled) }
+    let(:domain3) { FactoryBot.create(:miq_ae_git_domain) }
     let(:ids) { "aen-#{domain1.id}, aen-#{domain2.id}, aen-#{domain3.id}, aen-someid" }
     let(:git_service) { double("GitBasedDomainImportService") }
 
@@ -426,12 +426,12 @@ describe MiqAeClassController do
   context "#ae_class_validation" do
     before do
       stub_user(:features => :all)
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      @cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
-      @cls.ae_fields << FactoryGirl.create(:miq_ae_field, :name => 'fred',
+      ns = FactoryBot.create(:miq_ae_namespace)
+      @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      @cls.ae_fields << FactoryBot.create(:miq_ae_field, :name => 'fred',
                                            :class_id => @cls.id, :priority => 1)
       @cls.save
-      @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
+      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
         :language => "ruby", :class_id => @cls.id, :data => "exit MIQ_OK", :location => "inline")
       expect(controller).to receive(:render)
       controller.instance_variable_set(:@sb, :trees       => {:ae_tree => {:active_node => "aec-#{@cls.id}"}},
@@ -538,15 +538,15 @@ describe MiqAeClassController do
   context "save class/method" do
     before do
       stub_user(:features => :all)
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      @cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
-      @cls.ae_fields << FactoryGirl.create(:miq_ae_field,
+      ns = FactoryBot.create(:miq_ae_namespace)
+      @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      @cls.ae_fields << FactoryBot.create(:miq_ae_field,
                                            :name          => 'fred',
                                            :class_id      => @cls.id,
                                            :default_value => "Wilma",
                                            :priority      => 1)
       @cls.save
-      @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
+      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
         :language => "ruby", :class_id => @cls.id, :data => "exit MIQ_OK", :location => "inline")
       allow(controller).to receive(:replace_right_cell)
       controller.instance_variable_set(:@sb, :trees       => {:ae_tree => {:active_node => "aec-#{@cls.id}"}},
@@ -667,10 +667,10 @@ describe MiqAeClassController do
 
   context "#copy_objects_edit_screen" do
     it "sets only current tenant's domains to be displayed in To Domain pull down" do
-      FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      FactoryGirl.create(:miq_ae_domain, :tenant => FactoryGirl.create(:tenant))
+      FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      FactoryBot.create(:miq_ae_domain, :tenant => FactoryBot.create(:tenant))
       controller.instance_variable_set(:@sb, {})
-      ns = FactoryGirl.create(:miq_ae_namespace)
+      ns = FactoryBot.create(:miq_ae_namespace)
       controller.send(:copy_objects_edit_screen, MiqAeNamespace, [ns.id], "miq_ae_namespace_copy")
       expect(assigns(:edit)[:domains].count).to eq(1)
     end
@@ -679,9 +679,9 @@ describe MiqAeClassController do
   context "#delete_namespaces_or_classes" do
     before do
       stub_user(:features => :all)
-      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryGirl.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
-      @ae_class = FactoryGirl.create(:miq_ae_class, :name => "foo_class", :namespace_id => 1)
+      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
+      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => 1)
       controller.instance_variable_set(:@sb,
                                        :trees       => {},
                                        :active_tree => :ae_tree)
@@ -723,8 +723,8 @@ describe MiqAeClassController do
   context "#update_namespace" do
     before do
       stub_user(:features => :all)
-      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryGirl.create(:miq_ae_namespace,
+      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryBot.create(:miq_ae_namespace,
                                       :name        => "foo_namespace",
                                       :description => "foo_description",
                                       :parent      => domain)
@@ -767,9 +767,9 @@ describe MiqAeClassController do
   context "#deleteclasses" do
     before do
       stub_user(:features => :all)
-      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryGirl.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
-      @ae_class = FactoryGirl.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
+      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
+      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {},
                                        :active_tree => :ae_tree)
@@ -790,15 +790,15 @@ describe MiqAeClassController do
 
   context "#set_field_vars" do
     it "sets priority of new schema fields" do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
-      field1 = FactoryGirl.create(:miq_ae_field,
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      field1 = FactoryBot.create(:miq_ae_field,
                                   "aetype"   => "attribute",
                                   "datatype" => "string",
                                   "name"     => "name01",
                                   "class_id" => cls.id,
                                   "priority" => 1)
-      field2 = FactoryGirl.create(:miq_ae_field,
+      field2 = FactoryBot.create(:miq_ae_field,
                                   "aetype"   => "attribute",
                                   "datatype" => "string",
                                   "name"     => "name02",
@@ -818,15 +818,15 @@ describe MiqAeClassController do
 
   context "#fields_seq_field_changed" do
     before do
-      ns = FactoryGirl.create(:miq_ae_namespace, :name => 'foo')
-      @cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
-      FactoryGirl.create(:miq_ae_field,
+      ns = FactoryBot.create(:miq_ae_namespace, :name => 'foo')
+      @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
+      FactoryBot.create(:miq_ae_field,
                          :aetype   => "attribute",
                          :datatype => "string",
                          :name     => "name01",
                          :class_id => @cls.id,
                          :priority => 1)
-      FactoryGirl.create(:miq_ae_field,
+      FactoryBot.create(:miq_ae_field,
                          :aetype   => "attribute",
                          :datatype => "string",
                          :name     => "name02",
@@ -855,8 +855,8 @@ describe MiqAeClassController do
 
   context "#replace_right_cell" do
     before do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id)
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       seed_session_trees('miq_ae_class', :ae, "aec-#{cls.id}")
       session_to_sb
     end
@@ -880,7 +880,7 @@ describe MiqAeClassController do
   context "method data edit" do
     before do
       stub_user(:features => :all)
-      @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
+      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
                                    :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
       controller.instance_variable_set(:@sb, :trees => {:ae_tree => {:active_node => "aec-someid"}},
                                        :active_tree => :ae_tree, :form_vars_set => true)
@@ -912,9 +912,9 @@ describe MiqAeClassController do
 
   context "#open_parent_nodes" do
     it "returns parent nodes hash for newly added item in tree" do
-      ns = FactoryGirl.create(:miq_ae_namespace)
-      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
-      method = FactoryGirl.create(:miq_ae_method,
+      ns = FactoryBot.create(:miq_ae_namespace)
+      cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
+      method = FactoryBot.create(:miq_ae_method,
                                   :name     => "method01",
                                   :scope    => "class",
                                   :language => "ruby",
@@ -956,13 +956,13 @@ describe MiqAeClassController do
   context "#deleteinstances" do
     before do
       stub_user(:features => :all)
-      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryGirl.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
-      @ae_class = FactoryGirl.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
+      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
+      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {},
                                        :active_tree => :ae_tree)
-      @instance = FactoryGirl.create(:miq_ae_instance, :name => "instance01", :class_id => @ae_class.id)
+      @instance = FactoryBot.create(:miq_ae_instance, :name => "instance01", :class_id => @ae_class.id)
       allow(controller).to receive(:replace_right_cell)
     end
 
@@ -993,15 +993,15 @@ describe MiqAeClassController do
   context "#deletemethods" do
     before do
       stub_user(:features => :all)
-      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryGirl.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
-      @ae_class = FactoryGirl.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
+      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
+      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {},
                                        :active_tree => :ae_tree)
-      @method = FactoryGirl.create(:miq_ae_method, :name => "method01", :scope => "class",
+      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
                                    :language => "ruby", :class_id => @ae_class.id, :data => "exit MIQ_OK", :location => "inline")
-      @method2 = FactoryGirl.create(:miq_ae_method, :name => "method012", :scope => "class",
+      @method2 = FactoryBot.create(:miq_ae_method, :name => "method012", :scope => "class",
                                    :language => "ruby", :class_id => @ae_class.id, :data => "exit MIQ_OK", :location => "inline")
       allow(controller).to receive(:replace_right_cell)
     end

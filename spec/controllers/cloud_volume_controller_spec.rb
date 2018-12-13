@@ -3,13 +3,13 @@ describe CloudVolumeController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @volume = FactoryGirl.create(:cloud_volume, :name => "cloud-volume-01")
+      @volume = FactoryBot.create(:cloud_volume, :name => "cloud-volume-01")
       allow(@volume).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@volume).and_return([@tag1, @tag2])
@@ -52,11 +52,11 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @backup = FactoryGirl.create(:cloud_volume_backup)
+      @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
     context "#create_backup" do
@@ -92,9 +92,9 @@ describe CloudVolumeController do
 
   describe "#new" do
     let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_volume_new)) }
-    let(:role)    { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
-    let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
-    let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+    let(:role)    { FactoryBot.create(:miq_user_role, :miq_product_features => feature) }
+    let(:group)   { FactoryBot.create(:miq_group, :miq_user_role => role) }
+    let(:user)    { FactoryBot.create(:user, :miq_groups => [group]) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -115,9 +115,9 @@ describe CloudVolumeController do
     render_views
 
     let(:features) { MiqProductFeature.find_all_by_identifier(%w(cloud_volume_new cloud_tenant_show_list)) }
-    let(:role)    { FactoryGirl.create(:miq_user_role, :miq_product_features => features) }
-    let(:group)   { FactoryGirl.create(:miq_group, :miq_user_role => role) }
-    let(:user)    { FactoryGirl.create(:user, :miq_groups => [group]) }
+    let(:role)    { FactoryBot.create(:miq_user_role, :miq_product_features => features) }
+    let(:group)   { FactoryBot.create(:miq_group, :miq_user_role => role) }
+    let(:user)    { FactoryBot.create(:user, :miq_groups => [group]) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -138,11 +138,11 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @backup = FactoryGirl.create(:cloud_volume_backup)
+      @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
     context "#restore_backup" do
@@ -180,11 +180,11 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @snapshot = FactoryGirl.create(:cloud_volume_snapshot)
+      @snapshot = FactoryBot.create(:cloud_volume_snapshot)
     end
 
     context "#create_snapshot" do
@@ -255,8 +255,8 @@ describe CloudVolumeController do
 
     context "in OpenStack cloud" do
       before do
-        @ems = FactoryGirl.create(:ems_openstack)
-        @tenant = FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => @ems)
+        @ems = FactoryBot.create(:ems_openstack)
+        @tenant = FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => @ems)
 
         @form_params = { :name => "volume", :size => 1, :cloud_tenant_id => @tenant.id,
                          :emstype => "ManageIQ::Providers::StorageManager::CinderManager" }
@@ -268,9 +268,9 @@ describe CloudVolumeController do
 
     context "in Amazon EBS" do
       before do
-        @cloud_manager = FactoryGirl.create(:ems_amazon)
-        @ems = FactoryGirl.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
-        @availability_zone = FactoryGirl.create(:availability_zone,
+        @cloud_manager = FactoryBot.create(:ems_amazon)
+        @ems = FactoryBot.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
+        @availability_zone = FactoryBot.create(:availability_zone,
                                                 :ems_ref               => "us-east-1e",
                                                 :ext_management_system => @cloud_manager)
 

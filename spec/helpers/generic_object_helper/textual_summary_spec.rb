@@ -2,8 +2,8 @@ describe GenericObjectHelper::TextualSummary do
   context "Textual Properties for GO instances" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @generic_obj_defn = FactoryGirl.create(
+      login_as FactoryBot.create(:user)
+      @generic_obj_defn = FactoryBot.create(
         :generic_object_definition,
         :name       => "test_definition",
         :properties => {
@@ -18,11 +18,11 @@ describe GenericObjectHelper::TextualSummary do
           :methods      => %w(some_method)
         }
       )
-      @generic_obj_defn_with_no_properties = FactoryGirl.create(:generic_object_definition)
+      @generic_obj_defn_with_no_properties = FactoryBot.create(:generic_object_definition)
     end
 
     it "displays the GO Attributes in the name/value format when Attributes exist" do
-      @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id, :flag => true)
+      @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id, :flag => true)
 
       expected = TextualMultilabel.new(
         "Attributes",
@@ -35,7 +35,7 @@ describe GenericObjectHelper::TextualSummary do
     end
 
     it "displays 'No Attributes defined' when Attributes do not exist" do
-      @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
+      @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
       expected = TextualEmpty.new('Attributes', 'No Attributes defined')
 
@@ -43,10 +43,10 @@ describe GenericObjectHelper::TextualSummary do
     end
 
     it "displays the GO Associations when Associations exist" do
-      vm1 = FactoryGirl.create(:vm_vmware)
-      vm2 = FactoryGirl.create(:vm_openstack)
-      ems = FactoryGirl.create(:ems_cloud)
-      @record = FactoryGirl.create(:generic_object,
+      vm1 = FactoryBot.create(:vm_vmware)
+      vm2 = FactoryBot.create(:vm_openstack)
+      ems = FactoryBot.create(:ems_cloud)
+      @record = FactoryBot.create(:generic_object,
                                    :generic_object_definition_id => @generic_obj_defn.id,
                                    :cp                           => [ems],
                                    :vms                          => [vm1, vm2])
@@ -57,7 +57,7 @@ describe GenericObjectHelper::TextualSummary do
     end
 
     it "displays 'No Associations defined' when do not Associations exist" do
-      @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
+      @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
       expected = TextualEmpty.new('Associations', 'No Associations defined')
 
@@ -65,7 +65,7 @@ describe GenericObjectHelper::TextualSummary do
     end
 
     it "displays the GO Methods when Methods exist" do
-      @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
+      @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
       expected = TextualGroup.new("Methods", %i(some_method))
 
@@ -73,7 +73,7 @@ describe GenericObjectHelper::TextualSummary do
     end
 
     it "displays 'No Methods defined' when do not Methods exist" do
-      @record = FactoryGirl.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
+      @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
       expected = TextualEmpty.new('Methods', 'No Methods defined')
 

@@ -1,5 +1,5 @@
 describe TextualMixins::TextualDevices do
-  let(:host) { FactoryGirl.create(:host, :hardware => hw) }
+  let(:host) { FactoryBot.create(:host, :hardware => hw) }
   before do
     assign(:record, host)
   end
@@ -13,7 +13,7 @@ describe TextualMixins::TextualDevices do
     end
 
     context "with a hardware" do
-      let(:hw) { FactoryGirl.create(:hardware, :cpu1x1, :ram1GB) }
+      let(:hw) { FactoryBot.create(:hardware, :cpu1x1, :ram1GB) }
       it { is_expected.not_to be_empty }
     end
   end
@@ -22,14 +22,14 @@ describe TextualMixins::TextualDevices do
     subject { helper.disks_attributes }
 
     context "without hdd hardware" do
-      let(:hw) { FactoryGirl.create(:hardware, :cpu1x1, :ram1GB) }
+      let(:hw) { FactoryBot.create(:hardware, :cpu1x1, :ram1GB) }
       it { is_expected.to be_empty }
     end
 
     context "with hdd hardware" do
       let(:hw) do
-        FactoryGirl.create(:hardware,
-                           :disks => [FactoryGirl.create(:disk,
+        FactoryBot.create(:hardware,
+                           :disks => [FactoryBot.create(:disk,
                                                          :device_type     => "disk",
                                                          :device_name     => "HD01",
                                                          :controller_type => "scsi")])
@@ -39,8 +39,8 @@ describe TextualMixins::TextualDevices do
 
     context "with hdd with no size_on_disk collected (AZURE)" do
       let(:hw) do
-        FactoryGirl.create(:hardware,
-                           :disks => [FactoryGirl.create(:disk,
+        FactoryBot.create(:hardware,
+                           :disks => [FactoryBot.create(:disk,
                                                          :device_type     => "disk",
                                                          :device_name     => "HD01",
                                                          :size            => "1072693248",
@@ -52,8 +52,8 @@ describe TextualMixins::TextualDevices do
 
     context "with hdd with size_on_disk and percent provisioned collected (AZURE)" do
       let(:hw) do
-        FactoryGirl.create(:hardware,
-                           :disks => [FactoryGirl.create(:disk,
+        FactoryBot.create(:hardware,
+                           :disks => [FactoryBot.create(:disk,
                                                          :device_type     => "disk",
                                                          :device_name     => "CLIA566D60F38FB9ECC",
                                                          :location        => "https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd",
@@ -80,39 +80,39 @@ describe TextualMixins::TextualDevices do
     subject { helper.network_attributes }
 
     context "without network hardware" do
-      let(:hw) { FactoryGirl.create(:hardware, :cpu1x1, :ram1GB) }
+      let(:hw) { FactoryBot.create(:hardware, :cpu1x1, :ram1GB) }
       it { is_expected.to be_empty }
     end
 
     context "with network hardware" do
       let(:hw) do
-        FactoryGirl.create(:hardware,
-                           :guest_devices => [FactoryGirl.create(:guest_device_nic)])
+        FactoryBot.create(:hardware,
+                           :guest_devices => [FactoryBot.create(:guest_device_nic)])
       end
       it { is_expected.not_to be_empty }
     end
 
     context "with model type parsed" do
-      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :model => 'Vmxnet3')]) }
+      let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :model => 'Vmxnet3')]) }
       it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Vmxnet3", "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "without vswitch and portgroup" do
-      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic)]) }
+      let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic)]) }
       it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with vswitch and portgroup" do
-      let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'false') }
-      let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
-      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
+      let(:switch) { FactoryBot.create(:switch, :name => 'test_switch1', :shared => 'false') }
+      let(:lan) { FactoryBot.create(:lan, :name => "VM NFS Network", :switch => switch) }
+      let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :lan => lan)]) }
       it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
 
     context "with dvswitch and dvportgroup" do
-      let(:switch) { FactoryGirl.create(:switch, :name => 'test_switch1', :shared => 'true') }
-      let(:lan) { FactoryGirl.create(:lan, :name => "VM NFS Network", :switch => switch) }
-      let(:hw) { FactoryGirl.create(:hardware, :guest_devices => [FactoryGirl.create(:guest_device_nic, :lan => lan)]) }
+      let(:switch) { FactoryBot.create(:switch, :name => 'test_switch1', :shared => 'true') }
+      let(:lan) { FactoryBot.create(:lan, :name => "VM NFS Network", :switch => switch) }
+      let(:hw) { FactoryBot.create(:hardware, :guest_devices => [FactoryBot.create(:guest_device_nic, :lan => lan)]) }
       it { is_expected.to eq([Device.new("Ethernet #{hw.ports.first.name}", [hw.ports.first.address.to_s, "Default Adapter", "Network:VM NFS Network(Distributed Switch: test_switch1)"].compact.join(', '), nil, "ff ff-network-card")]) }
     end
   end

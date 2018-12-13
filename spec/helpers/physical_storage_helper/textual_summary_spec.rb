@@ -2,7 +2,7 @@ describe PhysicalStorageHelper::TextualSummary do
   include ApplicationHelper
 
   let(:ems) do
-    FactoryGirl.create(:physical_infra,
+    FactoryBot.create(:physical_infra,
                        :name      => 'LXCA',
                        :hostname  => 'my.physicalinfra.com',
                        :port      => '443',
@@ -10,7 +10,7 @@ describe PhysicalStorageHelper::TextualSummary do
   end
 
   let(:asset_detail) do
-    FactoryGirl.create(:asset_detail,
+    FactoryBot.create(:asset_detail,
                        :machine_type     => '6411',
                        :model            => 'S2200',
                        :contact          => 'Jonas Arioli',
@@ -25,11 +25,11 @@ describe PhysicalStorageHelper::TextualSummary do
   end
 
   let(:physical_rack) do
-    FactoryGirl.create(:physical_rack, :name => 'Rack XYZ')
+    FactoryBot.create(:physical_rack, :name => 'Rack XYZ')
   end
 
   let(:physical_storage) do
-    FactoryGirl.create(:physical_storage,
+    FactoryBot.create(:physical_storage,
                        :ems_id               => ems.id,
                        :uid_ems              => '208000C0FF2647DA',
                        :name                 => 'S2200-Test',

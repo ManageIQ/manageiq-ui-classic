@@ -2,7 +2,7 @@ describe ApplicationHelper::Button::CloudVolumeNew do
   describe '#disabled?' do
     it "when at least one provider supports volume create then the button is not disabled" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_openstack)
+      FactoryBot.create(:ems_openstack)
       button = described_class.new(view_context, {}, {}, {})
       expect(button.disabled?).to be false
     end
@@ -15,7 +15,7 @@ describe ApplicationHelper::Button::CloudVolumeNew do
 
     it "when only Amazon EBS storage manager is available, the button is not disabled" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_amazon_ebs)
+      FactoryBot.create(:ems_amazon_ebs)
       button = described_class.new(view_context, {}, {}, {})
       expect(button.disabled?).to be false
     end
@@ -31,7 +31,7 @@ describe ApplicationHelper::Button::CloudVolumeNew do
 
     it "when at least one provider supports volume create, the button has no error in the title" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_openstack)
+      FactoryBot.create(:ems_openstack)
       button = described_class.new(view_context, {}, {}, {})
       button.calculate_properties
       expect(button[:title]).to be nil
@@ -39,7 +39,7 @@ describe ApplicationHelper::Button::CloudVolumeNew do
 
     it "when only Amazon EBS storage manager is available, the button has no error in the title" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_amazon_ebs)
+      FactoryBot.create(:ems_amazon_ebs)
       button = described_class.new(view_context, {}, {}, {})
       button.calculate_properties
       expect(button[:title]).to be nil

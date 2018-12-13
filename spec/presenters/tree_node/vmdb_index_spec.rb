@@ -1,5 +1,5 @@
 describe TreeNode::VmdbIndex do
-  let(:object) { FactoryGirl.create(:vmdb_index, :name => 'foo') }
+  let(:object) { FactoryBot.create(:vmdb_index, :name => 'foo') }
   subject { described_class.new(object, nil, {}) }
 
   include_examples 'TreeNode::Node#key prefix', 'ti-'

@@ -12,7 +12,7 @@ describe ContainerServiceController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_service = ContainerService.create(:ext_management_system => ems, :name => "Test Service")
     get :show, :params => { :id => container_service.id }
     expect(response.status).to eq(200)
@@ -26,8 +26,8 @@ describe ContainerServiceController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @service = FactoryGirl.create(:container_service)
+      login_as FactoryBot.create(:user)
+      @service = FactoryBot.create(:container_service)
     end
 
     subject { get :show, :params => { :id => @service.id } }

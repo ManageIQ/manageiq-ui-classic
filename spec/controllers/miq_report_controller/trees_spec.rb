@@ -1,6 +1,6 @@
 describe ReportController do
   render_views
-  let(:user) { FactoryGirl.create(:user, :features => "none") }
+  let(:user) { FactoryBot.create(:user, :features => "none") }
   before do
     login_as user
     EvmSpecHelper.create_guid_miq_server_zone
@@ -25,22 +25,22 @@ describe ReportController do
         session[:settings] = {:perpage => {:reports => 20}}
         controller.instance_variable_set(:@html, "<h1>Test</h1>")
 
-        report = FactoryGirl.create(:miq_report_with_results)
-        task = FactoryGirl.create(:miq_task)
+        report = FactoryBot.create(:miq_report_with_results)
+        task = FactoryBot.create(:miq_task)
         task.update_attributes(:state => "Finished")
         task.reload
 
-        report_result = FactoryGirl.build(:miq_report_result,
+        report_result = FactoryBot.build(:miq_report_result,
                                            :miq_group_id => user.current_group.id,
                                            :miq_task_id  => task.id,
                                            :miq_report   => report)
         report_result.report = report.to_hash.merge(:extras=> {:total_html_rows => 100})
         report_result.save
 
-        binary_blob = FactoryGirl.create(:binary_blob,
+        binary_blob = FactoryBot.create(:binary_blob,
                                          :resource_type => "MiqReportResult",
                                          :resource_id   => report_result.id)
-        FactoryGirl.create(:binary_blob_part,
+        FactoryBot.create(:binary_blob_part,
                            :data           => "--- Quota \xE2\x80\x93 Max CPUs\n...\n",
                            :binary_blob_id => binary_blob.id)
 
@@ -55,7 +55,7 @@ describe ReportController do
       end
 
       it 'renders list of Reports in Reports - Custom tree' do
-        FactoryGirl.create(:miq_report)
+        FactoryBot.create(:miq_report)
         post :tree_select, :params => { :id => 'reports_xx-0', :format => :js }
         expect(response).to render_template('report/_report_list')
       end
@@ -72,14 +72,14 @@ describe ReportController do
       end
 
       it 'renders show of Schedule in Schedules tree' do
-        schedule = FactoryGirl.create(:miq_schedule)
+        schedule = FactoryBot.create(:miq_schedule)
         post :tree_select, :params => { :id => "msc-#{schedule.id}", :format => :js, :accord => 'schedules' }
         expect(response).to render_template('report/_show_schedule')
       end
     end
 
     context "dashboards tree" do
-      let!(:other_group)  { FactoryGirl.create(:miq_group) }
+      let!(:other_group)  { FactoryBot.create(:miq_group) }
       let(:current_group) { User.current_user.current_group }
 
       before do
@@ -110,7 +110,7 @@ describe ReportController do
         ApplicationController.handle_exceptions = true
 
         MiqWidgetSet.seed
-        widget_set = FactoryGirl.create(:miq_widget_set, :group_id => user.current_group.id)
+        widget_set = FactoryBot.create(:miq_widget_set, :group_id => user.current_group.id)
         post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_-#{widget_set.id}", :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_show')
       end
@@ -129,18 +129,18 @@ describe ReportController do
       it 'renders show of Dashboard Widget in Widgets tree' do
         ApplicationController.handle_exceptions = true
 
-        widget = FactoryGirl.create(:miq_widget)
+        widget = FactoryBot.create(:miq_widget)
         post :tree_select, :params => { :id => "xx-r_-#{widget.id}", :format => :js, :accord => 'widgets' }
         expect(response).to render_template('report/_widget_show')
       end
 
       let(:default_row_count_value)        { 5 }
       let(:other_row_count_value)          { 7 }
-      let(:widget_with_default_row_value)  { FactoryGirl.create(:miq_widget, :visibility => {:roles => ["_ALL_"]}) }
+      let(:widget_with_default_row_value)  { FactoryBot.create(:miq_widget, :visibility => {:roles => ["_ALL_"]}) }
       let(:widget_options)                 { {:row_count => other_row_count_value} }
 
       let(:widget_with_row_value) do
-        FactoryGirl.create(:miq_widget, :visibility => {:roles => ["_ALL_"]}, :options => widget_options)
+        FactoryBot.create(:miq_widget, :visibility => {:roles => ["_ALL_"]}, :options => widget_options)
       end
 
       let(:params_default_row_value) do
@@ -188,7 +188,7 @@ describe ReportController do
       end
 
       it 'renders form to edit Role in Roles tree' do
-        FactoryGirl.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
+        FactoryBot.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
         post :tree_select, :params => { :id => "g-#{user.current_group.id}", :format => :js, :accord => 'roles' }
         expect(response).to render_template('report/_menu_form1')
       end

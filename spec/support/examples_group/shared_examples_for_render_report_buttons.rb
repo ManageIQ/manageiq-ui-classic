@@ -5,7 +5,7 @@ shared_examples_for 'a render_report button' do
   let(:records_count) { 0 }
   let(:records_total) { {:count => records_count} }
   let(:grouping) { {:_total_ => records_total} }
-  let(:report) { FactoryGirl.create(:miq_report, :extras => {:grouping => grouping}) }
+  let(:report) { FactoryBot.create(:miq_report, :extras => {:grouping => grouping}) }
   let(:button) { described_class.new(view_context, {}, {'report' => report, 'html' => html, 'render_chart' => render_chart}, {}) }
 
   describe '#calculate_properties' do

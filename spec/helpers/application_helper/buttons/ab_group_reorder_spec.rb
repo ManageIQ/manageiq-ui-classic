@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::AbGroupReorder do
 
       before do
         custom_button_sets_count.times do
-          FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => cb_class})
+          FactoryBot.create(:custom_button_set, :set_data => {:applies_to_class => cb_class})
         end
         allow(view_context).to receive(:x_node).and_return("xx-ab_#{cb_class}")
       end
@@ -27,10 +27,10 @@ describe ApplicationHelper::Button::AbGroupReorder do
     context 'when :active_tree != :ab_tree' do
       let(:view_context) { setup_view_context_with_sandbox(:active_tree => :not_ab_tree) }
       let(:cb_class) { 'ServiceTemplate' }
-      let(:service_template) { FactoryGirl.create(:service_template, :custom_button_sets => custom_button_sets) }
+      let(:service_template) { FactoryBot.create(:service_template, :custom_button_sets => custom_button_sets) }
       let(:custom_button_sets) do
         (1..custom_button_sets_count).inject([]) do |arr|
-          arr << FactoryGirl.create(:custom_button_set)
+          arr << FactoryBot.create(:custom_button_set)
         end
       end
 

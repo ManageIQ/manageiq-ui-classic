@@ -1,5 +1,5 @@
 describe TextualMixins::TextualVmmInfo do
-  let(:host) { FactoryGirl.create(:host, :vmm_vendor => vmm) }
+  let(:host) { FactoryBot.create(:host, :vmm_vendor => vmm) }
 
   before do
     assign(:record, host)

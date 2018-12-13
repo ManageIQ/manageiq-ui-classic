@@ -2,7 +2,7 @@ describe TreeNode::ExtManagementSystem do
   subject { described_class.new(object, nil, {}) }
 
   describe 'ManageIQ::Providers::Redhat::InfraManager' do
-    let(:object) { FactoryGirl.create(:ems_redhat) }
+    let(:object) { FactoryBot.create(:ems_redhat) }
 
     context 'has no name' do
       describe '#title' do
@@ -49,11 +49,11 @@ describe TreeNode::ExtManagementSystem do
     # :ems_network                       => {},
     # :ems_storage                       => {}
   }.each do |factory, spec|
-    klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
+    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
       before(:all) { klass.constantize.skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
 
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', spec.fetch(:key_prefix, 'e-')
       include_examples 'TreeNode::Node#tooltip prefix', spec.fetch(:tip_prefix, 'Provider')

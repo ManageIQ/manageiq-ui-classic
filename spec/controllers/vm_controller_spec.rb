@@ -9,7 +9,7 @@ describe VmController do
     # because the branching logic is in app/views/vm/show.html.haml
     render_views
 
-    let(:vm_openstack) { FactoryGirl.create(:vm_openstack) }
+    let(:vm_openstack) { FactoryBot.create(:vm_openstack) }
 
     # Request URL: http://localhost:3000/vm/live_migrate?escape=false
     # FIXME: the espace=false seems unused

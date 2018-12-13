@@ -1,19 +1,19 @@
 describe TreeBuilderMiqActionCategory do
   before do
     role = MiqUserRole.find_by(:name => "EvmRole-operator")
-    group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
+    group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
+    login_as FactoryBot.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
 
-  let!(:tag1) { FactoryGirl.create(:classification, :name => 'tag1', :show => false) }
+  let!(:tag1) { FactoryBot.create(:classification, :name => 'tag1', :show => false) }
   let!(:folder1) do
-    f1 = FactoryGirl.create(:classification, :name => 'folder1', :show => true)
+    f1 = FactoryBot.create(:classification, :name => 'folder1', :show => true)
     f1.entries.push(tag1)
     f1
   end
-  let!(:tag2) { FactoryGirl.create(:classification, :name => 'tag2', :show => false) }
+  let!(:tag2) { FactoryBot.create(:classification, :name => 'tag2', :show => false) }
   let!(:folder2) do
-    f2 = FactoryGirl.create(:classification, :name => 'folder2', :show => true)
+    f2 = FactoryBot.create(:classification, :name => 'folder2', :show => true)
     f2.entries.push(tag2)
     f2
   end

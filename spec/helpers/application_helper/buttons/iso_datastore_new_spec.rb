@@ -5,7 +5,7 @@ describe ApplicationHelper::Button::IsoDatastoreNew do
   describe '#calculate_properties' do
     context 'when there is a RedHat InfraManager without iso datastores' do
       before do
-        FactoryGirl.create(:ems_redhat)
+        FactoryBot.create(:ems_redhat)
         button.calculate_properties
       end
 
@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::IsoDatastoreNew do
 
     context 'when all RedHat InfraManagers have iso datastores' do
       before do
-        FactoryGirl.create(:iso_datastore, :ems_id => FactoryGirl.create(:ems_redhat).id)
+        FactoryBot.create(:iso_datastore, :ems_id => FactoryBot.create(:ems_redhat).id)
         button.calculate_properties
       end
 

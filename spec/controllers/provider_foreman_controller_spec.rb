@@ -62,8 +62,8 @@ describe ProviderForemanController do
 
   it "renders explorer sorted by url" do
     login_as user_with_feature(%w(providers_accord configured_systems_filter_accord))
-    FactoryGirl.create(:provider_foreman, :name => "foremantest1", :url => "z_url")
-    FactoryGirl.create(:provider_foreman, :name => "foremantest2", :url => "a_url")
+    FactoryBot.create(:provider_foreman, :name => "foremantest1", :url => "z_url")
+    FactoryBot.create(:provider_foreman, :name => "foremantest2", :url => "a_url")
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
@@ -160,7 +160,7 @@ describe ProviderForemanController do
     end
 
     it "should display the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, @provider)
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
@@ -168,7 +168,7 @@ describe ProviderForemanController do
     end
 
     it "should save the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, @provider)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
@@ -465,7 +465,7 @@ describe ProviderForemanController do
     pending "does not display an automation manger configured system in the Configured Systems accordion" do
       controller.instance_variable_set(:@in_report_data, true)
       stub_user(:features => :all)
-      FactoryGirl.create(:configured_system_ansible_tower)
+      FactoryBot.create(:configured_system_ansible_tower)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
@@ -484,9 +484,9 @@ describe ProviderForemanController do
     session[:tag_items] = [@configured_system.id]
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
-    parent = FactoryGirl.create(:classification, :name => "test_category")
-    FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification, :name => "test_category")
+    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
     post :tagging, :params => { :id => @configured_system.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -495,9 +495,9 @@ describe ProviderForemanController do
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
     allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
-    parent = FactoryGirl.create(:classification, :name => "test_category")
-    FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification, :name => "test_category")
+    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
     post :tagging, :params => { :miq_grid_checks => [@configured_system.id], :id => @config_profile.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -655,11 +655,11 @@ describe ProviderForemanController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@configured_system).and_return([@tag1, @tag2])
@@ -703,7 +703,7 @@ describe ProviderForemanController do
       allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       allow(controller).to receive(:tagdata).and_return(nil)
       allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
-      login_as FactoryGirl.create(:user_admin)
+      login_as FactoryBot.create(:user_admin)
       stub_user(:features => :all)
     end
 
@@ -736,7 +736,7 @@ describe ProviderForemanController do
 
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
-    FactoryGirl.create(:user, :features => features)
+    FactoryBot.create(:user, :features => features)
   end
 
   def find_treenode_for_foreman_provider(tree, provider)

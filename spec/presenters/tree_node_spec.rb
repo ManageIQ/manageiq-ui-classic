@@ -2,7 +2,7 @@ describe TreeNode do
   # Force load all the TreeNode:: subclasses
   Dir[ManageIQ::UI::Classic::Engine.root.join('app', 'presenters', 'tree_node', '*.rb')].each { |f| require f }
 
-  # FIXME: rewrite this to FactoryGirl
+  # FIXME: rewrite this to FactoryBot
   let(:object) do
     # We need a Zone & Server for creating a MiqSchedule
     EvmSpecHelper.create_guid_miq_server_zone if klass == MiqSchedule

@@ -1,7 +1,7 @@
 describe ChartsLayoutService do
-  let(:host_openstack_infra) { FactoryGirl.create(:host_openstack_infra) }
-  let(:host_redhat) { FactoryGirl.create(:host_redhat) }
-  let(:vm_openstack) { FactoryGirl.create(:vm_openstack) }
+  let(:host_openstack_infra) { FactoryBot.create(:host_openstack_infra) }
+  let(:host_redhat) { FactoryBot.create(:host_redhat) }
+  let(:vm_openstack) { FactoryBot.create(:vm_openstack) }
   let(:host_openstack_infra_chart) do
     YAML.load(File.open(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'ManageIQ_Providers_Openstack_InfraManager_Host') + '.yaml'))
   end
@@ -47,9 +47,9 @@ describe ChartsLayoutService do
     end
 
     it "includes Memory (MB) chart for azure instance" do
-      ems_azure = FactoryGirl.create(:ems_azure)
-      host = FactoryGirl.create(:host, :ext_management_system => ems_azure)
-      vm_azure = FactoryGirl.create(:vm_azure, :ext_management_system => ems_azure, :host => host)
+      ems_azure = FactoryBot.create(:ems_azure)
+      host = FactoryBot.create(:host, :ext_management_system => ems_azure)
+      vm_azure = FactoryBot.create(:vm_azure, :ext_management_system => ems_azure, :host => host)
       chart = ChartsLayoutService.layout(vm_azure, ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'VmOrTemplate')
       expect(chart.count { |x| x[:title] == "Memory (MB)" }).to equal 1
     end

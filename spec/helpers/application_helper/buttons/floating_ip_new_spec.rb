@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::FloatingIpNew do
   describe '#disabled?' do
     it "when at least one provider supports floating ip create then the button is not disabled" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_openstack)
+      FactoryBot.create(:ems_openstack)
       button = described_class.new(view_context, {}, {}, {})
       expect(button.disabled?).to be false
     end
@@ -26,7 +26,7 @@ describe ApplicationHelper::Button::FloatingIpNew do
 
     it "when at least one provider supports floating ip create, the button has no error in the title" do
       view_context = setup_view_context_with_sandbox({})
-      FactoryGirl.create(:ems_openstack)
+      FactoryBot.create(:ems_openstack)
       button = described_class.new(view_context, {}, {}, {})
       button.calculate_properties
       expect(button[:title]).to be nil

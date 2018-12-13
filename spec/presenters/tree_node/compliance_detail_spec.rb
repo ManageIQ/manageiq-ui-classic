@@ -1,6 +1,6 @@
 describe TreeNode::ComplianceDetail do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:compliance_detail, :miq_policy_result => result) }
+  let(:object) { FactoryBot.create(:compliance_detail, :miq_policy_result => result) }
   let(:result) { true }
 
   include_examples 'TreeNode::Node#key prefix', 'cd-'

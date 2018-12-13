@@ -1,16 +1,16 @@
 describe TreeBuilderInstances do
   before do
-    @vm_cloud_with_az = FactoryGirl.create(:vm_cloud,
-                                           :ext_management_system => FactoryGirl.create(:ems_google),
-                                           :storage               => FactoryGirl.create(:storage),
-                                           :availability_zone     => FactoryGirl.create(:availability_zone_google))
-    @vm_cloud_without_az = FactoryGirl.create(:vm_cloud,
-                                              :ext_management_system => FactoryGirl.create(:ems_google),
-                                              :storage               => FactoryGirl.create(:storage),)
+    @vm_cloud_with_az = FactoryBot.create(:vm_cloud,
+                                           :ext_management_system => FactoryBot.create(:ems_google),
+                                           :storage               => FactoryBot.create(:storage),
+                                           :availability_zone     => FactoryBot.create(:availability_zone_google))
+    @vm_cloud_without_az = FactoryBot.create(:vm_cloud,
+                                              :ext_management_system => FactoryBot.create(:ems_google),
+                                              :storage               => FactoryBot.create(:storage),)
 
-    login_as FactoryGirl.create(:user_with_group, :role => "operator", :settings => {})
+    login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})
 
-    allow(MiqServer).to receive(:my_server) { FactoryGirl.create(:miq_server) }
+    allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
 
     @instances_tree = TreeBuilderInstances.new(:instances, :instances_tree, {}, nil)
   end

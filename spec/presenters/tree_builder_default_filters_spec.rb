@@ -2,58 +2,58 @@ describe TreeBuilderDefaultFilters do
   context 'TreeBuilderDefaultFilters' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Default filters Group")
-      login_as FactoryGirl.create(:user, :userid => 'default_filters__wilma', :miq_groups => [@group])
-      @filters = [FactoryGirl.create(:miq_search,
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Default filters Group")
+      login_as FactoryBot.create(:user, :userid => 'default_filters__wilma', :miq_groups => [@group])
+      @filters = [FactoryBot.create(:miq_search,
                                      :name        => "default_Platform / HyperV",
                                      :description => "Platform / HyperV",
                                      :options     => nil,
                                      :db          => "Host",
                                      :search_type => "default",
                                      :search_key  => nil)]
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / UAT",
                                        :description => "Environment / UAT",
                                        :options     => nil,
                                        :db          => "MiqTemplate",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,
                                        :db          => "MiqTemplate",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,
                                        :db          => "Container",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,
                                        :db          => "ContainerGroup",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,
                                        :db          => "ContainerService",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,
                                        :db          => "Storage",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryGirl.create(:miq_search,
+      @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
                                        :options     => nil,

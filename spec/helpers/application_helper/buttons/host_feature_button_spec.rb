@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::HostFeatureButton do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:ems_openstack_infra) }
+  let(:record) { FactoryBot.create(:ems_openstack_infra) }
   let(:feature) { :standby }
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
@@ -23,7 +23,7 @@ describe ApplicationHelper::Button::HostFeatureButton do
       end
     end
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)' do
-      let(:record) { FactoryGirl.create(:host_openstack_infra) }
+      let(:record) { FactoryBot.create(:host_openstack_infra) }
       before { allow(record).to receive(:is_available?).and_return(available) }
       context 'and feature is available' do
         let(:feature) { :stop }

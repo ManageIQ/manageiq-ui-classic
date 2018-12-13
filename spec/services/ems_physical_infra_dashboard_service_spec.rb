@@ -1,22 +1,22 @@
 describe EmsPhysicalInfraDashboardService do
   let(:physical_infra1) do
-    FactoryGirl.create(:physical_infra,
+    FactoryBot.create(:physical_infra,
                        :name     => "foo",
                        :hostname => "test1.com")
   end
 
   let(:physical_infra2) do
-    FactoryGirl.create(:physical_infra,
+    FactoryBot.create(:physical_infra,
                        :name     => "bar",
                        :hostname => "test2.com")
   end
 
   context "aggregate_status_card" do
     it "should display either a single provider or sum of all providers" do
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :name                  => "foo",
                          :ext_management_system => physical_infra1)
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :name                  => "bar",
                          :ext_management_system => physical_infra2)
 
@@ -40,19 +40,19 @@ describe EmsPhysicalInfraDashboardService do
       current_date = 29.days.ago.beginning_of_day.utc
       old_date = 31.days.ago
 
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :name                  => "foo",
                          :created_at            => current_date,
                          :ext_management_system => physical_infra1)
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :created_at            => old_date,
                          :name                  => "bar",
                          :ext_management_system => physical_infra2)
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :name                  => "foo2",
                          :created_at            => old_date,
                          :ext_management_system => physical_infra1)
-      FactoryGirl.create(:lenovo_physical_server,
+      FactoryBot.create(:lenovo_physical_server,
                          :created_at            => current_date,
                          :name                  => "bar2",
                          :ext_management_system => physical_infra2)

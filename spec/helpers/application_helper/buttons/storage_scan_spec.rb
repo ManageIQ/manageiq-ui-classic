@@ -1,10 +1,10 @@
 describe ApplicationHelper::Button::StorageScan do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:storage) }
+  let(:record) { FactoryBot.create(:storage) }
   let(:feature) { :smartstate_analysis }
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
-  let(:ems)                  { FactoryGirl.create(:ems_vmware) }
+  let(:ems)                  { FactoryBot.create(:ems_vmware) }
   let(:emss)                 { [ems] }
   let(:emss_with_valid_auth) { [ems] }
 

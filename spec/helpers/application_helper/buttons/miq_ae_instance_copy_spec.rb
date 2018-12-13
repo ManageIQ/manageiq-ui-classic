@@ -1,11 +1,11 @@
 describe ApplicationHelper::Button::MiqAeInstanceCopy do
   let(:session) { {} }
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:miq_ae_class, :of_domain, :domain => domain) }
-  let(:domain) { FactoryGirl.create(:miq_ae_domain_disabled) }
+  let(:record) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => domain) }
+  let(:domain) { FactoryBot.create(:miq_ae_domain_disabled) }
   subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => child_id}) }
 
-  before { login_as FactoryGirl.create(:user, :with_miq_edit_features) }
+  before { login_as FactoryBot.create(:user, :with_miq_edit_features) }
 
   describe '#visible?' do
     context 'when domain is locked' do
@@ -21,9 +21,9 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
       end
       context 'and button is miq_ae_method_copy with method record' do
         let(:child_id) { 'miq_ae_method_copy' }
-        let(:klass) { FactoryGirl.create(:miq_ae_class, :of_domain, :domain => domain) }
+        let(:klass) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => domain) }
         let(:record) do
-          FactoryGirl.create(:miq_ae_method, :scope => 'class', :language => 'ruby',
+          FactoryBot.create(:miq_ae_method, :scope => 'class', :language => 'ruby',
                                           :location => 'builtin', :ae_class => klass)
         end
         it { expect(subject.visible?).to be_truthy }

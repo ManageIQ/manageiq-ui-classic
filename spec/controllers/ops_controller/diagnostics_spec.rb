@@ -128,7 +128,7 @@ describe OpsController do
       EvmSpecHelper.local_miq_server
       MiqRegion.seed
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      @miq_server_to_delete = FactoryGirl.create(:miq_server)
+      @miq_server_to_delete = FactoryBot.create(:miq_server)
       @miq_server_to_delete.last_heartbeat -= 20.minutes
       @miq_server_to_delete.save
     end
@@ -167,14 +167,14 @@ describe OpsController do
     describe '#delete_server' do
       context "server does exist" do
         it 'deletes server and refreshes screen' do
-          server = FactoryGirl.create(:miq_server, :zone => @zone)
+          server = FactoryBot.create(:miq_server, :zone => @zone)
           sb_hash = {
             :trees            => {:diagnostics_tree => {:active_node => "z-#{@zone.id}"}},
             :active_tree      => :diagnostics_tree,
             :diag_selected_id => @miq_server_to_delete.id,
             :active_tab       => "diagnostics_roles_servers"
           }
-          @server_role = FactoryGirl.create(
+          @server_role = FactoryBot.create(
             :server_role,
             :name              => "smartproxy",
             :description       => "SmartProxy",
@@ -182,7 +182,7 @@ describe OpsController do
             :external_failover => false,
             :role_scope        => "zone"
           )
-          @assigned_server_role = FactoryGirl.create(
+          @assigned_server_role = FactoryBot.create(
             :assigned_server_role,
             :miq_server_id  => server.id,
             :server_role_id => @server_role.id,
@@ -254,7 +254,7 @@ describe OpsController do
 
       context "#role_start" do
         before do
-          assigned_server_role = FactoryGirl.create(
+          assigned_server_role = FactoryBot.create(
             :assigned_server_role,
             :miq_server_id  => 1,
             :server_role_id => 1,

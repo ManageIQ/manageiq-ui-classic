@@ -1,13 +1,13 @@
 describe TreeBuilderGenealogy do
-  let(:vm_without_kid) { FactoryGirl.create(:vm) }
-  let(:kid) { FactoryGirl.create(:vm) }
+  let(:vm_without_kid) { FactoryBot.create(:vm) }
+  let(:kid) { FactoryBot.create(:vm) }
   let(:vm_with_kid) do
-    vm = FactoryGirl.create(:vm)
+    vm = FactoryBot.create(:vm)
     vm.add_child(kid)
     vm
   end
   let(:record) do
-    vm = FactoryGirl.create(:vm)
+    vm = FactoryBot.create(:vm)
     vm.add_child(vm_with_kid)
     vm.add_child(vm_without_kid)
     vm

@@ -1,7 +1,7 @@
 describe VmInfraController do
-  let(:host_1x1)  { FactoryGirl.create(:host_vmware_esx, :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB)) }
-  let(:host_2x2)  { FactoryGirl.create(:host_vmware_esx, :hardware => FactoryGirl.create(:hardware, :cpu2x2, :ram1GB)) }
-  let(:vm_vmware) { FactoryGirl.create(:vm_vmware) }
+  let(:host_1x1)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB)) }
+  let(:host_2x2)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu2x2, :ram1GB)) }
+  let(:vm_vmware) { FactoryBot.create(:vm_vmware) }
   before do
     stub_user(:features => :all)
 
@@ -52,7 +52,7 @@ describe VmInfraController do
   end
 
   let(:custom_attr1) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :custom_attribute,
       :resource => vm_vmware,
       :name     => 'Proč by si jeden nepokrad',
@@ -61,7 +61,7 @@ describe VmInfraController do
   end
 
   let(:custom_attr2) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :custom_attribute,
       :resource => vm_vmware,
       :name     => nil,
@@ -108,7 +108,7 @@ describe VmInfraController do
   end
 
   it 'can open the reconfigure tab' do
-    vm = FactoryGirl.create(:vm_vmware, :host => host_1x1, :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+    vm = FactoryBot.create(:vm_vmware, :host => host_1x1, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -155,13 +155,13 @@ describe VmInfraController do
   end
 
   it 'can open VM Compare tab' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_1x1,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
-    vm2 = FactoryGirl.create(:vm_vmware,
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+    vm2 = FactoryBot.create(:vm_vmware,
                              :host     => host_1x1,
-                             :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '05'))
-    FactoryGirl.create(:miq_report, :filename      => 'vms.yaml',
+                             :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '05'))
+    FactoryBot.create(:miq_report, :filename      => 'vms.yaml',
                                     :template_type => 'compare',
                                     :name          => "Test Report",
                                     :rpt_type      => "Custom",
@@ -251,9 +251,9 @@ describe VmInfraController do
   end
 
   it 'can open Policies Simulation' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_1x1,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
@@ -268,11 +268,11 @@ describe VmInfraController do
   end
 
   it 'can open Edit Tags' do
-    classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
-    @tag1 = FactoryGirl.create(:classification_tag,
+    classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+    @tag1 = FactoryBot.create(:classification_tag,
                                :name   => "tag1",
                                :parent => classification)
-    @tag2 = FactoryGirl.create(:classification_tag,
+    @tag2 = FactoryBot.create(:classification_tag,
                                :name   => "tag2",
                                :parent => classification)
     get :show, :params => {:id => vm_vmware.id}
@@ -287,11 +287,11 @@ describe VmInfraController do
   end
 
   it 'The VM quadicons on the tagging screen do not links' do
-    classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
-    @tag1 = FactoryGirl.create(:classification_tag,
+    classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+    @tag1 = FactoryBot.create(:classification_tag,
                                :name   => "tag1",
                                :parent => classification)
-    @tag2 = FactoryGirl.create(:classification_tag,
+    @tag2 = FactoryBot.create(:classification_tag,
                                :name   => "tag2",
                                :parent => classification)
     get :show, :params => {:id => vm_vmware.id}
@@ -365,7 +365,7 @@ describe VmInfraController do
   end
 
   it 'can migrate selected items' do
-    vm_vmware_migrateable = FactoryGirl.create(:vm_vmware, :ems_id => 1, :storage_id => 1)
+    vm_vmware_migrateable = FactoryBot.create(:vm_vmware, :ems_id => 1, :storage_id => 1)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
@@ -378,9 +378,9 @@ describe VmInfraController do
   end
 
   it 'can Publish selected VM' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_1x1,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
@@ -405,7 +405,7 @@ describe VmInfraController do
   end
 
   context 'Mixins::Actions::VmActions::Ownership' do
-    let(:vm) { FactoryGirl.create(:vm_vmware) }
+    let(:vm) { FactoryBot.create(:vm_vmware) }
 
     it 'handles dont-change vs nil' do
       expect(VmOrTemplate).to receive(:set_ownership).with([vm.id], {:group => nil})
@@ -419,8 +419,8 @@ describe VmInfraController do
   end
 
   context 'transform VM dialog' do
-    let(:dialog)           { FactoryGirl.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
-    let!(:resource_action) { FactoryGirl.create(:resource_action, :dialog => dialog) }
+    let(:dialog)           { FactoryBot.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+    let!(:resource_action) { FactoryBot.create(:resource_action, :dialog => dialog) }
 
     it 'can Transform selected VM' do
       get :show, :params => {:id => vm_vmware.id}
@@ -482,9 +482,9 @@ describe VmInfraController do
   end
 
   it 'the reconfigure tab for a vm with max_cpu_cores_per_socket <= 1 should not display the cpu_cores_per_socket dropdown' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_1x1,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -499,9 +499,9 @@ describe VmInfraController do
   end
 
   it 'the reconfigure tab for a vm with max_cpu_cores_per_socket > 1 should display the cpu_cores_per_socket dropdown' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_2x2,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -516,9 +516,9 @@ describe VmInfraController do
   end
 
   it 'the reconfigure tab for a single vmware vm should display the list of disks' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_2x2,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -533,9 +533,9 @@ describe VmInfraController do
   end
 
   it 'the reconfigure tab displays the submit and cancel buttons' do
-    vm = FactoryGirl.create(:vm_vmware,
+    vm = FactoryBot.create(:vm_vmware,
                             :host     => host_2x2,
-                            :hardware => FactoryGirl.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -606,8 +606,8 @@ describe VmInfraController do
   end
 
   context 'simple searching' do
-    let(:vm1) { FactoryGirl.create(:vm_vmware, :name => 'foobar') }
-    let(:vm2) { FactoryGirl.create(:vm_vmware, :name => 'barbar') }
+    let(:vm1) { FactoryBot.create(:vm_vmware, :name => 'foobar') }
+    let(:vm2) { FactoryBot.create(:vm_vmware, :name => 'barbar') }
 
     describe '#x_search_by_name' do
       it 'render GTL with and saves search_text in the session' do
@@ -649,8 +649,8 @@ describe VmInfraController do
   it_behaves_like "explorer controller with custom buttons"
 
   it "executes select_check? and disable_check? helper methods" do
-    admin_user = FactoryGirl.create(:user_with_group, :role => 'super_administrator')
-    wf = FactoryGirl.create(:miq_provision_workflow, :requester => admin_user)
+    admin_user = FactoryBot.create(:user_with_group, :role => 'super_administrator')
+    wf = FactoryBot.create(:miq_provision_workflow, :requester => admin_user)
 
     controller.send(:select_check?, wf)
     expect(response.status).to eq(200)

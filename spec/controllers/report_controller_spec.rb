@@ -47,7 +47,7 @@ describe ReportController do
       end
 
       describe "#add_field_to_col_order" do
-        let(:miq_report)               { FactoryGirl.create(:miq_report, :cols => [], :col_order => []) }
+        let(:miq_report)               { FactoryBot.create(:miq_report, :cols => [], :col_order => []) }
         let(:base_model)               { "Vm" }
         let(:virtual_custom_attribute) { "virtual_custom_attribute_kubernetes.io/hostname" }
 
@@ -298,7 +298,7 @@ describe ReportController do
         end
 
         it "sets perf time profile" do
-          time_prof = FactoryGirl.create(:time_profile, :description => "Test", :profile => {:tz => "UTC"})
+          time_prof = FactoryBot.create(:time_profile, :description => "Test", :profile => {:tz => "UTC"})
           chosen_time_prof = time_prof.id.to_s
           controller.instance_variable_set(:@_params, :chosen_time_profile => chosen_time_prof)
           controller.send(:gfv_performance)
@@ -340,7 +340,7 @@ describe ReportController do
         it "sets tag category" do
           tag_cat = "department"
           controller.instance_variable_set(:@_params, :cb_tag_cat => tag_cat)
-          cl_rec = FactoryGirl.create(:classification, :name => "test_name", :description => "Test Description")
+          cl_rec = FactoryBot.create(:classification, :name => "test_name", :description => "Test Description")
           expect(Classification).to receive(:find_by_name).and_return([cl_rec])
           controller.send(:gfv_chargeback)
           expect(assigns(:edit)[:new][:cb_tag_cat]).to eq(tag_cat)
@@ -712,10 +712,10 @@ describe ReportController do
   end
 
   context "ReportController::Schedules" do
-    let(:miq_report) { FactoryGirl.create(:miq_report) }
+    let(:miq_report) { FactoryBot.create(:miq_report) }
 
     before do
-      @current_user = login_as FactoryGirl.create(:user, :features => %w(miq_report_schedule_enable
+      @current_user = login_as FactoryBot.create(:user, :features => %w(miq_report_schedule_enable
                                                                          miq_report_schedule_disable
                                                                          miq_report_schedule_edit))
       allow(User).to receive(:server_timezone).and_return("UTC")
@@ -741,7 +741,7 @@ describe ReportController do
         allow(server).to receive_messages(:zone_id => 1)
         allow(MiqServer).to receive(:my_server).and_return(server)
 
-        @sch = FactoryGirl.create(:miq_schedule, :enabled => true, :updated_at => 1.hour.ago.utc)
+        @sch = FactoryBot.create(:miq_schedule, :enabled => true, :updated_at => 1.hour.ago.utc)
 
         allow(controller).to receive(:find_records_with_rbac).and_return([@sch])
         expect(controller).to receive(:render).never
@@ -820,7 +820,7 @@ describe ReportController do
     render_views
 
     before do
-      login_as(FactoryGirl.create(:user))
+      login_as(FactoryBot.create(:user))
       allow(controller).to receive(:x_active_tree) { :export_tree }
     end
 
@@ -937,11 +937,11 @@ describe ReportController do
 
       before do
         allow(WidgetImportService).to receive(:new).and_return(widget_import_service)
-        login_as(FactoryGirl.create(:user))
+        login_as(FactoryBot.create(:user))
       end
 
       context "when the widget importer does not raise an error" do
-        let(:ret) { FactoryGirl.build(:import_file_upload, :id => '123') }
+        let(:ret) { FactoryBot.build(:import_file_upload, :id => '123') }
 
         before do
           allow(ret).to receive(:widget_list).and_return([])
@@ -1126,8 +1126,8 @@ describe ReportController do
 
   context "#replace_right_cell" do
     before do
-      FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
-      login_as FactoryGirl.create(:user_admin) # not sure why this needs to be an admin...
+      FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
+      login_as FactoryBot.create(:user_admin) # not sure why this needs to be an admin...
 
       controller.instance_variable_set(:@sb,
                                        :trees       => {'reports_tree'      => {:active_node => "root"},
@@ -1148,7 +1148,7 @@ describe ReportController do
     it "should rebuild trees when last report result is newer than last tree build time" do
       # report is newer, set build_time first
       sb[:rep_tree_build_time] = Time.now.utc
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
 
       expect(controller).to receive(:build_reports_tree)
       expect(controller).to receive(:build_savedreports_tree)
@@ -1161,7 +1161,7 @@ describe ReportController do
     it "should not rebuild trees which weren't previously built, even though newer" do
       # report is newer, set build_time first
       sb[:rep_tree_build_time] = Time.now.utc
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
 
       sb[:trees].delete('db_tree')
       sb[:trees].delete('widgets_tree')
@@ -1176,7 +1176,7 @@ describe ReportController do
 
     it "should not rebuild trees when last report result is older than last tree build time" do
       # report is older, set build_time after
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
       sb[:rep_tree_build_time] = Time.now.utc
 
       expect(controller).not_to receive(:build_reports_tree)
@@ -1192,7 +1192,7 @@ describe ReportController do
       # {:replace_trees => [:reports]} is passed in
 
       # report is older, set build_time after
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
       sb[:rep_tree_build_time] = Time.now.utc
 
       expect(controller).to receive(:build_reports_tree)
@@ -1225,20 +1225,20 @@ describe ReportController do
 
   context "#rebuild_trees" do
     before do
-      login_as FactoryGirl.create(:user_admin) # not sure why this needs to be an admin...
+      login_as FactoryBot.create(:user_admin) # not sure why this needs to be an admin...
     end
 
     it "rebuild trees, latest report result was created after last time tree was built" do
       last_build_time = Time.now.utc
       controller.instance_variable_set(:@sb, :rep_tree_build_time => last_build_time)
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
       res = controller.send(:rebuild_trees)
       expect(res).to be(true)
       expect(assigns(:sb)[:rep_tree_build_time]).not_to eq(last_build_time)
     end
 
     it "don't rebuild trees, latest report result was created before last time tree was built" do
-      FactoryGirl.create(:miq_report_with_results)
+      FactoryBot.create(:miq_report_with_results)
       last_build_time = Time.now.utc
       controller.instance_variable_set(:@sb, :rep_tree_build_time => last_build_time)
       res = controller.send(:rebuild_trees)
@@ -1254,7 +1254,7 @@ describe ReportController do
 
     context "when generating reports" do
       render_views
-      let(:rpt) { FactoryGirl.create(:miq_report) }
+      let(:rpt) { FactoryBot.create(:miq_report) }
 
       before do
         stub_user(:features => :all)
@@ -1297,7 +1297,7 @@ describe ReportController do
       context "User2 generates report under Group1" do
         before do
           os = OperatingSystem.create(:name => "RHEL 7", :product_name => "RHEL7")
-          FactoryGirl.create(:vm_vmware, :operating_system => os)
+          FactoryBot.create(:vm_vmware, :operating_system => os)
           @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
         end
 
@@ -1338,7 +1338,7 @@ describe ReportController do
   end
 
   describe "#populate_reports_menu" do
-    let(:user) { FactoryGirl.create(:user_with_group) }
+    let(:user) { FactoryBot.create(:user_with_group) }
     let(:sandbox) { {} }
 
     before do
@@ -1355,7 +1355,7 @@ describe ReportController do
   end
 
   describe '#get_reports_menu' do
-    let(:group) { FactoryGirl.create(:miq_group, :settings => settings) }
+    let(:group) { FactoryBot.create(:miq_group, :settings => settings) }
     let(:settings) { {:report_menus => []} }
 
     before do
@@ -1378,14 +1378,14 @@ describe ReportController do
     end
 
     context 'custom reports included' do
-      let(:user) { FactoryGirl.create(:user_with_group) }
+      let(:user) { FactoryBot.create(:user_with_group) }
       let(:menu) { controller.instance_variable_get(:@sb)[:rpt_menu] }
       subject { controller.send(:get_reports_menu, false, user.current_group) }
 
       before do
         EvmSpecHelper.local_miq_server
         login_as user
-        FactoryGirl.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
+        FactoryBot.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
       end
 
       it 'returns with the correct name for custom folder' do
@@ -1395,8 +1395,8 @@ describe ReportController do
   end
 
   describe "#miq_report_edit" do
-    let(:admin_user)   { FactoryGirl.create(:user, :role => "super_administrator") }
-    let(:tenant)       { FactoryGirl.create(:tenant) }
+    let(:admin_user)   { FactoryBot.create(:user, :role => "super_administrator") }
+    let(:tenant)       { FactoryBot.create(:tenant) }
     let(:chosen_model) { "ChargebackVm" }
 
     before do

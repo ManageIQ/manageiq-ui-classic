@@ -2,10 +2,10 @@ describe TreeBuilderServersByRole do
   context 'TreeBuilderServersByRole' do
     before do
       MiqRegion.seed
-      zone = FactoryGirl.create(:zone)
-      @miq_server = FactoryGirl.create(:miq_server, :zone => zone)
+      zone = FactoryBot.create(:zone)
+      @miq_server = FactoryBot.create(:miq_server, :zone => zone)
       allow(MiqServer).to receive(:my_zone).and_return(zone)
-      @server_role = FactoryGirl.create(
+      @server_role = FactoryBot.create(
         :server_role,
         :name              => "smartproxy",
         :description       => "SmartProxy",
@@ -14,7 +14,7 @@ describe TreeBuilderServersByRole do
         :role_scope        => "zone"
       )
 
-      @assigned_server_role1 = FactoryGirl.create(
+      @assigned_server_role1 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,
@@ -22,7 +22,7 @@ describe TreeBuilderServersByRole do
         :priority       => 1
       )
 
-      @assigned_server_role2 = FactoryGirl.create(
+      @assigned_server_role2 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,

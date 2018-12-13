@@ -142,62 +142,62 @@ describe MiqAeCustomizationController do
     end
 
     it "assigns the sandbox active tree" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:active_tree]).to eq(:old_dialogs_tree)
     end
 
     it "assigns the sandbox active accord" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:active_accord]).to eq(:old_dialogs)
     end
 
     it "assigns the sandbox active node on old dialogs tree to root" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(controller.x_node).to eq("root")
     end
 
     it "builds the old dialogs tree" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:old_dialogs_tree)
     end
 
     it "assigns the sandbox active node on dialogs tree to root" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
       expect(controller.x_node).to eq("root")
     end
 
     it "builds the dialog tree" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:dialogs_tree)
     end
 
     it "assigns the sandbox active node on ab tree to root" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
       expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the ab tree" do
-      login_as FactoryGirl.create(:user, :features => "ab_buttons_accord")
+      login_as FactoryBot.create(:user, :features => "ab_buttons_accord")
       allow(controller).to receive(:get_node_info)
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:ab_tree)
     end
 
     it "assigns the sandbox active node on import/export tree to root" do
-      login_as FactoryGirl.create(:user, :features => "miq_ae_class_import_export")
+      login_as FactoryBot.create(:user, :features => "miq_ae_class_import_export")
       get :explorer
       expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the import/export tree" do
-      login_as FactoryGirl.create(:user, :features => "miq_ae_class_import_export")
+      login_as FactoryBot.create(:user, :features => "miq_ae_class_import_export")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:dialog_import_export_tree)
     end

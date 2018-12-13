@@ -12,7 +12,7 @@ describe ContainerRouteController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_route = ContainerRoute.create(:ext_management_system => ems, :name => "Test Route")
     get :show, :params => { :id => container_route.id }
     expect(response.status).to eq(200)
@@ -26,8 +26,8 @@ describe ContainerRouteController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @route = FactoryGirl.create(:container_route)
+      login_as FactoryBot.create(:user)
+      @route = FactoryBot.create(:container_route)
     end
 
     subject { get :show, :params => { :id => @route.id } }

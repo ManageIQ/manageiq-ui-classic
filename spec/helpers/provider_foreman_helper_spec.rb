@@ -1,6 +1,6 @@
 describe ProviderForemanHelper do
   before do
-    @record = FactoryGirl.create(:ansible_configuration_script,
+    @record = FactoryBot.create(:ansible_configuration_script,
                                  :name        => "ConfigScript1",
                                  :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
                                                               'min' => nil, 'default' => nil, 'max' => nil,
@@ -8,7 +8,7 @@ describe ProviderForemanHelper do
                                                               'variable' => 'test', 'choices' => nil,
                                                               'type' => 'text'}]})
 
-    login_as @user = FactoryGirl.create(:user)
+    login_as @user = FactoryBot.create(:user)
   end
 
   context ".textual_configuration_script_survey" do

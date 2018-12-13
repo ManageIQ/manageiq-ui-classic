@@ -1,10 +1,10 @@
 describe CloudTenantController do
-  let(:classification) { FactoryGirl.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryGirl.create(:classification_tag, :name => "tag1", :parent => classification) }
-  let(:tag2) { FactoryGirl.create(:classification_tag, :name => "tag2", :parent => classification) }
-  let(:ct) { FactoryGirl.create(:cloud_tenant, :name => "cloud-tenant-01") }
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
+  let(:ct) { FactoryBot.create(:cloud_tenant, :name => "cloud-tenant-01") }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
 
   before do
     stub_user(:features => :all)
@@ -70,9 +70,9 @@ describe CloudTenantController do
   end
 
   describe "#show" do
-    let(:tenant) { FactoryGirl.create(:cloud_tenant) }
+    let(:tenant) { FactoryBot.create(:cloud_tenant) }
 
-    before { login_as FactoryGirl.create(:user, :features => "none") }
+    before { login_as FactoryBot.create(:user, :features => "none") }
 
     render_views
 
@@ -92,7 +92,7 @@ describe CloudTenantController do
   end
 
   describe "#create" do
-    let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack) }
+    let(:tenant) { FactoryBot.create(:cloud_tenant_openstack) }
     let(:task_options) do
       {
         :action => "creating Cloud Tenant for user %{user}" % {:user => controller.current_user.userid},

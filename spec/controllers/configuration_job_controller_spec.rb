@@ -9,7 +9,7 @@ describe ConfigurationJobController do
 
   describe '#show' do
     context "instances" do
-      let(:record) { FactoryGirl.create(:ansible_tower_job) }
+      let(:record) { FactoryBot.create(:ansible_tower_job) }
 
       before do
         session[:settings] = {
@@ -40,13 +40,13 @@ describe ConfigurationJobController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @cj = FactoryGirl.create(:ansible_tower_job, :name => "testJob")
+      @cj = FactoryBot.create(:ansible_tower_job, :name => "testJob")
       allow(@cj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@cj).and_return([@tag1, @tag2])

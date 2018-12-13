@@ -5,12 +5,12 @@ describe TreeBuilderReportDashboards do
     login_as user
   end
 
-  let(:group)            { FactoryGirl.create(:miq_group) }
-  let(:user)             { FactoryGirl.create(:user, :miq_groups => [group]) }
-  let!(:other_group)     { FactoryGirl.create(:miq_group) }
+  let(:group)            { FactoryBot.create(:miq_group) }
+  let(:user)             { FactoryBot.create(:user, :miq_groups => [group]) }
+  let!(:other_group)     { FactoryBot.create(:miq_group) }
   let!(:miq_widget_set) do
     widget_set_params = {:name => "default", :read_only => true, :owner_id => group.id, :owner_type => "MiqGroup"}
-    FactoryGirl.create(:miq_widget_set, widget_set_params)
+    FactoryBot.create(:miq_widget_set, widget_set_params)
   end
 
   describe "#x_get_tree_g_kids" do

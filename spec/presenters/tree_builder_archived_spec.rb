@@ -4,7 +4,7 @@ describe TreeBuilderArchived do
     allow(archived).to receive(:count_only_or_objects_filtered) do |count_only, objects, name|
       count_only ? objects.size : objects.sort_by { |object| object[name.to_sym] }
     end
-    login_as FactoryGirl.create(:user_with_group, :role => "operator", :settings => {})
+    login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})
   end
 
   it '#x_get_tree_arch_orph_nodes' do
@@ -35,10 +35,10 @@ describe TreeBuilderArchived do
 
   it '#x_get_tree_custom_kids with Infra VMs/Templates returns VMs' do
     User.current_user.settings[:display] = {:display_vms => true}
-    vm_orph = FactoryGirl.create(:vm_infra, :storage => FactoryGirl.create(:storage))
-    template_orph = FactoryGirl.create(:template_infra, :storage => FactoryGirl.create(:storage))
-    vm_arch = FactoryGirl.create(:vm_infra)
-    template_arch = FactoryGirl.create(:template_infra)
+    vm_orph = FactoryBot.create(:vm_infra, :storage => FactoryBot.create(:storage))
+    template_orph = FactoryBot.create(:template_infra, :storage => FactoryBot.create(:storage))
+    vm_arch = FactoryBot.create(:vm_infra)
+    template_arch = FactoryBot.create(:template_infra)
     allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:orphaned) { [vm_orph, template_orph] }
     allow(ManageIQ::Providers::InfraManager::VmOrTemplate).to receive(:archived) { [vm_arch, template_arch] }
     nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
@@ -65,8 +65,8 @@ describe TreeBuilderArchived do
 
   it '#x_get_tree_custom_kids with Cloud VMs returns VMs' do
     User.current_user.settings[:display] = {:display_vms => true}
-    vm_arch_cloud = FactoryGirl.create(:vm_cloud)
-    vm_orph_cloud = FactoryGirl.create(:vm_cloud, :storage => FactoryGirl.create(:storage))
+    vm_arch_cloud = FactoryBot.create(:vm_cloud)
+    vm_orph_cloud = FactoryBot.create(:vm_cloud, :storage => FactoryBot.create(:storage))
     nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
                                                  false,
                                                  :leaf => 'VmCloud')
@@ -91,8 +91,8 @@ describe TreeBuilderArchived do
 
   it '#x_get_tree_custom_kids with Cloud Templates returns Templates' do
     User.current_user.settings[:display] = {:display_vms => true}
-    template_arch_cloud = FactoryGirl.create(:template_cloud)
-    template_orph_cloud = FactoryGirl.create(:template_cloud, :storage => FactoryGirl.create(:storage))
+    template_arch_cloud = FactoryBot.create(:template_cloud)
+    template_orph_cloud = FactoryBot.create(:template_cloud, :storage => FactoryBot.create(:storage))
     nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
                                                  false,
                                                  :leaf => 'ManageIQ::Providers::CloudManager::Template')

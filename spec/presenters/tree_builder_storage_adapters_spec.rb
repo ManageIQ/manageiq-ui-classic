@@ -2,15 +2,15 @@ describe TreeBuilderStorageAdapters do
   context 'TreeBuilderStorageAdapters' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "SA Group")
-      login_as FactoryGirl.create(:user, :userid => 'sa_wilma', :miq_groups => [@group])
-      host = FactoryGirl.create(:host)
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "SA Group")
+      login_as FactoryBot.create(:user, :userid => 'sa_wilma', :miq_groups => [@group])
+      host = FactoryBot.create(:host)
       class << host
         def hardware
-          OpenStruct.new(:storage_adapters => [FactoryGirl.create(:miq_scsi_target,
-                                                                  :miq_scsi_luns => [FactoryGirl.create(:miq_scsi_lun),
-                                                                                     FactoryGirl.create(:miq_scsi_lun),
-                                                                                     FactoryGirl.create(:miq_scsi_lun)])])
+          OpenStruct.new(:storage_adapters => [FactoryBot.create(:miq_scsi_target,
+                                                                  :miq_scsi_luns => [FactoryBot.create(:miq_scsi_lun),
+                                                                                     FactoryBot.create(:miq_scsi_lun),
+                                                                                     FactoryBot.create(:miq_scsi_lun)])])
         end
       end
       @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, {}, true, host)

@@ -7,12 +7,12 @@ describe "shared/views/_ownership" do
     root_tenant
     Tenant.default_tenant
   end
-  let(:user)         { FactoryGirl.create(:user, :userid => 'user', :miq_groups => [tenant_group]) }
-  let(:tenant)       { FactoryGirl.build(:tenant, :parent => default_tenant) }
-  let(:tenant_users) { FactoryGirl.create(:miq_user_role, :name => "tenant-users") }
-  let(:tenant_group) { FactoryGirl.create(:miq_group, :miq_user_role => tenant_users, :tenant => tenant) }
-  let(:user_role)    { FactoryGirl.create(:miq_user_role) }
-  let(:user_group)   { FactoryGirl.create(:miq_group, :miq_user_role => user_role) }
+  let(:user)         { FactoryBot.create(:user, :userid => 'user', :miq_groups => [tenant_group]) }
+  let(:tenant)       { FactoryBot.build(:tenant, :parent => default_tenant) }
+  let(:tenant_users) { FactoryBot.create(:miq_user_role, :name => "tenant-users") }
+  let(:tenant_group) { FactoryBot.create(:miq_group, :miq_user_role => tenant_users, :tenant => tenant) }
+  let(:user_role)    { FactoryBot.create(:miq_user_role) }
+  let(:user_group)   { FactoryBot.create(:miq_group, :miq_user_role => user_role) }
 
   before do
     set_controller_for_view("vm_infra")
@@ -20,7 +20,7 @@ describe "shared/views/_ownership" do
   end
 
   it "the ownership group dropdown includes the no group option" do
-    vm = FactoryGirl.create(:vm_vmware, :miq_group => tenant_group)
+    vm = FactoryBot.create(:vm_vmware, :miq_group => tenant_group)
     allow(view).to receive(:ownership_user_options).and_return([user.id])
     allow(view).to receive(:settings).and_return('list')
     allow(view).to receive(:render_gtl_outer)

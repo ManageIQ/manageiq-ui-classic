@@ -5,13 +5,13 @@ describe NetworkRouterController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ct = FactoryGirl.create(:network_router, :name => "router-01")
+      @ct = FactoryBot.create(:network_router, :name => "router-01")
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
@@ -53,8 +53,8 @@ describe NetworkRouterController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @router = FactoryGirl.create(:network_router)
-      login_as FactoryGirl.create(:user, :features => %w(none))
+      @router = FactoryBot.create(:network_router)
+      login_as FactoryBot.create(:user, :features => %w(none))
     end
 
     subject do
@@ -72,7 +72,7 @@ describe NetworkRouterController do
 
   describe "#new" do
     let(:feature) { "network_router_new" }
-    let(:user)    { FactoryGirl.create(:user, :features => feature) }
+    let(:user)    { FactoryBot.create(:user, :features => feature) }
 
     before do
       bypass_rescue
@@ -97,8 +97,8 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack)
     end
 
     context "#create" do
@@ -110,7 +110,7 @@ describe NetworkRouterController do
       end
 
       let(:cloud_tenant) do
-        FactoryGirl.create(:cloud_tenant)
+        FactoryBot.create(:cloud_tenant)
       end
 
       let(:queue_options) do
@@ -158,8 +158,8 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
     end
 
@@ -200,8 +200,8 @@ describe NetworkRouterController do
   end
 
   describe "#delete_network_routers" do
-    let(:ems) { FactoryGirl.create(:ems_openstack).network_manager }
-    let(:router) { FactoryGirl.create(:network_router_openstack, :name => "router-01", :ext_management_system => ems) }
+    let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
+    let(:router) { FactoryBot.create(:network_router_openstack, :name => "router-01", :ext_management_system => ems) }
     before do
       stub_user(:features => :all)
       setup_zone
@@ -220,8 +220,8 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
       session[:network_router_lastaction] = 'show'
     end
@@ -265,10 +265,10 @@ describe NetworkRouterController do
   describe "#add_interface" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
-      @subnet = FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems)
+      @subnet = FactoryBot.create(:cloud_subnet, :ext_management_system => @ems)
     end
 
     context "#add_interface" do
@@ -309,8 +309,8 @@ describe NetworkRouterController do
       end
 
       context 'with restricted user' do
-        let!(:subnet_2) { FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems) }
-        let(:user)    { FactoryGirl.create(:user, :features => "network_router_add_interface") }
+        let!(:subnet_2) { FactoryBot.create(:cloud_subnet, :ext_management_system => @ems) }
+        let(:user)    { FactoryBot.create(:user, :features => "network_router_add_interface") }
         let(:tag)     { "/managed/environment/prod" }
 
         before do
@@ -357,10 +357,10 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
-      @subnet = FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems)
+      @subnet = FactoryBot.create(:cloud_subnet, :ext_management_system => @ems)
     end
 
     context "#remove_interface" do

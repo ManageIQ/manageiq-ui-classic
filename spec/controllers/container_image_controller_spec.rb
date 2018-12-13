@@ -35,7 +35,7 @@ describe ContainerImageController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_image = ContainerImage.create(:ext_management_system => ems, :name => "Test Image")
     get :show, :params => { :id => container_image.id }
     expect(response.status).to eq(200)
@@ -49,8 +49,8 @@ describe ContainerImageController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @image = FactoryGirl.create(:container_image)
+      login_as FactoryBot.create(:user)
+      @image = FactoryBot.create(:container_image)
     end
 
     subject { get :show, :params => { :id => @image.id } }

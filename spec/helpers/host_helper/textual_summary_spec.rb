@@ -1,6 +1,6 @@
 describe HostHelper::TextualSummary do
   before do
-    instance_variable_set(:@record, FactoryGirl.create(:host_openstack_infra,
+    instance_variable_set(:@record, FactoryBot.create(:host_openstack_infra,
                                                        :type => ManageIQ::Providers::Openstack::InfraManager::Host))
     allow(self).to receive(:textual_authentications).and_return([])
     allow(::Settings).to receive_message_chain(:product, :proto).and_return("")

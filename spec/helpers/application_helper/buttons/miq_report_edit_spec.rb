@@ -11,11 +11,11 @@ describe ApplicationHelper::Button::MiqReportEdit do
       context 'and active_tab == report_info' do
         let(:tab) { 'report_info' }
         context 'and record.rpt_type == Custom' do
-          let(:record) { FactoryGirl.create(:miq_report, :rpt_type => 'Custom') }
+          let(:record) { FactoryBot.create(:miq_report, :rpt_type => 'Custom') }
           it { expect(subject.visible?).to be_truthy }
         end
         context 'and record.rpt_type != Custom' do
-          let(:record) { FactoryGirl.create(:miq_report) }
+          let(:record) { FactoryBot.create(:miq_report) }
           it { expect(subject.visible?).to be_falsey }
         end
       end

@@ -1,6 +1,6 @@
 describe ContainerDashboardService do
   let(:controller) { double(:current_user => double(:get_timezone => "UTC", :id => 123)) }
-  let(:time_profile) { FactoryGirl.create(:time_profile_utc) }
+  let(:time_profile) { FactoryBot.create(:time_profile_utc) }
 
   before do
     MiqRegion.seed
@@ -9,7 +9,7 @@ describe ContainerDashboardService do
 
   context "providers" do
     it "filters containers providers with zero entity count and sorts providers by type correctly" do
-      ems = FactoryGirl.create(:ems_openshift, :hostname => "test2.com")
+      ems = FactoryBot.create(:ems_openshift, :hostname => "test2.com")
 
       providers_data = ContainerDashboardService.new(ems.id, nil).providers[0]
 
@@ -23,13 +23,13 @@ describe ContainerDashboardService do
 
   context "ems_utilization" do
     it "shows aggregated metrics from last 30 days only" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
-      ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
+      ems_kubernetes = FactoryBot.create(:ems_kubernetes, :zone => @zone)
 
       current_date = 7.days.ago.beginning_of_day.utc
       old_date = 35.days.ago
 
-      current_metric_openshift = FactoryGirl.create(
+      current_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp                => current_date,
         :derived_memory_used      => 1024,
@@ -39,7 +39,7 @@ describe ContainerDashboardService do
         :time_profile             => time_profile
       )
 
-      current_metric_kubernetes = FactoryGirl.create(
+      current_metric_kubernetes = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp                => current_date,
         :derived_memory_used      => 512,
@@ -49,7 +49,7 @@ describe ContainerDashboardService do
         :time_profile             => time_profile
       )
 
-      old_metric = FactoryGirl.create(
+      old_metric = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp                => old_date,
         :derived_memory_used      => 1024,
@@ -59,7 +59,7 @@ describe ContainerDashboardService do
         :time_profile             => time_profile
       )
 
-      nil_fielded_metric = FactoryGirl.create(
+      nil_fielded_metric = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp    => old_date,
         :time_profile => time_profile
@@ -107,7 +107,7 @@ describe ContainerDashboardService do
     end
 
     it "returns hash with nil values when no metrics available" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
       node_utilization_all_providers = described_class.new(nil, controller).ems_utilization[:xy_data]
       node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
       expect(node_utilization_all_providers).to eq(:cpu => nil, :memory => nil)
@@ -117,19 +117,19 @@ describe ContainerDashboardService do
 
   context "heatmaps" do
     it "shows aggregated metrics from last 30 days only" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :name => 'openshift', :zone => @zone)
-      ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :name => 'kubernetes', :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :name => 'openshift', :zone => @zone)
+      ems_kubernetes = FactoryBot.create(:ems_kubernetes, :name => 'kubernetes', :zone => @zone)
 
-      @node1 = FactoryGirl.create(:container_node, :name => 'node1')
-      @node2 = FactoryGirl.create(:container_node, :name => 'node2')
-      @node3 = FactoryGirl.create(:container_node, :name => 'node3')
-      @node4 = FactoryGirl.create(:container_node, :name => 'node4')
+      @node1 = FactoryBot.create(:container_node, :name => 'node1')
+      @node2 = FactoryBot.create(:container_node, :name => 'node2')
+      @node3 = FactoryBot.create(:container_node, :name => 'node3')
+      @node4 = FactoryBot.create(:container_node, :name => 'node4')
       ems_openshift.container_nodes << @node1 << @node2
       ems_kubernetes.container_nodes << @node3 << @node4
 
       [ems_kubernetes, ems_openshift].each do |p|
         p.container_nodes.each do |node|
-          node.metric_rollups << FactoryGirl.create(
+          node.metric_rollups << FactoryBot.create(
             :metric_rollup_cm_hr,
             :timestamp                  => 1.hour.ago.utc,
             :cpu_usage_rate_average     => 90,
@@ -247,7 +247,7 @@ describe ContainerDashboardService do
     end
 
     it "returns hash with nil values when no metrics available" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
       heatmaps_all_providers = described_class.new(nil, controller).heatmaps
       heatmaps_single_provider = described_class.new(ems_openshift.id, controller).heatmaps
       expect(heatmaps_all_providers).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil, :title => "Node Utilization")
@@ -256,16 +256,16 @@ describe ContainerDashboardService do
 
     # BZ: https://bugzilla.redhat.com/show_bug.cgi?id=1439671
     it "returns one metric per node in realtime case" do
-      ems = FactoryGirl.create(:ems_kubernetes, :name => 'kubernetes', :zone => @zone)
+      ems = FactoryBot.create(:ems_kubernetes, :name => 'kubernetes', :zone => @zone)
 
-      @node1 = FactoryGirl.create(:container_node, :name => 'node1')
-      @node2 = FactoryGirl.create(:container_node, :name => 'node2')
+      @node1 = FactoryBot.create(:container_node, :name => 'node1')
+      @node2 = FactoryBot.create(:container_node, :name => 'node2')
 
       ems.container_nodes << @node1 << @node2
 
       ems.container_nodes.each do |node|
         (1..10).each do |min|
-          node.metrics << FactoryGirl.create(
+          node.metrics << FactoryBot.create(
             :metric_container_node_rt,
             :timestamp                  => min.minute.ago.utc,
             :capture_interval           => 20,
@@ -321,35 +321,35 @@ describe ContainerDashboardService do
 
   context "network trends" do
     it "shows daily network trends from last 30 days only" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
-      ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
+      ems_kubernetes = FactoryBot.create(:ems_kubernetes, :zone => @zone)
 
       previous_date = 8.days.ago.beginning_of_day.utc
       current_date = 7.days.ago.beginning_of_day.utc
       old_date = 35.days.ago
 
-      previous_metric_openshift = FactoryGirl.create(
+      previous_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => previous_date,
         :net_usage_rate_average => 2000,
         :time_profile           => time_profile
       )
 
-      current_metric_openshift = FactoryGirl.create(
+      current_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
         :time_profile           => time_profile
       )
 
-      current_metric_kubernetes = FactoryGirl.create(
+      current_metric_kubernetes = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
         :time_profile           => time_profile
       )
 
-      old_metric = FactoryGirl.create(
+      old_metric = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
@@ -377,42 +377,42 @@ describe ContainerDashboardService do
     end
 
     it "show daily hourly network trends from last 24 hours only" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
-      ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
+      ems_kubernetes = FactoryBot.create(:ems_kubernetes, :zone => @zone)
 
       previous_date = 3.hours.ago
       current_date = 2.hours.ago
       old_date = 2.days.ago
 
-      previous_metric_openshift = FactoryGirl.create(
+      previous_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => previous_date,
         :net_usage_rate_average => 2000,
         :time_profile           => time_profile
       )
 
-      current_metric_openshift = FactoryGirl.create(
+      current_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
         :time_profile           => time_profile
       )
 
-      current_metric_kubernetes = FactoryGirl.create(
+      current_metric_kubernetes = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
         :time_profile           => time_profile
       )
 
-      old_metric = FactoryGirl.create(
+      old_metric = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
         :time_profile           => time_profile
       )
 
-      nil_fields_metric = FactoryGirl.create(
+      nil_fields_metric = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp    => old_date,
         :time_profile => time_profile
@@ -442,7 +442,7 @@ describe ContainerDashboardService do
     end
 
     it "returns hash with nil values when no metrics available" do
-      ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
+      ems_openshift = FactoryBot.create(:ems_openshift, :zone => @zone)
       hourly_network_trends = described_class.new(nil, controller).hourly_network_metrics
       hourly_network_trends_single_provider = described_class.new(ems_openshift.id, controller).hourly_network_metrics
 

@@ -1,6 +1,6 @@
 describe ApplicationHelper do
   before do
-    login_as FactoryGirl.create(:user, :features => "none")
+    login_as FactoryBot.create(:user, :features => "none")
   end
 
   context "build_toolbar" do
@@ -40,7 +40,7 @@ describe ApplicationHelper do
     let(:features) { MiqProductFeature.find_all_by_identifier("everything") }
     before do
       EvmSpecHelper.seed_specific_product_features("miq_report", "service")
-      @user = login_as FactoryGirl.create(:user, :features => features)
+      @user = login_as FactoryBot.create(:user, :features => features)
     end
 
     context "permission store" do
@@ -81,7 +81,7 @@ describe ApplicationHelper do
         end
 
         it "and not entitled" do
-          login_as FactoryGirl.create(:user, :features => "service")
+          login_as FactoryBot.create(:user, :features => "service")
           expect(helper.role_allows?(:feature => "miq_report", :any => true)).to be_falsey
         end
       end
@@ -92,7 +92,7 @@ describe ApplicationHelper do
         end
 
         it "and not entitled" do
-          login_as FactoryGirl.create(:user, :features => "service")
+          login_as FactoryBot.create(:user, :features => "service")
           expect(helper.role_allows?(:feature => "miq_report")).to be_falsey
         end
       end
@@ -130,7 +130,7 @@ describe ApplicationHelper do
     subject { helper.model_to_controller(@record) }
 
     it "when with any record" do
-      @record = FactoryGirl.create(:vm_vmware)
+      @record = FactoryBot.create(:vm_vmware)
       expect(subject).to eq(@record.class.base_model.name.underscore)
     end
 
@@ -141,12 +141,12 @@ describe ApplicationHelper do
 
   describe "#object_types_for_flash_message" do
     before do
-      @record_1 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
-      @record_2 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
-      @record_3 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
-      @record_4 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
-      @record_5 = FactoryGirl.create(:vm_redhat,    :type => ManageIQ::Providers::Redhat::InfraManager::Vm.name)
-      @record_6 = FactoryGirl.create(:vm_vmware,    :type => ManageIQ::Providers::Vmware::InfraManager::Vm.name)
+      @record_1 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
+      @record_2 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
+      @record_3 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
+      @record_4 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
+      @record_5 = FactoryBot.create(:vm_redhat,    :type => ManageIQ::Providers::Redhat::InfraManager::Vm.name)
+      @record_6 = FactoryBot.create(:vm_vmware,    :type => ManageIQ::Providers::Vmware::InfraManager::Vm.name)
     end
 
     context "when formatting flash message for VM or Templates class" do
@@ -231,7 +231,7 @@ describe ApplicationHelper do
     end
 
     it "when record is not VmOrTemplate" do
-      @record = FactoryGirl.create(:host)
+      @record = FactoryBot.create(:host)
       expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
     end
   end
@@ -244,7 +244,7 @@ describe ApplicationHelper do
 
     context "when with @vm" do
       before do
-        @vm = FactoryGirl.create(:vm_vmware)
+        @vm = FactoryBot.create(:vm_vmware)
       end
 
       ["Account", "User", "Group", "Patch", "GuestApplication"].each do |d|
@@ -267,7 +267,7 @@ describe ApplicationHelper do
 
     context "when with @host" do
       before do
-        @host = FactoryGirl.create(:host)
+        @host = FactoryBot.create(:host)
         @lastaction = "list"
       end
 
@@ -934,7 +934,7 @@ describe ApplicationHelper do
     end
 
     it "uses restful paths for pages" do
-      @record = FactoryGirl.create(:ems_cloud, :zone => zone)
+      @record = FactoryBot.create(:ems_cloud, :zone => zone)
       get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
 
       expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
@@ -943,19 +943,19 @@ describe ApplicationHelper do
 
   context "#title_for_cluster_record" do
     before do
-      @ems1 = FactoryGirl.create(:ems_vmware)
-      @ems2 = FactoryGirl.create(:ems_openstack_infra)
+      @ems1 = FactoryBot.create(:ems_vmware)
+      @ems2 = FactoryBot.create(:ems_openstack_infra)
     end
 
     it "returns 'Cluster' for non-openstack host" do
-      cluster = FactoryGirl.create(:ems_cluster, :ems_id => @ems1.id)
+      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
 
       result = helper.title_for_cluster_record(cluster)
       expect(result).to eq("Cluster")
     end
 
     it "returns 'Deployment Role' for openstack host" do
-      cluster = FactoryGirl.create(:ems_cluster, :ems_id => @ems2.id)
+      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
 
       result = helper.title_for_cluster_record(cluster)
       expect(result).to eq("Deployment Role")
@@ -964,13 +964,13 @@ describe ApplicationHelper do
 
   context "#title_for_host_record" do
     it "returns 'Host' for non-openstack host" do
-      host = FactoryGirl.create(:host_vmware, :ext_management_system => FactoryGirl.create(:ems_vmware))
+      host = FactoryBot.create(:host_vmware, :ext_management_system => FactoryBot.create(:ems_vmware))
 
       expect(helper.title_for_host_record(host)).to eq("Host")
     end
 
     it "returns 'Node' for openstack host" do
-      host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => FactoryGirl.create(:ems_openstack_infra))
+      host = FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
 
       expect(helper.title_for_host_record(host)).to eq("Node")
     end
@@ -1203,7 +1203,7 @@ describe ApplicationHelper do
       let(:args) do
         {:if         => true,
          :controller => 'availability_zone',
-         :record     => FactoryGirl.create(:availability_zone),
+         :record     => FactoryBot.create(:availability_zone),
          :action     => 'show_list',
          :display    => 'something',
          :title      => 'sometitle'}
@@ -1224,7 +1224,7 @@ describe ApplicationHelper do
       let(:args) do
         {:if         => true,
          :controller => 'availability_zone',
-         :record_id  => FactoryGirl.create(:availability_zone).id,
+         :record_id  => FactoryBot.create(:availability_zone).id,
          :action     => 'show_list',
          :display    => 'something',
          :title      => 'sometitle'}
@@ -1269,7 +1269,7 @@ describe ApplicationHelper do
     context "When record is a Container Provider" do
       it "Uses polymorphic_path for the show action" do
         stub_user(:features => :all)
-        ems = FactoryGirl.create(:ems_kubernetes)
+        ems = FactoryBot.create(:ems_kubernetes)
         ContainerProject.create(:ext_management_system => ems, :name => "Test Project")
         expect(helper.multiple_relationship_link(ems, "container_project")).to eq("<li><a title=\"Show Projects\" href=\"/ems_container/#{ems.id}?display=container_projects\">Projects (1)</a></li>")
       end

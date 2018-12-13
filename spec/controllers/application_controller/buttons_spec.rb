@@ -1,10 +1,10 @@
 describe ApplicationController do
   context "#custom_buttons" do
-    let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
-    let(:button)          { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
-    let(:host)            { FactoryGirl.create(:host_vmware) }
-    let(:vm)              { FactoryGirl.create(:vm_vmware, :name => "My VM") }
-    let(:service)         { FactoryGirl.create(:service) }
+    let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
+    let(:button)          { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+    let(:host)            { FactoryBot.create(:host_vmware) }
+    let(:vm)              { FactoryBot.create(:vm_vmware, :name => "My VM") }
+    let(:service)         { FactoryBot.create(:service) }
 
     context "with a resource_action dialog" do
       it "Vm button" do
@@ -100,7 +100,7 @@ describe ApplicationController do
 
     context "#button_create_update" do
       it "no need to set @record when add/cancel form buttons are pressed" do
-        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
         controller.instance_variable_set(:@_params, :button => "cancel", :id => custom_button.id)
         edit = {
           :new           => {},
@@ -119,7 +119,7 @@ describe ApplicationController do
       end
 
       it "the active tab is Advanced when the button pressed is an expression" do
-        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
         controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
         edit = {:new           => {},
                 :current       => {},
@@ -137,7 +137,7 @@ describe ApplicationController do
       end
 
       it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
-        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
         controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
         edit = {:new           => {},
                 :current       => {},
@@ -154,7 +154,7 @@ describe ApplicationController do
       end
 
       it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
-        custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
+        custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
         controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
         edit = {:new           => {},
                 :current       => {},
@@ -178,7 +178,7 @@ describe ApplicationController do
       #   which, in turn, needs *something* to come back from automate
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
 
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "fa fa-info"})
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "fa fa-info"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "req"
       custom_button.save
@@ -210,7 +210,7 @@ describe ApplicationController do
       e_expression = MiqExpression.new("=" => {:field => "Vm.name", :value => "Test"}, :token => 1)
       v_expression = MiqExpression.new("!=" => {:field => "Vm.description", :value => "DescriptionTest"}, :token => 1)
 
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :visibility_expression => v_expression, :enablement_expression => e_expression, :options => {:display => false, :button_icon => "5"})
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Vm", :visibility_expression => v_expression, :enablement_expression => e_expression, :options => {:display => false, :button_icon => "5"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "test_req"
       custom_button.resource_action.dialog_id = 42
@@ -240,8 +240,8 @@ describe ApplicationController do
       # button_set_form_vars expects that the simulation screen will be built,
       #   which, in turn, needs *something* to come back from automate
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
-      service_template = FactoryGirl.create(:service_template_ansible_playbook, :name => "playbook_test")
-      custom_button = FactoryGirl.create(:custom_button,
+      service_template = FactoryBot.create(:service_template_ansible_playbook, :name => "playbook_test")
+      custom_button = FactoryBot.create(:custom_button,
                                          :applies_to_class => "Vm",
                                          :options          => {:display     => false,
                                                                :button_icon => "fa fa-info",
@@ -311,8 +311,8 @@ describe ApplicationController do
 
   context "#button_set_record_vars" do
     it "sets role visibility for custom button" do
-      role = FactoryGirl.create(:miq_user_role, :name => "foo")
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"})
+      role = FactoryBot.create(:miq_user_role, :name => "foo")
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "test_req"
       custom_button.save
@@ -336,8 +336,8 @@ describe ApplicationController do
 
   context "#automate_button_field_changed" do
     context 'sets dialog_id' do
-      let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
-      let(:button)          { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+      let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
+      let(:button)          { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
       before do
         controller.instance_variable_set(:@custom_button, button)
         allow(controller).to receive(:render).and_return(nil)
@@ -366,9 +366,9 @@ describe ApplicationController do
     end
 
     context 'sets @edit[:new][:disabled_open_url]' do
-      let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => 1) }
-      let(:button_for_vm) { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
-      let(:button_for_az) { FactoryGirl.create(:custom_button, :name => "My Button", :applies_to_class => "AvailabilityZone", :resource_action => resource_action) }
+      let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
+      let(:button_for_vm) { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+      let(:button_for_az) { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "AvailabilityZone", :resource_action => resource_action) }
       before do
         allow(controller).to receive(:render).and_return(nil)
         edit = {

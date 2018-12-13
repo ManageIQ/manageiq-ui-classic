@@ -6,7 +6,7 @@ describe "catalog/_form.html.haml" do
     set_controller_for_view_to_be_nonrestful
     @edit = {:new => {:available_dialogs => {}}}
     @sb = {:st_form_active_tab => "Basic", :trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree}
-    user = FactoryGirl.create(:user_with_group)
+    user = FactoryBot.create(:user_with_group)
     login_as user
     create_state_ae_model(:name => 'LUIGI', :ae_class => 'CLASS1', :ae_namespace => 'A/B/C')
     create_ae_model(:name => 'MARIO', :ae_class => 'CLASS3', :ae_namespace => 'C/D/E')

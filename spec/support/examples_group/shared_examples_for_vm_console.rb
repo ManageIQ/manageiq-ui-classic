@@ -2,8 +2,8 @@ shared_examples 'vm_console_record_types' do |supported_records|
   supported_records.each do |type, support|
     context "and record is type of #{type}" do
       let(:api_version) { 6.4 }
-      let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
-      let(:record) { FactoryGirl.create(type, :ems_id => ems.id) }
+      let(:ems) { FactoryBot.create(:ems_vmware, :api_version => api_version) }
+      let(:record) { FactoryBot.create(type, :ems_id => ems.id) }
       it { is_expected.to eq(support) }
     end
   end

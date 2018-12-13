@@ -1,11 +1,11 @@
 describe AnsibleCredentialController do
   before do
     EvmSpecHelper.assign_embedded_ansible_role
-    login_as FactoryGirl.create(:user_admin)
+    login_as FactoryBot.create(:user_admin)
   end
 
   describe "#show" do
-    let(:machine_credential) { FactoryGirl.create(:embedded_ansible_scm_credential, :options=>{}) }
+    let(:machine_credential) { FactoryBot.create(:embedded_ansible_scm_credential, :options=>{}) }
     subject { get :show, :params => {:id => machine_credential.id} }
     render_views
 

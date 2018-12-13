@@ -1,9 +1,9 @@
 describe EmsCloudDashboardService do
   context '#recentInstances' do
     before do
-      @ems1 = FactoryGirl.create(:ems_cloud)
-      @vm1 = FactoryGirl.create(:vm_openstack, :ext_management_system => @ems1)
-      @vm2 = FactoryGirl.create(:vm_openstack, :ext_management_system => @ems1, :created_on => 1.day.ago.utc)
+      @ems1 = FactoryBot.create(:ems_cloud)
+      @vm1 = FactoryBot.create(:vm_openstack, :ext_management_system => @ems1)
+      @vm2 = FactoryBot.create(:vm_openstack, :ext_management_system => @ems1, :created_on => 1.day.ago.utc)
     end
 
     subject { EmsCloudDashboardService.new(@ems1.id, "ems_cloud", EmsCloud) }

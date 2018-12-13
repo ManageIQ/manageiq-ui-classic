@@ -2,10 +2,10 @@ describe TreeBuilderDatastores do
   context 'TreeBuilderDatastores' do
     before do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Datastores Group")
-      login_as FactoryGirl.create(:user, :userid => 'datastores_wilma', :miq_groups => [@group])
-      @host = FactoryGirl.create(:host, :name => 'Host Name')
-      FactoryGirl.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Datastores Group")
+      login_as FactoryBot.create(:user, :userid => 'datastores_wilma', :miq_groups => [@group])
+      @host = FactoryBot.create(:host, :name => 'Host Name')
+      FactoryBot.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
       @datastore = [{:id => 1, :name => 'Datastore', :location => 'Location', :capture => false}]
       @datastores_tree = TreeBuilderDatastores.new(:datastore, :datastore_tree, {}, true, @datastore)
     end

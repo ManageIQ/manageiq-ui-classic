@@ -7,9 +7,9 @@ describe TreeNode::CustomizationTemplate do
     customization_template_sysprep
     customization_template_cloud_init
   ).each do |factory|
-    klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
+    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'ct-'
       include_examples 'TreeNode::Node#icon', 'pficon pficon-template'

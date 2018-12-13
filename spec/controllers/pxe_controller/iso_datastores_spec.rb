@@ -6,8 +6,8 @@ describe PxeController do
   describe "#iso_datastore_set_form_vars" do
     context "when EMS is available" do
       before do
-        @ems = FactoryGirl.create(:ems_redhat)
-        iso = FactoryGirl.create(:iso_datastore)
+        @ems = FactoryBot.create(:ems_redhat)
+        iso = FactoryBot.create(:iso_datastore)
         controller.instance_variable_set(:@isd, iso)
       end
 
@@ -19,8 +19,8 @@ describe PxeController do
 
     context "when EMS is not available" do
       before do
-        ems = FactoryGirl.create(:ems_redhat)
-        iso = FactoryGirl.create(:iso_datastore, :ems_id => ems.id)
+        ems = FactoryBot.create(:ems_redhat)
+        iso = FactoryBot.create(:iso_datastore, :ems_id => ems.id)
         controller.instance_variable_set(:@isd, iso)
       end
 

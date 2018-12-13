@@ -2,7 +2,7 @@ describe ApplicationHelper::Button::ServerDemote do
   describe '#visible?' do
     context "with master supported server role" do
       before do
-        @record = FactoryGirl.create(:assigned_server_role_in_master_region)
+        @record = FactoryBot.create(:assigned_server_role_in_master_region)
       end
 
       it "will not be skipped for this record" do
@@ -16,7 +16,7 @@ describe ApplicationHelper::Button::ServerDemote do
 
     context "without server role" do
       before do
-        @record = FactoryGirl.create(:server_role)
+        @record = FactoryBot.create(:server_role)
       end
 
       it "will be skipped for this record" do
@@ -32,7 +32,7 @@ describe ApplicationHelper::Button::ServerDemote do
   describe '#disabled?' do
     context "with medium prioirity server role" do
       before do
-        @record = FactoryGirl.create(:assigned_server_role_in_master_region, :priority => 2)
+        @record = FactoryBot.create(:assigned_server_role_in_master_region, :priority => 2)
       end
 
       it "disables the button and returns the error message" do

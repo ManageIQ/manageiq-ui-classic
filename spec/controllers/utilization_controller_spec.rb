@@ -1,11 +1,11 @@
 describe UtilizationController do
   describe '#get_node_info' do
     it 'sets correct right cell headers' do
-      mr = FactoryGirl.create(:miq_region, :description => "My Region")
-      e = FactoryGirl.create(:ems_vmware, :name => "My Management System")
-      cl = FactoryGirl.create(:ems_cluster, :name => "My Cluster")
-      host = FactoryGirl.create(:host, :name => "My Host")
-      ds = FactoryGirl.create(:storage_vmware, :name => "My Datastore")
+      mr = FactoryBot.create(:miq_region, :description => "My Region")
+      e = FactoryBot.create(:ems_vmware, :name => "My Management System")
+      cl = FactoryBot.create(:ems_cluster, :name => "My Cluster")
+      host = FactoryBot.create(:host, :name => "My Host")
+      ds = FactoryBot.create(:storage_vmware, :name => "My Datastore")
       title_suffix = "Utilization Trend Summary"
       tree_nodes = {:region => {:active_node  => "mr-#{mr.id}",
                                 :title_prefix => "Region",

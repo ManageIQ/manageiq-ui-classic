@@ -1,11 +1,11 @@
 describe EmsCloudController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
   describe "#create" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_cloud_new")
+      login_as FactoryBot.create(:user, :features => "ems_cloud_new")
     end
 
     it "adds a new provider" do
@@ -17,7 +17,7 @@ describe EmsCloudController do
     render_views
 
     it 'shows the edit page' do
-      get :edit, :params => { :id => FactoryGirl.create(:ems_amazon).id }
+      get :edit, :params => { :id => FactoryBot.create(:ems_amazon).id }
       expect(response.status).to eq(200)
     end
 
@@ -387,11 +387,11 @@ describe EmsCloudController do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_cloud_new")
+      login_as FactoryBot.create(:user, :features => "ems_cloud_new")
     end
 
     it "refresh relationships and power states" do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :id => ems.id, :pressed => "ems_cloud_refresh" }
       expect(response.status).to eq(200)
     end
@@ -403,13 +403,13 @@ describe EmsCloudController do
     end
 
     it 'edit selected cloud provider' do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
 
     it 'edit cloud provider tags' do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_tag" }
       expect(response.status).to eq(200)
     end
@@ -417,7 +417,7 @@ describe EmsCloudController do
     it 'manage cloud provider policies' do
       allow(controller).to receive(:protect_build_tree).and_return(nil)
       controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_protect" }
       expect(response.status).to eq(200)
 
@@ -427,7 +427,7 @@ describe EmsCloudController do
     end
 
     it 'edit cloud provider tags' do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :id => ems.id, :pressed => "ems_cloud_timeline" }
       expect(response.status).to eq(200)
 
@@ -436,7 +436,7 @@ describe EmsCloudController do
     end
 
     it 'edit cloud providers' do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
@@ -447,10 +447,10 @@ describe EmsCloudController do
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "none")
       session[:settings] = {:views     => {:vm_summary_cool => "summary"},
                             :quadicons => {}}
-      @ems = FactoryGirl.create(:ems_amazon)
+      @ems = FactoryBot.create(:ems_amazon)
     end
 
     subject { get :show, :params => { :id => @ems.id } }
@@ -480,8 +480,8 @@ describe EmsCloudController do
     end
 
     it 'displays only associated storage_managers' do
-      FactoryGirl.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
-      FactoryGirl.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      FactoryBot.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      FactoryBot.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
       expect(response).to render_template('layouts/angular/_gtl')
       expect(response.status).to eq(200)
@@ -493,7 +493,7 @@ describe EmsCloudController do
     let(:wf) { double(:dialog => dialog) }
 
     before do
-      @ems = FactoryGirl.create(:ems_amazon)
+      @ems = FactoryBot.create(:ems_amazon)
       edit = {:rec_id => 1, :wf => wf, :key => 'dialog_edit__foo', :target_id => @ems.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, {})
@@ -664,7 +664,7 @@ describe EmsCloudController do
   it_behaves_like "controller with custom buttons"
 
   describe "#sync_users" do
-    let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
+    let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
     before do
       stub_user(:features => :all)
     end

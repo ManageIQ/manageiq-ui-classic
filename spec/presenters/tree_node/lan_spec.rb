@@ -1,6 +1,6 @@
 describe TreeNode::Lan do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:lan) }
+  let(:object) { FactoryBot.create(:lan) }
 
   include_examples 'TreeNode::Node#key prefix', 'l-'
   include_examples 'TreeNode::Node#icon', 'ff ff-network-switch'

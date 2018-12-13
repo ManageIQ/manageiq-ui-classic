@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::ViewGHT do
   let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
   let(:ght_type) { 'tabular' }
-  let(:report) { FactoryGirl.create(:miq_report) }
+  let(:report) { FactoryBot.create(:miq_report) }
   let(:render_chart) { nil }
   let(:graph) { nil }
   subject do

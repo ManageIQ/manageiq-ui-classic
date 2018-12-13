@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::CockpitConsole do
   describe '#disabled?' do
     before do
-      @record = FactoryGirl.create(:vm)
+      @record = FactoryBot.create(:vm)
       MiqRegion.seed
       EvmSpecHelper.create_guid_miq_server_zone
 
@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::CockpitConsole do
 
     context 'passes checks' do
       before do
-        @server_role = FactoryGirl.create(
+        @server_role = FactoryBot.create(
           :server_role,
           :name              => 'cockpit_ws',
           :description       => 'Cockpit WS',
@@ -22,7 +22,7 @@ describe ApplicationHelper::Button::CockpitConsole do
           :external_failover => false,
           :role_scope        => 'zone'
         )
-        FactoryGirl.create(
+        FactoryBot.create(
           :assigned_server_role,
           :miq_server_id  => MiqServer.first.id,
           :server_role_id => @server_role.id,
