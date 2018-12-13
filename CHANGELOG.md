@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-7 - Released 2018-11-06
+## Gaprindashvili-7
 
 ### Fixed
 - Show and allow the server name to be saved in the settings/server screen [(#4232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4232)
