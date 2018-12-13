@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-6
+## Gaprindashvili-7
+
+### Fixed
+- Show and allow the server name to be saved in the settings/server screen [(#4232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4232)
+- Fixed Schedules accordion swapping logic. [(#4621)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4621)
+- Fix Ansible Playbook 'New Catalog Item' styling issue [(#4794)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4794)
+- Allow Service retirement over Centralized Administration [(#4790)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4790)
+- Only update report name in group reports menu when editing a report [(#4824)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4824)
+- Fixed feature id when checking assert_privileges. [(#4843)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4843)
+- Rescue error when canceling job [(#4855)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4855)
+- No need to load default search when user is on tagging screen. [(#4856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4856)
+- Rescue error messages when executing retire action [(#4874)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4874)
+- VM CLoud: floating ips to associate must be a list [(#4944)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4944)
+- Add X-UA-Compatible header [(#4946)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4946)
+
+## Gaprindashvili-6 - Released 2018-11-06
 
 ### Added
 - VM: associate only unused floating IPs [(#4357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4357)
@@ -30,7 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Show correct VMs upon Service retirement [(#4710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4710)
 - Fix error for Datastore custom button [(#4745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4745) 
 
-## Gaprindashvili-5
+## Gaprindashvili-5 - Released 2018-10-07
 
 ### Added
 - Added Max Retries text field on Instance screen [(#3562)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3562)
