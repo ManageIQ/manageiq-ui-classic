@@ -15,7 +15,7 @@ module OpsHelper
     tree_keys = tree_node.split("-")
     # only 'root' key has 1 key after split
     if tree_keys.count == 2
-      tree_keys.any? { |t_key| %w(msc sis z l ld lr).include? t_key }
+      tree_keys.any? { |t_key| %w(msc sis z l ld lr).include?(t_key) }
     else
       false
     end
