@@ -21,7 +21,7 @@ Dir[support_path.join("**/*.rb")].each { |f| require f }
 # require core_support_path.join('presenter_helper.rb')
 # require core_support_path.join('menu_helper.rb')
 # require core_support_path.join('automation_helper.rb')
-# require core_support_path.join('factory_girl_helper.rb')
+# require core_support_path.join('factory_bot_helper.rb')
 # require core_support_path.join('button_helper.rb')
 # require core_support_path.join('settings_helper.rb')
 #
