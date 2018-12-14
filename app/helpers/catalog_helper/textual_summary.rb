@@ -24,7 +24,7 @@ module CatalogHelper::TextualSummary
     else
       tags[:value] = tags_from_record
       tags[:value].each { |value| value[:value].sort! }
-      tags[:value].sort_by!{ |x| x[:label] }
+      tags[:value].sort_by! { |x| x[:label] }
     end
     tags
   end

@@ -69,7 +69,7 @@ module ContainerGroupHelper::TextualSummary
         [nil, name, volume[key]] if volume[key].present?
       end.compact
       # Set the volume name only  for the first item in the list
-      volume_values[0][0] = volume.name if volume_values.length > 0
+      volume_values[0][0] = volume.name if volume_values.present?
       h[:values] += volume_values
     end
     TextualMultilabel.new(_("Volumes"), h)
