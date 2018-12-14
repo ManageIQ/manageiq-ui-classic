@@ -92,53 +92,40 @@ module HostHelper::TextualSummary
       all_count           = x.system_services.count
       configuration_count = x.filesystems.count
 
-      running_link = url_for_only_path(:controller         => controller.controller_name,
-                                       :action             => 'host_services',
-                                       :id                 => @record,
-                                       :db                 => controller.controller_name,
-                                       :host_service_group => x.id,
-                                       :status             => :running)
       running = {:title => _("Show list of running %{name}") % {:name => x.name},
                  :value => _("Running (%{number})") % {:number => running_count},
                  :icon  => failed_count.zero? && running_count.positive? ? 'pficon pficon-ok' : nil,
-                 :link  => running_count.positive? ? running_link : nil}
+                 :link  => running_count.positive? ? host_service_link(x, 'host_services', :running) : nil}
 
-      failed_link = url_for_only_path(:controller         => controller.controller_name,
-                                      :action             => 'host_services',
-                                      :id                 => @record,
-                                      :db                 => controller.controller_name,
-                                      :host_service_group => x.id,
-                                      :status             => :failed)
       failed = {:title => _("Show list of failed %{name}") % {:name => x.name},
                 :value => _("Failed (%{number})") % {:number => failed_count},
                 :icon  => failed_count.positive? ? 'pficon pficon-error-circle-o' : nil,
-                :link  => failed_count.positive? ? failed_link : nil}
+                :link  => failed_count.positive? ? host_service_link(x, 'host_services', :failed) : nil}
 
-      all_link = url_for_only_path(:controller         => controller.controller_name,
-                                   :action             => 'host_services',
-                                   :id                 => @record,
-                                   :db                 => controller.controller_name,
-                                   :host_service_group => x.id,
-                                   :status             => :all)
       all = {:title => _("Show list of all %{name}") % {:name => x.name},
              :value => _("All (%{number})") % {:number => all_count},
              :icon  => 'pficon pficon-service',
-             :link  => all_count.positive? ? all_link : nil}
+             :link  => all_count.positive? ? host_service_link(x, 'host_services', :all) : nil}
 
-      configuration_link = url_for_only_path(:controller         => controller.controller_name,
-                                             :action             => 'filesystems',
-                                             :id                 => @record,
-                                             :db                 => controller.controller_name,
-                                             :host_service_group => x.id)
       configuration = {:title => _("Show list of configuration files of %{name}") % {:name => x.name},
                        :icon  => 'fa fa-file-o',
                        :value => _("Configuration (%{number})") % {:number => configuration_count},
-                       :link  => configuration_count.positive? ? configuration_link : nil}
+                       :link  => configuration_count.positive? ? host_service_link(x, 'filesystems') : nil}
 
       sub_items = [running, failed, all, configuration]
 
       {:value => x.name, :sub_items => sub_items}
     end
+  end
+
+  def host_service_link(record, action, status = nil)
+    args = {:controller         => controller.controller_name,
+            :action             => action,
+            :id                 => @record,
+            :db                 => controller.controller_name,
+            :host_service_group => record.id}
+    args[:status] = status if status.present?
+    url_for_only_path(args)
   end
 
   def textual_hostname
