@@ -36,11 +36,11 @@ module NetworkPortHelper::TextualSummary
   end
 
   def textual_fixed_ip_addresses
-    @record.fixed_ip_addresses.join(", ") if @record.fixed_ip_addresses
+    @record.fixed_ip_addresses&.join(", ")
   end
 
   def textual_floating_ip_addresses
-    @record.floating_ip_addresses.join(", ") if @record.floating_ip_addresses
+    @record.floating_ip_addresses&.join(", ")
   end
 
   def textual_parent_ems_cloud
