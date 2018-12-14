@@ -125,6 +125,7 @@ module.exports = {
     alias: {
       'react': resolve(dirname(__filename), '../../node_modules', 'react'),
       'bootstrap-select': '@pf3/select',  // never use vanilla bootstrap-select
+      'moment': resolve(dirname(__filename), '../../node_modules', 'moment'), // fix moment-strftime peerDependency issue
     },
     extensions: settings.extensions,
     modules: [],
