@@ -50,7 +50,7 @@ module GtlHelper
   def render_gtl_outer(no_flash_div)
     parent_id = @report_data_additional_options.try(:[], :parent_id)
     gtl_type_string = @gtl_type || 'list'
-    @report_data_additional_options.with_gtl_type(gtl_type_string) if @report_data_additional_options
+    @report_data_additional_options&.with_gtl_type(gtl_type_string)
 
     options = {
       :model_name                     => model_to_report_data,
@@ -106,7 +106,7 @@ module GtlHelper
   def render_gtl_javascripts(options)
     parent_id_escaped = (h(j_str(options[:parent_id])) unless options[:display].nil?)
 
-    javascript_tag <<EOJ
+    javascript_tag(<<EOJ)
       ManageIQ.gtl.loading = true;
       sendDataWithRx({unsubscribe: 'reportDataController'});
       miq_bootstrap('#miq-gtl-view', 'ManageIQ.report_data');
