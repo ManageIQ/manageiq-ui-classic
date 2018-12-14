@@ -80,7 +80,7 @@ module EmsCloudHelper::TextualSummary
   def textual_instances
     num   = @record.number_of(:vms)
     h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = ems_cloud_path(@record.id, :display => 'instances')
       h[:title] = _("Show all Instances")
     end
@@ -90,7 +90,7 @@ module EmsCloudHelper::TextualSummary
   def textual_images
     num = @record.number_of(:miq_templates)
     h = {:label => _('Images'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "miq_template_show_list")
+    if num.positive? && role_allows?(:feature => "miq_template_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'images')
       h[:title] = _("Show all Images")
     end
@@ -108,7 +108,7 @@ module EmsCloudHelper::TextualSummary
   def textual_storage_managers
     num   = @record.try(:storage_managers) ? @record.number_of(:storage_managers) : 0
     h     = {:label => _('Storage Managers'), :icon => "fa fa-database", :value => num}
-    if num > 0 && role_allows?(:feature => "ems_storage_show_list")
+    if num.positive? && role_allows?(:feature => "ems_storage_show_list")
       h[:title] = _("Show all Storage Managers")
       h[:link] = ems_cloud_path(@record.id, :display => 'storage_managers')
     end
@@ -138,7 +138,7 @@ module EmsCloudHelper::TextualSummary
   def textual_security_groups
     num = @record.number_of(:security_groups)
     h = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
-    if num > 0 && role_allows?(:feature => "security_group_show_list")
+    if num.positive? && role_allows?(:feature => "security_group_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'security_groups')
       h[:title] = _("Show all Security Groups")
     end

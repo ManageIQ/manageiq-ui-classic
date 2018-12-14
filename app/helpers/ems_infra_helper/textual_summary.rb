@@ -81,7 +81,7 @@ module EmsInfraHelper::TextualSummary
   def textual_infrastructure_folders
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = "#{title_for_hosts} & #{title_for_clusters}"
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
+    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
     h         = {:label => label, :icon => "pficon pficon-container-node", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders')
@@ -93,7 +93,7 @@ module EmsInfraHelper::TextualSummary
   def textual_folders
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = _("VMs & Templates")
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
+    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
     h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders', :vat => true)
@@ -106,7 +106,7 @@ module EmsInfraHelper::TextualSummary
     label = title_for_clusters
     num   = @record.number_of(:ems_clusters)
     h     = {:label => label, :icon => "pficon pficon-cluster", :value => num}
-    if num > 0 && role_allows?(:feature => "ems_cluster_show_list")
+    if num.positive? && role_allows?(:feature => "ems_cluster_show_list")
       h[:link] = ems_infra_path(@record.id, :display => 'ems_clusters', :vat => true)
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -117,7 +117,7 @@ module EmsInfraHelper::TextualSummary
     label = title_for_hosts
     num   = @record.number_of(:hosts)
     h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
-    if num > 0 && role_allows?(:feature => "host_show_list")
+    if num.positive? && role_allows?(:feature => "host_show_list")
       h[:link]  = ems_infra_path(@record.id, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
