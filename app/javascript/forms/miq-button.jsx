@@ -11,7 +11,7 @@ function MiqButton(props) {
     title = props.disabledTitle;
   }
 
-  let klass = ClassNames({
+  const klass = ClassNames({
     'btn': true,
     'btn-xs': props.xs,
     'btn-primary': props.primary,
@@ -19,7 +19,7 @@ function MiqButton(props) {
     'disabled': !props.enabled,
   });
 
-  let buttonClicked = (event) => {
+  const buttonClicked = (event) => {
     if (props.enabled) {
       props.onClick();
     }
@@ -29,10 +29,12 @@ function MiqButton(props) {
   };
 
   return (
-    <button className={klass}
+    <button
+      className={klass}
       onClick={buttonClicked}
       title={title}
-      alt={title}>
+      alt={title}
+    >
       {props.name}
     </button>
   );

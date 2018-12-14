@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:current": "jest --watch",
-    "lint": "eslint -c app/javascript/.eslintrc.js --fix app/javascript || exit 0",
+    "lint": "eslint --ext=js,jsx .",
     "stylelint": "stylelint 'app/**/*css'"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "base64-js": "~1.2.3",
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-switch": "~3.3.4",
+    "classnames": "~2.2.6",
     "codemirror": "~5.19.0",
     "connected-react-router": "^4.3.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",

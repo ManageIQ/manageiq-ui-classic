@@ -66,11 +66,13 @@ class MiqAboutModal extends React.Component {
     const browser = window.miqBrowserDetect();
     const plugins = Object.keys(data.server_info.plugins).map((key) => {
       const val = data.server_info.plugins[key];
-      return (<AboutModal.VersionItem
-        label={val.display_name}
-        versionText={val.version}
-        key={key}
-      />);
+      return (
+        <AboutModal.VersionItem
+          label={val.display_name}
+          versionText={val.version}
+          key={key}
+        />
+      );
     });
 
     return (
@@ -94,7 +96,10 @@ class MiqAboutModal extends React.Component {
           <AboutModal.VersionItem label={__('Browser OS')} versionText={browser.OS} />
           <br />
           <a style={{ color: 'white' }} onClick={() => this.setState({ expand: !this.state.expand })} href="javascript:void(0);">
-            <strong><i className={this.state.expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} /> Plugins</strong>
+            <strong>
+              <i className={this.state.expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
+              Plugins
+            </strong>
           </a>
           <div className={this.state.expand ? 'about-visible-scrollbar' : 'hidden'} style={{ height: '200px', overflow: 'auto' }}>
             {plugins}

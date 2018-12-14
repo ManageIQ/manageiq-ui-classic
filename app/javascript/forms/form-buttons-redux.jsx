@@ -12,7 +12,12 @@ function FormButtonsRedux(props) {
 }
 
 FormButtonsRedux.propTypes = {
-  callbackOverrides: PropTypes.object,
+  callbackOverrides: PropTypes.shape({
+    addClicked: PropTypes.func,
+    saveClicked: PropTypes.func,
+    resetClicked: PropTypes.func,
+    cancelClicked: PropTypes.func,
+  }),
 };
 
 FormButtonsRedux.defaultProps = {
@@ -38,4 +43,3 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps)(FormButtonsRedux);
-

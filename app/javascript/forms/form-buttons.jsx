@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 import MiqButton from './miq-button';
 
 function FormButtons(props) {
-  let primaryTitle = props.customLabel || (props.newRecord ? __('Add') : __('Save'));
-  let primaryHandler = (props.newRecord ? props.addClicked : props.saveClicked) || props.addClicked || props.saveClicked;
+  const primaryTitle = props.customLabel || (props.newRecord ? __('Add') : __('Save'));
+  const primaryHandler = (props.newRecord ? props.addClicked : props.saveClicked) || props.addClicked || props.saveClicked;
 
-  let resetTitle = __("Reset");
-  let cancelTitle = __("Cancel");
+  const resetTitle = __('Reset');
+  const cancelTitle = __('Cancel');
 
   return (
     <React.Fragment>
-      <div className="clearfix"></div>
+      <div className="clearfix" />
       <div className="pull-right button-group edit_buttons">
-        <MiqButton name={primaryTitle} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary={true} />
+        <MiqButton name={primaryTitle} title={primaryTitle} enabled={props.saveable} onClick={primaryHandler} primary />
         {props.newRecord || <MiqButton name={resetTitle} title={resetTitle} enabled={! props.pristine} onClick={props.resetClicked} />}
-        <MiqButton name={cancelTitle} title={cancelTitle} enabled={true} onClick={props.cancelClicked} />
+        <MiqButton name={cancelTitle} title={cancelTitle} enabled onClick={props.cancelClicked} />
 
       </div>
     </React.Fragment>
@@ -36,7 +36,7 @@ FormButtons.propTypes = {
 
 const noop = () => null;
 
-FormButtons.defaultProps =  {
+FormButtons.defaultProps = {
   newRecord: false,
   customLabel: '',
   saveable: false,
@@ -45,6 +45,6 @@ FormButtons.defaultProps =  {
   saveClicked: noop,
   resetClicked: noop,
   cancelClicked: noop,
-}
+};
 
 export default FormButtons;

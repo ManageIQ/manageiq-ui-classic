@@ -59,6 +59,9 @@ engines:
         enabled: false
     config:
       ignore_warnings: true
+      extensions:
+      - .js
+      - .jsx
   fixme:
     # let's enable later
     enabled: false
