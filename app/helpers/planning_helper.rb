@@ -1,5 +1,4 @@
 module PlanningHelper
-
   # Choices for Target options show pulldown
   TARGET_TYPE_CHOICES = {
     "EmsCluster" => N_("Clusters"),
@@ -38,5 +37,4 @@ module PlanningHelper
     "55%"  => 55,
     "50%"  => 50,
   }.freeze
-
 end

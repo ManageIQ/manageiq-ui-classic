@@ -129,7 +129,7 @@ module PhysicalServerHelper::TextualSummary
     # Currently, we only want to display the MAC addresses of devices that
     # are associated with an entry in the networks table. This ensures that
     # we only display management addresses.
-    {:label =>  _("MAC Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device[:address] }.join(", ") }
+    {:label => _("MAC Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device[:address] }.join(", ") }
   end
 
   def textual_ipv4
@@ -161,7 +161,7 @@ module PhysicalServerHelper::TextualSummary
     # It is possible for guest devices not to have network data (or a network
     # hash). As a result, we need to exclude guest devices that don't have
     # network data to prevent a nil class error from occurring.
-    {:label =>  _("IPv6 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipv6address }.join(", ") }
+    {:label => _("IPv6 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipv6address }.join(", ") }
   end
 
   def textual_loc_led_state
