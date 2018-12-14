@@ -21,7 +21,7 @@ module LoadBalancerHelper
   def self.display_port_range(r)
     if r.nil?
       "nil"
-    elsif r.size == 0 # rubocop:disable Style/ZeroLengthPredicate
+    elsif r.size.zero?
       ""
     elsif r.size == 1
       r.first.to_s

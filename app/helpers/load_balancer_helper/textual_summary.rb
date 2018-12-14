@@ -31,18 +31,22 @@ module LoadBalancerHelper::TextualSummary
   end
 
   def textual_listeners
-    @record.load_balancer_listeners.map do |x|
-      "Load Balancer"\
-        " #{LoadBalancerHelper.display_protocol_port_range(x.load_balancer_protocol, x.load_balancer_port_range)}"\
-        ", Instance"\
-        " #{LoadBalancerHelper.display_protocol_port_range(x.instance_protocol, x.instance_port_range)}"
-    end.join(" | ") if @record.load_balancer_listeners
+    if @record.load_balancer_listeners
+      @record.load_balancer_listeners.map do |x|
+        "Load Balancer"\
+          " #{LoadBalancerHelper.display_protocol_port_range(x.load_balancer_protocol, x.load_balancer_port_range)}"\
+          ", Instance"\
+          " #{LoadBalancerHelper.display_protocol_port_range(x.instance_protocol, x.instance_port_range)}"
+      end.join(" | ")
+    end
   end
 
   def textual_health_checks
-    @record.load_balancer_health_checks.map do |x|
-      "#{x.protocol}:#{x.port}/#{x.url_path}"
-    end.join("\n") if @record.load_balancer_health_checks
+    if @record.load_balancer_health_checks
+      @record.load_balancer_health_checks.map do |x|
+        "#{x.protocol}:#{x.port}/#{x.url_path}"
+      end.join("\n")
+    end
   end
 
   def textual_parent_ems_cloud
@@ -56,7 +60,7 @@ module LoadBalancerHelper::TextualSummary
   def textual_instances
     num   = @record.number_of(:vms)
     h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
       h[:title] = _("Show all Instances")
     end

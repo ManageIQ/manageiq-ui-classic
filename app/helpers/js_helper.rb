@@ -75,11 +75,11 @@ module JsHelper
   def js_build_calendar(options = {})
     skip_days = options[:skip_days].nil? ? 'undefined' : options[:skip_days].to_a.to_json
 
-    <<EOD
-ManageIQ.calendar.calDateFrom = #{js_format_date(options[:date_from])};
-ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
-ManageIQ.calendar.calSkipDays = #{skip_days};
-miqBuildCalendar();
+    <<~EOD
+      ManageIQ.calendar.calDateFrom = #{js_format_date(options[:date_from])};
+      ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
+      ManageIQ.calendar.calSkipDays = #{skip_days};
+      miqBuildCalendar();
 EOD
   end
 
