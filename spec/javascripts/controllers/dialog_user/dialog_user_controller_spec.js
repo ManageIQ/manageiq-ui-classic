@@ -133,7 +133,7 @@ describe('dialogUserController', function() {
 
         setTimeout(function() {
           expect(API.post).toHaveBeenCalledWith('generic_objects/explorer', {
-            parameters: {field1: 'field1'}, action: 'custom_action'}, {skipErrors: [400]});
+            parameters: {field1: 'field1'}, requester_type: 'ui', action: 'custom_action'}, {skipErrors: [400]});
           done();
         });
       });
@@ -167,7 +167,7 @@ describe('dialogUserController', function() {
 
         setTimeout(function() {
           expect(API.post).toHaveBeenCalledWith('service/explorer', {
-            resource: {field1: 'field1'}, action: 'reconfigure'}, {skipErrors: [400]});
+            resource: {field1: 'field1'}, requester_type: 'ui', action: 'reconfigure'}, {skipErrors: [400]});
           done();
         });
       });
@@ -193,6 +193,7 @@ describe('dialogUserController', function() {
         setTimeout(function() {
           expect(API.post).toHaveBeenCalledWith('submit endpoint', {
             action: 'order',
+            requester_type: 'ui',
             field1: 'field1'
           }, {skipErrors: [400]});
           done();

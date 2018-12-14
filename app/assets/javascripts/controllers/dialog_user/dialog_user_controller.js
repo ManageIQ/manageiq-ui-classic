@@ -71,6 +71,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     } else {
       apiData = vm.dialogData;
     }
+    apiData.requester_type = 'ui';
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
       .then(function(response) {
         if (vm.openUrl === 'true') {
