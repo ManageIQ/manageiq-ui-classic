@@ -90,7 +90,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_instances
     num   = @record.number_of(:vms)
     h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
       h[:title] = _("Show all Instances")
     end
@@ -110,7 +110,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_parameters
     num   = @record.number_of(:parameters)
     h     = {:label => _("Parameters"), :icon => "ff ff-parameter", :value => num}
-    if num > 0
+    if num.positive?
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'parameters', :id => @record)
       h[:title] = _("Show all parameters")
     end
@@ -120,7 +120,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_outputs
     num   = @record.number_of(:outputs)
     h     = {:label => _("Outputs"), :icon => "ff ff-file-output-o", :value => num}
-    if num > 0
+    if num.positive?
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'outputs', :id => @record)
       h[:title] = _("Show all outputs")
     end
@@ -130,7 +130,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_resources
     num   = @record.number_of(:resources)
     h     = {:label => _("Resources"), :icon => "ff ff-resource", :value => num}
-    if num > 0
+    if num.positive?
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'resources', :id => @record)
       h[:title] = _("Show all resources")
     end

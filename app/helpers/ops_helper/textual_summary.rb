@@ -165,18 +165,18 @@ module OpsHelper::TextualSummary
 
   def self.convert_to_format(format, text_modifier, value)
     fmt_value = case format.to_s
-                  when "general_number_precision_0"
-                    value.to_i
-                  when "gigabytes_human"
-                    value.to_f / 1.0.gigabyte
-                  else
-                    value.to_f
+                when "general_number_precision_0"
+                  value.to_i
+                when "gigabytes_human"
+                  value.to_f / 1.0.gigabyte
+                else
+                  value.to_f
                 end
-    return "#{fmt_value} #{text_modifier}"
+    "#{fmt_value} #{text_modifier}"
   end
 
   def convert_to_format_with_default_text(format, text_modifier, value, metric)
-    is_zero_value = value.nil? || value == 0
+    is_zero_value = value.nil? || value.zero?
     can_display_default_text = !TenantQuota.default_text_for(metric).nil?
 
     if is_zero_value && can_display_default_text
@@ -190,15 +190,15 @@ module OpsHelper::TextualSummary
     rows = @record.combined_quotas.values.to_a
     rows.collect do |row|
       {
-        :title => row[:description],
-        :name => row[:description],
-        :in_use => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
+        :title     => row[:description],
+        :name      => row[:description],
+        :in_use    => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
         :allocated => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:allocated],
                                                           :allocated),
         :available => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:available],
                                                           :available),
-        :total => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
-        :explorer => true
+        :total     => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
+        :explorer  => true
       }
     end
   end
