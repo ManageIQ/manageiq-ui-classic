@@ -1,10 +1,12 @@
 module TextualMixins::TextualMetricsStatus
   def textual_metrics_status
-    return {
-      :label => _("Last Metrics Collection"),
-      :title => _("None"),
-      :value => _("None")
-    } unless @record.last_metrics_update_date
+    unless @record.last_metrics_update_date
+      return {
+        :label => _("Last Metrics Collection"),
+        :title => _("None"),
+        :value => _("None")
+      }
+    end
 
     status        = (@record.last_metrics_error || :valid).to_s.titleize
     updated_on    = @record.last_metrics_update_date
