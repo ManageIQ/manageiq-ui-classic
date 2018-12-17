@@ -102,7 +102,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_direct_vms
     num = @record.v_direct_vms
     h = {:label => _("Direct VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show VMs in this Resource Pool, but not in Resource Pools below")
       h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'vms')
     end
@@ -112,7 +112,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_allvms_size
     num = @record.total_vms
     h = {:label => _("All VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all VMs in this Resource Pool")
       h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
     end
@@ -123,7 +123,7 @@ module ResourcePoolHelper::TextualSummary
     num = @record.v_total_vms
     h = {:label => _("All VMs (Tree View)"), :icon => "pficon pficon-virtual-machine", :value => num}
     # TODO: Why is this role_allows? resource_pool_show_list but the previous 2 methods are for vm_show_list
-    if num > 0 && role_allows?(:feature => "resource_pool_show_list")
+    if num.positive? && role_allows?(:feature => "resource_pool_show_list")
       h[:title] = _("Show tree of all VMs in this Resource Pool")
       h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'descendant_vms')
     end
@@ -133,7 +133,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_resource_pools
     num = @record.number_of(:resource_pools)
     h = {:label => _("Resource Pools"), :icon => "pficon pficon-resource-pool", :value => num}
-    if num > 0 && role_allows?(:feature => "resource_pool_show_list")
+    if num.positive? && role_allows?(:feature => "resource_pool_show_list")
       h[:title] = _("Show all Resource Pools")
       h[:link]  = url_for_only_path(:controller => "resource_pool", :action => 'show', :id => @record, :display => 'resource_pools')
     end
