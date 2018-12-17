@@ -26,7 +26,7 @@ module TextualSummaryHelper
       when ActiveRecord::Relation, ActiveRecord::Base
         textual_link(result, :label => automatic_label)
       when String, Integer, true, false, nil
-        {:label => automatic_label, :value => result.to_s} unless result.to_s.blank?
+        {:label => automatic_label, :value => result.to_s} if result.to_s.present?
       end
     when nil
       nil
@@ -127,13 +127,13 @@ module TextualSummaryHelper
     h = {:label => label, :value => value}.merge(textual_object_icon(object, klass))
 
     if role_allows?(:feature => feature)
-      if restful_routed?(object)
-        h[:link] = polymorphic_path(object)
-      else
-        h[:link] = url_for_only_path(:controller => controller,
-                           :action     => 'show',
-                           :id         => object)
-      end
+      h[:link] = if restful_routed?(object)
+                   polymorphic_path(object)
+                 else
+                   url_for_only_path(:controller => controller,
+                                     :action     => 'show',
+                                     :id         => object)
+                 end
       h[:title] = _("Show %{label} '%{value}'") % {:label => label, :value => value}
     end
 
@@ -158,24 +158,24 @@ module TextualSummaryHelper
 
     h = {:label => label, :value => count.to_s}.merge(textual_collection_icon(collection, klass))
 
-    if count > 0 && role_allows?(:feature => feature)
+    if count.positive? && role_allows?(:feature => feature)
       if link
         h[:link] = link
       elsif collection.respond_to?(:proxy_association)
         owner = collection.proxy_association.owner
         display = collection.proxy_association.reflection.name
 
-        if restful_routed?(owner)
-          h[:link] = polymorphic_path(owner, :display => display)
-        else
-          h[:link] = url_for_only_path(:controller => controller_for_model(owner.class),
-                             :action     => 'show',
-                             :id         => owner,
-                             :display    => display)
-        end
+        h[:link] = if restful_routed?(owner)
+                     polymorphic_path(owner, :display => display)
+                   else
+                     url_for_only_path(:controller => controller_for_model(owner.class),
+                                       :action     => 'show',
+                                       :id         => owner,
+                                       :display    => display)
+                   end
       else
         h[:link] = url_for_only_path(:controller => controller_collection,
-                           :action     => 'list')
+                                     :action     => 'list')
       end
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:explorer] = true if explorer
