@@ -40,9 +40,11 @@ module TextualMixins::TextualAuthenticationsStatus
 
   def textual_authentications_status
     authentications = @record.authentications.order(:authtype).collect
-    return [{ :label => _("%{label} Authentication") % { :label => @record.default_authentication_type.to_s.titleize },
-              :title => t = _("None"),
-              :value => t }] if authentications.blank?
+    if authentications.blank?
+      return [{ :label => _("%{label} Authentication") % { :label => @record.default_authentication_type.to_s.titleize },
+                :title => t = _("None"),
+                :value => t }]
+    end
 
     map_authentications(authentications)
   end
