@@ -76,7 +76,7 @@ module StorageHelper::TextualSummary
     label = title_for_hosts
     num   = @record.number_of(:hosts)
     h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
-    if num > 0 && role_allows?(:feature => "host_show_list")
+    if num.positive? && role_allows?(:feature => "host_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -87,7 +87,7 @@ module StorageHelper::TextualSummary
     label = _("Managed VMs")
     num   = @record.number_of(:all_vms)
     h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'all_vms')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -97,7 +97,7 @@ module StorageHelper::TextualSummary
   def textual_managed_miq_templates
     num   = @record.number_of(:all_miq_templates)
     h     = {:label => _("Managed VM Templates"), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "miq_template_show_list")
+    if num.positive? && role_allows?(:feature => "miq_template_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'all_miq_templates')
       h[:title] = _("Show all Managed VM Templates")
     end
@@ -109,7 +109,7 @@ module StorageHelper::TextualSummary
     h = {:label => _("Managed/Registered VMs"),
          :icon  => "pficon pficon-virtual-machine",
          :value => value}
-    if value > 0 && role_allows?(:feature => "vm_show_list")
+    if value.positive? && role_allows?(:feature => "vm_show_list")
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'registered_vms')
       h[:title] = _("Show all Managed/Registered VMs")
     end
@@ -121,7 +121,7 @@ module StorageHelper::TextualSummary
     h = {:label => _("Managed/Unregistered VMs"),
          :icon  => "pficon pficon-virtual-machine",
          :value => value}
-    if value > 0 && role_allows?(:feature => "vm_show_list")
+    if value.positive? && role_allows?(:feature => "vm_show_list")
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'unregistered_vms')
       h[:title] = _("Show all Managed/Unregistered VMs")
     end
@@ -139,7 +139,7 @@ module StorageHelper::TextualSummary
   def textual_files
     num   = @record.number_of(:files)
     h     = {:label => _("All Files"), :icon => "fa fa-file-o", :value => num}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show all files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'files', :id => @record)
     end
@@ -165,7 +165,7 @@ module StorageHelper::TextualSummary
       num = @record.number_of(:disk_files)
     )
     h = {:label => _("VM Provisioned Disk Files"), :icon => "fa fa-file-o", :value => value}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show VM Provisioned Disk Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'disk_files', :id => @record)
     end
@@ -179,7 +179,7 @@ module StorageHelper::TextualSummary
       num = @record.number_of(:snapshot_files)
     )
     h = {:label => _("VM Snapshot Files"), :icon => "fa fa-file-o", :value => value}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show VM Snapshot Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'snapshot_files', :id => @record)
     end
@@ -193,7 +193,7 @@ module StorageHelper::TextualSummary
       num = @record.number_of(:vm_ram_files)
     )
     h = {:label => _("VM Memory Files"), :icon => "fa fa-file-o", :value => value}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show VM Memory Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'vm_ram_files', :id => @record)
     end
@@ -207,7 +207,7 @@ module StorageHelper::TextualSummary
       num = @record.number_of(:vm_misc_files)
     )
     h = {:label => _("Other VM Files"), :icon => "fa fa-file-o", :value => value}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show Other VM Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'vm_misc_files', :id => @record)
     end
@@ -221,7 +221,7 @@ module StorageHelper::TextualSummary
       num = @record.number_of(:debris_files)
     )
     h = {:label => _("Non-VM Files"), :icon => "fa fa-file-o", :value => value}
-    if num > 0
+    if num.positive?
       h[:title] = _("Show Non-VM Files installed on this Datastore")
       h[:link]  = url_for_only_path(:action => 'debris_files', :id => @record)
     end
