@@ -12,10 +12,9 @@
              :class     => "form-horizontal",
              :multipart => true,
              :method    => :post) do
-    - overwrite = @sb[:overwrite] ? true : false
     .form-group
       .col-md-8
-        = check_box_tag("overwrite", "1", overwrite)
+        = check_box_tag("overwrite", "1", @sb[:overwrite])
         = _('Overwrite existing reports?')
     .form-group
       .col-md-4

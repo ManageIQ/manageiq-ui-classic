@@ -71,7 +71,7 @@ class ReportController < ApplicationController
       return
     end
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
-      @sb[:overwrite] = !params[:overwrite].nil?
+      @sb[:overwrite] = params[:overwrite].present?
       begin
         _reps, mri = MiqReport.import(params[:upload][:file], :save => true, :overwrite => @sb[:overwrite], :userid => session[:userid])
       rescue => bang
