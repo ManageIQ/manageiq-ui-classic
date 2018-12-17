@@ -154,21 +154,23 @@ module ServiceHelper::TextualSummary
 
   def textual_parent_service
     parent = @record.parent_service
-    {
-      :label => _("Parent Service"),
-      :image => parent.picture ? "/pictures/#{parent.picture.basename}" : nil,
-      :icon  => parent.picture ? nil : "pficon pficon-service",
-      :value => parent.name,
-      :title => _("Show this Service's Parent Service"),
-      :link  => url_for_only_path(:controller => 'service', :action => 'show', :id => parent)
-    } if parent
+    if parent
+      {
+        :label => _("Parent Service"),
+        :image => parent.picture ? "/pictures/#{parent.picture.basename}" : nil,
+        :icon  => parent.picture ? nil : "pficon pficon-service",
+        :value => parent.name,
+        :title => _("Show this Service's Parent Service"),
+        :link  => url_for_only_path(:controller => 'service', :action => 'show', :id => parent)
+      }
+    end
   end
 
   def textual_orchestration_stack
     ost = @record.try(:orchestration_stack)
-    if ost && !ost.id.present?
+    if ost && ost.id.blank?
       {:label => _("Orchestration Stack"),
-       :icon => 'ff ff-stack',
+       :icon  => 'ff ff-stack',
        :value => ost.name,
        :title => _("Invalid Stack")}
     elsif ost
@@ -178,13 +180,15 @@ module ServiceHelper::TextualSummary
 
   def textual_job
     job = @record.try(:job)
-    {
-      :label => _("Job"),
-      :icon  => "ff ff-stack",
-      :value => job.name,
-      :title => _("Show this Service's Job"),
-      :link  => url_for_only_path(:controller => 'configuration_job', :action => 'show', :id => job.id)
-    } if job
+    if job
+      {
+        :label => _("Job"),
+        :icon  => "ff ff-stack",
+        :value => job.name,
+        :title => _("Show this Service's Job"),
+        :link  => url_for_only_path(:controller => 'configuration_job', :action => 'show', :id => job.id)
+      }
+    end
   end
 
   def textual_owner
@@ -272,7 +276,7 @@ module ServiceHelper::TextualSummary
   def textual_generic_object_instances
     num = @record.number_of(:generic_objects)
     h = {:label => _("Instances"), :value => num}
-    if role_allows?(:feature => "generic_object_view") && num > 0
+    if role_allows?(:feature => "generic_object_view") && num.positive?
       h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'generic_objects', :type => 'tile'),
                :title => _('Show Generic Object Instances for this Service'))
     end
