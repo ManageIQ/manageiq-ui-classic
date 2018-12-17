@@ -101,7 +101,6 @@ class ReportController < ApplicationController
     when "saved_reports"
       redirect_to(:action => params[:tab])
     when "menueditor"
-      # redirect_to(:controller=>"configuration", :action=>"change_tab", :tab=>6)
       redirect_to(:action => "menu_edit")
     else
       redirect_to(:action => params[:tab], :id => params[:id])
