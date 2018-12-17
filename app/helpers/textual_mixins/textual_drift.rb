@@ -3,7 +3,7 @@ module TextualMixins::TextualDrift
     return nil unless role_allows?(:feature => "vm_drift")
     h = {:label => _("Drift History"), :icon => "ff ff-drift"}
     num = @record.number_of(:drift_states)
-    if num == 0
+    if num.zero?
       h[:value] = _("None")
     else
       h[:value] = num
