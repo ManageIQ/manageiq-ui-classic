@@ -33,13 +33,14 @@ describe AutomateImportService do
     let(:removable_entry) { double(:name => "carrot/something_else/namespace.yaml") }
     let(:removable_class_entry) { double(:name => "carrot/something_else.class/class.yaml") }
     let(:user) { FactoryBot.create(:user_with_group) }
+    let(:zip_file) { Tempfile.open(['automate_temporary_zip', '.zip']) }
 
     before do
       User.current_user = user
       import_options = {
         "import_as" => "potato",
         "overwrite" => true,
-        "zip_file"  => "automate_temporary_zip.zip",
+        "zip_file"  => zip_file.path,
         "tenant_id" => user.current_tenant.id
       }
       allow(MiqAeImport).to receive(:new).with("carrot", import_options).and_return(miq_ae_import)
@@ -55,6 +56,9 @@ describe AutomateImportService do
       allow(miq_ae_import).to receive(:remove_entry)
       allow(miq_ae_import).to receive(:update_sorted_entries)
       allow(miq_ae_import).to receive(:import).and_return(true)
+      allow(Tempfile).to receive(:open).with(['automate_temporary_zip', '.zip']) do |&block|
+        block.call(zip_file)
+      end
     end
 
     it "removes unrelated entries" do
@@ -94,7 +98,7 @@ describe AutomateImportService do
           "carrot",
           "import_as" => "carrot",
           "overwrite" => true,
-          "zip_file"  => "automate_temporary_zip.zip",
+          "zip_file"  => zip_file.path,
           "tenant_id" => user.current_tenant.id
         ).and_return(miq_ae_import)
         automate_import_service.import_datastore(import_file_upload, "carrot", "", ["starch"])
