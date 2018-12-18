@@ -36,18 +36,18 @@ const observeWithInterval = (element, params) => {
       // tack on the id and value to the URL
       const data = {
         [id]: element.prop('value'),
-      }
+      };
 
       miqObserveRequest(url, {
         done: attemptAutoRefreshTrigger(params),
-        data: data,
+        data,
       });
     }
   });
 };
 
 const elementValue = (element) => {
-  if (element.prop('type') == 'checkbox' || element.attr('data-miq_observe_checkbox')) {
+  if (element.prop('type') === 'checkbox' || element.attr('data-miq_observe_checkbox')) {
     return encodeURIComponent(element.prop('checked') ? element.val() : 'null');
   }
 
@@ -75,7 +75,7 @@ const miqObserve = (element, params) => {
 
   return miqObserveRequest(url, {
     no_encoding: true,
-    data: id + '=' + value,
+    data: `${id}=${value}`,
     beforeSend: !!element.attr('data-miq_sparkle_on'),
     complete: !!element.attr('data-miq_sparkle_off'),
     done: attemptAutoRefreshTrigger(params),
@@ -89,12 +89,12 @@ const debouncedObserve = debounce(miqObserve, 700, {
 
 ManageIQ.observeDate = (element) => {
   const params = $.parseJSON(element.attr('data-miq_observe_date'));
-  let { url } = params;
+  const { url } = params;
 
-  //  tack on the id and value to the URL
-  url += '?' + element.prop('id') + '=' + element.val();
+  const id = element.prop('id');
+  const value = element.val();
 
-  return miqObserveRequest(url, {
+  return miqObserveRequest(`${url}?${id}=${value}`, {
     beforeSend: !!element.attr('data-miq_sparkle_on'),
     complete: !!element.attr('data-miq_sparkle_off'),
     done: attemptAutoRefreshTrigger(params),
