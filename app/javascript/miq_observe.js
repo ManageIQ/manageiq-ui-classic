@@ -1,5 +1,7 @@
 /* global dialogFieldRefresh miqObserveRequest miqSerializeForm miqSendOneTrans */
 
+import { debounce } from 'lodash';
+
 const attemptAutoRefreshTrigger = (params) =>
   () => {
     if (params.auto_refresh === true) {
@@ -64,7 +66,7 @@ n
   var observeOnChange = function(el, parms) {
     // No interval passed, use event observer
     el.off('change');
-    el.on('change', _.debounce(function() {
+    el.on('change', debounce(function() {
       var id = el.attr('id');
       var value = el.prop('multiple') ? el.val() : encodeURIComponent(el.prop('value'));
 
