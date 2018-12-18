@@ -111,6 +111,9 @@ $(document).ready(function() {
   };
 
   var observeOnChange = function(el, parms) {
+    if (el.prop("type") === "radio") {
+      return;
+    }
     // No interval passed, use event observer
     el.off('change');
     el.on('change', _.debounce(function() {
