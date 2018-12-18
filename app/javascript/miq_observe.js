@@ -9,6 +9,43 @@ const attemptAutoRefreshTrigger = (params) =>
     }
   };
 
+const observeWithInterval = (element, params) => {
+  const { interval, url, submit } = params;
+  const id = element.attr('id');
+
+  if (element.data('isObserved')) {
+    return;
+  }
+  element.data('isObserved', true);
+
+  element.observe_field(interval, function() {
+    const oneTrans = this.getAttribute('data-miq_send_one_trans'); // Grab one trans URL, if present
+
+    if (submit) {
+      // If submit element passed in
+      miqObserveRequest(url, {
+        data: miqSerializeForm(submit),
+        done: attemptAutoRefreshTrigger(params),
+      });
+    } else if (oneTrans) {
+      miqSendOneTrans(url, {
+        observe: true,
+        done: attemptAutoRefreshTrigger(params),
+      });
+    } else {
+      // tack on the id and value to the URL
+      const data = {
+        [id]: element.prop('value'),
+      }
+
+      miqObserveRequest(url, {
+        done: attemptAutoRefreshTrigger(params),
+        data: data,
+      });
+    }
+  });
+};
+
 function miqSendDateRequest(el) {
   var parms = $.parseJSON(el.attr('data-miq_observe_date'));
   var url = parms.url;
@@ -25,44 +62,6 @@ function miqSendDateRequest(el) {
 }
 
 export function setup() {
-  // Bind in the observe support. If interval is configured, use the observe_field functi
-n
-  var observeWithInterval = function(el, parms) {
-    if (el.data('isObserved')) {
-      return;
-    }
-    el.data('isObserved', true);
-
-    var interval = parms.interval;
-    var url = parms.url;
-    var submit = parms.submit;
-
-    el.observe_field(interval, function() {
-      var oneTrans = this.getAttribute('data-miq_send_one_trans'); // Grab one trans URL, if present
-      if (typeof submit !== 'undefined') {
-        // If submit element passed in
-        miqObserveRequest(url, {
-          data: miqSerializeForm(submit),
-          done: attemptAutoRefreshTrigger(parms),
-        });
-      } else if (oneTrans) {
-        miqSendOneTrans(url, {
-          observe: true,
-          done: attemptAutoRefreshTrigger(parms),
-        });
-      } else {
-        // tack on the id and value to the URL
-        var data = {};
-        data[el.attr('id')] = el.prop('value');
-
-        miqObserveRequest(url, {
-          done: attemptAutoRefreshTrigger(parms),
-          data: data,
-        });
-      }
-    });
-  };
-
   var observeOnChange = function(el, parms) {
     // No interval passed, use event observer
     el.off('change');
