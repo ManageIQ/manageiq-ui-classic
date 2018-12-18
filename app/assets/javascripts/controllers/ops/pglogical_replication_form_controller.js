@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', '$q', function($http, $scope, pglogicalReplicationFormId, miqService, $q) {
+ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', '$q', '$timeout', function($http, $scope, pglogicalReplicationFormId, miqService, $q, $timeout) {
   var init = function() {
     $scope.pglogicalReplicationModel = {
       replication_type: 'none',
@@ -315,6 +315,10 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     $scope.afterGet = true;
     $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
     miqService.sparkleOff();
+
+    $timeout(function() {
+      $scope.codeMirrorRefresh = true;
+    });
   }
 
   init();
