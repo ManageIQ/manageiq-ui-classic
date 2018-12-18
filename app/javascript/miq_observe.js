@@ -46,20 +46,19 @@ const observeWithInterval = (element, params) => {
   });
 };
 
-function miqSendDateRequest(el) {
-  var parms = $.parseJSON(el.attr('data-miq_observe_date'));
-  var url = parms.url;
+ManageIQ.observeDate = (element) => {
+  const params = $.parseJSON(element.attr('data-miq_observe_date'));
+  let { url } = params;
+
   //  tack on the id and value to the URL
-  var urlstring = url + '?' + el.prop('id') + '=' + el.val();
+  url += '?' + element.prop('id') + '=' + element.val();
 
-  var options = {
-    beforeSend: !!el.attr('data-miq_sparkle_on'),
-    complete: !!el.attr('data-miq_sparkle_off'),
-    done: attemptAutoRefreshTrigger(parms),
-  };
-
-  return miqObserveRequest(urlstring, options);
-}
+  return miqObserveRequest(url, {
+    beforeSend: !!element.attr('data-miq_sparkle_on'),
+    complete: !!element.attr('data-miq_sparkle_off'),
+    done: attemptAutoRefreshTrigger(params),
+  });
+};
 
 export function setup() {
   var observeOnChange = function(el, parms) {
@@ -124,10 +123,6 @@ export function setup() {
 
     event.stopPropagation();
   });
-
-  ManageIQ.observeDate = function(el) {
-    miqSendDateRequest(el);
-  };
 
   $(document).on('changeDate clearDate', '[data-miq_observe_date]', function() {
     ManageIQ.observeDate($(this));
