@@ -1333,6 +1333,8 @@ module OpsController::OpsRbac
   end
 
   def populate_role_features(role)
+    MiqProductFeature.invalidate_caches
+
     role.miq_product_features =
       MiqProductFeature.find_all_by_identifier(rbac_compact_features(@edit[:new][:features]))
   end
