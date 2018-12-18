@@ -10,7 +10,7 @@ module VmHelper
   end
 
   def last_date_processes
-    @record.operating_system && @record.operating_system.processes.maximum(:updated_on)
+    @record.operating_system&.processes&.maximum(:updated_on)
   end
 
   def set_controller_action
