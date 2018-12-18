@@ -1,21 +1,22 @@
 /* global dialogFieldRefresh miqObserveRequest miqSerializeForm miqSendOneTrans */
 
+const attemptAutoRefreshTrigger = (params) =>
+  () => {
+    if (params.auto_refresh === true) {
+      dialogFieldRefresh.triggerAutoRefresh(params);
+    }
+  };
+
 function miqSendDateRequest(el) {
   var parms = $.parseJSON(el.attr('data-miq_observe_date'));
   var url = parms.url;
   //  tack on the id and value to the URL
   var urlstring = url + '?' + el.prop('id') + '=' + el.val();
 
-  var attemptAutoRefreshTrigger = function() {
-    if (parms.auto_refresh === true) {
-      dialogFieldRefresh.triggerAutoRefresh(parms);
-    }
-  };
-
   var options = {
     beforeSend: !!el.attr('data-miq_sparkle_on'),
     complete: !!el.attr('data-miq_sparkle_off'),
-    done: attemptAutoRefreshTrigger,
+    done: attemptAutoRefreshTrigger(parms),
   };
 
   return miqObserveRequest(urlstring, options);
@@ -24,14 +25,6 @@ function miqSendDateRequest(el) {
 export function setup() {
   // Bind in the observe support. If interval is configured, use the observe_field functi
 n
-  var attemptAutoRefreshTrigger = function(parms) {
-    return function() {
-      if (parms.auto_refresh === true) {
-        dialogFieldRefresh.triggerAutoRefresh(parms);
-      }
-    };
-  };
-
   var observeWithInterval = function(el, parms) {
     if (el.data('isObserved')) {
       return;
