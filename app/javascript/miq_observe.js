@@ -66,7 +66,12 @@ const miqObserve = (element, params) => {
   }
 
   const id = element.attr('id');
+  const name = element.attr('name');
   const value = elementValue(element);
+
+  if (id !== name) {
+    console.warn(`miq_observe: element id and name differ: id=${id}, name=${name}, value=${value}`);
+  }
 
   return miqObserveRequest(url, {
     no_encoding: true,
