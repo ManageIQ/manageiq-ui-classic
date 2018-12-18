@@ -99,13 +99,11 @@ ManageIQ.observeDate = (element) => {
 
 export function setup() {
   $(document).on('focus', '[data-miq_observe]', function() {
-    var el = $(this);
-    var parms = $.parseJSON(el.attr('data-miq_observe'));
+    const element = $(this);
+    const params = $.parseJSON(element.attr('data-miq_observe'));
 
-    if (typeof parms.interval === 'undefined') {
-      // replaced by miqObserve
-    } else {
-      observeWithInterval(el, parms);
+    if (params.interval) {
+      observeWithInterval(element, params);
     }
   });
 
@@ -121,11 +119,12 @@ export function setup() {
     const params = $.parseJSON(element.attr('data-miq_observe_checkbox'));
 
     debouncedObserve(element, params);
-
     event.stopPropagation();
   });
 
   $(document).on('changeDate clearDate', '[data-miq_observe_date]', function() {
-    ManageIQ.observeDate($(this));
+    const element = $(this);
+
+    ManageIQ.observeDate(element);
   });
 }
