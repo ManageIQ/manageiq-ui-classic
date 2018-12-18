@@ -13,6 +13,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     # Make sure tree_state doesn't hold on to old data between requests
     TreeState.new(sandbox).remove_tree(name)
 
+    MiqProductFeature.invalidate_caches # clear cashes because of creating/updating/deleleting tenant product features
+
     super(name, type, sandbox, build)
   end
 
