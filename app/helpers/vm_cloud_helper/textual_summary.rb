@@ -35,7 +35,6 @@ module VmCloudHelper::TextualSummary
     TextualGroup.new(_("Security"), %i(users groups patches key_pairs))
   end
 
-
   #
   # Items
   #
@@ -64,11 +63,10 @@ module VmCloudHelper::TextualSummary
   end
 
   def textual_architecture
-    bitness = @record.hardware.try!(:bitness)
+    bitness = @record.hardware&.bitness
     return nil if bitness.blank?
     {:label => _("Architecture"), :value => "#{bitness} bit"}
   end
-
 
   def textual_key_pairs
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
@@ -78,16 +76,14 @@ module VmCloudHelper::TextualSummary
     h
   end
 
-
-
   def textual_virtualization_type
-    v_type = @record.hardware.try!(:virtualization_type)
+    v_type = @record.hardware&.virtualization_type
     return nil if v_type.blank?
     {:label => _("Virtualization Type"), :value => v_type.to_s}
   end
 
   def textual_root_device_type
-    rd_type = @record.hardware.try!(:root_device_type)
+    rd_type = @record.hardware&.root_device_type
     return nil if rd_type.blank?
     {:label => _("Root Device Type"), :value => rd_type.to_s}
   end
