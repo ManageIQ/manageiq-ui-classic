@@ -46,6 +46,18 @@ const observeWithInterval = (element, params) => {
   });
 };
 
+const elementValue = (element) => {
+  if (element.prop('type') == 'checkbox' || element.attr('data-miq_observe_checkbox')) {
+    return encodeURIComponent(element.prop('checked') ? element.val() : 'null');
+  }
+
+  if (element.prop('multiple')) {
+    return element.val();
+  }
+
+  return encodeURIComponent(element.prop('value'));
+};
+
 const miqObserve = (element, params) => {
   const { url, interval } = params;
   if (interval) {
@@ -54,7 +66,7 @@ const miqObserve = (element, params) => {
   }
 
   const id = element.attr('id');
-  const value = element.prop('multiple') ? element.val() : encodeURIComponent(element.prop('value'));
+  const value = elementValue(element);
 
   return miqObserveRequest(url, {
     no_encoding: true,
@@ -105,20 +117,10 @@ export function setup() {
   });
 
   $(document).on('change', '[data-miq_observe_checkbox]', function(event) {
-    var el = $(this);
-    var parms = $.parseJSON(el.attr('data-miq_observe_checkbox'));
-    var url = parms.url;
+    const element = $(this);
+    const params = $.parseJSON(element.attr('data-miq_observe_checkbox'));
 
-    var id = el.attr('id');
-    var value = encodeURIComponent(el.prop('checked') ? el.val() : 'null');
-
-    miqObserveRequest(url, {
-      no_encoding: true,
-      data: id + '=' + value,
-      beforeSend: !!el.attr('data-miq_sparkle_on'),
-      complete: !!el.attr('data-miq_sparkle_off'),
-      done: attemptAutoRefreshTrigger(parms),
-    });
+    debouncedObserve(element, params);
 
     event.stopPropagation();
   });
