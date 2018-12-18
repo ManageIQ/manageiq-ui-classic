@@ -188,6 +188,7 @@
         = _('Excluded Tables')
       %br
         %textarea{"ui-codemirror" => "",
+                  "ui-refresh"    => "codeMirrorRefresh",
                   :name           => "exclusion_list",
                   'ng-model'      => 'pglogicalReplicationModel.exclusion_list',
                   'checkchange'   => ''}
