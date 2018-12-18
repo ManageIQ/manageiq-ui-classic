@@ -82,11 +82,9 @@ module VmHelper::TextualSummary
     )
   end
 
-
   def textual_group_labels
     TextualGroup.new(_("Labels"), textual_key_value_group(@record.custom_attributes))
   end
-
 
   def textual_group_normal_operating_ranges
     TextualCustom.new(
@@ -143,7 +141,7 @@ module VmHelper::TextualSummary
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'hv_info')
 
       cpu_details =
-        if @record.num_cpu > 0 && @record.cpu_cores_per_socket > 0
+        if @record.num_cpu.positive? && @record.cpu_cores_per_socket.positive?
           sockets = n_("%{number} socket", "%{number} sockets", @record.num_cpu) % {:number => @record.num_cpu}
           cores = n_("%{number} core", "%{number} cores", @record.cpu_cores_per_socket) % {:number => @record.cpu_cores_per_socket}
           " (#{sockets} x #{cores})"
@@ -346,7 +344,7 @@ module VmHelper::TextualSummary
   def textual_security_groups
     num   = @record.number_of(:security_groups)
     h     = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
-    if num > 0 && role_allows?(:feature => "security_group_show_list")
+    if num.positive? && role_allows?(:feature => "security_group_show_list")
       h[:title] = _("Show all Security Groups")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'security_groups', :id => @record, :display => "security_groups")
@@ -357,7 +355,7 @@ module VmHelper::TextualSummary
   def textual_floating_ips
     num   = @record.number_of(:floating_ips)
     h     = {:label => _('Floating IPs'), :icon => "ff ff-floating-ip", :value => num}
-    if num > 0 && role_allows?(:feature => "floating_ip_show_list")
+    if num.positive? && role_allows?(:feature => "floating_ip_show_list")
       h[:title] = _("Show all Floating IPs")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'floating_ips', :id => @record, :display => "floating_ips")
@@ -368,7 +366,7 @@ module VmHelper::TextualSummary
   def textual_network_routers
     num   = @record.number_of(:network_routers)
     h     = {:label => _('Network Routers'), :icon => "pficon pficon-route", :value => num}
-    if num > 0 && role_allows?(:feature => "network_router_show_list")
+    if num.positive? && role_allows?(:feature => "network_router_show_list")
       h[:title] = _("Show all Network Routers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_routers', :id => @record, :display => "network_routers")
@@ -379,7 +377,7 @@ module VmHelper::TextualSummary
   def textual_cloud_subnets
     num   = @record.number_of(:cloud_subnets)
     h     = {:label => _('Cloud Subnets'), :icon => "pficon pficon-network", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_subnet_show_list")
+    if num.positive? && role_allows?(:feature => "cloud_subnet_show_list")
       h[:title] = _("Show all Cloud Subnets")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_subnets', :id => @record, :display => "cloud_subnets")
@@ -390,7 +388,7 @@ module VmHelper::TextualSummary
   def textual_network_ports
     num   = @record.number_of(:network_ports)
     h     = {:label => _('Network Ports'), :icon => "ff ff-network-port", :value => num}
-    if num > 0 && role_allows?(:feature => "network_port_show_list")
+    if num.positive? && role_allows?(:feature => "network_port_show_list")
       h[:title] = _("Show all Network Ports")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_ports', :id => @record, :display => "network_ports")
@@ -403,7 +401,7 @@ module VmHelper::TextualSummary
 
     num   = @record.number_of(:load_balancers)
     h     = {:label => _('Load Balancers'), :icon => "ff ff-load-balancer", :value => num}
-    if num > 0 && role_allows?(:feature => "load_balancer_show_list")
+    if num.positive? && role_allows?(:feature => "load_balancer_show_list")
       h[:title] = _("Show all Load Balancers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'load_balancers', :id => @record, :display => "load_balancers")
@@ -414,7 +412,7 @@ module VmHelper::TextualSummary
   def textual_cloud_networks
     num   = @record.number_of(:cloud_networks)
     h     = {:label => _('Cloud Networks'), :icon => "ff ff-cloud-network", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_network_show_list")
+    if num.positive? && role_allows?(:feature => "cloud_network_show_list")
       h[:title] = _("Show all Cloud Networks")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_networks', :id => @record, :display => "cloud_networks")
@@ -435,7 +433,7 @@ module VmHelper::TextualSummary
   def textual_cloud_volumes
     num = @record.number_of(:cloud_volumes)
     h = {:label => _('Cloud Volumes'), :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
+    if num.positive? && role_allows?(:feature => "cloud_volume_show_list")
       h[:title]    = _("Show all Cloud Volumes attached to this VM.")
       h[:explorer] = true
       h[:link]     = url_for_only_path(:action => 'cloud_volumes', :id => @record, :display => "cloud_volumes")
@@ -460,15 +458,13 @@ module VmHelper::TextualSummary
     }
   end
 
-
-
   def textual_disks
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:disks)
     h = {:label => _("Number of Disks"), :icon => "fa fa-hdd-o", :value => num}
-    if num > 0
+    if num.positive?
       h[:title] = n_("Show disk on this VM", "Show disks on this VM", num)
       h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "disks")
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "disks")
     end
     h
   end
@@ -535,7 +531,7 @@ module VmHelper::TextualSummary
                   _("N/A")
                 else
                   v = number_to_human_size(value.abs, :precision => 2)
-                  v = _("(%{value}) * Overallocated") % {:value => v} if value < 0
+                  v = _("(%{value}) * Overallocated") % {:value => v} if value.negative?
                   v
                 end
     h
@@ -565,8 +561,7 @@ module VmHelper::TextualSummary
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
       value = @record.send("derived_memory_used_#{key}_over_time_period")
       h[:value] << {:label => label,
-                    :value => (value.nil? ? _("Not Available") : number_to_human_size(value.megabytes,
-                                                                                      :precision => 2))}
+                    :value => (value.nil? ? _("Not Available") : number_to_human_size(value.megabytes, :precision => 2))}
     end
     h
   end
