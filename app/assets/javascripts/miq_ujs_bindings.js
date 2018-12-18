@@ -139,7 +139,7 @@ $(document).ready(function() {
   });
 
   // Firefox on MacOs isn't firing onfocus events for radio buttons so onchange is used instead
-  $(document).on('change', '[data-miq_observe]', function() {
+  $(document).on('change', '[data-miq_observe][type="radio"]', function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
     var id = el.attr('id');
