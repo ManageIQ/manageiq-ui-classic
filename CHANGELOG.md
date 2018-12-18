@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 101 ending 2018-12-17
+
+### Added
+- Added i18n form data-driven-forms default validation messages. [(#5068)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5068)
+- Add IDs to vertical menu leaf items [(#5063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5063)
+- uib-tooltip - respect newlines in tooltips [(#5038)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5038)
+- Include cloud tenant name column in Security Group list view [(#5037)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5037)
+- Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
+- Add top row information into the storage manager quadicons [(#4987)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4987)
+
+### Fixed
+- Monitoring > Alerts - sparkle when loading [(#5066)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5066)
+- Fix multi-target Set Ownership [(#5064)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5064)
+- Drop support for IE10 when transpiling javascript using babel [(#5062)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5062)
+- Do not try to display icon as image on Monitoring -> Alerts cards [(#5059)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5059)
+- Fix failing creating new Alert in Control > Explorer [(#5056)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5056)
+- Use the uib-tab parameter for switching tabs on the tasks screen [(#5054)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5054)
+- Add missing single_quad definitions for ansible-related entities [(#5051)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5051)
+- Use widget's title in flash messages [(#5047)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5047)
+- Replaces angular ownership form with data-driven-form [(#5046)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5046)
+- Fix rendering of VMware floppy drive [(#5041)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5041)
+- Fix regression in perpage_key for GTL types [(#5036)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5036)
+- TenantComponent - fix setting default based on ancestry [(#5031)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5031)
+- Fix CatalogItem tree_select() [(#5030)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5030)
+- select: use @pf3/select instead of bootstrap-select [(#5029)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5029)
+- Data driven form submit button disable config. [(#5028)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5028)
+- Catch 400 error and display it in flash message in GOD [(#4951)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4951)
+
 ## Unreleased as of Sprint 100 ending 2018-12-03
 
 ### Added
