@@ -135,7 +135,7 @@ module ViewHelper
 
   class << self
     def concat_tag(*args, &block)
-      concat content_tag(*args, &block)
+      concat(content_tag(*args, &block))
     end
   end
 end
