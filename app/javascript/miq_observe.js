@@ -46,6 +46,30 @@ const observeWithInterval = (element, params) => {
   });
 };
 
+const miqObserve = (element, params) => {
+  const { url, interval } = params;
+  if (interval) {
+    // interval handled by observeWithInterval
+    return;
+  }
+
+  const id = element.attr('id');
+  const value = element.prop('multiple') ? element.val() : encodeURIComponent(element.prop('value'));
+
+  return miqObserveRequest(url, {
+    no_encoding: true,
+    data: id + '=' + value,
+    beforeSend: !!element.attr('data-miq_sparkle_on'),
+    complete: !!element.attr('data-miq_sparkle_off'),
+    done: attemptAutoRefreshTrigger(params),
+  });
+};
+
+const debouncedObserve = debounce(miqObserve, 700, {
+  leading: true,
+  trailing: true,
+});
+
 ManageIQ.observeDate = (element) => {
   const params = $.parseJSON(element.attr('data-miq_observe_date'));
   let { url } = params;
@@ -60,49 +84,24 @@ ManageIQ.observeDate = (element) => {
   });
 };
 
+
 export function setup() {
-  var observeOnChange = function(el, parms) {
-    // No interval passed, use event observer
-    el.off('change');
-    el.on('change', debounce(function() {
-      var id = el.attr('id');
-      var value = el.prop('multiple') ? el.val() : encodeURIComponent(el.prop('value'));
-
-      miqObserveRequest(parms.url, {
-        no_encoding: true,
-        data: id + '=' + value,
-        beforeSend: !!el.attr('data-miq_sparkle_on'),
-        complete: !!el.attr('data-miq_sparkle_off'),
-        done: attemptAutoRefreshTrigger(parms),
-      });
-    }, 700, {leading: true, trailing: true}));
-  };
-
   $(document).on('focus', '[data-miq_observe]', function() {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
 
     if (typeof parms.interval === 'undefined') {
-      observeOnChange(el, parms);
+      // replaced by miqObserve
     } else {
       observeWithInterval(el, parms);
     }
   });
 
-  // Firefox on MacOs isn't firing onfocus events for radio buttons so onchange is used instead
   $(document).on('change', '[data-miq_observe]', function() {
-    var el = $(this);
-    var parms = $.parseJSON(el.attr('data-miq_observe'));
-    var id = el.attr('id');
-    var value = el.prop('multiple') ? el.val() : encodeURIComponent(el.prop('value'));
+    const element = $(this);
+    const params = $.parseJSON(element.attr('data-miq_observe'));
 
-    miqObserveRequest(parms.url, {
-      no_encoding: true,
-      data: id + '=' + value,
-      beforeSend: !!el.attr('data-miq_sparkle_on'),
-      complete: !!el.attr('data-miq_sparkle_off'),
-      done: attemptAutoRefreshTrigger(parms),
-    });
+    debouncedObserve(element, params);
   });
 
   $(document).on('change', '[data-miq_observe_checkbox]', function(event) {
