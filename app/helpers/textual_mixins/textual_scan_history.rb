@@ -2,7 +2,7 @@ module TextualMixins::TextualScanHistory
   def textual_scan_history
     h = {:label => _("Analysis History"), :icon => "fa fa-search"}
     num = @record.number_of(:scan_histories)
-    if num == 0
+    if num.zero?
       h[:value] = _("None")
     else
       h[:value] = num

@@ -6,7 +6,7 @@ module TextualMixins::TextualDevices
          :icon     => "fa fa-hdd-o",
          :explorer => true,
          :value    => devices.blank? ? _("None") : devices.length}
-    unless devices.blank?
+    if devices.present?
       h[:title] = _("Show VMs devices")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
@@ -14,7 +14,7 @@ module TextualMixins::TextualDevices
   end
 
   def processor_description
-    description = if @record.num_cpu > 0 && @record.cpu_cores_per_socket > 0
+    description = if @record.num_cpu.positive? && @record.cpu_cores_per_socket.positive?
                     _("%{total_cores} (%{num_sockets} Sockets x %{num_cores} Cores)") %
                       {:total_cores => @record.cpu_total_cores,
                        :num_sockets => @record.num_cpu,
