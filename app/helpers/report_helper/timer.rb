@@ -1,5 +1,4 @@
 module ReportHelper
-
   TIMER_DAYS = [
     [N_("Day"), "1"],
     [N_("2 Days"), "2"],
@@ -34,7 +33,7 @@ module ReportHelper
     [N_("5 Months"), "5"],
     [N_("6 Months"), "6"],
   ].freeze
-  
+
   Timer = Struct.new(
     :typ,
     :months,
