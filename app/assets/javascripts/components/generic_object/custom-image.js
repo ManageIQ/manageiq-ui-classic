@@ -9,13 +9,13 @@ ManageIQ.angular.app.component('customImage', {
     pictureReset: '<',
   },
   controllerAs: 'vm',
-  controller: customImageComponentController,
+  controller: customImageController,
   templateUrl: '/static/generic_object/custom-image.html.haml',
 });
 
-customImageComponentController.$inject = ['$timeout'];
+customImageController.$inject = ['$timeout'];
 
-function customImageComponentController($timeout) {
+function customImageController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {
