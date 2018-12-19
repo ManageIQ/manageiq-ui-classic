@@ -1,15 +1,7 @@
+import sortBy from 'lodash/sortBy';
 import * as actionTypes from './actionTypes';
 import { buildDropDown } from './helpers';
 
-const sortOn = property => (a, b) => {
-  if (a[property] < b[property]) {
-    return -1;
-  }
-  if (a[property] > b[property]) {
-    return 1;
-  }
-  return 0;
-};
 const mapCloudType = (cloudTypes) => {
   const credentialTypes = cloudTypes.embedded_ansible_credential_types;
   const cloudTypeList = [];
@@ -21,8 +13,7 @@ const mapCloudType = (cloudTypes) => {
       });
     }
   });
-
-  return cloudTypeList.sort(sortOn('label'));
+  return sortBy(cloudTypeList, 'label');
 };
 
 const initialState = {
@@ -73,9 +64,6 @@ export default (state = initialState, action) => {
       action.payload.forEach((field) => {
         dropdowns[`retirement_${field}`] = dropdowns[`provision_${field}`];
       });
-      break;
-    case actionTypes.CREATE_CATALOG_ITEM:
-      updatedState.catalogItemId = action.payload;
       break;
     default:
       return updatedState;

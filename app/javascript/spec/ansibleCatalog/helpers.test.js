@@ -14,23 +14,24 @@ describe('Ansible catalog form helpers', () => {
     const dropdown = helpers.buildDropDown(input, 'name', 'id');
     expect(dropdown).toEqual([{ label: 'test', value: 1 }]);
   });
+
   it('can render a form field', () => {
     const input = {
       name: 'test_execution_ttl',
       label: 'Max TTL (mins)',
       component: FinalFormField,
     };
-    // eslint-disable-next-line no-console
-    console.error = jest.fn();
     const formField = helpers.renderFormField(input, []);
     const wrapper = mount(formField);
 
     expect(toJson(wrapper)).toMatchSnapshot();
   });
+
   it('should return a list of catalog item fields', () => {
     const fields = helpers.getAnsibleCatalogItemFields([]);
     expect(fields).toHaveLength(5);
   });
+
   it('should return a list of AnsiblePlaybookFields', () => {
     const props = {
       prefix: 'provision',
@@ -39,6 +40,7 @@ describe('Ansible catalog form helpers', () => {
     const fields = helpers.getAnsiblePlaybookFields(props, true);
     expect(fields).toHaveLength(8);
   });
+
   it('should get resource options', () => {
     const options = helpers.getResourceOptions({});
     expect(options).toEqual([
@@ -46,9 +48,11 @@ describe('Ansible catalog form helpers', () => {
       { label: 'Yes', value: 'yes_without_playbook' },
     ]);
   });
+
   it('should render html dialog message', () => {
     expect(helpers.provisionDialogMessage()).toMatchSnapshot();
   });
+
   it('should format extra vars', () => {
     const formattedValues = helpers.formatExtraVars({
       testvalue1: {
@@ -74,23 +78,23 @@ describe('Ansible catalog form helpers', () => {
     ]);
     expect(formattedValues).toMatchSnapshot();
   });
+
   it('should setFormDefaultValues', () => {
     const setFormDefaultValues = helpers.setFormDefaultValues();
     expect(setFormDefaultValues).toEqual(catalogFormDefaults);
   });
+
   describe('it should handle form submission', () => {
     it('should submit a form successfully', (done) => {
       const url = '/api/service_templates/';
-      window.location.assign = jest.fn();
-      const flashMessage = jest.fn();
-      global.miqFlashLater = flashMessage;
+      const flashMessageSpy = jest.spyOn(window, 'miqFlashLater');
       fetchMock.reset();
       fetchMock.restore();
       fetchMock.postOnce('/api/service_templates/', {});
       helpers.submitCatalogForm(url, true, {}, null);
       setImmediate(() => {
+        expect(flashMessageSpy).toHaveBeenCalledWith({ message: 'Catalog item was added successfully.' });
         done();
-        expect(flashMessage).toHaveBeenCalledWith({ message: 'Catalog item was added successfully.' });
       });
     });
   });

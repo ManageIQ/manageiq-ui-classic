@@ -6,7 +6,8 @@
   "rules": {
     "max-lines": "off",
     "max-lines-per-function": "off",
-    "import/no-dynamic-require": "off"
+    "import/no-dynamic-require": "off",
+    "react/forbid-prop-types": "off"
   },
   "env": {
     "jest": true

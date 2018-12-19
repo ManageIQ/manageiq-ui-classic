@@ -12,6 +12,7 @@ describe('Ansible playbook fields form component', () => {
   const mockStore = configureStore([thunk]);
   let store;
   let initialProps;
+
   beforeEach(() => {
     store = mockStore({
     });
@@ -34,6 +35,7 @@ describe('Ansible playbook fields form component', () => {
       region: 1,
     };
   });
+
   it('should render correctly', () => {
     const exampleStore = { ...reduxStore };
     exampleStore.dropdowns.provision_playbooks = [
@@ -58,6 +60,7 @@ describe('Ansible playbook fields form component', () => {
     );
     expect(toJson(wrapper)).toMatchSnapshot();
   });
+
   it('should update a list of playbooks', () => {
     store = mockStore({
       ansibleCatalog: {
@@ -74,6 +77,7 @@ describe('Ansible playbook fields form component', () => {
     wrapper.instance().updatePlaybookList();
     expect(loadPlaybooks).toHaveBeenCalledWith(1, 1234, 'provision');
   });
+
   it('should update cloud credentials', () => {
     store = mockStore({
       ansibleCatalog: {
@@ -90,6 +94,7 @@ describe('Ansible playbook fields form component', () => {
     wrapper.instance().updateCloudCredentialsList('amazon');
     expect(loadCloudCredentials).toHaveBeenCalledWith('provision', 'amazon');
   });
+
   it('should detect if field values are prepopulated', () => {
     const exampleStore = { ...reduxStore };
     initialProps.formValues.provision_cloud_type = 'test';

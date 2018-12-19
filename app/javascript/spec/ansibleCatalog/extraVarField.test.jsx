@@ -11,9 +11,8 @@ describe('ExtraVarField component', () => {
     fieldName: 'key',
     label: 'Variable',
   };
+
   it('should render correctly', () => {
-    // eslint-disable-next-line no-console
-    console.error = jest.fn();
     const wrapper = shallow(<ExtraVarField field={initialProps} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

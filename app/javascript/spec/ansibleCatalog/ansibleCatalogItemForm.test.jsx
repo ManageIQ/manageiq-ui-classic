@@ -10,6 +10,7 @@ import { ANSIBLE_FIELDS } from '../../react/ansibleCatalog/constants';
 import AnsibleCatalogItemForm from '../../react/ansibleCatalog';
 import { AnsibleCatalogItemForm as AnsibleCatalogItemForm1 } from '../../react/ansibleCatalog/ansibleCatalogItemForm';
 import '../helpers/mockAsyncRequest';
+import '../helpers/addFlash';
 
 describe('Ansible catalog item form component', () => {
   const mockStore = configureStore([thunk]);
@@ -43,10 +44,12 @@ describe('Ansible catalog item form component', () => {
       region: 10,
     };
   });
+
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
   });
+
   it('should render correctly', () => {
     const wrapper = shallowMount();
     expect(toJson(wrapper)).toMatchSnapshot();
@@ -72,6 +75,7 @@ describe('Ansible catalog item form component', () => {
     );
     expect(loadCatalogItem).toHaveBeenCalledWith(1234);
   });
+
   it('should set default values when a catalog item is being edited', (done) => {
     const catalogItemId = 1234;
 
@@ -91,8 +95,8 @@ describe('Ansible catalog item form component', () => {
         {...props}
         ansibleCatalog={{ ...reduxStore }}
         catalogItemFormId={catalogItemId}
-      />
-      , {
+      />,
+      {
         context: { store },
         childContextTypes: { store: PropTypes.object.isRequired },
       },
@@ -107,9 +111,9 @@ describe('Ansible catalog item form component', () => {
       done();
     });
   });
+
   it('should allow a form to be submitted', () => {
     const wrapper = shallowMount();
-    window.location.assign = jest.fn();
     fetchMock.postOnce('/api/service_templates/', {});
     const values = {
       name: 'test',
@@ -122,9 +126,8 @@ describe('Ansible catalog item form component', () => {
     wrapper.instance().submitForm(values);
     expect(fetchMock.called('/api/service_templates/')).toBe(true);
   });
+
   it('should report an error if submitting failed', (done) => {
-    // eslint-disable-next-line no-console
-    console.error = jest.fn();
     const spy = jest.spyOn(window, 'add_flash');
     window.add_flash = spy;
     const wrapper = shallowMount();
@@ -147,6 +150,7 @@ describe('Ansible catalog item form component', () => {
       done();
     });
   });
+
   it('should close a popup', () => {
     const wrapper = shallowMount();
     const instance = wrapper.instance();
@@ -154,16 +158,17 @@ describe('Ansible catalog item form component', () => {
     instance.closeCopyProvisionDialog();
     expect(wrapper.state.showCopyProvisionDialog).toBeFalsy();
   });
+
   it('should show a message when canceling form', () => {
     const wrapper = shallowMount();
     const instance = wrapper.instance();
-    const flashMessage = jest.fn();
-    global.miqFlashLater = flashMessage;
+    const flashMessageSpy = jest.spyOn(window, 'miqFlashLater');
     instance.handleCancel();
-    expect(flashMessage).toHaveBeenCalledWith({
+    expect(flashMessageSpy).toHaveBeenCalledWith({
       message: 'Add of Catalog Item was cancelled by the user',
     });
   });
+
   it('should copy Form values', () => {
     const wrapper = shallowMount();
     const instance = wrapper.instance();

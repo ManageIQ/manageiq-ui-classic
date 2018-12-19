@@ -22,6 +22,7 @@ export class AnsiblePlaybookFields extends React.Component {
       repoId: formValues[`${prefix}_repository_id`],
     };
   }
+
   componentDidMount() {
     const { formValues, prefix } = this.props;
 
@@ -40,6 +41,7 @@ export class AnsiblePlaybookFields extends React.Component {
     }
     loadPlaybooks(region, this.state.repoId, prefix);
   }
+
   updateCloudCredentialsList(cloudType) {
     this.props.loadCloudCredentials(this.props.prefix, cloudType);
   }
@@ -114,7 +116,8 @@ export class AnsiblePlaybookFields extends React.Component {
               />)}
           />
           {
-            (formValues[`${prefix}_cloud_type`] !== '') &&
+            (formValues[`${prefix}_cloud_type`] !== '')
+            && (
             <Field
               inputColumnSize={8}
               labelColumnSize={3}
@@ -124,6 +127,7 @@ export class AnsiblePlaybookFields extends React.Component {
               options={dropdowns[`${prefix}_cloudCredentials`] || []}
               placeholder={DEFAULT_PLACEHOLDER}
             />
+            )
           }
         </div>
         <div className="col-md-12 col-lg-6">
@@ -144,12 +148,14 @@ export class AnsiblePlaybookFields extends React.Component {
               </div>
               <table className="table table-bordered table-striped">
                 <thead>
-                  {formValues[extraVarsField].length > 0 &&
+                  {formValues[extraVarsField].length > 0
+                  && (
                   <tr>
                     <th>{__('Variable')}</th>
                     <th>{__('Default')}</th>
                     <th>{__('Action')}</th>
                   </tr>
+                  )
                   }
                 </thead>
                 <tbody>

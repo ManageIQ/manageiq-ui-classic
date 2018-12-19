@@ -2,7 +2,6 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { ExtraVarRow } from '../../react/ansibleCatalog/extraVarRow';
-import { testActionSnapshot } from '../../components/test-utils';
 
 describe('ExtraVarRow component', () => {
   const initialProps = {
@@ -18,8 +17,6 @@ describe('ExtraVarRow component', () => {
   };
 
   it('should render correctly', () => {
-    // eslint-disable-next-line no-console
-    console.error = jest.fn();
     const wrapper = mount(<ExtraVarRow {...initialProps} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
@@ -54,6 +51,7 @@ describe('ExtraVarRow component', () => {
     const buttonWrapper = mount(button);
     expect(toJson(buttonWrapper)).toMatchSnapshot();
   });
+
   it('should handle when the remove button is clicked', () => {
     const wrapper = mount(<ExtraVarRow {...initialProps} />);
     const instance = wrapper.instance();

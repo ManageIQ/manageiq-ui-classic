@@ -1,6 +1,6 @@
 import reducer from '../../react/ansibleCatalog/catalogReducer';
 import * as actionTypes from '../../react/ansibleCatalog/actionTypes';
-import { testReducerSnapshotWithFixtures } from '../../components/test-utils';
+import { testReducerSnapshotWithFixtures } from '../helpers/reduxTestUtils';
 import * as testFixtures from './test.fixtures';
 
 const resources = testFixtures.testRecords;

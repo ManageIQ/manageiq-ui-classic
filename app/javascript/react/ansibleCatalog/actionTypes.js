@@ -9,5 +9,4 @@ export const LOAD_VAULT_CREDENTIALS = `${prefix} LOAD_VAULT_CREDENTIALS`;
 export const LOAD_CLOUD_CREDENTIALS = `${prefix} LOAD_CLOUD_CREDENTIALS`;
 export const LOAD_CATALOG_ITEM = `${prefix} LOAD_CATALOG_ITEM`;
 export const LOAD_CLOUD_CREDENTIAL = `${prefix} LOAD_CLOUD_CREDENTIAL`;
-export const CREATE_CATALOG_ITEM = `${prefix} Create catalog item`;
 export const DUPLICATE_DROPDOWNS = `${prefix} DUPLICATE_DROPDOWNS`;
