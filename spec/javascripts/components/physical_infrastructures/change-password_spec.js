@@ -1,4 +1,4 @@
-describe('change-password-component', function() {
+describe('change-password', function() {
   var $componentController, vm, miqService, API;
 
   describe('load page', function() {
@@ -13,7 +13,7 @@ describe('change-password-component', function() {
       spyOn(API, 'post').and.callFake(function() {return deferred.promise;});
 
       var bindings = {recordId: '1111', redirectUrl: '/controller/go_back', recordName: 'provider'};
-      vm = $componentController('changePasswordComponent', null, bindings);
+      vm = $componentController('changePassword', null, bindings);
       vm.$onInit();
     }));
 
