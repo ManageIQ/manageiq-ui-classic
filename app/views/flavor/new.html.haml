@@ -1,2 +1,4 @@
+= render :partial => "layouts/flash_msg"
 #main_div
-  = render :partial => 'flavor_form', :locals => {:newRecord => true}
+  .col-md-12
+    = react('FlavorForm')

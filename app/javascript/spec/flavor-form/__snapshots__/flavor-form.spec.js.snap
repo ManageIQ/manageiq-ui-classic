@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flavor form component should render form 1`] = `
+<div
+  className="container-fluid"
+>
+  <MiqFormRenderer
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
+      }
+    }
+    initialValues={
+      Object {
+        "is_public": true,
+        "rxtx_factor": "1.0",
+      }
+    }
+    onCancel={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "select-field",
+            "isSearchable": true,
+            "label": "Provider",
+            "name": "ems_id",
+            "options": Array [],
+            "validate": Array [
+              Object {
+                "type": "required-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "label": "Name",
+            "name": "name",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "dataType": "integer",
+            "label": "Ram size in MB",
+            "name": "ram",
+            "type": "number",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+              Object {
+                "message": "Ram must be integer",
+                "pattern": "^[-+]?[0-9]\\\\d*$",
+                "type": "pattern-validator",
+              },
+              Object {
+                "message": "Ram must be greater than 0",
+                "type": "min-number-value",
+                "value": 1,
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "dataType": "integer",
+            "label": "VCPUs",
+            "name": "vcpus",
+            "type": "number",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+              Object {
+                "message": "VCPUs must be integer",
+                "pattern": "^[-+]?[0-9]\\\\d*$",
+                "type": "pattern-validator",
+              },
+              Object {
+                "message": "VCPUs must be greater than 0",
+                "type": "min-number-value",
+                "value": 1,
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "dataType": "integer",
+            "label": "Disk size in GB",
+            "name": "disk",
+            "type": "number",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+              Object {
+                "message": "Disk size must be integer",
+                "pattern": "^[-+]?[0-9]\\\\d*$",
+                "type": "pattern-validator",
+              },
+              Object {
+                "message": "Disk size must be greater than 0",
+                "type": "min-number-value",
+                "value": 1,
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "dataType": "integer",
+            "label": "Swap size in MB",
+            "name": "swap",
+            "type": "number",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+              Object {
+                "message": "Swap size must be integer",
+                "pattern": "^[-+]?[0-9]\\\\d*$",
+                "type": "pattern-validator",
+              },
+              Object {
+                "message": "Swap size must be greater or equal to 0",
+                "type": "min-number-value",
+                "value": 0,
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "label": "RXTX factor",
+            "name": "rxtx_factor",
+            "type": "number",
+            "validate": Array [
+              Object {
+                "message": "Required",
+                "type": "required-validator",
+              },
+              Object {
+                "message": "RXTX factor must be number",
+                "pattern": "^[-+]?[0-9]\\\\d*\\\\.?\\\\d*$",
+                "type": "pattern-validator",
+              },
+              Object {
+                "message": "RXTX factor must be greater than or equal to 0",
+                "type": "min-number-value",
+                "value": 0,
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "assignFieldProvider": true,
+            "bsSize": "mini",
+            "component": "switch-field",
+            "label": "Public?",
+            "name": "is_public",
+            "offText": "False",
+            "onText": "True",
+          },
+          Object {
+            "component": "select-field",
+            "condition": Object {
+              "is": false,
+              "when": "is_public",
+            },
+            "isClearable": true,
+            "isSearchable": true,
+            "label": "Cloud Tenant",
+            "multi": true,
+            "name": "cloud_tenant_refs",
+            "options": Array [],
+            "placeholder": "Nothing selected",
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;
