@@ -8,6 +8,11 @@ module OpsController::OpsRbac
     'Tenant'   => 'tenant'
   }.freeze
 
+  def invalidate_miq_product_feature_caches
+    MiqProductFeature.invalidate_caches
+    render :json => {}
+  end
+
   # Edit user or group tags
   def rbac_tags_edit
     case params[:button]
@@ -298,7 +303,12 @@ module OpsController::OpsRbac
       parent_id = Tenant.find(params[:id]).parent.id
       self.x_node = "tn-#{parent_id}"
     end
-    process_tenants(tenants, "destroy") unless tenants.empty?
+
+    unless tenants.empty?
+      process_tenants(tenants, "destroy")
+      MiqProductFeature.invalidate_caches
+    end
+
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
   end

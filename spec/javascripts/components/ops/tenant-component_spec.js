@@ -1,17 +1,17 @@
 describe('tenant-component', function() {
-  var $componentController, vm, miqService, API;
+  var $componentController, vm, miqService, API, $httpBackend, deferred;
 
   describe('when the vm.recordId is not defined', function () {
 
     beforeEach(module('ManageIQ'));
-    beforeEach(inject(function (_$componentController_, _API_, _miqService_, $q) {
+    beforeEach(inject(function (_$componentController_, _API_, _miqService_, $q, _$httpBackend_) {
       $componentController = _$componentController_;
       API = _API_;
       miqService = _miqService_;
-
+      $httpBackend = _$httpBackend_;
       spyOn(miqService.redirectBack, 'bind');
 
-      var deferred = $q.defer();
+      deferred = $q.defer();
       spyOn(API, 'post').and.callFake(function() {return deferred.promise;});
 
       var bindings = {redirectUrl: '/controller/go_back', divisible: true};
@@ -28,6 +28,8 @@ describe('tenant-component', function() {
     });
 
     it('adds a Tenant record', function () {
+      $httpBackend.expectPOST('/ops/invalidate_miq_product_feature_caches').respond({});
+
       vm.tenantModel.name = 'newTenant';
       vm.tenantModel.description = 'newTenant_desc';
       vm.tenantModel.ancestry = null;
@@ -43,7 +45,14 @@ describe('tenant-component', function() {
       }, {
         skipErrors: [400],
       });
+
+      deferred.resolve({});
+
       expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"newTenant\" has been successfully added.', 'success', vm.redirectUrl);
+    });
+
+    afterEach(function () {
+      $httpBackend.verifyNoOutstandingExpectation();
     });
   });
 

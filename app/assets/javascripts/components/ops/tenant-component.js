@@ -10,9 +10,9 @@ ManageIQ.angular.app.component('tenantComponent', {
   templateUrl: '/static/ops/tenant/tenant.html.haml',
 });
 
-tenantFormController.$inject = ['API', 'miqService'];
+tenantFormController.$inject = ['API', 'miqService', '$http'];
 
-function tenantFormController(API, miqService) {
+function tenantFormController(API, miqService, $http) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -67,6 +67,9 @@ function tenantFormController(API, miqService) {
     API[method](url, saveObject, {
       skipErrors: [400],  // server-side validation
     })
+      .then(function() {
+        return $http.post('/ops/invalidate_miq_product_feature_caches', {});
+      })
       .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };

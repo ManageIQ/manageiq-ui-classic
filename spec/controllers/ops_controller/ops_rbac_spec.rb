@@ -8,6 +8,13 @@ describe OpsController do
       stub_user(:features => :all)
     end
 
+    it 'confirms existence of route and action with name invalidate_miq_product_feature_caches ' do
+      EvmSpecHelper.local_miq_server
+
+      post :invalidate_miq_product_feature_caches
+      expect(response.status).to eq(200)
+    end
+
     describe "rbac_edit_tags_reset" do
       let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:another_tenant) { FactoryBot.create(:tenant) }
@@ -104,6 +111,8 @@ describe OpsController do
 
       it "deletes a tenant record successfully" do
         expect(controller).to receive(:x_active_tree_replace_cell)
+        expect(MiqProductFeature).to receive(:invalidate_caches)
+
         controller.send(:rbac_tenant_delete)
 
         expect(response.status).to eq(200)
