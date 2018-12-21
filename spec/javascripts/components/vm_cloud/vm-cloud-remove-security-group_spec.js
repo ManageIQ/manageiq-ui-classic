@@ -1,4 +1,4 @@
-describe('vm-cloud-add-security-group-component', function() {
+describe('vm-cloud-remove-security-group', function() {
   var $componentController, vm, miqService, API;
 
   describe('when the vm.recordId is defined', function () {
@@ -9,7 +9,7 @@ describe('vm-cloud-add-security-group-component', function() {
       miqService = _miqService_;
 
       var formResponse = {
-        cloud_tenant_id: '2222',
+        id: '1111',
       };
 
       spyOn(API, 'get').and.callFake(function() {
@@ -22,12 +22,11 @@ describe('vm-cloud-add-security-group-component', function() {
       });
 
       var bindings = {recordId: '1111'};
-      vm = $componentController('vmCloudAddSecurityGroupComponent', null, bindings);
+      vm = $componentController('vmCloudRemoveSecurityGroup', null, bindings);
       vm.$onInit();
     }));
 
     it('calls API.get with the appropriate URL', function () {
-      expect(API.get).toHaveBeenCalledWith('/api/instances/1111');
       expect(API.get).toHaveBeenCalledWith('/api/instances/1111/security_groups?expand=resources&attributes=id,name');
     });
   });

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('genericObjectTableComponent', {
+ManageIQ.angular.app.component('genericObjectTable', {
   bindings: {
     keys: '=',
     values: '=',

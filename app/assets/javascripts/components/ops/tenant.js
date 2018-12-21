@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('tenantComponent', {
+ManageIQ.angular.app.component('tenantForm', {
   bindings: {
     recordId: '@?',
     divisible: '=',

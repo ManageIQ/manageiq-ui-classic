@@ -1,5 +1,5 @@
 (function() {
-  ManageIQ.angular.app.component('changePasswordComponent', {
+  ManageIQ.angular.app.component('changePassword', {
     bindings: {
       recordId: '@?',
       recordName: '@?',

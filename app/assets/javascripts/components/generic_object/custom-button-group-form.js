@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('customButtonGroupFormComponent', {
+ManageIQ.angular.app.component('customButtonGroupForm', {
   bindings: {
     angularForm: '<',
     model: '=',

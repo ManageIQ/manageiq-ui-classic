@@ -1,4 +1,4 @@
-describe('tenant-component', function() {
+describe('tenant-form', function() {
   var $componentController, vm, miqService, API, $httpBackend, deferred;
 
   describe('when the vm.recordId is not defined', function () {
@@ -15,7 +15,7 @@ describe('tenant-component', function() {
       spyOn(API, 'post').and.callFake(function() {return deferred.promise;});
 
       var bindings = {redirectUrl: '/controller/go_back', divisible: true};
-      vm = $componentController('tenantComponent', null, bindings);
+      vm = $componentController('tenantForm', null, bindings);
       vm.$onInit();
     }));
 
@@ -84,7 +84,7 @@ describe('tenant-component', function() {
       spyOn(API, 'put').and.callFake(function() {return deferred.promise;});
 
       var bindings = {recordId: '1111', redirectUrl: '/controller/go_back', divisible: true};
-      vm = $componentController('tenantComponent', null, bindings);
+      vm = $componentController('tenantForm', null, bindings);
       vm.$onInit();
     }));
 

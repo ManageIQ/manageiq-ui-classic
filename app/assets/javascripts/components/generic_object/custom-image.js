@@ -1,4 +1,4 @@
-ManageIQ.angular.app.component('customImageComponent', {
+ManageIQ.angular.app.component('customImage', {
   bindings: {
     picture: '=',
     newRecord: '<',
@@ -9,13 +9,13 @@ ManageIQ.angular.app.component('customImageComponent', {
     pictureReset: '<',
   },
   controllerAs: 'vm',
-  controller: customImageComponentController,
-  templateUrl: '/static/generic_object/custom-image-component.html.haml',
+  controller: customImageController,
+  templateUrl: '/static/generic_object/custom-image.html.haml',
 });
 
-customImageComponentController.$inject = ['$timeout'];
+customImageController.$inject = ['$timeout'];
 
-function customImageComponentController($timeout) {
+function customImageController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {

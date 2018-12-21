@@ -1,4 +1,4 @@
-describe('main-custom-button-form-component', function() {
+describe('main-custom-button-form', function() {
   var $componentController, vm, miqService, API, $scope;
   beforeEach(module('ManageIQ'));
   beforeEach(inject(function (_$componentController_, _API_, _$httpBackend_, _miqService_, $rootScope, $q) {
@@ -9,7 +9,7 @@ describe('main-custom-button-form-component', function() {
     $httpBackend = _$httpBackend_;
 
     var bindings = {genericObjectDefinitionRecordId: '1', customButtonGroupRecordId: '2', customButtonRecordId: '3', redirectUrl: '/redirect/url'};
-    vm = $componentController("mainCustomButtonFormComponent", null, bindings);
+    vm = $componentController("mainCustomButtonForm", null, bindings);
     var deferred = $q.defer();
     spyOn(API, 'get').and.callFake(function() {return deferred.promise;});
     var domainsResponse = {
