@@ -46,6 +46,30 @@ const nodeModulesNotShims = (module) => {
 };
 const notShims = (module) => (!SplitChunksPlugin.checkTest(/shims/, module));
 
+let plugins = [
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
+  }),
+
+  // Workaround for graphql/graphql-language-service#128
+  new webpack.ContextReplacementPlugin(
+    /graphql-language-service-interface[\\\/]dist$/,
+    /\.js$/
+  ),
+
+  new ManifestPlugin({
+    publicPath: output.publicPath,
+    writeToFileEmit: true,
+  }),
+];
+
+if (env.WEBPACK_VERBOSE) {
+  plugins.push(new DuplicatePackageCheckerPlugin({
+    verbose: true,
+    showHelp: false,
+  }));
+}
+
 module.exports = {
   entry: {
     ...Object.keys(packPaths).reduce(
@@ -74,27 +98,7 @@ module.exports = {
     rules: loaders,
   },
 
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
-    }),
-
-    // Workaround for graphql/graphql-language-service#128
-    new webpack.ContextReplacementPlugin(
-      /graphql-language-service-interface[\\\/]dist$/,
-      /\.js$/
-    ),
-
-    new ManifestPlugin({
-      publicPath: output.publicPath,
-      writeToFileEmit: true,
-    }),
-
-    new DuplicatePackageCheckerPlugin({
-      verbose: true,
-      showHelp: false,
-    }),
-  ],
+  plugins,
 
   optimization: {
     runtimeChunk: 'single',
