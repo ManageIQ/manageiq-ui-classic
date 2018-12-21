@@ -11,7 +11,7 @@ module Mixins
         def set_ownership
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
-          controller = if request.parameters[:controller] == "vm" || %w(all_vms vms instances images).include?(params[:display])
+          controller = if request.parameters[:controller] == "vm" || %w(all_vms vms instances).include?(params[:display])
                          "vm"
                        elsif %w(miq_templates images).include?(params[:display]) || params[:pressed].starts_with?("miq_template_")
                          "miq_template"
