@@ -36,4 +36,47 @@ describe ReportController do
       it_behaves_like "Report Widget @menu"
     end
   end
+
+  context "#widget_set_record_vars" do
+    let(:zone) { double("Zone", :name => "foo") }
+    let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
+
+    before do
+      allow(MiqServer).to receive(:my_server).and_return(server)
+      allow(server).to receive(:zone_id).and_return(1)
+      @widget = FactoryBot.build(:miq_widget, :content_type => "report")
+      report = FactoryBot.create(:miq_report, :name => "custom report 1", :col_order => [])
+      schedule = FactoryBot.build(:miq_schedule)
+      timer = ReportHelper::Timer.new('Hourly', 1, 1, 1, 1, '11/13/2015', '00', '10')
+      controller.instance_variable_set(:@sb, :wtype => 'r')
+      @edit_hash = {
+        :rpt      => report,
+        :schedule => schedule,
+        :new      => {
+          :name        => 'Fred',
+          :description => 'FRED',
+          :row_count   => 10,
+          :timer       => timer}
+      }
+      controller.instance_variable_set(:@edit, @edit_hash)
+      session[:edit] = @edit_hash
+    end
+
+    it "sets role visibility for widget" do
+      role = FactoryBot.create(:miq_user_role, :name => "foo")
+      @edit_hash[:new][:visibility_typ] = 'role'
+      @edit_hash[:new][:roles] = [role.id.to_s]
+      controller.send(:widget_set_record_vars, @widget)
+      expect(@widget.visibility[:roles]).to eq([role.name])
+    end
+
+    it "sets group visibility for widget" do
+      group = FactoryBot.create(:miq_group, :description => "foo_group")
+      @edit_hash[:new][:visibility_typ] = 'group'
+      @edit_hash[:new][:groups] = [group.id.to_s]
+      controller.send(:widget_set_record_vars, @widget)
+      expect(@widget.visibility[:groups]).to eq([group.description])
+    end
+  end
+
 end

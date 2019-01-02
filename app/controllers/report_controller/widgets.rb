@@ -596,7 +596,7 @@ module ReportController::Widgets
       groups = []
       @edit[:new][:groups].each do |g|
         group = MiqGroup.find(g)
-        groups.push(group.description) if g == group.id
+        groups.push(group.description) if g == group.id.to_s
       end
       widget.visibility[:groups] = groups
       widget.visibility.delete(:roles) if widget.visibility[:roles]
@@ -605,7 +605,7 @@ module ReportController::Widgets
         roles = []
         @edit[:new][:roles].each do |r|
           role = MiqUserRole.find(r)
-          roles.push(role.name) if r == role.id
+          roles.push(role.name) if r == role.id.to_s
         end
         widget.visibility[:roles] = roles
       else
