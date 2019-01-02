@@ -1100,7 +1100,7 @@ class MiqAeClassController < ApplicationController
       ae_ns.save!
     rescue => bang
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
-      javascript_flash
+      javascript_flash(:spinner_off => true)
     else
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
       AuditEvent.success(build_saved_audit_hash_angular(old_namespace_attributes, ae_ns, false))
