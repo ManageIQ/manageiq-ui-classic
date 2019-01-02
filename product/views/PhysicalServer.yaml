@@ -23,7 +23,6 @@ include:
 
 include_for_find:
   :ext_management_system: {}
-  :compliances: {}
   :tags: {}
 
 
