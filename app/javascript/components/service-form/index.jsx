@@ -17,8 +17,11 @@ class ServiceForm extends Component {
   componentDidMount() {
     cleanVirtualDom();
     miqSparkleOn();
+
+    // TODO no new?
     http.get(`/service/service_form_fields/${this.props.serviceFormId}`)
-      .then(data => this.setState({ initialValues: { ...data } }, miqSparkleOff()));
+      .then(data => this.setState({ initialValues: { ...data } }))
+      .then(miqSparkleOff);
   }
 
   render() {
@@ -48,7 +51,7 @@ class ServiceForm extends Component {
 ServiceForm.propTypes = {
   maxNameLen: PropTypes.number.isRequired,
   maxDescLen: PropTypes.number.isRequired,
-  serviceFormId: PropTypes.number.isRequired,
+  serviceFormId: PropTypes.string.isRequired,
 };
 
 export default ServiceForm;

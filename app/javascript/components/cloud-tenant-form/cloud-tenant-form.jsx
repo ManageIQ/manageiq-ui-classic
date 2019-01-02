@@ -47,7 +47,7 @@ class CloudTenantForm extends Component {
 }
 
 CloudTenantForm.propTypes = {
-  cloudTenantFormId: PropTypes.number,
+  cloudTenantFormId: PropTypes.string,
   emsChoices: PropTypes.shape({
     [PropTypes.string]: PropTypes.number,
   }),

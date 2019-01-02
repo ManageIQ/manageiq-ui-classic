@@ -1,0 +1,13 @@
+dataType is never used, why documented as required?
+autoFocus is never documented, but used
+validateOnMount "
+
+inconvenient validators syntax
+
+no docs on tabs
+
+why do we always need to cleanVirtualDom?
+
+zpusob jak ziskat schema prevedent ($r.schema je puvodni, nesjednoceny)
+
+taby vypadaji blbe protoze ul ma navic nav-tabs-pf (odstraneni te tridy fixes it)

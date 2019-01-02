@@ -10,6 +10,7 @@ import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
+import AnalysisProfileForm from '../components/analysis-profile-form';
 
 /**
 * Add component definitions to this file.
@@ -30,3 +31,4 @@ ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
 ManageIQ.component.addReact('SetServiceOwnershipForm', SetServiceOwnershipForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
+ManageIQ.component.addReact('AnalysisProfileForm', AnalysisProfileForm);

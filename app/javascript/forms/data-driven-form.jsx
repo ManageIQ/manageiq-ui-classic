@@ -16,7 +16,7 @@ const buttonLabels = {
 
 const MiqFormRenderer = props => (
   <FormRender
-    formFieldsMapper={formFieldsMapper}
+    formFieldsMapper={ { ...formFieldsMapper, ...(props.extraFormFields || {})} }
     layoutMapper={layoutMapper}
     disableSubmit={[
       'pristine',
