@@ -238,7 +238,7 @@ module EmsClusterHelper::TextualSummary
   end
 
   def textual_aggregate_disk_capacity
-    {:value => number_to_human_size(@record.aggregate_disk_capacity.gigabytes, :precision => 2)}
+    {:value => number_to_human_size(@record.aggregate_disk_capacity.gigabytes, :precision => 2), :label => _('Aggregate disk capacity')}
   end
 
   def textual_block_storage_disk_usage
