@@ -8,6 +8,6 @@ no docs on tabs
 
 why do we always need to cleanVirtualDom?
 
-zpusob jak ziskat schema prevedent ($r.schema je puvodni, nesjednoceny)
+how to get converted schema ($r.schema is the original, unconverted)
 
-taby vypadaji blbe protoze ul ma navic nav-tabs-pf (odstraneni te tridy fixes it)
+tabs look bad because the %ul has an extra .nav-tabs-pf (removing that class fixes it)
