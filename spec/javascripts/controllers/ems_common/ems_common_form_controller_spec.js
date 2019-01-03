@@ -79,8 +79,8 @@ describe('emsCommonFormController', function() {
       expect($scope.emsCommonModel.amqp_api_port).toEqual('5672');
     });
 
-    it('sets the api_version to v2', function() {
-      expect($scope.emsCommonModel.api_version).toEqual('v2');
+    it('sets the api_version to blank', function() {
+      expect($scope.emsCommonModel.api_version).toEqual('');
     });
 
     it('sets the current tab to default', function() {
@@ -515,8 +515,8 @@ describe('emsCommonFormController in the context of container provider', functio
       expect($scope.emsCommonModel.default_api_port).toEqual('');
     });
 
-    it('sets the api_version to v2', function () {
-      expect($scope.emsCommonModel.api_version).toEqual('v2');
+    it('sets the api_version to blank', function () {
+      expect($scope.emsCommonModel.api_version).toEqual('');
     });
 
     it('sets the current tab to default', function() {
@@ -718,8 +718,8 @@ describe('emsCommonFormController in the context of ems infra provider', functio
       expect($scope.emsCommonModel.default_api_port).toEqual('');
     });
 
-    it('sets the api_version to v2', function () {
-      expect($scope.emsCommonModel.api_version).toEqual('v2');
+    it('sets the api_version to blank', function () {
+      expect($scope.emsCommonModel.api_version).toEqual('');
     });
 
     it('sets the current tab to default', function() {

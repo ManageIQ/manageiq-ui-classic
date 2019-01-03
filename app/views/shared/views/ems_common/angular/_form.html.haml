@@ -97,7 +97,22 @@
         %span.help-block{"ng-show" => "angularForm.azure_tenant_id.$error.isUuid"}
           = _("Invalid input format, please enter a GUID")
 
-    .form-group{"ng-class" => "{'has-error': angularForm.subscription.$invalid}", "ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
+    .form-group{"ng-class" => "{'has-error': angularForm.azure_tenant_id.$invalid}", "ng-if" => "emsCommonModel.emstype == 'azure_stack'"}
+      %label.col-md-2.control-label{"for" => "ems_tenant_id"}
+        = _('Tenant ID')
+      .col-md-4
+        %input.form-control{"type"                    => "text",
+                            "id"                      => "ems_tenant_id",
+                            "name"                    => "azure_tenant_id",
+                            "ng-model"                => "emsCommonModel.azure_tenant_id",
+                            "required"                => "",
+                            "checkchange"             => "",
+                            "prefix"                  => "default",
+                            "reset-validation-status" => "default_auth_status"}
+        %span.help-block{"ng-show" => "angularForm.azure_tenant_id.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.subscription.$invalid}", "ng-if" => "['azure', 'azure_stack'].includes(emsCommonModel.emstype)"}
       %label.col-md-2.control-label{"for" => "ems_subscription"}
         = _('Subscription ID')
       .col-md-4
@@ -106,7 +121,7 @@
                             "name"                    => "subscription",
                             "ng-model"                => "emsCommonModel.subscription",
                             "checkchange"             => "",
-                            "required"                => "",
+                            "required"                => true,
                             "prefix"                  => "default",
                             "ng-readonly"             => @ems.id ? true : false,
                             "is-uuid"                 => 4,
@@ -137,6 +152,20 @@
                      "id"                          => "ems_vmware_cloud_api_version",
                      "checkchange"                 => "",
                      "selectpicker-for-select-tag" => "")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.api_version.$invalid}", "ng-if" => "emsCommonModel.emstype == 'azure_stack'"}
+      %label.col-md-2.control-label{"for" => "ems_api_version"}
+        = _("API Version")
+      .col-md-8
+        = select_tag('api_version',
+                     options_for_select(@azure_stack_api_versions),
+                     "ng-model"                    => "emsCommonModel.api_version",
+                     "id"                          => "ems_azure_stack_api_version",
+                     "required"                    => true,
+                     "checkchange"                 => "",
+                     "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.api_version.$error.required"}
+          = _("Required")
 
     .form-group{"ng-class" => "{'has-error': angularForm.api_version.$invalid}",
                 "ng-if"    => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra'"}
