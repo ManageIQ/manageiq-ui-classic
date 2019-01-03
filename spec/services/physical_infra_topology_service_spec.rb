@@ -89,7 +89,7 @@ describe PhysicalInfraTopologyService do
           :name         => ems.name,
           :kind         => "PhysicalInfraManager",
           :miq_id       => ems.id,
-          :status       => nil,
+          :status       => 'Valid',
           :display_kind => "Lenovo",
           :model        => ems.class.name,
           :key          => "PhysicalInfraManager" + ems.id.to_s
