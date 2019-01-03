@@ -77,12 +77,14 @@ function createSchema(scanMode) {
         label: __('Name'),
         autoFocus: true,
         ...required,
+        // TODO ViewHelper::MAX_NAME_LEN
       },
       {
         component: 'text-field',
         name: 'description',
         label: __('Description'),
         ...required,
+        // TODO ViewHelper::MAX_DESC_LEN
       },
       {
         component: 'output',

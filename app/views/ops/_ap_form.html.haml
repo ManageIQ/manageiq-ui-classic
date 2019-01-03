@@ -1,4 +1,6 @@
-= react 'AnalysisProfileForm', {:analysisProfileId => "123", :scanMode => "Host"}
+= react 'AnalysisProfileForm', {:analysisProfileId => @scan.id&.to_s, :scanMode => "Host"}
+-# TODO where flash?
+= render :partial => "layouts/flash_msg"
 
 - if x_active_tree == :settings_tree
   - url = url_for_only_path(:action => 'ap_form_field_changed', :id => (@scan.id || "new"))
