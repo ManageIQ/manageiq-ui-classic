@@ -484,4 +484,33 @@ describe OpsController do
       controller.send(:tree_select)
     end
   end
+
+  describe "#rbac_tenant_manage_quotas" do
+    let(:tenant_alpha) { FactoryBot.create(:tenant, :parent => Tenant.root_tenant) }
+    let(:tenant_omega) { FactoryBot.create(:tenant, :parent => tenant_alpha) }
+
+    let(:feature) { MiqProductFeature.find_all_by_identifier(["rbac_tenant_manage_quotas_tenant_#{tenant_omega.id}"]) }
+    let(:role_with_access_to_omega_rbac_tenant_manage_quota_permission) { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
+
+    let(:group_alpha) { FactoryBot.create(:miq_group, :tenant => tenant_alpha, :miq_user_role => role_with_access_to_omega_rbac_tenant_manage_quota_permission) }
+    let(:user_alpha)  { FactoryBot.create(:user, :miq_groups => [group_alpha]) }
+
+    before do
+      EvmSpecHelper.seed_specific_product_features(%w(rbac_tenant_manage_quotas))
+      Tenant.seed
+      User.current_user = user_alpha
+    end
+
+    it "doesn't perform any manage quota action on tenant_omega" do
+      allow(controller).to receive(:rbac_tenant_manage_quotas_save_add)
+      controller.instance_variable_set(:@_params, :id => tenant_omega.id, :button => 'add')
+      expect { controller.rbac_tenant_manage_quotas }.not_to raise_error
+    end
+
+    it "does perform any manage quota action on tenant_alpha" do
+      allow(controller).to receive(:rbac_tenant_manage_quotas_save_add)
+      controller.instance_variable_set(:@_params, :id => tenant_alpha.id, :button => 'add')
+      expect { controller.rbac_tenant_manage_quotas }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+  end
 end
