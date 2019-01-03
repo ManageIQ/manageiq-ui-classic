@@ -22,7 +22,7 @@ describe ServiceController do
   end
 
   describe "#service_reconfigure" do
-    let(:service) { instance_double("Service", :id => 321, :service_template => service_template) }
+    let(:service) { instance_double("Service", :id => 321, :service_template => service_template, :name => "foo name") }
     let(:service_template) { instance_double("ServiceTemplate", :name => "the name") }
     let(:ar_association_dummy) { double }
     let(:resource_action) { instance_double("ResourceAction", :id => 123) }
@@ -37,7 +37,7 @@ describe ServiceController do
 
     it "sets the right cell text" do
       controller.send(:service_reconfigure)
-      expect(controller.instance_variable_get(:@right_cell_text)).to eq("Reconfigure Service \"the name\"")
+      expect(controller.instance_variable_get(:@right_cell_text)).to eq("Reconfigure Service \"foo name\"")
     end
 
     it "replaces the right cell with the reconfigure dialog partial" do

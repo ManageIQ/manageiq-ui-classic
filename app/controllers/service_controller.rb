@@ -163,7 +163,7 @@ class ServiceController < ApplicationController
     service_template = service.service_template
     resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
 
-    @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service_template.name}
+    @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service.name}
     dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
     replace_right_cell(:action => "reconfigure_dialog", :dialog_locals => dialog_locals)
   end
