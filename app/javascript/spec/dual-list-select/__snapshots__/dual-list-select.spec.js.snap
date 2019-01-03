@@ -1,0 +1,273 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dual list component is correctly rendered 1`] = `
+<WrappedDualList
+  FieldProvider={[Function]}
+  input={
+    Object {
+      "onChange": [MockFunction],
+      "value": Object {
+        "key3": "text3",
+      },
+    }
+  }
+  options={
+    Object {
+      "key1": "text1",
+      "key2": "text2",
+      "key3": "text3",
+      "key4": "text4",
+    }
+  }
+>
+  <Component
+    component={[Function]}
+    input={
+      Object {
+        "onChange": [MockFunction],
+        "value": Object {
+          "key3": "text3",
+        },
+      }
+    }
+    options={
+      Object {
+        "key1": "text1",
+        "key2": "text2",
+        "key3": "text3",
+        "key4": "text4",
+      }
+    }
+  >
+    <div>
+      <DualListSelect
+        allToLeft={false}
+        allToRight={true}
+        input={
+          Object {
+            "onChange": [MockFunction],
+            "value": Object {
+              "key3": "text3",
+            },
+          }
+        }
+        meta={
+          Object {
+            "error": false,
+            "touched": false,
+          }
+        }
+        moveAllLeftTitle="Move all to left"
+        moveAllRightTitle="Move all to right"
+        moveLeftTitle="Move selected to left"
+        moveRightTitle="Move selected to right"
+        options={
+          Object {
+            "key1": "text1",
+            "key2": "text2",
+            "key3": "text3",
+            "key4": "text4",
+          }
+        }
+        size={15}
+      >
+        <div>
+          <div
+            className="col-md-5"
+          >
+            <ForwardRef
+              size={15}
+              values={
+                Object {
+                  "key1": "text1",
+                  "key2": "text2",
+                  "key4": "text4",
+                }
+              }
+            >
+              <select
+                className="form-control"
+                multiple={true}
+                name="undefined[]"
+                size={15}
+                style={
+                  Object {
+                    "overflowX": "scroll",
+                  }
+                }
+              >
+                <option
+                  key="key1"
+                  value="key1"
+                >
+                  text1
+                </option>
+                <option
+                  key="key2"
+                  value="key2"
+                >
+                  text2
+                </option>
+                <option
+                  key="key4"
+                  value="key4"
+                >
+                  text4
+                </option>
+              </select>
+            </ForwardRef>
+          </div>
+          <div
+            className="col-md-1"
+            style={
+              Object {
+                "padding": 10,
+              }
+            }
+          >
+            <div
+              className="spacer"
+            />
+            <div
+              className="spacer"
+            />
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              className="btn-block"
+              disabled={false}
+              onClick={[Function]}
+              title="Move selected to right"
+            >
+              <button
+                className="btn-block btn btn-default"
+                disabled={false}
+                onClick={[Function]}
+                title="Move selected to right"
+                type="button"
+              >
+                <Icon
+                  name="angle-right"
+                  size="lg"
+                  type="fa"
+                >
+                  <FontAwesome
+                    name="angle-right"
+                    size="lg"
+                  >
+                    <span
+                      aria-hidden={true}
+                      className="fa fa-angle-right fa-lg"
+                    />
+                  </FontAwesome>
+                </Icon>
+              </button>
+            </Button>
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              className="btn-block"
+              disabled={false}
+              onClick={[Function]}
+              title="Move all to right"
+            >
+              <button
+                className="btn-block btn btn-default"
+                disabled={false}
+                onClick={[Function]}
+                title="Move all to right"
+                type="button"
+              >
+                <Icon
+                  name="angle-double-right"
+                  size="lg"
+                  type="fa"
+                >
+                  <FontAwesome
+                    name="angle-double-right"
+                    size="lg"
+                  >
+                    <span
+                      aria-hidden={true}
+                      className="fa fa-angle-double-right fa-lg"
+                    />
+                  </FontAwesome>
+                </Icon>
+              </button>
+            </Button>
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              className="btn-block"
+              disabled={false}
+              onClick={[Function]}
+              title="Move selected to left"
+            >
+              <button
+                className="btn-block btn btn-default"
+                disabled={false}
+                onClick={[Function]}
+                title="Move selected to left"
+                type="button"
+              >
+                <Icon
+                  name="angle-left"
+                  size="lg"
+                  type="fa"
+                >
+                  <FontAwesome
+                    name="angle-left"
+                    size="lg"
+                  >
+                    <span
+                      aria-hidden={true}
+                      className="fa fa-angle-left fa-lg"
+                    />
+                  </FontAwesome>
+                </Icon>
+              </button>
+            </Button>
+          </div>
+          <div
+            className="col-md-5"
+          >
+            <ForwardRef
+              size={15}
+              values={
+                Object {
+                  "key3": "text3",
+                }
+              }
+            >
+              <select
+                className="form-control"
+                multiple={true}
+                name="undefined[]"
+                size={15}
+                style={
+                  Object {
+                    "overflowX": "scroll",
+                  }
+                }
+              >
+                <option
+                  key="key3"
+                  value="key3"
+                >
+                  text3
+                </option>
+              </select>
+            </ForwardRef>
+          </div>
+        </div>
+      </DualListSelect>
+    </div>
+  </Component>
+</WrappedDualList>
+`;

@@ -1,6 +1,7 @@
 import React from 'react';
 import FormRender, { Validators } from '@data-driven-forms/react-form-renderer';
-import { formFieldsMapper, layoutMapper } from '@data-driven-forms/pf3-component-mapper';
+import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
+import formFieldsMapper from './mappers/formsFieldsMapper';
 
 Validators.messages = {
   ...Validators.messages,
