@@ -1,5 +1,5 @@
 = render :partial => "layouts/flash_msg"
-= react 'AnalysisProfileForm', {:analysisProfileId => @scan.id&.to_s, :scanMode => "Host"}
+= react 'AnalysisProfileForm', {:analysisProfileId => @scan.id&.to_s, :scanMode => "Vm", "CATEGORY_CHOICES" => OpsController::Settings::AnalysisProfiles::CATEGORY_CHOICES}
 
 - if x_active_tree == :settings_tree
   - url = url_for_only_path(:action => 'ap_form_field_changed', :id => (@scan.id || "new"))

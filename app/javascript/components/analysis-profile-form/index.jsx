@@ -30,7 +30,7 @@ class AnalysisProfileForm extends Component {
     super(props);
 
     this.state = {
-      schema: createSchema(this.props.scanMode),
+      schema: createSchema(this.props.scanMode, this.props.CATEGORY_CHOICES),
     };
   }
 
@@ -69,6 +69,9 @@ class AnalysisProfileForm extends Component {
 AnalysisProfileForm.propTypes = {
   analysisProfileId: PropTypes.string,
   scanMode: PropTypes.oneOf(['Host', 'Vm']).isRequired,
+  CATEGORY_CHOICES: PropTypes.shape({
+    [PropTypes.string]: PropTypes.string,
+  }),
 };
 
 export default AnalysisProfileForm;

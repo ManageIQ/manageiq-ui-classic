@@ -33,12 +33,28 @@ const maxLength = (val, field) => {
   return field;
 };
 
-const tabCategory = {
-  component: componentTypes.TAB_ITEM,
-  title: __("Category"),
-  fields: [
-    FAKE,
-  ],
+const tabCategory = (choices) => {
+  let fields = [
+    {
+      component: 'header',
+      label: __('Category Selection'),
+    },
+  ];
+
+  Object.keys(choices).forEach((k) => {
+    fields.push({
+      component: componentTypes.CHECKBOX,
+      name: `category[${k}]`,
+      label: __(choices[k]),
+      hideLabel: true,
+    });
+  });
+
+  return {
+    component: componentTypes.TAB_ITEM,
+    title: __("Category"),
+    fields,
+  };
 };
 
 const tabFile = {
@@ -65,7 +81,7 @@ const tabEventLog = {
   ],
 };
 
-function tabs(scanMode) {
+function tabs(scanMode, categoryChoices) {
   switch (scanMode) {
     case 'Host':
       return [
@@ -74,7 +90,7 @@ function tabs(scanMode) {
       ];
     case 'Vm':
       return [
-        tabCategory,
+        tabCategory(categoryChoices),
         tabFile,
         tabRegistry,
         tabEventLog,
@@ -84,7 +100,7 @@ function tabs(scanMode) {
   }
 }
 
-function createSchema(scanMode) {
+function createSchema(scanMode, categoryChoices) {
   return {
     fields: [
       {
@@ -109,7 +125,7 @@ function createSchema(scanMode) {
       },
       {
         component: componentTypes.TABS,
-        fields: tabs(scanMode),
+        fields: tabs(scanMode, categoryChoices),
       },
     ],
   };
