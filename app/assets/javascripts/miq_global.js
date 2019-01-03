@@ -89,5 +89,7 @@ if (!window.ManageIQ) {
       dashboardUrl: null, // set dashboard widget drag drop url
       menuXml: null,
     },
+    ViewHelper: {
+    },
   };
 }

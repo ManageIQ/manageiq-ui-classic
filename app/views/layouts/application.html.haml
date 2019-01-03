@@ -30,6 +30,10 @@
       :javascript
         miqInitNotifications();
 
+    - ViewHelper.constants.each do |name|
+      :javascript
+        ManageIQ.ViewHelper.#{name} = #{ViewHelper.const_get(name).to_json};
+
   %body{:onload => is_browser_ie? ? '' : 'miqOnLoad();', 'data-controller' => controller_name}
     = render :partial => "layouts/header"
     = render :partial => "layouts/content"

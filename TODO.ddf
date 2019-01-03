@@ -11,3 +11,9 @@ why do we always need to cleanVirtualDom?
 how to get converted schema ($r.schema is the original, unconverted)
 
 tabs look bad because the %ul has an extra .nav-tabs-pf (removing that class fixes it)
+
+document all validator & component tyeps (max length missing?)
+
+treshold != threshold - bug in both docs and code
+
+no *.min.js files? needed for debugging

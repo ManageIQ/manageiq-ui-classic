@@ -10,7 +10,7 @@ class ServiceForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      schema: createSchema(props.maxNameLen, props.maxDescLen),
+      schema: createSchema(),
     };
   }
 
@@ -49,8 +49,6 @@ class ServiceForm extends Component {
 }
 
 ServiceForm.propTypes = {
-  maxNameLen: PropTypes.number.isRequired,
-  maxDescLen: PropTypes.number.isRequired,
   serviceFormId: PropTypes.string.isRequired,
 };
 

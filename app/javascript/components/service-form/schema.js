@@ -1,10 +1,10 @@
-function createSchema(maxNameLen, maxDescLen) {
+function createSchema() {
   return {
     fields: [
       {
         component: 'text-field',
         name: 'name',
-        maxLength: maxNameLen,
+        maxLength: ManageIQ.ViewHelper.MAX_NAME_LEN,
         label: __('Name'),
         validateOnMount: true,
         autoFocus: true,
@@ -15,7 +15,7 @@ function createSchema(maxNameLen, maxDescLen) {
       {
         component: 'text-field',
         name: 'description',
-        maxLength: maxDescLen,
+        maxLength: ManageIQ.ViewHelper.MAX_DESC_LEN,
         label: __('Description'),
         validateOnMount: true,
         validate: [{

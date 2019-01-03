@@ -1,20 +1,40 @@
+import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+
 const FAKE = {
-  component: 'text-field',
+  component: componentTypes.TEXT_FIELD,
   name: 'fake',
   label: 'fake',
 };
 
-const required = {
-  validateOnMount: true,
-  validate: [
-    {
-      type: 'required-validator',
-    },
-  ],
+const required = (field) => {
+  field.validateOnMount = true;
+  field.validate = field.validate || [];
+
+  field.validate.push({
+    type: validatorTypes.REQUIRED,
+  });
+  field.isRequired = true;
+
+  console.log('field', field);
+  return field;
+};
+
+const maxLength = (val, field) => {
+  field.validateOnMount = true;
+  field.validate = field.validate || [];
+
+  field.validate.push({
+    type: validatorTypes.MAX_LENGTH,
+    threshold: val,
+    treshold: val,  // FIXME: remove when fixed to use threshold
+  });
+  field.maxLength = val;
+
+  return field;
 };
 
 const tabCategory = {
-  component: 'tab-item',
+  component: componentTypes.TAB_ITEM,
   title: __("Category"),
   fields: [
     FAKE,
@@ -22,7 +42,7 @@ const tabCategory = {
 };
 
 const tabFile = {
-  component: 'tab-item',
+  component: componentTypes.TAB_ITEM,
   title: __("File"),
   fields: [
     FAKE,
@@ -30,7 +50,7 @@ const tabFile = {
 };
 
 const tabRegistry = {
-  component: 'tab-item',
+  component: componentTypes.TAB_ITEM,
   title: __("Registry"),
   fields: [
     FAKE,
@@ -38,7 +58,7 @@ const tabRegistry = {
 };
 
 const tabEventLog = {
-  component: 'tab-item',
+  component: componentTypes.TAB_ITEM,
   title: __("EventLog"),
   fields: [
     FAKE,
@@ -71,28 +91,24 @@ function createSchema(scanMode) {
         component: 'header',
         label: __('Basic Information'),
       },
-      {
-        component: 'text-field',
+      required(maxLength(ManageIQ.ViewHelper.MAX_NAME_LEN, {
+        component: componentTypes.TEXT_FIELD,
         name: 'name',
         label: __('Name'),
         autoFocus: true,
-        ...required,
-        // TODO ViewHelper::MAX_NAME_LEN
-      },
-      {
-        component: 'text-field',
+      })),
+      required(maxLength(ManageIQ.ViewHelper.MAX_DESC_LEN, {
+        component: componentTypes.TEXT_FIELD,
         name: 'description',
         label: __('Description'),
-        ...required,
-        // TODO ViewHelper::MAX_DESC_LEN
-      },
+      })),
       {
         component: 'output',
         label: __('Type'),
         value: scanMode,
       },
       {
-        component: 'tabs',
+        component: componentTypes.TABS,
         fields: tabs(scanMode),
       },
     ],

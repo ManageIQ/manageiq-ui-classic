@@ -15,8 +15,6 @@ describe('Service form component', () => {
 
   beforeEach(() => {
     initialProps = {
-      maxNameLen: 10,
-      maxDescLen: 20,
       serviceFormId: 3,
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
