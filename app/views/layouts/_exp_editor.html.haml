@@ -68,9 +68,9 @@
           - elsif [token].flatten.first == "???"
             %strong{:style => "color: #0088ce"}
               - if @edit[@expkey][:exp_token]
-                = "<new element>"
+                = "<#{_('new element')}>"
               - else
-                = link_to("<new element>",
+                = link_to("<#{_('new element')}>",
                           {:action => 'exp_token_pressed',
                            :token  => token.last},
                            :style                 => "text-decoration: underline",
