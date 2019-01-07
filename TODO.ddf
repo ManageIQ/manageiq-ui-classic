@@ -17,3 +17,6 @@ document all validator & component tyeps (max length missing?)
 treshold != threshold - bug in both docs and code
 
 no *.min.js files? needed for debugging
+
+
+docs how to write an input component .. set/get stuff
