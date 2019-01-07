@@ -129,7 +129,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_hostname
-    @record.hostname
+    {:label => _('Hostname'), :value => @record.hostname}
   end
 
   def textual_ipaddress
@@ -162,11 +162,11 @@ module HostHelper::TextualSummary
   end
 
   def textual_asset_tag
-    @record.asset_tag
+    textual_link(@record.asset_tag, :label => _('Asset tag'))
   end
 
   def textual_service_tag
-    @record.service_tag
+    textual_link(@record.service_tag, :label => _('Service tag'))
   end
 
   def textual_power_state
@@ -332,7 +332,7 @@ module HostHelper::TextualSummary
 
   def textual_templates
     return nil if @record.openstack_host?
-    @record.miq_templates
+    textual_link(@record.miq_templates, :label => _('Templates'))
   end
 
   def textual_compliance_history
