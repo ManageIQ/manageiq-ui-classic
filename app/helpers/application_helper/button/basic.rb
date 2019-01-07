@@ -19,7 +19,7 @@ class ApplicationHelper::Button::Basic < Hash
     return true if self[:type] == :buttonSelect
     # for each button in select checks RBAC, self[:child_id] represents the
     # button id for buttons inside select
-    return role_allows?(:feature => self[:child_id]) unless self[:child_id].nil?
+    return role_allows?(:feature => self[:child_id]) if self[:child_id]
     # check RBAC on separate button
     role_allows?(:feature => self[:id])
   end
