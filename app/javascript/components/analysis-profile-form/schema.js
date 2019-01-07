@@ -1,10 +1,5 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
-
-const FAKE = {
-  component: componentTypes.TEXT_FIELD,
-  name: 'fake',
-  label: 'fake',
-};
+import PropTypes from 'prop-types';
 
 const required = (field) => {
   field.validateOnMount = true;
@@ -52,32 +47,101 @@ const tabCategory = (choices) => {
 
   return {
     component: componentTypes.TAB_ITEM,
-    title: __("Category"),
+    title: __('Category'),
     fields,
   };
 };
 
 const tabFile = {
   component: componentTypes.TAB_ITEM,
-  title: __("File"),
+  title: __('File'),
   fields: [
-    FAKE,
+    {
+      component: 'header',
+      label: __('File Entry'),
+    },
+    {
+      component: 'editTable',
+      name: 'files',
+      headers: [
+        __('Name'),
+        __('Collect Contents?'),
+      ],
+      types: [
+        PropTypes.string,
+        PropTypes.bool,
+      ],
+      fields: [
+        'name',
+        'content',
+      ],
+    },
   ],
 };
 
 const tabRegistry = {
   component: componentTypes.TAB_ITEM,
-  title: __("Registry"),
+  title: __('Registry'),
   fields: [
-    FAKE,
+    {
+      component: 'header',
+      label: __('Registry Entry'),
+    },
+    {
+      component: 'editTable',
+      name: 'registry',
+      headers: [
+        __('Registry Hive'),
+        __('Registry Key'),
+        __('Registry Value'),
+      ],
+      types: [
+        PropTypes.oneOf('HKLM'),
+        PropTypes.string,
+        PropTypes.string,
+      ],
+      fields: [
+        'hive',
+        'key',
+        'value',
+      ],
+    },
   ],
 };
 
 const tabEventLog = {
   component: componentTypes.TAB_ITEM,
-  title: __("EventLog"),
+  title: __('EventLog'),
   fields: [
-    FAKE,
+    {
+      component: 'header',
+      label: __('Event Log Entry'),
+    },
+    {
+      component: 'editTable',
+      name: 'eventlog',
+      headers: [
+        __('Name'),
+        __('Filter Message'),
+        __('Level'),
+        __('Source'),
+        __('# of Days'),
+      ],
+      types: [
+        PropTypes.string,
+        PropTypes.string,
+        PropTypes.string,
+        PropTypes.string,
+        PropTypes.number,
+      ],
+      fields: [
+        'name',
+        'filter.message',
+        'filter.level',
+        'filter.source',
+        'filter.num_days',
+      ],
+    },
   ],
 };
 
