@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import createSchema from './schema';
+import createSchema from './schema.js';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import { cleanVirtualDom } from '../../miq-component/helpers';
 import { Col, FormGroup } from 'patternfly-react';
+import EditTable from './edit_table.jsx';
 
 const extraFormFields = {
   output: ({label, value}) => (
@@ -23,6 +24,8 @@ const extraFormFields = {
   header: ({label}) => (
     <h3>{label}</h3>
   ),
+
+  editTable: EditTable,
 };
 
 class AnalysisProfileForm extends Component {
