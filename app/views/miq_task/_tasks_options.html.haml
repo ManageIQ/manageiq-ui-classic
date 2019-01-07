@@ -9,7 +9,7 @@
           = _("Zone")
         .col-md-8
           - my_zone = MiqServer.my_server(true).my_zone
-          - opts = [["<#{_('All Zones')}>", "<all>"]] + @tasks_options[:zones].sort.collect { |a| [a == my_zone ? a + " (current)" : a, a] }
+          - opts = [["<#{_('All Zones')}>", "<all>"]] + @tasks_options[:zones].sort.collect { |a| [a == my_zone ? _("%{zone} (current)") % {:zone => a} : a, a] }
           = select_tag("chosen_zone",
             options_for_select(opts, @tasks_options[@tabform][:zone]),
             :class => "selectpicker")
