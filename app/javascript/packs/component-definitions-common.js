@@ -30,6 +30,7 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import WorkersForm from '../components/workers-form/workers-form';
+import ExpressionEditorWrapperConnected from '../components/expressionEditorWrapper'
 
 /**
 * Add component definitions to this file.
@@ -67,3 +68,5 @@ ManageIQ.component.addReact('TextualSummaryWrapper', TextualSummaryWrapper);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
 ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
+ManageIQ.component.addReact('CatalogForm', CatalogForm);
+ManageIQ.component.addReact('ExpressionEditorWrapperConnected', ExpressionEditorWrapperConnected);

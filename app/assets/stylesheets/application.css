@@ -13,5 +13,8 @@
  *= require ./metrics
  *= require ./service_dialogs
  *= require ./remote_console
- *= require ./piecharts
+ *= require graphiql/graphiql.css
+ *= require piecharts
+ *= require @manageiq/react-ui-components/dist/textual_summary
+ *= require ./expression-editor
 */

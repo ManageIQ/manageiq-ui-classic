@@ -3,6 +3,7 @@ module ApplicationController::Filter
   extend ActiveSupport::Concern
   include ::MiqExpression::SubstMixin
   include ApplicationController::ExpressionHtml
+  include ExpressionEditorOptions
 
   # Handle buttons pressed in the expression editor
   def exp_button
@@ -126,27 +127,7 @@ module ApplicationController::Filter
 
   # Handle items changed in the expression editor
   def exp_changed
-    @edit = session[:edit]
-    @edit[@expkey].update_from_expression_editor(params)
-    # See if only a text value changed
-    if params[:chosen_value] || params[:chosen_regkey] || params[:chosen_regval] ||
-       params[:chosen_cvalue || params[:chosen_suffix]] || params[:alias]
-      render :update do |page|
-        page << javascript_prologue
-      end
-    elsif @refresh_div.to_s == 'flash_msg_div'
-      javascript_flash(:flash_div_id => 'exp_editor_flash')
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("exp_editor_flash", :partial => "layouts/flash_msg", :locals => {:flash_div_id => 'exp_editor_flash'})
-        page.replace("exp_atom_editor_div", :partial => "layouts/exp_atom/editor")
-
-        page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
-        @edit[@expkey].render_values_to(page)
-        page << "miqSparkle(false);" # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    [{ :id => 'fields', :label => 'Fields', :type => 'category', :next => {:url => 'exp_options', :options => 'field_root_options'}}]
   end
 
   def adv_search_toggle_on
@@ -174,6 +155,7 @@ module ApplicationController::Filter
   end
 
   def adv_search_toggle
+    @expression_editor_data ||= build_expression_editor_menu if @expression_editor_data.nil?
     @edit = session[:edit]
 
     @edit[:adv_search_open] ? adv_search_toggle_off : adv_search_toggle_on
@@ -183,6 +165,10 @@ module ApplicationController::Filter
     if session.fetch_path(:adv_search, @edit[@expkey][:exp_model])
       session[:adv_search][@edit[@expkey][:exp_model]][:adv_search_open] = @edit[:adv_search_open]
     end
+  end
+
+  def build_expression_editor_menu(model = 'Vm')
+    {:id => 'root', :label => 'root', :type => 'root', :next => exp_editor_root_options}
   end
 
   # One of the form buttons was pressed on the advanced search panel

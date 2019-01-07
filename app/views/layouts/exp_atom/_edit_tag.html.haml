@@ -37,6 +37,7 @@
   - if @edit[@expkey][:exp_value] == :user_input
     = "<#{_('user input')}>"
   - else
+    - binding.pry
     - opts = ["<#{_('Choose')}>"] + MiqExpression.get_entry_details(@edit[@expkey][:exp_tag]).sort_by { |a| a.first.downcase }
     = select_tag('chosen_value', options_for_select(opts, @edit[@expkey][:exp_value]),
       :multiple              => false,

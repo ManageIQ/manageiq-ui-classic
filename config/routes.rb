@@ -78,6 +78,20 @@ Rails.application.routes.draw do
     exp_token_pressed
   )
 
+  exp_get = %w(
+    exp_options
+    exp_editor_field_root_options
+    exp_editor_operators
+    exp_editor_tag_root_options
+    exp_editor_tag_value_options
+    exp_editor_counts_root_options
+    exp_editor_count_operators
+    exp_editor_find_root_options
+    exp_editor_find_operators
+    exp_editor_find_checks_options
+    exp_editor_find_check_nested_options
+  )
+
   evm_relationship_post = %w(
     evm_relationship_field_changed
     evm_relationship_update
@@ -1865,6 +1879,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         edit
+        exp_get
         filesystem_download
         filesystems
         firewall_rules
@@ -1900,6 +1915,7 @@ Rails.application.routes.draw do
         drift_differences
         drift_mode
         drift_same
+        exp_post
         filesystems
         firewall_rules
         firewallrules
@@ -3120,7 +3136,8 @@ Rails.application.routes.draw do
         show
         tagging_edit
       ) +
-               compare_get,
+               compare_get +
+               exp_get,
       :post => %w(
         accordion_select
         advanced_settings

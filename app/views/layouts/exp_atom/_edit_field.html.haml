@@ -38,6 +38,7 @@
     %font{:color => "black"}
       = h(@edit[@expkey][:exp_key])
   - else
+    - binding.pry
     = select_tag('chosen_key',
       options_for_select(MiqExpression.get_col_operators(@edit[@expkey][:exp_field]), @edit[@expkey][:exp_key]),
       :multiple               => false,
@@ -54,6 +55,7 @@
           - values = [[_("true"), "true"], [_("false"), "false"]]
           - if @edit[@expkey][:exp_value].blank?
             - values.insert(0, ["<#{_('Choose')}>", ""])
+          - binding.pry
           = select_tag('chosen_value',
             options_for_select(values, @edit[@expkey][:exp_value]),
             :multiple              => false,

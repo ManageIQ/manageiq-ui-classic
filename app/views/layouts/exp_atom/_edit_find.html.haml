@@ -27,6 +27,7 @@
 
 - if @edit[@expkey][:exp_field]
   .spacer
+  - binding.pry
   = select_tag('chosen_skey',
     options_for_select(MiqExpression.get_col_operators(@edit[@expkey][:exp_field]), @edit[@expkey][:exp_skey]),
     :multiple              => false,
