@@ -22,7 +22,7 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
         "fields": Array [
           Object {
             "component": "select-field",
-            "label": "Cloud Provider",
+            "label": "Cloud Provider/Parent Cloud Tenant",
             "name": "ems_id",
             "options": Array [
               Object {
