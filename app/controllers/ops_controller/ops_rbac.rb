@@ -8,6 +8,15 @@ module OpsController::OpsRbac
     'Tenant'   => 'tenant'
   }.freeze
 
+  def role_allows?(**options)
+    if MiqProductFeature.my_root_tenant_identifier?(options[:feature]) && params.key?(:id)
+      _, _, id = TreeBuilder.extract_node_model_and_id(params[:id].to_s)
+      options[:feature] = MiqProductFeature.tenant_identifier(options[:feature], id)
+    end
+
+    super(options)
+  end
+
   def invalidate_miq_product_feature_caches
     MiqProductFeature.invalidate_caches
     render :json => {}
