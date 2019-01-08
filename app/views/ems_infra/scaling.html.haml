@@ -16,7 +16,7 @@
     - @count_parameters.each do |parameter|
       .form-group
         %label.col-md-2.control-label
-          = parameter.name
+          = scaling_field_label(parameter.name)
         .col-md-8
           = text_field_tag(parameter.name, parameter.value, :maxlength => 5)
   %table{:width => "100%"}
