@@ -1,6 +1,7 @@
 module EmsNetworkHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -100,15 +101,6 @@ module EmsNetworkHelper::TextualSummary
      :icon  => "pficon pficon-topology",
      :link  => url_for_only_path(:controller => 'network_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
-  end
-
-  def textual_zone
-    zone = if @record.zone == Zone.maintenance_zone
-             _("%{m_zone} (originally in %{o_zone})") % {:m_zone => @record.zone.name, :o_zone => @record.zone_before_pause.name}
-           else
-             @record.zone.name
-           end
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => zone}
   end
 
   def textual_cloud_tenants
