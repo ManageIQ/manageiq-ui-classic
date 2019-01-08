@@ -440,8 +440,8 @@ module OpsController::Settings::Common
       set_worker_setting(@edit[:new], MiqWebServiceWorker, :count, w[:count].to_i)
       set_worker_setting(@edit[:new], MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
 
-      w = wb[:websocket_worker]
-      set_worker_setting(@edit[:new], MiqWebsocketWorker, :count, w[:count].to_i)
+      w = wb[:remote_console_worker]
+      set_worker_setting(@edit[:new], MiqRemoteConsoleWorker, :count, w[:count].to_i)
 
       @update = MiqServer.find(@sb[:selected_server_id]).settings
     when "settings_custom_logos" # Custom Logo tab
@@ -861,8 +861,8 @@ module OpsController::Settings::Common
       w[:count] = params[:web_service_worker_count].to_i if params[:web_service_worker_count]
       w[:memory_threshold] = params[:web_service_worker_threshold].to_i if params[:web_service_worker_threshold]
 
-      w = wb[:websocket_worker]
-      w[:count] = params[:websocket_worker_count].to_i if params[:websocket_worker_count]
+      w = wb[:remote_console_worker]
+      w[:count] = params[:remote_console_worker_count].to_i if params[:remote_console_worker_count]
     when "settings_custom_logos" # Custom Logo tab
       new[:server][:custom_logo] = (params[:server_uselogo] == "true") if params[:server_uselogo]
       new[:server][:custom_login_logo] = (params[:server_useloginlogo] == "true") if params[:server_useloginlogo]
@@ -1072,8 +1072,8 @@ module OpsController::Settings::Common
     @sb[:web_service_threshold] = []
     @sb[:web_service_threshold] = copy_array(@sb[:threshold])
 
-    w = (wb[:websocket_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqWebsocketWorker, :count) || 2
+    w = (wb[:remote_console_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqRemoteConsoleWorker, :count) || 2
 
     @edit[:new] = copy_hash(@edit[:current])
     session[:log_depot_default_verify_status] = true

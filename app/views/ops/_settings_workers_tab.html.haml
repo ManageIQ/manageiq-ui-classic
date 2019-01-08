@@ -237,15 +237,15 @@
             miqSelectPickerEvent('proxy_worker_threshold', "#{url}")
       %hr
       %h3
-        = _("Websocket Workers")
+        = _("Remote Console Workers")
       .form-horizontal
         .form-group
           %label.col-md-2.control-label
             = _("Count")
           .col-md-8
-            = select_tag('websocket_worker_count',
+            = select_tag('remote_console_worker_count',
                         options_for_select((0..9).to_a,
-                                          @edit[:new][:workers][:worker_base][:websocket_worker][:count].to_i),
+                                          @edit[:new][:workers][:worker_base][:remote_console_worker][:count].to_i),
                           :class    => "selectpicker")
           :javascript
-            miqSelectPickerEvent('websocket_worker_count', "#{url}")
+            miqSelectPickerEvent('remote_console_worker_count', "#{url}")
