@@ -10,7 +10,12 @@ module OpsController::OpsRbac
 
   def role_allows?(**options)
     if MiqProductFeature.my_root_tenant_identifier?(options[:feature]) && params.key?(:id)
-      _, _, id = TreeBuilder.extract_node_model_and_id(params[:id].to_s)
+      if params[:id].to_s.include?('tn')
+        _, id, _ = TreeBuilder.extract_node_model_and_id(params[:id].to_s)
+      else
+        id = params[:id].to_s
+      end
+
       options[:feature] = MiqProductFeature.tenant_identifier(options[:feature], id)
     end
 
