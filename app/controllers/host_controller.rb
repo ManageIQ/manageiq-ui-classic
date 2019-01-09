@@ -116,7 +116,8 @@ class HostController < ApplicationController
   # Show the main Host list view overriding method from Mixins::GenericListMixin
   def show_list
     session[:host_items] = nil
-    process_show_list
+    options = {:no_checkboxes => ActiveRecord::Type::Boolean.new.cast(params[:no_checkboxes])}
+    process_show_list(options)
   end
 
   def start
