@@ -75,6 +75,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
     vm.customButtonGroupModel.set_data = {
       button_icon: vm.customButtonGroupModel.button_icon,
       button_color: vm.customButtonGroupModel.button_color,
+      button_order: vm.customButtonGroupModel.button_order,
       display: vm.customButtonGroupModel.display,
       applies_to_class: 'GenericObjectDefinition',
       applies_to_id: parseInt(vm.genericObjectDefnRecordId, 10),
@@ -103,6 +104,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
 
     vm.customButtonGroupModel.button_icon = response.set_data.button_icon;
     vm.customButtonGroupModel.button_color = response.set_data.button_color;
+    vm.customButtonGroupModel.button_order = response.set_data.button_order;
     vm.customButtonGroupModel.display = response.set_data.display;
     vm.customButtonGroupModel.group_index = response.set_data.group_index;
 
