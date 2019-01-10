@@ -115,11 +115,14 @@ describe CloudSubnetController do
         :role        => 'ems_operations',
         :zone        => ems.my_zone,
         :args        => [{
-          :name         => 'test',
-          :ip_version   => 4,
-          :cloud_tenant => cloud_tenant,
-          :network_id   => cloud_network.ems_ref,
-          :enable_dhcp  => "true"
+          :name             => 'test',
+          :ip_version       => 4,
+          :cloud_tenant     => cloud_tenant,
+          :network_id       => cloud_network.ems_ref,
+          :enable_dhcp      => "true",
+          :allocation_pools => [{"start" => "172.10.1.10", "end" => "172.10.1.20"}],
+          :host_routes      => [{"destination" => "172.12.1.0/24", "nexthop" => "172.12.1.1"}],
+          :dns_nameservers  => ["172.11.1.1"]
         }]
       }
     end
@@ -145,7 +148,10 @@ describe CloudSubnetController do
         :id               => 'new',
         :name             => 'test',
         :network_protocol => 'ipv4',
-        :network_id       => cloud_network.ems_ref
+        :network_id       => cloud_network.ems_ref,
+        :allocation_pools => "172.10.1.10,172.10.1.20",
+        :host_routes      => "172.12.1.0/24,172.12.1.1",
+        :dns_nameservers  => "172.11.1.1"
       }
     end
   end
@@ -165,7 +171,13 @@ describe CloudSubnetController do
         :priority    => MiqQueue::HIGH_PRIORITY,
         :role        => 'ems_operations',
         :zone        => ems.my_zone,
-        :args        => [{:name => 'test2', :enable_dhcp => false}]
+        :args        => [{
+          :name             => 'test2',
+          :enable_dhcp      => false,
+          :allocation_pools => [{"start" => "172.20.1.10", "end" => "172.20.1.20"}],
+          :host_routes      => [{"destination" => "172.22.1.0/24", "nexthop" => "172.22.1.1"}],
+          :dns_nameservers  => ["172.21.1.1"]
+        }]
       }
     end
 
@@ -181,10 +193,13 @@ describe CloudSubnetController do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
 
       post :update, :params => {
-        :button => 'save',
-        :format => :js,
-        :id     => cloud_subnet.id,
-        :name   => 'test2'
+        :button           => 'save',
+        :format           => :js,
+        :id               => cloud_subnet.id,
+        :name             => 'test2',
+        :allocation_pools => "172.20.1.10,172.20.1.20",
+        :host_routes      => "172.22.1.0/24,172.22.1.1",
+        :dns_nameservers  => "172.21.1.1"
       }
     end
   end

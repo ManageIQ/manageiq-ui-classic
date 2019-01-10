@@ -126,5 +126,29 @@
                             'required'    => ''}
         %span.help-block{'ng-show' => 'angularForm.cidr.$error.required'}
           = _('Required')
+    .form-group
+      %label.col-md-2.control-label
+        = _('Allocation Pools')
+      .col-md-8
+        %textarea.form-control{'type'     => 'textarea',
+                               'name'     => 'allocation_pools',
+                               'ng-model' => 'vm.cloudSubnetModel.allocation_pools',
+                               'rows'     => 4}
+    .form-group
+      %label.col-md-2.control-label
+        = _('DNS Name Servers')
+      .col-md-8
+        %textarea.form-control{'type'     => 'textarea',
+                               'name'     => 'dns_nameservers',
+                               'ng-model' => 'vm.cloudSubnetModel.dns_nameservers',
+                               'rows'     => 4}
+    .form-group
+      %label.col-md-2.control-label
+        = _('Host Routes')
+      .col-md-8
+        %textarea.form-control{'type'     => 'textarea',
+                               'name'     => 'host_routes',
+                               'ng-model' => 'vm.cloudSubnetModel.host_routes',
+                               'rows'     => 4}
 
   = render :partial => 'layouts/angular/generic_form_buttons'

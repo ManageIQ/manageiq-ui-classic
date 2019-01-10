@@ -61,26 +61,34 @@ class CloudSubnetController < ApplicationController
 
     when "add"
       @subnet = CloudSubnet.new
-      options = new_form_params
-      ems = ExtManagementSystem.find(options[:ems_id])
-      if CloudSubnet.class_by_ems(ems).supports_create?
-        options.delete(:ems_id)
-        task_id = ems.create_cloud_subnet_queue(session[:userid], options)
+      begin
+        options = new_form_params
+        ems = ExtManagementSystem.find(options[:ems_id])
+        if CloudSubnet.class_by_ems(ems).supports_create?
+          options.delete(:ems_id)
+          task_id = ems.create_cloud_subnet_queue(session[:userid], options)
 
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+          if task_id.kind_of?(Integer)
+            initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+          else
+            javascript_flash(
+              :text        => _("Cloud Subnet creation: Task start failed"),
+              :severity    => :error,
+              :spinner_off => true
+            )
+          end
         else
-          javascript_flash(
-            :text        => _("Cloud Subnet creation: Task start failed"),
-            :severity    => :error,
-            :spinner_off => true
-          )
+          @in_a_form = true
+          add_flash(_(CloudSubnet.unsupported_reason(:create)), :error)
+          drop_breadcrumb(:name => _("Add new Cloud Subnet "), :url => "/subnet/new")
+          javascript_flash
         end
-      else
-        @in_a_form = true
-        add_flash(_(CloudSubnet.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add new Cloud Subnet "), :url => "/subnet/new")
-        javascript_flash
+      rescue ArgumentError => err
+        javascript_flash(
+          :text        => _("Parameter Error: %{error_message}") % {:error_message => err.message},
+          :severity    => :error,
+          :spinner_off => true
+        )
       end
     end
   end
@@ -156,14 +164,22 @@ class CloudSubnetController < ApplicationController
 
     when "save"
       if @subnet.supports_create?
-        options = changed_form_params
-        task_id = @subnet.update_cloud_subnet_queue(session[:userid], options)
+        begin
+          options = changed_form_params
+          task_id = @subnet.update_cloud_subnet_queue(session[:userid], options)
 
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
-        else
+          if task_id.kind_of?(Integer)
+            initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+          else
+            javascript_flash(
+              :text        => _("Cloud Subnet update failed: Task start failed"),
+              :severity    => :error,
+              :spinner_off => true
+            )
+          end
+        rescue ArgumentError => err
           javascript_flash(
-            :text        => _("Cloud Subnet update failed: Task start failed"),
+            :text        => _("Parameter Error: %{error_message}") % {:error_message => err.message},
             :severity    => :error,
             :spinner_off => true
           )
@@ -208,6 +224,35 @@ class CloudSubnetController < ApplicationController
     end
   end
 
+  def parse_allocation_pools(option)
+    return [] unless option
+    option.lines.map do |pool|
+      start_addr, end_addr, extra_entry = pool.split(",")
+      raise ArgumentError, _("Too few addresses in line. Proper format is start_ip_address,end_ip_address (one Allocation Pool per line)") unless end_addr
+      raise ArgumentError, _("Too many addresses in line. Proper format is start_ip_address,end_ip_address (one Allocation Pool per line)") if extra_entry
+      {"start" => start_addr.strip, "end" => end_addr.strip}
+    end
+  end
+
+  def parse_host_routes(option)
+    return [] unless option
+    option.lines.map do |route|
+      dest_addr, nexthop_addr, extra_entry = route.split(",")
+      raise ArgumentError, _("Too few entries in line. Proper format is destination_cidr,nexthop (one Host Route per line)") unless nexthop_addr
+      raise ArgumentError, _("Too many entries in line. Proper format is destination_cidr,nexthop (one Host Route per line)") if extra_entry
+      {"destination" => dest_addr.strip, "nexthop" => nexthop_addr.strip}
+    end
+  end
+
+  def parse_dns_nameservers(option)
+    return [] unless option
+    option.lines.map do |nameserver|
+      one_nameserver, extra_entry = nameserver.strip.split(/\s+|,/)
+      raise ArgumentError, _("One DNS Name Server per line is required.") if !one_nameserver || extra_entry
+      one_nameserver
+    end
+  end
+
   def changed_form_params
     # Allowed fields for update: name, enable_dhcp, dns_nameservers, allocation_pools, host_routes, gateway_ip
     options = {}
@@ -221,7 +266,15 @@ class CloudSubnetController < ApplicationController
     unless @subnet.dhcp_enabled == switch_to_bol(params[:dhcp_enabled])
       options[:enable_dhcp] = switch_to_bol(params[:dhcp_enabled])
     end
-    # TODO: Add dns_nameservers, allocation_pools, host_routes
+    unless @subnet.allocation_pools == (pools = parse_allocation_pools(params[:allocation_pools])) || (@subnet.allocation_pools.blank? && pools.blank?)
+      options[:allocation_pools] = pools
+    end
+    unless @subnet.host_routes == (routes = parse_host_routes(params[:host_routes])) || (@subnet.host_routes.blank? && routes.blank?)
+      options[:host_routes] = routes
+    end
+    unless @subnet.dns_nameservers == (nameservers = parse_dns_nameservers(params[:dns_nameservers])) || (@subnet.dns_nameservers.blank? && nameservers.blank?)
+      options[:dns_nameservers] = nameservers
+    end
     options
   end
 
@@ -248,6 +301,9 @@ class CloudSubnetController < ApplicationController
     options[:ipv6_address_mode] = params[:ipv6_address_mode] if params[:ipv6_address_mode]
     options[:network_group_id] = params[:network_group_id] if params[:network_group_id]
     options[:parent_cloud_subnet_id] = params[:parent_cloud_subnet_id] if params[:parent_cloud_subnet_id]
+    options[:allocation_pools] = parse_allocation_pools(params[:allocation_pools]) if params[:allocation_pools].present?
+    options[:dns_nameservers] = parse_dns_nameservers(params[:dns_nameservers]) if params[:dns_nameservers].present?
+    options[:host_routes] = parse_host_routes(params[:host_routes]) if params[:host_routes].present?
     options
   end
 
