@@ -13,7 +13,7 @@
             = _('Hover Text')
         %tbody
           - @record.custom_button_sets.each do |obj|
-            %tr{:title => 'hi'}
+            %tr
               %td.table-view-pf-select
                 %i{:class => obj.set_data[:button_icon], :style => obj.set_data.key?(:button_color) ? "color: #{obj.set_data[:button_color]};" : nil}
               %td
