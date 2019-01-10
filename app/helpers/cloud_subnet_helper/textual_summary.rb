@@ -10,7 +10,7 @@ module CloudSubnetHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[name type cidr gateway network_protocol dns_nameservers_show allocation_pools host_routes ip_version]
+      %i[name type cidr gateway network_protocol dns_nameservers allocation_pools host_routes ip_version]
     )
   end
 
@@ -43,7 +43,7 @@ module CloudSubnetHelper::TextualSummary
     @record.network_protocol
   end
 
-  def textual_dns_nameservers_show
+  def textual_dns_nameservers
     @record.dns_nameservers_show
   end
 
@@ -54,7 +54,7 @@ module CloudSubnetHelper::TextualSummary
   def textual_host_routes
     if @record.host_routes
       @record.host_routes.map do |x|
-        "next_hop: #{x['next_hop']}, destination: #{x['destination']}"
+        "destination: #{x['destination']}, nexthop: #{x['nexthop']}"
       end.join(" | ")
     end
   end

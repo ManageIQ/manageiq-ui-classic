@@ -5,7 +5,7 @@ describe CloudSubnetHelper::TextualSummary do
     cidr
     gateway
     network_protocol
-    dns_nameservers_show
+    dns_nameservers
     allocation_pools
     host_routes
     ip_version
