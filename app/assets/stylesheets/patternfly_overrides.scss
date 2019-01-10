@@ -170,7 +170,6 @@ li.brand-white-label.whitelabeled {
       content: '\f08d';
       display: inline-block;
       transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
       -webkit-transform: rotate(45deg);
     }
   }
@@ -967,8 +966,6 @@ fieldset {
 
 .dimmed {
   background: #f5f5f5;
-  filter: alpha(opacity=40);
-  filter: progid:dximagetransform.microsoft.alpha(Opacity=40);
   opacity: 0.4;
 }
 
@@ -984,7 +981,6 @@ fieldset {
 #lightbox {
   background: #fff;
   display: none;
-  filter: alpha(opacity=50);
   left: 0;
   min-height: 100%;
   min-width: 100%;
