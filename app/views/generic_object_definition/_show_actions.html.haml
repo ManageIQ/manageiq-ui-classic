@@ -1,6 +1,6 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-  - unless @record.custom_button_sets.empty?
+  - if @record.custom_button_sets.present?
     %hr
       %h3
         = _('Button Groups')
@@ -20,7 +20,7 @@
                 = obj[:name]
               %td
                 = obj[:description]
-  - unless @record.custom_buttons.empty?
+  - if @record.custom_buttons.present?
     = render :partial => 'table_button' , :locals => {:buttons =>  @record.custom_buttons.sort_by{ |button| button.name.downcase }}
 :javascript
   $('#searchbox').hide();
