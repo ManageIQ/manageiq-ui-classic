@@ -7,7 +7,7 @@ class EditTable extends Component {
   }
 
   render() {
-    const { headers, types, fields } = this.props;
+    let { headers, types, fields } = this.props;
 
     headers = ['Foo', 'Bar'];
     fields = ['foo', 'bar'];
@@ -71,9 +71,9 @@ class EditTable extends Component {
           )}
 */
           {data.map((row, index) => (
-            <tr className={['row0', 'row1'][index % 2]}>
+            <tr className={(['row0', 'row1'])[index % 2]}>
               {(editing !== row) && (
-                <>
+                <React.Fragment>
                   {fields.map((field) => (
                     <td title={__("Click to update this entry")}>
                       {row[field]}
@@ -84,7 +84,7 @@ class EditTable extends Component {
                       {__("Delete")}
                     </button>
                   </td>
-                </>
+                </React.Fragment>
               )}
 /*
               {(editing === row) && (
@@ -109,9 +109,6 @@ class EditTable extends Component {
           ))}
         </tbody>
       </table>
-      <pre>
-        {JSON.stringify(this.props)}
-      </pre>
     );
   }
 }
