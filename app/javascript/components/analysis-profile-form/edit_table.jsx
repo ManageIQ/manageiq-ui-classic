@@ -7,10 +7,7 @@ class EditTable extends Component {
   }
 
   render() {
-    let { headers, types, fields } = this.props;
-
-    headers = ['Foo', 'Bar'];
-    fields = ['foo', 'bar'];
+    const { headers, types, fields } = this.props;
     const data = [
       {
         foo: 5,
@@ -25,6 +22,7 @@ class EditTable extends Component {
         bar: null,
       },
     ];
+
     const canAdd = true;
     const adding = true;
     const editing = null; //data[0];
