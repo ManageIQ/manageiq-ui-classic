@@ -9,14 +9,14 @@ describe('Dual list component', () => {
   const onChangeSpy = jest.fn();
 
   const props = {
-    options: {
-      key1: 'text1',
-      key2: 'text2',
-      key3: 'text3',
-      key4: 'text4',
-    },
+    options: [
+      { key: 'key1', label: 'text1' },
+      { key: 'key2', label: 'text2' },
+      { key: 'key3', label: 'text3' },
+      { key: 'key4', label: 'text4' },
+    ],
     input: {
-      value: { key3: 'text3' },
+      value: [{ key: 'key3', label: 'text3' }],
       onChange: onChangeSpy,
     },
   };
@@ -40,7 +40,10 @@ describe('Dual list component', () => {
     leftSelect.selectedIndex = 0; // 'select' first option
     button.simulate('click');
 
-    expect(onChangeSpy).toHaveBeenCalledWith({ key1: 'text1', key3: 'text3' });
+    expect(onChangeSpy).toHaveBeenCalledWith([
+      { key: 'key3', label: 'text3' },
+      { key: 'key1', label: 'text1' },
+    ]);
   });
 
   it('is correctly moves items to left', () => {
@@ -53,7 +56,7 @@ describe('Dual list component', () => {
     rightSelect.selectedIndex = 0; // 'select' first option
     button.simulate('click');
 
-    expect(onChangeSpy).toHaveBeenCalledWith({});
+    expect(onChangeSpy).toHaveBeenCalledWith([]);
   });
 
   it('is correctly moves all items to right', () => {
@@ -64,12 +67,12 @@ describe('Dual list component', () => {
 
     button.simulate('click');
 
-    expect(onChangeSpy).toHaveBeenCalledWith({
-      key1: 'text1',
-      key2: 'text2',
-      key3: 'text3',
-      key4: 'text4',
-    });
+    expect(onChangeSpy).toHaveBeenCalledWith([
+      { key: 'key3', label: 'text3' },
+      { key: 'key1', label: 'text1' },
+      { key: 'key2', label: 'text2' },
+      { key: 'key4', label: 'text4' },
+    ]);
   });
 
   it('is correctly moves all items to left', () => {
@@ -80,6 +83,6 @@ describe('Dual list component', () => {
 
     button.simulate('click');
 
-    expect(onChangeSpy).toHaveBeenCalledWith({});
+    expect(onChangeSpy).toHaveBeenCalledWith([]);
   });
 });
