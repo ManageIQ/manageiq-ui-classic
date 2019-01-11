@@ -19,7 +19,7 @@ class EmsInfraController < ApplicationController
   end
 
   def show
-    @breadcrumbs =  [{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"}]
+    @breadcrumbs =  [{:name => _('Infrastructure Providers'), :url => '/ems_infra/show_list'}]
     super
   end
 
