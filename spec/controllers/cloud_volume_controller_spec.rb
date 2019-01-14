@@ -276,11 +276,11 @@ describe CloudVolumeController do
 
         # Common form parameters for the Amazon EBS volume.
         @form_params = {
-          :emstype                  => "ManageIQ::Providers::Amazon::StorageManager::Ebs",
-          :storage_manager_id       => @ems.id,
-          :name                     => "volume",
-          :size                     => 1,
-          :aws_availability_zone_id => @availability_zone.ems_ref,
+          :emstype              => "ManageIQ::Providers::Amazon::StorageManager::Ebs",
+          :storage_manager_id   => @ems.id,
+          :name                 => "volume",
+          :size                 => 1,
+          :availability_zone_id => @availability_zone.ems_ref,
         }
         # Common EC2 client options
         @aws_options = {
