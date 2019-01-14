@@ -1,6 +1,49 @@
 require 'ostruct'
 
 describe ApplicationController do
+  describe "#report_only" do
+    let(:group) { FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role)) }
+    let(:user)  { FactoryBot.create(:user, :miq_groups => [group]) }
+    let(:report_title) { "VMs using thin provisioned disks" }
+    let(:report) { FactoryBot.create(:miq_report, :title => report_title) }
+    let(:report_result_for_report) { FactoryBot.create(:miq_report_result, :miq_group => group, :miq_report_id => report.id, :report => report) }
+    let(:widget_title) { "Widget: VMs using thin provisioned disks" }
+    let(:widget) { FactoryBot.create(:miq_widget, :widget => widget_title) }
+    let(:widget_content) { FactoryBot.create(:miq_widget_content, :miq_widget => widget) }
+    let(:report_for_widget) { FactoryBot.create(:miq_report, :title => widget_title) }
+    let(:report_result_for_widget) { FactoryBot.create(:miq_report_result, :miq_group => group, :miq_report => report_for_widget, :report => report_for_widget, :report_source => MiqWidget::WIDGET_REPORT_SOURCE) }
+
+    before do
+      login_as user
+    end
+
+    it "uses correct variables for rendering result of report" do
+      controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_report.id })
+      controller.instance_variable_set(:@_params, :rr_id => report_result_for_report.id)
+
+      expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
+      controller.send(:report_only)
+
+      expect(controller.instance_variable_get(:@report_title)).to eq(report_title)
+      expect(controller.instance_variable_get(:@report)).to eq(report)
+      expect(controller.instance_variable_get(:@ght_type)).to eq('tabular')
+      expect(controller.instance_variable_get(:@render_chart)).to be_falsey
+    end
+
+    it "uses correct variables for rendering result of report" do
+      controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_widget.id })
+      controller.instance_variable_set(:@_params, :rr_id => report_result_for_widget.id)
+
+      expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
+      controller.send(:report_only)
+
+      expect(controller.instance_variable_get(:@report_title)).to eq(widget_title)
+      expect(controller.instance_variable_get(:@report)).to eq(report_for_widget)
+      expect(controller.instance_variable_get(:@ght_type)).to eq('tabular')
+      expect(controller.instance_variable_get(:@render_chart)).to be_falsey
+    end
+  end
+
   describe "#find_record_with_rbac" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
