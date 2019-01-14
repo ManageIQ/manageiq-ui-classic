@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 102 ending 2019-01-07
+
+### Added
+- Authorise manage tenant quotas as tenant product feature in UI [(#5123)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5123)
+- Add missing gettext to zone dropdown in My Tasks screen [(#5122)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5122)
+- Add translatable labels to Host textual summary [(#5116)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5116)
+- Add missing gettext into ems_common/angular/ form.html.haml [(#5115)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5115)
+- Cluster textual summary: add translatable label [(#5114)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5114)
+
+### Fixed
+- Fixed regression on schedules screen due to bad towhat refactoring [(#5130)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5130)
+- Update misleading form label for new Cloud Tenant form [(#5127)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5127)
+- Add missing gettext into exp_editor.html.haml [(#5125)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5125)
+- Updated right cell header [(#5124)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5124)
+- Fixed saving of role/group visibility for a widget [(#5119)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5119)
+- Stop spinner after rednering flash message [(#5118)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5118)
+- set_ownership - use miq_template (not vm) for images [(#5113)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5113)
+- Clean out cache of MiqProductFeature at CUD tenant actions in UI process [(#5108)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5108)
+- Fix CatalogItem tree_select() [(#5096)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5096)
+- Region Replication - refresh code mirror after load [(#5095)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5095)
+
+### Removed
+- Remove logic for request screen dialogs [(#5126)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5126)
+
+
 ## Hammer-1
 
 ### Added
