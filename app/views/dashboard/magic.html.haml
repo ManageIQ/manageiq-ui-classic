@@ -1,0 +1,4 @@
+= render :partial => "layouts/flash_msg"
+= react 'AnalysisProfileForm', {:analysisProfileId => "123", :scanMode => "Vm", "CATEGORY_CHOICES" => OpsController::Settings::AnalysisProfiles::CATEGORY_CHOICES}
+:javascript
+  miqSparkleOff();

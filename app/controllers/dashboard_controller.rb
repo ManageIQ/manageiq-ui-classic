@@ -19,6 +19,9 @@ class DashboardController < ApplicationController
     redirect_to(:action => 'show')
   end
 
+  def magic
+  end
+
   def dialog_definition
     name = params[:name].gsub(/[^a-z_]/, '')
     definition = load_dialog_definition(name, params[:class])

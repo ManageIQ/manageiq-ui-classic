@@ -1155,6 +1155,7 @@ Rails.application.routes.draw do
 
     :dashboard                => {
       :get  => %w(
+        magic
         auth_error
         cockpit_redirect
         iframe
