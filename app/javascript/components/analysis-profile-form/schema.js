@@ -96,7 +96,7 @@ const tabRegistry = {
         __('Registry Value'),
       ],
       types: [
-        PropTypes.oneOf('HKLM'),
+        PropTypes.oneOf(['HKLM']),
         PropTypes.string,
         PropTypes.string,
       ],

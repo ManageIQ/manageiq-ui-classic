@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const FieldShow = ({field, type, row}) => (
+  <React.Fragment>
+    {row[field]}
+  </React.Fragment>
+);
+
+const FieldEdit = ({field, type, row}) => (
+  <React.Fragment>
+    <input type="text" style={{width: "100%"}} />
+    <input type="checkbox" />
+  </React.Fragment>
+);
+
 class EditTable extends Component {
   constructor(props) {
     super(props);
@@ -11,21 +24,24 @@ class EditTable extends Component {
     const data = [
       {
         foo: 5,
+        name: "foo",
         bar: "Bar",
       },
       {
         foo: true,
+        name: 5,
         bar: false,
       },
       {
         quux: [],
+        name: false,
         bar: null,
       },
     ];
 
     const canAdd = true;
-    const adding = true;
-    const editing = null; //data[0];
+    const adding = null; // {}
+    const editing = null; // data[0];
 
     return (
       <table className="table table-striped table-bordered table-hover">
@@ -42,15 +58,39 @@ class EditTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {canAdd && (<div>TODO</div>)}
-          {adding && (<div>TODO</div>)}
+          {canAdd && (
+            <tr title={__("Click to add a new entry")}>
+              <td colspan={fields.length}>
+                {__("<New Entry>")}
+              </td>
+              <td className="action-cell">
+                <button className="btn btn-default btn-block btn-sm" type="button">
+                  {__("Add")}
+                </button>
+              </td>
+            </tr>
+          )}
+          {adding && (
+            <tr>
+              {fields.map((field) => (
+                <td>
+                  <FieldEdit field={field} type={types[field]} row={adding} />
+                </td>
+              ))}
+              <td className="action-cell">
+                <button className="btn btn-default btn-block btn-sm" type="button" title={__("Add this entry")}>
+                  {__("Save")}
+                </button>
+              </td>
+            </tr>
+          )}
           {data.map((row, index) => (
             <tr className={(['row0', 'row1'])[index % 2]}>
               {(editing !== row) && (
                 <React.Fragment>
                   {fields.map((field) => (
                     <td title={__("Click to update this entry")}>
-                      {row[field]}
+                      <FieldShow field={field} type={types[field]} row={row} />
                     </td>
                   ))}
                   <td className="action-cell" title={__("Click to delete this entry")}>
@@ -60,7 +100,20 @@ class EditTable extends Component {
                   </td>
                 </React.Fragment>
               )}
-              {(editing === row) && (<div>TODO</div>)}
+              {(editing === row) && (
+                <React.Fragment>
+                  {fields.map((field) => (
+                    <td>
+                      <FieldEdit field={field} type={types[field]} row={row} />
+                    </td>
+                  ))}
+                  <td className="action-cell">
+                    <button className="btn btn-default btn-block btn-sm" type="button" title={__("Update this entry")}>
+                      {__("Save")}
+                    </button>
+                  </td>
+                </React.Fragment>
+              )}
             </tr>
           ))}
         </tbody>
@@ -70,46 +123,3 @@ class EditTable extends Component {
 }
 
 export default EditTable;
-
-/*
-canAdd:
-            %tr{:title => _("Click to add a new entry"), :onclick => remote_function(:url => {:action => 'ap_ce_select', :add => 'new', :item => "file", :id => scan_id})}
-              %td= _("<New Entry>")
-              %td
-              %td.action-cell
-                %button.btn.btn-default.btn-block.btn-sm
-                  = _("Add")
-
-adding:
-            %tr
-              %td
-                = text_field("entry", "fname", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
-                = hidden_field("item", "type1", :value => "file")
-              %td
-                = check_box_tag("entry_content", 1, false, :id => "entry_content")
-              %td.action-cell
-                %button.btn.btn-default.btn-block.btn-sm{:title => _("Add this entry"),
-                  "data-submit"         => 'ap_form_div',
-                  "data-miq_sparkle_on" => true,
-                  :remote               => true,
-                  "data-method"         => :post,
-                  'data-click_url'      => {:url => "#{url}?accept=accept"}.to_json}
-                  = _("Save")
-
-editing:
-                %td
-                  = text_field("entry", "fname", :maxlength => ViewHelper::MAX_NAME_LEN, "value" => session[:edit_filename], :style => "width: 100%;")
-                  = hidden_field("item", "type1", :value => "file")
-                %td
-                  - checked = !!entry["content"]
-                  = check_box_tag("entry_content", 1, checked, :id => "entry_content")
-                  = hidden_field("item", "type1", :value => "file")
-                %td.action-cell
-                  %button.btn.btn-default.btn-block.btn-sm{:title => _("Update this entry"),
-                    "data-submit"         => 'ap_form_div',
-                    "data-miq_sparkle_on" => true,
-                    :remote               => true,
-                    "data-method"         => :post,
-                    'data-click_url'      => {:url => "#{url}?accept=accept"}.to_json}
-                    = _("Save")
-*/
