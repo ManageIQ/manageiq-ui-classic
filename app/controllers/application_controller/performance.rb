@@ -322,6 +322,7 @@ module ApplicationController::Performance
                           :menu_click    => params[:menu_click],
                           :sb_controller => request.parameters["controller"],
                           :bc            => bc,
+                          :no_checkboxes => true,
                           :escape        => false
       return [true, nil]
     end

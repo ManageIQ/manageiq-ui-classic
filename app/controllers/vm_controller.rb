@@ -14,6 +14,7 @@ class VmController < ApplicationController
   def show_list
     options = {:association => session[:vm_type]}
     options[:model] = "ManageIQ::Providers::CloudManager::Vm" if params['sb_controller'] == 'availability_zone'
+    options[:no_checkboxes] = ActiveRecord::Type::Boolean.new.cast(params[:no_checkboxes])
     process_show_list(options)
   end
 
