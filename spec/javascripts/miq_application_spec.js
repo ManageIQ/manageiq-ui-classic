@@ -440,7 +440,7 @@ describe('miq_application.js', function() {
     context('failed login', function() {
       beforeEach(function() {
         // simulate failed authentication api call
-        spyOn(vanillaJsAPI, 'login').and.callFake(function() {
+        spyOn(window, 'miqJqueryRequest').and.callFake(function() {
           return Promise.reject();
         });
 

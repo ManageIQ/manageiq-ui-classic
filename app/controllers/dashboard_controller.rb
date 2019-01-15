@@ -579,8 +579,8 @@ class DashboardController < ApplicationController
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << javascript_show("flash_div")
+        page << "miqAjaxAuthFail();"
         page << "miqSparkle(false);"
-        page << "miqEnableLoginFields(true);"
       end
     end
   end
