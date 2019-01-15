@@ -1,4 +1,4 @@
-describe ApplicationHelper::Button::DbDelete do
+describe ApplicationHelper::Button::DashboardDelete do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:dashboard) { FactoryBot.create(:miq_widget_set, :read_only => read_only) }
   let(:button) { described_class.new(view_context, {}, {'db' => dashboard}, {}) }
