@@ -507,16 +507,16 @@ class DashboardController < ApplicationController
 
   # Handle external-auth signon from login screen
   def external_authenticate
-    authenticate_external_user_generate_api_token
+    authenticate_external_user
   end
 
   # Handle single-signon from login screen
   def kerberos_authenticate
-    authenticate_external_user_generate_api_token
+    authenticate_external_user
   end
 
   # Handle user credentials from login screen
-  def authenticate(require_api_token = false)
+  def authenticate
     @layout = "dashboard"
 
     unless params[:task_id] # First time thru, check for buttons pressed
@@ -566,10 +566,8 @@ class DashboardController < ApplicationController
     when :wait_for_task
       # noop, page content already set by initiate_wait_for_task
     when :pass
-      miq_api_token = require_api_token ? generate_ui_api_token(user[:name]) : nil
       render :update do |page|
         page << javascript_prologue
-        page << "localStorage.miq_token = '#{j_str(miq_api_token)}';" if miq_api_token
         page.redirect_to(validation.url)
       end
     when :fail
@@ -583,11 +581,6 @@ class DashboardController < ApplicationController
         page << "miqSparkle(false);"
       end
     end
-  end
-
-  def generate_ui_api_token(userid)
-    @api_user_token_service ||= Api::UserTokenService.new
-    @api_user_token_service.generate_token(userid, "ui")
   end
 
   def timeline
@@ -746,13 +739,12 @@ class DashboardController < ApplicationController
 
   private
 
-  # Authenticate external user and generate API token
-  def authenticate_external_user_generate_api_token
+  def authenticate_external_user
     if @user_name.blank? && request.headers["X-Remote-User"].present?
       @user_name = params[:user_name] = request.headers["X-Remote-User"].split("@").first
     end
 
-    authenticate(true)
+    authenticate
   end
 
   def tl_toggle_button_enablement(button_id, enablement, typ)
@@ -864,8 +856,7 @@ class DashboardController < ApplicationController
     when :pass
       render :template => "dashboard/#{identity_type}",
              :layout   => false,
-             :locals   => {:api_auth_token => generate_ui_api_token(@user_name),
-                           :validation_url => validation.url}
+             :locals   => {:validation_url => validation.url}
       return
     when :fail
       session[:user_validation_error] = validation.flash_msg || "User validation failed"
