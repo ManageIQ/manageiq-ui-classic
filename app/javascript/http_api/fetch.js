@@ -31,10 +31,6 @@ function processOptions(options) {
     delete o.skipTokenRenewal;
   }
 
-  if (localStorage.miq_token) {
-    o.headers['X-Auth-Token'] = localStorage.miq_token;
-  }
-
   const csrfElem = document.querySelector("meta[name=csrf-token]");
   if (csrfElem) {
     o.headers['X-CSRF-Token'] = csrfElem.getAttribute('content');
