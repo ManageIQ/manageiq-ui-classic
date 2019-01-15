@@ -485,7 +485,7 @@ module ApplicationHelper
       :changed          => @changed,
       :condition        => @condition,
       :condition_policy => @condition_policy,
-      :db               => @db,
+      :dashboard        => @dashboard,
       :display          => @display,
       :edit             => @edit,
       :explorer         => @explorer,

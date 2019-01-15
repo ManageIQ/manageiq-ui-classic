@@ -53,7 +53,7 @@
                 = "#{h(ws.description)} (#{h(ws.name)})"
   - elsif ((@sb[:nodes].length == 4 && @sb[:nodes][1] == "g_g") || (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")) && !@in_a_form
     = render :partial => "layouts/flash_msg"
-    = render :partial => "db_show", :locals => {:widget => @db}
+    = render :partial => "db_show", :locals => {:widget => @dashboard}
   - elsif @in_a_form
     - if @edit[:new][:dashboard_order]
       = render :partial => "db_seq_form"
