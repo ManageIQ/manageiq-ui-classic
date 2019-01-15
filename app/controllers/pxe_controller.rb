@@ -191,7 +191,7 @@ class PxeController < ApplicationController
     presenter[:right_cell_text] = right_cell_text || @right_cell_text
 
     if !@view || @in_a_form ||
-       (@pages && (@items_per_page == ONE_MILLION || @pages[:items].zero?))
+       (@pages && (@items_per_page == ONE_MILLION || @pages[:items]&.zero?))
       if @in_a_form
         presenter.hide(:toolbar)
         # in case it was hidden for summary screen, and incase there were no records on show_list
