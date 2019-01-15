@@ -521,7 +521,7 @@ module OpsController::OpsRbac
   # super administrator user with `userid` == "admin" can not be deleted
   # and user can not delete himself
   def rbac_user_delete_restriction?(user)
-    ["admin", session[:userid]].include?(user.userid)
+    user.super_admin_user? || User.current_user == user
   end
 
   def rbac_user_copy_restriction?(user)
