@@ -16,6 +16,9 @@
       .col-md-8
         = check_box_tag("overwrite", "1", @sb[:overwrite])
         = _('Overwrite existing reports?')
+      .col-md-8
+        = check_box_tag("preserve_owner", "1", @sb[:preserve_owner])
+        = _('Preserve owner?')
     .form-group
       .col-md-4
         = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
