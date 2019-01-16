@@ -94,7 +94,9 @@ function mainCustomButtonGroupFormController(API, miqService) {
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
     API[method](url, saveObject)
-      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .then( function() {
+        miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
+      })
       .catch(miqService.handleFailure);
   };
 
