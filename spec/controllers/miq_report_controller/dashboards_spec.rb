@@ -37,7 +37,7 @@ describe ReportController do
       end
 
       it 'establishes relations between MiqWidgetSet and MiqWidgets thru Relationship table' do
-        controller.instance_variable_set(:@db, miq_widget_set)
+        controller.instance_variable_set(:@dashboard, miq_widget_set)
 
         controller.send(:db_save_members)
 

@@ -1,7 +1,7 @@
 describe "report/_db_widget_remove.html.haml" do
   before do
     ws = FactoryBot.create(:miq_widget_set)
-    assign(:db, ws)
+    assign(:dashboard, ws)
   end
 
   it "correctly renders patternfly classes" do

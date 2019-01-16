@@ -680,7 +680,7 @@ class ReportController < ApplicationController
           @right_cell_text = if @edit[:new][:dashboard_order]
                                _("Editing Dashboard sequence for \"%{name}\"") % {:name => @sb[:group_desc]}
                              else
-                               @db.id ? _("Editing Dashboard \"%{name}\"") % {:name => @db.name} : _("Adding a new dashboard")
+                               @dashboard.id ? _("Editing Dashboard \"%{name}\"") % {:name => @dashboard.name} : _("Adding a new dashboard")
                              end
           # URL to be used in miqDropComplete method
           presenter[:miq_widget_dd_url] = "report/db_widget_dd_done"

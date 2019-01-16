@@ -319,7 +319,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_report
     if x_active_tree == :db_tree
       node = x_node
-      if %w(node xx-g).include?(node)
+      if %w(root xx-g).include?(node)
         return nil
       elsif node.split('-').length == 3
         return "miq_widget_sets_center_tb"

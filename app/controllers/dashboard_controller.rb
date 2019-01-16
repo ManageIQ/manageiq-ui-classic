@@ -198,9 +198,8 @@ class DashboardController < ApplicationController
   end
 
   def show
-    @layout    = "dashboard"
-    @dashboard = true
-    @display = "dashboard"
+    @layout     = "dashboard"
+    @display    = "dashboard"
     @lastaction = "show"
 
     records = current_group.ordered_widget_sets

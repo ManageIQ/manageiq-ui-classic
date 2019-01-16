@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::MiqWidgetSetCenter < ApplicationHelper::Toolba
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Dashboard and ALL of its components will be permanently removed!"),
-          :klass     => ApplicationHelper::Button::DbDelete),
+          :klass     => ApplicationHelper::Button::DashboardDelete),
       ]
     ),
   ])
