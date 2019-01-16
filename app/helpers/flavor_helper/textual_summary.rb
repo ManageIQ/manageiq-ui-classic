@@ -24,7 +24,7 @@ module FlavorHelper::TextualSummary
   #
 
   def textual_memory
-    @record.memory && number_to_human_size(@record.memory, :precision => 1)
+    {:label => _('Memory'), :value => @record.memory && number_to_human_size(@record.memory, :precision => 1)}
   end
 
   def textual_cpus
@@ -69,7 +69,7 @@ module FlavorHelper::TextualSummary
   end
 
   def textual_cloud_subnet_required
-    @record.cloud_subnet_required?
+    {:label => _('Cloud Subnet Required'), :value => @record.cloud_subnet_required?}
   end
 
   def textual_instances
