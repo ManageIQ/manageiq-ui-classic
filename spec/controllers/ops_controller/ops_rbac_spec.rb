@@ -616,4 +616,19 @@ describe OpsController do
       expect(controller.instance_variable_get(:@groups_count)).not_to eq(MiqGroup.count)
     end
   end
+
+  describe "#rbac_user_delete_restriction?" do
+    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let(:other_user) { FactoryBot.create(:user) }
+
+    it "returns true because user is super admin" do
+      expect(controller.send(:rbac_user_delete_restriction?, admin_user)).to be_truthy
+    end
+
+    it "returns true because user is current user" do
+      User.with_user(other_user) do
+        expect(controller.send(:rbac_user_delete_restriction?, other_user)).to be_truthy
+      end
+    end
+  end
 end
