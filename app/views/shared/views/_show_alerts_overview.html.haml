@@ -19,10 +19,11 @@
                 "ng-change"  => "vm.filterChange()"}
         %span
           = _("Display")
-        %select{"miq-select" => "true",
-                "ng-model"   => "vm.displayFilter",
-                "ng-options" => "o as o for o in vm.displayFilters",
-                "ng-change"  => "vm.filterChange()"}
+        %select{"miq-select"              => "true",
+                "ng-model"                => "vm.displayFilter",
+                "ng-options"              => "o as o for o in vm.displayFilters",
+                "ng-change"               => "vm.filterChange()",
+                "data-none-selected-text" => _('Nothing selected')}
   .row.row-tile-pf.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
     %ul.list-group
       %li.list-group-item.alerts-group-item{"ng-repeat" => "group in vm.groups track by $index"}
