@@ -342,7 +342,8 @@ describe EmsInfraController do
       get :show, :params => {:id => @ems.id, :display => 'storages'}
       expect(response.status).to eq(200)
       expect(response).to render_template('shared/views/ems_common/show')
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)", :url => "/ems_infra/#{@ems.id}?display=storages"}])
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"},
+                                           {:name => "#{@ems.name} (All Datastores)", :url => "/ems_infra/#{@ems.id}?display=storages"}])
 
       # display needs to be saved to session for GTL pagination and such
       expect(session[:ems_infra_display]).to eq('storages')
@@ -357,7 +358,8 @@ describe EmsInfraController do
       post :button, :params => {:id => @ems.id, :display => 'storages', :miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
       expect(response.status).to eq(200)
       _breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)",
+      expect(assigns(:breadcrumbs)).to eq([{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"},
+                                           {:name => "#{@ems.name} (All Datastores)",
                                             :url  => "/ems_infra/#{@ems.id}?display=storages"},
                                            {:name => "Tag Assignment", :url => "//tagging_edit"}])
     end
@@ -400,7 +402,8 @@ describe EmsInfraController do
         ems = FactoryBot.create(:ems_vmware)
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-        expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_infra/#{ems.id}"}])
+        expect(breadcrumbs).to eq([{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"},
+                                   {:name => "#{ems.name} (Dashboard)", :url => "/ems_infra/#{ems.id}"}])
       end
     end
   end

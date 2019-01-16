@@ -19,6 +19,11 @@ class EmsCloudController < ApplicationController
     @table_name ||= "ems_cloud"
   end
 
+  def show
+    @breadcrumbs = [{:name => _('Cloud Providers'), :url => '/ems_cloud/show_list'}]
+    super
+  end
+
   def ems_path(*args)
     ems_cloud_path(*args)
   end
