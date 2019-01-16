@@ -1,5 +1,5 @@
 module TextualMixins::TextualDescription
   def textual_description
-    @record.description
+    {:label => _('Description'), :value => @record.description}
   end
 end

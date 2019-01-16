@@ -1,5 +1,5 @@
 module TextualMixins::TextualName
   def textual_name
-    @record.name
+    {:label => _('Name'), :value => @record.name}
   end
 end
