@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'patternfly-react';
 import List from './list';
-import { isEmpty, leftValues as getLeftValues } from './helpers';
+import { filterOptions } from './helpers';
 
 class DualListSelect extends Component {
   constructor(props) {
@@ -14,50 +14,42 @@ class DualListSelect extends Component {
   moveLeft = (rightValues) => {
     const { input: { onChange } } = this.props;
     const selectedItems = Array.prototype.map.call(this.rightList.current.selectedOptions, ({ value }) => value);
-    const reducedItems = Object.keys(rightValues).filter(key => !selectedItems.includes(key)).reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr]: rightValues[curr],
-      }), {},
-    );
+    const reducedItems = rightValues.filter(({ key }) => !selectedItems.includes(key));
 
-    onChange({
+    onChange([
       ...reducedItems,
-    });
+    ]);
   };
 
   moveRight = () => {
     const { input: { onChange, value }, options } = this.props;
-    const selectedItems = Array.prototype.map.call(this.leftList.current.selectedOptions, ({ value }) => value)
-      .reduce((acc, curr) => ({
-        ...acc,
-        [curr]: options[curr],
-      }), {});
+    const selectedItems = Array.prototype.map.call(this.leftList.current.selectedOptions, ({ value }) => value);
+    const movedItems = options.filter(({ key }) => selectedItems.includes(key));
 
-    onChange({
+    onChange([
       ...value,
-      ...selectedItems,
-    });
+      ...movedItems,
+    ]);
   };
 
   moveAllRight = (leftValues) => {
     const { input: { onChange, value } } = this.props;
 
-    onChange({
+    onChange([
       ...value,
       ...leftValues,
-    });
+    ]);
   };
 
   moveAllLeft = () => {
     const { input: { onChange } } = this.props;
 
-    onChange({});
+    onChange([]);
   };
 
   render() {
     const {
-      input: { value = {} },
+      input: { value = [] },
       options,
       leftId,
       rightId,
@@ -71,7 +63,7 @@ class DualListSelect extends Component {
       moveAllLeftTitle,
       moveAllRightTitle,
     } = this.props;
-    const leftValues = getLeftValues(options, value);
+    const leftValues = filterOptions(options, value);
     const rightValues = value;
 
     return (
@@ -83,22 +75,27 @@ class DualListSelect extends Component {
         <div className="col-md-1" style={{ padding: 10 }}>
           <div className="spacer" />
           <div className="spacer" />
-          <Button disabled={isEmpty(leftValues)} className="btn-block" onClick={this.moveRight} title={moveRightTitle}>
+          <Button disabled={leftValues.length === 0} className="btn-block" onClick={this.moveRight} title={moveRightTitle}>
             <Icon type="fa" name="angle-right" size="lg" />
           </Button>
-          { allToRight
-          && (
-          <Button disabled={isEmpty(leftValues)} className="btn-block" onClick={() => this.moveAllRight(leftValues)} title={moveAllRightTitle}>
-            <Icon type="fa" name="angle-double-right" size="lg" />
-          </Button>
-          ) }
-          { allToLeft
-          && (
-          <Button disabled={isEmpty(rightValues)} className="btn-block" onClick={this.moveAllLeft} title={moveAllLeftTitle}>
-            <Icon type="fa" name="angle-double-left" size="lg" />
-          </Button>
-          ) }
-          <Button disabled={isEmpty(rightValues)} className="btn-block" onClick={() => this.moveLeft(rightValues)} title={moveLeftTitle}>
+          {allToRight
+            && (
+              <Button
+                disabled={leftValues.length === 0}
+                className="btn-block"
+                onClick={() => this.moveAllRight(leftValues)}
+                title={moveAllRightTitle}
+              >
+                <Icon type="fa" name="angle-double-right" size="lg" />
+              </Button>
+            )}
+          {allToLeft
+            && (
+              <Button disabled={rightValues.length === 0} className="btn-block" onClick={this.moveAllLeft} title={moveAllLeftTitle}>
+                <Icon type="fa" name="angle-double-left" size="lg" />
+              </Button>
+            )}
+          <Button disabled={rightValues.length === 0} className="btn-block" onClick={() => this.moveLeft(rightValues)} title={moveLeftTitle}>
             <Icon type="fa" name="angle-left" size="lg" />
           </Button>
         </div>
@@ -133,10 +130,18 @@ DualListSelect.propTypes = {
   moveAllRightTitle: PropTypes.string,
   /* Title of move all left button */
   moveAllLeftTitle: PropTypes.string,
-  /* Values in right select { value: "Text", value1: "Text1", ... } */
-  options: PropTypes.shape({
-    [PropTypes.string]: PropTypes.string,
-  }),
+  /* Options:
+    [
+      {key: 'key', label: 'label'},
+      ...
+    ]
+  */
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      [PropTypes.string]: PropTypes.string,
+      [PropTypes.string]: PropTypes.string,
+    }),
+  ),
 };
 
 DualListSelect.defaultProps = {
@@ -151,7 +156,7 @@ DualListSelect.defaultProps = {
   moveRightTitle: __('Move selected to right'),
   moveAllRightTitle: __('Move all to right'),
   moveAllLeftTitle: __('Move all to left'),
-  options: {},
+  options: [],
 };
 
 const WrappedDualList = ({ FieldProvider, name, ...rest }) => (

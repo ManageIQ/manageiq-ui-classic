@@ -6,18 +6,33 @@ exports[`Dual list component is correctly rendered 1`] = `
   input={
     Object {
       "onChange": [MockFunction],
-      "value": Object {
-        "key3": "text3",
-      },
+      "value": Array [
+        Object {
+          "key": "key3",
+          "label": "text3",
+        },
+      ],
     }
   }
   options={
-    Object {
-      "key1": "text1",
-      "key2": "text2",
-      "key3": "text3",
-      "key4": "text4",
-    }
+    Array [
+      Object {
+        "key": "key1",
+        "label": "text1",
+      },
+      Object {
+        "key": "key2",
+        "label": "text2",
+      },
+      Object {
+        "key": "key3",
+        "label": "text3",
+      },
+      Object {
+        "key": "key4",
+        "label": "text4",
+      },
+    ]
   }
 >
   <Component
@@ -25,18 +40,33 @@ exports[`Dual list component is correctly rendered 1`] = `
     input={
       Object {
         "onChange": [MockFunction],
-        "value": Object {
-          "key3": "text3",
-        },
+        "value": Array [
+          Object {
+            "key": "key3",
+            "label": "text3",
+          },
+        ],
       }
     }
     options={
-      Object {
-        "key1": "text1",
-        "key2": "text2",
-        "key3": "text3",
-        "key4": "text4",
-      }
+      Array [
+        Object {
+          "key": "key1",
+          "label": "text1",
+        },
+        Object {
+          "key": "key2",
+          "label": "text2",
+        },
+        Object {
+          "key": "key3",
+          "label": "text3",
+        },
+        Object {
+          "key": "key4",
+          "label": "text4",
+        },
+      ]
     }
   >
     <div>
@@ -46,9 +76,12 @@ exports[`Dual list component is correctly rendered 1`] = `
         input={
           Object {
             "onChange": [MockFunction],
-            "value": Object {
-              "key3": "text3",
-            },
+            "value": Array [
+              Object {
+                "key": "key3",
+                "label": "text3",
+              },
+            ],
           }
         }
         meta={
@@ -62,12 +95,24 @@ exports[`Dual list component is correctly rendered 1`] = `
         moveLeftTitle="Move selected to left"
         moveRightTitle="Move selected to right"
         options={
-          Object {
-            "key1": "text1",
-            "key2": "text2",
-            "key3": "text3",
-            "key4": "text4",
-          }
+          Array [
+            Object {
+              "key": "key1",
+              "label": "text1",
+            },
+            Object {
+              "key": "key2",
+              "label": "text2",
+            },
+            Object {
+              "key": "key3",
+              "label": "text3",
+            },
+            Object {
+              "key": "key4",
+              "label": "text4",
+            },
+          ]
         }
         size={15}
       >
@@ -78,11 +123,20 @@ exports[`Dual list component is correctly rendered 1`] = `
             <ForwardRef
               size={15}
               values={
-                Object {
-                  "key1": "text1",
-                  "key2": "text2",
-                  "key4": "text4",
-                }
+                Array [
+                  Object {
+                    "key": "key1",
+                    "label": "text1",
+                  },
+                  Object {
+                    "key": "key2",
+                    "label": "text2",
+                  },
+                  Object {
+                    "key": "key4",
+                    "label": "text4",
+                  },
+                ]
               }
             >
               <select
@@ -240,9 +294,12 @@ exports[`Dual list component is correctly rendered 1`] = `
             <ForwardRef
               size={15}
               values={
-                Object {
-                  "key3": "text3",
-                }
+                Array [
+                  Object {
+                    "key": "key3",
+                    "label": "text3",
+                  },
+                ]
               }
             >
               <select

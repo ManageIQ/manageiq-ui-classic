@@ -1,6 +1,6 @@
 import React from 'react';
 
-const List = React.forwardRef(({ id, values = {}, ...rest }, ref) => (
+const List = React.forwardRef(({ id, values = [], ...rest }, ref) => (
   <select
     ref={ref}
     id={id}
@@ -10,7 +10,8 @@ const List = React.forwardRef(({ id, values = {}, ...rest }, ref) => (
     style={{ overflowX: 'scroll' }}
     {...rest}
   >
-    { Object.entries(values).sort((a, b) => a[1].localeCompare(b[1])).map(([key, text]) => <option key={key} value={key}>{text}</option>)}
+    {Array.isArray(values)
+      && values.sort((a, b) => a.label.localeCompare(b.label)).map(({ key, label }) => <option key={key} value={key}>{label}</option>)}
   </select>
 ));
 

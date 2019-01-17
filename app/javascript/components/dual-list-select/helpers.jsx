@@ -1,22 +1,19 @@
-export const isEmpty = (obj) => {
-  if (obj === '') { return true; }
-  return (Object.getOwnPropertyNames(obj).length === 0);
-};
+/* *********** HELPERS FOR FORMS *********** */
 
-/** *********** HELPERS FOR FORMS *********** */
-/* returns left values of dual list select */
-export const leftValues = (options, value) => Object.keys(options).filter(key => !value[key]).reduce((acc, curr) => ({
-  ...acc,
-  [curr]: options[curr],
-}), {});
+/* Get keys of options array
+  Options:
+    [
+      {key: 'key', label: 'label'},
+      {key: 'key1', label: 'label1'},
+    ]
+  returns ['key', 'key1']
+*/
+export const getKeys = value => (Array.isArray(value) ? value.map(({ key }) => key) : []);
 
-/* returns left submitted keys of dual list select */
-export const leftSubmittedKeys = (originalOptions, value) => Object.keys(originalOptions).filter(e => !value[e]);
+/* Returns array of options excluding value options */
+export const filterOptions = (options, value) => options.filter(({ key }) => !getKeys(value).includes(key));
 
-/* returns new left keys (added to left) of dual list select */
-export const addedLeftKeys = (originalOptions, value, originalLeftValues) => (
-  leftSubmittedKeys(originalOptions, value).filter(e => !originalLeftValues[e])
+/* Returns array of newly added options from left select */
+export const addedLeftValues = (originalOptions, value, originalLeftValues) => (
+  filterOptions(filterOptions(originalOptions, value), originalLeftValues)
 );
-
-/* return new right keys (added to right) of dual list select */
-export const addedRightKeys = (value, originalRightValues) => Object.keys(value).filter(e => !originalRightValues[e]);
