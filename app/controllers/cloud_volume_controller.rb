@@ -561,7 +561,6 @@ class CloudVolumeController < ApplicationController
     options = {}
     options[:name] = params[:name] if params[:name]
     options[:size] = params[:size].to_i if params[:size]
-
     # Depending on the storage manager type, collect required form params.
     case params[:emstype]
     when "ManageIQ::Providers::StorageManager::CinderManager", "ManageIQ::Providers::Openstack::StorageManager::CinderManager"
@@ -576,6 +575,7 @@ class CloudVolumeController < ApplicationController
     options = {}
     cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
     options[:volume_type] = params[:volume_type] if params[:volume_type]
+    options[:multiattach] = params[:multiattach] if params[:multiattach]
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
     options[:ems] = cloud_tenant.ext_management_system

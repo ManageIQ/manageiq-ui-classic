@@ -151,4 +151,17 @@
                         'ng-disabled'     => "!vm.newRecord || vm.encryptionDisabled",
                         :checkchange      => ""}
 
+.form-group{"ng-if" => "vm.supportsVolumeMultiattachment"}
+  %label.col-md-2.control-label
+    = _('Multiattach')
+  .col-md-8
+    %input.form-control{"bs-switch"       => "",
+                        :data             => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                        :type             => "checkbox",
+                        :name             => "multiattach",
+                        'ng-model'        => "vm.cloudVolumeModel.multiattach",
+                        'switch-readonly' => "{{!vm.newRecord}}",
+                        'ng-disabled'     => "!vm.newRecord",
+                        :checkchange      => ""}
+
 = render :partial => "layouts/angular/generic_form_buttons"

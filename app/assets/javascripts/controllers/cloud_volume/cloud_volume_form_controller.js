@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       aws_encryption: false,
       incremental: false,
       force: false,
+      multiattach: false,
       storage_manager_id: storageManagerId,
     };
 
@@ -136,7 +137,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_resizing,supports_volume_availability_zones,parent_manager.volume_availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots,parent_manager.cloud_volume_types')
+    return API.get('/api/providers/' + id + '?attributes=type,supports_cinder_volume_types,supports_volume_multiattachment,supports_volume_resizing,supports_volume_availability_zones,parent_manager.volume_availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots,parent_manager.cloud_volume_types')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
@@ -279,6 +280,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.supportsCinderVolumeTypes = data.supports_cinder_volume_types;
     vm.supportsVolumeResizing = data.supports_volume_resizing;
     vm.supportsVolumeAvailabilityZones = data.supports_volume_availability_zones;
+    vm.supportsVolumeMultiattachment = data.supports_volume_multiattachment;
     if (vm.supportsCinderVolumeTypes) {
       vm.volumeTypes = data.parent_manager.cloud_volume_types;
     } else if (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs') {

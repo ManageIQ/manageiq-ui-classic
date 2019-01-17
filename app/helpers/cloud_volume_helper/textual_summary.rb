@@ -5,7 +5,7 @@ module CloudVolumeHelper::TextualSummary
   include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[name size bootable description status])
+    TextualGroup.new(_("Properties"), %i[name size bootable description status multiattach])
   end
 
   def textual_group_relationships
@@ -28,6 +28,10 @@ module CloudVolumeHelper::TextualSummary
 
   def textual_status
     {:label => _('Status'), :value => @record.status.to_s}
+  end
+
+  def textual_multiattach
+    @record.multi_attachment.to_s
   end
 
   def textual_parent_ems_cloud
