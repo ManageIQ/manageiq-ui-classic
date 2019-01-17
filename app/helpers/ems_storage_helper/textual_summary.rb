@@ -1,6 +1,7 @@
 module EmsStorageHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -59,10 +60,6 @@ module EmsStorageHelper::TextualSummary
 
   def textual_parent_ems_cloud
     textual_link(@record.try(:parent_manager), :label => _("Parent Cloud Provider"))
-  end
-
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.try(:name)}
   end
 
   def textual_cloud_volumes

@@ -1,5 +1,6 @@
 module EmsInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -167,10 +168,6 @@ module EmsInfraHelper::TextualSummary
     return nil unless @record.respond_to?(:orchestration_stacks)
 
     @record.orchestration_stacks
-  end
-
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
 
   def textual_host_default_vnc_port_range

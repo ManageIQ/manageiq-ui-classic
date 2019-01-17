@@ -52,7 +52,7 @@ class MiqTaskController < ApplicationController
     @pp_choices = PPCHOICES2 # Get special pp choices for jobs/tasks lists
     @settings[:perpage][:job_task] ||= 50 # Default to 50 per page until changed
     @tasks_options = HashWithIndifferentAccess.new if @tasks_options.blank?
-    @tasks_options[:zones] = Zone.all.collect { |z| z.name if z.miq_servers.present? }.compact
+    @tasks_options[:zones] = Zone.visible.includes(:miq_servers).collect { |z| z.name if z.miq_servers.present? }.compact
     tasks_set_default_options if @tasks_options[@tabform].blank?
 
     @tabs ||= []

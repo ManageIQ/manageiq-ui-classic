@@ -1,6 +1,7 @@
 module EmsCloudHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -143,10 +144,6 @@ module EmsCloudHelper::TextualSummary
       h[:title] = _("Show all Security Groups")
     end
     h
-  end
-
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
 
   def textual_topology

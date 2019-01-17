@@ -1,6 +1,7 @@
 module EmsPhysicalInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -103,10 +104,6 @@ module EmsPhysicalInfraHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
 
     textual_link(@record.vms, :label => _("Virtual Machines"))
-  end
-
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
 
   def textual_topology

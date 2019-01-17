@@ -530,7 +530,7 @@ module EmsCommon
 
   def form_instance_vars
     @server_zones = []
-    zones = Zone.order('lower(description)')
+    zones = Zone.visible.order('lower(description)')
     zones.each do |zone|
       @server_zones.push([zone.description, zone.name])
     end
@@ -647,8 +647,8 @@ module EmsCommon
                  :userid       => session[:userid]}
         AuditEvent.success(audit)
 
-        ems.disable! if action == "pause"
-        ems.enable! if action == "resume"
+        ems.pause! if action == "pause"
+        ems.resume! if action == "resume"
       end
     else
       model.where(:id => emss).order("lower(name)").each do |ems|
