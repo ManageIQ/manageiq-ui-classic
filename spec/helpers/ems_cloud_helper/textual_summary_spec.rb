@@ -42,6 +42,7 @@ describe EmsCloudHelper::TextualSummary do
       security_groups
       instances
       images
+      cloud_volumes
       orchestration_stacks
       storage_managers
       custom_button_events
