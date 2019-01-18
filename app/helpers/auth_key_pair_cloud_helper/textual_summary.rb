@@ -16,7 +16,7 @@ module AuthKeyPairCloudHelper::TextualSummary
   # Items
   #
   def textual_fingerprint
-    @record.fingerprint
+    {:label => _('Fingerprint'), :value => @record.fingerprint}
   end
 
   def textual_vms
