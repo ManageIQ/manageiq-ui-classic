@@ -30,15 +30,15 @@ module OrchestrationStackHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_status
-    @record.status
+    {:label => _('Status'), :value => @record.status}
   end
 
   def textual_status_reason
-    @record.status_reason
+    {:label => _('Status Reason'), :value => @record.status_reason}
   end
 
   def textual_retirement_date
