@@ -8,7 +8,6 @@
     vm.$uibModal = $uibModal;
 
     vm.includeDomain = false;
-    vm.selectable = {key: '^aem-'};
 
     vm.$http.get('/tree/automate_inline_methods').then(function(response) {
       vm.data = response.data;

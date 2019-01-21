@@ -17,7 +17,7 @@
     %hr
     %h3
       = _('Embedded Methods')
-    #automate-inline-method-select{'ng-controller' => 'aeInlineMethodSelectionController as vm'}
+    #automate-inline-method-select{'ng-controller' => 'aeInlineMethodSelectionController as vm', 'ng-init' => "vm.selectable = {key: '^aem-(?!#{@selectable_methods}$)'};"}
       .pull-right
         %button.btn.btn-primary{:type        => "button",
                                 'ng-click'   => 'vm.openModal();',
