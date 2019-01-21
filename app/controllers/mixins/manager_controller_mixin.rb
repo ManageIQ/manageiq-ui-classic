@@ -319,6 +319,7 @@ module Mixins
       handle_bottom_cell(presenter)
       reload_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
+      presenter[:provider_paused] = provider_paused?(@record)
       presenter[:right_cell_text] = @right_cell_text
       presenter[:osf_node] = x_node # Open, select, and focus on this node
 
