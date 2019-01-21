@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
           N_('Refresh relationships for all items related to this Provider'),
           N_('Refresh Relationships and Power states'),
           :url     => "refresh",
-          :confirm => N_("Refresh relationships for all items related to this Provider?")
+          :confirm => N_("Refresh relationships for all items related to this Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh
         ),
         separator,
         button(
@@ -23,6 +24,23 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
           t,
           :url => "edit"
         ),
+        button(
+          :automation_manager_resume,
+          'pficon pficon-trend-up fa-lg',
+          t = N_('Resume this Automation Manager Provider'),
+          t,
+          :confirm   => N_("Resume this Automation Manager Provider?"),
+          :enabled   => proc { !@record.enabled? },
+          :url_parms => "main_div"),
+        button(
+          :automation_manager_pause,
+          'pficon pficon-trend-down fa-lg',
+          t = N_('Pause this Automation Manager Provider'),
+          t,
+          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
+                         "This may cause gaps in inventory, metrics and events!"),
+          :enabled   => proc { @record.enabled? },
+          :url_parms => "main_div"),
         button(
           :automation_manager_delete_provider,
           'pficon pficon-delete fa-lg',

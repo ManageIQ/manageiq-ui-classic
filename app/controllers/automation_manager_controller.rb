@@ -8,6 +8,8 @@ class AutomationManagerController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
   include Mixins::ExplorerPresenterMixin
+  include Mixins::EmsCommon::Core
+  include Mixins::EmsCommon::PauseResume
 
   menu_section :at
 
@@ -165,6 +167,14 @@ class AutomationManagerController < ApplicationController
   end
 
   private
+
+  def automation_manager_pause
+    pause_or_resume_emss(:pause => true)
+  end
+
+  def automation_manager_resume
+    pause_or_resume_emss(:resume => true)
+  end
 
   def template_record?
     @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
