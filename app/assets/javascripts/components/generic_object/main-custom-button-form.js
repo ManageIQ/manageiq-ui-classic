@@ -72,35 +72,54 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     ];
 
     miqService.sparkleOn();
-    optionsPromise = API.options('/api/custom_buttons')
-      .then(getCustomButtonOptions)
+    var dataPromise;
+    var optionsPromise = API.options('/api/custom_buttons')
+      .then(function(response) {
+        _.forEach(response.data.custom_button_types, function(name, id) {
+          vm.button_types.push({id: id, name: name});
+        });
+        if (vm.customButtonRecordId) {
+          vm.newRecord = false;
+          miqService.sparkleOn();
+          dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action')
+            .then(getCustomButtonFormData)
+            .catch(miqService.handleFailure);
+        } else {
+          vm.newRecord = true;
+          vm.modelCopy = angular.copy( vm.customButtonModel );
+        }
+      })
       .catch(miqService.handleFailure);
 
-    serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
-      .then(getServiceDialogs)
+    var serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
+      .then(function(response) {
+        _.forEach(response.resources, function(item) {
+          vm.dialogs.push({id: item.id, label: item.label});
+        });
+      })
       .catch(miqService.handleFailure);
 
-    rolesPromise = API.get('/api/roles?expand=resources&attributes=name')
-      .then(getRoles)
+    var rolesPromise = API.get('/api/roles?expand=resources&attributes=name')
+      .then(function(response) {
+        _.forEach(response.resources, function(item) {
+          vm.customButtonModel.available_roles.push({name: item.name, value: false});
+        });
+      })
       .catch(miqService.handleFailure);
 
-    instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
-      .then(getDistinctInstancesAcrossDomains)
+    var instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
+      .then(function(response) {
+        _.forEach(response.data.distinct_instances_across_domains, function(item) {
+          vm.ae_instances.push({id: item, name: item});
+        });
+      })
       .catch(miqService.handleFailure);
-
-    if (vm.customButtonRecordId) {
-      vm.newRecord = false;
-      miqService.sparkleOn();
-      var dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action')
-        .then(getCustomButtonFormData)
-        .catch(miqService.handleFailure);
-    } else {
-      vm.newRecord = true;
-      vm.modelCopy = angular.copy( vm.customButtonModel );
-    }
 
     $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise])
-      .then(promisesResolvedForLoad);
+      .then(function() {
+          vm.afterGet = true;
+          miqService.sparkleOff();
+      });
   };
 
   vm.cancelClicked = function() {
@@ -243,7 +262,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.genericObjectDefinitionRecordId = response.applies_to_id;
 
-    optionsPromise.then(function() {
       if (vm.customButtonModel.current_visibility === 'role') {
         _.forEach(vm.customButtonModel.available_roles, function(role, index) {
           if (_.includes(response.visibility.roles, role.name)) {
@@ -259,7 +277,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         vm.customButtonModel.attribute_values);
 
       vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
-    });
   }
 
   function assignAllObjectsToKeyValueArrays(purge) {
@@ -290,34 +307,5 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       });
     }
     return _.size(keyArray);
-  }
-
-  function getCustomButtonOptions(response) {
-    _.forEach(response.data.custom_button_types, function(name, id) {
-      vm.button_types.push({id: id, name: name});
-    });
-  }
-
-  function getServiceDialogs(response) {
-    _.forEach(response.resources, function(item) {
-      vm.dialogs.push({id: item.id, label: item.label});
-    });
-  }
-
-  function getRoles(response) {
-    _.forEach(response.resources, function(item) {
-      vm.customButtonModel.available_roles.push({name: item.name, value: false});
-    });
-  }
-
-  function getDistinctInstancesAcrossDomains(response) {
-    _.forEach(response.data.distinct_instances_across_domains, function(item) {
-      vm.ae_instances.push({id: item, name: item});
-    });
-  }
-
-  function promisesResolvedForLoad() {
-    vm.afterGet = true;
-    miqService.sparkleOff();
   }
 }
