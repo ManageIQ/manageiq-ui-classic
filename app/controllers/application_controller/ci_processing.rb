@@ -632,11 +632,11 @@ module ApplicationController::CiProcessing
   #                 :refresh_partial
   #                 used by #screen_redirection
   #               - :specific_requirements
-  #                 used by #specific_requirements_fullfiled?
+  #                 used by #specific_requirements_fulfilled?
   def generic_button_operation(action, action_name, operation, options = {})
     records = find_records_with_rbac(get_rec_cls, checked_or_params)
     if (testable_action?(action) && !records_support_feature?(records, action_to_feature(action))) ||
-       !specific_requirements_fullfiled?(records, options[:specific_requirements])
+       !specific_requirements_fulfilled?(records, options[:specific_requirements])
       javascript_flash(
         :text       => _("%{action_name} action does not apply to selected items") % {:action_name => action_name},
         :severity   => :error,
@@ -656,10 +656,10 @@ module ApplicationController::CiProcessing
   #   records             - selected records
   #   requirements_method - symbol with a name of the method to be ran
   # Returns:
-  #   boolean - true, if all the requirements are fullfilled (called method returns
+  #   boolean - true, if all the requirements are fulfilled (called method returns
   #             true as well) or no requirements method is specified
-  #           - false if the requirements are not fullfilled
-  def specific_requirements_fullfiled?(records, requirements_method)
+  #           - false if the requirements are not fulfilled
+  def specific_requirements_fulfilled?(records, requirements_method)
     return true if requirements_method.nil?
     method(requirements_method).call(records)
   end
