@@ -67,7 +67,7 @@ module ApplicationController::Tags
 
   # Get the string with proper feature name for asserting privileges
   def feature_name
-    is_nested_list = @display && @display != 'main'
+    is_nested_list = @display && %w(main dashboard).exclude?(@display) # if @display is set but not to default display values
     display_or_controller = is_nested_list ? @display.singularize : controller_for_common_methods
     "#{display_or_controller}_tag"
   end
