@@ -297,7 +297,7 @@ describe DialogLocalService do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::Storage, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "storage", "datastores", "/storage/explorer"
+                       "storage", "data_stores", "/storage/explorer"
     end
 
     context "when the object is a Template" do
