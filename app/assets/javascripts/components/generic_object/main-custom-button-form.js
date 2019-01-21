@@ -88,38 +88,35 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
           vm.newRecord = true;
           vm.modelCopy = angular.copy( vm.customButtonModel );
         }
-      })
-      .catch(miqService.handleFailure);
+      });
 
     var serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
       .then(function(response) {
         _.forEach(response.resources, function(item) {
           vm.dialogs.push({id: item.id, label: item.label});
         });
-      })
-      .catch(miqService.handleFailure);
+      });
 
     var rolesPromise = API.get('/api/roles?expand=resources&attributes=name')
       .then(function(response) {
         _.forEach(response.resources, function(item) {
           vm.customButtonModel.available_roles.push({name: item.name, value: false});
         });
-      })
-      .catch(miqService.handleFailure);
+      });
 
     var instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
       .then(function(response) {
         _.forEach(response.data.distinct_instances_across_domains, function(item) {
           vm.ae_instances.push({id: item, name: item});
         });
-      })
-      .catch(miqService.handleFailure);
+      });
 
     $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise])
       .then(function() {
           vm.afterGet = true;
           miqService.sparkleOff();
-      });
+      })
+      .catch(miqService.handleFailure);;
   };
 
   vm.cancelClicked = function() {
