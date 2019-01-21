@@ -15,11 +15,6 @@ mainCustomButtonFormController.$inject = ['API', 'miqService', '$q', '$http'];
 function mainCustomButtonFormController(API, miqService, $q, $http) {
   var vm = this;
 
-  var optionsPromise = null;
-  var serviceDialogsPromise = null;
-  var rolesPromise = null;
-  var instancesPromise = null;
-
   vm.$onInit = function() {
     vm.entity = __('Custom Button');
     vm.saveable = miqService.saveable;
@@ -47,11 +42,14 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       attributeValuesTableChanged: false,
       current_visibility: 'all',
       available_roles: [],
+      uri_attributes: {"request": "", service_template: null, hosts: null},
     };
 
     vm.dialogs = [];
     vm.button_types = [];
     vm.ae_instances = [];
+    vm.templates = [];
+    vm.inventory = 'localhost';
 
     vm.attributeValueTableHeaders = [__('Name'), __('Value'), __('Actions')];
 
@@ -81,7 +79,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         if (vm.customButtonRecordId) {
           vm.newRecord = false;
           miqService.sparkleOn();
-          dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action')
+          dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action,uri_attributes')
             .then(getCustomButtonFormData)
             .catch(miqService.handleFailure);
         } else {
@@ -111,12 +109,17 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         });
       });
 
-    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise])
+    var serviceTemplateAnsiblePlaybooks = $http.get('/generic_object_definition/service_template_ansible_playbooks')
+      .then(function(response) {
+        vm.templates = response.data.templates;
+      });
+
+    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise, serviceTemplateAnsiblePlaybooks])
       .then(function() {
           vm.afterGet = true;
           miqService.sparkleOff();
       })
-      .catch(miqService.handleFailure);;
+      .catch(miqService.handleFailure);
   };
 
   vm.cancelClicked = function() {
@@ -259,6 +262,8 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.genericObjectDefinitionRecordId = response.applies_to_id;
 
+    vm.customButtonModel.uri_attributes = response.uri_attributes;
+
       if (vm.customButtonModel.current_visibility === 'role') {
         _.forEach(vm.customButtonModel.available_roles, function(role, index) {
           if (_.includes(response.visibility.roles, role.name)) {
@@ -273,6 +278,13 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         vm.customButtonModel.attribute_names,
         vm.customButtonModel.attribute_values);
 
+      if(vm.customButtonModel.uri_attributes.hosts == undefined || vm.customButtonModel.uri_attributes.hosts === "localhost" || vm.customButtonModel.uri_attributes.hosts == null) {
+        vm.inventory = "localhost";
+      } else if(vm.customButtonModel.uri_attributes.hosts === "vmdb_object"){
+        vm.inventory = "vmdb_object";
+      } else {
+        vm.inventory = "manual";
+      }
       vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
   }
 
