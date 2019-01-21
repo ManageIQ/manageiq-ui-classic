@@ -498,6 +498,7 @@ class MiqAeClassController < ApplicationController
       id = x_node.split('-')
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
+    @selectable_methods = embedded_method_regex(@ae_method.fqname)
     if @ae_method.location == "playbook"
       angular_form_specific_data
     else
@@ -1639,6 +1640,7 @@ class MiqAeClassController < ApplicationController
 
   def embedded_methods_add
     submit_embedded_method(URI.unescape(params[:fqname]))
+    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname)
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -1651,6 +1653,7 @@ class MiqAeClassController < ApplicationController
 
   def embedded_methods_remove
     @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
+    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname)
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -1692,6 +1695,12 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  # Builds a regular expression that controls the selectable items in the ae_methods tree
+  def embedded_method_regex(fqname)
+    ids = MiqAeMethod.get_homonymic_across_domains(current_user, fqname).map { |m| "(#{m.id})" }
+    ids.join('|')
+  end
 
   def playbook_inputs(method)
     existing_inputs = method.inputs
