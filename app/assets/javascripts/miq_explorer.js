@@ -260,6 +260,12 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
       .html(data.rightCellText);
   }
 
+  if (data.providerPaused === true) {
+    $('#providerPaused').show();
+  } else {
+    $('#providerPaused').hide();
+  }
+
   if (data.reportData && _.isObject(data.reportData)) {
     sendDataWithRx({initController: {
       name: data.reportData.controller_name,

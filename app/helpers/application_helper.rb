@@ -1432,4 +1432,16 @@ module ApplicationHelper
   def miq_favicon_link_tag
     Settings.server.custom_favicon ? favicon_link_tag('/upload/custom_favicon.ico') : favicon_link_tag
   end
+
+  def provider_paused?(record)
+    provider = if record.kind_of?(ExtManagementSystem)
+                 record
+               elsif record.respond_to?(:ext_management_system)
+                 record.ext_management_system
+               elsif record.respond_to?(:manager)
+                 record.manager
+               end
+
+    provider.try(:enabled?) == false
+  end
 end
