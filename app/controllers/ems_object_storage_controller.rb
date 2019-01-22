@@ -1,7 +1,7 @@
 class EmsObjectStorageController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon
+  include Mixins::EmsCommon
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
 
