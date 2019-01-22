@@ -17,7 +17,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i(
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images orchestration_stacks storage_managers custom_button_events
+        security_groups instances images cloud_volumes orchestration_stacks storage_managers custom_button_events
       )
     )
   end
@@ -93,6 +93,16 @@ module EmsCloudHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "miq_template_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'images')
       h[:title] = _("Show all Images")
+    end
+    h
+  end
+
+  def textual_cloud_volumes
+    num = @record.number_of(:cloud_volumes)
+    h = {:label => _('Cloud Volumes'), :icon => "pficon pficon-volume", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_volume_show_list")
+      h[:link] = ems_cloud_path(@record.id, :display => 'cloud_volumes')
+      h[:title] = _("Show Cloud Volumes")
     end
     h
   end
