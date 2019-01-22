@@ -126,10 +126,20 @@ if Rake::Task.task_defined?("assets:clobber")
   end
 end
 
-# yarn:install is a rails 5.1 task, webpacker:compile needs it
 namespace :yarn do
+  # yarn:install is a rails 5.1 task, webpacker:compile needs it
   task :install do
     puts 'yarn:install called, not doing anything'
+  end
+
+  # useful right after upgrading node
+  task :clobber do
+    puts 'Removing yarn.lock and node_modules in...'
+    asset_engines.each do |engine|
+      puts "  #{engine.name} (#{engine.path})"
+      FileUtils.rm_rf(engine.path.join('node_modules'))
+      FileUtils.rm_rf(engine.path.join('yarn.lock'))
+    end
   end
 end
 
