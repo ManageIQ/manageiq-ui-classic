@@ -1,4 +1,4 @@
-describe Mixins::EmsCommonAngular do
+describe Mixins::EmsCommon::Angular do
   context '.retrieve_event_stream_selection' do
     let(:network_controller) { EmsNetworkController.new }
     let(:ems_nuage) { FactoryBot.create(:ems_nuage_network_with_authentication) }
