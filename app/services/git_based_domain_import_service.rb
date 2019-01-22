@@ -94,6 +94,7 @@ class GitBasedDomainImportService
   end
 
   def import(git_repo_id, branch_or_tag, tenant_id)
+    binding.pry
     task_id = queue_import(git_repo_id, branch_or_tag, tenant_id)
     task = MiqTask.wait_for_taskid(task_id)
 

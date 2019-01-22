@@ -202,7 +202,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   def retrieve_git_datastore
     git_url = params[:git_url]
-
+    binding.pry
     if git_url.blank?
       add_flash(_("Please provide a valid git URL"), :error)
       response_json = {:message => @flash_array.first}

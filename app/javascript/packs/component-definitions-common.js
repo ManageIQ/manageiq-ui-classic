@@ -10,7 +10,7 @@ import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
-
+import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 /**
 * Add component definitions to this file.
 * example of component definition:
@@ -30,3 +30,4 @@ ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
 ManageIQ.component.addReact('SetServiceOwnershipForm', SetServiceOwnershipForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
+ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
