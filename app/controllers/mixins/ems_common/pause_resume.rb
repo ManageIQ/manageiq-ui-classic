@@ -21,7 +21,8 @@ module Mixins
 
       def pause_or_resume_emss(options)
         assert_privileges(params[:pressed])
-        if @lastaction == "show_list"
+        # Test if multiple providers have been selected via checkboxes
+        if params[:miq_grid_checks].present? || params.keys.any? { |k| k.starts_with?('check') }
           emss = find_checked_items
           if emss.empty?
             add_flash(_("No %{model} were selected for pause") % {:model => ui_lookup(:table => table_name)}, :error)
@@ -29,7 +30,7 @@ module Mixins
           call_ems_pause_resume(emss, options)
           show_list
           @refresh_partial = "layouts/gtl"
-        else
+        else # Single provider screen, no checkboxes
           if params[:id].nil? || model.find_by_id(params[:id]).nil?
             add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
           else
