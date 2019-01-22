@@ -1,7 +1,7 @@
 module Mixins
   module EmsCommon
     extend ActiveSupport::Concern
-    include EmsCommonHelper
+    include Metrics
 
     included do
       include Mixins::GenericSessionMixin
