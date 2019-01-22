@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 103 ending 2019-01-21
+
+### Added
+- Add Status Attribute to Cloud Volume Detail screen [(#5160)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5160)
+- Extract the decorators into a separate repository [(#5158)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5158)
+
+### Fixed
+- Dashboard (under Reports) - fix broken accordion_select; use @dashboardnot @db [(#5162)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5162)
+- Properly handle non-existent hash key [(#5161)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5161)
+- Fix missing paging in provisioning template selection [(#5149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5149)
+- Show breadcrumbs when redirected from another controller [(#5148)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5148)
+- Unify sorting in GOD page [(#5146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5146)
+- Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
+- Send button_order via API [(#5143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5143)
+- Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
+- Rename WebsocketWorker to RemoteConsoleWorker [(#5136)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5136)
+- Added "Preserve owner?" checkbox on Import report screen  [(#5060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5060)
+- Flavor add form converted to data-driven-forms [(#5055)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5055)
+- Fix labels for Scale Infrastructure Provider form [(#4896)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4896)
+- Do not allow to embed a method into itself in automate [(#4753)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4753)
+- Allow the suspension of cloud infra and physical infra providers [(#4269)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4269)
+
 ## Unreleased as of Sprint 102 ending 2019-01-07
 
 ### Added
