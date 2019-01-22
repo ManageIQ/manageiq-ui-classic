@@ -19,9 +19,6 @@
       patch: angularify(vanillaJsAPI.patch),
       options: angularify(vanillaJsAPI.options),
       wait_for_task: angularify(vanillaJsAPI.wait_for_task),
-      login: angularify(vanillaJsAPI.login),
-      logout: vanillaJsAPI.logout,
-      autorenew: vanillaJsAPI.autorenew,
     };
   }];
 

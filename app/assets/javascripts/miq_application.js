@@ -699,53 +699,34 @@ function storeUserFeatures() {
 // Send login authentication via ajax
 function miqAjaxAuth(url) {
   miqEnableLoginFields(false);
-  miqSparkleOn(); // miqJqueryRequest starts sparkle either way, but API login doesn't
 
-  var credentials = {
-    login: $('#user_name').val(),
-    password: $('#user_password').val(),
-    serialized: miqSerializeForm('login_div'),
-  };
+  return miqJqueryRequest(url || '/dashboard/authenticate', {
+    beforeSend: true,
+    data: miqSerializeForm('login_div'),
+  }).then(null, function(err) {
+    // HTTP failures only, authentication failures come as 200, with their own javascript
+    var message = __('Incorrect username or password');
+    if (err && err.status && err.status !== 200 && err.statusText) {
+      message = __('Login failed:') + ' ' + err.statusText;
+    }
 
-  return vanillaJsAPI.login(credentials.login, credentials.password)
-    .then(function() {
-      return vanillaJsAPI.ws_init();
-    })
-    .then(function() {
-      return storeUserFeatures();
-    })
-    .then(function() {
-    // API login ok, now do the normal one
-      miqJqueryRequest(url || '/dashboard/authenticate', {
-        beforeSend: true,
-        data: credentials.serialized,
-      });
+    clearFlash();
+    add_flash(message, 'error', { id: 'auth_failed' });
 
-    // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
-    })
-    .then(null, function(err) {
-      var message = __('Incorrect username or password');
-      if (err && err.status && err.status !== 200 && err.statusText) {
-        message = __('Login failed:') + ' ' + err.statusText;
-      }
+    miqAjaxAuthFail();
+    miqSparkleOff();
+  });
+}
 
-      clearFlash();
-      add_flash(message, 'error', { id: 'auth_failed' });
-
-      miqClearLoginFields();
-      miqEnableLoginFields(true);
-      miqSparkleOff();
-    });
+function miqAjaxAuthFail() {
+  miqClearLoginFields();
+  miqEnableLoginFields(true);
 }
 
 // Send SSO login authentication via ajax
 function miqAjaxAuthSso(url) {
   miqEnableLoginFields(false);
   miqSparkleOn();
-
-  // Note: /dashboard/kerberos_authenticate creates an API token
-  //       based on the authenticated external user
-  //       and stores it in localStorage.miq_token
 
   miqJqueryRequest(url || '/dashboard/kerberos_authenticate', {
     beforeSend: true,
@@ -757,19 +738,9 @@ function miqAjaxExtAuth(url) {
   miqEnableLoginFields(false);
   miqSparkleOn();
 
-  // Note: /dashboard/external_authenticate creates an API token
-  //       based on the authenticated external user
-  //       and stores it in localStorage.miq_token
-
-  var credentials = {
-    login: $('#user_name').val(),
-    password: $('#user_password').val(),
-    serialized: miqSerializeForm('login_div'),
-  };
-
   miqJqueryRequest(url || '/dashboard/external_authenticate', {
     beforeSend: true,
-    data: credentials.serialized,
+    data: miqSerializeForm('login_div'),
   });
 }
 

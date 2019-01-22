@@ -117,21 +117,17 @@ describe DashboardController do
     %i(saml oidc).each do |protocol|
       it "#{protocol.upcase} protected page should render the #{protocol}_login page with the proper validation_url and api token" do
         user           = FactoryBot.create(:user, :userid => "johndoe", :role => "test")
-        auth_token     = "aabbccddeeff"
         validation_url = "/user_validation_url"
 
         request.env["HTTP_X_REMOTE_USER"] = user.userid
         skip_data_checks(validation_url)
 
         allow(User).to receive(:authenticate).and_return(user)
-        allow_any_instance_of(Api::UserTokenService).to receive(:generate_token)
-          .with(user.userid, "ui")
-          .and_return(auth_token)
 
         expect(controller).to receive(:render)
           .with(:template => "dashboard/#{protocol}_login",
                 :layout   => false,
-                :locals   => {:api_auth_token => auth_token, :validation_url => validation_url})
+                :locals   => {:validation_url => validation_url})
           .exactly(1).times
 
         controller.send("#{protocol}_login")
@@ -502,6 +498,15 @@ describe DashboardController do
       post :csp_report, :body => '{"csp-report":{"document-uri":"https://example.com/foo/bar"}}', :format => 'json'
       expect(session[:edit]).to eq("xyz")
       expect(response.status).to eq(200)
+    end
+  end
+
+  describe '#authenticate_external_user' do
+    it 'sets the user name based on the header' do
+      allow(controller).to receive(:authenticate)
+      request.headers['X-Remote-User'] = 'foo@bar'
+      controller.send(:authenticate_external_user)
+      expect(assigns(:user_name)).to eq('foo')
     end
   end
 
