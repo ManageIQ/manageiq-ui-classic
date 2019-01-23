@@ -14,7 +14,7 @@
     "miqSparkleOn": true,
     "add_flash": true
   },
-  "extends": ["airbnb", "plugin:jest/recommended"],
+  "extends": ["jquery", "airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],
   "rules": {
     "func-names": 0,
