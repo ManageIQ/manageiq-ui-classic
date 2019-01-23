@@ -2,6 +2,7 @@ describe VmInfraController do
   let(:host_1x1)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB)) }
   let(:host_2x2)  { FactoryBot.create(:host_vmware_esx, :hardware => FactoryBot.create(:hardware, :cpu2x2, :ram1GB)) }
   let(:vm_vmware) { FactoryBot.create(:vm_vmware) }
+
   before do
     stub_user(:features => :all)
 
@@ -434,46 +435,64 @@ describe VmInfraController do
     end
   end
 
-  it 'can Shutdown Guest' do
-    post :x_button, :params => {:pressed => 'vm_guest_shutdown', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+  context 'power operations' do
+    let(:ems) { FactoryBot.create(:ems_vmware, :hostname => 'foo.com') }
 
-    expect(response.body).to include('Shutdown Guest initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
-  end
+    context 'operations on VMs' do
+      let(:vm) { FactoryBot.create(:vm_vmware, :host => host_1x1, :raw_power_state => 'poweredOn', :ext_management_system => ems) }
 
-  it 'can Restart Guest' do
-    post :x_button, :params => {:pressed => 'vm_guest_restart', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+      it 'can Shutdown Guest' do
+        post :x_button, :params => {:pressed => 'vm_guest_shutdown', :id => vm.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Shutdown Guest initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      end
 
-    expect(response.body).to include('Restart Guest initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
-  end
+      it 'can Restart Guest' do
+        post :x_button, :params => {:pressed => 'vm_guest_restart', :id => vm.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Restart Guest initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      end
 
-  it 'can Power On VM' do
-    post :x_button, :params => {:pressed => 'vm_start', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+      context 'powering on VM' do
+        let(:vm) { FactoryBot.create(:vm_vmware, :host => host_1x1, :raw_power_state => 'poweredOff', :ext_management_system => ems) }
 
-    expect(response.body).to include('Start initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
-  end
+        it 'can Power On VM' do
+          post :x_button, :params => {:pressed => 'vm_start', :id => vm.id}
+          expect(response.status).to eq(200)
+          expect(response.body).to include('Start initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+        end
+      end
 
-  it 'can Power Off VM' do
-    post :x_button, :params => {:pressed => 'vm_stop', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+      it 'can Power Off VM' do
+        post :x_button, :params => {:pressed => 'vm_stop', :id => vm.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Stop initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      end
 
-    expect(response.body).to include('Stop initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
-  end
+      it 'can Suspend VM' do
+        post :x_button, :params => {:pressed => 'vm_suspend', :id => vm.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Suspend initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      end
 
-  it 'can Suspend VM' do
-    post :x_button, :params => {:pressed => 'vm_suspend', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
+      it 'can Reset VM' do
+        post :x_button, :params => {:pressed => 'vm_reset', :id => vm.id}
+        expect(response.status).to eq(200)
+        expect(response.body).to include('Reset initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      end
+    end
 
-    expect(response.body).to include('Suspend initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
-  end
+    context 'operations on Templates' do
+      let(:template) { FactoryBot.create(:template, :ext_management_system => ems) }
 
-  it 'can Reset VM' do
-    post :x_button, :params => {:pressed => 'vm_reset', :id => vm_vmware.id}
-    expect(response.status).to eq(200)
-
-    expect(response.body).to include('Reset initiated for 1 VM and Instance from the %{product} Database' % {:product => Vmdb::Appliance.PRODUCT_NAME})
+      %w(vm_guest_shutdown vm_guest_restart vm_start vm_stop vm_suspend vm_reset).zip(['Shutdown Guest', 'Restart Guest', 'Start', 'Stop', 'Suspend', 'Reset']).each do |action, action_name|
+        it "cannot #{action_name}" do
+          post :x_button, :params => {:pressed => action, :id => template.id}
+          expect(response.status).to eq(200)
+          expect(response.body).to include('%{action_name} action does not apply to selected items' % {:action_name => action_name})
+        end
+      end
+    end
   end
 
   it 'can run Utilization' do
