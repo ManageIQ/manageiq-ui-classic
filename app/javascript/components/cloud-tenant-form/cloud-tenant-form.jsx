@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
-import createSchema from './create-form-schema';
+import createSchema from './create-form.schema';
 
 
 class CloudTenantForm extends Component {

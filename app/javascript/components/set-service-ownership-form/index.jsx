@@ -4,7 +4,7 @@ import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import { cleanVirtualDom } from '../../miq-component/helpers';
-import createSchema from './schema';
+import createSchema from './ownership-form.schema';
 
 class SetServiceOwnershipForm extends Component {
   state = {

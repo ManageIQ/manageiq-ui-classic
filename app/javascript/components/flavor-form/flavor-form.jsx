@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid } from 'patternfly-react';
 import { sprintf } from 'sprintf-js';
-import addSchema from './add-form-schema';
+import addSchema from './flavor-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http, API } from '../../http_api';
 import { cleanVirtualDom } from '../../miq-component/helpers';
