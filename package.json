@@ -20,6 +20,9 @@
     "url": "https://github.com/ManageIQ/manageiq/issues"
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
+  "installConfig": {
+    "pnp": true
+  },
   "dependencies": {
     "@data-driven-forms/pf3-component-mapper": "~1.18.0",
     "@data-driven-forms/react-form-renderer": "~1.18.0",

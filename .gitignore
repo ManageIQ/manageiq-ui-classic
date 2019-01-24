@@ -19,3 +19,5 @@ tmp/
 node_modules/
 config/webpack/paths.json
 *.sw[po]
+.pnp/
+.pnp.js
