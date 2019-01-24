@@ -472,7 +472,7 @@ module OpsController::Settings::Common
         if %w(settings_server settings_authentication).include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.add_settings_for_resource(@update)
-          update_server_name(server)
+          update_server_name(server) if @sb[:active_tab] == 'settings_server'
         else
           MiqServer.my_server.add_settings_for_resource(@update)
         end
