@@ -208,6 +208,7 @@ class ContainerDashboardService < DashboardService
         :id       => m.resource.id,
         :node     => m.resource.name,
         :provider => provider_name,
+        :unit     => _("Cores"),
         :total    => m.derived_vm_numvcpus.present? ? m.derived_vm_numvcpus.round : nil,
         :percent  => m.cpu_usage_rate_average.present? ? (m.cpu_usage_rate_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
@@ -216,6 +217,7 @@ class ContainerDashboardService < DashboardService
         :id       => m.resource.id,
         :node     => m.resource.name,
         :provider => m.resource.ext_management_system.name,
+        :unit     => _("GB"),
         :total    => m.derived_memory_available.present? ? m.derived_memory_available.round : nil,
         :percent  => m.mem_usage_absolute_average.present? ? (m.mem_usage_absolute_average / 100.0).round(CPU_USAGE_PRECISION) : nil # pf accepts fractions 90% = 0.90
       }
