@@ -989,12 +989,12 @@ module OpsController::Settings::Common
       @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
     end
     (600.megabytes...1000.megabytes).step(100.megabytes) do |x|
-      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it p     uts 1000MB instead of 1GB in pulldown
+      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
       @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
     end
     (1.gigabytes...1.5.gigabytes).step(100.megabytes) do |x|
       # adding values in 100 MB increments from 1gb to 1.5 gb
-      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+      @sb[:threshold] << [number_to_human_size(x, :significant => false), x.to_i]
     end
 
     cwb = @edit[:current][:workers][:worker_base] ||= {}
@@ -1082,7 +1082,7 @@ module OpsController::Settings::Common
 
   private def get_worker_setting(config, klass, *setting)
     settings = klass.worker_settings(:config => config, :raw => true)
-    setting.empty? ? settings : settings.fetch_path(setting)
+    setting.empty? ? settings : settings.fetch_path(setting).to_i_with_method
   end
 
   def settings_set_form_vars_logos
