@@ -227,6 +227,7 @@ module OpsController::Settings::Common
   private
 
   def update_server_name(server)
+    return unless @sb[:active_tab] == 'settings_server'
     return if @edit[:new][:server][:name] == server.name # appliance name was modified
     begin
       server.name = @edit[:new][:server][:name]
@@ -472,7 +473,7 @@ module OpsController::Settings::Common
         if %w(settings_server settings_authentication).include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.add_settings_for_resource(@update)
-          update_server_name(server) if @sb[:active_tab] == 'settings_server'
+          update_server_name(server)
         else
           MiqServer.my_server.add_settings_for_resource(@update)
         end
