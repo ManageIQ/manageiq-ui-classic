@@ -41,7 +41,7 @@ plugins:
     enabled: true
     exclude_patterns:
     - "app/decorators/"
-    - "app/javascript/**/*spec.js"
+    - "app/javascript/**/*.spec.js"
     - "app/javascript/**/*.schema.js"
     config:
       concurrency: 1
