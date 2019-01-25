@@ -19,7 +19,7 @@ module.exports = [
   {
     test: /\.(js|jsx)$/,
     use: [{
-      loader: 'babel-loader',
+      loader: require.resolve('babel-loader'),
       options: babelOptions,
     }],
     exclude: /node_modules/,
