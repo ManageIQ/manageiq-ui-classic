@@ -13,6 +13,7 @@ NODE_ENV = ENV["NODE_ENV"]
 APP_PATH          = File.expand_path("../", __dir__)
 NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
 WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/#{NODE_ENV}.js")
+PNP_PATH          = File.join(APP_PATH, ".pnp.js")
 
 unless File.exist?(WEBPACK_CONFIG)
   puts "Webpack configuration not found."
@@ -22,7 +23,7 @@ end
 
 newenv  = {
   "NODE_PATH"    => NODE_MODULES_PATH.shellescape,
-  "NODE_OPTIONS" => "--max_old_space_size=4096"
+  "NODE_OPTIONS" => "--max_old_space_size=4096 --require #{PNP_PATH}"
 }
 cmdline = ["yarn", "run", "webpack", "--config", WEBPACK_CONFIG] + ARGV
 

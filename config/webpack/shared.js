@@ -10,10 +10,10 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 
 const { env, settings, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
-const RailsEnginesPlugin = require('./RailsEnginesPlugin');
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
@@ -141,13 +141,16 @@ module.exports = {
     extensions: settings.extensions,
     modules: [],
     plugins: [
-      new RailsEnginesPlugin('module', 'resolve', engines, { packages: sharedPackages, root: moduleDir }),
+      PnpWebpackPlugin,
     ],
   },
 
   resolveLoader: {
     // only read loaders from ui-classic
     modules: [moduleDir],
+    plugins: [
+      PnpWebpackPlugin.moduleLoader(module),
+    ],
   },
 
   watchOptions: {
