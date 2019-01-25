@@ -101,7 +101,11 @@ module Mixins
 
     def render_validation_result(result, details)
       if result
-        msg = _("Credential validation was successful")
+        msg = if details.blank?
+                _("Credential validation was successful")
+              else
+                _("Credential validation was successful: %{details}") % {:details => strip_tags(details)}
+              end
       else
         msg = _("Credential validation was not successful: %{details}") % {:details => strip_tags(details)}
         level = :error
