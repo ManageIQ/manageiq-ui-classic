@@ -152,6 +152,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "openshift",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           },
@@ -159,6 +160,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "openshift",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           },
@@ -166,6 +168,7 @@ describe ContainerDashboardService do
             :id       => @node3.id,
             :node     => "node3",
             :provider => "kubernetes",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           },
@@ -173,6 +176,7 @@ describe ContainerDashboardService do
             :id       => @node4.id,
             :node     => "node4",
             :provider => "kubernetes",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           }
@@ -182,6 +186,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "openshift",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           },
@@ -189,6 +194,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "openshift",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           },
@@ -196,6 +202,7 @@ describe ContainerDashboardService do
             :id       => @node3.id,
             :node     => "node3",
             :provider => "kubernetes",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           },
@@ -203,6 +210,7 @@ describe ContainerDashboardService do
             :id       => @node4.id,
             :node     => "node4",
             :provider => "kubernetes",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           }
@@ -216,6 +224,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "openshift",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           },
@@ -223,6 +232,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "openshift",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.9
           }
@@ -232,6 +242,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "openshift",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           },
@@ -239,6 +250,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "openshift",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.9
           }
@@ -287,6 +299,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "kubernetes",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.1
           },
@@ -294,6 +307,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "kubernetes",
+            :unit     => "Cores",
             :total    => 4,
             :percent  => 0.1
           }
@@ -303,6 +317,7 @@ describe ContainerDashboardService do
             :id       => @node1.id,
             :node     => "node1",
             :provider => "kubernetes",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.1
           },
@@ -310,6 +325,7 @@ describe ContainerDashboardService do
             :id       => @node2.id,
             :node     => "node2",
             :provider => "kubernetes",
+            :unit     => "GB",
             :total    => 8192,
             :percent  => 0.1
           }
