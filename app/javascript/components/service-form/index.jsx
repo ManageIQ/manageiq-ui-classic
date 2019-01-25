@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
-import createSchema from './schema';
+import createSchema from './service-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import { cleanVirtualDom } from '../../miq-component/helpers';

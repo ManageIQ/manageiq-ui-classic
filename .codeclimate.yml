@@ -1,5 +1,6 @@
 ---
-exclude_paths:
+version: "2"
+exclude_patterns:
 - ".git/"
 - "**.gif"
 - "**.html"
@@ -27,7 +28,7 @@ checks:
   file-lines:
     config:
       threshold: 400
-engines:
+plugins:
   brakeman:
     # very slow :sad_panda:
     enabled: false
@@ -38,9 +39,10 @@ engines:
     enabled: false
   duplication:
     enabled: true
-    exclude_paths:
+    exclude_patterns:
     - "app/decorators/"
-    - "app/javascript/spec/"
+    - "app/javascript/**/*.spec.js"
+    - "app/javascript/**/*.schema.js"
     config:
       concurrency: 1
       languages:
