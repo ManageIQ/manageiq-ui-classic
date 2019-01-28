@@ -44,6 +44,7 @@
     "classnames": "~2.2.6",
     "codemirror": "~5.19.0",
     "connected-react-router": "^4.3.0",
+    "create-react-context": "~0.2.3",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "es6-shim": "~0.35.3",
     "graphiql": "^0.11.11",
