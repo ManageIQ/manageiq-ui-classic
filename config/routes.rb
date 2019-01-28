@@ -2620,6 +2620,7 @@ Rails.application.routes.draw do
         upload_login_brand
         upload_login_logo
         upload_logo
+        upload_favicon
         validate_replcation_worker
         wait_for_task
         x_button
