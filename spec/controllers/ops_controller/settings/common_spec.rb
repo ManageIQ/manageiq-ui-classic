@@ -376,7 +376,7 @@ describe OpsController do
         end
       end
 
-      context "save server name in server settings" do
+      context "save server name in server settings only when 'Server' is active tab" do
         before do
           @miq_server = FactoryGirl.create(:miq_server)
           allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
@@ -406,6 +406,16 @@ describe OpsController do
           controller.send(:settings_update_save)
           @miq_server.reload
           expect(@miq_server.name).to eq("Foo")
+        end
+
+        it "does not update server name when active tab is Authentication tab" do
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_authentication',
+                                           :selected_server_id => @miq_server.id)
+          @new[:server][:name] = 'Foo'
+          controller.send(:settings_update_save)
+          @miq_server.reload
+          expect(@miq_server.name).to_not eq("Foo")
         end
       end
     end
