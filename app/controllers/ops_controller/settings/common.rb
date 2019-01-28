@@ -227,6 +227,7 @@ module OpsController::Settings::Common
   private
 
   def update_server_name(server)
+    return unless @sb[:active_tab] == 'settings_server'
     return if @edit[:new][:server][:name] == server.name # appliance name was modified
     begin
       server.name = @edit[:new][:server][:name]
