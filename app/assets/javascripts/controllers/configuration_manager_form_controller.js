@@ -47,6 +47,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
 
     vm.configurationManagerModel.name = data.name;
     vm.configurationManagerModel.zone = data.zone;
+    vm.configurationManagerModel.zone_hidden = data.zone_hidden;
     vm.configurationManagerModel.url = data.url;
     vm.configurationManagerModel.verify_ssl = data.verify_ssl === 1;
     vm.configurationManagerModel.default_userid = data.default_userid;

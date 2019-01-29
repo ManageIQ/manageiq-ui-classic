@@ -287,6 +287,7 @@ module Mixins
 
       render :json => {:name                => provider.name,
                        :zone                => provider.zone.name,
+                       :zone_hidden         => !manager.enabled?,
                        :url                 => provider.url,
                        :verify_ssl          => provider.verify_ssl,
                        :default_userid      => provider.authentications.first.userid,
@@ -341,7 +342,7 @@ module Mixins
       @provider.name       = params[:name]
       @provider.url        = params[:url]
       @provider.verify_ssl = params[:verify_ssl].eql?("on") || params[:verify_ssl].eql?("true")
-      @provider.zone       = Zone.find_by(:name => params[:zone].to_s)
+      @provider.zone       = Zone.find_by(:name => params[:zone].to_s) if params[:zone]
     end
 
     def provider_list(id, model)
