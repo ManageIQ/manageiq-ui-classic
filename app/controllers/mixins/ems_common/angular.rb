@@ -539,7 +539,7 @@ module Mixins
         ems.provider_region        = params[:provider_region] if params[:provider_region]
         ems.api_version            = params[:api_version].strip if params[:api_version]
         ems.provider_id            = params[:provider_id]
-        ems.zone                   = Zone.find_by(:name => params[:zone])
+        ems.zone                   = Zone.find_by(:name => params[:zone]) if params[:zone]
         ems.tenant_mapping_enabled = params[:tenant_mapping_enabled] == "on" if ems.class.supports_cloud_tenant_mapping?
         ems.security_protocol      = params[:default_security_protocol].strip if params[:default_security_protocol]
 
