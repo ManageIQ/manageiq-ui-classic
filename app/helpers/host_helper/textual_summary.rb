@@ -162,11 +162,11 @@ module HostHelper::TextualSummary
   end
 
   def textual_asset_tag
-    textual_link(@record.asset_tag, :label => _('Asset tag'))
+    {:label => _('Asset tag'), :value => @record.asset_tag}
   end
 
   def textual_service_tag
-    textual_link(@record.service_tag, :label => _('Service tag'))
+    {:label => _('Service tag'), :value => @record.service_tag}
   end
 
   def textual_power_state
