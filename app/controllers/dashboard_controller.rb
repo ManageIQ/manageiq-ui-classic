@@ -206,9 +206,9 @@ class DashboardController < ApplicationController
     records = current_group.ordered_widget_sets
 
     @tabs = []
-    active_tab_id = (params[:tab] || @sb[:active_db_id]).try(:to_s)
+    active_tab_id = (params['uib-tab'] || @sb[:active_db_id]).try(:to_s)
     active_tab = active_tab_id && records.detect { |r| r.id.to_s == active_tab_id } || records.first
-    # load first one on intial load, or load tab from params[:tab] changed,
+    # load first one on intial load, or load tab from params['uib-tab'] changed,
     # or when coming back from another screen load active tab from sandbox
     if active_tab
       @active_tab = active_tab.id.to_s
