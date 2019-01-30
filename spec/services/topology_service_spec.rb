@@ -143,8 +143,8 @@ describe TopologyService do
 
     context 'entity is a tag' do
       let(:parent_cls) { FactoryBot.create(:classification, :description => 'foo') }
-      let(:cls) { FactoryBot.create(:classification, :parent => parent_cls, :description => 'bar') }
-      let(:entity) { FactoryBot.create(:tag, :classification => cls) }
+      let(:cls) { FactoryBot.create(:classification_tag, :parent => parent_cls, :description => 'bar') }
+      let(:entity) { cls.tag }
 
       it 'returns with the parent and the child classification description' do
         expect(name).to eq('foo: bar')
