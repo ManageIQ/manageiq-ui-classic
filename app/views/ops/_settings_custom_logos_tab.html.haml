@@ -90,6 +90,33 @@
         .col-md-8
           = check_box_tag("server_usebrand", true, @edit[:new][:server][:custom_brand], :data => {:on_text => _('Yes'), :off_text => _('No')})
   %hr
+  %h3=_("Custom Favicon")
+  - if File.exist?(@favicon_file)
+    = image_tag("/upload/custom_favicon.ico?#{rand(99_999_999)}")
+    %br/
+    %br/
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No custom favicon has been uploaded yet.")}
+  = form_tag({:action    => "upload_favicon"},
+             :class     => "form-horizontal",
+             :multipart => true,
+             :method    => :post) do
+    .form-group
+      .col-md-4
+        = render :partial => "shared/file_chooser", :locals => {:object_name => "favicon", :method => "logo"}
+      .col-md-6
+        = submit_tag(_("Upload"), :class => "btn btn-default")
+        = _("* Requirements: File-type - ICO;")
+
+  - if File.exist?(@favicon_file)
+    %br/
+    %form.form-horizontal
+      .form-group
+        %label.col-md-2.control-label
+          = _("Use Custom Favicon")
+        .col-md-8
+          = check_box_tag("server_usefavicon", true, @edit[:new][:server][:custom_favicon], :data => {:on_text => _('Yes'), :off_text => _('No')})
+  %hr
   %h3
     = _("Custom Login Panel Text (")
     %span#text_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
@@ -114,3 +141,4 @@
         miqInitBootstrapSwitch('server_uselogo', "#{url}");
         miqInitBootstrapSwitch('server_useloginlogo', "#{url}");
         miqInitBootstrapSwitch('server_usebrand', "#{url}");
+        miqInitBootstrapSwitch('server_usefavicon', "#{url}");

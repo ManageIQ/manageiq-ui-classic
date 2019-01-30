@@ -3,29 +3,35 @@ module OpsController::Settings::Upload
 
   def upload_logo
     logo_file = File.join(logo_dir, "custom_logo.png")
-    upload_logos(logo_file, params[:upload], _('Custom logo image'))
+    upload_logos(logo_file, params[:upload], _('Custom logo image'), "png")
   end
 
   def upload_login_logo
     login_logo_file = File.join(logo_dir, "custom_login_logo.png")
-    upload_logos(login_logo_file, params[:login], _('Custom login image'))
+    upload_logos(login_logo_file, params[:login], _('Custom login image'), "png")
   end
 
   def upload_login_brand
     login_logo_file = File.join(logo_dir, "custom_brand.png")
-    upload_logos(login_logo_file, params[:brand], _('Custom brand'))
+    upload_logos(login_logo_file, params[:brand], _('Custom brand'), "png")
   end
 
-  def upload_logos(file, field, text)
+  def upload_favicon
+    logo_file = File.join(logo_dir, "custom_favicon.ico")
+    upload_logos(logo_file, params[:favicon], _('Custom favicon'), "ico")
+  end
+
+
+  def upload_logos(file, field, text, type)
     if field && field[:logo] && field[:logo].respond_to?(:read)
-      if field[:logo].original_filename.split(".").last.downcase != "png"
-        add_flash("%{image} must be a .png file" % {:image => text}, :error)
+      if field[:logo].original_filename.split(".").last.downcase != type
+        add_flash("%{image} must be a .#{type} file" % {:image => text}, :error)
       else
         File.open(file, "wb") { |f| f.write(field[:logo].read) }
         add_flash(_("%{image} \"%{name}\" uploaded") % {:image => text, :name => field[:logo].original_filename})
       end
     else
-      add_flash(_("Use the Choose file button to locate .png image file"), :error)
+      add_flash(_("Use the Choose file button to locate .#{type} image file"), :error)
     end
     flash_to_session
     redirect_to(:action => 'explorer')
