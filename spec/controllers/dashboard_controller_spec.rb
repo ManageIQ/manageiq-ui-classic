@@ -1,12 +1,8 @@
 describe DashboardController do
   context "POST authenticate" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
+    before { EvmSpecHelper.create_guid_miq_server_zone }
 
-    let(:user_with_role) do
-      FactoryBot.create(:user, :role => "random")
-    end
+    let(:user_with_role) { FactoryBot.create(:user, :role => "random") }
 
     it "has secure headers" do
       get :index
@@ -93,9 +89,7 @@ describe DashboardController do
   end
 
   context "SAML and OIDC support" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
+    before { EvmSpecHelper.create_guid_miq_server_zone }
 
     %i(saml oidc).each do |protocol|
       it "#{protocol.upcase} login should redirect to the protected page" do
@@ -137,10 +131,8 @@ describe DashboardController do
 
   # would like to test these controller by calling authenticate
   # need to ensure all cases are handled before deleting these
-  context "#validate_user" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
+  describe "#validate_user" do
+    before { EvmSpecHelper.create_guid_miq_server_zone }
 
     it "returns flash message when user's group is missing" do
       user = FactoryBot.create(:user)
@@ -190,7 +182,7 @@ describe DashboardController do
     it "dashboard show" do
       # create dashboard for a group
       ws = FactoryBot.create(:miq_widget_set, :name     => "default",
-                                               :set_data => {:last_group_db_updated => Time.now.utc,
+                                              :set_data => {:last_group_db_updated => Time.now.utc,
                               :col1 => [1], :col2 => [], :col3 => []})
 
       ur = FactoryBot.create(:miq_user_role)
@@ -202,8 +194,8 @@ describe DashboardController do
       login_as user
       # create a user's dashboard using group dashboard name.
       FactoryBot.create(:miq_widget_set,
-                         :name     => "#{user.userid}|#{group.id}|#{ws.name}",
-                         :set_data => {:last_group_db_updated => Time.now.utc, :col1 => [1], :col2 => [], :col3 => []})
+                        :name     => "#{user.userid}|#{group.id}|#{ws.name}",
+                        :set_data => {:last_group_db_updated => Time.now.utc, :col1 => [1], :col2 => [], :col3 => []})
       controller.show
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
@@ -214,10 +206,10 @@ describe DashboardController do
       user = FactoryBot.create(:user, :miq_groups => [group])
       wi = FactoryBot.create(:miq_widget)
       ws = FactoryBot.create(:miq_widget_set, :name     => "default",
-                                               :set_data => {:last_group_db_updated => Time.now.utc,
+                                              :set_data => {:last_group_db_updated => Time.now.utc,
                                                              :col1 => [], :col2 => [], :col3 => []},
-                                               :userid   => user.userid,
-                                               :group_id => group.id)
+                                              :userid   => user.userid,
+                                              :group_id => group.id)
       session[:sandboxes] = {"dashboard" => {:active_db  => ws.name,
                                              :dashboards => {ws.name => {:col1 => [], :col2 => [], :col3 => []}}}}
       login_as user
@@ -270,7 +262,7 @@ describe DashboardController do
     end
   end
 
-  context "#start_url_for_user" do
+  describe "#start_url_for_user" do
     before do
       MiqShortcut.seed
       allow(controller).to receive(:check_privileges).and_return(true)
@@ -339,11 +331,12 @@ describe DashboardController do
     end
   end
 
-  context "#maintab" do
+  describe "#maintab" do
     before do
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
     end
+
     it "redirects a restful link correctly" do
       ems_cloud_amz = FactoryBot.create(:ems_amazon)
       breadcrumbs = [{:name => "Name", :url => "/controller/action"}]
@@ -355,7 +348,7 @@ describe DashboardController do
     end
   end
 
-  context "#session_reset" do
+  describe "#session_reset" do
     it "verify certain keys are restored after session is cleared" do
       user_TZO           = '5'
       browser_info       = {:name => 'firefox', :version => '32'}
@@ -372,15 +365,13 @@ describe DashboardController do
     end
   end
 
-  describe "building tabs" do
+  context "building tabs" do
     let(:group) do
       role = FactoryBot.create(:miq_user_role)
       FactoryBot.create(:miq_group, :miq_user_role => role)
     end
 
-    let(:user) do
-      FactoryBot.create(:user, :miq_groups => [group])
-    end
+    let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
 
     let(:wset) do
       FactoryBot.create(
@@ -453,9 +444,9 @@ describe DashboardController do
   end
 
   describe 'private #load_dialog_definition' do
-    let (:klass) { 'Foobar' }
-    let (:name) { 'existing_dialog' }
-    let (:dialog_path) { Pathname.new("/dialogs/#{name}.json") }
+    let(:klass) { 'Foobar' }
+    let(:name) { 'existing_dialog' }
+    let(:dialog_path) { Pathname.new("/dialogs/#{name}.json") }
 
     before do
       plug = double('Plugin')
@@ -507,6 +498,40 @@ describe DashboardController do
       request.headers['X-Remote-User'] = 'foo@bar'
       controller.send(:authenticate_external_user)
       expect(assigns(:user_name)).to eq('foo')
+    end
+  end
+
+  describe '#show' do
+    context 'changing tabs' do
+      let(:group) { FactoryBot.create(:miq_group) }
+      let(:user) { FactoryBot.create(:user_admin, :current_group => group, :miq_groups => [group]) }
+      let(:ws1) do
+        FactoryBot.create(:miq_widget_set,
+                          :name     => 'A',
+                          :owner_id => group.id,
+                          :set_data => {:col1 => [], :col2 => [], :col3 => []})
+      end
+      let(:ws2) do
+        FactoryBot.create(:miq_widget_set,
+                          :name     => 'B',
+                          :owner_id => group.id,
+                          :set_data => {:col1 => [], :col2 => [], :col3 => []})
+      end
+
+      before do
+        login_as user
+        controller.instance_variable_set(:@_params, 'uib-tab' => ws2.id.to_s)
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@current_user, user)
+        group.update_attributes(:settings => { :dashboard_order => [ws1.id.to_s, ws2.id.to_s] })
+      end
+
+      it 'sets id of selected tab properly' do
+        controller.send(:show)
+        expect(controller.instance_variable_get(:@sb)[:active_db]).to eq(ws2.name)
+        expect(controller.instance_variable_get(:@sb)[:active_db_id]).to eq(ws2.id)
+        expect(controller.instance_variable_get(:@active_tab)).to eq(ws2.id.to_s)
+      end
     end
   end
 
