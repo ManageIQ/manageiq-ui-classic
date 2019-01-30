@@ -410,7 +410,7 @@ describe ReportController do
   describe '#check_tabs' do
     tabs.each_pair do |tab_title, tab_number|
       title = tab_title.to_s.titleize
-      it "check existence of flash message when tab is changed to #{title} without selecting fields" do
+      it "check existence of flash message when tab is changed to #{title} without selecting (time) fields" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@edit, :new => {:fields => []})
         controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
