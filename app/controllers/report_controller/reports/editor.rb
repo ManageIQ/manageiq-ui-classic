@@ -266,7 +266,7 @@ module ReportController::Reports::Editor
     when "6"  # Timeline
       @tl_fields = []
       @edit[:new][:fields].each do |field|
-        if MiqReport.get_col_type(field[1]) == :datetime
+        if MiqExpression.parse_field_or_tag(field[1])&.datetime?
           @tl_fields.push(field)
         end
       end
@@ -1756,7 +1756,7 @@ module ReportController::Reports::Editor
       found = false
       unless empty_fields
         @edit[:new][:fields].each do |field|
-          if MiqReport.get_col_type(field[1]) == :datetime
+          if MiqExpression.parse_field_or_tag(field[1])&.datetime?
             found = true
             break
           end
