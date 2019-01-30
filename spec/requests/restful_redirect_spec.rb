@@ -16,9 +16,8 @@ describe RestfulRedirectController do
 
     before do
       # Load just one dialog instead of calling `MiqDialog.seed`
-      MiqDialog.sync_from_file(
+      MiqDialog.seed_dialog(
         Rails.root.join('product', 'dialogs', 'miq_dialogs', 'miq_provision_dialogs.yaml').to_s,
-        Rails.root.join('product', 'dialogs', 'miq_dialogs')
       )
     end
 
