@@ -10,9 +10,8 @@ function get(url, options = {}) {
     ...options,
     url,
     method: 'GET',
-    csrf: true,
     backendName: __('http'),
-    credentials: 'include',
+    cookieAndCsrf: true,
   });
 }
 
@@ -25,8 +24,7 @@ function post(url, data, { headers, ...options } = {}) {
     },
     url,
     method: 'POST',
-    csrf: true,
     backendName: __('http'),
-    credentials: 'include',
+    cookieAndCsrf: true,
   }, data);
 }

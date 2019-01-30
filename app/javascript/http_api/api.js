@@ -30,6 +30,7 @@ function urlOnly(method) {
     method,
     url,
     backendName: __('API'),
+    cookieAndCsrf: true,
   }, null);
 }
 
@@ -39,6 +40,7 @@ function withData(method) {
     method,
     url,
     backendName: __('API'),
+    cookieAndCsrf: true,
   }, data);
 }
 

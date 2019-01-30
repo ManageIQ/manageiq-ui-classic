@@ -22,7 +22,6 @@ function processOptions(options) {
   delete o.type;
   delete o.url;
   delete o.transformResponse;
-  delete o.csrf;
 
   o.headers = o.headers || {};
 
@@ -31,9 +30,15 @@ function processOptions(options) {
     delete o.skipTokenRenewal;
   }
 
-  const csrfElem = document.querySelector("meta[name=csrf-token]");
-  if (csrfElem) {
-    o.headers['X-CSRF-Token'] = csrfElem.getAttribute('content');
+  if (o.cookieAndCsrf) {
+    o.credentials = 'include';
+
+    const csrfElem = document.querySelector("meta[name=csrf-token]");
+    if (csrfElem) {
+      o.headers['X-CSRF-Token'] = csrfElem.getAttribute('content');
+    }
+
+    delete o.cookieAndCsrf;
   }
 
   if (Object.keys(o.headers).length) {
