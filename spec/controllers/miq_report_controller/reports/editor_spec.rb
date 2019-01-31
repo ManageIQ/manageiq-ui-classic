@@ -378,7 +378,11 @@ describe ReportController do
         controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
         controller.send(:check_tabs)
         flash_messages = assigns(:flash_array)
-        flash_str = "#{title} tab is not available until at least 1 field has been selected"
+        flash_str = if tab_number == 6
+                      "#{title} tab is not available unless at least 1 time field has been selected"
+                    else
+                      "#{title} tab is not available until at least 1 field has been selected"
+                    end
         expect(flash_messages.first[:message]).to eq(flash_str)
         expect(flash_messages.first[:level]).to eq(:error)
       end
