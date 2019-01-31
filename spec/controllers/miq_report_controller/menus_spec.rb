@@ -22,5 +22,23 @@ describe ReportController do
       expect(assigns(:edit)[:new]).to eq([["foo", [["bar", [report.name]]]]])
       expect(assigns(:flash_array).first[:message]).to include("default")
     end
+
+    context "report menu set to default" do
+      it "clears the report_menus from the selected group settings" do
+        controller.instance_variable_set(:@sb, :new => {}, :menu_default => true)
+        controller.instance_variable_set(:@_params, :button => "save")
+
+        expect(controller).to receive(:menu_get_form_vars)
+        expect(controller).to receive(:get_tree_data)
+        expect(controller).to receive(:replace_right_cell)
+
+        expect(MiqGroup).to receive(:find_by).and_return(user.current_group)
+        user.current_group[:settings] = { "report_menus" => 'foo' }
+
+        controller.menu_update
+
+        expect(user.current_group[:settings]["report_menus"]).to be_nil
+      end
+    end
   end
 end

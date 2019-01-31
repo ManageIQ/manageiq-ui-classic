@@ -223,7 +223,7 @@ module ReportController::Menus
       rec[:settings] ||= {}
       if @sb[:menu_default]
         # delete report_menus from settings if menu set to default
-        rec[:settings].delete(:report_menus)
+        rec[:settings].delete("report_menus")
       else
         rec[:settings]["report_menus"] ||= {}
         rec[:settings]["report_menus"] = copy_array(@edit[:new])
