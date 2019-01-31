@@ -332,27 +332,26 @@ module ReportController::Reports::Editor
     @edit[:miq_exp]               = true
   end
 
+  TAB_TITLES = {
+    'edit_1' => N_('Columns'),
+    'edit_3' => N_('Filter'),
+    'edit_7' => N_('Preview'),
+    'edit_8' => N_('Consolidation'),
+    'edit_2' => N_('Formatting'),
+    'edit_9' => N_('Styling'),
+    'edit_4' => N_('Summary'),
+    'edit_5' => N_('Charts'),
+    'edit_6' => N_('Timeline'),
+  }.freeze
+
   def build_tabs
     @tabs = if @edit[:new][:model] == ApplicationController::TREND_MODEL
-              [["edit_1", _('Columns')],
-               ["edit_3", _('Filter')],
-               ["edit_7", _('Preview')]]
+              TAB_TITLES.slice('edit_1', 'edit_3', 'edit_7')
             elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
-              [["edit_1", _('Columns')],
-               ["edit_2", _('Formatting')],
-               ["edit_3", _('Filter')],
-               ["edit_7", _('Preview')]]
+              TAB_TITLES.slice('edit_1', 'edit_2', 'edit_3', 'edit_7')
             else
-              [["edit_1", _('Columns')],
-               ["edit_8", _('Consolidation')],
-               ["edit_2", _('Formatting')],
-               ["edit_9", _('Styling')],
-               ["edit_3", _('Filter')],
-               ["edit_4", _('Summary')],
-               ["edit_5", _('Charts')],
-               ["edit_6", _('Timeline')],
-               ["edit_7", _('Preview')]]
-            end
+              TAB_TITLES.slice('edit_1', 'edit_8', 'edit_2', 'edit_9', 'edit_3', 'edit_4', 'edit_5', 'edit_6', 'edit_7')
+            end.transform_values! { |value| _(value) }.to_a
 
     tab = @sb[:miq_tab].split("_")[1] # Get the tab number of the active tab
     @active_tab = "edit_#{tab}"
