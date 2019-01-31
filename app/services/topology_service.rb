@@ -28,7 +28,7 @@ class TopologyService
       h[kind] = {:type => 'glyph', :class => klass.decorate.fonticon}
     end
 
-    @providers.uniq(&:class).each_with_object(kind_icons) do |provider, h|
+    @providers.to_a.uniq(&:class).each_with_object(kind_icons) do |provider, h|
       fileicon = provider.decorate.try(:fileicon)
 
       next if fileicon.nil?
