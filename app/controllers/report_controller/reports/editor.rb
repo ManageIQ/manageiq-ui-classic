@@ -1756,20 +1756,20 @@ module ReportController::Reports::Editor
         active_tab = 'edit_4'
       end
     when '6'
-      if @edit[:new][:fields].empty?
-        add_flash(_('Timeline tab is not available until at least 1 field has been selected'), :error)
-      else
-        found = false
+      error_message = _('Timeline tab is not available unless at least 1 time field has been selected')
+      empty_fields = @edit[:new][:fields].empty?
+
+      found = false
+      unless empty_fields
         @edit[:new][:fields].each do |field|
           if MiqReport.get_col_type(field[1]) == :datetime
             found = true
             break
           end
         end
-        unless found
-          add_flash(_('Timeline tab is not available unless at least 1 time field has been selected'), :error)
-        end
       end
+
+      add_flash(error_message, :error) if empty_fields || !found
     when '7'
       if @edit[:new][:model] == ApplicationController::TREND_MODEL
         unless @edit[:new][:perf_trend_col]
