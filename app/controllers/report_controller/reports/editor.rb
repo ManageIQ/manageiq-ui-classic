@@ -345,14 +345,15 @@ module ReportController::Reports::Editor
   }.freeze
 
   def build_tabs
-    @tabs = if @edit[:new][:model] == ApplicationController::TREND_MODEL
-              TAB_TITLES.slice('edit_1', 'edit_3', 'edit_7')
-            elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
-              TAB_TITLES.slice('edit_1', 'edit_2', 'edit_3', 'edit_7')
-            else
-              TAB_TITLES.slice('edit_1', 'edit_8', 'edit_2', 'edit_9', 'edit_3', 'edit_4', 'edit_5', 'edit_6', 'edit_7')
-            end.transform_values! { |value| _(value) }.to_a
+    tab_indexes = if @edit[:new][:model] == ApplicationController::TREND_MODEL
+                    %w(edit_1 edit_3 edit_7)
+                  elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
+                    %w(edit_1 edit_2 edit_3 edit_7)
+                  else
+                    %w(edit_1 edit_8 edit_2 edit_9 edit_3 edit_4 edit_5 edit_6 edit_7)
+                  end
 
+    @tabs = TAB_TITLES.slice(*tab_indexes).transform_values! { |value| _(value) }.to_a
     tab = @sb[:miq_tab].split("_")[1] # Get the tab number of the active tab
     @active_tab = "edit_#{tab}"
   end
