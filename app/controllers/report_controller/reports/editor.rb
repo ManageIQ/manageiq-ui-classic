@@ -333,30 +333,29 @@ module ReportController::Reports::Editor
   end
 
   def build_tabs
-    req = "edit"
     @tabs = if @edit[:new][:model] == ApplicationController::TREND_MODEL
-              [["#{req}_1", _('Columns')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_7", _('Preview')]]
+              [["edit_1", _('Columns')],
+               ["edit_3", _('Filter')],
+               ["edit_7", _('Preview')]]
             elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
-              [["#{req}_1", _('Columns')],
-               ["#{req}_2", _('Formatting')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_7", _('Preview')]]
+              [["edit_1", _('Columns')],
+               ["edit_2", _('Formatting')],
+               ["edit_3", _('Filter')],
+               ["edit_7", _('Preview')]]
             else
-              [["#{req}_1", _('Columns')],
-               ["#{req}_8", _('Consolidation')],
-               ["#{req}_2", _('Formatting')],
-               ["#{req}_9", _('Styling')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_4", _('Summary')],
-               ["#{req}_5", _('Charts')],
-               ["#{req}_6", _('Timeline')],
-               ["#{req}_7", _('Preview')]]
+              [["edit_1", _('Columns')],
+               ["edit_8", _('Consolidation')],
+               ["edit_2", _('Formatting')],
+               ["edit_9", _('Styling')],
+               ["edit_3", _('Filter')],
+               ["edit_4", _('Summary')],
+               ["edit_5", _('Charts')],
+               ["edit_6", _('Timeline')],
+               ["edit_7", _('Preview')]]
             end
 
     tab = @sb[:miq_tab].split("_")[1] # Get the tab number of the active tab
-    @active_tab = "#{req}_#{tab}"
+    @active_tab = "edit_#{tab}"
   end
 
   # Get variables from edit form
