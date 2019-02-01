@@ -31,15 +31,22 @@ describe ContainerNodeController do
       @node = FactoryBot.create(:container_node)
     end
 
-    subject { get :show, :params => { :id => @node.id } }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_node")
-        is_expected.to render_template('layouts/_textual_groups_generic')
+      it "correctly for summary page" do
+        get :show, :params => {:id => @node.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @node.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
       end
     end
   end

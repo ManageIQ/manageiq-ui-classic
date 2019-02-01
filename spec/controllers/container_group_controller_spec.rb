@@ -44,15 +44,22 @@ describe ContainerGroupController do
       login_as FactoryBot.create(:user)
     end
 
-    subject { get :show, :params => { :id => @container_group.id } }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_group")
-        is_expected.to render_template('layouts/_textual_groups_generic')
+      it "correctly for summary page" do
+        get :show, :params => {:id => @container_group.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_group")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @container_group.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_group")
       end
     end
   end

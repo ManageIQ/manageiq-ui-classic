@@ -68,15 +68,22 @@ describe EmsClusterController do
       login_as FactoryBot.create(:user, :features => "none")
     end
 
-    subject do
-      get :show, :params => {:id => @cluster.id}
-    end
-
-    context "render" do
+    context "render listnav partial" do
       render_views
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_cluster")
+
+      it "correctly for summary page" do
+        get :show, :params => {:id => @cluster.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_ems_cluster")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @cluster.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_ems_cluster")
       end
     end
   end
