@@ -73,4 +73,21 @@ describe InfraTopologyService do
       )
     end
   end
+
+  describe '#build_icons' do
+    it "creates a hash of object types and their icon information" do
+      FactoryBot.create(:ems_vmware)
+      FactoryBot.create(:ems_openstack_infra)
+      FactoryBot.create(:ems_openstack_infra)
+
+      # entity_display_type is called once per class of ems
+      expect(infra_topology_service).to receive(:entity_display_type).exactly(2).times.and_call_original
+
+      icons = infra_topology_service.build_icons
+      expect(icons["Openstack"]).to eq(:type => "image", :icon  => "/images/svg/vendor-openstack_infra.svg")
+      expect(icons["Vmware"]).to    eq(:type => "image", :icon  => "/images/svg/vendor-vmwarews.svg")
+      expect(icons[:EmsCluster]).to eq(:type => "glyph", :class => "pficon pficon-cluster")
+      expect(icons[:Host]).to       eq(:type => "glyph", :class => "pficon pficon-container-node")
+    end
+  end
 end
