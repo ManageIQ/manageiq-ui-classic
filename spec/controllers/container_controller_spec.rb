@@ -1,3 +1,4 @@
+
 describe ContainerController do
   render_views
   before do
@@ -41,15 +42,22 @@ describe ContainerController do
       @container = FactoryBot.create(:container, :container_group => container_group, :name => "Test Container")
     end
 
-    subject { get :show, :params => { :id => @container.id } }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container")
-        is_expected.to render_template('layouts/_textual_groups_generic')
+      it "correctly for summary page" do
+        get :show, :params => {:id => @container.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @container.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container")
       end
     end
   end

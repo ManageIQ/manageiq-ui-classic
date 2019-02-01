@@ -34,14 +34,22 @@ describe ContainerReplicatorController do
       @replicator = FactoryBot.create(:replicator_with_assoc)
     end
 
-    subject { get :show, :params => { :id => @replicator.id } }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_replicator")
+      it "correctly for summary page" do
+        get :show, :params => {:id => @replicator.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @replicator.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
       end
     end
   end
