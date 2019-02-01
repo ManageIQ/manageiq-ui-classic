@@ -2954,6 +2954,10 @@ Rails.application.routes.draw do
       :get  => %w(index)
     },
 
+    :ui                       => {
+      :post => %w(keepalive),
+    },
+
     :vm                       => {
       :get  => %w(
         download_data
