@@ -1,40 +1,4 @@
 class DialogLocalService
-  NEW_DIALOG_USERS = %w(
-    AvailabilityZone
-    CloudNetwork
-    CloudObjectStoreContainer
-    CloudSubnet
-    CloudTenant
-    CloudVolume
-    ContainerGroup
-    ContainerImage
-    ContainerNode
-    ContainerProject
-    ContainerTemplate
-    ContainerVolume
-    EmsCluster
-    GenericObject
-    Host
-    InfraManager
-    LoadBalancer
-    MiqGroup
-    NetworkRouter
-    OrchestrationStack
-    SecurityGroup
-    Service
-    ServiceAnsiblePlaybook
-    ServiceAnsibleTower
-    ServiceContainerTemplate
-    ServiceGeneric
-    ServiceOrchestration
-    Storage
-    Switch
-    Template
-    Tenant
-    User
-    Vm
-  ).freeze
-
   def determine_dialog_locals_for_svc_catalog_provision(resource_action, target, finish_submit_endpoint)
     api_submit_endpoint = "/api/service_catalogs/#{target.service_template_catalog_id}/service_templates/#{target.id}"
 
@@ -53,13 +17,9 @@ class DialogLocalService
   end
 
   def determine_dialog_locals_for_custom_button(obj, button_name, resource_action, display_options = {})
-    dialog_locals = {:force_old_dialog_use => true}
-
-    return dialog_locals unless NEW_DIALOG_USERS.include?(obj.class.name.demodulize)
-
     submit_endpoint, cancel_endpoint = determine_api_endpoints(obj, display_options)
 
-    dialog_locals.merge!(
+    {
       :resource_action_id     => resource_action.id,
       :target_id              => obj.id,
       :target_type            => determine_target_type(obj),
@@ -70,19 +30,20 @@ class DialogLocalService
       :finish_submit_endpoint => cancel_endpoint,
       :cancel_endpoint        => cancel_endpoint,
       :open_url               => false
-    )
-
-    dialog_locals
+    }
   end
 
   private
 
   def determine_api_endpoints(obj, display_options = {})
-    base_name = obj.class.name.demodulize
+    base_name = obj.class.base_model.name
     case base_name
     when /EmsCluster/
       api_collection_name = "clusters"
       cancel_endpoint = "/ems_cluster"
+    when /MiqTemplate/
+      api_collection_name = "templates"
+      cancel_endpoint = display_options[:cancel_endpoint] || "/vm_or_template/explorer"
     when /GenericObject/
       api_collection_name = "generic_objects"
       cancel_endpoint = if !display_options.empty? && display_options[:display_id]
@@ -90,9 +51,9 @@ class DialogLocalService
                         else
                           "/service/explorer"
                         end
-    when /InfraManager/
+    when /ExtManagementSystem/
       api_collection_name = "providers"
-      cancel_endpoint = "/ems_infra"
+      cancel_endpoint = obj.class.name.demodulize == "CloudManager" ? "/ems_cloud" : "/ems_infra"
     when /MiqGroup/
       api_collection_name = "groups"
       cancel_endpoint = "/ops/explorer"
@@ -105,12 +66,6 @@ class DialogLocalService
     when /Switch/
       api_collection_name = "switches"
       cancel_endpoint = "/infra_networking/explorer"
-
-    # ^ is necessary otherwise we match on ContainerTemplates
-    when /^Template/
-      api_collection_name = "templates"
-      cancel_endpoint = display_options[:cancel_endpoint] || "/vm_or_template/explorer"
-
     # ^ is necessary otherwise we match CloudTenant
     when /^Tenant/
       api_collection_name = "tenants"
@@ -140,7 +95,7 @@ class DialogLocalService
     when /^Service/
       "service"
     else
-      obj.class.name.demodulize.underscore
+      obj.class.base_model.name.underscore.downcase
     end
   end
 end

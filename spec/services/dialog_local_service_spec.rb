@@ -44,8 +44,7 @@ describe DialogLocalService do
     let(:resource_action) { instance_double("ResourceAction", :id => 321, :dialog_id => 654) }
     let(:display_options) { {} }
 
-    shared_examples_for "DialogLocalService#determine_dialog_locals_for_custom_button return value" do
-      |target_type, collection_name, finish_endpoint|
+    shared_examples_for "DialogLocalService#determine_dialog_locals_for_custom_button return value" do |target_type, collection_name, finish_endpoint|
       it "returns a hash with the proper parameters" do
         expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action, display_options))
           .to eq(
@@ -72,6 +71,13 @@ describe DialogLocalService do
 
     context "when the object is a CloudNetwork" do
       let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::CloudNetwork, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "cloud_network", "cloud_networks", "/cloud_network"
+    end
+
+    context "when the object is a private CloudNetwork" do
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "cloud_network", "cloud_networks", "/cloud_network"
@@ -168,11 +174,25 @@ describe DialogLocalService do
                        "host", "hosts", "/host"
     end
 
+    context "when the object is a HostEsx" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::HostEsx, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "host", "hosts", "/host"
+    end
+
     context "when the object is an InfraManager" do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "ext_management_system", "providers", "/ems_infra"
+    end
+
+    context "when the object is a CloudManager" do
+      let(:obj) { double(:class => ManageIQ::Providers::Vmware::CloudManager, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "ext_management_system", "providers", "/ems_cloud"
     end
 
     context "when the object is a LoadBalancer" do
@@ -290,16 +310,6 @@ describe DialogLocalService do
 
         include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                          "vm", "vms", "/vm_infra/explorer"
-      end
-    end
-
-    context "when the object does not support new dialogs" do
-      let(:obj) { double(:id => 123) }
-
-      it "returns a hash with 'force_old_dialog_use' set to true" do
-        expect(service.determine_dialog_locals_for_custom_button(obj, button_name, resource_action)).to eq(
-          :force_old_dialog_use => true
-        )
       end
     end
   end
