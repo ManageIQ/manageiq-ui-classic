@@ -77,13 +77,14 @@ module ApplicationHelper
         vm_or_template
       )).include?(@layout)
         "vm"
+      elsif @layout == "timeline"
+        controller.controller_name == "dashboard" ? "timeline" : controller.controller_name
       elsif (common_layouts + %w(
         action
         condition
         miq_schedule
         policy
         scan_profile
-        timeline
       )).include?(@layout)
         @layout
       end
