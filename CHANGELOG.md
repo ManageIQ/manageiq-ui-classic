@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-2
+
+### Fixed
+- Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
+- Fix missing paging in provisioning template selection [(#5149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5149)
+
 ## Unreleased as of Sprint 103 ending 2019-01-21
 
 ### Added
@@ -14,12 +20,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Dashboard (under Reports) - fix broken accordion_select; use @dashboardnot @db [(#5162)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5162)
 - Properly handle non-existent hash key [(#5161)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5161)
-- Fix missing paging in provisioning template selection [(#5149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5149)
 - Show breadcrumbs when redirected from another controller [(#5148)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5148)
 - Unify sorting in GOD page [(#5146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5146)
 - Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
 - Send button_order via API [(#5143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5143)
-- Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
 - Rename WebsocketWorker to RemoteConsoleWorker [(#5136)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5136)
 - Added "Preserve owner?" checkbox on Import report screen  [(#5060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5060)
 - Flavor add form converted to data-driven-forms [(#5055)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5055)
@@ -52,7 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Remove logic for request screen dialogs [(#5126)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5126)
 
 
-## Hammer-1
+## Hammer-1 - Released 2019-01-15
 
 ### Added
 - Swift DB Backups [(#4684)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4684)
