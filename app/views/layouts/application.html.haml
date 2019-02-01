@@ -24,6 +24,7 @@
       ManageIQ.charts.provider = "#{Charting.backend}";
       ManageIQ.browser = "#{j browser_info(:name_ui)}";
       ManageIQ.controller = "#{j controller_name}";
+      ManageIQ.login.timeout = #{::Settings.session.timeout.to_json};
 
     - if ::Settings.server.asynchronous_notifications
       :javascript

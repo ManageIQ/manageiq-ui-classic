@@ -48,6 +48,9 @@ if (!window.ManageIQ) {
     i18n: {
       mark_translated_strings: false,
     },
+    login: {
+      timeout: null, // session timeout in seconds
+    },
     mouse: {
       x: null, // mouse X coordinate for popup menu
       y: null, // mouse Y coordinate for popup menu
