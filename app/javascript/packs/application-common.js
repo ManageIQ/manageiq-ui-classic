@@ -22,6 +22,8 @@ import { history } from '../miq-component/react-history.ts';
 import createReduxRoutingActions from '../miq-redux/redux-router-actions';
 import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
 
+import miqKeepAlive from '../helpers/keepalive.js';
+
 ManageIQ.component = {
   ...newRegistry,
   reactBlueprint,
@@ -55,3 +57,6 @@ require('xml_display/XMLDisplay.css');
 
 // miqSpinner, miqSearchSpinner
 window.Spinner = Spinner;
+
+// don't log out in the middle of editing a form
+window.miqKeepAlive = miqKeepAlive;
