@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-1
+## Hammer-2
+
+### Fixed
+- Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
+- Fix missing paging in provisioning template selection [(#5149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5149)
+
+## Hammer-1 - Released 2019-01-15
 
 ### Added
 - Swift DB Backups [(#4684)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4684)
