@@ -12,10 +12,11 @@ export default function miqKeepAlive() {
   }
 
   document.addEventListener("visibilitychange", maybePing);
-  window.setInterval(maybePing, ManageIQ.login.timeout / 2 * 1000);
+  window.setInterval(maybePing, ManageIQ.login.timeout / 3 * 1000);
 }
 
-// ping, except when hidden, or pinged in the last timeout/2 seconds
+// ping, except when hidden, or pinged in the last timeout/3 seconds
+// halving is not enough: if the server takes too long to respond, every other ping gets skipped
 function maybePing() {
   const now = new Date() / 1000;
 
@@ -23,7 +24,7 @@ function maybePing() {
     return;
   }
 
-  if (now - last_ping < ManageIQ.login.timeout / 2) {
+  if (now - last_ping < ManageIQ.login.timeout / 3) {
     return;
   }
 
