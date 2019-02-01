@@ -239,7 +239,9 @@
     .col-md-8
       = select_tag('chosen_tz',
         options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:tz]),
-        :class => "selectpicker")
+        :class             => 'selectpicker',
+        'data-live-search' => 'true',
+        )
       :javascript
         miqInitSelectPicker();
         miqSelectPickerEvent('chosen_tz', '#{url}')
