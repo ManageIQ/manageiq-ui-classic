@@ -26,6 +26,12 @@ describe EmsContainerController do
         is_expected.to render_template(:partial => 'ems_container/_show_dashboard')
       end
 
+      it "listnav correctly for timeline" do
+        get :show, :params => { :id => @container.id, :display => 'timeline' }
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_ems_container")
+      end
+
       it "renders topology view" do
         get :show, :params => { :id => @container.id, :display => 'topology' }
         expect(response.status).to eq(200)

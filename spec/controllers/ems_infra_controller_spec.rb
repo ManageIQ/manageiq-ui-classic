@@ -326,9 +326,15 @@ describe EmsInfraController do
     context "render listnav partial" do
       render_views
 
-      it do
+      it "listnav correctly for summary page" do
         is_expected.to have_http_status 200
         is_expected.not_to render_template(:partial => "layouts/listnav/_ems_infra")
+      end
+
+      it "listnav correctly for timeline" do
+        get :show, :params => { :id => @ems.id, :display => 'timeline' }
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_ems_infra")
       end
     end
 
