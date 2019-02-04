@@ -286,26 +286,34 @@ function miqDimDiv(divname, status) {
   }
 }
 
+function miqInAForm() {
+  if (miqDomElementExists('ignore_form_changes'))
+    return false;
+
+  if (ManageIQ.angular.scope) {
+    return ManageIQ.angular.scope.angularForm && ManageIQ.angular.scope.angularForm.$dirty;
+  } else {
+    return ManageIQ.changes || $('#buttons_on').is(':visible');
+  }
+
+  return false;
+}
+
 // Check for changes and prompt
 function miqCheckForChanges() {
-  if (ManageIQ.angular.scope) {
-    if (ManageIQ.angular.scope.angularForm !== undefined &&
-      ManageIQ.angular.scope.angularForm.$dirty &&
-      !miqDomElementExists('ignore_form_changes')) {
-      var answer = confirm(__('Abandon changes?'));
-      if (answer) {
-        ManageIQ.angular.scope.angularForm.$setPristine(true);
-      }
-      return answer;
-    }
-  } else if (((miqDomElementExists('buttons_on') &&
-               $('#buttons_on').is(':visible')) ||
-              ManageIQ.changes !== null) &&
-             !miqDomElementExists('ignore_form_changes')) {
-    return confirm(__('Abandon changes?'));
+  var form = miqInAForm();
+  if (! form) {
+    // use default browser reaction for onclick
+    return true;
   }
-  // use default browser reaction for onclick
-  return true;
+
+  var answer = confirm(__('Abandon changes?'));
+
+  if (answer && ManageIQ.angular.scope && ManageIQ.angular.scope.angularForm) {
+    ManageIQ.angular.scope.angularForm.$setPristine(true);
+  }
+
+  return answer;
 }
 
 // Hide/show form buttons
