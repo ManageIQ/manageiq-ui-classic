@@ -1,5 +1,7 @@
+import idleJs from 'idle-js';
+
 let last_ping = new Date() / 1000;
-let last_click = new Date() / 1000;
+let idle = null;
 
 export default function miqKeepAlive() {
   if (! ManageIQ.login.timeout) {
@@ -7,39 +9,37 @@ export default function miqKeepAlive() {
     return;
   }
 
-  if (document.hidden === undefined) {
-    console.warning('Not initializing keepalive, Page Visibility API unsupported.');
-    return;
-  }
-
-  document.addEventListener('visibilitychange', maybePing);
   window.setInterval(maybePing, ManageIQ.login.timeout / 3 * 1000);
 
-  document.addEventListener('click', lastClick);
+  idle = new idleJs({
+    idle: 60000, // idle after a minute
+    onActive: maybePing,
+    onShow: maybePing,
+  });
+  idle.start();
 }
 
-function lastClick() {
-  last_click = new Date() / 1000;
-}
-
-// ping, except when hidden, or pinged in the last timeout/3 seconds
-// halving is not enough: if the server takes too long to respond, every other ping gets skipped
+// ping, except when hidden, inactive, or pinged in the last timeout/3 seconds
 function maybePing() {
   const now = new Date() / 1000;
 
-  if (document.hidden) {
+  if (! idle.visible) {
+    console.log('bail: hidden');
     return;
   }
 
+  if (idle.idle) {
+    console.log('bail: idle');
+    return;
+  }
+
+  // halving the timeout is not enough: if the server takes too long to respond, every other ping gets skipped
   if (now - last_ping < ManageIQ.login.timeout / 3) {
+    console.log('bail: timeout', {timeout: ManageIQ.login.timeout, diff: now - last_ping, now, last_ping});
     return;
   }
 
-  // if the last click was closer to the last ping then to now, ignore it
-  if ((now - last_click) > ((now - last_ping) / 2)) {
-    return;
-  }
-
+  console.log('ping');
   ping();
 }
 
