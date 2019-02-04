@@ -12,8 +12,9 @@ describe AnsibleRepositoryController do
     describe "#show" do
       subject { get :show, :params => {:id => @repository.id} }
 
-      it "render specific view" do
+      it "render specific view and listnav" do
         is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
+        is_expected.to render_template(:partial => "layouts/listnav/_ansible_repository")
         is_expected.to have_http_status 200
       end
     end
@@ -30,9 +31,10 @@ describe AnsibleRepositoryController do
     describe "#show_list" do
       subject { get :show_list, :params => {} }
 
-      it "render list of repositories with a toolbar" do
+      it "render list of repositories with a toolbar and listnav" do
         expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition).and_call_original
         is_expected.to render_template(:partial => "layouts/_gtl")
+        is_expected.to render_template(:partial => "layouts/listnav/_show_list")
         is_expected.to have_http_status 200
       end
     end
