@@ -45,7 +45,7 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_button_saveid
     if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
-      add_flash(_("Search Name is required"), :error)
+      add_flash(_("Search Name is required"), :error) if params[:button] == 'saveit'
       false
     else
       s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
