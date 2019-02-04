@@ -25,22 +25,18 @@ function maybePing() {
   const now = new Date() / 1000;
 
   if (! idle.visible) {
-    console.log('bail: hidden');
     return;
   }
 
   if (idle.idle) {
-    console.log('bail: idle');
     return;
   }
 
   // halving the timeout is not enough: if the server takes too long to respond, every other ping gets skipped
   if (now - last_ping < ManageIQ.login.timeout / 3) {
-    console.log('bail: timeout', {timeout: ManageIQ.login.timeout, diff: now - last_ping, now, last_ping});
     return;
   }
 
-  console.log('ping');
   ping();
 }
 
