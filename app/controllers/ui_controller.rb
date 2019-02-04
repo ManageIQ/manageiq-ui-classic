@@ -9,9 +9,21 @@ class UiController < ActionController::Base
   end
 
   def keepalive
+    # 401 when session timed out,
+    # 422 when invalid csrf,
+    # 200 otherwise
+
     head :unauthorized unless session[:userid]
     render :json => {
       :timeout => ::Settings.session.timeout,
     }
+  end
+
+  rescue_from StandardError, :with => :error_handler
+  def error_handler(e)
+    status = 500
+    status = 422 if ActionController::InvalidAuthenticityToken === e
+
+    render :json => {:error => e, :message => e.message}, :status => status
   end
 end
