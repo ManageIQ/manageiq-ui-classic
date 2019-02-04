@@ -342,6 +342,33 @@ describe ReportController do
     end
   end
 
+  describe "#build_tabs" do
+    before do
+      controller.instance_variable_set(:@sb, :miq_tab => "edit_1")
+    end
+
+    it "display title tabs for model #{ApplicationController::TREND_MODEL}" do
+      controller.instance_variable_set(:@edit, :new => {:model => ApplicationController::TREND_MODEL})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_3 Filter), %w(edit_7 Preview)])
+    end
+
+    it "display title tabs for chargeback model" do
+      controller.instance_variable_set(:@edit, :new => {:model => ChargebackVm})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_2 Formatting), %w(edit_3 Filter), %w(edit_7 Preview)])
+    end
+
+    it "display title tabs for any model" do
+      controller.instance_variable_set(:@edit, :new => {:model => Vm})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_8 Consolidation), %w(edit_2 Formatting), %w(edit_9 Styling), %w(edit_3 Filter), %w(edit_4 Summary), %w(edit_5 Charts), %w(edit_6 Timeline), %w(edit_7 Preview)])
+    end
+  end
+
   describe '#check_tabs' do
     tabs.each_pair do |tab_title, tab_number|
       title = tab_title.to_s.titleize
@@ -351,7 +378,11 @@ describe ReportController do
         controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
         controller.send(:check_tabs)
         flash_messages = assigns(:flash_array)
-        flash_str = "#{title} tab is not available until at least 1 field has been selected"
+        flash_str = if tab_number == 6
+                      "#{title} tab is not available unless at least 1 time field has been selected"
+                    else
+                      "#{title} tab is not available until at least 1 field has been selected"
+                    end
         expect(flash_messages.first[:message]).to eq(flash_str)
         expect(flash_messages.first[:level]).to eq(:error)
       end

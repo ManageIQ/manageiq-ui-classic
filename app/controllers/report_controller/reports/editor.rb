@@ -332,31 +332,30 @@ module ReportController::Reports::Editor
     @edit[:miq_exp]               = true
   end
 
-  def build_tabs
-    req = "edit"
-    @tabs = if @edit[:new][:model] == ApplicationController::TREND_MODEL
-              [["#{req}_1", _('Columns')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_7", _('Preview')]]
-            elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
-              [["#{req}_1", _('Columns')],
-               ["#{req}_2", _('Formatting')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_7", _('Preview')]]
-            else
-              [["#{req}_1", _('Columns')],
-               ["#{req}_8", _('Consolidation')],
-               ["#{req}_2", _('Formatting')],
-               ["#{req}_9", _('Styling')],
-               ["#{req}_3", _('Filter')],
-               ["#{req}_4", _('Summary')],
-               ["#{req}_5", _('Charts')],
-               ["#{req}_6", _('Timeline')],
-               ["#{req}_7", _('Preview')]]
-            end
+  TAB_TITLES = {
+    'edit_1' => N_('Columns'),
+    'edit_3' => N_('Filter'),
+    'edit_7' => N_('Preview'),
+    'edit_8' => N_('Consolidation'),
+    'edit_2' => N_('Formatting'),
+    'edit_9' => N_('Styling'),
+    'edit_4' => N_('Summary'),
+    'edit_5' => N_('Charts'),
+    'edit_6' => N_('Timeline'),
+  }.freeze
 
+  def build_tabs
+    tab_indexes = if @edit[:new][:model] == ApplicationController::TREND_MODEL
+                    %w(edit_1 edit_3 edit_7)
+                  elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
+                    %w(edit_1 edit_2 edit_3 edit_7)
+                  else
+                    %w(edit_1 edit_8 edit_2 edit_9 edit_3 edit_4 edit_5 edit_6 edit_7)
+                  end
+
+    @tabs = TAB_TITLES.slice(*tab_indexes).transform_values! { |value| _(value) }.to_a
     tab = @sb[:miq_tab].split("_")[1] # Get the tab number of the active tab
-    @active_tab = "#{req}_#{tab}"
+    @active_tab = "edit_#{tab}"
   end
 
   # Get variables from edit form
@@ -1757,20 +1756,20 @@ module ReportController::Reports::Editor
         active_tab = 'edit_4'
       end
     when '6'
-      if @edit[:new][:fields].empty?
-        add_flash(_('Timeline tab is not available until at least 1 field has been selected'), :error)
-      else
-        found = false
+      error_message = _('Timeline tab is not available unless at least 1 time field has been selected')
+      empty_fields = @edit[:new][:fields].empty?
+
+      found = false
+      unless empty_fields
         @edit[:new][:fields].each do |field|
           if MiqReport.get_col_type(field[1]) == :datetime
             found = true
             break
           end
         end
-        unless found
-          add_flash(_('Timeline tab is not available unless at least 1 time field has been selected'), :error)
-        end
       end
+
+      add_flash(error_message, :error) if empty_fields || !found
     when '7'
       if @edit[:new][:model] == ApplicationController::TREND_MODEL
         unless @edit[:new][:perf_trend_col]
