@@ -9,8 +9,9 @@ describe AnsibleCredentialController do
     subject { get :show, :params => {:id => machine_credential.id} }
     render_views
 
-    it "renders correct template" do
+    it "renders correct template and listnav" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
+      is_expected.to render_template(:partial => "layouts/listnav/_ansible_credential")
       is_expected.to have_http_status 200
     end
   end
@@ -19,8 +20,9 @@ describe AnsibleCredentialController do
     subject { get :show_list, :params => {} }
     render_views
 
-    it "renders correct template" do
+    it "renders correct template and listnav" do
       is_expected.to render_template(:partial => "layouts/_gtl")
+      is_expected.to render_template(:partial => "layouts/listnav/_show_list")
       is_expected.to have_http_status 200
     end
 
