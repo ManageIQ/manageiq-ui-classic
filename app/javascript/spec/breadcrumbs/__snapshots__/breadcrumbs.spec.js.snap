@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Breadcrumbs component is correctly rendered 1`] = `
+<Breadcrumbs
+  controllerName="provider"
+  items={
+    Array [
+      Object {
+        "title": "Providers",
+        "url": "/providers",
+      },
+      Object {
+        "key": "in tree",
+        "title": "Google",
+      },
+      Object {
+        "action": "accordion-select",
+        "title": "All",
+      },
+      Object {
+        "title": "This",
+      },
+    ]
+  }
+  title="Title"
+>
+  <Breadcrumb
+    style={
+      Object {
+        "marginBottom": 0,
+      }
+    }
+    title={false}
+  >
+    <Breadcrumb
+      bsClass="breadcrumb"
+      className=""
+      style={
+        Object {
+          "marginBottom": 0,
+        }
+      }
+    >
+      <ol
+        aria-label="breadcrumbs"
+        className="breadcrumb"
+        role="navigation"
+        style={
+          Object {
+            "marginBottom": 0,
+          }
+        }
+      >
+        <BreadcrumbItem
+          active={false}
+          href="/providers"
+          key="/providers"
+        >
+          <li
+            className=""
+          >
+            <SafeAnchor
+              componentClass="a"
+              href="/providers"
+            >
+              <a
+                href="/providers"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+              >
+                Providers
+              </a>
+            </SafeAnchor>
+          </li>
+        </BreadcrumbItem>
+        <BreadcrumbItem
+          active={false}
+          key="in tree"
+          onClick={[Function]}
+        >
+          <li
+            className=""
+          >
+            <SafeAnchor
+              componentClass="a"
+              onClick={[Function]}
+            >
+              <a
+                href="#"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="button"
+              >
+                Google
+              </a>
+            </SafeAnchor>
+          </li>
+        </BreadcrumbItem>
+        <li
+          key="2"
+        >
+          All
+        </li>
+        <BreadcrumbItem
+          active={true}
+        >
+          <li
+            className="active"
+          >
+            <span>
+              <strong>
+                This
+              </strong>
+            </span>
+          </li>
+        </BreadcrumbItem>
+      </ol>
+    </Breadcrumb>
+  </Breadcrumb>
+</Breadcrumbs>
+`;
