@@ -13,7 +13,8 @@ export default function miqKeepAlive() {
 
   idle = new idleJs({
     idle: 60000, // idle after a minute
-    onActive: maybePing,
+    // setTimeout - workaround for https://github.com/soixantecircuits/idle-js/issues/6
+    onActive: () => setTimeout(maybePing, 1000),
     onShow: maybePing,
   });
   idle.start();
