@@ -1,4 +1,5 @@
 let last_ping = new Date() / 1000;
+let last_click = new Date() / 1000;
 
 export default function miqKeepAlive() {
   if (! ManageIQ.login.timeout) {
@@ -11,8 +12,14 @@ export default function miqKeepAlive() {
     return;
   }
 
-  document.addEventListener("visibilitychange", maybePing);
+  document.addEventListener('visibilitychange', maybePing);
   window.setInterval(maybePing, ManageIQ.login.timeout / 3 * 1000);
+
+  document.addEventListener('click', lastClick);
+}
+
+function lastClick() {
+  last_click = new Date() / 1000;
 }
 
 // ping, except when hidden, or pinged in the last timeout/3 seconds
@@ -25,6 +32,11 @@ function maybePing() {
   }
 
   if (now - last_ping < ManageIQ.login.timeout / 3) {
+    return;
+  }
+
+  // if the last click was closer to the last ping then to now, ignore it
+  if ((now - last_click) > ((now - last_ping) / 2)) {
     return;
   }
 
