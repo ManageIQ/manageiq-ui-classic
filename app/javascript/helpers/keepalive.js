@@ -1,3 +1,4 @@
+/* global miqInAForm */
 import idleJs from 'idle-js';
 
 let last_ping = new Date() / 1000;
@@ -49,7 +50,9 @@ function ping() {
     })
     .catch(() => {
       window.add_flash(__("You have been logged out becuase of session timeout."), "warning");
-      // TODO only when editing
-      window.add_flash(__("Please make sure to log in in a different tab before submitting the form."), "info");
+
+      if (miqInAForm()) {
+        window.add_flash(__("Please make sure to log in in a different tab before submitting the form."), "info");
+      }
     });
 }
