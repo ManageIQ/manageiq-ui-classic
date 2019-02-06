@@ -307,7 +307,7 @@ module ApplicationController::Buttons
     ids = find_checked_items if ids == 'LIST' || ids.nil?
 
     if ids.blank?
-      render_flash(_("Error executing custom button: No item was selected."), :error)
+      render_flash(_("Error launching custom button: No item was selected."), :error)
       return
     end
 
@@ -315,7 +315,7 @@ module ApplicationController::Buttons
     obj = objs.first
 
     if objs.empty?
-      render_flash(_("Error executing custom button: No item was selected."), :error)
+      render_flash(_("Error launching custom button: No item was selected."), :error)
       return
     end
 
@@ -344,10 +344,10 @@ module ApplicationController::Buttons
       begin
         custom_buttons_invoke(button, objs)
       rescue StandardError => bang
-        add_flash(_("Error executing: \"%{task_description}\" %{error_message}") %
+        add_flash(_("Error launching: \"%{task_description}\" %{error_message}") %
           {:task_description => params[:desc], :error_message => bang.message}, :error)
       else
-        add_flash(_("\"%{task_description}\" was executed") % {:task_description => params[:desc]})
+        add_flash(_("\"%{task_description}\" was launched") % {:task_description => params[:desc]})
       end
       javascript_flash
     end
