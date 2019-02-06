@@ -26,7 +26,7 @@
     .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}", "ng-if" => "!emsCommonModel.zone_hidden"}
       %label.col-md-2.control-label{"for" => "prov_zone"}
         = _("Zone")
-      .col-md-8
+      .col-md-8{"class" => @server_zones.empty? ? "has-error" : ""}
         - if @server_zones.length <= 1
           %input.form-control{"type"        => "text",
                               "id"          => "prov_zone",
@@ -36,6 +36,9 @@
                               "required"    => "",
                               "readonly"    => true,
                               "style"       => "color: black;"}
+          - if @server_zones.empty?
+            %span.help-block
+              = _("No visible Zones found in current region")
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
