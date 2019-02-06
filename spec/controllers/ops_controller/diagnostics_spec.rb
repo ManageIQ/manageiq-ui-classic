@@ -57,6 +57,32 @@ end
 
 describe OpsController do
   render_views
+
+  describe '#report_data' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+      FactoryBot.create(:miq_worker, :miq_server => server)
+    end
+
+    let(:server) { FactoryBot.create(:miq_server) }
+
+    it 'returns workers with checkboxes' do
+      report_data_request(
+        :model       => 'MiqWorker',
+        :parent_id   => nil,
+        :named_scope => [['with_miq_server_id', server.id]],
+        :explorer    => true,
+        :gtl_dbname  => nil,
+        :gtl_type    => 'list'
+      )
+      results = assert_report_data_response
+      expect(results['data']['rows'].length).to eq(1)
+      expect(results['data']['rows'][0]["cells"][0]).to have_key("is_checkbox")
+      expect(results['data']['rows'][0]["cells"][0]["is_checkbox"]).to be_truthy
+    end
+  end
+
   context "#tree_select" do
     it "renders zone list for diagnostics_tree root node" do
       stub_user(:features => :all)
