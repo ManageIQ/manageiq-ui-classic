@@ -146,8 +146,6 @@ module Mixins
         when 'default'
           [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true]
         end
-      when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         connect_opts = {
           :hostname          => params[:default_hostname],
@@ -357,12 +355,6 @@ module Mixins
         subscription    = @ems.subscription
         client_id       = @ems.authentication_userid.to_s
         client_key      = @ems.authentication_password.to_s
-      end
-
-      if @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
-        project         = @ems.project
-        service_account = @ems.authentication_token
-        service_account_auth_status = @ems.authentication_status_ok?
       end
 
       if @ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
@@ -612,10 +604,6 @@ module Mixins
         }
 
         kubevirt_endpoint.merge!(endpoint_security_options(kubevirt_security_protocol, kubevirt_tls_ca_certs))
-      end
-
-      if ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
-        ems.project = params[:project]
       end
 
       if ems.kind_of?(ManageIQ::Providers::Microsoft::InfraManager)
@@ -875,7 +863,7 @@ module Mixins
     end
 
     def default_auth_status
-      @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
+      @ems.authentication_status_ok?
     end
   end
 end

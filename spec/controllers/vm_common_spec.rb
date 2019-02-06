@@ -228,15 +228,15 @@ describe VmOrTemplateController do
 
     it 'returns id of Availability Zone folder for Cloud VM that has one' do
       vm_cloud_with_az = FactoryBot.create(:vm_cloud,
-                                            :ext_management_system => FactoryBot.create(:ems_google),
+                                            :ext_management_system => FactoryBot.create(:ems_amazon),
                                             :storage               => FactoryBot.create(:storage),
-                                            :availability_zone     => FactoryBot.create(:availability_zone_google))
+                                            :availability_zone     => FactoryBot.create(:availability_zone_amazon))
       expect(controller.parent_folder_id(vm_cloud_with_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_with_az.availability_zone))
     end
 
     it 'returns id of Provider folder for Cloud VM without Availability Zone' do
       vm_cloud_without_az = FactoryBot.create(:vm_cloud,
-                                               :ext_management_system => FactoryBot.create(:ems_google),
+                                               :ext_management_system => FactoryBot.create(:ems_amazon),
                                                :storage               => FactoryBot.create(:storage),
                                                :availability_zone     => nil)
       expect(controller.parent_folder_id(vm_cloud_without_az)).to eq(TreeBuilder.build_node_cid(vm_cloud_without_az.ext_management_system))
@@ -244,7 +244,7 @@ describe VmOrTemplateController do
 
     it 'returns id of Provider folder for Cloud Template' do
       template_cloud = FactoryBot.create(:template_cloud,
-                                          :ext_management_system => FactoryBot.create(:ems_google),
+                                          :ext_management_system => FactoryBot.create(:ems_amazon),
                                           :storage               => FactoryBot.create(:storage))
       expect(controller.parent_folder_id(template_cloud)).to eq(TreeBuilder.build_node_cid(template_cloud.ext_management_system))
     end

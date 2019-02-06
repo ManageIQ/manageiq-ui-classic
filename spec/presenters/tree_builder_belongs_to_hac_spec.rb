@@ -2,7 +2,6 @@ describe TreeBuilderBelongsToHac do
   before do
     login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})
     FactoryBot.create(:ems_redhat)
-    FactoryBot.create(:ems_google_network)
   end
 
   let!(:edit) { nil }

@@ -1,11 +1,11 @@
 describe TreeBuilderInstances do
   before do
     @vm_cloud_with_az = FactoryBot.create(:vm_cloud,
-                                           :ext_management_system => FactoryBot.create(:ems_google),
+                                           :ext_management_system => FactoryBot.create(:ems_amazon),
                                            :storage               => FactoryBot.create(:storage),
-                                           :availability_zone     => FactoryBot.create(:availability_zone_google))
+                                           :availability_zone     => FactoryBot.create(:availability_zone_amazon))
     @vm_cloud_without_az = FactoryBot.create(:vm_cloud,
-                                              :ext_management_system => FactoryBot.create(:ems_google),
+                                              :ext_management_system => FactoryBot.create(:ems_amazon),
                                               :storage               => FactoryBot.create(:storage),)
 
     login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})

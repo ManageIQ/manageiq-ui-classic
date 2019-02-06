@@ -915,8 +915,7 @@
       "Vm": "",
       "Openstack": "...openstack...",
       "Amazon": "...amazon...",
-      "Azure": "...azure...",
-      "Google": "...google..."
+      "Azure": "...azure..."
     }
   }
 }

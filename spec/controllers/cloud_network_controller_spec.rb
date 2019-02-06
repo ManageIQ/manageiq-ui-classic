@@ -12,7 +12,7 @@ describe CloudNetworkController do
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
-  include_examples :shared_examples_for_cloud_network_controller, %w(openstack azure google amazon)
+  include_examples :shared_examples_for_cloud_network_controller, %w(openstack azure amazon)
 
   describe "#tags_edit" do
     before do

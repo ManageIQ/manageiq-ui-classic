@@ -4,7 +4,6 @@ describe TreeNode::AvailabilityZone do
   %i(
     availability_zone_amazon
     availability_zone_azure
-    availability_zone_google
     availability_zone_openstack
     availability_zone_openstack_null
     availability_zone_vmware

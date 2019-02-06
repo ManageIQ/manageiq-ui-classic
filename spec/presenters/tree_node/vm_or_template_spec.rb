@@ -9,7 +9,6 @@ describe TreeNode::VmOrTemplate do
     template_infra
     template_amazon
     template_azure
-    template_google
     template_openstack
     template_vmware_cloud
     template_microsoft
@@ -40,7 +39,6 @@ describe TreeNode::VmOrTemplate do
     vm_server
     vm_amazon
     vm_azure
-    vm_google
     vm_openstack
     vm_vmware_cloud
     vm_microsoft

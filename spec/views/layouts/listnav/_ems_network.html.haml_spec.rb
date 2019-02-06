@@ -8,7 +8,7 @@ describe "layouts/listnav/_ems_network.html.haml" do
     allow(view).to receive(:role_allows?).and_return(true)
   end
 
-  %w(openstack amazon google).each do |t|
+  %w(openstack amazon).each do |t|
     before do
       allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
       @provider      = FactoryBot.create("ems_#{t}".to_sym)

@@ -30,7 +30,6 @@ describe VmCloudController do
     [
       %w(vm_openstack Openstack),
       %w(vm_azure Azure),
-      %w(vm_google Google),
       %w(vm_amazon Amazon)
     ].each do |instance, name|
       it "renders Instance details for #{name} node" do
