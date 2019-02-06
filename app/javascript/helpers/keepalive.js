@@ -1,5 +1,5 @@
 /* global miqInAForm */
-import idleJs from 'idle-js';
+import IdleJs from 'idle-js';
 
 let last_ping = new Date() / 1000;
 let idle = null;
@@ -16,13 +16,11 @@ export default function miqKeepAlive() {
 
   interval = window.setInterval(maybePing, ManageIQ.login.timeout / 3 * 1000);
 
-  idle = new idleJs({
+  idle = new IdleJs({
     idle: 60000, // idle after a minute
-    // setTimeout - workaround for https://github.com/soixantecircuits/idle-js/issues/6
-    onActive: () => setTimeout(maybePing, 1000),
+    onActive: maybePing,
     onShow: maybePing,
-  });
-  idle.start();
+  }).start();
 }
 
 // ping, except when hidden, inactive, or pinged in the last timeout/3 seconds
@@ -73,7 +71,7 @@ function stop() {
   window.clearInterval(interval);
   interval = null;
 
-  // idle.stop();
+  idle.stop();
   stopped = true;
 }
 
