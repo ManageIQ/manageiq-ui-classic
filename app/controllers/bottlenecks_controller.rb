@@ -24,7 +24,7 @@ class BottlenecksController < ApplicationController
 
     # build timeline data when coming back to Summary tab for bottlenecks
     displaying_timeline = @sb[:active_tab] == "summary"
-    get_node_info(x_node) if displaying_timeline
+    get_node_info(x_node, "n") if displaying_timeline
 
     render :update do |page|
       page << javascript_prologue
