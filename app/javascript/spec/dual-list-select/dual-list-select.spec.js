@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import DualList from '../../components/dual-list-select';
-import List from '../../components/dual-list-select/list';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
 describe('Dual list component', () => {
@@ -16,7 +15,7 @@ describe('Dual list component', () => {
       { key: 'key4', label: 'text4' },
     ],
     input: {
-      value: [{ key: 'key3', label: 'text3' }],
+      value: ['key3'],
       onChange: onChangeSpy,
     },
   };
@@ -25,62 +24,100 @@ describe('Dual list component', () => {
     onChangeSpy.mockReset();
   });
 
-  it('is correctly rendered', () => {
+  it('is rendered correctly', () => {
     const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('is correctly moves items to right', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
-    const leftSelect = wrapper.find(List).first().find('select').getDOMNode();
-    const button = wrapper.find('button').first(); // find toRight button
-
-    expect(onChangeSpy).not.toHaveBeenCalled();
-
-    leftSelect.selectedIndex = 0; // 'select' first option
-    button.simulate('click');
-
-    expect(onChangeSpy).toHaveBeenCalledWith([
-      { key: 'key3', label: 'text3' },
-      { key: 'key1', label: 'text1' },
-    ]);
+  it('is rendered correctly with move all buttons', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToLeft allToRight />);
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('is correctly moves items to left', () => {
+  it('correctly moves items to right', () => {
     const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
-    const rightSelect = wrapper.find(List).last().find('select').getDOMNode();
+    const button = wrapper.find('button').first(); // find toRight button
+    wrapper
+      .find('select')
+      .first()
+      .find('option')
+      .first()
+      .simulate('click');
+    wrapper.update();
+    button.simulate('click');
+
+    expect(onChangeSpy).toHaveBeenCalledWith(['key3', 'key1']);
+  });
+
+  it('correctly moves items to left', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    wrapper
+      .find('select')
+      .last()
+      .find('option')
+      .first()
+      .simulate('click');
     const button = wrapper.find('button').last(); // find toLeft button
-
-    expect(onChangeSpy).not.toHaveBeenCalled();
-
-    rightSelect.selectedIndex = 0; // 'select' first option
     button.simulate('click');
 
     expect(onChangeSpy).toHaveBeenCalledWith([]);
   });
 
-  it('is correctly moves all items to right', () => {
-    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
-    const button = wrapper.find('button').at(1); // find allToRight button
-
-    expect(onChangeSpy).not.toHaveBeenCalled();
-
+  it('correctly move all items to right', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToRight />);
+    const button = wrapper.find('button').at(1); // find allRoLeft button
     button.simulate('click');
 
-    expect(onChangeSpy).toHaveBeenCalledWith([
-      { key: 'key3', label: 'text3' },
-      { key: 'key1', label: 'text1' },
-      { key: 'key2', label: 'text2' },
-      { key: 'key4', label: 'text4' },
-    ]);
+    expect(onChangeSpy).toHaveBeenCalledWith(['key1', 'key2', 'key3', 'key4']);
   });
 
-  it('is correctly moves all items to left', () => {
-    const wrapper = mount(<DualList allToLeft FieldProvider={FieldProvider} {...props} />);
-    const button = wrapper.find('button').at(2); // find allToLeft button
+  it('correctly move all items to left', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToLeft />);
+    const button = wrapper.find('button').at(1); // find allToLeft button
+    button.simulate('click');
 
-    expect(onChangeSpy).not.toHaveBeenCalled();
+    expect(onChangeSpy).toHaveBeenCalledWith([]);
+  });
 
+  it('correctly moves items to right when holding shift key', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} />);
+    const button = wrapper.find('button').first(); // find toRight button
+    wrapper
+      .find('select')
+      .first()
+      .find('option')
+      .first()
+      .simulate('click');
+    wrapper.update();
+    wrapper
+      .find('select')
+      .first()
+      .find('option')
+      .first()
+      .simulate('click', { shiftKey: true, target: { value: 'key2' } });
+    wrapper.update();
+    button.simulate('click');
+
+    expect(onChangeSpy).toHaveBeenCalledWith(['key3', 'key1', 'key2']);
+  });
+
+  it('correctly moves items to left when holding shift key', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} input={{ ...props.input, value: ['key3', 'key2'] }} />);
+    const button = wrapper.find('button').last(); // find toRight button
+    wrapper
+      .find('select')
+      .last()
+      .find('option')
+      .first()
+      .simulate('click');
+    wrapper.update();
+    wrapper
+      .find('select')
+      .last()
+      .find('option')
+      .last()
+      .simulate('click', { shiftKey: true, target: { value: 'key3' } });
+    wrapper.update();
     button.simulate('click');
 
     expect(onChangeSpy).toHaveBeenCalledWith([]);
