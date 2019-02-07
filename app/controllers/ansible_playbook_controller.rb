@@ -8,6 +8,7 @@ class AnsiblePlaybookController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::ListnavMixin
 
   menu_section :ansible_playbooks
 
