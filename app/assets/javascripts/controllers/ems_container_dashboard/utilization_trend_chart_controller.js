@@ -67,9 +67,9 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
             },
           };
         } else {
-          if (allData.interval_name !== 'daily') {
-            vm.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
-            vm.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
+          var sparkline = Object.assign({}, chartsMixin.chartConfig[key + 'UsageSparklineConfig']);
+          if (allData.interval_name !== 'daily') { // hourly or realtime
+            sparkline.tooltipFn = chartsMixin.hourlyTimeTooltip;
           }
 
           metricsDataStruct.data[key] = {
@@ -80,7 +80,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
               'units': chartsMixin.chartConfig[key + 'UsageConfig'].units,
             },
             'donutConfig': chartsMixin.chartConfig[key + 'UsageDonutConfig'],
-            'sparklineConfig': chartsMixin.chartConfig[key + 'UsageSparklineConfig'],
+            'sparklineConfig': sparkline,
           };
         }
       }
