@@ -63,6 +63,8 @@
         {id: 'per_page_20', text: 20, value: 20, hidden: false, enabled: true},
         {id: 'per_page_50', text: 50, value: 50, hidden: false, enabled: true},
         {id: 'per_page_100', text: 100, value: 100, hidden: false, enabled: true},
+        {id: 'per_page_200', text: 200, value: 200, hidden: false, enabled: true},
+        {id: 'per_page_500', text: 500, value: 500, hidden: false, enabled: true},
         {id: 'per_page_1000', text: 1000, value: 1000, hidden: false, enabled: true},
       ],
     };
