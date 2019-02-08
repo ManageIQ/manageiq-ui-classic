@@ -564,16 +564,6 @@ module VmCommon
     @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil # Set to first category, if not already set
   end
 
-  def evm_relationship_field_changed
-    return unless load_edit("evm_relationship_edit__new")
-    evm_relationship_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
   def evm_relationship_get_form_vars
     @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
     @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
@@ -593,9 +583,6 @@ module VmCommon
         javascript_redirect(:action => 'show', :id => @record.id)
       end
     when "save"
-      svr = @edit[:new][:server] && @edit[:new][:server] != "" ? MiqServer.find(@edit[:new][:server]) : nil
-      @record.miq_server = svr
-      @record.save
       add_flash(_("Management Engine Relationship saved"))
       if @edit[:explorer]
         @sb[:action] = nil
@@ -603,17 +590,6 @@ module VmCommon
       else
         flash_to_session
         javascript_redirect(:action => 'show', :id => @record.id)
-      end
-    when "reset"
-      @in_a_form = true
-      if @edit[:explorer]
-        @explorer = true
-        evm_relationship
-        add_flash(_("All changes have been reset"), :warning)
-        replace_right_cell
-      else
-        flash_to_session(_("All changes have been reset"), :warning)
-        javascript_redirect(:action => 'evm_relationship', :id => @record.id, :escape => true)
       end
     end
   end
@@ -1302,6 +1278,9 @@ module VmCommon
         presenter.update(:form_buttons_div, '') if action == "retire" || hide_x_edit_buttons(action)
 
         presenter.remove_paging.show(:form_buttons_div)
+
+        # evm_relationship_update uses React form and buttons
+        presenter.hide(:form_buttons_div) if action == "evm_relationship_update"
       end
       presenter.show(:paging_div)
     else
