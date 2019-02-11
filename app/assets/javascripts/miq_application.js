@@ -1403,16 +1403,10 @@ function miqToolbarOnClick(_e) {
   // put url_parms into params var, if defined
   var paramstring = getParams(button.data('url_parms'), !!button.data('send_checked'));
 
-  // TODO:
-  // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
-  // Checking for Report download button to allow controller method to turn off spinner
-  // Need to design this feature into the toolbar button support at a later time.
-  var no_complete = _.includes([
-  ], button.attr('name'));
-
+  // don't sparkleOff after the request for buttons which explicitly disable it
   var options = {
     beforeSend: true,
-    complete: !no_complete,
+    complete: button.data('sparkleOff'),
     data: paramstring,
   };
 

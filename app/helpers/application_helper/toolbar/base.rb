@@ -61,7 +61,8 @@ class ApplicationHelper::Toolbar::Base
       :id    => id.to_s,
       :icon  => icon,
       :title => title,
-      :text  => text
+      :text  => text,
+      :sparkle_off => true,
     }.merge(keys)
   end
 end
