@@ -18,6 +18,10 @@ function lineChartController(pfUtils) {
   var prevChartData;
 
   vm.updateAll = function() {
+    if (! vm.config || ! vm.chartData) {
+      return;
+    }
+
     // Need to deep watch changes in chart data
     prevChartData = angular.copy(vm.chartData);
     vm.loadingDone = false;
