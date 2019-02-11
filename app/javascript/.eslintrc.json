@@ -36,6 +36,7 @@
     "react/jsx-filename-extension": "off",
     "react/destructuring-assignment": [1, "always"],
     "space-before-function-paren": [2, "never"],
-    "no-extra-boolean-cast": "off"
+    "no-extra-boolean-cast": "off",
+    "no-shadow": "off"
   }
 }
