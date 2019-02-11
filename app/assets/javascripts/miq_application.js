@@ -1408,7 +1408,7 @@ function miqToolbarOnClick(_e) {
   // Checking for Report download button to allow controller method to turn off spinner
   // Need to design this feature into the toolbar button support at a later time.
   var no_complete = _.includes([
-  ], button.attr('name')) || button.attr('name').match(/_console$/);
+  ], button.attr('name'));
 
   var options = {
     beforeSend: true,

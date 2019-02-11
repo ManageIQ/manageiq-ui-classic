@@ -120,11 +120,11 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             'pficon pficon-screen fa-lg',
             N_('Open a remote console for this Physical Server'),
             N_('Physical Server Console'),
-            :url     => "console",
-            :method  => :get,
-            :enabled => true,
-            :options => {:feature => :physical_server_remote_access}
-          )
+            :url         => "console",
+            :method      => :get,
+            :enabled     => true,
+            :options     => {:feature => :physical_server_remote_access},
+            :sparkle_off => false),
         ],
       ),
     ]
