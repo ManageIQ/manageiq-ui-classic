@@ -58,27 +58,29 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainer
     if (data) {
       var keys = Object.keys(data);
       for (var i in keys) {
-        if (data[keys[i]] === null) {
-          metricsDataStruct.data[keys[i]] = {
+        var key = keys[i];  // 'cpu' || 'memory'
+        if (data[key] === null) {
+          metricsDataStruct.data[key] = {
             'data': {dataAvailable: false},
             'config': {
-              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
+              'title': chartsMixin.chartConfig[key + 'UsageConfig'].title,
             },
           };
         } else {
-          if (allData.interval_name !== 'daily') {
-            vm.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
-            vm.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
+          var sparkline = Object.assign({}, chartsMixin.chartConfig[key + 'UsageSparklineConfig']);
+          if (allData.interval_name !== 'daily') { // hourly or realtime
+            sparkline.tooltipFn = chartsMixin.hourlyTimeTooltip;
           }
-          metricsDataStruct.data[keys[i]] = {
-            'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
-            'id': keys[i] + 'UsageConfig_' + providerId,
+
+          metricsDataStruct.data[key] = {
+            'data': chartsMixin.processData(data[key], 'dates', chartsMixin.chartConfig[key + 'UsageConfig'].units),
+            'id': key + 'UsageConfig_' + providerId,
             'config': {
-              'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
-              'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units,
+              'title': chartsMixin.chartConfig[key + 'UsageConfig'].title,
+              'units': chartsMixin.chartConfig[key + 'UsageConfig'].units,
             },
-            'donutConfig': chartsMixin.chartConfig[keys[i] + 'UsageDonutConfig'],
-            'sparklineConfig': chartsMixin.chartConfig[keys[i] + 'UsageSparklineConfig'],
+            'donutConfig': chartsMixin.chartConfig[key + 'UsageDonutConfig'],
+            'sparklineConfig': sparkline,
           };
         }
       }
