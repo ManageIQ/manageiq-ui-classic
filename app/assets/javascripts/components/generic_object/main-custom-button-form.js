@@ -206,6 +206,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         return role.value === true;
       }), 'name');
     }
+    // set uri_attributes to default for non-Ansible button
+    if (vm.customButtonModel.button_type == "default") {
+      vm.customButtonModel.uri_attributes = {"request": "", service_template: null, hosts: null};
+    };
 
     vm.customButtonModel.visibility = {
       roles: vm.customButtonModel.roles.length === 0 ? ['_ALL_'] : vm.customButtonModel.roles,
@@ -219,6 +223,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       options: vm.customButtonModel.options,
       resource_action: vm.customButtonModel.resource_action,
       visibility: vm.customButtonModel.visibility,
+      uri_attributes: vm.customButtonModel.uri_attributes,
     };
   };
 
