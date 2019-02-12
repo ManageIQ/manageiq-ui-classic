@@ -54,6 +54,20 @@ function moveBetween({from, to, selected}) {
   };
 }
 
+function moveTop({array, selected}) {
+  var moved = idsToElements(array, selected);
+  array = removeElements(array, moved);
+
+  return moved.concat(array);
+}
+
+function moveBottom({array, selected}) {
+  var moved = idsToElements(array, selected);
+  array = removeElements(array, moved);
+
+  return array.concat(moved);
+}
+
 
 function assignButtonsController() {
   var vm = this;
@@ -82,6 +96,20 @@ function assignButtonsController() {
 
     vm.updateButtons(ret.to, ret.from);
   };
+
+  function wrap(fn) {
+    return function() {
+      var assigned = fn({
+        array: [].concat(vm.assignedButtons),
+        selected: vm.model.selectedAssignedButtons,
+      });
+
+      vm.updateButtons(assigned);
+    };
+  }
+
+  vm.topButtonClicked = wrap(moveTop);
+  vm.bottomButtonClicked = wrap(moveBottom);
 
 
   var getIndexes = idsToIndexes;
@@ -146,34 +174,6 @@ function assignButtonsController() {
         assigned[index + 1] = temp;
       }
     });
-
-    vm.updateButtons(assigned);
-  };
-
-  vm.topButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-
-    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
-    var movedElements = [];
-    indexes.forEach(function(index) {
-      movedElements.push(assigned[index]);
-    });
-    removeElements(assigned, movedElements);
-    assigned = movedElements.concat( assigned);
-
-    vm.updateButtons(assigned);
-  };
-
-  vm.bottomButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-
-    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
-    var movedElements = [];
-    indexes.forEach(function(index) {
-      movedElements.push(assigned[index]);
-    });
-    removeElements(assigned, movedElements);
-    assigned = assigned.concat(movedElements);
 
     vm.updateButtons(assigned);
   };
