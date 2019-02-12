@@ -29,6 +29,14 @@ function idsToIndexes(arr, ids) {
   return indexes;
 }
 
+function idsToElements(arr, ids) {
+  return ids.map(function(id) {
+    return arr.find(function(el) {
+      return el.id === id;
+    });
+  });
+}
+
 function removeElements(arr, elements) {
   _.remove(arr, function(n) {
     return _.some(elements, n);
@@ -38,12 +46,7 @@ function removeElements(arr, elements) {
 }
 
 function moveBetween({from, to, selected}) {
-  var indexes = idsToIndexes(from, selected);
-
-  var moved = [];
-  indexes.forEach(function(index) {
-    moved.push(from[index]);
-  });
+  var moved = idsToElements(from, selected);
 
   return {
     from: removeElements(from, moved),
