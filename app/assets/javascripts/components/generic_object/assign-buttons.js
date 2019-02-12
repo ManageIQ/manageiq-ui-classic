@@ -2,10 +2,10 @@ ManageIQ.angular.app.component('assignButtons', {
   bindings: {
     assignedButtons: '<',
     unassignedButtons: '<',
-    updateButtons: '<'
+    updateButtons: '<',
   },
   require: {
-    parent: '^^mainCustomButtonGroupForm'
+    parent: '^^mainCustomButtonGroupForm',
   },
   controllerAs: 'vm',
   controller: assignButtonsController,
@@ -21,17 +21,20 @@ function assignButtonsController() {
   };
 
   function getIndexes(arr, ids) {
-    var indexes= [];
-    ids.forEach(function (id) {
-      var i = arr.findIndex(function(el){
-        return el.id == id;
+    var indexes = [];
+
+    ids.forEach(function(id) {
+      var i = arr.findIndex(function(el) {
+        return el.id === id;
       });
-      if (i >= 0){
+
+      if (i >= 0) {
         indexes.push(i);
       }
     });
+
     return indexes;
-  };
+  }
 
   function filterIndexes(indexes) {
     if (indexes[0] !== 0) {
@@ -47,7 +50,7 @@ function assignButtonsController() {
       }
     });
     return filteredIndexes;
-  };
+  }
 
   function filterReverseIndexes(indexes, endIndex) {
     if (indexes[0] !== endIndex) {
@@ -63,7 +66,7 @@ function assignButtonsController() {
       }
     });
     return filteredIndexes;
-  };
+  }
 
   vm.leftButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
@@ -74,8 +77,10 @@ function assignButtonsController() {
     indexes.forEach(function(index) {
       movedElements.push(assigned[index]);
     });
-    _.remove(assigned, function(n) { return _.some(movedElements, n) });
-    unassigned = unassigned.concat( movedElements);
+    _.remove(assigned, function(n) {
+      return _.some(movedElements, n);
+    });
+    unassigned = unassigned.concat(movedElements);
 
     vm.updateButtons(assigned, unassigned);
   };
@@ -89,7 +94,9 @@ function assignButtonsController() {
     indexes.forEach(function(index) {
       movedElements.push(unassigned[index]);
     });
-    _.remove(unassigned, function(n) { return _.some(movedElements, n) });
+    _.remove(unassigned, function(n) {
+      return _.some(movedElements, n);
+    });
     assigned = assigned.concat( movedElements);
 
     vm.updateButtons(assigned, unassigned);
@@ -135,7 +142,9 @@ function assignButtonsController() {
     indexes.forEach(function(index) {
       movedElements.push(assigned[index]);
     });
-    _.remove(assigned, function(n) { return _.some(movedElements, n) });
+    _.remove(assigned, function(n) {
+      return _.some(movedElements, n);
+    });
     assigned = movedElements.concat( assigned);
 
     vm.updateButtons(assigned);
@@ -149,7 +158,9 @@ function assignButtonsController() {
     indexes.forEach(function(index) {
       movedElements.push(assigned[index]);
     });
-    _.remove(assigned, function(n) { return _.some(movedElements, n) });
+    _.remove(assigned, function(n) {
+      return _.some(movedElements, n);
+    });
     assigned = assigned.concat(movedElements);
 
     vm.updateButtons(assigned);
