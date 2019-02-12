@@ -1,5 +1,6 @@
 describe('assign-button', function() {
   var vm;
+  var after = {};
 
   // buttons
   var b1 = { name: 'button1', id: 1 };
@@ -22,27 +23,31 @@ describe('assign-button', function() {
     var bindings = {
       assignedButtons: [b1, b2, b3, b4, b5, b6],
       unassignedButtons: [b7, b8, b9, b10, b11, b12],
-      updateButtons: function() {},
+      updateButtons: function(assigned, unassigned) {
+        after.assigned = assigned;
+        after.unassigned = unassigned || bindings.unassignedButtons;
+      },
     };
 
+    bindings.updateButtons([], []);
+
     vm = $componentController('assignButtons', null, bindings);
-    vm.$onInit();
   }));
 
   describe('#leftButtonClicked', function() {
     it('one button from assignedButtons is moved to the end of unassignedButtons', function() {
       vm.model.selectedAssignedButtons = [1];
       vm.leftButtonClicked();
-      expect(vm.model.assignedButtons).toEqual([b2, b3, b4, b5, b6]);
-      expect(vm.model.unassignedButtons[vm.model.unassignedButtons.length - 1]).toEqual(b1);
+      expect(after.assigned).toEqual([b2, b3, b4, b5, b6]);
+      expect(after.unassigned[after.unassigned.length - 1]).toEqual(b1);
     });
 
     it('multiple buttons from assignedButtons are moved to the end of unassignedButtons', function() {
       vm.model.selectedAssignedButtons = [2, 4, 6];
-      var expectedResult = vm.model.unassignedButtons.concat([b2, b4, b6]);
+      var expectedResult = vm.unassignedButtons.concat([b2, b4, b6]);
       vm.leftButtonClicked();
-      expect(vm.model.assignedButtons).toEqual([b1, b3, b5]);
-      expect(vm.model.unassignedButtons).toEqual(expectedResult);
+      expect(after.assigned).toEqual([b1, b3, b5]);
+      expect(after.unassigned).toEqual(expectedResult);
     });
   });
 
@@ -50,16 +55,16 @@ describe('assign-button', function() {
     it('one button from unassignedButtons is moved to the end of assignedButtons', function() {
       vm.model.selectedUnassignedButtons = [7];
       vm.rightButtonClicked();
-      expect(vm.model.unassignedButtons).toEqual([b8, b9, b10, b11, b12]);
-      expect(vm.model.assignedButtons[vm.model.assignedButtons.length - 1]).toEqual(b7);
+      expect(after.unassigned).toEqual([b8, b9, b10, b11, b12]);
+      expect(after.assigned[after.assigned.length - 1]).toEqual(b7);
     });
 
     it('multiple buttons from unassignedButtons are moved to the end of assignedButtons', function() {
       vm.model.selectedUnassignedButtons = [8, 10, 12];
-      var expectedResult = vm.model.assignedButtons.concat([b8, b10, b12]);
+      var expectedResult = vm.assignedButtons.concat([b8, b10, b12]);
       vm.rightButtonClicked();
-      expect(vm.model.unassignedButtons).toEqual([b7, b9, b11]);
-      expect(vm.model.assignedButtons).toEqual(expectedResult);
+      expect(after.unassigned).toEqual([b7, b9, b11]);
+      expect(after.assigned).toEqual(expectedResult);
     });
   });
 
@@ -67,21 +72,21 @@ describe('assign-button', function() {
     it('one button is moved one place up', function() {
       vm.model.selectedAssignedButtons = [2];
       vm.upButtonClicked();
-      expect(vm.model.assignedButtons[0]).toEqual(b2);
+      expect(after.assigned[0]).toEqual(b2);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [1, 2, 3];
-      var original = [].concat(vm.model.assignedButtons);
+      var original = [].concat(vm.assignedButtons);
       vm.upButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [1, 3, 5];
       var original = [b1, b3, b2, b5, b4, b6];
       vm.upButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
   });
 
@@ -89,21 +94,21 @@ describe('assign-button', function() {
     it('one button is moved one place down', function() {
       vm.model.selectedAssignedButtons = [5];
       vm.downButtonClicked();
-      expect(vm.model.assignedButtons[5]).toEqual(b5);
+      expect(after.assigned[5]).toEqual(b5);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [4, 5, 6];
-      var original = [].concat(vm.model.assignedButtons);
+      var original = [].concat(vm.assignedButtons);
       vm.downButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [1, 3, 5];
       var original = [b2, b1, b4, b3, b6, b5];
       vm.downButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
   });
 
@@ -111,21 +116,21 @@ describe('assign-button', function() {
     it('one button is moved one place down', function() {
       vm.model.selectedAssignedButtons = [1];
       vm.bottomButtonClicked();
-      expect(vm.model.assignedButtons[5]).toEqual(b1);
+      expect(after.assigned[5]).toEqual(b1);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [4, 5, 6];
-      var original = [].concat(vm.model.assignedButtons);
+      var original = [].concat(vm.assignedButtons);
       vm.bottomButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [2, 4, 6];
       var original = [b1, b3, b5, b2, b4, b6];
       vm.bottomButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
   });
 
@@ -133,21 +138,21 @@ describe('assign-button', function() {
     it('one button is moved to the beginning', function() {
       vm.model.selectedAssignedButtons = [5];
       vm.topButtonClicked();
-      expect(vm.model.assignedButtons[0]).toEqual(b5);
+      expect(after.assigned[0]).toEqual(b5);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [1, 2, 3];
-      var original = [].concat(vm.model.assignedButtons);
+      var original = [].concat(vm.assignedButtons);
       vm.topButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
 
     it('buttons preserve their relative order', function() {
       vm.model.selectedAssignedButtons = [1, 3, 5];
       var original = [b1, b3, b5, b2, b4, b6];
       vm.topButtonClicked();
-      expect(vm.model.assignedButtons).toEqual(original);
+      expect(after.assigned).toEqual(original);
     });
   });
 });
