@@ -37,6 +37,20 @@ function removeElements(arr, elements) {
   return arr;
 }
 
+function moveBetween({from, to, selected}) {
+  var indexes = idsToIndexes(from, selected);
+
+  var moved = [];
+  indexes.forEach(function(index) {
+    moved.push(from[index]);
+  });
+
+  return {
+    from: removeElements(from, moved),
+    to: to.concat(moved),
+  };
+}
+
 
 function assignButtonsController() {
   var vm = this;
@@ -45,6 +59,27 @@ function assignButtonsController() {
     selectedAssignedButtons: [],
     selectedUnassignedButtons: [],
   };
+
+  vm.leftButtonClicked = function() {
+    var ret = moveBetween({
+      from: [].concat(vm.assignedButtons),
+      to: [].concat(vm.unassignedButtons),
+      selected: vm.model.selectedAssignedButtons,
+    });
+
+    vm.updateButtons(ret.from, ret.to);
+  };
+
+  vm.rightButtonClicked = function() {
+    var ret = moveBetween({
+      from: [].concat(vm.unassignedButtons),
+      to: [].concat(vm.assignedButtons),
+      selected: vm.model.selectedUnassignedButtons,
+    });
+
+    vm.updateButtons(ret.to, ret.from);
+  };
+
 
   var getIndexes = idsToIndexes;
 
@@ -79,36 +114,6 @@ function assignButtonsController() {
     });
     return filteredIndexes;
   }
-
-  vm.leftButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
-
-    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
-    var movedElements = [];
-    indexes.forEach(function(index) {
-      movedElements.push(assigned[index]);
-    });
-    removeElements(assigned, movedElements);
-    unassigned = unassigned.concat(movedElements);
-
-    vm.updateButtons(assigned, unassigned);
-  };
-
-  vm.rightButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
-
-    var indexes = getIndexes(unassigned, vm.model.selectedUnassignedButtons);
-    var movedElements = [];
-    indexes.forEach(function(index) {
-      movedElements.push(unassigned[index]);
-    });
-    removeElements(unassigned, movedElements);
-    assigned = assigned.concat( movedElements);
-
-    vm.updateButtons(assigned, unassigned);
-  };
 
   vm.upButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
