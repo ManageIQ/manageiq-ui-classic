@@ -33,11 +33,6 @@ function assignButtonsController() {
     return indexes;
   };
 
-  vm.$onInit = function() {
-    vm.model.assignedButtons = [].concat(vm.assignedButtons);
-    vm.model.unassignedButtons = [].concat(vm.unassignedButtons);
-  };
-
   function filterIndexes(indexes) {
     if (indexes[0] !== 0) {
       return indexes;
@@ -70,84 +65,97 @@ function assignButtonsController() {
     return filteredIndexes;
   };
 
-  function copyData() {
-    vm.model.assignedButtons = [].concat(vm.assignedButtons);
-    vm.model.unassignedButtons = [].concat(vm.unassignedButtons);
-  };
-
   vm.leftButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.assignedButtons, vm.model.selectedAssignedButtons);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     var movedElements = [];
     indexes.forEach(function(index) {
-      movedElements.push(vm.model.assignedButtons[index]);
+      movedElements.push(assigned[index]);
     });
-    _.remove(vm.model.assignedButtons, function(n) { return _.some(movedElements, n) });
-    vm.model.unassignedButtons = vm.model.unassignedButtons.concat( movedElements);
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+    _.remove(assigned, function(n) { return _.some(movedElements, n) });
+    unassigned = unassigned.concat( movedElements);
+
+    vm.updateButtons(assigned, unassigned);
   };
 
   vm.rightButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.unassignedButtons, vm.model.selectedUnassignedButtons);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(unassigned, vm.model.selectedUnassignedButtons);
     var movedElements = [];
     indexes.forEach(function(index) {
-      movedElements.push(vm.model.unassignedButtons[index]);
+      movedElements.push(unassigned[index]);
     });
-    _.remove(vm.model.unassignedButtons, function(n) { return _.some(movedElements, n) });
-    vm.model.assignedButtons = vm.model.assignedButtons.concat( movedElements);
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+    _.remove(unassigned, function(n) { return _.some(movedElements, n) });
+    assigned = assigned.concat( movedElements);
+
+    vm.updateButtons(assigned, unassigned);
   };
 
   vm.upButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.assignedButtons, vm.model.selectedAssignedButtons);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     indexes = filterIndexes(indexes);
     indexes.forEach(function(index) {
       if (index > 0) {
-        var temp = vm.model.assignedButtons[index];
-        vm.model.assignedButtons[index] = vm.model.assignedButtons[index - 1];
-        vm.model.assignedButtons[index - 1] = temp;
+        var temp = assigned[index];
+        assigned[index] = assigned[index - 1];
+        assigned[index - 1] = temp;
       }
     });
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+
+    vm.updateButtons(assigned, unassigned);
   };
 
   vm.downButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.assignedButtons, vm.model.selectedAssignedButtons).reverse();
-    indexes = filterReverseIndexes(indexes, vm.model.assignedButtons.length - 1);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons).reverse();
+    indexes = filterReverseIndexes(indexes, assigned.length - 1);
     indexes.forEach(function(index) {
-      if (index < vm.model.assignedButtons.length - 1) {
-        var temp = vm.model.assignedButtons[index];
-        vm.model.assignedButtons[index] = vm.model.assignedButtons[index + 1];
-        vm.model.assignedButtons[index + 1] = temp;
+      if (index < assigned.length - 1) {
+        var temp = assigned[index];
+        assigned[index] = assigned[index + 1];
+        assigned[index + 1] = temp;
       }
     });
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+
+    vm.updateButtons(assigned, unassigned);
   };
 
   vm.topButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.assignedButtons, vm.model.selectedAssignedButtons);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     var movedElements = [];
     indexes.forEach(function(index) {
-      movedElements.push(vm.model.assignedButtons[index]);
+      movedElements.push(assigned[index]);
     });
-    _.remove(vm.model.assignedButtons, function(n) { return _.some(movedElements, n) });
-    vm.model.assignedButtons = movedElements.concat( vm.model.assignedButtons);
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+    _.remove(assigned, function(n) { return _.some(movedElements, n) });
+    assigned = movedElements.concat( assigned);
+
+    vm.updateButtons(assigned, unassigned);
   };
 
   vm.bottomButtonClicked = function() {
-    copyData();
-    var indexes = getIndexes(vm.model.assignedButtons, vm.model.selectedAssignedButtons);
+    var assigned = [].concat(vm.assignedButtons);
+    var unassigned = [].concat(vm.unassignedButtons);
+
+    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     var movedElements = [];
     indexes.forEach(function(index) {
-      movedElements.push(vm.model.assignedButtons[index]);
+      movedElements.push(assigned[index]);
     });
-    _.remove(vm.model.assignedButtons, function(n) { return _.some(movedElements, n) });
-    vm.model.assignedButtons = vm.model.assignedButtons.concat(movedElements);
-    vm.updateButtons(vm.model.assignedButtons, vm.model.unassignedButtons);
+    _.remove(assigned, function(n) { return _.some(movedElements, n) });
+    assigned = assigned.concat(movedElements);
+
+    vm.updateButtons(assigned, unassigned);
   };
 }
