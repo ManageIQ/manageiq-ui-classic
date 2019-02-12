@@ -20,7 +20,8 @@
           = "<#{_('Choose')}>"
       %span.help-block{"ng-show" => "angularForm.button_type.$error.required"}
         = _("Required")
-  .form-group{"ng-if" => "vm.customButtonModel.button_type == 'ansible_playbook'"}
+  .form-group{"ng-if"    => "vm.customButtonModel.button_type == 'ansible_playbook'",
+              "ng-class" => "{'has-error': angularForm.playbook_catalog_item.$invalid}"}
     #form_playbook_options
       %label.control-label.col-md-2
         = _("Playbook Catalog Item")
@@ -30,9 +31,12 @@
                 "ng-options"                  => "item.id as item.name for item in vm.templates",
                 "data-live-search"            => "true",
                 "selectpicker-for-select-tag" => "",
+                :required                     => true,
                 "miq-select"                  => true,}
           %option{"value" => "", "disabled" => ""}
             = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.playbook_catalog_item.$error.required"}
+          = _("Required")
   .form-group{"ng-if" => "vm.customButtonModel.button_type == 'ansible_playbook'"}
     %label.control-label.col-md-2
       = _("Inventory")
