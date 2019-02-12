@@ -687,6 +687,7 @@ function miqEnterPressed(e) {
 }
 
 function storeUserFeatures() {
+  console.log('Local storage');
   delete window.localStorage.userFeatures;
   return window.http.get('/api?attributes=identity')
     .then(function(data) {

@@ -86,6 +86,14 @@ class OpsController < ApplicationController
     logs_collect(:only_current => true)
   end
 
+  def user_tags
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    entries = Classification.find_assigned_entries(user).sort_by(&:name)
+    tags = entries.map { |tag| {:name => tag.parent.description, :value => tag.description } }
+    render :json => { :tags => tags, :tenant => current_tenant.name }
+  end
+
   # handle buttons pressed on the center buttons toolbar
   def x_button
     generic_x_button(OPS_X_BUTTON_ALLOWED_ACTIONS)

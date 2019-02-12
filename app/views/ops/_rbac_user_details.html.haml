@@ -8,6 +8,8 @@
 - observe_url_json = {:interval => '.5', :url => url}.to_json
 - disabled = @edit && @edit[:new][:userid] == "admin"
 
+= react('UserDetail', { :userId => @record.id })
+
 = render :partial => "layouts/flash_msg"
 #user_info
   %h3
