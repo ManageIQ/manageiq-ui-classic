@@ -26,7 +26,7 @@ module OpsController::Db
         ]
       )
     elsif model == VmdbDatabaseConnection
-      @zones = Zone.visible.order(&:name).collect { |z| [z.name, z.name] }
+      @zones = Zone.visible.order(:name).collect { |z| [z.name, z.name] }
       # for now we dont need this pulldown, need to get a method that gives us a list of workers for filter pulldown
       # @workers = MiqWorker.all.sort_by(&:type).collect { |w| [w.friendly_name, w.id] }
     end
