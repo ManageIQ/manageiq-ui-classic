@@ -97,7 +97,6 @@ function assignButtonsController() {
 
   vm.upButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
 
     var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     indexes = filterIndexes(indexes);
@@ -109,12 +108,11 @@ function assignButtonsController() {
       }
     });
 
-    vm.updateButtons(assigned, unassigned);
+    vm.updateButtons(assigned);
   };
 
   vm.downButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
 
     var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons).reverse();
     indexes = filterReverseIndexes(indexes, assigned.length - 1);
@@ -126,12 +124,11 @@ function assignButtonsController() {
       }
     });
 
-    vm.updateButtons(assigned, unassigned);
+    vm.updateButtons(assigned);
   };
 
   vm.topButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
 
     var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     var movedElements = [];
@@ -141,12 +138,11 @@ function assignButtonsController() {
     _.remove(assigned, function(n) { return _.some(movedElements, n) });
     assigned = movedElements.concat( assigned);
 
-    vm.updateButtons(assigned, unassigned);
+    vm.updateButtons(assigned);
   };
 
   vm.bottomButtonClicked = function() {
     var assigned = [].concat(vm.assignedButtons);
-    var unassigned = [].concat(vm.unassignedButtons);
 
     var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
     var movedElements = [];
@@ -156,6 +152,6 @@ function assignButtonsController() {
     _.remove(assigned, function(n) { return _.some(movedElements, n) });
     assigned = assigned.concat(movedElements);
 
-    vm.updateButtons(assigned, unassigned);
+    vm.updateButtons(assigned);
   };
 }

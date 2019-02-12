@@ -52,7 +52,10 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
 
   vm.updateButtons = function(assignedButtons, unassignedButtons) {
     vm.customButtonGroupModel.assigned_buttons = assignedButtons;
-    vm.customButtonGroupModel.unassigned_buttons = unassignedButtons;
+
+    if (unassignedButtons) {
+      vm.customButtonGroupModel.unassigned_buttons = unassignedButtons;
+    }
   };
 
   vm.cancelClicked = function() {
