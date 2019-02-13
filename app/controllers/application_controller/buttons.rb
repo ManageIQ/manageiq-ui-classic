@@ -587,7 +587,6 @@ module ApplicationController::Buttons
     end
     @edit[:uri] = MiqAeEngine.create_automation_object(ab_button_name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
-    button_set_record_vars(@custom_button)
 
     unless button_valid?
       @breadcrumbs = []
@@ -597,6 +596,8 @@ module ApplicationController::Buttons
       javascript_flash
       return
     end
+
+    button_set_record_vars(@custom_button)
 
     if @custom_button.save
       add_flash(_("Custom Button \"%{name}\" was saved") % {:name => @edit[:new][:description]})
@@ -845,7 +846,9 @@ module ApplicationController::Buttons
   end
 
   def validate_playbook_button(button_hash)
-    add_flash(_("An Ansible Playbook must be selected"), :error) if button_hash[:service_template_id].blank?
+    if button_hash[:service_template_id].blank? || button_hash[:service_template_id].zero?
+      add_flash(_("An Ansible Playbook must be selected"), :error)
+    end
     if button_hash[:inventory_type] == 'manual' && button_hash[:hosts].blank?
       add_flash(_("At least one host must be specified for manual mode"), :error)
     end
