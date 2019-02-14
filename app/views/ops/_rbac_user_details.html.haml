@@ -1,5 +1,5 @@
-- change_stored_password ||= _("Change stored password")
-- cancel_password_change ||= _("Cancel password change")
+- change_stored_password ||= _("Change")
+- cancel_password_change ||= _("Cancel")
 - stored_password_placeholder = "●●●●●●●●"
 - pfx ||= ""
 
@@ -52,24 +52,25 @@
           %label.col-md-2.control-label
             = _("Password")
           .col-md-8
-            = password_field_tag("password",
-                                 @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
-                                 :maxlength         => 50,
-                                 :disabled          => @edit[:new][:userid].blank? ? false : true,
-                                 :class             => "form-control",
-                                 "data-miq_observe" => observe_url_json)
-            - if @edit[:new][:userid] == "admin"
-              = javascript_tag(javascript_focus('password'))
-          - unless @edit[:new][:userid].blank?
-            %div
-              %a{:id       => "change_stored_password", 
-                 "style"   => "display:block;cursor: pointer; cursor: hand;", 
-                 "onclick" => "changeStoredPassword('#{pfx}', '#{url}')"}
-                = change_stored_password
-              %a{:id       => "cancel_password_change", 
-                 "style"   => "display:none;cursor: pointer; cursor: hand;",
-                 "onclick" => "cancelPasswordChange('#{pfx}', '#{url}')"}
-                = cancel_password_change
+            %span.input-group
+              = password_field_tag("password",
+                                   @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
+                                   :maxlength         => 50,
+                                   :disabled          => @edit[:new][:userid].blank? ? false : true,
+                                   :class             => "form-control",
+                                   "data-miq_observe" => observe_url_json)
+              - if @edit[:new][:userid] == "admin"
+                = javascript_tag(javascript_focus('password'))
+              - unless @edit[:new][:userid].blank?
+                %span.input-group-btn
+                  %button.btn.btn-default{:id       => "change_stored_password",
+                                          "style"   => "display:block;cursor: pointer; cursor: hand;", "onclick" => "changeStoredPassword('#{pfx}', '#{url}')"}
+                    = change_stored_password
+                  %button.btn.btn-default{:id       => "cancel_password_change",
+                                          "style"   => "display:none;cursor: pointer; cursor: hand;", 
+                                          "onclick" => "cancelPasswordChange('#{pfx}', '#{url}')"}
+                    = cancel_password_change
+
         .form-group{:id    => "verify_group",
                     :style => @edit[:new][:userid].blank? ? "display:block" : "display:none"}
           %label.col-md-2.control-label
@@ -80,6 +81,7 @@
                                  :maxlength         => 50,
                                  :class             => "form-control",
                                  "data-miq_observe" => observe_url_json)
+
     .form-group
       %label.col-md-2.control-label
         = _("E-mail Address")
