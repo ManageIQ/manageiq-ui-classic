@@ -857,6 +857,13 @@ describe CatalogController do
         expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
       end
 
+      it "list of available resources should not include catalog bundles" do
+        FactoryBot.create(:service_template, :service_type => 'composite')
+        controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
+        controller.send(:get_available_resources, "ServiceTemplate")
+        expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
+      end
+
       context "#get_available_resources" do
         let(:user_role) { FactoryBot.create(:miq_user_role) }
         let(:miq_group) { FactoryBot.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
