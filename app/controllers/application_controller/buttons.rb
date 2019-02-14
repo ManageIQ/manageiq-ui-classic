@@ -864,7 +864,6 @@ module ApplicationController::Buttons
     button.uri = @edit[:uri]
     button[:options] = {}
     button.disabled_text = @edit[:new][:disabled_text]
-    #   button[:options][:target_attr_name] = @edit[:new][:target_attr_name]
     button.uri_path, button.uri_attributes, button.uri_message = CustomButton.parse_uri(@edit[:uri])
     button.uri_attributes["request"] = @edit[:new][:object_request]
     button.options[:button_icon] = @edit[:new][:button_icon] if @edit[:new][:button_icon].present?

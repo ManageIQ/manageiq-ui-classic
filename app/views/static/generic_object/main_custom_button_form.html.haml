@@ -34,8 +34,6 @@
               "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
-      %span.help-block{"ng-show" => "angularForm.dialog_id.$error.required"}
-        = _("Required")
   .form-group{"ng-class" => "{'has-error': angularForm.display_for.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_display_for"}
       = _("Display for")
@@ -47,8 +45,6 @@
               "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
-      %span.help-block{"ng-show" => "angularForm.display_for.$error.required"}
-        = _("Required")
   .form-group{"ng-class" => "{'has-error': angularForm.submit_how.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_submit_how"}
       = _("Submit")
@@ -60,8 +56,6 @@
               "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
-      %span.help-block{"ng-show" => "angularForm.submit_how.$error.required"}
-        = _("Required")
   .form-group{"ng-class" => "{'has-error': angularForm.ae_instance.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_ae_instance"}
       = _("System/Process")
@@ -73,8 +67,6 @@
               "miq-select"                  => true,}
         %option{"value" => "", "disabled" => ""}
           = "<#{_('Choose')}>"
-      %span.help-block{"ng-show" => "angularForm.ae_instance.$error.required"}
-        = _("Required")
   .form-group{"ng-class" => "{'has-error': angularForm.ae_message.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_ae_message"}
       = _("Message")
@@ -84,8 +76,6 @@
                           "name"        => "ae_message",
                           "ng-model"    => "vm.customButtonModel.ae_message",
                           "maxlength"   => ViewHelper::MAX_NAME_LEN}
-      %span.help-block{"ng-show" => "angularForm.ae_message.$error.required"}
-        = _("Required")
   .form-group{"ng-class" => "{'has-error': angularForm.request.$invalid}"}
     %label.col-md-2.control-label{"for" => "custom_button_request"}
       = _("Request")
