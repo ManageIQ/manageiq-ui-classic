@@ -590,6 +590,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                           isFocused={false}
                                           isMulti={false}
                                           isRtl={false}
+                                          menuIsOpen={false}
                                           options={
                                             Array [
                                               Object {
@@ -1061,6 +1062,86 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  selectProps={
+                                                    Object {
+                                                      "backspaceRemovesValue": true,
+                                                      "blurInputOnSelect": true,
+                                                      "captureMenuScroll": false,
+                                                      "className": "selected-option",
+                                                      "clearable": false,
+                                                      "closeMenuOnScroll": false,
+                                                      "closeMenuOnSelect": true,
+                                                      "components": Object {},
+                                                      "controlShouldRenderValue": true,
+                                                      "defaultInputValue": "",
+                                                      "defaultMenuIsOpen": false,
+                                                      "defaultValue": null,
+                                                      "escapeClearsValue": false,
+                                                      "filterOption": [Function],
+                                                      "filterOptions": [Function],
+                                                      "formatGroupLabel": [Function],
+                                                      "getOptionLabel": [Function],
+                                                      "getOptionValue": [Function],
+                                                      "inputValue": "",
+                                                      "isDisabled": false,
+                                                      "isLoading": false,
+                                                      "isMulti": false,
+                                                      "isOptionDisabled": [Function],
+                                                      "isRtl": false,
+                                                      "isSearchable": true,
+                                                      "label": "animal",
+                                                      "loadingMessage": [Function],
+                                                      "maxMenuHeight": 300,
+                                                      "menuIsOpen": false,
+                                                      "menuPlacement": "bottom",
+                                                      "menuPosition": "absolute",
+                                                      "menuShouldBlockScroll": false,
+                                                      "menuShouldScrollIntoView": true,
+                                                      "minMenuHeight": 140,
+                                                      "name": "form-field-name",
+                                                      "noOptionsMessage": [Function],
+                                                      "onChange": [Function],
+                                                      "onInputChange": [Function],
+                                                      "onMenuClose": [Function],
+                                                      "onMenuOpen": [Function],
+                                                      "openMenuOnClick": true,
+                                                      "openMenuOnFocus": false,
+                                                      "options": Array [
+                                                        Object {
+                                                          "keyWord": "name",
+                                                          "label": "Name",
+                                                          "value": 1,
+                                                        },
+                                                        Object {
+                                                          "keyWord": "number",
+                                                          "label": "Number",
+                                                          "value": 2,
+                                                        },
+                                                        Object {
+                                                          "keyWord": "animal",
+                                                          "label": "Animal",
+                                                          "value": 3,
+                                                        },
+                                                        Object {
+                                                          "keyWord": "food",
+                                                          "label": "Food",
+                                                          "value": 4,
+                                                        },
+                                                        Object {
+                                                          "keyWord": "something",
+                                                          "label": "Something",
+                                                          "value": 5,
+                                                        },
+                                                      ],
+                                                      "pageSize": 5,
+                                                      "placeholder": "Select...",
+                                                      "screenReaderStatus": [Function],
+                                                      "styles": Object {},
+                                                      "tabIndex": "0",
+                                                      "tabSelectsValue": true,
+                                                      "value": 1,
+                                                    }
+                                                  }
                                                   spellCheck="false"
                                                   tabIndex="0"
                                                   theme={
@@ -2005,6 +2086,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                           isFocused={false}
                                           isMulti={false}
                                           isRtl={false}
+                                          menuIsOpen={false}
                                           options={
                                             Array [
                                               Object {
@@ -2371,6 +2453,68 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  selectProps={
+                                                    Object {
+                                                      "backspaceRemovesValue": true,
+                                                      "blurInputOnSelect": true,
+                                                      "captureMenuScroll": false,
+                                                      "clearable": false,
+                                                      "closeMenuOnScroll": false,
+                                                      "closeMenuOnSelect": true,
+                                                      "components": Object {},
+                                                      "controlShouldRenderValue": true,
+                                                      "defaultInputValue": "",
+                                                      "defaultMenuIsOpen": false,
+                                                      "defaultValue": null,
+                                                      "escapeClearsValue": false,
+                                                      "filterOption": [Function],
+                                                      "formatGroupLabel": [Function],
+                                                      "getOptionLabel": [Function],
+                                                      "getOptionValue": [Function],
+                                                      "ignoreCase": true,
+                                                      "inputValue": "",
+                                                      "isDisabled": false,
+                                                      "isLoading": false,
+                                                      "isMulti": false,
+                                                      "isOptionDisabled": [Function],
+                                                      "isRtl": false,
+                                                      "isSearchable": true,
+                                                      "label": "duck",
+                                                      "loadingMessage": [Function],
+                                                      "maxMenuHeight": 300,
+                                                      "menuIsOpen": false,
+                                                      "menuPlacement": "bottom",
+                                                      "menuPosition": "absolute",
+                                                      "menuShouldBlockScroll": false,
+                                                      "menuShouldScrollIntoView": true,
+                                                      "minMenuHeight": 140,
+                                                      "name": "form-field-name",
+                                                      "noOptionsMessage": [Function],
+                                                      "onChange": [Function],
+                                                      "onInputChange": [Function],
+                                                      "onMenuClose": [Function],
+                                                      "onMenuOpen": [Function],
+                                                      "openMenuOnClick": true,
+                                                      "openMenuOnFocus": false,
+                                                      "options": Array [
+                                                        Object {
+                                                          "label": "Pepa",
+                                                          "value": 11,
+                                                        },
+                                                        Object {
+                                                          "label": "Franta",
+                                                          "value": 12,
+                                                        },
+                                                      ],
+                                                      "pageSize": 5,
+                                                      "placeholder": "Select...",
+                                                      "screenReaderStatus": [Function],
+                                                      "styles": Object {},
+                                                      "tabIndex": "0",
+                                                      "tabSelectsValue": true,
+                                                      "value": 1,
+                                                    }
+                                                  }
                                                   spellCheck="false"
                                                   tabIndex="0"
                                                   theme={
