@@ -45,6 +45,22 @@ function filterReverseIndexes(indexes, endIndex) {
   return filteredIndexes;
 }
 
+function stepUp(array, index) {
+  if (index < 1) {
+    return;
+  }
+
+  [array[index], array[index - 1]] = [array[index - 1], array[index]];
+}
+
+function stepDown(array, index) {
+  if ((index < 0) || (index >= array.length - 1)) {
+    return;
+  }
+
+  [array[index], array[index + 1]] = [array[index + 1], array[index]];
+}
+
 
 // move selected elements between two arrays
 export function between({from, to, selected}) {
@@ -76,13 +92,9 @@ export function bottom({array, selected}) {
 export function up({array, selected}) {
   var indexes = idsToIndexes(array, selected);
   indexes = filterIndexes(indexes);
-  indexes.forEach(function(index) {
-    if (index > 0) {
-      var temp = array[index];
-      array[index] = array[index - 1];
-      array[index - 1] = temp;
-    }
-  });
+
+  indexes.forEach((index) => stepUp(array, index));
+
   return array;
 }
 
@@ -90,12 +102,8 @@ export function up({array, selected}) {
 export function down({array, selected}) {
   var indexes = idsToIndexes(array, selected).reverse();
   indexes = filterReverseIndexes(indexes, array.length - 1);
-  indexes.forEach(function(index) {
-    if (index < array.length - 1) {
-      var temp = array[index];
-      array[index] = array[index + 1];
-      array[index + 1] = temp;
-    }
-  });
+
+  indexes.forEach((index) => stepDown(array, index));
+
   return array;
 }
