@@ -1,33 +1,16 @@
-function idsToIndexes(arr, ids) {
-  var indexes = [];
+import { find, findIndex, some, reject } from 'lodash';
 
-  ids.forEach(function(id) {
-    var i = arr.findIndex(function(el) {
-      return el.id === id;
-    });
-
-    if (i >= 0) {
-      indexes.push(i);
-    }
-  });
-
-  return indexes;
+// [{id: 123}], [123] => [0]
+function idsToElements(arr, ids) {
+  return ids.map((id) => find(arr, { id }));
 }
 
-function idsToElements(arr, ids) {
-  return ids.map(function(id) {
-    return arr.find(function(el) {
-      return el.id === id;
-    });
-  });
+function idsToIndexes(arr, ids) {
+  return ids.map((id) => findIndex(arr, { id }));
 }
 
 function removeElements(arr, elements) {
-  _.remove(arr, function(n) {
-    return _.some(elements, n);
-  });
-
-  return arr;
+  return reject(arr, (elem) => some(elements, elem));
 }
 
 function filterIndexes(indexes) {
