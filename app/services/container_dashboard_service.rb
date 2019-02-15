@@ -251,11 +251,13 @@ class ContainerDashboardService < DashboardService
       end
     end
 
-    {
-      :dataAvailable => true,
-      :interval_name => "hourly",
-      :xy_data       => trend_data(hourly_image_metrics)
-    }
+    if hourly_image_metrics.size > 1
+      {
+        :dataAvailable => true,
+        :interval_name => "hourly",
+        :xy_data       => trend_data(hourly_image_metrics)
+      }
+    end
   end
 
   def daily_image_metrics

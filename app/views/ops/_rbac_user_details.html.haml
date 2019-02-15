@@ -1,5 +1,5 @@
-- change_stored_password ||= _("Change stored password")
-- cancel_password_change ||= _("Cancel password change")
+- change_stored_password ||= _("Change")
+- cancel_password_change ||= _("Cancel")
 - stored_password_placeholder = "●●●●●●●●"
 - pfx ||= ""
 
@@ -23,10 +23,10 @@
         - else
           = text_field_tag("name",
                            @edit[:new][:name],
-                           :autocomplete => 'off',
-                           :maxlength    => 50,
-                           :disabled     => disabled,
-                           :class => "form-control",
+                           :autocomplete      => 'off',
+                           :maxlength         => 50,
+                           :disabled          => disabled,
+                           :class             => "form-control",
                            "data-miq_observe" => observe_url_json)
           - unless @edit[:new][:userid] == "admin"
             = javascript_tag(javascript_focus('name'))
@@ -40,10 +40,10 @@
         - else
           = text_field_tag("userid",
                            @edit[:new][:userid],
-                           :autocomplete => 'off',
-                           :maxlength    => 255,
-                           :disabled     => disabled,
-                           :class => "form-control",
+                           :autocomplete      => 'off',
+                           :maxlength         => 255,
+                           :disabled          => disabled,
+                           :class             => "form-control",
                            "data-miq_observe" => observe_url_json)
     - if @edit
       - db_mode = ::Settings.authentication.mode
@@ -52,29 +52,36 @@
           %label.col-md-2.control-label
             = _("Password")
           .col-md-8
-            = password_field_tag("password",
-                                 @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
-                                 :maxlength         => 50,
-                                 :disabled => @edit[:new][:userid].blank? ? false : true,
-                                 :class => "form-control",
-                                 "data-miq_observe" => observe_url_json)
-            - if @edit[:new][:userid] == "admin"
-              = javascript_tag(javascript_focus('password'))
-          - unless @edit[:new][:userid].blank?
-            %div
-              %a{:id => "change_stored_password", "style" => "display:block;cursor: pointer; cursor: hand;", "onclick" => "changeStoredPassword('#{pfx}', '#{url}')"}
-                = change_stored_password
-              %a{:id => "cancel_password_change", "style" => "display:none;cursor: pointer; cursor: hand;", "onclick" => "cancelPasswordChange('#{pfx}', '#{url}')"}
-                = cancel_password_change
-        .form-group{:id => "verify_group", :style => @edit[:new][:userid].blank? ? "display:block" : "display:none"}
+            %span.input-group
+              = password_field_tag("password",
+                                   @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
+                                   :maxlength         => 50,
+                                   :disabled          => @edit[:new][:userid].blank? ? false : true,
+                                   :class             => "form-control",
+                                   "data-miq_observe" => observe_url_json)
+              - if @edit[:new][:userid] == "admin"
+                = javascript_tag(javascript_focus('password'))
+              - unless @edit[:new][:userid].blank?
+                %span.input-group-btn
+                  %button.btn.btn-default{:id       => "change_stored_password",
+                                          "style"   => "display:block;cursor: pointer; cursor: hand;", "onclick" => "changeStoredPassword('#{pfx}', '#{url}')"}
+                    = change_stored_password
+                  %button.btn.btn-default{:id       => "cancel_password_change",
+                                          "style"   => "display:none;cursor: pointer; cursor: hand;", 
+                                          "onclick" => "cancelPasswordChange('#{pfx}', '#{url}')"}
+                    = cancel_password_change
+
+        .form-group{:id    => "verify_group",
+                    :style => @edit[:new][:userid].blank? ? "display:block" : "display:none"}
           %label.col-md-2.control-label
             = _("Confirm Password")
           .col-md-8
             = password_field_tag("verify",
                                  "",
                                  :maxlength         => 50,
-                                 :class => "form-control",
+                                 :class             => "form-control",
                                  "data-miq_observe" => observe_url_json)
+
     .form-group
       %label.col-md-2.control-label
         = _("E-mail Address")
@@ -87,7 +94,7 @@
                            @edit[:new][:email],
                            :autocomplete      => 'off',
                            :maxlength         => 253,
-                           :class => "form-control",
+                           :class             => "form-control",
                            "data-miq_observe" => observe_url_json)
     - unless @edit
       .form-group
@@ -97,7 +104,7 @@
           - params = {}
           - if @record.current_group
             - if role_allows?(:feature => "rbac_group_show")
-              - params = {:class => "pointer",
+              - params = {:class   => "pointer",
                           :onclick => "miqOnClickSelectRbacTreeNode('g-#{@record.current_group.id}');",
                           :title => _("View this Group")}
             %i.ff.ff-group{params}
@@ -115,7 +122,7 @@
             - groups.each do |group|
               - params = {:class => "pointer",
                           :onclick => "miqOnClickSelectRbacTreeNode('g-#{group.id}');",
-                          :title => _("View this Group")}
+                          :title   => _("View this Group")}
               %i.ff.ff-group{params}
               = link_to(group.description, "#", params)
               %br
@@ -156,7 +163,7 @@
             - if role_allows?(:feature => "rbac_user_show")
               - params = {:class => "pointer",
                           :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@record.current_group.miq_user_role.id}');",
-                          :title => _("View this Role")}
+                          :title   => _("View this Role")}
             - else
               - params = {}
             %i.ff.ff-user-role{params}

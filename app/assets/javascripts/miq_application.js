@@ -1413,6 +1413,8 @@ function miqToolbarOnClick(_e) {
     'download_choice__render_report_csv',
     'download_choice__render_report_pdf',
     'download_choice__render_report_txt',
+    'custom_button_vmdb_choice__ab_button_simulate',
+    'catalogitem_button_vmdb_choice__ab_button_simulate',
   ], button.attr('name')) || button.attr('name').match(/_console$/);
 
   var options = {

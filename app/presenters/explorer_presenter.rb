@@ -263,18 +263,22 @@ class ExplorerPresenter
     # Open an accordion inside an other AJAX call
     data[:accordionSwap] = @options[:open_accord] unless @options[:open_accord].to_s.empty?
 
-    data[:addNodes] = {
-      :activeTree => @options[:active_tree],
-      :key        => @options[:add_nodes][:key],
-      :osf        => @options[:osf_node],
-      :nodes      => @options[:add_nodes][:nodes],
-      :remove     => !!@options[:remove_nodes],
-    } if @options[:add_nodes]
+    if @options[:add_nodes]
+      data[:addNodes] = {
+        :activeTree => @options[:active_tree],
+        :key        => @options[:add_nodes][:key],
+        :osf        => @options[:osf_node],
+        :nodes      => @options[:add_nodes][:nodes],
+        :remove     => !!@options[:remove_nodes],
+      }
+    end
 
-    data[:deleteNode] = {
-      :node       => @options[:delete_node],
-      :activeTree => @options[:active_tree],
-    } if @options[:delete_node]
+    if @options[:delete_node]
+      data[:deleteNode] = {
+        :node       => @options[:delete_node],
+        :activeTree => @options[:active_tree],
+      }
+    end
 
     data[:dashboardUrl] = @options[:miq_widget_dd_url] if @options[:miq_widget_dd_url]
     data[:updatePartials] = @options[:update_partials] # Replace content of given DOM element (element stays).
@@ -282,7 +286,7 @@ class ExplorerPresenter
     data[:replacePartials] = @options[:replace_partials] # Replace given DOM element (and it's children) (element goes away).
     data[:reloadTrees] = @options[:reload_trees] # Replace the data attribute of the given TreeViewComponent
     data[:buildCalendar] = format_calendar_dates(@options[:build_calendar])
-    data[:initDashboard] = !! @options[:init_dashboard]
+    data[:initDashboard] = !!@options[:init_dashboard]
     data[:ajaxUrl] = ajax_action_url(@options[:ajax_action]) if @options[:ajax_action]
     data[:clearGtlListGrid] = !!@options[:clear_gtl_list_grid]
     data[:setVisibility] = @options[:set_visible_elements]
@@ -298,7 +302,7 @@ class ExplorerPresenter
       :recordId    => @options[:record_id],
     }
 
-    unless @options[:osf_node].blank?
+    if @options[:osf_node].present?
       data[:activateNode] = {
         :activeTree => @options[:active_tree],
         :osf        => @options[:osf_node]
