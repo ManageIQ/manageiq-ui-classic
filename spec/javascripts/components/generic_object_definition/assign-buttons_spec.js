@@ -1,4 +1,4 @@
-describe('assign-button', function() {
+describe('assign-buttons', function() {
   var vm;
   var after = {};
 
@@ -17,9 +17,7 @@ describe('assign-button', function() {
   var b12 = { name: 'button12', id: 12 };
 
   beforeEach(module('ManageIQ'));
-  beforeEach(inject(function(_$componentController_) {
-    var $componentController = _$componentController_;
-
+  beforeEach(inject(function($componentController) {
     var bindings = {
       assignedButtons: [b1, b2, b3, b4, b5, b6],
       unassignedButtons: [b7, b8, b9, b10, b11, b12],
