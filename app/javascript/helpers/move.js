@@ -1,12 +1,3 @@
-export {
-  between: moveBetween,
-  top: moveTop,
-  bottom: moveBottom,
-  up: moveUp,
-  down: moveDown,
-};
-
-
 function idsToIndexes(arr, ids) {
   var indexes = [];
 
@@ -72,7 +63,8 @@ function filterReverseIndexes(indexes, endIndex) {
 }
 
 
-function moveBetween({from, to, selected}) {
+// move selected elements between two arrays
+export function between({from, to, selected}) {
   var moved = idsToElements(from, selected);
 
   return {
@@ -81,21 +73,24 @@ function moveBetween({from, to, selected}) {
   };
 }
 
-function moveTop({array, selected}) {
+// move selected elements to the top of the array
+export function top({array, selected}) {
   var moved = idsToElements(array, selected);
   array = removeElements(array, moved);
 
   return moved.concat(array);
 }
 
-function moveBottom({array, selected}) {
+// move selected elements to the bottom of the array
+export function bottom({array, selected}) {
   var moved = idsToElements(array, selected);
   array = removeElements(array, moved);
 
   return array.concat(moved);
 }
 
-function moveUp({array, selected}) {
+// move selected elements one position up
+export function up({array, selected}) {
   var indexes = idsToIndexes(array, selected);
   indexes = filterIndexes(indexes);
   indexes.forEach(function(index) {
@@ -108,7 +103,8 @@ function moveUp({array, selected}) {
   return array;
 }
 
-function moveDown({array, selected}) {
+// move selected elements one position up
+export function down({array, selected}) {
   var indexes = idsToIndexes(array, selected).reverse();
   indexes = filterReverseIndexes(indexes, array.length - 1);
   indexes.forEach(function(index) {
