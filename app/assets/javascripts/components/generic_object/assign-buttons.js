@@ -45,6 +45,64 @@ function removeElements(arr, elements) {
   return arr;
 }
 
+function filterIndexes(indexes) {
+  if (indexes[0] !== 0) {
+    return indexes;
+  }
+  var previous = 0;
+  var filteredIndexes = [];
+  indexes.forEach(function(index) {
+    if (index !== 0 && index - 1 !== previous) {
+      filteredIndexes.push(index);
+    } else {
+      previous = index;
+    }
+  });
+  return filteredIndexes;
+}
+
+function filterReverseIndexes(indexes, endIndex) {
+  if (indexes[0] !== endIndex) {
+    return indexes;
+  }
+  var previous = endIndex;
+  var filteredIndexes = [];
+  indexes.forEach(function(index) {
+    if (index !== endIndex && index + 1 !== previous) {
+      filteredIndexes.push(index);
+    } else {
+      previous = index;
+    }
+  });
+  return filteredIndexes;
+}
+
+function moveUp({array, selected}) {
+  var indexes = idsToIndexes(array, selected);
+  indexes = filterIndexes(indexes);
+  indexes.forEach(function(index) {
+    if (index > 0) {
+      var temp = array[index];
+      array[index] = array[index - 1];
+      array[index - 1] = temp;
+    }
+  });
+  return array;
+}
+
+function moveDown({array, selected}) {
+  var indexes = idsToIndexes(array, selected).reverse();
+  indexes = filterReverseIndexes(indexes, array.length - 1);
+  indexes.forEach(function(index) {
+    if (index < array.length - 1) {
+      var temp = array[index];
+      array[index] = array[index + 1];
+      array[index + 1] = temp;
+    }
+  });
+  return array;
+}
+
 function moveBetween({from, to, selected}) {
   var moved = idsToElements(from, selected);
 
@@ -111,70 +169,6 @@ function assignButtonsController() {
   vm.topButtonClicked = wrap(moveTop);
   vm.bottomButtonClicked = wrap(moveBottom);
 
-
-  var getIndexes = idsToIndexes;
-
-  function filterIndexes(indexes) {
-    if (indexes[0] !== 0) {
-      return indexes;
-    }
-    var previous = 0;
-    var filteredIndexes = [];
-    indexes.forEach(function(index) {
-      if (index !== 0 && index - 1 !== previous) {
-        filteredIndexes.push(index);
-      } else {
-        previous = index;
-      }
-    });
-    return filteredIndexes;
-  }
-
-  function filterReverseIndexes(indexes, endIndex) {
-    if (indexes[0] !== endIndex) {
-      return indexes;
-    }
-    var previous = endIndex;
-    var filteredIndexes = [];
-    indexes.forEach(function(index) {
-      if (index !== endIndex && index + 1 !== previous) {
-        filteredIndexes.push(index);
-      } else {
-        previous = index;
-      }
-    });
-    return filteredIndexes;
-  }
-
-  vm.upButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-
-    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons);
-    indexes = filterIndexes(indexes);
-    indexes.forEach(function(index) {
-      if (index > 0) {
-        var temp = assigned[index];
-        assigned[index] = assigned[index - 1];
-        assigned[index - 1] = temp;
-      }
-    });
-
-    vm.updateButtons(assigned);
-  };
-
-  vm.downButtonClicked = function() {
-    var assigned = [].concat(vm.assignedButtons);
-
-    var indexes = getIndexes(assigned, vm.model.selectedAssignedButtons).reverse();
-    indexes = filterReverseIndexes(indexes, assigned.length - 1);
-    indexes.forEach(function(index) {
-      if (index < assigned.length - 1) {
-        var temp = assigned[index];
-        assigned[index] = assigned[index + 1];
-        assigned[index + 1] = temp;
-      }
-    });
-
-    vm.updateButtons(assigned);
-  };
+  vm.upButtonClicked = wrap(move.up);
+  vm.downButtonClicked = wrap(move.down);
 }
