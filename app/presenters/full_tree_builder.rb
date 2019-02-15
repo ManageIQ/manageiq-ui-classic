@@ -33,7 +33,7 @@ class FullTreeBuilder < TreeBuilder
     ui_tree = rel_tree.collect do |object, nodes|
       ui_node = x_build_single_node(object, parent_ui_tree_id, options)
 
-      unless nodes.blank?
+      if nodes.present?
         ui_node[:nodes] = convert_to_ui_tree(nodes, ui_node[:key])
       end
 
