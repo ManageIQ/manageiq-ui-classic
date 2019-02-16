@@ -32,13 +32,13 @@ class TreeBuilderRegion < TreeBuilder
       emses.count + storages.count
     else
       objects = []
-      if emses.count > 0
+      if emses.count.positive?
         objects.push(:id   => "folder_e_xx-#{object.id}",
                      :text => _("Providers"),
                      :icon => "pficon pficon-folder-close",
                      :tip  => _("Providers (Click to open)"))
       end
-      if storages.count > 0
+      if storages.count.positive?
         objects.push(:id   => "folder_ds_xx-#{object.id}",
                      :text => _("Datastores"),
                      :icon => "pficon pficon-folder-close",
