@@ -1,18 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const List = React.forwardRef(({ id, values = [], ...rest }, ref) => (
+const List = ({ value, optionClick, ...rest }) => (
   <select
-    ref={ref}
-    id={id}
-    name={`${id}[]`}
     multiple
-    className="form-control"
-    style={{ overflowX: 'scroll' }}
+    className="form-control list"
     {...rest}
   >
-    {Array.isArray(values)
-      && values.sort((a, b) => a.label.localeCompare(b.label)).map(({ key, label }) => <option key={key} value={key}>{label}</option>)}
+    {value.map(({ key, label }) => (
+      <option onClick={optionClick} key={key} value={key}>
+        {label}
+      </option>
+    ))}
   </select>
-));
+);
+
+List.propTypes = {
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    }),
+  ),
+  optionClick: PropTypes.func.isRequired,
+};
+
+List.defaultProps = {
+  value: [],
+};
 
 export default List;

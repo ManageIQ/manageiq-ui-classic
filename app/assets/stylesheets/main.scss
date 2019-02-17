@@ -40,6 +40,7 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "timeline"; // used for the patternfly-timeline styles
 @import "alerts";
 @import "graphql_explorer";
+@import "dual_list";
 
 .login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
   height: 38px;

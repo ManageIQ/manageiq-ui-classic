@@ -1,169 +1,186 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'patternfly-react';
+import {
+  Button,
+  Icon,
+  Grid,
+  Row,
+  Col,
+} from 'patternfly-react';
+import { isEqual } from 'lodash';
 import List from './list';
-import { filterOptions } from './helpers';
 
-class DualListSelect extends Component {
-  constructor(props) {
-    super(props);
-    this.leftList = React.createRef();
-    this.rightList = React.createRef();
+const getOptionsGroup = (value, lastClicked, options) => {
+  const lastIndex = options.map(({ key }) => key.toString()).indexOf(lastClicked.toString());
+  const currentIndex = options.map(({ key }) => key.toString()).indexOf(value);
+  const startIndex = Math.min(lastIndex, currentIndex);
+  const endIndex = Math.max(lastIndex, currentIndex) + 1;
+  return [...options.slice(startIndex, endIndex).map(({ key }) => key.toString())];
+};
+
+class DualList extends Component {
+  state = {
+    lastRightClicked: undefined,
+    selectedRightValues: [],
+    lastLeftClicked: undefined,
+    selectedLeftValues: [],
+  };
+
+  handleOptionClicked = (event, options, isRight) => {
+    const { target: { value } } = event;
+    const selectedKey = isRight ? 'selectedRightValues' : 'selectedLeftValues';
+    const lastKey = isRight ? 'lastRightClicked' : 'lastLeftClicked';
+    if (event.shiftKey && this.state[lastKey]) {
+      this.setState(prevState => ({ [selectedKey]: getOptionsGroup(value, prevState[lastKey], options) }));
+    } else if (event.ctrlKey && this.state[lastKey]) {
+      this.setState((prevState) => {
+        const selectedValues = prevState[selectedKey].includes(value)
+          ? prevState[selectedKey].filter(item => item !== value)
+          : [...prevState[selectedKey], value];
+        return { [selectedKey]: selectedValues };
+      });
+    } else {
+      this.setState({ [selectedKey]: [value] });
+    }
+    this.setState({ [lastKey]: value });
+  };
+
+  handleMoveRight = () => {
+    this.props.input.onChange([...this.props.input.value, ...this.state.selectedRightValues]);
+    this.setState({ selectedRightValues: [] });
   }
 
-  moveLeft = (rightValues) => {
-    const { input: { onChange } } = this.props;
-    const selectedItems = Array.prototype.map.call(this.rightList.current.selectedOptions, ({ value }) => value);
-    const reducedItems = rightValues.filter(({ key }) => !selectedItems.includes(key));
-
-    onChange([
-      ...reducedItems,
-    ]);
-  };
-
-  moveRight = () => {
-    const { input: { onChange, value }, options } = this.props;
-    const selectedItems = Array.prototype.map.call(this.leftList.current.selectedOptions, ({ value }) => value);
-    const movedItems = options.filter(({ key }) => selectedItems.includes(key));
-
-    onChange([
-      ...value,
-      ...movedItems,
-    ]);
-  };
-
-  moveAllRight = (leftValues) => {
-    const { input: { onChange, value } } = this.props;
-
-    onChange([
-      ...value,
-      ...leftValues,
-    ]);
-  };
-
-  moveAllLeft = () => {
-    const { input: { onChange } } = this.props;
-
-    onChange([]);
-  };
+  handleMoveLeft = () => {
+    this.props.input.onChange(this.props.input.value.filter(value => !this.state.selectedLeftValues.includes(value)));
+    this.setState({ selectedLeftValues: [] });
+  }
 
   render() {
     const {
-      input: { value = [] },
-      options,
-      leftId,
-      rightId,
-      leftTitle,
-      rightTitle,
-      size,
-      allToRight,
       allToLeft,
-      moveLeftTitle,
-      moveRightTitle,
+      allToRight,
+      input: { value, onChange },
+      leftTitle,
       moveAllLeftTitle,
       moveAllRightTitle,
+      moveRightTitle,
+      moveLeftTitle,
+      options,
+      rightTitle,
+      size,
     } = this.props;
-    const leftValues = filterOptions(options, value);
-    const rightValues = value;
-
+    const leftValues = options.filter(option => !value.includes(option.key));
+    const rightValues = options.filter(option => value.includes(option.key));
     return (
-      <div>
-        <div className="col-md-5">
-          {leftTitle}
-          <List size={size} ref={this.leftList} id={leftId} values={leftValues} />
-        </div>
-        <div className="col-md-1" style={{ padding: 10 }}>
-          <div className="spacer" />
-          <div className="spacer" />
-          <Button disabled={leftValues.length === 0} className="btn-block" onClick={this.moveRight} title={moveRightTitle}>
-            <Icon type="fa" name="angle-right" size="lg" />
-          </Button>
-          {allToRight
-            && (
+      <div className="dual-list">
+        <Grid fluid>
+          <Row>
+            <Col md={5}>
+              {leftTitle}
+              <List size={size} optionClick={event => this.handleOptionClicked(event, leftValues, true)} value={leftValues} />
+            </Col>
+            <Col md={2} className="buttons-block">
+              <div className="spacer" />
+              <div className="spacer" />
               <Button
                 disabled={leftValues.length === 0}
-                className="btn-block"
-                onClick={() => this.moveAllRight(leftValues)}
-                title={moveAllRightTitle}
+                className="btn-block dual-list-button"
+                onClick={this.handleMoveRight}
+                title={moveRightTitle}
+                type="button"
               >
-                <Icon type="fa" name="angle-double-right" size="lg" />
+                <Icon type="fa" name="angle-right" size="lg" />
               </Button>
-            )}
-          {allToLeft
-            && (
-              <Button disabled={rightValues.length === 0} className="btn-block" onClick={this.moveAllLeft} title={moveAllLeftTitle}>
-                <Icon type="fa" name="angle-double-left" size="lg" />
+              {
+                allToRight && (
+                <Button
+                  disabled={leftValues.length === 0}
+                  className="btn-block dual-list-button"
+                  onClick={() => this.setState({ selectedRightValues: [] }, () => onChange(options.map(({ key }) => key)))}
+                  title={moveAllRightTitle}
+                  type="button"
+                >
+                  <Icon type="fa" name="angle-double-right" size="lg" />
+                </Button>
+                )
+              }
+              {
+                allToLeft && (
+                <Button
+                  disabled={rightValues.length === 0}
+                  className="btn-block dual-list-button"
+                  onClick={() => this.setState({ selectedLeftValues: [] }, () => onChange([]))}
+                  title={moveAllLeftTitle}
+                  type="button"
+                >
+                  <Icon type="fa" name="angle-double-left" size="lg" />
+                </Button>
+                )
+              }
+              <Button
+                disabled={rightValues.length === 0}
+                className="btn-block dual-list-button"
+                onClick={this.handleMoveLeft}
+                title={moveLeftTitle}
+                type="button"
+              >
+                <Icon type="fa" name="angle-left" size="lg" />
               </Button>
-            )}
-          <Button disabled={rightValues.length === 0} className="btn-block" onClick={() => this.moveLeft(rightValues)} title={moveLeftTitle}>
-            <Icon type="fa" name="angle-left" size="lg" />
-          </Button>
-        </div>
-        <div className="col-md-5">
-          {rightTitle}
-          <List size={size} ref={this.rightList} id={rightId} values={rightValues} />
-        </div>
-      </div>);
+            </Col>
+            <Col md={5}>
+              {rightTitle}
+              <List size={size} optionClick={event => this.handleOptionClicked(event, rightValues, false)} value={rightValues} />
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    );
   }
 }
 
-DualListSelect.propTypes = {
-  /* ID of the left select */
-  leftId: PropTypes.string,
-  /* ID of the right select */
-  rightId: PropTypes.string,
-  /* Title above left select */
-  leftTitle: PropTypes.string,
-  /* Title above right select */
-  rightTitle: PropTypes.string,
-  /* Size of select */
-  size: PropTypes.number,
-  /* Should show button "move all to right" */
-  allToRight: PropTypes.bool,
-  /* Should show button "move all to left" */
-  allToLeft: PropTypes.bool,
-  /* Title of move left button */
-  moveLeftTitle: PropTypes.string,
-  /* Title of move right button */
-  moveRightTitle: PropTypes.string,
-  /* Title of move all right button */
-  moveAllRightTitle: PropTypes.string,
-  /* Title of move all left button */
-  moveAllLeftTitle: PropTypes.string,
-  /* Options:
-    [
-      {key: 'key', label: 'label'},
-      ...
-    ]
-  */
+
+DualList.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      [PropTypes.string]: PropTypes.string,
-      [PropTypes.string]: PropTypes.string,
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
     }),
   ),
+  leftTitle: PropTypes.string,
+  rightTitle: PropTypes.string,
+  size: PropTypes.number,
+  moveLeftTitle: PropTypes.string,
+  moveRightTitle: PropTypes.string,
+  input: PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+    onChange: PropTypes.func.isRequired,
+  }).isRequired,
+  allToLeft: PropTypes.bool,
+  allToRight: PropTypes.bool,
+  moveAllLeftTitle: PropTypes.string,
+  moveAllRightTitle: PropTypes.string,
 };
 
-DualListSelect.defaultProps = {
-  leftId: undefined,
-  rightId: undefined,
-  leftTitle: undefined,
-  rightTitle: undefined,
+DualList.defaultProps = {
+  leftTitle: __('Options'),
+  rightTitle: __('Selected'),
   size: 15,
-  allToRight: true,
-  allToLeft: false,
   moveLeftTitle: __('Move selected to left'),
   moveRightTitle: __('Move selected to right'),
   moveAllRightTitle: __('Move all to right'),
   moveAllLeftTitle: __('Move all to left'),
   options: [],
+  allToLeft: false,
+  allToRight: false,
 };
 
 const WrappedDualList = ({ FieldProvider, name, ...rest }) => (
   <FieldProvider
     name={name}
     {...rest}
-    component={props => <DualListSelect {...props} />}
+    subscription={{ error: true, pristine: true, value: true }}
+    isEqual={(current, initial) => isEqual([...current || []].sort(), [...initial || []].sort())}
+    component={props => <DualList {...props} />}
   />
 );
 
