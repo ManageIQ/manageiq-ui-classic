@@ -1,7 +1,3 @@
-if [ "$TEST_SUITE" = "spec" ]; then
-  bundle exec codeclimate-test-reporter;
-fi
-
 if [ "$TEST_SUITE" = "spec:compile" ]; then
   # Collapse Travis output https://github.com/travis-ci/travis-ci/issues/2158
   echo "travis_fold:start:GEMFILE_LOCK"
