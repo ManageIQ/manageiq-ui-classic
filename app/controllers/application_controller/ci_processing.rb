@@ -636,10 +636,7 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_untestable_actions = %w(
-      reboot_guest stop start check_compliance_queue destroy
-      refresh_ems vm_miq_request_new suspend reset shutdown_guest
-    )
+    vm_infra_untestable_actions = %w(check_compliance_queue destroy refresh_ems vm_miq_request_new)
     ems_cluster_untestable_actions = %w(scan)
     if controller == "vm_infra"
       return vm_infra_untestable_actions.exclude?(action)
