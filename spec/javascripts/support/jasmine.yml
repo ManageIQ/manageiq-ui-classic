@@ -20,7 +20,6 @@ src_files:
 - assets/jasmine-jquery/lib/jasmine-jquery
 - assets/angular-mocks
 - __spec__/helpers/fixtures-fix.js
-- __spec__/helpers/toolbar.js
 - packs/manageiq-ui-classic/application-common.js
 - packs/manageiq-ui-classic/toolbar-actions-common.js
 - packs/manageiq-ui-classic/provisioning-actions-common.js
