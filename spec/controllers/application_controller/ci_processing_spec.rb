@@ -34,7 +34,7 @@ describe ApplicationController do
     end
   end
 
-  describe "action_to_feature" do
+  describe "#action_to_feature" do
     let(:record) { FactoryGirl.create(:vm_redhat) }
 
     context 'the UI action is also a queryable feature' do
@@ -681,7 +681,7 @@ describe ApplicationController do
     end
   end
 
-  context "#discover" do
+  describe "#discover" do
     it "checks that keys in @to remain set if there is an error after submit is pressed" do
       from_first = "1"
       from_second = "1"
@@ -720,7 +720,7 @@ describe ApplicationController do
     end
   end
 
-  context "#process_elements" do
+  describe "#process_elements" do
     it "shows passed in display name in flash message" do
       pxe = FactoryGirl.create(:pxe_server)
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue', 'Refresh Relationships')
@@ -735,7 +735,7 @@ describe ApplicationController do
     end
   end
 
-  context "#identify_record" do
+  describe "#identify_record" do
     it "Verify flash error message when passed in ID no longer exists in database" do
       record = controller.send(:identify_record, "1", ExtManagementSystem)
       expect(record).to be_nil
@@ -749,7 +749,7 @@ describe ApplicationController do
     end
   end
 
-  context "#get_record" do
+  describe "#get_record" do
     it "use passed in db to set class for identify_record call" do
       host = FactoryGirl.create(:host)
       controller.instance_variable_set(:@_params, :id => host.id)
@@ -800,7 +800,7 @@ describe HostController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.create(:zone) }
 
-  context "#show_association" do
+  describe "#show_association" do
     before(:each) do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -846,7 +846,7 @@ describe HostController do
     end
   end
 
-  context "#process_objects" do
+  describe "#process_objects" do
     it "returns array of object ids " do
       vm1 = FactoryGirl.create(:vm_vmware)
       vm2 = FactoryGirl.create(:vm_vmware)
@@ -858,7 +858,7 @@ describe HostController do
     end
   end
 
-  context "#process_hosts" do
+  describe "#process_hosts" do
     before do
       @host1 = FactoryGirl.create(:host)
       @host2 = FactoryGirl.create(:host)
@@ -881,7 +881,7 @@ describe HostController do
     end
   end
 
-  context "#generic_button_operation" do
+  describe "#generic_button_operation" do
     before(:each) do
       allow(subject).to receive(:vm_button_action).and_return(subject.method(:process_objects))
       allow(controller).to receive(:render)
@@ -916,7 +916,7 @@ describe HostController do
 end
 
 describe ServiceController do
-  context "#vm_button_operation" do
+  describe "#vm_button_operation" do
     let(:user) { FactoryGirl.create(:user_admin) }
 
     before do
@@ -947,7 +947,7 @@ describe ServiceController do
 end
 
 describe MiqTemplateController do
-  context "#vm_button_operation" do
+  describe "#vm_button_operation" do
     before do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       allow(MiqServer).to receive(:my_zone).and_return("default")
@@ -973,7 +973,7 @@ describe MiqTemplateController do
 end
 
 describe VmOrTemplateController do
-  context "#vm_button_operation" do
+  describe "#vm_button_operation" do
     let(:user) { FactoryGirl.create(:user_admin) }
 
     before do
@@ -1029,7 +1029,7 @@ describe VmOrTemplateController do
 end
 
 describe OrchestrationStackController do
-  context "#orchestration_stack_delete" do
+  describe "#orchestration_stack_delete" do
     let(:orchestration_stack) { FactoryGirl.create(:orchestration_stack_cloud) }
     let(:orchestration_stack_deleted) { FactoryGirl.create(:orchestration_stack_cloud) }
 
@@ -1078,6 +1078,22 @@ describe EmsCloudController do
         expect(controller).to receive(:delete_flavors).and_call_original
         expect_any_instance_of(Flavor).to receive(:delete_flavor_queue)
         post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => flavor.id}
+      end
+    end
+  end
+end
+
+describe VmInfraController do
+  describe '#testable_action' do
+    before do
+      controller.instance_variable_set(:@_params, :controller => 'vm_infra')
+    end
+
+    context 'power operations and vm infra controller' do
+      %w(reboot_guest reset shutdown_guest start stop suspend).each do |op|
+        it "returns true for #{op} operation on a VM" do
+          expect(controller.send(:testable_action, op)).to be(true)
+        end
       end
     end
   end
