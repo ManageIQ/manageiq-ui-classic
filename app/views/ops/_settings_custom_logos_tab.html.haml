@@ -60,7 +60,7 @@
         .col-md-8
           = check_box_tag("server_useloginlogo", true, @edit[:new][:server][:custom_login_logo], :data => {:on_text => _('Yes'), :off_text => _('No')})
   %hr
-  %h3=_("Custom Brand Image (Shown on top right of all screens and above login panel)")
+  %h3=_("Custom Brand Image (Shown on top left of all screens and above login panel)")
   - if File.exist?(@login_brand_file)
     = image_tag("/upload/custom_brand.png?#{rand(99_999_999)}")
     %br/
