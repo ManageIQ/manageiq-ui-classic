@@ -3029,6 +3029,7 @@ Rails.application.routes.draw do
         perf_chart_chooser
         protect
         retire
+        right_size_print
         show
         tagging_edit
         resize
@@ -3136,6 +3137,7 @@ Rails.application.routes.draw do
         filesystem_download
         retirement_info
         reconfigure_form_fields
+        right_size_print
         launch_html5_console
         launch_vmrc_console
         perf_chart_chooser

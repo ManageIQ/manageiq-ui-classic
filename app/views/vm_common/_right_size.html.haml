@@ -213,7 +213,7 @@
     - arr = [Vm.cpu_recommendation_minimum, MiqReport.new.format_mbytes_to_human_size(Vm.mem_recommendation_minimum)]
     = _("* Recommendations are subject to minimum of CPU: %{cpu} and Memory: %{memory}.") % {:cpu => arr[0], :memory => arr[1]}
 
-  - unless @explorer
+  - unless @explorer || @display = "download_pdf"
     #buttons_on{:style => "float: right"}
       = button_tag((t = _('Back')),
         :class   => 'btn btn-default',
