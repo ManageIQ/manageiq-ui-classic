@@ -1182,6 +1182,8 @@ module VmCommon
       c_tb = build_toolbar("drifts_center_tb") # Use vm or template tb
     elsif @sb[:action] == 'snapshot_info'
       c_tb = build_toolbar("x_vm_snapshot_center_tb")
+    elsif @sb[:action] == 'right_size'
+      v_tb = build_toolbar("right_size_view_tb")
     elsif @sb[:action] == 'vmtree_info'
       c_tb = build_toolbar("x_vm_vmtree_center_tb")
     end
