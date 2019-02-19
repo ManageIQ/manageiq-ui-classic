@@ -187,7 +187,7 @@ module EmsInfraHelper::TextualSummary
     return nil unless User.current_user.super_admin_user? || User.current_user.admin?
 
     {
-      :title => _('Custom Button Events'),
+      :label => _('Custom Button Events'),
       :value => num = @record.number_of(:custom_button_events),
       :link  => num.positive? ? ems_infra_path(:id => @record, :display => 'custom_button_events') : nil,
       :icon  => CustomButtonEvent.decorate.fonticon,
