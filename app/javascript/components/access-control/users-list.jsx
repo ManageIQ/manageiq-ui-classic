@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { API, http } from '../../http_api';
 import UserDetails from './user-details';
 import CustomEvents from './custom-events';
+import { cleanVirtualDom } from '../../miq-component/helpers';
 
 // eslint-disable-next-line max-len
 const getUserCustomButtons = userId => `/api/users/${userId}/custom_button_events?expand=resources&attributes=message,created_on,username,automate_entry_point,button_name`;
@@ -11,13 +12,17 @@ const getUserCustomButtons = userId => `/api/users/${userId}/custom_button_event
 const requestUser = userId => `/api/users/${userId}/?expand=resources&attributes=current_group,miq_groups,current_group.miq_user_role,tags&sort_by=name`;
 
 class UserList extends Component {
-  state = {
-    isFetching: true,
-    view: 'user-info',
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetching: true,
+      view: 'user-info',
+    };
   }
 
   componentDidMount() {
     const { userId } = this.props;
+    cleanVirtualDom();
     miqSparkleOn();
     Promise.all([
       API.get(getUserCustomButtons(userId))
