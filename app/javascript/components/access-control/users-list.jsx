@@ -1,12 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  FormGroup,
-  Col,
-  Row,
-  Icon,
-} from 'patternfly-react';
 import { API, http } from '../../http_api';
 import UserDetails from './user-details';
 import CustomEvents from './custom-events';

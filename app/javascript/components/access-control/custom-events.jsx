@@ -1,7 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { GenericPreviewTable } from '@manageiq/react-ui-components/dist/table';
 import PropTypes from 'prop-types';
-import { PaginationRow, paginate, PAGINATION_VIEW } from 'patternfly-react';
+import {
+  PaginationRow,
+  paginate,
+  PAGINATION_VIEW,
+  Button,
+  ButtonGroup,
+  Grid,
+  Row,
+  Col,
+} from 'patternfly-react';
 
 const columns = [{
   property: 'button_name',
@@ -86,7 +95,8 @@ class CustomEvents extends Component {
 
    render() {
      const {
-       events, onEventClick,
+       events,
+       onEventClick,
      } = this.props;
      const {
        pagination, pageChangeValue, sortOrderAsc, sortableColumnPropery,
@@ -97,7 +107,6 @@ class CustomEvents extends Component {
      return (
        <Fragment>
          <h3>Custom Button Events</h3>
-         <p onClick={() => onEventClick('user-info')}>Back</p>
          <GenericPreviewTable
            showIcon
            rowClick={() => {}}
@@ -124,6 +133,9 @@ class CustomEvents extends Component {
            onPageInput={({ target: { value } }) => this.setState({ pageChangeValue: value })}
            onSubmit={() => this.handlePageInputChange(pageChangeValue)}
          />
+         <div style={{ marginTop: 8 }}>
+           <Button className="pull-right" onClick={() => onEventClick('user-info')}>Back</Button>
+         </div>
        </Fragment>
      );
    }
