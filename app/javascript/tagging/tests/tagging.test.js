@@ -1,6 +1,6 @@
 import React from 'react';
 import Tagging from '../components/Tagging/Tagging';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 const tags = [
@@ -61,7 +61,7 @@ const onDelete = jest.fn();
 
 describe('Tagging component without redux mapping', () => {
   it('match snapshot', () => {
-    const component = mount(
+    const component = shallow(
       <Tagging
         tags={tags}
         assignedTags={assignedTags}
@@ -82,7 +82,7 @@ describe('Tagging component without redux mapping', () => {
     const onTagValueChange = jest.fn();
     const onTagDeleteClick = jest.fn();
     const onTagMultiValueChange = jest.fn();
-    const wrapper = mount(
+    const wrapper = shallow(
       <Tagging
         tags={tags}
         assignedTags={assignedTags}
