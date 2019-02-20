@@ -1,7 +1,7 @@
 class TreeBuilder
   include TreeKids
 
-  attr_reader :name, :type, :tree_nodes
+  attr_reader :name, :type, :tree_nodes, :bs_tree
 
   def self.class_for_type(type)
     raise('Obsolete tree type.') if type == :filter
