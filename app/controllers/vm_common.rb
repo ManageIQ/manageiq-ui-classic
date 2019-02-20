@@ -535,6 +535,21 @@ module VmCommon
     end
   end
 
+  def right_size_print
+    @record = find_record_with_rbac(Vm, params[:id])
+    @display = "download_pdf"
+    disable_client_cache
+
+    @options = {
+      :page_layout => "portrait",
+      :page_size   => "us-letter",
+      :title       => "\"#{@record.name}\"".html_safe,
+      :quadicon    => false
+    }
+
+    render :template => 'vm_common/_right_size', :layout => '/layouts/print'
+  end
+
   def evm_relationship
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
     @edit = {}
@@ -1143,6 +1158,8 @@ module VmCommon
       c_tb = build_toolbar("drifts_center_tb") # Use vm or template tb
     elsif @sb[:action] == 'snapshot_info'
       c_tb = build_toolbar("x_vm_snapshot_center_tb")
+    elsif @sb[:action] == 'right_size'
+      v_tb = build_toolbar("right_size_view_tb")
     elsif @sb[:action] == 'vmtree_info'
       c_tb = build_toolbar("x_vm_vmtree_center_tb")
     end
