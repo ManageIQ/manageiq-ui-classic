@@ -12,7 +12,6 @@ const UserDetails = ({
   onEventClick,
 }) => (
   <div>
-    <h3>{__('User Information')}</h3>
     <RbacUserPreview user={user} onEventClick={() => onEventClick('events')} permission={permission} customEvents={customEvents} />
     <hr />
     <RbacUserTagsList tags={tags} tenant={tenant} />
