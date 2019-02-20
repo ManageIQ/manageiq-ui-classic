@@ -341,9 +341,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                     closeMenuOnSelect={true}
                                     components={Object {}}
                                     controlShouldRenderValue={true}
-                                    defaultInputValue=""
-                                    defaultMenuIsOpen={false}
-                                    defaultValue={null}
                                     escapeClearsValue={false}
                                     filterOption={[Function]}
                                     filterOptions={[Function]}
@@ -469,9 +466,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                           "closeMenuOnSelect": true,
                                           "components": Object {},
                                           "controlShouldRenderValue": true,
-                                          "defaultInputValue": "",
-                                          "defaultMenuIsOpen": false,
-                                          "defaultValue": null,
                                           "escapeClearsValue": false,
                                           "filterOption": [Function],
                                           "filterOptions": [Function],
@@ -632,9 +626,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
-                                              "defaultInputValue": "",
-                                              "defaultMenuIsOpen": false,
-                                              "defaultValue": null,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "filterOptions": [Function],
@@ -787,9 +778,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
-                                                  "defaultInputValue": "",
-                                                  "defaultMenuIsOpen": false,
-                                                  "defaultValue": null,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "filterOptions": [Function],
@@ -942,9 +930,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "filterOptions": [Function],
@@ -1073,9 +1058,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "filterOptions": [Function],
@@ -1314,9 +1296,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
-                                                  "defaultInputValue": "",
-                                                  "defaultMenuIsOpen": false,
-                                                  "defaultValue": null,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "filterOptions": [Function],
@@ -1468,9 +1447,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "filterOptions": [Function],
@@ -1630,9 +1606,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "filterOptions": [Function],
@@ -1890,9 +1863,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                     closeMenuOnSelect={true}
                                     components={Object {}}
                                     controlShouldRenderValue={true}
-                                    defaultInputValue=""
-                                    defaultMenuIsOpen={false}
-                                    defaultValue={null}
                                     escapeClearsValue={false}
                                     filterOption={[Function]}
                                     formatGroupLabel={[Function]}
@@ -1982,9 +1952,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                           "closeMenuOnSelect": true,
                                           "components": Object {},
                                           "controlShouldRenderValue": true,
-                                          "defaultInputValue": "",
-                                          "defaultMenuIsOpen": false,
-                                          "defaultValue": null,
                                           "escapeClearsValue": false,
                                           "filterOption": [Function],
                                           "formatGroupLabel": [Function],
@@ -2110,9 +2077,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                               "closeMenuOnSelect": true,
                                               "components": Object {},
                                               "controlShouldRenderValue": true,
-                                              "defaultInputValue": "",
-                                              "defaultMenuIsOpen": false,
-                                              "defaultValue": null,
                                               "escapeClearsValue": false,
                                               "filterOption": [Function],
                                               "formatGroupLabel": [Function],
@@ -2230,9 +2194,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
-                                                  "defaultInputValue": "",
-                                                  "defaultMenuIsOpen": false,
-                                                  "defaultValue": null,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -2350,9 +2311,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "formatGroupLabel": [Function],
@@ -2463,9 +2421,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "formatGroupLabel": [Function],
@@ -2669,9 +2624,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                   "closeMenuOnSelect": true,
                                                   "components": Object {},
                                                   "controlShouldRenderValue": true,
-                                                  "defaultInputValue": "",
-                                                  "defaultMenuIsOpen": false,
-                                                  "defaultValue": null,
                                                   "escapeClearsValue": false,
                                                   "filterOption": [Function],
                                                   "formatGroupLabel": [Function],
@@ -2788,9 +2740,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "formatGroupLabel": [Function],
@@ -2915,9 +2864,6 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
                                                       "closeMenuOnSelect": true,
                                                       "components": Object {},
                                                       "controlShouldRenderValue": true,
-                                                      "defaultInputValue": "",
-                                                      "defaultMenuIsOpen": false,
-                                                      "defaultValue": null,
                                                       "escapeClearsValue": false,
                                                       "filterOption": [Function],
                                                       "formatGroupLabel": [Function],
