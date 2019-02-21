@@ -137,8 +137,8 @@ class ReportController < ApplicationController
     populate_reports_menu
     build_accordions_and_trees
 
-    self.x_active_tree = x_last_active_tree if x_last_active_tree
-    self.x_active_accord = x_last_active_accord.to_s if x_last_active_accord
+    # params or last
+    accord_tree_node_params(x_last_active_accord.to_s, x_last_active_tree)
 
     @widget_nodes ||= []
     @sb[:node_clicked] = false
@@ -181,6 +181,16 @@ class ReportController < ApplicationController
     tree_select
   end
 
+  def accord_tree_node_params(default_accord = nil, default_tree = nil)
+    accord = params[:accord] || default_accord
+    tree = params[:tree] || (params[:accord] ? "#{params[:accord]}_tree" : default_tree)
+    node = params[:id]
+
+    self.x_active_accord = accord if accord
+    self.x_active_tree = tree if tree
+    self.x_node = node if node
+  end
+
   def tree_select
     @edit = nil
     @sb[:select_node] = false
@@ -188,11 +198,10 @@ class ReportController < ApplicationController
       @flash_array = @sb[:flash_msg]
       @sb[:flash_msg] = nil
     end
+
     # set these when a link on one of the summary screen was pressed
-    self.x_active_accord = params[:accord]           if params[:accord]
-    self.x_active_tree   = "#{params[:accord]}_tree" if params[:accord]
-    self.x_active_tree   = params[:tree]             if params[:tree]
-    self.x_node = params[:id]
+    accord_tree_node_params
+
     @sb[:active_tab] = "report_info" if x_active_tree == :reports_tree && params[:action] != "reload"
     if params[:action] == "reload" && @sb[:active_tab] == "saved_reports"
       replace_right_cell(:replace_trees => %i(reports savedreports))
