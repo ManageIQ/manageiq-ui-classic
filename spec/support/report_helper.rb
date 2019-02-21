@@ -71,6 +71,33 @@ module Spec
         report
       end
 
+      def null_data_chart_with_basic_condition
+        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp:
+          INCLUDES:
+            field: Name
+            value: Amazon
+        ')
+        null_data_chart.tap { |r| r.update(:conditions => exp) }
+      end
+
+      def null_data_chart_with_complex_condition
+        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp:
+          and:
+          - IS:
+              field: VmPerformance-timestamp
+              value: Last Hour
+          - ">":
+              value: "0"
+              field: VmPerformance-cpu_usage_rate_average
+          - INCLUDES:
+              field: VmPerformance.vm-type
+              value: Amazon
+        ')
+        null_data_chart.tap { |r| r.update(:conditions => exp) }
+      end
+
       def numeric_chart_simple_with_long_strings
         report = MiqReport.new(
           :db          => "Host",
