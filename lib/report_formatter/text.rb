@@ -173,7 +173,7 @@ module ReportFormatter
           unless user_filters.blank?
             customer_name = Tenant.root_tenant.name
             user_filter = "User assigned " + customer_name + " Tag filters:"
-            t = user_filter + " " * (@line_len - 2 - user_filter.length)
+            t = user_filter.ljust(@line_len - 2)
             output << fit_to_width("|#{t}|" + CRLF)
             user_filters.each do |filters|
               tag_val = "  " + calculate_filter_names(filters)
@@ -201,7 +201,7 @@ module ReportFormatter
         unless mri.conditions.nil?
           if mri.conditions.kind_of?(Hash)
             filter_fields = "Report based filter fields:"
-            t = filter_fields + " " * (@line_len - 2 - filter_fields.length)
+            t = filter_fields.ljust(@line_len - 2)
             output << fit_to_width("|#{t}|" + CRLF)
 
             # Clean up the conditions for display
@@ -218,17 +218,17 @@ module ReportFormatter
             output << fit_to_width("|#{t}|" + CRLF)
           else
             filter_fields = "Report based filter fields:"
-            t = filter_fields + " " * (@line_len - 2 - filter_fields.length)
+            t = filter_fields.ljust(@line_len - 2)
             output << fit_to_width("|#{t}|" + CRLF)
             filter_val = mri.conditions.to_human
-            t = filter_val + " " * (@line_len - filter_val.length - 2)
+            t = filter_val.ljust(@line_len - 2)
             output << fit_to_width("|#{t}|" + CRLF)
           end
         end
 
         unless mri.display_filter.nil?
           filter_fields = "Display Filter:"
-          t = filter_fields + " " * (@line_len - 2 - filter_fields.length)
+          t = filter_fields.ljust(@line_len - 2)
           output << fit_to_width("|#{t}|" + CRLF)
           filter_val = mri.display_filter.to_human
           t = filter_val + " " * (@line_len - filter_val.length - 2)
