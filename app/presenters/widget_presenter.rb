@@ -78,11 +78,24 @@ class WidgetPresenter
                    :title      => _("Zoom in on this chart"),
                    :name       => _("Zoom in"),
                    :href       => '/dashboard/widget_zoom?widget=' + @widget.id.to_s,
-                   :fonticon   => 'fa  fa-plus fa-fw',
+                   :fonticon   => 'fa fa-plus fa-fw',
                    :dataRemote => true,
                    :sparkleOn  => true,
                    :dataMethod => 'post')
     end
+
+    if role_allows?(:feature => "widget_edit")
+      # "xx-r_-25" is a *r*eport widget, id 25
+      id = TreeBuilderReportWidgets.widget_tree_id(@widget)
+
+      buttons.push(:id        => "w_#{@widget.id}_edit",
+                   :title     => t = _('Edit'),
+                   :name      => t,
+                   :sparkleOn => true,
+                   :fonticon  => 'pficon pficon-edit fa-fw',
+                   :href      => "/report/explorer?accord=widgets&id=#{id}")
+    end
+
     buttons.to_json
   end
 
