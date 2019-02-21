@@ -5,7 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-2
+## Unreleased as of Sprint 105 ending 2019-02-18
+
+### Added
+- User Edit screen - link to button [(#5239)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5239)
+- Automate Datastore Schema Edit reset click message [(#5237)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5237)
+- Add back paging options [(#5229)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5229)
+- Rework dual list [(#5228)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5228)
+- Add listnav to Embedded Ansible pages [(#5222)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5222)
+
+### Fixed
+- Fix Expression Builder to load page display only once per dropdown pick [(#5245)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5245)
+- Fix missing flash message for Re-check Authentication Status [(#5243)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5243)
+- Check button's inputs before looking for records [(#5241)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5241)
+- Do not hide the spinner before the custom button simulate redirect [(#5236)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5236)
+- Fix database connections page [(#5235)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5235)
+- Container dashboard utilization metrics - fix hourly metrics [(#5232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5232)
+- Ansible job launch confirmation message fix [(#5226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5226)
+- Ansible Tower & Foreman edit - explicitly warn when Zone.visible.empty? [(#5225)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5225)
+- Display missing checkboxes for workers under Diagnostics [(#5223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5223)
+- Don't allow adding another svc bundle into an existing bundle [(#5221)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5221)
+- Display widget's title in full screen of widget result [(#5159)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5159)
+- Fix enabling Power operations for a template [(#5128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5128)
+
+## Hammer-2 - Released 2019-02-07
 
 ### Fixed
 - Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
