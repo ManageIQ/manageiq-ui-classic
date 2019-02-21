@@ -95,4 +95,12 @@ describe ServiceHelper::TextualSummary do
       expect(textual_vault_credential).to eq(:label => "Vault", :value => nil, :title => "Credential (Vault)", :link => "link")
     end
   end
+
+  describe '.calculate_elapsed_time' do
+    subject { helper.send(:calculate_elapsed_time, Time.new(2019, 1, 1, 10, 0, 0, 0), Time.new(2019, 1, 1, 11, 5, 0, 0)) }
+
+    it 'calculates elapsed time' do
+      expect(subject).to eq("01:05:00")
+    end
+  end
 end
