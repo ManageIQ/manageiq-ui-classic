@@ -331,7 +331,7 @@ module ServiceHelper::TextualSummary
   def calculate_elapsed_time(stime, ftime)
     val = (ftime - stime)
     hours = val / 3600
-    mins = val / 60
+    mins = (val / 60) % 60
     secs = val % 60
     ("%02d:%02d:%02d" % [hours, mins, secs])
   end
