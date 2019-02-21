@@ -7,6 +7,11 @@ class TreeBuilderReportWidgets < TreeBuilder
     "m"  => N_('Menus')
   }.freeze
 
+  def self.widget_tree_id(widget)
+    widget_type = ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[widget.content_type]
+    "xx-#{widget_type}_-#{widget.id}"
+  end
+
   private
 
   def tree_init_options(_tree_name)
