@@ -12,8 +12,9 @@ ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http
     });
   };
 
-  this.treeSelectorLoadData = function() {
-    return $http.get('/tree/automate_entrypoint').then(function(response) {
+  this.treeSelectorLoadData = function(fqdn) {
+    var url = '/tree/automate_entrypoint' + (fqdn ? '?fqdn=' + encodeURIComponent(fqdn) : '');
+    return $http.get(url).then(function(response) {
       return response.data;
     });
   };
