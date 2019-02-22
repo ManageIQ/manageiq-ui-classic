@@ -44,7 +44,7 @@ describe MiqAeCustomizationController do
       end
 
       let(:features) { MiqProductFeature.find_all_by_identifier(permissions) }
-      let(:role_with_access) { FactoryGirl.create(:miq_user_role, :miq_product_features => features) }
+      let(:role_with_access) { FactoryBot.create(:miq_user_role, :miq_product_features => features) }
       let(:tenant) { FactoryBot.create(:tenant, :parent => Tenant.root_tenant) }
       let(:group) { FactoryBot.create(:miq_group, :tenant => tenant, :miq_user_role => role_with_access) }
       let(:user)  { FactoryBot.create(:user, :miq_groups => [group]) }
@@ -59,7 +59,7 @@ describe MiqAeCustomizationController do
         end
       end
 
-      let(:role_without_access) { FactoryGirl.create(:miq_user_role, :miq_product_features => []) }
+      let(:role_without_access) { FactoryBot.create(:miq_user_role, :miq_product_features => []) }
       let(:group_without_access) { FactoryBot.create(:miq_group, :tenant => tenant, :miq_user_role => role_without_access) }
       let(:user_without_access)  { FactoryBot.create(:user, :miq_groups => [group_without_access]) }
 

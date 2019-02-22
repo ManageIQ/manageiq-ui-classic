@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::Basic do
     let(:tenant_omega) { FactoryBot.create(:tenant, :parent => tenant_alpha) }
 
     let(:feature) { MiqProductFeature.find_all_by_identifier(["rbac_tenant_manage_quotas_tenant_#{tenant_omega.id}"]) }
-    let(:role_with_access_to_omega_rbac_tenant_manage_quota_permission) { FactoryGirl.create(:miq_user_role, :miq_product_features => feature) }
+    let(:role_with_access_to_omega_rbac_tenant_manage_quota_permission) { FactoryBot.create(:miq_user_role, :miq_product_features => feature) }
 
     let(:group_alpha) { FactoryBot.create(:miq_group, :tenant => tenant_alpha, :miq_user_role => role_with_access_to_omega_rbac_tenant_manage_quota_permission) }
     let(:user_alpha)  { FactoryBot.create(:user, :miq_groups => [group_alpha]) }
