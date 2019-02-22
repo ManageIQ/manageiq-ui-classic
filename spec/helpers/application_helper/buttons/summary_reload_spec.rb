@@ -4,10 +4,11 @@ describe ApplicationHelper::Button::SummaryReload do
   let(:layout) { 'not_miq_policy_rsop' }
   let(:showtype) { true }
   let(:lastaction) { nil }
+  let(:sb) { {} }
   let(:button) do
     described_class.new(setup_view_context_with_sandbox({}), {},
                         {'record' => record, 'explorer' => explorer, 'layout' => layout,
-                         'showtype' => showtype, 'lastaction' => lastaction}, {})
+                         'showtype' => showtype, 'lastaction' => lastaction, 'sb' => sb}, {})
   end
 
   shared_examples 'lastaction_examples' do
@@ -40,6 +41,24 @@ describe ApplicationHelper::Button::SummaryReload do
         context 'when layout == miq_policy_rsop' do
           let(:layout) { 'miq_policy_rsop' }
           include_examples 'lastaction_examples'
+        end
+        context "when at timeline page" do
+          let(:lastaction) { "show_timeline" }
+          it "returns false" do
+            expect(subject).to be_falsey
+          end
+        end
+        context "when at utilization page" do
+          let(:showtype) { "performance" }
+          it "returns false" do
+            expect(subject).to be_falsey
+          end
+        end
+        context "when at chargeback page" do
+          let(:sb) { {:action => "chargeback"} }
+          it "returns false" do
+            expect(subject).to be_falsey
+          end
         end
       end
       context 'when record not set' do
