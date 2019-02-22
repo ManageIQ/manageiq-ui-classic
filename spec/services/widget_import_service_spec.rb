@@ -147,50 +147,6 @@ describe WidgetImportService do
       end
 
       context "when the list of widgets to import from the yaml do not include an existing widget" do
-        context "when the report is an RssFeed" do
-          let(:miq_report_contents) do
-            [{
-              "RssFeed" => {
-                "name"  => "name",
-                "title" => "new title"
-              }
-            }]
-          end
-
-          context "when the RssFeed already exists" do
-            before do
-              RssFeed.create!(:name => "name", :title => "old title")
-              allow(YAML).to receive(:load).with(yaml_data) do
-                allow(YAML).to receive(:load).and_call_original
-                widgets
-              end
-            end
-
-            it_behaves_like "WidgetImportService#import_widgets with a non existing widget"
-
-            it "does not update the rss feed" do
-              widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-              expect(RssFeed.first.title).to eq("old title")
-            end
-          end
-
-          context "when the RssFeed does not already exist" do
-            before do
-              allow(YAML).to receive(:load).with(yaml_data) do
-                allow(YAML).to receive(:load).and_call_original
-                widgets
-              end
-            end
-
-            it_behaves_like "WidgetImportService#import_widgets with a non existing widget"
-
-            it "builds a new RssFeed" do
-              widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-              expect(RssFeed.first.title).to eq("new title")
-            end
-          end
-        end
-
         context "when the report with the same name already exists" do
           before do
             MiqReport.create!(

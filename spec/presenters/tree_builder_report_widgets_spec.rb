@@ -9,7 +9,6 @@ describe TreeBuilderReportWidgets do
     expect(subject.send(:x_get_tree_roots, false, nil)).to match_array([
                                                                          {:id => "r",  :text => "Reports",   :icon => "pficon pficon-folder-close", :tip => "Reports"},
                                                                          {:id => "c",  :text => "Charts",    :icon => "pficon pficon-folder-close", :tip => "Charts"},
-                                                                         {:id => "rf", :text => "RSS Feeds", :icon => "pficon pficon-folder-close", :tip => "RSS Feeds"},
                                                                          {:id => "m",  :text => "Menus",     :icon => "pficon pficon-folder-close", :tip => "Menus"}
                                                                        ])
   end

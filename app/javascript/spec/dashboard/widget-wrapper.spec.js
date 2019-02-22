@@ -6,7 +6,7 @@ describe('widget-wrapper', () => {
   let $scope;
   let element;
   let $compile;
-  const widgetTypes = ['chart', 'menu', 'report', 'rss'];
+  const widgetTypes = ['chart', 'menu', 'report'];
 
   beforeEach(module('ManageIQ'));
 

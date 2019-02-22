@@ -72,8 +72,6 @@ module ApplicationHelper
         _("Policy Simulation")
       when "report"
         _("Reports")
-      when "rss"
-        _("RSS")
       when "ops"
         _("Configuration")
       when "provider_foreman"

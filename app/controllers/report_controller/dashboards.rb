@@ -400,8 +400,6 @@ module ReportController::Dashboards
       @available_widgets.each do |w|
         next if col_widgets.include?(w.id) || !w.enabled
         image = case w.content_type
-                when "rss"
-                  "fa fa-rss"
                 when "chart"
                   "fa fa-pie-chart"
                 when "report"

@@ -188,15 +188,6 @@ class DashboardController < ApplicationController
     }
   end
 
-  def widget_rss_data
-    widget = find_record_with_rbac(MiqWidget, params[:id])
-    content = widget
-              .contents_for_user(current_user)
-              .contents.gsub("https://localhost:3000", "#{request.protocol}#{request.host}:#{request.port}")
-              .html_safe
-    render :json => {:content => content, :minimized => widget_minimized?(params[:id])}
-  end
-
   def show
     @layout     = "dashboard"
     @display    = "dashboard"
@@ -280,7 +271,6 @@ class DashboardController < ApplicationController
       next if col_widgets.include?(w.id) || !w.enabled
       image, tip = case w.content_type
                    when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
-                   when "rss"    then ["fa fa-rss fa-lg",            _("Add this RSS Feed Widget")]
                    when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
                    when "report" then ["fa fa-file-text-o fa-lg",    _("Add this Report Widget")]
                    end
@@ -582,80 +572,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  def timeline
-    @breadcrumbs = []
-    @layout      = "timeline"
-    @report      = nil
-    @timeline    = true
-    if params[:id]
-      build_timeline
-      drop_breadcrumb(:name => @title, :url => "/dashboard/timeline/#{params[:id]}")
-    else
-      drop_breadcrumb(:name => _("Timelines"), :url => "/dashboard/timeline")
-      session[:last_rpt_id] = nil # Clear out last rpt record id
-    end
-    build_timeline_listnav
-  end
-
-  # timeline tree
-  def tree_select
-    @breadcrumbs = []
-    @layout      = "timeline"
-    if params[:id]
-      _, params[:id] = parse_nodetype_and_id(params[:id])
-      build_timeline
-      render :update do |page|
-        page << javascript_prologue
-        if @ajax_action
-          page << "miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record)}');"
-        end
-      end
-    else
-      @report = nil
-      drop_breadcrumb(:name => _("Timelines"), :url => "/dashboard/timeline")
-      @timeline = true
-      session[:last_rpt_id] = nil # Clear out last rpt record id
-      build_timeline_listnav
-    end
-  end
-
-  # Process changes to timeline selection
-  def tl_generate
-    # set variables for type of timeline is selected
-    unless @timeline
-      tl_gen_timeline_data
-      return unless @timeline
-    end
-
-    @timeline = true
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_highlight("report_#{session[:last_rpt_id]}_link", false) if session[:last_rpt_id]
-      center_tb_buttons = {
-        'timeline_txt' => "text",
-        'timeline_csv' => "CSV"
-      }
-      center_tb_buttons['timeline_pdf'] = "PDF" if PdfGenerator.available?
-      # if @report
-      #   page << javascript_highlight("report_#{@report.id}_link", true)
-      #   status = @report.table.data.length == 0 ? :disabled : :enabled
-      #
-      #   center_tb_buttons.each do |button_id, typ|
-      #     page << "ManageIQ.toolbars.showItem('#center_tb', '#{button_id}');"
-      #     page << tl_toggle_button_enablement(button_id, status, typ)
-      #   end
-      # else
-      #   center_tb_buttons.keys.each do |button_id|
-      #     page << "ManageIQ.toolbars.hideItem('#center_tb', '#{button_id}');"
-      #   end
-      # end
-
-      page.replace("tl_div", :partial => "dashboard/tl_detail")
-      page << "miqSparkle(false);"
-      session[:last_rpt_id] = @report.try(:id) # Remember rpt record id to turn off later
-    end
-  end
-
   def logout
     current_user.try(:logoff)
     clear_current_user
@@ -705,7 +621,7 @@ class DashboardController < ApplicationController
 
     # Clear instance vars that end up in the session
     @sb = @edit = @view = @settings = @lastaction = @perf_options = @assign = nil
-    @server_options = @tl_options = @pp_choices = @panels = @breadcrumbs = nil
+    @server_options = @pp_choices = @panels = @breadcrumbs = nil
   end
 
   # Initialize session hash variables for the logged in user
@@ -746,17 +662,6 @@ class DashboardController < ApplicationController
     authenticate
   end
 
-  def tl_toggle_button_enablement(button_id, enablement, typ)
-    if enablement == :enabled
-      tooltip = _("Download this Timeline data in %{typ} format") % {:typ => typ}
-      "ManageIQ.toolbars.enableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
-    else
-      tooltip = _('No records found for this timeline')
-      "ManageIQ.toolbars.disableItem('#center_tb', '#{button_id}'); ManageIQ.toolbars.setItemTooltip('#center_tb', '#{button_id}', '#{tooltip}');"
-    end
-  end
-  helper_method(:tl_toggle_button_enablement)
-
   def validate_user(user, task_id = nil, request = nil, authenticate_options = {})
     UserValidationService.new(self).validate_user(user, task_id, request, authenticate_options)
   end
@@ -792,48 +697,6 @@ class DashboardController < ApplicationController
     ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
     ws.set_data = @sb[:dashboards][@sb[:active_db]]
     ws.save
-  end
-
-  # Gather information for the report accordians
-  def build_timeline_listnav
-    @timelines_tree = TreeBuilderTimelines.new(:timelines_tree, :timelines, @sb, true, :title => reports_group_title)
-  end
-
-  def build_timeline
-    @record = MiqReport.for_user(current_user).find_by(:id => params[:id])
-    @ajax_action = "tl_generate"
-  end
-
-  def tl_gen_timeline_data
-    @report = MiqReport.for_user(current_user).find(params[:id])
-    @title  = @report.title
-    @timeline = true unless @report # need to set this incase @report is not there, when switching between Management/Policy events
-    return unless @report
-
-    unless params[:task_id] # First time thru, kick off the report generate task
-      initiate_wait_for_task(:task_id => @report.async_generate_table(:userid => session[:userid]))
-      return
-    end
-
-    @timeline = true
-    miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
-    @report  = miq_task.task_results
-    session[:rpt_task_id] = miq_task.id
-    unless miq_task.results_ready?
-      add_flash(_("Error building timeline  %{error_message}") % {:error_message => miq_task.message}, :error)
-      return
-    end
-
-    @timeline = true
-    if @report.table.data.empty?
-      add_flash(_("No records found for this timeline"), :warning)
-      return
-    end
-
-    @report.extras[:browser_name] = browser_info(:name)
-    @tl_json = @report.to_timeline
-    tz = @report.tz || Time.zone
-    session[:tl_position] = format_timezone(@report.extras[:tl_position], tz, "tl")
   end
 
   def get_session_data
