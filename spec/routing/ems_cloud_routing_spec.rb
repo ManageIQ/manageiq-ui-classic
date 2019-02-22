@@ -32,7 +32,6 @@ describe EmsCloudController do
     show
     show_list
     protect
-    squash_toggle
     update
   ).each do |task|
     describe "##{task}" do

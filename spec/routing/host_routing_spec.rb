@@ -243,12 +243,6 @@ describe "routes for HostController" do
     end
   end
 
-  describe "#squash_toggle" do
-    it "routes with POST" do
-      expect(post("/host/squash_toggle")).to route_to("host#squash_toggle")
-    end
-  end
-
   describe "#timeline_data" do
     it "routes with GET" do
       expect(get("/host/timeline_data")).to route_to("host#timeline_data")
