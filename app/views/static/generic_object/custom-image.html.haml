@@ -1,5 +1,5 @@
 .form-group{"ng-show" => "vm.newRecord || vm.changeImage || vm.pictureUrlPath === '' || vm.pictureRemove",
-            "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid}"}
+            "ng-class" => "{'has-error': vm.angularForm.generic_object_definition_image_file_status.$invalid || vm.imageMissing}"}
   %label.col-md-2.control-label{"for" => "generic_object_definition_image_file_status"}
     = _("Custom Image File")
   .col-md-4
@@ -7,6 +7,8 @@
                         "class"       => "filestyle",
                         "id"          => "generic_object_definition_image_file",
                         "name"        => "generic_object_definition_image_file"}
+      %span.help-block{"ng-show" => "vm.imageMissing"}
+        = _("Please select a file before uploading")
     %input.form-control{"type"        => "hidden",
                         "id"          => "generic_object_definition_image_file_status",
                         "ng-model"    => "vm.imageUploadStatus",
