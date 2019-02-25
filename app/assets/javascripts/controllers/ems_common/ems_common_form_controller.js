@@ -10,6 +10,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       hostname: '',
       default_hostname: '',
       amqp_hostname: '',
+      amqp_fallback_hostname1: '',
+      amqp_fallback_hostname2: '',
       provider_options: {},
       metrics_hostname: '',
       metrics_selection: '',
@@ -617,6 +619,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
       $scope.postValidationModel.amqp = {
         amqp_hostname:             $scope.emsCommonModel.amqp_hostname,
+        amqp_fallback_hostname1:             $scope.emsCommonModel.amqp_fallback_hostname1,
+        amqp_fallback_hostname2:             $scope.emsCommonModel.amqp_fallback_hostname2,
         amqp_api_port:             $scope.emsCommonModel.amqp_api_port,
         amqp_security_protocol:    $scope.emsCommonModel.amqp_security_protocol,
         amqp_userid:               $scope.emsCommonModel.amqp_userid,
@@ -719,6 +723,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.event_stream_selection === 'none') {
       if ($scope.postValidationModel !== undefined) {
         $scope.emsCommonModel.amqp_hostname = $scope.postValidationModel.amqp.amqp_hostname;
+        $scope.emsCommonModel.amqp_fallback_hostname1 = $scope.postValidationModel.amqp.amqp_fallback_hostname1;
+        $scope.emsCommonModel.amqp_fallback_hostname2 = $scope.postValidationModel.amqp.amqp_fallback_hostname2;
         $scope.emsCommonModel.amqp_api_port = $scope.postValidationModel.amqp.amqp_api_port;
         $scope.emsCommonModel.amqp_security_protocol = $scope.postValidationModel.amqp.amqp_security_protocol;
         $scope.emsCommonModel.amqp_userid = $scope.postValidationModel.amqp.amqp_userid;
