@@ -989,7 +989,7 @@ module ApplicationController::Buttons
     if x_active_tree == :sandt_tree
       @resolve[:target_class] = "ServiceTemplate"
     elsif x_node.starts_with?("-ub-")
-      @resolve[:target_class] = x_node.sub('-ub-', '')
+      @resolve[:target_class] = x_node.sub(/-ub-([^_]+)(_.*)?/, '\1')
     else
       @resolve[:target_class] = x_node.sub(/xx-ab_([^_]+)_.*/, '\1')
     end
@@ -1189,9 +1189,9 @@ module ApplicationController::Buttons
       @resolve[:new][:instance_name] = instance_name || @resolve[:new][:instance_name] || "Request"
       @resolve[:new][:object_message] = @custom_button.try(:uri_message) || @resolve[:new][:object_message] || "create"
       @resolve[:target_class] = nil
-      @resolve[:target_classes] = {}
-      CustomButton.button_classes.each { |db| @resolve[:target_classes][db] = ui_lookup(:model => db) }
-      @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
+      @resolve[:target_classes] = CustomButton.button_classes.each_with_object({}) do |klass, hash|
+        hash[klass] = ui_lookup(:model => klass)
+      end
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?
         ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }

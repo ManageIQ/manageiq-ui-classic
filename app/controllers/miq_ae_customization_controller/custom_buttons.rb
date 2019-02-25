@@ -14,17 +14,16 @@ module MiqAeCustomizationController::CustomButtons
 
     if @nodetype[0] == "root"
       @right_cell_text = _("All Object Types")
-      @custom_button_entities = {}
       if session[:resolve]
         @resolve = session[:resolve]
       else
         build_resolve_screen
       end
-      Array(@resolve[:target_classes]).each do |tc_node|
-        @custom_button_entities[tc_node[0]] = "ab_#{tc_node[1]}"
+      @custom_button_entities = @resolve[:target_classes].each_with_object({}) do |(k, v), result|
+        result[v] = "ab_#{k}"
       end
     elsif @nodetype[0] == "xx-ab" && nodeid.length == 2 # one of the CI's node selected
-      @right_cell_text = _("%{typ} Button Groups") % {:typ => @resolve[:target_classes].to_h.invert[@nodetype[1]]}
+      @right_cell_text = _("%{typ} Button Groups") % {:typ => @resolve[:target_classes][@nodetype[1]]}
       @sb[:applies_to_class] = x_node.split('-').last.split('_').last
       asets = CustomButtonSet.find_all_by_class_name(@nodetype[1])
       @sb[:button_groups] = []
@@ -42,7 +41,7 @@ module MiqAeCustomizationController::CustomButtons
       end
     elsif @nodetype.length == 1 && nodeid[1] == "ub" # Unassigned buttons group selected
       @sb[:buttons] = []
-      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @resolve[:target_classes].to_h.invert[nodeid[2]]}
+      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @resolve[:target_classes][nodeid[2]]}
       uri = CustomButton.buttons_for(nodeid[2]).sort_by(&:name)
       if uri.present?
         uri.each do |b|
@@ -95,7 +94,7 @@ module MiqAeCustomizationController::CustomButtons
       @sb[:applies_to_class] = @nodetype[1]
       @record = CustomButtonSet.find(nodeid.last)
       @right_cell_text = _("%{typ} Button Group \"%{name}\"") %
-                         {:typ  => @resolve[:target_classes].to_h.invert[@nodetype[1]],
+                         {:typ  => @resolve[:target_classes][@nodetype[1]],
                           :name => @record.name.split("|").first}
       @sb[:button_group] = {}
       @sb[:button_group][:text] = @sb[:button_group][:hover_text] = @sb[:button_group][:display]
