@@ -22,7 +22,7 @@ module MiqAeCustomizationController::CustomButtons
         build_resolve_screen
       end
       Array(@resolve[:target_classes]).each do |tc_node|
-        @sb[:obj_list][tc_node[0]] = "ab_#{tc_node[0]}"
+        @sb[:obj_list][tc_node[0]] = "ab_#{tc_node[1]}"
       end
     elsif @nodetype[0] == "xx-ab" && nodeid.length == 2 # one of the CI's node selected
       @right_cell_text = _("%{typ} Button Groups") % {:typ => @sb[:target_classes].invert[@nodetype[2]]}

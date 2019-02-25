@@ -8,7 +8,7 @@
     %tbody
       -# CI node level
       - @sb[:obj_list].sort.each do |obj|
-        %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('ab_tree', 'xx-#{obj[1].split('_').first}_#{@sb[:target_classes][obj[0]]}')"}
+        %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('ab_tree', 'xx-#{obj[1]}')"}
           %td
             = obj[0]
 
