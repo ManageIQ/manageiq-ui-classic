@@ -39,7 +39,6 @@ describe EmsPhysicalInfraController do
     update
     wait_for_task
     protect
-    squash_toggle
     scaling
     scaledown
     x_show

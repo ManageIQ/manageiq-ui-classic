@@ -97,7 +97,6 @@ describe VmOrTemplateController do
     sort_ds_grid
     sort_host_grid
     sort_iso_img_grid
-    squash_toggle
     tree_select
     users
     vm_pre_prov
