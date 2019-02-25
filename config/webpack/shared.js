@@ -142,4 +142,8 @@ module.exports = {
     // only read loaders from ui-classic
     modules: [moduleDir],
   },
+
+  watchOptions: {
+    ignored: ['**/.*.sw[po]'],
+  },
 };
