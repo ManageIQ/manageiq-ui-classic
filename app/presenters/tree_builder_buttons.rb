@@ -20,12 +20,6 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
     @sb[:target_classes] = {}
     buttons = CustomButton.button_classes.map do |klass|
       name = case klass
-             when 'ContainerGroup'
-               _('Container Pod')
-             when 'ContainerNode'
-               _('Container Node')
-             when 'ContainerProject'
-               _('Container Project')
              when 'MiqGroup'
                _('Group')
              when 'Switch'
