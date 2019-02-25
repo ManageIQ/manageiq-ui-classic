@@ -24,7 +24,7 @@ module MiqAeCustomizationController::CustomButtons
         @custom_button_entities[tc_node[0]] = "ab_#{tc_node[1]}"
       end
     elsif @nodetype[0] == "xx-ab" && nodeid.length == 2 # one of the CI's node selected
-      @right_cell_text = _("%{typ} Button Groups") % {:typ => @sb[:target_classes].invert[@nodetype[2]]}
+      @right_cell_text = _("%{typ} Button Groups") % {:typ => @resolve[:target_classes].to_h.invert[@nodetype[1]]}
       @sb[:applies_to_class] = x_node.split('-').last.split('_').last
       asets = CustomButtonSet.find_all_by_class_name(@nodetype[1])
       @sb[:button_groups] = []
@@ -42,7 +42,7 @@ module MiqAeCustomizationController::CustomButtons
       end
     elsif @nodetype.length == 1 && nodeid[1] == "ub" # Unassigned buttons group selected
       @sb[:buttons] = []
-      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @sb[:target_classes].invert[nodeid[2]]}
+      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @resolve[:target_classes].to_h.invert[nodeid[2]]}
       uri = CustomButton.buttons_for(nodeid[2]).sort_by(&:name)
       if uri.present?
         uri.each do |b|
@@ -84,10 +84,9 @@ module MiqAeCustomizationController::CustomButtons
       @sb[:dialog_label] = dialog_id ? Dialog.find(dialog_id).label : ""
       @resolve[:new][:target_class] = if @nodetype[0].starts_with?("-ub-")
                                         # selected button is under unassigned folder
-                                        @sb[:target_classes].invert[@nodetype[0].split('-').last]
+                                        @nodetype[0].sub('-ub-', '')
                                       else
-                                        # selected button is under assigned folder
-                                        @sb[:target_classes].invert[@nodetype[1]]
+                                        @nodetype[1]
                                       end
       @visibility_expression_table = exp_build_table(@custom_button.visibility_expression.exp) if @custom_button.visibility_expression.kind_of?(MiqExpression)
       @enablement_expression_table = exp_build_table(@custom_button.enablement_expression.exp) if @custom_button.enablement_expression.kind_of?(MiqExpression)
@@ -96,7 +95,7 @@ module MiqAeCustomizationController::CustomButtons
       @sb[:applies_to_class] = @nodetype[1]
       @record = CustomButtonSet.find(nodeid.last)
       @right_cell_text = _("%{typ} Button Group \"%{name}\"") %
-                         {:typ  => @sb[:target_classes].invert[@nodetype[2]],
+                         {:typ  => @resolve[:target_classes].to_h.invert[@nodetype[1]],
                           :name => @record.name.split("|").first}
       @sb[:button_group] = {}
       @sb[:button_group][:text] = @sb[:button_group][:hover_text] = @sb[:button_group][:display]

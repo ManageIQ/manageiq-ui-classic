@@ -17,7 +17,6 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(_count_only, _options)
-    @sb[:target_classes] = {}
     buttons = CustomButton.button_classes.map do |klass|
       name = case klass
              when 'MiqGroup'
@@ -29,8 +28,6 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
              else
                ui_lookup(:model => klass)
              end
-      # FIXME: This is probably a session backed caching of a small hash and it should be removed
-      @sb[:target_classes][name] = klass
 
       {
         :id   => "ab_#{klass}",

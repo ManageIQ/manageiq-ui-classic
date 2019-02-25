@@ -35,7 +35,6 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
     @resolve ||= {}
     @resolve[:target_classes] = {}
     CustomButton.button_classes.each { |db| @resolve[:target_classes][db] = ui_lookup(:model => db) }
-    @sb[:target_classes] = @resolve[:target_classes].invert
     @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
     st = ServiceTemplate.find_by(:id => object[:id])
     items = st.custom_button_sets + st.custom_buttons
