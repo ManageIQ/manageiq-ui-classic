@@ -6,7 +6,7 @@ describe MiqAeCustomizationController, "ApplicationController::Automate" do
       target_classes = {}
       CustomButton.button_classes.each { |db| target_classes[db] = ui_lookup(:model => db) }
       resolve = {
-        :new            => {:target_class => "Host / Node"},
+        :new            => {:target_class => "Host"},
         :target_classes => Array(target_classes.invert).sort
       }
       session[:resolve] = resolve

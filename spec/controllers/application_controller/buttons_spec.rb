@@ -190,7 +190,7 @@ describe ApplicationController do
                                        },
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
       expect(assigns(:edit)[:new][:display]).to eq(false)
       expect(assigns(:edit)[:new][:button_icon]).to eq('fa fa-info')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
@@ -202,7 +202,7 @@ describe ApplicationController do
                                        },
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
     end
 
     it "check button_set_form_vars sets correctly loads the filtering expressions when editing a button" do
@@ -221,7 +221,7 @@ describe ApplicationController do
                                        :trees       => {:ab_tree => {:active_node => "-ub-Vm_cb-10r51"}},
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
       expect(assigns(:edit)[:new][:display]).to eq(false)
       expect(assigns(:edit)[:new][:button_icon]).to eq('5')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
@@ -233,7 +233,7 @@ describe ApplicationController do
                                        :trees       => { :ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
     end
 
     it "check button_set_form_vars sets correct values when editing a playbook button" do
@@ -257,7 +257,7 @@ describe ApplicationController do
                                        :trees       => {:ab_tree => {:active_node => "-ub-Vm_cb-10r51"}},
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
       expect(assigns(:edit)[:new][:display]).to eq(false)
       expect(assigns(:edit)[:new][:button_icon]).to eq('fa fa-info')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
@@ -270,7 +270,7 @@ describe ApplicationController do
                                        :trees       => {:ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
-      expect(assigns(:edit)[:new][:target_class]).to eq("VM and Instance")
+      expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
     end
   end
 
