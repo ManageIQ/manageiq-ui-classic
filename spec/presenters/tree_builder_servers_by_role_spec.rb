@@ -55,9 +55,9 @@ describe TreeBuilderServersByRole do
 
     it 'returns Servers by Roles' do
       nodes = [{'key'        => "role-#{@server_role.id}",
-                'tooltip'    => "Role: SmartProxy (stopped)",
+                'tooltip'    => "Role: SmartProxy (active)",
                 "icon"       => "ff ff-user-role",
-                'text'       => "Role: SmartProxy (stopped)",
+                'text'       => "Role: SmartProxy (active)",
                 'selectable' => true,
                 'nodes'      => [{'key'            => "asr-#{@assigned_server_role1.id}",
                                   'icon'           => 'pficon pficon-asleep',

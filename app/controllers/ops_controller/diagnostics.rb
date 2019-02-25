@@ -853,8 +853,6 @@ module OpsController::Diagnostics
 
   # Method to build the server tree (parent is a zone or region instance)
   def build_server_tree(parent)
-    @sb[:parent_name] = parent.name
-    @sb[:parent_kls] = parent.class.name
     @server_tree = if @sb[:diag_tree_type] == "roles"
                      TreeBuilderRolesByServer.new(:roles_by_server_tree, :roles_by_server, @sb, true, parent)
                    else
