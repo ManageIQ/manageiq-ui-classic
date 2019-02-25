@@ -8,21 +8,20 @@ module MiqAeCustomizationController::CustomButtons
     nodeid = node.split("-")
 
     # initializing variables to hold data for selected node
-    @sb[:obj_list] = nil
     @custom_button = nil
     @sb[:button_groups] = nil
     @sb[:buttons] = nil
 
     if @nodetype[0] == "root"
       @right_cell_text = _("All Object Types")
-      @sb[:obj_list] = {}
+      @custom_button_entities = {}
       if session[:resolve]
         @resolve = session[:resolve]
       else
         build_resolve_screen
       end
       Array(@resolve[:target_classes]).each do |tc_node|
-        @sb[:obj_list][tc_node[0]] = "ab_#{tc_node[1]}"
+        @custom_button_entities[tc_node[0]] = "ab_#{tc_node[1]}"
       end
     elsif @nodetype[0] == "xx-ab" && nodeid.length == 2 # one of the CI's node selected
       @right_cell_text = _("%{typ} Button Groups") % {:typ => @sb[:target_classes].invert[@nodetype[2]]}

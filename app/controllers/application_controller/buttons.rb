@@ -1095,7 +1095,6 @@ module ApplicationController::Buttons
   def buttons_get_node_info(node)
     nodetype = node.split("_")
     # initializing variables to hold data for selected node
-    @sb[:obj_list] = nil
     @custom_button = nil
     @sb[:button_groups] = nil
     @sb[:buttons] = nil
