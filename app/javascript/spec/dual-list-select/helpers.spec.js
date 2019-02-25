@@ -1,12 +1,9 @@
-import {
-  getKeys,
-  filterOptions,
-  addedLeftValues,
-} from '../../components/dual-list-select/helpers';
+import { getKeys, filterOptions, filterValues } from '../../components/dual-list-select/helpers';
 
 describe('Dual list select helpers', () => {
   let options;
   let value;
+  let originalValue;
 
   beforeEach(() => {
     options = [
@@ -15,7 +12,10 @@ describe('Dual list select helpers', () => {
       { key: 'key3', label: 'text3' },
       { key: 'key4', label: 'text4' },
     ];
-    value = [{ key: 'key3', label: 'text3' }];
+    value = ['key3'];
+    originalValue = [
+      { key: 'key3', label: 'text3' },
+    ];
   });
 
   describe('getKeys', () => {
@@ -35,25 +35,24 @@ describe('Dual list select helpers', () => {
       );
     });
 
-    it('returns only added values to right list', () => {
-      const newValue = [
-        { key: 'key3', label: 'text3' },
-        { key: 'key4', label: 'text4' },
-      ];
-      expect(filterOptions(newValue, value)).toEqual(
-        [
-          { key: 'key4', label: 'text4' },
-        ],
+    it('returns only added values to left list', () => {
+      const newValue = [];
+      expect(filterOptions(originalValue, newValue)).toEqual(
+        [{ key: 'key3', label: 'text3' }],
       );
     });
   });
 
-  describe('addedLeftValues', () => {
-    it('returns only added values to left list', () => {
-      const originalLeftValues = filterOptions(options, value);
-      value = [];
-      expect(addedLeftValues(options, value, originalLeftValues)).toEqual(
-        [{ key: 'key3', label: 'text3' }],
+  describe('filterValues', () => {
+    it('returns only added values to right list', () => {
+      const newValue = [
+        'key3',
+        'key4',
+      ];
+      expect(filterValues(newValue, value)).toEqual(
+        [
+          'key4',
+        ],
       );
     });
   });

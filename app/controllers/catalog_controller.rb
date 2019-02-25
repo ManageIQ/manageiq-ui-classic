@@ -578,51 +578,16 @@ class CatalogController < ApplicationController
       @in_a_form = false
       replace_right_cell
     when "save", "add"
-      assert_privileges("st_catalog_#{params[:id] ? "edit" : "new"}")
-      return unless load_edit("st_catalog_edit__#{params[:id] || "new"}", "replace_cell__explorer")
-
-      @stc = @edit[:rec_id] ? ServiceTemplateCatalog.find(@edit[:rec_id]) : ServiceTemplateCatalog.new
-      st_catalog_set_record_vars(@stc)
-      begin
-        @stc.save
-      rescue => bang
-        add_flash(_("Error during 'Catalog Edit': %{error_message}") % {:error_message => bang.message}, :error)
-      else
-        if @stc.errors.empty?
-          add_flash(_("Catalog \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-        else
-          @stc.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
-          end
-          javascript_flash
-          return
-        end
-      end
+      add_flash(_("Catalog was saved"))
       @changed = session[:changed] = false
       @in_a_form = false
       @edit = session[:edit] = nil
       replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat stcat)))
-    when "reset", nil # Reset or first time in
+    when nil # First time in
       st_catalog_set_form_vars
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
       @changed = session[:changed] = false
       replace_right_cell(:action => "st_catalog_edit")
       return
-    end
-  end
-
-  def st_catalog_form_field_changed
-    id = session[:edit][:rec_id] || "new"
-    return unless load_edit("st_catalog_edit__#{id}", "replace_cell__explorer")
-    st_catalog_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      page << javascript_for_miq_button_visibility(changed)
-      page << "miqSparkle(false);"
     end
   end
 
@@ -1201,14 +1166,6 @@ class CatalogController < ApplicationController
     end
   end
 
-  def st_catalog_get_form_vars
-    case params[:button]
-    when 'right' then move_cols_left_right('right')
-    when 'left' then  move_cols_left_right('left')
-    else copy_params_if_set(@edit[:new], params, %i(name description))
-    end
-  end
-
   def st_catalog_set_form_vars
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
@@ -1220,26 +1177,11 @@ class CatalogController < ApplicationController
                          _("Adding a new Catalog")
                        end
     @edit = {}
-    @edit[:key] = "st_catalog_edit__#{@record.id || "new"}"
     @edit[:new] = {}
-    @edit[:current] = {}
     @edit[:rec_id] = @record.id
     @edit[:new][:name] = @record.name
-    @edit[:new][:description] = @record.description
-    @edit[:new][:fields] = @record.service_templates.collect { |st| [st.name, st.id] }.sort
-
-    @edit[:new][:available_fields] = Rbac.filtered(ServiceTemplate, :named_scope => %i(displayed public_service_templates without_service_template_catalog_id))
-                                         .collect { |st| [st.name, st.id] }
-                                         .sort
-
-    @edit[:current] = copy_hash(@edit[:new])
+    @edit[:current] = {} # because of locking tree in replace_right_cell method
     @in_a_form = true
-  end
-
-  def st_catalog_set_record_vars(stc)
-    stc.name = @edit[:new][:name]
-    stc.description = @edit[:new][:description]
-    stc.service_templates = @edit[:new][:fields].collect { |sf| ServiceTemplate.find(sf[1]) }
   end
 
   def st_catalog_delete
@@ -2099,7 +2041,11 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
-        action == 'at_st_new' && ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
+        if (action == 'at_st_new' && ansible_playbook?) || (action == 'st_catalog_new' || action == 'st_catalog_edit')
+          presenter.hide(:form_buttons_div)
+        else
+          presenter.show(:form_buttons_div)
+        end
         locals = {:record_id => @edit[:rec_id]}
         case action
         when 'group_edit'
