@@ -1,5 +1,7 @@
 class TreeBuilderButtons < TreeBuilderAeCustomization
   include CustomButtonsMixin
+  include CustomButtonHelper
+
   has_kids_for CustomButtonSet, [:x_get_tree_aset_kids]
 
   private
@@ -18,16 +20,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(_count_only, _options)
     buttons = CustomButton.button_classes.map do |klass|
-      name = case klass
-             when 'MiqGroup'
-               _('Group')
-             when 'Switch'
-               _('Virtual Infra Switch')
-             when 'User'
-               _('User')
-             else
-               ui_lookup(:model => klass)
-             end
+      name = target_class_name(klass)
 
       {
         :id   => "ab_#{klass}",

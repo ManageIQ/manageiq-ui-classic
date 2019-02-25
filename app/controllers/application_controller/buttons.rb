@@ -3,6 +3,7 @@ module ApplicationController::Buttons
 
   included do
     include Mixins::PlaybookOptions
+    include CustomButtonHelper
   end
 
   def ab_group_edit
@@ -1190,7 +1191,7 @@ module ApplicationController::Buttons
       @resolve[:new][:object_message] = @custom_button.try(:uri_message) || @resolve[:new][:object_message] || "create"
       @resolve[:target_class] = nil
       @resolve[:target_classes] = CustomButton.button_classes.each_with_object({}) do |klass, hash|
-        hash[klass] = ui_lookup(:model => klass)
+        hash[klass] = target_class_name(klass)
       end
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?
