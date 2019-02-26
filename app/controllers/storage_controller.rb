@@ -225,34 +225,6 @@ class StorageController < ApplicationController
     replace_right_cell(:nodetype => x_node)
   end
 
-  def tree_record
-    if x_active_tree == :storage_tree
-      storage_tree_rec
-    elsif x_active_tree == :storage_pod_tree
-      storage_pod_tree_rec
-    end
-  end
-
-  def storage_tree_rec
-    nodes = x_node.split('-')
-    case nodes.first
-    when "root" then find_record(Storage, params[:id])
-    when "ds" then find_record(Storage, params[:id])
-    when "xx" then
-      case nodes.second
-      when "ds" then find_record(Storage, params[:id])
-      end
-    end
-  end
-
-  def storage_pod_tree_rec
-    nodes = x_node.split('-')
-    case nodes.first
-    when "xx"  then @record = find_record(Storage, params[:id])
-    when "dsc" then @storage_record = find_record(EmsFolder, params[:id])
-    end
-  end
-
   def show_record(_id = nil)
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
@@ -483,6 +455,7 @@ class StorageController < ApplicationController
     @explorer
   end
 
+  # called by explorer.rb x_button
   def storage_scan
     scanstorage
   end

@@ -73,23 +73,6 @@ class InfraNetworkingController < ApplicationController
     generic_x_show
   end
 
-  def tree_record
-    @record =
-      case x_active_tree
-      when :infra_networking_tree then infra_networking_tree_rec
-      end
-  end
-
-  def infra_networking_tree_rec
-    nodes = x_node.split('-')
-    case nodes.first
-    when "root", 'e' then find_record(ExtManagementSystem, params[:id])
-    when "h"  then find_record(Host, params[:id])
-    when "c"  then find_record(Cluster, params[:id])
-    when "sw" then find_record(Switch, params[:id])
-    end
-  end
-
   def show_record(_id = nil)
     @display    = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
@@ -425,13 +408,6 @@ class InfraNetworkingController < ApplicationController
     end
     action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
-  end
-
-  def leaf_record
-    get_node_info(x_node)
-    @delete_node = params[:id] if @replace_trees
-    type, _id = parse_nodetype_and_id(x_node)
-    type && %w(Switch).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def dvswitch_record?(node = x_node)
