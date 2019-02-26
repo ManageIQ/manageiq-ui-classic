@@ -28,9 +28,6 @@ class TreeBuilderInfraNetworking < TreeBuilder
 
   def x_get_tree_roots(count_only, _options)
     objects = Rbac.filtered(ManageIQ::Providers::Vmware::InfraManager.order("lower(name)"))
-    objects.each do |item|
-      item[:load_children => true]
-    end
     count_only_or_objects(count_only, objects)
   end
 
@@ -53,12 +50,8 @@ class TreeBuilderInfraNetworking < TreeBuilder
   end
 
   def x_get_tree_switch_kids(object, count_only)
-    objects = count_only_or_objects(count_only,
-                                    object.lans.sort,
-                                    "name")
-    objects.each do |item|
-      item[:load_children => true]
-      item[:selectable => false]
-    end
+    count_only_or_objects(count_only,
+                          object.lans.sort,
+                          "name")
   end
 end
