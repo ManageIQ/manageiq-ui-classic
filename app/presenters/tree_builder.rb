@@ -54,6 +54,19 @@ class TreeBuilder
     end
   end
 
+  # The possible options are
+  # * full_ids - whether to generate full node IDs or not
+  # * leaf - class of the leaf nodes
+  # * open_all - expand all expandable nodes
+  # * expand - ?? probably not used anywhere
+  # * add_root - merge root_options with the first node
+  # * lazy - is the tree lazily-loadable
+  # * checkable_checkboxes - checkable checkboxes for the nodes
+  # * selected - key of the selected node
+  # * features - used by the RBAC features tree only
+  # * editable - used by the RBAC features tree only
+  # * node_id_prefix - used by the RBAC features tree only
+  # * selected_node - used by the snapshots tree only
   def tree_init_options(_tree_name)
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
