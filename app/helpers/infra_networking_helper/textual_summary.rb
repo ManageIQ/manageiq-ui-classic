@@ -31,6 +31,7 @@ module InfraNetworkingHelper::TextualSummary
 
   def textual_custom_button_events
     return nil unless User.current_user.super_admin_user? || User.current_user.admin?
+    return nil unless @record.respond_to?(:custom_button_events) # Lan has no custom buttons
 
     {
       :label    => _('Custom Button Events'),

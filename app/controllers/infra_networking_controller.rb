@@ -186,6 +186,8 @@ class InfraNetworkingController < ApplicationController
                 cluster_switches_list(id, EmsCluster)
               when "Switch"
                 dvswitch_node(id, Switch)
+              when "Lan"
+                lan_node(id, Lan)
               when "MiqSearch"
                 miq_search_node
               else
@@ -202,6 +204,11 @@ class InfraNetworkingController < ApplicationController
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
     options
+  end
+
+  def lan_node(id, model)
+    @record = find_record(model, id) if model
+    display_node(id, model)
   end
 
   def dvswitch_node(id, model)
@@ -315,7 +322,7 @@ class InfraNetworkingController < ApplicationController
       @delete_node = params[:id] if @replace_trees # get_node_info might set this
       type, _id = parse_nodetype_and_id(x_node)
 
-      record_showing = type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
+      record_showing = type && %w(Switch Lan).include?(TreeBuilder.get_model_for_prefix(type))
     end
 
     # Build presenter to render the JS command for the tree update
@@ -384,7 +391,7 @@ class InfraNetworkingController < ApplicationController
 
   def dvswitch_record?(node = x_node)
     type, _id = node.split("-")
-    type && ["Switch"].include?(TreeBuilder.get_model_for_prefix(type))
+    type && TreeBuilder.get_model_for_prefix(type) == "Switch"
   end
 
   def search_text_type(node)
