@@ -33,7 +33,7 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
     count_only_or_objects(count_only, object[:object].custom_button_sets + object[:object].custom_buttons, :name)
   end
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {:lazy => false}
   end
 end

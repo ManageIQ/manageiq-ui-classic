@@ -16,7 +16,7 @@ describe TreeBuilderInstances do
   end
 
   it 'sets tree to have leaf and not lazy' do
-    root_options = @instances_tree.tree_init_options(nil)
+    root_options = @instances_tree.tree_init_options
 
     expect(root_options).to eq(:leaf => 'VmCloud', :lazy => false)
   end

@@ -37,12 +37,12 @@ describe TreeBuilderServersByRole do
     end
 
     it "is not lazy" do
-      tree_options = @server_tree.send(:tree_init_options, :servers_by_role)
+      tree_options = @server_tree.send(:tree_init_options)
       expect(tree_options[:lazy]).to eq(false)
     end
 
     it 'has no root' do
-      tree_options = @server_tree.send(:tree_init_options, :servers_by_role)
+      tree_options = @server_tree.send(:tree_init_options)
       root = @server_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
       expect(root).to eq({})

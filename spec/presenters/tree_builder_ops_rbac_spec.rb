@@ -19,7 +19,7 @@ describe TreeBuilderOpsRbac do
     it "has :open_all set to false" do
       login_as FactoryBot.create(:user, :features => 'none')
       tree = TreeBuilderOpsRbac.new("rbac_tree", "rbac", {})
-      expect(tree.send(:tree_init_options, :open_all)[:open_all]).to be_falsey
+      expect(tree.send(:tree_init_options)[:open_all]).to be_falsey
     end
 
     it "with user with rbac_role_view role" do

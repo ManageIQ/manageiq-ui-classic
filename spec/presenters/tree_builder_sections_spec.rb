@@ -54,7 +54,7 @@ describe TreeBuilderSections do
                                                @current_tenant)
     end
     it 'set init options correctly' do
-      tree_options = @sections_tree.send(:tree_init_options, :all_selections)
+      tree_options = @sections_tree.send(:tree_init_options)
       expect(tree_options).to eq(:full_ids => true, :add_root => false, :lazy => false)
     end
     it 'set locals for render correctly' do

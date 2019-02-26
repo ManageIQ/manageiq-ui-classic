@@ -6,7 +6,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
 
   private
 
-  def tree_init_options(_)
+  def tree_init_options
     {:open_all => true}
   end
 

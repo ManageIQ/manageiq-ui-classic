@@ -3,7 +3,7 @@ class TreeBuilderRegion < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {:add_root => MiqEnterprise.my_enterprise.is_enterprise?}
   end
 

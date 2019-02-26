@@ -23,7 +23,7 @@ describe TreeBuilderTags do
                                        :edit => edit, :filters => @filters, :group => @group)
     end
     it 'set init options correctly' do
-      tree_options = @tags_tree.send(:tree_init_options, :tags)
+      tree_options = @tags_tree.send(:tree_init_options)
       expect(tree_options).to eq(:full_ids => true, :add_root => false, :lazy => false)
     end
     it 'set locals for render correctly' do

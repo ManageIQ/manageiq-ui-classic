@@ -18,7 +18,7 @@ class TreeBuilderNetwork < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {:full_ids => true}
   end
 

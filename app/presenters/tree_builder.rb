@@ -15,7 +15,7 @@ class TreeBuilder
 
     @locals_for_render  = {}
     @name               = name.to_sym # includes _tree
-    @options            = tree_init_options(name.to_sym)
+    @options            = tree_init_options
     @tree_nodes         = {}.to_json
     # FIXME: remove @name or @tree, unify
     @type               = type.to_sym # *usually* same as @name but w/o _tree
@@ -67,7 +67,7 @@ class TreeBuilder
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only
   # * selected_node - used by the snapshots tree only
-  def tree_init_options(_tree_name)
+  def tree_init_options
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
   end

@@ -23,7 +23,7 @@ describe TreeBuilderProtect do
     end
 
     it 'set init options correctly' do
-      tree_options = @protect_tree.send(:tree_init_options, :protect)
+      tree_options = @protect_tree.send(:tree_init_options)
       expect(tree_options).to eq(:full_ids => false, :add_root => false, :lazy => false)
     end
 

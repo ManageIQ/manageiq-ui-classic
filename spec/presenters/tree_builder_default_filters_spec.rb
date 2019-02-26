@@ -65,12 +65,12 @@ describe TreeBuilderDefaultFilters do
     end
 
     it 'is not lazy' do
-      tree_options = @default_filters_tree.send(:tree_init_options, :df)
+      tree_options = @default_filters_tree.send(:tree_init_options)
       expect(tree_options[:lazy]).to eq(false)
     end
 
     it 'has no root' do
-      tree_options = @default_filters_tree.send(:tree_init_options, :df)
+      tree_options = @default_filters_tree.send(:tree_init_options)
       root = @default_filters_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
       expect(root).to eq({})

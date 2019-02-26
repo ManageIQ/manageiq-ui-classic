@@ -13,7 +13,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     node[:select] = @selected.include?(object.id)
   end
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
       :expand => true
     }
