@@ -22,7 +22,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
   def root_options
     {
       :text    => t = _("All Distributed Switches"),
-      :tooltip => t
+      :tooltip => t,
     }
   end
 
@@ -40,12 +40,14 @@ class TreeBuilderInfraNetworking < TreeBuilder
   def x_get_tree_cluster_kids(object, count_only)
     hosts = object.hosts
     switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-    count_only_or_objects(count_only, Rbac.filtered(Switch, :named_scope => [:shareable, [:with_id, switch_ids.flatten.uniq]]))
+
+    objects = Rbac.filtered(Switch, :named_scope => [:shareable, [:with_id, switch_ids.flatten.uniq]])
+    count_only_or_objects(count_only, objects)
   end
 
   def x_get_tree_host_kids(object, count_only)
     count_only_or_objects(count_only,
-                          Rbac.filtered(object.switches.where(:shared =>'true')).sort,
+                          Rbac.filtered(object.switches.where(:shared => 'true')).sort,
                           "name")
   end
 
