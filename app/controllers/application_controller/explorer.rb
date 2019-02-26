@@ -59,6 +59,8 @@ module ApplicationController::Explorer
     'start'            => :s1, 'stop'                      => :s1, 'suspend'             => :s1,
     'reset'            => :s1, 'terminate'                 => :s1, 'pause'               => :s1,
     'shelve'           => :s1, 'shelve_offload'            => :s1, 'chargeback'          => :s1,
+    'foreman_pause'    => :s1, 'foreman_resume'            => :s1, 'manager_pause'       => :s1,
+    'manager_resume'   => :s1,
 
     # group 2
     'clone'        => :s2, 'compare'          => :s2, 'drift'           => :s2,
@@ -86,7 +88,7 @@ module ApplicationController::Explorer
   def x_button
     model, action = pressed2model_action(params[:pressed])
 
-    allowed_models = %w(common image instance vm miq_template provider storage configscript infra_networking automation_manager_provider configuration_manager_provider)
+    allowed_models = %w(common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider configuration_manager_provider)
     raise ActionController::RoutingError.new('invalid button action') unless
       allowed_models.include?(model)
 

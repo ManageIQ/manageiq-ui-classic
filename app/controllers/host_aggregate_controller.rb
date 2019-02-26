@@ -8,7 +8,7 @@ class HostAggregateController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
-  include EmsCommon
+  include Mixins::EmsCommon
 
   def self.display_methods
     %w(instances hosts)

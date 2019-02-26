@@ -1,0 +1,5 @@
+#providerPaused.alert.alert-warning{:style => provider_paused?(record) ? '' : 'display: none;'}
+  %span.pficon-layered
+    %span.pficon.pficon-warning-triangle-o
+  %strong
+    = _("Warning: This provider is paused, no data is currently collected from it.")

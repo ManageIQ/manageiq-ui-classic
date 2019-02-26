@@ -8,7 +8,7 @@ class AvailabilityZoneController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
   include Mixins::GenericShowMixin
-  include EmsCommon
+  include Mixins::EmsCommon
 
   def self.display_methods
     %w(ems_cloud instances cloud_volumes custom_button_events)

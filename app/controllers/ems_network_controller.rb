@@ -1,8 +1,8 @@
 class EmsNetworkController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon
-  include Mixins::EmsCommonAngular
+  include Mixins::EmsCommon
+  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
 
   before_action :check_privileges

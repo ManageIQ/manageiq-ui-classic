@@ -7,7 +7,7 @@ class FlavorController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
-  include EmsCommon
+  include Mixins::EmsCommon
 
   def self.display_methods
     %w(instances)

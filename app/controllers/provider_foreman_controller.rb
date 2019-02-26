@@ -8,6 +8,8 @@ class ProviderForemanController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
   include Mixins::ExplorerPresenterMixin
+  include Mixins::EmsCommon::Core
+  include Mixins::EmsCommon::PauseResume
 
   def self.model
     ManageIQ::Providers::ConfigurationManager
@@ -188,6 +190,14 @@ class ProviderForemanController < ApplicationController
   end
 
   private
+
+  def provider_foreman_pause
+    pause_or_resume_emss(:pause => true)
+  end
+
+  def provider_foreman_resume
+    pause_or_resume_emss(:resume => true)
+  end
 
   def textual_group_list
     [%i(properties environment os), %i(tenancy tags)]
