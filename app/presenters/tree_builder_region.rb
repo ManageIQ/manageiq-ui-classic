@@ -4,8 +4,7 @@ class TreeBuilderRegion < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    ent = MiqEnterprise.my_enterprise
-    {:leaf => ent.is_enterprise? ? "MiqEnterprise" : "MiqRegion", :add_root => ent.is_enterprise?}
+    {:add_root => MiqEnterprise.my_enterprise.is_enterprise?}
   end
 
   def set_locals_for_render

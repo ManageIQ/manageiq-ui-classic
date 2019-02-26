@@ -4,7 +4,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "IsoDatastore"}
+    {}
   end
 
   def set_locals_for_render

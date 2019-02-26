@@ -2,7 +2,7 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "CustomizationTemplate"}
+    {}
   end
 
   def set_locals_for_render

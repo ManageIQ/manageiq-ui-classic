@@ -7,7 +7,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "CustomButton", :open_all => true, :full_ids => true}
+    {:open_all => true, :full_ids => true}
   end
 
   def root_options

@@ -2,7 +2,7 @@ class TreeBuilderChargebackRates < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:open_all => true, :full_ids => true, :leaf => "MiqReportResult"}
+    {:open_all => true, :full_ids => true}
   end
 
   def root_options

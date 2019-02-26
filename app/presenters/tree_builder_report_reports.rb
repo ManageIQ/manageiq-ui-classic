@@ -10,10 +10,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
   end
 
   def tree_init_options(_tree_name)
-    {
-      :leaf     => 'full_ids',
-      :full_ids => true
-    }
+    {:full_ids => true}
   end
 
   def set_locals_for_render

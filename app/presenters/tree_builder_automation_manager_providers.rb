@@ -5,7 +5,7 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager"}
+    {}
   end
 
   def set_locals_for_render
