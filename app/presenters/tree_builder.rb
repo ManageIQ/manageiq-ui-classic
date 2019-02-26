@@ -58,7 +58,6 @@ class TreeBuilder
   # * full_ids - whether to generate full node IDs or not
   # * leaf - class of the leaf nodes
   # * open_all - expand all expandable nodes
-  # * expand - ?? probably not used anywhere
   # * add_root - merge root_options with the first node
   # * lazy - is the tree lazily-loadable
   # * checkable_checkboxes - checkable checkboxes for the nodes

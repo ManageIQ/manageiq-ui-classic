@@ -14,9 +14,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def tree_init_options
-    {
-      :expand => true
-    }
+    {}
   end
 
   def set_locals_for_render

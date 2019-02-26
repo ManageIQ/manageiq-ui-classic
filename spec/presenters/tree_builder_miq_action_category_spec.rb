@@ -26,7 +26,7 @@ describe TreeBuilderMiqActionCategory do
 
   describe '#tree_init_options' do
     it 'set init options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:expand => true, :lazy => false)
+      expect(subject.send(:tree_init_options)).to eq(:lazy => false)
     end
   end
 
