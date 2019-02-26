@@ -5,7 +5,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ConfigurationScript"}
+    {}
   end
 
   def set_locals_for_render
@@ -48,7 +48,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, options)
-    objects = MiqSearch.where(:db => options[:leaf]).filters_by_type(object[:id])
+    objects = MiqSearch.where(:db => "ConfigurationScript").filters_by_type(object[:id])
     count_only_or_objects(count_only, objects, 'description')
   end
 end
