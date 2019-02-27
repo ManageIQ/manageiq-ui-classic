@@ -61,7 +61,6 @@ class TreeBuilder
   # * add_root - merge root_options with the first node
   # * lazy - is the tree lazily-loadable
   # * checkable_checkboxes - checkable checkboxes for the nodes
-  # * selected - key of the selected node
   # * features - used by the RBAC features tree only
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only

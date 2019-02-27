@@ -19,7 +19,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       else
         node[:hideCheckbox] = true
       end
-      node[:select] = options.key?(:selected) && options[:selected].include?("EmsFolder_#{object[:id]}")
+      node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
     end
   end
 

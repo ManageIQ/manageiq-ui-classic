@@ -899,7 +899,7 @@ module OpsController::OpsRbac
   end
 
   # this causes the correct tree to get instantiated, depending on the active tab
-  def rbac_group_right_tree(selected)
+  def rbac_group_right_tree(selected_nodes)
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
       @tags_tree = TreeBuilderTags.new(:tags_tree,
@@ -914,17 +914,17 @@ module OpsController::OpsRbac
                                               :hac,
                                               @sb,
                                               true,
-                                              :edit     => @edit,
-                                              :group    => @group,
-                                              :selected => selected)
+                                              :edit           => @edit,
+                                              :group          => @group,
+                                              :selected_nodes => selected_nodes)
     when 'rbac_vms_templates'
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                               :vat,
                                               @sb,
                                               true,
-                                              :edit     => @edit,
-                                              :group    => @group,
-                                              :selected => selected)
+                                              :edit           => @edit,
+                                              :group          => @group,
+                                              :selected_nodes => selected_nodes)
     end
   end
 
