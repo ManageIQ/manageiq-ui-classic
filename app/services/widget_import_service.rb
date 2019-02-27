@@ -17,6 +17,7 @@ class WidgetImportService
   def import_widget_from_hash(widget)
     new_or_existing_widget = MiqWidget.where(:description => widget["description"]).first_or_create
     new_or_existing_widget.title ||= widget["title"]
+    new_or_existing_widget.content_type ||= "report"
     new_or_existing_widget.resource = build_report_contents(widget)
     new_or_existing_widget.miq_schedule = build_miq_schedule(widget)
     widget.delete("resource_id")
