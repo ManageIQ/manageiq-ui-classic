@@ -161,10 +161,9 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
-  def get_node_info(treenodeid, show_list = true)
+  def get_node_info(treenodeid)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
-    @show_list = show_list
 
     model = TreeBuilder.get_model_for_prefix(@nodetype)
     if model == "Hash"
@@ -186,22 +185,22 @@ class InfraNetworkingController < ApplicationController
       end
     end
 
-    options = case model
-              when "ExtManagementSystem"
-                hosts = Host.where(:ems_id => @record.id)
-                switches_list(model, hosts_switches_list(hosts))
-              when "Host"
-                switches_list(model, @record.switches.pluck(:id))
-              when "EmsCluster"
-                switches_list(model, hosts_switches_list(@record.hosts))
-              when "Switch",
-                   "Lan"
-                display_node(id, model.constantize)
-              when "MiqSearch"
-                miq_search_node
-              else
-                default_node
-              end
+    case model
+    when "ExtManagementSystem"
+      hosts = Host.where(:ems_id => @record.id)
+      switches_list(model, hosts_switches_list(hosts))
+    when "Host"
+      switches_list(model, @record.switches.pluck(:id))
+    when "EmsCluster"
+      switches_list(model, hosts_switches_list(@record.hosts))
+    when "Switch",
+         "Lan"
+      display_node(id, model.constantize)
+    when "MiqSearch"
+      miq_search_node
+    else
+      default_node
+    end
 
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
@@ -212,22 +211,18 @@ class InfraNetworkingController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
-    options
   end
 
   def switches_list(model, ids)
-    options = {
+    process_show_list({
       :model => "Switch",
       :named_scope => :shareable,
       :selected_ids => ids,
-    }
-    process_show_list(options) if @show_list
+    })
 
     @pages = nil
     @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
     @showtype = 'main'
-
-    options
   end
 
   def hosts_switches_list(hosts)
@@ -237,18 +232,14 @@ class InfraNetworkingController < ApplicationController
   end
 
   def miq_search_node
-    options = {:model => "Switch"}
-    process_show_list(options) if @show_list
+    process_show_list({:model => "Switch"})
     @right_cell_text = _("All Switches")
-    options
   end
 
   def default_node
     return unless x_node == "root"
-    options = {:model => "Switch", :named_scope => :shareable}
-    process_show_list(options) if @show_list
+    process_show_list({:model => "Switch", :named_scope => :shareable})
     @right_cell_text = _("All Switches")
-    options
   end
 
   def render_form
