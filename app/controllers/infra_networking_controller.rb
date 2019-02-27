@@ -194,10 +194,9 @@ class InfraNetworkingController < ApplicationController
                 host_switches_list(id, Host)
               when "EmsCluster"
                 cluster_switches_list(id, EmsCluster)
-              when "Switch"
-                dvswitch_node(id, Switch)
-              when "Lan"
-                lan_node(id, Lan)
+              when "Switch",
+                   "Lan"
+                display_node(id, model.constantize)
               when "MiqSearch"
                 miq_search_node
               else
@@ -214,14 +213,6 @@ class InfraNetworkingController < ApplicationController
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
     options
-  end
-
-  def lan_node(id, model)
-    display_node(id, model)
-  end
-
-  def dvswitch_node(id, model)
-    display_node(id, model)
   end
 
   def host_switches_list(id, model)
