@@ -33,11 +33,6 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": All Tasks")
     end
 
-    it "when layout = 'rss'" do
-      @layout = "rss"
-      expect(subject).to eq(title + ": RSS")
-    end
-
     it "when layout = 'management_system'" do
       @layout = "management_system"
       expect(subject).to eq(title + ": Management Systems")
