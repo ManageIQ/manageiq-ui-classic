@@ -212,58 +212,58 @@ class InfraNetworkingController < ApplicationController
   end
 
   def dvswitch_node(id, model)
-    @record = @switch_record = find_record(model, id) if model
+    @record = find_record(model, id) if model
     display_node(id, model)
   end
 
   def host_switches_list(id, model)
-    @record = @host_record = find_record(model, id) if model
+    @record = find_record(model, id) if model
 
-    if @host_record.nil?
+    if @record.nil?
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => @host_record.switches.pluck(:id)}
+      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => @record.switches.pluck(:id)}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @host_record.name}
+      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
     end
     options
   end
 
   def cluster_switches_list(id, model)
-    @record = @cluster_record = find_record(model, id) if model
+    @record = find_record(model, id) if model
 
-    if @cluster_record.nil?
+    if @record.nil?
       self.x_node = "root"
       get_node_info("root")
     else
-      hosts = @cluster_record.hosts
+      hosts = @record.hosts
       switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
       options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @cluster_record.name}
+      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
     end
     options
   end
 
   def provider_switches_list(id, model)
-    @record = @provider_record = find_record(model, id) if model
+    @record = find_record(model, id) if model
 
-    if @provider_record.nil?
+    if @record.nil?
       self.x_node = "root"
       get_node_info("root")
     else
-      hosts = Host.where(:ems_id => @provider_record.id)
+      hosts = Host.where(:ems_id => @record.id)
       switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
       options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @provider_record.name}
+      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
     end
     options
   end
