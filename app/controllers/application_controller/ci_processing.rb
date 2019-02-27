@@ -78,7 +78,7 @@ module ApplicationController::CiProcessing
     elsif db == "ems_cloud"
       @ems = @record = identify_record(params[:id], EmsCloud)
     elsif db == "switch"
-      @switch = @record = identify_record(params[:id], Switch)
+      @record = identify_record(params[:id], Switch)
     elsif db == "service"
       @service = @record = identify_record(params[:id], Service)
     end

@@ -69,7 +69,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def x_show
-    @switch = @record = identify_record(params[:id], Switch)
+    @record = identify_record(params[:id], Switch)
     generic_x_show
   end
 
