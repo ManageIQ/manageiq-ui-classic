@@ -65,7 +65,7 @@
           = _("Type")
         .col-md-8
           = select_tag('target_class',
-                       options_for_select([["<None>", nil]] + resolve[:target_classes],
+                       options_for_select([["<None>", nil]] + resolve[:target_classes].invert.to_a,
                        resolve[:new][:target_class]),
                        "data-miq_sparkle_on"  => true,
                        "data-miq_sparkle_off" => true,

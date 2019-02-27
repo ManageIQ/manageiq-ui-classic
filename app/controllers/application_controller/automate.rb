@@ -10,7 +10,7 @@ module ApplicationController::Automate
         @sb[:attrs][a[0].to_sym] = a[1] if a[0].present?
       end
       @sb[:obj] = if @resolve[:new][:target_id] && @resolve[:new][:target_class]
-                    @resolve[:new][:target_class].constantize.find(@resolve[:new][:target_id])
+                    @resolve[:new][:target_class].safe_constantize.find(@resolve[:new][:target_id])
                   end
       @resolve[:button_class] = @resolve[:new][:target_class]
       @resolve[:button_number] ||= 1
@@ -54,7 +54,7 @@ module ApplicationController::Automate
     @edit[:new][:object_message] = @resolve[:new][:object_message]
     @edit[:new][:object_request] = @resolve[:new][:object_request]
     @edit[:new][:attrs]          = @resolve[:new][:attrs]
-    @edit[:new][:target_class]   = @resolve[:target_class] = Hash[*@resolve[:target_classes].flatten.reverse][@resolve[:new][:target_class]]
+    @edit[:new][:target_class]   = @resolve[:target_class] = @resolve[:new][:target_class]
     @edit[:uri] = @resolve[:uri]
     (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @resolve[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @changed = (@edit[:new] != @edit[:current])
@@ -85,9 +85,7 @@ module ApplicationController::Automate
       @resolve[:new][:other_name] = @edit[:new][:other_name]
     end
     if @edit[:new][:target_class]
-      @resolve[:new][:target_class] = Hash[*@resolve[:target_classes].flatten][@edit[:new][:target_class]]
-      target_class = @resolve[:target_classes].detect { |ui_name, _| @edit[:new][:target_class] == ui_name }.last
-      targets = target_class.constantize.all
+      targets = @resolve[:new][:target_class].safe_constantize.all
       @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
       @resolve[:new][:target_id] = nil
       @resolve[:new][:object_message] = @edit[:new][:object_message]

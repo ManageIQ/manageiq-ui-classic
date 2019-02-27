@@ -33,10 +33,6 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   def x_get_tree_custom_kids(object, count_only, _options)
     # build node showing any button groups or buttons under selected CatalogItem
     @resolve ||= {}
-    @resolve[:target_classes] = {}
-    CustomButton.button_classes.each { |db| @resolve[:target_classes][db] = ui_lookup(:model => db) }
-    @sb[:target_classes] = @resolve[:target_classes].invert
-    @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
     st = ServiceTemplate.find_by(:id => object[:id])
     items = st.custom_button_sets + st.custom_buttons
     objects = []

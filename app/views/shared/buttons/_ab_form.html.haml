@@ -1,7 +1,7 @@
 #ab_form
   #policy_bar
     - if session[:resolve_object].present?
-      - copied_target_class = Hash[*@resolve[:target_classes].flatten].invert[session[:resolve_object][:new][:target_class]]
+      - copied_target_class = session[:resolve_object][:new][:target_class]
       - current_target_class =  @edit[:new][:target_class]
       - if copied_target_class == current_target_class
         = link_to({:action => "resolve", :button => "paste"},

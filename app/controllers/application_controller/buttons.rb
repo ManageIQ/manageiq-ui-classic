@@ -3,6 +3,7 @@ module ApplicationController::Buttons
 
   included do
     include Mixins::PlaybookOptions
+    include CustomButtonHelper
   end
 
   def ab_group_edit
@@ -858,7 +859,7 @@ module ApplicationController::Buttons
   def button_set_record_vars(button)
     button.name = @edit[:new][:name]
     button.description = @edit[:new][:description]
-    button.applies_to_class = x_active_tree == :ab_tree ? @sb[:target_classes][@resolve[:target_class]] : "ServiceTemplate"
+    button.applies_to_class = x_active_tree == :ab_tree ? @resolve[:target_class] : "ServiceTemplate"
     button.applies_to_id = x_active_tree == :ab_tree ? nil : @sb[:applies_to_id]
     button.userid = session[:userid]
     button.uri = @edit[:uri]
@@ -900,7 +901,7 @@ module ApplicationController::Buttons
   end
 
   def field_expression_model
-    @custom_button.applies_to_class ||= (x_active_tree == :ab_tree ? @sb[:target_classes][@resolve[:target_class]] : "ServiceTemplate")
+    @custom_button.applies_to_class ||= (x_active_tree == :ab_tree ? @resolve[:target_class] : "ServiceTemplate")
   end
 
   def button_set_expression_vars(field_expression, field_expression_table)
@@ -986,17 +987,12 @@ module ApplicationController::Buttons
     else
       build_resolve_screen
     end
-    if @sb[:target_classes].nil?
-      @sb[:target_classes] = {}
-      CustomButton.button_classes.each { |db| @sb[:target_classes][ui_lookup(:model => db)] = db }
-    end
     if x_active_tree == :sandt_tree
-      @resolve[:target_class] = @sb[:target_classes].invert["ServiceTemplate"]
-    elsif x_node.starts_with?("_xx-ab")
-      @resolve[:target_class] = @sb[:target_classes].invert[x_node.split('_')[1]]
+      @resolve[:target_class] = "ServiceTemplate"
+    elsif x_node.starts_with?("-ub-")
+      @resolve[:target_class] = x_node.sub(/-ub-([^_]+)(_.*)?/, '\1')
     else
-      sp = x_node.split('-')
-      @resolve[:target_class] = @sb[:target_classes].invert[sp[1] == "ub" ? sp[2].split('_')[0] : sp[1].split('_')[1]]
+      @resolve[:target_class] = x_node.sub(/xx-ab_([^_]+)_.*/, '\1')
     end
     @record = @edit[:custom_button] = @custom_button
     @edit[:instance_names] = Array(@resolve[:instance_names])
@@ -1095,7 +1091,6 @@ module ApplicationController::Buttons
   def buttons_get_node_info(node)
     nodetype = node.split("_")
     # initializing variables to hold data for selected node
-    @sb[:obj_list] = nil
     @custom_button = nil
     @sb[:button_groups] = nil
     @sb[:buttons] = nil
@@ -1170,7 +1165,7 @@ module ApplicationController::Buttons
           @sb[:user_roles].push(r.name) if @custom_button.visibility[:roles].include?(r.name)
         end
       end
-      @resolve[:new][:target_class] = @sb[:target_classes].invert["ServiceTemplate"]
+      @resolve[:new][:target_class] = "ServiceTemplate"
       dialog_id = @custom_button.resource_action.dialog_id
       @sb[:dialog_label] = dialog_id ? Dialog.find(dialog_id).label : _("No Dialog")
       @right_cell_text = _("Button \"%{name}\"") % {:name => @custom_button.name}
@@ -1195,9 +1190,9 @@ module ApplicationController::Buttons
       @resolve[:new][:instance_name] = instance_name || @resolve[:new][:instance_name] || "Request"
       @resolve[:new][:object_message] = @custom_button.try(:uri_message) || @resolve[:new][:object_message] || "create"
       @resolve[:target_class] = nil
-      @resolve[:target_classes] = {}
-      CustomButton.button_classes.each { |db| @resolve[:target_classes][db] = ui_lookup(:model => db) }
-      @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
+      @resolve[:target_classes] = CustomButton.button_classes.each_with_object({}) do |klass, hash|
+        hash[klass] = target_class_name(klass)
+      end
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?
         ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }
