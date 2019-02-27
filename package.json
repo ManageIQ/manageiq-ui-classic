@@ -22,7 +22,7 @@
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
     "@data-driven-forms/pf3-component-mapper": "^0.4.3",
-    "@data-driven-forms/react-form-renderer": "^1.7.0",
+    "@data-driven-forms/react-form-renderer": "^1.8.0",
     "@manageiq/react-ui-components": "~0.10.8",
     "@manageiq/ui-components": "~1.2.2",
     "@pf3/select": "~1.12.6",
@@ -39,6 +39,7 @@
     "angular-ui-sortable": "~0.16.1",
     "angular.validators": "~4.4.3",
     "array-includes": "~3.0.3",
+    "awesome-debounce-promise": "^2.1.0",
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-switch": "~3.3.4",
     "classnames": "~2.2.6",
