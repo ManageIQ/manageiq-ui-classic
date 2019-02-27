@@ -148,7 +148,7 @@ class InfraNetworkingController < ApplicationController
 
   def display_node(id, model)
     show_record(id)
-    model_string = ui_lookup(:model => (model ? model : @record.class).to_s)
+    model_string = ui_lookup(:model => model)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
   end
 
@@ -195,7 +195,7 @@ class InfraNetworkingController < ApplicationController
       switches_list(model, hosts_switches_list(@record.hosts))
     when "Switch",
          "Lan"
-      display_node(id, model.constantize)
+      display_node(id, model)
     when "MiqSearch"
       miq_search_node
     else
