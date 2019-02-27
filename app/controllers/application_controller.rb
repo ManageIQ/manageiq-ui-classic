@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/LineLength, Lint/EmptyWhen
 require 'open-uri'
-require 'simple-rss'
 
 # Need to make sure models are autoloaded
 MiqCompare
