@@ -3,10 +3,6 @@ module InfraNetworkingHelper::TextualSummary
   # Groups
   #
 
-  def textual_group_properties
-    TextualGroup.new(_('UNUSED?'), %i(switch_type))
-  end
-
   def textual_group_relationships
     TextualGroup.new(_("Relationships"), %i(hosts custom_button_events))
   end
