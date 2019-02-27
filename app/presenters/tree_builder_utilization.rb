@@ -4,20 +4,10 @@ class TreeBuilderUtilization < TreeBuilderRegion
   has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
-    @selected_node = params[:selected_node]
-    super(name, type, sandbox, build)
-  end
-
   private
 
   def override(node, _object, _pid, _options)
     node[:selectable] = node[:key].split('-')[1].split('_')[0] != 'folder'
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:select_node => @selected_node.to_s)
   end
 
   def root_options
