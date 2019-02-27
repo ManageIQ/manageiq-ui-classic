@@ -189,11 +189,12 @@ class InfraNetworkingController < ApplicationController
 
     options = case model
               when "ExtManagementSystem"
-                provider_switches_list(id, ExtManagementSystem)
+                hosts = Host.where(:ems_id => @record.id)
+                switches_list(model, hosts_switches_list(hosts))
               when "Host"
-                host_switches_list(id, Host)
+                switches_list(model, @record.switches.pluck(:id))
               when "EmsCluster"
-                cluster_switches_list(id, EmsCluster)
+                switches_list(model, hosts_switches_list(@record.hosts))
               when "Switch",
                    "Lan"
                 display_node(id, model.constantize)
@@ -215,50 +216,31 @@ class InfraNetworkingController < ApplicationController
     options
   end
 
-  def host_switches_list(id, model)
+  def switches_list(model, ids)
     if @record.nil?
       self.x_node = "root"
       get_node_info("root")
-    else
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => @record.switches.pluck(:id)}
-      process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
+      return
     end
+
+    options = {
+      :model => "Switch",
+      :named_scope => :shareable,
+      :selected_ids => ids,
+    }
+    process_show_list(options) if @show_list
+
+    @pages = nil
+    @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
+    @showtype = 'main'
+
     options
   end
 
-  def cluster_switches_list(id, model)
-    if @record.nil?
-      self.x_node = "root"
-      get_node_info("root")
-    else
-      hosts = @record.hosts
-      switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
-      process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
-    end
-    options
-  end
-
-  def provider_switches_list(id, model)
-    if @record.nil?
-      self.x_node = "root"
-      get_node_info("root")
-    else
-      hosts = Host.where(:ems_id => @record.id)
-      switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
-      process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
-      @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @record.name}
-    end
-    options
+  def hosts_switches_list(hosts)
+    hosts.collect do |host|
+      host.switches.pluck(:id)
+    end.flatten.uniq
   end
 
   def miq_search_node
