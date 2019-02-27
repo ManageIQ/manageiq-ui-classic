@@ -65,7 +65,6 @@ class TreeBuilder
   # * features - used by the RBAC features tree only
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only
-  # * selected_node - used by the snapshots tree only
   def tree_init_options
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
