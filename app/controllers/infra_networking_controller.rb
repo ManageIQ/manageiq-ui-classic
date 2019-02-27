@@ -177,6 +177,16 @@ class InfraNetworkingController < ApplicationController
       id = nil
     end
 
+    if %w(
+      EmsCluster
+      ExtManagementSystem
+      Host
+      Lan
+      Switch
+    ).include?(model)
+      @record = find_record(model.constantize, id)
+    end
+
     options = case model
               when "ExtManagementSystem"
                 provider_switches_list(id, ExtManagementSystem)
@@ -207,18 +217,14 @@ class InfraNetworkingController < ApplicationController
   end
 
   def lan_node(id, model)
-    @record = find_record(model, id) if model
     display_node(id, model)
   end
 
   def dvswitch_node(id, model)
-    @record = find_record(model, id) if model
     display_node(id, model)
   end
 
   def host_switches_list(id, model)
-    @record = find_record(model, id) if model
-
     if @record.nil?
       self.x_node = "root"
       get_node_info("root")
@@ -233,8 +239,6 @@ class InfraNetworkingController < ApplicationController
   end
 
   def cluster_switches_list(id, model)
-    @record = find_record(model, id) if model
-
     if @record.nil?
       self.x_node = "root"
       get_node_info("root")
@@ -251,8 +255,6 @@ class InfraNetworkingController < ApplicationController
   end
 
   def provider_switches_list(id, model)
-    @record = find_record(model, id) if model
-
     if @record.nil?
       self.x_node = "root"
       get_node_info("root")
