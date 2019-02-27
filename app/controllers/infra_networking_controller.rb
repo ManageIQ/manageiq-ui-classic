@@ -147,14 +147,9 @@ class InfraNetworkingController < ApplicationController
   helper_method :textual_group_list
 
   def display_node(id, model)
-    if @record.nil?
-      self.x_node = "root"
-      get_node_info("root")
-    else
-      show_record(id)
-      model_string = ui_lookup(:model => (model ? model : @record.class).to_s)
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
-    end
+    show_record(id)
+    model_string = ui_lookup(:model => (model ? model : @record.class).to_s)
+    @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
   end
 
   def features
@@ -185,6 +180,10 @@ class InfraNetworkingController < ApplicationController
       Switch
     ).include?(model)
       @record = find_record(model.constantize, id)
+      if @record.nil?
+        self.x_node = "root"
+        return get_node_info("root")
+      end
     end
 
     options = case model
@@ -217,12 +216,6 @@ class InfraNetworkingController < ApplicationController
   end
 
   def switches_list(model, ids)
-    if @record.nil?
-      self.x_node = "root"
-      get_node_info("root")
-      return
-    end
-
     options = {
       :model => "Switch",
       :named_scope => :shareable,
