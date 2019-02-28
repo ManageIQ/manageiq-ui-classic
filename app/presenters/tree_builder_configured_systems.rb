@@ -4,12 +4,7 @@ class TreeBuilderConfiguredSystems < TreeBuilder
   private
 
   def tree_init_options
-    {:lazy => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:allow_reselect => true)
+    {:lazy => true, :allow_reselect => true}
   end
 
   def x_get_tree_custom_kids(object, count_only, options)

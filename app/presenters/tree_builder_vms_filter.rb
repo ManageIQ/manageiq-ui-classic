@@ -1,13 +1,10 @@
 class TreeBuilderVmsFilter < TreeBuilder
   def tree_init_options
     {
-      :open_all => true,
-      :leaf     => 'ManageIQ::Providers::InfraManager::Vm'
+      :open_all       => true,
+      :leaf           => 'ManageIQ::Providers::InfraManager::Vm',
+      :allow_reselect => true
     }
-  end
-
-  def set_locals_for_render
-    super.merge!(:allow_reselect => true)
   end
 
   def root_options

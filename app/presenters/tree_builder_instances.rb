@@ -5,11 +5,7 @@ class TreeBuilderInstances < TreeBuilder
   include TreeBuilderArchived
 
   def tree_init_options
-    {:leaf => 'VmCloud'}
-  end
-
-  def set_locals_for_render
-    super.merge!(:allow_reselect => TreeBuilder.hide_vms)
+    {:leaf => 'VmCloud', :allow_reselect => TreeBuilder.hide_vms}
   end
 
   def root_options
