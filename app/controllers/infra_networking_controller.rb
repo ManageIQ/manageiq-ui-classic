@@ -73,23 +73,6 @@ class InfraNetworkingController < ApplicationController
     generic_x_show
   end
 
-  def tree_record
-    @record =
-      case x_active_tree
-      when :infra_networking_tree then infra_networking_tree_rec
-      end
-  end
-
-  def infra_networking_tree_rec
-    nodes = x_node.split('-')
-    case nodes.first
-    when "root", 'e' then find_record(ExtManagementSystem, params[:id])
-    when "h"  then find_record(Host, params[:id])
-    when "c"  then find_record(Cluster, params[:id])
-    when "sw" then find_record(Switch, params[:id])
-    end
-  end
-
   def show_record(_id = nil)
     @display    = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
@@ -162,34 +145,6 @@ class InfraNetworkingController < ApplicationController
     [%i(relationships), %i(smart_management)]
   end
   helper_method :textual_group_list
-
-  def hosts_list
-    condition         = nil
-    label             = _("%{name} (All %{titles})" % {:name => @switch.name, :titles => title_for_hosts})
-    breadcrumb_suffix = ""
-
-    host_service_group_name = params[:host_service_group_name]
-    if host_service_group_name
-      case params[:status]
-      when 'running'
-        hosts_filter = @switch.host_ids_with_running_service_group(host_service_group_name)
-        label        = _("Hosts with running %{name}") % {:name => host_service_group_name}
-      when 'failed'
-        hosts_filter = @switch.host_ids_with_failed_service_group(host_service_group_name)
-        label        = _("Hosts with failed %{name}") % {:name => host_service_group_name}
-      when 'all'
-        hosts_filter = @switch.host_ids_with_service_group(host_service_group_name)
-        label        = _("All %{titles} with %{name}") % {:titles => title_for_hosts, :name => host_service_group_name}
-      end
-
-      if hosts_filter
-        condition = ["hosts.id IN (#{hosts_filter.to_sql})"]
-        breadcrumb_suffix = "&host_service_group_name=#{host_service_group_name}&status=#{params[:status]}"
-      end
-    end
-
-    return label, condition, breadcrumb_suffix
-  end
 
   def display_node(id, model)
     if @record.nil?
@@ -425,13 +380,6 @@ class InfraNetworkingController < ApplicationController
     end
     action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
-  end
-
-  def leaf_record
-    get_node_info(x_node)
-    @delete_node = params[:id] if @replace_trees
-    type, _id = parse_nodetype_and_id(x_node)
-    type && %w(Switch).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def dvswitch_record?(node = x_node)
