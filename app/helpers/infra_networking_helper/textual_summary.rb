@@ -20,7 +20,7 @@ module InfraNetworkingHelper::TextualSummary
     if num.positive? && role_allows?(:feature => "host_show_list")
       h = {:label => title_for_hosts, :icon => "pficon pficon-container-node", :value => num}
       h[:explorer] = true
-      h[:link] = url_for_only_path(:action => 'hosts', :id => @record, :db => 'switch')
+      h[:link] = url_for_only_path(:action => 'hosts', :id => @record, :db => db)
     end
     h
   end
@@ -32,9 +32,20 @@ module InfraNetworkingHelper::TextualSummary
     {
       :label    => _('Custom Button Events'),
       :value    => num = @record.number_of(:custom_button_events),
-      :link     => num.positive? ? url_for_only_path(:action => 'custom_button_events', :id => @record, :db => 'switch') : nil,
+      :link     => num.positive? ? url_for_only_path(:action => 'custom_button_events', :id => @record, :db => db) : nil,
       :icon     => CustomButtonEvent.decorate.fonticon,
       :explorer => true
     }
+  end
+
+  private
+
+  def db
+    case @record
+    when Switch
+      'switch'
+    when Lan
+      'lan'
+    end
   end
 end

@@ -139,6 +139,17 @@ class InfraNetworkingController < ApplicationController
     show_details(CustomButtonEvent, :association => "custom_button_events", :clickable => false)
   end
 
+  def get_record(db)
+    case db
+    when 'switch'
+      @record = identify_record(params[:id], Switch)
+    when 'lan'
+      @record = identify_record(params[:id], Lan)
+    else
+      super
+    end
+  end
+
   private
 
   def textual_group_list
