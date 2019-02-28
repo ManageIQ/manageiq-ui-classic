@@ -305,7 +305,7 @@ module MiqPolicyController::MiqActions
 
   # Build the alert choice hash for evaluate_alerts action_type
   def action_build_alert_choices
-    @edit[:choices] = MiqAlert.all.reduce({}) { |h, a| h[a.description] = a.guid } # Build the hash of alert choices
+    @edit[:choices] = MiqAlert.all.each_with_object({}) { |h, a| h[a.description] = a.guid } # Build the hash of alert choices
     @edit[:new][:alerts] = {} # Clear out the alerts hash
   end
 
