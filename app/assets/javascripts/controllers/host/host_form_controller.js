@@ -16,7 +16,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       ws_password: '',
       ipmi_userid: '',
       ipmi_password: '',
-      validate_id: '',
+      validate_id: null,
     };
 
     $scope.modelCopy = angular.copy( $scope.hostModel );
@@ -46,7 +46,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.ws_password = '';
       $scope.hostModel.ipmi_userid = '';
       $scope.hostModel.ipmi_password = '';
-      $scope.hostModel.validate_id = '';
+      $scope.hostModel.validate_id = null;
       $scope.afterGet = true;
     } else if (hostFormId.split(',').length === 1) {
       miqService.sparkleOn();
