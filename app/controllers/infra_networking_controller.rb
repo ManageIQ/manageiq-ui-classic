@@ -330,6 +330,7 @@ class InfraNetworkingController < ApplicationController
   def set_right_cell_vars
     @sb[:action] = params[:action]
     name = @record.try(:name).to_s
+    db = @record.class.try(:base_class).try(:display_name) # Switch, Lan, nil?
     partial = if ["details"].include?(@showtype)
                 "layouts/x_gtl"
               elsif @showtype == "item"
@@ -338,16 +339,18 @@ class InfraNetworkingController < ApplicationController
                 @showtype.to_s
               end
     if @showtype == "item"
-      header = _("%{action} \"%{item_name}\" for Switch \"%{name}\"") % {
+      header = _("%{action} \"%{item_name}\" for %{db} \"%{name}\"") % {
         :name      => name,
         :item_name => @item.name,
-        :action    => action_type(@sb[:action], 1)
+        :action    => action_type(@sb[:action], 1),
+        :db        => db,
       }
       x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
     else
-      header = _("\"%{action}\" for Switch \"%{name}\"") % {
+      header = _("\"%{action}\" for %{db} \"%{name}\"") % {
         :name   => name,
-        :action => action_type(@sb[:action], 2)
+        :action => action_type(@sb[:action], 2),
+        :db     => db,
       }
       if @display && @display != "main"
         x_history_add_item(:id => x_node, :text => header, :display => @display)
