@@ -18,6 +18,18 @@ class ApplicationHelper::Toolbar::MiqReportScheduleCenter < ApplicationHelper::T
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Schedule and ALL of its components will be permanently removed!")),
+        button(
+          :miq_report_schedule_enable,
+          'fa fa-check fa-lg',
+          t = N_('Enable this Schedule'),
+          t
+        ),
+        button(
+          :miq_report_schedule_disable,
+          'fa fa-ban fa-lg',
+          t = N_('Disable this Schedule'),
+          t
+        ),
         separator,
         button(
           :miq_report_schedule_run_now,

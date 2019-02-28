@@ -241,7 +241,15 @@ module OpsController::Settings::Schedules
     add_flash(msg, :info, true) unless flash_errors?
     schedule_build_list
     settings_get_info("st")
-    replace_right_cell(:nodetype => "root")
+    if x_node == "xx-msc"
+      replace_right_cell(:nodetype => "root")
+    else
+      @selected_schedule = @record = schedules.first
+      if @selected_schedule.filter.kind_of?(MiqExpression)
+        @exp_table = exp_build_table(@selected_schedule.filter.exp)
+      end
+      replace_right_cell(:nodetype => x_node)
+    end
   end
 
   def schedule_enable
