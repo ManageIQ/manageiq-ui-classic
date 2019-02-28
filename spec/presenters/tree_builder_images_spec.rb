@@ -13,7 +13,7 @@ describe TreeBuilderImages do
 
   it 'sets tree to have leaf and not lazy' do
     root_options = @images_tree.tree_init_options
-    expect(root_options).to eq(:leaf => "ManageIQ::Providers::CloudManager::Template")
+    expect(root_options).to eq(:leaf => "ManageIQ::Providers::CloudManager::Template", :lazy => true)
   end
 
   it 'sets tree to have full ids, not lazy and no root' do

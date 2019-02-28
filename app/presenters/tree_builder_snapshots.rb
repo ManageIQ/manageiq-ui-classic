@@ -17,12 +17,12 @@ class TreeBuilderSnapshots < TreeBuilder
   end
 
   def tree_init_options
-    {:full_ids => true}
+    {:full_ids => true, :lazy => true}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:autoload => true, :onclick => 'miqOnClickSnapshots',)
+    locals.merge!(:onclick => 'miqOnClickSnapshots',)
   end
 
   def root_options

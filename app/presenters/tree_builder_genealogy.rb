@@ -21,7 +21,7 @@ class TreeBuilderGenealogy < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :lazy => false}
+    {:full_ids => true}
   end
 
   def set_locals_for_render

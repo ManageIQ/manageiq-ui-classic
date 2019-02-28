@@ -71,7 +71,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :lazy           => false,
       :add_root       => true,
       :role           => @role,
       :features       => @features,

@@ -6,8 +6,7 @@ class TreeBuilderInstancesFilter < TreeBuilderVmsFilter
   def set_locals_for_render
     locals = super
     locals.merge!(:tree_id   => "instances_filter_treebox",
-                  :tree_name => "instances_filter_tree",
-                  :autoload  => false)
+                  :tree_name => "instances_filter_tree")
   end
 
   def root_options

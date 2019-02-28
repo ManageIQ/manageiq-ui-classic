@@ -33,7 +33,6 @@ class TreeBuilderBelongsToHac < TreeBuilder
   def tree_init_options
     {:full_ids   => true,
      :add_root   => false,
-     :lazy       => false,
      :checkboxes => @edit.present? || @assign_to.present?}
   end
 

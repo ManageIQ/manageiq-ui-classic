@@ -5,10 +5,7 @@ class TreeBuilderInstances < TreeBuilder
   include TreeBuilderArchived
 
   def tree_init_options
-    {
-      :leaf => 'VmCloud',
-      :lazy => false
-    }
+    {:leaf => 'VmCloud'}
   end
 
   def set_locals_for_render
@@ -16,7 +13,6 @@ class TreeBuilderInstances < TreeBuilder
     locals.merge!(
       :tree_id        => "instances_treebox",
       :tree_name      => "instances_tree",
-      :autoload       => true,
       :allow_reselect => TreeBuilder.hide_vms
     )
   end

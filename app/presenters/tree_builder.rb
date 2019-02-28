@@ -176,7 +176,6 @@ class TreeBuilder
         :leaf       => @options[:leaf],
         :add_root   => true,
         :open_nodes => [],
-        :lazy       => true,
         :checkboxes => false
       )
     )
@@ -200,7 +199,8 @@ class TreeBuilder
       :tree_id    => "#{@name}box",
       :tree_name  => @name.to_s,
       :bs_tree    => @bs_tree,
-      :checkboxes => false
+      :checkboxes => false,
+      :autoload   => @options[:lazy]
     }
   end
 
@@ -275,10 +275,7 @@ class TreeBuilder
                     !!options[:open_all]                                               ||
                     node[:expand]                                                      ||
                     @tree_state.x_tree(@name)[:active_node] == node[:key]
-    if ancestry_kids ||
-       load_children ||
-       node[:expand] ||
-       @options[:lazy] == false
+    if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, options, false, parents)).map do |o|
         x_build_node(o, node[:key], options)

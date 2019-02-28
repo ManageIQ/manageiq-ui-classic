@@ -34,6 +34,6 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
   end
 
   def tree_init_options
-    {:lazy => false}
+    {}
   end
 end

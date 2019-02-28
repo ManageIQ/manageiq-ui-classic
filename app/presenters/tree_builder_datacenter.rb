@@ -36,12 +36,12 @@ class TreeBuilderDatacenter < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true}
+    {:full_ids => true, :lazy => true}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:autoload => true, :url => '/vm/show/', :onclick => 'miqOnClickHostNet')
+    locals.merge!(:url => '/vm/show/', :onclick => 'miqOnClickHostNet')
   end
 
   def root_options

@@ -40,7 +40,6 @@ describe TreeBuilderBelongsToVat do
     it 'sets tree options correctly' do
       expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
                                                      :add_root   => false,
-                                                     :lazy       => false,
                                                      :checkboxes => edit.present?)
     end
   end

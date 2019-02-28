@@ -5,7 +5,8 @@ class TreeBuilderImages < TreeBuilder
 
   def tree_init_options
     {
-      :leaf => "ManageIQ::Providers::CloudManager::Template"
+      :leaf => "ManageIQ::Providers::CloudManager::Template",
+      :lazy => true
     }
   end
 
@@ -14,7 +15,6 @@ class TreeBuilderImages < TreeBuilder
     locals.merge!(
       :tree_id        => "images_treebox",
       :tree_name      => "images_tree",
-      :autoload       => true,
       :allow_reselect => TreeBuilder.hide_vms
     )
   end

@@ -18,7 +18,7 @@ describe TreeBuilderInstances do
   it 'sets tree to have leaf and not lazy' do
     root_options = @instances_tree.tree_init_options
 
-    expect(root_options).to eq(:leaf => 'VmCloud', :lazy => false)
+    expect(root_options).to eq(:leaf => 'VmCloud')
   end
 
   it 'sets tree to have full ids, not lazy and no root' do
@@ -26,7 +26,6 @@ describe TreeBuilderInstances do
 
     expect(locals[:tree_id]).to eq("instances_treebox")
     expect(locals[:tree_name]).to eq("instances_tree")
-    expect(locals[:autoload]).to eq(true)
   end
 
   it 'sets root correctly' do

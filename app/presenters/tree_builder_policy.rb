@@ -5,13 +5,7 @@ class TreeBuilderPolicy < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true,
-     :lazy     => false}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+    {:full_ids => true}
   end
 
   def compliance_control_kids(mode)

@@ -2,12 +2,7 @@ class TreeBuilderOpsDiagnostics < TreeBuilderOps
   private
 
   def tree_init_options
-    {:open_all => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+    {:open_all => true, :lazy => true}
   end
 
   def root_options

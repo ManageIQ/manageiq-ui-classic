@@ -9,7 +9,7 @@ class TreeBuilderProtect < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => false, :add_root => false, :lazy => false}
+    {:full_ids => false, :add_root => false}
   end
 
   def set_locals_for_render

@@ -17,8 +17,7 @@ class TreeBuilderTags < TreeBuilder
 
   def tree_init_options
     {:full_ids => true,
-     :add_root => false,
-     :lazy     => false}
+     :add_root => false}
   end
 
   def contain_selected_kid(category)
