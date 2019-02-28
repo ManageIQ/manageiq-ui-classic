@@ -2,7 +2,7 @@ class TreeBuilderReportExport < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :open_all => true, :lazy => true}
+    {:full_ids => true, :open_all => true}
   end
 
   def root_options

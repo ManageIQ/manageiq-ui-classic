@@ -7,7 +7,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
   private
 
   def tree_init_options
-    {:open_all => true, :lazy => true}
+    {:open_all => true}
   end
 
   def root_options
