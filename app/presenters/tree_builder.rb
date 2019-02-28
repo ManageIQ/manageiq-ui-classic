@@ -60,7 +60,7 @@ class TreeBuilder
   # * open_all - expand all expandable nodes
   # * add_root - merge root_options with the first node
   # * lazy - is the tree lazily-loadable
-  # * checkable_checkboxes - checkable checkboxes for the nodes
+  # * checkboxes - show checkboxes for the nodes
   # * features - used by the RBAC features tree only
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only
@@ -170,14 +170,14 @@ class TreeBuilder
   def add_to_sandbox
     @tree_state.add_tree(
       @options.reverse_merge(
-        :tree                 => @name,
-        :type                 => type,
-        :klass_name           => self.class.name,
-        :leaf                 => @options[:leaf],
-        :add_root             => true,
-        :open_nodes           => [],
-        :lazy                 => true,
-        :checkable_checkboxes => false
+        :tree       => @name,
+        :type       => type,
+        :klass_name => self.class.name,
+        :leaf       => @options[:leaf],
+        :add_root   => true,
+        :open_nodes => [],
+        :lazy       => true,
+        :checkboxes => false
       )
     )
   end
