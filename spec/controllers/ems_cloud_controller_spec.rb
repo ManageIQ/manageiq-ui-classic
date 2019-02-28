@@ -128,6 +128,7 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
+        "default_url"      => "http://abc.test/path"
       }
 
       expect(response.status).to eq(200)

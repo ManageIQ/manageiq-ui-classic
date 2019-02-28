@@ -244,6 +244,8 @@
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
       %h3
         = _("Credentials")
+      = render :partial => "layouts/angular-bootstrap/endpoints_for_url",
+                               :locals => {:prefix => "default", :ng_model => "emsCommonModel"}
       = render :partial => "/layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
                :locals  => {:record                 => @ems,
                             :ng_model               => "emsCommonModel",

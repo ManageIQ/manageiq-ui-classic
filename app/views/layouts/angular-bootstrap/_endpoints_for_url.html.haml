@@ -7,14 +7,11 @@
                           "id"                      => "#{prefix}_url",
                           "ng-required"             => "false",
                           "name"                    => "#{prefix}_url",
-                          "ng-model"                => "#{main_scope}.#{ng_model}.#{prefix}_url",
+                          "ng-model"                => "#{ng_model}.#{prefix}_url",
                           "checkchange"             => "",
                           "ng-trim"                 => false,
                           "detect_spaces"           => "",
                           "prefix"                  => "#{prefix}",
-                          "main-scope"              => "#{main_scope}",
                           "reset-validation-status" => "#{prefix}_auth_status"}
       %span.help-block{"ng-show" => "angularForm.#{prefix}_url.$error.url"}
         = _("Invalid URL")
-      %span.help-block{"ng-show" => "angularForm.#{prefix}_url.$error.detectedSpaces"}
-        = _("Spaces are prohibited")

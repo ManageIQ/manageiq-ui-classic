@@ -139,7 +139,8 @@ module Mixins
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
           [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true, uri]
         when 'ManageIQ::Providers::Azure::CloudManager'
-          [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region]]
+          uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
+          [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region], uri]
         when 'ManageIQ::Providers::Vmware::CloudManager'
           case params[:cred_type]
           when 'amqp'
@@ -640,6 +641,8 @@ module Mixins
         if ems.kind_of?(ManageIQ::Providers::Azure::CloudManager)
           ems.azure_tenant_id = params[:azure_tenant_id]
           ems.subscription    = params[:subscription] if params[:subscription].present?
+          uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
+          default_endpoint = {:role => :default, :hostname => uri.host, :port => uri.port, :path => uri.path, :url => params[:default_url]}
         end
 
         if ems.kind_of?(ManageIQ::Providers::ContainerManager)
