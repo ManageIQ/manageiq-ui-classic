@@ -3,10 +3,6 @@ class TreeBuilderTemplatesImagesFilter < TreeBuilderVmsFilter
     super.update(:leaf => 'MiqTemplate')
   end
 
-  def set_locals_for_render
-    super.merge!(:allow_reselect => true)
-  end
-
   def root_options
     {
       :text    => _("All Templates & Images"),
