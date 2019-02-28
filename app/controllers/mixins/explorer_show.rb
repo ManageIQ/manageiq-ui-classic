@@ -142,7 +142,6 @@ module Mixins
 
     def hosts
       db = params[:db] || controller_name
-      db = 'switch' if db == 'infra_networking'
       return unless init_show_variables(db)
 
       @lastaction = "hosts"

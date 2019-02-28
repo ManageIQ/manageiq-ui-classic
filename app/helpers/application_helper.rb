@@ -373,9 +373,12 @@ module ApplicationHelper
     else
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
+      query_params = "?"
+      query_params += "db=#{params[:db]}&" if params[:db]
+      query_params += "#{@explorer ? "x_show" : "show"}=" # this one must go last
       return url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
                                :action     => association,
-                               :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
+                               :id         => parent.id) + query_params
     end
   end
 
