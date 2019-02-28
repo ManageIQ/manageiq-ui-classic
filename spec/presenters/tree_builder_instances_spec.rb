@@ -12,7 +12,7 @@ describe TreeBuilderInstances do
 
     allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
 
-    @instances_tree = TreeBuilderInstances.new(:instances, :instances_tree, {}, nil)
+    @instances_tree = TreeBuilderInstances.new(:instances_tree, :instances, {}, nil)
   end
 
   it 'sets tree to have leaf and not lazy' do

@@ -9,12 +9,7 @@ class TreeBuilderInstances < TreeBuilder
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(
-      :tree_id        => "instances_treebox",
-      :tree_name      => "instances_tree",
-      :allow_reselect => TreeBuilder.hide_vms
-    )
+    super.merge!(:allow_reselect => TreeBuilder.hide_vms)
   end
 
   def root_options

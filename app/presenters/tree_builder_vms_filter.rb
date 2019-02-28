@@ -7,8 +7,7 @@ class TreeBuilderVmsFilter < TreeBuilder
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(:tree_id => "vms_filter_treebox", :tree_name => "vms_filter_tree", :allow_reselect => true)
+    super.merge!(:allow_reselect => true)
   end
 
   def root_options

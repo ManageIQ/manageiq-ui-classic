@@ -8,7 +8,7 @@ describe TreeBuilderImages do
 
     allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
 
-    @images_tree = TreeBuilderImages.new(:images, :images_tree, {}, nil)
+    @images_tree = TreeBuilderImages.new(:images_tree, :images, {}, nil)
   end
 
   it 'sets tree to have leaf and not lazy' do
