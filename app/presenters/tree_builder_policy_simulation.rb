@@ -17,11 +17,6 @@ class TreeBuilderPolicySimulation < TreeBuilder
     {:full_ids => true}
   end
 
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:cookie_prefix => 'edit_')
-  end
-
   def root_options
     {
       :text       => ViewHelper.content_tag(:strong, @root_name),
