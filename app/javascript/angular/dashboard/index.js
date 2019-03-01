@@ -5,6 +5,5 @@ require('./widget-error.js');
 require('./widget-footer.js');
 require('./widget-menu.js');
 require('./widget-report.js');
-require('./widget-rss.js');
 require('./widget-spinner.js');
 require('./widget-wrapper.js');

@@ -18,7 +18,6 @@ ManageIQ.angular.app.component('widgetWrapper', {
       menu: '/dashboard/widget_menu_data/',
       report: '/dashboard/widget_report_data/',
       chart: '/dashboard/widget_chart_data/',
-      rss: '/dashboard/widget_rss_data/',
     };
 
     const deferred = miqDeferred();

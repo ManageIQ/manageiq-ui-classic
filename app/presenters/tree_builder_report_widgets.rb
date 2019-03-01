@@ -3,7 +3,6 @@ class TreeBuilderReportWidgets < TreeBuilder
   WIDGET_TYPES = {
     "r"  => N_('Reports'),
     "c"  => N_('Charts'),
-    "rf" => N_('RSS Feeds'),
     "m"  => N_('Menus')
   }.freeze
 

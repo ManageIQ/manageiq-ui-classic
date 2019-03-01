@@ -672,7 +672,6 @@ module ApplicationHelper
       ops
       pxe
       report
-      rss
       server_build
     )
     return false if hide_layouts.include?(@layout)
@@ -1263,7 +1262,6 @@ module ApplicationHelper
   CONTENT_TYPE_ID = {
     "report" => "r",
     "menu"   => "m",
-    "rss"    => "rf",
     "chart"  => "c"
   }.freeze
 

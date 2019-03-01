@@ -17,7 +17,7 @@ class WidgetImportService
   def import_widget_from_hash(widget)
     new_or_existing_widget = MiqWidget.where(:description => widget["description"]).first_or_create
     new_or_existing_widget.title ||= widget["title"]
-    new_or_existing_widget.content_type ||= "rss"
+    new_or_existing_widget.content_type ||= "report"
     new_or_existing_widget.resource = build_report_contents(widget)
     new_or_existing_widget.miq_schedule = build_miq_schedule(widget)
     widget.delete("resource_id")
@@ -77,10 +77,6 @@ class WidgetImportService
       report_attributes = report_contents.first["MiqReport"]
       name = report_attributes.delete("menu_name")
       new_or_existing_report = MiqReport.where(:name => name).first_or_initialize
-    elsif report_contents.first["RssFeed"]
-      report_attributes = report_contents.first["RssFeed"]
-      name = report_attributes["name"]
-      new_or_existing_report = RssFeed.where(:name => name).first_or_initialize
     end
 
     if new_or_existing_report.new_record?

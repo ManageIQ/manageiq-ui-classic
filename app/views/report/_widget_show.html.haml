@@ -51,8 +51,6 @@
     - title = _("Report Options")
   - when "c"
     - title = _("Chart Report")
-  - when "rf"
-    - title = _("RSS Feed Options")
   - when "m"
     - title = _("Menu Shortcuts")
   %h3= title
@@ -83,36 +81,6 @@
             - else
               %span{:style => "color: red;"}
                 = "*** %s ***" % _("Chart no longer exists")
-    - elsif @sb[:wtype] == "rf"
-      - typ = @widget.resource ? _("Internal") : _("External")
-      .form-group
-        %label.control-label.col-md-2
-          - if @widget.read_only
-            *
-          = _('Type')
-        .col-md-10
-          %p.form-control-static= h(typ)
-      - if typ == "Internal"
-        .form-group
-          %label.control-label.col-md-2
-            - if @widget.read_only
-              *
-            = _('Internal RSS Feed')
-          .col-md-10
-            %p.form-control-static
-              - if @widget.resource
-                = h(@widget.resource.title)
-              - else
-                %span{:style => "color: red;"}
-                  = "*** %s ***" % _("RSS Feed no longer exists")
-      - else
-        .form-group
-          %label.control-label.col-md-2
-            - if @widget.read_only
-              *
-            = _('External RSS Feed/URL')
-          .col-md-10
-            %p.form-control-static= h(@widget.options[:url])
     - elsif @sb[:wtype] == "m"
       .form-group
         %label.control-label.col-md-2

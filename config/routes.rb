@@ -124,17 +124,6 @@ Rails.application.routes.draw do
   )
 
   controller_routes = {
-    :alert                    => {
-      :get  => %w(
-        index
-        rss
-        show_list
-      ),
-      :post => %w(
-        role_selected
-      ),
-    },
-
     :auth_key_pair_cloud      => {
       :get  => %w(
         download_data
@@ -1174,7 +1163,6 @@ Rails.application.routes.draw do
         widget_chart_data
         widget_menu_data
         widget_report_data
-        widget_rss_data
       ),
       :post => %w(
         dialog_definition

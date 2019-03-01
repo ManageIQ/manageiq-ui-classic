@@ -1,26 +1,9 @@
 module ReportController::Widgets
   extend ActiveSupport::Concern
 
-  # RSS Feeds
-  RSS_FEEDS = {
-    "Microsoft Security"         => "http://www.microsoft.com/protect/rss/rssfeed.aspx",
-    "CNN Top Stories"            => "http://rss.cnn.com/rss/cnn_topstories.rss",
-    "Gartner Latest Research"    => "http://www.gartner.com/it/rss/leaders/latest_research_itoperations.jsp#",
-    "Google News"                => "http://news.google.com/?output=rss",
-    "SlashDot"                   => "http://slashdot.org/index.rdf",
-    "VM Etc."                    => "http://feeds.feedburner.com/vmetc?format=xml",
-    "Virtualization Pro"         => "http://itknowledgeexchange.techtarget.com/virtualization-pro/feed/",
-    "Virtualization Information" => "http://virtualizationinformation.com/?feed=rss2",
-    "Vmware Tips & Tricks"       => "http://rss.techtarget.com/840.xml",
-    "DABCC - News & Support"     => "http://feeds.dabcc.com/AllArticles",
-    "VmwareWolf"                 => "http://feeds.feedburner.com/vmwarewolf",
-    "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
-  }.freeze
-
   RIGHT_CELL_TEXTS = {
     "r"  => [N_('Report Widgets'),   N_('Report Widget "%{name}"')],
     "c"  => [N_('Chart Widgets'),    N_('Chart Widget "%{name}"')],
-    "rf" => [N_('RSS Feed Widgets'), N_('RSS Feed Widget "%{name}"')],
     "m"  => [N_('Menu Widgets'),     N_('Menu Widget "%{name}"')]
   }.freeze
 
@@ -28,7 +11,6 @@ module ReportController::Widgets
   WIDGET_CONTENT_TYPE = {
     "r"  => "report",
     "c"  => "chart",
-    "rf" => "rss",
     "m"  => "menu"
   }.freeze
 
@@ -156,7 +138,7 @@ module ReportController::Widgets
         @edit[:new][:repfilter] = nil
         @replace_filter_div = true
       elsif params[:repfilter_typ] || params[:chosen_pivot1] || params[:chosen_pivot2] || params[:chosen_pivot3] ||
-            params[:feed_type] || params[:rss_url]
+            params[:feed_type]
         @replace_filter_div = true
       end
       if @replace_filter_div
@@ -424,19 +406,6 @@ module ReportController::Widgets
       @edit[:new][:pivot].by4 = @widget.options[:col_order][3] if @widget.options && @widget.options[:col_order] && @widget.options[:col_order][3]
       @edit[:new][:pivot].options = @edit[:new][:fields].dup
       @edit[:new][:row_count] = @widget.row_count
-    elsif @sb[:wtype] == "rf"
-      @edit[:rss_feeds] = RssFeed.pluck(:title, :id).sort.to_h
-      @edit[:new][:feed_type] = @widget.options && @widget.options[:url] ? "external" : "internal"
-      if @widget.options && @widget.options[:url]
-        self.class::RSS_FEEDS.each do |r|
-          if r[1] == @widget.options[:url]
-            @edit[:new][:url] = @widget.options[:url]
-          end
-        end
-        @edit[:new][:txt_url] = @widget.options[:url] if @edit[:new][:url].blank?
-      end
-      @edit[:new][:row_count]   = @widget.row_count
-      @edit[:new][:rss_feed_id] = @widget.resource_type == "RssFeed" ? @widget.resource_id : @edit[:rss_feeds].first.second
     end
     @edit[:current] = copy_hash(@edit[:new])
   end
@@ -562,11 +531,6 @@ module ReportController::Widgets
       @pivot = @edit[:new][:pivot]
     elsif @sb[:wtype] == "c"
       widget_graph_menus # to build report pulldown with only reports with graphs
-    elsif @sb[:wtype] == "rf"
-      @edit[:new][:feed_type]   = params[:feed_type] if params[:feed_type]
-      @edit[:new][:url]         = params[:rss_url]   if params[:rss_url]
-      @edit[:new][:url]         = params[:txt_url]   if params[:txt_url]
-      @edit[:new][:rss_feed_id] = params[:rss_feed]  if params[:rss_feed]
     end
 
     visibility_box_edit
@@ -580,7 +544,6 @@ module ReportController::Widgets
     widget.options ||= {}
     widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w(r rf).include?(@sb[:wtype])
     if @sb[:wtype] == "rf"
-      widget.set_rss_properties(@edit[:new][:feed_type], @edit[:new][:rss_feed_id], @edit[:new][:url])
     else
       widget.resource = @edit[:rpt]
     end

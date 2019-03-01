@@ -32,7 +32,6 @@ module ApplicationHelper::PageLayouts
       physical_network_port
       pxe
       report
-      rss
       server_build
       storage
       storage_pod
@@ -96,7 +95,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def layout_uses_breadcrumbs?
-    !%w(dashboard exception support configuration rss).include?(@layout)
+    !%w(dashboard exception support configuration).include?(@layout)
   end
 
   def dashboard_no_listnav?
