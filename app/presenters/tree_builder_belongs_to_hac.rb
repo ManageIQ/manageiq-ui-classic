@@ -31,14 +31,15 @@ class TreeBuilderBelongsToHac < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids   => true,
-     :add_root   => false,
-     :checkboxes => true}
+    {
+      :full_ids          => true,
+      :add_root          => false,
+      :checkboxes        => true,
+      :highlight_changes => !@assign_to
+    }
   end
 
   def set_locals_for_render
-    locals = super
-
     oncheck, check_url = if @assign_to
                            ["miqOnCheckGeneric", "/miq_policy/alert_profile_assign_changed/"]
                          elsif @edit
@@ -47,10 +48,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
                            [nil, "/ops/rbac_group_field_changed/#{group_id}___"]
                          end
 
-    locals.merge!(:oncheck           => oncheck,
-                  :check_url         => check_url,
-                  :highlight_changes => @assign_to ? false : true,
-                  :onclick           => false)
+    super.merge!(:oncheck => oncheck, :check_url => check_url, :onclick => false)
   end
 
   def root_options

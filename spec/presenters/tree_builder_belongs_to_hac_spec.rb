@@ -67,18 +67,18 @@ describe TreeBuilderBelongsToHac do
 
   describe '#tree_init_options' do
     it 'sets init options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
-                                                     :add_root   => false,
-                                                     :checkboxes => true)
+      expect(subject.send(:tree_init_options)).to eq(:full_ids          => true,
+                                                     :add_root          => false,
+                                                     :checkboxes        => true,
+                                                     :highlight_changes => true)
     end
   end
 
   describe '#set_locals_for_render' do
     it 'sets locals correctly' do
-      expect(subject.send(:set_locals_for_render)).to include(:onclick           => false,
-                                                              :check_url         => "/ops/rbac_group_field_changed/new___",
-                                                              :oncheck           => nil,
-                                                              :highlight_changes => true)
+      expect(subject.send(:set_locals_for_render)).to include(:onclick   => false,
+                                                              :check_url => "/ops/rbac_group_field_changed/new___",
+                                                              :oncheck   => nil)
     end
   end
 

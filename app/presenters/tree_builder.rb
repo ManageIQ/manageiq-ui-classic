@@ -195,12 +195,13 @@ class TreeBuilder
 
   def set_locals_for_render
     {
-      :tree_id        => "#{@name}box",
-      :tree_name      => @name.to_s,
-      :bs_tree        => @bs_tree,
-      :checkboxes     => @options[:checkboxes],
-      :autoload       => @options[:lazy],
-      :allow_reselect => @options[:allow_reselect]
+      :tree_id           => "#{@name}box",
+      :tree_name         => @name.to_s,
+      :bs_tree           => @bs_tree,
+      :checkboxes        => @options[:checkboxes],
+      :autoload          => @options[:lazy],
+      :allow_reselect    => @options[:allow_reselect],
+      :highlight_changes => @options[:highlight_changes]
     }
   end
 

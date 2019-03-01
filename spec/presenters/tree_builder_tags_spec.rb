@@ -24,7 +24,7 @@ describe TreeBuilderTags do
     end
     it 'set init options correctly' do
       tree_options = @tags_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => true, :add_root => false, :checkboxes => true)
+      expect(tree_options).to eq(:full_ids => true, :add_root => false, :checkboxes => true, :highlight_changes => true)
     end
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)
