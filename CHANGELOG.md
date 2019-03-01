@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-2
+## Hammer-3
+
+### Fixed
+- Do not allow to embed a method into itself in automate [(#4753)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4753)
+- Added missing unit label [(#5195)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5195)
+- Add missing styling to user input filter modal [(#5208)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5208)
+- Use onchange only for radio buttons [(#5097)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5097)
+- Display missing checkboxes for workers under Diagnostics [(#5223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5223)
+- Container dashboard utilization metrics - fix hourly metrics [(#5232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5232)
+- Don't allow adding another svc bundle into an existing bundle [(#5221)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5221)
+- Use correct dialog product features in MiqAeCustomizationController [(#5197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5197)
+
+## Hammer-2 - Released 2019-02-07
 
 ### Fixed
 - Fix usage of TreeBuilder.extract_node_model_and_id in OpcControler [(#5142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5142)
