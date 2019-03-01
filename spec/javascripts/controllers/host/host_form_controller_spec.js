@@ -65,6 +65,10 @@ describe('hostFormController', function() {
         it('sets the IPMI Address to blank', function() {
           expect($scope.hostModel.ipmi_address).toEqual('');
         });
+
+        it('sets the validate id to null', function() {
+          expect($scope.hostModel.validate_id).toEqual(null);
+        });
       });
 
       describe('when the hostFormId is an Id', function() {
@@ -77,7 +81,8 @@ describe('hostFormController', function() {
           default_userid: 'abc',
           remote_userid: 'xyz',
           ws_userid: 'aaa',
-          ipmi_userid: 'zzz'
+          ipmi_userid: 'zzz',
+          validate_id: '1',
         };
         describe('when the filter type is all', function() {
           beforeEach(inject(function(_$controller_) {
@@ -126,6 +131,10 @@ describe('hostFormController', function() {
 
           it('sets the ipmi password to the placeholder value if a ipmi user exists', function() {
             expect($scope.hostModel.ipmi_password).toEqual(miqService.storedPasswordPlaceholder);
+          });
+
+          it('sets the validate id to the value returned from the http request', function() {
+            expect($scope.hostModel.validate_id).toEqual('1');
           });
         });
       });
