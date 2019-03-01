@@ -1,5 +1,6 @@
 = render :partial => "layouts/flash_msg"
 
+= react('CloudNetworkForm', {:cloudNetworkId => @network.id.to_s})
 %cloud-network-form{'cloud-network-form-id' => @network.id}
 
 :javascript
