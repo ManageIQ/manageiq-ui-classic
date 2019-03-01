@@ -1,8 +1,8 @@
 class TreeBuilderAlertProfileObj < TreeBuilder
-  def initialize(name, type, sandbox, build = true, assign_to: nil, cat: nil, selected: nil)
+  def initialize(name, type, sandbox, build = true, assign_to: nil, cat: nil, selected_nodes: nil)
     @assign_to = assign_to
     @cat = cat
-    @selected = selected
+    @selected = selected_nodes
     @cat_tree = @assign_to.ends_with?("-tags")
     super(name, type, sandbox, build)
   end
@@ -10,7 +10,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   def override(node, object, _pid, _options)
     node[:text] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer)
     node[:hideCheckbox] = false
-    node[:select] = @selected.include?(object.id)
+    node[:select] = @selected.try(:include?, object.id)
   end
 
   def tree_init_options
