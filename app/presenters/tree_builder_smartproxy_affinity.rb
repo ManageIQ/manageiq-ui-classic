@@ -14,13 +14,12 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def tree_init_options
-    {:full_ids => false, :add_root => false}
+    {:full_ids => false, :add_root => false, :checkboxes => true}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:checkboxes   => true,
-                  :onclick      => false,
+    locals.merge!(:onclick      => false,
                   :three_checks => true,
                   :post_check   => true,
                   :oncheck      => 'miqOnCheckGeneric',

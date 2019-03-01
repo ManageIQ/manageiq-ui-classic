@@ -20,7 +20,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def set_locals_for_render
     locals = {
-      :checkboxes   => true,
       :three_checks => true,
       :check_url    => "/ops/rbac_role_field_changed/",
       :onclick      => nil,
@@ -75,7 +74,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :role           => @role,
       :features       => @features,
       :editable       => @editable,
-      :node_id_prefix => node_id_prefix
+      :node_id_prefix => node_id_prefix,
+      :checkboxes     => true
     }
   end
 

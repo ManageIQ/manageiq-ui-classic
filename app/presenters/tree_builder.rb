@@ -175,8 +175,7 @@ class TreeBuilder
         :klass_name => self.class.name,
         :leaf       => @options[:leaf],
         :add_root   => true,
-        :open_nodes => [],
-        :checkboxes => false
+        :open_nodes => []
       )
     )
   end
@@ -199,7 +198,7 @@ class TreeBuilder
       :tree_id        => "#{@name}box",
       :tree_name      => @name.to_s,
       :bs_tree        => @bs_tree,
-      :checkboxes     => false,
+      :checkboxes     => @options[:checkboxes],
       :autoload       => @options[:lazy],
       :allow_reselect => @options[:allow_reselect]
     }

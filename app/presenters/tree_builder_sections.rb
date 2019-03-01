@@ -12,13 +12,12 @@ class TreeBuilderSections < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :add_root => false}
+    {:full_ids => true, :add_root => false, :checkboxes => true}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:checkboxes   => true,
-                  :three_checks => true,
+    locals.merge!(:three_checks => true,
                   :onselect     => "miqOnCheckSections",
                   :check_url    => "/#{@controller_name}/sections_field_changed/")
   end

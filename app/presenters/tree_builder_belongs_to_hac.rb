@@ -15,7 +15,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     end
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
     node[:selectable] = false
-    node[:checkable] = options[:checkboxes] if options.key?(:checkboxes)
+    node[:checkable] = @edit.present? || @assign_to.present?
   end
 
   def initialize(name, type, sandbox, build, params)
@@ -33,7 +33,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
   def tree_init_options
     {:full_ids   => true,
      :add_root   => false,
-     :checkboxes => @edit.present? || @assign_to.present?}
+     :checkboxes => true}
   end
 
   def set_locals_for_render
@@ -50,7 +50,6 @@ class TreeBuilderBelongsToHac < TreeBuilder
     locals.merge!(:oncheck           => oncheck,
                   :check_url         => check_url,
                   :highlight_changes => @assign_to ? false : true,
-                  :checkboxes        => true,
                   :onclick           => false)
   end
 

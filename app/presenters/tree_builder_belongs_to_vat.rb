@@ -9,7 +9,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
 
   def override(node, object, _pid, options)
     node[:selectable] = false
-    node[:checkable] = options[:checkboxes] if options.key?(:checkboxes)
+    node[:checkable] = @edit.present? || @assign_to.present?
     if [ExtManagementSystem, EmsCluster, Datacenter].any? { |klass| object.kind_of?(klass) }
       node[:hideCheckbox] = true
     end

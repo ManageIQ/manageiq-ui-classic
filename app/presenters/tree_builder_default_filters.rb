@@ -35,15 +35,13 @@ class TreeBuilderDefaultFilters < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true,
-     :add_root => false}
+    {:full_ids => true, :add_root => false, :checkboxes => true}
   end
 
   def set_locals_for_render
     locals = super
     locals.merge!(:check_url         => "/configuration/filters_field_changed/",
                   :oncheck           => "miqOnCheckGeneric",
-                  :checkboxes        => true,
                   :highlight_changes => true)
   end
 

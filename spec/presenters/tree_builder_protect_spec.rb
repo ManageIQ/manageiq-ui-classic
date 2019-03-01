@@ -24,7 +24,7 @@ describe TreeBuilderProtect do
 
     it 'set init options correctly' do
       tree_options = @protect_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => false, :add_root => false)
+      expect(tree_options).to eq(:full_ids => false, :add_root => false, :checkboxes => true)
     end
 
     it 'set locals for render correctly' do

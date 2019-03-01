@@ -21,14 +21,13 @@ class TreeBuilderGenealogy < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true}
+    {:full_ids => true, :checkboxes => true}
   end
 
   def set_locals_for_render
     super.merge!(
       :click_url  => "/vm/genealogy_tree_selected/",
       :onclick    => "miqOnClickGeneric",
-      :checkboxes => true,
       :oncheck    => "miqOnCheckGenealogy",
       :check_url  => "/vm/set_checked_items/"
     )

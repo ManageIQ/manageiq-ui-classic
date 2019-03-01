@@ -10,7 +10,6 @@ describe TreeBuilderAeCustomization do
         :leaf        => nil,
         :add_root    => true,
         :open_nodes  => [],
-        :checkboxes  => false,
         :open_all    => true,
         :active_node => "root"
       }

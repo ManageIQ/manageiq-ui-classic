@@ -55,11 +55,10 @@ describe TreeBuilderSections do
     end
     it 'set init options correctly' do
       tree_options = @sections_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => true, :add_root => false)
+      expect(tree_options).to eq(:full_ids => true, :add_root => false, :checkboxes => true)
     end
     it 'set locals for render correctly' do
       locals = @sections_tree.send(:set_locals_for_render)
-      expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq("/#{@controller_name}/sections_field_changed/")
       expect(locals[:onselect]).to eq("miqOnCheckSections")
       expect(locals[:three_checks]).to eq(true)

@@ -16,8 +16,7 @@ class TreeBuilderTags < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true,
-     :add_root => false}
+    {:full_ids => true, :add_root => false, :checkboxes => true}
   end
 
   def contain_selected_kid(category)
@@ -35,7 +34,6 @@ class TreeBuilderTags < TreeBuilder
     locals = super
     locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
                   :oncheck           => @edit.nil? ? nil : "miqOnCheckUserFilters",
-                  :checkboxes        => true,
                   :highlight_changes => true,
                   :selectable        => false,
                   :onclick           => false)
