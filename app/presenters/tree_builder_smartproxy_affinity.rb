@@ -14,16 +14,14 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def tree_init_options
-    {:full_ids => false, :add_root => false, :checkboxes => true}
+    {:full_ids => false, :add_root => false, :checkboxes => true, :three_checks => true}
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(:onclick      => false,
-                  :three_checks => true,
-                  :post_check   => true,
-                  :oncheck      => 'miqOnCheckGeneric',
-                  :check_url    => '/ops/smartproxy_affinity_field_changed/')
+    super.merge!(:onclick    => false,
+                 :post_check => true,
+                 :oncheck    => 'miqOnCheckGeneric',
+                 :check_url  => '/ops/smartproxy_affinity_field_changed/')
   end
 
   def root_options
