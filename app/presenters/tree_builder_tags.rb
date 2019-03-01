@@ -35,7 +35,6 @@ class TreeBuilderTags < TreeBuilder
     locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
                   :oncheck           => @edit.nil? ? nil : "miqOnCheckUserFilters",
                   :highlight_changes => true,
-                  :selectable        => false,
                   :onclick           => false)
   end
 

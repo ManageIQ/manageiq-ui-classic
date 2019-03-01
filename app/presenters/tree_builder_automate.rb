@@ -27,10 +27,6 @@ class TreeBuilderAutomate < TreeBuilderAeClass
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(:onclick      => "miqOnClickAutomate",
-                  :exp_tree     => false,
-                  :base_id      => "root",
-                  :highlighting => true)
+    super.merge!(:onclick => "miqOnClickAutomate")
   end
 end

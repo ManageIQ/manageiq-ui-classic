@@ -21,7 +21,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     super.merge!(
       :oncheck    => "miqOnCheckGeneric",
       :check_url  => "/miq_policy/alert_profile_assign_changed/",
-      :selectable => false,
       :onclick    => false
     )
   end

@@ -32,7 +32,6 @@ describe TreeBuilderTags do
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id}___")
       expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq(nil)
-      expect(locals[:selectable]).to eq(false)
     end
     it 'set info about selected kids correctly' do
       expect(@tags_tree.send(:contain_selected_kid, @folder_selected)).to eq(true)
@@ -80,7 +79,6 @@ describe TreeBuilderTags do
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/new___")
       expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq("miqOnCheckUserFilters")
-      expect(locals[:selectable]).to eq(false)
     end
     it 'sets second level nodes correctly' do
       selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_selected, false)
