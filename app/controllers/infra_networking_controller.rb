@@ -88,7 +88,7 @@ class InfraNetworkingController < ApplicationController
 
     return unless %w(download_pdf main).include?(@display)
     @showtype = "main"
-    @center_toolbar = 'infra_networking'
+    @center_toolbar = 'infra_networking' if @record.kind_of?(Switch)
   end
 
   def explorer
