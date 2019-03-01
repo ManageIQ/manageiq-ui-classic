@@ -6,27 +6,10 @@
               :id     => "report_basic_form"},
              :class  => "form-horizontal",
              :method => :post) do
+  
     %h3
       = _('Basic Report Info')
-    .form-group
-      %label.control-label.col-md-2
-        = _('Menu Name')
-      .col-md-8
-        #name_div
-          = text_field_tag("name", @edit[:new][:name].to_s,
-            :maxlength         => 40,
-            "class"            => "form-control",
-            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    = javascript_tag(javascript_focus('name'))
-    .form-group
-      %label.control-label.col-md-2
-        = _('Title')
-      .col-md-8
-        #title_div
-          = text_field_tag("title", @edit[:new][:title],
-            :maxlength         => 60,
-            "class"            => "form-control",
-            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    = react('BasicReportInfo', { :url => url, :name => @edit[:new][:name].to_s, :title => @edit[:new][:title] })
     %hr
 
   -# Show the fields for tab #
