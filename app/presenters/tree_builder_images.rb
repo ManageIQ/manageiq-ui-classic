@@ -3,7 +3,7 @@ class TreeBuilderImages < TreeBuilder
 
   include TreeBuilderArchived
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
       :leaf => "ManageIQ::Providers::CloudManager::Template"
     }

@@ -30,7 +30,7 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#tree_init_options' do
       it 'sets init options correctly' do
-        expect(subject.send(:tree_init_options, :alert_profile_obj)).to eq(:expand => true)
+        expect(subject.send(:tree_init_options)).to eq({})
       end
     end
 

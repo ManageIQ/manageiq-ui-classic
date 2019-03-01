@@ -1,8 +1,8 @@
 class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   private
 
-  def tree_init_options(_tree_name)
-    {:leaf => "MiqDialog", :open_all => true}
+  def tree_init_options
+    {:open_all => true}
   end
 
   def root_options

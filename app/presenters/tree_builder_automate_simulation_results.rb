@@ -9,13 +9,8 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :full_ids => true,
-      :add_root => false,
-      :expand   => true,
-      :lazy     => false
-    }
+  def tree_init_options
+    {:full_ids => true, :add_root => false, :lazy => false}
   end
 
   def set_locals_for_render

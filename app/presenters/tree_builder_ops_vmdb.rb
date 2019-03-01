@@ -3,11 +3,8 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
 
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :open_all => false,
-      :leaf     => "VmdbTable",
-    }
+  def tree_init_options
+    {:open_all => false}
   end
 
   def set_locals_for_render

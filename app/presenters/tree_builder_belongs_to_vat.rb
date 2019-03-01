@@ -9,7 +9,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
 
   def override(node, object, _pid, options)
     node[:selectable] = false
-    node[:checkable] = options[:checkable_checkboxes] if options.key?(:checkable_checkboxes)
+    node[:checkable] = options[:checkboxes] if options.key?(:checkboxes)
     if [ExtManagementSystem, EmsCluster, Datacenter].any? { |klass| object.kind_of?(klass) }
       node[:hideCheckbox] = true
     end
@@ -19,7 +19,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       else
         node[:hideCheckbox] = true
       end
-      node[:select] = options.key?(:selected) && options[:selected].include?("EmsFolder_#{object[:id]}")
+      node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
     end
   end
 

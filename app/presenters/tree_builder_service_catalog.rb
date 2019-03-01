@@ -3,8 +3,8 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true, :leaf => 'ServiceTemplateCatalog'}
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def set_locals_for_render

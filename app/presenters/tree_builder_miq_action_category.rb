@@ -15,11 +15,8 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     super(name, type, sandbox, build)
   end
 
-  def tree_init_options(_tree_name)
-    {
-      :expand => true,
-      :lazy   => false
-    }
+  def tree_init_options
+    {:lazy => false}
   end
 
   def set_locals_for_render

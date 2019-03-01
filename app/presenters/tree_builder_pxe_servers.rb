@@ -3,8 +3,8 @@ class TreeBuilderPxeServers < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:leaf => "PxeServer"}
+  def tree_init_options
+    {}
   end
 
   def set_locals_for_render

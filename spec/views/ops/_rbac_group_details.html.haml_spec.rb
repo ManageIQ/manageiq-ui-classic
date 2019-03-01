@@ -31,16 +31,16 @@ describe 'ops/_rbac_group_details.html.haml' do
                                               :hac,
                                               sb,
                                               true,
-                                              :edit     => nil,
-                                              :group    => @group,
-                                              :selected => {})
+                                              :edit           => nil,
+                                              :group          => @group,
+                                              :selected_nodes => {})
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                               :vat,
                                               sb,
                                               true,
-                                              :edit     => nil,
-                                              :group    => @group,
-                                              :selected => {})
+                                              :edit           => nil,
+                                              :group          => @group,
+                                              :selected_nodes => {})
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode ldap' do

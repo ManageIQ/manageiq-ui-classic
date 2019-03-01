@@ -18,7 +18,7 @@ describe TreeBuilderClusters do
     end
 
     it 'sets tree to have full ids, not lazy and no root' do
-      root_options = @cluster_tree.send(:tree_init_options, nil)
+      root_options = @cluster_tree.send(:tree_init_options)
       expect(root_options).to eq(:full_ids => false, :add_root => false, :lazy => false)
     end
 

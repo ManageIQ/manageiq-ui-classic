@@ -1,12 +1,8 @@
 class TreeBuilderReportExport < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :leaf     => 'Export',
-      :full_ids => true,
-      :open_all => true
-    }
+  def tree_init_options
+    {:full_ids => true, :open_all => true}
   end
 
   def set_locals_for_render

@@ -1,6 +1,6 @@
 class TreeBuilderAutomate < TreeBuilderAeClass
-  def tree_init_options(_tree_name)
-    {:leaf => "datastore", :full_ids => false}
+  def tree_init_options
+    {:full_ids => false}
   end
 
   def initialize(name, type, sandbox, build = true, controller = nil)

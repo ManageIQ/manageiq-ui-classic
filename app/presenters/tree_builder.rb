@@ -15,7 +15,7 @@ class TreeBuilder
 
     @locals_for_render  = {}
     @name               = name.to_sym # includes _tree
-    @options            = tree_init_options(name.to_sym)
+    @options            = tree_init_options
     @tree_nodes         = {}.to_json
     # FIXME: remove @name or @tree, unify
     @type               = type.to_sym # *usually* same as @name but w/o _tree
@@ -54,7 +54,17 @@ class TreeBuilder
     end
   end
 
-  def tree_init_options(_tree_name)
+  # The possible options are
+  # * full_ids - whether to generate full node IDs or not
+  # * leaf - class of the leaf nodes
+  # * open_all - expand all expandable nodes
+  # * add_root - merge root_options with the first node
+  # * lazy - is the tree lazily-loadable
+  # * checkboxes - show checkboxes for the nodes
+  # * features - used by the RBAC features tree only
+  # * editable - used by the RBAC features tree only
+  # * node_id_prefix - used by the RBAC features tree only
+  def tree_init_options
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
   end
@@ -160,14 +170,14 @@ class TreeBuilder
   def add_to_sandbox
     @tree_state.add_tree(
       @options.reverse_merge(
-        :tree                 => @name,
-        :type                 => type,
-        :klass_name           => self.class.name,
-        :leaf                 => @options[:leaf],
-        :add_root             => true,
-        :open_nodes           => [],
-        :lazy                 => true,
-        :checkable_checkboxes => false
+        :tree       => @name,
+        :type       => type,
+        :klass_name => self.class.name,
+        :leaf       => @options[:leaf],
+        :add_root   => true,
+        :open_nodes => [],
+        :lazy       => true,
+        :checkboxes => false
       )
     )
   end

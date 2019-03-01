@@ -1,11 +1,8 @@
 class TreeBuilderOpsSettings < TreeBuilderOps
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :open_all => true,
-      :leaf     => "Settings"
-    }
+  def tree_init_options
+    {:open_all => true}
   end
 
   def set_locals_for_render

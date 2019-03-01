@@ -28,7 +28,7 @@ class TreeBuilderMenuRoles < TreeBuilder
     super.merge!(locals)
   end
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     { :lazy => false, :add_root => true }
   end
 

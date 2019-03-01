@@ -69,7 +69,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     count_only_or_objects(count_only, kids)
   end
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
       :lazy           => false,
       :add_root       => true,

@@ -208,14 +208,14 @@ module MiqPolicyController::AlertProfiles
     end
   end
 
-  def instantiate_tree(tree_class, tree_name, type, selected)
+  def instantiate_tree(tree_class, tree_name, type, selected_nodes)
     tree_class.constantize.new(tree_name,
                                type,
                                @sb,
                                true,
-                               :assign_to => @assign[:new][:assign_to],
-                               :cat       => @assign[:new][:cat],
-                               :selected  => selected)
+                               :assign_to      => @assign[:new][:assign_to],
+                               :cat            => @assign[:new][:cat],
+                               :selected_nodes => selected_nodes)
   end
 
   def alert_profile_build_edit_screen

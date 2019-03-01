@@ -9,11 +9,8 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
     super(name, type, sandbox, build = true)
   end
 
-  def tree_init_options(_tree_name)
-    {
-      :leaf     => 'full_ids',
-      :full_ids => true
-    }
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def set_locals_for_render

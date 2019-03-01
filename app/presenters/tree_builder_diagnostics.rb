@@ -6,11 +6,8 @@ class TreeBuilderDiagnostics < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:add_root => false,
-     :expand   => true,
-     :lazy     => false,
-     :open_all => true}
+  def tree_init_options
+    {:add_root => false, :lazy => false, :open_all => true}
   end
 
   def set_locals_for_render

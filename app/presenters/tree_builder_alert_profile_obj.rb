@@ -13,10 +13,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     node[:select] = @selected.include?(object.id)
   end
 
-  def tree_init_options(_tree_name)
-    {
-      :expand => true
-    }
+  def tree_init_options
+    {}
   end
 
   def set_locals_for_render

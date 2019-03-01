@@ -5,20 +5,19 @@ class TreeBuilderSnapshots < TreeBuilder
 
   def initialize(name, type, sandbox, build = true, **params)
     @record = params[:root]
-    @selected_node = params.key?(:selected_node) ? id(params[:selected_node]) : nil
     super(name, type, sandbox, build)
   end
 
   private
 
-  def override(node, object, _pid, options)
-    if (options[:selected_node].present? && node[:key] == options[:selected_node]) || object.children.empty?
+  def override(node, object, _pid, _options)
+    if (@selected_node.present? && node[:key] == @selected_node) || object.children.empty?
       node[:highlighted] = true
     end
   end
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true, :selected_node => @selected_node}
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def set_locals_for_render

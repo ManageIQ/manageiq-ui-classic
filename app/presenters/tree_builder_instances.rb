@@ -4,7 +4,7 @@ class TreeBuilderInstances < TreeBuilder
 
   include TreeBuilderArchived
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
       :leaf => 'VmCloud',
       :lazy => false

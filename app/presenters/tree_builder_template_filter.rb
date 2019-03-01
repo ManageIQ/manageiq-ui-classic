@@ -1,5 +1,5 @@
 class TreeBuilderTemplateFilter < TreeBuilderVmsFilter
-  def tree_init_options(tree_name)
+  def tree_init_options
     super.update(:leaf => 'ManageIQ::Providers::InfraManager::Template')
   end
 
