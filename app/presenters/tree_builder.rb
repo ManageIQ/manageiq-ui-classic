@@ -202,7 +202,8 @@ class TreeBuilder
       :autoload          => @options[:lazy],
       :allow_reselect    => @options[:allow_reselect],
       :highlight_changes => @options[:highlight_changes],
-      :three_checks      => @options[:three_checks]
+      :three_checks      => @options[:three_checks],
+      :post_check        => @options[:post_check]
     }
   end
 
