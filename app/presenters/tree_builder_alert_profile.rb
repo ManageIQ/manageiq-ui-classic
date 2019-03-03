@@ -38,8 +38,6 @@ class TreeBuilderAlertProfile < TreeBuilder
 
   # level 2 - alert profiles
   def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :alert_profile)
-
     objects = MiqAlertSet.where(:mode => parent[:id].split('-'))
 
     count_only_or_objects(count_only, objects, :description)

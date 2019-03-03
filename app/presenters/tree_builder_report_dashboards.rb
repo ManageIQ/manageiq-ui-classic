@@ -30,7 +30,6 @@ class TreeBuilderReportDashboards < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, options)
-    assert_type(options[:type], :db)
     objects = []
     if object[:id].split('-').first == "g"
       objects = Rbac.filtered(MiqGroup.non_tenant_groups)
