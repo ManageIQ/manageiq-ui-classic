@@ -21,6 +21,7 @@ function customImageController($timeout) {
   vm.$onInit = function() {
     vm.imageUploadStatus = '';
     vm.changeImage = false;
+    vm.imageMissing = false;
   };
 
   vm.$onChanges = function(changes) {
@@ -34,8 +35,11 @@ function customImageController($timeout) {
     var imageFile;
 
     if (angular.element('#generic_object_definition_image_file')[0].files.length === 0) {
+      add_flash(__("No file chosen."), 'error');
+      vm.imageMissing = true;
       return;
     }
+    vm.imageMissing = false;
 
     imageFile = angular.element('#generic_object_definition_image_file')[0].files[0];
 
