@@ -343,10 +343,6 @@ class TreeBuilder
     count_only_or_objects(count_only, Rbac.filtered(objects, options), sort_by, &block)
   end
 
-  def assert_type(actual, expected)
-    raise "#{self.class}: expected #{expected.inspect}, got #{actual.inspect}" unless actual == expected
-  end
-
   def open_node(id)
     open_nodes = @tree_state.x_tree(@name)[:open_nodes]
     open_nodes.push(id) unless open_nodes.include?(id)

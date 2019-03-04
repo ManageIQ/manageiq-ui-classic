@@ -51,7 +51,6 @@ class TreeBuilderCondition < TreeBuilder
 
   # level 2 - conditions
   def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :condition)
     towhat = parent[:id].camelize
     return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(towhat)
 

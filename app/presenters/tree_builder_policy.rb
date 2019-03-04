@@ -68,8 +68,6 @@ class TreeBuilderPolicy < TreeBuilder
 
   # level 2 & 3...
   def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :policy)
-
     # level 2 - host, vm, etc. under compliance/control
     if %w(compliance control).include?(parent[:id])
       mode = parent[:id]
