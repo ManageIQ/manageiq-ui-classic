@@ -6,27 +6,17 @@ class TreeBuilderChargeback < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, options)
-    # TODO: Common code in CharbackRate & ChargebackAssignments, need to move into module
-    case options[:type]
-    when :cb_assignments, :cb_rates
-      rate_types = ChargebackRate::VALID_CB_RATE_TYPES
+  def x_get_tree_roots(count_only, _options)
+    rate_types = ChargebackRate::VALID_CB_RATE_TYPES
+    return rate_types.length if count_only
 
-      if count_only
-        rate_types.length
-      else
-        objects = []
-        rate_types.sort.each do |rtype|
-          img = rtype.downcase == "compute" ? "pficon pficon-cpu" : "fa fa-hdd-o"
-          objects.push(
-            :id   => rtype,
-            :text => rtype,
-            :icon => img,
-            :tip  => rtype
-          )
-        end
-        objects
-      end
+    rate_types.map do |type|
+      {
+        :id   => type,
+        :text => type,
+        :icon => type.downcase == "compute" ? "pficon pficon-cpu" : "fa fa-hdd-o",
+        :tip  => type
+      }
     end
   end
 end
