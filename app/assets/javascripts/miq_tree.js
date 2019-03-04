@@ -73,13 +73,6 @@ function miqOnClickMenuRoles(id) {
   });
 }
 
-// OnClick handler to run tree_select server method
-function miqOnClickSelectTreeNode(id) {
-  var rec_id = id.split('__');
-  var url = '/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(rec_id[0]);
-  miqJqueryRequest(url, {beforeSend: true});
-}
-
 // Activate and focus on a node within a tree given the node's key
 function miqTreeActivateNode(tree, key) {
   miqSparkle(true);
@@ -411,7 +404,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickDiagnostics',
     'miqOnClickGeneric',
     'miqOnClickHostNet',
-    'miqOnClickSelectTreeNode',
     'miqOnClickSnapshots',
     'miqOnClickUtilization',
   ];
