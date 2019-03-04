@@ -29,8 +29,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
   def x_get_tree_roots(count_only, options)
     return @rpt_menu.size if count_only
     @rpt_menu.each_with_index.each_with_object({}) do |(r, node_id), a|
-      # load next level of folders when building the tree
-      @tree_state.x_tree(options[:tree])[:open_nodes].push("xx-#{node_id}")
+      options[:open_nodes].push("xx-#{node_id}")
 
       root_node = folder_hash(node_id.to_s, r[0], @grp_title == r[0])
       child_nodes = @rpt_menu[node_id][1].each_with_index.each.map do |child_r, child_id|
