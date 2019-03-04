@@ -96,8 +96,8 @@ describe TreeBuilderMenuRoles do
       expect(subject[:click_url]).to eq "/report/menu_editor/"
     end
 
-    it 'uses miqOnCheckMenuRoles to handle clicks' do
-      expect(subject[:onclick]).to eq "miqOnCheckMenuRoles"
+    it 'uses miqOnClickMenuRoles to handle clicks' do
+      expect(subject[:onclick]).to eq "miqOnClickMenuRoles"
     end
   end
 end
