@@ -14,7 +14,7 @@ class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::Generic
 
   def visible?
     return false if @record.resource_type == "AutomationRequest" &&
-                   !%w(miq_request_approval miq_request_deny miq_request_delete).include?(@feature)
+                    !%w(miq_request_approval miq_request_delete).include?(@feature)
     true
   end
 

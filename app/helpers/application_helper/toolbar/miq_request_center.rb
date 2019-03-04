@@ -48,7 +48,7 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       N_('Deny this Request'),
       nil,
       :klass     => ApplicationHelper::Button::MiqRequestApproval,
-      :options   => {:feature => 'miq_request_deny'},
+      :options   => {:feature => 'miq_request_approval'},
       :url       => "/stamp",
       :url_parms => "?typ=d"),
   ])

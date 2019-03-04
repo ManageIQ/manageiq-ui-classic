@@ -14,6 +14,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
     let(:request) { "SomeRequest" }
     let(:username) { user.name }
     let(:state) { "xx" }
+
     %w(MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
       context "id = miq_request_approval" do
@@ -27,22 +28,28 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           button.instance_variable_set(:@showtype, "prase")
           button.instance_variable_set(:@request_tab, "service")
         end
+
         context "resource_type = AutomationRequest" do
           let(:request) { "AutomationRequest" }
+
           it "and resource_type = AutomationRequest" do
             expect(button.skipped?).to be_falsey
           end
         end
+
         context "approval_state = approved" do
           let(:state) { "approved" }
+
           it "and approval_state = approved" do
             expect(button.skipped?).to be_truthy
           end
         end
+
         it "and showtype = miq_provisions" do
           button.instance_variable_set(:@showtype, "miq_provisions")
           expect(button.skipped?).to be_truthy
         end
+
         it "and approval_state != approved and showtype != miq_provisions" do
           expect(button.skipped?).to be_falsey
         end
@@ -53,7 +60,7 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           view_context,
           {},
           {'record' => @record, 'showtype' => @showtype},
-          {:options => {:feature => 'miq_request_deny'}}
+          {:options => {:feature => 'miq_request_approval'}}
         )
       end
 
@@ -68,28 +75,36 @@ describe ApplicationHelper::Button::MiqRequestApproval do
           button.instance_variable_set(:@showtype, "prase")
           button.instance_variable_set(:@request_tab, "service")
         end
+
         context "resource_type = AutomationRequest" do
           let(:request) { "AutomationRequest" }
+
           it "and resource_type = AutomationRequest" do
             expect(button.skipped?).to be_falsey
           end
         end
+
         context "approval_state = approved" do
           let(:state) { "approved" }
+
           it "and approval_state = approved" do
             expect(button.skipped?).to be_truthy
           end
         end
+
         context "approval_state = denied" do
           let(:state) { "denied" }
+
           it "and approval_state = denied" do
             expect(button.skipped?).to be_truthy
           end
         end
+
         it "and showtype = miq_provisions" do
           button.instance_variable_set(:@showtype, "miq_provisions")
           expect(button.skipped?).to be_truthy
         end
+
         it "and approval_state != approved|denied and showtype != miq_provisions" do
           expect(button.skipped?).to be_falsey
         end
