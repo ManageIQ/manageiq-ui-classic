@@ -1,5 +1,5 @@
 class TreeBuilderPxeServers < TreeBuilder
-  has_kids_for PxeServer, [:x_get_tree_pxe_server_kids]
+  has_kids_for PxeServer, %i(x_get_tree_pxe_server_kids options)
 
   private
 
@@ -24,25 +24,24 @@ class TreeBuilderPxeServers < TreeBuilder
     count_only_or_objects(count_only, PxeServer.all, "name")
   end
 
-  def x_get_tree_pxe_server_kids(object, count_only)
+  def x_get_tree_pxe_server_kids(object, count_only, options)
     pxe_images = object.pxe_images
     win_images = object.windows_images
-    open_nodes = @tree_state.x_tree(@name)[:open_nodes]
     if count_only
-      open_nodes.push("xx-pxe_xx-#{object.id}") unless open_nodes.include?("xx-pxe_xx-#{object.id}")
-      open_nodes.push("xx-win_xx-#{object.id}") unless open_nodes.include?("xx-win_xx-#{object.id}")
+      options[:open_nodes].push("xx-pxe_xx-#{object.id}") unless options[:open_nodes].include?("xx-pxe_xx-#{object.id}")
+      options[:open_nodes].push("xx-win_xx-#{object.id}") unless options[:open_nodes].include?("xx-win_xx-#{object.id}")
       pxe_images.size + win_images.size
     else
       objects = []
       unless pxe_images.empty?
-        open_nodes.push("pxe_xx-#{object.id}") unless open_nodes.include?("pxe_xx-#{object.id}")
+        options[:open_nodes].push("pxe_xx-#{object.id}") unless options[:open_nodes].include?("pxe_xx-#{object.id}")
         objects.push(:id   => "pxe_xx-#{object.id}",
                      :text => _("PXE Images"),
                      :icon => "pficon pficon-folder-close",
                      :tip  => _("PXE Images"))
       end
       unless win_images.empty?
-        open_nodes.push("win_xx-#{object.id}") unless open_nodes.include?("win_xx-#{object.id}")
+        options[:open_nodes].push("win_xx-#{object.id}") unless options[:open_nodes].include?("win_xx-#{object.id}")
         objects.push(:id   => "win_xx-#{object.id}",
                      :text => _("Windows Images"),
                      :icon => "pficon pficon-folder-close",

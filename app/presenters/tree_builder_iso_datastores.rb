@@ -1,5 +1,5 @@
 class TreeBuilderIsoDatastores < TreeBuilder
-  has_kids_for IsoDatastore, [:x_get_tree_iso_datastore_kids]
+  has_kids_for IsoDatastore, %i(x_get_tree_iso_datastore_kids options)
 
   private
 
@@ -24,15 +24,15 @@ class TreeBuilderIsoDatastores < TreeBuilder
     count_only_or_objects(count_only, IsoDatastore.all, "name")
   end
 
-  def x_get_tree_iso_datastore_kids(object, count_only)
+  def x_get_tree_iso_datastore_kids(object, count_only, options)
     iso_images = object.iso_images
     if count_only
-      @tree_state.x_tree(@name)[:open_nodes].push("xx-isd_xx-#{object.id}")
+      options[:open_nodes].push("xx-isd_xx-#{object.id}")
       iso_images.size
     else
       objects = []
       unless iso_images.empty?
-        @tree_state.x_tree(@name)[:open_nodes].push("isd_xx-#{object.id}")
+        options[:open_nodes].push("isd_xx-#{object.id}")
         objects.push(
           :id   => "isd_xx-#{object.id}",
           :text => _("ISO Images"),
