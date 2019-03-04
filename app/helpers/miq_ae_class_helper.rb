@@ -128,4 +128,21 @@ module MiqAeClassHelper
   def state_class?(cls_id)
     MiqAeClass.find_by(:id => cls_id).state_machine?
   end
+
+  def location_fancy_name(location)
+    case location
+    when 'playbook'
+      _('Playbook')
+    when 'inline'
+      _('Inline')
+    when 'expression'
+      _('Expression')
+    when 'ansible_job_template'
+      _('Ansible Tower Job Template')
+    when 'ansible_workflow_template'
+      _('Ansible Tower Workflow Template')
+    else
+      location
+    end
+  end
 end

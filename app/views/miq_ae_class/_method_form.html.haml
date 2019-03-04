@@ -23,7 +23,7 @@
           = _('Type')
         .col-md-8
           %p.form-control-static
-            = @edit[:new][:location]
+            = location_fancy_name(@edit[:new][:location])
       .form-group
         %label.col-md-2.control-label
           = _('Fully Qualified Name')
