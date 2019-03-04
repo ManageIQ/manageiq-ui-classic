@@ -52,4 +52,11 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
     objects = count > 0 ? [{:id => object.id.to_s, :text => 'Actions', :icon => 'pficon pficon-folder-close', :tip => 'Actions'}] : []
     count_only_or_objects(count_only, objects)
   end
+
+  def x_get_tree_roots(count_only, _options)
+    return super + 1 if count_only
+
+    # FIXME: adding gettext here would break the tree_select for languages other than English
+    super.unshift(ServiceTemplateCatalog.new(:name => 'Unassigned', :description => 'Unassigned Catalogs'))
+  end
 end
