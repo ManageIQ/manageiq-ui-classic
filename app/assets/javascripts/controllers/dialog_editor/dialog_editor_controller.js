@@ -5,12 +5,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
 
-  // treeSelector related
-  vm.lazyLoad = DialogEditorHttp.treeSelectorLazyLoadData;
-  vm.node = {};
-  DialogEditorHttp.treeSelectorLoadData().then(function(data) {
-    vm.treeSelectorData = data;
-  });
+  // options for tree selector
+  vm.treeOptions = {
+    load: DialogEditorHttp.treeSelectorLoadData,
+    lazyLoad: DialogEditorHttp.treeSelectorLazyLoadData,
+  };
 
   function requestDialogId() {
     return JSON.parse(dialogIdAction).id;
