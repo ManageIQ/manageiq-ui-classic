@@ -986,13 +986,15 @@ class MiqAeClassController < ApplicationController
   end
 
   def method_form_fields
+    location = 'playbook' # FIXME: add new ones
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
       :namespace_path      => @sb[:namespace_path],
       :class_id            => method.id ? method.class_id : MiqAeClass.find(x_node.split("-").last).id,
-      :location            => 'playbook',
+      :location            => location,
+      :location_fancy_name => location_fancy_name(location),
       :language            => 'ruby',
       :scope               => "instance",
       :available_datatypes => MiqAeField.available_datatypes_for_ui,

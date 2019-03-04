@@ -11,7 +11,7 @@
       %label.col-md-2.control-label{"for" => "name"}
         = _("Type")
       .col-md-8
-        {{vm.aeMethodModel.location}}
+        {{vm.aeMethodModel.location_fancy_name}}
         %input{:type => 'hidden', :id => "location", :value => "vm.aeMethodModel.location"}
         %input{:type => 'hidden', :id => "scope", :value => "vm.aeMethodModel.scope"}
         %input{:type => 'hidden', :id => "language", :value => "vm.aeMethodModel.language"}

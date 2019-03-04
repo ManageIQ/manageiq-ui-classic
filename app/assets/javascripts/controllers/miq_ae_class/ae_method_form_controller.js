@@ -60,6 +60,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.display_name = data.display_name;
     vm.aeMethodModel.namespace_path = data.namespace_path;
     vm.aeMethodModel.location = data.location;
+    vm.aeMethodModel.location_fancy_name = data.location_fancy_name;
     vm.aeMethodModel.class_id = data.class_id;
     vm.aeMethodModel.language = data.language;
     vm.aeMethodModel.scope = data.scope;
