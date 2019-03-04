@@ -579,6 +579,7 @@ class CloudVolumeController < ApplicationController
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
     options[:ems] = cloud_tenant.ext_management_system
+    options[:availability_zone] = params[:availability_zone_id] if params[:availability_zone_id]
     options
   end
 
@@ -587,7 +588,7 @@ class CloudVolumeController < ApplicationController
     options[:volume_type] = params[:volume_type] if params[:volume_type]
     # Only set IOPS if io1 (provisioned IOPS) and IOPS available
     options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
-    options[:availability_zone] = params[:aws_availability_zone_id] if params[:aws_availability_zone_id]
+    options[:availability_zone] = params[:availability_zone_id] if params[:availability_zone_id]
     options[:snapshot_id] = params[:aws_base_snapshot_id] if params[:aws_base_snapshot_id]
     options[:encrypted] = params[:aws_encryption]
 

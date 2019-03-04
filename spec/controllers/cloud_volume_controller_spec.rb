@@ -257,10 +257,18 @@ describe CloudVolumeController do
       before do
         @ems = FactoryBot.create(:ems_openstack)
         @tenant = FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => @ems)
+        @availability_zone = FactoryBot.create(:availability_zone,
+                                                :ems_ref               => "nova",
+                                                :ext_management_system => @ems)
 
-        @form_params = { :name => "volume", :size => 1, :cloud_tenant_id => @tenant.id,
-                         :emstype => "ManageIQ::Providers::StorageManager::CinderManager" }
-        @task_options = [@ems.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant }]
+        @form_params = {
+          :name                 => "volume",
+          :size                 => 1,
+          :cloud_tenant_id      => @tenant.id,
+          :emstype              => "ManageIQ::Providers::StorageManager::CinderManager",
+          :availability_zone_id => @availability_zone.ems_ref
+        }
+        @task_options = [@ems.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant, :availability_zone => @availability_zone.ems_ref }]
       end
 
       it_behaves_like "queue create volume task"
@@ -280,7 +288,7 @@ describe CloudVolumeController do
           :storage_manager_id       => @ems.id,
           :name                     => "volume",
           :size                     => 1,
-          :aws_availability_zone_id => @availability_zone.ems_ref,
+          :availability_zone_id => @availability_zone.ems_ref,
         }
         # Common EC2 client options
         @aws_options = {

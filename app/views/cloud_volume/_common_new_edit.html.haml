@@ -32,13 +32,13 @@
     %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
       = _("Required")
 
-.form-group{"ng-class" => "{'has-error': angularForm.aws_availability_zone_id.$invalid}",
-            "ng-if"    => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+.form-group{"ng-class" => "{'has-error': angularForm.availability_zone_id.$invalid}",
+            "ng-if"    => "vm.supportsVolumeAvailabilityZones || (vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs')"}
   %label.col-md-2.control-label
     = _('Availability Zone')
   .col-md-8
-    %select{"name"        => "aws_availability_zone_id",
-            "ng-model"    => "vm.cloudVolumeModel.aws_availability_zone_id",
+    %select{"name"        => "availability_zone_id",
+            "ng-model"    => "vm.cloudVolumeModel.availability_zone_id",
             "ng-options"  => "az.ems_ref as az.name for az in vm.availabilityZoneChoices",
             "required"    => "",
             "ng-disabled" => "!vm.newRecord",
@@ -46,7 +46,7 @@
             "miq-select"  => true}
       %option{"value" => "", "disabled" => ""}
         = "<#{_('Choose')}>"
-    %span.help-block{"ng-show" => "angularForm.aws_availability_zone_id.$error.required"}
+    %span.help-block{"ng-show" => "angularForm.availability_zone_id.$error.required"}
       = _("Required")
 
 .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
