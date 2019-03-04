@@ -65,15 +65,12 @@ function miqRemoveNodeChildren(treename, key) {
   }
 }
 
-function miqOnCheckMenuRoles(id) {
-  var nid = id.split('__');
-  if (nid[0] !== 'r') {
-    var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
-    miqJqueryRequest(url, {beforeSend: true,
-      complete: true,
-      no_encoding: true,
-    });
-  }
+function miqOnClickMenuRoles(id) {
+  var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
+  miqJqueryRequest(url, {beforeSend: true,
+    complete: true,
+    no_encoding: true,
+  });
 }
 
 // OnClick handler to run tree_select server method
@@ -405,7 +402,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckCUFilters',
     'miqOnCheckGenealogy',
     'miqOnCheckGeneric',
-    'miqOnCheckMenuRoles',
+    'miqOnClickMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckProvTags',
     'miqOnCheckSections',
