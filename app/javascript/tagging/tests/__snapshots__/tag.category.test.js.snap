@@ -7,31 +7,12 @@ exports[`TagCategory Component match snapshot 1`] = `
   <li
     key="1"
   >
-    <OverlayTrigger
-      defaultOverlayShown={false}
-      overlay={
-        <Tooltip
-          bsClass="tooltip"
-          id="tooltip"
-          placement="right"
-        >
-          animal
-        </Tooltip>
-      }
-      placement="bottom"
-      trigger={
-        Array [
-          "hover",
-          "focus",
-        ]
-      }
+    <div
+      className="category-label"
+      title="animal"
     >
-      <div
-        className="category-label"
-      >
-        animal
-      </div>
-    </OverlayTrigger>
+      animal
+    </div>
   </li>
   <Tag
     key="1"

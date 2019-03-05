@@ -7,7 +7,6 @@ exports[`match snapshot 1`] = `
   defaultMenuIsOpen={false}
   defaultValue={null}
   ignoreCase={true}
-  label="Obelix"
   name="form-field-name"
   onChange={[Function]}
   options={
@@ -22,7 +21,12 @@ exports[`match snapshot 1`] = `
       },
     ]
   }
-  value={2}
+  value={
+    Object {
+      "label": "Obelix",
+      "value": 2,
+    }
+  }
 />
 `;
 
@@ -33,7 +37,6 @@ exports[`match snapshot without multiple values 1`] = `
   defaultMenuIsOpen={false}
   defaultValue={null}
   ignoreCase={true}
-  label="Obelix"
   name="form-field-name"
   onChange={[Function]}
   options={
@@ -48,6 +51,11 @@ exports[`match snapshot without multiple values 1`] = `
       },
     ]
   }
-  value={2}
+  value={
+    Object {
+      "label": "Obelix",
+      "value": 2,
+    }
+  }
 />
 `;

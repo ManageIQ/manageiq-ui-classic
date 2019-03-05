@@ -8,7 +8,6 @@ exports[`Tagging modifier match snapshot 1`] = `
   defaultMenuIsOpen={false}
   defaultValue={null}
   filterOptions={[Function]}
-  label="Homer"
   name="form-field-name"
   onChange={[Function]}
   options={
@@ -25,6 +24,11 @@ exports[`Tagging modifier match snapshot 1`] = `
       },
     ]
   }
-  value={1}
+  value={
+    Object {
+      "label": "Homer",
+      "value": 1,
+    }
+  }
 />
 `;

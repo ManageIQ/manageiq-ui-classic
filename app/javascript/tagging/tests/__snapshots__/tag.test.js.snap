@@ -5,32 +5,13 @@ exports[`Tag Component match snapshot 1`] = `
   className="tag"
   key="1"
 >
-  <OverlayTrigger
-    defaultOverlayShown={false}
-    overlay={
-      <Tooltip
-        bsClass="tooltip"
-        id="tooltip"
-        placement="right"
-      >
-        duck
-      </Tooltip>
-    }
-    placement="bottom"
-    trigger={
-      Array [
-        "hover",
-        "focus",
-      ]
-    }
-  >
-    <Label
-      bsStyle="primary"
-      className="tagColor"
-      key="1"
-      onRemoveClick={[Function]}
-      type="default"
-    />
-  </OverlayTrigger>
+  <Label
+    bsStyle="primary"
+    className="tagColor"
+    key="1"
+    onRemoveClick={[Function]}
+    title="duck"
+    type="default"
+  />
 </li>
 `;
