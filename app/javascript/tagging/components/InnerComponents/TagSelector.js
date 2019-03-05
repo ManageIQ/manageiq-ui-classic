@@ -13,17 +13,15 @@ class TagSelector extends React.Component {
     });
   };
 
-  tooltip = text => <Tooltip id="tooltip">{text}</Tooltip>;
 
   labelWithIcon = (description, infoText) => (
     <div>
       <span>{description}</span>
-      <OverlayTrigger placement="bottom" overlay={this.tooltip(infoText)}>
         <span
           className="pull-right pficon pficon-info tag-icon"
+          title={infoText}
           aria-hidden="true"
         />
-      </OverlayTrigger>
       <span className="sr-only">{infoText}</span>
     </div>
   );

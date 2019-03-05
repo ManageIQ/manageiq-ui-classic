@@ -9,16 +9,15 @@ const Tag = ({
   onTagDeleteClick, tagCategory, tagValue, truncate,
 }) => (
   <li key={tagValue.id} className="tag">
-    <OverlayTrigger placement="bottom" overlay={tooltip(tagValue.description)}>
       <Label
         key={tagValue.id}
         bsStyle="primary"
         onRemoveClick={() => onTagDeleteClick(tagCategory, tagValue)}
         className="tagColor"
+        title={tagValue.description}
       >
         {truncate(tagValue.description)}
       </Label>
-    </OverlayTrigger>
   </li>
 );
 

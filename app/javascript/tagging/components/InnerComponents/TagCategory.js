@@ -17,17 +17,12 @@ class TagCategory extends React.Component {
 
   render() {
     const values = [...this.props.values];
-    const categoryTooltip = (
-      <Tooltip id="tooltip">{this.props.tagCategory.description}</Tooltip>
-    );
     return (
       <ul className="tag-category list-inline">
         <li key={this.props.tagCategory.id}>
-          <OverlayTrigger placement="bottom" overlay={categoryTooltip}>
-            <div className="category-label">
+            <div className="category-label" title={this.props.tagCategory.description}>
               {this.props.categoryTruncate(this.props.tagCategory.description)}
             </div>
-          </OverlayTrigger>
         </li>
         {values
           .sort((a, b) => (a.description < b.description ? -1 : 1))
