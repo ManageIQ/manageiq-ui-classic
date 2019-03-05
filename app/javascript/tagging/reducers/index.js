@@ -12,7 +12,7 @@ const combinedReducers = combineReducers({
 function taggingApp(state = {}, action) {
   let newState = Object.assign(state.tagging || state);
   newState = initialize(newState, action);
-  return { tagging: { appState: combinedReducers(newState.appState, action), initialState: newState.initialState } };
+  return { appState: combinedReducers(newState.appState, action), initialState: newState.initialState };
 }
 
 export default taggingApp;
