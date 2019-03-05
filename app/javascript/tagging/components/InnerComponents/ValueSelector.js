@@ -14,11 +14,10 @@ class ValueSelector extends React.Component {
     });
   };
 
-  selector = (value, label, values) => (
+  selector = (value, values) => (
     <Select
       name="form-field-name"
       value={value}
-      label={label}
       onChange={this.handleChange}
       options={values}
       clearable={false}
@@ -27,9 +26,9 @@ class ValueSelector extends React.Component {
   );
 
   render() {
+    const val = { value: this.props.selectedOption.id, label: this.props.selectedOption.description };
     return this.selector(
-      this.props.selectedOption.id,
-      this.props.selectedOption.description,
+      val,
       this.getvalues(this.props.values),
     );
   }
