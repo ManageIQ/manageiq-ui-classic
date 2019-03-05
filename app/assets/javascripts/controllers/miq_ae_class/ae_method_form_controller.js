@@ -1,7 +1,7 @@
 ManageIQ.angular.app.controller('aeMethodFormController', aeMethodFormController);
-aeMethodFormController.$inject = ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin'];
+aeMethodFormController.$inject = ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin', 'location'];
 
-function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin) {
+function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin, location) {
   var vm = this;
   var init = function() {
     vm.aeMethodModel = {
@@ -16,6 +16,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       key_value: '',
       key_type: 'string',
       available_datatypes: '',
+      providers: [],
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -44,7 +45,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
     ManageIQ.angular.scope = $scope;
 
-    $http.get('method_form_fields/' + aeMethodFormId)
+    $http.get('method_form_fields/' + aeMethodFormId + '?location=' + location)
       .then(getMethodFormData)
       .catch(miqService.handleFailure);
     vm.saveable = miqService.saveable;
@@ -61,6 +62,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.namespace_path = data.namespace_path;
     vm.aeMethodModel.location = data.location;
     vm.aeMethodModel.location_fancy_name = data.location_fancy_name;
+    vm.aeMethodModel.providers = data.providers;
     vm.aeMethodModel.class_id = data.class_id;
     vm.aeMethodModel.language = data.language;
     vm.aeMethodModel.scope = data.scope;

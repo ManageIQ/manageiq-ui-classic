@@ -507,9 +507,11 @@ class MiqAeClassController < ApplicationController
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
     @selectable_methods = embedded_method_regex(@ae_method.fqname)
-    if @ae_method.location == "playbook"
+    if written_in_angular(@ae_method.location)
+      # these variants are implemented in Angular
       angular_form_specific_data
     else
+      # other variants are implemented server side
       set_method_form_vars
       @in_a_form = true
     end
@@ -871,6 +873,10 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def written_in_angular(location)
+    %w(playbook ansible_job_template ansible_workflow_template).include?(@edit[:new][:location])
+  end
+
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
     if !@sb[:form_vars_set] # workaround to prevent an error that happens when IE sends a transaction form form even after save button is clicked when there is text_area in the form
@@ -913,12 +919,19 @@ class MiqAeClassController < ApplicationController
                            end
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
-      angular_form_specific_data if @edit[:new][:location] == "playbook"
+
+      in_angular = written_in_angular(@edit[:new][:location])
+      angular_form_specific_data if in_angular
+
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        if @edit[:new][:location] == "playbook"
-          page.replace_html(@refresh_div, :partial => 'angular_method_form')
+        if in_angular
+          page.replace_html(
+            @refresh_div,
+             :partial => 'angular_method_form',
+             :locals => {:location => @edit[:new][:location]}
+          )
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
           page.replace_html(@refresh_div, :partial => @refresh_partial)
@@ -986,7 +999,14 @@ class MiqAeClassController < ApplicationController
   end
 
   def method_form_fields
-    location = 'playbook' # FIXME: add new ones
+    assert_privileges("miq_ae_method_edit")
+    location = params['location'] || 'playbook'
+    list_of_providers = if %w(ansible_job_template ansible_workflow_template).include?(location)
+                          #ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
+                          ManageIQ::Providers::AnsibleTower::Provider.all.pluck(:id, :name).
+                            map { |r| {:id => r[0], :name => r[1]} }
+                        end
+
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
     method_hash = {
       :name                => method.name,
@@ -997,6 +1017,7 @@ class MiqAeClassController < ApplicationController
       :location_fancy_name => location_fancy_name(location),
       :language            => 'ruby',
       :scope               => "instance",
+      :providers           => list_of_providers,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => { :repository_id         => method.options[:repository_id] || '',
                                 :playbook_id           => method.options[:playbook_id] || '',
