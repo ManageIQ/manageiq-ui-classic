@@ -36,14 +36,16 @@ class CatalogForm extends Component {
             originalRightValues: rightValues,
             isLoaded: true,
           }), miqSparkleOff);
-        });
+        })
+        .catch(({ error: { message } = { message: __('Could not fetch the data') } }) => add_flash(message, 'error'), miqSparkleOff);
     } else {
       API.get('/api/service_templates?expand=resources&filter[]=service_template_catalog_id=null').then(
         ({ resources }) => this.setState({
           schema: createSchema(resources.map(({ href, name }) => ({ key: href, label: name }))),
           isLoaded: true,
         }, miqSparkleOff),
-      );
+      )
+        .catch(({ error: { message } = { message: __('Could not fetch the data') } }) => add_flash(message, 'error'), miqSparkleOff);
     }
   }
 
