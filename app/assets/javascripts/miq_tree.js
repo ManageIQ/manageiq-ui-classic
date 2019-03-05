@@ -86,7 +86,7 @@ function miqTreeActivateNode(tree, key) {
   var node = miqTreeFindNodeByKey(tree, key);
   if (node) {
     miqTreeObject(tree).selectNode(node);
-    node.$el.focus();
+    miqTreeScrollToNode(tree, key);
   }
 }
 
@@ -96,7 +96,7 @@ function miqTreeActivateNodeSilently(tree, key) {
   if (node) {
     miqTreeObject(tree).selectNode(node, {silent: true });
     miqTreeObject(tree).expandNode(node);
-    node.$el.focus();
+    miqTreeScrollToNode(tree, key);
   }
 }
 
@@ -143,7 +143,19 @@ function miqOnClickSelectRbacTreeNode(id) {
 function miqTreeScrollToNode(tree, id) {
   var node = miqTreeFindNodeByKey(tree, id);
   var parentPanelBody = node.$el.parents('div.panel-body');
-  parentPanelBody.animate({scrollTop: (parentPanelBody.position().top + node.$el.position().top)});
+  // Calculate the current node position relative to the scrollable panel
+  var nodePos = node.$el.offset().top - parentPanelBody.offset().top;
+
+  var offset = 0; // Calculate the required scrolling offset
+  if (nodePos < 0) {
+    offset = nodePos - node.$el.height();
+  } else if (nodePos > parentPanelBody.height()) {
+    offset = nodePos + node.$el.height() - parentPanelBody.height();
+  }
+
+  if (offset != 0) { // Scroll the panel to the node's position if necessary
+    parentPanelBody.animate({scrollTop: parentPanelBody.scrollTop() + offset});
+  }
 }
 
 function miqOnClickAutomate(id) {
