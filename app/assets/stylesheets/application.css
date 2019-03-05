@@ -26,5 +26,4 @@
  *= require piecharts
   *= require @manageiq/react-ui-components/dist/textual_summary
  *= require @manageiq/react-ui-components/dist/tagging.css
- *= require react-select/dist/react-select.css
 */

@@ -41,5 +41,4 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
-ManageIQ.component.addReact('TaggingWrapper', TaggingWrapper);
 ManageIQ.component.addReact('TaggingWrapperConnected', TaggingWrapperConnected);

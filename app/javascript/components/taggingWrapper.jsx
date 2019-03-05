@@ -8,7 +8,7 @@ import '@manageiq/react-ui-components/dist/tagging.css';
 class TaggingWrapper extends React.Component {
   constructor(props) {
     super(props);
-    ManageIQ.redux.addReducer(taggingApp);
+    ManageIQ.redux.addReducer({tagging: taggingApp});
   }
 
   componentDidMount() {
