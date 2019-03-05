@@ -50,9 +50,6 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       .catch(miqService.handleFailure);
     vm.saveable = miqService.saveable;
     vm.newRecord = aeMethodFormId === 'new';
-    if (aeMethodFormId === 'new') {
-      playbookReusableCodeMixin.formOptions(vm);
-    }
   };
 
   function getMethodFormData(response) {
