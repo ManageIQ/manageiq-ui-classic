@@ -42,12 +42,6 @@ class TreeBuilderInfraNetworking < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_host_kids(object, count_only)
-    count_only_or_objects(count_only,
-                          Rbac.filtered(object.switches.where(:shared => 'true')).sort,
-                          "name")
-  end
-
   def x_get_tree_switch_kids(object, count_only)
     count_only_or_objects(count_only,
                           object.lans.sort,
