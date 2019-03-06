@@ -43,10 +43,10 @@
       .col-md-8
         = select_tag("chosen_parent",
                       options_for_select(parent_choices_with_no_parent_choice, @edit[:new][:parent]),
-                      :multiple => false,
-                      "data-miq_sparkle_on" => true,
+                      :multiple              => false,
+                      "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true,
-                      :class    => "selectpicker")
+                      :class                 => "form-control selectpicker")
     :javascript
        miqInitSelectPicker();
        miqSelectPickerEvent("chosen_parent", "#{url}")
