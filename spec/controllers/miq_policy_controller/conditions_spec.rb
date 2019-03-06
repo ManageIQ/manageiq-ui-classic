@@ -1,18 +1,34 @@
-describe MiqPolicyController do
-  context "::Conditions" do
-    context '#condition_remove' do
-      it 'removes condition successfully' do
-        login_as FactoryBot.create(:user, :features => "condition_remove")
-        condition = FactoryBot.create(:condition)
-        policy = FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition])
-        controller.instance_variable_set(:@_params, :policy_id => policy.id, :id => condition.id)
-        controller.instance_variable_set(:@sb, {})
-        controller.x_node = "pp_pp-1r36_p-#{policy.id}_co-#{condition.id}"
-        expect(controller).to receive(:replace_right_cell)
-        controller.send(:condition_remove)
-        policy.reload
-        expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
-        expect(policy.conditions).to eq([])
+describe MiqPolicyController::Conditions do
+  let(:test_class) { Struct.new(:params) { include MiqPolicyController::Conditions } }
+  subject { test_class.new(params) }
+
+  describe '#condition_edit' do
+    context 'adding new condition' do
+      let(:params) { {:button => 'add'} }
+
+      before do
+        allow(subject).to receive(:add_flash)
+        allow(subject).to receive(:assert_privileges)
+        allow(subject).to receive(:build_saved_audit).and_return(:event        => 'condition_record_add',
+                                                                 :target_id    => 1,
+                                                                 :target_class => 'Condition',
+                                                                 :userid       => 'admin',
+                                                                 :message      => '')
+        allow(subject).to receive(:exp_build_table)
+        allow(subject).to receive(:exp_remove_tokens)
+        allow(subject).to receive(:load_edit).and_return(true)
+        allow(subject).to receive(:replace_right_cell)
+        allow(subject).to receive(:x_active_tree).and_return(:condition_tree)
+        subject.instance_variable_set(:@edit, :new => {:towhat         => 'ContainerReplicator',
+                                                       :description    => 'New_condition',
+                                                       :notes          => nil,
+                                                       :expression     => {},
+                                                       :applies_to_exp => {"???"=>"???"}})
+      end
+
+      it 'sets new node correctly' do
+        subject.send(:condition_edit)
+        expect(subject.instance_variable_get(:@new_condition_node)).to include('xx-containerReplicator_co-')
       end
     end
   end
