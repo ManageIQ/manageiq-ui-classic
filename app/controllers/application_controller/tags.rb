@@ -163,11 +163,10 @@ module ApplicationController::Tags
   def tagging_save_tags
     new_assignments = JSON.parse(params['data']).map { |tag| tag['values'].map { |v| v['id'] } }
     @edit[:new][:assignments] = new_assignments.flatten
-    Classification.bulk_reassignment({:model      => @edit[:tagging],
-                                      :object_ids => @edit[:object_ids],
-                                      :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
-                                      :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments]
-                                    })
+    Classification.bulk_reassignment(:model      => @edit[:tagging],
+                                     :object_ids => @edit[:object_ids],
+                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
+                                     :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments])
   rescue => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
@@ -180,9 +179,9 @@ module ApplicationController::Tags
     @edit[:object_ids] ||= @object_ids
 
     cats = Classification.categories.select(&:show).sort_by { |t| t.description.try(:downcase) } # Get the categories, sort by description
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
+    cats.delete_if { |c| c.read_only? || c.entries.empty? } # Remove categories that are read only or have no entries
     if ["User", "MiqGroup", "Tenant"].include?(@tagging)
-      session[:assigned_filters] = []  # No view filters used for user/groups/tenants, set as empty for later methods
+      session[:assigned_filters] = [] # No view filters used for user/groups/tenants, set as empty for later methods
     else
       cats.each do |cat_key| # not needed for user/group tags since they are not filtered for viewing
         if session[:assigned_filters].include?(cat_key.name.downcase)
@@ -201,12 +200,14 @@ module ApplicationController::Tags
     end.reduce(:&).compact
 
     @tags = cats.map do |cat|
-      {:id          => cat.id,
-       :description => cat.description,
-       :singleValue => cat.single_value,
-       :values      => cat.entries.map do |entry|
-         { :id => entry.id, :description => entry.description }
-       end.sort_by { |e| e[:description.downcase] }}
+      {
+        :id          => cat.id,
+        :description => cat.description,
+        :singleValue => cat.single_value,
+        :values      => cat.entries.map do |entry|
+          { :id => entry.id, :description => entry.description }
+        end.sort_by { |e| e[:description.downcase] }
+      }
     end
 
     assigned_tags = @assignments.map do |a|
