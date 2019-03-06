@@ -43,7 +43,7 @@ describe CloudObjectStoreObjectController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{object.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => object.id, :data => get_tags_json([@tag1, @tag2]) }
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => object.id, :data => get_tags_json([tag1, tag2]) }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
