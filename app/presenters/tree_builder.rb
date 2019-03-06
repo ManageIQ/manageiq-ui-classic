@@ -200,7 +200,6 @@ class TreeBuilder
       :tree_id    => "#{@name}box",
       :tree_name  => @name.to_s,
       :bs_tree    => @bs_tree,
-      :onclick    => "miqOnClickSelectTreeNode",
       :checkboxes => false
     }
   end
