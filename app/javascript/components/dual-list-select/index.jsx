@@ -180,7 +180,7 @@ const WrappedDualList = ({ FieldProvider, name, ...rest }) => (
     {...rest}
     subscription={{ error: true, pristine: true, value: true }}
     isEqual={(current, initial) => isEqual([...current || []].sort(), [...initial || []].sort())}
-    component={props => <DualList {...props} />}
+    component={DualList}
   />
 );
 
