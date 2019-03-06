@@ -8,7 +8,7 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
                    :name     => 'Datastore',
                    :location => 'Location',
                    :capture  => false}]
-    @datastore_tree = TreeBuilderDatastores.new(:datastore, :datastore_tree, {}, true, @datastore)
+    @datastore_tree = TreeBuilderDatastores.new(:datastore, :datastore_tree, {}, true, :root => @datastore)
 
     @ho_enabled = [FactoryBot.create(:host)]
     @ho_disabled = [FactoryBot.create(:host)]
@@ -20,7 +20,7 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
                                                                                             :ho_disabled => @ho_disabled})
     @non_cluster_hosts = [{:id => 2, :name => 'Non Cluster Host', :capture => true}]
     @cluster = {:clusters => [{:id => 1, :name => 'Name', :capture => 'unsure'}], :non_cl_hosts => @non_cluster_hosts}
-    @cluster_tree = TreeBuilderClusters.new(:cluster, :cluster_tree, {}, true, @cluster)
+    @cluster_tree = TreeBuilderClusters.new(:cluster, :cluster_tree, {}, true, :root => @cluster)
   end
 
   it "Check All checkbox have unique id for Clusters trees" do

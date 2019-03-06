@@ -16,7 +16,7 @@ describe TreeBuilderVat do
           'cluster'
         end
       end
-      @vat_tree = TreeBuilderVat.new(:vat_tree, :vat, {}, true, cluster, true)
+      @vat_tree = TreeBuilderVat.new(:vat_tree, :vat, {}, true, :root => cluster, :vat => true)
     end
 
     it 'returns EmsCluster as root' do

@@ -9,7 +9,7 @@ class TreeBuilder
     @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
   end
 
-  def initialize(name, type, sandbox, build = true)
+  def initialize(name, type, sandbox, build = true, **_params)
     @tree_state = TreeState.new(sandbox)
     @sb = sandbox # FIXME: some subclasses still access @sb
 

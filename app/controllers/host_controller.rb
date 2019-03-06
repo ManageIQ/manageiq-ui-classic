@@ -34,10 +34,10 @@ class HostController < ApplicationController
   def display_tree_resources
     @showtype = "config"
     title, tree = if @display == "network"
-                    @network_tree = TreeBuilderNetwork.new(:network_tree, :network, @sb, true, @record)
+                    @network_tree = TreeBuilderNetwork.new(:network_tree, :network, @sb, true, :root => @record)
                     [_("Network"), :network_tree]
                   else
-                    @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, @sb, true, @record)
+                    @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, @sb, true, :root => @record)
                     [_("Storage Adapters"), :sa_tree]
                   end
     drop_breadcrumb(:name => "#{@record.name} (#{title})",

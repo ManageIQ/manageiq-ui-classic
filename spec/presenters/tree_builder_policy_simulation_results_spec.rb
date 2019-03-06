@@ -27,7 +27,7 @@ describe TreeBuilderPolicySimulationResults do
                                                                                                     {:id          => 9,
                                                                                                      :description => "Shutdown Virtual Machine Guest OS",
                                                                                                      :result      => "deny"}]}]}]}]}
-      @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, {}, true, @data)
+      @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, {}, true, :root => @data)
     end
 
     it 'sets root correctly' do

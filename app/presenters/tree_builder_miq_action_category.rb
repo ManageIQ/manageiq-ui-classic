@@ -10,8 +10,8 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     node
   end
 
-  def initialize(name, type, sandbox, build = true, tenant_name = nil)
-    @tenant_name = tenant_name
+  def initialize(name, type, sandbox, build = true, **params)
+    @root = params[:root]
     super(name, type, sandbox, build)
   end
 
@@ -29,8 +29,8 @@ class TreeBuilderMiqActionCategory < TreeBuilder
 
   def root_options
     {
-      :text    => @tenant_name,
-      :tooltip => @tenant_name,
+      :text    => @root,
+      :tooltip => @root,
       :icon    => "fa fa-tag"
     }
   end

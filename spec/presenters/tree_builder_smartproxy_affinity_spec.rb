@@ -30,7 +30,7 @@ describe TreeBuilderSmartproxyAffinity do
                                                                     :smartproxy_affinity_tree,
                                                                     {},
                                                                     true,
-                                                                    @selected_zone)
+                                                                    :data => @selected_zone)
     end
 
     it 'set init options correctly' do

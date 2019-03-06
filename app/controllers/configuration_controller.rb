@@ -511,7 +511,7 @@ class ConfigurationController < ApplicationController
         :set_filters => true,
         :current     => current,
       }
-      @df_tree = TreeBuilderDefaultFilters.new(:df_tree, :df, @sb, true, filters)
+      @df_tree = TreeBuilderDefaultFilters.new(:df_tree, :df, @sb, true, :data => filters)
       self.x_active_tree = :df_tree
     when 'ui_4'
       @edit = {

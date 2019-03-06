@@ -21,7 +21,7 @@ describe TreeBuilderMiqActionCategory do
   let!(:tree_name) { :action_tags }
 
   subject do
-    described_class.new(:action_tags_tree, :action_tags, {}, true, tenant)
+    described_class.new(:action_tags_tree, :action_tags, {}, true, :root => tenant)
   end
 
   describe '#tree_init_options' do

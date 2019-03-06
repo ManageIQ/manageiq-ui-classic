@@ -2,20 +2,20 @@ class TreeBuilderGenealogy < TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
   def override(node, object, _pid, _options)
-    if object == @vm
+    if object == @root
       node[:text] = _("%{item} (Selected)") % {:item => node[:text]}
       node[:highlighted] = true
       node[:expand] = true
     end
   end
 
-  def initialize(name, type, sandbox, build, vm)
-    @vm = vm
+  def initialize(name, type, sandbox, build, **params)
+    @root = params[:root]
     super(name, type, sandbox, build)
   end
 
   def root_id
-    @vm.parent.present? ? @vm.parent.id : @vm.id
+    @root.parent.present? ? @root.parent.id : @root.id
   end
 
   private
@@ -40,17 +40,17 @@ class TreeBuilderGenealogy < TreeBuilder
   end
 
   def root_options
-    if @vm.parent.present?
-      {:text    => @vm.parent.name + _(" (Parent)"),
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @vm.parent.name}}.merge(vm_icon_image(@vm.parent))
+    if @root.parent.present?
+      {:text    => @root.parent.name + _(" (Parent)"),
+       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.parent.name}}.merge(vm_icon_image(@root.parent))
     else
-      {:text    => @vm.name,
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @vm.name}}.merge(vm_icon_image(@vm))
+      {:text    => @root.name,
+       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.name}}.merge(vm_icon_image(@root))
     end
   end
 
   def x_get_tree_roots(count_only, _options)
-    kids = @vm.parent.present? ? [@vm] : @vm.children
+    kids = @root.parent.present? ? [@root] : @root.children
     count_only_or_objects(count_only, kids, :name)
   end
 

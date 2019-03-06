@@ -3,8 +3,8 @@ class TreeBuilderAutomate < TreeBuilderAeClass
     {:full_ids => false}
   end
 
-  def initialize(name, type, sandbox, build = true, controller = nil)
-    @controller = controller
+  def initialize(name, type, sandbox, build = true, **params)
+    @controller = params[:controller]
     super(name, type, sandbox, build)
   end
 

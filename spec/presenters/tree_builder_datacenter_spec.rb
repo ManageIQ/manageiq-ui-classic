@@ -13,7 +13,7 @@ describe TreeBuilderDatacenter do
           [FactoryBot.create(:resource_pool)]
         end
       end
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, cluster)
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, :root => cluster)
     end
 
     it 'returns EmsCluster as root' do
@@ -50,7 +50,7 @@ describe TreeBuilderDatacenter do
           [FactoryBot.create(:vm)]
         end
       end
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, cluster)
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, :root => cluster)
     end
 
     it 'returns ResourcePool as root' do

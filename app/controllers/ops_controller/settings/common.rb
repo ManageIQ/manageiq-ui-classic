@@ -658,7 +658,7 @@ module OpsController::Settings::Common
                                                                     :smartproxy_affinity_tree,
                                                                     @sb,
                                                                     true,
-                                                                    @selected_zone)
+                                                                    :data => @selected_zone)
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit

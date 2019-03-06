@@ -1,6 +1,6 @@
 class TreeBuilderDiagnostics < TreeBuilder
-  def initialize(name, type, sandbox, build = true, parent = nil)
-    @root = parent
+  def initialize(name, type, sandbox, build = true, **params)
+    @root = params[:root]
     super(name, type, sandbox, build)
   end
 

@@ -3,9 +3,9 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   has_kids_for Menu::Item,        [:x_get_tree_item_kids]
   has_kids_for MiqProductFeature, [:x_get_tree_feature_kids]
 
-  def initialize(name, type, sandbox, build, role:, editable: false)
-    @role     = role
-    @editable = editable
+  def initialize(name, type, sandbox, build, **params)
+    @role     = params[:role]
+    @editable = params[:editable]
     @features = @role.miq_product_features.map(&:identifier)
 
     @root_counter = []

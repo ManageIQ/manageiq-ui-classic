@@ -3,9 +3,9 @@ class TreeBuilderMenuRoles < TreeBuilder
 
   attr_reader :rpt_menu, :role_choice
 
-  def initialize(name, type, sandbox, build, role_choice:, rpt_menu: nil)
-    @rpt_menu    = rpt_menu || sandbox[:rpt_menu]
-    @role_choice = role_choice
+  def initialize(name, type, sandbox, build, **params)
+    @rpt_menu    = params[:rpt_menu] || sandbox[:rpt_menu]
+    @role_choice = params[:role_choice]
 
     super(name, type, sandbox, build)
   end

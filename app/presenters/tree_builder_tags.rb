@@ -1,7 +1,7 @@
 class TreeBuilderTags < TreeBuilder
   has_kids_for Classification, [:x_get_classification_kids]
 
-  def initialize(name, type, sandbox, build, params)
+  def initialize(name, type, sandbox, build, **params)
     @edit = params[:edit]
     @filters = params[:filters]
     @group = params[:group]

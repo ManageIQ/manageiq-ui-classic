@@ -13,7 +13,7 @@ describe TreeBuilderStorageAdapters do
                                                                                      FactoryBot.create(:miq_scsi_lun)])])
         end
       end
-      @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, {}, true, host)
+      @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, {}, true, :root => host)
     end
 
     it 'returns Host as root' do

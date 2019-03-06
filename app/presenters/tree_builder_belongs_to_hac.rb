@@ -18,7 +18,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     node[:checkable] = options[:checkboxes] if options.key?(:checkboxes)
   end
 
-  def initialize(name, type, sandbox, build, params)
+  def initialize(name, type, sandbox, build, **params)
     @edit = params[:edit]
     @group = params[:group]
     @selected_nodes = params[:selected_nodes]

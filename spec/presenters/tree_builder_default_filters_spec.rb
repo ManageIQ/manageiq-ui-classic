@@ -61,7 +61,7 @@ describe TreeBuilderDefaultFilters do
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
       @sb = {:active_tree => :default_filters_tree}
-      @default_filters_tree = TreeBuilderDefaultFilters.new(:df_tree, :df, @sb, true, @filters)
+      @default_filters_tree = TreeBuilderDefaultFilters.new(:df_tree, :df, @sb, true, :data => @filters)
     end
 
     it 'is not lazy' do
