@@ -16,7 +16,10 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       key_value: '',
       key_type: 'string',
       available_datatypes: '',
-      providers: [],
+      managers: [],
+      manager: null,
+      playbooks: [],
+      playbook: null,
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -59,7 +62,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.namespace_path = data.namespace_path;
     vm.aeMethodModel.location = data.location;
     vm.aeMethodModel.location_fancy_name = data.location_fancy_name;
-    vm.aeMethodModel.providers = data.providers;
+    vm.aeMethodModel.managers = data.managers;
     vm.aeMethodModel.class_id = data.class_id;
     vm.aeMethodModel.language = data.language;
     vm.aeMethodModel.scope = data.scope;
@@ -142,9 +145,11 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       class_id: configData.class_id,
       language: configData.language,
       scope: configData.scope,
-      location: 'playbook',
+      location: configData.location,
+      manager_id: configData.manager.id,
+
       repository_id: configData.provisioning_repository_id,
-      playbook_id: configData.provisioning_playbook_id,
+      playbook_id: configData.provisioning_playbook_id || configData.playbook.id,
       credential_id: configData.provisioning_machine_credential_id,
       vault_credential_id: configData.provisioning_vault_credential_id,
       verbosity: configData.provisioning_verbosity,
@@ -162,6 +167,19 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       method.cloud_credential_id = configData.provisioning_cloud_credential_id;
     }
     return method;
+  };
+
+  $scope.managerChanged = function() {
+    const manager = $scope.vm.aeMethodModel.manager;
+    const klass = $scope.vm.aeMethodModel.location === 'ansible_job_template' ?
+      'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' :
+      'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow';
+
+    API.get(`/api/configuration_scripts?expand=resources&collection_class=${klass}&filter[]=manager_id=${manager.id}`)
+      .then(function(data) {
+        $scope.vm.aeMethodModel.playbooks = data.resources;
+      })
+      .catch(miqService.handleFailure);
   };
 
   $scope.$watch('vm._provisioning_repository', function(value) {
