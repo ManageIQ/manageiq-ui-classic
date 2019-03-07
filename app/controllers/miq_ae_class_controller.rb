@@ -1001,9 +1001,9 @@ class MiqAeClassController < ApplicationController
   def method_form_fields
     assert_privileges("miq_ae_method_edit")
     location = params['location'] || 'playbook'
-    list_of_providers = if %w(ansible_job_template ansible_workflow_template).include?(location)
+    list_of_managers = if %w(ansible_job_template ansible_workflow_template).include?(location)
                           #ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
-                          ManageIQ::Providers::AnsibleTower::Provider.all.pluck(:id, :name).
+                          ManageIQ::Providers::AnsibleTower::AutomationManager.pluck(:id, :name).
                             map { |r| {:id => r[0], :name => r[1]} }
                         end
 
@@ -1017,7 +1017,7 @@ class MiqAeClassController < ApplicationController
       :location_fancy_name => location_fancy_name(location),
       :language            => 'ruby',
       :scope               => "instance",
-      :providers           => list_of_providers,
+      :managers           => list_of_managers,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => { :repository_id         => method.options[:repository_id] || '',
                                 :playbook_id           => method.options[:playbook_id] || '',
