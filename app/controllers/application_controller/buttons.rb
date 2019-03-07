@@ -144,7 +144,6 @@ module ApplicationController::Buttons
     end
   end
 
-  # AJAX driven routine to delete a user
   def ab_button_delete
     assert_privileges("ab_button_delete")
     custom_button = CustomButton.find(params[:id])
@@ -153,14 +152,8 @@ module ApplicationController::Buttons
     if custom_button.parent
       automation_set = CustomButtonSet.find_by(:id => custom_button.parent.id)
       if automation_set
-        mems = automation_set.members
-        if mems.length > 1
-          mems.each do |m|
-            automation_set.remove_member(custom_button) if m.id == custom_button
-          end
-        else
-          automation_set.remove_member(custom_button)
-        end
+        automation_set.set_data[:button_order].delete(custom_button.id)
+        automation_set.save!
       end
     end
     if custom_button.destroy
@@ -235,12 +228,8 @@ module ApplicationController::Buttons
     description = custom_button_set.description
     audit = {:event => "custom_button_set_record_delete", :message => "[#{custom_button_set.description}] Record deleted", :target_id => custom_button_set.id, :target_class => "CustomButtonSet", :userid => session[:userid]}
 
-    mems = custom_button_set.members
-    mems.each do |mem|
-      uri = CustomButton.find(mem.id)
-      uri.save!
-      custom_button_set.remove_member(mem)
-    end
+    custom_button_set.set_data[:button_order] = []
+    custom_button_set.save!
 
     if custom_button_set.destroy
       AuditEvent.success(audit)
@@ -388,22 +377,8 @@ module ApplicationController::Buttons
     end
     group_set_record_vars(@custom_button_set)
 
-    member_ids = @edit[:new][:fields].collect { |field| field[1] }
-    mems = CustomButton.where(:id => member_ids)
-
     if typ == "update"
-      org_mems = @custom_button_set.members # clean up existing members
-      org_mems.each do |m|
-        uri = CustomButton.find(m.id)
-        uri.save
-      end
-
       if @custom_button_set.save
-        if mems.present? # replace children if members were added/updated
-          @custom_button_set.replace_children(mems)
-        else # remove members if nothing was selected
-          @custom_button_set.remove_all_children
-        end
         add_flash(_("Button Group \"%{name}\" was saved") % {:name => @edit[:new][:description]})
         @edit = session[:edit] = nil # clean out the saved info
         ab_get_node_info(x_node) if x_active_tree == :ab_tree
@@ -426,7 +401,6 @@ module ApplicationController::Buttons
       end
       @custom_button_set.set_data[:group_index] = all_sets.length + 1
       if @custom_button_set.save
-        @custom_button_set.replace_children(mems) if mems.present?
         if x_active_tree == :sandt_tree
           aset = CustomButtonSet.find_by(:id => @custom_button_set.id)
           # push new button at the end of button_order array
@@ -540,7 +514,6 @@ module ApplicationController::Buttons
         # find custombutton set in ab_tree or when adding button under a group
         group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
         @aset = CustomButtonSet.find(group_id)
-        mems = @aset.members
       end
     end
 
@@ -550,8 +523,6 @@ module ApplicationController::Buttons
       au = CustomButton.find(@custom_button.id)
       if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
         # if group is not unassigned group, add uri as a last member  of the group
-        mems.push(au)
-        @aset.replace_children(mems)
         @aset.set_data[:button_order] ||= []
         @aset.set_data[:button_order].push(au.id)
         @aset.save!
@@ -737,7 +708,8 @@ module ApplicationController::Buttons
     @edit[:new][:button_color] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_color] ? @custom_button_set[:set_data][:button_color] : ""
     @edit[:new][:display] = @custom_button_set[:set_data] && @custom_button_set[:set_data].key?(:display) ? @custom_button_set[:set_data][:display] : true
     @edit[:new][:fields] = []
-    button_order = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_order] ? @custom_button_set[:set_data][:button_order] : nil
+
+    button_order = @custom_button_set[:set_data].try(:[], :button_order)
     if button_order # show assigned buttons in order they were saved
       button_order.each do |bidx|
         @custom_button_set.members.each do |mem|

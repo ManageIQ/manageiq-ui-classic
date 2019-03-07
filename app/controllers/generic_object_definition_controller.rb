@@ -136,9 +136,6 @@ class GenericObjectDefinitionController < ApplicationController
 
   def add_button_in_group
     custom_button_set = CustomButtonSet.find(params[:id])
-    members = custom_button_set.members
-    members.push(CustomButton.find(params[:button_id]))
-    custom_button_set.replace_children(members)
     custom_button_set.set_data[:button_order] ||= []
     custom_button_set.set_data[:button_order].push(CustomButton.last.id)
     custom_button_set.save!
