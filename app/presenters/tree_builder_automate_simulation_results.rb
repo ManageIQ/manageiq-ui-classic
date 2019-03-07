@@ -10,11 +10,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :add_root => false}
-  end
-
-  def root_options
-    {}
+    {:full_ids => true}
   end
 
   def x_get_tree_roots(_count_only = false, _options = {})

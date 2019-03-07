@@ -24,12 +24,6 @@ describe TreeBuilderComplianceHistory do
       tree_options = @ch_tree.send(:tree_init_options)
       expect(tree_options[:lazy]).not_to be_truthy
     end
-    it 'has no root' do
-      tree_options = @ch_tree.send(:tree_init_options)
-      root = @ch_tree.send(:root_options)
-      expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq({})
-    end
     it 'returns Compliance as root kids' do
       kids = @ch_tree.send(:x_get_tree_roots, false)
       kids.each do |kid|

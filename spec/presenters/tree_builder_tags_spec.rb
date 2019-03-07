@@ -24,7 +24,7 @@ describe TreeBuilderTags do
     end
     it 'set init options correctly' do
       tree_options = @tags_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => true, :add_root => false, :checkboxes => true, :highlight_changes => true)
+      expect(tree_options).to eq(:full_ids => true, :checkboxes => true, :highlight_changes => true)
     end
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)
@@ -38,8 +38,7 @@ describe TreeBuilderTags do
       expect(@tags_tree.send(:contain_selected_kid, @folder_not_selected)).to eq(false)
     end
     it 'sets root to nothing' do
-      roots = @tags_tree.send(:root_options)
-      expect(roots).to eq({})
+      expect { @tags_tree.send(:root_options) }.to raise_error(NoMethodError)
     end
     it 'sets first level nodes correctly' do
       roots = @tags_tree.send(:x_get_tree_roots, false, nil)

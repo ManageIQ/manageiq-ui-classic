@@ -10,15 +10,11 @@ class TreeBuilderDatastores < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => false, :add_root => false, :checkboxes => true, :highlight_changes => true}
+    {:full_ids => false, :checkboxes => true, :highlight_changes => true}
   end
 
   def set_locals_for_render
     super.merge!(:onselect => "miqOnCheckCUFilters", :check_url => "/ops/cu_collection_field_changed/")
-  end
-
-  def root_options
-    {}
   end
 
   def x_get_tree_roots(count_only = false, _options)

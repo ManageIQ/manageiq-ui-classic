@@ -33,7 +33,6 @@ class TreeBuilderBelongsToHac < TreeBuilder
   def tree_init_options
     {
       :full_ids          => true,
-      :add_root          => false,
       :checkboxes        => true,
       :highlight_changes => !@assign_to
     }
@@ -49,10 +48,6 @@ class TreeBuilderBelongsToHac < TreeBuilder
                          end
 
     super.merge!(:oncheck => oncheck, :check_url => check_url)
-  end
-
-  def root_options
-    {}
   end
 
   def x_get_tree_roots(count_only, _options)

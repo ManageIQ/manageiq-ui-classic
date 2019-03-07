@@ -63,7 +63,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :add_root       => true,
       :role           => @role,
       :features       => @features,
       :editable       => @editable,

@@ -58,7 +58,6 @@ class TreeBuilder
   # * full_ids - whether to generate full node IDs or not
   # * leaf - class of the leaf nodes
   # * open_all - expand all expandable nodes
-  # * add_root - merge root_options with the first node
   # * lazy - is the tree lazily-loadable
   # * checkboxes - show checkboxes for the nodes
   # * features - used by the RBAC features tree only
@@ -165,7 +164,7 @@ class TreeBuilder
 
   def set_nodes(nodes)
     # Add the root node even if it is not set
-    add_root_node(nodes) if @options.fetch(:add_root, :true)
+    add_root_node(nodes) if respond_to?(:root_options, true)
     @bs_tree = self.class.convert_bs_tree(nodes).to_json
     @tree_nodes = nodes.to_json
     @locals_for_render = set_locals_for_render
@@ -178,7 +177,6 @@ class TreeBuilder
         :type       => type,
         :klass_name => self.class.name,
         :leaf       => @options[:leaf],
-        :add_root   => true,
         :open_nodes => []
       )
     )
@@ -216,7 +214,6 @@ class TreeBuilder
   # :type                   # Type of tree, i.e. :handc, :vandt, :filtered, etc
   # :leaf                   # Model name of leaf nodes, i.e. "Vm"
   # :open_nodes             # Tree node ids of currently open nodes
-  # :add_root               # If true, put a root node at the top
   # :full_ids               # stack parent id on top of each node id
   # :lazy                   # set if tree is lazy
   def x_build_tree(options)
@@ -228,7 +225,7 @@ class TreeBuilder
         x_build_node_tree(child, nil, options)
       end
     end
-    return nodes unless options[:add_root]
+    return nodes unless respond_to?(:root_options, true)
     [{:key => 'root', :nodes => nodes, :expand => true}]
   end
 

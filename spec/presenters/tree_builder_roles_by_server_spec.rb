@@ -39,13 +39,6 @@ describe TreeBuilderRolesByServer do
       expect(tree_options[:lazy]).not_to be_truthy
     end
 
-    it 'has no root' do
-      tree_options = @server_tree.send(:tree_init_options)
-      root = @server_tree.send(:root_options)
-      expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq({})
-    end
-
     it 'returns server nodes as root kids' do
       server_nodes = @server_tree.send(:x_get_tree_roots, false, {})
       expect(server_nodes).to eq([@miq_server])
