@@ -132,4 +132,44 @@ describe('Async credentials component', () => {
     expect(change).toHaveBeenCalledTimes(2);
     expect(change.mock.calls).toEqual(expectedChangeCalls);
   });
+
+  it('should correctly set valid state after input change to initial empty values', () => {
+    const change = jest.fn();
+    const getStateMock = jest.fn()
+      .mockReturnValueOnce({
+        values: {},
+      })
+      .mockReturnValueOnce({
+        values: {
+          foo: 'changed-value',
+        },
+      })
+      .mockReturnValueOnce({
+        values: {
+          foo: 'changed-value',
+        },
+      })
+      .mockReturnValue({
+        values: {},
+      });
+
+    const expectedChangeCalls = [
+      ['foo', 'changed-value'],
+      ['async-wrapper', false],
+      ['foo', ''],
+      ['async-wrapper', undefined],
+    ];
+    const wrapper = mount(<AsyncCredentials
+      {...initialProps}
+      formOptions={{
+        ...initialProps.formOptions,
+        change,
+        getState: getStateMock,
+      }}
+    />);
+    wrapper.find('input').first().simulate('change', { target: { value: 'changed-value' } });
+    wrapper.find('input').first().simulate('change', { target: { value: '' } });
+    expect(change).toHaveBeenCalledTimes(4);
+    expect(change.mock.calls).toEqual(expectedChangeCalls);
+  });
 });

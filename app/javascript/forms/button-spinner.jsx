@@ -1,7 +1,6 @@
 import React from 'react';
 import { Spinner } from 'patternfly-react';
 
-
 const ButtonSpinner = () => (
   <div style={{ display: 'inline-block', position: 'relative' }}>
     &nbsp;

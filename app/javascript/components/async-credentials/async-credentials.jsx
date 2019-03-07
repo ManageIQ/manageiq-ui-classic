@@ -13,7 +13,6 @@ import { checkValidState } from './helper';
 
 export const SecretContext = createContext();
 
-
 const AsyncCredentials = ({
   FieldProvider,
   formOptions,
@@ -80,23 +79,20 @@ const AsyncCredentials = ({
             <Col md={8}>
               <input type="hidden" {...input} />
               <CheckErrors subscription={{ valid: true, invalid: true, active: true }} names={asyncFields} FieldProvider={FieldProvider}>
-                {(valid) => {
-                  const disabled = valid.includes(false);
-                  return (
-                    <Fragment>
-                      <Button
-                        bsSize="small"
-                        bsStyle="primary"
-                        onClick={() => handleAsyncValidation(formOptions, name, asyncFields)}
-                        disabled={disabled || validating}
-                      >
-                        {validating ? validationProgressLabel : validateLabel}
-                        {validating && <ButtonSpinner /> }
-                      </Button>
-                      {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
-                    </Fragment>
-                  );
-                }}
+                {valid => (
+                  <Fragment>
+                    <Button
+                      bsSize="small"
+                      bsStyle="primary"
+                      onClick={() => handleAsyncValidation(formOptions, name, asyncFields)}
+                      disabled={valid.includes(false) || validating}
+                    >
+                      {validating ? validationProgressLabel : validateLabel}
+                      {validating && <ButtonSpinner /> }
+                    </Button>
+                    {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
+                  </Fragment>
+                )}
               </CheckErrors>
             </Col>
           </FormGroup>
@@ -116,7 +112,6 @@ AsyncCredentials.propTypes = {
   validateLabel: PropTypes.string,
   validationProgressLabel: PropTypes.string,
   validateDefaultError: PropTypes.string,
-  edit: PropTypes.bool,
   asyncValidate: PropTypes.func.isRequired,
 };
 
@@ -124,7 +119,6 @@ AsyncCredentials.defaultProps = {
   validateLabel: __('Validate'),
   validationProgressLabel: __('Validating'),
   validateDefaultError: __('Validation Required'),
-  edit: false,
 };
 
 export default AsyncCredentials;

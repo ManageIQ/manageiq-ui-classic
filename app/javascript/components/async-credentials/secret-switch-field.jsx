@@ -4,7 +4,6 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { SecretContext } from './async-credentials';
 import { checkValidState } from './helper';
 
-
 const SecretSwitchField = ({
   edit,
   formOptions,
