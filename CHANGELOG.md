@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 106 ending 2019-03-04
+
+### Added
+- Dialog Editor - rework tree params *don't* pre-initialize the tree [(#5267)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5267)
+- Add error when clicking upload image without selecting a file [(#5265)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5265)
+- Allow to print (export to PDF) the right size recommendations of a VM [(#5252)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5252)
+
+### Fixed
+- Fixed wrong keyword for selected nodes in TreeBuilderAlertProfileObj [(#5292)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5292)
+- Fixes value of validate_id in host form [(#5289)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5289)
+- Fix add new action [(#5286)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5286)
+- [Performance] Remove compliance from VmOrTemplate includes [(#5283)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5283)
+- Add All Custom Button Events page to Cloud Network [(#5277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5277)
+- Fix wrong displayed elapsed time in the service [(#5260)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5260)
+- Do not show Refresh button on Monitoring page [(#5258)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5258)
+- Add Memory for Amazon Availability Zones [(#5256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5256)
+- Allow Approver user to deny the request [(#5255)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5255)
+- Use ljust to left justify and pad strings [(#5254)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5254)
+- Fix the label of Custom Button Events for infra providers [(#5251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5251)
+- Fixed explanation of brand image positioning under Custom Logos [(#5250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5250)
+- Advanced Search Save: don't create unnecessary flash message [(#5220)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5220)
+- Fix sumary screen for catalog item with deleted provider template [(#5193)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5193)
+- Allow pausing/resuming foreman and ansible tower providers [(#5173)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5173)
+- Add endpoint url for azure [(#4304)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4304)
+
 ## Hammer-3
 
 ### Fixed
