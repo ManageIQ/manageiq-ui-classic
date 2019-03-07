@@ -10,7 +10,7 @@
           = _('Type')
         .col-md-8
           = select_tag("#{prefix}method_location",
-                        options_for_select([[_("<Choose>"), nil]] + @edit[:new][:available_locations].sort,
+                        options_for_select([[_("<Choose>"), nil]] + available_locations_with_labels,
                         @edit[:new][:location]),
                         :class    => "selectpicker",
                         "data-miq_observe" => {:url => url}.to_json)

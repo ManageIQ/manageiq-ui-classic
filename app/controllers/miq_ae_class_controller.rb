@@ -737,7 +737,6 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:display_name] = @ae_method.display_name
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
-    @edit[:new][:available_locations] = MiqAeMethod.available_locations unless @ae_method.id
     @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location
     if @edit[:new][:location] == "expression"

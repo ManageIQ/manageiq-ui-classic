@@ -145,4 +145,8 @@ module MiqAeClassHelper
       location
     end
   end
+
+  def available_locations_with_labels
+    MiqAeMethod.available_locations.sort.map { |l| [location_fancy_name(l), l] }
+  end
 end
