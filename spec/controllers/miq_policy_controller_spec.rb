@@ -345,4 +345,24 @@ describe MiqPolicyController do
       end
     end
   end
+
+  context 'removing conditions' do
+    let(:condition) { FactoryBot.create(:condition) }
+    let(:policy) { FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition]) }
+
+    before do
+      login_as FactoryBot.create(:user, :features => 'condition_remove')
+      controller.instance_variable_set(:@_params, :policy_id => policy.id, :id => condition.id)
+      controller.instance_variable_set(:@sb, {})
+      allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
+    end
+
+    it 'removes condition successfully' do
+      expect(controller).to receive(:replace_right_cell)
+      controller.send(:condition_remove)
+      policy.reload
+      expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
+      expect(policy.conditions).to eq([])
+    end
+  end
 end

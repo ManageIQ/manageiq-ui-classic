@@ -66,7 +66,7 @@ module MiqPolicyController::Conditions
           condition_get_info(condition)
           case x_active_tree
           when :condition_tree
-            @new_condition_node = "xx-#{condition.towhat.downcase}_co-#{condition.id}"
+            @new_condition_node = "xx-#{condition.towhat.camelize(:lower)}_co-#{condition.id}"
             replace_right_cell(:nodetype => "co", :replace_trees => %i(condition), :remove_form_buttons => true)
           when :policy_tree
             node_ids = @sb[:node_ids][x_active_tree]  # Get the selected node ids
