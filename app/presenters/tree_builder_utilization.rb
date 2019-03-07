@@ -5,10 +5,15 @@ class TreeBuilderUtilization < TreeBuilder
   has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
+  def initialize(*args)
+    instance_eval { undef :root_options } unless MiqEnterprise.my_enterprise.is_enterprise?
+    super(*args)
+  end
+
   private
 
   def tree_init_options
-    {:add_root => MiqEnterprise.my_enterprise.is_enterprise?, :lazy => true}
+    {:lazy => true}
   end
 
   def override(node, _object, _pid, _options)
@@ -16,19 +21,10 @@ class TreeBuilderUtilization < TreeBuilder
   end
 
   def root_options
-    if MiqEnterprise.my_enterprise.is_enterprise?
-      text = _("Enterprise")
-      icon = 'pficon pficon-enterprise'
-    else
-      text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => MiqRegion.my_region.description,
-                                                                          :region             => MiqRegion.my_region.region,
-                                                                          :product            => Vmdb::Appliance.PRODUCT_NAME}
-      icon = 'pficon pficon-regions'
-    end
     {
-      :text    => text,
+      :text    => text = _("Enterprise"),
       :tooltip => text,
-      :icon    => icon
+      :icon    => 'pficon pficon-enterprise'
     }
   end
 
