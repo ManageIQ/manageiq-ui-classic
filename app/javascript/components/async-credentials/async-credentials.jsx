@@ -46,7 +46,7 @@ const AsyncCredentials = ({
       })
       .catch((error) => {
         formOptions.change(hiddenName, false);
-        setAsyncError(error);
+        setAsyncError(error || validateDefaultError);
         setValidating(false);
       });
   };

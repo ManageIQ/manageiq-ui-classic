@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const CheckErrors = ({
   names,
   subscription,
-  fieldsState = {},
+  fieldsState,
   children,
   originalRender,
   FieldProvider,
@@ -32,7 +32,7 @@ const CheckErrors = ({
 
 CheckErrors.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
-  subscription: PropTypes.arrayOf(PropTypes.object).isRequired,
+  subscription: PropTypes.object.isRequired,
   fieldsState: PropTypes.object,
   children: PropTypes.any,
   originalRender: PropTypes.func,
