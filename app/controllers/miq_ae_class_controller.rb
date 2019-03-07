@@ -1761,7 +1761,8 @@ class MiqAeClassController < ApplicationController
   end
 
   def set_playbook_data
-    params_list = %i[repository_id
+    params_list = %i[ansible_template_id
+                     repository_id
                      playbook_id
                      credential_id
                      vault_credential_id

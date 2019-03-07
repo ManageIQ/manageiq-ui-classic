@@ -18,8 +18,8 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       available_datatypes: '',
       managers: [],
       manager: null,
-      playbooks: [],
-      playbook: null,
+      ansible_templates: [],
+      ansible_template: {},
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -48,7 +48,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
     ManageIQ.angular.scope = $scope;
 
-    $http.get('method_form_fields/' + aeMethodFormId + '?location=' + location)
+    $http.get('/miq_ae_class/method_form_fields/' + aeMethodFormId + '?location=' + location)
       .then(getMethodFormData)
       .catch(miqService.handleFailure);
     vm.saveable = miqService.saveable;
@@ -147,9 +147,9 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       scope: configData.scope,
       location: configData.location,
       manager_id: configData.manager.id,
-
+      ansible_template_id: configData.ansible_template && configData.ansible_template.id,
       repository_id: configData.provisioning_repository_id,
-      playbook_id: configData.provisioning_playbook_id || configData.playbook.id,
+      playbook_id: configData.provisioning_playbook_id,
       credential_id: configData.provisioning_machine_credential_id,
       vault_credential_id: configData.provisioning_vault_credential_id,
       verbosity: configData.provisioning_verbosity,
@@ -177,7 +177,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
     API.get(`/api/configuration_scripts?expand=resources&collection_class=${klass}&filter[]=manager_id=${manager.id}`)
       .then(function(data) {
-        $scope.vm.aeMethodModel.playbooks = data.resources;
+        $scope.vm.aeMethodModel.ansible_templates = data.resources;
       })
       .catch(miqService.handleFailure);
   };

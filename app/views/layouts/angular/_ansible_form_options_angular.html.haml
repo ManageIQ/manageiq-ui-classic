@@ -32,12 +32,12 @@
 
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_playbook_id.$invalid}",
                 "ng-if" => "#{ng_model}.location!=='playbook'"}
-      %label.col-md-3.control-label{"for" => "#{ng_model}.playbook_id"}
+      %label.col-md-3.control-label{"for" => "#{ng_model}.ansible_template_id"}
         = _('Playbook')
       .col-md-9
-        %select{"ng-model"    => "#{ng_model}.playbook",
-                "name"        => "#{ng_model}_playbook_id",
-                'ng-options'  => "playbook as playbook.name for playbook in #{ng_model}.playbooks",
+        %select{"ng-model"    => "#{ng_model}.ansible_template",
+                "name"        => "#{ng_model}_ansible_template_id",
+                'ng-options'  => "playbook as playbook.name for playbook in #{ng_model}.ansible_templates",
                 'miq-select'  => true}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
