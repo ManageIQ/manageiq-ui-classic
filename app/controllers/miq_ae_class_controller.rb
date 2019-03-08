@@ -507,7 +507,7 @@ class MiqAeClassController < ApplicationController
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
     @selectable_methods = embedded_method_regex(@ae_method.fqname)
-    if written_in_angular(@ae_method.location)
+    if playbook_style_location?(@ae_method.location)
       # these variants are implemented in Angular
       angular_form_specific_data
     else
@@ -872,7 +872,8 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def written_in_angular(location)
+  # these are written in angular
+  def playbook_style_location?(location)
     %w(playbook ansible_job_template ansible_workflow_template).include?(location)
   end
 
@@ -919,7 +920,7 @@ class MiqAeClassController < ApplicationController
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
 
-      in_angular = written_in_angular(@edit[:new][:location])
+      in_angular = playbook_style_location?(@edit[:new][:location])
       angular_form_specific_data if in_angular
 
       render :update do |page|
@@ -999,15 +1000,27 @@ class MiqAeClassController < ApplicationController
 
   def method_form_fields
     assert_privileges("miq_ae_method_edit")
-    location = params['location'] || 'playbook'
-    list_of_managers = if %w(ansible_job_template ansible_workflow_template).include?(location)
-                         # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
-                         ManageIQ::Providers::AnsibleTower::AutomationManager
+
+    if params[:id] == 'new'
+      method = MiqAeMethod.new
+      location = params['location'] || 'playbook'
+    else
+      method = MiqAeMethod.find(params[:id])
+      location = method.location
+    end
+
+    if %w(ansible_job_template ansible_workflow_template).include?(location)
+      # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
+      list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager
                            .pluck(:id, :name)
                            .map { |r| {:id => r[0], :name => r[1]} }
-                       end
 
-    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
+      if method&.options[:ansible_template_id]
+        manager_id = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
+          .find(method.options[:ansible_template_id])&.manager_id
+      end
+    end
+
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
@@ -1018,8 +1031,10 @@ class MiqAeClassController < ApplicationController
       :language            => 'ruby',
       :scope               => "instance",
       :managers            => list_of_managers,
+      :manager_id          => manager_id,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => { :repository_id         => method.options[:repository_id] || '',
+                                :ansible_template_id   => method.options[:ansible_template_id] || '',
                                 :playbook_id           => method.options[:playbook_id] || '',
                                 :credential_id         => method.options[:credential_id] || '',
                                 :vault_credential_id   => method.options[:vault_credential_id] || '',
@@ -2228,8 +2243,7 @@ class MiqAeClassController < ApplicationController
       # for method_inputs view
       @edit[:new][:name] = params[:method_name].presence if params[:method_name]
       @edit[:new][:display_name] = params[:method_display_name].presence if params[:method_display_name]
-      @edit[:new][:location] = params[:method_location] if params[:method_location]
-      @edit[:new][:location] ||= "inline"
+      @edit[:new][:location] = params[:method_location] || 'inline'
       @edit[:new][:data] = params[:method_data] if params[:method_data]
       method_form_vars_process_fields
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
@@ -2240,8 +2254,7 @@ class MiqAeClassController < ApplicationController
       # for class_methods view
       @edit[:new][:name] = params[:cls_method_name].presence if params[:cls_method_name]
       @edit[:new][:display_name] = params[:cls_method_display_name].presence if params[:cls_method_display_name]
-      @edit[:new][:location] = params[:cls_method_location] if params[:cls_method_location]
-      @edit[:new][:location] ||= "inline"
+      @edit[:new][:location] = params[:cls_method_location] || 'inline'
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
       @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
       method_form_vars_process_fields('cls_')
@@ -2700,28 +2713,29 @@ class MiqAeClassController < ApplicationController
     if @record.location == 'expression'
       hash = YAML.load(@record.data)
       @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
-    elsif @record.location == "playbook"
-      fetch_playbook_details
+    elsif playbook_style_location?(@record.location)
+      @playbook_details = fetch_playbook_details(@record)
     end
     domain_overrides
     set_right_cell_text(x_node, @record)
   end
 
-  def fetch_playbook_details
-    @playbook_details = {}
+  def fetch_playbook_details(record)
     options = @record.options
-    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id])
-    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id])
-    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id])
-    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
-    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
-    @playbook_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
-    @playbook_details[:verbosity] = options[:verbosity]
-    @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
-    @playbook_details[:execution_ttl] = options[:execution_ttl]
-    @playbook_details[:hosts] = options[:hosts]
-    @playbook_details[:log_output] = options[:log_output]
-    @playbook_details
+    details = {
+      :repository          => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id]),
+      :playbook            => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id]),
+      :machine_credential  => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id]),
+      :verbosity           => options[:verbosity],
+      :become_enabled      => options[:become_enabled] == true ? _("Yes") : _("No"),
+      :execution_ttl       => options[:execution_ttl],
+      :hosts               => options[:hosts],
+      :log_output          => options[:log_output],
+      :ansible_template_id => options[:ansible_template_id],
+    }
+    details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
+    details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
+    details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
   end
 
   def get_class_node_info(id)
