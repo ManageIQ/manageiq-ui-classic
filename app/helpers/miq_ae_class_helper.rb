@@ -131,6 +131,8 @@ module MiqAeClassHelper
 
   def location_fancy_name(location)
     case location
+    when 'builtin'
+      _('Built-in')
     when 'playbook'
       _('Playbook')
     when 'inline'
