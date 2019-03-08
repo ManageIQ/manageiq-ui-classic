@@ -873,7 +873,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def written_in_angular(location)
-    %w(playbook ansible_job_template ansible_workflow_template).include?(@edit[:new][:location])
+    %w(playbook ansible_job_template ansible_workflow_template).include?(location)
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -929,7 +929,7 @@ class MiqAeClassController < ApplicationController
           page.replace_html(
             @refresh_div,
              :partial => 'angular_method_form',
-             :locals => {:location => @edit[:new][:location]}
+             :locals  => {:location => @edit[:new][:location]}
           )
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
@@ -1001,10 +1001,11 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_method_edit")
     location = params['location'] || 'playbook'
     list_of_managers = if %w(ansible_job_template ansible_workflow_template).include?(location)
-                          #ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
-                          ManageIQ::Providers::AnsibleTower::AutomationManager.pluck(:id, :name).
-                            map { |r| {:id => r[0], :name => r[1]} }
-                        end
+                         # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
+                         ManageIQ::Providers::AnsibleTower::AutomationManager
+                           .pluck(:id, :name)
+                           .map { |r| {:id => r[0], :name => r[1]} }
+                       end
 
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
     method_hash = {
@@ -1016,7 +1017,7 @@ class MiqAeClassController < ApplicationController
       :location_fancy_name => location_fancy_name(location),
       :language            => 'ruby',
       :scope               => "instance",
-      :managers           => list_of_managers,
+      :managers            => list_of_managers,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => { :repository_id         => method.options[:repository_id] || '',
                                 :playbook_id           => method.options[:playbook_id] || '',
