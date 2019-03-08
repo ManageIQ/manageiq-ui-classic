@@ -535,7 +535,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def display_adv_searchbox
-    !(@infra_networking_record || @in_a_form || @nodetype == 'sw')
+    !(@record || @in_a_form)
   end
 
   def breadcrumb_name(_model)
