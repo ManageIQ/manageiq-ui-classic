@@ -872,11 +872,6 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  # these are written in angular
-  def playbook_style_location?(location)
-    %w(playbook ansible_job_template ansible_workflow_template).include?(location)
-  end
-
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
     if !@sb[:form_vars_set] # workaround to prevent an error that happens when IE sends a transaction form form even after save button is clicked when there is text_area in the form
@@ -2163,6 +2158,12 @@ class MiqAeClassController < ApplicationController
   end
   helper_method :row_selected_in_grid?
 
+  # these are written in angular
+  def playbook_style_location?(location)
+    %w(playbook ansible_job_template ansible_workflow_template).include?(location)
+  end
+  helper_method :playbook_style_location?
+
   # Get variables from edit form
   def fields_get_form_vars
     @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
@@ -2736,6 +2737,10 @@ class MiqAeClassController < ApplicationController
     details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
     details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
     details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
+    details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
+    details[:manager_name] = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
+      .find(options[:ansible_template_id])&.manager&.name
+    details
   end
 
   def get_class_node_info(id)

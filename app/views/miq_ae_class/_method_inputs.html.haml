@@ -1,8 +1,9 @@
 #method_inputs_div
   - if @in_a_form || @angular_form
     #method_form_div
-      - if @ae_method.location == "playbook"
-        = render :partial => "angular_method_form", :locals  => {:prefix => ""}
+      - if playbook_style_location?(@ae_method.location)
+        = render :partial => "angular_method_form",
+                 :locals  => {:prefix => "", :location => @ae_method.location }
       - else
         = render :partial => "method_form", :locals  => {:prefix => ""}
   - else
@@ -10,7 +11,7 @@
       = _('Main Info')
     .form-horizontal.static
       .form-group
-        = format_form_group(_('Type'), @ae_method.location)
+        = format_form_group(_('Type'), location_fancy_name(@ae_method.location))
       .form-group
         = format_form_group(_('Fully Qualified Name'), @sb[:namespace_path])
       .form-group
@@ -38,12 +39,19 @@
           :read_only               => true}
     - elsif @ae_method.location == 'expression'
       = @expression
-    - elsif @ae_method.location == 'playbook'
+    - elsif playbook_style_location?(@ae_method.location)
       .form-horizontal.static
-        .form-group
-          = format_form_group(_('Repository'), @playbook_details[:repository])
-        .form-group
-          = format_form_group(_('Playbook'), @playbook_details[:playbook])
+        - if @ae_method.location == 'playbook'
+          .form-group
+            = format_form_group(_('Repository'), @playbook_details[:repository])
+          .form-group
+            = format_form_group(_('Playbook'), @playbook_details[:playbook])
+        - else
+          .form-group
+            = format_form_group(_('Provider'), @playbook_details[:manager_name])
+          .form-group
+            = format_form_group(_('Ansible Template'), @playbook_details[:ansible_template])
+
         .form-group
           = format_form_group(_('Machine Credential'), @playbook_details[:machine_credential])
         .form-group
@@ -78,7 +86,4 @@
               %td= record_name(record)
               %td= record.datatype.blank? ? 'string' : record.datatype
               %td
-                - if record.datatype == 'password'
-                  ********
-                - else
-                  = record.default_value
+                = record.datatype == 'password' ? '********' : record.default_value
