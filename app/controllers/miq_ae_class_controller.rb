@@ -1622,6 +1622,16 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def copy_objects_reset(ids)
+    action = params[:pressed] || @sb[:action]
+    klass = case action
+            when 'miq_ae_class_copy'    then MiqAeClass
+            when 'miq_ae_instance_copy' then MiqAeInstance
+            when 'miq_ae_method_copy'   then MiqAeMethod
+            end
+    copy_reset(klass, ids, action)
+  end
+
   def copy_objects
     ids = objects_to_copy
     if ids.blank?
@@ -1631,22 +1641,11 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
       return
     end
+
     case params[:button]
-    when "cancel"
-      copy_cancel
-    when "copy"
-      copy_save
-    when "reset", nil # Reset or first time in
-      action = params[:pressed] || @sb[:action]
-      klass = case action
-              when "miq_ae_class_copy"
-                MiqAeClass
-              when "miq_ae_instance_copy"
-                MiqAeInstance
-              when "miq_ae_method_copy"
-                MiqAeMethod
-              end
-      copy_reset(klass, ids, action)
+    when "cancel"     then copy_cancel
+    when "copy"       then copy_save
+    when "reset", nil then copy_objects_reset(ids)
     end
   end
 
@@ -1772,9 +1771,8 @@ class MiqAeClassController < ApplicationController
                      execution_ttl
                      hosts
                      log_output]
-    boolean_params_list = %i[become_enabled]
     params_hash = copy_params_if_set({}, params, params_list)
-    copy_boolean_params(params_hash, params, boolean_params_list)
+    copy_boolean_params(params_hash, params, %i[become_enabled])
   end
 
   def angular_form_specific_data
