@@ -39,6 +39,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
 
       before do
+        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
         @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
         @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
