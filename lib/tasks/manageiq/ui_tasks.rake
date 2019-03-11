@@ -1,3 +1,36 @@
+namespace :symlink do
+  SYMLINKS=%w[
+    node_modules
+    yarn.lock
+  ]
+
+  task :prepare do
+    dir = Rails.root.join('vendor', 'engines')
+    FileUtils.mkdir_p(dir)
+
+    asset_engines.each do |engine|
+      next unless File.file?(engine.path.join('package.json'))
+      FileUtils.mkdir_p(dir.join(engine.namespace))
+
+      SYMLINKS.each do |symlink|
+        gemloc = engine.path.join(symlink)
+        coreloc = dir.join(engine.namespace, symlink)
+
+        # already linked
+        next if File.symlink?(gemloc)
+
+        # old one, move
+        if File.exists?(gemloc)
+          FileUtils.mv(gemloc, coreloc)
+        end
+
+        # create the symlink
+        File.symlink(coreloc, gemloc)
+      end
+    end
+  end
+end
+
 namespace :update do
   task :yarn do
     asset_engines.each do |engine|
@@ -34,7 +67,7 @@ namespace :update do
     puts
   end
 
-  task :actual_ui => ['update:clean', 'update:yarn', 'webpack:compile', 'update:print_engines']
+  task :actual_ui => ['update:clean', 'symlink:prepare', 'update:yarn', 'webpack:compile', 'update:print_engines']
 
   task :ui do
     # when running update:ui from ui-classic, asset_engines won't see the other engines
