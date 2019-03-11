@@ -49,11 +49,10 @@ namespace :symlink do
         next if File.symlink?(gemloc)
 
         # old one, move
-        if File.exists?(gemloc)
-          FileUtils.mv(gemloc, coreloc)
-        end
+        next unless File.exists?(gemloc)
 
-        # create the symlink
+        # move to core and symlink
+        FileUtils.mv(gemloc, coreloc)
         File.symlink(coreloc, gemloc)
       end
     end
