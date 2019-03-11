@@ -15,6 +15,7 @@ module.exports = class RailsEnginesPlugin {
   pathToEngine(path) {
     const pathLength = (path) => (path.match(/\//g) || []).length;
 
+    // FIXME: support vendor/engines/ too
     const candidates = (path, field) => Object.keys(this.engines)
       .filter((engine) => path.startsWith(this.engines[engine][field]))
       .sort((a, b) => {

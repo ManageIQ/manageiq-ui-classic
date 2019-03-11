@@ -51,6 +51,8 @@ namespace :symlink do
         # old one, move
         next unless File.exists?(gemloc)
 
+        # FIXME: what if File.exists?(coreloc)
+
         # move to core and symlink
         FileUtils.mv(gemloc, coreloc)
         File.symlink(coreloc, gemloc)
