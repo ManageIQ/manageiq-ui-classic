@@ -1,20 +1,49 @@
 namespace :symlink do
-  SYMLINKS=%w[
+  symlinks = %w[
     node_modules
     yarn.lock
   ]
 
+  def core_dir
+    Rails.root.join('vendor', 'engines')
+  end
+
+  # just creates all the necessary directories
   task :prepare do
-    dir = Rails.root.join('vendor', 'engines')
-    FileUtils.mkdir_p(dir)
+    FileUtils.mkdir_p(core_dir)
 
     asset_engines.each do |engine|
-      next unless File.file?(engine.path.join('package.json'))
-      FileUtils.mkdir_p(dir.join(engine.namespace))
+      FileUtils.mkdir_p(core_dir.join(engine.namespace))
+    end
+  end
 
-      SYMLINKS.each do |symlink|
+  # moves the files back to gem dirs - needed before `yarn`
+  task :unlink do
+    asset_engines.each do |engine|
+      symlinks.each do |symlink|
         gemloc = engine.path.join(symlink)
-        coreloc = dir.join(engine.namespace, symlink)
+        coreloc = core_dir.join(engine.namespace, symlink)
+
+        # not linked
+        # FIXME: could we skip this to move the thing to newer gems after update?
+        next unless File.symlink?(gemloc)
+
+        # not in core
+        next unless File.exists?(coreloc)
+
+        # move back
+        FileUtils.rm(gemloc)
+        FileUtils.mv(coreloc, gemloc)
+      end
+    end
+  end
+
+  # moves the files from gem dirs to core
+  task :link do
+    asset_engines.each do |engine|
+      symlinks.each do |symlink|
+        gemloc = engine.path.join(symlink)
+        coreloc = core_dir.join(engine.namespace, symlink)
 
         # already linked
         next if File.symlink?(gemloc)
@@ -67,7 +96,7 @@ namespace :update do
     puts
   end
 
-  task :actual_ui => ['update:clean', 'symlink:prepare', 'update:yarn', 'webpack:compile', 'update:print_engines']
+  task :actual_ui => ['update:clean', 'symlink:prepare', 'symlink:unlink', 'update:yarn', 'symlink:link', 'webpack:compile', 'update:print_engines']
 
   task :ui do
     # when running update:ui from ui-classic, asset_engines won't see the other engines
