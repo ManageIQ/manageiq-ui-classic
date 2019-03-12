@@ -613,8 +613,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Build a Catalog Items explorer tree
-  def build_ae_tree(type = :ae, name = :ae_tree)
+  # Build a tree for automate copy or catalog entrypoint selection
+  def build_ae_tree(type, name)
     # build the ae tree to show the tree select box for entry point
     if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
       nodes = @edit[:new][:fqname].split("/")
@@ -639,11 +639,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    if name == :ae_tree
-      TreeBuilderAeClass.new(name, type, @sb)
-    else
-      @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
-    end
+    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
   end
 
   # Build an audit object when configuration is changed in configuration and ops controllers
