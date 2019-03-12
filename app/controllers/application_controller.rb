@@ -614,7 +614,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Build a tree for automate copy or catalog entrypoint selection
-  def build_ae_tree(type, name)
+  def build_ae_tree(selectable)
     # build the ae tree to show the tree select box for entry point
     if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
       nodes = @edit[:new][:fqname].split("/")
@@ -639,7 +639,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
+    @automate_tree = TreeBuilderAutomate.new(:automate_tree, :automate, @sb, :selectable => selectable)
   end
 
   # Build an audit object when configuration is changed in configuration and ops controllers

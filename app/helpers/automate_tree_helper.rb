@@ -14,7 +14,7 @@ module AutomateTreeHelper
   private :submit_embedded_method
 
   def at_tree_select_toggle(edit_key)
-    build_ae_tree(:automate, :automate_tree)
+    build_ae_tree(MiqAeNamespace)
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do

@@ -5,16 +5,16 @@ class TreeBuilderAutomate < TreeBuilderAeClass
 
   def initialize(name, type, sandbox, build = true, **params)
     @controller = params[:controller]
+    @selectable = params[:selectable]
     super(name, type, sandbox, build)
   end
 
   def override(node, object, _pid, _options)
-    if @type == 'catalog'
+    if @selectable
       # Only the instance items should be clickable when selecting a catalog item entry point
-      node[:selectable] = false unless object.kind_of?(MiqAeInstance) # catalog
-    elsif object.kind_of?(MiqAeNamespace) && object.domain?
+      node[:selectable] = false unless object.kind_of?(@selectable)
       # Only the namespace items should be clickable when copying a class or instance
-      node[:selectable] = false
+      node[:selectable] = false if @selectable == MiqAeNamespace && !object.domain?
     end
   end
 

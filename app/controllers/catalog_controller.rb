@@ -135,7 +135,7 @@ class CatalogController < ApplicationController
     get_form_vars
     changed = (@edit[:new] != @edit[:current])
     # Build Catalog Items tree unless @edit[:ae_tree_select]
-    build_ae_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
+    build_ae_tree(MiqAeInstance) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
       if ansible_playbook?
@@ -371,7 +371,7 @@ class CatalogController < ApplicationController
     default_entry_point("generic", "composite") if params[:display]
     st_get_form_vars
     changed = (@edit[:new] != @edit[:current])
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_ae_tree(MiqAeInstance) # Build Catalog Items tree
     render :update do |page|
       page << javascript_prologue
       page.replace("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
@@ -440,7 +440,7 @@ class CatalogController < ApplicationController
 
     # if resource has been deleted from group, rearrange groups incase group is now empty.
     rearrange_groups_array
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_ae_tree(MiqAeInstance) # Build Catalog Items tree
     changed = (@edit[:new] != @edit[:current])
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     render :update do |page|
@@ -507,7 +507,7 @@ class CatalogController < ApplicationController
     @edit = session[:edit]
     @edit[:new][params[:typ]] = nil
     @edit[:new][ae_tree_key] = ''
-    # build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree unless @edit[:ae_tree_select]
+    # build_ae_tree(MiqAeInstance) # Build Catalog Items tree unless @edit[:ae_tree_select]
     render :update do |page|
       page << javascript_prologue
       @changed = (@edit[:new] != @edit[:current])
@@ -1316,7 +1316,7 @@ class CatalogController < ApplicationController
                        else
                          _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
                        end
-    build_ae_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_ae_tree(MiqAeInstance) # Build Catalog Items tree
   end
 
   def st_set_form_vars
