@@ -4,7 +4,6 @@ class TreeBuilderAutomate < TreeBuilderAeClass
   end
 
   def initialize(name, type, sandbox, build = true, **params)
-    @controller = params[:controller]
     @selectable = params[:selectable]
     super(name, type, sandbox, build)
   end
