@@ -23,7 +23,8 @@ cols:
 - address
 - spid
 - blocked_by
-- task_state
+- wait_event
+- wait_event_type
 - wait_resource
 - wait_time
 - command
@@ -49,12 +50,14 @@ col_order:
 - address
 - spid
 - blocked_by
-- task_state
+- wait_event
+- wait_event_type
 - wait_resource
 - wait_time
 - command
 
 col_formats:
+-
 -
 -
 -
@@ -76,7 +79,8 @@ headers:
 - Address
 - SPID
 - Blocked By
-- Task State
+- Wait Event
+- Wait Event Type
 - Waiting Resource
 - Wait Time
 - Command
