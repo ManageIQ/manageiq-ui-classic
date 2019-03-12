@@ -1,10 +1,10 @@
 class TreeBuilderAlertProfileObj < TreeBuilder
-  def initialize(name, type, sandbox, build = true, assign_to: nil, cat: nil, selected_nodes: nil)
-    @assign_to = assign_to
-    @cat = cat
-    @selected = selected_nodes
+  def initialize(name, type, sandbox, build = true, **params)
+    @assign_to = params[:assign_to]
+    @cat = params[:cat]
+    @selected = params[:selected_nodes]
     @cat_tree = @assign_to.ends_with?("-tags")
-    super(name, type, sandbox, build)
+    super(name, type, sandbox, build, **params)
   end
 
   def override(node, object, _pid, _options)

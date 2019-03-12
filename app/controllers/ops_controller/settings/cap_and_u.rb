@@ -130,7 +130,7 @@ module OpsController::Settings::CapAndU
                                               :cluster_tree,
                                               @sb,
                                               true,
-                                              @edit[:current])
+                                              :root => @edit[:current])
     end
     @edit[:current][:storages] = []
     @st_recs = {}
@@ -148,7 +148,7 @@ module OpsController::Settings::CapAndU
                                                   :datastore_tree,
                                                   @sb,
                                                   true,
-                                                  @edit[:current][:storages])
+                                                  :root => @edit[:current][:storages])
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit

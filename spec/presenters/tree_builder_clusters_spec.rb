@@ -14,7 +14,7 @@ describe TreeBuilderClusters do
                                                                                               :ho_disabled => @ho_disabled})
       @non_cluster_hosts = [{:id => 2, :name => 'Non Cluster Host', :capture => true}]
       @cluster = {:clusters => [{:id => 1, :name => 'Name', :capture => 'unsure'}], :non_cl_hosts => @non_cluster_hosts}
-      @cluster_tree = TreeBuilderClusters.new(:cluster, :cluster_tree, {}, true, @cluster)
+      @cluster_tree = TreeBuilderClusters.new(:cluster, :cluster_tree, {}, true, :root => @cluster)
     end
 
     it 'sets tree to have full ids, not lazy and no root' do

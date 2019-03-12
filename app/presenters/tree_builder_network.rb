@@ -6,9 +6,9 @@ class TreeBuilderNetwork < TreeBuilder
     node[:selectable] = false # if node[:image].nil? || !node[:image].include?('svg/currentstate-')
   end
 
-  def initialize(name, type, sandbox, build = true, root = nil)
-    sandbox[:network_root] = TreeBuilder.build_node_id(root) if root
-    @root = root
+  def initialize(name, type, sandbox, build = true, **params)
+    sandbox[:network_root] = TreeBuilder.build_node_id(params[:root]) if params[:root]
+    @root = params[:root]
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:network_root])
       @root = model.constantize.find_by(:id => id)

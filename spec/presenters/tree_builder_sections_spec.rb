@@ -49,9 +49,9 @@ describe TreeBuilderSections do
                                                :all_sections_tree,
                                                {},
                                                true,
-                                               @compare,
-                                               @controller_name,
-                                               @current_tenant)
+                                               :data            => @compare,
+                                               :controller_name => @controller_name,
+                                               :current_tenant  => @current_tenant)
     end
     it 'set init options correctly' do
       tree_options = @sections_tree.send(:tree_init_options)

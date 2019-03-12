@@ -11,7 +11,7 @@ describe TreeBuilderNetwork do
       lan = FactoryBot.create(:lan, :guest_devices => [guest_device_with_vm])
       switch = FactoryBot.create(:switch, :guest_devices => [guest_device], :lans => [lan])
       network = FactoryBot.create(:host, :switches => [switch])
-      @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, network)
+      @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, :root => network)
     end
 
     it 'returns Host as root' do

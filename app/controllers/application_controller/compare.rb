@@ -47,9 +47,9 @@ module ApplicationController::Compare
                                              :all_sections_tree,
                                              @sb,
                                              true,
-                                             @compare,
-                                             controller_name,
-                                             current_tenant.name)
+                                             :data            => @compare,
+                                             :controller_name => controller_name,
+                                             :current_tenant  => current_tenant.name)
     compare_to_json(@compare)
     if params[:ppsetting] # Came in from per page setting
       replace_main_div({:partial => "layouts/compare"}, {:spinner_off => true})
@@ -369,9 +369,9 @@ module ApplicationController::Compare
       :all_sections_tree,
       @sb,
       true,
-      @compare,
-      controller_name,
-      current_tenant.name
+      :data            => @compare,
+      :controller_name => controller_name,
+      :current_tenant  => current_tenant.name
     )
     drift_to_json(@compare)
     drop_breadcrumb(:name => _("'%{name}' Drift Analysis") % {:name => @drift_obj.name},

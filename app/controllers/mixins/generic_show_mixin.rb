@@ -143,7 +143,7 @@ module Mixins
       drop_breadcrumb(:name => _("%{name} (All VMs - Tree View)") % {:name => @record.name},
                       :url  => show_link(@record, :display => "descendant_vms", :treestate => true))
       self.x_active_tree = :datacenter_tree
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, @sb, true, @record)
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, @sb, true, :root => @record)
     end
 
     def display_all_vms
