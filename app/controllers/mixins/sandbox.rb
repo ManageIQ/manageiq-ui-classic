@@ -111,6 +111,7 @@ module Sandbox
   ACCORD_WHITELIST = %w(
     ab
     action
+    ae
     alert
     alert_profile
     automation_manager_providers
@@ -125,7 +126,6 @@ module Sandbox
     configuration_manager_cs_filter
     configuration_manager_providers
     customization_templates
-    datastores
     db
     diagnostics
     dialog_import_export
