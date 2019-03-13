@@ -130,6 +130,7 @@ module.exports = {
       'react': resolve(dirname(__filename), '../../node_modules', 'react'),
       'bootstrap-select': '@pf3/select',  // never use vanilla bootstrap-select
       'moment': resolve(dirname(__filename), '../../node_modules', 'moment'), // fix moment-strftime peerDependency issue
+      'angular': resolve(dirname(__filename), '../../node_modules', 'angular'),  // fix for "Tried to load angular more than once"
     },
     extensions: settings.extensions,
     modules: [],
