@@ -1,5 +1,5 @@
 class ApplicationController
-  Feature = Struct.new(:role, :role_any, :name, :accord_name, :title, :container) do
+  Feature = Struct.new(:role, :role_any, :name, :accord_name, :title) do
     def self.new_with_hash(hash)
       feature = new(*members.collect { |m| hash[m] })
       feature.autocomplete
@@ -8,13 +8,12 @@ class ApplicationController
 
     def autocomplete
       self.accord_name = name.to_s unless accord_name
-      self.container   = "#{accord_name}_accord" unless container
     end
 
     def accord_hash
       {:name      => accord_name,
        :title     => title,
-       :container => container}
+       :container => "#{accord_name}_accord"}
     end
 
     def tree_name
