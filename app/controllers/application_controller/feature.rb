@@ -1,5 +1,5 @@
 class ApplicationController
-  Feature = Struct.new(:role, :role_any, :name, :accord_name, :tree_name, :title, :container) do
+  Feature = Struct.new(:role, :role_any, :name, :accord_name, :title, :container) do
     def self.new_with_hash(hash)
       feature = new(*members.collect { |m| hash[m] })
       feature.autocomplete
@@ -8,7 +8,6 @@ class ApplicationController
 
     def autocomplete
       self.accord_name = name.to_s unless accord_name
-      self.tree_name   = "#{name}_tree".to_sym unless tree_name
       self.container   = "#{accord_name}_accord" unless container
     end
 
@@ -18,14 +17,14 @@ class ApplicationController
        :container => container}
     end
 
-    def tree_list_name
-      tree_name.to_s
+    def tree_name
+      "#{name}_tree"
     end
 
     def build_tree(sandbox)
       builder = TreeBuilder.class_for_type(name)
       raise _("No TreeBuilder found for feature '%{name}'") % {:name => name} unless builder
-      builder.new(tree_name, name, sandbox)
+      builder.new(tree_name.to_sym, name, sandbox)
     end
 
     def self.allowed_features(features)
