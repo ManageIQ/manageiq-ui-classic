@@ -27,10 +27,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 "maxLength": 40,
                 "name": "name",
                 "validate": Array [
-                  Object {
-                    "message": "Name can't be blank",
-                    "type": "required-validator",
-                  },
+                  [Function],
                 ],
                 "validateOnMount": true,
               },
@@ -120,10 +117,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 "maxLength": 40,
                 "name": "name",
                 "validate": Array [
-                  Object {
-                    "message": "Name can't be blank",
-                    "type": "required-validator",
-                  },
+                  [Function],
                 ],
                 "validateOnMount": true,
               },

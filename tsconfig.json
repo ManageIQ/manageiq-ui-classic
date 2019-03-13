@@ -12,7 +12,8 @@
       "app/javascript/typings"
     ],
     "allowJs": true,
-    "jsx": "react"
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
   },
   "exclude": [
     "**/*.spec.ts",
