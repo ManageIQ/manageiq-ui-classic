@@ -1295,19 +1295,26 @@ class ApplicationController < ActionController::Base
              end
 
       id = @search_text if @search_text =~ /^\d+$/
-      return (
-        if id
-          ["#{view.db_class.table_name}.id = ?", id]
-        else
-          if ::Settings.server.case_sensitive_name_search
-            ["#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt]
-          else
-            ["lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase]
-          end
-        end
-      )
+      condition = [[]]
+      if id
+        add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id)
+      end
+
+      if ::Settings.server.case_sensitive_name_search
+        add_to_search_condition(condition, "#{view.db_class.table_name}.#{view.col_order.first} like ? escape '`'", stxt)
+      else
+        add_to_search_condition(condition, "lower(#{view.db_class.table_name}.#{view.col_order.first}) like ? escape '`'", stxt.downcase)
+      end
+      condition[0] = condition[0].join(" OR ")
+      return condition.flatten
     end
     nil
+  end
+
+  def add_to_search_condition(condition, query, values)
+    condition[0] << query unless query.nil?
+    condition << values unless values.nil?
+    condition
   end
 
   def perpage_key(dbname)
