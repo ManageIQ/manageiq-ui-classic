@@ -4,7 +4,7 @@ class TreeBuilderServices < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => false, :lazy => true}
+    {:add_root => false, :lazy => true, :allow_reselect => true}
   end
 
   def root_options
@@ -40,18 +40,8 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, options)
-    case object[:id]
-    when 'my', 'global'
-      # Get My Filters and Global Filters
-      count_only_or_objects(count_only, x_get_search_results(object))
-    when 'asrv', 'rsrv'
-      retired = object[:id] != 'asrv'
-      services = Rbac.filtered(Service.where(:retired => retired, :display => true))
-      return sevices.size if count_only
-
-      MiqPreloader.preload(services.to_a, :picture)
-      Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
-    end
+    # Get My Filters and Global Filters
+    count_only_or_objects(count_only, x_get_search_results(object)) if %w(my global).include?(object[:id])
   end
 
   def x_get_search_results(object)
