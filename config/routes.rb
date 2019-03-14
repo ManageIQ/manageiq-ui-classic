@@ -2967,6 +2967,7 @@ Rails.application.routes.draw do
         name_changed
         policy_sim
         policy_sim_add
+        policy_sim_cancel
         policy_sim_remove
         provision
         reconfigure
