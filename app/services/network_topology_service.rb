@@ -70,7 +70,7 @@ class NetworkTopologyService < TopologyService
     data[:status]       = entity_status(entity)
     data[:display_kind] = entity_display_type(entity)
 
-    if entity.kind_of?(Host) || entity.kind_of?(Vm)
+    if (entity.kind_of?(Host) || entity.kind_of?(Vm)) && entity.try(:ems_id)
       data[:provider] = entity.ext_management_system.name
     end
 
