@@ -27,7 +27,7 @@
              :post_check         => post_check,
              :autoload           => autoload,
              :allow_reselect     => allow_reselect,
-             :controller         => j(request.parameters[:controller]),
+             :controller         => controller_name,
              :silent_activate    => @explorer && tree_name == x_active_tree.to_s,
              :select_node        => select_node,
              :highlight_changes  => highlight_changes,
