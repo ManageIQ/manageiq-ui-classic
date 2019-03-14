@@ -12,21 +12,20 @@ describe TreeBuilderInstances do
 
     allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
 
-    @instances_tree = TreeBuilderInstances.new(:instances, :instances_tree, {}, nil)
+    @instances_tree = TreeBuilderInstances.new(:instances_tree, :instances, {}, nil)
   end
 
   it 'sets tree to have leaf and not lazy' do
     root_options = @instances_tree.tree_init_options
 
-    expect(root_options).to eq(:leaf => 'VmCloud', :lazy => false)
+    expect(root_options).to eq(:leaf => 'VmCloud', :allow_reselect => true)
   end
 
   it 'sets tree to have full ids, not lazy and no root' do
-    locals = @instances_tree.set_locals_for_render
+    locals = @instances_tree.send(:set_locals_for_render)
 
     expect(locals[:tree_id]).to eq("instances_treebox")
     expect(locals[:tree_name]).to eq("instances_tree")
-    expect(locals[:autoload]).to eq(true)
   end
 
   it 'sets root correctly' do

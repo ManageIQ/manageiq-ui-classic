@@ -3,9 +3,8 @@ class TreeBuilderConfiguredSystems < TreeBuilder
 
   private
 
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true, :allow_reselect => true)
+  def tree_init_options
+    {:lazy => true, :allow_reselect => true}
   end
 
   def x_get_tree_custom_kids(object, count_only, options)

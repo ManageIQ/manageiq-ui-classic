@@ -16,7 +16,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   end
 
   def tree_init_options
-    {:lazy => false}
+    {}
   end
 
   def set_locals_for_render

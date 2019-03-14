@@ -4,12 +4,7 @@ class TreeBuilderServices < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => false}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+    {:add_root => false, :lazy => true}
   end
 
   def root_options

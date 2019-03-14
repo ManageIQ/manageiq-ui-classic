@@ -19,16 +19,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   private
 
   def set_locals_for_render
-    locals = {
-      :checkboxes   => true,
-      :three_checks => true,
-      :check_url    => "/ops/rbac_role_field_changed/",
-      :onclick      => nil,
-      :post_check   => true
-    }
-
+    locals = {:check_url => "/ops/rbac_role_field_changed/", :onclick => nil}
     locals[:oncheck] = "miqOnCheckGeneric" if @editable
-
     super.merge!(locals)
   end
 
@@ -71,12 +63,14 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :lazy           => false,
       :add_root       => true,
       :role           => @role,
       :features       => @features,
       :editable       => @editable,
-      :node_id_prefix => node_id_prefix
+      :node_id_prefix => node_id_prefix,
+      :checkboxes     => true,
+      :three_checks   => true,
+      :post_check     => true
     }
   end
 

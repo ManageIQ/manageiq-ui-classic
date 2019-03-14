@@ -15,7 +15,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     end
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
     node[:selectable] = false
-    node[:checkable] = options[:checkboxes] if options.key?(:checkboxes)
+    node[:checkable] = @edit.present? || @assign_to.present?
   end
 
   def initialize(name, type, sandbox, build, **params)
@@ -31,15 +31,15 @@ class TreeBuilderBelongsToHac < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids   => true,
-     :add_root   => false,
-     :lazy       => false,
-     :checkboxes => @edit.present? || @assign_to.present?}
+    {
+      :full_ids          => true,
+      :add_root          => false,
+      :checkboxes        => true,
+      :highlight_changes => !@assign_to
+    }
   end
 
   def set_locals_for_render
-    locals = super
-
     oncheck, check_url = if @assign_to
                            ["miqOnCheckGeneric", "/miq_policy/alert_profile_assign_changed/"]
                          elsif @edit
@@ -48,11 +48,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
                            [nil, "/ops/rbac_group_field_changed/#{group_id}___"]
                          end
 
-    locals.merge!(:oncheck           => oncheck,
-                  :check_url         => check_url,
-                  :highlight_changes => @assign_to ? false : true,
-                  :checkboxes        => true,
-                  :onclick           => false)
+    super.merge!(:oncheck => oncheck, :check_url => check_url, :onclick => false)
   end
 
   def root_options

@@ -35,7 +35,13 @@ describe TreeBuilderSmartproxyAffinity do
 
     it 'set init options correctly' do
       tree_options = @smartproxy_affinity_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => false, :add_root => false, :lazy => false)
+      expect(tree_options).to eq(
+        :full_ids     => false,
+        :add_root     => false,
+        :checkboxes   => true,
+        :three_checks => true,
+        :post_check   => true
+      )
     end
     it 'set locals for render correctly' do
       locals = @smartproxy_affinity_tree.send(:set_locals_for_render)

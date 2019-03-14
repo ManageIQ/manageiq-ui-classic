@@ -9,11 +9,7 @@ class TreeBuilderReportWidgets < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true}
-  end
-
-  def set_locals_for_render
-    super.merge!(:autoload => true)
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options

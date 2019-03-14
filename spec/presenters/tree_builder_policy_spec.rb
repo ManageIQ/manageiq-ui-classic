@@ -3,7 +3,7 @@ describe TreeBuilderPolicy do
     it "is explicitly not lazy" do
       tree = TreeBuilderPolicy.new(:policy_tree, :policy, {}, true)
       options = tree.instance_variable_get(:@options)
-      expect(options[:lazy]).to eq(false)
+      expect(options[:lazy]).not_to be_truthy
     end
   end
 end

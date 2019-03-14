@@ -4,12 +4,7 @@ class TreeBuilderRegion < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => MiqEnterprise.my_enterprise.is_enterprise?}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+    {:add_root => MiqEnterprise.my_enterprise.is_enterprise?, :lazy => true}
   end
 
   # Get root nodes count/array for explorer tree

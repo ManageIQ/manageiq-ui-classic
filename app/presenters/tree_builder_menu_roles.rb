@@ -29,7 +29,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   end
 
   def tree_init_options
-    { :lazy => false, :add_root => true }
+    {:add_root => true}
   end
 
   def root_options

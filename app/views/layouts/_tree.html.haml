@@ -1,5 +1,4 @@
 - click_url                   ||= false
-- cookie_prefix               ||= ""
 - check_url                   ||= false
 - select_node                 ||= false
 - checkboxes                  ||= false
@@ -18,7 +17,6 @@
 - options = {:tree_id            => tree_id,
              :tree_name          => tree_name,
              :group_changed      => session[:group_changed],
-             :cookie_id          => "#{cookie_prefix}#{tree_name}",
              :checkboxes         => checkboxes,
              :hierarchical_check => three_checks,
              :onclick            => onclick,

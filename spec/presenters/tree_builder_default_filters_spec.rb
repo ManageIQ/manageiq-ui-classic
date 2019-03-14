@@ -66,7 +66,7 @@ describe TreeBuilderDefaultFilters do
 
     it 'is not lazy' do
       tree_options = @default_filters_tree.send(:tree_init_options)
-      expect(tree_options[:lazy]).to eq(false)
+      expect(tree_options[:lazy]).not_to be_truthy
     end
 
     it 'has no root' do

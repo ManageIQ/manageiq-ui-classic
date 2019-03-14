@@ -22,7 +22,7 @@ describe TreeBuilderComplianceHistory do
     end
     it 'is not lazy' do
       tree_options = @ch_tree.send(:tree_init_options)
-      expect(tree_options[:lazy]).to eq(false)
+      expect(tree_options[:lazy]).not_to be_truthy
     end
     it 'has no root' do
       tree_options = @ch_tree.send(:tree_init_options)

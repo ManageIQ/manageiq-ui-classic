@@ -7,13 +7,12 @@ class TreeBuilderDiagnostics < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => false, :lazy => false, :open_all => true}
+    {:add_root => false, :open_all => true}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:autoload  => false,
-                  :click_url => "/ops/diagnostics_tree_select/",
+    locals.merge!(:click_url => "/ops/diagnostics_tree_select/",
                   :onclick   => "miqOnClickDiagnostics")
   end
 

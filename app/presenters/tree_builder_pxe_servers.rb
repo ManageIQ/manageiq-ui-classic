@@ -4,12 +4,7 @@ class TreeBuilderPxeServers < TreeBuilder
   private
 
   def tree_init_options
-    {}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+    {:lazy => true}
   end
 
   def root_options

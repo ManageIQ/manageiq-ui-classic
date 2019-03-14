@@ -14,12 +14,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
   private
 
   def tree_init_options
-    {:lazy => false, :full_ids => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true, :cookie_prefix => 'edit_')
+    {:full_ids => true}
   end
 
   def root_options

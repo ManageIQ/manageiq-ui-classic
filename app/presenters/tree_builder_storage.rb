@@ -2,12 +2,7 @@ class TreeBuilderStorage < TreeBuilder
   private
 
   def tree_init_options
-    {}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true, :allow_reselect => true)
+    {:lazy => true, :allow_reselect => true}
   end
 
   def root_options

@@ -1,6 +1,6 @@
 class TreeBuilderAutomate < TreeBuilderAeClass
   def tree_init_options
-    {:full_ids => false}
+    {:full_ids => false, :lazy => true}
   end
 
   def initialize(name, type, sandbox, build = true, **params)
@@ -27,11 +27,6 @@ class TreeBuilderAutomate < TreeBuilderAeClass
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(:onclick      => "miqOnClickAutomate",
-                  :exp_tree     => false,
-                  :autoload     => true,
-                  :base_id      => "root",
-                  :highlighting => true)
+    super.merge!(:onclick => "miqOnClickAutomate")
   end
 end

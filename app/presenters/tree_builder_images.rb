@@ -5,18 +5,10 @@ class TreeBuilderImages < TreeBuilder
 
   def tree_init_options
     {
-      :leaf => "ManageIQ::Providers::CloudManager::Template"
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(
-      :tree_id        => "images_treebox",
-      :tree_name      => "images_tree",
-      :autoload       => true,
+      :leaf           => "ManageIQ::Providers::CloudManager::Template",
+      :lazy           => true,
       :allow_reselect => TreeBuilder.hide_vms
-    )
+    }
   end
 
   def root_options

@@ -64,6 +64,10 @@ class TreeBuilder
   # * features - used by the RBAC features tree only
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only
+  # * allow_reselect - fire the onselect event if a selected node is reselected
+  # * highlight_changes - highlight the changes in checkboxes differing from initial
+  # * three_checks - hierarchically check the parent if all children are checked
+  # * post_check - some kind of post-processing hierarchical checks
   def tree_init_options
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
@@ -175,9 +179,7 @@ class TreeBuilder
         :klass_name => self.class.name,
         :leaf       => @options[:leaf],
         :add_root   => true,
-        :open_nodes => [],
-        :lazy       => true,
-        :checkboxes => false
+        :open_nodes => []
       )
     )
   end
@@ -197,10 +199,15 @@ class TreeBuilder
 
   def set_locals_for_render
     {
-      :tree_id    => "#{@name}box",
-      :tree_name  => @name.to_s,
-      :bs_tree    => @bs_tree,
-      :checkboxes => false
+      :tree_id           => "#{@name}box",
+      :tree_name         => @name.to_s,
+      :bs_tree           => @bs_tree,
+      :checkboxes        => @options[:checkboxes],
+      :autoload          => @options[:lazy],
+      :allow_reselect    => @options[:allow_reselect],
+      :highlight_changes => @options[:highlight_changes],
+      :three_checks      => @options[:three_checks],
+      :post_check        => @options[:post_check]
     }
   end
 
@@ -275,10 +282,7 @@ class TreeBuilder
                     !!options[:open_all]                                               ||
                     node[:expand]                                                      ||
                     @tree_state.x_tree(@name)[:active_node] == node[:key]
-    if ancestry_kids ||
-       load_children ||
-       node[:expand] ||
-       @options[:lazy] == false
+    if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, options, false, parents)).map do |o|
         x_build_node(o, node[:key], options)

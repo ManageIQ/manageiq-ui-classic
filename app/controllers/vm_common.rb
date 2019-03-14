@@ -1202,7 +1202,7 @@ module VmCommon
         locals[:submit_button]   = @sb[:action] != 'miq_request_new' # need submit button on the screen
         locals[:continue_button] = @sb[:action] == 'miq_request_new' # need continue button on the screen
         update_buttons(locals) if @edit && @edit[:buttons].present?
-        presenter[:clear_tree_cookies] = "prov_trees"
+        presenter[:clear_tree_cookies] = "all_tags_tree"
       end
 
       if ['snapshot_add'].include?(@sb[:action])
