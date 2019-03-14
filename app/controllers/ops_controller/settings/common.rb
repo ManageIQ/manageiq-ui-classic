@@ -998,95 +998,100 @@ module OpsController::Settings::Common
       @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
     end
     (600.megabytes...1000.megabytes).step(100.megabytes) do |x|
-      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it p     uts 1000MB instead of 1GB in pulldown
+      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
       @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
     end
     (1.gigabytes...1.5.gigabytes).step(100.megabytes) do |x|
       # adding values in 100 MB increments from 1gb to 1.5 gb
-      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+      @sb[:threshold] << [number_to_human_size(x, :significant => false), x.to_i]
     end
 
     cwb = @edit[:current].config[:workers][:worker_base] ||= {}
     qwb = (cwb[:queue_worker_base] ||= {})
     w = (qwb[:generic_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqGenericWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqGenericWorker, :memory_threshold) || 400.megabytes
     @sb[:generic_threshold] = []
     @sb[:generic_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:priority_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold) || 200.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqPriorityWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqPriorityWorker, :memory_threshold) || 200.megabytes
     @sb[:priority_threshold] = []
     @sb[:priority_threshold] = copy_array(@sb[:threshold])
 
     qwb[:ems_metrics_collector_worker] ||= {}
     qwb[:ems_metrics_collector_worker][:defaults] ||= {}
     w = qwb[:ems_metrics_collector_worker][:defaults]
-    raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
+    raw = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker)
     w[:count] = raw[:defaults][:count] || 2
     w[:memory_threshold] = raw[:defaults][:memory_threshold] || 400.megabytes
     @sb[:ems_metrics_collector_threshold] = []
     @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:ems_metrics_processor_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
     @sb[:ems_metrics_processor_threshold] = []
     @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
 
     w = (qwb[:smart_proxy_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :count) || 3
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
     @sb[:smart_proxy_threshold] = []
     @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
 
     qwb[:ems_refresh_worker] ||= {}
     qwb[:ems_refresh_worker][:defaults] ||= {}
     w = qwb[:ems_refresh_worker][:defaults]
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, %i(defaults memory_threshold)) || 400.megabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsRefreshWorker, :defaults, :memory_threshold) || 400.megabytes
     @sb[:ems_refresh_threshold] = []
     (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     wb = @edit[:current].config[:workers][:worker_base]
     w = (wb[:event_catcher] ||= {})
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold) || 1.gigabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEventCatcher, :memory_threshold) || 1.gigabytes
     @sb[:event_catcher_threshold] = []
     (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     w = (wb[:vim_broker_worker] ||= {})
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
     @sb[:vim_broker_threshold] = []
     (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     w = (wb[:ui_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
+    w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2
 
     w = (qwb[:reporting_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqReportingWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqReportingWorker, :memory_threshold) || 400.megabytes
     @sb[:reporting_threshold] = []
     @sb[:reporting_threshold] = copy_array(@sb[:threshold])
 
     w = (wb[:web_service_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
-    w[:memory_threshold] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold) || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :memory_threshold) || 400.megabytes
     @sb[:web_service_threshold] = []
     @sb[:web_service_threshold] = copy_array(@sb[:threshold])
 
     w = (wb[:websocket_worker] ||= {})
-    w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebsocketWorker, :count) || 2
+    w[:count] = get_worker_setting(@edit[:current], MiqWebsocketWorker, :count) || 2
 
     @edit[:new].config = copy_hash(@edit[:current].config)
     session[:log_depot_default_verify_status] = true
     @in_a_form = true
+  end
+
+  private def get_worker_setting(config, klass, *setting)
+    settings = klass.worker_settings(:config => config, :raw => true)
+    setting.empty? ? settings : settings.fetch_path(setting).to_i_with_method
   end
 
   def settings_set_form_vars_logos
