@@ -215,9 +215,7 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree ||= 'policy_profile_tree'
     self.x_active_accord ||= 'policy_profile'
 
-    allowed_features = ApplicationController::Feature.allowed_features(features)
-    @trees = allowed_features.map { |feature| feature.build_tree(@sb) }
-    @accords = allowed_features.map(&:accord_hash)
+    build_accordions_and_trees
 
     if params[:profile].present? # If profile record id passed in, position on that node
       self.x_active_tree = 'policy_profile_tree'
