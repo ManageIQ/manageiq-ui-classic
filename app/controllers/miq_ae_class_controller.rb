@@ -1756,7 +1756,6 @@ class MiqAeClassController < ApplicationController
     [ApplicationController::Feature.new_with_hash(:role        => "miq_ae_class_explorer",
                                                   :role_any    => true,
                                                   :name        => :ae,
-                                                  :accord_name => "datastores",
                                                   :title       => _("Datastore"))]
   end
 

@@ -274,7 +274,7 @@ class OpsController < ApplicationController
 
   def set_active_elements(feature, _x_node_to_set = nil)
     if feature
-      self.x_active_tree ||= feature.tree_list_name
+      self.x_active_tree ||= feature.tree_name
       self.x_active_accord ||= feature.accord_name
     end
     set_active_tab_and_node
