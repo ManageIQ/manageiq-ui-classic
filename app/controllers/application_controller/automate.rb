@@ -100,8 +100,6 @@ module ApplicationController::Automate
 
   # Reset or first time in
   def resolve_button_reset_or_none
-    @accords = [{:name => "resolve", :title => _("Options"), :container => "resolve_form_div"}]
-
     if params[:simulate] == "simulate"
       @resolve = session[:resolve]
       @resolve[:ae_result] = nil
