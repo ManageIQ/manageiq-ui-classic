@@ -779,6 +779,24 @@ describe ChargebackController do
     end
 
     context 'changing Assigned To, for assignments' do
+      before do
+        allow(controller).to receive(:x_node).and_return("xx-Storage")
+        @edit_new = assigns(:edit)[:new]
+      end
+
+      it 'sets/resets data based upon Assign To selection' do
+        post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage'}
+
+        expect(@edit_new[:cbtag_cat]).to be(nil)
+        expect(@edit_new[:cblabel_key]).to be(nil)
+
+        post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage-tags'}
+        expect(@edit_new[:cbtag_cat]).to eq(assigns(:edit)[:current][:cbtag_cat])
+        expect(@edit_new[:cblabel_key]).to eq(assigns(:edit)[:current][:cblabel_key])
+      end
+    end
+
+    context 'changing Assigned To, for assignments' do
       it 'hides buttons as no change has been made' do
         post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage'}
         expect(response.body).to include("miqButtons('hide');")

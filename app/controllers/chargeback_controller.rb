@@ -828,6 +828,11 @@ class ChargebackController < ApplicationController
     @edit[:new][:cblabel_key] = nil if params[:cbshow_typ]
     @edit[:new][:cblabel_key] = params[:cblabel_key].to_s if params[:cblabel_key]
 
+    # if Assign To has been changed back to previously saved value, reset all data on screen
+    if params[:cbshow_typ] && params[:cbshow_typ] == @edit[:current][:cbshow_typ]
+      cb_assign_set_form_vars
+    end
+
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       get_categories_all
       get_tags_all
