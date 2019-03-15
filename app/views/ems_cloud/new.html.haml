@@ -1,4 +1,10 @@
 - url = @ems.persisted? ? ems_clouds_path(@ems) : ems_clouds_path
+= react('CloudProviderForm', {:openStackApiVersion => @openstack_api_versions,
+                              :providerRegions => @provider_regions,
+                              :vmWareCloudApiVersions => @vmware_cloud_api_versions,
+                              :openstackSecurityProtocols => @openstack_security_protocols,
+                              :amqpSecurityProtocol => @amqp_security_protocols})
+
 = form_for(@ems,
            :url    => url,
            :method => :post,

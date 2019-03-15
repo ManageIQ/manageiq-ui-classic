@@ -8,13 +8,13 @@ Validators.messages = {
   required: __('Required'),
 };
 
-const buttonLabels = {
+const defaultButtonsLabels = {
   submitLabel: __('Save'),
   resetLabel: __('Reset'),
   cancelLabel: __('Cancel'),
 };
 
-const MiqFormRenderer = props => (
+const MiqFormRenderer = ({ buttonsLabels, ...props }) => (
   <FormRender
     formFieldsMapper={formFieldsMapper}
     layoutMapper={layoutMapper}
@@ -22,8 +22,12 @@ const MiqFormRenderer = props => (
       'pristine',
       'invalid',
     ]}
-    {...buttonLabels}
+    buttonsLabels={{
+      ...defaultButtonsLabels,
+      ...buttonsLabels,
+    }}
     {...props}
   />
 );
+
 export default MiqFormRenderer;

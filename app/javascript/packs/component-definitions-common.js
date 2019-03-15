@@ -19,6 +19,7 @@ import TaggingWrapperConnected from '../components/taggingWrapper';
 import '@manageiq/react-ui-components/dist/tagging.css';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal.jsx';
 
+import CloudProviderForm from '../components/cloud-provider/cloud-provider-form';
 /**
 * Add component definitions to this file.
 * example of component definition:
@@ -44,3 +45,4 @@ ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('TaggingWrapperConnected', TaggingWrapperConnected);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
+ManageIQ.component.addReact('CloudProviderForm', CloudProviderForm);

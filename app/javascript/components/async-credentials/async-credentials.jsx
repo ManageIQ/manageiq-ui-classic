@@ -76,26 +76,23 @@ const AsyncCredentials = ({
       <FieldProvider initialValue={!!edit} name={name} validate={value => (value === false ? asyncError : undefined)}>
         {({ input, meta }) => (
           <FormGroup validationState={meta.error ? 'error' : null}>
-            <Col md={2} componentClass="label" className="control-label" />
-            <Col md={8}>
-              <input type="hidden" {...input} />
-              <CheckErrors subscription={{ valid: true, invalid: true, active: true }} names={asyncFields} FieldProvider={FieldProvider}>
-                {valid => (
-                  <Fragment>
-                    <Button
-                      bsSize="small"
-                      bsStyle="primary"
-                      onClick={() => handleAsyncValidation(formOptions, name, asyncFields)}
-                      disabled={valid.includes(false) || validating}
-                    >
-                      {validating ? validationProgressLabel : validateLabel}
-                      {validating && <ButtonSpinner /> }
-                    </Button>
-                    {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
-                  </Fragment>
-                )}
-              </CheckErrors>
-            </Col>
+            <input type="hidden" {...input} />
+            <CheckErrors subscription={{ valid: true, invalid: true, active: true }} names={asyncFields} FieldProvider={FieldProvider}>
+              {valid => (
+                <Fragment>
+                  <Button
+                    bsSize="small"
+                    bsStyle="primary"
+                    onClick={() => handleAsyncValidation(formOptions, name, asyncFields)}
+                    disabled={valid.includes(false) || validating}
+                  >
+                    {validating ? validationProgressLabel : validateLabel}
+                    {validating && <ButtonSpinner /> }
+                  </Button>
+                  {meta.error && <HelpBlock>{asyncError}</HelpBlock>}
+                </Fragment>
+              )}
+            </CheckErrors>
           </FormGroup>
         )}
       </FieldProvider>
