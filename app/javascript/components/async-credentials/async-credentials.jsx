@@ -22,6 +22,7 @@ const AsyncCredentials = ({
   fields,
   name,
   asyncValidate,
+  edit,
 }) => {
   const [asyncError, setAsyncError] = useState(validateDefaultError);
   const [validating, setValidating] = useState(false);
@@ -72,7 +73,7 @@ const AsyncCredentials = ({
         isDisabled: field.isDisabled || validating,
         onChange: value => enahncedChange(value, field.name, name, formOptions.change),
       })), formOptions)}
-      <FieldProvider name={name} validate={value => (value === false ? asyncError : undefined)}>
+      <FieldProvider initialValue={!!edit} name={name} validate={value => (value === false ? asyncError : undefined)}>
         {({ input, meta }) => (
           <FormGroup validationState={meta.error ? 'error' : null}>
             <Col md={2} componentClass="label" className="control-label" />
@@ -113,12 +114,14 @@ AsyncCredentials.propTypes = {
   validationProgressLabel: PropTypes.string,
   validateDefaultError: PropTypes.string,
   asyncValidate: PropTypes.func.isRequired,
+  edit: PropTypes.bool,
 };
 
 AsyncCredentials.defaultProps = {
   validateLabel: __('Validate'),
   validationProgressLabel: __('Validating'),
   validateDefaultError: __('Validation Required'),
+  edit: false,
 };
 
 export default AsyncCredentials;
