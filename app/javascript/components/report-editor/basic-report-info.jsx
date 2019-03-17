@@ -5,6 +5,13 @@ import { FinalFormField } from '@manageiq/react-ui-components/dist/forms';
 import { cleanVirtualDom } from '../../miq-component/helpers';
 import { required } from '../../forms/validators';
 
+const formRequest = (data, url, options) => miqAjax(url, data, options);
+
+const onBlur = (event, onBlur, name, state, url) => {
+  onBlur(event);
+  formRequest({ [name]: state[name] }, url, {observeQueue: true});
+};
+
 const BasicReportInfo = ({ name, title, url }) => {
   // set Initial values if editing
   const [initialValues] = useState({ name, title });
@@ -12,7 +19,7 @@ const BasicReportInfo = ({ name, title, url }) => {
   useEffect(() => cleanVirtualDom());
   return (
     <Form initialValues={initialValues} onSubmit={() => {}}>
-      {() => (
+      {({ form: { getState } }) => (
         <React.Fragment>
           <Field
             label={__('Menu Name')}
@@ -20,10 +27,11 @@ const BasicReportInfo = ({ name, title, url }) => {
             id="name"
             maxLength={40}
             validate={required}
-            extraProps={{
-              'data-miq_observe': `{"interval" : ".5", "url": "${url}"}`,
-            }}
-            component={FinalFormField}
+            render={({ input, ...rest }) => (
+              <FinalFormField
+                input={{ ...input, onBlur: event => onBlur(event, input.onBlur, input.name, getState().values, url) }}
+                {...rest}
+              />)}
           />
           <Field
             label={__('Title')}
@@ -31,10 +39,11 @@ const BasicReportInfo = ({ name, title, url }) => {
             id="title"
             maxLength={60}
             validate={required}
-            extraProps={{
-              'data-miq_observe': `{"interval" : ".5", "url": "${url}"}`,
-            }}
-            component={FinalFormField}
+            render={({ input, ...rest }) => (
+              <FinalFormField
+                input={{ ...input, onBlur: event => onBlur(event, input.onBlur, input.name, getState().values, url) }}
+                {...rest}
+              />)}
           />
         </React.Fragment>
       )}
