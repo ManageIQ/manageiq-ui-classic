@@ -2,6 +2,7 @@
 
 exports[`match snapshot 1`] = `
 <StateManager
+  className="final-form-select"
   clearable={false}
   defaultInputValue=""
   defaultMenuIsOpen={false}
@@ -9,6 +10,7 @@ exports[`match snapshot 1`] = `
   ignoreCase={true}
   name="form-field-name"
   onChange={[Function]}
+  optionClassName="selected-option final-form-select-option"
   options={
     Array [
       Object {
@@ -20,6 +22,23 @@ exports[`match snapshot 1`] = `
         "value": 2,
       },
     ]
+  }
+  placeholder="Select tag value"
+  styles={
+    Object {
+      "container": [Function],
+      "control": [Function],
+      "dropdownIndicator": [Function],
+      "indicatorSeparator": [Function],
+      "input": [Function],
+      "menu": [Function],
+      "multiValue": [Function],
+      "multiValueLabel": [Function],
+      "multiValueRemove": [Function],
+      "option": [Function],
+      "placeholder": [Function],
+      "singleValue": [Function],
+    }
   }
   value={
     Object {
@@ -32,6 +51,7 @@ exports[`match snapshot 1`] = `
 
 exports[`match snapshot without multiple values 1`] = `
 <StateManager
+  className="final-form-select"
   clearable={false}
   defaultInputValue=""
   defaultMenuIsOpen={false}
@@ -39,6 +59,7 @@ exports[`match snapshot without multiple values 1`] = `
   ignoreCase={true}
   name="form-field-name"
   onChange={[Function]}
+  optionClassName="selected-option final-form-select-option"
   options={
     Array [
       Object {
@@ -50,6 +71,23 @@ exports[`match snapshot without multiple values 1`] = `
         "value": 2,
       },
     ]
+  }
+  placeholder="Select tag value"
+  styles={
+    Object {
+      "container": [Function],
+      "control": [Function],
+      "dropdownIndicator": [Function],
+      "indicatorSeparator": [Function],
+      "input": [Function],
+      "menu": [Function],
+      "multiValue": [Function],
+      "multiValueLabel": [Function],
+      "multiValueRemove": [Function],
+      "option": [Function],
+      "placeholder": [Function],
+      "singleValue": [Function],
+    }
   }
   value={
     Object {
