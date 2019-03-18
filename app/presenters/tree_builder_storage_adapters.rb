@@ -15,8 +15,7 @@ class TreeBuilderStorageAdapters < TreeBuilder
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(:click_url => "/vm/show/", :onclick => "miqOnClickHostNet")
+    super.merge!(:onclick => "miqOnClickHostNet")
   end
 
   def root_options
