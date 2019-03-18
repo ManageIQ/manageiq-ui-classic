@@ -20,7 +20,7 @@ class TreeBuilderClusters < TreeBuilder
   end
 
   def set_locals_for_render
-    super.merge!(:onselect => "miqOnCheckCUFilters", :check_url => "/ops/cu_collection_field_changed/")
+    super.merge!(:oncheck => "miqOnCheckCUFilters", :check_url => "/ops/cu_collection_field_changed/")
   end
 
   def root_options

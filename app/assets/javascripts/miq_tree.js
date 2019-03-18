@@ -433,8 +433,6 @@ function miqTreeEventSafeEval(func) {
 function miqTreeOnNodeChecked(options, node) {
   if (options.oncheck) {
     miqTreeEventSafeEval(options.oncheck)(node, options.tree_name);
-  } else if (options.onselect) {
-    miqTreeEventSafeEval(options.onselect)(node, options.tree_name);
   }
 }
 
