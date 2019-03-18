@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
 import TaggingPropTypes from '../TaggingPropTypes';
+import customStyles from '../../../forms/select-styles';
 
 class ValueSelector extends React.Component {
   getvalues = values =>
@@ -16,8 +17,12 @@ class ValueSelector extends React.Component {
 
   selector = (value, values) => (
     <Select
+      className="final-form-select"
+      optionClassName="selected-option final-form-select-option"
+      styles={customStyles}
       name="form-field-name"
       value={value}
+      placeholder="Select tag value"
       onChange={this.handleChange}
       options={values}
       clearable={false}
@@ -26,7 +31,7 @@ class ValueSelector extends React.Component {
   );
 
   render() {
-    const val = { value: this.props.selectedOption.id, label: this.props.selectedOption.description };
+    const val = this.props.selectedOption.id ? { value: this.props.selectedOption.id, label: this.props.selectedOption.description } : undefined;
     return this.selector(
       val,
       this.getvalues(this.props.values),
