@@ -48,7 +48,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
                            [nil, "/ops/rbac_group_field_changed/#{group_id}___"]
                          end
 
-    super.merge!(:oncheck => oncheck, :check_url => check_url, :onclick => false)
+    super.merge!(:oncheck => oncheck, :check_url => check_url)
   end
 
   def root_options

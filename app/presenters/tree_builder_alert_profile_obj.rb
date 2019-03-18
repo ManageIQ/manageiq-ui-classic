@@ -19,9 +19,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def set_locals_for_render
     super.merge!(
-      :oncheck    => "miqOnCheckGeneric",
-      :check_url  => "/miq_policy/alert_profile_assign_changed/",
-      :onclick    => false
+      :oncheck   => "miqOnCheckGeneric",
+      :check_url => "/miq_policy/alert_profile_assign_changed/"
     )
   end
 
