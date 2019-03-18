@@ -208,9 +208,13 @@ function miqOnClickHostNet(id) {
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
-function miqOnCheckSections(_tree_name, key, checked, all_checked) {
-  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + checked;
-  miqJqueryRequest(url, {data: {all_checked: all_checked}});
+function miqOnCheckSections(node, tree_name) {
+  var selectedKeys = miqTreeObject(tree_name).getChecked().map(function(n) {
+    return n.key;
+  });
+
+  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + node.state.checked;
+  miqJqueryRequest(url, {data: {all_checked: selectedKeys}});
   return true;
 }
 
@@ -297,8 +301,8 @@ function miqCheckCUAll(cb, treename) {
 }
 
 // OnCheck handler for the C&U collection trees
-function miqOnCheckCUFilters(tree_name, key, checked) {
-  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + encodeURIComponent(checked) + '&tree_name=' + encodeURIComponent(tree_name);
+function miqOnCheckCUFilters(node, tree_name) {
+  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + encodeURIComponent(node.state.checked) + '&tree_name=' + encodeURIComponent(tree_name);
   miqJqueryRequest(url);
   return true;
 }
@@ -430,10 +434,7 @@ function miqTreeOnNodeChecked(options, node) {
   if (options.oncheck) {
     miqTreeEventSafeEval(options.oncheck)(node, options.tree_name);
   } else if (options.onselect) {
-    var selectedKeys = miqTreeObject(options.tree_name).getChecked().map(function(node) {
-      return node.key;
-    });
-    miqTreeEventSafeEval(options.onselect)(options.tree_name, node.key, node.state.checked, selectedKeys);
+    miqTreeEventSafeEval(options.onselect)(node, options.tree_name);
   }
 }
 
