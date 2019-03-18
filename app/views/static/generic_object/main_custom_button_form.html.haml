@@ -22,33 +22,33 @@
         = _("Required")
   .form-group{"ng-if"    => "vm.customButtonModel.button_type == 'ansible_playbook'",
               "ng-class" => "{'has-error': angularForm.playbook_catalog_item.$invalid}"}
-    #form_playbook_options
-      %label.control-label.col-md-2
-        = _("Playbook Catalog Item")
-      .col-md-8
-        %select{"name"                        => "playbook_catalog_item",
-                "ng-model"                    => "vm.customButtonModel.uri_attributes.service_template",
-                "ng-options"                  => "item.id as item.name for item in vm.templates",
-                "data-live-search"            => "true",
-                "selectpicker-for-select-tag" => "",
-                :required                     => true,
-                "miq-select"                  => true,}
-          %option{"value" => "", "disabled" => ""}
-            = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "angularForm.playbook_catalog_item.$error.required"}
-          = _("Required")
+    %label.control-label.col-md-2
+      = _("Playbook Catalog Item")
+    .col-md-8
+      %select{"name"                        => "playbook_catalog_item",
+              "ng-model"                    => "vm.customButtonModel.uri_attributes.service_template",
+              "ng-options"                  => "item.id as item.name for item in vm.templates",
+              "data-live-search"            => "true",
+              "selectpicker-for-select-tag" => "",
+              :required                     => true,
+              "miq-select"                  => true,}
+        %option{"value" => "", "disabled" => ""}
+          = "<#{_('Choose')}>"
+      %span.help-block{"ng-show" => "angularForm.playbook_catalog_item.$error.required"}
+        = _("Required")
   .form-group{"ng-if" => "vm.customButtonModel.button_type == 'ansible_playbook'"}
     %label.control-label.col-md-2
       = _("Inventory")
     .col-md-8
-      %input{:type => "radio", :id => "inventory_localhost", :value => "localhost", 'ng-model' => 'vm.inventory'}
+      %input{:name => "inventory", :type => "radio", :id => "inventory_localhost", :value => "localhost", 'ng-model' => 'vm.inventory'}
       = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
       %br
-      %input{:type => "radio", :id => "inventory_localhost", :value => "event_target", 'ng-model' =>  "vm.inventory"}
+      %input{:name => "inventory", :type => "radio", :id => "inventory_event_target", :value => "event_target", 'ng-model' =>  "vm.inventory"}
       = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
       %br
-      %input{:type => "radio", :id => "manual", :value => "manual", 'ng-model' =>  "vm.inventory"}
-      = label_tag(_("Specific Hosts"))
+      %input{:name => "inventory",
+      :type => "radio", :id => "inventory_manual", :value => "manual", 'ng-model' =>  "vm.inventory"}
+      = label_tag('inventory_manual', _("Specific Hosts"))
       #manual_inventory_div{'ng-if' => "vm.inventory === 'manual'"}
         .form-group
           .col-md-8

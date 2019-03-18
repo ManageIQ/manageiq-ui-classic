@@ -70,23 +70,22 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     ];
 
     miqService.sparkleOn();
-    var dataPromise;
     var optionsPromise = API.options('/api/custom_buttons')
       .then(function(response) {
         _.forEach(response.data.custom_button_types, function(name, id) {
           vm.button_types.push({id: id, name: name});
         });
-        if (vm.customButtonRecordId) {
-          vm.newRecord = false;
-          miqService.sparkleOn();
-          dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action,uri_attributes')
-            .then(getCustomButtonFormData)
-            .catch(miqService.handleFailure);
-        } else {
-          vm.newRecord = true;
-          vm.modelCopy = angular.copy( vm.customButtonModel );
-        }
       });
+    var dataPromise;
+    if (vm.customButtonRecordId) {
+      vm.newRecord = false;
+      dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action,uri_attributes')
+        .then(getCustomButtonFormData)
+        .catch(miqService.handleFailure);
+    } else {
+      vm.newRecord = true;
+      vm.modelCopy = angular.copy( vm.customButtonModel );
+    }
 
     var serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
       .then(function(response) {
@@ -114,10 +113,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         vm.templates = response.data.templates;
       });
 
-    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise, serviceTemplateAnsiblePlaybooks])
+    $q.all([optionsPromise, dataPromise, serviceDialogsPromise, rolesPromise, instancesPromise, serviceTemplateAnsiblePlaybooks])
       .then(function() {
-          vm.afterGet = true;
-          miqService.sparkleOff();
+        vm.afterGet = true;
+        miqService.sparkleOff();
       })
       .catch(miqService.handleFailure);
   };
@@ -269,28 +268,28 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.customButtonModel.uri_attributes = response.uri_attributes;
 
-      if (vm.customButtonModel.current_visibility === 'role') {
-        _.forEach(vm.customButtonModel.available_roles, function(role, index) {
-          if (_.includes(response.visibility.roles, role.name)) {
-            vm.customButtonModel.available_roles[index].value = true;
-          }
-        });
-      }
+    if (vm.customButtonModel.current_visibility === 'role') {
+      _.forEach(vm.customButtonModel.available_roles, function(role, index) {
+        if (_.includes(response.visibility.roles, role.name)) {
+          vm.customButtonModel.available_roles[index].value = true;
+        }
+      });
+    }
 
-      delete vm.customButtonModel.resource_action.ae_attributes.request;
-      vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
-        vm.customButtonModel.resource_action.ae_attributes,
-        vm.customButtonModel.attribute_names,
-        vm.customButtonModel.attribute_values);
+    delete vm.customButtonModel.resource_action.ae_attributes.request;
+    vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
+      vm.customButtonModel.resource_action.ae_attributes,
+      vm.customButtonModel.attribute_names,
+      vm.customButtonModel.attribute_values);
 
-      if(vm.customButtonModel.uri_attributes.hosts == undefined || vm.customButtonModel.uri_attributes.hosts === "localhost" || vm.customButtonModel.uri_attributes.hosts == null) {
-        vm.inventory = "localhost";
-      } else if(vm.customButtonModel.uri_attributes.hosts === "vmdb_object"){
-        vm.inventory = "vmdb_object";
-      } else {
-        vm.inventory = "manual";
-      }
-      vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
+    if (!vm.customButtonModel.uri_attributes.hosts || vm.customButtonModel.uri_attributes.hosts === "localhost") {
+      vm.inventory = "localhost";
+    } else if (vm.customButtonModel.uri_attributes.hosts === "vmdb_object") {
+      vm.inventory = "vmdb_object";
+    } else {
+      vm.inventory = "manual";
+    }
+    vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
   }
 
   function assignAllObjectsToKeyValueArrays(purge) {

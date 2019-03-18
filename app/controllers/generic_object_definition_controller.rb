@@ -135,7 +135,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def service_template_ansible_playbooks
-    templates = ServiceTemplateAnsiblePlaybook.order(:name).map{ |item| {:name => item.name, :id => item.id} } || []
+    templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
     render :json => {:templates => templates}
   end
 
