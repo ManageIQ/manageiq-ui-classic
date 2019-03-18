@@ -8,25 +8,6 @@ module ReportController::Reports::Editor
 
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
 
-  CHARGEBACK_ALLOWED_FIELD_SUFFIXES = %w(
-    _rate
-    _cost
-    -owner_name
-    _metric
-    -provider_name
-    -provider_uid
-    -project_uid
-    -archived
-    -chargeback_rates
-    -vm_guid
-    -vm_uid
-  ).freeze
-
-  METERING_VM_ALLOWED_FIELD_SUFFIXES = %w(
-    -beginning_of_resource_existence_in_report_interval
-    -end_of_resource_existence_in_report_interval
-  ).freeze
-
   MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
   GRAPH_MAX_COUNT = 10
 
@@ -1529,7 +1510,7 @@ module ReportController::Reports::Editor
       f_len = fields.length
       for f_idx in 1..f_len # Go thru fields in reverse
         f_key = fields[f_len - f_idx].last
-        next if f_key.ends_with?(*CHARGEBACK_ALLOWED_FIELD_SUFFIXES) || f_key.include?('managed') || f_key.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
+        next if f_key.ends_with?(*Chargeback::ALLOWED_FIELD_SUFFIXES) || f_key.include?('managed') || f_key.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
         headers.delete(f_key)
         col_formats.delete(f_key)
         fields.delete_at(f_len - f_idx)
