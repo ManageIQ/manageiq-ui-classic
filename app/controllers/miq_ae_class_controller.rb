@@ -1040,7 +1040,7 @@ class MiqAeClassController < ApplicationController
                                 :execution_ttl         => method.options[:execution_ttl] || '',
                                 :hosts                 => method.options[:hosts] || 'localhost',
                                 :log_output            => method.options[:log_output] || 'on_error',
-                                :extra_vars            => method.inputs }
+                                :extra_vars            => location == 'playbook' && method.inputs }
     }
     render :json => method_hash
   end
@@ -2738,7 +2738,7 @@ class MiqAeClassController < ApplicationController
     details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
     details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
     details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
-    details[:manager_name] = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
+    details[:manager_name] = options[:ansible_template_id] && ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
       .find(options[:ansible_template_id])&.manager&.name
     details
   end

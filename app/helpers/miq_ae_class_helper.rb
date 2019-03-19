@@ -148,6 +148,19 @@ module MiqAeClassHelper
     end
   end
 
+  def playbook_label(location)
+    case location
+    when 'playbook'
+      _('Playbook')
+    when 'ansible_job_template'
+      _('Job Template')
+    when 'ansible_workflow_template'
+      _('Workflow Template')
+    else
+      location
+    end
+  end
+
   def available_locations_with_labels
     MiqAeMethod.available_locations.sort.map { |l| [location_fancy_name(l), l] }
   end

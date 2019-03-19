@@ -109,7 +109,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   };
 
   var setExtraVars = function(variableName, extraVars) {
-    if (extraVars !== 'undefined') {
+    if (extraVars) {
       vm.aeMethodModel[variableName] = [];
       extraVars.forEach(function(arrayItem) {
         var inputVars = [arrayItem.name, arrayItem.default_value, arrayItem.datatype, arrayItem.id];
