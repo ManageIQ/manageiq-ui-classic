@@ -7,6 +7,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       long_description: '',
       display: false,
       prov_type: 'generic_ansible_playbook',
+      location: 'playbook',
       catalog_id: '',
       key: '',
       key_value: '',
