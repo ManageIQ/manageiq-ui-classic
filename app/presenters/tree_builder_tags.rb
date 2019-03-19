@@ -32,8 +32,7 @@ class TreeBuilderTags < TreeBuilder
 
   def set_locals_for_render
     super.merge!(:check_url => "/ops/rbac_group_field_changed/#{group_id}___",
-                 :oncheck   => @edit.nil? ? nil : "miqOnCheckUserFilters",
-                 :onclick   => false)
+                 :oncheck   => @edit.nil? ? nil : "miqOnCheckUserFilters")
   end
 
   def root_options

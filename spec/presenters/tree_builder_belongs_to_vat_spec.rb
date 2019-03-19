@@ -49,7 +49,6 @@ describe TreeBuilderBelongsToVat do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
       expect(locals).to include(:check_url => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
-                                :onclick   => false,
                                 :oncheck   => edit ? "miqOnCheckUserFilters" : nil)
     end
   end

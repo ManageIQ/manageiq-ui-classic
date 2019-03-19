@@ -24,8 +24,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def set_locals_for_render
-    super.merge!(:onclick   => false,
-                 :oncheck   => 'miqOnCheckGeneric',
+    super.merge!(:oncheck   => 'miqOnCheckGeneric',
                  :check_url => '/ops/smartproxy_affinity_field_changed/')
   end
 

@@ -76,8 +76,7 @@ describe TreeBuilderBelongsToHac do
 
   describe '#set_locals_for_render' do
     it 'sets locals correctly' do
-      expect(subject.send(:set_locals_for_render)).to include(:onclick   => false,
-                                                              :check_url => "/ops/rbac_group_field_changed/new___",
+      expect(subject.send(:set_locals_for_render)).to include(:check_url => "/ops/rbac_group_field_changed/new___",
                                                               :oncheck   => nil)
     end
   end

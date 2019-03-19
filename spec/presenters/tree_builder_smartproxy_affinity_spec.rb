@@ -47,7 +47,6 @@ describe TreeBuilderSmartproxyAffinity do
       locals = @smartproxy_affinity_tree.send(:set_locals_for_render)
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq('/ops/smartproxy_affinity_field_changed/')
-      expect(locals[:onclick]).to eq(false)
       expect(locals[:oncheck]).to eq('miqOnCheckGeneric')
       expect(locals[:three_checks]).to eq(true)
     end
