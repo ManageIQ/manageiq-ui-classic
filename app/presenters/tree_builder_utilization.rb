@@ -5,11 +5,6 @@ class TreeBuilderUtilization < TreeBuilder
   has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
-  def initialize(*args)
-    instance_eval { undef :root_options } unless MiqEnterprise.my_enterprise.is_enterprise?
-    super(*args)
-  end
-
   private
 
   def tree_init_options
