@@ -59,7 +59,7 @@ module ApplicationController::Tags
   def tad_add_assignments
     @edit[:new][:assignments].push(params[:tag_add].to_i)
     @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
-    @assignments.each_with_index do |a, a_idx|
+    @edit[:new][:assignments].each_with_index do |a, a_idx|
       # skip when same category, single value category, different tag
       next unless delete_from_assignments?(a)
       @edit[:new][:assignments].delete(a.id) # Remove prev tag from new
@@ -161,8 +161,7 @@ module ApplicationController::Tags
 
   # Add/remove tags in a single transaction
   def tagging_save_tags
-    new_assignments = JSON.parse(params['data']).map { |tag| tag['values'].map { |v| v['id'] } }
-    @edit[:new][:assignments] = new_assignments.flatten
+    @edit[:new][:assignments] = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| v['id'] } }
     Classification.bulk_reassignment(:model      => @edit[:tagging],
                                      :object_ids => @edit[:object_ids],
                                      :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
@@ -196,29 +195,28 @@ module ApplicationController::Tags
     @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
     @edit[:new][:assignments] = @assignments = @tagitems.map do |tagitem|
-      Classification.find_assigned_entries(tagitem).collect { |e| e unless e.parent.read_only? }
-    end.reduce(:&).compact
+      Classification.find_assigned_entries(tagitem).reject { |e| e.parent.read_only? }
+    end.reduce(:&) # intersection of arrays
 
     @tags = cats.map do |cat|
       {
         :id          => cat.id,
         :description => cat.description,
         :singleValue => cat.single_value,
-        :values      => cat.entries.map do |entry|
+        :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
           { :id => entry.id, :description => entry.description }
-        end.sort_by { |e| e[:description.downcase] }
+        end
       }
     end
 
-    assigned_tags = @assignments.map do |a|
-      {:description => a.parent.description,
-       :id          => a.parent.id}
-    end
-
-    assigned_tags = assigned_tags.uniq.map do |tag|
-      {:id          => tag[:id],
-       :description => tag[:description],
-       :values      => @assignments.select { |a| a.parent_id == tag[:id] }.map { |b| { :description => b.description, :id => b[:id] } }}
+    assigned_tags = assignments.uniq.map do |tag|
+      {
+        :description => tag.parent.description,
+        :id          => tag.parent.id,
+        :values      => assignments.select { |assignment| assignment.parent_id == tag.parent_id }.map do |assignment|
+          { :description => assignment.description, :id => assignment.id }
+        end
+      }
     end
     @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map(&:id)}
     @button_urls = {
