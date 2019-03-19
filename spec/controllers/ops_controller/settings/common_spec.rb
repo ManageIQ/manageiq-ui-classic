@@ -234,8 +234,8 @@ describe OpsController do
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           queued_password = queue_item.args[0][0].password
-          expect(MiqPassword.encrypted?(queued_password)).to be(true)
-          expect(MiqPassword.decrypt(queued_password)).to eq(password)
+          expect(ManageIQ::Password.encrypted?(queued_password)).to be(true)
+          expect(ManageIQ::Password.decrypt(queued_password)).to eq(password)
         end
       end
 
@@ -278,7 +278,7 @@ describe OpsController do
       context 'get advanced config settings' do
         it 'for selected server' do
           miq_server = FactoryBot.create(:miq_server)
-          enc_pass = MiqPassword.encrypt('pa$$word')
+          enc_pass = ManageIQ::Password.encrypt('pa$$word')
           Vmdb::Settings.save!(
             miq_server,
             :http_proxy => {
@@ -303,7 +303,7 @@ describe OpsController do
 
         it 'for selected zone' do
           zone = FactoryBot.create(:zone)
-          enc_pass = MiqPassword.encrypt('pa$$word')
+          enc_pass = ManageIQ::Password.encrypt('pa$$word')
           Vmdb::Settings.save!(
             zone,
             :http_proxy => {

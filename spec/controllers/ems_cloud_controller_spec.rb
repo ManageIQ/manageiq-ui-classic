@@ -340,7 +340,7 @@ describe EmsCloudController do
         let(:compute_service) { {:service => "compute"} }
 
         it "queues the correct number of arguments" do
-          expected_validate_args = [project, MiqPassword.encrypt(service_account), compute_service, nil, true]
+          expected_validate_args = [project, ManageIQ::Password.encrypt(service_account), compute_service, nil, true]
           expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
           controller.send(:create_ems_button_validate)
         end
