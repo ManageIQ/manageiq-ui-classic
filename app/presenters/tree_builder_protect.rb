@@ -10,11 +10,10 @@ class TreeBuilderProtect < TreeBuilder
 
   def tree_init_options
     {
-      :full_ids          => false,
-      :checkboxes        => true,
-      :highlight_changes => true,
-      :oncheck           => "miqOnCheckProtect",
-      :check_url         => "/#{@data[:controller_name]}/protect/"
+      :full_ids   => false,
+      :checkboxes => true,
+      :oncheck    => "miqOnCheckProtect",
+      :check_url  => "/#{@data[:controller_name]}/protect/"
     }
   end
 

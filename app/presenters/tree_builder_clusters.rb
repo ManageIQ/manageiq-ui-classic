@@ -11,12 +11,11 @@ class TreeBuilderClusters < TreeBuilder
 
   def tree_init_options
     {
-      :full_ids          => false,
-      :checkboxes        => true,
-      :highlight_changes => true,
-      :three_checks      => true,
-      :oncheck           => "miqOnCheckCUFilters",
-      :check_url         => "/ops/cu_collection_field_changed/"
+      :full_ids     => false,
+      :checkboxes   => true,
+      :three_checks => true,
+      :oncheck      => "miqOnCheckCUFilters",
+      :check_url    => "/ops/cu_collection_field_changed/"
     }
   end
 

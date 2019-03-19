@@ -36,11 +36,10 @@ class TreeBuilderDefaultFilters < TreeBuilder
 
   def tree_init_options
     {
-      :full_ids          => true,
-      :checkboxes        => true,
-      :highlight_changes => true,
-      :check_url         => "/configuration/filters_field_changed/",
-      :oncheck           => "miqOnCheckGeneric"
+      :full_ids   => true,
+      :checkboxes => true,
+      :check_url  => "/configuration/filters_field_changed/",
+      :oncheck    => "miqOnCheckGeneric"
     }
   end
 

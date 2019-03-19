@@ -25,18 +25,16 @@ describe TreeBuilderTags do
     it 'set init options correctly' do
       tree_options = @tags_tree.send(:tree_init_options)
       expect(tree_options).to eq(
-        :full_ids          => true,
-        :checkboxes        => true,
-        :highlight_changes => true,
-        :check_url         => "/ops/rbac_group_field_changed/#{@group.id}___",
-        :oncheck           => nil
+        :full_ids   => true,
+        :checkboxes => true,
+        :check_url  => "/ops/rbac_group_field_changed/#{@group.id}___",
+        :oncheck    => nil
       )
     end
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id}___")
-      expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq(nil)
     end
     it 'set info about selected kids correctly' do
@@ -82,7 +80,6 @@ describe TreeBuilderTags do
       locals = @tags_tree.send(:set_locals_for_render)
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/new___")
-      expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq("miqOnCheckUserFilters")
     end
     it 'sets second level nodes correctly' do

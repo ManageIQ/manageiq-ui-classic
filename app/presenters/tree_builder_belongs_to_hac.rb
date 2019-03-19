@@ -40,11 +40,10 @@ class TreeBuilderBelongsToHac < TreeBuilder
                          end
 
     {
-      :full_ids          => true,
-      :checkboxes        => true,
-      :highlight_changes => !@assign_to,
-      :oncheck           => oncheck,
-      :check_url         => check_url
+      :full_ids   => true,
+      :checkboxes => true,
+      :oncheck    => oncheck,
+      :check_url  => check_url
     }
   end
 

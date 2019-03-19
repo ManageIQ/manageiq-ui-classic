@@ -17,11 +17,10 @@ class TreeBuilderTags < TreeBuilder
 
   def tree_init_options
     {
-      :full_ids          => true,
-      :checkboxes        => true,
-      :highlight_changes => true,
-      :check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
-      :oncheck           => @edit.nil? ? nil : "miqOnCheckUserFilters"
+      :full_ids   => true,
+      :checkboxes => true,
+      :check_url  => "/ops/rbac_group_field_changed/#{group_id}___",
+      :oncheck    => @edit.nil? ? nil : "miqOnCheckUserFilters"
     }
   end
 

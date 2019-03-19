@@ -203,7 +203,6 @@ class TreeBuilder
       :checkboxes        => @options[:checkboxes],
       :autoload          => @options[:lazy],
       :allow_reselect    => @options[:allow_reselect],
-      :highlight_changes => @options[:highlight_changes],
       :three_checks      => @options[:three_checks],
       :post_check        => @options[:post_check],
       :onclick           => @options[:onclick],

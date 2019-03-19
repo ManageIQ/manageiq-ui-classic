@@ -20,12 +20,11 @@ describe TreeBuilderClusters do
     it 'sets tree to have full ids, not lazy and no root' do
       root_options = @cluster_tree.send(:tree_init_options)
       expect(root_options).to eq(
-        :full_ids          => false,
-        :checkboxes        => true,
-        :highlight_changes => true,
-        :three_checks      => true,
-        :oncheck           => "miqOnCheckCUFilters",
-        :check_url         => "/ops/cu_collection_field_changed/"
+        :full_ids     => false,
+        :checkboxes   => true,
+        :three_checks => true,
+        :oncheck      => "miqOnCheckCUFilters",
+        :check_url    => "/ops/cu_collection_field_changed/"
       )
     end
 
