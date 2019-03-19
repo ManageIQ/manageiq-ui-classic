@@ -53,17 +53,14 @@ module ApplicationController::Tags
       @edit[:new][:assignments].delete(params[:tag_remove].to_i)
     end
     @edit[:new][:assignments].sort!
-    @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
   end
 
   def tad_add_assignments
     @edit[:new][:assignments].push(params[:tag_add].to_i)
-    @assignments ||= Classification.find(@edit.fetch_path(:new, :assignments))
-    @edit[:new][:assignments].each_with_index do |a, a_idx|
+    @edit[:new][:assignments].each do |a|
       # skip when same category, single value category, different tag
       next unless delete_from_assignments?(a)
       @edit[:new][:assignments].delete(a.id) # Remove prev tag from new
-      @assignments.delete_at(a_idx) # Remove prev tag from display
     end
   end
 
@@ -194,7 +191,7 @@ module ApplicationController::Tags
     @view = get_db_view(@tagging, :clickable => false) # Instantiate the MIQ Report view object
     @view.table = ReportFormatter::Converter.records2table(@tagitems, @view.cols + ['id'])
 
-    @edit[:new][:assignments] = @assignments = @tagitems.map do |tagitem|
+    @edit[:new][:assignments] = assignments = @tagitems.map do |tagitem|
       Classification.find_assigned_entries(tagitem).reject { |e| e.parent.read_only? }
     end.reduce(:&) # intersection of arrays
 
