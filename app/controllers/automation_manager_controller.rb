@@ -192,25 +192,25 @@ class AutomationManagerController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role     => "automation_manager_providers",
         :role_any => true,
         :name     => :automation_manager_providers,
         :title    => _("Providers")
-      ),
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role     => "automation_manager_configured_system",
         :role_any => true,
         :name     => :automation_manager_cs_filter,
         :title    => _("Configured Systems")
-      ),
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role     => "automation_manager_configuration_scripts_accord",
         :role_any => true,
         :name     => :configuration_scripts,
         :title    => _("Templates")
-      )
-    ]
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_node_info(treenodeid, _show_list = true)

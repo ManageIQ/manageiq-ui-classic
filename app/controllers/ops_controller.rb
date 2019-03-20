@@ -252,24 +252,29 @@ class OpsController < ApplicationController
   private ############################
 
   def features
-    [{:role  => "ops_settings",
-      :name  => :settings,
-      :title => _("Settings")},
-
-     {:role     => "ops_rbac",
-      :role_any => true,
-      :name     => :rbac,
-      :title    => _("Access Control")},
-
-     {:role  => "ops_diagnostics",
-      :name  => :diagnostics,
-      :title => _("Diagnostics")},
-
-     {:role  => "ops_db",
-      :name  => :vmdb,
-      :title => _("Database")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role  => "ops_settings",
+        :name  => :settings,
+        :title => _("Settings")
+      },
+      {
+        :role     => "ops_rbac",
+        :role_any => true,
+        :name     => :rbac,
+        :title    => _("Access Control")
+      },
+      {
+        :role  => "ops_diagnostics",
+        :name  => :diagnostics,
+        :title => _("Diagnostics")
+      },
+      {
+        :role  => "ops_db",
+        :name  => :vmdb,
+        :title => _("Database")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def set_active_elements(feature, _x_node_to_set = nil)

@@ -76,13 +76,13 @@ class BottlenecksController < ApplicationController
 
   def features
     [
-      {:role     => "bottlenecks",
-       :role_any => true,
-       :name     => :utilization,
-       :title    => _("Bottlenecks")}
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      {
+        :role     => "bottlenecks",
+        :role_any => true,
+        :name     => :utilization,
+        :title    => _("Bottlenecks")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_session_data

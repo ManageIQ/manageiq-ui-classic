@@ -17,24 +17,22 @@ class VmInfraController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role  => "vandt_accord",
         :name  => :vandt,
         :title => _("VMs & Templates")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "vms_filter_accord",
         :name  => :vms_filter,
         :title => _("VMs")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "templates_filter_accord",
         :name  => :templates_filter,
         :title => _("Templates")
-      ),
-    ]
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def prefix_by_nodetype(nodetype)

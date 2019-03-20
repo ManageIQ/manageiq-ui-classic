@@ -1753,10 +1753,14 @@ class MiqAeClassController < ApplicationController
   end
 
   def features
-    [ApplicationController::Feature.new_with_hash(:role        => "miq_ae_class_explorer",
-                                                  :role_any    => true,
-                                                  :name        => :ae,
-                                                  :title       => _("Datastore"))]
+    [
+      {
+        :role     => "miq_ae_class_explorer",
+        :role_any => true,
+        :name     => :ae,
+        :title    => _("Datastore")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def initial_setup_for_instances_form_vars(ae_inst_id)

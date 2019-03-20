@@ -309,19 +309,23 @@ class ChargebackController < ApplicationController
   private ############################
 
   def features
-    [{:role  => "chargeback_reports",
-      :name  => :cb_reports,
-      :title => _("Reports")},
-
-     {:role  => "chargeback_rates",
-      :name  => :cb_rates,
-      :title => _("Rates")},
-
-     {:role  => "chargeback_assignments",
-      :name  => :cb_assignments,
-      :title => _("Assignments")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role  => "chargeback_reports",
+        :name  => :cb_reports,
+        :title => _("Reports")
+      },
+      {
+        :role  => "chargeback_rates",
+        :name  => :cb_rates,
+        :title => _("Rates")
+      },
+      {
+        :role  => "chargeback_assignments",
+        :name  => :cb_assignments,
+        :title => _("Assignments")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   # Build a Chargeback Reports explorer tree

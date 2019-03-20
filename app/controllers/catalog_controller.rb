@@ -820,27 +820,33 @@ class CatalogController < ApplicationController
   helper_method :remove_resources_display
 
   def features
-    [{:role     => "svc_catalog_accord",
-      :role_any => true,
-      :name     => :svccat,
-      :title    => _("Service Catalogs")},
+    [
+      {
+        :role     => "svc_catalog_accord",
+        :role_any => true,
+        :name     => :svccat,
+        :title    => _("Service Catalogs")
+      },
 
-     {:role     => "catalog_items_accord",
-      :role_any => true,
-      :name     => :sandt,
-      :title    => _("Catalog Items")},
-
-     {:role     => "orchestration_templates_accord",
-      :role_any => true,
-      :name     => :ot,
-      :title    => _("Orchestration Templates")},
-
-     {:role     => "st_catalog_accord",
-      :role_any => true,
-      :name     => :stcat,
-      :title    => _("Catalogs")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      {
+        :role     => "catalog_items_accord",
+        :role_any => true,
+        :name     => :sandt,
+        :title    => _("Catalog Items")
+      },
+      {
+        :role     => "orchestration_templates_accord",
+        :role_any => true,
+        :name     => :ot,
+        :title    => _("Orchestration Templates")
+      },
+      {
+        :role     => "st_catalog_accord",
+        :role_any => true,
+        :name     => :stcat,
+        :title    => _("Catalogs")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def class_service_template(prov_type)

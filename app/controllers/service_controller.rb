@@ -243,10 +243,14 @@ class ServiceController < ApplicationController
   helper_method :textual_tower_job_group_list
 
   def features
-    [ApplicationController::Feature.new_with_hash(:role     => "service",
-                                                  :role_any => true,
-                                                  :name     => :svcs,
-                                                  :title    => _("Services"))]
+    [
+      {
+        :role     => "service",
+        :role_any => true,
+        :name     => :svcs,
+        :title    => _("Services")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def service_ownership

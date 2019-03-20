@@ -113,13 +113,13 @@ class UtilizationController < ApplicationController
 
   def features
     [
-      {:role     => "utilization",
-       :role_any => true,
-       :name     => :utilization,
-       :title    => _("Utilization")}
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      {
+        :role     => "utilization",
+        :role_any => true,
+        :name     => :utilization,
+        :title    => _("Utilization")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_session_data

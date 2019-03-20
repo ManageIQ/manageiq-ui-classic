@@ -68,27 +68,32 @@ class PxeController < ApplicationController
   private
 
   def features
-    [{:role     => "pxe_server_accord",
-      :role_any => true,
-      :name     => :pxe_servers,
-      :title    => _("PXE Servers")},
-
-     {:role     => "customization_template_accord",
-      :role_any => true,
-      :name     => :customization_templates,
-      :title    => _("Customization Templates")},
-
-     {:role     => "pxe_image_type_accord",
-      :role_any => true,
-      :name     => :pxe_image_types,
-      :title    => _("System Image Types")},
-
-     {:role     => "iso_datastore_accord",
-      :role_any => true,
-      :name     => :iso_datastores,
-      :title    => _("ISO Datastores")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role     => "pxe_server_accord",
+        :role_any => true,
+        :name     => :pxe_servers,
+        :title    => _("PXE Servers")
+      },
+      {
+        :role     => "customization_template_accord",
+        :role_any => true,
+        :name     => :customization_templates,
+        :title    => _("Customization Templates")
+      },
+      {
+        :role     => "pxe_image_type_accord",
+        :role_any => true,
+        :name     => :pxe_image_types,
+        :title    => _("System Image Types")
+      },
+      {
+        :role     => "iso_datastore_accord",
+        :role_any => true,
+        :name     => :iso_datastores,
+        :title    => _("ISO Datastores")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_node_info(node, show_list = true)

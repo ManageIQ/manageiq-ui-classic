@@ -282,16 +282,20 @@ class StorageController < ApplicationController
   end
 
   def features
-    [{:role     => "storage",
-      :role_any => true,
-      :name     => :storage,
-      :title    => _("Datastores")},
-     {:role     => "storage_pod",
-      :role_any => true,
-      :name     => :storage_pod,
-      :title    => _("Datastore Clusters")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role     => "storage",
+        :role_any => true,
+        :name     => :storage,
+        :title    => _("Datastores")
+      },
+      {
+        :role     => "storage_pod",
+        :role_any => true,
+        :name     => :storage_pod,
+        :title    => _("Datastore Clusters")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_node_info(node, _show_list = true)
