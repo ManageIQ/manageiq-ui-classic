@@ -1213,7 +1213,7 @@ module OpsController::OpsRbac
       @edit[:new][:filters].clear
     else
       exp_remove_tokens(@edit[:new][:filter_expression])
-      @edit[:new][:filter_expression] = nil
+      @edit[:new][:filter_expression] = {}
     end
 
     rbac_group_set_filters(group) # Go set the filters for the group
