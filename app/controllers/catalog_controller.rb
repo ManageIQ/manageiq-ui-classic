@@ -204,6 +204,7 @@ class CatalogController < ApplicationController
   def explorer
     @explorer = true
     @lastaction = "explorer"
+    @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?

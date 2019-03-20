@@ -32,9 +32,9 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
           'pficon pficon-delete fa-lg',
           N_('Remove this Catalog Item'),
           N_('Remove Catalog Item'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Warning: This Catalog Items and ALL of their components will be permanently removed!")),
+          :data => {'function'      => 'sendDataWithRx',
+                    'function-data' => {:type => 'removeCatalogItemModal'}}
+        )
       ]
     ),
   ])

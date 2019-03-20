@@ -32,11 +32,10 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           'pficon pficon-delete fa-lg',
           N_('Remove selected Catalog Items'),
           N_('Remove Catalog Items'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Warning: The selected Items and ALL of their components will be permanently removed!"),
           :enabled      => false,
-          :onwhen       => "1+"),
+          :onwhen       => "1+",
+          :data         => {'function'      => 'sendDataWithRx',
+                            'function-data' => {:type => 'removeCatalogItemModal'}}),
       ]
     ),
   ])
