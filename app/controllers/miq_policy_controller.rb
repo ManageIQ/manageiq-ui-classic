@@ -215,8 +215,7 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree ||= 'policy_profile_tree'
     self.x_active_accord ||= 'policy_profile'
 
-    @trees = features.map { |feature| feature.build_tree(@sb) }
-    @accords = features.map(&:accord_hash)
+    build_accordions_and_trees
 
     if params[:profile].present? # If profile record id passed in, position on that node
       self.x_active_tree = 'policy_profile_tree'
@@ -1111,16 +1110,49 @@ class MiqPolicyController < ApplicationController
 
   def features
     [
-      {:name  => :policy_profile, :title => _("Policy Profiles")},
-      {:name  => :policy, :title => _("Policies")},
-      {:name  => :event, :title => _("Events")},
-      {:name  => :condition, :title => _("Conditions")},
-      {:name  => :action, :title => _("Actions")},
-      {:name  => :alert_profile, :title => _("Alert Profiles")},
-      {:name  => :alert, :title => _("Alerts")},
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      {
+        :name     => :policy_profile,
+        :title    => _("Policy Profiles"),
+        :role     => "policy_profile",
+        :role_any => true
+      },
+      {
+        :name     => :policy,
+        :title    => _("Policies"),
+        :role     => "policy",
+        :role_any => true
+      },
+      {
+        :name     => :event,
+        :title    => _("Events"),
+        :role     => "event",
+        :role_any => true
+      },
+      {
+        :name     => :condition,
+        :title    => _("Conditions"),
+        :role     => "condition",
+        :role_any => true
+      },
+      {
+        :name     => :action,
+        :title    => _("Actions"),
+        :role     => "action",
+        :role_any => true
+      },
+      {
+        :name     => :alert_profile,
+        :title    => _("Alert Profiles"),
+        :role     => "alert_profile",
+        :role_any => true
+      },
+      {
+        :name     => :alert,
+        :title    => _("Alerts"),
+        :role     => "alert",
+        :role_any => true
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   menu_section :con
