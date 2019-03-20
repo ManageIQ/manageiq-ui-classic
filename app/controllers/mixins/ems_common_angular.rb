@@ -121,14 +121,14 @@ module Mixins
     end
 
     def get_task_args(ems)
-      user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
+      user, password = params[:default_userid], ManageIQ::Password.encrypt(params[:default_password])
       case ems.to_s
       when 'ManageIQ::Providers::Openstack::CloudManager', 'ManageIQ::Providers::Openstack::InfraManager'
         case params[:cred_type]
         when 'default'
           [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
         when 'amqp'
-          [MiqPassword.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)]
+          [ManageIQ::Password.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)]
         end
       when 'ManageIQ::Providers::Amazon::CloudManager'
         uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
@@ -139,12 +139,12 @@ module Mixins
       when 'ManageIQ::Providers::Vmware::CloudManager'
         case params[:cred_type]
         when 'amqp'
-          [params[:amqp_hostname], params[:amqp_api_port], params[:amqp_userid], MiqPassword.encrypt(params[:amqp_password]), params[:api_version], true]
+          [params[:amqp_hostname], params[:amqp_api_port], params[:amqp_userid], ManageIQ::Password.encrypt(params[:amqp_password]), params[:api_version], true]
         when 'default'
           [params[:default_hostname], params[:default_api_port], user, password, params[:api_version], true]
         end
       when 'ManageIQ::Providers::Google::CloudManager'
-        [params[:project], MiqPassword.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
+        [params[:project], ManageIQ::Password.encrypt(params[:service_account]), {:service => "compute"}, ems.http_proxy_uri, true]
       when 'ManageIQ::Providers::Microsoft::InfraManager'
         connect_opts = {
           :hostname          => params[:default_hostname],
@@ -157,7 +157,7 @@ module Mixins
 
         [ems.build_connect_params(connect_opts), true]
       when 'ManageIQ::Providers::Redhat::InfraManager'
-        metrics_user, metrics_password = params[:metrics_userid], MiqPassword.encrypt(params[:metrics_password])
+        metrics_user, metrics_password = params[:metrics_userid], ManageIQ::Password.encrypt(params[:metrics_password])
         [{
           :username         => user,
           :password         => password,
@@ -182,7 +182,7 @@ module Mixins
       when 'ManageIQ::Providers::Vmware::InfraManager'
         case params[:cred_type]
         when 'console'
-          [{:pass => MiqPassword.encrypt(params[:console_password]), :user => params[:console_userid], :ip => params[:default_hostname], :use_broker => false}]
+          [{:pass => ManageIQ::Password.encrypt(params[:console_password]), :user => params[:console_userid], :ip => params[:default_hostname], :use_broker => false}]
         when 'default'
           [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}]
         end
