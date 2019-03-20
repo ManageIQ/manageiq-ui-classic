@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 107 ending 2019-03-18
+
+### Added
+- Added promise debounce library (with updated typescript) and async validation in Catalog form [(#5284)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5284)
+- Added hostname fallback fields for openstack amqp events. [(#5270)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5270)
+- CustomButtonSet - don't touch children/members directly set button_order [(#5187)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5187)
+
+### Fixed
+- Lock enzyme adapter version to stop failing travis. [(#5336)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5336)
+- Hide services from the Services tree as its redundant and slow [(#5335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5335)
+- Automate import service fix. [(#5327)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5327)
+- Remove unused variable from infra networking controller [(#5317)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5317)
+- styling fix for vm edit screen [(#5312)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5312)
+- Container trends chart - wait for loadingDone before displaying pf-trends-chart [(#5310)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5310)
+- Fix unhandled promise catch in catalog form [(#5308)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5308)
+- When activating a tree node make it visible by scrolling onto it [(#5306)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5306)
+- Fix highlighting the condition in accordion after creating it [(#5302)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5302)
+
 ## Unreleased as of Sprint 106 ending 2019-03-04
 
 ### Added
