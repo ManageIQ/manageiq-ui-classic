@@ -25,11 +25,12 @@ module ApplicationController::MiqRequestMethods
       refresh_divs = prov_get_form_vars # Get changed option, returns true if divs need refreshing
       build_grid if refresh_divs
       changed = (@edit[:new] != @edit[:current])
-      @record = if @edit[:new][:src_configured_system_ids].present?
-                  PhysicalServer.find(@edit[:new][:src_configured_system_ids].first)
-                elsif @edit[:new][:src_vm_id].first.present?
-                  MiqTemplate.find(@edit[:new][:src_vm_id].first)
-                end
+      @record =
+        if @edit[:new][:src_configured_system_ids].present?
+          PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
+        elsif @edit[:new][:src_vm_id].first.present?
+          MiqTemplate.where(:id => @edit[:new][:src_vm_id].first).first
+        end
       render :update do |page|
         page << javascript_prologue
         # Going thru all dialogs to see if model has set any of the dialog display to hide/ignore
