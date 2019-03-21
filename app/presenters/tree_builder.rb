@@ -205,8 +205,12 @@ class TreeBuilder
       :allow_reselect    => @options[:allow_reselect],
       :highlight_changes => @options[:highlight_changes],
       :three_checks      => @options[:three_checks],
-      :post_check        => @options[:post_check]
-    }
+      :post_check        => @options[:post_check],
+      :onclick           => @options[:onclick],
+      :oncheck           => @options[:oncheck],
+      :click_url         => @options[:click_url],
+      :check_url         => @options[:check_url]
+    }.compact
   end
 
   # Build an explorer tree, from scratch

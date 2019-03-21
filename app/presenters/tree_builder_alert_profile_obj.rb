@@ -14,14 +14,11 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def tree_init_options
-    {:checkboxes => true}
-  end
-
-  def set_locals_for_render
-    super.merge!(
-      :oncheck   => "miqOnCheckGeneric",
-      :check_url => "/miq_policy/alert_profile_assign_changed/"
-    )
+    {
+      :checkboxes => true,
+      :oncheck    => "miqOnCheckGeneric",
+      :check_url  => "/miq_policy/alert_profile_assign_changed/"
+    }
   end
 
   def root_options

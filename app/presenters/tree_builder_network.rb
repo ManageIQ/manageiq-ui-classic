@@ -19,11 +19,7 @@ class TreeBuilderNetwork < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :lazy => true}
-  end
-
-  def set_locals_for_render
-    super.merge!(:onclick => "miqOnClickHostNet")
+    {:full_ids => true, :lazy => true, :onclick => "miqOnClickHostNet"}
   end
 
   def root_options

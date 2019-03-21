@@ -39,7 +39,9 @@ describe TreeBuilderSmartproxyAffinity do
         :full_ids     => false,
         :checkboxes   => true,
         :three_checks => true,
-        :post_check   => true
+        :post_check   => true,
+        :check_url    => "/ops/smartproxy_affinity_field_changed/",
+        :oncheck      => "miqOnCheckGeneric"
       )
     end
     it 'set locals for render correctly' do

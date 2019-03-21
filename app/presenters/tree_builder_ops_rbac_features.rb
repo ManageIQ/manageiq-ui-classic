@@ -18,12 +18,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   private
 
-  def set_locals_for_render
-    locals = {:check_url => "/ops/rbac_role_field_changed/", :onclick => nil}
-    locals[:oncheck] = "miqOnCheckGeneric" if @editable
-    super.merge!(locals)
-  end
-
   def x_get_tree_roots(count_only = false, _options)
     top_nodes = Menu::Manager.map do |section|
       next if section.id == :cons && !Settings.product.consumption
@@ -69,7 +63,9 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :node_id_prefix => node_id_prefix,
       :checkboxes     => true,
       :three_checks   => true,
-      :post_check     => true
+      :post_check     => true,
+      :check_url      => "/ops/rbac_role_field_changed/",
+      :oncheck        => @editable ? "miqOnCheckGeneric" : false
     }
   end
 

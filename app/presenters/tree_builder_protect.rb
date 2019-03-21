@@ -9,11 +9,13 @@ class TreeBuilderProtect < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => false, :checkboxes => true, :highlight_changes => true}
-  end
-
-  def set_locals_for_render
-    super.merge!(:oncheck => "miqOnCheckProtect", :check_url => "/#{@data[:controller_name]}/protect/")
+    {
+      :full_ids          => false,
+      :checkboxes        => true,
+      :highlight_changes => true,
+      :oncheck           => "miqOnCheckProtect",
+      :check_url         => "/#{@data[:controller_name]}/protect/"
+    }
   end
 
   def x_get_tree_roots(count_only = false, _options)

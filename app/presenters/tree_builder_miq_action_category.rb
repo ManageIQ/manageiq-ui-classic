@@ -16,15 +16,10 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   end
 
   def tree_init_options
-    {}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(
+    {
       :click_url => "/miq_policy/action_tag_pressed/",
       :onclick   => "miqOnClickGeneric"
-    )
+    }
   end
 
   def root_options

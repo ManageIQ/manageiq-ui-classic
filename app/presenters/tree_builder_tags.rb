@@ -16,7 +16,13 @@ class TreeBuilderTags < TreeBuilder
   private
 
   def tree_init_options
-    {:full_ids => true, :checkboxes => true, :highlight_changes => true}
+    {
+      :full_ids          => true,
+      :checkboxes        => true,
+      :highlight_changes => true,
+      :check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
+      :oncheck           => @edit.nil? ? nil : "miqOnCheckUserFilters"
+    }
   end
 
   def contain_selected_kid(category)
@@ -28,11 +34,6 @@ class TreeBuilderTags < TreeBuilder
     return false unless @edit || @filters
     path = "#{category.name}-#{entry.name}"
     (@edit&.fetch_path(:new, :filters, path)) || (@filters&.key?(path))
-  end
-
-  def set_locals_for_render
-    super.merge!(:check_url => "/ops/rbac_group_field_changed/#{group_id}___",
-                 :oncheck   => @edit.nil? ? nil : "miqOnCheckUserFilters")
   end
 
   def x_get_tree_roots(count_only, _options)

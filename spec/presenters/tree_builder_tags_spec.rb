@@ -24,7 +24,13 @@ describe TreeBuilderTags do
     end
     it 'set init options correctly' do
       tree_options = @tags_tree.send(:tree_init_options)
-      expect(tree_options).to eq(:full_ids => true, :checkboxes => true, :highlight_changes => true)
+      expect(tree_options).to eq(
+        :full_ids          => true,
+        :checkboxes        => true,
+        :highlight_changes => true,
+        :check_url         => "/ops/rbac_group_field_changed/#{@group.id}___",
+        :oncheck           => nil
+      )
     end
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)

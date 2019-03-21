@@ -19,17 +19,8 @@ class TreeBuilderMenuRoles < TreeBuilder
 
   private
 
-  def set_locals_for_render
-    locals = {
-      :click_url => "/report/menu_editor/",
-      :onclick   => "miqOnClickMenuRoles"
-    }
-
-    super.merge!(locals)
-  end
-
   def tree_init_options
-    {}
+    {:click_url => "/report/menu_editor/", :onclick => "miqOnClickMenuRoles"}
   end
 
   def root_options
