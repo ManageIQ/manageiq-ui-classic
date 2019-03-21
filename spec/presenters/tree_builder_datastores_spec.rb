@@ -16,7 +16,7 @@ describe TreeBuilderDatastores do
     it 'sets locals correctly' do
       locals = @datastores_tree.send(:set_locals_for_render)
       expect(locals[:checkboxes]).to eq(true)
-      expect(locals[:onselect]).to eq("miqOnCheckCUFilters")
+      expect(locals[:oncheck]).to eq("miqOnCheckCUFilters")
       expect(locals[:check_url]).to eq("/ops/cu_collection_field_changed/")
     end
     it 'sets Datastore node correctly' do

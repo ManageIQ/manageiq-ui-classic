@@ -63,7 +63,7 @@ class TreeBuilder
   # * features - used by the RBAC features tree only
   # * editable - used by the RBAC features tree only
   # * node_id_prefix - used by the RBAC features tree only
-  # * allow_reselect - fire the onselect event if a selected node is reselected
+  # * allow_reselect - fire the onclick event if a selected node is reselected
   # * highlight_changes - highlight the changes in checkboxes differing from initial
   # * three_checks - hierarchically check the parent if all children are checked
   # * post_check - some kind of post-processing hierarchical checks

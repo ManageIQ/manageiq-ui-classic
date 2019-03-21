@@ -16,7 +16,7 @@ class TreeBuilderSections < TreeBuilder
   end
 
   def set_locals_for_render
-    super.merge!(:onselect => "miqOnCheckSections", :check_url => "/#{@controller_name}/sections_field_changed/")
+    super.merge!(:oncheck => "miqOnCheckSections", :check_url => "/#{@controller_name}/sections_field_changed/")
   end
 
   def x_get_tree_roots(count_only = false, _options)
