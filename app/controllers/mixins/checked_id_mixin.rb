@@ -70,24 +70,5 @@ module Mixins
     def checked_or_params
       (checked = find_checked_items).blank? && params[:id].present? ? Array(params[:id]) : checked
     end
-
-    # Either creates a new instance or loads the one passed in 'ids'.
-    #
-    # Params:
-    #   klass - class of requested object
-    #   id    - id of requested object
-    #
-    # 'id' can be an array (then the first item is taken) or a single value.
-    #
-    # Returns:
-    #   instance of 'klass'
-    #
-    def find_or_new(klass, id)
-      if params[:typ] == "new"
-        klass.new
-      else
-        Rbac.filtered(Array(id), :class => klass).first
-      end
-    end
   end
 end
