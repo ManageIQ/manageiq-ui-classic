@@ -21,7 +21,6 @@ module Sandbox
       :tree       => name,
       :type       => type,
       :leaf       => leaf,
-      :add_root   => true,
       :open_nodes => []
     }
 

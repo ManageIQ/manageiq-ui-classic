@@ -7,7 +7,7 @@ class TreeBuilderDiagnostics < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => false, :open_all => true}
+    {:open_all => true}
   end
 
   def set_locals_for_render
@@ -20,9 +20,5 @@ class TreeBuilderDiagnostics < TreeBuilder
     options[:parent_kls]  = @root.class.name
     options[:parent_name] = @root.name
     super(object, pid, options)
-  end
-
-  def root_options
-    {}
   end
 end

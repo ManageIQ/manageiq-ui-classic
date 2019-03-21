@@ -4,11 +4,7 @@ class TreeBuilderServices < TreeBuilder
   private
 
   def tree_init_options
-    {:add_root => false, :lazy => true, :allow_reselect => true}
-  end
-
-  def root_options
-    {}
+    {:lazy => true, :allow_reselect => true}
   end
 
   def root_node(id, text, tip)
@@ -39,7 +35,7 @@ class TreeBuilderServices < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, options)
+  def x_get_tree_custom_kids(object, count_only, _options)
     # Get My Filters and Global Filters
     count_only_or_objects(count_only, x_get_search_results(object)) if %w(my global).include?(object[:id])
   end

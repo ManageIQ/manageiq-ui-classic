@@ -897,7 +897,6 @@ describe ApplicationHelper do
         expect(@sb[:trees][:vm_filter_tree]).to eq(:tree       => :vm_filter_tree,
                                                    :type       => :vm_filter,
                                                    :leaf       => "Vm",
-                                                   :add_root   => true,
                                                    :open_nodes => [])
       end
     end

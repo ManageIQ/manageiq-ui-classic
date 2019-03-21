@@ -6,8 +6,7 @@ describe TreeBuilderAutomateSimulationResults do
     end
 
     it 'no root is set' do
-      root_options = @ae_simulation_tree.send(:root_options)
-      expect(root_options).to eq({})
+      expect { @ae_simulation_tree.send(:root_options) }.to raise_error(NoMethodError)
     end
 
     it 'sets attribute nodes correctly' do

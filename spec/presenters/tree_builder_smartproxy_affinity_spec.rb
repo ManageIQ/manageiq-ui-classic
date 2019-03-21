@@ -37,7 +37,6 @@ describe TreeBuilderSmartproxyAffinity do
       tree_options = @smartproxy_affinity_tree.send(:tree_init_options)
       expect(tree_options).to eq(
         :full_ids     => false,
-        :add_root     => false,
         :checkboxes   => true,
         :three_checks => true,
         :post_check   => true

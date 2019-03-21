@@ -11,7 +11,7 @@ describe TreeBuilderDatastores do
     end
     it 'sets tree to have full ids, not lazy and no root' do
       root_options = @datastores_tree.send(:tree_init_options)
-      expect(root_options).to eq(:full_ids => false, :add_root => false, :checkboxes => true, :highlight_changes => true)
+      expect(root_options).to eq(:full_ids => false, :checkboxes => true, :highlight_changes => true)
     end
     it 'sets locals correctly' do
       locals = @datastores_tree.send(:set_locals_for_render)

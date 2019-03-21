@@ -68,7 +68,6 @@ describe TreeBuilderBelongsToHac do
   describe '#tree_init_options' do
     it 'sets init options correctly' do
       expect(subject.send(:tree_init_options)).to eq(:full_ids          => true,
-                                                     :add_root          => false,
                                                      :checkboxes        => true,
                                                      :highlight_changes => true)
     end
@@ -83,7 +82,7 @@ describe TreeBuilderBelongsToHac do
 
   describe '#root_options' do
     it 'sets root to empty one' do
-      expect(subject.send(:root_options)).to eq({})
+      expect { subject.send(:root_options) }.to raise_error(NoMethodError)
     end
   end
 
