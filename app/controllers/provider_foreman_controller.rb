@@ -210,19 +210,19 @@ class ProviderForemanController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role     => "providers_accord",
         :role_any => true,
         :name     => :configuration_manager_providers,
         :title    => _("Providers")
-      ),
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role     => "configured_systems_filter_accord",
         :role_any => true,
         :name     => :configuration_manager_cs_filter,
         :title    => _("Configured Systems")
-      ),
-    ]
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def build_configuration_manager_providers_tree(_type)

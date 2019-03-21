@@ -158,12 +158,14 @@ class InfraNetworkingController < ApplicationController
   end
 
   def features
-    [{:role     => "infra_networking",
-      :role_any => true,
-      :name     => :infra_networking,
-      :title    => _("Switches")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role     => "infra_networking",
+        :role_any => true,
+        :name     => :infra_networking,
+        :title    => _("Switches")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def get_node_info(treenodeid, show_list = true)

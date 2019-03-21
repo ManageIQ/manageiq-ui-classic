@@ -12,18 +12,17 @@ class VmOrTemplateController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role  => "vms_instances_filter_accord",
         :name  => :vms_instances_filter,
         :title => _("VMs & Instances")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "templates_images_filter_accord",
         :name  => :templates_images_filter,
         :title => _("Templates & Images")
-      ),
-    ]
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def prefix_by_nodetype(nodetype)

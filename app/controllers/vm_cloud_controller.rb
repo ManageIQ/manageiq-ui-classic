@@ -175,30 +175,27 @@ class VmCloudController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role  => "instances_accord",
         :name  => :instances,
         :title => _("Instances by Provider")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "images_accord",
         :name  => :images,
         :title => _("Images by Provider")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "instances_filter_accord",
         :name  => :instances_filter,
         :title => _("Instances")
-      ),
-
-      ApplicationController::Feature.new_with_hash(
+      },
+      {
         :role  => "images_filter_accord",
         :name  => :images_filter,
         :title => _("Images")
-      )
-    ]
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   # redefine get_filters from VmShow

@@ -285,38 +285,46 @@ class ReportController < ApplicationController
   end
 
   def features
-    [{:role     => "miq_report_saved_reports",
-      :role_any => true,
-      :name     => :savedreports,
-      :title    => _("Saved Reports")},
-
-     {:role     => "miq_report_reports",
-      :role_any => true,
-      :name     => :reports,
-      :title    => _("Reports")},
-
-     {:role     => "miq_report_schedules",
-      :role_any => true,
-      :name     => :schedules,
-      :title    => _("Schedules")},
-
-     {:role  => "miq_report_dashboard_editor",
-      :name  => :db,
-      :title => _("Dashboards")},
-
-     {:role  => "miq_report_widget_editor",
-      :name  => :widgets,
-      :title => _("Dashboard Widgets")},
-
-     {:role  => "miq_report_menu_editor",
-      :name  => :roles,
-      :title => _("Edit Report Menus")},
-
-     {:role  => "miq_report_export",
-      :name  => :export,
-      :title => _("Import/Export")}].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+    [
+      {
+        :role     => "miq_report_saved_reports",
+        :role_any => true,
+        :name     => :savedreports,
+        :title    => _("Saved Reports")
+      },
+      {
+        :role     => "miq_report_reports",
+        :role_any => true,
+        :name     => :reports,
+        :title    => _("Reports")
+      },
+      {
+        :role     => "miq_report_schedules",
+        :role_any => true,
+        :name     => :schedules,
+        :title    => _("Schedules")
+      },
+      {
+        :role  => "miq_report_dashboard_editor",
+        :name  => :db,
+        :title => _("Dashboards")
+      },
+      {
+        :role  => "miq_report_widget_editor",
+        :name  => :widgets,
+        :title => _("Dashboard Widgets")
+      },
+      {
+        :role  => "miq_report_menu_editor",
+        :name  => :roles,
+        :title => _("Edit Report Menus")
+      },
+      {
+        :role  => "miq_report_export",
+        :name  => :export,
+        :title => _("Import/Export")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def report_selection_menus
