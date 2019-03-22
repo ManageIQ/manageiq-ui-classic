@@ -1,5 +1,6 @@
 class ContainerBuildController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -15,6 +16,16 @@ class ContainerBuildController < ApplicationController
 
   def display_name
     _("Builds")
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Container Builds"), :url => controller_url},
+      ],
+    }
   end
 
   menu_section :cnt

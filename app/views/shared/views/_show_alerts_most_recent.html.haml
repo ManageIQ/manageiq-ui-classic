@@ -1,14 +1,5 @@
 .row.miq-alerts-center
   .container-fluid{"ng-controller" => "alertsMostRecentController as vm"}
-    %span
-      %ol.breadcrumb
-        %li
-          = _("Monitor")
-        %li
-          = _("Alerts")
-        %li.active
-          %strong
-            = _("Most Recent Alerts")
     .row.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
       %div{"pf-toolbar" => "", "config" => "vm.toolbarConfig"}
         %actions.recent-toolbar-actions

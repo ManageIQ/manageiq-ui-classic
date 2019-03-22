@@ -3,6 +3,7 @@ class PhysicalSwitchController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :session_data
@@ -42,5 +43,16 @@ class PhysicalSwitchController < ApplicationController
 
   def display_physical_network_ports
     nested_list(PhysicalNetworkPort, :breadcrumb_title => _("Physical Ports"))
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Physical Infrastructure")},
+        {:title => _("Switches")},
+        {:url   => controller_url, :title => _("Physical Switches")},
+      ],
+    }
   end
 end

@@ -8,6 +8,7 @@ describe AutomationManagerController do
   let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
 
   before do
+    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     Tag.find_or_create_by(:name => tags.first)
     @automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     @automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)

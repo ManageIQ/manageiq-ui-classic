@@ -21,6 +21,10 @@
         vm.updateTreeNode(payload.updateTreeNode);
         vm.$scope.$apply();
       }
+
+      if (payload.breadcrumbSelect) {
+        vm.nodeSelect({key: payload.breadcrumbSelect.key}, payload.breadcrumbSelect.path);
+      }
     });
 
     /**

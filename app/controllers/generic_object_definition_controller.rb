@@ -7,6 +7,7 @@ class GenericObjectDefinitionController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   menu_section :automate
 
@@ -270,6 +271,7 @@ class GenericObjectDefinitionController < ApplicationController
 
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
     presenter.set_visibility(true, :toolbar)
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
 
     presenter[:osf_node] = x_node
     presenter[:record_id] = @record.try(:id)
@@ -283,4 +285,24 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Automate")},
+        {:title => _("Generic Objects")},
+      ],
+      :record_info => @generic_object_definition,
+    }
+  end
+
+  def build_breadcrumbs_from_tree
+    breadcrumbs = []
+    tree = build_tree if @tree.nil?
+    if x_node && tree
+      breadcrumbs = current_tree_path(JSON.parse(tree.bs_tree).first, x_node)
+    end
+    breadcrumbs
+  end
 end

@@ -9,6 +9,7 @@ class CloudVolumeBackupController < ApplicationController
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def volume_select
     assert_privileges("cloud_volume_backup_restore_to_volume")
@@ -105,6 +106,17 @@ class CloudVolumeBackupController < ApplicationController
   end
 
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Storage")},
+        {:title => _("Block Storage")},
+        {:title => _("Volume Backups")},
+        {:url   => controller_url, :title => _("Cloud Volume Backups")},
+      ],
+    }
+  end
 
   menu_section :bst
 end

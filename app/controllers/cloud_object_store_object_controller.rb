@@ -8,6 +8,7 @@ class CloudObjectStoreObjectController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def breadcrumb_name(_model)
     _('Cloud Object Store Objects')
@@ -32,6 +33,17 @@ class CloudObjectStoreObjectController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Storage")},
+        {:title => _("Object Storage")},
+        {:title => _("Object Store Objects")},
+        {:url   => controller_url, :title => _("Cloud Object Store Objects")},
+      ],
+    }
+  end
 
   menu_section :ost
 end

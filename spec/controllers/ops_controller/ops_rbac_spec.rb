@@ -6,6 +6,7 @@ describe OpsController do
       Tenant.seed
       MiqRegion.seed
       stub_user(:features => :all)
+      allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
     end
 
     it 'confirms existence of route and action with name invalidate_miq_product_feature_caches ' do

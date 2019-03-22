@@ -3,6 +3,7 @@ class PhysicalStorageController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::MoreShowActions
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :session_data
@@ -34,4 +35,15 @@ class PhysicalStorageController < ApplicationController
     ]
   end
   helper_method(:textual_group_list)
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Physical Infrastructure")},
+        {:title => _("Storages")},
+        {:url   => controller_url, :title => _("Physical Storages")},
+      ],
+    }
+  end
 end

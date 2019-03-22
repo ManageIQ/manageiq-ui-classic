@@ -10,6 +10,7 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::EmbeddedAnsibleRefreshMixin
   include Mixins::ListnavMixin
+  include Mixins::BreadcrumbsMixin
 
   menu_section :ansible_repositories
 
@@ -136,4 +137,14 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   helper_method :textual_group_list, :show_output_link
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Ansible")},
+        {:title => _("Repositories"), :url => controller_url},
+      ],
+    }
+  end
 end

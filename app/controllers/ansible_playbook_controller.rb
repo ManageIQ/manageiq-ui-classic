@@ -9,6 +9,7 @@ class AnsiblePlaybookController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::ListnavMixin
+  include Mixins::BreadcrumbsMixin
 
   menu_section :ansible_playbooks
 
@@ -32,4 +33,14 @@ class AnsiblePlaybookController < ApplicationController
     [%i(properties relationships smart_management)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Ansible")},
+        {:url   => controller_url, :title => _("Playbooks (Embedded Ansible)")},
+      ],
+    }
+  end
 end

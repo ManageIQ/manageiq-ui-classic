@@ -1,5 +1,7 @@
 = render :partial => "layouts/vertical_navbar"
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
+  #breadcrumbs
+    = render :partial => "layouts/breadcrumbs_new"
   - if !@in_a_form && taskbar_in_header?
     .row.toolbar-pf#toolbar.miq-toolbar-menu
       .col-sm-12
@@ -26,4 +28,3 @@
     .col-sm-2.col-md-3.col-sm-pull-10.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
       -# listnav_div
       = render :partial => "layouts/listnav"
-

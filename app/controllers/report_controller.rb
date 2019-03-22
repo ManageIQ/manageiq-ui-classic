@@ -12,6 +12,7 @@ class ReportController < ApplicationController
   include ReportHelper
   include Mixins::GenericSessionMixin
   include Mixins::SavedReportPaging
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -866,6 +867,8 @@ class ReportController < ApplicationController
     # Lock current tree if in edit or assign, else unlock all trees
     presenter[:lock_sidebar] = @edit && @edit[:current]
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -897,6 +900,15 @@ class ReportController < ApplicationController
 
   def widget_import_service
     @widget_import_service ||= WidgetImportService.new
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Cloud Intel")},
+        {:title => _("Reports")},
+      ],
+    }
   end
 
   menu_section :vi

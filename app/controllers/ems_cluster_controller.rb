@@ -8,6 +8,7 @@ class EmsClusterController < ApplicationController
   include Mixins::MoreShowActions
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   def title
     @title = _("Clusters")
@@ -118,6 +119,17 @@ class EmsClusterController < ApplicationController
                          :description => db_record.drs_automation_level) unless db_record.drs_automation_level.nil?
     @cluster_config.push(:field       => "DRS Migration Threshold",
                          :description => db_record.drs_migration_threshold) unless db_record.drs_migration_threshold.nil?
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Clusters / Deployment Roles")},
+      ],
+      :record_info => @ems,
+    }.compact
   end
 
   menu_section :inf

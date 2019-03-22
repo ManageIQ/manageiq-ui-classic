@@ -1492,6 +1492,7 @@ function miqInitAccordions() {
 // Function to resize the main content for best fit between the toolbar & footer
 function miqInitMainContent() {
   var toolbar = $('#toolbar');
+  var breadcrumbs = $('#breadcrumbs');
   var footer = $('#paging_div');
   var buttons = $('#form_buttons_div');
   var height = 0;
@@ -1503,6 +1504,7 @@ function miqInitMainContent() {
   if (toolbar.find('*:visible').length > 0) {
     height += toolbar.outerHeight();
   }
+  height += breadcrumbs.outerHeight();
 
   $('#main-content').css('height', 'calc(100% - ' + height + 'px)');
 }

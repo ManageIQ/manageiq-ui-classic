@@ -1,6 +1,7 @@
 describe ServiceController do
   before do
     stub_user(:features => :all)
+    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
   end
 
   let(:go_definition) do
@@ -340,6 +341,9 @@ describe ServiceController do
 
   context 'displaying a list of All Services' do
     describe '#tree_select' do
+      before do
+        allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
+      end
       render_views
 
       let(:service_search) { FactoryBot.create(:miq_search, :description => 'a', :db => 'Service') }

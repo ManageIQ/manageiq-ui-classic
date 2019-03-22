@@ -14,6 +14,7 @@ class MiqPolicyController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   UI_FOLDERS = [Host, Vm, ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage, ContainerProject, ExtManagementSystem, PhysicalServer].freeze
 
@@ -686,6 +687,8 @@ class MiqPolicyController < ApplicationController
 
     presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -1153,6 +1156,19 @@ class MiqPolicyController < ApplicationController
         :role_any => true
       },
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Control")},
+        action_name == "rsop" ? {:title => _("Simulation")} : {:title => _("Explorer")},
+      ].compact,
+    }
+  end
+
+  def build_tree
+    features.find { |f| f.tree_name == x_active_tree }.build_tree(@sb.deep_dup)
   end
 
   menu_section :con

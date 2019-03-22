@@ -1,6 +1,7 @@
 class ServiceController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -488,6 +489,8 @@ class ServiceController < ApplicationController
     # unset variable that was set in form_field_changed to prompt for changes when leaving the screen
     presenter.reset_changes
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -528,6 +531,15 @@ class ServiceController < ApplicationController
   def set_session_data
     super
     session[:prov_options] = @options if @options
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Services")},
+        {:title => _("My services")},
+      ],
+    }
   end
 
   menu_section :svc

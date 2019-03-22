@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  include Mixins::BreadcrumbsMixin
   include DashboardHelper
   include StartUrl
 
@@ -192,6 +193,7 @@ class DashboardController < ApplicationController
     @layout     = "dashboard"
     @display    = "dashboard"
     @lastaction = "show"
+    @title = _("Dashboard")
 
     records = current_group.ordered_widget_sets
 
@@ -725,5 +727,14 @@ class DashboardController < ApplicationController
       redirect_to(:action => 'logout')
       return
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Cloud Intel")},
+        {:title => (action_name == "show" ? _("Dashboard") : _("Timelines"))},
+      ],
+    }
   end
 end

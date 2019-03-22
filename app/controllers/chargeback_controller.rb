@@ -6,6 +6,7 @@ class ChargebackController < ApplicationController
 
   include Mixins::SavedReportPaging
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   CB_X_BUTTON_ALLOWED_ACTIONS = {
     'chargeback_rates_copy'   => :cb_rate_edit,
@@ -934,6 +935,8 @@ class ChargebackController < ApplicationController
       presenter[:lock_sidebar] = @in_a_form && @edit
     end
 
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+
     render :json => presenter.for_render
   end
 
@@ -966,6 +969,15 @@ class ChargebackController < ApplicationController
                        :locals  => locals)
       page << javascript_for_miq_button_visibility(true)
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Cloud Intel")},
+        {:title => _("Chargebacks")},
+      ],
+    }
   end
 
   menu_section :vi

@@ -1,5 +1,6 @@
 class MiqRequestController < ApplicationController
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges, :except => :post_install_callback
   before_action :get_session_data
@@ -534,5 +535,23 @@ class MiqRequestController < ApplicationController
     session[:edit]         = @edit unless @edit.nil?
     session[:request_tab]  = @request_tab unless @request_tab.nil?
     session[:prov_options] = @options if @options
+  end
+
+  def breadcrumbs_options
+    if params[:typ] == "ae"
+      {
+        :breadcrumbs => [
+          {:title => _("Automation")},
+          {:title => _("Automate")},
+        ],
+      }
+    elsif params[:typ] == "service"
+      {
+        :breadcrumbs => [
+          {:title => _("Services")},
+          {:title => _("Requests")},
+        ],
+      }
+    end
   end
 end

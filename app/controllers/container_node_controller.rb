@@ -1,6 +1,7 @@
 class ContainerNodeController < ApplicationController
   include ContainersCommonMixin
   include ContainersExternalLoggingSupportMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -41,6 +42,17 @@ class ContainerNodeController < ApplicationController
 
   def self.custom_display_modes
     %w(ad_hoc_metrics)
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Nodes")},
+        {:url   => controller_url, :title => _("Container Nodes")},
+      ],
+    }
   end
 
   menu_section :cnt

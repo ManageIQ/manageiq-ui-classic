@@ -8,6 +8,7 @@ class SecurityGroupController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances network_ports network_routers cloud_subnets custom_button_events)
@@ -311,6 +312,15 @@ class SecurityGroupController < ApplicationController
                    "Delete initiated for %{number} Security Groups.",
                    security_groups.length) % {:number => security_groups.length})
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Security Groups"), :url => controller_url},
+      ],
+    }
   end
 
   has_custom_buttons

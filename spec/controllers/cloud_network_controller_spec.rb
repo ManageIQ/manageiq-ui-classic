@@ -58,15 +58,20 @@ describe CloudNetworkController do
   describe "#show" do
     before { login_as FactoryBot.create(:user) }
 
-    context "render listnav partial" do
-      render_views
+    render_views
 
-      it do
-        get(:show, :params => {:id => network.id})
+    it "render listnav partial" do
+      get(:show, :params => {:id => network.id})
 
-        expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_cloud_network")
-      end
+      expect(response.status).to eq(200)
+      expect(response).to render_template(:partial => "layouts/listnav/_cloud_network")
+    end
+
+    it "render breadcrumb partial" do
+      get(:show, :params => {:id => network.id})
+
+      expect(response.status).to eq(200)
+      expect(response).to render_template(:partial => "layouts/_breadcrumbs_new")
     end
   end
 

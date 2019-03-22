@@ -9,11 +9,23 @@ class CloudVolumeTypeController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
+  include Mixins::BreadcrumbsMixin
 
   private
 
   def textual_group_list
     [%i(properties relationships), %i(tags)]
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Storage")},
+        {:title => _("Block Storage")},
+        {:title => _("Volume Types")},
+        {:url   => controller_url, :title => _("Cloud Volume Types")},
+      ],
+    }
   end
 
   helper_method :textual_group_list

@@ -2,6 +2,7 @@ class ContainerDashboardController < ApplicationController
   extend ActiveSupport::Concern
 
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -103,6 +104,17 @@ class ContainerDashboardController < ApplicationController
 
   def collect_project_data(project_id)
     ContainerProjectDashboardService.new(project_id, self).all_data
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Overview")},
+        {:url   => controller_url, :title => _("Container Dashboard")},
+      ],
+    }
   end
 
   menu_section :cnt

@@ -5,6 +5,7 @@ class MiqTaskController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   # Per page choices for task/jobs
   PPCHOICES2 = [
@@ -416,6 +417,14 @@ class MiqTaskController < ApplicationController
 
     list_jobs
     {:view => @view, :pages => @pages}
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:url => controller_url, :title => _("Tasks")},
+      ],
+    }
   end
 
   menu_section :set

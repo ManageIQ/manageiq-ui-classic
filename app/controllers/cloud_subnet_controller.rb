@@ -9,6 +9,7 @@ class CloudSubnetController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances cloud_subnets network_ports security_groups custom_button_events)
@@ -267,6 +268,16 @@ class CloudSubnetController < ApplicationController
         subnet.delete_cloud_subnet_queue(session[:userid])
       end
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Subnets")},
+        {:url   => controller_url, :title => _("Cloud Subnets")},
+      ],
+    }
   end
 
   menu_section :net
