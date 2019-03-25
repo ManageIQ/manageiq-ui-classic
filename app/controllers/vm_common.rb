@@ -1025,13 +1025,16 @@ module VmCommon
       end
     else # Get list of child VMs of this node
       options = {:model => model}
+      options[:named_scope] ||= []
+      options[:named_scope] << :not_orphaned unless role_allows?(:feature => 'vm_show_list_orphaned')
+      options[:named_scope] << :not_archived unless role_allows?(:feature => 'vm_show_list_archived')
       if model == "ManageIQ::Providers::CloudManager::Template"
-        options[:named_scope] = [:without_volume_templates]
+        options[:named_scope] << [:without_volume_templates]
       end
       if x_node == "root"
         if x_active_tree == :vandt_tree
           klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-          options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
+          options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
         end
         process_show_list(options) if show_list # Get all VMs & Templates
         # :model=>ui_lookup(:models=>"VmOrTemplate"))
@@ -1044,10 +1047,10 @@ module VmCommon
       elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
         if x_active_tree == :vandt_tree
           klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-          options[:named_scope] = [[:with_type, klass.vm_descendants.collect(&:name)]]
+          options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
+
         end
         if id == "orph"
-          options[:named_scope] ||= []
           options[:named_scope] << :orphaned
           process_show_list(options) if show_list
           @right_cell_text = if model
@@ -1056,7 +1059,6 @@ module VmCommon
                                _("Orphaned VMs & Templates")
                              end
         elsif id == "arch"
-          options[:named_scope] ||= []
           options[:named_scope] << :archived
           process_show_list(options) if show_list
           @right_cell_text = if model
@@ -1076,10 +1078,8 @@ module VmCommon
         rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
         options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
         options[:parent] = rec
-        options[:named_scope] ||= []
         options[:named_scope] << :with_ems
-        options[:named_scope] << :not_archived unless role_allows?(:feature => vm_show_list_archived)
-        options[:named_scope] << :not_orphaned unless role_allows?(:feature => vm_show_list_orphaned)
+
         process_show_list(options) if show_list
         model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
         @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
