@@ -900,20 +900,22 @@ class ApplicationController < ActionController::Base
 
         celltext = nil
 
-        case view.col_order[col_idx]
-        when 'approval_state'
+        if view.col_order[col_idx] == 'approval_state' && view.extras[:filename] == "MiqRequest"
           celltext = _(PROV_STATES[row[col]])
-        when 'prov_type'
+        elsif view.col_order[col_idx] == 'prov_type' && view.extras[:filename] == "ServiceTemplate"
           celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
-        when "result"
+        elsif view.col_order[col_idx] == "result" && view.extras[:filename] == "OpenscapRuleResult"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
-        when "severity"
+        elsif view.col_order[col_idx] == "severity" && view.extras[:filename] == "OpenscapRuleResult"
           new_row[:cells] << {:span => severity_span_class(row[col]), :text => row[col].titleize}
-        when 'state'
+        elsif view.col_order[col_idx] == 'state' && %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
           celltext = row[col].to_s.titleize
-        when 'hardware.bitness'
+        elsif view.col_order[col_idx] == 'hardware.bitness' && %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates
+                                                                  ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates
+                                                                  ManageIQ_Providers_CloudManager_Vm ManageIQ_Providers_CloudManager_Vm-vms
+                                                                  ManageIQ_Providers_CloudManager_Template).include?(view.extras[:filename])
           celltext = row[col] ? "#{row[col]} bit" : ''
-        when 'image?'
+        elsif view.col_order[col_idx] == 'image?' && view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
           celltext = row[col] ? _("Image") : _("Snapshot")
         else
           # Use scheduled tz for formatting, if configured
