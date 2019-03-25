@@ -16,26 +16,23 @@ describe Mixins::BreadcrumbsMixin do
     include Mixins::BreadcrumbsMixin
 
     def features
-      feature_active = ApplicationController::Feature.new
-      feature_active.name = :utilization_tree
-      feature_active.title = "Active Tree"
-      feature_active.container = "active_accord"
-
-      feature_not_active1 = ApplicationController::Feature.new
-      feature_not_active1.name = :old_dialog_tree
-      feature_not_active1.title = "Dialog Tree"
-      feature_not_active1.container = "dialog_accord"
-
-      feature_not_active2 = ApplicationController::Feature.new
-      feature_not_active2.name = :tree
-      feature_not_active2.title = "Tree"
-      feature_not_active2.container = "tree_accord"
-
       [
-        feature_active,
-        feature_not_active1,
-        feature_not_active2,
-      ]
+        {
+          :role_any => true,
+          :name     => :utilization_tree,
+          :title    => _("Active Tree")
+        },
+        {
+          :role_any => true,
+          :name     => :old_dialog_tree,
+          :title    => _("Dialog Tree")
+        },
+        {
+          :role_any => true,
+          :name     => :tree,
+          :title    => _("Tree")
+        }
+      ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
     end
 
     def build_tree
@@ -45,7 +42,7 @@ describe Mixins::BreadcrumbsMixin do
 
   let(:mixin) { TestMixin.new }
   let(:controller_url) { 'testmixin' }
-  let(:features) { [{:title => "Active Tree", :name => :utilization_tree, :container => "active_accord"}] }
+  let(:features) { [{:title => "Active Tree", :name => :utilization_tree}] }
   let(:breadcrumbs) do
     [
       {:title => _("First Layer")},
@@ -74,8 +71,8 @@ describe Mixins::BreadcrumbsMixin do
 
   describe "#accord_name" do
     context 'when features contains the tree' do
-      it "returns title" do
-        expect(mixin.accord_name).to eq(features[0][:title])
+      it "returns name" do
+        expect(mixin.accord_name).to eq(features[0][:name])
       end
     end
 
@@ -87,17 +84,17 @@ describe Mixins::BreadcrumbsMixin do
     end
   end
 
-  describe "#accord_container" do
+  describe "#accord_title" do
     context 'when features contains the tree' do
-      it "returns container" do
-        expect(mixin.accord_container).to eq(features[0][:container])
+      it "returns title" do
+        expect(mixin.accord_title).to eq(features[0][:title])
       end
     end
 
     context 'when features do not contains the tree' do
       it "returns nil" do
         allow(mixin).to receive(:x_active_accord).and_return(:not_tree)
-        expect(mixin.accord_container).to be(nil)
+        expect(mixin.accord_title).to be(nil)
       end
     end
   end
@@ -158,7 +155,7 @@ describe Mixins::BreadcrumbsMixin do
       it "creates breadcrumbs" do
         expect(mixin.data_for_breadcrumbs).to eq([{:title => "First Layer"},
                                                   {:title => "Second Layer"},
-                                                  {:title => "Active Tree", :key => "active_accord", :action => "accordion_select"},
+                                                  {:title => "Active Tree", :key => "utilization_tree_accord", :action => "accordion_select"},
                                                   {:title => "All Dialogs", :key => "root"},
                                                   {:title => "Item1", :key => "xx-1"}])
       end

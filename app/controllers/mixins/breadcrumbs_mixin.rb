@@ -26,7 +26,7 @@ module Mixins
         end
       else
         # Append breadcrumb from title of the accordion (eg "Policies")
-        breadcrumbs.push(:title => accord_name, :key => accord_container, :action => "accordion_select") if features?
+        breadcrumbs.push(:title => accord_title, :key => "#{accord_name}_accord", :action => "accordion_select") if features?
 
         # Append breadcrumbs created from the tree (eg "All policies > Red Hat policies > Policy 1")
         breadcrumbs_from_tree = build_breadcrumbs_from_tree
@@ -105,17 +105,17 @@ module Mixins
       if features?
         allowed_features = ApplicationController::Feature.allowed_features(features)
         # allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
-        return allowed_features.find { |f| f.tree_name == x_active_tree }.build_tree(@sb.deep_dup)
+        return allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
       end
       []
     end
 
-    def accord_name
-      features.find { |f| f.name == x_active_accord }.try(:title)
+    def accord_title
+      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:title)
     end
 
-    def accord_container
-      features.find { |f| f.name == x_active_accord }.try(:container)
+    def accord_name
+      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:name)
     end
 
     # Has controller features
