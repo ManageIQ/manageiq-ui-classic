@@ -1333,7 +1333,7 @@ class ApplicationController < ActionController::Base
     view =
       if options['report_name']
         path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", options['report_name']).to_s
-        MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
+        MiqReport.load_from_filename(path_to_report, {})
       else
         refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
       end
