@@ -924,8 +924,8 @@ class MiqAeClassController < ApplicationController
         if in_angular
           page.replace_html(
             @refresh_div,
-             :partial => 'angular_method_form',
-             :locals  => {:location => @edit[:new][:location]}
+            :partial => 'angular_method_form',
+            :locals  => {:location => @edit[:new][:location]}
           )
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
@@ -1006,13 +1006,14 @@ class MiqAeClassController < ApplicationController
 
     if %w(ansible_job_template ansible_workflow_template).include?(location)
       # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
-      list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager.where(:enabled => true)
-                           .pluck(:id, :name)
-                           .map { |r| {:id => r[0], :name => r[1]} }
+      list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager
+                         .where(:enabled => true)
+                         .pluck(:id, :name)
+                         .map { |r| {:id => r[0], :name => r[1]} }
 
       if method&.options[:ansible_template_id]
         manager_id = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
-          .find(method.options[:ansible_template_id])&.manager_id
+                     .find(method.options[:ansible_template_id])&.manager_id
       end
     end
 
@@ -1178,7 +1179,7 @@ class MiqAeClassController < ApplicationController
         method.inputs = to_save
         method.save!
       end
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
@@ -2722,7 +2723,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def fetch_playbook_details(record)
-    options = @record.options
+    options = record.options
     details = {
       :repository          => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id]),
       :playbook            => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id]),
@@ -2739,7 +2740,7 @@ class MiqAeClassController < ApplicationController
     details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
     details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
     details[:manager_name] = options[:ansible_template_id] && ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
-      .find(options[:ansible_template_id])&.manager&.name
+                             .find(options[:ansible_template_id])&.manager&.name
     details
   end
 
