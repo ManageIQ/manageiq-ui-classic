@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
-import '@manageiq/react-ui-components/dist/tagging.css';
+import { http } from '../http_api';
 
 class TaggingWrapper extends React.Component {
   constructor(props) {
