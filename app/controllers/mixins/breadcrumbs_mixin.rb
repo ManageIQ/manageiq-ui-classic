@@ -105,17 +105,17 @@ module Mixins
       if features?
         allowed_features = ApplicationController::Feature.allowed_features(features)
         # allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
-        return allowed_features.find { |f| f.tree_name == x_active_tree }.build_tree(@sb.deep_dup)
+        return allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
       end
       []
     end
 
     def accord_name
-      features.find { |f| f.name == x_active_accord }.try(:title)
+      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:title)
     end
 
     def accord_container
-      features.find { |f| f.name == x_active_accord }.try(:container)
+      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:container)
     end
 
     # Has controller features
