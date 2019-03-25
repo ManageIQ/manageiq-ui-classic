@@ -1168,7 +1168,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def build_tree
-    features.find { |f| f.tree_name == x_active_tree }.build_tree(@sb.deep_dup)
+    features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
   end
 
   menu_section :con
