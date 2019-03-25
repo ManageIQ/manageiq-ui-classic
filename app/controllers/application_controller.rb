@@ -901,8 +901,6 @@ class ApplicationController < ActionController::Base
         celltext = nil
 
         case view.col_order[col_idx]
-        when 'db'
-          celltext = Dictionary.gettext(row[col], :type => :model, :notfound => :titleize)
         when 'approval_state'
           celltext = _(PROV_STATES[row[col]])
         when 'prov_type'
