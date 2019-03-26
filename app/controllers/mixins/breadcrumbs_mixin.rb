@@ -26,7 +26,10 @@ module Mixins
         end
       else
         # Append breadcrumb from title of the accordion (eg "Policies")
-        breadcrumbs.push(:title => accord_title, :key => "#{accord_name}_accord", :action => "accordion_select") if features?
+        if features?
+          accord = features.find { |f| f.accord_name == x_active_accord.to_s }
+          breadcrumbs.push(:title => accord.title, :key => "#{accord.name}_accord", :action => "accordion_select")
+        end
 
         # Append breadcrumbs created from the tree (eg "All policies > Red Hat policies > Policy 1")
         breadcrumbs_from_tree = build_breadcrumbs_from_tree
@@ -108,14 +111,6 @@ module Mixins
         return allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
       end
       []
-    end
-
-    def accord_title
-      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:title)
-    end
-
-    def accord_name
-      features.find { |f| f.accord_name == x_active_accord.to_s }.try(:name)
     end
 
     # Has controller features

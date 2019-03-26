@@ -42,7 +42,6 @@ describe Mixins::BreadcrumbsMixin do
 
   let(:mixin) { TestMixin.new }
   let(:controller_url) { 'testmixin' }
-  let(:features) { [{:title => "Active Tree", :name => :utilization_tree}] }
   let(:breadcrumbs) do
     [
       {:title => _("First Layer")},
@@ -66,36 +65,6 @@ describe Mixins::BreadcrumbsMixin do
   describe "#url" do
     it "returns url" do
       expect(mixin.url('ems', 'show', 'node')).to eq("/ems/show/node")
-    end
-  end
-
-  describe "#accord_name" do
-    context 'when features contains the tree' do
-      it "returns name" do
-        expect(mixin.accord_name).to eq(features[0][:name])
-      end
-    end
-
-    context 'when features do not contains the tree' do
-      it "returns nil" do
-        allow(mixin).to receive(:x_active_accord).and_return(:not_tree)
-        expect(mixin.accord_name).to be(nil)
-      end
-    end
-  end
-
-  describe "#accord_title" do
-    context 'when features contains the tree' do
-      it "returns title" do
-        expect(mixin.accord_title).to eq(features[0][:title])
-      end
-    end
-
-    context 'when features do not contains the tree' do
-      it "returns nil" do
-        allow(mixin).to receive(:x_active_accord).and_return(:not_tree)
-        expect(mixin.accord_title).to be(nil)
-      end
     end
   end
 
