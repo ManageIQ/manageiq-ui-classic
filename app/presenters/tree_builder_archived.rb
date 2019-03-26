@@ -1,14 +1,7 @@
 module TreeBuilderArchived
   def x_get_tree_custom_kids(object, count_only, options)
     klass = options[:leaf].safe_constantize
-    objects = if TreeBuilder.hide_vms
-                [] # hidden all VMs
-              else
-                case object[:id]
-                when "orph" then  klass.orphaned
-                when "arch" then  klass.archived
-                end
-              end
+    objects = []
     count_only_or_objects_filtered(count_only, objects, "name")
   end
 

@@ -47,17 +47,8 @@ describe TreeBuilderImages do
   end
 
   it 'sets Templates nodes to empty Array if VMs/Templates are hidden' do
-    User.current_user.settings[:display] = {:display_vms => false}
-
     provider = @images_tree.x_get_tree_roots(false, nil)[0]
     template = @images_tree.x_get_tree_ems_kids(provider, false)
     expect(template).to eq([])
-  end
-
-  it 'sets Templates nodes correctly if VMs/Templates are shown' do
-    User.current_user.settings[:display] = {:display_vms => true}
-    provider = @images_tree.x_get_tree_roots(false, nil)[0]
-    template = @images_tree.x_get_tree_ems_kids(provider, false)
-    expect(template).to eq([@template_cloud_with_az])
   end
 end
