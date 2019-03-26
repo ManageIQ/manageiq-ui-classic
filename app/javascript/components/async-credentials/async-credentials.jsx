@@ -11,7 +11,7 @@ import ButtonSpinner from '../../forms/button-spinner';
 import CheckErrors from './check-errors';
 import { checkValidState } from './helper';
 
-export const SecretContext = createContext();
+export const PasswordContext = createContext();
 
 const AsyncCredentials = ({
   FieldProvider,
@@ -52,7 +52,7 @@ const AsyncCredentials = ({
       });
   };
 
-  const enahncedChange = (value, name, validateName, change) => {
+  const enhancedChange = (value, name, validateName, change) => {
     let fieldValue = value;
     // check if value is event and replace the value if it is
     if (typeof fieldValue === 'object' && fieldValue.target && fieldValue.target.hasOwnProperty('value')) {
@@ -67,11 +67,11 @@ const AsyncCredentials = ({
   };
 
   return (
-    <SecretContext.Provider value={name}>
+    <PasswordContext.Provider value={name}>
       {formOptions.renderForm(fields.map(field => ({
         ...field,
         isDisabled: field.isDisabled || validating,
-        onChange: value => enahncedChange(value, field.name, name, formOptions.change),
+        onChange: value => enhancedChange(value, field.name, name, formOptions.change),
       })), formOptions)}
       <FieldProvider initialValue={!!edit} name={name} validate={value => (value === false ? asyncError : undefined)}>
         {({ input, meta }) => (
@@ -99,7 +99,7 @@ const AsyncCredentials = ({
           </FormGroup>
         )}
       </FieldProvider>
-    </SecretContext.Provider>
+    </PasswordContext.Provider>
   );
 };
 

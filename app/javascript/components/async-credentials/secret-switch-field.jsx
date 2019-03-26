@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { SecretContext } from './async-credentials';
+import { PasswordContext } from './async-credentials';
 import { checkValidState } from './helper';
 
 const SecretSwitchField = ({
@@ -24,7 +24,7 @@ const SecretSwitchField = ({
     ...rest,
   };
   return (
-    <SecretContext.Consumer>
+    <PasswordContext.Consumer>
       {secretKey => (
         <Fragment>
           {
@@ -45,7 +45,7 @@ const SecretSwitchField = ({
           : formOptions.renderForm([secretField], formOptions)}
         </Fragment>
       )}
-    </SecretContext.Consumer>
+    </PasswordContext.Consumer>
   );
 };
 
