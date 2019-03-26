@@ -20,37 +20,4 @@ describe TreeBuilderArchived do
                           :icon_background => "#336699",
                           :tip             => "Orphaned VMs/Templates"}])
   end
-
-  it '#x_get_tree_custom_kids with hidden Infra VMs returns empty Array' do
-    nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
-                                                 false,
-                                                 :leaf => 'ManageIQ::Providers::InfraManager::VmOrTemplate')
-    nodes_arch = archived.x_get_tree_custom_kids({:id => 'arch'},
-                                                 false,
-                                                 :leaf => 'ManageIQ::Providers::InfraManager::VmOrTemplate')
-    expect(nodes_orph).to eq([])
-    expect(nodes_arch).to eq([])
-  end
-
-  it '#x_get_tree_custom_kids with hidden Cloud VMs returns empty Array' do
-    nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
-                                                 false,
-                                                 :leaf => 'VmCloud')
-    nodes_arch = archived.x_get_tree_custom_kids({:id => 'arch'},
-                                                 false,
-                                                 :leaf => 'VmCloud')
-    expect(nodes_orph).to eq([])
-    expect(nodes_arch).to eq([])
-  end
-
-  it '#x_get_tree_custom_kids with hidden Cloud Templates returns empty Array' do
-    nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
-                                                 false,
-                                                 :leaf => 'ManageIQ::Providers::CloudManager::Template')
-    nodes_arch = archived.x_get_tree_custom_kids({:id => 'arch'},
-                                                 false,
-                                                 :leaf => 'ManageIQ::Providers::InfraManager::Template')
-    expect(nodes_orph).to eq([])
-    expect(nodes_arch).to eq([])
-  end
 end

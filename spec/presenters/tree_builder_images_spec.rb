@@ -45,10 +45,4 @@ describe TreeBuilderImages do
                               :icon_background => "#336699",
                               :tip             => "Orphaned Images"}])
   end
-
-  it 'sets Templates nodes to empty Array if VMs/Templates are hidden' do
-    provider = @images_tree.x_get_tree_roots(false, nil)[0]
-    template = @images_tree.x_get_tree_ems_kids(provider, false)
-    expect(template).to eq([])
-  end
 end

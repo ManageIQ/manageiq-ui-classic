@@ -1,5 +1,4 @@
 class TreeBuilderInstances < TreeBuilder
-  has_kids_for AvailabilityZone, [:x_get_tree_az_kids]
   has_kids_for ExtManagementSystem, [:x_get_tree_ems_kids]
 
   include TreeBuilderArchived
@@ -21,12 +20,6 @@ class TreeBuilderInstances < TreeBuilder
   end
 
   def x_get_tree_ems_kids(object, count_only)
-    count_only_or_objects_filtered(count_only, object.availability_zones, "name") +
-      count_only_or_objects_filtered(count_only, [], "name")
-  end
-
-  # Get AvailabilityZone children count/array
-  def x_get_tree_az_kids(object, count_only)
-    count_only_or_objects_filtered(count_only, [], "name")
+    count_only_or_objects_filtered(count_only, object.availability_zones, "name")
   end
 end
