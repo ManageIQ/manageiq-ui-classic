@@ -193,8 +193,7 @@ class ApplicationController < ActionController::Base
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
       :hostcompare   => "Compressed",     # Start Host compare in compressed mode
-      :timezone      => nil,              # This will be set when the user logs in
-      :display_vms   => false # don't display vms by default
+      :timezone      => nil               # This will be set when the user logs in
     },
   }.freeze
 

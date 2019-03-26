@@ -80,7 +80,7 @@ class VmInfraController < ApplicationController
         {:title => _("Infrastructure")},
         {:title => _("Virtual Machines")},
       ],
-      :include_record => (!@settings[:display][:display_vms]),
+      :include_record => true,
     }
   end
 
