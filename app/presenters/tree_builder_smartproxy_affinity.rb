@@ -18,13 +18,10 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
       :full_ids     => false,
       :checkboxes   => true,
       :three_checks => true,
-      :post_check   => true
+      :post_check   => true,
+      :oncheck      => 'miqOnCheckGeneric',
+      :check_url    => '/ops/smartproxy_affinity_field_changed/'
     }
-  end
-
-  def set_locals_for_render
-    super.merge!(:oncheck   => 'miqOnCheckGeneric',
-                 :check_url => '/ops/smartproxy_affinity_field_changed/')
   end
 
   def x_get_tree_roots(count_only = false, _options)

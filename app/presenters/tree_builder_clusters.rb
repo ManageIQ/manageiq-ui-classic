@@ -14,12 +14,10 @@ class TreeBuilderClusters < TreeBuilder
       :full_ids          => false,
       :checkboxes        => true,
       :highlight_changes => true,
-      :three_checks      => true
+      :three_checks      => true,
+      :oncheck           => "miqOnCheckCUFilters",
+      :check_url         => "/ops/cu_collection_field_changed/"
     }
-  end
-
-  def set_locals_for_render
-    super.merge!(:oncheck => "miqOnCheckCUFilters", :check_url => "/ops/cu_collection_field_changed/")
   end
 
   def non_cluster_selected

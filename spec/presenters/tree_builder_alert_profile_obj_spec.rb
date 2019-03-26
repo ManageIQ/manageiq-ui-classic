@@ -30,7 +30,11 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#tree_init_options' do
       it 'sets init options correctly' do
-        expect(subject.send(:tree_init_options)).to eq(:checkboxes => true)
+        expect(subject.send(:tree_init_options)).to eq(
+          :checkboxes => true,
+          :oncheck    => "miqOnCheckGeneric",
+          :check_url  => "/miq_policy/alert_profile_assign_changed/"
+        )
       end
     end
 

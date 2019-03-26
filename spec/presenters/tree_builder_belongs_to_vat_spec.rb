@@ -40,15 +40,16 @@ describe TreeBuilderBelongsToVat do
     it 'sets tree options correctly' do
       expect(subject.send(:tree_init_options)).to eq(:full_ids          => true,
                                                      :checkboxes        => true,
-                                                     :highlight_changes => true)
+                                                     :highlight_changes => true,
+                                                     :oncheck           => nil,
+                                                     :check_url         => "/ops/rbac_group_field_changed/#{group.id}___")
     end
   end
 
   describe '#set_locals_for_render' do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:check_url => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
-                                :oncheck   => edit ? "miqOnCheckUserFilters" : nil)
+      expect(locals).to include(:check_url => "/ops/rbac_group_field_changed/#{group.id || "new"}___")
     end
   end
 
