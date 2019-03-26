@@ -24,12 +24,10 @@ module Mixins
         if @title && not_show_page? && @title != breadcrumbs.compact.last.try(:[], :title)
           breadcrumbs.push(:title => @title)
         end
-      else
+      elsif features?
         # Append breadcrumb from title of the accordion (eg "Policies")
-        if features?
-          accord = features.find { |f| f.accord_name == x_active_accord.to_s }
-          breadcrumbs.push(:title => accord.title, :key => "#{accord.name}_accord", :action => "accordion_select")
-        end
+        accord = features.find { |f| f.accord_name == x_active_accord.to_s }
+        breadcrumbs.push(:title => accord.title, :key => "#{accord.name}_accord", :action => "accordion_select")
 
         # Append breadcrumbs created from the tree (eg "All policies > Red Hat policies > Policy 1")
         breadcrumbs_from_tree = build_breadcrumbs_from_tree
@@ -105,12 +103,9 @@ module Mixins
     # Helper methods
 
     def build_tree
-      if features?
-        allowed_features = ApplicationController::Feature.allowed_features(features)
-        # allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
-        return allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
-      end
-      []
+      allowed_features = ApplicationController::Feature.allowed_features(features)
+      # TODO: allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
+      allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
     end
 
     # Has controller features
