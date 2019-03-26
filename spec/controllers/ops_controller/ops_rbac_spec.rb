@@ -275,7 +275,6 @@ describe OpsController do
         controller.instance_variable_set(:@_params, :miq_grid_checks => @tenant.id.to_s)
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array)).to be_nil
-        expect(assigns(:entries)).not_to be_nil
         expect(response.status).to eq(200)
       end
 
@@ -293,7 +292,6 @@ describe OpsController do
         controller.instance_variable_set(:@_params, :button => "reset", :id => @tenant.id)
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("All changes have been reset")
-        expect(assigns(:entries)).not_to be_nil
         expect(response.status).to eq(200)
       end
 
