@@ -78,7 +78,7 @@ module VmCommon
 
   # to reload currently displayed summary screen in explorer
   def reload
-    @_params[:id] = if hide_vms && x_node.split('-')[1] != params[:id] && params[:id].present?
+    @_params[:id] = if x_node.split('-')[1] != params[:id] && params[:id].present?
                       'v-' + params[:id]
                     else
                       x_node
@@ -107,10 +107,6 @@ module VmCommon
   alias_method :instance_timeline, :show_timeline
   alias_method :vm_timeline, :show_timeline
   alias_method :miq_template_timeline, :show_timeline
-
-  def hide_vms
-    !User.current_user.settings.fetch_path(:display, :display_vms) # default value is false
-  end
 
   def x_show
     @vm = @record = identify_record(params[:id], VmOrTemplate)
@@ -911,7 +907,7 @@ module VmCommon
       javascript_flash(:spinner_off => true, :activate_node => {:tree => x_active_tree.to_s, :node => x_node})
     end
 
-    self.x_node = (@record.present? && hide_vms ? parent_folder_id(@record) : params[:id])
+    self.x_node = (@record.present? ? parent_folder_id(@record) : params[:id])
     replace_right_cell
   end
 
@@ -971,11 +967,11 @@ module VmCommon
     add_nodes
   end
 
-  # if node is VM or Template and hide_vms is true - select parent node in explorer tree but show info of Vm/Template
+  # if node is VM or Template is true - select parent node in explorer tree but show info of Vm/Template
   def resolve_node_info(id)
     nodetype, id = id.split("-")
 
-    if hide_vms && (nodetype == 'v' || nodetype == 't')
+    if nodetype == 'v' || nodetype == 't'
       @vm = VmOrTemplate.find(id)
       self.x_node = parent_folder_id(@vm)
     else
@@ -989,7 +985,7 @@ module VmCommon
   def get_node_info(treenodeid, show_list = true)
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
-    @nodetype, id = if (treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't') && hide_vms
+    @nodetype, id = if treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't'
                       @sb[@sb[:active_accord]] = treenodeid
                       parse_nodetype_and_id(treenodeid)
                     else
@@ -1132,7 +1128,7 @@ module VmCommon
     end
 
     if !@in_a_form && !@sb[:action]
-      id = @record.present? && hide_vms ? TreeBuilder.build_node_cid(@record) : x_node
+      id = @record.present? ? TreeBuilder.build_node_cid(@record) : x_node
       id = @sb[@sb[:active_accord]] if @sb[@sb[:active_accord]].present? && params[:action] != 'tree_select'
       get_node_info(id)
       type, _id = parse_nodetype_and_id(id)

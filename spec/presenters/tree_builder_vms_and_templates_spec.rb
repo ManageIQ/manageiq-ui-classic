@@ -23,32 +23,8 @@ describe TreeBuilderVmsAndTemplates do
   end
 
   describe "#tree" do
-    it "returns vms with display_vms=true" do
-      EvmSpecHelper.local_miq_server
-      User.current_user = FactoryBot.create(:user, :settings => {:display => {:display_vms => true}})
-      tree
-      vms = FactoryBot.create_list(:vm_vmware, 2, :ext_management_system => ems)
-      subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }
-
-      tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
-      expect(tree_v[:text]).to eq(ems.name)
-      expect(tree_v[:nodes].size).to eq(1)
-
-      folders_v = tree_v[:nodes].first
-      expect(folders_v[:text]).to match folder.name
-      expect(folders_v[:nodes].size).to eq(1)
-
-      subfolders_v = folders_v[:nodes].detect { |f| f[:text] == subfolder1.name }
-      expect(subfolders_v).to be_present
-      expect(subfolders_v[:nodes].size).to eq(2)
-
-      ems_vs = subfolders_v[:nodes]
-      expect(ems_vs.map { |e| e[:text] }).to match_array(vms.map(&:name))
-    end
-
     it "returns no vms with display_vms=false" do
       EvmSpecHelper.local_miq_server
-      User.current_user = FactoryBot.create(:user, :settings => {:display => {:display_vms => false}})
       tree
       vms = FactoryBot.create_list(:vm_vmware, 2, :ext_management_system => ems)
       subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }

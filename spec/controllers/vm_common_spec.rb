@@ -55,20 +55,12 @@ describe VmOrTemplateController do
     end
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
-      User.current_user.settings[:display] = {:display_vms => false}
       allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
       controller.instance_variable_set(:@_params, :id => @vm.id.to_s)
       controller.reload
       expect(controller.params[:id]).to eq("v-#{@vm.id}")
     end
 
-    it 'sets params[:id] to x_node if vms are displayed in a tree' do
-      User.current_user.settings[:display] = {:display_vms => true}
-      allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
-      controller.instance_variable_set(:@_params, :id => @folder.id.to_s)
-      controller.reload
-      expect(controller.params[:id]).to eq(controller.x_node)
-    end
   end
 
   context "#show" do
@@ -293,17 +285,7 @@ describe VmOrTemplateController do
     end
 
     it 'when VM hidden select parent in tree but show VMs info' do
-      User.current_user.settings[:display] = {:display_vms => false}
-
       allow(vm_common).to receive(:x_node=) { |id| expect(id).to eq(controller.parent_folder_id(@vm_arch)) }
-      allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
-      vm_common.resolve_node_info("v-#{@vm_arch[:id]}")
-    end
-
-    it 'when VM shown select it in tree and show its info' do
-      User.current_user.settings[:display] = {:display_vms => true}
-
-      allow(vm_common).to receive(:x_node=) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
       allow(vm_common).to receive(:get_node_info) { |id| expect(id).to eq(TreeBuilder.build_node_cid(@vm_arch)) }
       vm_common.resolve_node_info("v-#{@vm_arch[:id]}")
     end

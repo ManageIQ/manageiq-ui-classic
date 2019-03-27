@@ -5,7 +5,7 @@ class TreeBuilderVandt < TreeBuilder
     {
       :leaf           => 'ManageIQ::Providers::InfraManager::VmOrTemplate',
       :lazy           => true,
-      :allow_reselect => TreeBuilder.hide_vms
+      :allow_reselect => true
     }
   end
 

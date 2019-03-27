@@ -1,11 +1,10 @@
 class TreeBuilderInstances < TreeBuilder
-  has_kids_for AvailabilityZone, [:x_get_tree_az_kids]
   has_kids_for ExtManagementSystem, [:x_get_tree_ems_kids]
 
   include TreeBuilderArchived
 
   def tree_init_options
-    {:leaf => 'VmCloud', :allow_reselect => TreeBuilder.hide_vms}
+    {:leaf => 'VmCloud', :allow_reselect => true}
   end
 
   def root_options
@@ -21,16 +20,6 @@ class TreeBuilderInstances < TreeBuilder
   end
 
   def x_get_tree_ems_kids(object, count_only)
-    count_only_or_objects_filtered(count_only, object.availability_zones, "name") +
-      count_only_or_objects_filtered(count_only,
-                                     TreeBuilder.hide_vms ? [] : object.vms.where(:availability_zone_id => nil),
-                                     "name")
-  end
-
-  # Get AvailabilityZone children count/array
-  def x_get_tree_az_kids(object, count_only)
-    count_only_or_objects_filtered(count_only,
-                                   TreeBuilder.hide_vms ? [] : object.vms.with_ems,
-                                   "name")
+    count_only_or_objects_filtered(count_only, object.availability_zones, "name")
   end
 end
