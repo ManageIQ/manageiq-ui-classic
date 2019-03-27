@@ -1029,7 +1029,7 @@ module VmCommon
       options[:named_scope] << :not_orphaned unless role_allows?(:feature => 'vm_show_list_orphaned')
       options[:named_scope] << :not_archived unless role_allows?(:feature => 'vm_show_list_archived')
       if model == "ManageIQ::Providers::CloudManager::Template"
-        options[:named_scope] << [:without_volume_templates]
+        options[:named_scope] << :without_volume_templates
       end
       if x_node == "root"
         if x_active_tree == :vandt_tree
