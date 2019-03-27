@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-4
+
+### Fixed
+- Fix enabling Power operations for a template [(#5128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5128)
+- Use timeline listnav only for dashboard controller [(#5218)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5218)
+- Catch 400 error and display it in flash message in GOD [(#4951)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4951)
+- [Performance] Remove compliance from VmOrTemplate includes [(#5283)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5283)
+- Stop spinner after rednering flash message [(#5118)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5118)
+- Allow Approver user to deny the request [(#5255)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5255)
+- Fix missing flash message for Re-check Authentication Status [(#5243)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5243)
+- Ansible job launch confirmation message fix [(#5226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5226)
+- Hide services from the Services tree as its redundant and slow [(#5335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5335)
+
 ## Hammer-3
 
 ### Fixed
