@@ -48,3 +48,15 @@
     - session[:edit][:policy_sim] = @policy_sim
     = render :partial => "layouts/gtl",
              :locals  => {:view => @pol_view}
+
+- if params[:action] == 'policy_sim' && !@explorer
+  %table{:width => "100%"}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on
+          = link_to(_('Cancel'),
+                    {:action => 'policy_sim_cancel'},
+                     :class  => 'btn btn-default',
+                     :alt    => t = _('Cancel Changes'),
+                     :title  => t,
+                     :method => :post)
