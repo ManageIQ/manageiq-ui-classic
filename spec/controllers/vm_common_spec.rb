@@ -1,5 +1,5 @@
 describe VmOrTemplateController do
-  context "#snap_pressed" do
+  describe "#snap_pressed" do
     before do
       stub_user(:features => :all)
       @vm = FactoryBot.create(:vm_vmware)
@@ -46,7 +46,7 @@ describe VmOrTemplateController do
     end
   end
 
-  context '#reload ' do
+  describe '#reload' do
     before do
       login_as FactoryBot.create(:user_with_group, :role => "operator")
       allow(controller).to receive(:tree_select).and_return(nil)
@@ -63,7 +63,7 @@ describe VmOrTemplateController do
 
   end
 
-  context "#show" do
+  describe "#show" do
     before do
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
@@ -179,7 +179,7 @@ describe VmOrTemplateController do
     end
   end
 
-  context '#replace_right_cell' do
+  describe '#replace_right_cell' do
     it 'should display form button on Migrate request screen' do
       vm = FactoryBot.create(:vm_infra)
       allow(controller).to receive(:params).and_return(:action => 'vm_migrate')
@@ -202,9 +202,25 @@ describe VmOrTemplateController do
       controller.send(:replace_right_cell, :action => 'migrate', :presenter => presenter)
       expect(presenter[:update_partials]).to have_key(:form_buttons_div)
     end
+
+    context 'Instance policy simulation' do
+      let(:vm_openstack) { FactoryBot.create(:vm_openstack, :ext_management_system => FactoryBot.create(:ems_openstack)) }
+
+      before do
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@record, vm_openstack)
+        controller.instance_variable_set(:@sb, :action => 'policy_sim')
+        request.parameters[:controller] = 'vm_or_template'
+      end
+
+      it 'sets right cell text for policy simulation page' do
+        controller.send(:replace_right_cell)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Instance Policy Simulation')
+      end
+    end
   end
 
-  context '#parent_folder_id' do
+  describe '#parent_folder_id' do
     it 'returns id of orphaned folder for orphaned VM/Template' do
       vm_orph = FactoryBot.create(:vm_infra, :storage => FactoryBot.create(:storage))
       template_orph = FactoryBot.create(:template_infra, :storage => FactoryBot.create(:storage))
@@ -273,7 +289,7 @@ describe VmOrTemplateController do
     end
   end
 
-  context "#resolve_node_info" do
+  describe "#resolve_node_info" do
     let(:vm_common) do
       Class.new do
         extend VmCommon
@@ -291,7 +307,7 @@ describe VmOrTemplateController do
     end
   end
 
-  context '#evm_relationship_get_form_vars' do
+  describe '#evm_relationship_get_form_vars' do
     before do
       @vm = FactoryBot.create(:vm_vmware)
       edit = {:vm_id => @vm.id, :new => {:server => nil}}
