@@ -858,10 +858,12 @@ module OpsController::Diagnostics
                    else
                      TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, :root => parent)
                    end
-    if @sb[:diag_selected_id]
-      @record = @sb[:diag_selected_model].constantize.find(@sb[:diag_selected_id]) # Set the current record
-      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
-    end
+
+    # Pull out the selected node from the tree state and store it in the sandbox for future use
+    prefix, @sb[:diag_selected_id] = x_node(@server_tree.name).split('-')
+    @sb[:diag_selected_model] = TreeBuilder.get_model_for_prefix(prefix)
+    @record = @sb[:diag_selected_model].constantize.find(@sb[:diag_selected_id]) # Set the current record
+    @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
   end
 
   # Get information for a node
