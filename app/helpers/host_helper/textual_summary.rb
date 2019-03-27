@@ -162,11 +162,11 @@ module HostHelper::TextualSummary
   end
 
   def textual_asset_tag
-    {:label => _('Asset tag'), :value => @record.asset_tag}
+    {:label => _('Asset tag'), :icon => "fa fa-tag", :value => @record.asset_tag}
   end
 
   def textual_service_tag
-    {:label => _('Service tag'), :value => @record.service_tag}
+    {:label => _('Service tag'), :icon => "fa fa-tag", :value => @record.service_tag}
   end
 
   def textual_power_state
@@ -216,20 +216,20 @@ module HostHelper::TextualSummary
   end
 
   def textual_num_cpu
-    {:label => _("Number of CPUs"), :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_sockets}
+    {:label => _("Number of CPUs"), :icon => "pficon pficon-cpu", :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_sockets}
   end
 
   def textual_num_cpu_cores
-    {:label => _("Number of CPU Cores"), :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_total_cores}
+    {:label => _("Number of CPU Cores"), :icon => "pficon pficon-cpu", :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_total_cores}
   end
 
   def textual_cpu_cores_per_socket
-    {:label => _("CPU Cores Per Socket"),
+    {:label => _("CPU Cores Per Socket"), :icon => "pficon pficon-cpu",
      :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_cores_per_socket}
   end
 
   def textual_memory
-    {:label => _("Memory"),
+    {:label => _("Memory"), :icon => "pficon pficon-memory",
      :value => if @record.hardware.nil? || !@record.hardware.memory_mb.kind_of?(Numeric)
                  _("N/A")
                else

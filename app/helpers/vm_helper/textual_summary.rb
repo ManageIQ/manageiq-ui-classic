@@ -160,11 +160,11 @@ module VmHelper::TextualSummary
   end
 
   def textual_tools_status
-    {:label => _("Platform Tools"), :value => (@record.tools_status.nil? ? _("N/A") : @record.tools_status)}
+    {:label => _("Platform Tools"), :icon => "pficon pficon-maintenance", :value => (@record.tools_status.nil? ? _("N/A") : @record.tools_status)}
   end
 
   def textual_cpu_affinity
-    {:label => _("CPU Affinity"), :value => @record.cpu_affinity}
+    {:label => _("CPU Affinity"), :icon => "pficon pficon-cpu", :value => @record.cpu_affinity}
   end
 
   def textual_storage_profile
