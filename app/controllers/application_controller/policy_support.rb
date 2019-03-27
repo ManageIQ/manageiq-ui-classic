@@ -95,6 +95,8 @@ module ApplicationController::PolicySupport
         @refresh_partial = "layouts/policy_sim"
         replace_right_cell
       end
+    else
+      set_right_cell_text
     end
   end
 
@@ -135,6 +137,11 @@ module ApplicationController::PolicySupport
   end
 
   private ############################
+
+  # Set title of the policy simulation page, for non explorer screens
+  def set_right_cell_text
+    @right_cell_text = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => vm_or_instance)}
+  end
 
   # Assign policies to selected records of db
   def assign_policies(db)
