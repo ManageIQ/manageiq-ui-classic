@@ -24,6 +24,7 @@ class TaggingWrapper extends React.Component {
     const { urls } = this.props;
     return (<TaggingWithButtonsConnected
       saveButton={{
+        // don't replace $.post with http.post
           onClick: (assignedTags) => {
             $.post(urls.save_url, { data: JSON.stringify(assignedTags) });
           },
@@ -34,6 +35,7 @@ class TaggingWrapper extends React.Component {
         }
       }
       cancelButton={{
+        // don't replace $.post with http.post
         onClick: () => { this.reset(); $.post(urls.cancel_url); },
         href: '',
         type: 'button',
