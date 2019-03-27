@@ -64,7 +64,7 @@ describe TreeBuilderRolesByServer do
                                   'state'          => {'expanded' => true},
                                   'selectable'     => true,
                                   'class'          => ''},],
-                'state'      => {'expanded' => true, 'selected' => true},
+                'state'      => {'expanded' => true},
                 'class'      => ''}]
       expect(JSON.parse(@server_tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
