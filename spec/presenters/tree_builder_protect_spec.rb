@@ -25,11 +25,10 @@ describe TreeBuilderProtect do
     it 'set init options correctly' do
       tree_options = @protect_tree.send(:tree_init_options)
       expect(tree_options).to eq(
-        :full_ids          => false,
-        :checkboxes        => true,
-        :highlight_changes => true,
-        :check_url         => "/name/protect/",
-        :oncheck           => "miqOnCheckProtect"
+        :full_ids   => false,
+        :checkboxes => true,
+        :check_url  => "/name/protect/",
+        :oncheck    => "miqOnCheckProtect"
       )
     end
 

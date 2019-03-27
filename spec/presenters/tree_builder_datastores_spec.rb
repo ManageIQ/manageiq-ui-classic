@@ -12,11 +12,10 @@ describe TreeBuilderDatastores do
     it 'sets tree to have full ids, not lazy and no root' do
       root_options = @datastores_tree.send(:tree_init_options)
       expect(root_options).to eq(
-        :full_ids          => false,
-        :checkboxes        => true,
-        :highlight_changes => true,
-        :check_url         => "/ops/cu_collection_field_changed/",
-        :oncheck           => "miqOnCheckCUFilters"
+        :full_ids   => false,
+        :checkboxes => true,
+        :check_url  => "/ops/cu_collection_field_changed/",
+        :oncheck    => "miqOnCheckCUFilters"
       )
     end
     it 'sets locals correctly' do

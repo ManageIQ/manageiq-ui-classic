@@ -11,11 +11,10 @@ class TreeBuilderDatastores < TreeBuilder
 
   def tree_init_options
     {
-      :full_ids          => false,
-      :checkboxes        => true,
-      :highlight_changes => true,
-      :oncheck           => "miqOnCheckCUFilters",
-      :check_url         => "/ops/cu_collection_field_changed/"
+      :full_ids   => false,
+      :checkboxes => true,
+      :oncheck    => "miqOnCheckCUFilters",
+      :check_url  => "/ops/cu_collection_field_changed/"
     }
   end
 

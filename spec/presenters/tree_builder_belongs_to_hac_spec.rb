@@ -67,11 +67,10 @@ describe TreeBuilderBelongsToHac do
 
   describe '#tree_init_options' do
     it 'sets init options correctly' do
-      expect(subject.send(:tree_init_options)).to eq(:full_ids          => true,
-                                                     :checkboxes        => true,
-                                                     :highlight_changes => true,
-                                                     :oncheck           => nil,
-                                                     :check_url         => "/ops/rbac_group_field_changed/new___")
+      expect(subject.send(:tree_init_options)).to eq(:full_ids   => true,
+                                                     :checkboxes => true,
+                                                     :oncheck    => nil,
+                                                     :check_url  => "/ops/rbac_group_field_changed/new___")
     end
   end
 
