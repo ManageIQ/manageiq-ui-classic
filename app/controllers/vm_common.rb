@@ -928,6 +928,14 @@ module VmCommon
     {'"no parent"' => -1}.merge(parent_choices(@record.id))
   end
 
+  # Return vm_cloud or vm_infra based on selected record
+  def vm_or_instance
+    if @record || @tagitems
+      record_model = model_for_vm(@record || @tagitems.first)
+      controller_for_vm(record_model)
+    end
+  end
+
   private
 
   # Check for parent nodes missing from vandt tree and return them if any
@@ -1531,7 +1539,7 @@ module VmCommon
       action = nil
     when "policy_sim"
       action = nil
-      header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => table)}
+      header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => vm_or_instance)}
       partial = params[:action] == "policies" ? "vm_common/policies" : "layouts/policy_sim"
     when "protect"
       partial = "layouts/protect"
