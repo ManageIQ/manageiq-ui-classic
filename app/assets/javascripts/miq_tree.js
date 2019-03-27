@@ -136,18 +136,20 @@ function miqOnClickSelectRbacTreeNode(id) {
 function miqTreeScrollToNode(tree, id) {
   var node = miqTreeFindNodeByKey(tree, id);
   var parentPanelBody = node.$el.parents('div.panel-body');
-  // Calculate the current node position relative to the scrollable panel
-  var nodePos = node.$el.offset().top - parentPanelBody.offset().top;
+  if (parentPanelBody.length > 0) {
+    // Calculate the current node position relative to the scrollable panel
+    var nodePos = node.$el.offset().top - parentPanelBody.offset().top;
 
-  var offset = 0; // Calculate the required scrolling offset
-  if (nodePos < 0) {
-    offset = nodePos - node.$el.height();
-  } else if (nodePos > parentPanelBody.height()) {
-    offset = nodePos + node.$el.height() - parentPanelBody.height();
-  }
+    var offset = 0; // Calculate the required scrolling offset
+    if (nodePos < 0) {
+      offset = nodePos - node.$el.height();
+    } else if (nodePos > parentPanelBody.height()) {
+      offset = nodePos + node.$el.height() - parentPanelBody.height();
+    }
 
-  if (offset != 0) { // Scroll the panel to the node's position if necessary
-    parentPanelBody.animate({scrollTop: parentPanelBody.scrollTop() + offset});
+    if (offset != 0) { // Scroll the panel to the node's position if necessary
+      parentPanelBody.animate({scrollTop: parentPanelBody.scrollTop() + offset});
+    }
   }
 }
 
