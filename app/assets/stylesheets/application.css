@@ -25,4 +25,5 @@
  *= require graphiql/graphiql.css
  *= require piecharts
  *= require @manageiq/react-ui-components/dist/textual_summary
+ *= require @manageiq/react-ui-components/dist/tagging.css
 */

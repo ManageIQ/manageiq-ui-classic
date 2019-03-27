@@ -1,9 +1,9 @@
 - if @angular_form
   - @angular_form = false
   - return
-
 -# Set default action url, if none passed in
 - action_url ||= nil
+- return if action_url == "tagging_edit"
 -# Set default record id to nil, if none passed in
 - record_id ||= nil
 - align ||= "right"

@@ -2200,6 +2200,7 @@ class CatalogController < ApplicationController
     add_flash(_('All changes have been reset'), :warning) if params[:button] == "reset"
     @right_cell_text = _("Editing %{model} Tags for \"%{name}\"") % {:name  => ui_lookup(:models => @tagging),
                                                                      :model => current_tenant.name}
+
     replace_right_cell(:action => @sb[:action])
   end
 
