@@ -22,7 +22,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_asset_details
     TextualGroup.new(
       _("Asset Details"),
-      %i(support_contact description location room_id rack_name lowest_rack_unit)
+      %i[support_contact description location room rack_name lowest_rack_unit]
     )
   end
 
@@ -180,8 +180,8 @@ module PhysicalServerHelper::TextualSummary
     {:label => _("Location"), :value => @record.asset_detail['location']}
   end
 
-  def textual_room_id
-    {:label => _("Room"), :value => @record.asset_detail['room_id']}
+  def textual_room
+    {:label => _("Room"), :value => @record.asset_detail['room']}
   end
 
   def textual_rack_name

@@ -61,7 +61,7 @@ describe PhysicalServerHelper::TextualSummary do
     support_contact
     description
     location
-    room_id
+    room
     rack_name
     lowest_rack_unit
   ), "asset_details"
