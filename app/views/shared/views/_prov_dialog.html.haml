@@ -132,7 +132,9 @@
             :prefix                     => "/miq_request/",
             :keys                       => keys})
       - if wf.kind_of?(ManageIQ::Providers::CloudManager::ProvisionWorkflow)
-        - keys = [:cloud_tenant, :availability_zone_filter, :placement_availability_zone, :cloud_network, :cloud_subnet, :security_groups, :floating_ip_address, :resource_group]
+        - has_cloud_network = (@edit && @edit[:new] && (!@edit[:new][:cloud_network_selection_method] || @edit[:new][:cloud_network_selection_method][0] == "network")) || (@options && (!@options[:cloud_network_selection_method] || @options[:cloud_network_selection_method][0] == "network"))
+        - has_network_port = (@edit && @edit[:new] && @edit[:new][:cloud_network_selection_method] && @edit[:new][:cloud_network_selection_method][0] == "port") || (@options && @options[:cloud_network_selection_method] && @options[:cloud_network_selection_method][0] == "port")
+        - keys = [:cloud_tenant, :availability_zone_filter, :placement_availability_zone, :cloud_network_selection_method, has_cloud_network ? :cloud_network : nil, has_network_port ? :network_port : nil, :cloud_subnet, :security_groups, :floating_ip_address, :resource_group].compact
         = render(:partial => "/miq_request/prov_dialog_fieldset",
           :locals         => {:workflow => wf,
             :dialog                     => dialog,
