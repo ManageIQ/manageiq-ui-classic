@@ -7,6 +7,12 @@ class TreeBuilderServersByRole < TreeBuilderDiagnostics
     x_get_tree_server_roles
   end
 
+  def override(node, _object, _pid, _options)
+    if @sb[:diag_selected_id] && node[:key] == "role-#{@sb[:diag_selected_id]}"
+      node[:highlighted] = true
+    end
+  end
+
   def x_get_tree_server_roles
     ServerRole.all.sort_by(&:description).each_with_object([]) do |r, objects|
       next if @root.kind_of?(MiqRegion) && !r.regional_role? # Only regional roles under Region
