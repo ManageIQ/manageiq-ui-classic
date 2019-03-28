@@ -258,6 +258,10 @@ class MiqAeClassController < ApplicationController
     existing_node
   end
 
+  def build_ae_tree
+    TreeBuilderAeClass.new(:ae, :ae_tree, @sb)
+  end
+
   def replace_right_cell(options = {})
     @explorer = true
     replace_trees = options[:replace_trees]
@@ -1618,7 +1622,7 @@ class MiqAeClassController < ApplicationController
   def form_copy_objects_field_changed
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
     copy_objects_get_form_vars
-    build_ae_tree(:automate, :automate_tree)
+    build_automate_tree(:automate, :automate_tree)
     @changed = (@edit[:new] != @edit[:current])
     @changed = @edit[:new][:override_source] if @edit[:new][:namespace].nil?
     render :update do |page|
@@ -1849,7 +1853,7 @@ class MiqAeClassController < ApplicationController
     if params[:button] == "reset"
       add_flash(_("All changes have been reset"), :warning)
     end
-    build_ae_tree(:automate, :automate_tree)
+    build_automate_tree(:automate, :automate_tree)
     replace_right_cell
   end
 

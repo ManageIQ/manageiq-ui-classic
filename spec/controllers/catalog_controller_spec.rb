@@ -1253,7 +1253,7 @@ describe CatalogController do
 
   describe '#set_form_vars' do
     before do
-      allow(controller).to receive(:build_ae_tree)
+      allow(controller).to receive(:build_automate_tree)
       controller.instance_variable_set(:@edit, :new => {})
       controller.instance_variable_set(:@record, FactoryBot.create(:service_template))
     end
@@ -1308,7 +1308,7 @@ describe CatalogController do
 
   describe '#resource_delete' do
     before do
-      allow(controller).to receive(:build_ae_tree)
+      allow(controller).to receive(:build_automate_tree)
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:rearrange_groups_array)
       allow(controller).to receive(:render)
