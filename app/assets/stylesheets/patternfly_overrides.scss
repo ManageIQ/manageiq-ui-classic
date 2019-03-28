@@ -249,6 +249,11 @@ body#dashboard .blank-slate-pf {
   }
 }
 
+/// add padding below toolbar on angular dashboards
+.container-tiles-pf {
+  padding-top: 20px;
+}
+
 /// styling for object card on angular dashboards
 
 @media (min-width: $screen-md) {

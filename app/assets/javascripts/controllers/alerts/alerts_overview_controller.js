@@ -10,7 +10,6 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       miqSparkleOn();
 
       function setupInitialValues() {
-        document.getElementById('center_div').className += ' miq-body';
 
         setupConfig();
 

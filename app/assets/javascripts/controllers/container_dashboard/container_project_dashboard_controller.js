@@ -2,7 +2,6 @@
 
 ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
   function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
-    document.getElementById('center_div').className += ' miq-body';
 
     // Obj-status cards init
     $scope.objectStatus = {
