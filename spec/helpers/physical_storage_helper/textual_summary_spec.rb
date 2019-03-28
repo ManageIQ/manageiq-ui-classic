@@ -108,7 +108,7 @@ describe PhysicalStorageHelper::TextualSummary do
         :model,
         :contact,
         :location,
-        :room_id,
+        :room,
         :rack_name,
         :lowest_rack_unit
       )
@@ -246,11 +246,11 @@ describe PhysicalStorageHelper::TextualSummary do
     end
   end
 
-  describe '.textual_room_id' do
-    subject { textual_room_id }
+  describe '.textual_room' do
+    subject { textual_room }
 
-    it 'show the storage Room ID' do
-      expect(subject).to eq(:label => 'Room ID', :value => nil)
+    it 'show the storage Room' do
+      expect(subject).to eq(:label => 'Room', :value => 'Room')
     end
   end
 
