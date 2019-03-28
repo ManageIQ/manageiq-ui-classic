@@ -83,6 +83,11 @@ function miqOnClickSelectTreeNode(id) {
   miqJqueryRequest(url, {beforeSend: true});
 }
 
+function miqTreeSelect(key) {
+  var url = '/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(key.split('__')[0]);
+  miqJqueryRequest(url, {beforeSend: true});
+}
+
 // Activate and focus on a node within a tree given the node's key
 function miqTreeActivateNode(tree, key) {
   miqSparkle(true);
