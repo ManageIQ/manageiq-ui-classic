@@ -1017,9 +1017,8 @@ module OpsController::Settings::Common
     qwb[:ems_metrics_collector_worker] ||= {}
     qwb[:ems_metrics_collector_worker][:defaults] ||= {}
     w = qwb[:ems_metrics_collector_worker][:defaults]
-    raw = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker)
-    w[:count] = raw[:defaults][:count] || 2
-    w[:memory_threshold] = raw[:defaults][:memory_threshold] || 400.megabytes
+    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold) || 400.megabytes
     @sb[:ems_metrics_collector_threshold] = []
     @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
 
@@ -1034,6 +1033,7 @@ module OpsController::Settings::Common
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
     @sb[:smart_proxy_threshold] = []
     @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:smart_proxy_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     qwb[:ems_refresh_worker] ||= {}
     qwb[:ems_refresh_worker][:defaults] ||= {}
@@ -1042,23 +1042,23 @@ module OpsController::Settings::Common
     @sb[:ems_refresh_threshold] = []
     (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     wb = @edit[:current][:workers][:worker_base]
     w = (wb[:event_catcher] ||= {})
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEventCatcher, :memory_threshold) || 1.gigabytes
     @sb[:event_catcher_threshold] = []
     (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     w = (wb[:vim_broker_worker] ||= {})
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
     @sb[:vim_broker_threshold] = []
     (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
 
     w = (wb[:ui_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2

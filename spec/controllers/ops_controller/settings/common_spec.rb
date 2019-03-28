@@ -450,6 +450,7 @@ describe OpsController do
     end
 
     describe '#settings_set_form_vars_workers' do
+      include ActionView::Helpers::NumberHelper
       context "set worker settings for selected server" do
         before do
           @miq_server = FactoryBot.create(:miq_server)
@@ -482,6 +483,13 @@ describe OpsController do
           ui_worker_count = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :count)
           expect(ui_worker_threshold).to eq(600.megabytes)
           expect(ui_worker_count).to eq(2)
+        end
+
+        it "gets worker setting and makes sure it exists in threshold array so correct value can be selected in drop down" do
+          controller.send(:settings_set_form_vars_workers)
+          proxy_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqSmartProxyWorker, :memory_threshold)
+          proxy_worker_threshold_human_size = number_to_human_size(proxy_worker_threshold, :significant => false)
+          expect(assigns(:sb)[:smart_proxy_threshold]).to include([proxy_worker_threshold_human_size, proxy_worker_threshold])
         end
       end
     end
