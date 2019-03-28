@@ -398,12 +398,6 @@ describe EmsCloudController do
       expect(response.status).to eq(200)
     end
 
-    it "discover cloud providers" do
-      get :discover, :params => { :discover_type => "ems" }
-      expect(response.status).to eq(200)
-      expect(response).to render_template('ems_cloud/discover')
-    end
-
     it 'edit selected cloud provider' do
       ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }

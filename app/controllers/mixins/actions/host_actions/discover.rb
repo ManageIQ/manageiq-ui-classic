@@ -45,22 +45,11 @@ module Mixins
             drop_breadcrumb(:name => _("%{title} Discovery") % {:title => title}, :url => "/host/discover")
             @discover_type_selected = params[:discover_type_selected]
 
-            if request.parameters[:controller] == "ems_cloud" && params[:discover_type_selected] == 'azure'
-              @client_id = params[:client_id] if params[:client_id]
-              @client_key = params[:client_key] if params[:client_key]
-              @azure_tenant_id = params[:azure_tenant_id] if params[:azure_tenant_id]
-              @subscription = params[:subscription] if params[:subscription]
-
-              if @client_id == "" || @client_key == "" || @azure_tenant_id == "" || @subscription == ""
-                add_flash(_("Client ID, Client Key, Azure Tenant ID and Subscription ID are required"), :error)
-                render :action => 'discover'
-                return
-              end
-            elsif request.parameters[:controller] == "ems_cloud" || params[:discover_type_ipmi].to_s == "1"
+            if params[:discover_type_ipmi].to_s == "1"
               @userid = params[:userid] if  params[:userid]
               @password = params[:password] if params[:password]
               @verify = params[:verify] if params[:verify]
-              if request.parameters[:controller] == "ems_cloud" && params[:userid] == ""
+              if params[:userid] == ""
                 add_flash(_("Username is required"), :error)
                 render :action => 'discover'
                 return
