@@ -37,4 +37,42 @@ describe ApplicationController do
       expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => flash_msg, :level => :success}])
     end
   end
+
+  describe '#policy_sim' do
+    context 'VM policy simulation and non explorer screen' do
+      let(:ctrl) { VmInfraController.new }
+      let(:vm) { FactoryBot.create(:vm_vmware) }
+
+      before do
+        session = instance_double('VmInfraController', :session    => {:tag_items => [vm], :tag_db => VmOrTemplate},
+                                                       :parameters => {:controller => 'vm_infra'})
+        allow(ctrl).to receive(:drop_breadcrumb).and_return(true)
+        allow(session).to receive(:xml_http_request?).and_return(false)
+        ctrl.instance_variable_set(:@_request, session)
+      end
+
+      it 'sets right cell text' do
+        ctrl.send(:policy_sim)
+        expect(ctrl.instance_variable_get(:@right_cell_text)).to eq('Virtual Machine Policy Simulation')
+      end
+    end
+
+    context 'Instance policy simulation and non explorer screen' do
+      let(:ctrl) { VmCloudController.new }
+      let(:vm) { FactoryBot.create(:vm_openstack, :ext_management_system => FactoryBot.create(:ems_openstack)) }
+
+      before do
+        session = instance_double('VmCloudController', :session    => {:tag_items => [vm], :tag_db => VmOrTemplate},
+                                                       :parameters => {:controller => 'vm_cloud'})
+        allow(ctrl).to receive(:drop_breadcrumb).and_return(true)
+        allow(session).to receive(:xml_http_request?).and_return(false)
+        ctrl.instance_variable_set(:@_request, session)
+      end
+
+      it 'sets right cell text' do
+        ctrl.send(:policy_sim)
+        expect(ctrl.instance_variable_get(:@right_cell_text)).to eq('Instance Policy Simulation')
+      end
+    end
+  end
 end
