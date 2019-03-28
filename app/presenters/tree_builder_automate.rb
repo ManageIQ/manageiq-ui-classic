@@ -2,11 +2,6 @@ class TreeBuilderAutomate < TreeBuilder
   has_kids_for MiqAeClass, [:x_get_tree_class_kids]
   has_kids_for MiqAeNamespace, [:x_get_tree_ns_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
-    @controller = params[:controller]
-    super(name, type, sandbox, build)
-  end
-
   private
 
   def tree_init_options
