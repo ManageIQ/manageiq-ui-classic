@@ -58,12 +58,14 @@ module EmsContainerHelper::TextualSummary
 
   def textual_memory_resources
     {:label => _("Aggregate Node Memory"),
+     :icon  => "pficon pficon-memory",
      :value => number_to_human_size(@record.aggregate_memory * 1.megabyte,
                                     :precision => 0)}
   end
 
   def textual_cpu_cores
     {:label => _("Aggregate Node CPU Cores"),
+     :icon  => "pficon pficon-cpu",
      :value => @record.aggregate_cpu_total_cores}
   end
 

@@ -50,7 +50,7 @@ module ContainerNodeHelper::TextualSummary
   #
 
   def textual_num_cpu_cores
-    {:label => _("Number of CPU Cores"),
+    {:label => _("Number of CPU Cores"), :icon => "pficon pficon-cpu",
      :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_total_cores}
   end
 
@@ -60,11 +60,11 @@ module ContainerNodeHelper::TextualSummary
              else
                _("N/A")
              end
-    {:label => _("Memory"), :value => memory}
+    {:label => _("Memory"), :icon => "pficon pficon-memory", :value => memory}
   end
 
   def textual_max_container_groups
-    {:label => _("Max Pods Capacity"),
+    {:label => _("Max Pods Capacity"), :icon => "fa fa-cubes",
      :value => @record.max_container_groups.nil? ? _("N/A") : @record.max_container_groups}
   end
 
