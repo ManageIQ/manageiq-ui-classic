@@ -10,13 +10,6 @@ describe TreeBuilderAeClass do
       @sb = {:trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree}
     end
 
-    it "a tree with filter" do
-      @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
-      tree = TreeBuilderAeClass.new(:automate_tree, "automate", @sb)
-      domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
-      expect(domains).to match_array ['LUIGI']
-    end
-
     it "a tree without filter" do
       tree = TreeBuilderAeClass.new(:automate_tree, "automate", @sb)
       domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
