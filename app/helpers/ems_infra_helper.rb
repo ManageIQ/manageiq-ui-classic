@@ -1,5 +1,6 @@
 module EmsInfraHelper
   include_concern 'TextualSummary'
+  include_concern 'ComplianceSummaryHelper'
 
   def scaling_field_label(param_name)
     field_name = param_name.dup

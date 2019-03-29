@@ -30,7 +30,7 @@ module Mixins
     def textual_group_list
       [
         %i[properties status],
-        %i[relationships topology smart_management]
+        %i[compliance relationships topology smart_management]
       ]
     end
 
