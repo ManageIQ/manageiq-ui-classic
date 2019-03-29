@@ -47,5 +47,10 @@ describe TreeBuilderSnapshots do
         expect(snapshot_node).to be_a_kind_of(Snapshot)
       end
     end
+
+    it 'selects the last node in the tree' do
+      sandbox = tree.instance_variable_get(:@sb)
+      expect(sandbox[:trees][:snapshot_tree][:active_node].split('-').last).to eq(s2.id.to_s)
+    end
   end
 end
