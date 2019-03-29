@@ -67,6 +67,7 @@ class TreeBuilder
   # * highlight_changes - highlight the changes in checkboxes differing from initial
   # * three_checks - hierarchically check the parent if all children are checked
   # * post_check - some kind of post-processing hierarchical checks
+  # * silent_activate - whether to activate the active_node silently or not (by default for explorers)
   def tree_init_options
     $log.warn("MIQ(#{self.class.name}) - TreeBuilder descendants should have their own tree_init_options")
     {}
@@ -193,18 +194,19 @@ class TreeBuilder
 
   def set_locals_for_render
     {
-      :tree_id           => "#{@name}box",
-      :tree_name         => @name.to_s,
-      :bs_tree           => @bs_tree,
-      :checkboxes        => @options[:checkboxes],
-      :autoload          => @options[:lazy],
-      :allow_reselect    => @options[:allow_reselect],
-      :three_checks      => @options[:three_checks],
-      :post_check        => @options[:post_check],
-      :onclick           => @options[:onclick],
-      :oncheck           => @options[:oncheck],
-      :click_url         => @options[:click_url],
-      :check_url         => @options[:check_url]
+      :tree_id         => "#{@name}box",
+      :tree_name       => @name.to_s,
+      :bs_tree         => @bs_tree,
+      :checkboxes      => @options[:checkboxes],
+      :autoload        => @options[:lazy],
+      :allow_reselect  => @options[:allow_reselect],
+      :three_checks    => @options[:three_checks],
+      :post_check      => @options[:post_check],
+      :onclick         => @options[:onclick],
+      :oncheck         => @options[:oncheck],
+      :click_url       => @options[:click_url],
+      :check_url       => @options[:check_url],
+      :silent_activate => @options[:silent_activate]
     }.compact
   end
 
