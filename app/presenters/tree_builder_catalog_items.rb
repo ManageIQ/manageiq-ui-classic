@@ -1,6 +1,6 @@
 class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   has_kids_for ServiceTemplateCatalog, [:x_get_tree_stc_kids]
-  has_kids_for ServiceTemplate, %i(x_get_tree_st_kids type)
+  has_kids_for ServiceTemplate, %i(x_get_tree_st_kids)
 
   private
 
@@ -42,8 +42,8 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_st_kids(object, count_only, type)
-    count = type == :svvcat ? 0 : object.custom_button_sets.count + object.custom_buttons.count
+  def x_get_tree_st_kids(object, count_only)
+    count = object.custom_button_sets.count + object.custom_buttons.count
     objects = count > 0 ? [{:id => object.id.to_s, :text => 'Actions', :icon => 'pficon pficon-folder-close', :tip => 'Actions'}] : []
     count_only_or_objects(count_only, objects)
   end
