@@ -562,7 +562,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Automate Instance \"%{name}\" was cancelled by the user") % {:name => @ae_inst.name})
       @in_a_form = false
       replace_right_cell
@@ -589,7 +589,7 @@ class MiqAeClassController < ApplicationController
         javascript_flash
       else
         AuditEvent.success(build_saved_audit(@ae_class, @edit))
-        session[:edit] = nil # clean out the saved info
+        @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         add_flash(_("Automate Instance \"%{name}\" was saved") % {:name => @ae_inst.name})
         replace_right_cell(:replace_trees => [:ae])
@@ -608,7 +608,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_instance_new")
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Add of new Automate Instance was cancelled by the user"))
       @in_a_form = false
       replace_right_cell
@@ -1014,7 +1014,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
@@ -1033,7 +1033,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("Automate Class \"%{name}\" was saved") % {:name => ae_class.fqname})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
-        session[:edit] = nil # clean out the saved info
+        @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1056,7 +1056,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
@@ -1076,7 +1076,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
-        session[:edit] = nil # clean out the saved info
+        @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1108,7 +1108,7 @@ class MiqAeClassController < ApplicationController
     else
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
       AuditEvent.success(build_saved_audit_hash_angular(old_namespace_attributes, ae_ns, false))
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       @in_a_form = false
       replace_right_cell(:replace_trees => [:ae])
     end
@@ -1161,7 +1161,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
+      @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => @ae_method.name})
       @sb[:form_vars_set] = false
       @in_a_form = false
@@ -1189,7 +1189,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("Automate Method \"%{name}\" was saved") % {:name => ae_method.name})
         AuditEvent.success(build_saved_audit(ae_method, @edit))
-        session[:edit] = nil # clean out the saved info
+        @sb[:action] = session[:edit] = nil # clean out the saved info
         @sb[:form_vars_set] = false
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
