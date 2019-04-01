@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 import createSchema from './ownership-form.schema';
 
 class SetServiceOwnershipForm extends Component {
@@ -12,7 +11,6 @@ class SetServiceOwnershipForm extends Component {
   }
 
   componentDidMount() {
-    cleanVirtualDom();
     const { ownershipIds } = this.props;
     this.loadInitialData(ownershipIds);
   }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 import createSchema from './vm-server-relationship-form.schema';
 
 class VmServerRelationShipForm extends Component {
@@ -12,7 +11,6 @@ class VmServerRelationShipForm extends Component {
     this.state = {
       isLoading: true,
     };
-    cleanVirtualDom();
   }
 
   componentDidMount() {

@@ -7,6 +7,7 @@ import {
 } from './component-typings';
 
 import { writeProxy, lockInstanceProperties } from './utils';
+import { cleanVirtualDom } from './helpers';
 
 interface ComponentDefinition {
   name: string;
@@ -58,7 +59,6 @@ export function validateInstance(
   if (Array.from(registry.get(definition)).find(existingInstance => existingInstance === instance)) {
     throw new Error('Instance already present, check your blueprint.create implementation');
   }
-
   if (getInstance(definition.name, instance.id)) {
     throw new Error(`Instance with id ${instance.id} already present`);
   }
@@ -100,6 +100,8 @@ export function newInstance(
   initialProps: ComponentProps = {},
   mountTo?: HTMLElement
 ): ManagedComponentInstance | undefined {
+  // clean all left over components
+  cleanVirtualDom();
   // validate inputs
   const definition = getDefinition(name);
   if (!definition) {
