@@ -3,7 +3,6 @@ class TreeBuilderGenealogy < TreeBuilder
 
   def override(node, object, _pid, _options)
     if object == @root
-      node[:text] = _("%{item} (Selected)") % {:item => node[:text]}
       node[:highlighted] = true
       node[:expand] = true
     end
@@ -38,7 +37,7 @@ class TreeBuilderGenealogy < TreeBuilder
 
   def root_options
     if @root.parent.present?
-      {:text    => @root.parent.name + _(" (Parent)"),
+      {:text    => @root.parent.name,
        :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.parent.name}}.merge(vm_icon_image(@root.parent))
     else
       {:text    => @root.name,
