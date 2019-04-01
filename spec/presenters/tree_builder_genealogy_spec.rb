@@ -22,6 +22,7 @@ describe TreeBuilderGenealogy do
       expect(subject.send(:tree_init_options)).to eq(
         :full_ids   => true,
         :checkboxes => true,
+        :open_all   => true,
         :click_url  => "/vm/genealogy_tree_selected/",
         :onclick    => "miqOnClickGeneric",
         :oncheck    => "miqOnCheckGenealogy",

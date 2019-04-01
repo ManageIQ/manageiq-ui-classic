@@ -4,7 +4,6 @@ class TreeBuilderGenealogy < TreeBuilder
   def override(node, object, _pid, _options)
     if object == @root
       node[:highlighted] = true
-      node[:expand] = true
     end
   end
 
@@ -23,6 +22,7 @@ class TreeBuilderGenealogy < TreeBuilder
     {
       :full_ids   => true,
       :checkboxes => true,
+      :open_all   => true,
       :click_url  => "/vm/genealogy_tree_selected/",
       :onclick    => "miqOnClickGeneric",
       :oncheck    => "miqOnCheckGenealogy",
