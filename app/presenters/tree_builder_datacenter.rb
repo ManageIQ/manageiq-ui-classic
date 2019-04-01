@@ -1,7 +1,7 @@
 class TreeBuilderDatacenter < TreeBuilder
   has_kids_for Host, [:x_get_tree_host_kids]
-  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids type)
-  has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
+  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids)
+  has_kids_for EmsFolder, %i(x_get_tree_folder_kids)
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 
@@ -63,11 +63,11 @@ class TreeBuilderDatacenter < TreeBuilder
     end
   end
 
-  def x_get_tree_datacenter_kids(parent, count_only = false, _type)
+  def x_get_tree_datacenter_kids(parent, count_only = false)
     count_only_or_many_objects(count_only, parent.folders, parent.clusters, "name")
   end
 
-  def x_get_tree_folder_kids(parent, count_only, _type)
+  def x_get_tree_folder_kids(parent, count_only)
     objects = count_only ? 0 : []
 
     if parent.name == "Datacenters"
