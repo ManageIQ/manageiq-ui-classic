@@ -222,7 +222,7 @@ module VmCommon
         return
       else
         @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, :root => @record)
-        session[:genealogy_tree_root_id] = @genealogy_tree.root_id
+        session[:genealogy_tree_root_id] = @record.parent.presence.try(:id) || @record.id
       end
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10

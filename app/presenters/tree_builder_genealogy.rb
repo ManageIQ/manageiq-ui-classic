@@ -12,10 +12,6 @@ class TreeBuilderGenealogy < TreeBuilder
     super(name, type, sandbox, build)
   end
 
-  def root_id
-    @root.parent.present? ? @root.parent.id : @root.id
-  end
-
   private
 
   def tree_init_options
@@ -36,13 +32,11 @@ class TreeBuilderGenealogy < TreeBuilder
   end
 
   def root_options
-    if @root.parent.present?
-      {:text    => @root.parent.name,
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.parent.name}}.merge(vm_icon_image(@root.parent))
-    else
-      {:text    => @root.name,
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.name}}.merge(vm_icon_image(@root))
-    end
+    object = @root.parent.presence || @root
+    {
+      :text    => object.name,
+      :tooltip => _("VM: %{name} (Click to view)") % {:name => object.name}
+    }.merge(vm_icon_image(object))
   end
 
   def x_get_tree_roots(count_only, _options)
