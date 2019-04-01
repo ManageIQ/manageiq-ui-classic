@@ -25,22 +25,20 @@ module Mixins
           @discover_type_selected = nil
           if params["start"]
             audit = {:event => "ms_and_host_discovery", :target_class => "Host", :userid => session[:userid]}
-            if request.parameters[:controller] != "ems_cloud"
-              from_ip = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:from_fourth]
-              to_ip   = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:to_fourth]
+            from_ip = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:from_fourth]
+            to_ip   = params[:from_first].to_s + "." + params[:from_second].to_s + "." + params[:from_third].to_s + "." + params[:to_fourth]
 
-              i = 0
-              while i < @discover_type.length
-                if @discover_type.length == 1 || params["discover_type_#{@discover_type[i]}"]
-                  discover_type.push(@discover_type[i].to_sym)
-                  @discover_type_checked.push(@discover_type[i])
-                end
-                i += 1
+            i = 0
+            while i < @discover_type.length
+              if @discover_type.length == 1 || params["discover_type_#{@discover_type[i]}"]
+                discover_type.push(@discover_type[i].to_sym)
+                @discover_type_checked.push(@discover_type[i])
               end
-
-              @from = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:from_fourth]}
-              @to   = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:to_fourth]}
+              i += 1
             end
+
+            @from = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:from_fourth]}
+            @to   = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:to_fourth]}
             @in_a_form = true
             drop_breadcrumb(:name => _("%{title} Discovery") % {:title => title}, :url => "/host/discover")
             @discover_type_selected = params[:discover_type_selected]
@@ -49,11 +47,6 @@ module Mixins
               @userid = params[:userid] if  params[:userid]
               @password = params[:password] if params[:password]
               @verify = params[:verify] if params[:verify]
-              if params[:userid] == ""
-                add_flash(_("Username is required"), :error)
-                render :action => 'discover'
-                return
-              end
               if params[:userid] == "" && params[:password] != ""
                 add_flash(_("Username must be entered if Password is entered"), :error)
                 render :action => 'discover'
@@ -66,7 +59,7 @@ module Mixins
               end
             end
 
-            if request.parameters[:controller] != "ems_cloud" && discover_type.length <= 0
+            if discover_type.length <= 0
               add_flash(_("At least 1 item must be selected for discovery"), :error)
               render :action => 'discover'
             else
@@ -83,22 +76,13 @@ module Mixins
                       physical_infra_manager.discover_queue(ip, params[:port])
                     end
                   end
-                elsif request.parameters[:controller] != "ems_cloud"
+                else
                   options = if params[:discover_type_ipmi].to_s == "1"
                               {:discover_types => discover_type, :credentials => {:ipmi => {:userid => @userid, :password => @password}}}
                             else
                               {:discover_types => discover_type}
                             end
                   Host.discoverByIpRange(from_ip, to_ip, options)
-                else
-                  cloud_manager = ManageIQ::Providers::CloudManager.subclasses.detect do |ems|
-                    ems.supports_discovery? && ems.ems_type == params[:discover_type_selected]
-                  end
-                  if cloud_manager.ems_type == 'azure'
-                    cloud_manager.discover_queue(@client_id, @client_key, @azure_tenant_id, @subscription)
-                  else
-                    cloud_manager.discover_queue(@userid, @password)
-                  end
                 end
               rescue => err
                 add_flash(_("%{title} Discovery returned: %{error_message}") % {:title => title, :error_message => err.message}, :error)
@@ -166,17 +150,9 @@ module Mixins
             elsif params[:to_fourth] && params[:to_fourth] =~ /[\D]/
               page << "$('#to_fourth').val('#{j_str(params[:to_fourth].gsub(/[\D]/, ""))}');"
             end
-            if (request.parameters[:controller] == "ems_cloud" && params[:discover_type_selected]) || (params[:discover_type_ipmi] && params[:discover_type_ipmi].to_s == "1")
-              if params[:discover_type_selected] && params[:discover_type_selected] == 'azure'
-                page << javascript_hide("discover_credentials")
-                page << javascript_show("discover_azure_credentials")
-              elsif params[:discover_type_selected] && params[:discover_type_selected] == 'ec2'
-                page << javascript_hide("discover_azure_credentials")
-                page << javascript_show("discover_credentials")
-              else
-                @ipmi = true
-                page << javascript_show("discover_credentials")
-              end
+            if params[:discover_type_ipmi] && params[:discover_type_ipmi].to_s == "1"
+              @ipmi = true
+              page << javascript_show("discover_credentials")
             elsif params[:discover_type_ipmi] && params[:discover_type_ipmi].to_s == "null"
               @ipmi = false
               page << javascript_hide("discover_credentials")
@@ -193,11 +169,6 @@ module Mixins
             @discover_type = ExtManagementSystem.ems_infra_discovery_types
           elsif controller == 'ems_physical_infra'
             @discover_type = ExtManagementSystem.ems_physical_infra_discovery_types
-          else
-            @discover_type = ManageIQ::Providers::CloudManager.subclasses.select(&:supports_discovery?).map do |cloud_manager|
-              [cloud_manager.description, cloud_manager.ems_type]
-            end
-            @discover_type_selected = @discover_type.first.try!(:last)
           end
         end
 
