@@ -14,8 +14,7 @@ module AutomateTreeHelper
   private :submit_embedded_method
 
   # Build the tree for catalog item entry point selection and automate copy
-  def build_automate_tree(type, name)
-    # build the ae tree to show the tree select box for entry point
+  def automate_open_nodes
     if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
       nodes = @edit[:new][:fqname].split("/")
       @open_nodes = []
@@ -38,12 +37,10 @@ module AutomateTreeHelper
         end
       end
     end
-
-    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
   end
 
   def at_tree_select_toggle(edit_key)
-    build_automate_tree(:automate, :automate_tree)
+    build_automate_tree
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do

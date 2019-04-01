@@ -1622,7 +1622,7 @@ class MiqAeClassController < ApplicationController
   def form_copy_objects_field_changed
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
     copy_objects_get_form_vars
-    build_automate_tree(:automate, :automate_tree)
+    build_automate_tree
     @changed = (@edit[:new] != @edit[:current])
     @changed = @edit[:new][:override_source] if @edit[:new][:namespace].nil?
     render :update do |page|
@@ -1703,6 +1703,11 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def build_automate_tree
+    automate_open_nodes
+    @automate_tree = TreeBuilderAutomate.new(:automate_tree, :automate, @sb)
+  end
 
   # Builds a regular expression that controls the selectable items in the ae_methods tree
   def embedded_method_regex(fqname)
@@ -1853,7 +1858,7 @@ class MiqAeClassController < ApplicationController
     if params[:button] == "reset"
       add_flash(_("All changes have been reset"), :warning)
     end
-    build_automate_tree(:automate, :automate_tree)
+    build_automate_tree
     replace_right_cell
   end
 
