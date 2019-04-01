@@ -20,13 +20,14 @@ describe TreeBuilderGenealogy do
   describe '#tree_init_options' do
     it 'sets tree options correctly' do
       expect(subject.send(:tree_init_options)).to eq(
-        :full_ids   => true,
-        :checkboxes => true,
-        :open_all   => true,
-        :click_url  => "/vm/genealogy_tree_selected/",
-        :onclick    => "miqOnClickGeneric",
-        :oncheck    => "miqOnCheckGenealogy",
-        :check_url  => "/vm/set_checked_items/"
+        :full_ids        => true,
+        :checkboxes      => true,
+        :open_all        => true,
+        :silent_activate => true,
+        :click_url       => "/vm/genealogy_tree_selected/",
+        :onclick         => "miqOnClickGeneric",
+        :oncheck         => "miqOnCheckGenealogy",
+        :check_url       => "/vm/set_checked_items/"
       )
     end
   end
