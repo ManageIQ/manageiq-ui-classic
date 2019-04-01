@@ -20,7 +20,8 @@
                   "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
                 = javascript_tag(javascript_focus('description'))
               - else
-                = h(@action.description)
+                %p.form-control-static
+                  = h(@action.description)
         .form-group
           %label.col-md-2.control-label
             = _('Action Type')
@@ -33,7 +34,8 @@
                 miqInitSelectPicker();
                 miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
             - else
-              = h(@action.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@action.action_type]))
+              %p.form-control-static
+                = h(@action.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@action.action_type]))
       %hr
       - if @edit
         = render :partial => "action_options"
