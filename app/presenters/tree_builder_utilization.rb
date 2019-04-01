@@ -31,12 +31,7 @@ class TreeBuilderUtilization < TreeBuilder
   end
 
   def x_get_tree_region_kids(object, count_only)
-    emstype = if %i(bottlenecks utilization).include?(@type)
-                object.ems_infras
-              else
-                object.ext_management_systems
-              end
-    emses = Rbac.filtered(emstype)
+    emses = Rbac.filtered(object.ems_infras)
     storages = Rbac.filtered(object.storages)
     if count_only
       emses.count + storages.count
