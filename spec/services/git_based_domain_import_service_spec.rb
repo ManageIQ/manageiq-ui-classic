@@ -161,12 +161,13 @@ describe GitBasedDomainImportService do
       allow(task).to receive(:message).and_return(nil)
     end
 
+    let(:git_branches) { [] }
+    let(:ref_name) { "the_tag_name" }
+    let(:ref_type) { "tag" }
+    let(:method_name) { 'import_git_url' }
+    let(:action) { 'Refresh and import git repository' }
+
     context "when git branches that match the given name do not exist" do
-      let(:git_branches) { [] }
-      let(:ref_name) { "the_tag_name" }
-      let(:ref_type) { "tag" }
-      let(:method_name) { 'import_git_url' }
-      let(:action) { 'Refresh and import git repository' }
       let(:import_options) do
         {
           "git_url"   => git_repo.url,
@@ -181,6 +182,25 @@ describe GitBasedDomainImportService do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
 
         expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321)).to eq(task.id)
+      end
+    end
+
+    context "when custom options are provided" do
+      let(:import_options) do
+        {
+          "git_url"   => git_repo.url,
+          "ref"       => ref_name,
+          "ref_type"  => ref_type,
+          "tenant_id" => 321,
+          "overwrite" => true,
+          "userid" => "bob"
+        }
+      end
+
+      it "calls 'queue_import' with the the additional custom options" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+
+        expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321, "userid" => "bob")).to eq(task.id)
       end
     end
   end

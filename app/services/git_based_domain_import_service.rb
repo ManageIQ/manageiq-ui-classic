@@ -50,14 +50,14 @@ class GitBasedDomainImportService
     MiqTask.generic_action_with_callback(task_options, queue_options)
   end
 
-  def queue_refresh_and_import(git_url, ref, ref_type, tenant_id)
+  def queue_refresh_and_import(git_url, ref, ref_type, tenant_id, custom_import_options = {})
     import_options = {
       "git_url"   => git_url,
       "ref"       => ref,
       "ref_type"  => ref_type,
       "tenant_id" => tenant_id,
       "overwrite" => true
-    }
+    }.merge(custom_import_options)
 
     task_options = {
       :action => "Refresh and import git repository",
