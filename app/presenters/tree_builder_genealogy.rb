@@ -1,33 +1,36 @@
 class TreeBuilderGenealogy < TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
-  def override(node, object, _pid, _options)
-    if object == @root
-      node[:text] = _("%{item} (Selected)") % {:item => node[:text]}
-      node[:highlighted] = true
-      node[:expand] = true
-    end
-  end
-
   def initialize(name, type, sandbox, build, **params)
     @root = params[:root]
     super(name, type, sandbox, build)
   end
 
-  def root_id
-    @root.parent.present? ? @root.parent.id : @root.id
-  end
-
   private
+
+  # The tree name is the same for any genealogy tree, so it doesn't make sense to
+  # load the selected node from the session.
+  def active_node_set(tree_nodes)
+    # Find the right node to be selected based on the @root.id
+    selected = tree_nodes.first[:nodes].find do |node|
+      self.class.extract_node_model_and_id(node[:key])[1] == @root.id.to_s
+    end
+    # If no node has been found, just select the root node
+    selected ||= tree_nodes.first
+    # Set it as the active node in the tree state
+    @tree_state.x_node_set(selected[:key], @name)
+  end
 
   def tree_init_options
     {
-      :full_ids   => true,
-      :checkboxes => true,
-      :click_url  => "/vm/genealogy_tree_selected/",
-      :onclick    => "miqOnClickGeneric",
-      :oncheck    => "miqOnCheckGenealogy",
-      :check_url  => "/vm/set_checked_items/"
+      :full_ids        => true,
+      :checkboxes      => true,
+      :open_all        => true,
+      :silent_activate => true,
+      :click_url       => "/vm/genealogy_tree_selected/",
+      :onclick         => "miqOnClickGeneric",
+      :oncheck         => "miqOnCheckGenealogy",
+      :check_url       => "/vm/set_checked_items/"
     }
   end
 
@@ -37,13 +40,11 @@ class TreeBuilderGenealogy < TreeBuilder
   end
 
   def root_options
-    if @root.parent.present?
-      {:text    => @root.parent.name + _(" (Parent)"),
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.parent.name}}.merge(vm_icon_image(@root.parent))
-    else
-      {:text    => @root.name,
-       :tooltip => _("VM: %{name} (Click to view)") % {:name => @root.name}}.merge(vm_icon_image(@root))
-    end
+    object = @root.parent.presence || @root
+    {
+      :text    => object.name,
+      :tooltip => _("VM: %{name} (Click to view)") % {:name => object.name}
+    }.merge(vm_icon_image(object))
   end
 
   def x_get_tree_roots(count_only, _options)
