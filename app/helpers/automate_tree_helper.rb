@@ -13,8 +13,37 @@ module AutomateTreeHelper
 
   private :submit_embedded_method
 
+  # Build the tree for catalog item entry point selection and automate copy
+  def build_automate_tree(type, name)
+    # build the ae tree to show the tree select box for entry point
+    if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
+      nodes = @edit[:new][:fqname].split("/")
+      @open_nodes = []
+      # if there are more than one nested namespaces
+      nodes.each_with_index do |_node, i|
+        if i == nodes.length - 1
+          # check if @cls is there, to make sure the class/instance still exists in Automate db
+          inst = @cls ? MiqAeInstance.find_by(:class_id => @cls.id, :name => nodes[i]) : nil
+          # show this as selected/expanded node when tree loads
+          if inst
+            @open_nodes.push("aei-#{inst.id}")
+            @active_node = "aei-#{inst.id}"
+          end
+        elsif i == nodes.length - 2
+          @cls = MiqAeClass.find_by(:namespace_id => @ns.id, :name => nodes[i])
+          @open_nodes.push("aec-#{@cls.id}") if @cls
+        else
+          @ns = MiqAeNamespace.find_by(:name => nodes[i])
+          @open_nodes.push("aen-#{@ns.id}") if @ns
+        end
+      end
+    end
+
+    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
+  end
+
   def at_tree_select_toggle(edit_key)
-    build_ae_tree(:automate, :automate_tree)
+    build_automate_tree(:automate, :automate_tree)
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do
