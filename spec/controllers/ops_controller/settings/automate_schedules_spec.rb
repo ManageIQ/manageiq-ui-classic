@@ -77,6 +77,17 @@ describe OpsController do
         ops.fetch_target_ids
       end
     end
+
+    ['MiqGroup', 'User', 'Tenant'].each do |klass|
+      context "#{klass} class" do
+        it "fetches appropriate ids" do
+          ops.params = {:target_class => klass }
+          targets = klass.safe_constantize.all.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+          expect(ops).to receive(:render).with(:json => {:target_id => '', :targets => targets})
+          ops.fetch_target_ids
+        end
+      end
+    end
   end
 
   describe "#fetch_automate_request_vars" do
