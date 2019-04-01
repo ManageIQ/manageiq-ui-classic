@@ -1,6 +1,6 @@
 class TreeBuilderVat < TreeBuilderDatacenter
-  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids type)
-  has_kids_for EmsFolder, %i(x_get_tree_folder_kids type)
+  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids)
+  has_kids_for EmsFolder, %i(x_get_tree_folder_kids)
 
   def initialize(name, type, sandbox, build = true, **params)
     sandbox[:vat] = params[:vat] if params[:vat]
@@ -24,17 +24,17 @@ class TreeBuilderVat < TreeBuilderDatacenter
     count_only_or_many_objects(count_only, root_child.folders_only, root_child.datacenters_only, "name")
   end
 
-  def x_get_tree_datacenter_kids(parent, count_only = false, type)
+  def x_get_tree_datacenter_kids(parent, count_only = false)
     # Get rid of unwanted folder level
     parent = @vat ? parent.folders.find { |x| x.name == "vm" } : parent.folders.find { |x| x.name == "host" }
     if parent.nil?
       count_only ? 0 : []
     else
-      x_get_tree_folder_kids(parent, count_only, type)
+      x_get_tree_folder_kids(parent, count_only)
     end
   end
 
-  def x_get_tree_folder_kids(parent, count_only, _type)
+  def x_get_tree_folder_kids(parent, count_only)
     objects = count_only ? 0 : []
 
     if parent.name == "Datacenters"
