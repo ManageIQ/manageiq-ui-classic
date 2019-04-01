@@ -4,7 +4,6 @@ import { Grid } from 'patternfly-react';
 import createSchema from './service-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 
 class ServiceForm extends Component {
   constructor(props) {
@@ -15,7 +14,6 @@ class ServiceForm extends Component {
   }
 
   componentDidMount() {
-    cleanVirtualDom();
     miqSparkleOn();
     http.get(`/service/service_form_fields/${this.props.serviceFormId}`)
       .then(data => this.setState({ initialValues: { ...data } }, miqSparkleOff()));

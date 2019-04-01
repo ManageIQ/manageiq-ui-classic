@@ -11,14 +11,28 @@ import {
   clearRegistry,
 } from '../../miq-component/registry.ts';
 
+
 import {
   writeProxy,
   lockInstanceProperties,
 } from '../../miq-component/utils.ts';
 
 describe('Component API', () => {
+  let mountingElement;
+  const mountId = 'mounting-point';
+
+  beforeAll(() => {
+    mountingElement = document.createElement('div');
+    mountingElement.id = mountId;
+    document.body.appendChild(mountingElement);
+  });
+
   afterEach(() => {
     clearRegistry();
+  });
+
+  afterAll(() => {
+    document.body.remove(mountingElement);
   });
 
   it('define method can be used to register new components', () => {
@@ -108,7 +122,7 @@ describe('Component API', () => {
 
   it('newInstance method can be used to create new component instances', () => {
     const testInstances = [
-      { id: 'first' }, { id: 'second' },
+      { id: 'first', elementId: mountId }, { id: 'second', elementId: mountId },
     ];
 
     const testBlueprint = {
@@ -118,21 +132,19 @@ describe('Component API', () => {
     };
 
     define('FooComponent', testBlueprint);
-
-    const mountFirstInstanceTo = document.createElement('div');
     const resultingInstances = [
-      newInstance('FooComponent', { bar: 123 }, mountFirstInstanceTo),
-      newInstance('FooComponent', { baz: true }),
+      newInstance('FooComponent', { bar: 123 }, mountingElement),
+      newInstance('FooComponent', { baz: true }, mountingElement),
     ];
 
     expect(testBlueprint.create).toHaveBeenCalledTimes(2);
     expect(testBlueprint.create.mock.calls[0]).toEqual([
       { bar: 123 },
-      mountFirstInstanceTo,
+      mountingElement,
     ]);
     expect(testBlueprint.create.mock.calls[1]).toEqual([
       { baz: true },
-      undefined,
+      mountingElement,
     ]);
 
     expect(resultingInstances[0]).toBe(testInstances[0]);
@@ -180,15 +192,15 @@ describe('Component API', () => {
   it('newInstance method ensures a sane instance id', () => {
     define('FooComponent', {
       create: jest.fn().mockName('testBlueprint.create')
-        .mockImplementationOnce(() => ({ id: 'first' }))
-        .mockImplementationOnce(() => ({ id: 123 }))
-        .mockImplementationOnce(() => ({})),
+        .mockImplementationOnce(() => ({ id: 'first', elementId: mountId }))
+        .mockImplementationOnce(() => ({ id: 123, elementId: mountId }))
+        .mockImplementationOnce(() => ({ elementId: mountId })),
     });
 
     const resultingInstances = [
-      newInstance('FooComponent', { bar: 123 }),
-      newInstance('FooComponent', { baz: true }),
-      newInstance('FooComponent', { qux: ['1337'] }),
+      newInstance('FooComponent', { bar: 123, elementId: mountId }, mountingElement),
+      newInstance('FooComponent', { baz: true, elementId: mountId }, mountingElement),
+      newInstance('FooComponent', { qux: ['1337'], elementId: mountId }, mountingElement),
     ];
 
     expect(resultingInstances[0].id).toBe('first');
@@ -227,14 +239,12 @@ describe('Component API', () => {
   it('newInstance method throws if blueprint.create returns an instance with id already taken', () => {
     define('FooComponent', {
       create: jest.fn().mockName('testBlueprint.create')
-        .mockImplementationOnce(() => ({ id: 'first' }))
-        .mockImplementationOnce(() => ({ id: 'first' })),
+        .mockImplementationOnce(() => ({ id: 'first', elementId: mountId }))
+        .mockImplementationOnce(() => ({ id: 'first', elementId: mountId })),
     });
-
-    newInstance('FooComponent', { bar: 123 });
-
+    newInstance('FooComponent', { bar: 123 }, mountingElement);
     expect(() => {
-      newInstance('FooComponent', { bar: 123 });
+      newInstance('FooComponent', { bar: 123 }, mountingElement);
     }).toThrow();
   });
 
@@ -250,17 +260,22 @@ describe('Component API', () => {
   });
 
   it('instance.update merges props and delegates to blueprint.update', () => {
+    const testInstances = [
+      { id: 'first', elementId: mountId }, { id: 'second', elementId: mountId },
+    ];
+
     const testBlueprint = {
-      create() { return {}; },
+      create: jest.fn().mockName('testBlueprint.create')
+        .mockImplementationOnce(() => testInstances[0])
+        .mockImplementationOnce(() => testInstances[1]),
       update: jest.fn().mockName('testBlueprint.update'),
     };
 
-    define('FooComponent', testBlueprint);
+    define('UpdateComponent', testBlueprint);
 
-    const mountFirstInstanceTo = document.createElement('div');
     const resultingInstances = [
-      newInstance('FooComponent', { bar: 123 }, mountFirstInstanceTo),
-      newInstance('FooComponent', { baz: true }),
+      newInstance('UpdateComponent', { bar: 123 }, mountingElement),
+      newInstance('UpdateComponent', { baz: true }, mountingElement),
     ];
 
     resultingInstances[0].update({ baz: true, qux: ['1337'] });
@@ -269,11 +284,7 @@ describe('Component API', () => {
     expect(testBlueprint.update).toHaveBeenCalledTimes(2);
     expect(testBlueprint.update.mock.calls[0]).toEqual([
       { bar: 123, baz: true, qux: ['1337'] },
-      mountFirstInstanceTo,
-    ]);
-    expect(testBlueprint.update.mock.calls[1]).toEqual([
-      { baz: false },
-      undefined,
+      mountingElement,
     ]);
 
     expect(resultingInstances[0].props).toEqual({
@@ -316,16 +327,22 @@ describe('Component API', () => {
   });
 
   it('instance.destroy delegates to blueprint.destroy', () => {
+    const testInstances = [
+      { id: 'first', elementId: mountId }, { id: 'second', elementId: mountId },
+    ];
+
     const testBlueprint = {
-      create() { return {}; },
+      create: jest.fn().mockName('testBlueprint.create')
+        .mockImplementationOnce(() => testInstances[0])
+        .mockImplementationOnce(() => testInstances[1]),
       destroy: jest.fn().mockName('testBlueprint.destroy'),
+      elementId: mountId,
     };
 
     define('FooComponent', testBlueprint);
 
-    const mountFirstInstanceTo = document.createElement('div');
     const resultingInstances = [
-      newInstance('FooComponent', { bar: 123 }, mountFirstInstanceTo),
+      newInstance('FooComponent', { bar: 123 }, mountingElement),
       newInstance('FooComponent', { baz: true }),
     ];
 
@@ -335,7 +352,7 @@ describe('Component API', () => {
     expect(testBlueprint.destroy).toHaveBeenCalledTimes(2);
     expect(testBlueprint.destroy.mock.calls[0]).toEqual([
       resultingInstances[0],
-      mountFirstInstanceTo,
+      mountingElement,
     ]);
     expect(testBlueprint.destroy.mock.calls[0][0]).toBe(resultingInstances[0]);
     expect(testBlueprint.destroy.mock.calls[1]).toEqual([

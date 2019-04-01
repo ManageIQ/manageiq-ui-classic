@@ -5,7 +5,6 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-form.schema';
 import { filterOptions, filterValues } from '../dual-list-select/helpers';
 import { API } from '../../http_api';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 
 class CatalogForm extends Component {
   constructor(props) {
@@ -13,7 +12,6 @@ class CatalogForm extends Component {
     this.state = {
       isLoaded: false,
     };
-    cleanVirtualDom();
   }
 
   componentDidMount() {
