@@ -193,7 +193,7 @@ describe GitBasedDomainImportService do
           "ref_type"  => ref_type,
           "tenant_id" => 321,
           "overwrite" => true,
-          "userid" => "bob"
+          "userid"    => "bob"
         }
       end
 
