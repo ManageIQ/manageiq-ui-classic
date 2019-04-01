@@ -1,4 +1,4 @@
-/* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetButtons miqSparkle */
+/* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetToolbarCount miqSparkle */
 
 function miqTreeObject(tree) {
   var obj;
@@ -232,7 +232,7 @@ function miqOnCheckGenealogy(node, treename) {
     return encodeURIComponent(item.key);
   });
   // Activate toolbar items according to the selection
-  miqSetButtons(selectedKeys.length, 'center_tb');
+  miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
 }
@@ -250,7 +250,7 @@ function miqCheckAll(cb, treename) {
     return encodeURIComponent(item.key);
   });
   // Activate toolbar items according to the selection
-  miqSetButtons(selectedKeys.length, 'center_tb');
+  miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&all_checked=' + selectedKeys);
 }
