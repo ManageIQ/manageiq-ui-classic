@@ -58,6 +58,25 @@ class TreeBuilderUtilization < TreeBuilder
     end
   end
 
+  def x_get_tree_custom_kids(object, count_only, _options)
+    nodes = object[:id].split('_')
+    id = nodes.last.split('-').last
+    if object_ems?(nodes, object)
+      rec = MiqRegion.find_by(:id => id)
+      objects = rbac_filtered_sorted_objects(rec.ems_infras, "name")
+      count_only_or_objects(count_only, objects)
+    elsif object_ds?(nodes, object)
+      rec = MiqRegion.find_by(:id => id)
+      objects = rbac_filtered_sorted_objects(rec.storages, "name")
+      count_only_or_objects(count_only, objects)
+    elsif object_cluster?(nodes, object)
+      rec = ExtManagementSystem.find_by(:id => id)
+      objects = rbac_filtered_sorted_objects(rec.ems_clusters, "name") +
+                rbac_filtered_sorted_objects(rec.non_clustered_hosts, "name")
+      count_only_or_objects(count_only, objects)
+    end
+  end
+
   def object_ems?(nodes, object)
     (nodes.length > 1 && nodes[1] == "e") ||
       (object[:full_id] && object[:full_id].split('_')[1] == "e")
