@@ -26,6 +26,12 @@
       = render :partial => "column_lists"
     %strong
       = _('* Caution: Changing these fields will clear all selected values below them!')
+    - if @unavailable_fields
+      %br
+      %p{:style => "max-width: 850px;"}
+        %strong
+          = @unavailable_fields
+
     %hr
       %h3
         = _('Report Creation Timeout')
