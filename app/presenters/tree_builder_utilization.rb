@@ -109,12 +109,6 @@ class TreeBuilderUtilization < TreeBuilder
   end
 
   def x_get_tree_cluster_kids(object, count_only)
-    objects = rbac_filtered_sorted_objects(object.hosts, "name")
-    # FIXME: is the condition below ever false?
-    unless %i(bottlenecks utilization).include?(@type)
-      objects += rbac_filtered_sorted_objects(object.resource_pools, "name")
-      objects += rbac_filtered_sorted_objects(object.vms, "name")
-    end
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(count_only, rbac_filtered_sorted_objects(object.hosts, "name"))
   end
 end
