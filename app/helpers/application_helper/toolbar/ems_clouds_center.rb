@@ -16,14 +16,6 @@ class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::
           :confirm      => N_("Refresh relationships and power states for all items related to the selected Cloud Providers?"),
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :ems_cloud_discover,
-          'fa fa-search fa-lg',
-          t = N_('Discover Cloud Providers'),
-          t,
-          :url       => "/discover",
-          :url_parms => "?discover_type=ems",
-          :klass     => ApplicationHelper::Button::ButtonNewDiscoverCloud),
         separator,
         button(
           :ems_cloud_new,

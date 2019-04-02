@@ -703,21 +703,6 @@ describe ApplicationController do
       expect(to[:third]).to eq(from_third)
       expect(controller.send(:flash_errors?)).to be_truthy
     end
-
-    it "displays options to select Azure or Amazon cloud" do
-      session[:type] = "ems"
-      controller.instance_variable_set(:@_params,
-                                       :controller => "ems_cloud")
-      allow(controller).to receive(:drop_breadcrumb)
-      cloud_manager_stub = double('CloudManager',
-                                  :supports_discovery? => true,
-                                  :ems_type            => 'example',
-                                  :description         => 'Example Manager')
-      allow(ManageIQ::Providers::CloudManager).to receive(:subclasses).and_return([cloud_manager_stub])
-      controller.send(:discover)
-      expect(response.status).to eq(200)
-      expect(controller.instance_variable_get(:@discover_type)).to include(["Example Manager", "example"])
-    end
   end
 
   describe "#process_elements" do
