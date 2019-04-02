@@ -1196,6 +1196,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         ems_cloud_form_fields
         protect
+        show
         show_list
         sync_users
         tagging_edit
@@ -1292,6 +1293,7 @@ Rails.application.routes.draw do
         protect
         scaledown
         scaling
+        show
         show_list
         tagging_edit
       ),
@@ -1345,6 +1347,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         ems_physical_infra_form_fields
         protect
+        show
         show_list
         tagging_edit
         change_password
@@ -1523,6 +1526,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         perf_top_chart
         protect
+        show
         show_list
         tagging_edit
         ems_container_form_fields
