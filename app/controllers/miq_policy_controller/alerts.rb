@@ -6,7 +6,7 @@ module MiqPolicyController::Alerts
   end
 
   def alert_edit_cancel
-    @edit = nil
+    @sb[:action] = @edit = nil
     @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
     if @alert.id.blank?
       add_flash(_("Add of new Alert was cancelled by the user"))
@@ -36,7 +36,7 @@ module MiqPolicyController::Alerts
     add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_get_info(MiqAlert.find(alert.id))
     alert_sync_provider(@edit[:alert_id] ? :update : :new)
-    @edit = nil
+    @sb[:action] = @edit = nil
     @nodetype = "al"
     @new_alert_node = "al-#{alert.id}"
     replace_right_cell(:nodetype => "al", :replace_trees => %i[alert_profile alert], :remove_form_buttons => true)

@@ -24,6 +24,7 @@ describe MiqPolicyController::Conditions do
                                                        :notes          => nil,
                                                        :expression     => {},
                                                        :applies_to_exp => {"???"=>"???"}})
+        subject.instance_variable_set(:@sb, {})
       end
 
       it 'sets new node correctly' do

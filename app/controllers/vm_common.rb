@@ -1411,11 +1411,6 @@ module VmCommon
     end
   end
 
-  # return correct node to right cell
-  def x_node_right_cell
-    @sb[@sb[:active_accord]].presence || x_node
-  end
-
   # set partial name and cell header for edit screens
   def set_right_cell_vars(options = {})
     name = @record.try(:name).to_s

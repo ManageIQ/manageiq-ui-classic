@@ -81,6 +81,7 @@ class VmInfraController < ApplicationController
         {:title => _("Virtual Machines")},
       ],
       :include_record => true,
+      :show_header    => @sb[:action],
     }
   end
 

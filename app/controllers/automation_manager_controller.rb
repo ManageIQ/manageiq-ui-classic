@@ -517,6 +517,7 @@ class AutomationManagerController < ApplicationController
         {:title => _("Explorer")},
       ],
       :record_title => :hostname,
+      :show_header  => true,
     }
   end
 end

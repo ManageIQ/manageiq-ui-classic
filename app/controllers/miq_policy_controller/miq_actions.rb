@@ -5,7 +5,7 @@ module MiqPolicyController::MiqActions
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      @edit = nil
+      @sb[:action] = @edit = nil
       @action = MiqAction.find(session[:edit][:action_id]) if session[:edit] && session[:edit][:action_id]
       if @action.present?
         add_flash(_("Edit of Action \"%{name}\" was cancelled by the user") % {:name => @action.description})
@@ -48,7 +48,7 @@ module MiqPolicyController::MiqActions
           add_flash(_("Action \"%{name}\" was added") % {:name => @edit[:new][:description]})
         end
         action_get_info(MiqAction.find(action.id))
-        @edit = nil
+        @sb[:action] = @edit = nil
         @nodetype = "a"
         @new_action_node = "a-#{action.id}"
         replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? %i[policy_profile policy action] : %i[action], :remove_form_buttons => true)

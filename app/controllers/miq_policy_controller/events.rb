@@ -5,7 +5,7 @@ module MiqPolicyController::Events
     assert_privileges("event_edit")
     case params[:button]
     when "cancel"
-      @edit = nil
+      @sb[:action] = @edit = nil
       add_flash(_("Edit Event cancelled by user"))
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
@@ -43,7 +43,7 @@ module MiqPolicyController::Events
       add_flash(_("Actions for Policy Event \"%{events}\" were saved") % {:events => event.description})
       @nodetype = "ev"
       event_get_info(MiqEventDefinition.find(event.id))
-      @edit = nil
+      @sb[:action] = @edit = nil
       replace_right_cell(:nodetype => "ev", :replace_trees => %i[policy_profile policy], :remove_form_buttons => true)
     when "true_right", "true_left", "true_allleft", "true_up", "true_down", "true_sync", "true_async"
       handle_selection_buttons(:actions_true, :members_chosen_true, :choices_true, :choices_chosen_true)

@@ -12,7 +12,7 @@ module MiqPolicyController::Conditions
       else
         add_flash(_("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat])})
       end
-      @edit = nil
+      @sb[:action] = @edit = nil
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
       return
@@ -60,7 +60,7 @@ module MiqPolicyController::Conditions
         else
           add_flash(_("Condition \"%{name}\" was added") % {:name => @edit[:new][:description]})
         end
-        @edit = nil
+        @sb[:action] = @edit = nil
         @nodetype = "co"
         if adding # If add
           condition_get_info(condition)

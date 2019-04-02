@@ -253,6 +253,7 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree   = params[:tree]             if params[:tree]
     self.x_node          = params[:id]
 
+    @sb[:action] = nil
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype)
   end

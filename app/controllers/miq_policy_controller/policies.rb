@@ -10,7 +10,7 @@ module MiqPolicyController::Policies
     else
       add_flash(_("Add of new Policy was cancelled by the user"))
     end
-    @edit = nil
+    @sb[:action] = @edit = nil
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
   end
@@ -69,7 +69,7 @@ module MiqPolicyController::Policies
       add_flash(_("Policy \"%{name}\" was added") % {:name => @edit[:new][:description]})
     end
     policy_get_info(MiqPolicy.find(policy.id))
-    @edit = nil
+    @sb[:action] = @edit = nil
     @nodetype = "p"
 
     case x_active_tree

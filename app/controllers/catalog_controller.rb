@@ -86,7 +86,7 @@ class CatalogController < ApplicationController
       else
         add_flash(_("Add of new Service Catalog Item was cancelled by the user"))
       end
-      @edit = @record = nil
+      @sb[:action] = @edit = @record = nil
       @in_a_form = false
       replace_right_cell
     when "save", "add"
@@ -187,6 +187,7 @@ class CatalogController < ApplicationController
 
   # VM or Template show selected, redirect to proper controller
   def show
+    @sb[:action] = nil
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     record = ServiceTemplate.find(params[:id])
     if !@explorer
@@ -204,6 +205,7 @@ class CatalogController < ApplicationController
     @explorer = true
     @lastaction = "explorer"
     @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
+    @sb[:action] = nil
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
@@ -251,6 +253,7 @@ class CatalogController < ApplicationController
 
   # ST clicked on in the explorer right cell
   def x_show
+    @sb[:action] = nil
     @explorer = true
     if x_active_tree == :stcat_tree
       if params[:rec_id]
@@ -282,7 +285,7 @@ class CatalogController < ApplicationController
       else
         add_flash(_("Add of new Catalog Bundle was cancelled by the user"))
       end
-      @edit = @record = nil
+      @sb[:action] = @edit = @record = nil
       @in_a_form = false
       replace_right_cell
     when "save", "add"
@@ -549,7 +552,7 @@ class CatalogController < ApplicationController
       else
         add_flash(_("Add of new Catalog was cancelled by the user"))
       end
-      @edit = nil
+      @sb[:action] = @edit = nil
       @in_a_form = false
       replace_right_cell
     when "save", "add"
@@ -950,7 +953,7 @@ class CatalogController < ApplicationController
     add_flash(_("Edit of Orchestration Template \"%{name}\" was cancelled by the user") %
       {:name => session[:edit][:new][:name]})
     @in_a_form = false
-    @edit = @record = nil
+    @sb[:action] = @edit = @record = nil
     replace_right_cell
   end
 
@@ -996,7 +999,7 @@ class CatalogController < ApplicationController
     add_flash(_("Copy of Orchestration Template \"%{name}\" was cancelled by the user") %
       {:name => session[:edit][:current][:name]})
     @in_a_form = false
-    @edit = @record = nil
+    @sb[:action] = @edit = @record = nil
     replace_right_cell
   end
 
@@ -1045,7 +1048,7 @@ class CatalogController < ApplicationController
   def ot_add_submit_cancel
     add_flash(_("Creation of a new Orchestration Template was cancelled by the user"))
     @in_a_form = false
-    @edit = @record = nil
+    @sb[:action] = @edit = @record = nil
     replace_right_cell
   end
 
@@ -1097,7 +1100,7 @@ class CatalogController < ApplicationController
   def service_dialog_from_ot_submit_cancel
     add_flash(_("Creation of a new Service Dialog was cancelled by the user"))
     @in_a_form = false
-    @edit = @record = nil
+    @sb[:action] = @edit = @record = nil
     replace_right_cell
   end
 
@@ -2096,6 +2099,7 @@ class CatalogController < ApplicationController
   end
 
   def show_record(id = nil)
+    @sb[:action] = nil
     @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
@@ -2152,10 +2156,11 @@ class CatalogController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs       => [
         {:title => _("Services")},
         {:title => _("Catalogs")},
       ],
+      :hide_special_item => true,
     }
   end
 
