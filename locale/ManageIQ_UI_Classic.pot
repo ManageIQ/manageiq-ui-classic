@@ -9811,10 +9811,6 @@ msgstr ""
 msgid "Discover"
 msgstr ""
 
-#: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:22
-msgid "Discover Cloud Providers"
-msgstr ""
-
 #: ../app/helpers/application_helper/toolbar/ems_infras_center.rb:22
 msgid "Discover Infrastructure Providers"
 msgstr ""
