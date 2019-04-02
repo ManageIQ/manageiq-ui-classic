@@ -1,5 +1,7 @@
 module EmsNetworkHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -12,14 +14,14 @@ module EmsNetworkHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i(
-        parent_ems_cloud cloud_networks cloud_subnets network_routers security_groups floating_ips
-        network_ports load_balancers
+        parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups floating_ips
+        network_ports load_balancers custom_button_events
       )
     )
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status refresh_date))
   end
 
   def textual_group_smart_management
@@ -63,7 +65,7 @@ module EmsNetworkHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    {:label => _("Parent Cloud Provider"), :value => @record.try(:parent_manager)}
+    textual_link(@record.try(:parent_manager), :label => _("Parent Cloud Provider"))
   end
 
   def textual_security_groups
@@ -101,7 +103,11 @@ module EmsNetworkHelper::TextualSummary
      :title => _("Show topology")}
   end
 
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.try(:name)}
+  def textual_cloud_tenants
+    textual_link(
+      @record.try(:cloud_tenants),
+      :label => _('Cloud Tenants'),
+      :link  => url_for_only_path(:display => 'cloud_tenants')
+    )
   end
 end

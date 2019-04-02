@@ -34,9 +34,9 @@ class ExplorerPresenter
   #   open_accord                      -- accordion to open
   #   exp                              -- data for the expression editor
   #   active_tree                      -- x_active_tree view state from controller
+  #   lock_sidebar                     -- enable or disable the sidebar
   #
   # Following options are hashes:
-  #   lock_unlock_trees         -- trees to lock/unlock
   #   update_partials           -- partials to update contents
   #   replace_partials          -- partials to replace (also wrapping tag)
   #   element_updates           -- update DOM element content or title FIXME: content can be
@@ -53,6 +53,10 @@ class ExplorerPresenter
     new(args.update(:mode => 'flash'))
   end
 
+  def self.rx(args = {})
+    new(args.update(:mode => 'rx'))
+  end
+
   def self.main_div(args = {})
     new(args.update(:mode => 'main_div'))
   end
@@ -63,18 +67,31 @@ class ExplorerPresenter
 
   def initialize(options = {})
     @options = {
-      :lock_unlock_trees    => {},
       :set_visible_elements => {},
       :update_partials      => {},
       :element_updates      => {},
       :replace_partials     => {},
       :reload_toolbars      => {},
+      :reload_trees         => {},
       :exp                  => {},
       :osf_node             => '',
       :show_miq_buttons     => false,
       :load_chart           => nil,
       :open_window          => nil,
+      :remove_sand          => nil,
+      :remove_paging        => nil,
+      :rx                   => nil,
     }.update(options)
+  end
+
+  def remove_sand
+    @options[:remove_sand] = true
+    self
+  end
+
+  def remove_paging
+    @options[:remove_paging] = true
+    self
   end
 
   def reset_changes
@@ -127,11 +144,6 @@ class ExplorerPresenter
     self
   end
 
-  def lock_tree(tree, lock = true)
-    @options[:lock_unlock_trees][tree] = !!lock
-    self
-  end
-
   def hide(*elements)
     set_visibility(false, *elements)
   end
@@ -147,6 +159,10 @@ class ExplorerPresenter
     self
   end
 
+  def reload_tree(name, data)
+    @options[:reload_trees][name] = data
+  end
+
   def replace(div_name, content)
     @options[:replace_partials][div_name] = content
     self
@@ -154,6 +170,15 @@ class ExplorerPresenter
 
   def update(div_name, content)
     @options[:update_partials][div_name] = content
+    self
+  end
+
+  def update_report_data(report_data)
+    @options[:report_data] = report_data
+  end
+
+  def rx(data)
+    @options[:rx] = data
     self
   end
 
@@ -175,6 +200,7 @@ class ExplorerPresenter
     when 'flash'    then for_render_flash
     when 'buttons'  then for_render_buttons
     when 'window'   then for_render_window
+    when 'rx'       then for_render_rx
     else for_render_default
     end
   end
@@ -195,6 +221,12 @@ class ExplorerPresenter
     data = {:explorer => 'window'}
     data[:openUrl] = @options[:open_url]
     data[:spinnerOff] = true if @options[:spinner_off]
+    data
+  end
+
+  def for_render_rx
+    data = {:explorer => 'rx'}
+    data[:rx] = @options[:rx]
     data
   end
 
@@ -231,29 +263,35 @@ class ExplorerPresenter
     # Open an accordion inside an other AJAX call
     data[:accordionSwap] = @options[:open_accord] unless @options[:open_accord].to_s.empty?
 
-    data[:addNodes] = {
-      :activeTree => @options[:active_tree],
-      :key        => @options[:add_nodes][:key],
-      :osf        => @options[:osf_node],
-      :nodes      => @options[:add_nodes][:nodes],
-      :remove     => !!@options[:remove_nodes],
-    } if @options[:add_nodes]
+    if @options[:add_nodes]
+      data[:addNodes] = {
+        :activeTree => @options[:active_tree],
+        :key        => @options[:add_nodes][:key],
+        :osf        => @options[:osf_node],
+        :nodes      => @options[:add_nodes][:nodes],
+        :remove     => !!@options[:remove_nodes],
+      }
+    end
 
-    data[:deleteNode] = {
-      :node       => @options[:delete_node],
-      :activeTree => @options[:active_tree],
-    } if @options[:delete_node]
+    if @options[:delete_node]
+      data[:deleteNode] = {
+        :node       => @options[:delete_node],
+        :activeTree => @options[:active_tree],
+      }
+    end
 
     data[:dashboardUrl] = @options[:miq_widget_dd_url] if @options[:miq_widget_dd_url]
     data[:updatePartials] = @options[:update_partials] # Replace content of given DOM element (element stays).
     data[:updateElements] = @options[:element_updates] # Update element in the DOM with given options
     data[:replacePartials] = @options[:replace_partials] # Replace given DOM element (and it's children) (element goes away).
+    data[:reloadTrees] = @options[:reload_trees] # Replace the data attribute of the given TreeViewComponent
     data[:buildCalendar] = format_calendar_dates(@options[:build_calendar])
-    data[:initDashboard] = !! @options[:init_dashboard]
+    data[:initDashboard] = !!@options[:init_dashboard]
     data[:ajaxUrl] = ajax_action_url(@options[:ajax_action]) if @options[:ajax_action]
     data[:clearGtlListGrid] = !!@options[:clear_gtl_list_grid]
     data[:setVisibility] = @options[:set_visible_elements]
     data[:rightCellText] = ERB::Util.html_escape(@options[:right_cell_text]) if @options[:right_cell_text]
+    data[:providerPaused] = @options[:provider_paused] if @options.key?(:provider_paused)
 
     data[:reloadToolbars] = @options[:reload_toolbars].collect do |_div_name, toolbar|
       toolbar
@@ -265,22 +303,25 @@ class ExplorerPresenter
       :recordId    => @options[:record_id],
     }
 
-    unless @options[:osf_node].blank?
+    if @options[:osf_node].present?
       data[:activateNode] = {
         :activeTree => @options[:active_tree],
         :osf        => @options[:osf_node]
       }
     end
 
-    data[:lockTrees] = @options[:lock_unlock_trees]
+    data[:lockSidebar] = !!@options[:lock_sidebar]
     data[:chartData] = @options[:load_chart]
     data[:resetChanges] = !!@options[:reset_changes]
+    data[:removeSand] = !!@options[:remove_sand]
+    data[:removePaging] = !!@options[:remove_paging]
     data[:resetOneTrans] = !!@options[:reset_one_trans]
     data[:oneTransIE] = !!@options[:one_trans_ie]
     data[:focus] = @options[:focus]
-    data[:clearSearch] = @options[:clear_search_toggle] if @options[:clear_search_toggle]
+    data[:clearSearch] = @options[:clear_search_toggle] if @options.key?(:clear_search_toggle)
     data[:hideModal] if @options[:hide_modal]
     data[:initAccords] if @options[:init_accords]
+    data[:reportData] = @options[:report_data] if @options[:report_data]
 
     data
   end

@@ -1,0 +1,69 @@
+#Report title
+title: Physical Servers
+
+#Menu name
+name: Physical Server
+
+
+db: PhysicalServer
+
+
+# Columns to fetch from main table
+cols:
+- name
+- type
+- health_state
+- power_state
+- hostname
+- asset_detail
+
+
+include:
+
+
+include_for_find:
+  :ext_management_system: {}
+  :tags: {}
+
+
+col_order:
+- name
+- type
+- health_state
+- power_state
+- asset_detail.location_led_state
+- hostname
+- asset_detail.product_name
+- asset_detail.manufacturer
+
+col_formats:
+-
+- :model_name
+
+headers:
+- Name
+- Type
+- Health State
+- Power State
+- LED State
+- Hostname
+- Product Name
+- Manufacturer
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- name
+
+group: n
+
+
+graph:
+
+
+dims:

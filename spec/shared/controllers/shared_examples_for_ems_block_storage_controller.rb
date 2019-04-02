@@ -1,16 +1,15 @@
 require_relative 'shared_storage_manager_context'
 
 shared_examples :shared_examples_for_ems_block_storage_controller do |providers|
-  include CompressedIds
   render_views
-  before :each do
-    stub_user(:features => :all)
-    setup_zone
-  end
 
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_storage_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
 
       describe "#show_list" do
         it "renders index" do
@@ -28,6 +27,28 @@ shared_examples :shared_examples_for_ems_block_storage_controller do |providers|
           get :show_list
           expect(response.status).to eq(200)
           expect(response.body).to_not be_empty
+        end
+      end
+    end
+
+    context "for #{t}" do
+      include_context :shared_storage_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
+
+      describe '#show_list' do
+        render_views
+
+        it 'renders only block storage' do
+          expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(:model_name                     => "ManageIQ::Providers::StorageManager",
+                                                                                           :no_flash_div                   => false,
+                                                                                           :gtl_type_string                => "list",
+                                                                                           :report_data_additional_options => {:lastaction                => "show_list",
+                                                                                                                               :supported_features_filter => "supports_block_storage?"})
+          post :show_list
+          expect(response.status).to eq(200)
         end
       end
     end

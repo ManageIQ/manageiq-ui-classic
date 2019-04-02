@@ -39,61 +39,30 @@
                     #{view_name}
                   .col-md-8
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
-        - if has_any_role?(%w(ems_container_show_list container_group_show_list container_node_show_list container_route_show_list container_project_show_list container_replicator_show_list container_image_show_list container_image_registry_show_list container_service_accord containers_filter_accord containers_accord persistent_volume container_build_show_list container_template_show_list))
+        - if has_any_role?(%w(ems_container_show_list container_group_show_list container_node_show_list container_route_show_list container_show_list container_project_show_list container_replicator_show_list container_image_show_list container_image_registry_show_list container_service_accord containers_filter_accord containers_accord persistent_volume container_build_show_list container_template_show_list))
           %fieldset
             %h3
               = _('Containers')
-            - {:emscontainer           => "ems_container",
-               :containernode          => "container_node",
-               :containergroup         => "container_group",
-               :containerservice       => "container_service",
-               :containerroute         => "container_route",
-               :containerproject       => "container_project",
-               :containerreplicator    => "container_replicator",
-               :containerimage         => "container_image",
-               :containerimageregistry => "container_image_registry",
-               :container              => "container",
-               :containerbuild         => "container_build",
-               :persistentvolume       => "persistent_volume",
-               :containertemplate      => "container_template"}.each do |resource, table_view_name|
+            - {:emscontainer           => _('Containers Providers'),
+               :containernode          => _('Nodes'),
+               :containergroup         => _('Pods'),
+               :containerservice       => _('Services'),
+               :containerroute         => _('Routes'),
+               :container              => _('Containers'),
+               :containerproject       => _('Projects'),
+               :containerreplicator    => _('Replicators'),
+               :containerimage         => _('Images'),
+               :containerimageregistry => _('Image Registries'),
+               :container              => _('Containers'),
+               :containerbuild         => _('Builds'),
+               :persistentvolume       => _('Volumes'),
+               :containertemplate      => _('Templates')}.each do |resource, label|
               .form-group
                 %label.col-md-3.control-label
-                  = ui_lookup(:tables => table_view_name)
+                  = label
                 .col-md-8
                   %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
-          %fieldset
-            %h3
-              = _('VM Visibility')
-            .form-group
-              %label.col-md-3.control-label
-                = _("Show VMs in Explorer tree.")
-              .col-md-6
-                = check_box_tag("display_vms",
-                                 '1',
-                                 @edit[:new][:display][:display_vms],
-                                 :data => {:on_text => _('Yes'), :off_text => _('No')})
-                .note
-                  = _("Warning: Enabling this option may cause performance issues in large environments (i.e. thousands of VMs)")
-                :javascript
-                  miqInitBootstrapSwitch("display_vms", "#{url}")
       .col-md-12.col-lg-6
-        - if has_any_role?(%w(ems_middleware_show_list middleware_server_show_list middleware_deployment_show_list middleware_datasource_show_list middleware_domain_show_list middleware_server_group_show_list middleware_messaging_show_list))
-          %fieldset
-            %h3
-              = _('Middleware')
-            - {:manageiq_providers_middlewaremanager => ["ems_middleware_show_list",           _('Middleware Providers')],
-               :middlewareserver                     => ["middleware_server_show_list",        _('Middleware Servers')],
-               :middlewaredeployment                 => ["middleware_deployment_show_list",    _('Middleware Deployments')],
-               :middlewaredatasource                 => ["middleware_datasource_show_list",    _('Middleware Datasources')],
-               :middlewaredomain                     => ["middleware_domain_show_list",        _('Middleware Domains')],
-               :middlewareservergroup                => ["middleware_server_groups_show_list", _('Middleware Server Groups')],
-               :middlewaremessaging                  => ["middleware_messaging_show_list",     _('Middleware Messaging')]}.each do |resource, (feature, view_name)|
-              - if role_allows?(:feature => feature)
-                .form-group
-                  %label.col-md-3.control-label
-                    = view_name
-                  .col-md-8
-                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
         - if has_any_role?(%w(ems_cloud_show_list availability_zone_show_list host_aggregate_show_list cloud_tenant_show_list flavor_show_list instances_accord instances_filter_accord images_filter_accord orchestration_stack_show_list cloud_volume_show_list cloud_volume_snapshot_show_list cloud_object_store_container_show_list))
           %fieldset
             %h3
@@ -117,6 +86,7 @@
                     = view_name
                   .col-md-8
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+
         - if has_any_role?(%w(ems_infra_show_list ems_cluster_show_list host_show_list resource_pool_show_list storage_show_list vandt_accord vms_filter_accord templates_filter_accord))
           %fieldset
             %h3
@@ -140,4 +110,32 @@
                     = view_name
                   .col-md-8
                     %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+
+        - if has_any_role?(%w(ems_physical_infra_show_list physical_server_show_list))
+          %fieldset
+            %h3
+              = _('Physical Infrastructure')
+            - {:manageiq_providers_physicalinframanager => ["ems_physical_infra_show_list", _('Providers')],
+              :physicalserver                           => ["physical_server_show_list",    _('Servers')],
+              }.each do |resource, (feature, view_name)|
+              - if has_any_role?(Array(feature))
+                .form-group
+                  %label.col-md-3.control-label
+                    = view_name
+                  .col-md-8
+                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+        - if has_any_role?(%w(embedded_automation_manager_credentials embedded_configuration_script_payload embedded_configuration_script_source))
+          %fieldset
+            %h3
+              = _('Ansible')
+            - {:manageiq_providers_embeddedansible_automationmanager_playbook          => ["embedded_configuration_script_payload",   _('Playbooks')],
+               :manageiq_providers_embeddedautomationmanager_configurationscriptsource => ["embedded_configuration_script_source",    _('Repositories')],
+               :manageiq_providers_embeddedautomationmanager_authentication            => ["embedded_automation_manager_credentials", _('Credentials')]}.each do |resource, (feature, view_name)|
+              - if role_allows?(:feature => feature)
+                .form-group
+                  %label.col-md-3.control-label
+                    #{view_name}
+                  .col-md-8
+                    %ul.list-inline= render_view_buttons(resource, @edit[:new][:views][resource])
+
     = render :partial => "/layouts/form_buttons"

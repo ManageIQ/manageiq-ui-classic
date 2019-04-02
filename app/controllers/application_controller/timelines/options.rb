@@ -2,26 +2,23 @@ module ApplicationController::Timelines
   SELECT_EVENT_TYPE = [[N_('Management Events'), 'timeline'], [N_('Policy Events'), 'policy_timeline']].freeze
 
   DateOptions = Struct.new(
-    :daily,
+    :end_date,
     :days,
     :end,
-    :hourly,
     :start,
     :typ
   ) do
     def update_from_params(params)
       self.typ = params[:tl_typ] if params[:tl_typ]
       self.days = params[:tl_days] if params[:tl_days]
-      self.hourly = params[:miq_date_1] if params[:miq_date_1] && typ == 'Hourly'
-      self.daily = params[:miq_date_1] if params[:miq_date_1] && typ == 'Daily'
+      self.end_date = params[:miq_date_1] || params[:miq_date]
     end
 
     def update_start_end(sdate, edate)
       if !sdate.nil? && !edate.nil?
         self.start = [sdate.year.to_s, (sdate.month - 1).to_s, sdate.day.to_s].join(", ")
         self.end = [edate.year.to_s, (edate.month - 1).to_s, edate.day.to_s].join(", ")
-        self.hourly ||= [edate.month, edate.day, edate.year].join("/")
-        self.daily ||= [edate.month, edate.day, edate.year].join("/")
+        self.end_date ||= [edate.month, edate.day, edate.year].join("/")
       else
         self.start = self.end = nil
       end
@@ -30,19 +27,34 @@ module ApplicationController::Timelines
   end
 
   ManagementEventsOptions = Struct.new(
-    :level,
+    :levels,
     :categories,
   ) do
     def update_from_params(params)
-      self.level = params[:tl_fl_typ] == "critical" ? :critical : :detail
+      self.levels = params[:tl_levels]&.map(&:to_sym) || group_levels
       self.categories = {}
-      if params[:tl_categories]
-        params[:tl_categories].each do |category|
-          categories[events[category]] = {:display_name => category}
-          categories[events[category]][:event_groups] = level == :critical ?
-            event_groups[events[category]][level] :
-            event_groups[events[category]][level] + event_groups[events[category]][:critical]
+      params.fetch(:tl_categories, []).each do |category_display_name|
+        group_data = event_groups[events[category_display_name]]
+        category = {
+          :display_name => category_display_name,
+          :include_set  => [],
+          :exclude_set  => [],
+          :regexes      => []
+        }
+
+        group_levels.each do |lvl|
+          next unless group_data[lvl]
+          strings, regexes = group_data[lvl].partition { |typ| typ.kind_of?(String) }
+          if levels.include?(lvl)
+            category[:include_set].push(*strings)
+            category[:regexes].push(*regexes)
+          else
+            category[:exclude_set].push(*strings)
+          end
         end
+        next if category[:include_set].empty? && category[:regexes].empty?
+
+        categories[events[category_display_name]] = category
       end
     end
 
@@ -53,28 +65,22 @@ module ApplicationController::Timelines
       end
     end
 
-    def event_set
-      event_set = []
-      categories.each do |category|
-        event_set.push(category.last[:event_groups])
-      end
-      event_set
+    def drop_cache
+      @events = @event_groups = @lvl_text_value = nil
     end
 
-    def drop_cache
-      @events = @event_groups = nil
+    def levels_text_and_value
+      @lvl_text_value ||= group_levels.map { |level| [level.to_s.titleize, level] }
     end
 
     private
 
-    def build_filter(grp_name) # hidden fields to highlight bands in timeline
-      arr = event_groups[grp_name][level.to_sym]
-      arr.push(event_groups[grp_name][:critical]) if level == 'detail'
-      "(" << arr.join(")|(") << ")"
-    end
-
     def event_groups
       @event_groups ||= EmsEvent.event_groups
+    end
+
+    def group_levels
+      EmsEvent::GROUP_LEVELS
     end
   end
 
@@ -85,10 +91,13 @@ module ApplicationController::Timelines
     def update_from_params(params)
       self.result = params[:tl_result] || "success"
       self.categories = {}
-      if params[:tl_categories]
-        params[:tl_categories].each do |category|
-          categories[category] = {:display_name => category, :event_groups => events[category]}
-        end
+      params.fetch(:tl_categories, []).each do |category|
+        categories[category] = {
+          :display_name => category,
+          :include_set  => events[category],
+          :exclude_set  => [],
+          :regexes      => []
+        }
       end
     end
 
@@ -100,27 +109,6 @@ module ApplicationController::Timelines
 
     def drop_cache
       @events = @fltr_cache = nil
-    end
-
-    def fltr(number)
-      @fltr_cache ||= {}
-      @fltr_cache[number] ||= build_filter(filters[number])
-    end
-
-    def event_set
-      categories.blank? ? [] : categories.collect { |_, e| e[:event_groups] }
-    end
-
-    private
-
-    def build_filter(grp_name) # hidden fields to highlight bands in timeline
-      return '' if grp_name.blank?
-      arr = []
-      events[grp_name].each do |a|
-        e = PolicyEvent.find_by_miq_event_definition_id(a.to_i)
-        arr.push(e.event_type) unless e.nil?
-      end
-      arr.blank? ? '' : '(' << arr.join(')|(') << ')'
     end
   end
 
@@ -150,8 +138,12 @@ module ApplicationController::Timelines
       management_events? ? :event_streams : :policy_events
     end
 
-    def event_set
-      (policy_events? ? policy : management).event_set
+    def categories
+      (policy_events? ? policy : management).categories
+    end
+
+    def get_set(name)
+      categories.values.flat_map { |v| v[name] }
     end
 
     def drop_cache

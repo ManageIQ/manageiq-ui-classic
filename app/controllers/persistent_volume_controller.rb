@@ -1,5 +1,6 @@
 class PersistentVolumeController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -17,5 +18,18 @@ class PersistentVolumeController < ApplicationController
     _("Volumes")
   end
 
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Volumes")},
+        {:url   => controller_url, :title => _("Persistent Volumes")},
+      ],
+    }
+  end
+
   menu_section :cnt
+
+  has_custom_buttons
 end

@@ -3,12 +3,12 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
   def override(node, _object, _pid, _options)
-    node[:cfmeNoClick] = true if node[:image].nil? || !node[:image].include?('svg/currentstate-')
+    node[:selectable] = false # if node[:image].nil? || !node[:image].include?('svg/currentstate-')
   end
 
-  def initialize(name, type, sandbox, build = true, root = nil)
-    sandbox[:network_root] = TreeBuilder.build_node_id(root) if root
-    @root = root
+  def initialize(name, type, sandbox, build = true, **params)
+    sandbox[:network_root] = TreeBuilder.build_node_id(params[:root]) if params[:root]
+    @root = params[:root]
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:network_root])
       @root = model.constantize.find_by(:id => id)
@@ -18,21 +18,16 @@ class TreeBuilderNetwork < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true, :click_url => "/vm/show/", :onclick => "miqOnClickHostNet")
+  def tree_init_options
+    {:full_ids => true, :lazy => true, :onclick => "miqOnClickHostNet"}
   end
 
   def root_options
     {
-      :title       => @root.name,
-      :tooltip     => _("Host: %{name}") % {:name => @root.name},
-      :icon        => 'pficon pficon-screen',
-      :cfmeNoClick => true
+      :text       => @root.name,
+      :tooltip    => _("Host: %{name}") % {:name => @root.name},
+      :icon       => 'pficon pficon-container-node',
+      :selectable => false
     }
   end
 

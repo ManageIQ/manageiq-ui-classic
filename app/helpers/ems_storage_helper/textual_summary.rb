@@ -1,5 +1,7 @@
 module EmsStorageHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -9,14 +11,15 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(
-      _("Relationships"),
-      %i(parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_object_store_containers)
-    )
+    TextualGroup.new(_("Relationships"),
+                     %i(
+                       parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
+                       cloud_object_store_containers cloud_volume_types custom_button_events
+                     ))
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status refresh_date))
   end
 
   def textual_group_smart_management
@@ -44,7 +47,7 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_type
-    @record.emstype_description
+    {:label => _('Type'), :value => @record.emstype_description}
   end
 
   def textual_port
@@ -59,19 +62,23 @@ module EmsStorageHelper::TextualSummary
     textual_link(@record.try(:parent_manager), :label => _("Parent Cloud Provider"))
   end
 
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.try(:name)}
-  end
-
   def textual_cloud_volumes
-    @record.try(:cloud_volumes)
+    textual_link(@record.try(:cloud_volumes), :label => _('Cloud Volumes'))
   end
 
   def textual_cloud_volume_snapshots
-    @record.try(:cloud_volume_snapshots)
+    textual_link(@record.try(:cloud_volume_snapshots), :label => _('Cloud Volume Snapshots'))
+  end
+
+  def textual_cloud_volume_backups
+    textual_link(@record.try(:cloud_volume_backups), :label => _('Cloud Volume Backups'))
   end
 
   def textual_cloud_object_store_containers
     @record.try(:cloud_object_store_containers)
+  end
+
+  def textual_cloud_volume_types
+    textual_link(@record.try(:cloud_volume_types), :label => _('Cloud Volume Types'))
   end
 end

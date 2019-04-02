@@ -13,7 +13,7 @@
               "data-method"          => :post,
               :remote                => true)
             - if @edit[:vc_columns][i] == @edit[:vc_sortcol]
-              %img{:src => "/imgas/icons/16/sort_#{@edit[:vc_sortdir] == 'ASC' ? 'up' : 'down'}"}
+              %i{:class => @edit[:vc_sortdir] == 'ASC' ? 'fa fa-angle-up' : 'fa fa-angle-down'}
     %tbody
       - cls = @edit[:new][:sysprep_custom_spec] && @edit[:new][:sysprep_custom_spec][0].nil? ? "selected" : ""
       - unless spec_required

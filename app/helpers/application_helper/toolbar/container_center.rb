@@ -2,25 +2,30 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
   button_group('container_monitoring', [
     select(
       :container_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :container_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Container'),
           N_('Timelines'),
+          :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Container'},
-          :klass     => ApplicationHelper::Button::ContainerTimeline),
+          :options   => {:entity => N_('Container')},
+          :klass     => ApplicationHelper::Button::ContainerTimeline
+        ),
         button(
           :container_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Container'),
           N_('Utilization'),
+          :url       => "/show",
           :url_parms => "?display=performance",
-          :klass     => ApplicationHelper::Button::VmPerf),
+          :options   => {:entity => N_('Container')},
+          :klass     => ApplicationHelper::Button::ContainerPerf
+        ),
       ]
     ),
   ])
@@ -36,7 +41,8 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Container'),
           N_('Edit Tags'),
-          :url_parms => "main_div"),
+          :url_parms    => "main_div",
+          :send_checked => true),
       ]
     ),
   ])

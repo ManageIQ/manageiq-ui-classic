@@ -1,11 +1,24 @@
 module Mixins
   module ManagerControllerMixin
+    extend ActiveSupport::Concern
+
+    included do
+      include Mixins::GenericFormMixin
+      include Mixins::FindRecord
+    end
+
     def index
-      redirect_to :action => 'explorer'
+      redirect_to(:action => 'explorer')
     end
 
     def show_list
-      redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
+      flash_to_session
+      redirect_to(:action => 'explorer')
+    end
+
+    def find_or_build_provider
+      @provider = provider_class.new if params[:id] == "new"
+      @provider ||= find_record(self.class.model, params[:id]).provider
     end
 
     def add_provider
@@ -20,11 +33,11 @@ module Mixins
     end
 
     def build_credentials
-      return {} unless params[:log_userid]
+      return {} unless params[:default_userid]
       {
         :default => {
-          :userid   => params[:log_userid],
-          :password => params[:log_password] || @provider.authentication_password
+          :userid   => params[:default_userid],
+          :password => params[:default_password] || @provider.authentication_password
         }
       }
     end
@@ -35,14 +48,14 @@ module Mixins
         AuditEvent.success(build_created_audit(@provider, @edit))
         @in_a_form = false
         @sb[:action] = nil
-        model = "#{model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
+        model = "#{self.class.model_to_name(@provider.type)} #{_('Provider')}"
         if params[:id] == "new"
           add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
           process_managers([@provider.instance_eval(manager_prefix).id], "refresh_ems")
         else
           add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
         end
-        replace_right_cell
+        replace_right_cell(:replace_trees => [x_active_accord])
       else
         @provider.errors.each do |field, msg|
           @sb[:action] = nil
@@ -56,11 +69,9 @@ module Mixins
       @in_a_form = false
       @sb[:action] = nil
       if params[:id] == "new"
-        add_flash(_("Add of %{provider} was cancelled by the user") %
-          {:provider => ui_lookup(:model => 'ExtManagementSystem')})
+        add_flash(_("Add of Provider was cancelled by the user"))
       else
-        add_flash(_("Edit of %{provider} was cancelled by the user") %
-          {:provider => ui_lookup(:model => 'ExtManagementSystem')})
+        add_flash(_("Edit of Provider was cancelled by the user"))
       end
       replace_right_cell
     end
@@ -73,10 +84,13 @@ module Mixins
       begin
         @provider.verify_credentials(params[:type])
       rescue => error
-        render_flash(_("Credential validation was not successful: %{details}") % {:details => error}, :error)
+        msg = _("Credential validation was not successful: %{details}") % {:details => error}
+        level = :error
       else
-        render_flash(_("Credential validation was successful"))
+        msg = _("Credential validation was successful")
       end
+
+      render_flash_json(msg, level)
     end
 
     def explorer
@@ -103,14 +117,14 @@ module Mixins
       session.delete(:exp_parms)
       @in_a_form = false
 
-      if params[:id] # If a tree node id came in, show in one of the trees
-        nodetype, id = params[:id].split("-")
-        # treebuilder initializes x_node to root first time in locals_for_render,
-        # need to set this here to force & activate node when link is clicked outside of explorer.
-        @reselect_node = self.x_node = "#{nodetype}-#{to_cid(id)}"
-        get_node_info(x_node)
-      end
       render :layout => "application"
+    end
+
+    def identify_record(id, klass = self.class.model)
+      type, _id = parse_nodetype_and_id(x_node)
+      klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+      record = super(id, klass)
+      record
     end
 
     def tree_autoload
@@ -175,7 +189,7 @@ module Mixins
                            else
                              'summary'
                            end
-        replace_right_cell
+        replace_right_cell unless @edit && @edit[:adv_search_applied] && MiqExpression.quick_search?(@edit[:adv_search_applied][:exp])
       end
     end
 
@@ -204,9 +218,93 @@ module Mixins
       end
     end
 
-    private ###########
+    def new
+      assert_privileges("#{privilege_prefix}_add_provider")
+      @provider_manager = concrete_model.new
+      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
+      render_form
+    end
+
+    def edit
+      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
+      case params[:button]
+      when "cancel"
+        cancel_provider
+      when "save"
+        add_provider
+        save_provider
+      else
+        assert_privileges("#{privilege_prefix}_edit_provider")
+        manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
+        @provider_manager     = find_record(concrete_model, manager_id)
+        @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
+        render_form
+      end
+    end
+
+    def delete
+      assert_privileges("#{privilege_prefix}_delete_provider")
+      checked_items = find_checked_items
+      checked_items.push(params[:id]) if checked_items.empty? && params[:id]
+      providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
+      if providers.empty?
+        add_flash(_("No Providers were selected for deletion"), :error)
+      else
+        providers.each do |provider|
+          AuditEvent.success(
+            :event        => "provider_record_delete_initiated",
+            :message      => "[#{provider.name}] Record delete initiated",
+            :target_id    => provider.id,
+            :target_class => provider.type,
+            :userid       => session[:userid]
+          )
+          provider.destroy_queue
+        end
+
+        add_flash(n_("Delete initiated for %{count} Provider",
+                     "Delete initiated for %{count} Providers",
+                     providers.length) % {:count => providers.length})
+      end
+      replace_right_cell
+    end
+
+    def refresh
+      assert_privileges("#{privilege_prefix}_refresh_provider")
+      @explorer = true
+      manager_button_operation('refresh_ems', _('Refresh'))
+      replace_right_cell
+    end
+
+    def form_fields
+      assert_privileges("#{privilege_prefix}_edit_provider")
+      # set value of read only zone text box, when there is only single zone
+      if params[:id] == "new"
+        return render(:json => {:zone => Zone.visible.in_my_region.size >= 1 ? Zone.visible.in_my_region.first.name : nil})
+      end
+
+      manager = find_record(concrete_model, params[:id])
+      provider = manager.provider
+
+      render :json => {:name                => provider.name,
+                       :zone                => provider.zone.name,
+                       :zone_hidden         => !manager.enabled?,
+                       :url                 => provider.url,
+                       :verify_ssl          => provider.verify_ssl,
+                       :default_userid      => provider.authentications.first.userid,
+                       :default_auth_status => provider.authentication_status_ok?}
+    end
+
+    private
+
+    def tag_action
+      (params[:action] == 'x_button' && %w(automation_manager_provider_tag configuration_manager_provider_tag).include?(params[:pressed])) || (params[:action] == 'tagging' && params[:pressed] == 'reset')
+    end
 
     def replace_right_cell(options = {})
+      if tag_action
+        render_tagging_form
+        return
+      end
       replace_trees = options[:replace_trees]
       return if @in_a_form
       @explorer = true
@@ -215,12 +313,14 @@ module Mixins
       trees = rebuild_trees(replace_trees)
 
       record_showing = leaf_record
-      presenter, r = rendering_objects
-      update_partials(record_showing, presenter, r)
-      replace_search_box(presenter, r)
-      handle_bottom_cell(presenter, r)
-      replace_trees_by_presenter(presenter, trees)
+      presenter = rendering_objects
+      get_tagdata(@record) if @record.try(:taggings)
+      update_partials(record_showing, presenter)
+      replace_search_box(presenter)
+      handle_bottom_cell(presenter)
+      reload_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
+      presenter[:provider_paused] = provider_paused?(@record)
       presenter[:right_cell_text] = @right_cell_text
       presenter[:osf_node] = x_node # Open, select, and focus on this node
 
@@ -232,7 +332,7 @@ module Mixins
         self.x_node = "root"
         get_node_info("root")
       else
-        show_record(from_cid(id))
+        show_record(id)
         model_string = ui_lookup(:model => @record.class.to_s)
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
       end
@@ -241,14 +341,14 @@ module Mixins
     def sync_form_to_instance
       @provider.name       = params[:name]
       @provider.url        = params[:url]
-      @provider.verify_ssl = params[:verify_ssl].eql?("on")
-      @provider.zone       = Zone.find_by(:name => params[:zone].to_s)
+      @provider.verify_ssl = params[:verify_ssl].eql?("on") || params[:verify_ssl].eql?("true")
+      @provider.zone       = Zone.find_by(:name => params[:zone].to_s) if params[:zone]
     end
 
     def provider_list(id, model)
       return provider_node(id, model) if id
       options = {:model => model.to_s}
-      @right_cell_text = _("All %{title} Providers") % {:title => model_to_name(model)}
+      @right_cell_text = _("All %{title} Providers") % {:title => self.class.model_to_name(model)}
       process_show_list(options)
     end
 
@@ -256,7 +356,7 @@ module Mixins
       return configured_system_node(id, model) if id
       if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
         options = {:model => model.to_s}
-        @right_cell_text = _("All %{title} Configured Systems") % {:title => model_to_name(model)}
+        @right_cell_text = _("All %{title} Configured Systems") % {:title => self.class.model_to_name(model)}
         process_show_list(options)
       end
     end
@@ -267,31 +367,26 @@ module Mixins
     end
 
     def display_adv_searchbox
-      !(@configured_system_record || @in_a_form || group_summary_tab_selected?)
+      !(@configured_system_record || @configuration_script_record || @in_a_form || group_summary_tab_selected?)
     end
 
     def miq_search_node
-      options = {:model => "ConfiguredSystem"}
+      options = {:model => model_from_active_tree(x_active_tree)}
+      if x_active_tree == :configuration_scripts_tree
+        options = {:model      => "ConfigurationScript",
+                   :gtl_dbname => "automation_manager_configuration_scripts"}
+      end
       process_show_list(options)
-      @right_cell_text = _("All Configured Systems")
-    end
-
-    def rendering_objects
-      presenter = ExplorerPresenter.new(
-        :active_tree => x_active_tree,
-        :delete_node => @delete_node,
-      )
-      r = proc { |opts| render_to_string(opts) }
-      return presenter, r
+      @right_cell_text = x_active_tree == :configuration_scripts_tree ? _("All Ansible Tower Job Templates") : _("All Configured Systems")
     end
 
     def render_form
-      presenter, r = rendering_objects
+      presenter = rendering_objects
       @in_a_form = true
       presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => controller_name}])
       update_title(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
 
       render :json => presenter.for_render
     end
@@ -301,11 +396,11 @@ module Mixins
       @in_a_form = true
       @right_cell_text = _("Edit Tags")
       clear_flash_msg
-      presenter, r = rendering_objects
-      update_tagging_partials(presenter, r)
+      presenter = rendering_objects
+      update_tagging_partials(presenter)
       update_title(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
 
       render :json => presenter.for_render
     end
@@ -314,24 +409,11 @@ module Mixins
       return if %w(cancel save).include?(params[:button])
       @in_a_form = true
       clear_flash_msg
-      presenter, r = rendering_objects
-      update_service_dialog_partials(presenter, r)
+      presenter = rendering_objects
+      update_service_dialog_partials(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
       presenter[:right_cell_text] = @right_cell_text
-
-      render :json => presenter.for_render
-    end
-
-    def update_tree_and_render_list(replace_trees)
-      @explorer = true
-      get_node_info(x_node)
-      presenter, r = rendering_objects
-      replace_explorer_trees(replace_trees, presenter, r)
-
-      presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
-      rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
 
       render :json => presenter.for_render
     end
@@ -362,7 +444,7 @@ module Mixins
       @sb["#{controller_name.underscore}_search_text".to_sym][:current_node] = x_node
     end
 
-    def replace_search_box(presenter, r)
+    def replace_search_box(presenter)
       # Replace the searchbox
       presenter.replace(:adv_searchbox_div,
                         r[:partial => 'layouts/x_adv_searchbox'])
@@ -370,22 +452,13 @@ module Mixins
       presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     end
 
-    def handle_bottom_cell(presenter, r)
+    def handle_bottom_cell(presenter)
       # Handle bottom cell
       if @pages || @in_a_form
         if @pages && !@in_a_form
-          @ajax_paging_buttons = true
-          if @sb[:action] && @record # Came in from an action link
-            presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols',
-                                            :locals  => {:action_url    => @sb[:action],
-                                                         :action_method => @sb[:action],
-                                                         :action_id     => @record.id}])
-          else
-            presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols'])
-          end
-          presenter.hide(:form_buttons_div).show(:pc_div_1)
+          presenter.hide(:form_buttons_div)
         elsif @in_a_form
-          presenter.hide(:pc_div_1).show(:form_buttons_div)
+          presenter.remove_paging.show(:form_buttons_div)
         end
         presenter.show(:paging_div)
       else
@@ -421,23 +494,21 @@ module Mixins
       presenter.hide(:quicksearchbox)
       presenter[:hide_modal] = true
 
-      presenter.lock_tree(x_active_tree, @in_a_form)
+      presenter[:lock_sidebar] = @in_a_form
     end
 
     def construct_edit_for_audit
       @edit ||= {}
       @edit[:current] = {:name       => @provider.name,
-                         :provtype   => model_to_name(@provider.type),
                          :url        => @provider.url,
                          :verify_ssl => @provider.verify_ssl}
       @edit[:new] = {:name       => params[:name],
-                     :provtype   => params[:provtype],
                      :url        => params[:url],
                      :verify_ssl => params[:verify_ssl]}
     end
 
     def breadcrumb_name(_model)
-      "#{ui_lookup(:ui_title => 'foreman')} #{ui_lookup(:model => 'ExtManagementSystem')}"
+      "#{ui_lookup(:ui_title => 'foreman')} #{_('Provider')}"
     end
 
     def tagging_explorer_controller?
@@ -446,20 +517,6 @@ module Mixins
 
     def valid_configured_system_record?(configured_system_record)
       configured_system_record.try(:id)
-    end
-
-    def find_record(model, id)
-      raise _("Invalid input") unless is_integer?(from_cid(id))
-      begin
-        record = model.where(:id => from_cid(id)).first
-      rescue ActiveRecord::RecordNotFound, StandardError => ex
-        if @explorer
-          self.x_node = "root"
-          add_flash(ex.message, :error, true)
-          session[:flash_msgs] = @flash_array.dup
-        end
-      end
-      record
     end
 
     def title

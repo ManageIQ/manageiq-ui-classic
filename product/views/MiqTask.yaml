@@ -1,0 +1,74 @@
+#
+# This is an MIQ Report configuration file
+#   Single value parameters are specified as:
+#     single_value_parm: value
+#   Multiple value parameters are specified as:
+#     multi_value_parm:
+#       - value 1
+#       - value 2
+#
+
+# Report title
+title: UI Tasks
+
+# Menu name
+name: UI Tasks
+
+# Main DB table report is based on
+db: MiqTask
+
+# Columns to fetch from the main table
+cols:
+- updated_on
+- started_on
+- created_on
+- state
+- message
+- name
+- userid
+- status
+
+# Included tables (joined, has_one, has_many) and columns
+include:
+  miq_server:
+    columns:
+    - name
+  job:
+    columns:
+    - target_class
+    - target_id
+
+# Order of columns (from all tables)
+col_order:
+- updated_on
+- started_on
+- created_on
+- state
+- message
+- name
+- userid
+- miq_server.name
+
+# Column titles, in order
+headers:
+- Updated
+- Started
+- Queued
+- State
+- Message
+- Task Name
+- User
+- Server
+
+# Condition(s) string for the SQL query
+conditions: {}
+
+# Order string for the SQL query
+order: Descending
+
+# Columns to sort the report on, in order
+sortby:
+- updated_on
+
+# Group rows (y=yes,n=no,c=count)
+group: n

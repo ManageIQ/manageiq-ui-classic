@@ -1,3 +1,4 @@
+/* stylelint-disable selector-type-no-unknown */
 kubernetes-topology-graph {
   border-top: 1px solid #eee;
   position: fixed;
@@ -6,38 +7,44 @@ kubernetes-topology-graph {
   padding: 10px;
 }
 
-.container_topology .legend {
-  padding-top: 5px;
-  font-family: sans-serif;
+.topology .legend {
+  font-family: "Open Sans", Open Sans, sans-serif;
   font-size: 15px;
   display: inline-block;
   vertical-align: middle;
 }
-.container_topology .legend label {
+
+.topology .legend label {
   font-weight: 400;
   cursor: pointer;
-  vertical-align: 10px;
 }
 
-.container_topology #selected {
+.topology #selected {
   float: right;
   display: block;
   margin-top: 15px;
 }
 
+kubernetes-topology-filter,
 kubernetes-topology-icon {
-  padding: 4px 11px 4px 2px !important;
   opacity: 0.4;
+  padding: 10px 10px;
 }
 
+kubernetes-topology-filter.active,
 kubernetes-topology-icon.active {
   opacity: 1;
 }
 
+kubernetes-topology-filter svg,
 kubernetes-topology-icon svg {
   width: 39px !important;
   height: 39px !important;
   display: inline-block;
+}
+
+.kube-topology g {
+  font-family: "Open Sans", Open Sans, sans-serif;
 }
 
 .kube-topology g text.attached-label {
@@ -56,29 +63,31 @@ kubernetes-topology-icon svg {
 
 .kube-topology g circle {
   stroke-width: 2px;
+  stroke: #aaa;
+  fill: #fff;
 }
 
 .kube-topology g circle.success {
-  stroke: #3F9C35;
+  stroke: #3f9c35;
 }
 
 .kube-topology g circle.error {
-  stroke: #CC0000;
+  stroke: #cc0000;
 }
 
 .kube-topology g circle.warning {
-  stroke: #EC7A08;
+  stroke: #ec7a08;
 }
 
 .kube-topology g circle.unknown {
   stroke: #bbb;
 }
 
-.container_topology .canvas {
+.topology .canvas {
   position: absolute;
 }
 
-.container_topology .popup {
+.topology .popup {
   position: absolute;
   left: 0;
   top: 0;
@@ -91,19 +100,50 @@ kubernetes-topology-icon svg {
   font-size: 14px;
 }
 
-.container_topology .popup h5 {
+.topology .popup h5 {
   font-weight: bold;
 }
 
-.container_topology .popup p {
+.topology .popup p {
   margin: 0 0 4px;
 }
 
-.container_topology .popup p:hover {
-  color : #0099cc;
+.topology .popup p:hover {
+  color: #0099cc;
   cursor: pointer;
 }
 
-.container_topology label.checkbox-inline {
-  font-size:14px;
+.topology label.checkbox-inline {
+  font-size: 14px;
+}
+
+.floating-not-found {
+  width: 100%;
+  text-align: center;
+  font-size: large;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 24px;
+  z-index: 100;
+}
+
+line.PhysicalServerPhysicalSwitch {
+  stroke : #3f9c35;
+  stroke-dasharray: 5;
+}
+
+.topology-filter-group {
+  float: left;
+  padding: 0px 10px;
+  margin: 10px 0px;
+}
+
+.topology-filter-group > label {
+  vertical-align: middle;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.topology-filter-group:not(:first-child) {
+  border-left: 1px solid #d1d1d1;
 }

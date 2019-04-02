@@ -1,6 +1,6 @@
 describe ContainerServiceController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -12,7 +12,7 @@ describe ContainerServiceController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_service = ContainerService.create(:ext_management_system => ems, :name => "Test Service")
     get :show, :params => { :id => container_service.id }
     expect(response.status).to eq(200)
@@ -26,11 +26,11 @@ describe ContainerServiceController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @service = FactoryGirl.create(:container_service)
+      login_as FactoryBot.create(:user)
+      @service = FactoryBot.create(:container_service)
     end
 
-    subject { get :show, :id => @service.id }
+    subject { get :show, :params => { :id => @service.id } }
 
     context "render" do
       render_views
@@ -38,6 +38,7 @@ describe ContainerServiceController do
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_container_service")
+        is_expected.to render_template('layouts/_textual_groups_generic')
       end
     end
   end

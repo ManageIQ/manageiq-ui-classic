@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::DbSeqEdit do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:dashboard_count) { 2 }
-  let(:widgetsets) { Array.new(dashboard_count) { |_i| FactoryGirl.create(:miq_widget_set) } }
+  let(:widgetsets) { Array.new(dashboard_count) { |_i| FactoryBot.create(:miq_widget_set) } }
   let(:button) { described_class.new(view_context, {}, {'widgetsets' => widgetsets}, {}) }
 
   describe '#calculate_properties' do

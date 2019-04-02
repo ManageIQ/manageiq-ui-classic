@@ -5,7 +5,7 @@ module ReportController::Dashboards
     assert_privileges("db_seq_edit")
     case params[:button]
     when "cancel"
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Dashboard Sequence was cancelled by the user"))
       replace_right_cell
     when "save"
@@ -15,7 +15,7 @@ module ReportController::Dashboards
       @edit[:new][:dashboard_order].each do |n|
         dashboard_order.push(MiqWidgetSet.where_unique_on(n).first.id)
       end
-      g = MiqGroup.find(from_cid(@sb[:nodes][2]))
+      g = MiqGroup.find(@sb[:nodes][2])
       g.settings ||= {}
       g.settings[:dashboard_order] ||= {}
       g.settings[:dashboard_order] = dashboard_order
@@ -29,7 +29,7 @@ module ReportController::Dashboards
       end
       if !err
         add_flash(_("Dashboard Sequence was saved"))
-        @edit = session[:edit] = nil    # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:replace_trees => [:db])
       else
         @in_a_form = true
@@ -41,7 +41,6 @@ module ReportController::Dashboards
       if params[:button] == "reset"
         add_flash(_("All changes have been reset"), :warning)
       end
-      @lock_tree = true
       session[:changed] = @changed = false
       replace_right_cell
     end
@@ -55,29 +54,29 @@ module ReportController::Dashboards
   def db_edit
     case params[:button]
     when "cancel"
-      @db = MiqWidgetSet.find_by_id(session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
-      if !@db || @db.id.blank?
+      @dashboard = MiqWidgetSet.find_by(:id => session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
+      if !@dashboard || @dashboard.id.blank?
         add_flash(_("Add of new Dashboard was cancelled by the user"))
       else
-        add_flash(_("Edit of Dashboard \"%{name}\" was cancelled by the user") % {:name => @db.name})
+        add_flash(_("Edit of Dashboard \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@dashboard)})
       end
       get_node_info
       @edit = session[:edit] = nil # clean out the saved info
-      @db = nil
+      @dashboard = nil
       replace_right_cell
     when "add", "save"
       assert_privileges("db_#{@edit[:db_id] ? "edit" : "new"}")
-      @db = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new # get the current record
+      @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new # get the current record
       db_fields_validation
       db_set_record_vars
       if params[:button] == "add"
-        g = MiqGroup.find(from_cid(@sb[:nodes][2]))
-        @db.owner = g
+        g = MiqGroup.find(@sb[:nodes][2])
+        @dashboard.owner = g
       end
-      if @flash_array.nil? && @db.save
+      if @flash_array.nil? && @dashboard.save
         db_save_members
-        AuditEvent.success(build_saved_audit(@db, @edit))
-        add_flash(_("Dashboard \"%{name}\" was saved") % {:name => @db.name})
+        AuditEvent.success(build_saved_audit(@dashboard, @edit))
+        add_flash(_("Dashboard \"%{name}\" was saved") % {:name => get_record_display_name(@dashboard)})
         if params[:button] == "add"
           widgetset = MiqWidgetSet.where_unique_on(@edit[:new][:name]).first
           settings = g.settings ? g.settings : {}
@@ -85,11 +84,11 @@ module ReportController::Dashboards
           settings[:dashboard_order].push(widgetset.id) unless settings[:dashboard_order].include?(widgetset.id)
           g.save
         end
-        params[:id] = @db.id.to_s   # reset id in params for show
-        @edit = session[:edit] = nil    # clean out the saved info
+        params[:id] = @dashboard.id.to_s # reset id in params for show
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:replace_trees => [:db])
       else
-        @db.errors.each do |field, msg|
+        @dashboard.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
@@ -97,11 +96,10 @@ module ReportController::Dashboards
       end
     else
       add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      @db = params[:id] && params[:id] != "new" ? find_by_id_filtered(MiqWidgetSet, params[:id]) : MiqWidgetSet.new
+      @dashboard = params[:id] && params[:id] != "new" ? find_record_with_rbac(MiqWidgetSet, params[:id]) : MiqWidgetSet.new
       db_set_form_vars
       session[:changed] = false
       @in_a_form = true
-      @lock_tree = true
       replace_right_cell
     end
   end
@@ -109,14 +107,12 @@ module ReportController::Dashboards
   # Delete all selected or single displayed action(s)
   def db_delete
     assert_privileges("db_delete")
-    db = MiqWidgetSet.find_by_id(params[:id])       # temp var to determine the parent node of deleted items
+    db = MiqWidgetSet.find(params[:id]) # temp var to determine the parent node of deleted items
     process_elements(db, MiqWidgetSet, "destroy")
-    g = MiqGroup.find(from_cid(@sb[:nodes][2].split('_').first))
+    g = MiqGroup.find(@sb[:nodes][2].split('_').first)
     # delete dashboard id from group settings and save
     db_order = g.settings && g.settings[:dashboard_order] ? g.settings[:dashboard_order] : nil
-    if db_order
-      db_order.delete(db.id)
-    end
+    db_order&.delete(db.id)
     g.save
     nodes = x_node.split('-')
     self.x_node = "#{nodes[0]}-#{nodes[1]}-#{nodes[2].split('_').first}"
@@ -135,7 +131,7 @@ module ReportController::Dashboards
         page << "ManageIQ.widget.dashboardUrl = 'report/db_widget_dd_done'"
         page << "miqInitDashboardCols();"
       end
-      if ["up", "down"].include?(params[:button])
+      if %w(up down).include?(params[:button])
         page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
         page.replace(@refresh_div, :partial => @refresh_partial, :locals => {:action => "db_seq_edit"}) if @refresh_div
       end
@@ -164,7 +160,7 @@ module ReportController::Dashboards
 
   def db_widget_remove
     return unless load_edit("db_edit__#{params[:id]}", "replace_cell__explorer")
-    @db = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
+    @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
     w = params[:widget].to_i
     @edit[:new][:col1].delete(w) if @edit[:new][:col1].include?(w)
     @edit[:new][:col2].delete(w) if @edit[:new][:col2].include?(w)
@@ -215,7 +211,7 @@ module ReportController::Dashboards
       @db_nodes_order = [@default_ws.name, "All Groups"]
 
       @db_nodes[@default_ws.name] = {}
-      @db_nodes[@default_ws.name][:id] = "xx-#{to_cid(@default_ws.id)}"
+      @db_nodes[@default_ws.name][:id] = "xx-#{@default_ws.id}"
       @db_nodes[@default_ws.name][:text] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:title] = "#{@default_ws.description} (#{@default_ws.name})"
       @db_nodes[@default_ws.name][:glyph] = "fa fa-dashboard"
@@ -229,9 +225,9 @@ module ReportController::Dashboards
       # All groups node is selected
       @miq_groups = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region)
       @right_cell_div  = "db_list"
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "MiqGroup")}
+      @right_cell_text = _("All EVM Groups")
     elsif @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g"
-      g = MiqGroup.find(from_cid(@sb[:nodes].last))
+      g = MiqGroup.find(@sb[:nodes].last)
       @right_cell_text = _("Dashboards for \"%{name}\"") % {:name => g.description}
       @right_cell_div  = "db_list"
       widgetsets = MiqWidgetSet.where(:owner_type => "MiqGroup", :owner_id => g.id)
@@ -251,23 +247,23 @@ module ReportController::Dashboards
           (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")
       # default dashboard nodes is selected or one under a specific group is selected
       # g = MiqGroup.find(@sb[:nodes][2])
-      @record = @db = MiqWidgetSet.find(from_cid(@sb[:nodes].last))
-      @right_cell_text = _("Dashboard \"%{name}\"") % {:name => "#{@db.description} (#{@db.name})"}
+      @record = @dashboard = MiqWidgetSet.find(@sb[:nodes].last)
+      @right_cell_text = _("Dashboard \"%{name}\"") % {:name => "#{@dashboard.description} (#{@dashboard.name})"}
       @right_cell_div  = "db_list"
       @sb[:new] = {}
-      @sb[:new][:name] = @db.name
-      @sb[:new][:description] = @db.description
-      @sb[:new][:locked] = @db[:set_data] && @db[:set_data][:locked] ? @db[:set_data][:locked] : true
-      @sb[:new][:col1] = @db[:set_data] && @db[:set_data][:col1] ? @db[:set_data][:col1] : []
-      @sb[:new][:col2] = @db[:set_data] && @db[:set_data][:col2] ? @db[:set_data][:col2] : []
-      @sb[:new][:col3] = @db[:set_data] && @db[:set_data][:col3] ? @db[:set_data][:col3] : []
+      @sb[:new][:name] = @dashboard.name
+      @sb[:new][:description] = @dashboard.description
+      @sb[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : true
+      @sb[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
+      @sb[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
+      @sb[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
     end
   end
 
   def db_get_form_vars
     @in_a_form = true
-    @db = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
-    if ["up", "down"].include?(params[:button])
+    @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
+    if %w(up down).include?(params[:button])
       db_move_cols_up if params[:button] == "up"
       db_move_cols_down if params[:button] == "down"
     else
@@ -276,7 +272,7 @@ module ReportController::Dashboards
       if params[:locked]
         @edit[:new][:locked] = params[:locked].to_i == 1
       end
-      if params[:widget]                # Make sure we got a widget in
+      if params[:widget] # Make sure we got a widget in
         w = params[:widget].to_i
         if @edit[:new][:col3].length < @edit[:new][:col1].length &&
            @edit[:new][:col3].length < @edit[:new][:col2].length
@@ -293,35 +289,25 @@ module ReportController::Dashboards
   end
 
   def db_set_record_vars
-    @db.name = @edit[:new][:name]
-    @db.description = @edit[:new][:description]
-    @db.updated_on = Time.now.utc
-    @db.set_data = Hash.new unless @db.set_data
-    @db.set_data[:col1] = [] if !@db.set_data[:col1] && !@edit[:new][:col1].empty?
-    @db.set_data[:col2] = [] if !@db.set_data[:col2] && !@edit[:new][:col2].empty?
-    @db.set_data[:col3] = [] if !@db.set_data[:col3] && !@edit[:new][:col3].empty?
-    @db.set_data[:col1] = @edit[:new][:col1]
-    @db.set_data[:col2] = @edit[:new][:col2]
-    @db.set_data[:col3] = @edit[:new][:col3]
-    @db.set_data[:locked] = @edit[:new][:locked]
+    @dashboard.name = @edit[:new][:name]
+    @dashboard.description = @edit[:new][:description]
+    @dashboard.updated_on = Time.now.utc
+    @dashboard.set_data = {} unless @dashboard.set_data
+    @dashboard.set_data[:col1] = [] if !@dashboard.set_data[:col1] && !@edit[:new][:col1].empty?
+    @dashboard.set_data[:col2] = [] if !@dashboard.set_data[:col2] && !@edit[:new][:col2].empty?
+    @dashboard.set_data[:col3] = [] if !@dashboard.set_data[:col3] && !@edit[:new][:col3].empty?
+    @dashboard.set_data[:col1] = @edit[:new][:col1]
+    @dashboard.set_data[:col2] = @edit[:new][:col2]
+    @dashboard.set_data[:col3] = @edit[:new][:col3]
+    @dashboard.set_data[:locked] = @edit[:new][:locked]
   end
 
   def db_save_members
-    widgets = []
-    @db.set_data[:col1].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
-    @db.set_data[:col2].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
-    @db.set_data[:col3].each do |w|
-      wg = MiqWidget.find_by_id(w)
-      widgets.push(wg) if wg
-    end
-    @db.replace_children(widgets)
-    @db.members.each { |w| w.create_initial_content_for_user(session[:userid]) } # Generate content if not there
+    widget_ids = %i(col1 col2 col3).collect { |key| @dashboard.set_data[key] }.flatten
+    widgets = Array(MiqWidget.where(:id => widget_ids))
+
+    @dashboard.replace_children(widgets)
+    @dashboard.members.each { |w| w.create_initial_content_for_user(session[:userid]) } # Generate content if not there
   end
 
   def db_fields_validation
@@ -330,7 +316,7 @@ module ReportController::Dashboards
       return
     end
     # no need to check this for default dashboard, it doesn't belong to any group
-    if @sb[:nodes][2] != "d"
+    if @sb[:nodes][1] == "g_g"
       ws = MiqWidgetSet.where(:owner_id => @sb[:nodes][2])
       # make sure description is unique within group
       ws.each do |w|
@@ -349,19 +335,19 @@ module ReportController::Dashboards
   def db_set_form_vars
     @timezone_abbr = get_timezone_abbr
     @edit = {}
-    @edit[:db_id] = @db.id
-    @edit[:read_only] = !!@db.read_only
+    @edit[:db_id] = @dashboard.id
+    @edit[:read_only] = !!@dashboard.read_only
 
     # Remember how this edit started
     @edit[:type] = params[:id] ? "db_edit" : "db_new"
-    @edit[:key]  = params[:id] ? "db_edit__#{@db.id}" : "db_edit__new"
+    @edit[:key]  = params[:id] ? "db_edit__#{@dashboard.id}" : "db_edit__new"
     @edit[:new] = {}
-    @edit[:new][:name] = @db.name
-    @edit[:new][:description] = @db.description
-    @edit[:new][:locked] = @db[:set_data] && @db[:set_data][:locked] ? @db[:set_data][:locked] : false
-    @edit[:new][:col1] = @db[:set_data] && @db[:set_data][:col1] ? @db[:set_data][:col1] : []
-    @edit[:new][:col2] = @db[:set_data] && @db[:set_data][:col2] ? @db[:set_data][:col2] : []
-    @edit[:new][:col3] = @db[:set_data] && @db[:set_data][:col3] ? @db[:set_data][:col3] : []
+    @edit[:new][:name] = @dashboard.name
+    @edit[:new][:description] = @dashboard.description
+    @edit[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : false
+    @edit[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
+    @edit[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
+    @edit[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
     db_available_widgets_options
     @edit[:current] = copy_hash(@edit[:new])
   end
@@ -372,8 +358,8 @@ module ReportController::Dashboards
     @edit[:new] = {}
     @edit[:current] = {}
     @edit[:new][:dashboard_order] = []
-    g = MiqGroup.find(from_cid(@sb[:nodes][2]))
-    @sb[:group_desc] = g.description    # saving for cell header
+    g = MiqGroup.find(@sb[:nodes][2])
+    @sb[:group_desc] = g.description # saving for cell header
     if g.settings && g.settings[:dashboard_order]
       dbs = g.settings[:dashboard_order]
       dbs.each do |db|
@@ -401,7 +387,7 @@ module ReportController::Dashboards
       # default dashboard selected
       @available_widgets = MiqWidget.available_for_all_roles.to_a
     else
-      g = MiqGroup.find(from_cid(@sb[:nodes][2].split('_').first))
+      g = MiqGroup.find(@sb[:nodes][2].split('_').first)
       @available_widgets = MiqWidget.available_for_group(g).to_a
     end
     @available_widgets.sort_by! { |w| [w.content_type, w.title.downcase] }
@@ -414,8 +400,6 @@ module ReportController::Dashboards
       @available_widgets.each do |w|
         next if col_widgets.include?(w.id) || !w.enabled
         image = case w.content_type
-                when "rss"
-                  "fa fa-rss"
                 when "chart"
                   "fa fa-pie-chart"
                 when "report"
@@ -431,7 +415,7 @@ module ReportController::Dashboards
 
   def db_move_cols_up
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].length == 0 || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       @refresh_div = "column_lists"
       @refresh_partial = "db_seq_form"
@@ -441,7 +425,7 @@ module ReportController::Dashboards
     if !consecutive
       add_flash(_("Select only one or consecutive fields to move up"), :error)
     else
-      if first_idx > 0
+      if first_idx.positive?
         @edit[:new][:dashboard_order][first_idx..last_idx].reverse_each do |field|
           pulled = @edit[:new][:dashboard_order].delete(field)
           @edit[:new][:dashboard_order].insert(first_idx - 1, pulled)
@@ -455,7 +439,7 @@ module ReportController::Dashboards
 
   def db_move_cols_down
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
-    if !params[:seq_fields] || params[:seq_fields].length == 0 || params[:seq_fields][0] == ""
+    if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       @refresh_div = "column_lists"
       @refresh_partial = "db_seq_form"
@@ -466,7 +450,7 @@ module ReportController::Dashboards
       add_flash(_("Select only one or consecutive fields to move down"), :error)
     else
       if last_idx < @edit[:new][:dashboard_order].length - 1
-        insert_idx = last_idx + 1   # Insert before the element after the last one
+        insert_idx = last_idx + 1 # Insert before the element after the last one
         insert_idx = -1 if last_idx == @edit[:new][:dashboard_order].length - 2 # Insert at end if 1 away from end
         @edit[:new][:dashboard_order][first_idx..last_idx].each do |field|
           pulled = @edit[:new][:dashboard_order].delete(field)

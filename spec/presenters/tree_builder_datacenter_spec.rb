@@ -1,25 +1,25 @@
 describe TreeBuilderDatacenter do
   context 'TreeBuilderDatacenter Cluster root' do
-    before(:each) do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Datacenter Group Cluster root")
-      login_as FactoryGirl.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
-      host = FactoryGirl.create(:host)
+    before do
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Datacenter Group Cluster root")
+      login_as FactoryBot.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
+      host = FactoryBot.create(:host)
 
-      vm = FactoryGirl.create(:vm)
-      cluster = FactoryGirl.create(:ems_cluster, :hosts => [host], :vms => [vm])
+      vm = FactoryBot.create(:vm)
+      cluster = FactoryBot.create(:ems_cluster, :hosts => [host], :vms => [vm])
       class << cluster
         def resource_pools
-          [FactoryGirl.create(:resource_pool)]
+          [FactoryBot.create(:resource_pool)]
         end
       end
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, cluster)
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, :root => cluster)
     end
 
     it 'returns EmsCluster as root' do
       root = @datacenter_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @datacenter_tree.instance_variable_get(:@root).name,
+        :text    => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Cluster: #{@datacenter_tree.instance_variable_get(:@root).name}",
         :icon    => "pficon pficon-cluster"
       )
@@ -34,29 +34,29 @@ describe TreeBuilderDatacenter do
   end
 
   context 'TreeBuilderDatacenter Resource pool root' do
-    before(:each) do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group,
+    before do
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group,
                                   :miq_user_role => role,
                                   :description   => "Datacenter Group Resource pool root")
-      login_as FactoryGirl.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
-      cluster = FactoryGirl.create(:resource_pool)
+      login_as FactoryBot.create(:user, :userid => 'datacenter_wilma', :miq_groups => [@group])
+      cluster = FactoryBot.create(:resource_pool)
       class << cluster
         def resource_pools
-          [FactoryGirl.create(:resource_pool)]
+          [FactoryBot.create(:resource_pool)]
         end
 
         def vms
-          [FactoryGirl.create(:vm)]
+          [FactoryBot.create(:vm)]
         end
       end
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, cluster)
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, {}, true, :root => cluster)
     end
 
     it 'returns ResourcePool as root' do
       root = @datacenter_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @datacenter_tree.instance_variable_get(:@root).name,
+        :text    => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Resource Pool: #{@datacenter_tree.instance_variable_get(:@root).name}",
         :icon    => "pficon-resource-pool"
       )

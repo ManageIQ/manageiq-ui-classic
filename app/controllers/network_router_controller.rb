@@ -8,11 +8,11 @@ class NetworkRouterController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances cloud_subnets)
+    %w(instances cloud_subnets floating_ips security_groups custom_button_events)
   end
 
   def button
@@ -21,56 +21,41 @@ class NetworkRouterController < ApplicationController
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
     @refresh_div = "main_div"
-    return tag("NetworkRouter") if params[:pressed] == "network_router_tag"
-    delete_network_routers if params[:pressed] == 'network_router_delete'
 
-    if params[:pressed] == "network_router_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "network_router_new"
-      javascript_redirect :action => "new"
-    elsif params[:pressed] == "network_router_add_interface"
-      javascript_redirect :action => "add_interface_select", :id => checked_item_id
-    elsif params[:pressed] == "network_router_remove_interface"
-      javascript_redirect :action => "remove_interface_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
+    case params[:pressed]
+    when "cloud_subnet_tag"
+      return tag("CloudSubnet")
+    when "custom_button"
+      custom_buttons
+    when "instance_tag"
+      return tag("VmOrTemplate")
+    when "network_router_add_interface"
+      javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
+    when "network_router_delete"
+      delete_network_routers
+      javascript_redirect(previous_breadcrumb_url)
+    when "network_router_edit"
+      javascript_redirect(:action => "edit", :id => checked_item_id)
+    when "network_router_new"
+      javascript_redirect(:action => "new")
+    when "network_router_remove_interface"
+      javascript_redirect(:action => "remove_interface_select", :id => checked_item_id)
+    when "network_router_tag"
+      return tag("NetworkRouter")
     else
       render_flash
     end
   end
 
-  def network_router_form_fields
-    assert_privileges("network_router_edit")
-    router = find_by_id_filtered(NetworkRouter, params[:id])
-    render :json => {
-      :name => router.name
-    }
-  end
-
-  def network_router_networks_by_ems
-    assert_privileges("network_router_new")
-    networks = []
-    available_networks = CloudNetwork.where(:ems_id => params[:id]).find_each
-    available_networks.each do |network|
-      networks << { 'name' => network.name, 'id' => network.id }
-    end
-    render :json => {
-      :available_networks => networks
-    }
-  end
-
   def new
     @router = NetworkRouter.new
     assert_privileges("network_router_new")
+    assert_privileges("ems_network_show_list")
+    assert_privileges("cloud_tenant_show_list")
+
     @in_a_form = true
-    @network_provider_choices = {}
-    ExtManagementSystem.where(:type => "ManageIQ::Providers::Openstack::NetworkManager").find_each do |ems|
-      @network_provider_choices[ems.name] = ems.id
-    end
-    @cloud_tenant_choices = {}
-    CloudTenant.all.each { |tenant| @cloud_tenant_choices[tenant.name] = tenant.id }
     drop_breadcrumb(
-      :name => _("Add New Router") % {:model => ui_lookup(:table => 'network_router')},
+      :name => _("Add New Network Router"),
       :url  => "/network_router/new"
     )
   end
@@ -79,19 +64,17 @@ class NetworkRouterController < ApplicationController
     assert_privileges("network_router_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Router was cancelled by the user") % {
-                            :model => ui_lookup(:table => 'network_router')}
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Network Router was cancelled by the user"))
 
     when "add"
-      @router = NetworkRouter.new
       options = form_params(params)
-      ems = ExtManagementSystem.find(options[:ems_id])
-      options.delete(:ems_id)
+      options.merge!(form_external_gateway(params)) if switch_to_bool(params[:external_gateway])
+
+      ems = ExtManagementSystem.find(params[:ems_id])
       task_id = ems.create_network_router_queue(session[:userid], options)
 
-      add_flash(_("Network Router creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Network Router creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -106,46 +89,29 @@ class NetworkRouterController < ApplicationController
     router_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("%{model} \"%{name}\" created") % { :model => ui_lookup(:table => 'network_router'),
-                                                      :name  => router_name })
+      add_flash(_("Network Router \"%{name}\" created") % {:name => router_name})
     else
-      add_flash(
-        _("Unable to create %{model} \"%{name}\": %{details}") % { :model   => ui_lookup(:table => 'network_router'),
-                                                                   :name    => router_name,
-                                                                   :details => task.message }, :error)
+      add_flash(_("Unable to create Network Router \"%{name}\": %{details}") %
+                {:name => router_name, :details => task.message}, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show_list"
+    flash_to_session
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_network_routers
     assert_privileges("network_router_delete")
 
-    routers = if @lastaction == "show_list" ||
-                 (@lastaction == "show" && @layout != "network_router") ||
-                 @lastaction.nil?
-                find_checked_items
-              else
-                [params[:id]]
-              end
-
-    if routers.empty?
-      add_flash(_("No router were selected for deletion.") % {
-        :models => ui_lookup(:tables => "network_router")
-      }, :error)
-    end
+    routers = find_records_with_rbac(NetworkRouter, checked_or_params)
 
     routers_to_delete = []
-    routers.each do |s|
-      router = NetworkRouter.find_by_id(s)
-      if router.nil?
-        add_flash(_("Router no longer exists.") % {:model => ui_lookup(:table => "network_router")}, :error)
-      else
+    routers.each do |router|
+      if router.supports?(:delete)
         routers_to_delete.push(router)
+      else
+        add_flash(_(router.unsupported_reason(:delete)), :error)
       end
     end
     process_network_routers(routers_to_delete, "destroy") unless routers_to_delete.empty?
@@ -156,43 +122,45 @@ class NetworkRouterController < ApplicationController
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "network_router"
       @single_delete = true unless flash_errors?
-      if @flash_array.nil?
-        add_flash(_("The selected Router was deleted") % {:model => ui_lookup(:table => "network_router")})
-      end
+      add_flash(_("The selected Router was deleted")) if @flash_array.nil?
+      flash_to_session
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      session[:flash_msgs] = @flash_array.dup if @flash_array
+      flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
   end
 
   def edit
-    params[:id] = checked_item_id unless params[:id].present?
+    params[:id] = checked_item_id if params[:id].blank?
     assert_privileges("network_router_edit")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
+    # needs to be initializes for haml
     drop_breadcrumb(
-      :name => _("Edit Router \"%{name}\"") % {:model => ui_lookup(:table => 'network_router'), :name => @router.name},
+      :name => _("Edit Router \"%{name}\"") % {:name => @router.name},
       :url  => "/network_router/edit/#{@router.id}"
     )
   end
 
   def update
     assert_privileges("network_router_edit")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
-    options = form_params(params)
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
+
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Router \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => 'network_router'),
-        :name  => @router.name
-      })
+      cancel_action(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
 
     when "save"
+      options = form_params(params)
+      if switch_to_bool(params[:external_gateway])
+        options.merge!(form_external_gateway(params))
+      else
+        options.merge!(form_external_gateway({}))
+      end
       task_id = @router.update_network_router_queue(session[:userid], options)
 
-      add_flash(_("Router update failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Router update failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -207,27 +175,24 @@ class NetworkRouterController < ApplicationController
     router_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("%{model} \"%{name}\" updated") % { :model => ui_lookup(:table => 'network_router'),
-                                                      :name  => router_name })
+      add_flash(_("Network Router \"%{name}\" updated") % {:name => router_name})
     else
-      add_flash(
-        _("Unable to update %{model} \"%{name}\": %{details}") % { :model   => ui_lookup(:table => 'network_router'),
-                                                                   :name    => router_name,
-                                                                   :details => task.message }, :error)
+      add_flash(_("Unable to update Network Router \"%{name}\": %{details}") %
+                {:name => router_name, :details => task.message}, :error)
     end
 
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-    javascript_redirect previous_breadcrumb_url
+    flash_to_session
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def add_interface_select
     assert_privileges("network_router_add_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     @subnet_choices = {}
 
-    (@router.ext_management_system.cloud_subnets - @router.cloud_subnets).each do |subnet|
+    Rbac::Filterer.filtered(@router.ext_management_system.cloud_subnets - @router.cloud_subnets).each do |subnet|
       @subnet_choices[subnet.name] = subnet.id
     end
     if @subnet_choices.empty?
@@ -251,7 +216,7 @@ class NetworkRouterController < ApplicationController
 
   def add_interface
     assert_privileges("network_router_add_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
 
     case params[:button]
     when "cancel"
@@ -261,15 +226,14 @@ class NetworkRouterController < ApplicationController
 
     when "add"
       options = form_params(params)
-      cloud_subnet = find_by_id_filtered(CloudSubnet, options[:cloud_subnet_id])
+      cloud_subnet = find_record_with_rbac(CloudSubnet, options[:cloud_subnet_id])
 
       if @router.supports?(:add_interface)
         task_id = @router.add_interface_queue(session[:userid], cloud_subnet)
 
-        unless task_id.kind_of?(Fixnum)
-          add_flash(_("Add Interface on Subnet to Router \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Add Interface on Subnet to Router \"%{name}\" failed: Task start failed") % {
             :name => @router.name,
-            :id   => task_id.inspect
           }, :error)
         end
 
@@ -311,14 +275,13 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show", :id => router_id
+    flash_to_session
+    javascript_redirect(:action => "show", :id => router_id)
   end
 
   def remove_interface_select
     assert_privileges("network_router_remove_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     @subnet_choices = {}
 
@@ -346,7 +309,7 @@ class NetworkRouterController < ApplicationController
 
   def remove_interface
     assert_privileges("network_router_remove_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
 
     case params[:button]
     when "cancel"
@@ -356,15 +319,14 @@ class NetworkRouterController < ApplicationController
 
     when "remove"
       options = form_params(params)
-      cloud_subnet = find_by_id_filtered(CloudSubnet, options[:cloud_subnet_id])
+      cloud_subnet = find_record_with_rbac(CloudSubnet, options[:cloud_subnet_id])
 
       if @router.supports?(:remove_interface)
         task_id = @router.remove_interface_queue(session[:userid], cloud_subnet)
 
-        unless task_id.kind_of?(Fixnum)
-          add_flash(_("Remove Interface on Subnet from Router \"%{name}\" failed: Task start failed: ID [%{id}]") % {
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Remove Interface on Subnet from Router \"%{name}\" failed: Task start failed") % {
             :name => @router.name,
-            :id   => task_id.inspect
           }, :error)
         end
 
@@ -406,26 +368,42 @@ class NetworkRouterController < ApplicationController
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show", :id => router_id
+    flash_to_session
+    javascript_redirect(:action => "show", :id => router_id)
   end
 
   private
+
   def textual_group_list
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
 
-  def form_params(in_params)
-    options = {}
-    [:name, :ems_id, :admin_state_up, :cloud_group_id,
-     :cloud_subnet_id, :cloud_network_id].each do |param|
-      options[param] = in_params[param] if in_params[param]
+  def form_external_gateway(params)
+    options = {:external_gateway_info => {}}
+    if params[:cloud_network_id].present?
+      network = find_record_with_rbac(CloudNetwork, params[:cloud_network_id])
+      options[:external_gateway_info][:network_id] = network.ems_ref
+      if params[:cloud_subnet_id].present?
+        subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
+        options[:external_gateway_info][:external_fixed_ips] = [{:subnet_id => subnet.ems_ref}]
+      end
+      if params.fetch_path(:extra_attributes, :external_gateway_info, :enable_snat)
+        options[:external_gateway_info][:enable_snat] = params[:extra_attributes][:external_gateway_info][:enable_snat]
+      end
     end
+    options
+  end
+
+  def form_params(params)
+    options = %i(name admin_state_up ems_id cloud_group_id cloud_subnet_id
+                 cloud_network_id).each_with_object({}) do |param, opt|
+      opt[param] = params[param] if params[param]
+    end
+
     options[:cloud_network_id].gsub!(/number:/, '') if options[:cloud_network_id]
-    if in_params[:cloud_tenant_id]
-      options[:cloud_tenant] = find_by_id_filtered(CloudTenant, in_params[:cloud_tenant_id])
+    if params[:cloud_tenant_id]
+      options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id])
     end
     options
   end
@@ -452,5 +430,21 @@ class NetworkRouterController < ApplicationController
     end
   end
 
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Network Routers"), :url => controller_url},
+      ],
+      :record_info => @router,
+    }
+  end
+
   menu_section :net
+
+  def switch_to_bool(option)
+    option && option =~ /on|true/i
+  end
+
+  has_custom_buttons
 end

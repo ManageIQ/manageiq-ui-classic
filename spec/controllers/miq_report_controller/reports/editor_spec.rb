@@ -5,7 +5,7 @@ describe ReportController do
     end
 
     let(:has_many_field_col) do
-      ['Vm.Storage.Storage Volumes.Disks : Storage Volume Class Hier', 'Vm.storage_volumes-class_hier']
+      ['Vm.Service.User.Miq Templates : Last Analysis Time', 'Vm.service.user.miq_templates-last_scan_attempt_on']
     end
 
     let(:cols) do
@@ -33,15 +33,14 @@ describe ReportController do
       let(:user) { stub_user(:features => :all) }
 
       let(:chargeback_report) do
-        FactoryGirl.create(:miq_report,
+        FactoryBot.create(:miq_report,
                            :db         => "ChargebackVm",
                            :name       => 'name',
                            :title      => 'title',
                            :db_options => {:options => {:owner => user.userid}},
                            :col_order  => ["name"],
                            :headers    => ["Name"],
-                           :tz         => nil
-                          )
+                           :tz         => nil)
       end
 
       let(:report_edit_options) do
@@ -118,14 +117,15 @@ describe ReportController do
     end
 
     context "#miq_report_edit" do
-      before { stub_user(:features => :all) }
-
       it "should build tabs with correct tab id after reset button is pressed to prevent error when changing tabs" do
+        user = stub_user(:features => :all)
+        user.save!
         ApplicationController.handle_exceptions = true
 
-        rep = FactoryGirl.create(
+        rep = FactoryBot.create(
           :miq_report,
           :rpt_type   => "Custom",
+          :miq_group  => user.current_group,
           :db         => "Host",
           :name       => 'name',
           :title      => 'title',
@@ -159,12 +159,51 @@ describe ReportController do
         expect(assigns(:tabs)).to include(["edit_1", "Columns"])
         expect(assigns(:active_tab)).to eq("edit_1")
       end
+
+      it "should allow user with miq_report_edit access to edit a report" do
+        user = FactoryBot.create(:user, :features => %w(miq_report_edit))
+        login_as user
+        EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
+        ApplicationController.handle_exceptions = true
+
+        rep = FactoryBot.create(
+          :miq_report,
+          :rpt_type   => "Custom",
+          :miq_group  => user.current_group,
+          :db         => "Host",
+          :name       => 'name',
+          :title      => 'title',
+          :db_options => {},
+          :col_order  => ["name"],
+          :headers    => ["Name"],
+          :tz         => nil
+        )
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:replace_right_cell)
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@_params, :id => rep.id)
+        controller.send(:miq_report_edit)
+        expect(response.status).to eq(200)
+      end
+
+      it "should allow user with miq_report_new access to add a new report" do
+        login_as FactoryBot.create(:user, :features => %w(miq_report_new))
+        EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
+        ApplicationController.handle_exceptions = true
+
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:replace_right_cell)
+        controller.instance_variable_set(:@sb, {})
+        controller.instance_variable_set(:@_params, :pressed => 'miq_report_new')
+        controller.send(:miq_report_edit)
+        expect(response.status).to eq(200)
+      end
     end
 
     describe "set_form_vars" do
-      let(:admin_user) { FactoryGirl.create(:user, :role => "super_administrator") }
+      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:chargeback_report) do
-        FactoryGirl.create(:miq_report, :db => "ChargebackVm", :col_order => ["name"], :headers => ["Name"])
+        FactoryBot.create(:miq_report, :db => "ChargebackVm", :col_order => ["name"], :headers => ["Name"])
       end
 
       let(:fake_id) { 999_999_999 }
@@ -184,14 +223,13 @@ describe ReportController do
           chargeback_report.db_options = {}
           chargeback_report.db_options[:options] = {}
 
-          case
-          when show_typ == "owner"
+          if show_typ == "owner"
             chargeback_report.db_options[:options] = {:owner => fake_id}
-          when show_typ == "tenant"
+          elsif show_typ == "tenant"
             chargeback_report.db_options[:options] = {:tenant_id => fake_id}
-          when show_typ == "tag"
+          elsif show_typ == "tag"
             chargeback_report.db_options[:options] = {:tag => "/managed/prov_max_cpu/1"}
-          when show_typ == "entity"
+          elsif show_typ == "entity"
             chargeback_report.db_options[:options] = {:provider_id => fake_id, :entity_id => fake_id}
           end
 
@@ -205,14 +243,14 @@ describe ReportController do
     end
 
     def non_empty_category(attrs = {})
-      cat = FactoryGirl.create(:classification, :name => "non_empty", :description => "Has entries", **attrs)
+      cat = FactoryBot.create(:classification, :name => "non_empty", :description => "Has entries", **attrs)
       cat.add_entry(:name => "foo", :description => "Foo")
       cat.add_entry(:name => "bar", :description => "Bar")
       cat
     end
 
     def empty_category(attrs = {})
-      FactoryGirl.create(:classification, :name => "empty", :description => "Zero entries", **attrs)
+      FactoryBot.create(:classification, :name => "empty", :description => "Zero entries", **attrs)
     end
 
     describe "#categories_hash" do
@@ -254,10 +292,10 @@ describe ReportController do
                                                         :cb_show_typ => 'entity',
                                                         :cb_model    => 'ContainerProject'})
       controller.instance_variable_set(:@sb, {})
-      rpt = FactoryGirl.create(:miq_report_chargeback)
+      rpt = FactoryBot.create(:miq_report_chargeback)
       controller.send(:valid_report?, rpt)
       flash_messages = assigns(:flash_array)
-      flash_str = 'A specific Project or all must be selected'
+      flash_str = 'A specific Container Project or all must be selected'
       expect(flash_messages.first[:message]).to eq(flash_str)
       expect(flash_messages.first[:level]).to eq(:error)
     end
@@ -265,16 +303,27 @@ describe ReportController do
 
   tabs = {:formatting => 2, :filter => 3, :summary => 4, :charts => 5, :timeline => 6, :preview => 7,
           :consolidation => 8, :styling => 9}
-  chargeback_tabs = [:formatting, :filter, :preview]
+  chargeback_tabs = %i(formatting filter preview)
 
   describe '#build_edit_screen' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:default_tenant) { Tenant.seed }
+    let(:user) { FactoryBot.create(:user_with_group, :tenant => default_tenant) }
+    let(:user_group) do
+      group = user.miq_groups.first
+      group.tenant = default_tenant
+      group.save
+      group
+    end
+
     let(:chargeback_report) do
-      FactoryGirl.create(:miq_report, :db => 'ChargebackVm', :db_options => {:options => {:owner => user.userid}},
+      FactoryBot.create(:miq_report, :db => 'ChargebackVm', :db_options => {:options => {:owner => user.userid}},
                                     :col_order => ['name'], :headers => ['Name'])
     end
 
-    before { login_as user }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as user
+    end
 
     tabs.slice(*chargeback_tabs).each do |tab_number|
       it 'flash messages should be nil' do
@@ -283,8 +332,40 @@ describe ReportController do
         controller.instance_variable_set(:@sb, :miq_tab => "edit_#{tab_number.second}")
         controller.send(:build_edit_screen)
 
+        if tab_number == [:filter, 3]
+          expect(controller.instance_variable_get(:@edit)[:cb_users]).to eq(user.userid => user.name)
+          expect(controller.instance_variable_get(:@edit)[:cb_tenant]).to eq(default_tenant.id => default_tenant.name)
+        end
+
         expect(assigns(:flash_array)).to be_nil
       end
+    end
+  end
+
+  describe "#build_tabs" do
+    before do
+      controller.instance_variable_set(:@sb, :miq_tab => "edit_1")
+    end
+
+    it "display title tabs for model #{ApplicationController::TREND_MODEL}" do
+      controller.instance_variable_set(:@edit, :new => {:model => ApplicationController::TREND_MODEL})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_3 Filter), %w(edit_7 Preview)])
+    end
+
+    it "display title tabs for chargeback model" do
+      controller.instance_variable_set(:@edit, :new => {:model => ChargebackVm})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_2 Formatting), %w(edit_3 Filter), %w(edit_7 Preview)])
+    end
+
+    it "display title tabs for any model" do
+      controller.instance_variable_set(:@edit, :new => {:model => Vm})
+
+      controller.send(:build_tabs)
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_8 Consolidation), %w(edit_2 Formatting), %w(edit_9 Styling), %w(edit_3 Filter), %w(edit_4 Summary), %w(edit_5 Charts), %w(edit_6 Timeline), %w(edit_7 Preview)])
     end
   end
 
@@ -297,7 +378,11 @@ describe ReportController do
         controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
         controller.send(:check_tabs)
         flash_messages = assigns(:flash_array)
-        flash_str = "#{title} tab is not available until at least 1 field has been selected"
+        flash_str = if tab_number == 6
+                      "#{title} tab is not available unless at least 1 time field has been selected"
+                    else
+                      "#{title} tab is not available until at least 1 field has been selected"
+                    end
         expect(flash_messages.first[:message]).to eq(flash_str)
         expect(flash_messages.first[:level]).to eq(:error)
       end

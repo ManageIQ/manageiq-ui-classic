@@ -1,7 +1,7 @@
 - if current_user
   %li.dropdown
     %a{:href => "#", :class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu2", "data-toggle" => "dropdown", "aria-haspopup" => "true"}
-      %span.fa.pficon-user
+      %span.pficon.pficon-user
       %p.navbar__user-name{"data-userid" => current_user.userid, :id => "username_display"}
         = "#{current_user.name} | #{appliance_name}"
       %span.caret
@@ -38,7 +38,8 @@
           - menu_section.items.each do |menu_item|
             - if menu_item.visible?
               %li
-                %a{:href => menu_item.url, :onclick => 'return miqCheckForChanges()'}= _(menu_item.name)
+                %a{menu_item.link_params}
+                  = _(menu_item.name)
       %li.divider
       %li
         %a{:href => "/dashboard/logout", :onclick => 'return miqCheckForChanges()', :title => _("Click to Logout")}

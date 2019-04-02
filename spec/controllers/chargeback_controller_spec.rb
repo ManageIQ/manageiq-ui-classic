@@ -2,29 +2,26 @@ describe ChargebackController do
   before { stub_user(:features => :all) }
 
   context "returns current rate assignments or set them to blank if category/tag is deleted" do
-    let(:category) { FactoryGirl.create(:classification) }
-    let(:tag)      { FactoryGirl.create(:classification, :parent_id => category.id) }
-    let(:entry)    { FactoryGirl.create(:classification, :parent_id => tag.id) }
+    let(:category) { FactoryBot.create(:classification) }
+    let(:tag)      { FactoryBot.create(:classification, :parent_id => category.id) }
+    let(:entry)    { FactoryBot.create(:classification, :parent_id => tag.id) }
 
-    context "#get_tags_all" do
+    describe "#get_tags_all" do
       before { entry }
 
       it "returns the classification entry record" do
         controller.instance_variable_set(:@edit, :cb_assign => {:tags => {}})
-        controller.send(:get_tags_all, tag.id)
-        expect(assigns(:edit)[:cb_assign][:tags]).to eq(entry.id.to_s => entry.description)
-      end
+        controller.send(:get_tags_all)
 
-      it "returns empty hash when classification entry is not found" do
-        controller.instance_variable_set(:@edit, :cb_assign => {:tags => {}})
-        controller.send(:get_tags_all, 1)
-        expect(assigns(:edit)[:cb_assign][:tags]).to eq({})
+        result = {category.id => {tag.id.to_s => tag.description}, tag.id => { entry.id.to_s => entry.description}, entry.id => {}}
+
+        expect(assigns(:edit)[:cb_assign][:tags]).to eq(result)
       end
     end
 
-    context "#cb_assign_set_form_vars" do
+    describe "#cb_assign_set_form_vars" do
       before do
-        cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage")
+        cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage")
         ChargebackRate.set_assignments(:Storage, [{:cb_rate => cbr, :tag => [tag, "vm"]}])
         sandbox = {:active_tree => :cb_assignments_tree, :trees => {:cb_assignments_tree => {:active_node => 'xx-Storage'}}}
         controller.instance_variable_set(:@sb, sandbox)
@@ -41,11 +38,35 @@ describe ChargebackController do
         expect(assigns(:edit)[:current_assignment]).to eq([])
       end
     end
+
+    describe '#cb_assign_get_form_vars' do
+      before do
+        controller.instance_variable_set(:@_params, :cblabel_key => 'null')
+        controller.instance_variable_set(:@edit, :new => {:cbshow_typ => '-labels'}, :cb_assign => {})
+      end
+
+      it "returns tag for current assignments" do
+        expect { controller.send(:cb_assign_get_form_vars) }.not_to raise_error
+      end
+
+      it "initializes hash when data are no available(params[:cblabel_key] == null)" do
+        controller.send(:cb_assign_get_form_vars)
+        docker_label_values = controller.instance_variable_get(:@edit)[:cb_assign][:docker_label_values]
+        expect(docker_label_values).to eq({})
+      end
+
+      it "initializes hash when data are no available (params[:cblabel_key] == nil)" do
+        controller.instance_variable_set(:@_params, :cblabel_key => nil)
+        controller.send(:cb_assign_get_form_vars)
+        docker_label_values = controller.instance_variable_get(:@edit)[:cb_assign][:docker_label_values]
+        expect(docker_label_values).to eq({})
+      end
+    end
   end
 
   context "Saved chargeback rendering" do
     it "Saved chargeback reports renders paginagion buttons correctly" do
-      report = FactoryGirl.create(:miq_report_with_results)
+      report = FactoryBot.create(:miq_report_with_results, :miq_group => User.current_user.current_group)
       report.extras = {:total_html_rows => 100}
       rp_id = report.id
       rr_id = report.miq_report_results[0].id
@@ -72,8 +93,8 @@ describe ChargebackController do
     end
 
     describe "#cb_rpt_build_folder_nodes" do
-      let!(:admin_user)        { FactoryGirl.create(:user_admin) }
-      let!(:chargeback_report) { FactoryGirl.create(:miq_report_chargeback_with_results) }
+      let!(:admin_user)        { FactoryBot.create(:user_admin) }
+      let!(:chargeback_report) { FactoryBot.create(:miq_report_chargeback_with_results) }
 
       before { login_as admin_user }
 
@@ -82,14 +103,14 @@ describe ChargebackController do
 
         parent_reports = controller.instance_variable_get(:@parent_reports)
 
-        tree_id = "#{ApplicationRecord.compress_id(chargeback_report.id)}-0"
+        tree_id = "#{chargeback_report.id}-0"
         expected_result = {chargeback_report.miq_report_results.first.miq_report.name => tree_id}
         expect(parent_reports).to eq(expected_result)
       end
     end
   end
 
-  context "#explorer" do
+  describe "#explorer" do
     render_views
 
     it "can be rendered" do
@@ -100,9 +121,9 @@ describe ChargebackController do
     end
   end
 
-  context "#process_cb_rates" do
+  describe "#process_cb_rates" do
     it "delete unassigned" do
-      cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
 
       rates = [cbr.id]
       controller.send(:process_cb_rates, rates, "destroy")
@@ -114,8 +135,8 @@ describe ChargebackController do
     end
 
     it "delete assigned" do
-      cbr = FactoryGirl.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
-      host = FactoryGirl.create(:host)
+      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      host = FactoryBot.create(:host)
       cbr.assign_to_objects(host)
 
       rates = [cbr.id]
@@ -128,9 +149,9 @@ describe ChargebackController do
     end
   end
 
-  context "#get_cis_all" do
-    let!(:storage) { FactoryGirl.create(:storage) }
-    let!(:miq_enterprise) { FactoryGirl.create(:miq_enterprise) }
+  describe "#get_cis_all" do
+    let!(:storage) { FactoryBot.create(:storage) }
+    let!(:miq_enterprise) { FactoryBot.create(:miq_enterprise) }
 
     it "returns names of instances of enterprise" do
       names_miqent = {}
@@ -188,7 +209,7 @@ describe ChargebackController do
 
     render_views
 
-    let(:chargeback_rate) { FactoryGirl.create(:chargeback_rate, :with_details, :description => "foo") }
+    let(:chargeback_rate) { FactoryBot.create(:chargeback_rate, :with_details, :description => "foo") }
 
     # this index represent first rate detail( "Allocated Memory in MB") chargeback_rate
     let(:index_to_rate_type) { "0" }
@@ -342,7 +363,18 @@ describe ChargebackController do
     end
 
     def expect_chargeback_rate_to_eq_hash(expected_rate, rate_hash)
-      rate_hash[:rates].sort_by! { |rd| [rd[:group], rd[:description]] }
+      rate_hash[:rates].sort_by! do |rd|
+        if rd[:group].nil? || rd[:description].nil?
+          field = if rd[:chargeable_field_id]
+                    ChargeableField.find(rd[:chargeable_field_id])
+                  else
+                    ChargeableField.find_by(:metric => rd[:metric])
+                  end
+          [field.group, field.description]
+        else
+          [rd[:group], rd[:description]] # this can be after ManageIQ/manageiq#13960
+        end
+      end
 
       expect(expected_rate.chargeback_rate_details.count).to eq(rate_hash[:rates].count)
 
@@ -350,13 +382,7 @@ describe ChargebackController do
         rate_detail_hash = rate_hash[:rates][index]
 
         expect(rate_detail).to have_attributes(rate_detail_hash.slice(*ChargebackRateDetail::FORM_ATTRIBUTES))
-        expect(rate_detail.detail_currency.name).to eq(rate_detail_hash[:type_currency])
-
-        if rate_detail_hash[:measure].nil?
-          expect(rate_detail.chargeable_field.detail_measure).to be_nil
-        else
-          expect(rate_detail.chargeable_field.detail_measure.name).to eq(rate_detail_hash[:measure])
-        end
+        expect(rate_detail.detail_currency.code).to eq(rate_detail_hash[:type_currency])
 
         rate_detail.chargeback_tiers.each_with_index do |tier, tier_index|
           tier_hash = rate_detail_hash[:tiers][tier_index]
@@ -415,15 +441,14 @@ describe ChargebackController do
         post :cb_rate_edit, :params => {:button => "add"}
 
         # change expected values from yaml
-        compute_chargeback_rate_hash_from_yaml[:rates].sort_by! { |rd| [rd[:group], rd[:description]] }
+        compute_chargeback_rate_hash_from_yaml[:rates].sort_by! { |rd| [ChargeableField.find_by(:metric => rd[:metric]).group, rd[:description]] }
         compute_rates = compute_chargeback_rate_hash_from_yaml[:rates][index_to_rate_type.to_i]
         compute_rates[:tiers][0][:finish] = 20.0
         compute_rates[:tiers].push(:start => 20.0, :finish => 50.0)
         compute_rates[:tiers].push(:start => 50.0, :finish => Float::INFINITY)
 
         new_chargeback_rate = ChargebackRate.last
-
-        expect_chargeback_rate_to_eq_hash(new_chargeback_rate, compute_chargeback_rate_hash_from_yaml)
+        expect_chargeback_rate_to_eq_hash(new_chargeback_rate, compute_chargeback_rate_hash_from_yaml.dup)
       end
 
       it "doesn't add new chargeback rate because some of tier has start value bigger than finish value" do
@@ -468,7 +493,7 @@ describe ChargebackController do
         end
 
         rate_detail_hash[:measure] = rate_detail.chargeable_field.detail_measure.name
-        rate_detail_hash[:type_currency] = rate_detail.detail_currency.name
+        rate_detail_hash[:type_currency] = rate_detail.detail_currency.code
         origin_chargeback_rate_hash[:rates].push(rate_detail_hash)
       end
       origin_chargeback_rate_hash
@@ -568,25 +593,203 @@ describe ChargebackController do
     let(:current_user) { User.current_user }
     let(:miq_task)     { MiqTask.new(:name => "Generate Report result", :userid => current_user.userid) }
     let(:miq_report_result) do
-      FactoryGirl.create(:miq_chargeback_report_result, :miq_group => current_user.current_group, :miq_task => miq_task)
+      FactoryBot.create(:miq_chargeback_report_result, :miq_group => current_user.current_group, :miq_task => miq_task)
     end
 
-    let(:chargeback_report) { FactoryGirl.create(:miq_report_chargeback, :miq_report_results => [miq_report_result]) }
+    let(:chargeback_report) { FactoryBot.create(:miq_report_chargeback, :miq_report_results => [miq_report_result]) }
 
     before do
       miq_task.state_finished
       miq_report_result.report = chargeback_report.to_hash.merge(:extras=> {:total_html_rows => 100})
       miq_report_result.save
-      allow(controller).to receive(:report_first_page)
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
     end
 
     it "fetch existing report" do
-      controller.send(:cb_rpts_fetch_saved_report, controller.to_cid(miq_report_result.id))
+      controller.send(:cb_rpts_fetch_saved_report, miq_report_result.id)
 
       fetched_report = controller.instance_variable_get(:@report)
 
       expect(fetched_report).not_to be_nil
       expect(fetched_report).to eq(chargeback_report)
+    end
+  end
+
+  describe "#replace_right_cell" do
+    it "Can build the :cb_rates tree" do
+      seed_session_trees('chargeback', :cb_rates, 'root')
+      session_to_sb
+
+      expect(controller).to receive(:render)
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderChargebackRates),
+        )
+      )
+      controller.send(:replace_right_cell, :replace_trees => %i(cb_rates))
+    end
+  end
+
+  describe '#cb_rates_delete' do
+    let(:params) { {:id => rate.id} }
+    let(:rate) { FactoryBot.create(:chargeback_rate, :rate_type => "Compute") }
+    let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => "xx-#{rate.rate_type}_cr-#{rate.id}"}}} }
+
+    before do
+      allow(controller).to receive(:x_node).and_call_original
+      allow(controller).to receive(:render).and_return(true)
+
+      controller.instance_variable_set(:@_params, params)
+      controller.instance_variable_set(:@sb, sandbox)
+    end
+
+    it 'sets right cell text properly' do
+      controller.send(:cb_rates_delete)
+      expect(controller.instance_variable_get(:@right_cell_text)).to eq("#{rate.rate_type} Chargeback Rates")
+    end
+
+    context 'deleting a list of rates' do
+      let(:params) { {:miq_grid_checks => rate.id.to_s} }
+
+      it 'calls cb_rates_list method when there are no errors' do
+        expect(controller).to receive(:cb_rates_list)
+        controller.send(:cb_rates_delete)
+      end
+
+      context 'no checked item found' do
+        let(:params) { nil }
+
+        it 'calls cb_rates_list method when there is an error' do
+          expect(controller).to receive(:cb_rates_list)
+          controller.send(:cb_rates_delete)
+        end
+      end
+    end
+
+    context 'deleting a rate from its details page' do
+      it 'calls cb_rates_list method when there are no errors' do
+        expect(controller).to receive(:cb_rates_list)
+        controller.send(:cb_rates_delete)
+      end
+
+      context 'rate not found by id' do
+        let(:params) { {:id => 123} }
+
+        it 'calls cb_rates_list method when there is an error' do
+          expect(controller).to receive(:cb_rates_list)
+          controller.send(:cb_rates_delete)
+        end
+      end
+    end
+  end
+
+  describe '#get_node_info' do
+    let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => node}}} }
+
+    before do
+      controller.instance_variable_set(:@sb, sandbox)
+    end
+
+    context 'root node' do
+      let(:node) { "root" }
+
+      it 'sets right cell text properly' do
+        controller.send(:get_node_info, node)
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Chargeback Rates")
+      end
+    end
+  end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:current_page) { 'current_page' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:chargeback_lastaction   => lastaction,
+                                                          :chargeback_display      => display,
+                                                          :chargeback_current_page => current_page)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Chargeback")
+        expect(controller.instance_variable_get(:@layout)).to eq("chargeback")
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@current_page, current_page)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:chargeback_lastaction]).to eq(lastaction)
+        expect(controller.session[:chargeback_display]).to eq(display)
+        expect(controller.session[:chargeback_current_page]).to eq(current_page)
+      end
+    end
+  end
+
+  describe '#cb_assign_field_changed' do
+    let(:edit) do
+      {
+        :cb_assign => {
+          :cats => {
+            '1' => 'Category1',
+            '2' => 'Category2'
+          },
+          :tags => {
+            1 => {
+              '2' => 'Tag1',
+              '3' => 'Tag2',
+              '4' => 'Tag3'
+            },
+            2 => {}
+          }
+        },
+        :current   => {
+          :cbshow_typ       => 'storage-tags',
+          :cbtag_cat        => '1',
+          'storage-tags__2' => '3'
+        },
+        :new       => {
+          :cbshow_typ       => 'storage-tags',
+          :cbtag_cat        => '1',
+          'storage-tags__2' => '3'
+        }
+      }
+    end
+
+    before do
+      allow(controller).to receive(:load_edit).and_return(true)
+      controller.instance_variable_set(:@edit, edit)
+    end
+
+    context 'changing Tag Category for assignments' do
+      it 'hides buttons as no change has been made' do
+        post :cb_assign_field_changed, :params => {:cbtag_cat => '2'}
+        expect(response.body).to include("miqButtons('hide');")
+      end
+    end
+
+    context 'changing Assigned To, for assignments' do
+      it 'hides buttons as no change has been made' do
+        post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage'}
+        expect(response.body).to include("miqButtons('hide');")
+      end
+    end
+
+    context 'changing item under Selections, for assignments' do
+      it 'shows buttons as a change in Selections has been made' do
+        post :cb_assign_field_changed, :params => {'storage-tags__3' => '4'}
+        expect(response.body).to include("miqButtons('show');")
+      end
     end
   end
 end

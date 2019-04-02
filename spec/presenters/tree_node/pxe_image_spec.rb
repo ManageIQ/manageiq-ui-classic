@@ -1,5 +1,3 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::PxeImage do
   subject { described_class.new(object, nil, {}) }
 
@@ -8,12 +6,12 @@ describe TreeNode::PxeImage do
     pxe_image_ipxe
     pxe_image_pxelinux
   ).each do |factory|
-    klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
+    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'pi-'
-      include_examples 'TreeNode::Node#icon', 'product product-network_card'
+      include_examples 'TreeNode::Node#icon', 'ff ff-network-card'
     end
   end
 end

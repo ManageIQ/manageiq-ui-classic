@@ -1,6 +1,6 @@
 describe ContainerReplicatorController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -12,7 +12,7 @@ describe ContainerReplicatorController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_replicator = ContainerReplicator.create(
       :ext_management_system => ems,
       :container_project     => ContainerProject.create(:ext_management_system => ems, :name => "test"),
@@ -21,7 +21,7 @@ describe ContainerReplicatorController do
     get :show, :params => { :id => container_replicator.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Replicators",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Replicators",
                                           :url  => "/container_replicator/show_list?page=&refresh=y"},
                                          {:name => "Test Replicator (Summary)",
                                           :url  => "/container_replicator/show/#{container_replicator.id}"}])
@@ -30,18 +30,26 @@ describe ContainerReplicatorController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @replicator = FactoryGirl.create(:replicator_with_assoc)
+      login_as FactoryBot.create(:user)
+      @replicator = FactoryBot.create(:replicator_with_assoc)
     end
 
-    subject { get :show, :id => @replicator.id }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_replicator")
+      it "correctly for summary page" do
+        get :show, :params => {:id => @replicator.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @replicator.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
       end
     end
   end

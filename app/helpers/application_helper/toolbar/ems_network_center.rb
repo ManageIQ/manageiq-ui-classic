@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsNetworkCenter < ApplicationHelper::Toolbar:
   button_group('ems_network_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_network_vmdb_choice,
@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsNetworkCenter < ApplicationHelper::Toolbar:
           'fa fa-refresh fa-lg',
           N_('Refresh relationships and power states for all items related to this Network Provider'),
           N_('Refresh Relationships and Power States'),
-          :confirm => N_("Refresh relationships and power states for all items related to this Network Provider?")),
+          :confirm => N_("Refresh relationships and power states for all items related to this Network Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
           :ems_network_edit,
@@ -27,7 +28,7 @@ class ApplicationHelper::Toolbar::EmsNetworkCenter < ApplicationHelper::Toolbar:
         button(
           :ems_network_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Network Provider'),
+          t = N_('Remove this Network Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Network Provider and ALL of its components will be permanently removed!")),
@@ -57,13 +58,13 @@ class ApplicationHelper::Toolbar::EmsNetworkCenter < ApplicationHelper::Toolbar:
   button_group('ems_network_monitoring', [
     select(
       :ems_network_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_network_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Network Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,

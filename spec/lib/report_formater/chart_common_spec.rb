@@ -11,7 +11,7 @@
 describe ReportFormatter::C3Formatter do
   include Spec::Support::ReportHelper
 
-  before(:each) do
+  before do
     allow(Charting).to receive(:backend).and_return(:c3)
     allow(Charting).to receive(:format).and_return(:c3)
   end
@@ -44,7 +44,8 @@ describe ReportFormatter::C3Formatter do
 
       report.table = Ruport::Data::Table.new(
         :column_names => %w(timestamp cpu_usagemhz_rate_average min_cpu_usagemhz_rate_average max_cpu_usagemhz_rate_average trend_max_cpu_usagemhz_rate_average),
-        :data         => [["Sun, 20 Mar 2016 00:00:00 UTC +00:00", 0.0, nil, nil, 0]])
+        :data         => [["Sun, 20 Mar 2016 00:00:00 UTC +00:00", 0.0, nil, nil, 0]]
+      )
 
       expect_any_instance_of(described_class).to receive(:build_performance_chart_area).once.and_call_original
       render_report(report) { |e| e.options.graph_options[:chart_type] = :performance }

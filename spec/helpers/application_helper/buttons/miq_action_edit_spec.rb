@@ -1,13 +1,13 @@
 describe ApplicationHelper::Button::MiqActionEdit do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:action_type).and_return(action_type) }
     before { allow(view_context).to receive(:x_node).and_return('node') }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record has no policies' do
       let(:action_type) { "Non-default" }

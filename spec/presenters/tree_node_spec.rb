@@ -2,14 +2,14 @@ describe TreeNode do
   # Force load all the TreeNode:: subclasses
   Dir[ManageIQ::UI::Classic::Engine.root.join('app', 'presenters', 'tree_node', '*.rb')].each { |f| require f }
 
-  # FIXME: rewrite this to FactoryGirl
+  # FIXME: rewrite this to FactoryBot
   let(:object) do
     # We need a Zone & Server for creating a MiqSchedule
     EvmSpecHelper.create_guid_miq_server_zone if klass == MiqSchedule
     klass.new
   end
   let(:parent_id) { dup }
-  let(:options) { Hash.new }
+  let(:options) { {} }
   subject { TreeNode.new(object, parent_id, options) }
 
   describe '.new' do
@@ -23,7 +23,7 @@ describe TreeNode do
 
     TreeNode.constants.each do |type|
       # We never instantiate MiqAeNode and Node in our codebase
-      next if [:MiqAeNode, :Node, :Menu].include?(type)
+      next if %i(MiqAeNode Node Menu).include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }
@@ -49,6 +49,35 @@ describe TreeNode do
           end
         end
       end
+    end
+  end
+
+  describe '.exists?' do
+    subject { described_class.exists?(object) }
+
+    context 'object has a direct subclass' do
+      let(:object) { User.new }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object has an indirect subclass' do
+      let(:object) { VmOrTemplate.new }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object is a hash' do
+      let(:object) { {} }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object is an array' do
+      let(:object) { [] }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'object is nil' do
+      let(:object) { nil }
+      it { is_expected.to be_falsey }
     end
   end
 end

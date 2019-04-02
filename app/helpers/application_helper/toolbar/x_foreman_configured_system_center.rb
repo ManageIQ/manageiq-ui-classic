@@ -12,9 +12,10 @@ class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHe
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Provision Configured System'),
           t,
-          :url       => "provision",
-          :url_parms => "main_div",
-          :enabled   => true),
+          :url          => "provision",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => true),
       ]
     ),
     select(
@@ -25,13 +26,14 @@ class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHe
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_configured_system_tag,
+          :configured_system_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Configured System'),
           N_('Edit Tags'),
-          :url       => "tagging",
-          :url_parms => "main_div",
-          :enabled   => true),
+          :url          => "tagging",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => true),
       ]
     ),
   ])

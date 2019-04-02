@@ -1,9 +1,10 @@
 class EmsNetworkController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon
-  include Mixins::EmsCommonAngular
+  include Mixins::EmsCommon
+  include Mixins::EmsCommon::Angular
   include Mixins::GenericSessionMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -19,8 +20,7 @@ class EmsNetworkController < ApplicationController
   end
 
   def ems_path(*args)
-    path_hash = {:action => 'show', :id => args[0].id.to_s }
-    path_hash.merge(args[1])
+    ems_network_path(*args)
   end
 
   def new_ems_path
@@ -35,6 +35,24 @@ class EmsNetworkController < ApplicationController
     true
   end
   public :restful?
+
+  def model_feature_for_action(action)
+    case action
+    when :edit
+      :ems_network_new
+    end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Networks")},
+        {:title => _("Providers")},
+        {:url   => controller_url, :title => _("Network Managers")},
+      ],
+      :record_info => @ems,
+    }.compact
+  end
 
   menu_section :net
   has_custom_buttons

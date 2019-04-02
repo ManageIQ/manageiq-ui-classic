@@ -5,6 +5,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       depot_name: '',
       filter_typ: '',
       log_userid: '',
+      log_aws_region: '',
+      openstack_region: '',
+      keystone_api_version: '',
+      v3_domain_ident: '',
+      swift_api_port: 5000,
+      security_protocol: '',
       log_protocol: '',
       description: '',
       enabled: '',
@@ -17,24 +23,24 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       time_zone: '',
       uri: '',
       uri_prefix: '',
-      filter_value: ''
+      filter_value: '',
     };
-    $scope.date_from = null;
+    $scope.date_from = new Date();
     $scope.formId = scheduleFormId;
     $scope.afterGet = false;
     $scope.validateClicked = miqService.validateWithAjax;
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
-    $scope.model = "scheduleModel";
+    $scope.model = 'scheduleModel';
 
     ManageIQ.angular.scope = $scope;
 
-    if (scheduleFormId == 'new') {
+    if (scheduleFormId === 'new') {
       $scope.newRecord                = true;
       $scope.scheduleModel.action_typ = 'vm';
       $scope.scheduleModel.filter_typ = 'all';
       $scope.scheduleModel.enabled    = true;
       $scope.filterValuesEmpty        = true;
-      $scope.scheduleModel.start_date = moment(moment.utc().toDate()).format('MM/DD/YYYY');
+      $scope.scheduleModel.start_date = moment.utc().toDate();
       $scope.scheduleModel.timer_typ  = 'Once';
       $scope.scheduleModel.time_zone  = 'UTC';
       $scope.scheduleModel.start_hour = '0';
@@ -42,7 +48,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.afterGet                 = true;
       $scope.modelCopy                = angular.copy( $scope.scheduleModel );
       $scope.setTimerType();
-      $scope.date_from = new Date();
     } else {
       $scope.newRecord = false;
 
@@ -66,7 +71,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.name         = data.schedule_name;
       $scope.scheduleModel.timer_typ    = data.schedule_timer_type;
       $scope.scheduleModel.timer_value  = data.schedule_timer_value;
-      $scope.scheduleModel.start_date   = data.schedule_start_date;
+      $scope.scheduleModel.start_date   = moment(data.schedule_start_date, 'MM/DD/YYYY').utc().toDate();
       $scope.scheduleModel.start_hour   = data.schedule_start_hour.toString();
       $scope.scheduleModel.start_min    = data.schedule_start_min.toString();
       $scope.scheduleModel.time_zone    = data.schedule_time_zone;
@@ -82,12 +87,18 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.target_class    = data.target_class;
       $scope.scheduleModel.target_id       = data.target_id;
       $scope.scheduleModel.ui_attrs        = data.ui_attrs;
+      $scope.scheduleModel.log_aws_region       = data.log_aws_region;
+      $scope.scheduleModel.openstack_region     = data.openstack_region;
+      $scope.scheduleModel.keystone_api_version = data.keystone_api_version;
+      $scope.scheduleModel.v3_domain_ident      = data.v3_domain_ident;
+      $scope.scheduleModel.swift_api_port       = data.swift_api_port;
+      $scope.scheduleModel.security_protocol    = data.security_protocol;
 
       $scope.setTimerType();
 
       $scope.timer_items        = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
-      if (data.filter_type === 'all' || (angular.isDefined(data.protocol) && data.protocol !== null)) {
+      if (data.filter_type === 'all' || (data.protocol !== undefined && data.protocol !== null)) {
         $scope.filterValuesEmpty = true;
       } else {
         buildFilterList(data);
@@ -97,13 +108,13 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (angular.isDefined(data.protocol) && data.protocol !== null && data.protocol !== 'Samba')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba' && data.protocol !== 'AWS S3' && data.protocol !== 'OpenStack Swift')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 
-      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = '';
+      $scope.scheduleModel.log_password = '';
       if ($scope.scheduleModel.log_userid !== '') {
-        $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = miqService.storedPasswordPlaceholder;
+        $scope.scheduleModel.log_password = miqService.storedPasswordPlaceholder;
       }
 
       $scope.afterGet = true;
@@ -152,9 +163,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     } else {
       if ($scope.scheduleModel.action_typ === 'automation_request') {
         // should ignore list of targets as this list can be really long no need to send that up to server
-        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ["targets"]));
+        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ['targets', 'time_zone']));
         if (moreUrlParams) {
-          url += '&' + decodeURIComponent(moreUrlParams);
+          url += '&' + decodeURIComponent(moreUrlParams) + '&' + encodeURIComponent($scope.scheduleModel.time_zone);
         }
       }
       miqService.miqAjaxButton(url, serializeFields);
@@ -188,9 +199,8 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       return 'vm';
     } else if (isHostType()) {
       return 'host';
-    } else {
-      return $scope.scheduleModel.action_typ;
     }
+    return $scope.scheduleModel.action_typ;
   };
 
   $scope.dbBackup = function() {
@@ -201,8 +211,16 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.action_typ === 'automation_request';
   };
 
-  $scope.sambaBackup = function() {
-    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'Samba';
+  $scope.credsProtocol = function() {
+    return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3' || $scope.scheduleModel.log_protocol === 'OpenStack Swift');
+  };
+
+  $scope.s3Backup = function() {
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'AWS S3';
+  };
+
+  $scope.swiftBackup = function() {
+    return $scope.dbBackup() && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
   };
 
   $scope.actionTypeChanged = function() {
@@ -242,8 +260,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     }
   };
 
-  $scope.targetClassChanged = function() {
+  $scope.targetClassChanged = function(targetClass) {
     miqService.sparkleOn();
+    $scope.scheduleModel.target_class = targetClass;
     $http.post('/ops/fetch_target_ids/?target_class=' + $scope.scheduleModel.target_class)
       .then(postFetchTargetIdsComplete)
       .catch(miqService.handleFailure);
@@ -258,7 +277,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.filterTypeChanged = function() {
-    if ($scope.scheduleModel.filter_typ != 'all') {
+    if ($scope.scheduleModel.filter_typ !== 'all') {
       miqService.sparkleOn();
       $http.post('/ops/schedule_form_filter_type_field_changed/' + scheduleFormId,
         {filter_type: $scope.scheduleModel.filter_typ,
@@ -280,16 +299,27 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.logProtocolChanged = function() {
-    if ($scope.scheduleModel.log_protocol === "Samba") {
-      $scope.scheduleModel.uri_prefix = "smb";
+    if ($scope.scheduleModel.log_protocol === 'Samba') {
+      $scope.scheduleModel.uri_prefix = 'smb';
     }
 
-    if ($scope.scheduleModel.log_protocol === "Network File System") {
-      $scope.scheduleModel.uri_prefix = "nfs";
-      $scope.$broadcast('resetClicked');
-      $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = $scope.modelCopy.log_password;
+    if ($scope.scheduleModel.log_protocol === 'Network File System') {
+      $scope.updateLogProtocol('nfs');
     }
+
+    if ($scope.scheduleModel.log_protocol === 'AWS S3') {
+      $scope.updateLogProtocol('s3');
+    }
+    if ($scope.scheduleModel.log_protocol === 'OpenStack Swift') {
+      $scope.updateLogProtocol('swift');
+    }
+  };
+
+  $scope.updateLogProtocol = function(prefix) {
+    $scope.scheduleModel.uri_prefix = prefix;
+    $scope.$broadcast('resetClicked');
+    $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
+    $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
   };
 
   $scope.filterValueChanged = function() {
@@ -313,7 +343,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
   $scope.cancelClicked = function() {
     scheduleEditButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
   };
 
   $scope.resetClicked = function() {
@@ -324,7 +353,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.filterValuesEmpty = true;
     }
 
-    var filter_touched = $scope.angularForm.action_typ.$touched || (typeof $scope.angularForm.filter_typ != 'undefined' && $scope.angularForm.filter_typ.$touched);
+    var filter_touched = $scope.angularForm.action_typ.$touched || (typeof $scope.angularForm.filter_typ !== 'undefined' && $scope.angularForm.filter_typ.$touched);
     if (!$scope.dbBackup() && !$scope.automateRequest() && $scope.scheduleModel.filter_typ && !filter_touched) {
       // AJAX-less Reset
       $scope.toggleValueForWatch('filterValuesEmpty', false);
@@ -341,12 +370,11 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.saveClicked = function() {
-    scheduleEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
+    scheduleEditButtonClicked('save', $scope.scheduleModel);
   };
 
   $scope.addClicked = function() {
@@ -365,22 +393,41 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.sambaBackup() && !value;
   };
 
+  $scope.regionSelect = function() {
+    return $scope.scheduleModel.log_protocol === 'AWS S3';
+  };
+
+  $scope.regionRequired = function() {
+    return ($scope.s3Backup() && $scope.scheduleModel.log_aws_region === '');
+  };
+
+  $scope.swiftSecurityProtocolSelect = function() {
+    return $scope.scheduleModel.action_typ === 'db_backup' && $scope.scheduleModel.log_protocol === 'OpenStack Swift';
+  };
+
+  $scope.swiftSecurityProtocolRequired = function() {
+    return ($scope.swiftBackup() && $scope.scheduleModel.security_protocol === '');
+  };
+
+  $scope.s3Required = function(value) {
+    return $scope.s3Backup() && !value;
+  };
+
   $scope.isBasicInfoValid = function() {
     return ($scope.angularForm.depot_name.$valid &&
       $scope.angularForm.uri.$valid &&
       $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid &&
-      $scope.angularForm.log_verify.$valid);
+      $scope.angularForm.log_password.$valid);
   };
 
   $scope.setTimerType = function() {
-    $scope.timerTypeOnce = $scope.scheduleModel.timer_typ == "Once";
+    $scope.timerTypeOnce = $scope.scheduleModel.timer_typ === 'Once';
   };
 
   $scope.toggleValueForWatch = function(watchValue, initialValue) {
-    if ($scope[watchValue] == initialValue) {
-      $scope[watchValue] = "NO-OP";
-    } else if ($scope[watchValue] == "NO-OP") {
+    if ($scope[watchValue] === initialValue) {
+      $scope[watchValue] = 'NO-OP';
+    } else if ($scope[watchValue] === 'NO-OP') {
       $scope[watchValue] = initialValue;
     }
   };
@@ -397,8 +444,23 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return ($scope.angularForm.depot_name.$dirty ||
         $scope.angularForm.uri.$dirty ||
         $scope.angularForm.log_userid.$dirty ||
-        $scope.angularForm.log_password.$dirty ||
-        $scope.angularForm.log_verify.$dirty);
+        $scope.angularForm.log_password.$dirty);
+  };
+
+  $scope.setInstanceName = function(instanceName) {
+    $scope.scheduleModel.instance_name = instanceName;
+  };
+
+  $scope.setObjectMessage = function(objectMessage) {
+    $scope.scheduleModel.object_message = objectMessage;
+  };
+
+  $scope.setObjectRequest = function(objectRequest) {
+    $scope.scheduleModel.object_request = objectRequest;
+  };
+
+  $scope.setTargetId = function(targetId) {
+    $scope.scheduleModel.target_id = targetId;
   };
 
   init();

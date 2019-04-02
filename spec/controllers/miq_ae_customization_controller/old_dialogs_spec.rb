@@ -2,21 +2,19 @@ describe MiqAeCustomizationController do
   context "::OldDialogs" do
     context "#old_dialogs_button_operation" do
       it "Only non-default dialogs should get deleted" do
-        dialog1 = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog1",
+        dialog1 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog1",
                                                   :description => "Test Description 1",
-                                                  :default     => true
-                                    )
-        dialog2 = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog2",
+                                                  :default     => true)
+        dialog2 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog2",
                                                   :description => "Test Description 2",
-                                                  :default     => false
-                                    )
+                                                  :default     => false)
         controller.instance_variable_set(:@sb,
                                          :active_tree => :old_dialogs_tree,
                                          :trees       => {
                                            :old_dialogs_tree => {
-                                             :active_node => "xx-MiqDialog_MiqProvisionWorkflow"}
-                                         }
-                                        )
+                                             :active_node => "xx-MiqDialog_MiqProvisionWorkflow"
+                                           }
+                                         })
         allow(controller).to receive(:get_node_info)
         allow(controller).to receive(:replace_right_cell)
 
@@ -32,10 +30,9 @@ describe MiqAeCustomizationController do
       end
 
       it "Default Dialog should not be deleted" do
-        dialog = FactoryGirl.create(:miq_dialog, :name        => "Test_Dialog",
+        dialog = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog",
                                                  :description => "Test Description",
-                                                 :default     => true
-                                   )
+                                                 :default     => true)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:old_dialogs_tree => {:active_node => "odg-#{dialog.id}"}},
                                          :active_tree => :old_dialogs_tree)

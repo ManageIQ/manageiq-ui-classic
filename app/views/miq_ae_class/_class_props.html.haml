@@ -1,13 +1,12 @@
 #class_props_div
   - if x_node.split('-')[0] == "aec" || params[:pressed] || ["field_select","field_accept","field_delete"].include?(params[:action]) || (x_node.split('-')[0] == "aen" && params[:button] == "reset")
     - if !@in_a_form_props
-      = render :partial => "layouts/flash_msg"
       %h3= _('Properties')
       %table.table.table-striped.table-bordered
         %tbody
           %tr
             %td
-              = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
+              = _('Fully Qualified Name')
             %td
               = h(@sb[:namespace_path])
           %tr
@@ -34,5 +33,4 @@
     - else
       #form_div
         %div{:style => "padding-top: 10px;"}
-        = render :partial => "layouts/flash_msg"
         = render :partial => "class_form"

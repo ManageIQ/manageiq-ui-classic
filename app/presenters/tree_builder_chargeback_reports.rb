@@ -1,18 +1,13 @@
 class TreeBuilderChargebackReports < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true, :leaf => "MiqReportResult"}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("Saved Chargeback Reports"),
+      :text    => t = _("Saved Chargeback Reports"),
       :tooltip => t
     }
   end
@@ -29,10 +24,10 @@ class TreeBuilderChargebackReports < TreeBuilder
       objects = []
       items.each_with_index do |item, idx|
         objects.push(
-          :id    => "#{to_cid(item.miq_report_id)}-#{idx}",
-          :text  => item.miq_report.name,
-          :icon  => "fa fa-file-text-o",
-          :tip   => item.name
+          :id   => "#{item.miq_report_id}-#{idx}",
+          :text => item.miq_report.name,
+          :icon => "fa fa-file-text-o",
+          :tip  => item.name
         )
       end
       objects
@@ -41,7 +36,7 @@ class TreeBuilderChargebackReports < TreeBuilder
 
   # Handle custom tree nodes (object is a Hash)
   def x_get_tree_custom_kids(object, count_only, _options)
-    objects = MiqReportResult.with_saved_chargeback_reports(from_cid(object[:id].split('-').first))
+    objects = MiqReportResult.with_saved_chargeback_reports(object[:id].split('-').first)
                              .select(:id, :miq_report_id, :name, :last_run_on, :miq_task_id)
                              .order(:last_run_on => :desc)
 

@@ -1,24 +1,32 @@
+dist: xenial
 language: ruby
 rvm:
-- '2.3.1'
-sudo: false
+- 2.4.5
+- 2.5.3
 cache:
   bundler: true
-  directories:
-  - vendor/assets/bower_components
+  yarn: true
+  timeout: 600
 addons:
-  postgresql: '9.4'
+  postgresql: '10'
 env:
   matrix:
   - TEST_SUITE=spec
   - TEST_SUITE=spec:javascript
+  - TEST_SUITE=spec:compile
+  - TEST_SUITE=spec:jest
+matrix:
+  exclude:
+  - rvm: 2.4.5
+    env: TEST_SUITE=spec:javascript
+  - rvm: 2.4.5
+    env: TEST_SUITE=spec:compile
+  - rvm: 2.4.5
+    env: TEST_SUITE=spec:jest
+bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
-before_script: bundle exec rake $TEST_SUITE:setup
+install: true
 script: bundle exec rake $TEST_SUITE
-before_cache:
-- mkdir -p vendor/assets
-- mv spec/manageiq/vendor/assets/bower_components vendor/assets
-- cp bower.json vendor/assets/bower_components
 after_script: source tools/ci/after_install.sh
 notifications:
   webhooks:

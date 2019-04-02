@@ -4,16 +4,15 @@ module TextualMixins::TextualRegion
     h = {:label => _("Region")}
     reg = @record.miq_region
     url = reg.remote_ui_url
-    h[:value] = if url
-                  # TODO: Why is this link different than the others?
-                  link_to(reg.description, url_for_only_path(:host   => url,
-                                                   :action => 'show',
-                                                   :id     => @record),
-                          :title   => _("Connect to this VM in its Region"),
-                          :onclick => "return miqClickAndPop(this);")
-                else
-                  reg.description
-                end
+    h[:value] = reg.description
+    if url
+      # this must be url_for to make sure :host is used
+      h[:link] = url_for(:host   => url,
+                         :action => 'show',
+                         :id     => @record)
+      h[:title] = _("Connect to this VM in its Region")
+      h[:external] = true
+    end
     h
   end
 end

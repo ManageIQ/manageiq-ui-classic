@@ -1,0 +1,9 @@
+- @angular_form = true
+
+= render :partial => "layouts/flash_msg"
+
+%vm-cloud-add-security-group{"record-id"    => @record.id,
+                             "redirect-url" => "/#{controller_name}/explorer",}
+
+:javascript
+  miq_bootstrap('vm-cloud-add-security-group');

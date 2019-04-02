@@ -1,7 +1,7 @@
 describe "layouts/listnav/_ems_cluster.html.haml" do
-  helper(QuadiconHelper)
+  helper QuadiconHelper
 
-  before :each do
+  before do
     set_controller_for_view("ems_cluster")
     assign(:panels, "ems_cluster_prop" => true, "ems_cluster_rel" => true)
     allow(view).to receive(:truncate_length).and_return(23)

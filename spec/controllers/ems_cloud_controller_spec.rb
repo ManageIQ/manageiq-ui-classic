@@ -1,13 +1,11 @@
 describe EmsCloudController do
-  include CompressedIds
-
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryBot.build(:zone) }
   describe "#create" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_cloud_new")
+      login_as FactoryBot.create(:user, :features => "ems_cloud_new")
     end
 
     it "adds a new provider" do
@@ -19,30 +17,22 @@ describe EmsCloudController do
     render_views
 
     it 'shows the edit page' do
-      get :edit, :params => { :id => FactoryGirl.create(:ems_amazon).id }
+      get :edit, :params => { :id => FactoryBot.create(:ems_amazon).id }
       expect(response.status).to eq(200)
     end
 
     it 'creates on post' do
       expect do
         post :create, :params => {
-          "button"               => "add",
-          "name"                 => "foo",
-          "emstype"              => "ec2",
-          "provider_region"      => "ap-southeast-1",
-          "port"                 => "",
-          "zone"                 => zone.name,
-          "default_userid"       => "foo",
-          "default_password"     => "[FILTERED]",
-          "default_verify"       => "[FILTERED]",
-          "metrics_userid"       => "",
-          "metrics_password"     => "[FILTERED]",
-          "metrics_verify"       => "[FILTERED]",
-          "amqp_userid"          => "",
-          "amqp_password"        => "[FILTERED]",
-          "amqp_verify"          => "[FILTERED]",
-          "ssh_keypair_userid"   => "",
-          "ssh_keypair_password" => "[FILTERED]"
+          "button"           => "add",
+          "name"             => "foo",
+          "emstype"          => "ec2",
+          "provider_region"  => "ap-southeast-1",
+          "port"             => "",
+          "zone"             => zone.name,
+          "default_userid"   => "foo",
+          "default_password" => "[FILTERED]",
+          "default_url"      => "http://abc.test/path"
         }
       end.to change { ManageIQ::Providers::Amazon::CloudManager.count }.by(1)
     end
@@ -51,7 +41,7 @@ describe EmsCloudController do
       expect do
         post :create, :params => {
           "button"           => "add",
-          "default_hostname" => "host_openstack",
+          "default_hostname" => "openstack.example.com",
           "name"             => "foo_openstack",
           "emstype"          => "openstack",
           "provider_region"  => "",
@@ -59,7 +49,6 @@ describe EmsCloudController do
           "zone"             => zone.name,
           "default_userid"   => "foo",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.to change { Authentication.count }.by(1)
 
@@ -71,14 +60,13 @@ describe EmsCloudController do
         post :update, :params => {
           "id"               => openstack.id,
           "button"           => "save",
-          "default_hostname" => "host_openstack_updated",
+          "default_hostname" => "openstack.example.com",
           "name"             => "foo_openstack",
           "emstype"          => "openstack",
           "provider_region"  => "",
           "default_port"     => "5000",
           "default_userid"   => "bar",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.not_to change { Authentication.count }
 
@@ -87,9 +75,19 @@ describe EmsCloudController do
     end
 
     it "validates credentials for a new record" do
-      stub_request(:post, "https://ec2.ap-southeast-1.amazonaws.com/")
-        .with(:body => /Action\=DescribeRegions/)
-        .to_return(:status => 200, :body => "", :headers => {})
+      expect(ManageIQ::Providers::Amazon::CloudManager).to receive(:validate_credentials_task).with(
+        match_array([
+          'foo',
+          'v2:{SRpWIJC0Y1AOrUrKC0KDiw==}',
+          :EC2,
+          'ap-southeast-1',
+          nil,
+          true,
+          instance_of(URI::Generic)
+        ]),
+        User.current_user.userid,
+        zone.name
+      )
 
       post :create, :params => {
         "button"           => "validate",
@@ -97,10 +95,10 @@ describe EmsCloudController do
         "name"             => "foo_ec2",
         "emstype"          => "ec2",
         "provider_region"  => "ap-southeast-1",
-        "zone"             => "default",
+        "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
+        "default_url"      => ""
       }
 
       expect(response.status).to eq(200)
@@ -116,7 +114,6 @@ describe EmsCloudController do
         "zone"             => "default",
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -131,7 +128,7 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
+        "default_url"      => "http://abc.test/path"
       }
 
       expect(response.status).to eq(200)
@@ -148,9 +145,10 @@ describe EmsCloudController do
     end
 
     it 'gets the ems cloud form fields on a get' do
+      Zone.seed
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "host_openstack",
+        "default_hostname" => "openstack.example.com",
         "name"             => "foo_openstack",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -158,7 +156,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -169,17 +166,18 @@ describe EmsCloudController do
     end
 
     let(:openstack_form_params) do
-      {"button"                 => "add",
-       "default_hostname"       => "host_openstack",
-       "name"                   => "foo_openstack",
-       "emstype"                => "openstack",
-       "tenant_mapping_enabled" => "on",
-       "provider_region"        => "",
-       "default_port"           => "5000",
-       "zone"                   => zone.name,
-       "default_userid"         => "foo",
-       "default_password"       => "[FILTERED]",
-       "default_verify"         => "[FILTERED]"}
+      {
+        "button"                 => "add",
+        "default_hostname"       => "openstack.example.com",
+        "name"                   => "foo_openstack",
+        "emstype"                => "openstack",
+        "tenant_mapping_enabled" => "on",
+        "provider_region"        => "",
+        "default_port"           => "5000",
+        "zone"                   => zone.name,
+        "default_userid"         => "foo",
+        "default_password"       => "[FILTERED]",
+      }
     end
 
     it "creates openstack cloud manager with attributes from form" do
@@ -210,7 +208,7 @@ describe EmsCloudController do
     it 'strips whitespace from name, hostname and api_port form fields on create' do
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "  host_openstack     ",
+        "default_hostname" => "openstack.example.com",
         "name"             => "  foo_openstack     ",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -218,11 +216,9 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
-
       expect(response.status).to eq(200)
-      expect(ManageIQ::Providers::Openstack::CloudManager.with_hostname('host_openstack')
+      expect(ManageIQ::Providers::Openstack::CloudManager.with_hostname('openstack.example.com')
                                                          .with_port('5000')
                                                          .where(:name => 'foo_openstack')
                                                          .count).to eq(1)
@@ -240,7 +236,7 @@ describe EmsCloudController do
       session[:settings] = {:views => {:vm_summary_cool => ""}}
       post :create, :params => {
         "button"           => "add",
-        "default_hostname" => "host_openstack",
+        "default_hostname" => "openstack.example.com",
         "name"             => "foo_openstack",
         "emstype"          => "openstack",
         "provider_region"  => "",
@@ -248,7 +244,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -300,37 +295,105 @@ describe EmsCloudController do
 
   context "#update_ems_button_validate" do
     let(:mocked_ems) { double(ManageIQ::Providers::Openstack::CloudManager, :id => 1) }
-    it "calls authentication_check with save = false if validation is done for an existing record" do
-      allow(controller).to receive(:set_ems_record_vars)
-      allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params,
-                                       :button    => "validate",
-                                       :id        => mocked_ems.id,
-                                       :cred_type => "default")
-      expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
-      controller.send(:update_ems_button_validate, mocked_ems)
-    end
 
-    it "calls authentication_check with save = false if validation is done for a new record" do
+    it "calls authentication_check with save = false" do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params,
-                                       :button           => "validate",
-                                       :default_password => "[FILTERED]",
-                                       :cred_type        => "default")
+      allow(controller).to receive(:find_record_with_rbac).and_return(mocked_ems)
+      controller.instance_variable_set(:@_params, :button => "validate", :id => mocked_ems.id, :cred_type => "default")
+
       expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
-      controller.send(:update_ems_button_validate, mocked_ems)
+      controller.send(:update_ems_button_validate)
     end
   end
+
+  context "#create_ems_button_validate" do
+    let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default"} }
+    before do
+      allow(controller).to receive(:render)
+      controller.instance_variable_set(:@_params, mocked_params)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_class)
+    end
+
+    context "with a cloud manager" do
+      let(:mocked_class) { ManageIQ::Providers::Amazon::CloudManager }
+      let(:mocked_class_controller) { "ems_cloud" }
+      let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default", :default_url => ""} }
+
+      it "queues the authentication type if it is a cloud provider" do
+        expect(mocked_class).to receive(:validate_credentials_task)
+        controller.send(:create_ems_button_validate)
+      end
+
+      it "does not queue the authentication check if it is a cloud provider with a ui role" do
+        session[:selected_roles] = ['user_interface']
+
+        expect(mocked_class).to receive(:raw_connect)
+        controller.send(:create_ems_button_validate)
+      end
+
+      context "google compute engine" do
+        let(:mocked_params)   { {:controller => mocked_class_controller, :cred_type => "default", :project => project, :service_account => service_account} }
+        let(:mocked_class)    { ManageIQ::Providers::Google::CloudManager }
+        let(:project)         { "gce-project-1" }
+        let(:service_account) { "PRIVATE_KEY" }
+        let(:compute_service) { {:service => "compute"} }
+
+        it "queues the correct number of arguments" do
+          expected_validate_args = [project, ManageIQ::Password.encrypt(service_account), compute_service, nil, true]
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
+          controller.send(:create_ems_button_validate)
+        end
+      end
+    end
+
+    context "with an infrastructure manager" do
+      let(:mocked_class) { ManageIQ::Providers::Redhat::InfraManager }
+      let(:mocked_class_controller) { "ems_infra" }
+
+      it "queues the authentication check" do
+        expect(mocked_class).to receive(:validate_credentials_task)
+        controller.send(:create_ems_button_validate)
+      end
+
+      context "vmware infrastructure manager" do
+        let(:mocked_class) { ManageIQ::Providers::Vmware::InfraManager }
+        let(:mocked_class_controller) { "ems_infra" }
+
+        it "disables the broker" do
+          expected_validate_args = [{:pass => nil, :user => nil, :ip => nil, :use_broker => false}]
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
+          controller.send(:create_ems_button_validate)
+        end
+      end
+    end
+
+    context "with a container manager" do
+      let(:mocked_class) { ManageIQ::Providers::Openshift::ContainerManager }
+      let(:mocked_class_controller) { "ems_container" }
+      let(:mocked_container) { double(ManageIQ::Providers::Openshift::ContainerManager) }
+
+      before do
+        allow(mocked_class).to receive(:new).and_return(mocked_container)
+        allow(controller).to receive(:set_ems_record_vars)
+      end
+
+      it "does not queue the authentication check if it is a container provider" do
+        expect(mocked_container).to receive(:authentication_check).with("default", hash_including(:save => false))
+        controller.send(:create_ems_button_validate)
+      end
+    end
+  end
+
   describe "#test_toolbars" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      login_as FactoryGirl.create(:user, :features => "ems_cloud_new")
+      login_as FactoryBot.create(:user, :features => "ems_cloud_new")
     end
 
     it "refresh relationships and power states" do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :id => ems.id, :pressed => "ems_cloud_refresh" }
       expect(response.status).to eq(200)
     end
@@ -342,22 +405,22 @@ describe EmsCloudController do
     end
 
     it 'edit selected cloud provider' do
-      ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_edit" }
+      ems = FactoryBot.create(:ems_amazon)
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
 
     it 'edit cloud provider tags' do
-      ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_tag" }
+      ems = FactoryBot.create(:ems_amazon)
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_tag" }
       expect(response.status).to eq(200)
     end
 
     it 'manage cloud provider policies' do
       allow(controller).to receive(:protect_build_tree).and_return(nil)
       controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
-      ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_protect" }
+      ems = FactoryBot.create(:ems_amazon)
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_protect" }
       expect(response.status).to eq(200)
 
       get :protect
@@ -366,7 +429,7 @@ describe EmsCloudController do
     end
 
     it 'edit cloud provider tags' do
-      ems = FactoryGirl.create(:ems_amazon)
+      ems = FactoryBot.create(:ems_amazon)
       post :button, :params => { :id => ems.id, :pressed => "ems_cloud_timeline" }
       expect(response.status).to eq(200)
 
@@ -375,30 +438,61 @@ describe EmsCloudController do
     end
 
     it 'edit cloud providers' do
-      ems = FactoryGirl.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => to_cid(ems.id), :pressed => "ems_cloud_edit" }
+      ems = FactoryBot.create(:ems_amazon)
+      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
       expect(response.status).to eq(200)
     end
   end
 
   describe "#show" do
+    render_views
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
+      login_as FactoryBot.create(:user, :features => "none")
       session[:settings] = {:views     => {:vm_summary_cool => "summary"},
                             :quadicons => {}}
-      @ems = FactoryGirl.create(:ems_amazon)
+      @ems = FactoryBot.create(:ems_amazon)
     end
 
-    subject { get :show, :id => @ems.id }
+    subject { get :show, :params => { :id => @ems.id } }
 
     context "render listnav partial" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'main' } }
       render_views
 
-      it do
+      it "correctly for summary page" do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
       end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @ems.id, :display => 'timeline'}
+        is_expected.to have_http_status 200
+        is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
+      end
+    end
+
+    context "render dashboard" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      render_views
+
+      it 'never render template show' do
+        is_expected.not_to render_template('shared/views/ems_common/show')
+      end
+
+      it 'uses its own template' do
+        is_expected.to have_http_status 200
+        is_expected.not_to render_template(:partial => "ems_cloud/show_dashboard")
+      end
+    end
+
+    it 'displays only associated storage_managers' do
+      FactoryBot.create(:ems_storage, :name => 'abc', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      FactoryBot.create(:ems_storage, :name => 'xyz', :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
+      expect(response).to render_template('layouts/angular/_gtl')
+      expect(response.status).to eq(200)
     end
   end
 
@@ -407,7 +501,7 @@ describe EmsCloudController do
     let(:wf) { double(:dialog => dialog) }
 
     before do
-      @ems = FactoryGirl.create(:ems_amazon)
+      @ems = FactoryBot.create(:ems_amazon)
       edit = {:rec_id => 1, :wf => wf, :key => 'dialog_edit__foo', :target_id => @ems.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, {})
@@ -420,15 +514,15 @@ describe EmsCloudController do
       allow(wf).to receive(:submit_request).and_return({})
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
-      expect(page).to receive(:redirect_to).with("/ems_cloud/#{@ems.id}?flash_msg=Order+Request+was+Submitted")
+      expect(page).to receive(:redirect_to).with("/ems_cloud/#{@ems.id}")
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Order Request was Submitted", :level => :success)]
     end
   end
 
   describe "Ceilometer/AMQP Events" do
     before do
-      @openstack = FactoryGirl.create(:ems_openstack)
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
     end
@@ -436,7 +530,7 @@ describe EmsCloudController do
     it "creates ceilometer endpoint and on update to AMQP deletes ceilometer endpoint" do
       post :create, :params => {
         "button"                    => "add",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -461,7 +555,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -471,7 +565,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname",
+        "amqp_hostname"             => "amqp.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "",
@@ -486,7 +580,7 @@ describe EmsCloudController do
     it "restarts event monitor worker on endpoints or credentials change" do
       post :create, :params => {
         "button"                    => "add",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -501,13 +595,13 @@ describe EmsCloudController do
 
       # Change from ceilometer to amqp
       ems_openstack = EmsCloud.where(:name => "openstack_cloud").first
-      allow(controller).to receive(:find_by_id_filtered).and_return(ems_openstack)
+      allow(controller).to receive(:find_record_with_rbac).and_return(ems_openstack)
       expect(ems_openstack).to receive(:stop_event_monitor_queue).once
 
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname",
+        "default_hostname"          => "openstack.default.example.com",
         "default_userid"            => "",
         "default_password"          => "",
         "name"                      => "openstack_cloud",
@@ -517,7 +611,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname",
+        "amqp_hostname"             => "amqp.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "",
@@ -526,7 +620,7 @@ describe EmsCloudController do
 
       # Change of all endpoints and credentials
       ems_openstack = EmsCloud.where(:name => "openstack_cloud").first
-      allow(controller).to receive(:find_by_id_filtered).and_return(ems_openstack)
+      allow(controller).to receive(:find_record_with_rbac).and_return(ems_openstack)
       # This is a bug in ems saving mechanism, there are 3 saves now, 2 for each auth and one for ems. We need to fix
       # that, then stop_event_monitor_queue should be called once
       expect(ems_openstack).to receive(:stop_event_monitor_queue).exactly(3).times
@@ -534,7 +628,7 @@ describe EmsCloudController do
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname_changed",
+        "default_hostname"          => "openstack.default.changed.example.com",
         "default_userid"            => "changed",
         "default_password"          => "changed",
         "name"                      => "openstack_cloud",
@@ -544,7 +638,7 @@ describe EmsCloudController do
         "default_api_port"          => "5000",
         "default_security_protocol" => "ssl-with-validation",
         "event_stream_selection"    => "amqp",
-        "amqp_hostname"             => "amqp_hostname_changed",
+        "amqp_hostname"             => "amqp.changed.example.com",
         "amqp_api_port"             => "5672",
         "amqp_security_protocol"    => "ssl",
         "amqp_userid"               => "changed",
@@ -553,13 +647,13 @@ describe EmsCloudController do
 
       # Change from amqp to ceilometer
       ems_openstack = EmsCloud.where(:name => "openstack_cloud").first
-      allow(controller).to receive(:find_by_id_filtered).and_return(ems_openstack)
+      allow(controller).to receive(:find_record_with_rbac).and_return(ems_openstack)
       expect(ems_openstack).to receive(:stop_event_monitor_queue).once
 
       post :update, :params => {
         "id"                        => ems_openstack.id,
         "button"                    => "save",
-        "default_hostname"          => "default_hostname_changed",
+        "default_hostname"          => "openstack.default.changed.example.com",
         "default_userid"            => "changed",
         "default_password"          => "changed",
         "name"                      => "openstack_cloud",
@@ -576,4 +670,87 @@ describe EmsCloudController do
   include_examples '#download_summary_pdf', :ems_amazon
 
   it_behaves_like "controller with custom buttons"
+
+  describe "#sync_users" do
+    let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
+    before do
+      stub_user(:features => :all)
+    end
+
+    it "redirects when request is successful" do
+      expect(controller).to receive(:find_record_with_rbac).and_return(ems)
+      expect(ems).to receive(:sync_users_queue)
+      post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1, :member_role => 2}
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Sync users queued.", :level => :success)]
+      expect(response.body).to include("redirected")
+      expect(response.body).to include("ems_cloud/#{ems.id}")
+    end
+
+    it "returns error if admin role is not selected" do
+      post :sync_users, :params => {:id => ems.id, :sync => "", :member_role => 2}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("An admin role must be selected.")
+    end
+
+    it "returns error if member role is not selected" do
+      post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("A member role must be selected.")
+    end
+
+    def verify_password_and_confirm(password, verify)
+      post :sync_users, :params => {:id => ems.id, :sync => "",
+                                    :admin_role => 1, :member_role => 2,
+                                    :password => password,
+                                    :verify => verify}
+      expect(controller.send(:flash_errors?)).to be_truthy
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Password/Confirm Password do not match")
+    end
+
+    it "password and confirm must be equal" do
+      verify_password_and_confirm("apples", "oranges")
+    end
+
+    it "if password or confirm is not empty, then the other cannot be empty" do
+      verify_password_and_confirm("apples", nil)
+      verify_password_and_confirm(nil, "oranges")
+    end
+  end
+
+  context "'Set Default' button rendering in listnav" do
+    render_views
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    it "renders 'Set Default' button when a user defined search exists" do
+      MiqSearch.create(:db          => 'EmsCloud',
+                       :search_type => "user",
+                       :description => 'abc',
+                       :name        => 'abc',
+                       :search_key  => session[:userid])
+      get :show_list
+      expect(response.status).to eq(200)
+      expect(response.body).to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
+    end
+
+    it "does not render set default button when a user defined search does not exist" do
+      get :show_list
+      expect(response.status).to eq(200)
+      expect(response.body).not_to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
+    end
+  end
+
+  nested_lists = %w(availability_zones cloud_tenants cloud_volumes security_groups instances images
+     orchestration_stacks storage_managers)
+
+  nested_lists.each do |custom_button_class|
+    include_examples "relationship table screen with custom buttons", custom_button_class
+  end
+
+  it_behaves_like "relationship table screen with GTL", nested_lists, :ems_amazon
 end

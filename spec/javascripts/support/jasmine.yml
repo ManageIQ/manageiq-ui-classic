@@ -11,12 +11,18 @@
 #   - dist/**/*.js
 #
 src_files:
-  - __spec__/helpers/i18n-test.js
-  - assets/phantomjs-polyfill/bind-polyfill
-  - assets/application
-  - assets/jasmine-jquery
-  - assets/angular-mocks
-  - __spec__/helpers/fixtures-fix.js
+- __spec__/helpers/i18n-test.js
+- packs/runtime.js
+- packs/shims.js
+- packs/vendor.js
+- packs/manageiq-ui-classic/globals.js
+- assets/application
+- assets/jasmine-jquery/lib/jasmine-jquery
+- assets/angular-mocks
+- __spec__/helpers/fixtures-fix.js
+- packs/manageiq-ui-classic/application-common.js
+- packs/manageiq-ui-classic/toolbar-actions-common.js
+- packs/manageiq-ui-classic/provisioning-actions-common.js
 
 # stylesheets
 #
@@ -42,7 +48,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
-  - 'helpers/**/*.js'
+- 'helpers/**/*.js'
 
 # spec_files
 #
@@ -55,7 +61,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - '**/*[sS]pec.js'
+- '**/*[sS]pec.js'
 
 # src_dir
 #
@@ -126,3 +132,8 @@ boot_files:
 # rack_options:
 #   server: 'thin'
 
+# show_console_log
+#
+# Tell PhantomJS runner to enable console.log output from your specs.
+
+# show_console_log: true

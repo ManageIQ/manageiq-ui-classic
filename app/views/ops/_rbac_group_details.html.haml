@@ -1,8 +1,13 @@
 - if @edit
   - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
   - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
+- mode = ::Settings.authentication.mode
+- oidc_enabled = ::Settings.authentication.oidc_enabled
+- saml_enabled = ::Settings.authentication.saml_enabled
+- can_lookup_groups = mode.downcase.start_with?('ldap')
+- can_lookup_groups = mode.downcase == "httpd" && ! (saml_enabled || oidc_enabled) unless can_lookup_groups
 = render :partial => "layouts/flash_msg"
-#main_div
+#group_info
   %h3
     = _("Group Information")
   - if @edit
@@ -21,7 +26,7 @@
                            :class => "form-control",
                            "data-miq_observe" => {:interval => '.5',
                                                   :url      => url}.to_json)
-          - unless "database".include?(auth_mode_name.downcase)
+          - if can_lookup_groups
             = check_box_tag("lookup",
                             "1",
                             false,
@@ -36,11 +41,11 @@
           - if @group.miq_user_role
             - if role_allows?(:feature => "rbac_role_show")
               - params = {:class   => "pointer",
-                          :onclick => "miqTreeActivateNode('rbac_tree', 'ur-#{to_cid(@group.miq_user_role.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{@group.miq_user_role.id}');",
                           :title   => _("View this Role")}
             - else
               - params = {}
-            %i.product.product-role{params}
+            %i.ff.ff-user-role{params}
             = link_to(@group.miq_user_role.name, "#", params)
         - else
           = select_tag('group_role',
@@ -59,7 +64,7 @@
             - params = {:class => "pficon pficon-#{tenant.divisible ? "tenant" : "project"}"}
             - if role_allows?(:feature => "rbac_tenant_view")
               - params[:class] = "#{params[:class]} pointer"
-              - params[:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');"
+              - params[:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{tenant.id}');"
               - params[:title] = tenant.divisible ? _("View this Tenant") : _("View this Project")
             %i{params}
             = h(tenant.name)
@@ -75,16 +80,19 @@
         %label.col-md-2.control-label
           = _("Users in this Group")
         .col-md-8
-          - @group.users.sort_by { |a| a.name.downcase }.each do |u|
-            - if role_allows?(:feature => "rbac_user_show")
-              - params = {:class   => "pointer",
-                          :onclick => "miqTreeActivateNode('rbac_tree', 'u-#{to_cid(u.id)}');",
-                          :title   => _("View this User")}
-            - else
-              - params = {}
-            %i.pficon.pficon-user{params}
-            = h(u.name)
-            %br
+          - if role_allows?(:feature => "rbac_user_show")
+            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
+              - params = {:class => "pointer",
+                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{u.id}');",
+                          :title => _("View this User")}
+              %i.pficon.pficon-user{params}
+              = link_to(u.name, "#", params)
+              %br
+          - else
+            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
+              %i.pficon.pficon-user
+              = link_to(u.name, "#")
+              %br
     - unless @edit
       = render :partial => "rbac_tag_box"
     - if @edit

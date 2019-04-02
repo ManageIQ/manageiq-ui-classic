@@ -1,32 +1,17 @@
 describe FloatingIpController do
   include_examples :shared_examples_for_floating_ip_controller, %w(openstack azure google amazon)
 
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      ApplicationController.handle_exceptions = true
-    end
-
-    it "when Edit Tag is pressed" do
-      skip "Not ready yet"
-      expect(controller).to receive(:tag)
-      post :button, :params => { :pressed => "edit_tag", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-  end
-
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ct = FactoryGirl.create(:floating_ip)
+      @ct = FactoryBot.create(:floating_ip)
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
@@ -45,6 +30,23 @@ describe FloatingIpController do
       expect(response.status).to eq(200)
     end
 
+    describe "#delete_floating_ips" do
+      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+      let!(:floating_ip) { FactoryBot.create(:floating_ip) }
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        login_as admin_user
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:performed?)
+        controller.instance_variable_set(:@_params, :id => floating_ip.id, :pressed => 'host_NECO')
+      end
+
+      it "delete floating ips" do
+        expect(controller).to receive(:process_floating_ips).with([floating_ip], "destroy")
+        controller.send(:delete_floating_ips)
+      end
+    end
+
     it "builds tagging screen" do
       post :button, :params => { :pressed => "floating_ip_tag", :format => :js, :id => @ct.id }
       expect(assigns(:flash_array)).to be_nil
@@ -59,7 +61,7 @@ describe FloatingIpController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "floating_ip/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id }
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id, :data => get_tags_json([@tag1, @tag2]) }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end
@@ -68,8 +70,8 @@ describe FloatingIpController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @floating_ip = FactoryGirl.create(:floating_ip)
-      login_as FactoryGirl.create(:user)
+      @floating_ip = FactoryBot.create(:floating_ip)
+      login_as FactoryBot.create(:user)
     end
 
     subject do
@@ -89,8 +91,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack)
       stub_user(:features => :all)
     end
 
@@ -130,8 +132,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
     end
 
     context "#edit" do
@@ -161,7 +163,7 @@ describe FloatingIpController do
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => { :button => "save", :format => :js, :id => @floating_ip.id,
-                                   :network_port_ems_ref => "" }
+                                   :network_port => {:ems_ref => ""}}
       end
     end
   end
@@ -170,8 +172,8 @@ describe FloatingIpController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @floating_ip = FactoryGirl.create(:floating_ip_openstack, :ext_management_system => @ems)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
     end
 
     context "#delete" do

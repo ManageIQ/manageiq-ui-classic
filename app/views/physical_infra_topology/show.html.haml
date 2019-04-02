@@ -1,35 +1,56 @@
-- tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.physical_infra_topology{'ng-controller' => "physicalInfraTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
+- tooltipOptions = {"tooltip-placement" => "bottom", "uib-tooltip" => "{{vm.legendTooltip}}"}
+.topology{'ng-controller' => "physicalInfraTopologyController as vm"}
   .legend
     %label#selected
-    %div{'ng-if' => "kinds"}
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra.Host
-            %circle{:r => "17"}
-            -# pficon-host
-            %text{:y => "8"} &#xE600;
-        %label
-          = _("Nodes")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "EmsCluster"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra
-            %circle{:r => "17"}
-            -# pficon-cluster
-            %text{:y => "9"} &#xE620;
-        %label
-          = _("Roles")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Tag"}
-        %svg.kube-topology
-          %g.EntityLegend.Network.FloatingIp
-            %circle{:r => "17"}
-            -# pficon-cloud-tenant
-            %text{:y => "9"} &#xF02b;
-        %label
-          = _("Tags")
+    %div{'ng-if' => "vm.filters"}
+      .topology-filter-group
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "PhysicalRack"}
+          %label
+            %i.pficon.pficon-enterprise
+            = _("Physical Racks")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "PhysicalChassis"}
+          %label
+            %i.pficon.pficon-cluster
+            = _("Physical Chassis")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "PhysicalServer"}
+          %label
+            %i.pficon.pficon-server-group
+            = _("Physical Servers")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "PhysicalSwitch"}
+          %label
+            %i.ff.ff-network-switch
+            = _("Physical Switches")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "Host"}
+          %label
+            %i.pficon.pficon-container-node
+            = _("Hosts")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "Vm"}
+          %label
+            %i.pficon.pficon-virtual-machine
+            = _("VMs")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "kind", "filter-value" => "Tag"}
+          %label
+            %i.fa.fa-tag
+            = _("Tags")
+      .topology-filter-group
+        %label#health_state
+          = _("Health State: ")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "status", "filter-value" => "Valid"}
+          %label
+            %i.fa.fa-circle
+            = _("Valid")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "status", "filter-value" => "Warning"}
+          %label
+            %i.fa.fa-circle
+            = _("Warning")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "status", "filter-value" => "Critical"}
+          %label
+            %i.fa.fa-circle
+            = _("Critical")
+        %kubernetes-topology-filter{tooltipOptions, "filter-property" => "status", "filter-value" => "Unknown,None"}
+          %label
+            %i.fa.fa-circle
+            = _("Unknown")
 
   .alert.alert-info.alert-dismissable
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
@@ -37,7 +58,10 @@
     %span.pficon.pficon-info
     %strong
       = _("Click on the legend to show/hide entities, and double click/right click the entities in the graph to navigate to their summary pages.")
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+
+  = render :partial => "shared/topology/not_found_vm"
+
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds", :filters => "vm.filters"}
 
 :javascript
-  miq_bootstrap('.physical_infra_topology', 'physicalInfraTopologyApp');
+  miq_bootstrap('.topology');

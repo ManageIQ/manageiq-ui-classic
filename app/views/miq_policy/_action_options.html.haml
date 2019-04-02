@@ -15,7 +15,7 @@
         .col-md-8
           = text_field_tag("from",
             @edit[:new][:options][:from],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
           = _("(Default: %{email_from})") % {:email_from => h(::Settings.smtp.from)}
@@ -25,7 +25,7 @@
         .col-md-8
           = text_field_tag("to",
             @edit[:new][:options][:to],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
   - when "set_custom_attribute"
@@ -38,7 +38,7 @@
         .col-md-8
           = text_field_tag("attribute",
             @edit[:new][:options][:attribute],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
       .form-group
@@ -47,7 +47,7 @@
         .col-md-8
           = text_field_tag("value",
             @edit[:new][:options][:value],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
   - when "tag"
@@ -77,7 +77,7 @@
         .col-md-8
           = text_field_tag("snapshot_name",
             @edit[:new][:options][:name],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
   - when "delete_snapshots_by_age"
@@ -89,7 +89,7 @@
           = _("Delete if Older than")
         .col-md-8
           = select_tag('snapshot_age',
-            options_for_select([["<#{_('Choose')}>", nil]] + SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
+            options_for_select([["<#{_('Choose')}>", nil]] + MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
             @edit[:new][:options][:age]),
             :class             => "selectpicker")
           :javascript
@@ -105,7 +105,7 @@
         .col-md-8
           = text_field_tag("memory_value",
             @edit[:new][:options][:value],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
           = _('(Enter the value between 4 - 65636 MB)')
@@ -136,54 +136,47 @@
             :form_action                 => "miq_action",
             :field_changed_url           => "action_field_changed"})
   - when "evaluate_alerts"
-    %h3
-      = _("Select Alerts to be Evaluated")
-    .form-horizontal
-      .form-group
-        .col-md-8
-          %table#formtest.form{:width => "100%"}
-            %tr
-              %td{:align => "left"}= _('Available Alerts:')
-              %td
-              %td.widthed{:align => "left"}= _(' Selected Alerts:')
-            %tr
-              %td.widthed{:align => "left", :valign => "top"}
-                %span#choices_chosen_div
-                  = select_tag('choices_chosen[]', options_for_select(@edit[:choices].sort),
-                    :multiple => true,
-                    :class    => "widthed",
-                    :size     => 8,
-                    :id       => "choices_chosen")
-                %p
-              %td{:width => "20", :valign => "middle"}
-                = link_to(image_tag(image_path('toolbars/right.png'), :class => "rollover small", :alt => (t = _("Move selected Alerts into this Action"))),
-                  {:action => 'action_edit',
-                   :button => 'move_right',
-                   :id => @action.id || 'new'},
-                  "data-miq_sparkle_on"  => true,
-                  "data-miq_sparkle_off" => true,
-                  "data-submit"          => 'choices_chosen_div',
-                  :remote                => true,
-                  "data-method"          => :post,
-                  :title                 => t)
-                = link_to(image_tag(image_path('toolbars/left.png'), :class => "rollover small", :alt => (t = _("Remove selected Alerts from this Action"))),
-                  {:action => 'action_edit',
-                   :button => 'move_left',
-                   :id     => @action.id || 'new'},
-                  "data-miq_sparkle_on"  => true,
-                  "data-miq_sparkle_off" => true,
-                  "data-submit"          => 'members_chosen_div',
-                  :remote                => true,
-                  "data-method"          => :post,
-                  :title                 => t)
-              %td{:align => "right", :valign => "top"}
-                %span#members_chosen_div
-                  = select_tag('members_chosen[]',
-                    options_for_select(@edit[:new][:alerts].sort),
-                    :multiple => true,
-                    :class    => "widthed",
-                    :size     => 8,
-                    :id       => "members_chosen")
+    %h3= _("Select Alerts to be Evaluated")
+    #formtest.form
+      .col-md-5
+        = _('Available Alerts:')
+        %span#choices_chosen_div
+          = select_tag('choices_chosen[]', options_for_select(@edit[:choices].sort),
+            :multiple => true,
+            :class    => "form-control",
+            :style    => "overflow-x: scroll;",
+            :size     => 8,
+            :id       => "choices_chosen")
+
+      .col-md-1{:style => "padding: 10px"}
+        .spacer
+        .spacer
+        - [[_("Move selected Alerts into this Action"),   'choices_chosen_div', 'move_right',    'fa-angle-right'],
+           [_("Remove selected Alerts from this Action"), 'members_chosen_div', 'move_left',     'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
+          %button.btn.btn-default.btn-block{:title                 => title,
+                                            :remote                => true,
+                                            "data-submit"          => chosen_div,
+                                            "data-method"          => :post,
+                                            "data-miq_sparkle_on"  => true,
+                                            "data-miq_sparkle_off" => true,
+                                            "data-click_url"       => {:url => url_for_only_path(:action => 'action_edit',
+                                                                                                 :button => action,
+                                                                                                 :id     => @action.id || 'new')}.to_json}
+            %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+            %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+        .spacer
+          
+      .col-md-5
+        = _(' Selected Alerts:')
+        %span#members_chosen_div
+          = select_tag('members_chosen[]',
+            options_for_select(@edit[:new][:alerts].sort),
+            :multiple => true,
+            :class    => "form-control",
+            :style    => "overflow-x: scroll;",
+            :size     => 8,
+            :id       => "members_chosen")
+
   - when "snmp_trap"
     %h3
       = _("SNMP Trap Settings")
@@ -194,7 +187,7 @@
         .col-md-8
           = text_field_tag("host",
             @edit[:new][:options][:host],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
       .form-group
@@ -216,7 +209,7 @@
         .col-md-8
           = text_field_tag("trap_id",
             @edit[:new][:options][:trap_id],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
     %h3
@@ -238,7 +231,7 @@
           %td
             = text_field_tag("#{f}",
               @edit[:new][:options][:variables][i][:oid],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
           %td
@@ -257,7 +250,7 @@
           %td
             = text_field_tag(v,
               @edit[:new][:options][:variables][i][:value],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               :disabled          => val_disabled,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
@@ -348,10 +341,10 @@
           = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
           %br
           = radio_button_tag('inventory', "event_target", false,
-            "title"            => _('Run on the target machine of the alert'),
+            "title"            => _('Run on the target of the Policy Event'),
             "checked"          => @edit[:new][:inventory_type] == "event_target",
             "data-miq_observe" => observe)
-          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target machine of the alert'))
+          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
           %br
           = radio_button_tag('inventory', "manual", false,
             "title" => _('Enter a comma separated list of IP or DNS names'),
@@ -363,12 +356,7 @@
               .col-md-8
                 = text_field_tag("hosts",
                   @edit[:new][:options][:hosts],
-                  :maxlength         => MAX_DESC_LEN,
+                  :maxlength         => ViewHelper::MAX_DESC_LEN,
                   :class             => "form-control",
                   "data-miq_observe" => observe_with_interval)
                 = _('Enter a comma separated list of IP or DNS names')
-
-
-
-
-

@@ -1,0 +1,36 @@
+-# expression_type
+- table_key = "#{expression_type}_table".to_sym
+
+.form-horizontal{:id => "form_#{expression_type}_div"}
+  - if @expkey == expression_type
+    .form-group
+      %label.control-label.col-md-2
+        = title
+      .col-md-8
+        = render :partial => 'layouts/exp_editor'
+  - else
+    .form-group
+      %label.control-label.col-md-2
+        = title
+      .col-md-8
+        = link_to({:action => action,
+                   :button => expression_type},
+                   "data-miq_sparkle_on" => true,
+                   "data-miq_sparkle_off" => true,
+                   :remote => true,
+                   "data-method" => :post) do
+          %button.btn.btn-default
+            - if @edit[table_key].nil?
+              = _("Define Expression")
+            - else
+              = _("Edit Expression")
+
+        - unless @edit[table_key].nil?
+          .spacer
+          - @edit[table_key].each do |token|
+            - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
+              = h([token].flatten.first)
+            - else
+              %font{:color => "black"}
+                %b
+                  = h([token].flatten.first)

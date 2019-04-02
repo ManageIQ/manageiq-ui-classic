@@ -8,31 +8,31 @@
         = _('Column 1')
       .col-md-8
         = select_tag('chosen_pivot1',
-          options_for_select([NOTHING_STRING] + @pivot.options1, @pivot.by1),
+          options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options1, @pivot.by1),
           :multiple             => false,
           :class                => "selectpicker")
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('chosen_pivot1', '#{url}', {beforeSend: true, complete: true});
-    - if @pivot.by1 != NOTHING_STRING
+    - if @pivot.by1 != ReportHelper::NOTHING_STRING
       .form-group
         %label.control-label.col-md-2
           = _('Column 2')
         .col-md-8
           = select_tag('chosen_pivot2',
-            options_for_select([NOTHING_STRING] + @pivot.options2, @pivot.by2),
+            options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options2, @pivot.by2),
             :multiple             => false,
             :class                => "selectpicker")
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent('chosen_pivot2', '#{url}', {beforeSend: true});
-      - if @pivot.by2 != NOTHING_STRING
+      - if @pivot.by2 != ReportHelper::NOTHING_STRING
         .form-group
           %label.control-label.col-md-2
             = _('Column 3')
           .col-md-8
             = select_tag('chosen_pivot3',
-              options_for_select([NOTHING_STRING] + @pivot.options3, @pivot.by3),
+              options_for_select([ReportHelper::NOTHING_STRING] + @pivot.options3, @pivot.by3),
               :multiple             => false,
               :class                => "selectpicker")
             :javascript
@@ -43,7 +43,7 @@
     = _('Note:')
   = _('Consolidating records will not show detail records in the report.')
   %hr
-  - if @pivot.by1 != NOTHING_STRING
+  - if @pivot.by1 != ReportHelper::NOTHING_STRING
     %h3
       = _('Specify Calculations of Numeric Values for Grouped Records')
     %table.table.table-striped.table-bordered

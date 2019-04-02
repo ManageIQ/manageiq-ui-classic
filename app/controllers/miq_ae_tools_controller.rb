@@ -1,4 +1,5 @@
 class MiqAeToolsController < ApplicationController
+  include Mixins::BreadcrumbsMixin
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -14,7 +15,7 @@ class MiqAeToolsController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
+    @edit = session[:edit] # Restore @edit for adv search box
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     if params[:pressed] == "refresh_log"
       refresh_log
@@ -31,7 +32,7 @@ class MiqAeToolsController < ApplicationController
   def log
     @breadcrumbs = []
     @log = $miq_ae_logger.contents if $miq_ae_logger
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     @lastaction = "log"
     @layout = "miq_ae_logs"
     @msg_title = "AE"
@@ -43,17 +44,16 @@ class MiqAeToolsController < ApplicationController
   def refresh_log
     assert_privileges("refresh_log")
     @log = $miq_ae_logger.contents if $miq_ae_logger
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
-    replace_main_div :partial => "layouts/log_viewer",
-                     :locals  => {:legend_text => _("Last 1000 lines from the Automation log")}
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
+    replace_main_div(:partial => "layouts/log_viewer",
+                     :locals  => {:legend_text => _("Last 1000 lines from the Automation log")})
   end
 
   # Send the log in text format
   def fetch_log
     assert_privileges("fetch_log")
     disable_client_cache
-    send_data($miq_ae_logger.contents(nil, nil),
-              :filename => "automation.log") if $miq_ae_logger
+    send_data($miq_ae_logger.contents(nil, nil), :filename => "automation.log") if $miq_ae_logger
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_automation_log",
                        :message => _("Automation log downloaded"))
@@ -146,22 +146,26 @@ class MiqAeToolsController < ApplicationController
       import_file_upload = ImportFileUpload.where(:id => params[:import_file_upload_id]).first
 
       if import_file_upload
-        import_stats = automate_import_service.import_datastore(
-          import_file_upload,
-          params[:selected_domain_to_import_from],
-          params[:selected_domain_to_import_to],
-          selected_namespaces.sort
-        )
-        if import_stats.nil?
-          add_flash(_("Error: Datastore import was not successful"), :error)
-        else
-          stat_options = generate_stat_options(import_stats)
+        begin
+          import_stats = automate_import_service.import_datastore(
+            import_file_upload,
+            params[:selected_domain_to_import_from],
+            params[:selected_domain_to_import_to],
+            selected_namespaces.sort
+          )
+          if import_stats.nil?
+            add_flash(_("Error: Datastore import was not successful"), :error)
+          else
+            stat_options = generate_stat_options(import_stats)
 
-          add_flash(_("Datastore import was successful.
+            add_flash(_("Datastore import was successful.
 Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options, :success)
+          end
+        rescue MiqAeException::DomainNotAccessible
+          add_flash(_('Error: Selected domain is locked'), :error)
         end
       else
         add_flash(_("Error: Datastore import file upload expired"), :error)
@@ -188,14 +192,13 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
       redirect_options[:import_file_upload_id] = import_file_upload_id
     end
 
-    redirect_options[:message] = @flash_array.first.to_json
-
-    redirect_to redirect_options
+    flash_to_session
+    redirect_to(redirect_options)
   end
 
   def review_import
     @import_file_upload_id = params[:import_file_upload_id]
-    @message = params[:message]
+    @message = @flash_array.first.to_json
   end
 
   def retrieve_git_datastore
@@ -265,27 +268,20 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     end
   end
 
-  def review_git_import
-    @message = params[:message]
-    @git_branches = params[:git_branches]
-    @git_tags = params[:git_tags]
-    @git_repo_id = params[:git_repo_id]
-  end
-
   # Import classes
   def upload
-    if params[:upload] && !params[:upload][:datastore].blank?
+    if params[:upload] && params[:upload][:datastore].present?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
-        add_flash(_("Datastore import was successful.
+        flash_to_session(_("Datastore import was successful.
 Namespaces updated/added: %{namespace_stats}
 Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message]         # redirect to build the retire screen
+        redirect_to(:action => 'import_export')
       rescue => bang
-        add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
-        redirect_to :action => 'import_export', :flash_msg => @flash_array[0][:message], :flash_error => true         # redirect to build the retire screen
+        flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
+        redirect_to(:action => 'import_export')
       end
     else
       @in_a_form = true
@@ -312,7 +308,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     session[:ae_id] = params[:id]
     session[:ae_task_id] = params[:task_id]
 
-    if miq_task.status != "Ok"  # Check to see if any results came back or status not Ok
+    if miq_task.status != "Ok" # Check to see if any results came back or status not Ok
       add_flash(_("Error during reset: Status [%{status}] Message [%{message}]") %
                   {:status => miq_task.status, :message => miq_task.message}, :error)
     else
@@ -379,7 +375,7 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def ws_text_from_xml(xml, depth = 0)
     txt = ""
-    if depth == 0
+    if depth.zero?
       txt += "<#{xml.root.name}>\n"
       xml.root.each_element do |e|
         txt += "  "
@@ -407,11 +403,11 @@ Methods updated/added: %{method_stats}") % stat_options)
       add_flash(_("Starting Process is required"), :error)
     end
     add_flash(_("Request is required"), :error) if @resolve[:new][:object_request].blank?
-    AE_MAX_RESOLUTION_FIELDS.times do |i|
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
-      add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && !@resolve[:new][:attrs][i][1].blank?
-      add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if !@resolve[:new][:attrs][i][0].blank? && @resolve[:new][:attrs][i][1].blank?
+      add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && @resolve[:new][:attrs][i][1].present?
+      add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if @resolve[:new][:attrs][i][0].present? && @resolve[:new][:attrs][i][1].blank?
     end
     !flash_errors?
   end
@@ -428,7 +424,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     @resolve[:new][:other_name] = params[:other_name] if params.key?(:other_name)
     @resolve[:new][:object_message] = params[:object_message] if params.key?(:object_message)
     @resolve[:new][:object_request] = params[:object_request] if params.key?(:object_request)
-    AE_MAX_RESOLUTION_FIELDS.times do |i|
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
       @resolve[:new][:attrs][i][0] = params[f] if params[f.to_sym]
@@ -438,7 +434,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     #   @resolve[:new][:target_attr_name] = params[:target_attr_name] if params.has_key?(:target_attr_name)
     if params.key?(:target_class)
       @resolve[:new][:target_class] = params[:target_class]
-      targets = Rbac.filtered(params[:target_class]).select(:id, :name)
+      targets = Rbac.filtered(params[:target_class]).select(:id, :name) if params[:target_class].present?
       unless targets.nil?
         @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
         @resolve[:new][:target_id] = nil
@@ -458,6 +454,16 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def set_session_data
     session[:resolve_tools] = @resolve if @resolve
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Automate")},
+        action_name == "resolve" ? {:title => _("Automate")} : nil,
+      ].compact
+    }
   end
 
   menu_section :automate

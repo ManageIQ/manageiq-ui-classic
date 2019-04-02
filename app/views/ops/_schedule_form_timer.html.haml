@@ -7,7 +7,7 @@
           = _("Run")
         .col-md-10
           = select_tag("timer_typ",
-                       options_for_select(%w(Once Hourly Daily Weekly Monthly)),
+                       options_for_select([[_('Once'), 'Once'], [_('Hourly'), 'Hourly'], [_('Daily'), 'Daily'], [_('Weekly'), 'Weekly'], [_('Monthly'), 'Monthly']]),
                        "ng-model"                    => "scheduleModel.timer_typ",
                        "ng-change"                   => "scheduleTimerTypeChanged()",
                        "checkchange"                 => "",
@@ -20,13 +20,12 @@
                               "ng-options"                => "timerItem.value as timerItem.text for timerItem in timer_items",
                               "timer-hide"                => "timerTypeOnce",
                               "checkchange"               => ""}
-          %input{"type" => "hidden", "ng-value" => "scheduleModel.timer_value", "name" => "timer_value"}
       .form-group
         %label.col-md-2.control-label{"for" => "time_zone"}
           = _("Time Zone")
         .col-md-10
           = select_tag("time_zone",
-                       options_for_select(ALL_TIMEZONES),
+                       options_for_select(ViewHelper::ALL_TIMEZONES),
                        "ng-model"    => "scheduleModel.time_zone",
                        "checkchange" => "",
                        "data-live-search"            => "true",
@@ -38,19 +37,14 @@
         %label.col-md-2.control-label{"for" => "start_date"}
           = _("Starting Date")
         .col-md-3
-          .input-group.date
-            %input{:type             => "text",
-                   :id               => "start_date",
-                   :name             => "start_date",
-                   "ng-model"        => "scheduleModel.start_date",
-                   "datepicker-init" => "",
-                   :language         => FastGettext.locale,
-                   :required         => true,
-                   :checkchange      => "",
-                   :class            => "form-control bootstrap-datepicker",
-                   :readonly         => true}
-            %span.input-group-addon{"data-toggle" => "datepicker"}
-              %span.fa.fa-calendar
+          = datepicker_input_tag('start_date', nil,
+                                 'id'                => 'start_date',
+                                 'class'             => 'form-control',
+                                 'ng-model'          => 'scheduleModel.start_date',
+                                 'miq-datepicker'    => true,
+                                 'miq-cal-date-from' => 'date_from',
+                                 'required'          => true,
+                                 'checkchange'       => true)
       .form-group
         %label.col-md-2.control-label{"for" => "start_hour"}
           = _("Starting Time")

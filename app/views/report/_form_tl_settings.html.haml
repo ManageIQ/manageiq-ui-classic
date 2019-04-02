@@ -10,14 +10,14 @@
             = _('Base Timeline on')
           .col-md-8
             = select_tag('chosen_tl',
-              options_for_select([NOTHING_STRING] + @tl_fields, @tl_field),
+              options_for_select([ReportHelper::NOTHING_STRING] + @tl_fields, @tl_field),
               :multiple              => false,
               :class                 => "selectpicker")
             :javascript
               miqInitSelectPicker();
               miqSelectPickerEvent('chosen_tl', '#{url}', {beforeSend: true, complete: true});
     .col-md-12.col-lg-6
-      - if @tl_field != NOTHING_STRING
+      - if @tl_field != ReportHelper::NOTHING_STRING
         .form-horizontal
           .form-group
             %label.control-label.col-md-2

@@ -1,0 +1,43 @@
+- url = url_for_only_path(:action => 'playbook_options_field_changed', :id => (@custom_button.try(:id) || 'new'))
+- observe_with_interval = {:interval => '.5', :url => url}.to_json
+#form_playbook_options
+.form-group
+  %label.control-label.col-md-2
+    = _("Playbook Catalog Item")
+  .col-md-8
+    = select_tag('service_template_id',
+    options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
+    @edit[:new][:service_template_id]),
+    "style"            => "width:150px",
+    "data-live-search" => "true",
+    "class"            => "selectpicker")
+    :javascript
+      miqInitSelectPicker();
+      miqSelectPickerEvent('service_template_id', '#{url}')
+.form-group
+  %label.control-label.col-md-2
+    = _("Inventory")
+  .col-md-8
+    = radio_button_tag('inventory', "localhost", @edit[:new][:inventory_type] == "localhost",
+      "title"            => _('Run on localhost'),
+      "data-miq_observe" => {:url => url}.to_json)
+    = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
+    %br
+    = radio_button_tag('inventory', "event_target", @edit[:new][:inventory_type] == "event_target",
+      "title"            => _('Run on the target of the Policy Event'),
+      "data-miq_observe" => {:url => url}.to_json)
+    = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
+    %br
+    = radio_button_tag('inventory', "manual", @edit[:new][:inventory_type] == "manual",
+      "title" => _('Enter a comma separated list of IP or DNS names'),
+      "data-miq_observe" => {:url => url}.to_json)
+    = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
+    #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
+      .form-group
+        .col-md-8
+          = text_field_tag("hosts",
+            @edit[:new][:hosts],
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
+            :class             => "form-control",
+            "data-miq_observe" => observe_with_interval)
+          = _('Enter a comma separated list of IP or DNS names')

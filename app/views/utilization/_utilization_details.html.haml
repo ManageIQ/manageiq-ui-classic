@@ -1,0 +1,21 @@
+#utilization_details_div
+  = render :partial => "layouts/flash_msg"
+  - if @sb[:trend_rpt] && @sb[:summary]
+    = render :partial => "utilization_options", :locals  => {:cap_type => "details"}
+    = render(:partial => "layouts/perf_charts",
+      :locals         => {:charts => @sb[:trend_charts],
+        :chart_set                => "utiltrend",
+        :chart_data               => @sb[:chart_data]["utiltrend"],
+        :perf_options             => @sb[:options]})
+  - else
+    - if x_node == ""
+      - msg = _("Select a node on the left to view Utilization information.")
+    - else
+      - msg = _("No performance data is available for the selected item.")
+    = render :partial => 'layouts/info_msg', :locals => {:message => msg}
+  - if @sb[:trend_rpt]
+    %br{:clear => "all"}
+    %hr
+    = _('* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone.') % {:start_time => format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date"), :end_time => format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date"), :timezone => @sb[:options][:time_profile_tz] || @sb[:options][:tz]}
+    %p
+    %br

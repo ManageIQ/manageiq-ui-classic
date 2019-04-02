@@ -1,9 +1,9 @@
 describe TreeBuilderPolicySimulation do
   context 'TreeBuilderPolicySimulation' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
-      login_as FactoryGirl.create(:user, :userid => 'policy_simulation_wilma', :miq_groups => [@group])
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
+      login_as FactoryBot.create(:user, :userid => 'policy_simulation_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
       exp = {"FIND"   => {"checkcount" => {">=" => {"value" => "1", "field" => "<count>"}},
                           "search"     => {"INCLUDES" => {"value" => "nb", "field" => "Vm.filesystems-name"}}},
@@ -40,17 +40,17 @@ describe TreeBuilderPolicySimulation do
     end
 
     it 'sets tree as not lazy' do
-      tree_options = @policy_simulation_tree.send(:tree_init_options, :policy_simulation)
-      expect(tree_options[:lazy]).to eq(false)
+      tree_options = @policy_simulation_tree.send(:tree_init_options)
+      expect(tree_options[:lazy]).not_to be_truthy
     end
 
     it 'sets root correctly' do
       root = @policy_simulation_tree.send(:root_options)
       expect(root).to eq(
-        :title       => "<strong>Policy Simulation</strong>",
-        :tooltip     => 'Policy Simulation',
-        :icon        => 'pficon pficon-virtual-machine',
-        :cfmeNoClick => true
+        :text       => "<strong>Policy Simulation</strong>",
+        :tooltip    => 'Policy Simulation',
+        :icon       => 'pficon pficon-virtual-machine',
+        :selectable => false
       )
     end
 
@@ -116,9 +116,9 @@ describe TreeBuilderPolicySimulation do
   end
   context 'TreeBuilderPolicySimulation without data' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "No node Group")
-      login_as FactoryGirl.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "No node Group")
+      login_as FactoryBot.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
       @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
                                                                 :policy_simulaton,
@@ -132,7 +132,7 @@ describe TreeBuilderPolicySimulation do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       expect(node[:text]).to eq("Items out of scope")
       expect(node[:icon]).to eq("fa fa-ban")
-      expect(node[:cfmeNoClick]).to eq(true)
+      expect(node[:selectable]).to eq(false)
     end
   end
 end

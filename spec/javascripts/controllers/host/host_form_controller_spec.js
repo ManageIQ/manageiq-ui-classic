@@ -65,6 +65,10 @@ describe('hostFormController', function() {
         it('sets the IPMI Address to blank', function() {
           expect($scope.hostModel.ipmi_address).toEqual('');
         });
+
+        it('sets the validate id to null', function() {
+          expect($scope.hostModel.validate_id).toEqual(null);
+        });
       });
 
       describe('when the hostFormId is an Id', function() {
@@ -77,7 +81,8 @@ describe('hostFormController', function() {
           default_userid: 'abc',
           remote_userid: 'xyz',
           ws_userid: 'aaa',
-          ipmi_userid: 'zzz'
+          ipmi_userid: 'zzz',
+          validate_id: '1',
         };
         describe('when the filter type is all', function() {
           beforeEach(inject(function(_$controller_) {
@@ -126,6 +131,10 @@ describe('hostFormController', function() {
 
           it('sets the ipmi password to the placeholder value if a ipmi user exists', function() {
             expect($scope.hostModel.ipmi_password).toEqual(miqService.storedPasswordPlaceholder);
+          });
+
+          it('sets the validate id to the value returned from the http request', function() {
+            expect($scope.hostModel.validate_id).toEqual('1');
           });
         });
       });
@@ -195,7 +204,6 @@ describe('hostFormController', function() {
         '<input ng-model="hostModel.hostname" name="hostname" required text />' +
         '<input ng-model="hostModel.default_userid" name="default_userid" required text />' +
         '<input ng-model="hostModel.default_password" name="default_password" text />' +
-        '<input ng-model="hostModel.default_verify" name="default_verify" text />' +
         '</form>'
       );
 
@@ -206,24 +214,20 @@ describe('hostFormController', function() {
       $scope.angularForm.hostname.$setViewValue('abchost');
       $scope.angularForm.default_userid.$setViewValue('abcuser');
       $scope.angularForm.default_password.$setViewValue(miqService.storedPasswordPlaceholder);
-      $scope.angularForm.default_verify.$setViewValue(miqService.storedPasswordPlaceholder);
     }));
 
     it('returns true if all the Validation fields are filled in', function() {
       $scope.angularForm.default_password.$setViewValue('abcpassword');
-      $scope.angularForm.default_verify.$setViewValue('abcpassword');
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
 
-    it('returns true if password fields are left blank', function() {
+    it('returns false if password fields are left blank', function() {
       $scope.angularForm.default_password.$setViewValue('');
-      $scope.angularForm.default_verify.$setViewValue('');
-      expect($scope.canValidateBasicInfo()).toBe(true);
+      expect($scope.canValidateBasicInfo()).toBe(false);
     });
 
     it('returns true if all the Validation fields are filled in and dirty', function() {
-      $scope.angularForm.default_password.$setViewValue('');
-      $scope.angularForm.default_verify.$setViewValue('');
+      $scope.angularForm.default_password.$setViewValue('abc');
       expect($scope.canValidate()).toBe(true);
     });
   });

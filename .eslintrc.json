@@ -1,6 +1,5 @@
 {
   "root": true,
-  "installedESLint": true,
   "env": {
     "browser": true,
     "jquery": true
@@ -19,24 +18,30 @@
   "extends": [],
 
   "globals": {
-    "API": false, // local: miq_api.js
+    "sendDataWithRx": false, // local: miq_observable.js
+    "listenToRx": true, // local: miq_observable.js
+    "vanillaJsAPI": false, // local: http_api/api.js - deprecated
+    "API": false, // local: http_api/api.js
     "ManageIQ": false, // local: mig_global.js
-    "Promise": false, // bower: es6-shim
-    "_": false, // bower: lodash
+    "Promise": false, // modern browser / npm: es6-shim
+    "_": false, // npm: lodash
     "__": false, // local: i18n.js
-    "angular": false, // bower: angular
-    "c3": false, // bower: c3
-    "d3": false, // bower: d3
+    "angular": false, // npm: angular
+    "c3": false, // npm: c3
+    "d3": false, // npm: d3
+    "http": false, // local: http_api/http.js
     "i18n": false, // gem: gettext_i18n_rails_js
-    "moment": false, // bower: moment
-    "numeral": false, // bower: numeral
-    "sprintf": false // bower: sprintf
+    "moment": false, // npm: moment
+    "numeral": false, // npm: numeral
+    "sprintf": false, // npm: sprintf-js
+    "add_flash": true, // local miq_flash
+    "miq_bootstrap": true // local miq_angular_application
   },
 
   "rules": {
     // {{{ this section comes from eslint-config-airbnb-es5 1.0.9
     "strict": 0,
-    "no-shadow": 2,
+    "no-shadow": 0,
     "no-shadow-restricted-names": 2,
     "no-cond-assign": [2, "always"],
     "no-console": 1,
@@ -99,7 +104,7 @@
     "yoda": 2,
     "brace-style": [2,
     "1tbs", {
-      "allowSingleLine": true
+      "allowSingleLine": false
       }],
     "camelcase": [2, {
       "properties": "never"
@@ -159,11 +164,11 @@
       "words": true,
       "nonwords": false,
       "overrides": {
-        "!": true
+        "!": false
       }
     }],
     "no-unused-vars": [ "error", {
-      "args": "all",
+      "args": "after-used",
       "argsIgnorePattern": "^_",
       "vars": "local",
       "caughtErrors": "all",

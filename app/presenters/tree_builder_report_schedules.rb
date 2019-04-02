@@ -1,21 +1,13 @@
 class TreeBuilderReportSchedules < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :leaf     => 'Schedules',
-      :full_ids => true
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Schedules"),
+      :text    => t = _("All Schedules"),
       :tooltip => t,
       :icon    => 'fa fa-clock-o'
     }
@@ -25,10 +17,10 @@ class TreeBuilderReportSchedules < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     objects = if User.current_user.current_group.miq_user_role.name.split('-').last == 'super_administrator'
                 # Super admins see all report schedules
-                MiqSchedule.where(:towhat => 'MiqReport')
+                MiqSchedule.where(:resource_type => 'MiqReport')
               else
-                MiqSchedule.where(:towhat => 'MiqReport', :userid => User.current_user.userid)
+                MiqSchedule.where(:resource_type => 'MiqReport', :userid => User.current_user.userid)
               end
-    count_only_or_objects(count_only, objects.sort_by { |o| o.name.downcase }, 'name')
+    count_only_or_objects(count_only, objects, 'name')
   end
 end

@@ -5,7 +5,6 @@ module OpsController::Settings
   include_concern 'AnalysisProfiles'
   include_concern 'CapAndU'
   include_concern 'Common'
-  include_concern 'Ldap'
   include_concern 'Schedules'
   include_concern 'AutomateSchedules'
   include_concern 'Tags'
@@ -13,6 +12,7 @@ module OpsController::Settings
   include_concern 'Upload'
   include_concern 'Zones'
   include_concern 'RHN'
+  include_concern 'HelpMenu'
 
   # Apply the good records from an uploaded import file
   def apply_imports
@@ -20,19 +20,19 @@ module OpsController::Settings
       begin
         session[:imports].apply
       rescue => bang
-        msg = _("Error during 'apply': %{error}") % {:error => bang}
-        err = true
+        add_flash(_("Error during 'apply': %{error}") % {:error => bang}, :error)
+        @sb[:show_button] = true
       else
-        msg = _("Records were successfully imported")
-        err = false
+        add_flash(_("Records were successfully imported"))
+        @sb[:show_button] = false
         session[:imports] = @sb[:imports] = nil
       end
     else
-      msg = _("Use the Choose file button to locate CSV file")
-      err = true
+      add_flash(_("Use the Choose file button to locate CSV file"), :error)
+      @sb[:show_button] = true
     end
-    @sb[:show_button] = err
-    redirect_to :action => 'explorer', :flash_msg => msg, :flash_error => err, :no_refresh => true
+    flash_to_session
+    redirect_to(:action => 'explorer', :no_refresh => true)
   end
 
   def forest_get_form_vars
@@ -48,7 +48,7 @@ module OpsController::Settings
   end
 
   def forest_form_field_changed
-    @edit = session[:edit]  # Need to reload @edit so it stays in the session
+    @edit = session[:edit] # Need to reload @edit so it stays in the session
     port = params[:user_proxies_mode] == "ldap" ? "389" : "636"
     render :update do |page|
       page << javascript_prologue
@@ -88,7 +88,7 @@ module OpsController::Settings
       idx = i if f[:ldaphost] == params[:ldaphost_id]
     end
     @edit[:new][:authentication][:user_proxies].delete_at(idx) unless idx.nil?
-    @changed = (@edit[:new] != @edit[:current].config)
+    @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
@@ -104,15 +104,15 @@ module OpsController::Settings
     if @ldap_info[:ldaphost] == ""
       add_flash(_("LDAP Host is required"), :error)
       no_changes = false
-    elsif @edit[:new][:authentication][:user_proxies].blank? || @edit[:new][:authentication][:user_proxies][0].blank?   # if adding forest first time, delete a blank record
+    elsif @edit[:new][:authentication][:user_proxies].blank? || @edit[:new][:authentication][:user_proxies][0].blank? # if adding forest first time, delete a blank record
       @edit[:new][:authentication][:user_proxies].delete_at(0)
     else
       @edit[:new][:authentication][:user_proxies].each do |f|
-        if f[:ldaphost] == @ldap_info[:ldaphost] && session[:entry][:ldaphost] != @ldap_info[:ldaphost]   # check to make sure ldaphost already doesn't exist and ignore if existing record is being edited.
-          no_changes = false
-          add_flash(_("LDAP Host should be unique"), :error)
-          break
-        end
+        # check to make sure ldaphost already doesn't exist and ignore if existing record is being edited.
+        next unless f[:ldaphost] == @ldap_info[:ldaphost] && session[:entry] == 'new'
+        no_changes = false
+        add_flash(_("LDAP Host should be unique"), :error)
+        break
       end
     end
     if no_changes
@@ -124,20 +124,20 @@ module OpsController::Settings
         end
       end
     end
-    @changed = (@edit[:new] != @edit[:current].config)
+    @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed)
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false})  if no_changes
+      page.replace("forest_entries_div", :partial => "ldap_forest_entries", :locals => {:entry => nil, :edit => false}) if no_changes
     end
   end
 
   def region_edit
     settings_set_view_vars
-    @right_cell_text = _("Settings %{model} \"%{name}\"") %
-                       {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                        :model => ui_lookup(:model => "MiqRegion")}
+    @right_cell_text = _("%{product} Region \"%{name}\"") %
+                       {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
+                        :product => Vmdb::Appliance.PRODUCT_NAME}
     case params[:button]
     when "cancel"
       session[:edit] = @edit = nil
@@ -155,16 +155,16 @@ module OpsController::Settings
       @edit[:region].description = @edit[:new][:description]
       begin
         @edit[:region].save!
-      rescue => bang
+      rescue
         @edit[:region].errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqRegion"), :name => @edit[:region].description})
+        add_flash(_("Region \"%{name}\" was saved") % {:name => @edit[:region].description})
         AuditEvent.success(build_saved_audit(@edit[:region], params[:button] == "edit"))
-        @edit = session[:edit] = nil  # clean out the saved info
+        @edit = session[:edit] = nil # clean out the saved info
         replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
       end
     when "reset", nil # Reset or first time in
@@ -196,13 +196,6 @@ module OpsController::Settings
 
   def region_get_form_vars
     @edit[:new][:description] = params[:region_description] if params[:region_description]
-  end
-
-  # Need to make arrays by category containing arrays of items so the filtering logic can apply
-  # AND between the categories, but OR between the items within a category
-  def user_make_subarrays
-    # moved into common method used by ops_rbac module as well
-    rbac_and_user_make_subarrays
   end
 
   def set_verify_status

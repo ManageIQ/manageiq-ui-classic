@@ -59,8 +59,8 @@ describe ResourcePoolController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @resource_pool = FactoryGirl.create(:resource_pool)
+      login_as FactoryBot.create(:user, :features => "none")
+      @resource_pool = FactoryBot.create(:resource_pool)
     end
 
     let(:url_params) { {} }
@@ -86,6 +86,7 @@ describe ResourcePoolController do
     context "Direct VMs" do
       let(:url_params) { { :display => "vms" } }
       it "renders" do
+        bypass_rescue
         expect(subject).to have_http_status(200)
       end
     end
@@ -93,6 +94,7 @@ describe ResourcePoolController do
     context "All VMs" do
       let(:url_params) { { :display => "all_vms" } }
       it "renders" do
+        bypass_rescue
         expect(subject).to have_http_status(200)
       end
     end
@@ -100,6 +102,7 @@ describe ResourcePoolController do
     context "Nested Resource Pools" do
       let(:url_params) { { :display => "resource_pools"} }
       it "renders" do
+        bypass_rescue
         expect(subject).to have_http_status(200)
       end
     end

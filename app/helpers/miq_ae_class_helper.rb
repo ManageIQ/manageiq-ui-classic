@@ -9,23 +9,24 @@ module MiqAeClassHelper
 
   def add_read_only_suffix(node_string, editable, enabled)
     if enabled && !editable
-      suffix = "Locked"
+      _("%{node_string} (Locked)") % {:node_string => node_string}
     elsif editable && !enabled
-      suffix = "Disabled"
+      _("%{node_string} (Disabled)") % {:node_string => node_string}
     else # !rec.enabled && !rec.editable?
-      suffix = "Locked & Disabled"
+      _("%{node_string} (Locked & Disabled)") % {:node_string => node_string}
     end
-    "#{node_string} (#{suffix})".html_safe
   end
 
   def domain_display_name(domain)
-    @record.fqname.split('/').first == domain.name ? "#{domain.name} (Same Domain)" : domain.name
+    @record.fqname.split('/').first == domain.name ? _("%{domain_name} (Same Domain)") % {:domain_name => domain.name} : domain.name
   end
 
   def domain_display_name_using_name(record, current_domain_name)
     domain_name = record.domain.name
     if domain_name == current_domain_name
-      return "#{domain_name} (Same Domain)", nil
+      return _("%{domain_name} (Same Domain)") % {:domain_name => domain_name}, nil
+    elsif !record.domain.enabled
+      return _("%{domain_name} (Disabled)") % {:domain_name => domain_name}, record.id
     else
       return domain_name, record.id
     end
@@ -34,9 +35,7 @@ module MiqAeClassHelper
   def record_name(rec)
     column   = rec.display_name.blank? ? :name : :display_name
     rec_name = if rec.kind_of?(MiqAeNamespace) && rec.domain?
-                 editable_domain?(rec) && rec.enabled ? rec.send(column) : add_read_only_suffix(rec.send(column),
-                                                                                                editable_domain?(rec),
-                                                                                                rec.enabled)
+                 editable_domain?(rec) && rec.enabled ? rec.send(column) : add_read_only_suffix(rec.send(column), editable_domain?(rec), rec.enabled)
                else
                  rec.send(column)
                end
@@ -63,31 +62,31 @@ module MiqAeClassHelper
   end
 
   def nonblank(*items)
-    items.detect { |item| !item.blank? }
+    items.detect(&:present?)
   end
 
   def ae_field_fonticon(field)
     case field
     when 'string'
-      'product product-string'
+      'ff ff-string'
     when 'symbol'
-      'product product-symbol'
-    when 'integer'
-      'product product-integer'
+      'ff ff-hexagon'
+    when 'integer', 'fixnum'
+      'ff ff-integer'
     when 'float'
-      'product product-float'
+      'ff ff-float'
     when 'boolean'
-      'product product-boolean'
+      'ff ff-boolean'
     when 'time'
       'fa fa-clock-o'
     when 'array'
-      'product product-array'
+      'ff ff-array'
     when 'password'
-      'product product-password'
-    when 'null coalescing'
+      'pficon pficon-key'
+    when 'null coalescing', 'nil_class'
       'fa fa-question'
     when 'host'
-      'pficon pficon-screen'
+      'pficon pficon-container-node'
     when 'vm'
       'pficon pficon-virtual-machine'
     when 'storage'
@@ -105,17 +104,28 @@ module MiqAeClassHelper
     when 'user'
       'pficon pficon-user'
     when 'assertion'
-      'product product-assertion'
+      'fa fa-comment-o'
     when 'attribute'
-      'product product-attribute'
+      'ff ff-attribute'
     when 'method'
-      'product product-method'
+      'ff ff-method'
     when 'relationship'
-      'product product-relationship'
+      'ff ff-relationship'
     when 'state'
-      'product product-state'
+      'ff ff-state'
+    when 'element'
+      'ff ff-element'
+    when 'hash'
+      'fa fa-hashtag'
+    when 'key'
+      'pficon pficon-key'
     else
-      raise NotImplementedError, "Missing fonticon for MiqAeField type #{field}"
+      Rails.logger.warn("Missing fonticon for MiqAeField type \"#{field}\"")
+      'fa fa-file-text-o'
     end
+  end
+
+  def state_class?(cls_id)
+    MiqAeClass.find_by(:id => cls_id).state_machine?
   end
 end

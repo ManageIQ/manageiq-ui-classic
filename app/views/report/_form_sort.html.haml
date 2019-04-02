@@ -12,7 +12,7 @@
         - else
           - sortby1 = @sortby1
         = select_tag('chosen_sort1',
-          options_for_select([NOTHING_STRING] + @sort1, sortby1),
+          options_for_select([ReportHelper::NOTHING_STRING] + @sort1, sortby1),
           :multiple              => false,
           :class                 => "selectpicker")
         :javascript
@@ -27,7 +27,7 @@
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent('sort1_suffix', '#{url}', {beforeSend: true, complete: true});
-    - if @sortby1 != NOTHING_STRING
+    - if @sortby1 != ReportHelper::NOTHING_STRING
       .form-group
         %label.control-label.col-md-2
           = _('Sort Order')
@@ -75,7 +75,7 @@
               :javascript
                 miqInitSelectPicker();
                 miqSelectPickerEvent('break_format', '#{url}', {beforeSend: true, complete: true});
-  - if @sortby1 != NOTHING_STRING
+  - if @sortby1 != ReportHelper::NOTHING_STRING
     %br
     .form-horizontal
       .form-group
@@ -87,7 +87,7 @@
           - else
             - sortby2 = @sortby2
           = select_tag('chosen_sort2',
-            options_for_select([NOTHING_STRING] + @sort2, sortby2),
+            options_for_select([ReportHelper::NOTHING_STRING] + @sort2, sortby2),
             :multiple              => false,
             :class                 => "selectpicker")
           :javascript
@@ -117,7 +117,7 @@
               miqSelectPickerEvent('row_limit', '#{url}', {beforeSend: true, complete: true});
           - else
             = _('All')
-  - unless @sortby1 == NOTHING_STRING || @edit[:new][:group] == "No"
+  - unless @sortby1 == ReportHelper::NOTHING_STRING || @edit[:new][:group] == "No"
     %hr
     %h3
       = _("Specify Calculations for Summary Rows")

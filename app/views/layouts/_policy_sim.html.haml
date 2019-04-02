@@ -31,11 +31,12 @@
         - else
           - session[:policies].invert.sort.each do |desc, id|
             %tr{:id => "#{desc}_tr"}
-              %td{:onclick => "#{remote_function(:loading  => "miqSparkle(true);",
-                                                 :complete => "miqSparkle(false);",
-                                                 :url      => {:action  => 'policy_sim_remove', :del_pol => id})}",
-                  :title => t = _("Click to remove this policy")}
-                = image_tag(image_path('toolbars/delete.png'), :alt => t)
+              %td
+                %button.btn.btn-default{:onclick  => "#{remote_function(:loading  => "miqSparkle(true);",
+                                        :complete => "miqSparkle(false);",
+                                        :url      => {:action  => 'policy_sim_remove', :del_pol => id})}",
+                                        :title    => _("Click to remove this policy")}
+                  %i.pficon.pficon-delete
               %td
                 = h(desc)
   %hr
@@ -43,5 +44,19 @@
   - if @tagitems
     - @embedded = true
     - @policy_sim = true
+    - session[:edit] ||= {} 
+    - session[:edit][:policy_sim] = @policy_sim
     = render :partial => "layouts/gtl",
              :locals  => {:view => @pol_view}
+
+- if params[:action] == 'policy_sim' && !@explorer
+  %table{:width => "100%"}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on
+          = link_to(_('Cancel'),
+                    {:action => 'policy_sim_cancel'},
+                     :class  => 'btn btn-default',
+                     :alt    => t = _('Cancel Changes'),
+                     :title  => t,
+                     :method => :post)

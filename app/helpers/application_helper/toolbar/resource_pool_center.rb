@@ -9,8 +9,8 @@ class ApplicationHelper::Toolbar::ResourcePoolCenter < ApplicationHelper::Toolba
         button(
           :resource_pool_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Resource Pool'),
-          N_('Remove Resource Pool'),
+          N_('Remove this Resource Pool from Inventory'),
+          N_('Remove Resource Pool from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Resource Pool and ALL of its components will be permanently removed!")),
       ]

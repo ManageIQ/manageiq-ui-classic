@@ -17,13 +17,13 @@ class ApplicationHelper::Toolbar::AvailabilityZoneCenter < ApplicationHelper::To
   button_group('availability_zone_monitoring', [
     select(
       :availability_zone_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :availability_zone_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Availability Zone'),
           N_('Utilization'),
           :url       => "/show",
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::AvailabilityZoneCenter < ApplicationHelper::To
           :klass     => ApplicationHelper::Button::AvailabilityZonePerformance),
         button(
           :availability_zone_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Availability Zone'),
           N_('Timelines'),
           :url       => "/show",

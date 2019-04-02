@@ -4,7 +4,7 @@ $navbar-pf-navbar-navbar-brand-min-width:   270px;
 $navbar-pf-navbar-navbar-brand-padding:     8px 0 2px;
 $dropdown-link-hover-bg:                    #d4edfa;  // sets dropdown link hover
 $link-color:                                #0099d3;  // sets link (also accordion hover, selected table cell) color globally
-$navbar-pf-border-color:                    #063451;  // sets 3px border color at top of screen
+$navbar-pf-vertical-border-color:           #063451;  // sets 3px border color at top of screen
 $navbar-pf-alt-bg-color:                    #0c69a5;  // sets background color of navigation bar
 $nav-pf-vertical-width:                     225px;    // sets width of primary navigation
 $navbar-pf-alt-navbar-toggle-icon-bar-hover-bg: #fff;
@@ -28,6 +28,8 @@ $login-container-bg-color:                  #000000;
 $login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
 $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
+@import "font-fabulous-sprockets";
+@import "font-fabulous";
 @import "patternfly-sprockets";
 @import "patternfly";
 @import "patternfly_overrides";
@@ -36,23 +38,24 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "header_background"; // sets a custom background image in the header
 @import "about_modal_background"; // sets a custom background image in the 'About' modal
 @import "timeline"; // used for the patternfly-timeline styles
-@import "metrics";
 @import "alerts";
+@import "graphql_explorer";
+@import "dual_list";
 
 .login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
   height: 38px;
 }
 
 .about-modal-pf .modal-footer img { // sets size of logo in 'About' modal footer
-	height: 48px;
+  height: 48px;
 }
-
 
 // styling of brand.svg in header (upstream only)
 
 .navbar-brand {
   margin-top: 8px !important;
 }
+
 .navbar-brand img {
   height: 20px;
 }

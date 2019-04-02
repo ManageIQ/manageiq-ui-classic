@@ -2,29 +2,40 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
   button_group('container_node_monitoring', [
     select(
       :container_node_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :container_node_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Node'),
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :options   => {:entity => 'Node'},
+          :options   => {:entity => N_('Node')},
           :klass     => ApplicationHelper::Button::ContainerTimeline),
         button(
           :container_node_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Node'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :options   => {:entity => N_('Node')},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+        ),
+        button(
+          :ems_container_ad_hoc_metrics,
+          'fa fa-tachometer fa-1xplus',
+          N_('Show Ad hoc Metrics for this Provider'),
+          N_('Ad hoc Metrics'),
+          :url       => "/show",
+          :url_parms => "?display=ad_hoc_metrics"
+        ),
         button(
           :ems_container_launch_external_logging,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Open a new browser window with the External Logging Presentation UI. ' \
              'This requires the External Logging to be deployed on this Proider.'),
           N_('External Logging'),
@@ -66,6 +77,8 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
       'pficon pficon-screen fa-lg',
       N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
       N_('Web Console'),
-      :url     => "launch_cockpit"),
+      :url   => "launch_cockpit",
+      :klass => ApplicationHelper::Button::CockpitConsole
+    ),
   ])
 end

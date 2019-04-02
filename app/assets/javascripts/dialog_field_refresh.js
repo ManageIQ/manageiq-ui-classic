@@ -1,17 +1,21 @@
-/* global miqInitSelectPicker miqSelectPickerEvent miqSparkle miqSparkleOn */
+/* global miqInitSelectPicker miqObserveRequest miqSelectPickerEvent miqSparkle miqSparkleOn */
 
 var dialogFieldRefresh = {
+  unbindAllPreviousListeners: function() {
+    $(document).off('dialog::autoRefresh');
+  },
+
   listenForAutoRefreshMessages: function(autoRefreshOptions, callbackFunction) {
-    var thisIsTheFieldToUpdate = function(event) {
-      var tabIndex = event.data.tabIndex;
-      var groupIndex = event.data.groupIndex;
-      var fieldIndex = event.data.fieldIndex;
+    var thisIsTheFieldToUpdate = function(data) {
+      var tabIndex = data.tabIndex;
+      var groupIndex = data.groupIndex;
+      var fieldIndex = data.fieldIndex;
       return tabIndex === autoRefreshOptions.tab_index && groupIndex === autoRefreshOptions.group_index && fieldIndex === autoRefreshOptions.field_index;
     };
 
-    window.addEventListener('message', function(event) {
-      if (thisIsTheFieldToUpdate(event)) {
-        callbackFunction.call();
+    $(document).on('dialog::autoRefresh', function(_event, data) {
+      if (thisIsTheFieldToUpdate(data)) {
+        callbackFunction.call(null, data.initializingIndex);
       }
     });
   },
@@ -23,6 +27,7 @@ var dialogFieldRefresh = {
     }
 
     miqSelectPickerEvent(fieldName, url, {callback: function() {
+      autoRefreshOptions.initial_trigger = true;
       dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
       return true;
     }});
@@ -42,8 +47,31 @@ var dialogFieldRefresh = {
       dataType: 'script',
       beforeSend: true,
       complete: true,
-      done: callback
+      done: callback,
     });
+  },
+
+  refreshField: function(options, callback) {
+    var fieldType = options.type;
+
+    if (fieldType === 'DialogFieldCheckBox') {
+      dialogFieldRefresh.refreshCheckbox(options.name, options.id, callback);
+    } else if (fieldType === 'DialogFieldTextBox') {
+      dialogFieldRefresh.refreshTextBox(options.name, options.id, callback);
+    } else if (fieldType === 'DialogFieldTextAreaBox') {
+      dialogFieldRefresh.refreshTextAreaBox(options.name, options.id, callback);
+    } else if (fieldType === 'DialogFieldDropDownList') {
+      var selectedValue = $('select[name="' + options.name + '"]').val();
+      dialogFieldRefresh.refreshDropDownList(options.name, options.id, selectedValue, callback);
+    } else if (fieldType === 'DialogFieldRadioButton') {
+      var checkedValue = $('input:radio[name="' + options.name + '"]:checked').val();
+
+      dialogFieldRefresh.refreshRadioList(options.name, options.id, checkedValue, options.url, options.auto_refresh_options, callback);
+    } else if (fieldType === 'DialogFieldDateControl' || fieldType === 'DialogFieldDateTimeControl') {
+      dialogFieldRefresh.refreshDateTime(options.name, options.id, callback);
+    } else {
+      add_flash(__('Field type is not a supported type!'), 'error');
+    }
   },
 
   refreshCheckbox: function(fieldName, fieldId, callback) {
@@ -54,7 +82,7 @@ var dialogFieldRefresh = {
       var responseData = JSON.parse(data.responseText);
       $('.dynamic-checkbox-' + fieldId).prop('checked', responseData.values.checked);
       dialogFieldRefresh.setReadOnly($('.dynamic-checkbox-' + fieldId), responseData.values.read_only);
-      dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      dialogFieldRefresh.setVisible($('#field_' + fieldId + '_tr'), responseData.values.visible);
       callback.call();
     };
 
@@ -75,7 +103,7 @@ var dialogFieldRefresh = {
       }
 
       dialogFieldRefresh.setReadOnly($('.dynamic-date-' + fieldId), responseData.values.read_only);
-      dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      dialogFieldRefresh.setVisible($('#field_' + fieldId + '_tr'), responseData.values.visible);
       callback.call();
     };
 
@@ -90,7 +118,7 @@ var dialogFieldRefresh = {
       var responseData = JSON.parse(data.responseText);
       dialogFieldRefresh.addOptionsToDropDownList(responseData, fieldId);
       dialogFieldRefresh.setReadOnly($('#' + fieldName), responseData.values.read_only);
-      dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      dialogFieldRefresh.setVisible($('#field_' + fieldId + '_tr'), responseData.values.visible);
       $('#' + fieldName).selectpicker('refresh');
       $('#' + fieldName).selectpicker('val', responseData.values.checked_value);
       callback.call();
@@ -172,20 +200,30 @@ var dialogFieldRefresh = {
   triggerAutoRefresh: function(autoRefreshOptions) {
     if (Boolean(autoRefreshOptions.trigger) === true) {
       var autoRefreshableIndicies = autoRefreshOptions.auto_refreshable_field_indicies;
-      var currentIndex = autoRefreshOptions.current_index;
+      var currentIndex;
+      var initializingIndex;
+
+      if (autoRefreshOptions.initial_trigger === true) {
+        currentIndex = 0;
+        initializingIndex = autoRefreshOptions.current_index;
+      } else {
+        currentIndex = autoRefreshOptions.current_index;
+        initializingIndex = autoRefreshOptions.initializingIndex;
+      }
 
       var nextAvailable = $.grep(autoRefreshableIndicies, function(potential, potentialsIndex) {
-        return (potential.auto_refresh === true && potentialsIndex > currentIndex);
+        return (potential.auto_refresh === true && potentialsIndex > currentIndex && potentialsIndex !== initializingIndex);
       });
 
       nextAvailable = nextAvailable[0];
 
       if (nextAvailable !== undefined) {
-        parent.postMessage({
+        $(document).trigger('dialog::autoRefresh', {
           tabIndex: nextAvailable.tab_index,
           groupIndex: nextAvailable.group_index,
           fieldIndex: nextAvailable.field_index,
-        }, '*');
+          initializingIndex: initializingIndex,
+        });
       }
     }
   },
@@ -201,12 +239,12 @@ var dialogFieldRefresh = {
   },
 
   sendRefreshRequest: function(url, data, doneFunction) {
-    miqJqueryRequest(url, {
+    miqObserveRequest(url, {
       data: data,
       dataType: 'json',
       beforeSend: true,
       complete: true,
-      done: doneFunction
+      done: doneFunction,
     });
   },
 
@@ -223,25 +261,25 @@ var dialogFieldRefresh = {
 
     $.each(responseData.values.refreshed_values, function(_index, value) {
       var radio = $('<input>')
-      .attr('class', fieldId)
-      .attr('name', fieldName)
-      .attr('type', 'radio')
-      .val(value[0]);
+        .attr('class', fieldId)
+        .attr('name', fieldName)
+        .attr('type', 'radio')
+        .val(value[0]);
 
       var label = $('<label></label>')
-      .attr('for', value[0])
-      .addClass('dynamic-radio-label')
-      .text(value[1]);
+        .attr('for', value[0])
+        .addClass('dynamic-radio-label')
+        .text(value[1]);
 
       if (responseData.values.checked_value === String(value[0])) {
         radio.prop('checked', true);
       }
 
       if (responseData.values.read_only === true) {
-        radio.attr('title', __("This element is disabled because it is read only"));
+        radio.attr('title', __('This element is disabled because it is read only'));
         radio.prop('disabled', true);
       } else {
-        radio.on('click', function(event) {
+        radio.on('click', function() {
           dialogFieldRefresh.radioButtonSelectEvent(url, fieldId, function() {
             dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
           });
@@ -251,5 +289,5 @@ var dialogFieldRefresh = {
       radio.appendTo($('#dynamic-radio-' + fieldId));
       label.appendTo($('#dynamic-radio-' + fieldId));
     });
-  }
+  },
 };

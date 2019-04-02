@@ -13,12 +13,13 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectsCenter < ApplicationHel
           button(
             :cloud_object_store_object_delete,
             'pficon pficon-delete fa-lg',
-            N_('Remove selected Object Storage Objects'),
-            N_('Remove Object Storage Objects'),
-            :url_parms => "main_div",
-            :confirm   => N_("Warning: The selected Object Storage Object will be permanently removed!"),
-            :enabled   => false,
-            :onwhen    => "1+"
+            N_('Remove selected Object Storage Objects from Inventory'),
+            N_('Remove Object Storage Objects from Inventory'),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :confirm      => N_("Warning: The selected Object Storage Object will be permanently removed!"),
+            :enabled      => false,
+            :onwhen       => "1+"
           ),
         ]
       ),
@@ -38,9 +39,10 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectsCenter < ApplicationHel
           'pficon pficon-edit fa-lg',
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+")
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+")
       ]
     )
   ])

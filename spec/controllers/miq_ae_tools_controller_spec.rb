@@ -1,10 +1,23 @@
 describe MiqAeToolsController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
   context "#form_field_changed" do
     it "resets target id to nil, when target class is <none>" do
+      new = {
+        :target_class => "EmsCluster",
+        :target_id    => 1
+      }
+      controller.instance_variable_set(:@resolve, :throw_ready => true, :new => new)
+      expect(controller).to receive(:render)
+      controller.instance_variable_set(:@_params, :target_class => '', :id => 'new')
+      controller.send(:form_field_changed)
+      expect(assigns(:resolve)[:new][:target_class]).to eq('')
+      expect(assigns(:resolve)[:new][:target_id]).to eq(nil)
+    end
+
+    it "resets target id to nil, when target class is Vm" do
       new = {
         :target_class => "EmsCluster",
         :target_id    => 1
@@ -158,12 +171,12 @@ describe MiqAeToolsController do
 
         it "returns the flash message" do
           post :import_automate_datastore, :params => params, :xhr => true
-          expected_message = <<-MESSAGE
-Datastore import was successful.
-Namespaces updated/added: 4
-Classes updated/added: 6
-Instances updated/added: 0
-Methods updated/added: 10
+          expected_message = <<~MESSAGE
+            Datastore import was successful.
+            Namespaces updated/added: 4
+            Classes updated/added: 6
+            Instances updated/added: 0
+            Methods updated/added: 10
           MESSAGE
           expect(response.body).to eq([{:message => expected_message.chomp, :level => :success}].to_json)
         end
@@ -206,9 +219,10 @@ Methods updated/added: 10
   describe "#review_import" do
     include_context "valid session"
 
-    let(:params) { {:import_file_upload_id => "123", :message => "the message"} }
+    let(:params) { {:import_file_upload_id => "123"} }
 
     before do
+      session[:flash_msgs] = [{:message => 'the message'}]
       bypass_rescue
     end
 
@@ -219,39 +233,7 @@ Methods updated/added: 10
 
     it "assigns the message" do
       get :review_import, :params => params
-      expect(assigns(:message)).to eq("the message")
-    end
-  end
-
-  describe "#review_git_import" do
-    include_context "valid session"
-
-    let(:params) do
-      {:git_branches => "git_branches", :git_tags => "git_tags", :git_repo_id => "123", :message => "the message"}
-    end
-
-    before do
-      bypass_rescue
-    end
-
-    it "assigns the git repo id" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_repo_id)).to eq("123")
-    end
-
-    it "assigns the git branches" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_branches)).to eq("git_branches")
-    end
-
-    it "assigns the git tags" do
-      get :review_git_import, :params => params
-      expect(assigns(:git_tags)).to eq("git_tags")
-    end
-
-    it "assigns the message" do
-      get :review_git_import, :params => params
-      expect(assigns(:message)).to eq("the message")
+      expect(assigns(:message)).to include("the message")
     end
   end
 
@@ -334,7 +316,7 @@ Methods updated/added: 10
               "gitusername",
               "gitpassword",
               "gitverifyssl"
-            ).and_return({:git_repo_id => git_repo.id, :new_git_repo? => false})
+            ).and_return(:git_repo_id => git_repo.id, :new_git_repo? => false)
             allow(GitBasedDomainImportService).to receive(:new).and_return(git_based_domain_import_service)
             allow(git_based_domain_import_service).to receive(:queue_refresh).with(123).and_return(321)
           end
@@ -460,10 +442,8 @@ Methods updated/added: 10
     shared_examples_for "MiqAeToolsController#upload_import_file that does not upload a file" do
       it "redirects with a warning message" do
         post :upload_import_file, :params => params, :xhr => true
-        expect(response).to redirect_to(
-          :action  => :review_import,
-          :message => {:message => "Use the Choose file button to locate an import file", :level => :warning}.to_json
-        )
+        expect(response).to redirect_to(:action => :review_import)
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Use the Choose file button to locate an import file", :level => :warning)]
       end
     end
 
@@ -487,8 +467,8 @@ Methods updated/added: 10
         expect(response).to redirect_to(
           :action                => :review_import,
           :import_file_upload_id => 123,
-          :message               => {:message => "Import file was uploaded successfully", :level => :success}.to_json
         )
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Import file was uploaded successfully", :level => :success)]
       end
     end
 

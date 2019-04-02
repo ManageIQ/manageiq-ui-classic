@@ -22,14 +22,14 @@ module ApplicationController::Filter
     def rewind(direction)
       case direction
       when 'undo'
-        if idx > 0
+        if idx.positive?
           self.idx -= 1
-          return copy_hash(array[idx])
+          copy_hash(array[idx])
         end
       when 'redo'
         if idx < array.length - 1
           self.idx += 1
-          return copy_hash(array[idx])
+          copy_hash(array[idx])
         end
       end
     end

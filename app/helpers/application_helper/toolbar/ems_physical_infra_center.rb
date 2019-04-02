@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
   button_group('ems_physical_infra_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_physical_infra_vmdb_choice,
@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
           'fa fa-refresh fa-lg',
           N_('Refresh relationships and power states for all items related to this Infrastructure Provider'),
           N_('Refresh Relationships and Power States'),
-          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?")),
+          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
           :ems_physical_infra_edit,
@@ -24,9 +25,26 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
           t = N_('Edit this Infrastructure Provider'),
           t),
         button(
+          :ems_physical_infra_resume,
+          'pficon pficon-trend-up fa-lg',
+          t = N_('Resume this Infrastructure Provider'),
+          t,
+          :confirm   => N_("Resume this Infrastructure Provider?"),
+          :enabled   => proc { !@record.enabled? },
+          :url_parms => "main_div"),
+        button(
+          :ems_physical_infra_pause,
+          'pficon pficon-trend-down fa-lg',
+          t = N_('Pause this Infrastructure Provider'),
+          t,
+          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
+                         "This may cause gaps in inventory, metrics and events!"),
+          :enabled   => proc { @record.enabled? },
+          :url_parms => "main_div"),
+        button(
           :ems_physical_infra_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Infrastructure Provider'),
+          t = N_('Remove this Infrastructure Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Infrastructure Provider and ALL of its components will be permanently removed!")),
@@ -62,17 +80,36 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
   button_group('ems_physical_infra_monitoring', [
     select(
       :ems_physical_infra_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_physical_infra_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Physical Infrastructure Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,
           :url_parms => "?display=timeline"),
+      ]
+    ),
+  ])
+  button_group('ems_physical_infra_console_access', [
+    select(
+      :ems_physical_infra_console_choice,
+      'pficon pficon-screen fa-lg',
+      N_('Remote Access'),
+      N_('Access'),
+      :items => [
+        button(
+          :ems_physical_infra_console,
+          'pficon pficon-screen fa-lg',
+          N_('Open a web-based console for this provider'),
+          N_('Management Console'),
+          :url     => "launch_console",
+          :confirm => N_("Open management console for this provider"),
+          :klass   => ApplicationHelper::Button::PhysicalInfraConsole,
+          :options => {:feature => :console})
       ]
     ),
   ])
@@ -83,6 +120,12 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
       t = N_('Authentication'),
       t,
       :items => [
+        button(
+          :ems_infra_change_password,
+          'pficon pficon-edit fa-lg',
+          t = N_('Change password'),
+          t
+        ),
         button(
           :ems_physical_infra_recheck_auth_status,
           'fa fa-search fa-lg',

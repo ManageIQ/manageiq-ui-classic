@@ -1,5 +1,5 @@
 describe('catalogItemFormController', function() {
-  var $scope, $controller, postService;
+  var $scope, $controller, currentRegion, postService, allCatalogsNames;
 
   beforeEach(module('ManageIQ'));
 
@@ -18,8 +18,9 @@ describe('catalogItemFormController', function() {
     $scope.vm.catalogItemModel = {
       name:                         'catalogItemName',
       description:                  'catalogItemDescription',
-      service_template_catalog_id:  10000000000012,
+      long_description:             'catalogItemLongDescription',
       display:                      true,
+      service_template_catalog_id:  10000000000012,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       config_info:                  {
@@ -28,21 +29,22 @@ describe('catalogItemFormController', function() {
           repository_id: undefined,
           playbook_id:          10000000000493,
           credential_id:        10000000000090,
-          hosts:                undefined,
+          vault_credential_id:  10000000000100,
+          execution_ttl:         100,
+          hosts:                'localhost',
+          verbosity:            '0',
+          log_output:           'on_error',
           extra_vars:           {
-            'var1': 'default_val1',
-            'var2': 'default_val2'
+            'var1': {'default': 'default_val1'},
+            'var2': {'default': 'default_val2'}
           },
-          network_credential_id: undefined,
-          cloud_credential_id: undefined
+          become_enabled: false,
+          network_credential_id: undefined
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          hosts: undefined,
-          extra_vars: Object({  }),
-          network_credential_id: undefined,
-          cloud_credential_id: undefined,
-          dialog_id: undefined
+          verbosity:         '0',
+          log_output:       'on_error',
         }
       }
     };
@@ -51,6 +53,8 @@ describe('catalogItemFormController', function() {
 
     $controller = _$controller_('catalogItemFormController', {
       $scope: $scope,
+      currentRegion: currentRegion,
+      allCatalogsNames: allCatalogsNames,
       catalogItemFormId: 1000000000001
     });
   }));
@@ -60,8 +64,9 @@ describe('catalogItemFormController', function() {
   describe('initialization', function() {
     it('sets the catalogItemData name to the value returned via the http request', function(done) {
       setTimeout(function () {
-        expect($scope.vm.catalogItemModel.name).toEqual('catalogItemName');
-        expect($scope.vm.catalogItemModel.description).toEqual('catalogItemDescription');
+        expect($controller.catalogItemModel.name).toEqual($scope.vm.catalogItemModel.name);
+        expect($controller.catalogItemModel.description).toEqual($scope.vm.catalogItemModel.description);
+        expect($controller.catalogItemModel.provisioning_dialog_id).toEqual($scope.vm.catalogItemModel.config_info.provision.dialog_id);
         done();
       });
     });

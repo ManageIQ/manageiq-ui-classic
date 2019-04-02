@@ -1,16 +1,17 @@
 module Menu
   class Manager
+    include Enumerable
     include Singleton
 
     class << self
       extend Forwardable
 
-      delegate %i(menu item_in_section? item section section_id_string_to_symbol each) => :instance
+      delegate %i(menu item_in_section? item section section_id_string_to_symbol
+                  section_for_item_id each map detect select) => :instance
     end
 
-    private
-
-    class InvalidMenuDefinition < Exception
+    def each
+      @menu.each { |section| yield section }
     end
 
     def menu(placement = :default)
@@ -35,44 +36,75 @@ module Menu
       @id_to_section[section_id]
     end
 
+    def section_for_item_id(item_id)
+      found = nil
+      @id_to_section.each do |_id, section|
+        next unless section.contains_item_id?(item_id)
+
+        found = section if !found || section.parent
+      end
+
+      found
+    end
+
     def item_in_section?(item_id, section_id)
       @id_to_section[section_id].contains_item_id?(item_id)
     end
 
-    def each
-      @menu.each { |section| yield section }
+    #
+    # Takes section id as string and returns section id symbol or null.
+    #
+    # Prevent calling to_sym on user input by using this method.
+    #
+    def section_id_string_to_symbol(section_id_string)
+      valid_sections[section_id_string]
+    end
+
+    private
+
+    class InvalidMenuDefinition < Exception
     end
 
     def initialize
       load_default_items
-      load_custom_items
+      load_custom_items(Menu::YamlLoader)
+      load_custom_items(Menu::CustomLoader)
     end
 
     def merge_sections(sections)
       sections.each do |section|
         position = nil
+
+        parent = if section.parent_id && @id_to_section.key?(section.parent_id)
+                   @id_to_section[section.parent_id].items
+                 else
+                   @menu
+                 end
+
         if section.before
-          position = @menu.index { |existing_section| existing_section.id == section.before }
+          position = parent.index { |existing_section| existing_section.id == section.before }
         end
 
         if position
-          @menu.insert(position, section)
+          parent.insert(position, section)
         else
-          @menu << section
+          parent << section
         end
       end
     end
 
     def merge_items(items)
       items.each do |item|
-        raise InvalidMenuDefinition, 'Invalid parent' unless @id_to_section.key?(item.parent)
-        @id_to_section[item.parent].items << item
-        item.parent = @id_to_section[item.parent]
+        parent = @id_to_section[item.parent_id]
+        raise InvalidMenuDefinition, 'Invalid parent' if parent.nil?
+
+        parent.items << item
+        item.parent = parent
       end
     end
 
-    def load_custom_items
-      sections, items = Menu::CustomLoader.load
+    def load_custom_items(loader)
+      sections, items = loader.load
       merge_sections(sections)
       preprocess_sections
       merge_items(items)
@@ -89,15 +121,6 @@ module Menu
       @menu.each do |section|
         section.preprocess_sections(@id_to_section)
       end
-    end
-
-    #
-    # Takes section id as string and returns section id symbol or null.
-    #
-    # Prevent calling to_sym on user input by using this method.
-    #
-    def section_id_string_to_symbol(section_id_string)
-      valid_sections[section_id_string]
     end
 
     def valid_sections

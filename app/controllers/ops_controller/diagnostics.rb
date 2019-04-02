@@ -1,4 +1,4 @@
-# Diagnostics Accordion methods included in OpsController.rb
+# Diagnosticsapiversion Accordion methods included in OpsController.rb
 module OpsController::Diagnostics
   extend ActiveSupport::Concern
 
@@ -6,13 +6,13 @@ module OpsController::Diagnostics
     typ, id = params[:id].split("-")
     case typ
     when "svr"
-      @record = MiqServer.find(from_cid(id))
+      @record = MiqServer.find(id)
     when "role"
-      @record = ServerRole.find(from_cid(id))
-      @rec_status = @record.assigned_server_roles.find_by_active(true) ? "active" : "stopped" if @record.class == ServerRole
+      @record = ServerRole.find(id)
+      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
     when "asr"
-      @record = AssignedServerRole.find(from_cid(id))
-      @rec_status = @record.assigned_server_roles.find_by_active(true) ? "active" : "stopped" if @record.class == ServerRole
+      @record = AssignedServerRole.find(id)
+      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
     end
     @sb[:diag_selected_model] = @record.class.to_s
     @sb[:diag_selected_id] = @record.id
@@ -28,12 +28,12 @@ module OpsController::Diagnostics
       add_flash(_("Error during 'Appliance restart': %{message}") % {:message => bang.message}, :error)
     else
       audit = {:event        => "restart_server",
-               :message      => _("Server '%{name}' restarted") % {:name => svr.name},
+               :message      => "Server '#{svr.name}' restarted",
                :target_id    => svr.id,
                :target_class => "MiqServer",
                :userid       => session[:userid]}
       AuditEvent.success(audit)
-      add_flash(_("%{product} Appliance restart initiated successfully") % {:product => I18n.t('product.name')})
+      add_flash(_("%{product} Appliance restart initiated successfully") % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
     javascript_flash(:spinner_off => true)
   end
@@ -41,7 +41,7 @@ module OpsController::Diagnostics
   def pm_restart_workers
     assert_privileges("restart_workers")
     @refresh_partial = "#{@sb[:active_tab]}_tab"
-    worker = MiqWorker.find_by_id(@sb[:selected_worker_id])
+    worker = MiqWorker.find(checked_or_params.first)
     wtype = worker.normalized_type
     case wtype
     when "ems_vimbroker"
@@ -54,7 +54,7 @@ module OpsController::Diagnostics
         add_flash(_("Error during 'workers restart': %{message}") % {:message => bang.message}, :error)
       else
         audit = {:event        => "restart_workers",
-                 :message      => _("Worker on Server '%{name}' restarted") % {:name => svr.name},
+                 :message      => "Worker on Server '#{svr.name}' restarted",
                  :target_id    => svr.id,
                  :target_class => "MiqWorker",
                  :userid       => session[:userid]}
@@ -79,19 +79,16 @@ module OpsController::Diagnostics
 
   def log_depot_edit
     assert_privileges("#{@sb[:selected_typ] == "miq_server" ? "" : "zone_"}log_depot_edit")
-    @record = @sb[:selected_typ].classify.constantize.find_by_id(@sb[:selected_server_id])
+    @record = @sb[:selected_typ].classify.constantize.find(@sb[:selected_server_id])
     # @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
     case params[:button]
     when "cancel"
       @in_a_form = false
       @edit = session[:edit] = nil
       add_flash(_("Edit Log Depot settings was cancelled by the user"))
-      @record = nil
       diagnostics_set_form_vars
       replace_right_cell(:nodetype => x_node)
     when "save"
-      pfx = @sb[:active_tab] == "diagnostics_collect_logs" ? "logdepot" : "dbbackup"
-      id = params[:id] ? params[:id] : "new"
       if @flash_array
         javascript_flash(:spinner_off => true)
         return
@@ -120,12 +117,10 @@ module OpsController::Diagnostics
       else
         add_flash(_("Log Depot Settings were saved"))
         @edit = nil
-        @record = nil
         diagnostics_set_form_vars
         replace_right_cell(:nodetype => x_node)
       end
     when "validate"
-      id = params[:id] ? params[:id] : "new"
       creds = set_credentials
       settings = {
         :username => creds[:default][:userid],
@@ -154,7 +149,7 @@ module OpsController::Diagnostics
     disable_client_cache
     send_data($log.contents(nil, nil),
               :filename => "evm.log")
-    AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => _("EVM log downloaded"))
+    AuditEvent.success(:userid => session[:userid], :event => "download_evm_log", :message => "EVM log downloaded")
   end
 
   # Send the audit log in text format
@@ -165,7 +160,7 @@ module OpsController::Diagnostics
               :filename => "audit.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_audit_log",
-                       :message => _("Audit log downloaded"))
+                       :message => "Audit log downloaded")
   end
 
   # Send the production log in text format
@@ -176,14 +171,14 @@ module OpsController::Diagnostics
               :filename => "#{@sb[:rails_log].downcase}.log")
     AuditEvent.success(:userid  => session[:userid],
                        :event   => "download_#{@sb[:rails_log].downcase}_log",
-                       :message => _("%{log_description} log downloaded") % {:log_description => @sb[:rails_log]})
+                       :message => "#{@sb[:rails_log]} log downloaded")
   end
 
   def refresh_log
     assert_privileges("refresh_log")
-    @log = $log.contents(120, 1000)
-    @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    @log = $log.contents(nil, 1000)
+    @selected_server = MiqServer.find(x_node.split("-").last.to_i)
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_evm_log", :partial => "diagnostics_evm_log_tab")
@@ -194,8 +189,8 @@ module OpsController::Diagnostics
   def refresh_audit_log
     assert_privileges("refresh_audit_log")
     @log = $audit_log.contents(nil, 1000)
-    @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    @selected_server = MiqServer.find(x_node.split("-").last.to_i)
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_audit_log", :partial => "diagnostics_audit_log_tab")
@@ -206,8 +201,8 @@ module OpsController::Diagnostics
   def refresh_production_log
     assert_privileges("refresh_production_log")
     @log = $rails_log.contents(nil, 1000)
-    @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-    add_flash(_("Logs for this %{product} Server are not available for viewing") % I18n.t('product.name'), :warning) if @log.blank?
+    @selected_server = MiqServer.find(x_node.split("-").last.to_i)
+    add_flash(_("Logs for this %{product} Server are not available for viewing") % Vmdb::Appliance.PRODUCT_NAME, :warning) if @log.blank?
     render :update do |page|
       page << javascript_prologue
       page.replace_html("diagnostics_production_log", :partial => "diagnostics_production_log_tab")
@@ -217,7 +212,7 @@ module OpsController::Diagnostics
 
   def cu_repair_field_changed
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
-    @selected_server = Zone.find_by_id(@sb[:selected_server_id])
+    @selected_server = Zone.find(@sb[:selected_server_id])
     cu_repair_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -226,11 +221,11 @@ module OpsController::Diagnostics
       page << "ManageIQ.calendar.calDateFrom = null;"
       page << "ManageIQ.calendar.calDateTo = new Date();"
       page << "miqBuildCalendar();"
-      if @edit[:new][:start_date] == "" || @edit[:new][:end_date] == ""
-        page << javascript_for_miq_button_visibility(false)
-      else
-        page << javascript_for_miq_button_visibility(true)
-      end
+      page << if @edit[:new][:start_date] == "" || @edit[:new][:end_date] == ""
+                javascript_for_miq_button_visibility(false)
+              else
+                javascript_for_miq_button_visibility(true)
+              end
       page << "miqSparkle(false);"
     end
   end
@@ -238,12 +233,12 @@ module OpsController::Diagnostics
   def cu_repair
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
     if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
-      add_flash(_("End Date cannot be greater than Start Date"), :error)
+      add_flash(_("End Date cannot be earlier than Start Date"), :error)
     else
       # converting string to time, and then converting into user selected timezone
-      from =  "#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
-      to =  "#{@edit[:new][:end_date]} #{@edit[:new][:end_hour]}:#{@edit[:new][:end_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
-      selected_zone = Zone.find_by_id(from_cid(x_node.split('-').last))
+      from = "#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
+      to = "#{@edit[:new][:end_date]} #{@edit[:new][:end_hour]}:#{@edit[:new][:end_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
+      selected_zone = Zone.find(x_node.split('-').last)
       begin
         Metric::Capture.perf_capture_gap_queue(from, to, selected_zone)
       rescue => bang
@@ -268,38 +263,30 @@ module OpsController::Diagnostics
     end
   end
 
-  def replication_reset
-    begin
-      MiqReplicationWorker.reset_replication
-    rescue => bang
-      add_flash(_("Error during 'Reset/synchronization process': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_("Reset/synchronization process successfully initiated"))
-    end
-    javascript_flash
-  end
-
-  def replication_reload
-    @selected_server = MiqRegion.my_region
-    @refresh_div = "diagnostics_replication"
-    @refresh_partial = "diagnostics_replication_tab"
-  end
-
   def db_backup_form_field_changed
-    schedule     = MiqSchedule.find_by_id(params[:id])
-    depot        = schedule.file_depot
-    uri_settings = depot.try(:[], :uri).to_s.split("://")
+    require 'uri'
+    schedule = MiqSchedule.find(params[:id])
+    depot = schedule.file_depot
+    full_uri, _query = depot.try(:uri)&.split('?')
+    uri_prefix, uri = full_uri.to_s.split('://')
+    port         = URI(depot.try(:uri)).port
     render :json => {
-      :depot_name   => depot.try(:name),
-      :uri          => uri_settings[1],
-      :uri_prefix   => uri_settings[0],
-      :log_userid   => depot.try(:authentication_userid)
+      :depot_name           => depot.try(:name),
+      :uri                  => uri,
+      :uri_prefix           => uri_prefix,
+      :log_userid           => depot.try(:authentication_userid),
+      :log_aws_region       => depot.try(:aws_region),
+      :openstack_region     => depot.try(:openstack_region),
+      :keystone_api_version => depot.try(:keystone_api_version),
+      :v3_domain_ident      => depot.try(:v3_domain_ident),
+      :swift_api_port       => port ? port : 5000,
+      :security_protocol    => depot.try(:security_protocol)
     }
   end
 
   def db_backup
     if params[:backup_schedule].present?
-      @schedule = MiqSchedule.find_by_id(params[:backup_schedule])
+      @schedule = MiqSchedule.find(params[:backup_schedule])
     else
       @schedule = MiqSchedule.new(:userid => session[:userid])
       @schedule.adhoc = true
@@ -341,13 +328,9 @@ module OpsController::Diagnostics
 
   def log_collection_form_fields
     assert_privileges("#{@sb[:selected_typ] == "miq_server" ? "" : "zone_"}log_depot_edit")
-    @record = @sb[:selected_typ].classify.constantize.find_by_id(@sb[:selected_server_id])
+    @record = @sb[:selected_typ].classify.constantize.find(@sb[:selected_server_id])
     log_depot = @record.log_file_depot
-    if log_depot
-      log_depot_json = build_log_depot_json(log_depot)
-    else
-      log_depot_json = build_empty_log_depot_json
-    end
+    log_depot_json = log_depot ? build_log_depot_json(log_depot) : build_empty_log_depot_json
     render :json => log_depot_json
   end
 
@@ -360,8 +343,7 @@ module OpsController::Diagnostics
                       :uri          => uri,
                       :uri_prefix   => prefix,
                       :log_userid   => log_depot.authentication_userid,
-                      :log_protocol => protocol
-    }
+                      :log_protocol => protocol}
     log_depot_json
   end
 
@@ -371,20 +353,19 @@ module OpsController::Diagnostics
                       :uri_prefix   => '',
                       :log_userid   => '',
                       :log_password => '',
-                      :log_verify   => '',
-                      :log_protocol => ''
-    }
+                      :log_protocol => ''}
     log_depot_json
   end
 
   def log_protocol_changed
     depot = FileDepot.depot_description_to_class(params[:log_protocol]).new
-    uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
+    # uri_prefix, uri = depot.uri ? depot.uri.split('://') : nil
+    full_uri, _query = depot.try(:uri)&.split('?')
+    uri_prefix, uri  = full_uri.to_s.split('://')
 
     log_depot_json = {:depot_name => depot.name,
                       :uri_prefix => uri_prefix,
-                      :uri        => uri
-                     }
+                      :uri        => uri}
     render :json => log_depot_json
   end
 
@@ -396,7 +377,7 @@ module OpsController::Diagnostics
     else
       add_flash(_("Database Garbage Collection successfully initiated"))
     end
-    javascript_flash
+    javascript_flash(:spinner_off => true)
   end
 
   # to delete orphaned records for user that was delete from db
@@ -408,7 +389,7 @@ module OpsController::Diagnostics
     javascript_flash(:spinner_off => true)
   else
     audit = {:event        => "orphaned_record_delete",
-             :message      => _("Orphaned Records deleted for userid [%{number}]") % {:number => params[:userid]},
+             :message      => "Orphaned Records deleted for userid [#{params[:userid]}]",
              :target_id    => params[:userid],
              :target_class => "MiqReport",
              :userid       => session[:userid]}
@@ -417,7 +398,7 @@ module OpsController::Diagnostics
     orphaned_records_get
     render :update do |page|
       page << javascript_prologue
-      page.replace_html 'diagnostics_orphaned_data', :partial => 'diagnostics_savedreports'
+      page.replace_html('diagnostics_orphaned_data', :partial => 'diagnostics_savedreports')
     end
   end
 
@@ -425,117 +406,42 @@ module OpsController::Diagnostics
     @lastaction = "diagnostics_server_list"
     @force_no_grid_xml = true
     if x_node.split("-").first == "z"
-      zone = Zone.find_by_id(from_cid(x_node.split("-").last))
-      @view, @pages = get_view(MiqServer, :conditions => ["zone_id=?", zone.id]) # Get the records (into a view) and the paginator
+      zone = Zone.find(x_node.split("-").last)
+      @view, @pages = get_view(MiqServer, :named_scope => [[:with_zone_id, zone.id]]) # Get the records (into a view) and the paginator
     else
-      @view, @pages = get_view(MiqServer) # Get the records (into a view) and the paginator
+      @view, @pages = get_view(MiqServer, :named_scope => [:in_my_region]) # Get the records (into a view) and the paginator
     end
     @no_checkboxes = @showlinks = true
-    @items_per_page = ONE_MILLION
+    @items_per_page = ApplicationController::ONE_MILLION
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
     update_gtl_div('diagnostics_server_list') if pagination_or_gtl_request?
   end
 
-  def diagnostics_worker_selected
-    @explorer = true
-    @sb[:selected_worker_id] = params[:id]
-    get_workers
-    @sb[:center_tb_filename] = center_toolbar_filename
-    c_tb = build_toolbar(@sb[:center_tb_filename])
-    render :update do |page|
-      page << javascript_prologue
-      # page.replace_html("main_div", :partial=>"layouts/gtl")
-      page.replace_html(@sb[:active_tab], :partial => "#{@sb[:active_tab]}_tab")
-      if c_tb.present?
-        page << "$('#toolbar').show();"
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
-      else
-        page << "$('#toolbar').hide();"
-      end
-      page << "$('#toolbar').hide();" if @sb[:center_tb_filename] == "blank_view_tb"
-    end
-  end
-
   private ############################
-
-  def log_depot_reset_form_vars
-    @edit[:protocol]           = nil
-    @edit[:new][:depot_name]   = nil
-    @edit[:new][:uri]          = nil
-    @edit[:new][:log_userid]   = nil
-    @edit[:new][:log_password] = nil
-    @edit[:new][:log_verify]   = nil
-  end
-
-  def file_depot_reset_form_vars
-    if @edit[:protocol].present?
-      klass = Object.const_get(@edit[:protocols_hash].key(@edit[:protocol]))
-      depot = @record.log_file_depot.instance_of?(klass) ? @record.log_file_depot : klass.new
-      @edit[:new][:requires_credentials] = klass.try(:requires_credentials?)
-      @edit[:new][:uri_prefix]           = klass.try(:uri_prefix)
-      @edit[:new][:depot_name]           = depot.name
-      @edit[:new][:uri]                  = depot.uri.to_s.split('://').last
-      @edit[:new][:log_userid]           = depot.authentication_userid
-      @edit[:new][:log_password]         = depot.authentication_password
-      @edit[:new][:log_verify]           = depot.authentication_password
-    else
-      log_depot_reset_form_vars
-    end
-  end
-
-  def log_depot_get_form_vars
-    unless @schedule || (@sb["active_tree"] == :diagnostics_tree && @sb["active_tab"] == "diagnostics_database")
-      @record = @sb[:selected_typ].classify.constantize.find_by_id(@sb[:selected_server_id])
-    end
-    @prev_uri_prefix = @edit[:new][:uri_prefix]
-    @prev_protocol   = @edit[:protocol]
-    # @edit[:protocol] holds the current value of the selector so that it is not reset
-    # when _field_changed is called
-    @edit[:protocol] = params[:log_protocol].presence if params[:log_protocol]
-    if @sb[:active_tab] == "diagnostics_collect_logs"
-      file_depot_reset_form_vars if @prev_protocol != @edit[:protocol]
-    else
-      @edit[:new][:uri_prefix] = @edit[:protocols_hash].invert[params[:log_protocol]] if params[:log_protocol]
-      @edit[:new][:requires_credentials] = @edit[:new][:uri_prefix] != "nfs"
-    end
-
-    @edit[:new][:depot_name] = params[:depot_name] if params[:depot_name]
-    if @edit[:new][:uri_prefix].in?([nil, "nfs"]) || params[:backup_schedule] == ""
-      @edit[:new][:uri]          = params[:uri] if params[:uri]
-      @edit[:new][:log_userid]   = nil
-      @edit[:new][:log_password] = nil
-      @edit[:new][:log_verify]   = nil
-    else
-      @edit[:new][:uri]          = params[:uri] if params[:uri]
-      @edit[:new][:log_userid]   = params[:log_userid].blank? ? nil : params[:log_userid] if params[:log_userid]
-      @edit[:new][:log_password] = params[:log_password].blank? ? nil : params[:log_password] if params[:log_password]
-      @edit[:new][:log_verify]   = params[:log_verify].blank? ? nil : params[:log_verify] if params[:log_verify]
-    end
-  end
 
   # Build the Utilization screen for a server
   def diagnostics_build_perf
-    @record = MiqServer.find_by_id(@sb[:selected_server_id])
+    @record = MiqServer.find(@sb[:selected_server_id])
     if @record && @record.vm
       s, e = @record.vm.first_and_last_capture
       unless s.nil? || e.nil?
         @sb[:record_class] = @record.class.to_s
         @sb[:record_id] = @record.id
-        perf_gen_init_options(refresh = "y")  # Intialize perf chart options, charts will be generated async
+        perf_gen_init_options('y') # Intialize perf chart options, charts will be generated async
       end
     end
   end
 
   # Build the Timeline screen for a server
   def diagnostics_build_timeline
-    @record = MiqServer.find_by_id(@sb[:selected_server_id])
+    @record = MiqServer.find(@sb[:selected_server_id])
     if @record && @record.vm
       @sb[:record_class] = @record.class.to_s
       @sb[:record_id] = @record.id
       session[:tl_record_id] = @record.vm.id
       @timeline = true
-      tl_build_timeline                       # Create the timeline report
+      tl_build_timeline # Create the timeline report
     end
   end
 
@@ -572,12 +478,12 @@ module OpsController::Diagnostics
     ems = ExtManagementSystem.all
     ems.each do |ms|
       begin
-        ms.reset_vim_cache_queue              # Run the task
+        ms.reset_vim_cache_queue # Run the task
       rescue => bang
         add_flash(_("Error during 'Clear Connection Broker cache': %{message}") % {:message => bang.message}, :error)
       else
         audit = {:event        => "reset_broker",
-                 :message      => _("Connection Broker cache cleared successfully"),
+                 :message      => "Connection Broker cache cleared successfully",
                  :target_id    => ms.id,
                  :target_class => "ExtManagementSystem",
                  :userid       => session[:userid]}
@@ -591,10 +497,10 @@ module OpsController::Diagnostics
   # Collect the current logs from the selected zone or server
   def logs_collect(options = {})
     options[:support_case] = params[:support_case] if params[:support_case]
-    obj, id  = x_node.split("-")
+    obj, id = x_node.split("-")
     assert_privileges("#{obj == "z" ? "zone_" : ""}collect_logs")
-    klass    = obj == "svr" ? MiqServer : Zone
-    instance = @selected_server = klass.find(from_cid(id).to_i)
+    klass = obj == "svr" ? MiqServer : Zone
+    instance = @selected_server = klass.find(id.to_i)
     if !instance.active?
       add_flash(_("Cannot start log collection, requires a started server"), :error)
     elsif instance.log_collection_active_recently?
@@ -606,7 +512,7 @@ module OpsController::Diagnostics
       rescue => bang
         add_flash(_("Log collection error returned: %{error_message}") % {:error_message => bang.message}, :error)
       else
-        add_flash(_("Log collection for %{product} %{object_type} %{name} has been initiated") % {:product => I18n.t('product.name'), :object_type => klass.name, :name => instance.display_name})
+        add_flash(_("Log collection for %{product} %{object_type} %{name} has been initiated") % {:product => Vmdb::Appliance.PRODUCT_NAME, :object_type => klass.name, :name => instance.display_name})
       end
     end
     get_node_info(x_node)
@@ -621,21 +527,23 @@ module OpsController::Diagnostics
   end
 
   def pm_get_workers
-    @sb[:selected_worker_id] = nil
-    get_workers
-  end
-
-  def get_workers
     @lastaction = "pm_workers_list"
     @force_no_grid_xml = true
-    @no_checkboxes = true
+    @no_checkboxes = false
     @gtl_type = "list"
-    @ajax_paging_buttons = true
     @embedded = @pages = false
     @showlinks = true
-    status = ["started", "ready", "working"]
-    # passing all_pages option to show all records on same page
-    @view, @pages = get_view(MiqWorker, :conditions => ["(miq_server_id = ? and status IN (?))", @sb[:selected_server_id], status], :all_pages => true) # Get the records (into a view) and the paginator
+    status = %w(started ready working)
+
+    view_options = {
+      :named_scope => [[:with_miq_server_id, @sb[:selected_server_id]],
+                       [:with_status, status]],
+      # passing all_pages option to show all records on same page
+      :all_pages   => true,
+      :clickable   => false,
+    }
+    @view, @pages = get_view(MiqWorker, view_options)
+
     # setting @embedded and @pages to nil, we don't want to show sorting/paging bar on the screen'
     @embedded = @pages = nil
   end
@@ -678,30 +586,29 @@ module OpsController::Diagnostics
   def delete_server
     assert_privileges("delete_server")
     if @sb[:diag_selected_id].nil?
-      add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "evm_server")}, :error)
+      add_flash(_("EVM Server no longer exists"), :error)
     else
       server = MiqServer.find_by(:id => @sb[:diag_selected_id])
       process_server_deletion(server) if server
     end
-    add_flash(_("The selected %{table} was deleted") %
-                {:table => ui_lookup(:table => "evm_server")}) if @flash_array.nil?
+    add_flash(_("The selected EVM Server was deleted")) if @flash_array.nil?
     refresh_screen
   end
 
   def process_server_deletion(server)
     server.destroy
   rescue => bang
-    add_flash(_("%{model} \"%{name}\": Error during '%{task}': ") % {:model => ui_lookup(:model => "MiqServer"), :name => server.name, :task => "destroy"} << bang.message,
+    add_flash(_("Server \"%{name}\": Error during 'destroy': ") % {:name => server.name} << bang.message,
               :error)
   else
     AuditEvent.success(
       :event        => "svr_record_delete",
-      :message      => _("[%{name}] Record deleted") % {:name => server.name},
+      :message      => "[#{server.name}] Record deleted",
       :target_id    => server.id,
       :target_class => "MiqServer",
       :userid       => session[:userid]
     )
-    add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "MiqServer"), :name => "#{server.name} [#{server.id}]"})
+    add_flash(_("Server \"%{name}\": Delete successful") % {:name => "#{server.name} [#{server.id}]"})
   end
 
   def promote_server
@@ -715,8 +622,14 @@ module OpsController::Diagnostics
       rescue => bang
         add_flash(bang, :error)
       else
-        priority = asr.priority == 1 ? "primary" : (asr.priority == 2 ? "secondary" : "normal")
-        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => I18n.t('product.name')})
+        priority = if asr.priority == 1
+                     'primary'
+                   elsif asr.priority == 2
+                     'secondary'
+                   else
+                     'normal'
+                   end
+        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => Vmdb::Appliance.PRODUCT_NAME})
       end
     end
     refresh_screen
@@ -733,8 +646,14 @@ module OpsController::Diagnostics
       rescue => bang
         add_flash(bang, :error)
       else
-        priority = asr.priority == 1 ? "primary" : (asr.priority == 2 ? "secondary" : "normal")
-        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => I18n.t('product.name')})
+        priority = if asr.priority == 1
+                     'primary'
+                   elsif asr.priority == 2
+                     'secondary'
+                   else
+                     'normal'
+                   end
+        add_flash(_("%{product} Server \"%{name}\" set as %{priority} for Role \"%{role_description}\"") % {:name => asr.miq_server.name, :priority => priority, :role_description => asr.server_role.description, :product => Vmdb::Appliance.PRODUCT_NAME})
       end
     end
     refresh_screen
@@ -745,18 +664,16 @@ module OpsController::Diagnostics
     @explorer = true
     if params[:pressed] == "delete_server" || params[:pressed] == "zone_delete_server"
       @sb[:diag_selected_id] = nil
-      settings_build_tree
-      diagnostics_build_tree
+      build_settings_tree
+      build_diagnostics_tree
     end
-    if x_node == "root"
-      parent = MiqRegion.my_region
-    else
-      parent = Zone.find_by_id(from_cid(x_node.split('-').last))
-    end
+    parent = if x_node == "root"
+               MiqRegion.my_region
+             else
+               Zone.find(x_node.split('-').last)
+             end
     @selected_server = parent if params[:action] == "x_button"
     build_server_tree(parent)
-    @sb[:center_tb_filename] = center_toolbar_filename
-    c_tb = build_toolbar(@sb[:center_tb_filename])
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
@@ -772,24 +689,20 @@ module OpsController::Diagnostics
       if params[:action] == "x_button"
         page.replace("zone_tree_div", :partial => "zone_tree")
       end
-      if c_tb.present?
+
+      if center_toolbar_filename.present?
         page << "$('#toolbar').show();"
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+        page << javascript_reload_toolbars
       else
         page << "$('#toolbar').hide();"
       end
-      page << "$('#toolbar').hide();" if @sb[:center_tb_filename] == "blank_view_tb"
     end
   end
 
   # Reload the selected node and redraw the screen via ajax
   def reload_server_tree
     assert_privileges("reload_server_tree")
-    if x_node == "root"
-      parent = MiqRegion.my_region
-    else
-      parent = Zone.find_by_id(from_cid(x_node.split('-').last))
-    end
+    parent = x_node == "root" ? MiqRegion.my_region : Zone.find(x_node.split('-').last)
     build_server_tree(parent)
     render :update do |page|
       page << javascript_prologue
@@ -801,11 +714,11 @@ module OpsController::Diagnostics
   def diagnostics_set_form_vars
     active_node = x_node
     if active_node && active_node.split('-').first == "z"
-      @record = @selected_server = Zone.find_by_id(from_cid(active_node.split('-').last))
+      @record = @selected_server = Zone.find_by(:id => active_node.split('-').last)
       @sb[:selected_server_id] = @selected_server.id
       @sb[:selected_typ] = "zone"
       if @selected_server.miq_servers.length >= 1 &&
-         ["diagnostics_roles_servers", "diagnostics_servers_roles"].include?(@sb[:active_tab])
+         %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
         build_server_tree(@selected_server)
       else
         @server_tree = nil
@@ -814,17 +727,17 @@ module OpsController::Diagnostics
       diagnostics_server_list if @sb[:active_tab] == "diagnostics_server_list"
       @right_cell_text = if my_zone_name == @selected_server.name
                            _("Diagnostics %{model} \"%{name}\" (current)") %
-                           {:name  => @selected_server.description,
-                            :model => ui_lookup(:model => @selected_server.class.to_s)}
+                             {:name  => @selected_server.description,
+                              :model => ui_lookup(:model => @selected_server.class.to_s)}
                          else
                            _("Diagnostics %{model} \"%{name}\"") %
-                           {:name  => @selected_server.description,
-                            :model => ui_lookup(:model => @selected_server.class.to_s)}
+                             {:name  => @selected_server.description,
+                              :model => ui_lookup(:model => @selected_server.class.to_s)}
                          end
     elsif x_node == "root"
       if @sb[:active_tab] == "diagnostics_zones"
-        @zones = Zone.in_my_region
-      elsif ["diagnostics_roles_servers", "diagnostics_servers_roles"].include?(@sb[:active_tab])
+        @zones = Zone.visible.in_my_region
+      elsif %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
         @selected_server = MiqRegion.my_region
         @sb[:selected_server_id] = @selected_server.id
         @sb[:selected_typ] = "miq_region"
@@ -833,7 +746,7 @@ module OpsController::Diagnostics
         else
           @server_tree = nil
         end
-      elsif @sb[:active_tab] == "diagnostics_replication"     # Replication tab
+      elsif @sb[:active_tab] == "diagnostics_replication" # Replication tab
         @selected_server = MiqRegion.my_region
       elsif @sb[:active_tab] == "diagnostics_database"
         build_backup_schedule_options_for_select
@@ -843,27 +756,26 @@ module OpsController::Diagnostics
       elsif @sb[:active_tab] == "diagnostics_server_list"
         diagnostics_server_list
       end
-      @right_cell_text = _("Diagnostics %{model} \"%{name}\"") %
-                         {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                          :model => ui_lookup(:model => "MiqRegion")}
+      @right_cell_text = _("Diagnostics Region \"%{name}\"") %
+                         {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
     elsif active_node && active_node.split('-').first == "svr"
-      @selected_server ||= MiqServer.find(@sb[:selected_server_id])  # Reread the server record
+      @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
         if @sb[:active_tab] == "diagnostics_evm_log"
-          @log = $log.contents(120, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          @log = $log.contents(nil, 1000)
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
         elsif @sb[:active_tab] == "diagnostics_audit_log"
           @log = $audit_log.contents(nil, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
         elsif @sb[:active_tab] == "diagnostics_production_log"
           @log = $rails_log.contents(nil, 1000)
-          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
+          add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
           @download_action = "fetch_production_log"
@@ -877,7 +789,7 @@ module OpsController::Diagnostics
         elsif @sb[:active_tab] == "diagnostics_timelines"
           diagnostics_build_timeline
         else
-          @record = @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
+          @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)
           @sb[:selected_server_id] = @selected_server.id
           @sb[:selected_typ] = "miq_server"
         end
@@ -890,30 +802,28 @@ module OpsController::Diagnostics
         elsif @sb[:active_tab] == "diagnostics_timelines"
           diagnostics_build_timeline
         else
-          @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
+          @selected_server = MiqServer.find(x_node.split("-").last.to_i)
           @sb[:selected_server_id] = @selected_server.id
           @sb[:selected_typ] = "miq_server"
         end
+      elsif @sb[:active_tab] == "diagnostics_utilization"
+        diagnostics_build_perf
+      elsif @sb[:active_tab] == "diagnostics_timelines"
+        diagnostics_build_timeline
       else
-        if @sb[:active_tab] == "diagnostics_utilization"
-          diagnostics_build_perf
-        elsif @sb[:active_tab] == "diagnostics_timelines"
-          diagnostics_build_timeline
-        else
-          @sb[:active_tab] = "diagnostics_collect_logs"       # setting it to show collect logs tab as first tab for the servers that are not started
-          @record = @selected_server = MiqServer.find(from_cid(x_node.split("-").last).to_i)
-          @sb[:selected_server_id] = @selected_server.id
-          @sb[:selected_typ] = "miq_server"
-        end
+        @sb[:active_tab] = "diagnostics_collect_logs" # setting it to show collect logs tab as first tab for the servers that are not started
+        @record = @selected_server = MiqServer.find(x_node.split("-").last.to_i)
+        @sb[:selected_server_id] = @selected_server.id
+        @sb[:selected_typ] = "miq_server"
       end
       @right_cell_text = if my_server.id == @sb[:selected_server_id]
                            _("Diagnostics %{model} \"%{name}\" (current)") %
-                           {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                            :model => ui_lookup(:model => @selected_server.class.to_s)}
+                             {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                              :model => ui_lookup(:model => @selected_server.class.to_s)}
                          else
                            _("Diagnostics %{model} \"%{name}\"") %
-                           {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                            :model => ui_lookup(:model => @selected_server.class.to_s)}
+                             {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                              :model => ui_lookup(:model => @selected_server.class.to_s)}
                          end
     end
   end
@@ -921,9 +831,9 @@ module OpsController::Diagnostics
   def build_backup_schedule_options_for_select
     @backup_schedules = {}
     database_details
-    miq_schedules = MiqSchedule.where(:towhat => 'DatabaseBackup', :adhoc => nil)
+    miq_schedules = MiqSchedule.where(:resource_type => 'DatabaseBackup', :adhoc => nil)
     miq_schedules.sort_by { |s| s.name.downcase }.each do |s|
-      @backup_schedules[s.id] = s.name if s.towhat == "DatabaseBackup"
+      @backup_schedules[s.id] = s.name if s.resource_type == "DatabaseBackup"
     end
   end
 
@@ -943,15 +853,17 @@ module OpsController::Diagnostics
 
   # Method to build the server tree (parent is a zone or region instance)
   def build_server_tree(parent)
-    @sb[:parent_name] = parent.name
-    @sb[:parent_kls] = parent.class.name
-    @server_tree = @sb[:diag_tree_type] == "roles" ?
-                   TreeBuilderRolesByServer.new(:roles_by_server_tree, :roles_by_server, @sb, true, parent) :
-                   TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, parent)
-    if @sb[:diag_selected_id]
-      @record = @sb[:diag_selected_model].constantize.find(@sb[:diag_selected_id]) # Set the current record
-      @rec_status = @record.assigned_server_roles.find_by_active(true) ? "active" : "stopped" if @record.class == ServerRole
-    end
+    @server_tree = if @sb[:diag_tree_type] == "roles"
+                     TreeBuilderRolesByServer.new(:roles_by_server_tree, :roles_by_server, @sb, true, :root => parent)
+                   else
+                     TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, :root => parent)
+                   end
+
+    # Pull out the selected node from the tree state and store it in the sandbox for future use
+    prefix, @sb[:diag_selected_id] = x_node(@server_tree.name).split('-')
+    @sb[:diag_selected_model] = TreeBuilder.get_model_for_prefix(prefix)
+    @record = @sb[:diag_selected_model].constantize.find(@sb[:diag_selected_id]) # Set the current record
+    @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
   end
 
   # Get information for a node
@@ -968,18 +880,21 @@ module OpsController::Diagnostics
       @sb[:diag_selected_id] = nil
       diagnostics_set_form_vars
     when "svr"
-      @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
+      @record = @selected_server = MiqServer.find(x_node.downcase.split("-").last)
       @sb[:selected_server_id] = @selected_server.id
       diagnostics_set_form_vars
     end
   end
 
-  def diagnostics_build_tree
+  def build_diagnostics_tree
     TreeBuilderOpsDiagnostics.new("diagnostics_tree", "diagnostics", @sb)
   end
 
   def build_supported_depots_for_select
-    @supported_depots_for_select = FileDepot.supported_depots.values.sort
+    depots_for_select = FileDepot.supported_depots.values.sort
+    # S3 and Swift not currently supported for Log Collection
+    not_supported_depots = ["AWS S3", "OpenStack Swift"]
+    @supported_depots_for_select = depots_for_select - not_supported_depots
   end
 
   def set_credentials

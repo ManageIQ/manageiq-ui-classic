@@ -61,10 +61,6 @@ describe('scheduleFormController', function() {
       expect($scope.scheduleModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
     });
 
-    it('sets the logVerify to the log_verify returned from the http request', function() {
-      expect($scope.scheduleModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
     it('sets the scheduleName to the name returned from the http request', function() {
       expect($scope.scheduleModel.name).toEqual('scheduleName');
     });
@@ -86,7 +82,7 @@ describe('scheduleFormController', function() {
     });
 
     it('sets the scheduleDate', function() {
-      expect($scope.scheduleModel.start_date).toEqual(moment('01/01/2015').format('MM/DD/YYYY'));
+      expect($scope.scheduleModel.start_date).toEqual(moment.utc('01/01/2015').toDate());
     });
 
     it('sets the scheduleStartHour', function() {
@@ -145,7 +141,7 @@ describe('scheduleFormController', function() {
       });
 
       it('sets the scheduleDate to today', function() {
-        expect($scope.scheduleModel.start_date).toEqual(moment("01/02/2014").format('MM/DD/YYYY'));
+        expect($scope.scheduleModel.start_date).toEqual(moment("01/02/2014").toDate());
       });
 
       it('sets the scheduleTimerType to once', function() {
@@ -335,7 +331,7 @@ describe('scheduleFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', true);
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', $scope.scheduleModel);
     });
   });
 
@@ -352,7 +348,7 @@ describe('scheduleFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', true);
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/schedule_edit/new?button=save', $scope.scheduleModel);
     });
   });
 
@@ -644,7 +640,7 @@ describe('scheduleFormController', function() {
     });
   });
 
-  describe('#sambaBackup', function() {
+  describe('#credsProtocol', function() {
     describe('when the action type is db_backup', function() {
       beforeEach(function() {
         $scope.scheduleModel.action_typ = 'db_backup';
@@ -656,20 +652,30 @@ describe('scheduleFormController', function() {
         });
 
         it('returns true', function() {
-          expect($scope.sambaBackup()).toBe(true);
+          expect($scope.credsProtocol()).toBe(true);
         });
       });
 
-      describe('when the log protocol is not Samba', function() {
+      describe('when the log protocol is S3', function() {
+        beforeEach(function() {
+          $scope.scheduleModel.log_protocol = 'AWS S3';
+        });
+
+        it('returns true', function() {
+          expect($scope.credsProtocol()).toBe(true);
+        });
+      });
+
+      describe('when the log protocol is not Samba or S3', function() {
         it('returns false', function() {
-          expect($scope.sambaBackup()).toBe(false);
+          expect($scope.credsProtocol()).toBe(false);
         });
       });
     });
 
     describe('when the action type is not db_backup', function() {
       it('returns false', function() {
-        expect($scope.sambaBackup()).toBe(false);
+        expect($scope.credsProtocol()).toBe(false);
       });
     });
   });
@@ -751,7 +757,6 @@ describe('scheduleFormController', function() {
         '<input ng-model="scheduleModel.uri" name="uri" required text />' +
         '<input ng-model="scheduleModel.log_userid" name="log_userid" required text />' +
         '<input ng-model="scheduleModel.log_password" name="log_password" required text />' +
-        '<input ng-model="scheduleModel.log_verify" name="log_verify" required text />' +
         '</form>'
       );
 
@@ -763,7 +768,6 @@ describe('scheduleFormController', function() {
       $scope.angularForm.uri.$setViewValue('abc');
       $scope.angularForm.log_userid.$setViewValue('abcuser');
       $scope.angularForm.log_password.$setViewValue('abcpassword');
-      $scope.angularForm.log_verify.$setViewValue('abcpassword');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {

@@ -1,4 +1,3 @@
-# rubocop: disable ClassLength
 class TreeBuilderPolicySimulation < TreeBuilder
   # exp_build_string method needed
   include ApplicationController::ExpressionHtml
@@ -14,21 +13,16 @@ class TreeBuilderPolicySimulation < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:lazy => false, :full_ids => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true, :cookie_prefix => 'edit_')
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def root_options
     {
-      :title       => ViewHelper.content_tag(:strong, @root_name),
-      :tooltip     => @root_name,
-      :icon        => 'pficon pficon-virtual-machine',
-      :cfmeNoClick => true
+      :text       => ViewHelper.content_tag(:strong, @root_name),
+      :tooltip    => @root_name,
+      :icon       => 'pficon pficon-virtual-machine',
+      :selectable => false
     }
   end
 
@@ -47,18 +41,18 @@ class TreeBuilderPolicySimulation < TreeBuilder
   end
 
   def x_get_tree_roots(count_only = false, _options = {})
-    if @data.present?
-      nodes = reject_na_nodes(@data).map do |node|
-        {:id          => node['id'],
-         :text        => prefixed_title(_('Policy Profile'), node['description']),
-         :icon        => node_icon(node["result"]),
-         :tip         => node['description'],
-         :cfmeNoClick => true,
-         :policies    => node['policies']}
-      end
-    else
-      nodes = [{:id => nil, :text => _("Items out of scope"), :icon => 'fa fa-ban', :cfmeNoClick => true}]
-    end
+    nodes = if @data.present?
+              reject_na_nodes(@data).map do |node|
+                {:id         => node['id'],
+                 :text       => prefixed_title(_('Policy Profile'), node['description']),
+                 :icon       => node_icon(node["result"]),
+                 :tip        => node['description'],
+                 :selectable => false,
+                 :policies   => node['policies']}
+              end
+            else
+              [{:id => nil, :text => _("Items out of scope"), :icon => 'fa fa-ban', :selectable => false}]
+            end
     count_only_or_objects(count_only, nodes)
   end
 
@@ -85,26 +79,26 @@ class TreeBuilderPolicySimulation < TreeBuilder
   def policy_nodes(parent)
     parent[:policies].reject { |node| skip_node?(node) }.sort_by { |a| a["description"] }.map do |node|
       active_caption = get_active_caption(node)
-      {:id          => node['id'],
-       :text        => prefixed_title(_('Policy%{caption}') % {:caption => active_caption}, node['description']),
-       :icon        => node_icon(node["result"]),
-       :tip         => node['description'],
-       :scope       => node['scope'],
-       :conditions  => node['conditions'],
-       :cfmeNoClick => true}
+      {:id         => node['id'],
+       :text       => prefixed_title(_('Policy%{caption}') % {:caption => active_caption}, node['description']),
+       :icon       => node_icon(node["result"]),
+       :tip        => node['description'],
+       :scope      => node['scope'],
+       :conditions => node['conditions'],
+       :selectable => false}
     end
   end
 
   def condition_node(parent)
-    nodes = reject_na_nodes parent[:conditions]
+    nodes = reject_na_nodes(parent[:conditions])
     nodes = nodes.sort_by { |a| a["description"] }.map do |node|
-      {:id          => node['id'],
-       :text        => prefixed_title(_('Condition'), node['description']),
-       :icon        => node_icon(node["result"]),
-       :tip         => node['description'],
-       :scope       => node['scope'],
-       :expression  => node["expression"],
-       :cfmeNoClick => true}
+      {:id         => node['id'],
+       :text       => prefixed_title(_('Condition'), node['description']),
+       :icon       => node_icon(node["result"]),
+       :tip        => node['description'],
+       :scope      => node['scope'],
+       :expression => node["expression"],
+       :selectable => false}
     end
     nodes.compact
   end
@@ -112,20 +106,20 @@ class TreeBuilderPolicySimulation < TreeBuilder
   def scope_node(parent)
     icon = parent[:scope]["result"] ? "pficon pficon-ok" : "fa fa-ban"
     text, tip = exp_build_string(parent[:scope])
-    {:id => nil, :text => prefixed_title(_('Scope'), text), :icon => icon, :tip => tip, :cfmeNoClick => true}
+    {:id => nil, :text => prefixed_title(_('Scope'), text), :icon => icon, :tip => tip, :selectable => false}
   end
 
   def expression_node(parent)
     icon = parent[:expression]["result"] ? "pficon pficon-ok" : "fa fa-ban"
     text, tip = exp_build_string(parent[:expression])
-    {:id => nil, :text => prefixed_title(_('Expression'), text), :icon => icon, :tip => tip, :cfmeNoClick => true}
+    {:id => nil, :text => prefixed_title(_('Expression'), text), :icon => icon, :tip => tip, :selectable => false}
   end
 
   def get_correct_node(parent, node_name)
     if node_name == :scope
-      scope_node parent
+      scope_node(parent)
     elsif node_name == :expression
-      expression_node parent
+      expression_node(parent)
     end
   end
 
@@ -137,8 +131,8 @@ class TreeBuilderPolicySimulation < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     nodes = []
-    nodes.concat(policy_nodes(parent)) unless parent[:policies].blank?
-    nodes.concat(condition_node(parent)) unless parent[:conditions].blank?
+    nodes.concat(policy_nodes(parent)) if parent[:policies].present?
+    nodes.concat(condition_node(parent)) if parent[:conditions].present?
     push_node(parent, :scope, nodes)
     push_node(parent, :expression, nodes)
     count_only_or_objects(count_only, nodes)

@@ -1,18 +1,13 @@
 class TreeBuilderPxeImageTypes < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true, :leaf => "PxeImageType"}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All System Image Types"),
+      :text    => t = _("All System Image Types"),
       :tooltip => t
     }
   end

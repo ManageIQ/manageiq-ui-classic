@@ -1,5 +1,5 @@
 describe('tenantQuotaFormController', function() {
-  var $scope, $controller, $httpBackend, tenantType, miqService;
+  var $scope, vm, $httpBackend, tenantType, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -11,26 +11,23 @@ describe('tenantQuotaFormController', function() {
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
-    $httpBackend = _$httpBackend_;
-    $controller = _$controller_('tenantQuotaFormController', {
-      $scope: $scope,
-      tenantQuotaFormId: 1000000000001,
-      tenantType: '',
-      miqService: miqService
-    });
-  }));
-
-  beforeEach(inject(function(_$controller_) {
     var tenantQuotaFormResponse = {
       name: 'Test tenant',
       quotas: {
         cpu_allocated:{unit:'mhz', format: 'mhz', text_modifier: 'Mhz', description:'Allocated CPU in Mhz',value: 1024.0},
         mem_allocated:{unit: 'bytes', format: 'gigabytes_human', text_modifier: 'GB', description:'Allocated Memory in GB', value: 4096.0 * 1024 *1024 *1024},
         storage_allocated: {unit: 'bytes', format: "gigabytes_human", text_modifier: 'GB', description: 'Allocated Storage in GB', value: null}
-        }
-      };
-      $httpBackend.whenGET('/ops/tenant_quotas_form_fields/1000000000001').respond(tenantQuotaFormResponse);
-      $httpBackend.flush();
+      }
+    };
+    $httpBackend = _$httpBackend_;
+    $httpBackend.whenGET('/ops/tenant_quotas_form_fields/1000000000001').respond(tenantQuotaFormResponse);
+    vm = _$controller_('tenantQuotaFormController', {
+      $scope: $scope,
+      tenantQuotaFormId: 1000000000001,
+      tenantType: '',
+      miqService: miqService
+    });
+    $httpBackend.flush();
   }));
 
   afterEach(function() {
@@ -45,10 +42,10 @@ describe('tenantQuotaFormController', function() {
         mem_allocated:{unit: 'bytes', format: 'gigabytes_human', text_modifier: 'GB', description:'Allocated Memory in GB', value: 4096.0, enforced:true, valpattern:/^\s*(?=.*[1-9])\d*(?:\.\d{1,6})?\s*$/},
         storage_allocated: {unit: 'bytes', format: "gigabytes_human", text_modifier: 'GB', description: 'Allocated Storage in GB', value: null, enforced:false, valpattern:/^\s*(?=.*[1-9])\d*(?:\.\d{1,6})?\s*$/}
       };
-      expect($scope.tenantQuotaModel.quotas).toEqual(quotas);
+      expect(vm.tenantQuotaModel.quotas).toEqual(quotas);
     });
     it('sets the tenant name to the value returned via the http request', function() {
-      expect($scope.tenantQuotaModel.name).toEqual('Test tenant');
+      expect(vm.tenantQuotaModel.name).toEqual('Test tenant');
     });
   });
 

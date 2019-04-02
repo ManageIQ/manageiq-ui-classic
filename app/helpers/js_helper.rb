@@ -9,16 +9,6 @@ module JsHelper
     'miqSparkleOff();'
   end
 
-  # replacement for app/views/shared/ajax/_tree_lock_unlock.js.erb
-  def tree_lock(tree_var, lock = true)
-    bool_str = (!!lock).to_s
-    element = "#{tree_var}_div"
-    "
-      miqTreeObject('#{j_str(tree_var)}').#{lock ? 'disable' : 'enable'}All({silent: true, keepState: true});
-      #{javascript_dim(element, bool_str)}
-    ".html_safe
-  end
-
   # safe variant of j/escape_javascript that calls .to_s to work with non-string values
   def j_str(value)
     j(value.to_s)
@@ -34,10 +24,6 @@ module JsHelper
 
   def javascript_highlight(element, status)
     "miqHighlight('##{j_str(element)}', #{j_str(status)});".html_safe
-  end
-
-  def javascript_dim(element, status)
-    "miqDimDiv('##{j_str(element)}', #{j_str(status)});".html_safe
   end
 
   def javascript_disable_field(element)
@@ -89,14 +75,15 @@ module JsHelper
   def js_build_calendar(options = {})
     skip_days = options[:skip_days].nil? ? 'undefined' : options[:skip_days].to_a.to_json
 
-    <<EOD
-ManageIQ.calendar.calDateFrom = #{js_format_date(options[:date_from])};
-ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
-ManageIQ.calendar.calSkipDays = #{skip_days};
-miqBuildCalendar();
+    <<~EOD
+      ManageIQ.calendar.calDateFrom = #{js_format_date(options[:date_from])};
+      ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
+      ManageIQ.calendar.calSkipDays = #{skip_days};
+      miqBuildCalendar();
 EOD
   end
 
+  # JSONP request access prevention
   def javascript_prologue
     'throw "error";'
   end

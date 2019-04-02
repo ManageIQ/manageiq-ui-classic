@@ -1,8 +1,11 @@
 class EmsPhysicalInfraController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon # common methods for EmsInfra/Cloud controllers
-  include Mixins::EmsCommonAngular
+  include Mixins::EmsCommon # common methods for EmsInfra/Cloud controllers
+  include Mixins::EmsCommon::Angular
+  include Mixins::GenericSessionMixin
+  include Mixins::DashboardViewMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -28,21 +31,44 @@ class EmsPhysicalInfraController < ApplicationController
   def ems_physical_infra_form_fields
     assert_privileges("#{permission_prefix}_edit")
     @ems = model.new if params[:id] == 'new'
-    @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
+    @ems = find_record_with_rbac(model, params[:id]) if params[:id] != 'new'
 
     render :json => {
-      :name                => @ems.name,
-      :emstype             => @ems.emstype,
-      :zone                => zone,
-      :provider_id         => @ems.provider_id ? @ems.provider_id : "",
-      :hostname            => @ems.hostname,
-      :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
-      :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-      :provider_region     => @ems.provider_region,
-      :default_userid      => @ems.authentication_userid ? @ems.authentication_userid : "",
-      :ems_controller      => controller_name,
-      :default_auth_status => default_auth_status,
+      :name                      => @ems.name,
+      :emstype                   => @ems.emstype,
+      :zone                      => zone,
+      :provider_id               => @ems.provider_id ? @ems.provider_id : "",
+      :hostname                  => @ems.hostname,
+      :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
+      :default_api_port          => @ems.connection_configurations.default.endpoint.port,
+      :provider_region           => @ems.provider_region,
+      :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+      :ems_controller            => controller_name,
+      :default_auth_status       => default_auth_status,
+      :default_security_protocol => @ems.security_protocol || "",
     }
+  end
+
+  def display_physical_servers_with_host
+    nested_list(PhysicalServer, :named_scope => :with_hosts, :breadcrumb_title => _("Physical Servers with Host"))
+  end
+
+  def launch_console
+    @ems = find_record_with_rbac(model, params[:id])
+    $log.info('Console URL - ' + @ems.console_url.to_s)
+    javascript_open_window(@ems.console_url.to_s)
+  end
+
+  def change_password_ems_physical_infra_path(id = nil)
+    "/ems_physical_infra/change_password/#{id}"
+  end
+
+  # This method handle view objects of page
+  # +/ems_physical_infra/change_password/<id>+
+  def change_password
+    @record = find_record_with_rbac(model, params[:id])
+    @title = _("Change Password for Physical Infrasctructure Provider '#{@record.name}'")
+    @in_a_form = true # to show the page on all content frame
   end
 
   private
@@ -53,15 +79,22 @@ class EmsPhysicalInfraController < ApplicationController
     ems_path(ems.id, options)
   end
 
-  def log_and_flash_message(message)
-    add_flash(message, :error)
-    $log.error(message)
-  end
-
   def restful?
     true
   end
   public :restful?
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Physical Infrastructure")},
+        {:title => _("Providers")},
+        {:url   => controller_url, :title => _("Physical Infrastructure Providers")},
+      ],
+      :record_info => @ems,
+    }.compact
+  end
 
   menu_section :phy
   has_custom_buttons

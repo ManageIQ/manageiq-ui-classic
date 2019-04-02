@@ -1,0 +1,45 @@
+#Report title
+title: Physical Network Ports
+
+#Menu name
+name: Physical Network Port
+
+
+db: PhysicalNetworkPort
+
+
+# Columns to fetch from main table
+cols:
+- port_name
+- port_type
+- peer_mac_address
+
+col_order:
+- port_name
+- port_type
+- peer_mac_address
+
+col_formats:
+
+headers:
+- Port Name
+- Port Type
+- Peer Mac Address
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- port_name
+
+group: n
+
+
+graph:
+
+
+dims:

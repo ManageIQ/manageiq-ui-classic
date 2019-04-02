@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'bundler/gem_tasks'
+require 'English'
 
 require 'manageiq-ui-classic'
 ManageIQ::UI::Classic::Engine.load_tasks
@@ -25,17 +26,36 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   end
 end
 
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+# Only load the jasmine tasks if we are within this repo, otherwise, the bundle
+# won't contain the jasmine gem (i.e., from manageiq)
+if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+  require './config/jasmine_overrides'
+end
 
 namespace :spec do
-  namespace :javascript do
-    desc "Setup environment for javascript specs"
-    task :setup
-  end
-
   desc "Run all javascript specs"
   task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
+
+  desc "Try to compile assets"
+  task :compile => ["app:assets:precompile"]
+
+  desc "Run Jest tests"
+  task :jest do
+    system('yarn test')
+    exit $CHILD_STATUS.exitstatus
+  end
+
+  namespace :jest do
+    desc 'Run Jest tests with node debugger'
+    task :debug do
+      puts
+      puts "open your chrome://inspect/#devices on your chrome based browser (see https://facebook.github.io/jest/docs/en/troubleshooting.html for more details)"
+      puts
+      system('node --inspect-brk node_modules/.bin/jest --runInBand')
+    end
+  end
 end
 
 task :default => :spec

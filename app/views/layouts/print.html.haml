@@ -1,0 +1,31 @@
+= render :partial => 'layouts/doctype'
+%html
+  %head
+    %title= @options[:title]
+    = miq_favicon_link_tag
+    = stylesheet_link_tag 'print', :media => 'all'
+    -# Mock the gettext calls in javascript
+    :javascript
+      window.__ = function (data) { return data };
+    = javascript_dependencies
+    %style
+      @media all { @page { size: #{pdf_page_size_style}; } }
+  %body
+    - if @options[:quadicon]
+      .quadicon
+        = render :partial => 'shared/quadicon', :locals => {:record => @record}
+    %h1.center=@options[:title]
+    = yield
+    .center=@options[:run_date]
+
+    -# Opening the browser's printing dialog
+    :javascript
+      document.addEventListener('DOMContentLoaded', function() {
+        window.setTimeout(function() {
+          window.print();
+        });
+      });
+
+      window.onafterprint = function() {
+        window.close();
+      };

@@ -1,78 +1,40 @@
 class GenericObjectController < ApplicationController
   before_action :check_privileges
+  before_action :get_session_data
 
-  def create
-    generic_object_definition = GenericObjectDefinition.new
+  after_action :cleanup_action
+  after_action :set_session_data
 
-    update_model_fields(generic_object_definition)
-    generic_object_definition.save!
+  include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
+  include Mixins::GenericButtonMixin
 
-    render :json => {:message => _("Generic Object Definition created successfully")}
+  menu_section :automate
+  toolbar :generic_object
+
+  def self.model
+    GenericObject
   end
 
-  def save
-    generic_object_definition = GenericObjectDefinition.find(params[:id])
-
-    update_model_fields(generic_object_definition)
-
-    render :json => {:message => _("Generic Object Definition saved successfully")}
+  def self.display_methods
+    %w(custom_button_events)
   end
 
-  def delete
-    generic_object_definition = GenericObjectDefinition.find(params[:id])
-
-    generic_object_definition.delete
-
-    render :json => {:message => _("Generic Object Definition deleted")}
+  def display_methods(record)
+    record.property_associations.keys
   end
 
-  def explorer
-    @layout = "generic_object"
-
-    allowed_features = ApplicationController::Feature.allowed_features(features)
-    @accords = allowed_features.map(&:accord_hash)
-    @trees = TreeBuilderGenericObject.new.nodes
-
-    @explorer = true
-
-    render :layout => "application"
-  end
-
-  def all_object_data
-    all_generic_object_definitions = GenericObjectDefinition.all.select(%w(id name description))
-
-    render :json => all_generic_object_definitions.to_json
-  end
-
-  def object_data
-    generic_object_definition = GenericObjectDefinition.find(params[:id])
-
-    render :json => {
-      :id          => generic_object_definition.id,
-      :name        => generic_object_definition.name,
-      :description => generic_object_definition.description
-    }
-  end
-
-  def tree_data
-    tree_data = TreeBuilderGenericObject.new.nodes
-
-    render :json => {:tree_data => tree_data}
+  def display_nested_generic(display)
+    return unless @record.property_associations.key?(display)
+    nested_list(@record.generic_object_definition.properties[:associations][display], :association => display)
   end
 
   private
 
-  def update_model_fields(generic_object_definition)
-    generic_object_definition.update_attributes(:name => params[:name], :description => params[:description])
+  def textual_group_list
+    [%i(go_properties attribute_details_list associations methods go_relationships)]
   end
 
-  def features
-    [ApplicationController::Feature.new_with_hash(:role        => "generic_object_explorer",
-                                                  :role_any    => true,
-                                                  :name        => :generic_object_explorer,
-                                                  :accord_name => "generic_object_definition_accordion",
-                                                  :title       => _("Generic Objects"))]
-  end
-
-  menu_section :automate
+  helper_method :textual_group_list
 end

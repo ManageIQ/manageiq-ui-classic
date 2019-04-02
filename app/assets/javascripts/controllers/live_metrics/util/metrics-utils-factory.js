@@ -1,6 +1,20 @@
 angular.module('miq.util').factory('metricsUtilsFactory', function() {
-  return function (dash) {
+  return function(dash, $timeout) {
     var UNKNOWN_ERROR_STR = __('Something is wrong, try reloading the page');
+
+    function calcDataDifferentials(data) {
+      var outData = [];
+
+      data.forEach(function(value, i) {
+        if ((value !== null) && (data[i + 1] !== null) && (typeof data[i + 1] !== 'undefined')) {
+          outData[i] = data[i + 1] - value;
+        } else {
+          outData[i] = null;
+        }
+      });
+
+      return outData;
+    }
 
     var checkResponse = function(response) {
       if (response.error || response.data.error || typeof response.data === 'string') {
@@ -9,36 +23,48 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       }
 
       return true;
-    }
+    };
 
-    var getMetricTagsData = function(response) {
-      'use strict';
-      dash.tagsLoaded = true;
+    var setFilterOptionsAlpha = function(tagsData) {
+      for (var i = 0; i < tagsData.length; i++) {
+        var tagItem = tagsData[i];
 
-      if (checkResponse(response) === false) {
-        return;
+        dash.filterConfig.fields.push(
+          {
+            id: tagItem.tag,
+            title: tagItem.tag,
+            placeholder: sprintf(__('Filter by %s...'), tagItem.tag),
+            filterType: 'alpha',
+          });
       }
+    };
 
-      var data = response.data;
+    var setFilterOptionsSelect = function(tagsData) {
+      for (var i = 0; i < tagsData.length; i++) {
+        var tagItem = tagsData[i];
 
-      if (data && angular.isArray(data.metric_tags)) {
-        data.metric_tags.sort();
-        for (var i = 0; i < data.metric_tags.length; i++) {
-          dash.filterConfig.fields.push(
-            {
-              id: data.metric_tags[i],
-              title: data.metric_tags[i],
-              placeholder: sprintf(__('Filter by %s...'), data.metric_tags[i]),
-              filterType: 'alpha',
-            });
-        }
+        dash.filterConfig.fields.push(
+          {
+            id: tagItem.tag,
+            title: tagItem.tag,
+            placeholder: sprintf(__('Filter by %s...'), tagItem.tag),
+            filterType: 'select',
+            filterValues: tagItem.options,
+          });
+      }
+    };
+
+    var setFilterOptions = function() {
+      dash.filterConfig.fields = [];
+
+      if (dash.filterType === 'simple') {
+        setFilterOptionsSelect(dash.metricTags);
       } else {
-        // No filters available, apply without filtering
-        dash.filterConfig.fields = [];
+        setFilterOptionsAlpha(dash.metricTags);
       }
-    }
+    };
 
-    var getContainerParamsData = function(metricId, currentItem, response) {
+    var getContainerParamsData = function(currentItem, response) {
       'use strict';
       dash.loadCount++;
       if (dash.loadCount >= dash.selectedItems.length) {
@@ -49,62 +75,138 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         return;
       }
 
-      var data  = response.data.data;
-      var xData = data.map(function(d) { return d.start; });
-      var yData = data.map(function(d) { return d.avg || null; });
+      currentItem.responseData  = response.data.data.slice();
+      drawOneGraph(currentItem);
+    };
+
+    function redrawGraph() {
+      $timeout(function() {
+        angular.forEach(dash.selectedItems, drawOneGraph);
+      }, 10);
+    }
+
+    function drawOneGraph(currentItem) {
+      var switchObj = angular.element('#rate-switch');
+      var showRate = switchObj.bootstrapSwitch('state');
+      var xData = currentItem.responseData.map(function(d) {
+        return d.start;
+      });
+      var yData = currentItem.responseData.map(function(d) {
+        return d.avg || null;
+      });
+
+      // if diff checkbox is on, do diff
+      if (showRate) {
+        yData = calcDataDifferentials(yData);
+      }
 
       xData.unshift('time');
-      yData.unshift(metricId);
+      yData.unshift(currentItem.id);
 
       dash.chartData.xData = xData;
-      dash.chartData['yData'+ currentItem] = yData;
+      dash.chartData['yData' + currentItem.index] = yData;
 
       dash.chartDataInit = true;
     }
 
-    var getContainerDashboardData = function(item, response) {
+    var timeTooltip = function(data) {
+      return '<div class="tooltip-inner">' +
+        moment(data[0].x).format('MM/DD hh:mm') + ' : ' +
+        data[0].value.toFixed(2) + '</div>';
+    };
+
+    var metricPrefix = function(maxValue, units) {
+      var metricPrefixes;
+      var baseUnit;
+      var baseUnitMultiplier;
+      var baseUnitMaxValue;
+      var exp;
+
+      // get base unit for special case units
+      switch (units) {
+        case 'millisecond':
+        case 'ms':
+          baseUnitMultiplier = Math.pow(10, -3);
+          baseUnit = 's';
+          break;
+        case 'ns':
+          baseUnitMultiplier = Math.pow(10, -9);
+          baseUnit = 's';
+          break;
+        default:
+          baseUnitMultiplier = 1;
+          baseUnit = units;
+      }
+
+      // adjust to base units and calc exponent
+      baseUnitMaxValue = maxValue * baseUnitMultiplier;
+      exp = ~~(Math.log10(baseUnitMaxValue) / 3) * 3;
+
+      // calc output unit label and multiplier
+      metricPrefixes = {
+        3: {unitLabel: 'K' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -3)},
+        6: {unitLabel: 'M' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -6)},
+        9: {unitLabel: 'G' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -9)},
+        12: {unitLabel: 'T' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -12)},
+        15: {unitLabel: 'P' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -15)},
+      };
+
+      return metricPrefixes[exp] || {unitLabel: baseUnit, multiplier: baseUnitMultiplier};
+    };
+
+    var getContainerDashboardData = function(item) {
       'use strict';
-      if (checkResponse(response) === false) {
+      // it no data return gracefully
+      if (!item.data) {
         return;
       }
 
-      var data = response.data.data;
+      // make sure we have tags
+      if (!item.tags) {
+        item.tags = {};
+      }
 
-      item.lastValues = {};
-      angular.forEach(data, function(d) {
-        item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
+      item.data = item.data.sort(function(a, b) {
+        return a.timestamp > b.timestamp;
       });
+      var maxValue = Math.max.apply(Math, item.data.map(function(o) {
+        return o.value;
+      }));
+      var m = metricPrefix(maxValue, item.tags.units || '');
 
-      if (data.length > 0) {
-        var lastValue = data[0].value;
-        item.last_value = numeral(lastValue).format('0,0.00a');
-        item.last_timestamp = data[0].timestamp;
-      } else {
-        item.last_value = '-';
-        item.last_timestamp = '-';
-      }
+      var id = _.uniqueId('ChartId_');
+      var label = item.tags.descriptor_name || item.id;
+      var units = m.unitLabel;
 
-      if (data.length > 1) {
-        var prevValue = data[1].value;
-        if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
-          var change;
-          if (prevValue !== 0 && lastValue !== 0) {
-            change = Math.round((lastValue - prevValue) / lastValue);
-          } else if (lastValue !== 0) {
-            change = 1;
-          } else {
-            change = 0;
-          }
-          item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
-        }
-      }
-    }
+      item.lastValues = {
+        total: '100',
+        xData: ['dates'],
+        yData: [units],
+      };
+      angular.forEach(item.data, function(d) {
+        item.lastValues.xData.push(new Date(d.timestamp));
+        item.lastValues.yData.push((d.value * m.multiplier).toFixed(2));
+      });
+      item.lastValue = '' + item.lastValues.yData[item.data.length] + ' ' + units;
+
+      item.configTrend = {
+        chartId: id,
+        title: label,
+        layout: 'compact',
+        valueType: 'actual',
+        units: units,
+        tooltipFn: timeTooltip,
+      };
+    };
 
     return {
-      getMetricTagsData: getMetricTagsData,
       getContainerParamsData: getContainerParamsData,
       getContainerDashboardData: getContainerDashboardData,
-      checkResponse: checkResponse
-    }
-  }
+      checkResponse: checkResponse,
+      setFilterOptions: setFilterOptions,
+      calcDataDifferentials: calcDataDifferentials,
+      redrawGraph: redrawGraph,
+      metricPrefix: metricPrefix,
+    };
+  };
 });

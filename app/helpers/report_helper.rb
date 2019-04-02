@@ -1,4 +1,6 @@
 module ReportHelper
+  include_concern 'Editor'
+
   STYLE_CLASSES = {
     :miq_rpt_red_text    => _("Red Text"),
     :miq_rpt_red_bg      => _("Red Background"),
@@ -14,7 +16,9 @@ module ReportHelper
     :miq_rpt_purple_bg   => _("Purple Background"),
     :miq_rpt_gray_text   => _("Gray Text"),
     :miq_rpt_gray_bg     => _("Gray Background")
-  }
+  }.freeze
+
+  NOTHING_STRING = "<<< #{_('Nothing')} >>>".freeze
 
   def visibility_options(widget)
     typ = widget.visibility.keys.first
@@ -74,7 +78,7 @@ module ReportHelper
     case @edit[:new][:perf_interval]
     when 'hourly'
       end_array += [
-        ['Today', '0'],
+        %w(Today 0),
         ['Yesterday', 1.day.to_s]
       ]
       5.times { |i| end_array.push(["#{i + 2} days ago", (i + 2).days.to_s]) }
@@ -82,7 +86,7 @@ module ReportHelper
       5.times { |i| end_array.push(["#{pluralize(i + 2, 'month')} ago", (i + 1).months.to_s]) }
     when 'daily'
       end_array += [
-        ['Yesterday', '0'] # Start with yesterday, since we only allow full 24 hour days in daily trending
+        %w(Yesterday 0) # Start with yesterday, since we only allow full 24 hour days in daily trending
       ]
       5.times { |i| end_array.push(["#{i + 2} days ago", (i + 1).days.to_s]) }
       3.times { |i| end_array.push(["#{pluralize((i + 1), 'week')} ago", ((i + 1).weeks - 1.day).to_s]) }

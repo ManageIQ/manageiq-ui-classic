@@ -7,6 +7,12 @@ class AutomationManagerController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::ExplorerPresenterMixin
+  include Mixins::EmsCommon::Core
+  include Mixins::EmsCommon::PauseResume
+  include Mixins::BreadcrumbsMixin
+
+  menu_section :at
 
   def self.model
     ManageIQ::Providers::AutomationManager
@@ -16,129 +22,56 @@ class AutomationManagerController < ApplicationController
     @table_name ||= "automation_manager"
   end
 
-  CM_X_BUTTON_ALLOWED_ACTIONS = {
-    'configscript_service_dialog' => :configscript_service_dialog,
-  }.freeze
-
   def self.model_to_name(provmodel)
     if provmodel.include?("ManageIQ::Providers::AnsibleTower")
       Dictionary.gettext('ansible_tower', :type => :ui_title, :translate => false)
     end
   end
 
-  def model_to_name(provmodel)
-    AutomationManagerController.model_to_name(provmodel)
+  def concrete_model
+    ManageIQ::Providers::AnsibleTower::AutomationManager
   end
 
   def managed_group_kls
-    ManageIQ::Providers::AutomationManager::InventoryGroup
+    ManageIQ::Providers::AutomationManager::InventoryRootGroup
   end
 
   def manager_prefix
     'automation_manager'
   end
 
-  def new
-    assert_privileges("automation_manager_add_provider")
-    @provider_manager = ManageIQ::Providers::AnsibleTower::AutomationManager.new
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    render_form
-  end
-
-  def edit
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    case params[:button]
-    when "cancel"
-      cancel_provider
-    when "save"
-      add_provider
-      save_provider
-    else
-      assert_privileges("automation_manager_edit_provider")
-      manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
-      @providerdisplay_type = model_to_name(@provider_manager.type)
-      render_form
-    end
-  end
-
-  def delete
-    assert_privileges("automation_manager_delete_provider")
-    checked_items = find_checked_items
-    checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = ManageIQ::Providers::AutomationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
-    if providers.empty?
-      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
-    else
-      providers.each do |provider|
-        AuditEvent.success(
-          :event        => "provider_record_delete_initiated",
-          :message      => "[#{provider.name}] Record delete initiated",
-          :target_id    => provider.id,
-          :target_class => provider.type,
-          :userid       => session[:userid]
-        )
-        provider.destroy_queue
-      end
-
-      add_flash(n_("Delete initiated for %{count} Provider",
-                   "Delete initiated for %{count} Providers",
-                   providers.length) % {:count => providers.length})
-    end
-    replace_right_cell
-  end
-
-  def refresh
-    assert_privileges("automation_manager_refresh_provider")
-    @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
-    replace_right_cell
+  def privilege_prefix
+    'automation_manager'
   end
 
   def tagging
+    @explorer ||= true
     case x_active_accord
     when :automation_manager_providers
-      assert_privileges("automation_manager_provider_configured_system_tag")
-      tagging_edit('ConfiguredSystem', false)
+      assert_privileges("automation_manager_provider_tag")
+      tagging_edit(class_for_provider_node.to_s, false)
     when :automation_manager_cs_filter
       assert_privileges("automation_manager_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
       assert_privileges("automation_manager_configuration_script_tag")
-      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
+      tagging_edit('ConfigurationScript', false)
     end
     render_tagging_form
   end
 
-  def automation_manager_form_fields
-    assert_privileges("automation_manager_edit_provider")
-    # set value of read only zone text box, when there is only single zone
-    if params[:id] == "new"
-      return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
-    end
-
-    manager = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    provider = manager.provider
-
-    render :json => {:name       => provider.name,
-                     :zone       => provider.zone.name,
-                     :url        => provider.url,
-                     :verify_ssl => provider.verify_ssl,
-                     :log_userid => provider.authentications.first.userid}
-  end
-
   def load_or_clear_adv_search
-    adv_search_build("ConfiguredSystem")
+    adv_search_build(configuration_manager_scripts_tree(x_active_tree))
     session[:edit] = @edit
     @explorer = true
 
-    if x_active_tree != :automation_manager_cs_filter_tree || x_node == "root"
+    if !filtering? || x_node == "root"
       listnav_search_selected(0)
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_active_tree == :automation_manager_cs_filter_tree && @nodetype == "xx-csa"
-        search_id = @nodetype == "root" ? 0 : from_cid(id)
+      if filtering? && %w(xx-csa ms).include?(@nodetype)
+        search_id = id
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
@@ -161,41 +94,44 @@ class AutomationManagerController < ApplicationController
   end
 
   def tree_record
-    @record =
-      case x_active_tree
-      when :automation_manager_providers_tree  then automation_manager_providers_tree_rec
-      when :automation_manager_cs_filter_tree  then automation_manager_cs_filter_tree_rec
-      when :configuration_scripts_tree then configuration_scripts_tree_rec
+    @record = case x_active_tree
+              when :automation_manager_providers_tree then automation_manager_providers_tree_rec
+              when :automation_manager_cs_filter_tree then automation_manager_cs_filter_tree_rec
+              when :configuration_scripts_tree        then configuration_scripts_tree_rec
+              end
+  end
+
+  def class_for_provider_node
+    nodes = x_node.split('-')
+    case nodes.first
+    when "root"    then ManageIQ::Providers::AnsibleTower::AutomationManager
+    when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
+    when "f", "cs" then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    when "xx"      then
+      case nodes.second
+      when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
+      when "csa" then ConfiguredSystem
       end
+    end
   end
 
   def automation_manager_providers_tree_rec
-    nodes = x_node.split('-')
-    case nodes.first
-    when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
-    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
-    when "xx" then
-      case nodes.second
-      when "at"  then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-      when "csa" then find_record(ConfiguredSystem, params[:id])
-      end
-    end
+    find_record(class_for_provider_node, params[:id])
   end
 
   def automation_manager_cs_filter_tree_rec
     nodes = x_node.split('-')
     case nodes.first
     when "root", "xx" then find_record(ConfiguredSystem, params[:id])
-    when "ms"         then find_record(ConfiguredSystem, from_cid(params[:id]))
+    when "ms"         then find_record(ConfiguredSystem, params[:id])
     end
   end
 
   def configuration_scripts_tree_rec
     nodes = x_node.split('-')
     case nodes.first
-    when "root", "at"
-      find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
+    when "root", "at", "cf", "cw"
+      find_record(ConfigurationScript, params[:id])
     end
   end
 
@@ -211,18 +147,7 @@ class AutomationManagerController < ApplicationController
       return
     end
 
-    if @record.kind_of?(ConfiguredSystem)
-      rec_cls = "#{model_to_type_name(@record.ext_management_system.class.to_s)}_configured_system"
-    end
     return unless @display == 'main'
-    @button_group = case x_active_accord
-                    when :automation_manager_cs_filter
-                      rec_cls.to_s
-                    when :automation_manager_providers
-                      "automation_manager_#{rec_cls}"
-                    when :configuration_scripts
-                      @record.kind_of?(ConfigurationScript) ? "configuration_script" : "configuration_scripts"
-                    end
   end
 
   def configscript_service_dialog_submit
@@ -234,7 +159,28 @@ class AutomationManagerController < ApplicationController
     end
   end
 
+  def validate_before_save?
+    true
+  end
+
+  def providers_active_tree?
+    x_active_tree == :automation_manager_providers_tree
+  end
+
   private
+
+  def automation_manager_pause
+    pause_or_resume_emss(:pause => true)
+  end
+
+  def automation_manager_resume
+    pause_or_resume_emss(:resume => true)
+  end
+
+  def template_record?
+    @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow) || @record.kind_of?(ConfigurationScript)
+  end
+  helper_method :template_record?
 
   def textual_group_list
     [%i(properties tags)]
@@ -245,44 +191,30 @@ class AutomationManagerController < ApplicationController
     ManageIQ::Providers::AnsibleTower::Provider
   end
 
-  def find_or_build_provider
-    @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::AutomationManager, params[:id]).provider
-  end
-
   def features
     [
-      {:role     => "automation_manager_providers",
-       :role_any => true,
-       :name     => :automation_manager_providers,
-       :title    => _("Providers")},
-      {:role     => "automation_manager_configured_system",
-       :role_any => true,
-       :name     => :automation_manager_cs_filter,
-       :title    => _("Configured Systems")},
-      {:role     => "automation_manager_configuration_scripts_accord",
-       :role_any => true,
-       :name     => :configuration_scripts,
-       :title    => _("Job Templates")}
-    ].map do |hsh|
-      ApplicationController::Feature.new_with_hash(hsh)
-    end
+      {
+        :role     => "automation_manager_providers",
+        :role_any => true,
+        :name     => :automation_manager_providers,
+        :title    => _("Providers")
+      },
+      {
+        :role     => "automation_manager_configured_system",
+        :role_any => true,
+        :name     => :automation_manager_cs_filter,
+        :title    => _("Configured Systems")
+      },
+      {
+        :role     => "automation_manager_configuration_scripts_accord",
+        :role_any => true,
+        :name     => :configuration_scripts,
+        :title    => _("Templates")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
-  def build_automation_manager_tree(type, name)
-    tree = case name
-           when :automation_manager_providers_tree
-             TreeBuilderAutomationManagerProviders.new(name, type, @sb)
-           when :automation_manager_cs_filter_tree
-             TreeBuilderAutomationManagerConfiguredSystems.new(name, type, @sb)
-           else
-             TreeBuilderAutomationManagerConfigurationScripts.new(name, type, @sb)
-           end
-    instance_variable_set :"@#{name}", tree.tree_nodes
-    tree
-  end
-
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
 
@@ -293,20 +225,24 @@ class AutomationManagerController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-      provider_list(id, model)
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "ExtManagementSystem"
+      provider_list(id, "ManageIQ::Providers::AnsibleTower::AutomationManager")
     when "EmsFolder"
       inventory_group_node(id, model)
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
-    when "ConfigurationScript"
+    when "ConfigurationScript", "ConfigurationWorkflow"
       configuration_scripts_list(id, model)
     when "MiqSearch"
       miq_search_node
     else
       default_node
     end
-    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :automation_manager_cs_filter && @edit && @edit[:adv_search_applied]
+
+    # Edit right cell text if searching text
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w(ConfiguredSystem ConfigurationScript).exclude?(model)
+    # Edit right cell text if using filter
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && filtering? && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
@@ -315,6 +251,11 @@ class AutomationManagerController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
+    {:view => @view, :pages => @pages}
+  end
+
+  def filtering?
+    %w(automation_manager_cs_filter configuration_scripts).include?(x_tree[:type].to_s)
   end
 
   def provider_node(id, model)
@@ -325,35 +266,39 @@ class AutomationManagerController < ApplicationController
     elsif x_active_tree == :configuration_scripts_tree
       cs_provider_node(provider)
     else
+      @show_adv_search = false
       @no_checkboxes = true
-      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryGroup",
-                 :match_via_descendants => ConfiguredSystem,
-                 :where_clause          => ["ems_id IN (?)", provider.id]}
+      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
+                 :match_via_descendants => 'ConfiguredSystem',
+                 :named_scope           => [[:with_provider, provider.id]],
+                 :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
-      record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
-      @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
-                                                      :model => "#{ui_lookup(:tables => "inventory_group")} under #{record_model} Provider"}
+      record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
+      @right_cell_text = _("Inventory Groups under %{record_model} Provider \"%{name}\"") %
+        {:name => provider.name, :record_model => record_model}
     end
   end
 
   def cs_provider_node(provider)
-    options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
-               :match_via_descendants => ConfigurationScript,
-               :where_clause          => ["manager_id IN (?)", provider.id]}
+    options = {:model       => "ConfigurationScript",
+               :named_scope => [[:with_manager, provider.id]],
+               :gtl_dbname  => "automation_manager_configuration_scripts"}
+    @show_adv_search = true
     process_show_list(options)
-    @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
-                                                    :model => "#{ui_lookup(:tables => "job_templates")} under "}
+    @right_cell_text = _("Templates under \"%{name}\"") % {:name => provider.name}
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "ConfiguredSystem", :match_via_descendants => ConfiguredSystem}
-      options[:where_clause] = ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)]
+      @show_adv_search = false
+      options = {:model       => "ConfiguredSystem",
+                 :named_scope => [[:with_inventory_root_group, @inventory_group_record.id]],
+                 :gtl_dbname  => "automation_manager_configured_systems"}
       process_show_list(options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
       if @sb[:active_tab] == 'configured_systems'
@@ -367,60 +312,63 @@ class AutomationManagerController < ApplicationController
 
   def configuration_scripts_list(id, model)
     return configuration_script_node(id) if id
-    @listicon = "configuration_script"
+    @show_adv_search = true
     if x_active_tree == :configuration_scripts_tree
-      options = {:model => model.to_s}
-      @right_cell_text = _("All Ansible Tower Job Templates")
+      options = {:model      => model.to_s,
+                 :gtl_dbname => "configuration_scripts"}
+      @right_cell_text = _("All Ansible Tower Templates")
       process_show_list(options)
     end
   end
 
   def configuration_script_node(id)
-    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
+    @record = @configuration_script_record = find_record(ConfigurationScript, id)
+    @show_adv_search = false
     display_node(id, nil)
   end
 
   def default_node
     return unless x_node == "root"
+    @show_adv_search = true
     if x_active_tree == :automation_manager_providers_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager"}
+      options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager",
+                 :gtl_dbname => "automation_manager_providers"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Providers")
     elsif x_active_tree == :automation_manager_cs_filter_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
+      options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
+                 :gtl_dbname => "automation_manager_configured_systems"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"}
+      options = {:model      => "ConfigurationScript",
+                 :gtl_dbname => "automation_manager_configuration_scripts"}
       process_show_list(options)
-      @right_cell_text = _("All Ansible Tower Job Templates")
+      @right_cell_text = _("All Ansible Tower Templates")
     end
   end
 
+  def build_automation_manager_providers_tree(_type)
+    TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, :automation_manager_providers, @sb)
+  end
+
+  def build_automation_manager_cs_filter(_type)
+    TreeBuilderAutomationManagerConfiguredSystems.new(:automation_manager_cs_filter_tree, :automation_manager_cs_filter, @sb)
+  end
+
+  def build_configuration_scripts_tree(_type)
+    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, :configuration_scripts, @sb)
+  end
+
   def rebuild_trees(replace_trees)
-    trees = {}
-    if replace_trees
-      if replace_trees.include?(:automation_manager_providers)
-        trees[:automation_manager_providers] = build_automation_manager_tree(:automation_manager_providers,
-                                                                             :automation_manager_providers_tree)
-      end
-      if replace_trees.include?(:automation_manager_cs_filter)
-        trees[:automation_manager_cs_filter] = build_automation_manager_tree(:automation_manager_cs_filter,
-                                                                             :automation_manager_cs_filter_tree)
-      end
-      if replace_trees.include?(:configuration_scripts)
-        trees[:configuration_scripts] = build_automation_manager_tree(:configuration_scripts,
-                                                                      :configuration_scripts_tree)
-      end
-    end
-    trees
+    build_replaced_trees(replace_trees, %i(automation_manager_providers automation_manager_cs_filter configuration_scripts))
   end
 
   def leaf_record
     get_node_info(x_node)
     @delete_node = params[:id] if @replace_trees
     type, _id = parse_nodetype_and_id(x_node)
-    type && %w(ConfiguredSystem ConfigurationScript).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w(ConfiguredSystem ConfigurationScript ConfigurationWorkflow).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def managed_group_record?(node = x_node)
@@ -445,9 +393,10 @@ class AutomationManagerController < ApplicationController
     node
   end
 
-  def update_partials(record_showing, presenter, r)
+  def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
@@ -461,16 +410,26 @@ class AutomationManagerController < ApplicationController
       partial = 'form'
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_managed_group_record?(@inventory_group_record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "inventory_group",
                                     :locals  => {:controller => controller_name}])
     elsif valid_configuration_script_record?(@configuration_script_record)
+      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_script",
                                     :locals  => {:controller => controller_name}])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    replace_search_box(presenter)
+  end
+
+  def replace_search_box(presenter)
+    presenter.replace(:adv_searchbox_div,
+                      r[:partial => 'layouts/x_adv_searchbox',
+                        :locals  => {:nameonly => providers_active_tree?}])
   end
 
   def group_summary_tab_selected?
@@ -483,7 +442,7 @@ class AutomationManagerController < ApplicationController
      :record_id  => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]}
   end
 
-  def update_service_dialog_partials(presenter, r)
+  def update_service_dialog_partials(presenter)
     presenter.update(:main_div, r[:partial => 'configscript_service_dialog',
                                   :locals  => locals_for_service_dialog])
     locals = {:record_id  => @edit[:rec_id],
@@ -497,22 +456,15 @@ class AutomationManagerController < ApplicationController
     (%w(x_show x_search_by_name).include?(action_name) && managed_group_record?)
   end
 
-  def empty_managed_group_record?(inventory_group_record)
-    inventory_group_record.try(:id).nil?
-  end
-
   def valid_managed_group_record?(inventory_group_record)
     inventory_group_record.try(:id)
   end
 
-  def inventory_group_right_cell_text(model)
+  def inventory_group_right_cell_text(_model)
     return if @sb[:active_tab] != 'configured_systems'
     if valid_managed_group_record?(@inventory_group_record)
-      record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
-      @right_cell_text = _("%{model} under Inventory Group \"%{name}\"") %
-                         {:model        => ui_lookup(:tables => "configured_system"),
-                          :record_model => record_model,
-                          :name         => @inventory_group_record.name}
+      @right_cell_text = _("Configured Systems under Inventory Group \"%{name}\"") %
+        {:name => @inventory_group_record.name}
     end
   end
 
@@ -520,21 +472,9 @@ class AutomationManagerController < ApplicationController
     configuration_script_record.try(:id)
   end
 
-  def process_show_list(options = {})
-    options[:dbname] = case x_active_accord
-                       when :automation_manager_providers
-                         options[:model] && options[:model] == 'ConfiguredSystem' ? :automation_manager_configured_systems : :automation_manager_providers
-                       when :automation_manager_cs_filter
-                         :automation_manager_configured_systems
-                       when :configuration_scripts
-                         :configuration_scripts
-                       end
-    super
-  end
-
   def configscript_service_dialog
     assert_privileges("automation_manager_configuration_script_service_dialog")
-    cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by(:id => params[:id])
+    cs = ConfigurationScript.find_by(:id => params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
              :rec_id => cs.id}
@@ -569,5 +509,14 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  menu_section :aut
+  def breadcrumbs_options
+    {
+      :breadcrumbs  => [
+        {:title => _("Automation")},
+        {:title => _("Ansible Tower")},
+        {:title => _("Explorer")},
+      ],
+      :record_title => :hostname,
+    }
+  end
 end

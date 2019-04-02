@@ -1,19 +1,17 @@
 class TreeBuilderVandt < TreeBuilder
   include TreeBuilderArchived
 
-  def tree_init_options(_tree_name)
-    {:leaf => 'ManageIQ::Providers::InfraManager::VmOrTemplate'}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true,
-                  :allow_reselect => TreeBuilder.hide_vms)
+  def tree_init_options
+    {
+      :leaf           => 'ManageIQ::Providers::InfraManager::VmOrTemplate',
+      :lazy           => true,
+      :allow_reselect => true
+    }
   end
 
   def root_options
     {
-      :title   => _("All VMs & Templates"),
+      :text    => _("All VMs & Templates"),
       :tooltip => _("All VMs & Templates that I can see")
     }
   end
@@ -33,11 +31,11 @@ class TreeBuilderVandt < TreeBuilder
 
   private
 
-  def find_child_recursive(children, id)
-    children.each do |t|
-      return t[:children] if t[:key] == id
+  def find_child_recursive(nodes, id)
+    nodes.each do |t|
+      return t[:nodes] if t[:key] == id
 
-      found = find_child_recursive(t[:children], id) if t[:children]
+      found = find_child_recursive(t[:nodes], id) if t[:nodes]
       return found unless found.nil?
     end
     nil

@@ -3,27 +3,18 @@ class TreeBuilderOpsRbac < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :open_all => false,
-      :leaf     => "Access Control",
-      :expand   => false
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:open_all => false, :lazy => true}
   end
 
   def root_options
     region = MiqRegion.my_region
-    title =  _("%{product} Region: %{region_description} [%{region}]") % {:region_description => region.description,
-                                                                          :region             => region.region,
-                                                                          :product            => I18n.t('product.name')}
+    text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => region.description,
+                                                                        :region             => region.region,
+                                                                        :product            => Vmdb::Appliance.PRODUCT_NAME}
     {
-      :title   => title,
-      :tooltip => title,
+      :text    => text,
+      :tooltip => text,
       :icon    => 'pficon pficon-regions'
     }
   end
@@ -35,10 +26,10 @@ class TreeBuilderOpsRbac < TreeBuilder
       objects.push(:id => "u", :text => _("Users"), :icon => "pficon pficon-user", :tip => _("Users"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_group_view", :any => true)
-      objects.push(:id => "g", :text => _("Groups"), :icon => "product product-group", :tip => _("Groups"))
+      objects.push(:id => "g", :text => _("Groups"), :icon => "ff ff-group", :tip => _("Groups"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_role_view", :any => true)
-      objects.push(:id => "ur", :text => _("Roles"), :icon => "product product-role", :tip => _("Roles"))
+      objects.push(:id => "ur", :text => _("Roles"), :icon => "ff ff-user-role", :tip => _("Roles"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_tenant_view")
       objects.push(:id => "tn", :text => _("Tenants"), :icon => "pficon pficon-tenant", :tip => _("Tenants"))

@@ -11,7 +11,7 @@ describe CatalogController do
     let(:session) { {:edit => {:rec_id => 123, :wf => wf, :key => "dialog_edit__123"}} }
 
     before do
-      allow(Dialog).to receive(:find_by_id).with(123).and_return(dialog)
+      allow(Dialog).to receive(:find).with(123).and_return(dialog)
       allow(dialog).to receive(:field)
       allow(dialog).to receive(:field).with("test").and_return(dialog_field)
       allow(dialog).to receive(:field_name_exist?).and_return(false)
@@ -108,7 +108,7 @@ describe CatalogController do
       allow(dialog).to receive(:dialog_fields) { [Struct.new(:name, :type).new("name", "DialogFieldDateTimeControl")] }
       allow(wf).to receive(:value).with("name") { dialog_field.value }
       allow(wf).to receive(:set_value) { |_, val| dialog_field.instance_variable_set(:@value, val) }
-      allow(Dialog).to receive(:find_by_id).and_return(dialog)
+      allow(Dialog).to receive(:find).and_return(dialog)
 
       dialog_field.instance_variable_set(:@value, "04/05/2015 14:52")
       controller.instance_variable_set(:@edit, :rec_id => nil, :wf => wf)
@@ -135,7 +135,7 @@ describe CatalogController do
 
   describe "#dialog_form_button_pressed" do
     let(:dialog) { double("Dialog") }
-    let(:workflow) { FactoryGirl.build(:miq_provision_workflow) }
+    let(:workflow) { FactoryBot.build(:miq_provision_workflow) }
     let(:wf) { double(:dialog => dialog) }
 
     before do
@@ -152,15 +152,15 @@ describe CatalogController do
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
       expect(page).to receive(:redirect_to).with(:controller => "miq_request",
-                                                 :action     => "show_list",
-                                                 :flash_msg  => "Order Request was Submitted")
+                                                 :action     => "show_list")
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
+      expect(session[:flash_msgs]).to match [a_hash_including(:message => "Order Request was Submitted", :level => :success)]
     end
 
     it "stay on the current model page after the dialog is submitted if a request is not created" do
       controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
-      st = FactoryGirl.create(:service_template)
+      st = FactoryBot.create(:service_template)
       controller.x_node = "xx-st st-#{st.id}"
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:get_node_info)
@@ -168,6 +168,13 @@ describe CatalogController do
       allow(wf).to receive(:submit_request).and_return({})
       expect(controller).to receive(:replace_right_cell)
       controller.send(:dialog_form_button_pressed)
+    end
+  end
+
+  describe '#dialog_replace_right_cell' do
+    it 'calls #replace_right_cell' do
+      expect(controller).to receive(:replace_right_cell)
+      controller.dialog_replace_right_cell
     end
   end
 end

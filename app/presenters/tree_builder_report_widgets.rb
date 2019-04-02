@@ -1,17 +1,20 @@
 class TreeBuilderReportWidgets < TreeBuilder
+  # Need this for display purpose to map with id
+  WIDGET_TYPES = {
+    "r"  => N_('Reports'),
+    "c"  => N_('Charts'),
+    "m"  => N_('Menus')
+  }.freeze
+
   private
 
-  def tree_init_options(tree_name)
-    {:leaf => 'Widgets', :full_ids => true}
-  end
-
-  def set_locals_for_render
-    super.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Widgets"),
+      :text    => t = _("All Widgets"),
       :tooltip => t
     }
   end
@@ -23,7 +26,7 @@ class TreeBuilderReportWidgets < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
-    widgets = MiqWidget.where(:content_type => WIDGET_CONTENT_TYPE[object[:id].split('-').last])
+    widgets = MiqWidget.where(:content_type => ReportController::Widgets::WIDGET_CONTENT_TYPE[object[:id].split('-').last])
     count_only_or_objects(count_only, widgets, 'title')
   end
 end

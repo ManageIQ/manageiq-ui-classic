@@ -13,7 +13,7 @@ class AlertsMostRecentController < ApplicationController
   end
 
   def index
-    redirect_to :action => 'show'
+    redirect_to(:action => 'show')
   end
 
   private
@@ -26,5 +26,5 @@ class AlertsMostRecentController < ApplicationController
     session[:layout] = @layout
   end
 
-  menu_section :monitor
+  menu_section :monitor_alerts
 end

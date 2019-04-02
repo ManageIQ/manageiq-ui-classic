@@ -1,13 +1,13 @@
 describe ApplicationHelper::Button::MiqActionDelete do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:miq_policies).and_return(miq_policies) }
     before { allow(record).to receive(:action_type).and_return(action_type) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record has no policies' do
       let(:miq_policies) { [] }

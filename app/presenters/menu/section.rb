@@ -1,5 +1,15 @@
 module Menu
-  Section = Struct.new(:id, :name, :icon, :items, :placement, :before, :type, :href) do
+  Section = Struct.new(:id, :name, :icon, :items, :placement, :before, :type, :href, :parent_id) do
+    extend ActiveModel::Naming
+
+    def self.base_class
+      Menu::Section
+    end
+
+    def self.base_model
+      model_name
+    end
+
     def initialize(an_id, name, icon, *args)
       super
       self.items ||= []
@@ -17,7 +27,7 @@ module Menu
     end
 
     def features_recursive
-      Array(items).collect { |el| el.try(:feature) || el.try(:features) }.flatten.compact
+      Array(items).flat_map { |el| el.try(:feature) || el.try(:features) }.compact
     end
 
     def visible?
@@ -32,11 +42,12 @@ module Menu
       @subsection ||= Array(items).detect { |el| el.kind_of?(Section) }
     end
 
-    def url
-      case type
-      when :big_iframe then "/dashboard/iframe?sid=#{id}"
-      else                  "/dashboard/maintab/?tab=#{id}"
-      end
+    def link_params
+      params = case type
+               when :big_iframe then {:href => "/dashboard/iframe?sid=#{id}"}
+               else                  {:href => "/dashboard/maintab/?tab=#{id}"}
+               end
+      params.merge(:onclick => 'return miqCheckForChanges();')
     end
 
     def leaf?
@@ -62,7 +73,7 @@ module Menu
       items.each do |item|
         next unless item.visible?
         if item.kind_of?(Item)
-          return item.url
+          return item.link_params[:href]
         else
           section_result = item.default_redirect_url
           return section_result if section_result

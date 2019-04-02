@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::VmInstanceTemplateScan do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm_or_template) }
+  let(:record) { FactoryBot.create(:vm_or_template) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
@@ -30,16 +30,14 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
   describe '#calculate_properties' do
     let(:has_active_proxy?) { true }
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
       allow(record).to receive(:has_active_proxy?).and_return(has_active_proxy?)
     end
 
-    it_behaves_like 'a smart state scan button'
-
     context 'when smart_roles are enabled' do
       before do
-        roles = %w(smartproxy smartstate).collect { |role| FactoryGirl.create(:server_role, :name => role) }
-        FactoryGirl.create(:miq_server, :zone => MiqServer.my_server.zone, :active_roles => roles)
+        roles = %w(smartproxy smartstate).collect { |role| FactoryBot.create(:server_role, :name => role) }
+        FactoryBot.create(:miq_server, :zone => MiqServer.my_server.zone, :active_roles => roles)
         button.calculate_properties
       end
 

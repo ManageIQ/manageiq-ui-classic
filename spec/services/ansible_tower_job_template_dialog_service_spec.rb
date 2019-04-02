@@ -1,5 +1,5 @@
 describe AnsibleTowerJobTemplateDialogService do
-  let(:template) { FactoryGirl.create(:configuration_script) }
+  let(:template) { FactoryBot.create(:ansible_configuration_script) }
 
   describe "#create_dialog" do
     it "creates a dialog from a job template" do
@@ -25,8 +25,7 @@ describe AnsibleTowerJobTemplateDialogService do
 
       allow(template).to receive(:variables).and_return('some_extra_var'  => 'blah',
                                                         'other_extra_var' => {'name' => 'some_value'},
-                                                        'array_extra_var' => [{'name' => 'some_value'}]
-                                                       )
+                                                        'array_extra_var' => [{'name' => 'some_value'}])
       dialog = subject.create_dialog(template)
 
       expect(dialog).to have_attributes(:label => template.name, :buttons => "submit,cancel")
@@ -55,8 +54,9 @@ describe AnsibleTowerJobTemplateDialogService do
   def assert_option_group(group)
     expect(group).to have_attributes(:label => "Options", :display => "edit")
     fields = group.dialog_fields
-    expect(fields.size).to eq(1)
-    expect(fields[0]).to have_attributes(:label => "Limit", :name => "limit", :required => false, :data_type => 'string')
+    expect(fields.size).to eq(2)
+    expect(fields[0]).to have_attributes(:label => "Service Name", :name => "service_name", :required => false, :data_type => 'string')
+    expect(fields[1]).to have_attributes(:label => "Limit", :name => "limit", :required => false, :data_type => 'string')
   end
 
   def assert_field(field, clss, attributes)
@@ -73,8 +73,8 @@ describe AnsibleTowerJobTemplateDialogService do
     assert_field(fields[1], DialogFieldTextBox,      :name => 'param_param2', :data_type => 'string',    :default_value => "as")
     assert_field(fields[2], DialogFieldTextAreaBox,  :name => 'param_param3', :data_type => 'string',    :default_value => "no\nhello")
     assert_field(fields[3], DialogFieldTextBox,      :name => 'param_param4', :data_type => 'string',    :default_value => "mypassword", :options => {:protected => true})
-    assert_field(fields[4], DialogFieldDropDownList, :name => "param_param5", :default_value => "Peach", :values => [[nil, "<Choose>"], %w(Apple Apple), %w(Banana Banana), %w(Peach Peach)])
-    assert_field(fields[5], DialogFieldDropDownList, :name => "param_param6", :default_value => "opt1",  :values => [%w(222 222), [nil, "<Choose>"], %w(opt1 opt1), %w(opt3 opt3)])
+    assert_field(fields[4], DialogFieldDropDownList, :name => "param_param5", :default_value => "Peach", :values => [%w(Apple Apple), %w(Banana Banana), %w(Peach Peach)])
+    assert_field(fields[5], DialogFieldDropDownList, :name => "param_param6", :default_value => "opt1",  :values => [%w(222 222), %w(opt1 opt1), %w(opt3 opt3)])
     assert_field(fields[6], DialogFieldTextBox,      :name => 'param_param7', :data_type => 'string',    :default_value => "14.5")
   end
 

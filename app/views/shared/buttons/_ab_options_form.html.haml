@@ -1,0 +1,117 @@
+- url = url_for_only_path(:action => 'automate_button_field_changed')
+#ab_options_form
+  %h3
+    = _('Options')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Button Type')
+      .col-md-8
+        - if @edit
+          = select_tag('button_type',
+                options_for_select(CustomButton::TYPES.invert, @edit[:new][:button_type]),
+                :class => "selectpicker")
+          :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent('button_type', '#{url}', {beforeSend: true, complete: true})
+        - else
+          = h(@edit[:new][:button_type] == "default" ? "Default" : CustomButton::TYPES[[:button_type]])
+        - display = @edit[:new][:button_type] == "ansible_playbook" ? "" : "display:none"
+    #playbook_div{:style => display}
+      = render :partial => "shared/playbook_options"
+    .form-group
+      %label.control-label.col-md-2
+        = _('Text')
+      .col-md-8
+        .input-group
+          = text_field_tag("name", @edit[:new][:name],
+                          :maxlength         => 30,
+                          :class             => "form-control",
+                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+          .input-group-addon
+            %label.checkbox-inline
+              = check_box_tag("display", "1", @edit[:new][:display],
+                               "data-miq_observe_checkbox" => {:interval => '.5', :url => url}.to_json)
+              = _('Display on Button')
+      - unless is_browser_ie?
+        = javascript_tag(javascript_focus('name'))
+    .form-group
+      %label.control-label.col-md-2
+        = _('Hover Text')
+      .col-md-8
+        = text_field_tag("description", @edit[:new][:description],
+                          :maxlength         => 50,
+                          :class             => "form-control",
+                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    .form-group
+      %label.control-label.col-md-2
+        = _('Icon')
+      .col-md-8#button-icon-picker{'ng-controller' => 'fonticonPickerController as vm'}
+        %miq-fonticon-picker{'input-name' => 'button_icon', :selected => @edit[:new][:button_icon], 'icon-changed' => 'vm.select(selected);'}
+          %miq-fonticon-family{:selector => 'ff', :title => 'Font Fabulous'}
+          %miq-fonticon-family{:selector => 'pficon', :title => 'PatternFly'}
+          %miq-fonticon-family{:selector => 'fa', :title => 'Font Awesome'}
+    .form-group
+      %label.control-label.col-md-2
+        = _('Icon Color')
+      .col-md-8
+        -# Remove the default #4d5258 value when using a color picker with nil support
+        = color_field_tag("button_color", @edit[:new][:button_color] || '#4d5258',
+                          :maxlength         => 30,
+                          :class             => "form-control",
+                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+    - if @edit[:new][:button_type] != "ansible_playbook"
+      .form-group
+        %label.control-label.col-md-2
+          = _('Dialog')
+        .col-md-8
+          = select_tag('dialog_id',
+                        options_for_select([[_("<None>"), nil]] + Array(@edit[:new][:available_dialogs].invert).sort_by { |a| a.first.downcase }, @edit[:new][:dialog_id]),
+                        disabled: @edit[:new][:display_for] != 'single',
+                        "data-miq_sparkle_on" => true,
+                        :class => "selectpicker")
+          - if @edit[:new][:display_for] != 'single'
+            .note
+              = _("Only available when \"Display for\" is set to \"Single\"")
+    .form-group
+      %label.control-label.col-md-2
+        = _('Open URL')
+      .col-md-8
+        = check_box_tag("open_url", "1", @edit[:new][:open_url], "data-miq_observe_checkbox" => {:interval => '.5', :url => url}.to_json, disabled: @edit[:new][:disabled_open_url])
+        - if @edit[:new][:disabled_open_url]
+          .note
+            = _("Only available for VM with \"Display for\" set to \"Single\"")
+    .form-group
+      %label.control-label.col-md-2
+        = _('Display for')
+      .col-md-8
+        = select_tag("display_for",
+                     options_for_select([[_('Single entity'), 'single'], [_('List'), 'list'], [_('Single and list'), 'both']], @edit[:new][:display_for]),
+                     "data-miq_sparkle_on" => true, :class => 'selectpicker')
+        .note
+          = _("Expressions (next tab) can only be configured for buttons with \"Display for\" set to \"Single\"")
+
+    .form-group
+      %label.control-label.col-md-2
+        = _('Submit')
+      .col-md-8
+        = select_tag("submit_how",
+                     options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
+                     "data-miq_sparkle_on" => true, :class => 'selectpicker')
+:javascript
+  miqInitSelectPicker();
+  miqSelectPickerEvent('dialog_id', '#{url}');
+  miqSelectPickerEvent('display_for', '#{url}');
+  miqSelectPickerEvent('submit_how', '#{url}');
+  miq_bootstrap('#button-icon-picker', 'ManageIQ.fonticonPicker');
+
+  // This is an ugly hack to be able to use this component in a non-angular context with miq-observe
+  // FIXME: Remove this when the form is converted to angular
+  $(function() {
+    $('#button-icon-picker input[type="hidden"]').on('change', _.debounce(function() {
+      miqObserveRequest('#{url}', {
+        no_encoding: true,
+        data: 'button_icon' + '=' + $(this).val(),
+      });
+    }, 700, {leading: true, trailing: true}));
+  });

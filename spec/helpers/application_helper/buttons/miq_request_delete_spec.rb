@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::MiqRequestDelete do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+  let(:record) { FactoryBot.create(:vm) }
+  let(:button) { described_class.new(view_context, {}, {'record' => record}, {:options => {:feature => 'miq_request_delete'}}) }
 
   describe '#disabled?' do
     subject { button[:title] }
@@ -12,12 +12,12 @@ describe ApplicationHelper::Button::MiqRequestDelete do
       allow(record).to receive(:resource_type).and_return(resource_type)
     end
 
-    let(:current_user) {  FactoryGirl.create(:user_admin) }
+    let(:current_user) { FactoryBot.create(:user, :features => "everything") }
     let(:approval_state) { 'sorryjako' }
     let(:requester_name) { {:requester_name => current_user.name} }
     let(:resource_type) { 'knedlik' }
 
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'requester is admin' do
       let(:requester_name) { {:requester_name => 'FrantaSkocDoPole'} }
@@ -35,14 +35,13 @@ describe ApplicationHelper::Button::MiqRequestDelete do
 
     context 'request is approved and suer is not admin' do
       let(:approval_state) { 'approved' }
-      let(:current_user) { FactoryGirl.create(:user, :role => "test") }
+      let(:current_user) { FactoryBot.create(:user, :role => "test") }
       it_behaves_like 'a disabled button', 'Approved requests cannot be deleted'
     end
 
     context 'request is approved' do
-      let(:current_user) { FactoryGirl.create(:user, :role => "test") }
+      let(:current_user) { FactoryBot.create(:user, :role => "test") }
       it_behaves_like 'a disabled button', 'Users are only allowed to delete their own requests'
     end
-
   end
 end

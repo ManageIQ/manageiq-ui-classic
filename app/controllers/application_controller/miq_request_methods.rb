@@ -11,7 +11,7 @@ module ApplicationController::MiqRequestMethods
     else
       return unless load_edit("prov_edit__#{params[:id]}", "show_list")
     end
-    if @edit.nil? || @edit.try(:[], :stamp_typ)  # load tab for show screen
+    if @edit.nil? || @edit.try(:[], :stamp_typ) # load tab for show screen
       if params[:tab_id]
         @options[:current_tab_key] = params[:tab_id].split('_')[0].to_sym
         @options[:wf].refresh_field_values(@options)
@@ -22,9 +22,15 @@ module ApplicationController::MiqRequestMethods
         @edit[:new][:current_tab_key] = params[:tab_id].split('_')[0].to_sym
         @edit[:wf].refresh_field_values(@edit[:new])
       end
-      refresh_divs = prov_get_form_vars  # Get changed option, returns true if divs need refreshing
+      refresh_divs = prov_get_form_vars # Get changed option, returns true if divs need refreshing
       build_grid if refresh_divs
       changed = (@edit[:new] != @edit[:current])
+      @record =
+        if @edit[:new][:src_configured_system_ids].present?
+          PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
+        elsif @edit[:new][:src_vm_id].first.present?
+          MiqTemplate.where(:id => @edit[:new][:src_vm_id].first).first
+        end
       render :update do |page|
         page << javascript_prologue
         # Going thru all dialogs to see if model has set any of the dialog display to hide/ignore
@@ -71,29 +77,17 @@ module ApplicationController::MiqRequestMethods
   # Pre provisioning, select a template
   def pre_prov
     if params[:button] == "cancel"
-      add_flash(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
-      session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
+      flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
-      @edit = session[:edit] =  nil                                               # Clear out session[:edit]
-      if @explorer
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        if @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
-          javascript_redirect :action => "show_list", :controller => "vm"
-        else
-          # had to get id from breadcrumbs url, because there is no params[:id] when cancel is pressed on copy Request screen.
-          url = @breadcrumbs.last[:url].split('/')
-          javascript_redirect :controller => url[1], :action => url[2], :id => url[3]
-        end
-      end
-    elsif params[:button] == "continue"       # Template chosen, start vm provisioning
-      params[:button] = nil                   # Clear the incoming button
-      @edit = session[:edit]                  # Grab what we need from @edit
+      @edit = session[:edit] = nil # Clear out session[:edit]
+      prov_request_cancel_submit_response
+    elsif params[:button] == "continue" # Template chosen, start vm provisioning
+      params[:button] = nil # Clear the incoming button
+      @edit = session[:edit] # Grab what we need from @edit
       @explorer = @edit[:explorer]
 
       if @edit[:wf].nil?
-        @src_vm_id = @edit[:src_vm_id]          # Hang on to selected VM to populate prov
+        @src_vm_id = @edit[:src_vm_id] # Hang on to selected VM to populate prov
         @edit = session[:edit] = nil
       else
         @workflow_exists = true
@@ -106,24 +100,24 @@ module ApplicationController::MiqRequestMethods
         @redirect_controller = "miq_request"
         @refresh_partial = "miq_request/prov_edit"
         if @explorer
-          @_params[:org_controller] = "vm"        # Set up for prov_edit
+          @_params[:org_controller] = "vm" # Set up for prov_edit
           prov_edit
           @sb[:action] = "pre_prov"
           replace_right_cell
         else
-          javascript_redirect :controller     => @redirect_controller,
+          javascript_redirect(:controller     => @redirect_controller,
                               :action         => "prov_edit",
                               :src_vm_id      => @src_vm_id,
-                              :org_controller => "vm"
+                              :org_controller => "vm")
         end
       end
     elsif params[:sort_choice]
       @edit = session[:edit]
-      if @edit[:vm_sortcol] == params[:sort_choice]                       # if same column was selected
-        @edit[:vm_sortdir] = flip_sort_direction(@edit[:vm_sortdir])
-      else
-        @edit[:vm_sortdir] = "ASC"
-      end
+      @edit[:vm_sortdir] = if @edit[:vm_sortcol] == params[:sort_choice] # if same column was selected
+                             flip_sort_direction(@edit[:vm_sortdir])
+                           else
+                             'ASC'
+                           end
       @edit[:vm_sortcol] = params[:sort_choice]
       render_updated_templates
     elsif params[:sel_id]
@@ -140,7 +134,7 @@ module ApplicationController::MiqRequestMethods
       @edit = session[:edit]
       @edit[:hide_deprecated_templates] = params[:hide_deprecated_templates] == "true"
       render_updated_templates
-    else                                                        # First time in, build pre-provision screen
+    else # First time in, build pre-provision screen
       set_pre_prov_vars
     end
   end
@@ -148,8 +142,12 @@ module ApplicationController::MiqRequestMethods
   alias_method :vm_pre_prov, :pre_prov
 
   def render_updated_templates
-    templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
-    build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
+    report_scopes = [:eligible_for_provisioning]
+    report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
+    options = options_for_provisioning(get_template_kls.to_s, report_scopes)
+
+    @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+    @report_data_additional_options.with_no_checkboxes(true)
     render :update do |page|
       page << javascript_prologue
       page.replace("pre_prov_div", :partial => "miq_request/pre_prov")
@@ -164,25 +162,31 @@ module ApplicationController::MiqRequestMethods
     @edit[:vm_sortdir] ||= "ASC"
     @edit[:vm_sortcol] ||= "name"
     @edit[:prov_type] = "VM Provision"
-    @edit[:hide_deprecated_templates] = true
+    @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
+
     unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
+      path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", provisioning_report).to_s
+      @view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
+      @view.db = get_template_kls.to_s
+      report_scopes = %i(eligible_for_provisioning non_deprecated)
+      options = options_for_provisioning(@view.db, report_scopes)
+
+      @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
+      @report_data_additional_options.with_no_checkboxes(true)
+
       @edit[:template_kls] = get_template_kls
-      templates = Rbac.filtered(@edit[:template_kls].eligible_for_provisioning).sort_by { |a| a.name.downcase }
-      build_vm_grid(templates, @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
     end
     session[:changed] = false # Turn off the submit button
     @edit[:explorer] = true if @explorer
-    @in_a_form = true
   end
 
   def get_template_kls
     # when clone/migrate buttons are pressed from a sub list view,
     # these buttons are only available on Infra side
     return ManageIQ::Providers::InfraManager::Template if params[:prov_type]
-    case request.parameters[:controller]
-    when "vm_cloud"
+    if request.parameters[:template_klass] == 'cloud' || request.parameters[:controller] == 'vm_cloud'
       return ManageIQ::Providers::CloudManager::Template
-    when "vm_infra"
+    elsif request.parameters[:template_klass] == 'infra' || request.parameters[:controller] == 'vm_infra'
       return ManageIQ::Providers::InfraManager::Template
     else
       return MiqTemplate
@@ -192,21 +196,22 @@ module ApplicationController::MiqRequestMethods
   # Add/edit a provision request
   def prov_edit
     if params[:button] == "cancel"
-      req = MiqRequest.find_by_id(from_cid(session[:edit][:req_id])) if session[:edit] && session[:edit][:req_id]
-      add_flash(if req && req.id
-                  _("Edit of %{model} Request \"%{name}\" was cancelled by the user") %
-                    {:model => session[:edit][:prov_type], :name => req.description}
-                else
-                  _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
-                end)
-      session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
+      req = MiqRequest.find(session[:edit][:req_id]) if session[:edit] && session[:edit][:req_id]
+      flash_to_session(
+        if req && req.id
+          _("Edit of %{model} Request \"%{name}\" was cancelled by the user") %
+            {:model => session[:edit][:prov_type], :name => req.description}
+        else
+          _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
+        end
+      )
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
-      @edit = session[:edit] =  nil                                               # Clear out session[:edit]
+      @edit = session[:edit] = nil # Clear out session[:edit]
       @breadcrumbs.pop if @breadcrumbs
       prov_request_cancel_submit_response
-    elsif params[:button] == "submit"                           # Update or create the request from the workflow with the new options
+    elsif params[:button] == "submit" # Update or create the request from the workflow with the new options
       prov_req_submit
-    else                                                        # First time in, build provision request screen
+    else # First time in, build provision request screen
       @layout = layout_from_tab_name(params[:org_controller])
       if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
         upload_sysprep_file
@@ -236,7 +241,7 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_ds_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    field = ["miq_template", "vm", "service_template"].include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
+    field = %w(miq_template vm service_template).include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
     sort_grid('ds', @edit[:wf].get_field(field, :environment)[:values])
   end
 
@@ -249,7 +254,7 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_host_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    @edit[:wf].kind_of?(MiqHostProvisionWorkflow) ? sort_grid('host', @edit[:wf].get_field(:src_host_ids, :service)[:values]) : sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
+    sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
@@ -297,20 +302,25 @@ module ApplicationController::MiqRequestMethods
 
     post_sort_method = integer_fields.include?(sort_by) ? :to_i : :downcase
     sorted = list.sort_by { |item| item.deep_send(sort_by).to_s.send(post_sort_method) }.uniq
-    (sort_order == "ASC") ? sorted : sorted.reverse
+    sort_order == "ASC" ? sorted : sorted.reverse
   end
 
   def build_configured_system_grid(configured_systems, sort_order = nil, sort_by = nil)
     sort_by ||= "hostname"
     sort_order ||= "ASC"
-
-    headers = {
-      "hostname"                        => _("Hostname"),
-      "configuration_location_name"     => _("Configuration Location"),
-      "configuration_organization_name" => _("Configuration Organization"),
-      "operating_system_flavor_name"    => _("Operating System"),
-      "provider_name"                   => _("Provider"),
-    }
+    headers = if @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
+                {
+                  "name" => _("Server Name")
+                }
+              else
+                {
+                  "hostname"                        => _("Hostname"),
+                  "configuration_location_name"     => _("Configuration Location"),
+                  "configuration_organization_name" => _("Configuration Organization"),
+                  "operating_system_flavor_name"    => _("Operating System"),
+                  "provider_name"                   => _("Provider"),
+                }
+              end
 
     @configured_systems = _build_whatever_grid('configured_system', configured_systems, headers, sort_order, sort_by)
   end
@@ -355,9 +365,9 @@ module ApplicationController::MiqRequestMethods
     sort_order ||= "DESC"
 
     headers = {
-      "name"            => _("Name"),
-      "free_space"      => _("Free Space"),
-      "total_space"     => _("Total Space"),
+      "name"             => _("Name"),
+      "free_space"       => _("Free Space"),
+      "total_space"      => _("Total Space"),
       "storage_clusters" => _("Storage Clusters"),
     }
 
@@ -406,13 +416,14 @@ module ApplicationController::MiqRequestMethods
       "name"                          => _("Name"),
       "operating_system.product_name" => _("Operating System"),
       "platform"                      => _("Platform"),
-      "logical_cpus"                  => _("CPUs"),
+      "cpu_total_cores"               => _("CPUs"),
       "mem_cpu"                       => _("Memory"),
       "allocated_disk_storage"        => _("Disk Size"),
-      "deprecated"                    => _("Deprecated"),
-      "ext_management_system.name"    => ui_lookup(:model => 'ExtManagementSystem'),
+      "ext_management_system.name"    => _("Provider"),
       "v_total_snapshots"             => _("Snapshots"),
     }
+
+    headers["deprecated"] = _("Deprecated") if request.parameters[:controller] == "vm_cloud"
 
     # add tenant column header to cloud workflows only
     headers["cloud_tenant"] = _("Tenant") if vms.any? { |vm| vm.respond_to?(:cloud_tenant) }
@@ -420,10 +431,9 @@ module ApplicationController::MiqRequestMethods
     # currently the only ones that support the field.
     headers["image?"] = _("Type") if vms.any? { |vm| vm.respond_to?(:image?) }
 
-    integer_fields = %w(allocated_disk_storage mem_cpu logical_cpus v_total_snapshots)
+    integer_fields = %w(allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots)
 
     filtered_vms = vms.select { |x| filter_by.call(x) }
-
     @vms = _build_whatever_grid('vm', filtered_vms, headers, sort_order, sort_by, integer_fields)
   end
 
@@ -434,22 +444,13 @@ module ApplicationController::MiqRequestMethods
     # need to set options from @edit/@option based upon calling screen: show/edit
     options = @edit || @options
 
-    headers = if options[:wf].kind_of?(MiqHostProvisionWorkflow)
-                # non-editable grid for host prov to display hosts being provisioned
-                {
-                  "name"        => _("Name"),
-                  "mac_address" => _("MAC Address"),
-                }
-              else
-                # editable grid for vm/migrate prov screens
-                {
-                  "name"        => _("Name"),
-                  "v_total_vms" => _("Total VMs"),
-                  "vmm_product" => _("Platform"),
-                  "vmm_version" => _("Version"),
-                  "state"       => _("State"),
-                }
-              end
+    # editable grid for vm/migrate prov screens
+    headers = { "name"        => _("Name"),
+                "v_total_vms" => _("Total VMs"),
+                "vmm_product" => _("Platform"),
+                "vmm_version" => _("Version"),
+                "state"       => _("State"),
+                "maintenance" => _("Maintenance") }
 
     integer_fields = %w(v_total_vms)
 
@@ -465,7 +466,7 @@ module ApplicationController::MiqRequestMethods
         if @edit[:new][:st_prov_type]
           build_vm_grid(@edit[:wf].get_field(:src_vm_id, :service)[:values], @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
         else
-          @vm = VmOrTemplate.find_by_id(@edit[:new][:src_vm_id] && @edit[:new][:src_vm_id][0])
+          @vm = VmOrTemplate.find(@edit[:new][:src_vm_id] && @edit[:new][:src_vm_id][0])
         end
         if @edit[:wf].supports_pxe?
           build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
@@ -474,8 +475,8 @@ module ApplicationController::MiqRequestMethods
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
         end
       elsif @edit[:new][:current_tab_key] == :environment
-        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
-        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
+        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) if @edit[:wf].get_field(:placement_host_name, :environment).present?
+        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) if @edit[:wf].get_field(:placement_ds_name, :environment).present?
       elsif @edit[:new][:current_tab_key] == :customize
         @edit[:template_sortdir] ||= "ASC"
         @edit[:template_sortcol] ||= "name"
@@ -484,15 +485,14 @@ module ApplicationController::MiqRequestMethods
         else
           build_vc_grid(@edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values], @edit[:vc_sortdir], @edit[:vc_sortcol])
         end
-        build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
-        @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
+        @sb[:vm_os] = VmOrTemplate.find(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
         build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
       if @edit[:new][:current_tab_key] == :environment
-        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
-        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
+        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) if @edit[:wf].get_field(:placement_host_name, :environment).present?
+        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) if @edit[:wf].get_field(:placement_ds_name, :environment).present?
       end
     else
       if @edit[:new][:current_tab_key] == :service
@@ -521,10 +521,10 @@ module ApplicationController::MiqRequestMethods
   def dialog_partial_for_workflow
     workflow = @edit.try(:[], :wf) && !@edit[:stamp_typ] ? @edit[:wf] : @options[:wf]
     case workflow
-    when MiqProvisionVirtWorkflow                    then "shared/views/prov_dialog"
+    when MiqProvisionVirtWorkflow then "shared/views/prov_dialog"
     when ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow then "prov_configured_system_foreman_dialog"
-    when MiqHostProvisionWorkflow                    then "prov_host_dialog"
-    when VmMigrateWorkflow                           then "prov_vm_migrate_dialog"
+    when VmMigrateWorkflow then "prov_vm_migrate_dialog"
+    when PhysicalServerProvisionWorkflow then "prov_physical_server_dialog"
     end
   end
 
@@ -532,7 +532,7 @@ module ApplicationController::MiqRequestMethods
     case tab_name
     when "ae"                then "miq_request_ae"
     when "host"              then "miq_request_host"
-    else                          "miq_request_vm"  # Includes "vm"
+    else                          "miq_request_vm" # Includes "vm"
     end
   end
 
@@ -540,11 +540,11 @@ module ApplicationController::MiqRequestMethods
     sortdir = "#{what}_sortdir".to_sym
     sortcol = "#{what}_sortcol".to_sym
     unless params[:sort_choice].nil?
-      if @edit[sortcol] == params[:sort_choice]                       # if same column was selected
-        @edit[sortdir] = flip_sort_direction(@edit[sortdir])
-      else
-        @edit[sortdir] = "ASC"
-      end
+      @edit[sortdir] = if @edit[sortcol] == params[:sort_choice] # if same column was selected
+                         flip_sort_direction(@edit[sortdir])
+                       else
+                         "ASC"
+                       end
       @edit[sortcol] = params[:sort_choice]
     end
 
@@ -560,10 +560,11 @@ module ApplicationController::MiqRequestMethods
     (@edit || @options)[:wf].try(:tag_symbol) || :vm_tags
   end
 
-  def validate_fields # This doesn't run validations, it creates flash messages for errors found in MiqRequestWorkflow#validate
+  # This doesn't run validations, it creates flash messages for errors found in MiqRequestWorkflow#validate
+  def validate_fields
     @edit[:wf].get_dialog_order.each do |d|
-      @edit[:wf].get_all_fields(d, false).each do |_f, field|
-        unless field[:error].blank?
+      @edit[:wf].get_all_fields(d, false).each_value do |field|
+        if field[:error].present?
           @error_div ||= d.to_s
           add_flash(field[:error], :error)
         end
@@ -573,7 +574,7 @@ module ApplicationController::MiqRequestMethods
 
   def validate_preprov
     @edit[:wf].get_dialog_order.each do |d|
-      @edit[:wf].get_all_fields(d, false).each do |_f, field|
+      @edit[:wf].get_all_fields(d, false).each_value do |field|
         @edit[:wf].validate(@edit[:new])
         unless field[:error].nil?
           @error_div ||= d.to_s
@@ -587,12 +588,10 @@ module ApplicationController::MiqRequestMethods
     if @explorer
       @sb[:action] = nil
       replace_right_cell
+    elsif @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
+      javascript_redirect(:action => "show_list", :controller => "vm")
     else
-      if @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
-        javascript_redirect :action => "show_list", :controller => "vm"
-      else
-        javascript_redirect @breadcrumbs.last[:url]
-      end
+      javascript_redirect(@breadcrumbs.last[:url])
     end
   end
 
@@ -610,25 +609,29 @@ module ApplicationController::MiqRequestMethods
 
     if request
       @breadcrumbs.pop if @breadcrumbs
-      typ = @edit[:org_controller]
-      case typ
-      when "vm"
-        title = _("VMs")
-      when "miq_template"
-        title = _("Templates")
-      else
-        title = _("Hosts")
-      end
-      flash = @edit[:req_id].nil? ? _("%{typ} Request was Submitted, you will be notified when your %{title} are ready") % {:typ => @edit[:prov_type], :title => title} : _("%{typ} Request was re-submitted, you will be notified when your %{title} are ready") % {:typ => @edit[:prov_type], :title => title}
+      org_controller = @edit[:org_controller]
+      title = case org_controller
+              when "vm"           then _("VMs")
+              when "miq_template" then _("Templates")
+              else                     _("Hosts")
+              end
+
+      flash_message = if @edit[:req_id].nil?
+                        _("%{typ} Request was Submitted, you will be notified when your %{title} are ready")
+                      else
+                        _("%{typ} Request was re-submitted, you will be notified when your %{title} are ready")
+                      end
+      flash_message = flash_message % {:typ => @edit[:prov_type], :title => title}
       @explorer = @edit[:explorer] ? @edit[:explorer] : false
-      @sb[:action] = @edit = session[:edit] =  nil                                                # Clear out session[:edit]
+      @sb[:action] = @edit = session[:edit] = nil
+      add_flash(flash_message)
+
       if role_allows?(:feature => "miq_request_show_list", :any => true)
-        javascript_redirect :controller => 'miq_request',
+        flash_to_session
+        javascript_redirect(:controller => 'miq_request',
                             :action     => 'show_list',
-                            :flash_msg  => flash,
-                            :typ        => typ
+                            :typ        => org_controller)
       else
-        add_flash(flash)
         prov_request_cancel_submit_response
       end
     else
@@ -646,25 +649,25 @@ module ApplicationController::MiqRequestMethods
 
   # Get variables from provisioning form
   def prov_get_form_vars
-    if params[:ids_checked]                         # User checked/unchecked a tree node
+    if params[:ids_checked] # User checked/unchecked a tree node
       ids = params[:ids_checked].split(",")
       # for some reason if tree is not expanded clicking on radiobuttons this.getAllChecked() sends up extra blanks
       @edit.store_path(:new, tag_symbol_for_workflow, ids.select(&:present?).collect(&:to_i))
     end
     id = params[:ou_id].gsub(/_-_/, ",") if params[:ou_id]
-    @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id                       # ou selected in a tree
+    @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id # ou selected in a tree
 
     @edit[:new][:start_date]    = params[:miq_date_1] if params[:miq_date_1]
     @edit[:new][:start_hour]    = params[:start_hour] if params[:start_hour]
     @edit[:new][:start_min]     = params[:start_min] if params[:start_min]
     @edit[:new][:schedule_time] = Time.zone.parse("#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}")
 
-    params.keys.each do |key|
+    params.each_key do |key|
       next unless key.include?("__")
-      d, f  = key.split("__")  # Parse dialog and field names from the parameter key
-      field = @edit[:wf].get_field(f.to_sym, d.to_sym)  # Get the field hash
+      d, f  = key.split("__") # Parse dialog and field names from the parameter key
+      field = @edit[:wf].get_field(f.to_sym, d.to_sym) # Get the field hash
       val   =
-        case field[:data_type]  # Get the value, convert to integer or boolean if needed
+        case field[:data_type] # Get the value, convert to integer or boolean if needed
         when :integer
           params[key].to_i
         when :boolean
@@ -673,7 +676,7 @@ module ApplicationController::MiqRequestMethods
           params[key]
         end
 
-      if field[:values]                                                         # If a choice was made
+      if field[:values] # If a choice was made
         if field[:values].kind_of?(Hash)
           # set an array of selected ids for security groups field
           if f == "security_groups"
@@ -684,68 +687,64 @@ module ApplicationController::MiqRequestMethods
               params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v.to_i) }
             end
           else
-            @edit[:new][f.to_sym] = [val, field[:values][val]]                    # Save [value, description]
+            @edit[:new][f.to_sym] = [val, field[:values][val]] # Save [value, description]
           end
         else
           field[:values].each do |v|
             if v.class.name == "MiqHashStruct" && v.evm_object_class == :Storage
-              if ["miq_template", "service_template", "vm"].include?(@edit[:org_controller])
-                if params[key] == "__DS__NONE__"                                  # Added this to deselect datastore in grid
-                  @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if %w(miq_template service_template vm).include?(@edit[:org_controller])
+                if params[key] == "__DS__NONE__" # Added this to deselect datastore in grid
+                  @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
                 elsif v.id.to_i == val.to_i
-                  @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                  @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
                 end
-              else
-                if params[key] == "__DS__NONE__"                                  # Added this to deselect datastore in grid
-                  @edit[:new][f.to_sym] = []                           # Save [value, description]
-                elsif v.id.to_i == val.to_i
-                  if @edit[:new][f.to_sym].include?(val)
-                    @edit[:new][f.to_sym].delete_if { |x| x == val }
-                  else
-                    @edit[:new][f.to_sym].push(val)                             # Save [value, description]
-                  end
+              elsif params[key] == "__DS__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [] # Save [value, description]
+              elsif v.id.to_i == val.to_i
+                if @edit[:new][f.to_sym].include?(val)
+                  @edit[:new][f.to_sym].delete_if { |x| x == val }
+                else
+                  @edit[:new][f.to_sym].push(val) # Save [value, description]
                 end
               end
             elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :Host
-              if params[key] == "__HOST__NONE__"                                  # Added this to deselect datastore in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__HOST__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :Vm
-              if params[key] == "__VM__NONE__"                                  # Added this to deselect datastore in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__VM__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif v.class.name == "MiqHashStruct" && (v.evm_object_class == :PxeImage || v.evm_object_class == :WindowsImage)
-              if params[key] == "__PXE_IMG__NONE__"                                 # Added this to deselect datastore in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__PXE_IMG__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id == val
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :IsoImage
-              if params[key] == "__ISO_IMG__NONE__"                                 # Added this to deselect datastore in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__ISO_IMG__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id == val
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif v.class.name == "MiqHashStruct" && v.evm_object_class == :CustomizationTemplate
-              if params[key] == "__TEMPLATE__NONE__"                                  # Added this to deselect datastore in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__TEMPLATE__NONE__" # Added this to deselect datastore in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif v.kind_of?(VimHash) || (v.class.name == "MiqHashStruct" && v.evm_object_class == :CustomizationSpec)
-              if params[key] == "__VC__NONE__"                                  # Added this to deselect custom_spec in grid
-                @edit[:new][f.to_sym] = [nil, nil]                              # Save [value, description]
+              if params[key] == "__VC__NONE__" # Added this to deselect custom_spec in grid
+                @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id.to_i == val.to_i
-                @edit[:new][f.to_sym] = [val, v.name]                             # Save [value, description]
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            else
-              if v[1].to_i == val.to_i
-                @edit[:new][f.to_sym] = [val, v[0]]                             # Save [value, description]
-              end
+            elsif v[1].to_i == val.to_i
+              @edit[:new][f.to_sym] = [val, v[0]] # Save [value, description]
             end
           end
         end
@@ -753,25 +752,27 @@ module ApplicationController::MiqRequestMethods
           @edit[:wf].refresh_field_values(@edit[:new])
         rescue => bang
           add_flash(bang.message, :error)
-          @edit[:new][f.to_sym] = val                                             # Save value
-          return false                                                            # No need to refresh dialog divs
+          @edit[:new][f.to_sym] = val # Save value
+          # No need to refresh dialog divs
+          return false
         else
           return true
-        end                                                                   # Return true, refresh dialog divs
+        end
       else
-        @edit[:new][f.to_sym] = val                                             # Save value
-        return false                                                            # No need to refresh dialog divs
+        @edit[:new][f.to_sym] = val # Save value
+        # No need to refresh dialog divs
+        return false
       end
     end
   end
 
   def prov_set_show_vars
     @showtype = "main"
-    @options = @miq_request.get_options                         # Get the provision options from the request record
-    @options[:org_controller] = @miq_request.resource_type == "MiqHostProvisionRequest" ? "host" : "vm"
+    @options = @miq_request.get_options # Get the provision options from the request record
+    @options[:org_controller] = "vm"
     if @options[:schedule_time]
       @options[:schedule_time] = format_timezone(@options[:schedule_time], Time.zone, "raw")
-      @options[:start_date] = "#{@options[:schedule_time].month}/#{@options[:schedule_time].day}/#{@options[:schedule_time].year}"  # Set the start date
+      @options[:start_date] = "#{@options[:schedule_time].month}/#{@options[:schedule_time].day}/#{@options[:schedule_time].year}" # Set the start date
       @options[:start_hour] = @options[:schedule_time].hour.to_s
       @options[:start_min] = @options[:schedule_time].min.to_s
     end
@@ -784,7 +785,7 @@ module ApplicationController::MiqRequestMethods
         @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
       end
       if options[:wf]
-        options[:wf].init_from_dialog(@options)  # Create a new provision workflow for this edit session
+        options[:wf].init_from_dialog(@options) # Create a new provision workflow for this edit session
         # setting active tab to first visible tab
         options[:wf].get_dialog_order.each do |d|
           if options[:wf].get_dialog(d)[:display] == :show
@@ -792,20 +793,27 @@ module ApplicationController::MiqRequestMethods
             break
           end
         end
-        @options[tag_symbol_for_workflow] ||= []  # Initialize if came back nil from record
-        build_tags_tree(options[:wf], @options[tag_symbol_for_workflow], false) if @miq_request.resource_type != "VmMigrateRequest"
-        unless ["MiqHostProvisionRequest", "VmMigrateRequest"].include?(@miq_request.resource_type)
-          build_ous_tree(options[:wf], @options[:ldap_ous])
+        @options[tag_symbol_for_workflow] ||= [] # Initialize if came back nil from record
+        unless ["VmMigrateRequest"].include?(@miq_request.resource_type)
           svm = VmOrTemplate.where(:id => @options[:src_vm_id][0]).first if @options[:src_vm_id] && @options[:src_vm_id][0]
           @sb[:vm_os] = svm.platform if svm
         end
         @options[:wf] = options[:wf]
       end
+    elsif @miq_request.resource_type == 'ServiceRetireRequest'
+      @view, @pages = nil
+      if (service_id = @miq_request.options[:src_ids].first) && (service = Service.find_by(:id => service_id)) && Rbac.filtered_object(service)
+        @view, @pages = get_view(Vm, :parent => service, :view_suffix => 'OrchestrationStackRetireRequest')
+      end
     else
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
-      @force_no_grid_xml   = true
-      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", @miq_request.options[:src_ids]]) # Get the records (into a view) and the paginator
+      @force_no_grid_xml = true
+
+      @selected_ids = @miq_request.options[:src_ids]
+      @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest")
+      # FIXME: use selected_ids passed through get_view to replace all of
+      # gtl_selected_records after Gaprindashvili
     end
     @user = User.find_by_userid(@miq_request.stamped_by)
   end
@@ -816,7 +824,7 @@ module ApplicationController::MiqRequestMethods
     session[:prov_options]      = @options = nil  # Clearing out options that were set on show screen
     @edit[:req_id]              = req.try(:id)    # Save existing request record id, if passed in
     @edit[:key]                 = "prov_edit__#{@edit[:req_id] || "new"}"
-    options                     = req.try(:get_options) || {}  # Use existing request options, if passed in
+    options                     = req.try(:get_options) || {} # Use existing request options, if passed in
     @edit[:new]                 = options unless @workflow_exists
     # request originated from controller
     @edit[:org_controller]      = params[:org_controller] ? params[:org_controller] : "vm"
@@ -835,7 +843,7 @@ module ApplicationController::MiqRequestMethods
       if @edit[:new][:schedule_time]
         @edit[:new][:schedule_time] = format_timezone(@edit[:new][:schedule_time], Time.zone, "raw")
         @edit[:new][:start_date] = "#{@edit[:new][:schedule_time].month}/#{@edit[:new][:schedule_time].day}/#{@edit[:new][:schedule_time].year}" # Set the start date
-        if params[:id]
+        if params[:req_id]
           @edit[:new][:start_hour] = @edit[:new][:schedule_time].hour.to_s
           @edit[:new][:start_min] = @edit[:new][:schedule_time].min.to_s
         else
@@ -844,7 +852,7 @@ module ApplicationController::MiqRequestMethods
         end
       end
       @edit[:new][:src_vm_id] = [nil, nil] unless @edit[:new][:src_vm_id]
-      @edit[:new][tag_symbol_for_workflow] ||= []  # Initialize for new record
+      @edit[:new][tag_symbol_for_workflow] ||= [] # Initialize for new record
       @edit[:current] ||= {}
       @edit[:current] = copy_hash(@edit[:new])
       # Give the model a change to modify the dialog based on the default settings
@@ -852,10 +860,11 @@ module ApplicationController::MiqRequestMethods
       @edit[:wf].refresh_field_values(@edit[:new])
       if pre_prov_values
         @edit[:new] = @edit[:new].delete_nils
-        @edit[:new] = @edit[:new].merge pre_prov_values.select { |k| !@edit[:new].keys.include?(k) }
+        @edit[:new] = @edit[:new].merge(pre_prov_values.reject { |k| @edit[:new].keys.include?(k) })
       end
 
-      if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow)
+      if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow) ||
+         @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
         # BD TODO
       else
         @edit[:ds_sortdir] ||= "DESC"
@@ -872,8 +881,6 @@ module ApplicationController::MiqRequestMethods
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
           build_vm_grid(@edit[:wf].send("allowed_templates"), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
-          build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
-          build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
           if @edit[:wf].supports_pxe?
             build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
             build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
@@ -887,7 +894,6 @@ module ApplicationController::MiqRequestMethods
         else
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_tags_tree(@edit[:wf], @edit[:new][:tag_ids], true)
           build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
           build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
@@ -903,8 +909,8 @@ module ApplicationController::MiqRequestMethods
   def workflow_instance_from_vars(req)
     options         = {}
     pre_prov_values = nil
-    if ["miq_template", "service_template", "vm"].include?(@edit[:org_controller])
-      if params[:prov_type] && !req  # only do this new requests
+    if %w(miq_template service_template vm).include?(@edit[:org_controller])
+      if params[:prov_type] && !req # only do this new requests
         @edit[:prov_id] = params[:prov_id]
         wf_type =
           if params[:prov_type] == "migrate"
@@ -931,7 +937,7 @@ module ApplicationController::MiqRequestMethods
         src_vm_id =
           if @edit.fetch_path(:new, :src_vm_id, 0).present?
             @edit[:new][:src_vm_id]
-          elsif @src_vm_id || params[:src_vm_id]  # Set vm id if pre-prov chose one
+          elsif @src_vm_id || params[:src_vm_id] # Set vm id if pre-prov chose one
             options[:src_vm_id] = [@src_vm_id || params[:src_vm_id].to_i]
           end
         src_vm = VmOrTemplate.where(:id => src_vm_id).first
@@ -945,8 +951,6 @@ module ApplicationController::MiqRequestMethods
             MiqProvisionWorkflow.class_for_platform(@edit[:st_prov_type])
           elsif @edit[:new][:st_prov_type]
             MiqProvisionWorkflow.class_for_platform(@edit[:new][:st_prov_type])
-          else # handle copy button for host provisioning
-            MiqHostProvisionWorkflow
           end
         pre_prov_values = copy_hash(@edit[:wf].values) if @edit[:wf]
 
@@ -957,16 +961,13 @@ module ApplicationController::MiqRequestMethods
       @edit[:prov_type] = "ConfiguredSystem"
       @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
       wf_type = ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow
-    else
-      @edit[:prov_type] = "Host"
-      if @edit[:new].empty?
-        # multiple / single hosts selected, src_host_ids should always be an array
-        @edit[:new][:src_host_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
-      end
-      wf_type = MiqHostProvisionWorkflow
+    elsif @edit[:org_controller] == "physical_server"
+      @edit[:prov_type] = "PhysicalServer"
+      @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
+      wf_type = PhysicalServerProvisionWorkflow
     end
 
-    [wf_type.new(@edit[:new], current_user, options), pre_prov_values]  # Return the new workflow and any pre_prov_values
+    [wf_type.new(@edit[:new], current_user, options), pre_prov_values] # Return the new workflow and any pre_prov_values
   rescue => bang
     # only add this message if showing a list of Catalog items, show screen already handles this
     @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
@@ -974,113 +975,33 @@ module ApplicationController::MiqRequestMethods
     nil
   end
 
-  def build_ous_tree(wf, ldap_ous)
-    dcs = wf.send("allowed_ous_tree")
-    @curr_dc = nil
-    # Build the default filters tree for the search views
-    all_dcs = []                        # Array to hold all CIs
-    dcs.each_with_index do |dc, i| # Go thru all of the Searches
-      @curr_tag = dc[0]
-      @ci_node = {
-        :key         => dc[0],
-        :title       => dc[0],
-        :tooltip     => dc[0],
-        :icon        => 'pficon-folder-close',
-        :cfmeNoClick => true,
-        :addClass    => "cfme-bold-node",
-        :expand      => true
-      }
-      @ci_kids = []
-      dc[1].each_with_index do |ou, _j|
-        id = ou[1][:ou].join(",")
-        id.gsub!(/,/, "_-_")         # Workaround for save/load openstates, replacing commas in ou array
-        temp = {
-          :key     => id,
-          :tooltip => ou[0],
-          :title   => ou[0],
-          :icon    => 'product product-group'
-        }
-        if ldap_ous == ou[1][:ou]
-          # expand selected nodes parents when editing existing record
-          @expand_parent_nodes = id
-          temp[:highlighted] = true
-        end
-        @ou_kids = []
-        ou[1].each do |lvl1|
-          if lvl1.kind_of?(Array) && lvl1[0] != :ou && lvl1[0] != :path
-            kids = get_ou_kids(lvl1, ldap_ous)
-            @ou_kids.push(kids) unless @ou_kids.include?(kids)
-          end
-        end
-        temp[:children] = @ou_kids unless @ou_kids.blank?
-        @ci_kids.push(temp) unless @ci_kids.include?(temp)
-      end
-      if i == dcs.length - 1            # Adding last node
-        @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-        all_dcs.push(@ci_node)
-      end
-    end
-    unless all_dcs.blank?
-      @ldap_ous_tree = TreeBuilder.convert_bs_tree(all_dcs).to_json # Add ci node array to root of tree
-    else
-      @ldap_ous_tree = nil
-    end
-    session[:tree_name] = "ldap_ous_tree"
-  end
-
-  def get_ou_kids(node, ldap_ous)
-    id = node[1][:ou].join(",")
-    id.gsub!(/,/, "_-_")       # Workaround for save/load openstates, replacing commas in ou array
-    kids = {
-      :key     => id,
-      :title   => node[0],
-      :tooltip => node[0],
-      :icon    => 'product product-group'
-    }
-
-    if ldap_ous == node[1][:ou]
-      temp[:highlighted] = true
-      @expand_parent_nodes = id
-    end
-
-    ou_kids = []
-    node[1].each do |k|
-      if k.kind_of?(Array) && k[0] != :ou && k[0] != :path
-        ou = get_ou_kids(k, ldap_ous)
-        ou_kids.push(ou) unless ou_kids.include?(ou)
-      end
-      kids[:children] = ou_kids unless ou_kids.blank?
-    end
-    kids
-  end
-
   def build_tags_tree(wf, vm_tags, edit_mode)
     tags = wf.send("allowed_tags")
     @curr_tag = nil
     # Build the default filters tree for the search views
-    all_tags = []                          # Array to hold all CIs
+    all_tags = [] # Array to hold all CIs
     kids_checked = false
     tags.each_with_index do |t, i| # Go thru all of the Searches
       if @curr_tag.blank? || @curr_tag != t[:name]
         if @curr_tag != t[:name] && @ci_node
           @ci_node[:expand] = true if kids_checked
           kids_checked = false
-          @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-          all_tags.push(@ci_node) unless @ci_kids.blank?
+          @ci_node[:children] = @ci_kids if @ci_kids.present?
+          all_tags.push(@ci_node) if @ci_kids.present?
         end
         @curr_tag = t[:name]
-        @ci_node = {}                       # Build the ci node
+        @ci_node = {} # Build the ci node
         @ci_node[:key] = t[:id].to_s
         @ci_node[:title] = t[:description]
         @ci_node[:title] += " *" if t[:single_value]
         @ci_node[:tooltip] = t[:description]
-        @ci_node[:addClass] = "cfme-no-cursor-node"      # No cursor pointer
+        @ci_node[:addClass] = "cfme-no-cursor-node" # No cursor pointer
         @ci_node[:icon] = 'pficon pficon-folder-close'
         @ci_node[:hideCheckbox] = @ci_node[:cfmeNoClick] = true
-        @ci_node[:addClass] = "cfme-bold-node"  # Show node as different
+        @ci_node[:addClass] = "cfme-bold-node" # Show node as different
         @ci_kids = []
       end
-      if !@curr_tag.blank? && @curr_tag == t[:name]
+      if @curr_tag.present? && @curr_tag == t[:name]
         t[:children].each do |c|
           temp = {}
           temp[:key] = c[0].to_s
@@ -1089,7 +1010,7 @@ module ApplicationController::MiqRequestMethods
           temp[:title] = temp[:tooltip] = c[1][:description]
           temp[:addClass] = "cfme-no-cursor-node"
           temp[:icon] = 'fa fa-tag'
-          if edit_mode              # Don't show checkboxes/radio buttons in non-edit mode
+          if edit_mode # Don't show checkboxes/radio buttons in non-edit mode
             if vm_tags && vm_tags.include?(c[0].to_i)
               temp[:select] = true
               kids_checked = true
@@ -1110,11 +1031,11 @@ module ApplicationController::MiqRequestMethods
           end
         end
       end
-      if i == tags.length - 1           # Adding last node
+      if i == tags.length - 1 # Adding last node
         @ci_node[:expand] = true if kids_checked
         kids_checked = false
-        @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-        all_tags.push(@ci_node) unless @ci_kids.blank?
+        @ci_node[:children] = @ci_kids if @ci_kids.present?
+        all_tags.push(@ci_node) if @ci_kids.present?
       end
     end
     @all_tags_tree = TreeBuilder.convert_bs_tree(all_tags).to_json # Add ci node array to root of tree
@@ -1126,5 +1047,28 @@ module ApplicationController::MiqRequestMethods
     return ->(x) { !x.deprecated } if @edit[:hide_deprecated_templates]
 
     ->(_) { true } # do not apply a filter
+  end
+
+  def options_for_provisioning(db, report_scopes)
+    {
+      :model         => db,
+      :gtl_type      => "table",
+      :named_scope   => report_scopes,
+      :report_name   => provisioning_report,
+      :custom_action => {
+        :url  => "/miq_request/pre_prov/?sel_id=",
+        :type => 'provisioning'
+      }
+    }
+  end
+
+  def provisioning_report
+    if request.parameters[:template_klass] == 'cloud' ||
+       %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).include?(request.parameters[:controller])
+      'ProvisionCloudTemplates.yaml'
+    elsif request.parameters[:template_klass] == 'infra' ||
+          %w(ems_cluster ems_infra host resource_pool storage vm_infra).include?(request.parameters[:controller])
+      'ProvisionInfraTemplates.yaml'
+    end
   end
 end

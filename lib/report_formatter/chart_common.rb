@@ -40,17 +40,6 @@ module ReportFormatter
     # C&U performance charts (Cluster, Host, VM based)
     def build_performance_chart_area(maxcols)
       tz = mri.get_time_zone(Time.zone.name)
-      nils2zero = false # Allow gaps in charts for nil values
-
-      #### To do - Uncomment to handle long term averages
-      #   if mri.extras && mri.extras[:long_term_averages]  # If averages are present
-      #     mri.extras[:long_term_averages].keys.each do |avg_col|
-      #       if mri.graph[:columns].include?(avg_col.to_s)
-      #         mri.graph[:columns].push("avg__#{avg_col.to_s}")
-      #       end
-      #     end
-      #   end
-      ####
 
       mri.graph[:columns].each_with_index do |col, col_idx|
 
@@ -60,8 +49,7 @@ module ReportFormatter
         categories = []                      # Store categories and series counts in an array of arrays
         series = series_class.new
         mri.table.data.each_with_index do |r, d_idx|
-          # Use timestamp or statistic_time (metrics vs ontap)
-          rec_time = (r["timestamp"] || r["statistic_time"]).in_time_zone(tz)
+          rec_time = r["timestamp"].in_time_zone(tz)
 
           if mri.db.include?("Daily") || (mri.where_clause && mri.where_clause.include?("daily"))
             categories.push(rec_time.month.to_s + "/" + rec_time.day.to_s)
@@ -70,33 +58,19 @@ module ReportFormatter
           else
             categories.push(rec_time.hour.to_s + ":00")
           end
-          #           r[col] = nil if rec_time.day == 12  # Test code, uncomment to skip 12th day of the month
-
-          #### To do - Uncomment to handle long term averages
-          #       if col.starts_with?("avg__")
-          #         val = mri.extras[:long_term_averages][col.split("__").last.to_sym]
-          #       else
-          val = r[col].nil? && (nils2zero) ? 0 : r[col]
-          #       end
-          ####
+          val = r[col]
 
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
           else
             series.push(:value => val)
           end
-          allnil = false if !val.nil? || nils2zero
+          allnil = false if !val.nil?
         end
         series.set_to_zero(-1) if allnil # XML/SWF Charts can't handle all nils, set the last value to 0
         add_axis_category_text(categories)
 
-        #### To do - Uncomment to handle long term averages
-        #     if col.starts_with?("avg__")
-        #       head = "#{col.split("__").last.titleize}"
-        #     else
         head = mri.graph[:legends] ? mri.graph[:legends][col_idx] : mri.headers[mri.col_order.index(col)] # Use legend overrides, if present
-        #     end
-        ####
 
         add_series(head, series)
       end
@@ -115,11 +89,11 @@ module ReportFormatter
       cat_cnt = 0
       cat_total = mri.table.size
       mri.table.data.each do |r|
-        cat = cat_cnt > 6 ? '<Other(1)>' : r["resource_name"]
+        cat = cat_cnt > 6 ? 'Others' : r["resource_name"]
         val = rounded_value(r[col])
         next if val == 0
-        if cat.starts_with?("<Other(") && categories[-1].starts_with?("<Other(") # Are we past the top 10?
-          categories[-1] = "<Other(#{cat_total - (cat_cnt - 1)})>" # Fix the <Other> category count
+        if cat.starts_with?("Others") && categories[-1].starts_with?("Others") # Are we past the top 10?
+          categories[-1] = "Others"
           series.add_to_value(-1, val) # Accumulate the series value
           next
         end
@@ -131,7 +105,6 @@ module ReportFormatter
       return no_records_found_chart if series.empty?
 
       add_axis_category_text(categories)
-
       series.zip(categories) { |ser, category| ser[:tooltip] = category }
       add_series('', series)
     end
@@ -161,15 +134,6 @@ module ReportFormatter
           end
         end
 
-        #     # Remove categories (and associated series values) that have all zero or nil values
-        #     (categories.length - 1).downto(0) do |i|            # Go thru all cats
-        #       t = 0.0
-        #       series.each{|s| t += s[:data][i][:value].to_f}    # Add up the values for this cat across all series
-        #       next if t != 0                                    # Not zero, keep this cat
-        #       categories.delete_at(i)                           # Remove this cat
-        #       series.each{|s| s[:data].delete_at(i)}            # Remove the data for this cat across all series
-        #     end
-        #
         # Remove any series where all values are zero or nil
         series.delete_if { |s| s[:data].sum == 0 }
 
@@ -252,7 +216,7 @@ module ReportFormatter
 
     def keep_and_show_other
       # Show other sum value by default
-      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [GRAPH_MAX_COUNT, true]
+      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [ReportController::Reports::Editor::GRAPH_MAX_COUNT, true]
     end
 
     def build_reporting_chart_dim2
@@ -381,7 +345,7 @@ module ReportFormatter
       # Pie charts put categories in legend, else in axis labels
       add_axis_category_text(categories)
 
-      add_series(mri.chart_header_column, series)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     def build_numeric_chart_grouped
@@ -412,7 +376,7 @@ module ReportFormatter
       # Pie charts put categories in legend, else in axis labels
       add_axis_category_text(categories)
 
-      add_series(mri.chart_header_column, series)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     def build_numeric_chart_grouped_2dim
@@ -440,6 +404,7 @@ module ReportFormatter
       selected_groups = sorted_sums.reverse.take(keep)
 
       cathegory_texts = selected_groups.collect do |key, _|
+        label = key
         label = _('no value') if label.blank?
         label
       end
@@ -467,7 +432,7 @@ module ReportFormatter
 
         series.push(:value   => other[val2],
                     :tooltip => "Other / #{val2}: #{other[val2]}") if show_other
-
+        label = val2 if val2.kind_of?(String)
         label = label.to_s.gsub(/\\/, ' \ ')
         label = _('no value') if label.blank?
         add_series(label, series)
@@ -484,34 +449,33 @@ module ReportFormatter
       counter    = 0
       categories = []                      # Store categories and series counts in an array of arrays
       mri.table.data.each_with_index do |r, d_idx|
-        if d_idx > 0 && save_key != r[mri.sortby[0]]
-          save_key = nonblank_or_default(save_key)
+        category_changed = save_key != r[mri.sortby[0]]
+        not_first_iteration = d_idx > 0
+        if not_first_iteration && category_changed
           categories.push([save_key, counter])    # Push current category and count onto the array
           counter = 0
         end
         save_key = r[mri.sortby[0]]
         counter += 1
       end
-      # add the last key/value to the categories and series arrays
-      save_key = nonblank_or_default(save_key)
       categories.push([save_key, counter])        # Push last category and count onto the array
 
-      categories.sort! { |a, b| b.last <=> a.last }
       (keep, show_other) = keep_and_show_other
-      if keep < categories.length                      # keep the cathegories w/ highest counts
-        other = categories.slice!(keep..-1)
-        ocount = other.reduce(0) { |a, e| a + e.last } # sum up and add the other counts
-        categories.push(["Other", ocount]) if show_other
-      end
+      kept_categories = categories
+      kept_categories.reject! { |a| a.first.nil? }
+      kept_categories = kept_categories.sort_by(&:first).take(keep)
+      kept_categories.reverse! if mri.order == "Descending"
+      kept_categories.push(["Other", (categories - kept_categories).reduce(0) { |a, e| a + e.last }]) if show_other
+      kept_categories.map { |cat| [nonblank_or_default(cat.first), cat.last] }
 
-      series = categories.each_with_object(
+      series = kept_categories.each_with_object(
         series_class.new(pie_type? ? :pie : :flat)) do |cat, a|
         a.push(:value => cat.last, :tooltip => "#{cat.first}: #{cat.last}")
       end
 
       # Pie charts put categories in legend, else in axis labels
-      add_axis_category_text(categories)
-      add_series(mri.chart_header_column, series)
+      add_axis_category_text(kept_categories)
+      add_series(chart_is_2d? ? mri.chart_header_column : nil, series)
     end
 
     # C&U performance charts (Cluster, Host, VM based)

@@ -15,14 +15,12 @@ describe('miqDBBackupService', function() {
         uri_prefix:   'smb',
         log_userid:   'aa',
         log_password: 'bb',
-        log_verify:   'bb',
         log_protocol: 'NFS'
       };
       testService.logProtocolChanged(logCollectionModel);
       expect(logCollectionModel.uri_prefix).toEqual('nfs');
       expect(logCollectionModel.log_userid).toBeNull();
       expect(logCollectionModel.log_password).toBeNull();
-      expect(logCollectionModel.log_verify).toBeNull();
       expect(logCollectionModel.depot_name).toBeNull();
       expect(logCollectionModel.uri).toBeNull();
     });
@@ -34,14 +32,12 @@ describe('miqDBBackupService', function() {
         uri_prefix:   'smb',
         log_userid:   'aa',
         log_password: 'bb',
-        log_verify:   'bb',
         log_protocol: 'Anonymous FTP'
       };
       testService.logProtocolChanged(logCollectionModel);
       expect(logCollectionModel.uri_prefix).toEqual('ftp');
       expect(logCollectionModel.log_userid).toBeNull();
       expect(logCollectionModel.log_password).toBeNull();
-      expect(logCollectionModel.log_verify).toBeNull();
       expect(logCollectionModel.depot_name).toBeNull();
       expect(logCollectionModel.uri).toBeNull();
     });
@@ -53,14 +49,12 @@ describe('miqDBBackupService', function() {
         uri_prefix:   'smb',
         log_userid:   'aa',
         log_password: 'bb',
-        log_verify:   'bb',
         log_protocol: ''
       };
       testService.logProtocolChanged(logCollectionModel);
       expect(logCollectionModel.uri_prefix).toBeNull();
       expect(logCollectionModel.log_userid).toBeNull();
       expect(logCollectionModel.log_password).toBeNull();
-      expect(logCollectionModel.log_verify).toBeNull();
       expect(logCollectionModel.depot_name).toBeNull();
       expect(logCollectionModel.uri).toBeNull();
     });

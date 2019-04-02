@@ -35,14 +35,14 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                      button(
                        :image_delete,
                        'pficon pficon-delete fa-lg',
-                       N_('Remove this Image'),
-                       N_('Remove Image'),
+                       N_('Remove this Image from Inventory'),
+                       N_('Remove Image from Inventory'),
                        :url_parms => "&refresh=y",
                        :confirm   => N_("Warning: This Image and ALL of its components will be permanently removed!")),
                      separator,
                      button(
                        :image_right_size,
-                       'product product-custom-6 fa-lg',
+                       'ff ff-database-squeezed fa-lg',
                        N_('CPU/Memory Recommendations of this Image'),
                        N_('Right-Size Recommendations')),
                      button(

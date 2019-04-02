@@ -1,10 +1,13 @@
 module OpsController::Settings::Common
   extend ActiveSupport::Concern
+  include OpsHelper
 
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
-  Dir.mkdir logo_dir unless File.exist?(logo_dir)
+  Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
   @@login_logo_file = File.join(logo_dir, "custom_login_logo.png")
+  @@login_brand_file = File.join(logo_dir, "custom_brand.png")
+  @@favicon_file = File.join(logo_dir, "custom_favicon.ico")
 
   # AJAX driven routine to check for changes in ANY field on the form
   def settings_form_field_changed
@@ -20,24 +23,25 @@ module OpsController::Settings::Common
     case @sb[:active_tab] # Server, DB edit forms
     when 'settings_server', 'settings_authentication',
          'settings_custom_logos'
-      @changed = (@edit[:new] != @edit[:current].config)
+      @changed = (@edit[:new] != @edit[:current])
       if params[:console_type]
-        @refresh_div     = 'settings_server'              # Replace main area
+        @refresh_div     = 'settings_server' # Replace main area
         @refresh_partial = 'settings_server_tab'
       end
     when 'settings_rhn_edit'
-      if params[:use_proxy] || params[:register_to] || ['rhn_default_server', 'repo_default_name'].include?(params[:action])
+      if params[:use_proxy] || params[:register_to] || %w(rhn_default_server repo_default_name).include?(params[:action])
         @refresh_div     = 'settings_rhn'
         @refresh_partial = 'settings_rhn_edit_tab'
       else
         @refresh_div = nil
       end
+      @changed = false unless rhn_save_enabled?
     when 'settings_workers'
-      @changed = (@edit[:new].config != @edit[:current].config)
-      if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
+      @changed = (@edit[:new] != @edit[:current])
+      if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
         add_flash(_("Changing the UI Workers Count will immediately restart the webserver"), :warning)
       end
-    when 'settings_advanced'                                # Advanced yaml edit
+    when 'settings_advanced' # Advanced yaml edit
       @changed = (@edit[:new] != @edit[:current])
     end
 
@@ -72,7 +76,7 @@ module OpsController::Settings::Common
         end
       when 'settings_authentication'
         if @authmode_changed
-          if ["ldap", "ldaps"].include?(@edit[:new][:authentication][:mode])
+          if %w(ldap ldaps).include?(@edit[:new][:authentication][:mode])
             page << javascript_show("ldap_div")
             page << javascript_show("ldap_role_div")
             page << javascript_show("ldap_role_div")
@@ -95,9 +99,9 @@ module OpsController::Settings::Common
           page << set_element_visible("httpd_div", verb)
           page << set_element_visible("httpd_role_div", verb)
         end
-        if @saml_enabled_changed
-          verb = @edit[:new][:authentication][:saml_enabled]
-          page << set_element_visible("saml_local_login_div", verb)
+        if @provider_type_changed
+          verb = @edit[:new][:authentication][:provider_type] == 'none'
+          page << set_element_visible("none_local_login_div", !verb)
         end
         if @authusertype_changed
           verb = @edit[:new][:authentication][:user_type] == 'samaccountname'
@@ -144,7 +148,7 @@ module OpsController::Settings::Common
           end
         end
       when 'settings_workers'
-        if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
+        if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         end
       end
@@ -187,49 +191,25 @@ module OpsController::Settings::Common
   end
 
   def pglogical_save_subscriptions
-    replication_type = valid_replication_type
-    if replication_type == :global
-      MiqRegion.replication_type = replication_type
-      subscriptions_to_save = []
-      params[:subscriptions].each do |_, subscription_params|
-        subscription = find_or_new_subscription(subscription_params['id'])
-        if subscription.id && subscription_params['remove'] == "true"
-          subscription.delete
-        else
-          set_subscription_attributes(subscription, subscription_params)
-          subscriptions_to_save.push(subscription)
-        end
-      end
-      begin
-        PglogicalSubscription.save_all!(subscriptions_to_save)
-      rescue StandardError => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang}, :error)
-      else
-        add_flash(_("Replication configuration save was successful"))
-      end
-    else
-      begin
-        MiqRegion.replication_type = replication_type
-      rescue => bang
-        add_flash(_("Error during replication configuration save: %{message}") %
-                    {:message => bang.message}, :error)
-      else
-        if replication_type == :remote && !params[:exclusion_list].empty?
-          begin
-            MiqPglogical.refresh_excludes_queue(YAML.safe_load(params[:exclusion_list]))
-          rescue => bang
-            add_flash(_("Error saving the excluded tables list: %{message}") %
-                        {:message => bang}, :error)
-          else
-            add_flash(_("Replication configuration save was successful"))
-          end
-        else
-          add_flash(_("Replication configuration save was successful"))
-        end
-      end
+    case params[:replication_type]
+    when "global"
+      subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
+      task_opts  = {:action => "Save subscriptions for global region", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
+                    :args       => [subscriptions_to_save, subsciptions_to_remove]}
+    when "remote"
+      task_opts  = {:action => "Save list of table excluded from replication for remote region",
+                    :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_remote_region",
+                    :args       => [params[:exclusion_list]]}
+    when "none"
+      task_opts  = {:action => "Set replication type to none", :userid => session[:userid]}
+      queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
-    javascript_flash(:spinner_off => true)
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+    add_flash(_("Replication configuration save initiated. Check status of task \"%{task_name}\" on MyTasks screen") %
+                {:task_name => task_opts[:action]})
+    javascript_flash
   end
 
   def pglogical_validate_subscription
@@ -247,13 +227,65 @@ module OpsController::Settings::Common
 
   private
 
+  def update_server_name(server)
+    return unless @sb[:active_tab] == 'settings_server'
+    return if @edit[:new][:server][:name] == server.name # appliance name was modified
+    begin
+      server.name = @edit[:new][:server][:name]
+      server.save!
+    rescue => bang
+      add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
+      javascript_flash
+      return
+    end
+  end
+
   PASSWORD_MASK = '●●●●●●●●'.freeze
+
+  def prepare_subscriptions_for_saving
+    to_save = []
+    to_remove = []
+    params[:subscriptions].each_value do |subscription_params|
+      subscription = find_or_new_subscription(subscription_params['id'])
+      if subscription.id && subscription_params['remove'] == "true"
+        to_remove << subscription
+      else
+        set_subscription_attributes(subscription, subscription_params)
+        to_save << subscription
+      end
+    end
+    return to_save, to_remove
+  end
+
+  def fetch_advanced_settings(resource)
+    @edit = {}
+    @edit[:current] = {:file_data => resource.settings_for_resource_yaml}
+    @edit[:new] = copy_hash(@edit[:current])
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @in_a_form = true
+  end
+
+  def save_advanced_settings(resource)
+    resource.add_settings_for_resource_yaml(@edit[:new][:file_data])
+  rescue Vmdb::Settings::ConfigurationInvalid => err
+    err.errors.each do |field, msg|
+      add_flash("#{field.to_s.titleize}: #{msg}", :error)
+    end
+    @changed = (@edit[:new] != @edit[:current])
+    javascript_flash
+  else
+    add_flash(_("Configuration changes saved"))
+    @changed = false
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
 
   def find_or_new_subscription(id = nil)
     id.nil? ? PglogicalSubscription.new : PglogicalSubscription.find(id)
   end
 
   def set_subscription_attributes(subscription, params)
+    params['password'] = ManageIQ::Password.encrypt(params['password'])
     params_for_connection_validation(params).each do |k, v|
       subscription.send("#{k}=".to_sym, v)
     end
@@ -264,8 +296,7 @@ module OpsController::Settings::Common
      'port'     => subscription_params['port'],
      'user'     => subscription_params['user'],
      'dbname'   => subscription_params['dbname'],
-     'password' => subscription_params['password'] == PASSWORD_MASK ? nil : subscription_params['password']
-    }.delete_blanks
+     'password' => subscription_params['password'] == PASSWORD_MASK ? nil : subscription_params['password']}.delete_blanks
   end
 
   def get_subscriptions_array(subscriptions)
@@ -278,24 +309,21 @@ module OpsController::Settings::Common
         :password        => '●●●●●●●●',
         :port            => sub.port,
         :provider_region => sub.provider_region,
-        :backlog         => number_to_human_size(sub.backlog)
+        :backlog         => number_to_human_size(sub.backlog),
+        :status          => sub.status
       }
     end
-  end
-
-  def valid_replication_type
-    return params[:replication_type].to_sym if %w(global none remote).include?(params[:replication_type])
   end
 
   def settings_update_ldap_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-    server_config.config.each_key do |category|
-      server_config.config[category] = @edit[:new][category].dup
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
+    server_config.each_key do |category|
+      server_config[category] = @edit[:new][category].dup
     end
 
-    valid, errors = MiqLdap.validate_connection(server_config.config)
+    valid, errors = MiqLdap.validate_connection(server_config)
     if valid
       add_flash(_("LDAP Settings validation was successful"))
     else
@@ -310,12 +338,12 @@ module OpsController::Settings::Common
   def settings_update_amazon_verify
     settings_get_form_vars
     return unless @edit
-    server_config = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-    server_config.config.each_key do |category|
-      server_config.config[category] = @edit[:new][category].dup
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
+    server_config.each_key do |category|
+      server_config[category] = @edit[:new][category].dup
     end
 
-    valid, errors = Authenticator::Amazon.validate_connection(server_config.config)
+    valid, errors = Authenticator::Amazon.validate_connection(server_config)
     if valid
       add_flash(_("Amazon Settings validation was successful"))
     else
@@ -357,138 +385,128 @@ module OpsController::Settings::Common
     when "settings_server", "settings_authentication"
       # Server Settings
       settings_server_validate
-      unless @flash_array.blank?
+      if @flash_array.present?
         render_flash
         return
       end
       @edit[:new][:authentication][:ldaphost].reject!(&:blank?) if @edit[:new][:authentication][:ldaphost]
-      @changed = (@edit[:new] != @edit[:current].config)
+      @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
-      zone = Zone.find_by_name(@edit[:new][:server][:zone])
+      zone = Zone.find_by(:name => @edit[:new][:server][:zone])
       unless zone.nil? || server.zone == zone
         server.zone = zone
         server.save
       end
-      @update = server.get_config("vmdb")
-    when "settings_workers"                                   # Workers Settings
-      @changed = (@edit[:new] != @edit[:current].config)
-      qwb = @edit[:new].config[:workers][:worker_base][:queue_worker_base]
+      @update = server.settings
+    when "settings_workers" # Workers Settings
+      @changed = (@edit[:new] != @edit[:current])
+      qwb = @edit[:new][:workers][:worker_base][:queue_worker_base]
       w = qwb[:generic_worker]
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqGenericWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqGenericWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqGenericWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:priority_worker]
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqPriorityWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :count], w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsCollectorWorker, [:defaults, :memory_threshold], human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_metrics_processor_worker]
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqEmsMetricsProcessorWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:ems_refresh_worker][:defaults]
-      @edit[:new].set_worker_setting!(:MiqEmsRefreshWorker, [:defaults, :memory_threshold], human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqEmsRefreshWorker, :defaults, :memory_threshold, w[:memory_threshold])
 
-      wb = @edit[:new].config[:workers][:worker_base]
+      wb = @edit[:new][:workers][:worker_base]
       w = wb[:event_catcher]
-      @edit[:new].set_worker_setting!(:MiqEventCatcher, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqEventCatcher, :memory_threshold, w[:memory_threshold])
 
       w = wb[:vim_broker_worker]
-      @edit[:new].set_worker_setting!(:MiqVimBrokerWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
 
       w = qwb[:smart_proxy_worker]
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqSmartProxyWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:ui_worker]
-      @edit[:new].set_worker_setting!(:MiqUiWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqUiWorker, :count, w[:count].to_i)
 
       w = qwb[:reporting_worker]
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqReportingWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqReportingWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqReportingWorker, :memory_threshold, w[:memory_threshold])
 
       w = wb[:web_service_worker]
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :count, w[:count].to_i)
-      @edit[:new].set_worker_setting!(:MiqWebServiceWorker, :memory_threshold, human_size_to_rails_method(w[:memory_threshold]))
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :count, w[:count].to_i)
+      set_worker_setting(@edit[:new], MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
 
-      w = wb[:websocket_worker]
-      @edit[:new].set_worker_setting!(:MiqWebsocketWorker, :count, w[:count].to_i)
+      w = wb[:remote_console_worker]
+      set_worker_setting(@edit[:new], MiqRemoteConsoleWorker, :count, w[:count].to_i)
 
-      @update = MiqServer.find(@sb[:selected_server_id]).get_config
-    when "settings_custom_logos"                                      # Custom Logo tab
-      @changed = (@edit[:new] != @edit[:current].config)
-      @update = VMDB::Config.new("vmdb")                    # Get the settings object to update it
-    when "settings_advanced"                                          # Advanced manual yaml editor tab
-      result = VMDB::Config.save_file(@edit[:new][:file_data])  # Save the config file
-      if result != true                                         # Result contains errors?
-        result.each do |field, msg|
-          add_flash("#{field.to_s.titleize}: #{msg}", :error)
-        end
-        @changed = (@edit[:new] != @edit[:current])
-      else
-        add_flash(_("Configuration changes saved"))
-        @changed = false
-      end
-      #     redirect_to :action => 'explorer', :flash_msg=>msg, :flash_error=>err, :no_refresh=>true
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      @update = MiqServer.find(@sb[:selected_server_id]).settings
+    when "settings_custom_logos" # Custom Logo tab
+      @changed = (@edit[:new] != @edit[:current])
+      @update = ::Settings.to_hash
+    when "settings_advanced" # Advanced manual yaml editor tab
+      nodes = x_node.downcase.split("-")
+      resource = if selected?(x_node, "z")
+                   Zone.find(nodes.last)
+                 elsif selected?(x_node, "svr")
+                   MiqServer.find(@sb[:selected_server_id])
+                 else
+                   MiqRegion.my_region
+                 end
+      save_advanced_settings(resource)
       return
     end
     if !%w(settings_advanced settings_rhn_edit settings_workers).include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
-      @update.config.each_key do |category|
-        @update.config[category] = @edit[:new][category].dup
+      @update.each_key do |category|
+        @update[category] = @edit[:new][category].dup
       end
-      @update.config[:ntp] = @edit[:new][:ntp].dup if @edit[:new][:ntp]
-      @update.config[:ntp][:server].reject!(&:blank?) if @update.config[:ntp]
-      if @update.validate                                           # Have VMDB class validate the settings
-        if ["settings_server", "settings_authentication"].include?(@sb[:active_tab])
+
+      save_ntp_server_settings
+
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
+        if %w(settings_server settings_authentication).include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
-          server.set_config(@update)
-          if @update.config[:server][:name] != server.name # appliance name was modified
-            begin
-              server.name = @update.config[:server][:name]
-              server.save!
-            rescue => bang
-              add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
-              javascript_flash
-              return
-            end
-          end
+          server.add_settings_for_resource(@update)
+          update_server_name(server)
         else
-          @update.save                                              # Save other settings for current server
+          MiqServer.my_server.add_settings_for_resource(@update)
         end
-        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current].config))
+        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         if @sb[:active_tab] == "settings_server"
           add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
-                      {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => I18n.t('product.name')})
+                      {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
         elsif @sb[:active_tab] == "settings_authentication"
           add_flash(_("Authentication settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
-                      {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => I18n.t('product.name')})
+                      {:name => server.name, :server_id => server.id, :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
         else
           add_flash(_("Configuration settings saved"))
         end
-        if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update.config[:server][:company]
-          session[:vmdb_name] = @update.config[:server][:name]
+        if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
+          session[:customer_name] = @update[:server][:company]
+          session[:vmdb_name] = @update[:server][:name]
         end
         set_user_time_zone if @sb[:active_tab] == "settings_server"
         # settings_set_form_vars
         session[:changed] = @changed = false
         get_node_info(x_node)
         if @sb[:active_tab] == "settings_server"
-          replace_right_cell(:nodetype => @nodetype, :replace_trees => [:diagnostics, :settings])
+          replace_right_cell(:nodetype => @nodetype, :replace_trees => %i(diagnostics settings))
         elsif @sb[:active_tab] == "settings_custom_logos"
-          javascript_redirect :action => 'explorer', :flash_msg => @flash_array[0][:message], :flash_error => @flash_array[0][:level] == :error, :escape => false # redirect to build the server screen
+          flash_to_session
+          javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
           return
         else
           replace_right_cell(:nodetype => @nodetype)
         end
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
@@ -503,36 +521,55 @@ module OpsController::Settings::Common
         javascript_flash
         return
       end
-      @update.config.each_key do |category|
-        @update.config[category] = @edit[:new].config[category].dup
+      @update.each_key do |category|
+        @update[category] = @edit[:new][category].dup
       end
-      if @update.validate                                           # Have VMDB class validate the settings
+      config_valid, config_errors = Vmdb::Settings.validate(@update)
+      if config_valid
         server = MiqServer.find(@sb[:selected_server_id])
-        server.set_config(@update)
+        server.add_settings_for_resource(@update)
 
-        AuditEvent.success(build_config_audit(@edit[:new].config, @edit[:current].config))
+        AuditEvent.success(build_config_audit(@edit[:new], @edit[:current]))
         add_flash(_("Configuration settings saved for %{product} Server \"%{name} [%{server_id}]\" in Zone \"%{zone}\"") %
-                    {:name => server.name, :server_id => @sb[:selected_server_id], :zone => server.my_zone, :product => I18n.t('product.name')})
+                    {:name => server.name, :server_id => @sb[:selected_server_id], :zone => server.my_zone, :product => Vmdb::Appliance.PRODUCT_NAME})
 
-        if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id  # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update.config[:server][:company]
-          session[:vmdb_name] = @update.config[:server][:name]
+        if @sb[:active_tab] == "settings_workers" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
+          session[:customer_name] = @update[:server][:company]
+          session[:vmdb_name] = @update[:server][:name]
         end
         @changed = false
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => @nodetype)
       else
-        @update.errors.each do |field, msg|
+        config_errors.each do |field, msg|
           add_flash("#{field.titleize}: #{msg}", :error)
         end
         @changed = true
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => @nodetype)
       end
+      replace_right_cell(:nodetype => @nodetype)
     else
       @changed = false
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
+    end
+  end
+
+  private def set_worker_setting(config, klass, *path, value)
+    config.store_path(klass.config_settings_path + path, value)
+  end
+
+  private def new_ntp_servers
+    old_ntp_servers = @edit[:new][:ntp][:server] || []
+    [1, 2, 3].collect.with_index do |i, position|
+      field = "ntp_server_#{i}"
+      @edit[:new][:ntp].key?(field) ? @edit[:new][:ntp].delete(field).presence : old_ntp_servers[position]
+    end.compact
+  end
+
+  private def save_ntp_server_settings
+    if (new_servers = new_ntp_servers).present?
+      @update[:ntp] = {:server => new_servers}
+    else
+      @update.delete(:ntp)
+      MiqServer.find(@sb[:selected_server_id]).remove_settings_path_for_resource(:ntp)
     end
   end
 
@@ -557,8 +594,12 @@ module OpsController::Settings::Common
   end
 
   def settings_server_validate
-    if @sb[:active_tab] == "settings_server" && @edit[:new][:server] && ((@edit[:new][:server][:custom_support_url].nil? || @edit[:new][:server][:custom_support_url].strip == "") && (!@edit[:new][:server][:custom_support_url_description].nil? && @edit[:new][:server][:custom_support_url_description].strip != "") ||
-        (@edit[:new][:server][:custom_support_url_description].nil? || @edit[:new][:server][:custom_support_url_description].strip == "") && (!@edit[:new][:server][:custom_support_url].nil? && @edit[:new][:server][:custom_support_url].strip != ""))
+    return unless @sb[:active_tab] == "settings_server" && @edit[:new][:server]
+    if @edit[:new][:server][:name].blank?
+      add_flash(_("Appliance name must be entered."), :error)
+    end
+    if @edit[:new][:server][:custom_support_url].present? && @edit[:new][:server][:custom_support_url_description].blank? ||
+       @edit[:new][:server][:custom_support_url].blank? && @edit[:new][:server][:custom_support_url_description].present?
       add_flash(_("Custom Support URL and Description both must be entered."), :error)
     end
   end
@@ -568,7 +609,7 @@ module OpsController::Settings::Common
     server_id, child = id.split('__')
 
     if server_id.include?('svr')
-      server_id = from_cid(server_id.sub('svr-', ''))
+      server_id = server_id.sub('svr-', '')
     else
       server_id.sub!('xx-', '')
     end
@@ -586,13 +627,10 @@ module OpsController::Settings::Common
       else
         server[child_key] -= children_update
       end
+    elsif checked # a server was selected
+      all_children.each { |k, v| server[k] = Set.new(v) }
     else
-      # A server was selected
-      if checked
-        all_children.each { |k, v| server[k] = Set.new(v) }
-      else
-        server.each_value(&:clear)
-      end
+      server.each_value(&:clear)
     end
   end
 
@@ -620,7 +658,7 @@ module OpsController::Settings::Common
                                                                     :smartproxy_affinity_tree,
                                                                     @sb,
                                                                     true,
-                                                                    @selected_zone)
+                                                                    :data => @selected_zone)
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
@@ -632,7 +670,7 @@ module OpsController::Settings::Common
     MiqServer.transaction do
       @edit[:new][:servers].each do |svr_id, children|
         server = MiqServer.find(svr_id)
-        server.vm_scan_host_affinity = Host.where(:id =>  children[:hosts].to_a).to_a
+        server.vm_scan_host_affinity = Host.where(:id => children[:hosts].to_a).to_a
         server.vm_scan_storage_affinity = Storage.where(:id => children[:storages].to_a).to_a
       end
     end
@@ -654,16 +692,25 @@ module OpsController::Settings::Common
     new = @edit[:new]
 
     # WTF? here we can have a Zone or a MiqServer, what about Region? --> rescue from exception
-    @selected_server = (cls.find(from_cid(nodes.last)) rescue nil)
+    @selected_server = (cls.find(nodes.last) rescue nil)
 
-    case @sb[:active_tab]                                               # No @edit[:current].config for Filters since there is no config file
+    case @sb[:active_tab] # No @edit[:current] for Filters since there is no config file
     when 'settings_rhn_edit'
-      [:proxy_address, :use_proxy, :proxy_userid, :proxy_password, :proxy_verify, :register_to, :server_url, :repo_name,
-       :customer_org, :customer_org_display, :customer_userid, :customer_password, :customer_verify].each do |key|
+      %i(proxy_address use_proxy proxy_userid proxy_password proxy_verify register_to server_url repo_name
+         customer_org customer_org_display customer_userid customer_password customer_verify).each do |key|
         new[key] = params[key] if params[key]
       end
       if params[:register_to] || params[:action] == "repo_default_name"
         new[:repo_name] = reset_repo_name_from_default
+      end
+      if params[:register_to]
+        if params[:register_to] == 'rhn_satellite6' &&
+           @edit[:new][:server_url] == MiqDatabase.registration_default_values[:registration_server]
+          @edit[:new][:server_url] = nil
+        end
+        if params[:register_to] == 'sm_hosted' && @edit[:new][:server_url].blank?
+          @edit[:new][:server_url] = MiqDatabase.registration_default_values[:registration_server]
+        end
       end
       @changed = (new != @edit[:current])
     when "settings_server"                                                # Server Settings tab
@@ -675,18 +722,13 @@ module OpsController::Settings::Common
       new[:smtp][:authentication] = params[:smtp_authentication] if params[:smtp_authentication]
       new[:server][:locale] = params[:locale] if params[:locale]
       @smtp_auth_none = (new[:smtp][:authentication] == "none")
-      if !new[:smtp][:host].blank? && !new[:smtp][:port].blank? && !new[:smtp][:domain].blank? &&
-         (!new[:smtp][:user_name].blank? || new[:smtp][:authentication] == "none") &&
-         !new[:smtp][:from].blank? && !@sb[:new_to].blank?
-        @test_email_button = true
-      else
-        @test_email_button = false
-      end
+      @test_email_button = %i(from host port domain).all? { |item| new[:smtp][item].present? } &&
+                           (new[:smtp][:user_name].present? || new[:smtp][:authentication] == "none") && @sb[:new_to].present?
       @sb[:roles] = new[:server][:role].split(",")
       params.each do |var, val|
-        if var.starts_with?("server_roles_") && val.to_s == "true"
+        if var.to_s.starts_with?("server_roles_") && val.to_s == "true"
           @sb[:roles].push(var.split("server_roles_").last) unless @sb[:roles].include?(var.split("server_roles_").last)
-        elsif var.starts_with?("server_roles_") && val.downcase == "false"
+        elsif var.to_s.starts_with?("server_roles_") && val.downcase == "false"
           @sb[:roles].delete(var.split("server_roles_").last)
         end
         server_role = @sb[:roles].sort.join(",")
@@ -696,13 +738,11 @@ module OpsController::Settings::Common
       @host_choices = session[:host_choices]
       new[:server][:remote_console_type] = params[:console_type] if params[:console_type]
 
-      new[:ntp][:server] ||= []
-      new[:ntp][:server][0] = params[:ntp_server_1] if params[:ntp_server_1]
-      new[:ntp][:server][1] = params[:ntp_server_2] if params[:ntp_server_2]
-      new[:ntp][:server][2] = params[:ntp_server_3] if params[:ntp_server_3]
+      settings_get_form_vars_sync_ntp
 
       new[:server][:custom_support_url] = params[:custom_support_url].strip if params[:custom_support_url]
       new[:server][:custom_support_url_description] = params[:custom_support_url_description] if params[:custom_support_url_description]
+      new[:server][:name] = params[:server_name] if params[:server_name]
     when "settings_authentication"                                        # Authentication tab
       auth = new[:authentication]
       @sb[:form_vars][:session_timeout_mins] = params[:session_timeout_mins] if params[:session_timeout_mins]
@@ -711,8 +751,11 @@ module OpsController::Settings::Common
       @sb[:newrole] = (params[:ldap_role].to_s == "1") if params[:ldap_role]
       @sb[:new_amazon_role] = (params[:amazon_role].to_s == "1") if params[:amazon_role]
       @sb[:new_httpd_role] = (params[:httpd_role].to_s == "1") if params[:httpd_role]
-      if params[:saml_enabled] && params[:saml_enabled] != auth[:saml_enabled]
-        @saml_enabled_changed = true
+      if params[:provider_type] && params[:provider_type] != auth[:provider_type]
+        auth[:provider_type] = params[:provider_type]
+        auth[:saml_enabled] = params[:provider_type] == "saml"
+        auth[:oidc_enabled] = params[:provider_type] == "oidc"
+        @provider_type_changed = true
       end
       if params[:authentication_user_type] && params[:authentication_user_type] != auth[:user_type]
         @authusertype_changed = true
@@ -732,14 +775,14 @@ module OpsController::Settings::Common
       if params[:authentication_mode] && params[:authentication_mode] != auth[:mode]
         if params[:authentication_mode] == "ldap"
           params[:authentication_ldapport] = "389"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current].config[:authentication][:ldap_role]
+          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
           @authldapport_reset = true
         elsif params[:authentication_mode] == "ldaps"
           params[:authentication_ldapport] = "636"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current].config[:authentication][:ldap_role]
+          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
           @authldapport_reset = true
         else
-          @sb[:newrole] = auth[:ldap_role] = false    # setting it to false if database was selected to hide user_proxies box
+          @sb[:newrole] = auth[:ldap_role] = false # setting it to false if database was selected to hide user_proxies box
         end
         @authmode_changed = true
       end
@@ -772,64 +815,67 @@ module OpsController::Settings::Common
         @authmode_changed = true
       end
       auth[:sso_enabled] = (params[:sso_enabled].to_s == "1") if params[:sso_enabled]
-      auth[:saml_enabled] = (params[:saml_enabled].to_s == "1") if params[:saml_enabled]
+      auth[:provider_type] = params[:provider_type] if params[:provider_type]
       auth[:local_login_disabled] = (params[:local_login_disabled].to_s == "1") if params[:local_login_disabled]
       auth[:default_group_for_users] = params[:authentication_default_group_for_users] if params[:authentication_default_group_for_users]
-    when "settings_workers"                                       # Workers Settings tab
-      wb  = new.config[:workers][:worker_base]
+
+    when "settings_workers" # Workers Settings tab
+      wb  = new[:workers][:worker_base]
       qwb = wb[:queue_worker_base]
 
       w = qwb[:generic_worker]
       w[:count] = params[:generic_worker_count].to_i if params[:generic_worker_count]
-      w[:memory_threshold] = params[:generic_worker_threshold] if params[:generic_worker_threshold]
+      w[:memory_threshold] = params[:generic_worker_threshold].to_i if params[:generic_worker_threshold]
 
       w = qwb[:priority_worker]
       w[:count] = params[:priority_worker_count].to_i if params[:priority_worker_count]
-      w[:memory_threshold] = params[:priority_worker_threshold] if params[:priority_worker_threshold]
+      w[:memory_threshold] = params[:priority_worker_threshold].to_i if params[:priority_worker_threshold]
 
       w = qwb[:ems_metrics_collector_worker][:defaults]
       w[:count] = params[:ems_metrics_collector_worker_count].to_i if params[:ems_metrics_collector_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_collector_worker_threshold] if params[:ems_metrics_collector_worker_threshold]
+      w[:memory_threshold] = params[:ems_metrics_collector_worker_threshold].to_i if params[:ems_metrics_collector_worker_threshold]
 
       w = qwb[:ems_metrics_processor_worker]
       w[:count] = params[:ems_metrics_processor_worker_count].to_i if params[:ems_metrics_processor_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_processor_worker_threshold] if params[:ems_metrics_processor_worker_threshold]
+      w[:memory_threshold] = params[:ems_metrics_processor_worker_threshold].to_i if params[:ems_metrics_processor_worker_threshold]
 
       w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = params[:ems_refresh_worker_threshold] if params[:ems_refresh_worker_threshold]
+      w[:memory_threshold] = params[:ems_refresh_worker_threshold].to_i if params[:ems_refresh_worker_threshold]
 
       w = wb[:event_catcher]
-      w[:memory_threshold] = params[:event_catcher_threshold] if params[:event_catcher_threshold]
+      w[:memory_threshold] = params[:event_catcher_threshold].to_i if params[:event_catcher_threshold]
 
       w = wb[:vim_broker_worker]
-      w[:memory_threshold] = params[:vim_broker_worker_threshold] if params[:vim_broker_worker_threshold]
+      w[:memory_threshold] = params[:vim_broker_worker_threshold].to_i if params[:vim_broker_worker_threshold]
 
       w = qwb[:smart_proxy_worker]
       w[:count] = params[:proxy_worker_count].to_i if params[:proxy_worker_count]
-      w[:memory_threshold] = params[:proxy_worker_threshold] if params[:proxy_worker_threshold]
+      w[:memory_threshold] = params[:proxy_worker_threshold].to_i if params[:proxy_worker_threshold]
 
       w = wb[:ui_worker]
       w[:count] = params[:ui_worker_count].to_i if params[:ui_worker_count]
 
       w = qwb[:reporting_worker]
       w[:count] = params[:reporting_worker_count].to_i if params[:reporting_worker_count]
-      w[:memory_threshold] = params[:reporting_worker_threshold] if params[:reporting_worker_threshold]
+      w[:memory_threshold] = params[:reporting_worker_threshold].to_i if params[:reporting_worker_threshold]
 
       w = wb[:web_service_worker]
       w[:count] = params[:web_service_worker_count].to_i if params[:web_service_worker_count]
-      w[:memory_threshold] = params[:web_service_worker_threshold] if params[:web_service_worker_threshold]
+      w[:memory_threshold] = params[:web_service_worker_threshold].to_i if params[:web_service_worker_threshold]
 
-      w = wb[:websocket_worker]
-      w[:count] = params[:websocket_worker_count].to_i if params[:websocket_worker_count]
-    when "settings_custom_logos"                                            # Custom Logo tab
+      w = wb[:remote_console_worker]
+      w[:count] = params[:remote_console_worker_count].to_i if params[:remote_console_worker_count]
+    when "settings_custom_logos" # Custom Logo tab
       new[:server][:custom_logo] = (params[:server_uselogo] == "true") if params[:server_uselogo]
       new[:server][:custom_login_logo] = (params[:server_useloginlogo] == "true") if params[:server_useloginlogo]
+      new[:server][:custom_favicon] = (params[:server_usefavicon] == "true") if params[:server_usefavicon]
+      new[:server][:custom_brand] = (params[:server_usebrand] == "true") if params[:server_usebrand]
       new[:server][:use_custom_login_text] = (params[:server_uselogintext] == "true") if params[:server_uselogintext]
       if params[:login_text]
         new[:server][:custom_login_text] = params[:login_text]
-        @login_text_changed = new[:server][:custom_login_text] != @edit[:current].config[:server][:custom_login_text].to_s
+        @login_text_changed = new[:server][:custom_login_text] != @edit[:current][:server][:custom_login_text].to_s
       end
-    when "settings_smartproxy"                                        # SmartProxy Defaults tab
+    when "settings_smartproxy" # SmartProxy Defaults tab
       @sb[:form_vars][:agent_heartbeat_frequency_mins] = params[:agent_heartbeat_frequency_mins] if params[:agent_heartbeat_frequency_mins]
       @sb[:form_vars][:agent_heartbeat_frequency_secs] = params[:agent_heartbeat_frequency_secs] if params[:agent_heartbeat_frequency_secs]
       @sb[:form_vars][:agent_log_wraptime_days] = params[:agent_log_wraptime_days] if params[:agent_log_wraptime_days]
@@ -841,8 +887,8 @@ module OpsController::Settings::Common
       agent_log[:level] = params[:agent_log_level] if params[:agent_log_level]
       agent_log[:wrap_size] = params[:agent_log_wrapsize] if params[:agent_log_wrapsize]
       agent_log[:wrap_time] = @sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24 + @sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600 if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
-    when "settings_advanced"                                        # Advanced tab
-      if params[:file_data]                        # If save sent in the file data
+    when "settings_advanced"                          # Advanced tab
+      if params[:file_data]                           # If save sent in the file data
         new[:file_data] = params[:file_data]          # Put into @edit[:new] hash
       else
         new[:file_data] += "..."                      # Update the new data to simulate a change
@@ -851,12 +897,12 @@ module OpsController::Settings::Common
 
     # This section scoops up the config second level keys changed in the UI
     unless %w(settings_advanced settings_rhn_edit settings_smartproxy_affinity).include?(@sb[:active_tab])
-      @edit[:current].config.each_key do |category|
-        @edit[:current].config[category].symbolize_keys.each_key do |key|
-          if category == :smtp && key == :enable_starttls_auto  # Checkbox is handled differently
+      @edit[:current].each_key do |category|
+        @edit[:current][category].symbolize_keys.each_key do |key|
+          if category == :smtp && key == :enable_starttls_auto # Checkbox is handled differently
             new[category][key] = params["#{category}_#{key}"] == "true" if params.key?("#{category}_#{key}")
-          else
-            new[category][key] = params["#{category}_#{key}"] if params["#{category}_#{key}"]
+          elsif params["#{category}_#{key}"]
+            new[category][key] = params["#{category}_#{key}"]
           end
         end
         auth[:user_proxies][0] = copy_hash(params[:user_proxies]) if params[:user_proxies] && category == :authentication
@@ -864,211 +910,252 @@ module OpsController::Settings::Common
     end
   end
 
+  private def settings_get_form_vars_sync_ntp
+    [1, 2, 3].each do |field_num|
+      field = "ntp_server_#{field_num}"
+      next unless params.key?(field)
+      @edit[:new][:ntp][field] = params[field]
+    end
+  end
+
   # Load the @edit object from session based on which config screen we are on
   def settings_load_edit
-    if x_node.split("-").first == "z"
+    if selected?(x_node, "z") && @sb[:active_tab] != "settings_advanced"
       # if zone node is selected
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif @sb[:active_tab] == 'settings_rhn_edit'
       return unless load_edit("#{@sb[:active_tab]}__#{params[:id]}", "replace_cell__explorer")
-    else
-      if %w(settings_server settings_authentication settings_workers
-            settings_custom_logos settings_advanced).include?(@sb[:active_tab])
-        return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
-      end
+    elsif %w(settings_server settings_authentication settings_workers
+             settings_custom_logos settings_advanced).include?(@sb[:active_tab])
+      return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
+  end
+
+  def settings_set_form_vars_server
+    @edit = {
+      :new     => {},
+      :current => MiqServer.find(@sb[:selected_server_id]).settings,
+      :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
+    }
+    @sb[:new_to] = nil
+    @sb[:newrole] = false
+
+    @edit[:current][:server][:role] = @edit[:current][:server][:role] ? @edit[:current][:server][:role].split(",").sort.join(",") : ""
+    @edit[:current][:server][:timezone] = "UTC" if @edit[:current][:server][:timezone].blank?
+    @edit[:current][:server][:locale] = "default" if @edit[:current][:server][:locale].blank?
+    @edit[:current][:server][:remote_console_type] ||= "VNC"
+    @edit[:current][:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current][:smtp][:enable_starttls_auto].nil?
+    @edit[:current][:smtp][:openssl_verify_mode] ||= "none"
+    @edit[:current][:ntp] ||= {}
+    @edit[:current][:server][:zone] = MiqServer.find(@sb[:selected_server_id]).zone.name
+    @edit[:current][:server][:name] = MiqServer.find(@sb[:selected_server_id]).name
+
+    @in_a_form = true
+  end
+
+  def settings_set_form_vars_authentication
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
+    # Avoid thinking roles change when not yet set
+    @edit[:current][:authentication][:ldap_role] ||= false
+    @edit[:current][:authentication][:amazon_role] ||= false
+    @edit[:current][:authentication][:httpd_role] ||= false
+    @sb[:form_vars] = {}
+    @sb[:form_vars][:session_timeout_hours] = @edit[:current][:session][:timeout] / 3600
+    @sb[:form_vars][:session_timeout_mins] = (@edit[:current][:session][:timeout] % 3600) / 60
+    @edit[:current][:authentication][:ldaphost] = @edit[:current][:authentication][:ldaphost].to_miq_a
+    @edit[:current][:authentication][:user_proxies] ||= [{}]
+    @edit[:current][:authentication][:follow_referrals] ||= false
+    @edit[:current][:authentication][:sso_enabled] ||= false
+    @edit[:current][:authentication][:provider_type] ||= "none"
+    @edit[:current][:authentication][:local_login_disabled] ||= false
+    @sb[:newrole] = @edit[:current][:authentication][:ldap_role]
+    @sb[:new_amazon_role] = @edit[:current][:authentication][:amazon_role]
+    @sb[:new_httpd_role] = @edit[:current][:authentication][:httpd_role]
+    @in_a_form = true
+  end
+
+  def settings_set_form_vars_workers
+    # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = {}
+    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
+    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).settings
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    @sb[:threshold] = []
+    (200.megabytes...550.megabytes).step(50.megabytes) do |x|
+      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+    end
+    (600.megabytes...1000.megabytes).step(100.megabytes) do |x|
+      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
+      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
+    end
+    (1.gigabytes...1.5.gigabytes).step(100.megabytes) do |x|
+      # adding values in 100 MB increments from 1gb to 1.5 gb
+      @sb[:threshold] << [number_to_human_size(x, :significant => false), x.to_i]
+    end
+
+    cwb = @edit[:current][:workers][:worker_base] ||= {}
+    qwb = (cwb[:queue_worker_base] ||= {})
+    w = (qwb[:generic_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqGenericWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqGenericWorker, :memory_threshold) || 400.megabytes
+    @sb[:generic_threshold] = []
+    @sb[:generic_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:priority_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqPriorityWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqPriorityWorker, :memory_threshold) || 200.megabytes
+    @sb[:priority_threshold] = []
+    @sb[:priority_threshold] = copy_array(@sb[:threshold])
+
+    qwb[:ems_metrics_collector_worker] ||= {}
+    qwb[:ems_metrics_collector_worker][:defaults] ||= {}
+    w = qwb[:ems_metrics_collector_worker][:defaults]
+    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold) || 400.megabytes
+    @sb[:ems_metrics_collector_threshold] = []
+    @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:ems_metrics_processor_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
+    @sb[:ems_metrics_processor_threshold] = []
+    @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
+
+    w = (qwb[:smart_proxy_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :count) || 3
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
+    @sb[:smart_proxy_threshold] = []
+    @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:smart_proxy_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+
+    qwb[:ems_refresh_worker] ||= {}
+    qwb[:ems_refresh_worker][:defaults] ||= {}
+    w = qwb[:ems_refresh_worker][:defaults]
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsRefreshWorker, :defaults, :memory_threshold) || 400.megabytes
+    @sb[:ems_refresh_threshold] = []
+    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+
+    wb = @edit[:current][:workers][:worker_base]
+    w = (wb[:event_catcher] ||= {})
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEventCatcher, :memory_threshold) || 1.gigabytes
+    @sb[:event_catcher_threshold] = []
+    (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+
+    w = (wb[:vim_broker_worker] ||= {})
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
+    @sb[:vim_broker_threshold] = []
+    (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
+    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+
+    w = (wb[:ui_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2
+
+    w = (qwb[:reporting_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqReportingWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqReportingWorker, :memory_threshold) || 400.megabytes
+    @sb[:reporting_threshold] = []
+    @sb[:reporting_threshold] = copy_array(@sb[:threshold])
+
+    w = (wb[:web_service_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :count) || 2
+    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :memory_threshold) || 400.megabytes
+    @sb[:web_service_threshold] = []
+    @sb[:web_service_threshold] = copy_array(@sb[:threshold])
+
+    w = (wb[:remote_console_worker] ||= {})
+    w[:count] = get_worker_setting(@edit[:current], MiqRemoteConsoleWorker, :count) || 2
+
+    @edit[:new] = copy_hash(@edit[:current])
+    session[:log_depot_default_verify_status] = true
+    @in_a_form = true
+  end
+
+  private def get_worker_setting(config, klass, *setting)
+    settings = klass.worker_settings(:config => config, :raw => true)
+    setting.empty? ? settings : settings.fetch_path(setting).to_i_with_method
+  end
+
+  def settings_set_form_vars_logos
+    @edit = {}
+    @edit[:new] = {}
+    @edit[:current] = ::Settings.to_hash
+    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+    if @edit[:current][:server][:custom_logo].nil?
+      @edit[:current][:server][:custom_logo] = false # Set default custom_logo flag
+    end
+    if @edit[:current][:server][:custom_login_logo].nil?
+      @edit[:current][:server][:custom_login_logo] = false # Set default custom_logo flag
+    end
+    if @edit[:current][:server][:custom_brand].nil?
+      @edit[:current][:server][:custom_brand] = false # Set default custom_brand flag
+    end
+    if @edit[:current][:server][:custom_favicon].nil?
+      @edit[:current][:server][:custom_favicon] = false # Set default custom_favicon flag
+    end
+
+    if @edit[:current][:server][:use_custom_login_text].nil?
+      @edit[:current][:server][:use_custom_login_text] = false # Set default custom_login_text flag
+    end
+    @logo_file = @@logo_file
+    @login_logo_file = @@login_logo_file
+    @login_brand_file = @@login_brand_file
+    @favicon_file = @@favicon_file
+    @in_a_form = true
   end
 
   def settings_set_form_vars
     if x_node.split("-").first == "z"
-      @right_cell_text = my_zone_name == @selected_zone.name ?
-        _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
-                                                        :model => ui_lookup(:model => @selected_zone.class.to_s)} :
-        _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
-                                              :model => ui_lookup(:model => @selected_zone.class.to_s)}
+      @right_cell_text = if my_zone_name == @selected_zone.name
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
+                                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
+                                                                 :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         end
     else
-      @right_cell_text = my_server.id == @sb[:selected_server_id] ?
-        _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                                        :model => ui_lookup(:model => @selected_server.class.to_s)} :
-        _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                              :model => ui_lookup(:model => @selected_server.class.to_s)}
+      @right_cell_text = if my_server.id == @sb[:selected_server_id]
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                                           :model => ui_lookup(:model => @selected_server.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                                 :model => ui_lookup(:model => @selected_server.class.to_s)}
+                         end
     end
     case @sb[:active_tab]
-    when "settings_server"                                  # Server Settings tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @sb[:new_to] = nil
-      @sb[:newrole] = false
-      session[:server_zones] = []
-      zones = Zone.all
-      zones.each do |zone|
-        session[:server_zones].push(zone.name)
-      end
-      @edit[:current].config[:server][:role] = @edit[:current].config[:server][:role] ? @edit[:current].config[:server][:role].split(",").sort.join(",") : ""
-      @edit[:current].config[:server][:timezone] = "UTC" if @edit[:current].config[:server][:timezone].blank?
-      @edit[:current].config[:server][:locale] = "default" if @edit[:current].config[:server][:locale].blank?
-      @edit[:current].config[:server][:remote_console_type] ||= "MKS"
-      @edit[:current].config[:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current].config[:smtp][:enable_starttls_auto].nil?
-      @edit[:current].config[:smtp][:openssl_verify_mode] ||= nil
-      @edit[:current].config[:ntp] ||= {}
-      @edit[:current].config[:ntp][:server] ||= []
-      @in_a_form = true
-    when "settings_authentication"        # Authentication tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config("vmdb")
-      # Avoid thinking roles change when not yet set
-      @edit[:current].config[:authentication][:ldap_role] ||= false
-      @edit[:current].config[:authentication][:amazon_role] ||= false
-      @edit[:current].config[:authentication][:httpd_role] ||= false
-      @sb[:form_vars] = {}
-      @sb[:form_vars][:session_timeout_hours] = @edit[:current].config[:session][:timeout] / 3600
-      @sb[:form_vars][:session_timeout_mins] = (@edit[:current].config[:session][:timeout] % 3600) / 60
-      @edit[:current].config[:authentication][:ldaphost] = @edit[:current].config[:authentication][:ldaphost].to_miq_a
-      @edit[:current].config[:authentication][:user_proxies] ||= [{}]
-      @edit[:current].config[:authentication][:follow_referrals] ||= false
-      @edit[:current].config[:authentication][:sso_enabled] ||= false
-      @edit[:current].config[:authentication][:saml_enabled] ||= false
-      @edit[:current].config[:authentication][:local_login_disabled] ||= false
-      @sb[:newrole] = @edit[:current].config[:authentication][:ldap_role]
-      @sb[:new_amazon_role] = @edit[:current].config[:authentication][:amazon_role]
-      @sb[:new_httpd_role] = @edit[:current].config[:authentication][:httpd_role]
-      @in_a_form = true
-    when "settings_smartproxy_affinity"                     # SmartProxy Affinity tab
+    when 'settings_server' # Server Settings tab
+      settings_set_form_vars_server
+    when 'settings_authentication' # Authentication tab
+      settings_set_form_vars_authentication
+    when 'settings_smartproxy_affinity' # SmartProxy Affinity tab
       smartproxy_affinity_set_form_vars
-    when "settings_workers"                                 # Worker Settings tab
-      # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
-      # need to create two copies of config new/current set_worker_setting! is a instance method, need @edit[:new] to be config class to set count/memory_threshold, can't run method against hash
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:current] = MiqServer.find(@sb[:selected_server_id]).get_config
-      @edit[:new] = MiqServer.find(@sb[:selected_server_id]).get_config
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @sb[:threshold] = []
-      (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }
-      (600.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }    # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
-      (1.gigabytes...1.5.gigabytes).step(100.megabytes) { |x| @sb[:threshold] << number_to_human_size(x, :significant => false) }   # adding values in 100 MB increments from 1gb to 1.5 gb
-
-      cwb = @edit[:current].config[:workers][:worker_base] ||= {}
-      qwb = (cwb[:queue_worker_base] ||= {})
-      w = (qwb[:generic_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqGenericWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqGenericWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:generic_threshold] = []
-      @sb[:generic_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:priority_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :count) || 2
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqPriorityWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
-      @sb[:priority_threshold] = []
-      @sb[:priority_threshold] = copy_array(@sb[:threshold])
-
-      qwb[:ems_metrics_collector_worker] ||= {}
-      qwb[:ems_metrics_collector_worker][:defaults] ||= {}
-      w = qwb[:ems_metrics_collector_worker][:defaults]
-      raw = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsCollectorWorker)
-      w[:count] = raw[:defaults][:count] || 2
-      w[:memory_threshold] = rails_method_to_human_size(raw[:defaults][:memory_threshold] || 400.megabytes)
-      @sb[:ems_metrics_collector_threshold] = []
-      @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:ems_metrics_processor_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsMetricsProcessorWorker, :memory_threshold)) || rails_method_to_human_size(200.megabytes)
-      @sb[:ems_metrics_processor_threshold] = []
-      @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
-
-      w = (qwb[:smart_proxy_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :count) || 3
-      w[:memory_threshold] =  rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqSmartProxyWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:smart_proxy_threshold] = []
-      @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
-
-      qwb[:ems_refresh_worker] ||= {}
-      qwb[:ems_refresh_worker][:defaults] ||= {}
-      w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEmsRefreshWorker, [:defaults, :memory_threshold])) || rails_method_to_human_size(400.megabytes)
-      @sb[:ems_refresh_threshold] = []
-      (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << number_to_human_size(x, :significant => false) }
-
-      wb = @edit[:current].config[:workers][:worker_base]
-      w = (wb[:event_catcher] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqEventCatcher, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
-      @sb[:event_catcher_threshold] = []
-      (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << number_to_human_size(x, :significant => false) }
-
-      w = (wb[:vim_broker_worker] ||= {})
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqVimBrokerWorker, :memory_threshold)) || rails_method_to_human_size(1.gigabytes)
-      @sb[:vim_broker_threshold] = []
-      (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-      (1.gigabytes..2.9.gigabytes).step(1.gigabyte / 10) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-      (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << number_to_human_size(x, :significant => false) }
-
-      w = (wb[:ui_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqUiWorker, :count) || 2
-
-      w = (qwb[:reporting_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqReportingWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqReportingWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:reporting_threshold] = []
-      @sb[:reporting_threshold] = copy_array(@sb[:threshold])
-
-      w = (wb[:web_service_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :count) || 2
-      w[:memory_threshold] = rails_method_to_human_size(@edit[:current].get_raw_worker_setting(:MiqWebServiceWorker, :memory_threshold)) || rails_method_to_human_size(400.megabytes)
-      @sb[:web_service_threshold] = []
-      @sb[:web_service_threshold] = copy_array(@sb[:threshold])
-
-      w = (wb[:websocket_worker] ||= {})
-      w[:count] = @edit[:current].get_raw_worker_setting(:MiqWebsocketWorker, :count) || 2
-
-      @edit[:new].config = copy_hash(@edit[:current].config)
-      session[:log_depot_default_verify_status] = true
-      @in_a_form = true
-    when "settings_custom_logos"                                  # Custom Logo tab
-      @edit = {}
-      @edit[:new] = {}
-      @edit[:current] = {}
-      @edit[:current] = VMDB::Config.new("vmdb")                # Get the vmdb configuration settings
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      if @edit[:current].config[:server][:custom_logo].nil?
-        @edit[:current].config[:server][:custom_logo] = false # Set default custom_logo flag
-      end
-      if @edit[:current].config[:server][:custom_login_logo].nil?
-        @edit[:current].config[:server][:custom_login_logo] = false # Set default custom_logo flag
-      end
-      if @edit[:current].config[:server][:use_custom_login_text].nil?
-        @edit[:current].config[:server][:use_custom_login_text] = false # Set default custom_logo flag
-      end
-      @logo_file = @@logo_file
-      @login_logo_file = @@login_logo_file
-      @in_a_form = true
-    when "settings_advanced"                                  # Advanced yaml editor
-      @edit = {}
-      @edit[:current] = {:file_data => VMDB::Config.get_file}
-      @edit[:new] = copy_hash(@edit[:current])
-      @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-      @in_a_form = true
+    when 'settings_workers' # Worker Settings tab
+      settings_set_form_vars_workers
+    when 'settings_custom_logos' # Custom Logo tab
+      settings_set_form_vars_logos
+    when "settings_advanced" # Advanced yaml editor
+      fetch_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
     end
     if %w(settings_server settings_authentication settings_custom_logos).include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
-      @edit[:current].config.each_key do |category|
-        @edit[:new][category] = copy_hash(@edit[:current].config[category])
+      @edit[:current].each_key do |category|
+        @edit[:new][category] = copy_hash(@edit[:current][category])
       end
       if @sb[:active_tab] == "settings_server"
         session[:selected_roles] = @edit[:new][:server][:role].split(",") if !@edit[:new][:server].nil? && !@edit[:new][:server][:role].nil?
-        server_roles = MiqServer.licensed_roles           # Get the roles this server is licensed for
+        server_roles = MiqServer.licensed_roles # Get the roles this server is licensed for
         server_roles.delete_if { |r| r.name == "database_owner" }
         session[:server_roles] = {}
         server_roles.each do |sr|
@@ -1084,42 +1171,45 @@ module OpsController::Settings::Common
     nodes = nodetype.downcase.split("-")
     case nodes[0]
     when "root"
-      @right_cell_text = _("Settings %{model} \"%{name}\"") %
-                         {:name  => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                          :model => ui_lookup(:model => "MiqRegion")}
+      @right_cell_text = _("%{product} Region \"%{name}\"") %
+                         {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
+                          :product => Vmdb::Appliance.PRODUCT_NAME}
       case @sb[:active_tab]
       when "settings_details"
         settings_set_view_vars
-      when "settings_cu_collection"                                 # C&U collection settings
+      when "settings_cu_collection" # C&U collection settings
         cu_build_edit_screen
         @in_a_form = true
-      when "settings_co_categories"
-        category_get_all
-      when "settings_co_tags"
-        # dont hide the disabled categories, so user can remove tags from the disabled ones
-        cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
-        @cats = {}                                        # Classifications array for first chooser
-        cats.each do |c|
-          @cats[c.description] = c.name unless c.read_only?    # Show the non-read_only categories
+      when "settings_tags"
+        case @sb[:active_subtab]
+        when "settings_co_categories"
+          category_get_all
+        when "settings_co_tags"
+          # dont hide the disabled categories, so user can remove tags from the disabled ones
+          cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
+          @cats = {}                                               # Classifications array for first chooser
+          cats.each do |c|
+            @cats[c.description] = c.name unless c.read_only?      # Show the non-read_only categories
+          end
+          @cat = cats.first
+          ce_build_screen                                          # Build the Classification Edit screen
+        when "settings_import_tags"
+          @edit = {}
+          @edit[:new] = {}
+          @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+          add_flash(_("Locate and upload a file to start the import process"), :info)
+          @in_a_form = true
+        when "settings_import" # Import tab
+          @edit = {}
+          @edit[:new] = {}
+          @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
+          @edit[:new][:upload_type] = nil
+          @sb[:good] = nil unless @sb[:show_button]
+          add_flash(_("Choose the type of custom variables to be imported"), :info)
+          @in_a_form = true
+        when "settings_label_tag_mapping"
+          label_tag_mapping_get_all
         end
-        @cat = cats.first
-        ce_build_screen                                         # Build the Classification Edit screen
-      when "settings_import_tags"
-        @edit = {}
-        @edit[:new] = {}
-        @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-        add_flash(_("Locate and upload a file to start the import process"), :info)
-        @in_a_form = true
-      when "settings_import"                                  # Import tab
-        @edit = {}
-        @edit[:new] = {}
-        @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-        @edit[:new][:upload_type] = nil
-        @sb[:good] = nil unless @sb[:show_button]
-        add_flash(_("Choose the type of custom variables to be imported"))
-        @in_a_form = true
-      when "settings_label_tag_mapping"
-        label_tag_mapping_get_all
       when "settings_rhn"
         @edit = session[:edit] || {}
         @edit[:new] ||= {}
@@ -1127,71 +1217,68 @@ module OpsController::Settings::Common
         @customer = rhn_subscription
         @buttons_on = @edit[:new][:servers].detect { |_, value| !!value }
         @updates = rhn_update_information
+      when "settings_help_menu"
+        @in_a_form = true
+        @edit = {:new => {}, :key => 'customize_help_menu'}
+        @edit[:new] = Settings.help_menu.to_h
+        help_menu_items.each do |item|
+          @edit[:new][item] = Settings.help_menu.try(item).try(:to_h) || {}
+        end
+        @edit[:current] = copy_hash(@edit[:new])
+        session[:edit] = @edit
+        session[:changed] = false
+      when "settings_advanced"
+        fetch_advanced_settings(MiqRegion.my_region)
       end
     when "xx"
       case nodes[1]
       when "z"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "Zone")}
-        @zones = Zone.in_my_region
+        @right_cell_text = _("Settings Zones")
+        @zones = Zone.visible.in_my_region
       when "sis"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "ScanItemSet")}
+        @right_cell_text = _("Settings Analysis Profiles")
         aps_list
       when "msc"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "MiqSchedule")}
+        @right_cell_text = _("Settings Schedules")
         schedules_list
-      when "l"
-        @right_cell_text = _("Settings %{model}") % {:model => ui_lookup(:models => "LdapRegion")}
-        ldap_regions_list
       end
     when "svr"
       # @sb[:tabform] = "operations_1" if @sb[:selected_server] && @sb[:selected_server].id != nodetype.downcase.split("-").last.to_i #reset tab if server node was changed, current server has 10 tabs, current active tab may not be available for other server nodes.
-      #     @sb[:selected_server] = MiqServer.find(from_cid(nodetype.downcase.split("-").last))
-      @selected_server = MiqServer.find(from_cid(nodes.last))
+      #     @sb[:selected_server] = MiqServer.find(nodetype.downcase.split("-").last)
+      @selected_server = MiqServer.find(nodes.last)
       @sb[:selected_server_id] = @selected_server.id
       settings_set_form_vars
     when "msc"
-      @record = @selected_schedule = MiqSchedule.find(from_cid(nodes.last))
-      @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_schedule.name,
-                                                               :model => ui_lookup(:model => "MiqSchedule")}
+      @record = @selected_schedule = MiqSchedule.find(nodes.last)
+      @right_cell_text = _("Settings Schedule \"%{name}\"") % {:name => @selected_schedule.name}
       schedule_show
-    when "ld", "lr"
-      nodes = nodetype.split('-')
-      if nodes[0] == "lr"
-        @record = @selected_lr = LdapRegion.find(from_cid(nodes[1]))
-        @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_lr.name,
-                                                                 :model => ui_lookup(:model => "LdapRegion")}
-        ldap_region_show
-      else
-        @record = @selected_ld = LdapDomain.find(from_cid(nodes[1]))
-        @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_ld.name,
-                                                                 :model => ui_lookup(:model => "LdapDomain")}
-        ldap_domain_show
-      end
     when "sis"
-      @record = @selected_scan = ScanItemSet.find(from_cid(nodes.last))
-      @right_cell_text = _("Settings %{model} \"%{name}\"") % {:name  => @selected_scan.name,
-                                                               :model => ui_lookup(:model => "ScanItemSet")}
+      @record = @selected_scan = ScanItemSet.find(nodes.last)
+      @right_cell_text = _("Settings Analysis Profile \"%{name}\"") % {:name => @selected_scan.name}
       ap_show
     when "z"
       @servers = []
-      @record = @zone = @selected_zone = Zone.find(from_cid(nodes.last))
-      @sb[:tab_label] = @selected_zone.description
-      @right_cell_text = my_zone_name == @selected_zone.name ?
-          _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
-                                                          :model => ui_lookup(:model => @selected_zone.class.to_s)} :
-          _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
-                                                :model => ui_lookup(:model => @selected_zone.class.to_s)}
+      @record = @zone = @selected_zone = Zone.find(nodes.last)
+      @ntp_servers = @selected_zone&.settings_for_resource&.ntp ? @selected_zone.settings_for_resource.ntp.to_h[:server].join(", ") : ''
+      @right_cell_text = if my_zone_name == @selected_zone.name
+                           _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
+                                                                           :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         else
+                           _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
+                                                                 :model => ui_lookup(:model => @selected_zone.class.to_s)}
+                         end
       MiqServer.all.each do |ms|
         if ms.zone_id == @selected_zone.id
           @servers.push(ms)
         end
       end
       smartproxy_affinity_set_form_vars if @sb[:active_tab] == "settings_smartproxy_affinity"
+      fetch_advanced_settings(@record) if @sb[:active_tab] == "settings_advanced"
     end
   end
 
   # Build the main Settings tree
-  def settings_build_tree
+  def build_settings_tree
     TreeBuilderOpsSettings.new("settings_tree", "settings", @sb)
   end
 
@@ -1199,10 +1286,9 @@ module OpsController::Settings::Common
     if @sb[:active_tab] == "settings_details"
       # Enterprise Details tab
       @scan_items = ScanItemSet.all
-      @zones = Zone.in_my_region
-      @ldap_regions = LdapRegion.in_my_region
+      @zones = Zone.visible.in_my_region
       @miq_schedules = MiqSchedule.where("(prod_default != 'system' or prod_default is null) and adhoc IS NULL")
-                       .sort_by { |s| s.name.downcase }
+                                  .sort_by { |s| s.name.downcase }
     end
   end
 end

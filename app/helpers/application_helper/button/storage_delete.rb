@@ -3,8 +3,7 @@ class ApplicationHelper::Button::StorageDelete < ApplicationHelper::Button::Basi
 
   def disabled?
     unless @record.vms_and_templates.empty? && @record.hosts.empty?
-      @error_message = _('Only %{storage} without VMs and Hosts can be removed') %
-                       {:storage => ui_lookup(:table => 'storage')}
+      @error_message = _('Only Datastore without VMs and Hosts can be removed')
     end
     @error_message.present?
   end

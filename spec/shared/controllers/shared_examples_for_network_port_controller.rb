@@ -1,16 +1,15 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_network_port_controller do |providers|
-  include CompressedIds
   render_views
-  before :each do
-    stub_user(:features => :all)
-    setup_zone
-  end
 
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_network_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
 
       describe "#show_list" do
         it "renders index" do
@@ -55,7 +54,7 @@ shared_examples :shared_examples_for_network_port_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit Network Port tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@network_port.id), :pressed => "network_port_tag"}
+          post :button, :params => {:miq_grid_checks => @network_port.id, :pressed => "network_port_tag"}
           expect(response.status).to eq(200)
         end
       end

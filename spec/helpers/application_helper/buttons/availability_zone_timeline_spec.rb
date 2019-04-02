@@ -1,12 +1,12 @@
 describe ApplicationHelper::Button::AvailabilityZoneTimeline do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:has_events?).and_return(has_events) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record has events' do
       let(:has_events) { true }

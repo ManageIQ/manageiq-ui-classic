@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "app/javascript/typings"
+    ],
+    "allowJs": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "node_modules",
+    "vendor",
+    "public",
+    "spec/manageiq"
+  ],
+  "compileOnSave": false
+}

@@ -1,30 +1,29 @@
 /*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *
- *= require c3
- *= require patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.css
+ *= require c3/c3
+ *= require patternfly-bootstrap-treeview/dist/bootstrap-treeview.min
  *= require main
- *= require automate_import_export
- *= require dialog_fields
+ *= require ./automate_import_export
+ *= require ./dialog_fields
  *= require angular
- *= require notifications
- *= require angular-patternfly-sass/dist/styles/angular-patternfly
- *= require schedule_editor
- *= require miq_tree
- *= require codemirror
+ *= require ./notifications
+ *= require angular-patternfly/dist/styles/angular-patternfly
+ *= require ./schedule_editor
+ *= require ./miq_tree
+ *= require codemirror/lib/codemirror
  *= require codemirror/theme/eclipse
  *= require kubernetes-topology-graph/dist/topology-graph
- *= require container_providers_dashboard
- *= require wizard
- *= require template
- *= require timeline
- *= require topology
- *= require container_topology
- *= require middleware_topology
- *= require network_topology
- *= require service_dialogs
- *= require xml_display
- *= require patternfly-timeline/dist/timeline
+ *= require ./timeline
+ *= require ./topology
+ *= require ./container_topology
+ *= require ./physical_infra_topology
+ *= require ./metrics
+ *= require ./service_dialogs
+ *= require @pf3/timeline/style
+ *= require @manageiq/ui-components/dist/css/ui-components
+ *= require ui-select/dist/select
+ *= require ./remote_console
+ *= require graphiql/graphiql.css
+ *= require piecharts
+ *= require @manageiq/react-ui-components/dist/textual_summary
+ *= require @manageiq/react-ui-components/dist/tagging.css
 */

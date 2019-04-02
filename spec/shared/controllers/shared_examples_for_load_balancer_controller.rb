@@ -1,17 +1,15 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_load_balancer_controller do |providers|
-  include CompressedIds
-
   render_views
-  before :each do
-    stub_user(:features => :all)
-    setup_zone
-  end
 
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_network_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
 
       describe "#show_list" do
         it "renders index" do
@@ -52,7 +50,7 @@ shared_examples :shared_examples_for_load_balancer_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit cloud subnet tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@load_balancer.id), :pressed => "load_balancer_tag"}
+          post :button, :params => {:miq_grid_checks => @load_balancer.id, :pressed => "load_balancer_tag"}
           expect(response.status).to eq(200)
         end
       end

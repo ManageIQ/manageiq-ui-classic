@@ -9,12 +9,11 @@
           - @selected = Array.new
           - @edit[:new]["category"][:definition]["content"].each do |a|
             - @selected.push(a["target"])
-        - CATEGORY_CHOICES.each_slice(3) do |keyvalue|
+        - OpsController::Settings::AnalysisProfiles::CATEGORY_CHOICES.each_slice(3) do |keyvalue|
           .form-group
             - keyvalue.each do |k, v|
               - checked = @selected.include? k if @selected
               .col-md-4{:align => "left", :nowrap => "", :valign => "top"}
-                = hidden_field("item", "type", :value => "category")
                 = check_box_tag("check_#{k}", _(v), checked,
                   "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
                   "data-miq_observe_checkbox" => {:url => url}.to_json)

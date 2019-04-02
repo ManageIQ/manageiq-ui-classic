@@ -6,7 +6,7 @@
         - if @record.picture
           %img{:src => "#{@record.picture.url_path}?#{rand(99_999_999)}"}/
         - else
-          %i.product.product-template
+          %i.fa.fa-cube.fa-4x
         %br
         %br
       .col-md-9
@@ -33,7 +33,7 @@
       .col-md-1{:align => "center"}
         #buttons
           = button_tag(_("Order"),
-                       :class   => "btn btn-default",
+                       :class   => "btn btn-primary",
                        :alt     => t = _("Order this Service"),
                        :title   => t,
                        :onclick => "miqAjaxButton('#{url_for_only_path(:action => "svc_catalog_provision",

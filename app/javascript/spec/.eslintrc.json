@@ -1,0 +1,17 @@
+{
+  "globals": {
+    "getJSONFixture": true,
+    "spyOn": true
+  },
+  "rules": {
+    "max-lines": "off",
+    "max-lines-per-function": "off",
+    "import/no-dynamic-require": "off"
+  },
+  "env": {
+    "jest": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

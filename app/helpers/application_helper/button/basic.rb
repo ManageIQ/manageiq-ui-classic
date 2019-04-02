@@ -19,7 +19,7 @@ class ApplicationHelper::Button::Basic < Hash
     return true if self[:type] == :buttonSelect
     # for each button in select checks RBAC, self[:child_id] represents the
     # button id for buttons inside select
-    return role_allows?(:feature => self[:child_id]) unless self[:child_id].nil?
+    return role_allows?(:feature => self[:child_id]) if self[:child_id]
     # check RBAC on separate button
     role_allows?(:feature => self[:id])
   end
@@ -42,9 +42,24 @@ class ApplicationHelper::Button::Basic < Hash
   #   self[:prompt]  -- the user has to confirm the action
   #   self[:hidden]  -- the button is not displayed in the toolbar
   #   self[:text]    -- text for the button
+  #   self[:onwhen]  -- enable button if items are selected
+  #
+  # If disabled? is true, disable onwhen and set state and title unless
+  # user specifically enabled the button
   def calculate_properties
-    self[:enabled] = !disabled? if self[:enabled].nil?
-    self[:title] = @error_message if @error_message.present?
+    enabled = !disabled?
+
+    # if :enabled is not set, use disabled?
+    self[:enabled] = enabled if self[:enabled].nil?
+
+    # if disabled? is true and user did not specify that :enabled is true
+    # then:
+    #     set :onwhen to nil => do not enable when user select items
+    #     set :title to error => show user the error message
+    unless self[:enabled] || enabled
+      self[:onwhen] = nil
+      self[:title] = @error_message if @error_message.present?
+    end
   end
 
   # Check if all instance variables for that button works with are set and

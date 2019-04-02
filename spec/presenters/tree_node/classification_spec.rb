@@ -1,29 +1,31 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::Classification do
   subject { described_class.new(object, nil, {}) }
 
   shared_examples 'TreeNode::Classification' do
     include_examples 'TreeNode::Node#key prefix', 'cl-'
     include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
-    include_examples 'TreeNode::Node#title description'
+    include_examples 'TreeNode::Node#text description'
 
-    [:no_click, :hide_checkbox].each do |method|
-      describe "##{method}" do
-        it 'returns with true' do
-          expect(subject.send(method)).to be_truthy
-        end
+    describe '#hide_checkbox' do
+      it 'returns with true' do
+        expect(subject.send(:hide_checkbox)).to be_truthy
+      end
+    end
+
+    describe '#selectable' do
+      it 'returns with false' do
+        expect(subject.send(:selectable)).to be_falsey
       end
     end
   end
 
   context 'Classification' do
-    let(:object) { FactoryGirl.create(:classification) }
+    let(:object) { FactoryBot.create(:classification) }
     it_behaves_like 'TreeNode::Classification'
   end
 
   context 'Category' do
-    let(:object) { FactoryGirl.create(:category) }
+    let(:object) { FactoryBot.create(:category) }
     it_behaves_like 'TreeNode::Classification'
   end
 end

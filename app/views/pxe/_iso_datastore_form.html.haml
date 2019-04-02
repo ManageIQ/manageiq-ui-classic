@@ -6,7 +6,7 @@
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = ui_lookup(:table => "ext_management_system")
+        = _("Provider")
       .col-md-8
         = select_tag("ems_id",
                     options_for_select([["<#{_('Choose')}>", nil]] + @edit[:emses].sort, @edit[:new][:ems_id]),

@@ -1,23 +1,24 @@
 class CloudTenantController < ApplicationController
-  include Mixins::GenericShowMixin
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
 
   include Mixins::GenericListMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
+  include Mixins::DashboardViewMixin
+  include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   # handle buttons pressed on the button bar
   def button
     case params[:pressed]
     when "cloud_tenant_new"
-      javascript_redirect :action => "new"
+      javascript_redirect(:action => "new")
     when "cloud_tenant_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
+      javascript_redirect(:action => "edit", :id => checked_item_id)
     when 'cloud_tenant_delete'
       delete_cloud_tenants
     when "custom_button"
@@ -25,21 +26,19 @@ class CloudTenantController < ApplicationController
       custom_buttons
     else
       editable_objects = CloudTenantController.display_methods.map(&:singularize) - %w(instance image) # handled in super
-      if params[:pressed].starts_with?(*editable_objects)
+      if params[:pressed].starts_with?(*editable_objects) && !params[:pressed].ends_with?('_tag')
         target_controller = editable_objects.find { |n| params[:pressed].starts_with?(n) }
         action = params[:pressed].sub("#{target_controller}_", '')
-        action = "#{action}_#{target_controller.sub('cloud_','').pluralize}" if action == 'delete'
+        action = "#{action}_#{target_controller.sub('cloud_', '').pluralize}" if action == 'delete'
         if action == 'detach'
-          volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+          volume = find_record_with_rbac(CloudVolume, params[:miq_grid_checks])
           if volume.attachments.empty?
-            render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-                :volume      => ui_lookup(:table => 'cloud_volume'),
-                :volume_name => volume.name,
-                :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
+            render_flash(_("Cloud Volume \"%{volume_name}\" is not attached to any Instances") %
+              {:volume_name => volume.name}, :error)
             return
           end
         end
-        javascript_redirect :controller => target_controller, :miq_grid_checks => params[:miq_grid_checks], :action => action
+        javascript_redirect(:controller => target_controller, :miq_grid_checks => params[:miq_grid_checks], :action => action)
       else
         # calling the method from Mixins::GenericButtonMixin
         super
@@ -49,7 +48,7 @@ class CloudTenantController < ApplicationController
 
   def self.display_methods
     %w(instances images security_groups cloud_volumes cloud_volume_snapshots cloud_object_store_containers floating_ips
-       network_ports cloud_networks cloud_subnets network_routers)
+       network_ports cloud_networks cloud_subnets network_routers custom_button_events)
   end
 
   def new
@@ -57,15 +56,14 @@ class CloudTenantController < ApplicationController
     @tenant = CloudTenant.new
     @in_a_form = true
     @ems_choices = {}
-    ManageIQ::Providers::Openstack::CloudManager.all.each do |ems|
+    Rbac::Filterer.filtered(ManageIQ::Providers::Openstack::CloudManager).each do |ems|
       @ems_choices[ems.name] = ems.id
       # keystone v3 allows for hierarchical tenants
-      if ems.api_version == "v3"
-        ems.cloud_tenants.each do |ems_cloud_tenant|
-          tenant_choice_name = ems.name + " (" + ems_cloud_tenant.name + ")"
-          tenant_choice_id = ems.id.to_s + ":" + ems_cloud_tenant.id.to_s
-          @ems_choices[tenant_choice_name] = tenant_choice_id
-        end
+      next unless ems.api_version == "v3"
+      Rbac::Filterer.filtered(ems.cloud_tenants).each do |ems_cloud_tenant|
+        tenant_choice_name = ems.name + " (" + ems_cloud_tenant.name + ")"
+        tenant_choice_id = ems.id.to_s + ":" + ems_cloud_tenant.id.to_s
+        @ems_choices[tenant_choice_name] = tenant_choice_id
       end
     end
     drop_breadcrumb(
@@ -78,18 +76,17 @@ class CloudTenantController < ApplicationController
     assert_privileges("cloud_tenant_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Cloud Tenenat was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of Cloud Tenant was cancelled by the user"))
     when "add"
       @tenant = CloudTenant.new
       options = form_params
-      ems = find_by_id_filtered(ExtManagementSystem, options[:ems_id])
+      ems = find_record_with_rbac(ExtManagementSystem, options[:ems_id])
       options.delete(:ems_id)
 
       task_id = CloudTenant.create_cloud_tenant_queue(session[:userid], ems, options)
 
-      add_flash(_("Cloud tenant creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -114,16 +111,15 @@ class CloudTenantController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show_list"
+    flash_to_session
+    javascript_redirect(:action => "show_list")
   end
 
   def edit
     assert_privileges("cloud_tenant_edit")
-    @tenant = find_by_id_filtered(CloudTenant, params[:id])
+    @tenant = find_record_with_rbac(CloudTenant, params[:id])
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Cloud Tenant \"%{name}\"") % {:name => @tenant.name},
@@ -133,20 +129,17 @@ class CloudTenantController < ApplicationController
 
   def update
     assert_privileges("cloud_tenant_edit")
-    @tenant = find_by_id_filtered(CloudTenant, params[:id])
+    @tenant = find_record_with_rbac(CloudTenant, params[:id])
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {
-        :name  => @tenant.name
-      })
+      cancel_action(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => @tenant.name})
 
     when "save"
       options = form_params
       task_id = @tenant.update_cloud_tenant_queue(session[:userid], options)
 
-      add_flash(_("Cloud tenant creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+      add_flash(_("Cloud tenant creation failed: Task start failed"), :error) unless task_id.kind_of?(Integer)
 
       if @flash_array
         javascript_flash(:spinner_off => true)
@@ -172,16 +165,15 @@ class CloudTenantController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show", :id => tenant_id
+    flash_to_session
+    javascript_redirect(:action => "show", :id => tenant_id)
   end
 
   def cloud_tenant_form_fields
     assert_privileges("cloud_tenant_edit")
-    tenant = find_by_id_filtered(CloudTenant, params[:id])
+    tenant = find_record_with_rbac(CloudTenant, params[:id])
     render :json => {
       :name => tenant.name
     }
@@ -189,26 +181,12 @@ class CloudTenantController < ApplicationController
 
   def delete_cloud_tenants
     assert_privileges("cloud_tenant_delete")
-
-    tenants = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_tenant")
-                find_checked_items
-              else
-                [params[:id]]
-              end
-
-    if tenants.empty?
-      add_flash(_("No Cloud Tenants were selected for deletion."), :error)
-    end
-
+    tenants = find_records_with_rbac(CloudTenant, checked_or_params)
     tenants_to_delete = []
-    tenants.each do |tenant_id|
-      tenant = CloudTenant.find_by_id(tenant_id)
-      if tenant.nil?
-        add_flash(_("Cloud Tenant no longer exists."), :error)
-      elsif !tenant.vms.empty?
-        add_flash(_("Cloud Tenant \"%{name}\" cannot be removed because it is attached to one or more %{instances}") % {
-          :name      => tenant.name,
-          :instances => ui_lookup(:tables => 'vm_cloud')}, :warning)
+    tenants.each do |tenant|
+      if tenant.vms.present?
+        add_flash(_("Cloud Tenant \"%{name}\" cannot be removed because it is attached to one or more Instances") %
+          {:name => tenant.name}, :warning)
       else
         tenants_to_delete.push(tenant)
       end
@@ -218,13 +196,15 @@ class CloudTenantController < ApplicationController
     # refresh the list if applicable
     if @lastaction == "show_list"
       show_list
+      render_flash
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_tenant"
       # deleting from 'show' so we:
       if flash_errors? # either show the errors and stay on the 'show'
         render_flash
       else             # or (if we deleted what we were showing) we redirect to the listing
-        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+        flash_to_session
+        javascript_redirect(:action => 'show_list')
       end
     end
   end
@@ -232,7 +212,7 @@ class CloudTenantController < ApplicationController
   private
 
   def textual_group_list
-    [%i(relationships quotas), %i(tags)]
+    [%i(properties relationships quotas), %i(tags)]
   end
   helper_method :textual_group_list
 
@@ -243,7 +223,7 @@ class CloudTenantController < ApplicationController
       ems_id_array = params[:ems_id].split(":")
       options[:ems_id] = ems_id_array[0]
       if ems_id_array.length > 1
-        parent_id = find_by_id_filtered(CloudTenant, ems_id_array[1]).ems_ref
+        parent_id = find_record_with_rbac(CloudTenant, ems_id_array[1]).ems_ref
         options[:parent_id] = parent_id
       end
     end
@@ -270,6 +250,18 @@ class CloudTenantController < ApplicationController
                    "Delete initiated for %{number} Cloud Tenants.",
                    tenants.length) % {:number => tenants.length})
     end
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Clouds")},
+        {:title => _("Tenants")},
+        {:url   => controller_url, :title => _("Cloud Tenants")},
+      ],
+      :record_info => @tenant,
+    }.compact
   end
 
   menu_section :clo

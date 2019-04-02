@@ -11,6 +11,10 @@ module AnsiblePlaybookHelper::TextualSummary
     TextualGroup.new(_("Relationships"), %i(provider repository))
   end
 
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
+  end
+
   def textual_created
     {:label => _("Created On"), :value => format_timezone(@record.created_at)}
   end

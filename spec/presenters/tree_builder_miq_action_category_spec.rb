@@ -1,19 +1,19 @@
 describe TreeBuilderMiqActionCategory do
   before do
-    role = MiqUserRole.find_by_name("EvmRole-operator")
-    group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
+    role = MiqUserRole.find_by(:name => "EvmRole-operator")
+    group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
+    login_as FactoryBot.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
 
-  let!(:tag1) { FactoryGirl.create(:classification, :name => 'tag1', :show => false) }
+  let!(:tag1) { FactoryBot.create(:classification, :name => 'tag1', :show => false) }
   let!(:folder1) do
-    f1 = FactoryGirl.create(:classification, :name => 'folder1', :show => true)
+    f1 = FactoryBot.create(:classification, :name => 'folder1', :show => true)
     f1.entries.push(tag1)
     f1
   end
-  let!(:tag2) { FactoryGirl.create(:classification, :name => 'tag2', :show => false) }
+  let!(:tag2) { FactoryBot.create(:classification, :name => 'tag2', :show => false) }
   let!(:folder2) do
-    f2 = FactoryGirl.create(:classification, :name => 'folder2', :show => true)
+    f2 = FactoryBot.create(:classification, :name => 'folder2', :show => true)
     f2.entries.push(tag2)
     f2
   end
@@ -21,38 +21,37 @@ describe TreeBuilderMiqActionCategory do
   let!(:tree_name) { :action_tags }
 
   subject do
-    described_class.new(:action_tags_tree, :action_tags, {}, true, tenant)
+    described_class.new(:action_tags_tree, :action_tags, {}, true, :root => tenant)
   end
 
   describe '#tree_init_options' do
     it 'set init options correctly' do
-      expect(subject.send(:tree_init_options, tree_name)).to eq(:expand => true, :lazy => false)
+      expect(subject.send(:tree_init_options)[:lazy]).not_to be_truthy
     end
   end
 
   describe '#set_locals_for_render' do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
-      expect(locals[:id_prefix]).to eq('cat_tree')
       expect(locals[:click_url]).to eq("/miq_policy/action_tag_pressed/")
-      expect(locals[:onclick]).to eq("miqOnClickTagCat")
+      expect(locals[:onclick]).to eq("miqOnClickGeneric")
     end
   end
 
   describe '#override' do
     it 'set node' do
       node = subject.send(:override, {}, tag1, nil, nil)
-      expect(node[:cfmeNoClick]).to eq(false)
+      expect(node[:selectable]).to eq(true)
 
       node = subject.send(:override, {}, folder1, nil, nil)
-      expect(node[:cfmeNoClick]).to eq(true)
+      expect(node[:selectable]).to eq(false)
     end
   end
 
   describe '#root_options' do
     it 'sets root_options correctly' do
       expect(subject.send(:root_options)).to eq(
-        :title   => tenant,
+        :text    => tenant,
         :tooltip => tenant,
         :icon    => "fa fa-tag"
       )

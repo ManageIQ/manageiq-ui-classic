@@ -1,5 +1,5 @@
 describe MiqPolicyController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -57,12 +57,8 @@ describe MiqPolicyController do
     shared_examples_for "MiqPolicyController#upload that cannot locate an import file" do
       it "redirects with a cannot locate import file error message" do
         post :upload, :params => params
-        expect(response).to redirect_to(
-          :action      => "export",
-          :dbtype      => "dbtype",
-          :flash_msg   => "Use the Choose file button to locate an Import file",
-          :flash_error => true
-        )
+        expect(response).to redirect_to(:action => "export", :dbtype => "dbtype")
+        expect(session[:flash_msgs]).to match [a_hash_including(:message => "Use the Choose file button to locate an Import file", :level => :error)]
       end
     end
 
@@ -115,11 +111,10 @@ describe MiqPolicyController do
             it "redirects to export with an error message" do
               post :upload, :params => params
               expect(response).to redirect_to(
-                :action      => "export",
-                :dbtype      => "dbtype",
-                :flash_msg   => "Error during 'Policy Import': message",
-                :flash_error => true
+                :action => "export",
+                :dbtype => "dbtype",
               )
+              expect(session[:flash_msgs]).to match [a_hash_including(:message => "Error during 'Policy Import': message", :level => :error)]
             end
           end
         end
@@ -166,13 +161,13 @@ describe MiqPolicyController do
 
     context 'when profile param is valid' do
       it 'renders explorer w/o flash and assigns to x_node' do
-        profile = FactoryGirl.create(:miq_policy_set)
+        profile = FactoryBot.create(:miq_policy_set)
         allow(controller).to receive(:get_node_info).and_return(true)
         post :explorer, :params => { :profile => profile.id }
         expect(response).to render_template('explorer')
         flash_messages = controller.instance_variable_get(:@flash_array)
         expect(flash_messages).to be_nil
-        expect(controller.x_node).to eq("pp_#{profile.id}")
+        expect(controller.x_node).to eq("pp-#{profile.id}")
       end
     end
   end
@@ -200,14 +195,14 @@ describe MiqPolicyController do
   end
 
   describe '#replace_right_cell' do
-    it 'should replace policy_tree_div when replace_trees contains :policy' do
+    it 'should reload policy tree when reload_trees contains :policy_tree' do
       allow(controller).to receive(:params).and_return(:action => 'whatever')
       controller.instance_eval { @sb = {:active_tree => :policy_tree} }
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :policy_tree)
 
       controller.send(:replace_right_cell, :nodetype => 'root', :replace_trees => [:policy], :presenter => presenter)
-      expect(presenter[:replace_partials]).to have_key('policy_tree_div')
+      expect(presenter[:reload_trees]).to have_key(:policy_tree)
     end
 
     it 'should not hide center toolbar while doing searches' do
@@ -228,10 +223,61 @@ describe MiqPolicyController do
       presenter = ExplorerPresenter.new(:active_tree => :alert_profile_tree)
       controller.send(:get_node_info, 'ap_xx-Storage')
       presenter[:right_cell_text] = 'foo'
-      controller.send(:replace_right_cell, {:nodetype => 'xx', :replace_trees => [:alert_profile], :presenter => presenter})
+      controller.send(:replace_right_cell, :nodetype => 'xx', :replace_trees => [:alert_profile], :presenter => presenter)
 
       expect(presenter[:right_cell_text]).not_to equal('foo')
       expect(presenter[:right_cell_text]).to_not be_nil
+    end
+
+    context 'searching text' do
+      let(:search) { "some_text" }
+
+      before do
+        allow(controller).to receive(:params).and_return(:action => 'x_search_by_name')
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@conditions, {})
+        controller.instance_variable_set(:@sb, tree)
+        controller.instance_variable_set(:@search_text, search)
+      end
+
+      subject { controller.instance_variable_get(:@right_cell_text) }
+
+      context 'policy profiles root node' do
+        let(:tree) { {:active_tree => :policy_profile_tree} }
+
+        it 'updates right cell text according to search text' do
+          controller.send(:replace_right_cell, :nodetype => 'root')
+          expect(subject).to eq("All Policy Profiles (Names with \"#{search}\")")
+        end
+      end
+
+      context 'conditions node' do
+        let(:tree) { {:active_tree => :condition_tree, :folder => "host"} }
+
+        it 'updates right cell text according to search text' do
+          controller.send(:replace_right_cell, :nodetype => 'xx')
+          expect(subject).to eq("All Host / Node Conditions (Names with \"#{search}\")")
+        end
+      end
+    end
+  end
+
+  describe '#set_search_text' do
+    context 'clearing search text' do
+      let(:search) { "some_text" }
+      let(:tree) { :any_tree }
+
+      before do
+        controller.instance_variable_set(:@_params, :action => 'adv_search_text_clear')
+        controller.instance_variable_set(:@sb, :active_tree => tree, :pol_search_text => {tree => search})
+        controller.instance_variable_set(:@search_text, search)
+      end
+
+      it 'clears search text from the Search form' do
+        controller.send(:set_search_text)
+        expect(controller.instance_variable_get(:@sb)[:pol_search_text][tree]).to be(nil)
+        expect(controller.instance_variable_get(:@search_text)).to be(nil)
+      end
     end
   end
 
@@ -252,6 +298,71 @@ describe MiqPolicyController do
     it 'exception is raised for unknown action' do
       get :x_button, :params => { :pressed => 'random_dude', :format => :html }
       expect(response).to render_template('layouts/exception')
+    end
+  end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:current_page) { 'current_page' }
+    let(:server_options) { 'server options' }
+    let(:layout) { 'layout' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:miq_policy_lastaction   => lastaction,
+                                                          :miq_policy_display      => display,
+                                                          :miq_policy_current_page => current_page,
+                                                          :server_options          => server_options,
+                                                          :layout                  => layout)
+        allow(controller).to receive(:alert_build_pulldowns).and_return(nil)
+        allow(controller.request).to receive(:parameters).and_return('action' => 'wait_for_task')
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("Policies")
+        expect(controller.instance_variable_get(:@layout)).to eq(layout)
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
+        expect(controller.instance_variable_get(:@server_options)).to eq(server_options)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@current_page, current_page)
+        controller.instance_variable_set(:@layout, layout)
+        controller.instance_variable_set(:@server_options, server_options)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:miq_policy_lastaction]).to eq(lastaction)
+        expect(controller.session[:miq_policy_display]).to eq(display)
+        expect(controller.session[:miq_policy_current_page]).to eq(current_page)
+        expect(controller.session[:layout]).to eq(layout)
+        expect(controller.session[:server_options]).to eq(server_options)
+      end
+    end
+  end
+
+  context 'removing conditions' do
+    let(:condition) { FactoryBot.create(:condition) }
+    let(:policy) { FactoryBot.create(:miq_policy, :name => "test_policy", :conditions => [condition]) }
+
+    before do
+      login_as FactoryBot.create(:user, :features => 'condition_remove')
+      controller.instance_variable_set(:@_params, :policy_id => policy.id, :id => condition.id)
+      controller.instance_variable_set(:@sb, {})
+      allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
+    end
+
+    it 'removes condition successfully' do
+      expect(controller).to receive(:replace_right_cell)
+      controller.send(:condition_remove)
+      policy.reload
+      expect(assigns(:flash_array).first[:message]).to include("has been removed from Policy")
+      expect(policy.conditions).to eq([])
     end
   end
 end

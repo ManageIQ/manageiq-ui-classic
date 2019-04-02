@@ -1,18 +1,17 @@
 describe 'ops/_rbac_group_details.html.haml' do
   context 'add new group' do
-    before(:each) do
-      miq_server = FactoryGirl.create(:miq_server)
+    before do
+      miq_server = FactoryBot.create(:miq_server)
       edit = {:new                 => {:description => ''},
               :key                 => "settings_authentication_edit__#{miq_server.id}",
               :ldap_groups_by_user => [],
               :roles               => %w(fred wilma),
-              :projects_tenants    => [["projects", %w(foo bar)]]
-      }
+              :projects_tenants    => [["projects", %w(foo bar)]]}
       view.instance_variable_set(:@edit, edit)
-      @group = FactoryGirl.create(:miq_group, :description => 'flintstones')
+      @group = FactoryBot.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
       allow(view).to receive(:session).and_return(:assigned_filters => [])
-      FactoryGirl.create(:classification, :name => 'folder_selected', :show => true)
+      FactoryBot.create(:classification, :name => 'folder_selected', :show => true)
 
       sb = {
         :trees                 => {},
@@ -27,21 +26,21 @@ describe 'ops/_rbac_group_details.html.haml' do
                                        :edit    => {},
                                        :filters => {},
                                        :group   => @group)
-      @ems_azure_network = FactoryGirl.create(:ems_azure_network)
+      @ems_azure_network = FactoryBot.create(:ems_azure_network)
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               :hac,
                                               sb,
                                               true,
-                                              :edit     => nil,
-                                              :group    => @group,
-                                              :selected => {})
+                                              :edit           => nil,
+                                              :group          => @group,
+                                              :selected_nodes => {})
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                               :vat,
                                               sb,
                                               true,
-                                              :edit     => nil,
-                                              :group    => @group,
-                                              :selected => {})
+                                              :edit           => nil,
+                                              :group          => @group,
+                                              :selected_nodes => {})
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode ldap' do
@@ -58,18 +57,32 @@ describe 'ops/_rbac_group_details.html.haml' do
       expect(rendered).to include('Look up LDAPS Groups')
     end
 
-    it 'should show "Look up groups" checkbox and label for auth mode amazon' do
+    it 'should not show "Look up groups" checkbox and label for auth mode amazon' do
       stub_settings(:authentication => { :mode => 'amazon' }, :server => {})
       render :partial => 'ops/rbac_group_details'
-      expect(rendered).to have_selector('input#lookup')
-      expect(rendered).to include('Look up Amazon Groups')
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up Amazon Groups')
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode httpd' do
-      stub_settings(:authentication => { :mode => 'httpd' }, :server => {})
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => false}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).to have_selector('input#lookup')
       expect(rendered).to include('Look up External Authentication Groups')
+    end
+
+    it 'should not show "Look up groups" checkbox and label for auth mode httpd with SAML enabled' do
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true, :oidc_enabled => false}, :server => {})
+      render :partial => 'ops/rbac_group_details'
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up External Authentication Groups')
+    end
+
+    it 'should not show "Look up groups" checkbox and label for auth mode httpd with OIDC enabled' do
+      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => true}, :server => {})
+      render :partial => 'ops/rbac_group_details'
+      expect(rendered).not_to have_selector('input#lookup')
+      expect(rendered).not_to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode database' do

@@ -1,8 +1,6 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::EmsFolder do
   subject { described_class.new(object, nil, options) }
-  let(:options) { Hash.new }
+  let(:options) { {} }
 
   %i(
     ems_folder
@@ -10,9 +8,9 @@ describe TreeNode::EmsFolder do
     inventory_group
     inventory_root_group
   ).each do |factory|
-    klass = FactoryGirl.factory_by_name(factory).instance_variable_get(:@class_name)
+    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
     context(klass) do
-      let(:object) { FactoryGirl.create(factory) }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'f-'
       include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
@@ -27,7 +25,7 @@ describe TreeNode::EmsFolder do
   end
 
   context 'Datacenter' do
-    let(:object) { FactoryGirl.create(:datacenter) }
+    let(:object) { FactoryBot.create(:datacenter) }
 
     include_examples 'TreeNode::Node#key prefix', 'dc-'
     include_examples 'TreeNode::Node#icon', 'fa fa-building-o'

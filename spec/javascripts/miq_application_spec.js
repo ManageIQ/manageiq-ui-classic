@@ -42,6 +42,7 @@ describe('miq_application.js', function() {
     beforeEach(function () {
       var html  = '<div id="toolbar"><div class="btn-group"><button class="btn btn-default dropdown-toggle" id="second">Click me!</button><ul class="dropdown-menu"><li><a id="reportButton" data-explorer="true" data-url_parms="?render_type=pdf" title="Download this report in PDF format" data-click="download_choice__render_report_pdf" name="download_choice__render_report_pdf" href="#"><i class="fa fa-file-text-o fa-lg" style="margin-right: 5px;"></i>Download as PDF</a></li><li><a id="notAReportButton" data-url="x_history?item=1" title="Go to this item" data-click="history_choice__history_1" name="history_choice__history_1" href="#"><i class="fa fa-arrow-left fa-lg" style="margin-right: 5px;"></i>All Saved Reports</a></li>';
       setFixtures(html);
+      ManageIQ.record.recordId = null;
     });
 
     it('leaves miqSparkle on for Report download buttons', function () {
@@ -59,71 +60,6 @@ describe('miq_application.js', function() {
       $('#notAReportButton').click();
       expect(miqJqueryRequest).toHaveBeenCalledWith('/null/x_history?item=1', { beforeSend:true, complete: true, data: undefined });
     });
-  });
-
-  describe('miqButtonOnWhen', function () {
-    beforeEach(function () {
-      var html = '<button id="button">Click me!</button>';
-      setFixtures(html);
-    });
-
-    describe('nothing selected', function () {
-      $.each(['1', '1+', '2+'], function (k, v) {
-        it('disables the button when onwhen is ' + v, function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, v, 0);
-          expect(button.hasClass('disabled')).toBe(true);
-        });
-      });
-    });
-
-    describe('one selected', function () {
-      $.each(['1', '1+'], function (k, v) {
-        it('enables the button when onwhen is ' + v, function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, v, 1);
-          expect(button.hasClass('disabled')).toBe(false);
-        });
-      });
-
-      it('disables the button when onwhen is 2+', function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, '2+', 1);
-          expect(button.hasClass('disabled')).toBe(true);
-      });
-    });
-
-    describe('two selected', function () {
-      $.each(['1+', '2+'], function (k, v) {
-        it('enables the button when onwhen is ' + v, function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, v, 2);
-          expect(button.hasClass('disabled')).toBe(false);
-        });
-      });
-
-      it('disables the button when onwhen is 1', function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, '1', 2);
-          expect(button.hasClass('disabled')).toBe(true);
-      });
-    });
-
-    describe('three selected', function () {
-      $.each(['1+', '2+'], function (k, v) {
-        it('enables the button when onwhen is ' + v, function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, v, 3);
-          expect(button.hasClass('disabled')).toBe(false);
-        });
-      });
-
-      it('disables the button when onwhen is 1', function () {
-          var button = $('#button');
-          miqButtonOnWhen(button, '1', 3);
-          expect(button.hasClass('disabled')).toBe(true);
-      });
-    })
   });
 
   describe('miqShowAE_Tree', function () {
@@ -171,22 +107,6 @@ describe('miq_application.js', function() {
       expect(text).toEqual('baz');
       expect(klass).toEqual(true);
       expect(count).toEqual(1);
-    });
-  });
-
-  describe('miqUpdateElementsId', function () {
-    beforeEach(function () {
-      var html = '<div class="col-md-4 ui-sortable" id="col1"><div id="t_0|10000000000764" title="Drag this Tab to a new location"></div><div id="t_3|" title="Drag this Tab to a new location" class=""></div><div id="t_1|10000000000765" title="Drag this Tab to a new location"></div><div id="t_2|10000000000766" title="Drag this Tab to a new location"></div></div>'
-      setFixtures(html);
-    });
-
-    it('updates element Id with new order', function () {
-      ManageIQ.widget.dashboardUrl = 'dialog_res_reorder';
-      miqUpdateElementsId($('.col-md-4'));
-      var str = $('.col-md-4 > *').map(function(i, e) {
-        return e.id;
-      }).toArray().join(" ");
-      expect(str).toEqual("t_0|10000000000764 t_1| t_2|10000000000765 t_3|10000000000766")
     });
   });
 
@@ -466,18 +386,6 @@ describe('miq_application.js', function() {
     });
   });
 
-  describe('miqUncompressedId', function () {
-    it('returns uncompressed id unchanged', function() {
-      expect(miqUncompressedId('123')).toEqual('123');
-      expect(miqUncompressedId('12345678901234567890')).toEqual('12345678901234567890');
-    });
-
-    it('uncompresses compressed id', function() {
-      expect(miqUncompressedId('1r23')).toEqual('1000000000023');
-      expect(miqUncompressedId('999r123456789012')).toEqual('999123456789012');
-    });
-  });
-
   describe('miqFormatNotification', function () {
     context('single placeholder', function () {
       it('replaces placeholders with bindings', function () {
@@ -497,5 +405,65 @@ describe('miq_application.js', function() {
       });
     });
   });
-});
 
+  describe('User login form', function() {
+    beforeEach(function() {
+      var html = '<div class="form-horizontal" id="login_div">\
+        <div class="form-group">\
+          <label class="col-md-3 control-label">Username</label>\
+          <div class="col-md-9">\
+            <input type="text" name="user_name" id="user_name" class="form-control" placeholder="Username" onkeypress="if (miqEnterPressed(event)) miqAjaxAuth();">\
+          </div>\
+        </div>\
+        <div class="form-group">\
+          <label class="col-md-3 control-label">Password</label>\
+          <div class="col-md-9">\
+            <input type="password" name="user_password" id="user_password" onkeypress="if (miqEnterPressed(event)) miqAjaxAuth();" autocomplete="off" placeholder="Password" class="form-control">\
+          </div>\
+        </div>\
+        <div class="form-group">\
+          <div class="col-xs-8 col-md-offset-3 col-md-6">\
+            <div id="back_button" style="display: none">\
+              <a data-method="post" title="Back" data-remote="true" href="/dashboard/authenticate?button=back">Back</a>\
+            </div>\
+          </div>\
+        </div>\
+        <div class="col-xs-4 col-md-3 submit">\
+          <a id="login" class="btn btn-primary" alt="Log In" title="Log In" onclick="miqAjaxAuth(\'/dashboard/authenticate?button=login\'); return false;" href="">Log In</a>\
+          <a id="sso_login" class="btn btn-primary" alt="SSO Log In" title="SSO Log In" style="display: none;" onclick="miqAjaxAuthSso(\'/dashboard/kerberos_authenticate?button=sso_login\'); return false;" href="">SSO Log In</a>\
+        </div>\
+      </div>';
+
+      setFixtures(html);
+    });
+
+    context('failed login', function() {
+      beforeEach(function() {
+        // simulate failed authentication api call
+        spyOn(window, 'miqJqueryRequest').and.callFake(function() {
+          return Promise.reject();
+        });
+
+        spyOn(window, 'miqClearLoginFields').and.callThrough();
+      });
+
+      it('removes user and password field from log in form', function(done) {
+        var user = $('#user_name');
+        var password = $('#user_password');
+
+        user.val('Bob');
+        password.val('shh');
+
+        miqAjaxAuth('/dashboard/authenticate?button=login')
+          .then(function() {
+            expect(miqClearLoginFields).toHaveBeenCalled();
+            expect(document.activeElement.id).toEqual(user.attr('id'));
+            expect(user.val()).toBe('');
+            expect(password.val()).toBe('');
+
+            done();
+          });
+      });
+    });
+  });
+});

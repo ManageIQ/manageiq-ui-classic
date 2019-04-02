@@ -1,38 +1,22 @@
 describe InfraTopologyService do
   let(:infra_topology_service) { described_class.new(nil) }
 
-  describe "#build_kinds" do
-    it "creates the expected number of entity types" do
-      expect(infra_topology_service.build_kinds.keys).to match_array(
-        [:InfraManager, :EmsCluster, :Host, :Vm])
-    end
-  end
-
-  describe "#build_link" do
-    it "creates link between source to target" do
-      expect(infra_topology_service.build_link(
-               "95e49048-3e00-11e5-a0d2-18037327aaeb",
-               "96c35f65-3e00-11e5-a0d2-18037327aaeb")).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb",
-                                                              :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
-    end
-  end
-
   describe "#build_topology" do
     subject { infra_topology_service.build_topology }
 
-    let(:ems) { FactoryGirl.create(:ems_openstack_infra) }
+    let(:ems) { FactoryBot.create(:ems_openstack_infra) }
 
-    before :each do
-      @cluster = FactoryGirl.create(:ems_cluster_openstack, :ext_management_system => ems)
-      @host = FactoryGirl.create(:host_openstack_infra, :ems_cluster => @cluster, :ext_management_system => ems)
+    before do
+      @cluster = FactoryBot.create(:ems_cluster_openstack, :ext_management_system => ems)
+      @host = FactoryBot.create(:host_openstack_infra, :ems_cluster => @cluster, :ext_management_system => ems)
     end
 
     it "topology contains only the expected keys" do
-      expect(subject.keys).to match_array([:items, :kinds, :relations, :icons])
+      expect(subject.keys).to match_array(%i(items kinds filter_properties relations icons))
     end
 
     it "provider has unknown status when no authentication exists" do
-      ems = FactoryGirl.create(:ems_openstack_infra)
+      ems = FactoryBot.create(:ems_openstack_infra)
 
       allow(infra_topology_service).to receive(:retrieve_providers)
         .with(anything, ManageIQ::Providers::InfraManager)
@@ -42,11 +26,14 @@ describe InfraTopologyService do
         .where(:id => ems.id))
 
       expect(subject[:items]).to eq(
-        "InfraManager" + ems.compressed_id.to_s   => {:name         => ems.name,
-                                                      :status       => "Unknown",
-                                                      :kind         => "InfraManager",
-                                                      :display_kind => "Openstack",
-                                                      :miq_id       => ems.id})
+        "InfraManager" + ems.id.to_s => {:name         => ems.name,
+                                         :status       => "Unknown",
+                                         :kind         => "InfraManager",
+                                         :display_kind => "Openstack",
+                                         :miq_id       => ems.id,
+                                         :model        => ems.class.name,
+                                         :key          => "InfraManager" + ems.id.to_s}
+      )
     end
 
     it "topology contains the expected structure and content" do
@@ -54,29 +41,53 @@ describe InfraTopologyService do
       infra_topology_service.instance_variable_set(:@entity, ems)
 
       expect(subject[:items]).to eq(
-        "InfraManager" + ems.compressed_id.to_s             =>  {:name         => ems.name,
-                                                                 :kind         => "InfraManager",
-                                                                 :miq_id       => ems.id,
-                                                                 :status       => "Unknown",
-                                                                 :display_kind => "Openstack"},
-        "EmsCluster" + @cluster.compressed_id.to_s          =>  {:name         => @cluster.name,
-                                                                 :kind         => "EmsCluster",
-                                                                 :miq_id       => @cluster.id,
-                                                                 :status       => "Unknown",
-                                                                 :display_kind => "EmsCluster",
-                                                                 :provider     => ems.name},
-        "Host" + @host.compressed_id.to_s                   =>  {:name         => @host.name,
-                                                                 :kind         => "Host",
-                                                                 :miq_id       => @host.id,
-                                                                 :status       => "On",
-                                                                 :display_kind => "Host",
-                                                                 :provider     => ems.name},
+        "InfraManager" + ems.id.to_s    => {:name         => ems.name,
+                                            :kind         => "InfraManager",
+                                            :miq_id       => ems.id,
+                                            :status       => "Unknown",
+                                            :display_kind => "Openstack",
+                                            :model        => ems.class.name,
+                                            :key          => "InfraManager" + ems.id.to_s},
+        "EmsCluster" + @cluster.id.to_s => {:name         => @cluster.name,
+                                            :kind         => "EmsCluster",
+                                            :miq_id       => @cluster.id,
+                                            :status       => "Unknown",
+                                            :display_kind => "EmsCluster",
+                                            :provider     => ems.name,
+                                            :model        => @cluster.class.name,
+                                            :key          => "EmsCluster" + @cluster.id.to_s},
+        "Host" + @host.id.to_s          => {:name         => @host.name,
+                                            :kind         => "Host",
+                                            :miq_id       => @host.id,
+                                            :status       => "On",
+                                            :display_kind => "Host",
+                                            :provider     => ems.name,
+                                            :model        => @host.class.name,
+                                            :key          => "Host" + @host.id.to_s},
       )
 
       expect(subject[:relations].size).to eq(2)
       expect(subject[:relations]).to include(
-        {:source => "InfraManager" + ems.compressed_id.to_s, :target => "EmsCluster" + @cluster.compressed_id.to_s},
-        {:source => "EmsCluster" + @cluster.compressed_id.to_s, :target => "Host" + @host.compressed_id.to_s},)
+        {:source => "InfraManager" + ems.id.to_s, :target => "EmsCluster" + @cluster.id.to_s},
+        {:source => "EmsCluster" + @cluster.id.to_s, :target => "Host" + @host.id.to_s},
+      )
+    end
+  end
+
+  describe '#build_icons' do
+    it "creates a hash of object types and their icon information" do
+      FactoryBot.create(:ems_vmware)
+      FactoryBot.create(:ems_openstack_infra)
+      FactoryBot.create(:ems_openstack_infra)
+
+      # entity_display_type is called once per class of ems
+      expect(infra_topology_service).to receive(:entity_display_type).exactly(2).times.and_call_original
+
+      icons = infra_topology_service.build_icons
+      expect(icons["Openstack"]).to eq(:type => "image", :icon  => "/images/svg/vendor-openstack_infra.svg")
+      expect(icons["Vmware"]).to    eq(:type => "image", :icon  => "/images/svg/vendor-vmwarews.svg")
+      expect(icons[:EmsCluster]).to eq(:type => "glyph", :class => "pficon pficon-cluster")
+      expect(icons[:Host]).to       eq(:type => "glyph", :class => "pficon pficon-container-node")
     end
   end
 end

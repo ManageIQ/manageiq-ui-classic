@@ -19,11 +19,22 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
     ),
     twostate(
       :view_topology,
-      'fa pficon-topology',
+      'pficon pficon-topology',
       N_('Topology View'),
       nil,
       :url       => "/",
       :url_parms => "?display=topology",
       :klass     => ApplicationHelper::Button::TopologyFeatureButton)
+  ])
+  button_group('summary_download', [
+    button(
+      :download_view,
+      'pficon pficon-print fa-lg',
+      N_('Print or export summary'),
+      nil,
+      :klass => ApplicationHelper::Button::Basic,
+      :url   => "/download_summary_pdf",
+      :popup => true
+    ),
   ])
 end

@@ -1,7 +1,7 @@
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
-      = render_quadicon(@record, :mode => :icon, :size => 72, :typ => :listnav)
+      = render :partial => 'shared/quadicon', :locals => {:record => @record}
 
     = miq_accordion_panel(_("Properties"), false, "container_group_prop") do
       %ul.nav.nav-pills.nav-stacked
@@ -36,3 +36,4 @@
         = multiple_relationship_link(@record, :container)
         = multiple_relationship_link(@record, :container_image)
         = single_relationship_link(@record, :container_node)
+        = multiple_relationship_link(@record, :persistent_volume)

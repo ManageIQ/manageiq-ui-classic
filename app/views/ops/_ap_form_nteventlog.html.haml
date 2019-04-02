@@ -13,7 +13,7 @@
       %th.action-cell= _("Actions")
   %tbody
     - if (!params[:add] && session[:nteventlog_data].empty?) || params[:edit_entry]
-      %tr#new_tr{:onclick => remote_function(:url => {:action => 'ap_ce_select', :add => 'new', :item1 => "nteventlog", :id => "#{@scan.id || "new"}"}), :title => _("Click to add a new entry")}
+      %tr{:onclick => remote_function(:url => {:action => 'ap_ce_select', :add => 'new', :item1 => "nteventlog", :id => "#{@scan.id || "new"}"}), :title => _("Click to add a new entry")}
         %td= _("<New Entry>")
         %td= _("<New Entry>")
         %td= _("<New Entry>")
@@ -23,30 +23,30 @@
           %button.btn.btn-default.btn-block.btn-sm
             = _("Add")
     - else
-      %tr#new_tr
+      %tr
         %td
           = text_field("entry", "name",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:name],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "message",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:message],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "level",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:level],
             :style => "width: 100%;")
         %td
           = text_field("entry", "source",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:source],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "num_days",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:numdays],
             :style     => "width: 100%;")
         %td.action-cell
@@ -68,27 +68,27 @@
           %tr{:id => "edit_tr"}
             %td
               = text_field("entry", "name",
-              :maxlength => MAX_NAME_LEN,
+              :maxlength => ViewHelper::MAX_NAME_LEN,
               "value"    => session[:nteventlog_data][:name],
               :style     => "width: 100%;")
             %td
               = text_field("entry", "message",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:message],
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "level",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => h(session[:nteventlog_data][:level]),
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "source",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:source],
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "num_days",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:num_days],
                 :style     => "width: 100%;")
 

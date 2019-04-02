@@ -1,5 +1,5 @@
 module TreeNode
   class MiqAlertSet < Node
-    set_attribute(:title, &:description)
+    set_attribute(:text, &:description)
   end
 end

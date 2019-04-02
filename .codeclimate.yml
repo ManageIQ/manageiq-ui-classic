@@ -1,5 +1,6 @@
 ---
-exclude_paths:
+version: "2"
+exclude_patterns:
 - ".git/"
 - "**.gif"
 - "**.html"
@@ -23,7 +24,11 @@ exclude_paths:
 - "test/"
 - "tmp/"
 - "vendor/assets/"
-engines:
+checks:
+  file-lines:
+    config:
+      threshold: 400
+plugins:
   brakeman:
     # very slow :sad_panda:
     enabled: false
@@ -34,14 +39,31 @@ engines:
     enabled: false
   duplication:
     enabled: true
+    exclude_patterns:
+    - "app/decorators/"
+    - "app/javascript/**/*.spec.js"
+    - "app/javascript/**/*.schema.js"
     config:
       concurrency: 1
       languages:
-      - ruby
-      - javascript
+        ruby:
+          mass_threshold: 30
+        javascript:
   eslint:
     enabled: true
-    channel: "eslint-3"
+    channel: "eslint-5"
+    checks:
+      key-spacing:
+        enabled: false
+      no-undefined:
+        enabled: false
+      quotes:
+        enabled: false
+    config:
+      ignore_warnings: true
+      extensions:
+      - .js
+      - .jsx
   fixme:
     # let's enable later
     enabled: false
@@ -51,6 +73,14 @@ engines:
   rubocop:
     enabled: true
     config: '.rubocop_cc.yml'
+  stylelint:
+    enabled: true
+prepare:
+  fetch:
+  - url: "https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml"
+    path: ".rubocop_base.yml"
+  - url: "https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_cc_base.yml"
+    path: ".rubocop_cc_base.yml"
 ratings:
   paths:
   - Gemfile.lock
@@ -61,6 +91,7 @@ ratings:
   - "**.rhtml"
   - "**.slim"
   - "**.css"
+  - "**.scss"
   - "**.inc"
   - "**.js"
   - "**.jsx"

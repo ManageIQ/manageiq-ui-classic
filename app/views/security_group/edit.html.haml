@@ -1,5 +1,28 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "securityGroupFormController"}
+%form#form_div{:name           => "angularForm",
+   "form-changed"  => true,
+   "miq-form"      => true,
+   "model"         => "vm.securityGroupModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-controller" => "securityGroupFormController as vm",
+   "ng-show"       => "vm.afterGet"}
+
   = render :partial => "layouts/flash_msg"
+
+  %h3
+    = _('Network Management Provider')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Network Manager')
+      .col-md-8
+        %input.form-control{:type          => "text",
+                            :name          => "ems_name",
+                            "data-width"   => "auto",
+                            "ng-model"     => "vm.securityGroupModel.ext_management_system.name",
+                            "ng-maxlength" => 128,
+                            "readonly"     => true}
+
   = render :partial => "common_new_edit"
 
   %h3
@@ -11,13 +34,13 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "cloud_tenant_name",
-                            'ng-model'     => "securityGroupModel.cloud_tenant_name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true,
+                            "data-width"   => "auto",
+                            "ng-model"     => "vm.securityGroupModel.cloud_tenant.name",
+                            "ng-maxlength" => 128,
                             "readonly"     => true}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => 'fw_rules'
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id}');

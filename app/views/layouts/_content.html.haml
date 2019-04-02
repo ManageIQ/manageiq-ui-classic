@@ -4,24 +4,22 @@
     .row.max-height
       = yield
 - elsif inner_layout_present?
-  - rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
-  - resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
-  - planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
-  - simulate =  rsop || resolve || planning
   - session[:sidebar] ||= {}
-  - sidewidth = simulate ? 5 : session[:sidebar][params[:controller]] ||= 3
+  - sidewidth = simulate? ? 5 : session[:sidebar][params[:controller]] ||= 3
   - maindiv = 12 - sidewidth
   - sidebar = sidewidth == 0 ? 'hidden-md hidden-lg col-md-0' : "col-md-#{sidewidth} col-md-pull-#{maindiv}"
 
   = render :partial => "layouts/vertical_navbar"
 
   .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.resizable-sidebar.max-height{:style => "overflow: hidden !important"}
+    #breadcrumbs
+      = render :partial => "layouts/breadcrumbs_new"
     .row.toolbar-pf#toolbar.miq-toolbar-menu
-      .col-md-12
+      .col-sm-12
         = render :partial => "layouts/angular/toolbar"
     .row.max-height
       #right_div.resizable.max-height{:class => "col-md-#{maindiv} col-md-push-#{sidewidth}"}
-        #main-content.row
+        #main-content.row.miq-layout-content
           .col-md-12
             .row
               .col-md-7#explorer
@@ -47,14 +45,13 @@
               .col-md-12
                 = yield
         .col-md-12.no-padding
-          .row.toolbar-pf#paging_div
+          = render :partial => 'layouts/x_form_buttons'
+          .row#paging_div{:style => saved_report_paging? ? "" : "display: none"}
             - if saved_report_paging?
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
-            - else
-              = render(:partial => 'layouts/x_pagingcontrols')
 
-        - unless simulate
+        - unless simulate?
           .resizer.hidden-xs
             .resizer-box
               .btn-group
@@ -69,14 +66,12 @@
             = render :partial => "layouts/listnav"
           = yield :left
         #custom_left_cell
+- elsif layout_full_center
+  = render :partial => "layouts/vertical_navbar"
+  = render :partial => layout_full_center
 - else
   #center_div{:style => "height: 100%;"}
-    - if layout_uses_listnav?
-      = render :partial => "layouts/center_div_with_listnav"
-    - elsif dashboard_no_listnav?
-      = render :partial => "layouts/center_div_dashboard_no_listnav"
-    - else
-      = render :partial => "layouts/center_div_no_listnav"
+    = render :partial => center_div_partial
 
 - if show_advanced_search?
   :javascript

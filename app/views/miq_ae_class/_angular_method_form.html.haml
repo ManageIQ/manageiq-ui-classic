@@ -1,0 +1,62 @@
+- @angular_form = true
+%form.form-horizontal#form_div{"name"          => "angularForm",
+                               "ng-controller" => "aeMethodFormController as vm",
+                               "miq-form"      => 'true',
+                               "ng-show"       => "vm.afterGet",
+                               "model"         => "vm.aeMethodModel",
+                               "model-copy"    => 'vm.modelCopy'}
+  = render :partial => "layouts/flash_msg"
+  %div
+    .form-group
+      %label.col-md-2.control-label{"for" => "name"}
+        = _("Type")
+      .col-md-8
+        {{vm.aeMethodModel.location}}
+        %input{:type => 'hidden', :id => "location", :value => "vm.aeMethodModel.location"}
+        %input{:type => 'hidden', :id => "scope", :value => "vm.aeMethodModel.scope"}
+        %input{:type => 'hidden', :id => "language", :value => "vm.aeMethodModel.language"}
+        %input{:type => 'hidden', :id => "class_id", :value => "vm.aeMethodModel.class_id"}
+
+    .form-group
+      %label.col-md-2.control-label{"for" => "name"}
+        = _('Fully Qualified Name')
+      .col-md-8
+        {{vm.aeMethodModel.namespace_path}}
+
+    .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+      %label.col-md-2.control-label{"for" => "name"}
+        = _("Name")
+      .col-md-8
+        %input.form-control{"type"           => "text",
+                            "id"             => "name",
+                            "name"           => "name",
+                            "ng-model"       => "vm.aeMethodModel.name",
+                            "maxlength"      => 40,
+                            "miqrequired"    => "",
+                            "checkchange"    => "",
+                            "auto-focus"     => ""}
+        %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
+          = _("Required")
+    .form-group
+      %label.col-md-2.control-label{"for" => "display_name"}
+        = _("Display Name")
+      .col-md-8
+        %input.form-control{"type"        => "text",
+                            "id"          => "display_name",
+                            "name"        => "display_name",
+                            "ng-model"    => "vm.aeMethodModel.display_name",
+                            "maxlength"   => 60,
+                            "checkchange" => ""}
+
+    = render :partial => "layouts/angular/ansible_form_options_angular",
+                 :locals  => {:ng_show           => true,
+                              :ng_model          => "vm.aeMethodModel",
+                              :id                => @record.id,
+                              :prefix            => "provisioning",
+                              :basic_info_needed => true}
+    = render :partial => "layouts/angular/generic_form_buttons"
+
+:javascript
+  ManageIQ.angular.app.value('aeMethodFormId', '#{@record.id || "new"}');
+  ManageIQ.angular.app.value('currentRegion', '#{@current_region}');
+  miq_bootstrap('#form_div');

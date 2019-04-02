@@ -3,7 +3,7 @@ describe ApplicationHelper::Button::RbacRoleEdit do
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#calculate_properties' do
-    let(:record) { FactoryGirl.create(:miq_user_role, :read_only => read_only) }
+    let(:record) { FactoryBot.create(:miq_user_role, :read_only => read_only) }
     before { button.calculate_properties }
 
     context 'when role is writable' do

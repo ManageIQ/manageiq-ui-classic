@@ -1,4 +1,4 @@
-describe Menu::CustomLoader do
+describe Menu::YamlLoader do
   include Spec::Support::MenuHelper
 
   it "loads custom menu section" do
@@ -6,7 +6,7 @@ describe Menu::CustomLoader do
     begin
       expect(Dir).to receive(:glob).and_return([temp_file.path])
 
-      sections, items = Menu::CustomLoader.load
+      sections, items = described_class.load
       expect(sections.length).to be(1)
       expect(items.length).to be(0)
 
@@ -23,7 +23,7 @@ describe Menu::CustomLoader do
     begin
       expect(Dir).to receive(:glob).and_return([temp_file2.path, temp_file.path])
 
-      sections, items = Menu::CustomLoader.load
+      sections, items = described_class.load
       expect(sections.length).to be(1)
       expect(items.length).to be(1)
 

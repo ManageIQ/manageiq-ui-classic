@@ -4,7 +4,7 @@ describe 'ops/_label_tag_mapping_form.html.haml' do
   end
 
   context 'add new mapping' do
-    before(:each) do
+    before do
       @lt_map = nil
       @edit = {:id  => nil,
                :new => {:options    => [["<All>", nil]],
@@ -40,8 +40,8 @@ describe 'ops/_label_tag_mapping_form.html.haml' do
   end
 
   context 'edit existing mapping' do
-    before(:each) do
-      @lt_map = FactoryGirl.create(:container_label_tag_mapping)
+    before do
+      @lt_map = FactoryBot.create(:tag_mapping_with_category)
       @edit = {:id  => nil,
                :new => {:options    => [["<All>", nil]],
                         :entity     => nil,

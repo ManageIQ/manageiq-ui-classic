@@ -14,4 +14,31 @@ describe OpsController do
       end
     end
   end
+
+  describe '#ap_edit' do
+    context 'adding a new Analysis Profile' do
+      let(:desc) { 'Description1' }
+      let(:edit) do
+        {:scan_id => nil,
+         :key     => 'ap_edit__new',
+         :new     => {:name        => 'Name1',
+                      :description => desc,
+                      "file"       => {:definition => {"stats" => [{}]}}}}
+      end
+
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:ap_set_record_vars_set).and_call_original
+        allow(controller).to receive(:get_node_info)
+        allow(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:session).and_return(:edit => edit)
+        controller.instance_variable_set(:@_params, :button => 'add')
+      end
+
+      it 'sets the flash message for adding a new Analysis Profile properly' do
+        expect(controller).to receive(:add_flash).with("Analysis Profile \"#{desc}\" was saved")
+        controller.send(:ap_edit)
+      end
+    end
+  end
 end

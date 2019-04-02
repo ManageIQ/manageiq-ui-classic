@@ -3,21 +3,13 @@ class TreeBuilderReportDashboards < TreeBuilder
 
   private
 
-  def tree_init_options(tree_name)
-    {
-      :leaf     => 'Dashboards',
-      :full_ids => true
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Dashboards"),
+      :text    => t = _("All Dashboards"),
       :tooltip => t
     }
   end
@@ -27,13 +19,12 @@ class TreeBuilderReportDashboards < TreeBuilder
     objects = []
     default_ws = MiqWidgetSet.find_by(:name => 'default', :read_only => true)
     text = "#{default_ws.description} (#{default_ws.name})"
-    objects.push(:id => to_cid(default_ws.id), :text => text, :icon => 'fa fa-tachometer', :tip => text)
+    objects.push(:id => default_ws.id.to_s, :text => text, :icon => 'fa fa-tachometer', :tip => text)
     objects.push(:id => 'g', :text => _('All Groups'), :icon => 'pficon pficon-folder-close', :tip => _('All Groups'))
     count_only_or_objects(count_only, objects)
   end
 
   def x_get_tree_custom_kids(object, count_only, options)
-    assert_type(options[:type], :db)
     objects = []
     if object[:id].split('-').first == "g"
       objects = Rbac.filtered(MiqGroup.non_tenant_groups)

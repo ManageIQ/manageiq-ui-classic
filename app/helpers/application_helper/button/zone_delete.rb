@@ -14,7 +14,6 @@ class ApplicationHelper::Button::ZoneDelete < ApplicationHelper::Button::Basic
 
   def relationships?
     @selected_zone.ext_management_systems.count > 0 ||
-      @selected_zone.storage_managers.count > 0 ||
       @selected_zone.miq_schedules.count > 0 ||
       @selected_zone.miq_servers.count > 0
   end

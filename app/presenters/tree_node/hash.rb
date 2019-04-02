@@ -1,12 +1,14 @@
 module TreeNode
   class Hash < Node
-    set_attribute(:title) { @object[:text] }
+    set_attribute(:text) { @object[:text] }
 
     set_attribute(:image) { @object[:image] }
 
     set_attribute(:icon) { @object[:icon] }
 
-    set_attribute(:no_click) { @object.key?(:cfmeNoClick) && @object[:cfmeNoClick] ? true : nil }
+    set_attribute(:icon_background) { @object[:icon_background] }
+
+    set_attribute(:selectable) { @object.key?(:selectable) ? @object[:selectable] : true }
 
     set_attribute(:hide_checkbox) { @object.key?(:hideCheckbox) && @object[:hideCheckbox] ? true : nil }
 
@@ -23,7 +25,7 @@ module TreeNode
         "-Unassigned"
       else
         prefix = TreeBuilder.get_prefix_for_model("Hash")
-        "#{@options[:full_ids] && !@parent_id.blank? ? "#{@parent_id}_" : ''}#{prefix}-#{@object[:id]}"
+        "#{@options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{@object[:id]}"
       end
     end
   end

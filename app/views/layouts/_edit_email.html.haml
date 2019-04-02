@@ -1,10 +1,12 @@
-- box_title ||= _("E-mail")
 - action_url ||= "form_field_changed"
 - if @edit
   - url = url_for_only_path(:action => action_url, :id => (record.id || "new"))
 #edit_email_div
   %h3
-    = box_title
+    - if x_active_accord == :schedules
+      = _("E-Mail after Running")
+    - else
+      = _("E-mail")
   .form-horizontal
     .form-group
       %label.control-label.col-md-2
@@ -23,7 +25,7 @@
         .col-md-8
           = text_field_tag("from",
                            @edit[:new][:email][:from],
-                           :maxlength         => MAX_DESC_LEN,
+                           :maxlength         => ViewHelper::MAX_DESC_LEN,
                            :class             => "form-control",
                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           = _("(Default: %{email_from})") % {:email_from => ::Settings.smtp.from}

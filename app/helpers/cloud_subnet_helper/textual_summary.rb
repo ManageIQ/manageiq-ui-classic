@@ -2,6 +2,7 @@ module CloudSubnetHelper::TextualSummary
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -18,7 +19,7 @@ module CloudSubnetHelper::TextualSummary
       _("Relationships"),
       %i(
         parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network
-        network_router parent_subnet managed_subnets
+        network_router parent_subnet managed_subnets network_ports security_groups custom_button_events
       )
     )
   end
@@ -27,11 +28,11 @@ module CloudSubnetHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_cidr
-    @record.cidr
+    {:label => _('CIDR'), :value => @record.cidr}
   end
 
   def textual_gateway
@@ -63,22 +64,21 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    @record.ext_management_system.try(:parent_manager)
+    textual_link(@record.ext_management_system.try(:parent_manager), :label => _('Parent Cloud Provider'))
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
 
   def textual_cloud_network
-    @record.cloud_network
+    textual_link(@record.cloud_network, :label => _('Cloud Network'))
   end
 
   def textual_cloud_tenant
@@ -86,7 +86,7 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_network_router
-    @record.network_router
+    textual_link(@record.network_router, :label => _('Network Router'))
   end
 
   def textual_parent_subnet
@@ -96,8 +96,8 @@ module CloudSubnetHelper::TextualSummary
   def textual_managed_subnets
     label = _("Managed Subnets")
     num   = @record.number_of(:cloud_subnets)
-    h     = {:label => label, :icon => "product product-cloud_network", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_subnet_show_list")
+    h     = {:label => label, :icon => "ff ff-cloud-network", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_subnet_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_subnets')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -105,6 +105,14 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_availability_zone
-    @record.availability_zone
+    textual_link(@record.availability_zone, :label => _('Availability Zone'))
+  end
+
+  def textual_network_ports
+    textual_link(@record.network_ports, :label => _('Network Ports'))
+  end
+
+  def textual_security_groups
+    textual_link(@record.security_groups, :label => _('Security Groups'))
   end
 end

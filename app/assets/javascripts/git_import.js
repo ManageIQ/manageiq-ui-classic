@@ -39,7 +39,7 @@ var GitImport = {
         git_repo_id: data.git_repo_id,
         git_branches: data.git_branches,
         git_tags: data.git_tags,
-        message: data.message
+        message: data.message,
       };
 
       parent.postMessage(postMessageData, '*');

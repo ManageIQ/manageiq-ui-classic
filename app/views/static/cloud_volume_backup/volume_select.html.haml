@@ -1,0 +1,21 @@
+%form#form_div{:name           => "angularForm",
+               "miq-form"      => true,
+               'form-changed'  => true,
+               "model"         => "vm.cloudVolumeBackupModel",
+               "model-copy"    => "vm.modelCopy"}
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Basic Information')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Volume')
+      .col-md-8
+        = select_tag('volume_id',
+                '',
+                'ng-model'   => 'vm.cloudVolumeBackupModel.volume',
+                'ng-options' => 'volume.name for volume in vm.volume_choices track by volume.id',
+                :required    => '',
+                'miq-select' => true)
+
+  = render :partial => 'layouts/angular/generic_form_buttons'

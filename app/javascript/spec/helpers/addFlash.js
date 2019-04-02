@@ -1,0 +1,1 @@
+window.add_flash = () => {};

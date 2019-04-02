@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
   button_group('ems_container_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_container_vmdb_choice,
@@ -16,7 +16,16 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           'fa fa-refresh fa-lg',
           N_('Refresh items and relationships related to this Containers Provider'),
           N_('Refresh items and relationships'),
-          :confirm => N_("Refresh items and relationships related to this Containers Provider?")),
+          :confirm => N_("Refresh items and relationships related to this Containers Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
+        button(
+          :ems_container_capture_metrics,
+          'pficon pficon-import fa-lg',
+          N_('Capture metrics related to this Containers Provider'),
+          N_('Capture metrics'),
+          :confirm => N_("Capture metrics related to this Containers Provider?"),
+          :klass   => ApplicationHelper::Button::EmsCaptureMetrics,
+        ),
         separator,
         button(
           :ems_container_edit,
@@ -24,9 +33,26 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           t = N_('Edit this Containers Provider'),
           t,),
         button(
+          :ems_container_resume,
+          'pficon pficon-trend-up fa-lg',
+          t = N_('Resume this Containers Provider'),
+          t,
+          :confirm   => N_("Resume this Containers Provider?"),
+          :enabled   => proc { !@record.enabled? },
+          :url_parms => "main_div"),
+        button(
+          :ems_container_pause,
+          'pficon pficon-trend-down fa-lg',
+          t = N_('Pause this Containers Provider'),
+          t,
+          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
+                         "This may cause gaps in inventory, metrics and events!"),
+          :enabled   => proc { @record.enabled? },
+          :url_parms => "main_div"),
+        button(
           :ems_container_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Containers Provider'),
+          t = N_('Remove this Containers Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Containers Provider and ALL of its components will be permanently removed!")),
@@ -36,25 +62,25 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
   button_group('ems_container_monitoring', [
     select(
       :ems_container_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_container_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Containers Provider'),
           N_('Timelines'),
-          :klass     => ApplicationHelper::Button::GenericFeatureButton,
-          :options   => {:feature => :timeline},
+          :klass     => ApplicationHelper::Button::ContainerTimeline,
+          :options   => {:feature => :timeline, :entity => N_('Provider')},
           :url_parms => "?display=timeline"),
         button(
           :ems_container_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Provider'),
           N_('Utilization'),
-          :klass     => ApplicationHelper::Button::GenericFeatureButton,
-          :options   => {:feature => :performance},
+          :klass     => ApplicationHelper::Button::ContainerPerf,
+          :options   => {:feature => :performance, :entity => N_('Provider')},
           :url_parms => "?display=performance"),
         button(
           :ems_container_ad_hoc_metrics,
@@ -66,7 +92,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :url_parms => "?display=ad_hoc_metrics"),
         button(
           :ems_container_launch_external_logging,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Open a new browser window with the External Logging Presentation UI. ' \
              'This requires the External Logging to be deployed on this Proider.'),
           N_('External Logging'),

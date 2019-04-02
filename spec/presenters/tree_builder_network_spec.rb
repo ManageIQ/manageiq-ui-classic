@@ -1,26 +1,26 @@
 describe TreeBuilderNetwork do
   context 'TreeBuilderNetwork' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Network Group")
-      login_as FactoryGirl.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
-      vm = FactoryGirl.create(:vm)
-      hardware = FactoryGirl.create(:hardware, :vm_or_template => vm)
-      guest_device_with_vm = FactoryGirl.create(:guest_device, :hardware => hardware)
-      guest_device = FactoryGirl.create(:guest_device)
-      lan = FactoryGirl.create(:lan, :guest_devices => [guest_device_with_vm])
-      switch = FactoryGirl.create(:switch, :guest_devices => [guest_device], :lans => [lan])
-      network = FactoryGirl.create(:host, :switches => [switch])
-      @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, network)
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Network Group")
+      login_as FactoryBot.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
+      vm = FactoryBot.create(:vm)
+      hardware = FactoryBot.create(:hardware, :vm_or_template => vm)
+      guest_device_with_vm = FactoryBot.create(:guest_device, :hardware => hardware)
+      guest_device = FactoryBot.create(:guest_device)
+      lan = FactoryBot.create(:lan, :guest_devices => [guest_device_with_vm])
+      switch = FactoryBot.create(:switch, :guest_devices => [guest_device], :lans => [lan])
+      network = FactoryBot.create(:host, :switches => [switch])
+      @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, :root => network)
     end
 
     it 'returns Host as root' do
       root = @network_tree.send(:root_options)
       expect(root).to eq(
-        :title       => @network_tree.instance_variable_get(:@root).name,
-        :tooltip     => _("Host: %{name}") % {:name => @network_tree.instance_variable_get(:@root).name},
-        :icon        => 'pficon pficon-screen',
-        :cfmeNoClick => true
+        :text       => @network_tree.instance_variable_get(:@root).name,
+        :tooltip    => "Host: %{name}" % {:name => @network_tree.instance_variable_get(:@root).name},
+        :icon       => 'pficon pficon-container-node',
+        :selectable => false
       )
     end
 

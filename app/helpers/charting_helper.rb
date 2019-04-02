@@ -2,9 +2,13 @@ module ChartingHelper
   def chart_remote(a_controller, options)
     case Charting.backend
     when :c3
-      c3chart_remote(url_for_only_path(:controller => a_controller,
-                             :action     => options[:action] || 'render_chart'),
-                     options.slice(:id, :zoomed))
+      c3chart_remote(
+        url_for_only_path(
+          :controller => a_controller,
+          :action     => options[:action] || 'render_chart'
+        ),
+        options.slice(:id, :zoomed)
+      )
     end
   end
 
@@ -22,7 +26,8 @@ module ChartingHelper
   end
 
   def zoom_icon(zoom_url)
-    # could be just url or something like "javascript:miqAsyncAjax('/host/perf_chart_chooser/10000000000017?chart_idx=0')"
+    # could be just url or something like
+    # "javascript:miqAsyncAjax('/host/perf_chart_chooser/10000000000017?chart_idx=0')"
     zoom_url =~ /clear('\))?$/ ? 'fa fa-search-minus fa-lg' : 'fa fa-search-plus fa-lg'
   end
 end

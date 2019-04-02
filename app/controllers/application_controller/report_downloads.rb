@@ -21,25 +21,31 @@ module ApplicationController::ReportDownloads
 
   # Send the current report in pdf format
   def render_pdf(report = nil)
-    report ||= report_for_rendering
-    if report
-      userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-      rr = report.build_create_results(:userid => userid)
-    end
+    @report = report || report_for_rendering
+    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+    @result = @report.build_create_results(:userid => userid)
 
-    # Use rr frorm paging, if present
-    rr ||= MiqReportResult.find(@sb[:pages][:rr_id]) if @sb[:pages]
+    # Use @result frorm paging, if present
+    @result ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
     # Use report_result_id in session, if present
-    rr ||= MiqReportResult.find(session[:report_result_id]) if session[:report_result_id]
+    @result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
 
-    filename = filename_timestamp(rr.report.title)
     disable_client_cache
-    send_data(rr.to_pdf, :filename => "#{filename}.pdf", :type => 'application/pdf')
+
+    @options = {
+      :page_layout => 'landscape',
+      :page_size   => @report.page_size || 'a4',
+      :run_date    => format_timezone(@report.report_run_time, @result.user_timezone, "gtl"),
+      :title       => @result.name
+    }
+
+    @data = @result.html_rows.join
+
+    render :template => '/layouts/print/report', :layout => '/layouts/print'
   end
 
   # Show the current widget report in pdf format
   def widget_to_pdf
-    @report = nil   # setting report to nil in case full screen mode was opened first, to make sure the one in report_result is used for download
     session[:report_result_id] = params[:rr_id]
     render_pdf
   end
@@ -51,7 +57,7 @@ module ApplicationController::ReportDownloads
     unless params[:task_id] # First time thru, kick off the report generate task
       if render_type
         @sb[:render_type] = render_type
-        rr = MiqReportResult.find(session[:report_result_id]) # Get report task id from the session
+        rr = MiqReportResult.for_user(current_user).find(session[:report_result_id]) # Get report task id from the session
         task_id = rr.async_generate_result(@sb[:render_type], :userid     => session[:userid],
                                                               :session_id => request.session_options[:id])
         initiate_wait_for_task(:task_id => task_id)
@@ -65,10 +71,14 @@ module ApplicationController::ReportDownloads
       javascript_flash(:spinner_off => true)
     else
       @sb[:render_rr_id] = miq_task.miq_report_result.id
-      render :update do |page|
-        page << javascript_prologue
-        page << "miqSparkle(false);"
-        page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
+      if @sb[:render_type] == :pdf
+        javascript_open_window(url_for_only_path(:action => "send_report_data"))
+      else
+        render :update do |page|
+          page << javascript_prologue
+          page << "miqSparkle(false);"
+          page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
+        end
       end
     end
   end
@@ -79,14 +89,28 @@ module ApplicationController::ReportDownloads
   # Send rendered report data
   def send_report_data
     if @sb[:render_rr_id]
-      rr = MiqReportResult.find(@sb[:render_rr_id])
-      filename = filename_timestamp(rr.report.title, 'export_filename')
       disable_client_cache
-      generated_result = rr.get_generated_result(@sb[:render_type])
-      rr.destroy
-      send_data(generated_result,
-                :filename => "#{filename}.#{@sb[:render_type]}",
-                :type     => "application/#{@sb[:render_type]}")
+      @result = MiqReportResult.find(@sb[:render_rr_id])
+      @report = @result.report
+      @data = @result.get_generated_result(@sb[:render_type])
+      # We need the last_run_on time from the original result
+      last_run_on = MiqReportResult.select(:last_run_on).find(session[:report_result_id]).last_run_on
+      @result.destroy
+
+      if @sb[:render_type] == :pdf
+        @options = {
+          :page_layout => 'landscape',
+          :page_size   => @report.page_size || 'a4',
+          :run_date    => format_timezone(last_run_on, @result.user_timezone, "gtl"),
+          :title       => @result.name
+        }
+        render :template => '/layouts/print/report', :layout => '/layouts/print'
+      else
+        filename = filename_timestamp(@result.report.title, 'export_filename')
+        send_data(@data,
+                  :filename => "#{filename}.#{@sb[:render_type]}",
+                  :type     => "application/#{@sb[:render_type]}")
+      end
     end
   end
 
@@ -96,7 +120,7 @@ module ApplicationController::ReportDownloads
     options = session[:paged_view_search_options].merge(:page => nil, :per_page => nil) # Get all pages
     @view.table, _attrs = @view.paged_view_search(options) # Get the records
 
-    @view.title = _(@view.title)
+    @view.title = _(@view.title.pluralize)
     @view.headers.map! { |header| _(header) }
 
     @filename = filename_timestamp(@view.title)
@@ -112,7 +136,7 @@ module ApplicationController::ReportDownloads
 
   private
 
-  RENDER_TYPES = {'txt' => :txt, 'csv' => :csv, 'pdf' => :pdf}
+  RENDER_TYPES = {'txt' => :txt, 'csv' => :csv, 'pdf' => :pdf}.freeze
 
   def download_txt(view)
     disable_client_cache
@@ -134,7 +158,7 @@ module ApplicationController::ReportDownloads
       miq_task = MiqTask.find(session[:rpt_task_id])
       miq_task.task_results
     elsif session[:report_result_id]
-      rr = MiqReportResult.find(session[:report_result_id])
+      rr = MiqReportResult.for_user(current_user).find(session[:report_result_id])
       report = rr.report_results
       report.report_run_time = rr.last_run_on
       report
@@ -146,7 +170,6 @@ module ApplicationController::ReportDownloads
   end
 
   def set_summary_pdf_data
-    @report_only = true
     @showtype    = @display
     run_time     = Time.now
     klass        = ui_lookup(:model => @record.class.name)
@@ -156,22 +179,17 @@ module ApplicationController::ReportDownloads
       :page_size   => "us-letter",
       :run_date    => run_time.strftime("%m/%d/%y %l:%m %p %z"),
       :title       => "#{klass} \"#{@record.name}\"".html_safe,
+      :quadicon    => true
     }
 
     if @display == "download_pdf"
       @display = "main"
       if @record.kind_of?(VmOrTemplate)
         get_host_for_vm(@record)
-        set_config(@record)
       end
 
       disable_client_cache
-      html_string = render_to_string(:template => "/layouts/show_pdf", :layout => false)
-      pdf_data = PdfGenerator.pdf_from_string(html_string, "pdf_summary")
-      send_data(pdf_data,
-                :type     => "application/pdf",
-                :filename => filename_timestamp("#{klass}_#{@record.name}_summary") + '.pdf'
-               )
+      render :template => '/layouts/print/textual_summary', :layout => '/layouts/print'
     end
   end
 end

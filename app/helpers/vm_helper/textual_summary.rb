@@ -11,6 +11,10 @@ module VmHelper::TextualSummary
   include TextualMixins::TextualPowerState
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
+  include TextualMixins::TextualDevices
+  include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualVmmInfo
+  include TextualMixins::VmCommon
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -21,7 +25,7 @@ module VmHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        name region server description hostname ipaddress custom_1 container host_platform
+        name region server description hostname ipaddress mac_address custom_1 container host_platform
         tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots
         advanced_settings resources guid storage_profile
       )
@@ -40,7 +44,7 @@ module VmHelper::TextualSummary
       _("Relationships"),
       %i(
         ems cluster host resource_pool storage service parent_vm genealogy drift scan_history
-        cloud_network cloud_subnet
+        cloud_network cloud_subnet custom_button_events
       )
     )
   end
@@ -49,26 +53,19 @@ module VmHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i(
-        ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service
+        ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
         cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
-        floating_ips network_ports load_balancers cloud_volumes
+        floating_ips network_ports load_balancers cloud_volumes custom_button_events
       )
     )
   end
 
   def textual_group_template_cloud_relationships
-    TextualGroup.new(_("Relationships"), %i(ems parent_vm drift scan_history cloud_tenant))
+    TextualGroup.new(_("Relationships"), %i(ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events))
   end
 
   def textual_group_security
     TextualGroup.new(_("Security"), %i(users groups patches))
-  end
-
-  def textual_group_configuration
-    TextualGroup.new(
-      _("Configuration"),
-      %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items)
-    )
   end
 
   def textual_group_datastore_allocation
@@ -85,37 +82,14 @@ module VmHelper::TextualSummary
     )
   end
 
-  def textual_group_diagnostics
-    TextualGroup.new(_("Diagnostics"), %i(processes event_logs))
-  end
-
-  def textual_group_vmsafe
-    TextualGroup.new(
-      _("VMsafe"),
-      %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout)
-    )
-  end
-
-  def textual_group_miq_custom_attributes
-    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
-  end
-
-  def textual_group_ems_custom_attributes
-    TextualGroup.new(_("VC Custom Attributes"), textual_ems_custom_attributes)
-  end
-
   def textual_group_labels
-    TextualGroup.new(_("Labels"), textual_labels)
-  end
-
-  def textual_group_power_management
-    TextualGroup.new(_("Power Management"), %i(power_state boot_time state_changed_on))
+    TextualGroup.new(_("Labels"), textual_key_value_group(@record.custom_attributes))
   end
 
   def textual_group_normal_operating_ranges
     TextualCustom.new(
       _("Normal Operating Ranges (over 30 days)"),
-      'shared/summary/textual_normal_operating_ranges',
+      'OperationRanges',
       %i(
         normal_operating_ranges_cpu normal_operating_ranges_cpu_usage normal_operating_ranges_memory
         normal_operating_ranges_memory_usage
@@ -126,8 +100,8 @@ module VmHelper::TextualSummary
   #
   # Items
   #
-  def textual_server
-    @record.miq_server && "#{@record.miq_server.name} [#{@record.miq_server.id}]"
+  def textual_power_state
+    textual_power_state_whitelisted_with_template
   end
 
   def textual_hostname
@@ -155,29 +129,27 @@ module VmHelper::TextualSummary
     h
   end
 
-  def textual_custom_1
-    return nil if @record.custom_1.blank?
-    {:label => _("Custom Identifier"), :value => @record.custom_1}
-  end
-
   def textual_container
     h = {:label => _("Container")}
     vendor = @record.vendor
     if vendor.blank?
       h[:value] = _("None")
     else
-      h[:image] = "svg/vendor-#{vendor}.svg"
+      h[:image] = @record.decorate.fileicon
       h[:title] = _("Show VMM container information")
       h[:explorer] = true
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'hv_info')
 
       cpu_details =
-        if @record.num_cpu && @record.cpu_cores_per_socket
-          " (#{pluralize(@record.num_cpu, 'socket')} x #{pluralize(@record.cpu_cores_per_socket, 'core')})"
+        if @record.num_cpu.positive? && @record.cpu_cores_per_socket.positive?
+          sockets = n_("%{number} socket", "%{number} sockets", @record.num_cpu) % {:number => @record.num_cpu}
+          cores = n_("%{number} core", "%{number} cores", @record.cpu_cores_per_socket) % {:number => @record.cpu_cores_per_socket}
+          " (#{sockets} x #{cores})"
         else
           ""
         end
-      h[:value] = "#{vendor}: #{pluralize(@record.cpu_total_cores, 'CPU')}#{cpu_details}, #{@record.mem_cpu} MB"
+      cpus = n_("%{cpu} CPU", "%{cpu} CPUs", @record.cpu_total_cores) % {:cpu => @record.cpu_total_cores}
+      h[:value] = "#{vendor}: #{cpus}#{cpu_details}, #{@record.mem_cpu} MB"
     end
     h
   end
@@ -188,31 +160,11 @@ module VmHelper::TextualSummary
   end
 
   def textual_tools_status
-    {:label => _("Platform Tools"), :value => (@record.tools_status.nil? ? _("N/A") : @record.tools_status)}
+    {:label => _("Platform Tools"), :icon => "pficon pficon-maintenance", :value => (@record.tools_status.nil? ? _("N/A") : @record.tools_status)}
   end
 
   def textual_cpu_affinity
-    {:label => _("CPU Affinity"), :value => @record.cpu_affinity}
-  end
-
-  def textual_snapshots
-    num = @record.number_of(:snapshots)
-    h = {:label => _("Snapshots"), :icon => "fa fa-camera", :value => (num == 0 ? _("None") : num)}
-    if role_allows?(:feature => "vm_snapshot_show_list") && @record.supports_snapshots?
-      h[:title] = _("Show the snapshot info for this VM")
-      h[:explorer] = true
-      h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'snapshot_info')
-    end
-    h
-  end
-
-  def textual_resources
-    {:label => _("Resources"), :value => _("Available"), :title => _("Show resources of this VM"), :explorer => true,
-      :link => url_for_only_path(:action => 'show', :id => @record, :display => 'resources_info')}
-  end
-
-  def textual_guid
-    {:label => _("Management Engine GUID"), :value => @record.guid}
+    {:label => _("CPU Affinity"), :icon => "pficon pficon-cpu", :value => @record.cpu_affinity}
   end
 
   def textual_storage_profile
@@ -234,11 +186,11 @@ module VmHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Template)
     {:label => _("Retirement Date"),
      :icon  => "fa fa-clock-o",
-     :value => (@record.retires_on.nil? ? _("Never") : @record.retires_on.strftime("%x %R %Z"))}
+     :value => @record.retires_on.nil? ? _("Never") : format_timezone(@record.retires_on)}
   end
 
   def textual_retirement_state
-    @record.retirement_state.to_s.capitalize
+    {:label => _("Retirement State"), :value => @record.retirement_state.to_s.capitalize}
   end
 
   def textual_provisioned
@@ -289,22 +241,21 @@ module VmHelper::TextualSummary
 
   def textual_storage
     storages = @record.storages
-    label = ui_lookup(:table => "storages")
-    h = {:label => label, :icon => "fa fa-database"}
+    h = {:label => _('Datastores'), :icon => "fa fa-database"}
     if storages.empty?
       h[:value] = _("None")
     elsif storages.length == 1
       storage = storages.first
       h[:value] = storage.name
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Datastores")
       h[:link]  = url_for_only_path(:controller => 'storage', :action => 'show', :id => storage)
     else
       h.delete(:image) # Image will be part of each line item, instead
       main = @record.storage
       h[:value] = storages.sort_by { |s| s.name.downcase }.collect do |s|
         {:icon  => "fa fa-database",
-         :value => "#{s.name}#{" (main)" if s == main}",
-         :title => _("Show this VM's %{label}") % {:label => label},
+         :value => s.name + (s == main ? ' (main)' : ''),
+         :title => _("Show this VM's Datastores"),
          :link  => url_for_only_path(:controller => 'storage', :action => 'show', :id => s)}
       end
     end
@@ -321,12 +272,11 @@ module VmHelper::TextualSummary
 
   def textual_availability_zone
     availability_zone = @record.availability_zone
-    label = ui_lookup(:table => "availability_zone")
-    h = {:label => label,
+    h = {:label => _('Availability Zone'),
          :icon  => "pficon pficon-zone",
          :value => (availability_zone.nil? ? _("None") : availability_zone.name)}
     if availability_zone && role_allows?(:feature => "availability_zone_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Availability Zone")
       h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
     end
     h
@@ -334,10 +284,9 @@ module VmHelper::TextualSummary
 
   def textual_flavor
     flavor = @record.flavor
-    label = ui_lookup(:table => "flavor")
-    h = {:label => label, :icon => "pficon-flavor", :value => (flavor.nil? ? _("None") : flavor.name)}
+    h = {:label => _('Flavor'), :icon => "pficon-flavor", :value => (flavor.nil? ? _("None") : flavor.name)}
     if flavor && role_allows?(:feature => "flavor_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Flavor")
       h[:link]  = url_for_only_path(:controller => 'flavor', :action => 'show', :id => flavor)
     end
     h
@@ -345,10 +294,9 @@ module VmHelper::TextualSummary
 
   def textual_vm_template
     vm_template = @record.genealogy_parent
-    label = ui_lookup(:table => "miq_template")
-    h = {:label => label, :icon => "product product-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
+    h = {:label => _('VM Template'), :icon => "pficon pficon-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
     if vm_template && role_allows?(:feature => "miq_template_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Template")
       h[:link]  = url_for_only_path(:controller => 'miq_template', :action => 'show', :id => vm_template)
     end
     h
@@ -372,10 +320,9 @@ module VmHelper::TextualSummary
 
   def textual_orchestration_stack
     stack = @record.orchestration_stack
-    label = ui_lookup(:table => "orchestration_stack")
-    h = {:label => label, :icon => "product-orchestration_stack", :value => (stack.nil? ? _("None") : stack.name)}
+    h = {:label => _('Orchestration Stack'), :icon => "ff ff-stack", :value => (stack.nil? ? _("None") : stack.name)}
     if stack && role_allows?(:feature => "orchestration_stack_show")
-      h[:title] = _("Show this VM's %{label} '%{name}'") % {:label => label, :name => stack.name}
+      h[:title] = _("Show this VM's Orchestration Stack '%{name}'") % {:name => stack.name}
       h[:link]  = url_for_only_path(:controller => 'orchestration_stack', :action => 'show', :id => stack)
     end
     h
@@ -395,11 +342,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_security_groups
-    label = ui_lookup(:tables => "security_group")
     num   = @record.number_of(:security_groups)
-    h     = {:label => label, :icon => "pficon pficon-cloud-security", :value => num}
-    if num > 0 && role_allows?(:feature => "security_group_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
+    if num.positive? && role_allows?(:feature => "security_group_show_list")
+      h[:title] = _("Show all Security Groups")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'security_groups', :id => @record, :display => "security_groups")
     end
@@ -407,11 +353,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_floating_ips
-    label = ui_lookup(:tables => "floating_ip")
     num   = @record.number_of(:floating_ips)
-    h     = {:label => label, :icon => "fa fa-map-marker", :value => num}
-    if num > 0 && role_allows?(:feature => "floating_ip_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Floating IPs'), :icon => "ff ff-floating-ip", :value => num}
+    if num.positive? && role_allows?(:feature => "floating_ip_show_list")
+      h[:title] = _("Show all Floating IPs")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'floating_ips', :id => @record, :display => "floating_ips")
     end
@@ -419,11 +364,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_network_routers
-    label = ui_lookup(:tables => "network_router")
     num   = @record.number_of(:network_routers)
-    h     = {:label => label, :icon => "pficon pficon-route", :value => num}
-    if num > 0 && role_allows?(:feature => "network_router_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Network Routers'), :icon => "pficon pficon-route", :value => num}
+    if num.positive? && role_allows?(:feature => "network_router_show_list")
+      h[:title] = _("Show all Network Routers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_routers', :id => @record, :display => "network_routers")
     end
@@ -431,11 +375,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_cloud_subnets
-    label = ui_lookup(:tables => "cloud_subnet")
     num   = @record.number_of(:cloud_subnets)
-    h     = {:label => label, :icon => "pficon pficon-network", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_subnet_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Cloud Subnets'), :icon => "pficon pficon-network", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_subnet_show_list")
+      h[:title] = _("Show all Cloud Subnets")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_subnets', :id => @record, :display => "cloud_subnets")
     end
@@ -443,11 +386,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_network_ports
-    label = ui_lookup(:tables => "network_port")
     num   = @record.number_of(:network_ports)
-    h     = {:label => label, :icon => "product product-network_port", :value => num}
-    if num > 0 && role_allows?(:feature => "network_port_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Network Ports'), :icon => "ff ff-network-port", :value => num}
+    if num.positive? && role_allows?(:feature => "network_port_show_list")
+      h[:title] = _("Show all Network Ports")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_ports', :id => @record, :display => "network_ports")
     end
@@ -457,11 +399,10 @@ module VmHelper::TextualSummary
   def textual_load_balancers
     return nil if @record.try(:load_balancers).nil?
 
-    label = ui_lookup(:tables => "load_balancer")
     num   = @record.number_of(:load_balancers)
-    h     = {:label => label, :icon => "product product-load_balancer", :value => num}
-    if num > 0 && role_allows?(:feature => "load_balancer_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Load Balancers'), :icon => "ff ff-load-balancer", :value => num}
+    if num.positive? && role_allows?(:feature => "load_balancer_show_list")
+      h[:title] = _("Show all Load Balancers")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'load_balancers', :id => @record, :display => "load_balancers")
     end
@@ -469,11 +410,10 @@ module VmHelper::TextualSummary
   end
 
   def textual_cloud_networks
-    label = ui_lookup(:tables => "cloud_network")
     num   = @record.number_of(:cloud_networks)
-    h     = {:label => label, :icon => "product product-cloud_network", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_network_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Cloud Networks'), :icon => "ff ff-cloud-network", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_network_show_list")
+      h[:title] = _("Show all Cloud Networks")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'cloud_networks', :id => @record, :display => "cloud_networks")
     end
@@ -482,20 +422,18 @@ module VmHelper::TextualSummary
 
   def textual_cloud_tenant
     cloud_tenant = @record.cloud_tenant if @record.respond_to?(:cloud_tenant)
-    label = ui_lookup(:table => "cloud_tenants")
-    h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
+    h = {:label => _('Cloud Tenants'), :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
-      h[:title] = _("Show this VM's %{label}") % {:label => label}
+      h[:title] = _("Show this VM's Cloud Tenants")
       h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end
 
   def textual_cloud_volumes
-    label = ui_lookup(:tables => "cloud_volumes")
     num = @record.number_of(:cloud_volumes)
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
+    h = {:label => _('Cloud Volumes'), :icon => "pficon pficon-volume", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_volume_show_list")
       h[:title]    = _("Show all Cloud Volumes attached to this VM.")
       h[:explorer] = true
       h[:link]     = url_for_only_path(:action => 'cloud_volumes', :id => @record, :display => "cloud_volumes")
@@ -506,7 +444,7 @@ module VmHelper::TextualSummary
   def textual_genealogy
     {
       :label    => _("Genealogy"),
-      :icon     => "product product-genealogy",
+      :icon     => "ff ff-dna",
       :value    => _("Show parent and child VMs"),
       :title    => _("Show virtual machine genealogy"),
       :explorer => true,
@@ -520,106 +458,13 @@ module VmHelper::TextualSummary
     }
   end
 
-  def textual_users
-    num = @record.number_of(:users)
-    h = {:label => _("Users"), :icon => "pficon pficon-user", :value => num}
-    if num > 0
-      h[:title] = n_("Show the User defined on this VM", "Show the Users defined on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:action => 'users', :id => @record, :db => controller.controller_name)
-    end
-    h
-  end
-
-  def textual_groups
-    num = @record.number_of(:groups)
-    h = {:label => _("Groups"), :icon => "product product-group", :value => num}
-    if num > 0
-      h[:title] = n_("Show the Group defined on this VM", "Show the Groups defined on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:action => 'groups', :id => @record, :db => controller.controller_name)
-    end
-    h
-  end
-
-  def textual_guest_applications
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown"
-    num = @record.number_of(:guest_applications)
-    label = (os =~ /linux/) ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
-
-    h = {:label => label, :icon => "product product-application", :value => num}
-    if num > 0
-      h[:title] = _("Show the %{label} installed on this VM") % {:label => label}
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'guest_applications', :id => @record)
-    end
-    h
-  end
-
-  def textual_win32_services
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
-    num = @record.number_of(:win32_services)
-    h = {:label => _("Win32 Services"), :icon0 => "fa fa-cog", :value => num}
-    if num > 0
-      h[:title] = n_("Show the Win32 Service installed on this VM", "Show the Win32 Services installed on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'win32_services', :id => @record)
-    end
-    h
-  end
-
-  def textual_kernel_drivers
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
-    num = @record.number_of(:kernel_drivers)
-    # TODO: Why is this image different than graphical?
-    h = {:label => _("Kernel Drivers"), :icon => "fa fa-cog", :value => num}
-    if num > 0
-      h[:title] = n_("Show the Kernel Driver installed on this VM", "Show the Kernel Drivers installed on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'kernel_drivers', :id => @record)
-    end
-    h
-  end
-
-  def textual_filesystem_drivers
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
-    num = @record.number_of(:filesystem_drivers)
-    # TODO: Why is this image different than graphical?
-    h = {:label => _("File System Drivers"), :icon => "fa fa-cog", :value => num}
-    if num > 0
-      h[:title] = n_("Show the File System Driver installed on this VM",
-                     "Show the File System Drivers installed on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'filesystem_drivers', :id => @record)
-    end
-    h
-  end
-
-  def textual_registry_items
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
-    num = @record.number_of(:registry_items)
-    # TODO: Why is this label different from the link title text?
-    h = {:label => _("Registry Entries"), :icon => "pficon pficon-registry", :value => num}
-    if num > 0
-      h[:title] = n_("Show the Registry Item installed on this VM", "Show the Registry Items installed on this VM", num)
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'registry_items', :id => @record)
-    end
-    h
-  end
-
   def textual_disks
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:disks)
     h = {:label => _("Number of Disks"), :icon => "fa fa-hdd-o", :value => num}
-    if num > 0
+    if num.positive?
       h[:title] = n_("Show disk on this VM", "Show disks on this VM", num)
       h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "disks")
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "disks")
     end
     h
   end
@@ -686,99 +531,10 @@ module VmHelper::TextualSummary
                   _("N/A")
                 else
                   v = number_to_human_size(value.abs, :precision => 2)
-                  v = _("(%{value}) * Overallocated") % {:value => v} if value < 0
+                  v = _("(%{value}) * Overallocated") % {:value => v} if value.negative?
                   v
                 end
     h
-  end
-
-  def textual_processes
-    h = {:label => _("Running Processes"), :icon => "fa fa-cog"}
-    date = last_date(:processes)
-    if date.nil?
-      h[:value] = _("Not Available")
-    else
-      # TODO: Why does this date differ in style from the compliance one?
-      h[:value] = _("From %{time} Ago") % {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
-      h[:title] = _("Show Running Processes on this VM")
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'processes', :id => @record)
-    end
-    h
-  end
-
-  def textual_event_logs
-    num = @record.operating_system.nil? ? 0 : @record.operating_system.number_of(:event_logs)
-    h = {:label => _("Event Logs"), :icon => "fa fa-file-text-o", :value => (num == 0 ? _("Not Available") : _("Available"))}
-    if num > 0
-      h[:title] = _("Show Event Logs on this VM")
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'event_logs', :id => @record)
-    end
-    h
-  end
-
-  def textual_vmsafe_enable
-    return nil if @record.vmsafe_enable
-    {:label => _("Enable"), :value => "false"}
-  end
-
-  def textual_vmsafe_agent_address
-    return nil unless @record.vmsafe_enable
-    {:label => _("Agent Address"), :value => @record.vmsafe_agent_address}
-  end
-
-  def textual_vmsafe_agent_port
-    return nil unless @record.vmsafe_enable
-    {:label => _("Agent Port"), :value => @record.vmsafe_agent_port}
-  end
-
-  def textual_vmsafe_fail_open
-    return nil unless @record.vmsafe_enable
-    {:label => _("Fail Open"), :value => @record.vmsafe_fail_open}
-  end
-
-  def textual_vmsafe_immutable_vm
-    return nil unless @record.vmsafe_enable
-    {:label => _("Immutable VM"), :value => @record.vmsafe_immutable_vm}
-  end
-
-  def textual_vmsafe_timeout
-    return nil unless @record.vmsafe_enable
-    {:label => _("Timeout (ms)"), :value => @record.vmsafe_timeout_ms}
-  end
-
-  def textual_miq_custom_attributes
-    attrs = @record.miq_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
-  end
-
-  def textual_ems_custom_attributes
-    attrs = @record.ems_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
-  end
-
-  def textual_labels
-    attrs = @record.custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
-  end
-
-  def textual_compliance_history
-    super(:title    => _("Show Compliance History of this VM (Last 10 Checks)"),
-          :explorer => true)
-  end
-
-  def textual_boot_time
-    date = @record.boot_time
-    {:label => _("Last Boot Time"), :value => (date.nil? ? _("N/A") : format_timezone(date))}
-  end
-
-  def textual_state_changed_on
-    date = @record.state_changed_on
-    {:label => _("State Changed On"), :value => (date.nil? ? _("N/A") : format_timezone(date))}
   end
 
   def textual_normal_operating_ranges_cpu
@@ -793,7 +549,7 @@ module VmHelper::TextualSummary
   def textual_normal_operating_ranges_cpu_usage
     h = {:label => _("CPU Usage"), :value => []}
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
-      value = @record.send("max_cpu_usage_rate_average_#{key}_over_time_period")
+      value = @record.send("cpu_usage_rate_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
     end
@@ -805,8 +561,7 @@ module VmHelper::TextualSummary
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
       value = @record.send("derived_memory_used_#{key}_over_time_period")
       h[:value] << {:label => label,
-                    :value => (value.nil? ? _("Not Available") : number_to_human_size(value.megabytes,
-                                                                                      :precision => 2))}
+                    :value => (value.nil? ? _("Not Available") : number_to_human_size(value.megabytes, :precision => 2))}
     end
     h
   end
@@ -814,21 +569,9 @@ module VmHelper::TextualSummary
   def textual_normal_operating_ranges_memory_usage
     h = {:label => _("Memory Usage"), :value => []}
     [:max, _("Max"), :high, _("High"), :avg, _("Average"), :low, _("Low")].each_slice(2) do |key, label|
-      value = @record.send("max_mem_usage_absolute_average_#{key}_over_time_period")
+      value = @record.send("mem_usage_absolute_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
-    end
-    h
-  end
-
-  def textual_devices
-    h = {:label    => _("Devices"),
-         :icon     => "fa fa-hdd-o",
-         :explorer => true,
-         :value    => (@devices.nil? || @devices.empty? ? _("None") : @devices.length)}
-    if @devices.length > 0
-      h[:title] = _("Show VMs devices")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
     h
   end

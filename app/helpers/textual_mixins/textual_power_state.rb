@@ -1,9 +1,17 @@
 module TextualMixins::TextualPowerState
-  def textual_power_state
-    state = @record.current_state.downcase
-    state = "unknown" if state.blank?
-    h = {:label => _("Power State"), :value => state}
-    h[:image] = "svg/currentstate-#{@record.template? ? (@record.host ? "template" : "template-no-host") : state}.svg"
-    h
+  def textual_power_state_whitelisted(state)
+    state = state.blank? ? 'unknown' : state.downcase
+    quad_icon = QuadiconHelper.machine_state(state)
+
+    {
+      :label      => _('Power State'),
+      :value      => state,
+      :icon       => quad_icon[:fonticon],
+      :background => quad_icon[:background]
+    }
+  end
+
+  def textual_power_state_whitelisted_with_template
+    textual_power_state_whitelisted(@record.normalized_state)
   end
 end

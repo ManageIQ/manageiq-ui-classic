@@ -1,11 +1,11 @@
 describe TreeBuilderPolicySimulationResults do
   context 'TreeBuilderPolicySimulationResults' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
-      login_as FactoryGirl.create(:user, :userid => 'policy_simulation_results_wilma', :miq_groups => [@group])
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Policy Simulation Group")
+      login_as FactoryBot.create(:user, :userid => 'policy_simulation_results_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
-      @event = FactoryGirl.create(:miq_event_definition, :id => 123)
+      @event = FactoryBot.create(:miq_event_definition, :id => 123)
       @data = {:event_value => 123, :results => [{:id => 76, :name => "DevRHEL002", :result => "allow", :profiles => []},
                                                  {:id       => 69,
                                                   :name     => "DevLin002",
@@ -27,15 +27,15 @@ describe TreeBuilderPolicySimulationResults do
                                                                                                     {:id          => 9,
                                                                                                      :description => "Shutdown Virtual Machine Guest OS",
                                                                                                      :result      => "deny"}]}]}]}]}
-      @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, {}, true, @data)
+      @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, {}, true, :root => @data)
     end
 
     it 'sets root correctly' do
       root_options = @rsop_tree.send(:root_options)
       expect(root_options).to eq(
-        :title       => _("Policy Simulation Results for Event [%{description}]") % {:description => @event.description},
-        :icon        => @event.decorate.fonticon,
-        :cfmeNoClick => true
+        :text       => "Policy Simulation Results for Event [%{description}]" % {:description => @event.description},
+        :icon       => @event.decorate.fonticon,
+        :selectable => false
       )
     end
 

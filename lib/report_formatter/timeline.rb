@@ -34,14 +34,23 @@ module ReportFormatter
       # some of the OOTB reports have db as EventStream or PolicyEvent,
       # those do not have event categories, so need to go thru else block for such reports.
       if (mri.db == "EventStream" || mri.db == "PolicyEvent") && mri.rpt_options.try(:[], :categories)
-        mri.rpt_options[:categories].each do |_, options|
+        event_map = mri.table.data.each_with_object({}) do |event, buckets|
+          bucket_name = mri.rpt_options[:categories].detect do |_, options|
+            options[:include_set].include?(event.event_type)
+          end&.last.try(:[], :display_name)
+
+          bucket_name ||= mri.rpt_options[:categories].detect do |_, options|
+            options[:regexes].any? { |regex| regex.match(event.event_type) }
+          end.last[:display_name]
+
+          buckets[bucket_name] ||= []
+          buckets[bucket_name] << event
+        end
+
+        event_map.each do |name, events|
           @events_data = []
-          all_events = mri.table.data.select { |e| options[:event_groups].include?(e.event_type) }
-          all_events.each do |row|
-            tl_event(row, col) # Add this row to the tl event xml
-          end
-          @events.push(:name => options[:display_name],
-                       :data => [@events_data])
+          events.each { |row| tl_event(row, col) }
+          @events.push(:name => name, :data => [@events_data])
         end
       else
         mri.table.data.each_with_index do |row, _d_idx|
@@ -53,12 +62,6 @@ module ReportFormatter
       mri.extras[:tl_position] ||= format_timezone(Time.now, tz, 'raw') # If position not set, default to now
       #     END of TIMELINE TIMEZONE Code
       output << @events.to_json
-    end
-
-    # Methods to convert record id (id, fixnum, 12000000000056) to/from compressed id (cid, string, "12c56")
-    #   for use in UI controls (i.e. tree node ids, pulldown list items, etc)
-    def to_cid(id)
-      ApplicationRecord.compress_id(id)
     end
 
     def tl_event(row, col)
@@ -81,12 +84,6 @@ module ReportFormatter
       else
         mri.extras[:tl_position] = format_timezone(etime.to_time, tz, 'raw') if format_timezone(etime.to_time, tz, 'raw') > format_timezone(mri.extras[:tl_position], tz, 'raw')
       end
-      #     mri.extras[:tl_position] ||= etime.to_time
-      #     if mri.timeline[:position] && mri.timeline[:position] == "First"
-      #       mri.extras[:tl_position] = etime.to_time if etime.to_time < mri.extras[:tl_position]
-      #     else
-      #       mri.extras[:tl_position] = etime.to_time if etime.to_time > mri.extras[:tl_position]
-      #     end
       #     END of TIMELINE TIMEZONE Code
       if row["id"]  # Make sure id column is present
         rec = mri.db.constantize.find_by_id(row['id'])
@@ -94,9 +91,7 @@ module ReportFormatter
       unless rec.nil?
         case mri.db
         when "BottleneckEvent"
-          #         e_title = "#{ui_lookup(:model=>rec[:resource_type])}: #{rec[:resource_name]}"
           e_title = rec[:resource_name]
-        #         e_text = e_title # Commented out since name is showing in the columns anyway
         when "Vm"
           e_title = rec[:name]
         when "Host"
@@ -107,9 +102,8 @@ module ReportFormatter
             ems = ExtManagementSystem.find(rec[:ems_id])
             ems_cloud =  true if ems.kind_of?(EmsCloud)
             ems_container = true if ems.kind_of?(::ManageIQ::Providers::ContainerManager)
-            ems_mw = true if ems.kind_of?(::ManageIQ::Providers::MiddlewareManager)
           end
-          if !(ems_cloud || ems_mw)
+          if !ems_cloud
             e_title = if rec[:vm_name] # Create the title using VM name
                         rec[:vm_name]
                       elsif rec[:host_name] # or Host Name
@@ -125,29 +119,25 @@ module ReportFormatter
                       elsif rec[:container_node_name]
                         rec[:container_node_name]
                       end
-          elsif ems_mw
-            mw_name_cols = EmsEvent.column_names.select { |n| n.match('middleware_.+_name') }
-            title_col = mw_name_cols.find { |c| rec[c] }
-            e_title = rec[title_col] unless title_col.nil?
           end
-          e_title ||= ems ? ems.name : "No VM, Host, or MS"
         else
           e_title = rec[:name] ? rec[:name] : row[mri.col_order.first].to_s
         end
       end
+      e_title ||= ems ? ems.name : "No VM, Host, or MS"
 
       # manipulating column order to display timestamp at the end of the bubble.
       field = mri.timeline[:field].split("-")
       if ems && ems_cloud
         # Change labels to be cloud specific
         vm_name_idx = mri.col_order.index("vm_name")
-        mri.headers[vm_name_idx] = "Source Instance"
+        mri.headers[vm_name_idx] = "Source Instance" if vm_name_idx
         vm_location_idx = mri.col_order.index("vm_location")
-        mri.headers[vm_location_idx] = "Source Instance Location"
+        mri.headers[vm_location_idx] = "Source Instance Location" if vm_location_idx
         dest_vm_name_idx = mri.col_order.index("dest_vm_name")
-        mri.headers[dest_vm_name_idx] = "Destination Instance"
+        mri.headers[dest_vm_name_idx] = "Destination Instance" if dest_vm_name_idx
         dest_vm_location_idx = mri.col_order.index("dest_vm_location")
-        mri.headers[dest_vm_location_idx] = "Destination Instance Location"
+        mri.headers[dest_vm_location_idx] = "Destination Instance Location" if dest_vm_location_idx
       else
         mri.col_order.delete("availability_zone.name")
         mri.headers.delete("Availability Zone")
@@ -172,20 +162,22 @@ module ReportFormatter
 
       flags = {:ems_cloud     => ems_cloud,
                :ems_container => ems_container,
-               :ems_mw        => ems_mw,
                :time_zone     => tz}
       tl_message = TimelineMessage.new(row, rec, flags, mri.db)
-      e_text = ''
+      event_data = {}
       col_order.each_with_index do |co, co_idx|
-        val = tl_message.message_html(co)
-        e_text += "<b>#{headers[co_idx]}:</b>&nbsp;#{val}<br/>" unless val.to_s.empty? || co == "id"
+        value = tl_message.message_html(co)
+        next if value.to_s.empty? || co == "id"
+        event_data[co] = {
+          :value => value,
+          :text  => headers[co_idx]
+        }
       end
-      e_text = e_text.chomp('<br/>')
 
       # Add the event to the timeline
-      @events_data.push("start"       => format_timezone(row[col], tz, 'view'),
-                        "title"       => e_title.length < 20 ? e_title : e_title[0...17] + "...",
-                        "description" => e_text)
+      @events_data.push("start" => format_timezone(row[col], tz, 'view'),
+                        "title" => e_title.length < 20 ? e_title : e_title[0...17] + "...",
+                        "event" => event_data)
     end
   end
 end

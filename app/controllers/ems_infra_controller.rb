@@ -1,9 +1,10 @@
 class EmsInfraController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
-  include EmsCommon        # common methods for EmsInfra/Cloud controllers
-  include Mixins::EmsCommonAngular
+  include Mixins::EmsCommon # common methods for EmsInfra/Cloud controllers
+  include Mixins::EmsCommon::Angular
   include Mixins::DashboardViewMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -18,6 +19,11 @@ class EmsInfraController < ApplicationController
     @table_name ||= "ems_infra"
   end
 
+  def show
+    @breadcrumbs =  [{:name => _('Infrastructure Providers'), :url => '/ems_infra/show_list'}]
+    super
+  end
+
   def ems_path(*args)
     ems_infra_path(*args)
   end
@@ -26,8 +32,18 @@ class EmsInfraController < ApplicationController
     new_ems_infra_path
   end
 
+  def show_list
+    @showtype = nil
+    super
+  end
+
   def index
-    redirect_to :action => 'show_list'
+    redirect_to(:action => 'show_list')
+  end
+
+  def new
+    @disabled_ems_infra_types = [%w(KubeVirt kubevirt)]
+    super
   end
 
   def scaling
@@ -36,15 +52,15 @@ class EmsInfraController < ApplicationController
     # Hiding the toolbars
     @in_a_form = true
 
-    redirect_to ems_infra_path(params[:id]) if params[:cancel]
+    redirect_to(ems_infra_path(params[:id])) if params[:cancel]
 
     drop_breadcrumb(:name => _("Scale Infrastructure Provider"), :url => "/ems_infra/scaling")
-    @infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
     if @stack.nil?
-      log_and_flash_message(_("Orchestration stack could not be found."))
+      add_flash(_('Orchestration stack could not be found.'), :error)
       return
     end
 
@@ -54,38 +70,43 @@ class EmsInfraController < ApplicationController
 
     scale_parameters = params.select { |k, _v| k.include?('::count') || k.include?('Count') }.to_unsafe_h
     assigned_hosts = scale_parameters.values.sum(&:to_i)
-    infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    infra = get_infra_provider(params[:id])
     if assigned_hosts > infra.hosts.count
       # Validate number of selected hosts is not more than available
-      log_and_flash_message(_("Assigning %{hosts} but only have %{hosts_count} hosts available.") % {:hosts => assigned_hosts, :hosts_count => infra.hosts.count.to_s})
+      add_flash(_("Assigning %{hosts} but only have %{hosts_count} hosts available.") % {
+        :hosts => assigned_hosts, :hosts_count => infra.hosts.count.to_s
+      }, :error)
     else
       scale_parameters_formatted = {}
       return_message = _("Scaling")
+      if @count_parameters.any? { |p| scale_parameters[p.name].present? && scale_parameters[p.name].to_s < p.value.to_s }
+        add_flash(_("Scaling down is not supported. New value for %{name} %{new_value} is lower than current value %{current_value}.") % {:name => p.name, :new_value => scale_parameters[p.name], :current_value => p.value}, :error)
+        return
+      end
       @count_parameters.each do |p|
-        if !scale_parameters[p.name].nil? && scale_parameters[p.name] != p.value
-          return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
-          scale_parameters_formatted[p.name] = scale_parameters[p.name]
-        end
+        next if scale_parameters[p.name].nil? || scale_parameters[p.name] == p.value
+        return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
+        scale_parameters_formatted[p.name] = scale_parameters[p.name]
       end
 
-      update_stack(@stack, scale_parameters_formatted, params[:id], return_message, 'scaleup')
+      update_stack_up(@stack, scale_parameters_formatted, params[:id], return_message)
     end
   end
 
   def scaledown
     assert_privileges("ems_infra_scale")
-    redirect_to ems_infra_path(params[:id]) if params[:cancel]
+    redirect_to(ems_infra_path(params[:id])) if params[:cancel]
 
     # Hiding the toolbars
     @in_a_form = true
 
     drop_breadcrumb(:name => _("Scale Infrastructure Provider Down"), :url => "/ems_infra/scaling")
-    @infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
     if @stack.nil?
-      log_and_flash_message(_("Orchestration stack could not be found."))
+      add_flash(_('Orchestration stack could not be found.'), :error)
       return
     end
 
@@ -95,28 +116,27 @@ class EmsInfraController < ApplicationController
 
     host_ids = params[:host_ids]
     if host_ids.nil?
-      log_and_flash_message(_("No compute hosts were selected for scale down."))
+      add_flash(_("No compute hosts were selected for scale down."), :error)
     else
-      hosts = host_ids.map { |host_id| find_by_id_filtered(Host, host_id) }
-      services = hosts.collect(&:cloud_services).flatten
+      hosts = get_hosts_to_scaledown_from_ids(host_ids)
 
       # verify selected nodes can be removed
       has_invalid_nodes, error_return_message = verify_hosts_for_scaledown(hosts)
       if has_invalid_nodes
-        log_and_flash_message(error_return_message)
+        add_flash(error_return_message, :error)
         return
       end
 
       # figure out scaledown parameters and update stack
       stack_parameters = get_scaledown_parameters(hosts, @infra, @compute_hosts)
-      return_message = _(" Scaling down to %{a} compute nodes") % {:a => stack_parameters['ComputeCount']}
-      update_stack(@stack, stack_parameters, params[:id], return_message, 'scaledown', {:services => services})
+
+      update_stack_down(@stack, stack_parameters, params[:id], hosts)
     end
   end
 
   def register_nodes
     assert_privileges("host_register_nodes")
-    redirect_to ems_infra_path(params[:id], :display => "hosts") if params[:cancel]
+    redirect_to(ems_infra_path(params[:id], :display => "hosts")) if params[:cancel]
 
     # Hiding the toolbars
     @in_a_form = true
@@ -126,7 +146,7 @@ class EmsInfraController < ApplicationController
 
     if params[:register]
       if params[:nodes_json].nil? || params[:nodes_json][:file].nil?
-        log_and_flash_message(_("Please select a JSON file containing the nodes you would like to register."))
+        add_flash(_('Please select a JSON file containing the nodes you would like to register.'), :error)
         return
       end
 
@@ -134,36 +154,58 @@ class EmsInfraController < ApplicationController
         uploaded_file = params[:nodes_json][:file]
         nodes_json = parse_json(uploaded_file)
         if nodes_json.nil?
-          log_and_flash_message(_("JSON file format is incorrect, missing 'nodes'."))
+          add_flash(_("JSON file format is incorrect, missing 'nodes'."), :error)
         end
       rescue => ex
-        log_and_flash_message(_("Cannot parse JSON file: %{message}") %
-                                  {:message => ex})
+        add_flash(_("Cannot parse JSON file: %{message}") % {:message => ex}, :error)
       end
 
       if nodes_json
         begin
           @infra.workflow_service
         rescue => ex
-          log_and_flash_message(_("Cannot connect to workflow service: %{message}") %
-                                    {:message => ex})
+          add_flash(_("Cannot connect to workflow service: %{message}") % {:message => ex}, :error)
           return
         end
         begin
           state, response = @infra.register_and_configure_nodes(nodes_json)
         rescue => ex
-          log_and_flash_message(_("Error executing register and configure workflows: %{message}") %
-                                    {:message => ex})
+          add_flash(_("Error executing register and configure workflows: %{message}") % {:message => ex}, :error)
           return
         end
         if state == "SUCCESS"
-          redirect_to ems_infra_path(params[:id],
+          redirect_to(ems_infra_path(params[:id],
                                      :display   => "hosts",
-                                     :flash_msg => _("Nodes were added successfully. Refresh queued."))
+                                     :flash_msg => _("Nodes were added successfully. Refresh queued.")))
         else
-          log_and_flash_message(_("Unable to add nodes: %{error}") % {:error => response})
+          add_flash(_("Unable to add nodes: %{error}") % {:error => response}, :error)
         end
       end
+    end
+  end
+
+  def open_admin_ui
+    assert_privileges("ems_infra_admin_ui")
+    ems = identify_record(params[:id], ManageIQ::Providers::InfraManager)
+
+    if ems.supports?(:admin_ui)
+      task_id = ems.queue_generate_admin_ui_url
+      initiate_wait_for_task(:task_id => task_id, :action => "open_admin_ui_done")
+    else
+      javascript_flash(:text     => _("Admin UI feature is not supported for this infrastructure provider"),
+                       :severity => :error)
+    end
+  end
+
+  def open_admin_ui_done
+    task = MiqTask.find(params[:task_id])
+
+    if task.results_ready? && task.task_results.kind_of?(String)
+      javascript_open_window(task.task_results)
+    else
+      message = MiqTask.status_ok?(task.status) ? _("The URL is blank or not a String") : task.message
+      javascript_flash(:text     => _("Infrastructure provider failed to generate Admin UI URL: %{message}") % {:message => message},
+                       :severity => :error)
     end
   end
 
@@ -179,38 +221,40 @@ class EmsInfraController < ApplicationController
     ems_path(ems.id, options)
   end
 
-  def log_and_flash_message(message)
-    add_flash(message, :error)
-    $log.error(message)
+  def update_stack_up(stack, stack_parameters, provider_id, return_message)
+    if stack_parameters_changed?(stack_parameters)
+      begin
+        stack.scale_up_queue(session[:userid], stack_parameters)
+        add_flash(return_message)
+        flash_to_session
+        redirect_to(ems_infra_path(provider_id))
+      rescue => ex
+        add_flash(_("Unable to initiate scale up: %{message}") % {:message => ex}, :error)
+      end
+    end
   end
 
-  def update_stack(stack, stack_parameters, provider_id, return_message, operation, additional_args = {})
-    begin
-      # Check if stack is ready to be updated
-      update_ready = stack.update_ready?
-    rescue => ex
-      log_and_flash_message(_("Unable to update stack, obtaining of status failed: %{message}") %
-                            {:message => ex})
-      return
-    end
-
-    if !update_ready
-      add_flash(_("Provider stack is not ready to be updated, another operation is in progress."), :error)
-    elsif !stack_parameters.empty?
-      # A value was changed
+  def update_stack_down(stack, stack_parameters, provider_id, hosts)
+    return_message = _(" Scaling down to %{a} compute nodes") % {:a => stack_parameters['ComputeCount']}
+    if stack_parameters_changed?(stack_parameters)
       begin
-        task_id = stack.update_stack_queue(session[:userid], nil, stack_parameters)
-        if operation == 'scaledown'
-          @stack.queue_post_scaledown_task(additional_args[:services], task_id)
-        end
-        redirect_to ems_infra_path(provider_id, :flash_msg => return_message)
+        stack.scale_down_queue(session[:userid], stack_parameters, hosts)
+        add_flash(return_message)
+        flash_to_session
+        redirect_to(ems_infra_path(provider_id))
       rescue => ex
-        log_and_flash_message(_("Unable to initiate scaling: %{message}") % {:message => ex})
+        add_flash(_("Unable to initiate scale down: %{message}") % {:message => ex}, :error)
       end
-    else
+    end
+  end
+
+  def stack_parameters_changed?(stack_parameters)
+    if stack_parameters.empty?
       # No values were changed
       add_flash(_("A value must be changed or provider stack will not be updated."), :error)
+      return false
     end
+    true
   end
 
   def verify_hosts_for_scaledown(hosts)
@@ -223,7 +267,7 @@ class EmsInfraController < ApplicationController
         error_return_message += _(" %{host_uid_ems} needs to be in maintenance mode before it can be removed ") %
                                 {:host_uid_ems => host.uid_ems}
       end
-      if host.number_of(:vms) > 0
+      if host.number_of(:vms).positive?
         has_invalid_nodes = true
         error_return_message += _(" %{host_uid_ems} needs to be evacuated before it can be removed ") %
                                 {:host_uid_ems => host.uid_ems}
@@ -249,7 +293,7 @@ class EmsInfraController < ApplicationController
     parent_resource_names = []
     host_physical_resource_ids.each do |pr_id|
       host_resource = resources_by_physical_resource_id[pr_id]
-      host_stack = find_by_id_filtered(OrchestrationStack, host_resource.stack_id)
+      host_stack = find_record_with_rbac(OrchestrationStack, host_resource.stack_id)
       parent_host_resource = resources_by_physical_resource_id[host_stack.ems_ref]
       parent_resource_names << parent_host_resource.logical_resource
     end
@@ -257,7 +301,7 @@ class EmsInfraController < ApplicationController
     stack_parameters = {}
     stack_parameters['ComputeCount'] = compute_hosts.length - hosts.length
     stack_parameters['ComputeRemovalPolicies'] = [{:resource_list => parent_resource_names}]
-    return stack_parameters
+    stack_parameters
   end
 
   def restful?
@@ -267,6 +311,26 @@ class EmsInfraController < ApplicationController
 
   def parse_json(uploaded_file)
     JSON.parse(uploaded_file.read)["nodes"]
+  end
+
+  def get_infra_provider(id)
+    ManageIQ::Providers::Openstack::InfraManager.find(id)
+  end
+
+  def get_hosts_to_scaledown_from_ids(host_ids)
+    host_ids.map { |host_id| find_record_with_rbac(Host, host_id) }
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Providers")},
+        {:url   => controller_url, :title => _("Infrastructure Providers")},
+      ],
+      :record_info => @ems,
+    }.compact
   end
 
   menu_section :inf

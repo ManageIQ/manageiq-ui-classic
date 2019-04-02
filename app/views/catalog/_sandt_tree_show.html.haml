@@ -46,13 +46,13 @@
             %label.col-md-3.control-label
               = _('Item Type')
             .col-md-9
-              = h(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type])
+              = h(_(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type]))
         - if @record.prov_type == "generic"
           .form-group
             %label.col-md-3.control-label
               = _('Subtype')
             .col-md-9
-              = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]])
+              = h(_(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]]) || _("Custom"))
         - if @record.prov_type == "generic_orchestration"
           .form-group
             %label.col-md-3.control-label
@@ -68,9 +68,20 @@
         - elsif @record.prov_type == "generic_ansible_tower"
           .form-group
             %label.col-md-3.control-label
-              = _('Ansible Tower Job Template')
+              = _('Ansible Tower Template')
             .col-md-9
               = h(@record.try(:job_template).try(:name))
+        - elsif @record.prov_type == "generic_container_template"
+          .form-group
+            %label.col-md-3.control-label
+              = _('Provider')
+            .col-md-9
+              = h(provisioning[:provider_name])
+          .form-group
+            %label.col-md-3.control-label
+              = _('Container Template')
+            .col-md-9
+              = h(provisioning[:template_name])
         - unless @record.prov_type == "generic_ansible_playbook"
           - entry_points = [[_("Provisioning"), :fqname]]
           - unless @record.prov_type.try(:start_with?, "generic_")
@@ -82,6 +93,11 @@
                 #{entry_points_op[0]} #{_('Entry Point')}
               .col-md-9
                 = h(@sb[entry_points_op[1]])
+        .form-group
+          .col-md-9
+            #tag_group
+            :javascript
+               ManageIQ.component.componentFactory('TagGroup', '#tag_group', #{textual_tags_render_data(@record).to_json});
       %hr
       %h3
         = _('Custom Image')
@@ -92,18 +108,15 @@
               = image_tag("#{@record.picture.url_path}?#{rand(99_999_999)}",
                           :style => "width:100px; height:100px;")
             .col-md-9{:valign => "bottom"}
-              = link_to(image_tag(image_path('toolbars/remove.png'),
-                                  :class => "rollover small",
-                                  :alt   => t = _("Remove this Custom Image")),
-                        {:action  => "st_upload_image",
-                         :id      => @record.id,
-                         :pressed => "remove"},
+              = link_to({:action => "st_upload_image", :id => @record.id, :pressed => "remove"},
                         "data-miq_sparkle_on"  => true,
                         "data-miq_sparkle_off" => true,
                         :remote                => true,
+                        :class                 => 'btn btn-default',
                         "data-method"          => :post,
                         :confirm               => _("Are you sure you want to remove this Custom Image?"),
-                        :title                 => t)
+                        :title                 => _("Remove this Custom Image")) do
+                %i.pficon.pficon-delete
         - else
           = _('No custom image has been uploaded')
           %br
@@ -157,14 +170,14 @@
                 - col_span = 10
                 - if prev_group != r.group_idx && i < resources.length
                   - prev_group = r.group_idx
-                  %tr#new_tr.separator
+                  %tr.separator
                     %td{:colspan => col_span}
                 %tr{:title       => _("Click to this Catalog Item"),
                     :onclick     => remote_function(:loading  => "miqSparkle(true);",
                                                     :complete => "miqSparkle(false);",
-                                                    :url      => "/catalog/x_show/#{to_cid(r.resource_id)}")}
+                                                    :url      => "/catalog/x_show/#{r.resource_id}")}
                   %td.table-view-pf-select
-                    %i.product.product-template
+                    %i.pficon.pficon-template
                   - keys = %w(resource_name resource_description group_idx provision_index start_action stop_action start_delay stop_delay)
                   - keys.each do |key|
                     %td
@@ -175,7 +188,7 @@
     - else
       - if !@record.prov_type || (@record.prov_type && need_prov_dialogs?(@record.prov_type))
         = miq_tab_content('request') do
-          - if @options[:wf]
+          - if @options && @options[:wf]
             %h3
               = _('Request Info')
               = render :partial => "miq_request/prov_wf",
@@ -215,9 +228,14 @@
                 = h(provisioning[:machine_credential])
             .form-group
               %label.col-md-3.control-label
-                = _('Network Credential')
+                = _('Vault Credential')
               .col-md-9
-                = h(provisioning[:network_credential])
+                = h(provisioning[:vault_credential])
+            -#.form-group
+            -#  %label.col-md-3.control-label
+            -#    = _('Network Credential')
+            -#  .col-md-9
+            -#    = h(provisioning[:network_credential])
             .form-group
               %label.col-md-3.control-label
                 = _('Cloud Credential')
@@ -225,9 +243,29 @@
                 = h(provisioning[:cloud_credential])
             .form-group
               %label.col-md-3.control-label
+                = _('Max TTL (mins)')
+              .col-md-9
+                = h(@record.config_info[:provision][:execution_ttl])
+            .form-group
+              %label.col-md-3.control-label
                 = _('Hosts')
               .col-md-9
                 = h(@record.config_info[:provision][:hosts])
+            .form-group
+              %label.col-md-3.control-label
+                = _('Logging Output')
+              .col-md-9
+                = h(ViewHelper::LOG_OUTPUT_LEVELS[provisioning[:log_output]])
+            .form-group
+              %label.col-md-3.control-label
+                = _('Escalate Privilege')
+              .col-md-9
+                = h(provisioning[:become_enabled])
+            .form-group
+              %label.col-md-3.control-label
+                = _('Verbosity')
+              .col-md-9
+                = _(ViewHelper::VERBOSITY_LEVELS[provisioning[:verbosity]])
         .col-md-12.col-lg-6
           .form-horizontal.static
             .form-group
@@ -246,20 +284,21 @@
                         %td
                           = h(key)
                         %td
-                          = h(value)
+                          = h(value[:default])
             .form-group
               %label.col-md-3.control-label
                 = _('Dialog')
               .col-md-9
-                - if role_allows?(:feature => "dialog_accord", :any => true)
-                  - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(provisioning[:dialog_id])}"}
-                  = link_to(provisioning[:dialog],
-                          params,
-                          "data-miq_sparkle_on"  => true,
-                          "data-miq_sparkle_off" => true,
-                          :title                 => provisioning[:dialog])
-                - else
-                  = h(provisioning[:dialog])
+                - if provisioning[:dialog_id]
+                  - if role_allows?(:feature => "dialog_accord", :any => true)
+                    - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{provisioning[:dialog_id]}"}
+                    = link_to(provisioning[:dialog],
+                            params,
+                            "data-miq_sparkle_on"  => true,
+                            "data-miq_sparkle_off" => true,
+                            :title                 => provisioning[:dialog])
+                  - else
+                    = h(provisioning[:dialog])
       - if @record.config_info.fetch_path(:retirement)
         = miq_tab_content('retirement') do
           %h3
@@ -283,9 +322,14 @@
                   = h(retirement[:machine_credential])
               .form-group
                 %label.col-md-3.control-label
-                  = _('Network Credential')
+                  = _('Vault Credential')
                 .col-md-9
-                  = h(retirement[:network_credential])
+                  = h(retirement[:vault_credential])
+              -#.form-group
+              -#  %label.col-md-3.control-label
+              -#    = _('Network Credential')
+              -#  .col-md-9
+              -#    = h(retirement[:network_credential])
               .form-group
                 %label.col-md-3.control-label
                   = _('Cloud Credential')
@@ -293,9 +337,34 @@
                   = h(retirement[:cloud_credential])
               .form-group
                 %label.col-md-3.control-label
+                  = _('Max TTL (mins)')
+                .col-md-9
+                  = h(@record.config_info[:retirement][:execution_ttl])
+              .form-group
+                %label.col-md-3.control-label
                   = _('Hosts')
                 .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Logging Output')
+                .col-md-9
+                  = h(ViewHelper::LOG_OUTPUT_LEVELS[retirement[:log_output]])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Escalate Privilege')
+                .col-md-9
+                  = h(retirement[:become_enabled])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Remove Resources')
+                .col-md-9
+                  = h(remove_resources_display(retirement[:remove_resources]))
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Verbosity')
+                .col-md-9
+                  = _(ViewHelper::VERBOSITY_LEVELS[retirement[:verbosity]])
           .col-md-12.col-lg-6
             .form-horizontal.static
               .form-group
@@ -309,25 +378,13 @@
                       %th
                         = _("Default value")
                     %tbody
-                      - @record.config_info[:retirement][:extra_vars].each do |key, value|
-                        %tr
-                          %td
-                            = h(key)
-                          %td
-                            = h(value)
-              .form-group
-                %label.col-md-3.control-label
-                  = _('Dialog')
-                .col-md-9
-                  - if role_allows?(:feature => "dialog_accord", :any => true)
-                    - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
-                    = link_to(retirement[:dialog],
-                            params,
-                            "data-miq_sparkle_on"  => true,
-                            "data-miq_sparkle_off" => true,
-                            :title                 => retirement[:dialog])
-                  - else
-                    = h(retirement[:dialog])
+                      - if @record.config_info[:retirement][:extra_vars]
+                        - @record.config_info[:retirement][:extra_vars].each do |key, value|
+                          %tr
+                            %td
+                              = h(key)
+                            %td
+                              = h(value[:default])
 
 :javascript
   miq_tabs_init("#st_tabs");

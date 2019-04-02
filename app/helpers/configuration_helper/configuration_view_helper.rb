@@ -6,8 +6,6 @@ module ConfigurationHelper
          view == "compressed" ? compare_or_drift_compressed(resource) : compare_or_drift_expanded(resource)
        when :compare_mode, :drift_mode
          view == "details" ? compare_or_drift_mode_details(resource) : compare_or_drift_mode_exists(resource)
-       when :treesize
-         view == "20" ? treesize_small : treesize_large
        when :summary_mode
          view == "dashboard" ? summary_mode_dashboard(resource) : summary_mode_textual(resource)
        else
@@ -34,30 +32,30 @@ module ConfigurationHelper
                 {:action   => "view_selected",
                  :resource => resource,
                  :view     => view},
-                :remote       => true,
-                'data-method' => :post,
-                :title        => text)
+                {:remote       => true,
+                 'data-method' => :post,
+                 :title        => text})
       end
     end
 
     def compare_or_drift_compressed(resource)
-      inactive_icon("product product-view_expanded", _('Expanded View'), resource, "expanded") +
+      inactive_icon("ff ff-view-expanded", _('Expanded View'), resource, "expanded") +
         active_icon("fa fa-bars fa-rotate-90", _('Compressed View'))
     end
 
     def compare_or_drift_expanded(resource)
-      active_icon("product product-view_expanded", _('Expanded View')) +
+      active_icon("ff ff-view-expanded", _('Expanded View')) +
         inactive_icon("fa fa-bars fa-rotate-90", _('Compressed View'), resource, "compressed")
     end
 
     def compare_or_drift_mode_exists(resource)
       inactive_icon("fa fa-bars fa-rotate-90", _('Details Mode'), resource, "details") +
-        active_icon("product product-exists", _('Exists Mode'))
+        active_icon("ff ff-exists", _('Exists Mode'))
     end
 
     def compare_or_drift_mode_details(resource)
       active_icon("fa fa-bars fa-rotate-90", _('Details Mode')) +
-        inactive_icon("product product-exists", _('Exists Mode'), resource, "exists")
+        inactive_icon("ff ff-exists", _('Exists Mode'), resource, "exists")
     end
 
     def summary_mode_textual(resource)
@@ -68,16 +66,6 @@ module ConfigurationHelper
     def summary_mode_dashboard(resource)
       active_icon("fa fa-tachometer fa-1xplus", _('Dashboard View')) +
         inactive_icon("fa fa-th-list", _('Textual View'), resource, "textual")
-    end
-
-    def treesize_small
-      inactive_icon("tree-large.png", _('Large Trees'), :treesize, "32") +
-        active_icon("tree-small.png", _('Small Trees'))
-    end
-
-    def treesize_large
-      active_icon("tree-large.png", _('Large Trees')) +
-        inactive_icon("tree-small.png", _('Small Trees'), :treesize, "20")
     end
 
     def grid_view(resource)

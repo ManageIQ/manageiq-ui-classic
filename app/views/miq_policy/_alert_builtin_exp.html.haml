@@ -85,7 +85,7 @@
         - if @edit[:new][:expression][:options].key?(:value_threshold)
           = text_field_tag("value_threshold",
             @edit[:new][:expression][:options][:value_threshold],
-            :maxlength         => MAX_NAME_LEN,
+            :maxlength         => ViewHelper::MAX_NAME_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
       - else
@@ -108,7 +108,7 @@
         - if @edit[:new][:expression][:options][:trend_direction].to_s.ends_with?("more_than")
           = text_field_tag("trend_steepness",
             @edit[:new][:expression][:options][:trend_steepness],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
           = h(@edit[:perf_column_unit])
@@ -151,7 +151,7 @@
           miqSelectPickerEvent('select_event_log_message_filter_type', '#{url}', {beforeSend: true, complete: true})
         = text_field_tag("event_log_message_filter_value",
           @edit[:new][:expression][:options][:event_log_message_filter_value],
-          :maxlength         => MAX_DESC_LEN,
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
           "data-miq_observe" => observe_with_interval)
       - else
         = h(@alert.expression[:options][:event_log_message_filter_type])
@@ -182,7 +182,7 @@
     .col-md-8
       - if @edit
         - if @edit[:emss].length == 0
-          = _("No %{types} found") % {:types => ui_lookup(:tables => "ext_management_system")}
+          = _("No Providers found")
         - elsif @edit[:emss].length == 1
           = h(@edit[:emss][@edit[:new][:expression][:options][:ems_id]])
         - else
@@ -218,11 +218,30 @@
                 miqInitSelectPicker();
                 miqSelectPickerEvent('select_ems_alarm_mor', '#{url}', {beforeSend: true, complete: true})
           - else
-            = _("Choose a %{provider} first") % {:provider => ui_lookup(:table => "ext_management_system")}
+            = _("Choose a Provider first")
         - else
           = h(@alert.expression[:options][:ems_alarm_name])
   - when :mw_operator
     -# Skip this, handled by value_mw_garbage_collector
+  - when :value_mw_threshold
+    %label.control-label.col-md-2
+      = h(option[:description])
+    .col-md-8
+      - if @edit
+        = select_tag('select_mw_operator',
+          options_for_select(@edit[:operators], @edit[:new][:expression][:options][:mw_operator]),
+          :class => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('select_mw_operator', '#{url}', {beforeSend: true, complete: true})
+        = text_field_tag("value_mw_threshold",
+          @edit[:new][:expression][:options][:value_mw_threshold],
+          :maxlength         => ViewHelper::MAX_NAME_LEN,
+          :class             => "form-control",
+          "data-miq_observe" => observe_with_interval)
+      - else
+        = h(@alert.expression[:options][:mw_operator])
+        = h(@alert.expression[:options][:value_mw_threshold])
   - when :value_mw_garbage_collector
     %label.control-label.col-md-2
       = h(option[:description])
@@ -236,7 +255,7 @@
           miqSelectPickerEvent('select_mw_operator', '#{url}', {beforeSend: true, complete: true})
         = text_field_tag("value_mw_garbage_collector",
           @edit[:new][:expression][:options][:value_mw_garbage_collector],
-          :maxlength         => MAX_NAME_LEN,
+          :maxlength         => ViewHelper::MAX_NAME_LEN,
           :class             => "form-control",
           "data-miq_observe" => observe_with_interval)
       - else
@@ -250,7 +269,7 @@
       - if @edit
         = text_field_tag(option[:name],
           @edit[:new][:expression][:options][option[:name]],
-          :maxlength         => MAX_DESC_LEN,
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
           :class             => "form-control",
           "data-miq_observe" => observe_with_interval)
       - else

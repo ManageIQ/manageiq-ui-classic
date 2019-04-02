@@ -1,151 +1,103 @@
 describe GenericObjectController do
-  include_context "valid session"
+  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+  let(:zone) { FactoryBot.build(:zone) }
 
-  before do
-    stub_user(:features => :all)
-  end
-
-  describe "#create" do
-    let(:params) { {:name => "name", :description => "description"} }
-
-    it "creates a new generic object definition" do
-      expect(GenericObjectDefinition.first).to be_nil
-      post :create, params
-      expect(GenericObjectDefinition.first).to_not be_nil
-    end
-
-    it "renders a json message on success" do
-      post :create, params
-      expect(response.body).to eq({
-        :message => "Generic Object Definition created successfully"
-      }.to_json)
-    end
-  end
-
-  describe "#save" do
-    let(:params) { {:id => generic_object_definition.id, :name => "new name", :description => "new description"} }
-    let(:generic_object_definition) { GenericObjectDefinition.create!(:name => "name", :description => "description") }
-
+  describe "#show" do
+    render_views
     before do
-      post :save, params
-      generic_object_definition.reload
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryBot.create(:user, :features => "none")
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      get :show, :params => {:id => generic_obj.id}
     end
+    it { expect(response.status).to eq(200) }
 
-    it "adjusts the name" do
-      expect(generic_object_definition.name).to eq("new name")
-    end
-
-    it "adjusts the description" do
-      expect(generic_object_definition.description).to eq("new description")
-    end
-
-    it "renders a json message on success" do
-      expect(response.body).to eq({
-        :message => "Generic Object Definition saved successfully"
-      }.to_json)
-    end
-  end
-
-  describe "#delete" do
-    let(:params) { {:id => generic_object_definition.id} }
-    let(:generic_object_definition) { GenericObjectDefinition.create!(:name => "name", :description => "description") }
-
-    before do
-      post :delete, :params => params
-    end
-
-    it "deletes the generic object" do
-      expect(GenericObjectDefinition.count).to eq(0)
-    end
-
-    it "renders a json message" do
-      expect(response.body).to eq({
-        :message => "Generic Object Definition deleted"
-      }.to_json)
-    end
-  end
-
-  describe "#explorer" do
-    let(:tree_builder_generic_object) { double("TreeBuilderGenericObject") }
-
-    before do
-      bypass_rescue
-      allow(TreeBuilderGenericObject).to receive(:new).and_return(tree_builder_generic_object)
-      allow(tree_builder_generic_object).to receive(:nodes).and_return("nodes")
-
-      get :explorer
-    end
-
-    it "sets up the layout variable" do
-      expect(assigns[:layout]).to eq("generic_object")
-    end
-
-    it "sets up the accords variable" do
-      expect(assigns[:accords]).to eq(
-        [{
-          :name      => "generic_object_definition_accordion",
-          :title     => "Generic Objects",
-          :container => "generic_object_definition_accordion_accord"
-        }]
+    it 'displays Generic Object association in the nested display list' do
+      generic_obj_defn = FactoryBot.create(
+        :generic_object_definition,
+        :name       => "test_definition",
+        :properties => {
+          :attributes   => {
+            :flag       => "boolean",
+            :data_read  => "float",
+            :max_number => "integer",
+            :server     => "string",
+            :s_time     => "datetime"
+          },
+          :associations => {"cp" => "ManageIQ::Providers::CloudManager", "vms" => "Vm"},
+          :methods      => %w(some_method)
+        }
       )
-    end
+      generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      get :show, :params => { :display => "cp", :id => generic_obj.id }
+      expect(response.status).to eq(200)
 
-    it "sets up the trees variable" do
-      expect(assigns[:trees]).to eq("nodes")
-    end
-
-    it "sets the explorer variable to true" do
-      expect(assigns[:explorer]).to eq(true)
-    end
-
-    it "renders the application layout" do
-      expect(response).to render_template(:layout => "application")
+      get :show, :params => { :display => "vms", :id => generic_obj.id }
+      expect(response.status).to eq(200)
     end
   end
 
-  describe "#all_object_data" do
+  describe "#show_list" do
     before do
-      @generic_object_definition = GenericObjectDefinition.create!(:name => "name", :description => "description")
+      stub_user(:features => :all)
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      get :show_list
     end
-
-    it "returns all generic object definition ids, names, and descriptions in a json format" do
-      get :all_object_data
-      expect(response.body).to eq([{
-        :id          => @generic_object_definition.id,
-        :name        => "name",
-        :description => "description"
-      }].to_json)
-    end
+    it { expect(response.status).to eq(200) }
   end
 
-  describe "#object_data" do
-    let(:params) { {:id => @generic_object_definition.id} }
-
+  describe "#tags_edit" do
     before do
-      @generic_object_definition = GenericObjectDefinition.create!(:name => "name", :description => "description")
+      EvmSpecHelper.create_guid_miq_server_zone
+      user = FactoryBot.create(:user_with_group)
+      stub_user(:features => :all)
+      generic_obj_defn = FactoryBot.create(:generic_object_definition)
+      @gobj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
+      allow(@gobj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
+                                 :name   => "tag_1",
+                                 :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag,
+                                 :name   => "tag_2",
+                                 :parent => classification)
+      allow(Classification).to receive(:find_assigned_entries).with(@gobj).and_return([@tag1, @tag2])
+      session[:tag_db] = "GenericObject"
+      session[:tag_items] = "GenericObject"
+      session[:assigned_filters] = []
+      edit = { :key       => "GenericObject_edit_tags__#{@gobj.id}",
+               :tagging   => "GenericObject",
+               :tag_items => [@gobj.id],
+               :current   => {:assignments => []},
+               :new       => {:assignments => [@tag1.id, @tag2.id]}}
+      session[:edit] = edit
+      controller.instance_variable_set(:@settings, {})
+      allow(controller).to receive(:fetch_path)
     end
 
-    it "returns the name and description of the selected item in a json format" do
-      get :object_data, params
-      expect(response.body).to eq({
-        :id          => @generic_object_definition.id,
-        :name        => "name",
-        :description => "description"
-      }.to_json)
-    end
-  end
-
-  describe "#tree_data" do
-    let(:tree_builder_generic_object) { double("TreeBuilderGenericObject") }
-
-    before do
-      allow(TreeBuilderGenericObject).to receive(:new).and_return(tree_builder_generic_object)
-      allow(tree_builder_generic_object).to receive(:nodes).and_return("the tree data")
+    after(:each) do
+      expect(response.status).to eq(200)
     end
 
-    it "returns the tree data" do
-      get :tree_data
-      expect(response.body).to eq({:tree_data => "the tree data"}.to_json)
+    it "builds tagging screen" do
+      post :button, :params => { :pressed => "generic_object_tag", :format => :js, :id => @gobj.id }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    it "cancels tags edit" do
+      session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @gobj.id }
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+    end
+
+    it "save tags" do
+      session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @gobj.id, :data => get_tags_json([@tag1, @tag2]) }
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
     end
   end
 end

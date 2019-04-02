@@ -1,0 +1,50 @@
+#Report title
+title: Physical Racks
+
+#Menu name
+name: Physical Rack
+
+
+db: PhysicalRack
+
+
+# Columns to fetch from main table
+cols:
+- name
+
+
+include:
+
+
+include_for_find:
+  :ext_management_system: {}
+  :tags: {}
+
+
+col_order:
+- name
+
+col_formats:
+-
+- :model_name
+
+headers:
+- Name
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- name
+
+group: n
+
+
+graph:
+
+
+dims:

@@ -12,11 +12,13 @@
              :class     => "form-horizontal",
              :multipart => true,
              :method    => :post) do
-    - overwrite = @sb[:overwrite] ? true : false
     .form-group
       .col-md-8
-        = check_box_tag("overwrite", "1", overwrite)
+        = check_box_tag("overwrite", "1", @sb[:overwrite])
         = _('Overwrite existing reports?')
+      .col-md-8
+        = check_box_tag("preserve_owner", "1", @sb[:preserve_owner])
+        = _('Preserve owner?')
     .form-group
       .col-md-4
         = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
@@ -36,14 +38,20 @@
     %label.control-label.col-md-2
       = _('Available Custom Reports:')
     .col-md-8
-      %div{:style => "overflow: auto; width: 400px; border: 1px solid #999999;"}
-        = select_tag('choices_chosen',
-          options_for_select(@export_reports.sort),
-          :size              => 15,
-          :style             => "width:400px; min-width:375px; background-color:#fff; border: 0px;",
-          :multiple          => true,
-          :onchange          => "toggleConvertButtonToLink($('#export_button'),
-                                  'download_report', $('#choices_chosen').val() != null);")
-        :javascript
-          miqInitSelectPicker();
-          miqSelectPickerEvent("choices_chosen", "#{url}");
+      = select_tag('choices_chosen',
+        options_for_select(@export_reports.sort),
+        :size              => 15,
+        :style             => "width:400px; background-color:#fff; border: 1px solid #999999;",
+        :multiple          => true)
+
+      :javascript
+        miqInitSelectPicker();
+        miqSelectPickerEvent("choices_chosen", "#{url}");
+        $('#choices_chosen').on("change",
+          function() {
+            if ($(this).val()) {
+              $('#export_button').removeClass('disabled');
+            } else {
+              $('#export_button').addClass('disabled');
+            }
+          });

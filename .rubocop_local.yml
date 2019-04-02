@@ -1,0 +1,8 @@
+GlobalVars:
+  AllowedVariables:
+  # Loggers
+  - $audit_log
+  - $log
+  - $miq_ae_logger
+  - $policy_log
+  - $rails_log

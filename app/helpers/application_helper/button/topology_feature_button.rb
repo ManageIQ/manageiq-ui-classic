@@ -2,7 +2,8 @@ class ApplicationHelper::Button::TopologyFeatureButton < ApplicationHelper::Butt
   needs :@record
 
   def visible?
-    return false if @record.kind_of?(ManageIQ::Providers::InfraManager)
+    return false if [ManageIQ::Providers::InfraManager,
+                     ManageIQ::Providers::PhysicalInfraManager,].any? { |klass| @record.kind_of?(klass) }
     super
   end
 end

@@ -7,7 +7,7 @@ module TreeKids
 
     def kids_generators
       @kids_generators ||= superclass.try(:kids_generators).try(:dup) || {
-        Hash => [:x_get_tree_custom_kids, :options],
+        Hash => %i(x_get_tree_custom_kids options),
       }
     end
   end
@@ -22,7 +22,7 @@ module TreeKids
   #   :load_children
   # parents --- an Array of parent object ids, starting from tree root + 1, ending with parent's parent; only available when full_ids and not lazy
   def x_get_tree_kids(parent, count_only, options, parents)
-    generator = self.class.kids_generators.detect { |k, v| v if parent.kind_of? k }
+    generator = self.class.kids_generators.detect { |k, v| v if parent.kind_of?(k) }
     return nil unless generator
     method = generator[1][0]
     attributes = generator[1][1..-1].collect do |attribute_name|

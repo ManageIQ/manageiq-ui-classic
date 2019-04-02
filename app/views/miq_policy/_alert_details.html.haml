@@ -17,7 +17,7 @@
             .col-md-8
               = text_field_tag("description",
                 @edit[:new][:description],
-                :maxlength         => MAX_DESC_LEN,
+                :maxlength         => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
                 "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
               = javascript_tag(javascript_focus('description'))
@@ -80,7 +80,7 @@
 
         -# Expression driving event
         - if @edit
-          - unless @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing"
+          - unless display_driving_event?
             .form-group
               %label.control-label.col-md-2
                 = _("Driving Event")
@@ -93,7 +93,7 @@
                   miqInitSelectPicker();
                   miqSelectPickerEvent('exp_event', '#{url}', {beforeSend: true, complete: true})
         - else
-          - if @alert.expression.kind_of?(MiqExpression) || @alert.expression[:eval_method] == "nothing"
+          - if (@alert.expression.kind_of?(MiqExpression) || @alert.expression[:eval_method] == "nothing") && !%w(ContainerNode ContainerProject).include?(@alert.db)
             .form-group
               %label.control-label.col-md-2
                 = _("Driving Event")
@@ -101,13 +101,17 @@
                 %p.form-control-static
                   = h(@event)
         -# Repeat Time
-        .form-group
+        .form-group.notification-frequency
           %label.control-label.col-md-2
             = _("Notification Frequency")
+          - hide = false
           - if @edit
             .col-md-8
               - if @edit[:new][:expression][:eval_method] == "hourly_performance"
                 - repeat = @sb[:alert][:hourly_repeat_times]
+              - elsif @edit[:new][:expression][:eval_method] == "dwh_generic"
+                - repeat = @sb[:alert][:repeat_times_dwh]
+                - hide = true
               - else
                 - repeat = @sb[:alert][:repeat_times]
               = select_tag('repeat_time',
@@ -121,14 +125,17 @@
               %p.form-control-static
                 - if @alert.options[:notifications][:delay_next_evaluation].blank?
                   = _('10 Minutes')
+                - elsif @alert.options[:notifications][:delay_next_evaluation].zero?
+                  - hide = true
                 - else
                   = h(@sb[:alert][:repeat_times][@alert.options[:notifications][:delay_next_evaluation]])
-      %hr
+          %hr
+          - if hide
+            :javascript
+              $(".notification-frequency").hide();
       -# Expression
       - if @edit
         - if !@edit[:new][:expression][:eval_method]
-          %h3
-            = _('Expression (Choose an element of the expression to edit)')
           = render(:partial => 'layouts/exp_editor')
         - else
           - if @edit[:new][:expression][:eval_method] != "nothing"
@@ -272,7 +279,7 @@
                 %table
                   %tbody
                     - @alert_profiles.each do |ap|
-                      - id = "xx-#{@alert.db}_ap-#{to_cid(ap.id)}"
+                      - id = "xx-#{@alert.db}_ap-#{ap.id}"
                       %tr{:title => _("View this Alert Profile"),
                           :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=alert_profile")}
                         %td
@@ -291,7 +298,7 @@
                 %table.table.table-striped.table-bordered.table-hover
                   %tbody
                     - @alert.owning_miq_actions.each do |oa|
-                      - id = "a-#{to_cid(oa.id)}"
+                      - id = "a-#{oa.id}"
                       %tr{:title => _("View this Action"),
                         :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")}
                         %td.table-view-pf-select

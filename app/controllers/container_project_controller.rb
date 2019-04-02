@@ -1,5 +1,7 @@
 class ContainerProjectController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::DashboardViewMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -7,7 +9,8 @@ class ContainerProjectController < ApplicationController
   after_action :set_session_data
 
   def show_list
-    process_show_list(:where_clause => 'container_projects.deleted_on IS NULL')
+    @showtype = "main"
+    process_show_list(:named_scope => :active)
   end
 
   private
@@ -17,5 +20,18 @@ class ContainerProjectController < ApplicationController
   end
   helper_method :textual_group_list
 
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Projects")},
+        {:url   => controller_url, :title => _("Container Projects")},
+      ],
+    }
+  end
+
   menu_section :cnt
+
+  has_custom_buttons
 end

@@ -1,7 +1,7 @@
 -#
   Parameters:
     widget      MiqWidget object
-= link_to({:controller => "report", :action => "db_widget_remove", :id => @db.id || 'new', :widget => widget.id},
+= link_to({:controller => "report", :action => "db_widget_remove", :id => @dashboard.id || 'new', :widget => widget.id},
   "data-miq_sparkle_on" => true,
   :remote               => true,
   "data-method"         => :post,

@@ -1,6 +1,6 @@
 class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
   def blue?(object)
-    return false unless object.parent.present?
+    return false if object.parent.blank?
     object.parent.name == 'vm' &&
       object.parent.parent.present? &&
       object.parent.parent.kind_of?(Datacenter) ||
@@ -8,8 +8,8 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
   end
 
   def override(node, object, _pid, options)
-    node[:cfmeNoClick] = true
-    node[:checkable] = options[:checkable_checkboxes] if options.key?(:checkable_checkboxes)
+    node[:selectable] = false
+    node[:checkable] = @edit.present? || @assign_to.present?
     if [ExtManagementSystem, EmsCluster, Datacenter].any? { |klass| object.kind_of?(klass) }
       node[:hideCheckbox] = true
     end
@@ -19,13 +19,8 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       else
         node[:hideCheckbox] = true
       end
-      node[:select] = options.key?(:selected) && options[:selected].include?("EmsFolder_#{object[:id]}")
+      node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
     end
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:id_prefix => 'vat_')
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)

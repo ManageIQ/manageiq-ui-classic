@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::MiqWidgetsCenter < ApplicationHelper::Toolbar:
   button_group('widget_reloading', [
     button(
       :widget_refresh,
-      'fa fa-repeat fa-lg',
-      N_('Reload Widgets'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh Widgets'),
       nil),
   ])
   button_group('widget_vmdb', [

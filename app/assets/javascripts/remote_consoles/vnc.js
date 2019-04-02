@@ -23,7 +23,7 @@ $(function() {
     shared: true,
     view_only: false,
     onUpdateState: function(_, state, _, msg) {
-      if (['normal', 'loaded'].includes(state)) {
+      if (['normal', 'loaded'].indexOf(state) >= 0) {
         $('#connection-status').removeClass('label-danger label-warning').addClass('label-success');
         $('#connection-status').text(__('Connected'));
       } else if (state === 'disconnected') {
@@ -34,6 +34,9 @@ $(function() {
     },
   });
 
-  $('#ctrlaltdel').click(vnc.sendCtrlAltDel);
   vnc.connect(host, port, $('#remote-console').attr('data-secret'), $('#remote-console').attr('data-url'));
+
+  $('#ctrlaltdel').on('click', function() {
+    vnc.sendCtrlAltDel();
+  });
 });

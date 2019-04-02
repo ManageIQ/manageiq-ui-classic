@@ -2,6 +2,7 @@ module ContainerProjectHelper::TextualSummary
   #
   # Groups
   #
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i(name display_name creation_timestamp resource_version))
@@ -12,15 +13,13 @@ module ContainerProjectHelper::TextualSummary
       _("Relationships"),
       %i(
         ems container_routes container_services container_replicators container_groups
-        container_nodes container_images container_templates
+        container_nodes container_images container_templates custom_button_events
       )
     )
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualTags.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   def textual_group_quota
@@ -37,9 +36,9 @@ module ContainerProjectHelper::TextualSummary
       rows << [
         item.container_quota.name,
         item.resource,
-        item.quota_desired,
-        item.quota_enforced,
-        item.quota_observed,
+        item.quota_desired_display,
+        item.quota_enforced_display,
+        item.quota_observed_display,
       ]
     end
     rows

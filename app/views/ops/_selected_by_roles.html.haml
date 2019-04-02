@@ -22,7 +22,7 @@
         %i.pficon.pficon-server
       .col-md-8
         .form-group
-          %label.col-md-4.control-label= Dictionary.gettext('MiqServer', :type => :model, :notfound => :titleize)
+          %label.col-md-4.control-label= _('Server')
           .col-md-8
             = h("#{rec.miq_server.name} [#{rec.miq_server.id}]")
         .form-group

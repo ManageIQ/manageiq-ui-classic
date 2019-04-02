@@ -2,6 +2,7 @@ module SecurityGroupHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
+  include TextualMixins::TextualCustomButtonEvents
   #
   # Groups
   #
@@ -13,7 +14,10 @@ module SecurityGroupHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports)
+      %i(
+        parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports network_router
+        cloud_subnet custom_button_events
+      )
     )
   end
 
@@ -25,8 +29,7 @@ module SecurityGroupHelper::TextualSummary
         rule.network_protocol,
         rule.host_protocol,
         rule.direction,
-        rule.port,
-        rule.end_port,
+        port_range_helper(rule),
         (rule.source_ip_range || rule.source_security_group.try(:name) || "<None>")
       ]
     end.sort
@@ -34,7 +37,7 @@ module SecurityGroupHelper::TextualSummary
     TextualTable.new(
       _("Firewall Rules"),
       items,
-      [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port"), _("End Port"), _("Source")]
+      [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port Range"), _("Source")]
     )
   end
 
@@ -46,16 +49,15 @@ module SecurityGroupHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    @record.ext_management_system.try(:parent_manager)
+    textual_link(@record.ext_management_system.try(:parent_manager), :label => _("Parent Cloud Provider"))
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
@@ -70,5 +72,25 @@ module SecurityGroupHelper::TextualSummary
 
   def textual_network_ports
     @record.network_ports
+  end
+
+  def textual_network_router
+    @record.network_router
+  end
+
+  def textual_cloud_subnet
+    @record.cloud_subnet
+  end
+
+  def port_range_helper(rule)
+    if rule.host_protocol.to_s.upcase.include?("ICMP")
+      _("N/A")
+    elsif rule.port.nil? && rule.end_port.nil?
+      _("All")
+    elsif rule.port == rule.end_port
+      rule.port.to_s
+    else
+      rule.port_range.to_s(:dash)
+    end
   end
 end

@@ -10,7 +10,7 @@
           %td Examples (read only)
         - @folders.each do |f|
           %tr{:title => _("View '%{name}' Folder") % {:name => f.name},
-            :onclick => "miqTreeActivateNode('customization_templates_tree', 'xx-xx-#{to_cid(f.id)}');"}
+            :onclick => "miqTreeActivateNode('customization_templates_tree', 'xx-xx-#{f.id}');"}
             %td.table-view-pf-select
               %i.pficon.pficon-folder-close
             %td

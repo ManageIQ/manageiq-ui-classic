@@ -1,0 +1,35 @@
+import fetchMock from 'fetch-mock';
+import { asyncValidator } from '../../components/catalog-form/catalog-form.schema';
+
+describe('catalog form - promise validator', () => {
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
+
+  it('returns error message when name is taken', () => {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=a1', {
+      resources: [
+        { name: 'a1' },
+      ],
+    });
+
+    return asyncValidator('a1').then(data => expect(data).toEqual(__('Name has already been taken')));
+  });
+
+  it('returns error message when name is undefined', () => {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=undefined', {
+      resources: [],
+    });
+
+    return asyncValidator(undefined).then(data => expect(data).toEqual(__("Name can't be blank")));
+  });
+
+  it('returns nothing when passes', () => {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=a1', {
+      resources: [],
+    });
+
+    return asyncValidator('a1').then(data => expect(data).toEqual(undefined));
+  });
+});

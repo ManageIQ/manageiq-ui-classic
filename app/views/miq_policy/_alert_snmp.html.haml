@@ -19,17 +19,17 @@
             = title_for_host
           .col-md-8
             = text_field_tag("host_1", @edit[:new][:snmp][:host][0],
-              :maxlength         => MAX_DESC_LEN,
+              :maxlength         => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
             %br
             = text_field_tag("host_2", @edit[:new][:snmp][:host][1],
-              :maxlength => MAX_DESC_LEN,
+              :maxlength => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
             %br
             = text_field_tag("host_3", @edit[:new][:snmp][:host][2],
-              :maxlength => MAX_DESC_LEN,
+              :maxlength => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
               "data-miq_observe" => {:interval => '.5',  :url => url}.to_json)
         .form-group
@@ -48,7 +48,7 @@
             = trap_text
           .col-md-8
             = text_field_tag("trap_id", @edit[:new][:snmp][:trap_id],
-              :maxlength         => MAX_DESC_LEN,
+              :maxlength         => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
   - if @edit[:new][:send_snmp]
@@ -64,7 +64,7 @@
           %tr
             %td
               = text_field_tag("oid__#{i + 1}", @edit[:new][:snmp][:variables][i][:oid],
-                :maxlength         => MAX_DESC_LEN,
+                :maxlength         => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
                 "data-miq_observe" => observe_with_interval)
             %td
@@ -83,7 +83,7 @@
             %td
               = text_field_tag("value__#{i + 1}", @edit[:new][:snmp][:variables][i][:value],
                 :disabled  => val_disabled,
-                :maxlength => MAX_DESC_LEN,
+                :maxlength => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
                 "data-miq_observe" => observe_with_interval)
   %hr

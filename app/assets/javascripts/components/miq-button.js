@@ -40,6 +40,6 @@ ManageIQ.angular.app.component('miqButton', {
     'ng-attr-title="{{vm.title}}"',
     'ng-attr-alt="{{vm.title}}">',
     '{{vm.name}}',
-    '</button>'
-  ].join("\n")
+    '</button>',
+  ].join('\n'),
 });

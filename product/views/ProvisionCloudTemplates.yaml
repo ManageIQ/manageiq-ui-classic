@@ -1,0 +1,104 @@
+#
+# This is an MIQ Report configuration file
+#   Single value parameters are specified as:
+#     single_value_parm: value
+#   Multiple value parameters are specified as:
+#     multi_value_parm:
+#       - value 1
+#       - value 2
+#
+
+# Report title
+title: Images
+
+# Menu name
+name: Images
+
+# Main DB table report is based on
+db: TemplateCloud
+
+# Columns to fetch from the main table
+cols:
+- name
+- allocated_disk_storage
+- display_type
+- display_operating_system
+- display_platform
+- cpu_total_cores
+- display_memory
+- v_total_snapshots
+- display_tenant
+- display_deprecated
+
+
+# Included tables (joined, has_one, has_many) and columns
+include:
+  ext_management_system:
+    columns:
+    - name
+
+
+# Included tables and columns for query performance
+include_for_find:
+  :compliances: {}
+  :operating_system: {}
+  :hardware: {}
+  :tags: {}
+
+# Order of columns (from all tables)
+col_order:
+- name
+- display_type
+- display_operating_system
+- display_platform
+- cpu_total_cores
+- display_memory
+- allocated_disk_storage
+- display_deprecated
+- ext_management_system.name
+- v_total_snapshots
+- display_tenant
+
+# Column titles, in order
+headers:
+- Name
+- Type
+- Operating System
+- Platform
+- CPUs
+- Memory
+- Disk Size
+- Deprecated
+- Provider
+- Snapshot
+- Tenant
+
+# Condition(s) string for the SQL query
+conditions:
+
+# Order string for the SQL query
+order: Ascending
+
+# Columns to sort the report on, in order
+sortby:
+- name
+
+# Group rows (y=yes,n=no,c=count)
+group: n
+
+# Graph type
+#   Bar
+#   Column
+#   ColumnThreed
+#   ParallelThreedColumn
+#   Pie
+#   PieThreed
+#   StackedBar
+#   StackedColumn
+#   StackedThreedColumn
+
+graph:
+
+# Dimensions of graph (1 or 2)
+#   Note: specifying 2 for a single dimension graph may not return expected results
+dims:

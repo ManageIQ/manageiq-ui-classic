@@ -1,29 +1,20 @@
 class TreeBuilderReportRoles < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :leaf     => 'Roles',
-      :full_ids => true
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
-    user = User.current_user
-    title = if user.super_admin_user?
-              _("All EVM Grouops")
-            else
-              _("My EVM Groups")
-            end
+    text = if User.current_user.super_admin_user?
+             _("All EVM Groups")
+           else
+             _("My EVM Groups")
+           end
     {
-      :title   => title,
-      :tooltip => title,
-      :icon    => 'product product-group'
+      :text    => text,
+      :tooltip => text,
+      :icon    => 'ff ff-group'
     }
   end
 
@@ -31,6 +22,6 @@ class TreeBuilderReportRoles < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     user  = User.current_user
     roles = user.super_admin_user? ? MiqGroup.non_tenant_groups_in_my_region : [user.current_group]
-    count_only_or_objects(count_only, roles.sort_by { |o| o.name.downcase }, 'name')
+    count_only_or_objects(count_only, roles, 'name')
   end
 end

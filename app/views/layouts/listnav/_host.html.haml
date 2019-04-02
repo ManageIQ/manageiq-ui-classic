@@ -2,14 +2,7 @@
   - host_title = title_for_host_record(@record)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
-      -# Calculate the quadicon div height based on # of lines of text
-      - if @record.product_name != "" && @record.service_pack != ""
-        - height = 100
-      - elsif @record.product_name != "" || @record.service_pack != ""
-        - height = 90
-      - else
-        - height = 78
-      = render_quadicon(@record, :mode => :icon, :size => 72, :height => height, :typ => :listnav)
+      = render :partial => 'shared/quadicon', :locals => {:record => @record}
 
       %div{:style => "text-align:center"}
         - unless @record.vmm_product.nil?
@@ -27,7 +20,8 @@
           = link_to(_('Summary'),
             {:action => 'show', :id => @record, :display => 'main'},
             :title => _("Show Summary"))
-        = li_link(:if => !(@devices.nil? || @devices.empty?),
+        - devices, os_info, vmm_info = host_info
+        = li_link(:if => !(devices.nil? || devices.empty?),
           :text       => _('Devices'),
           :record_id  => @record.id,
           :display    => 'devices',
@@ -42,12 +36,12 @@
           :record_id  => @record.id,
           :display    => 'storage_adapters',
           :title      => _("Show %{host} storage adapters") % {:host => host_title})
-        = li_link(:if => !(@osinfo.nil? || @osinfo.empty?),
+        = li_link(:if => !(os_info.nil? || os_info.empty?),
           :text       => _('OS Information'),
           :record_id  => @record.id,
           :display    => 'os_info',
           :title      => _("Show %{host} OS information") % {:host => host_title})
-        = li_link(:if => !(@vmminfo.nil? || @vmminfo.empty?),
+        = li_link(:if => !(vmm_info.nil? || vmm_info.empty?),
           :text       => _('VMM Information'),
           :record_id  => @record.id,
           :display    => 'hv_info',
@@ -72,9 +66,9 @@
       %ul.nav.nav-pills.nav-stacked
         - if role_allows?(:feature => "ems_infra_show") && !@record.ext_management_system.nil?
           %li
-            = link_to("#{ui_lookup(:table => "ext_management_systems")}: #{@record.ext_management_system.name}",
+            = link_to(_("Infrastructure Provider: %{name}") % {:name => @record.ext_management_system.name},
               ems_infra_path(@record.ext_management_system),
-              :title => _("Show this parent %{provider} for this %{host}") % {:host => host_title, :provider => ui_lookup(:table => "ems_infra")})
+              :title => _("Show parent Infrastructure Provider for this %{host}") % {:host => host_title})
 
         - if role_allows?(:feature => "ems_cluster_show") && !@record.ems_cluster.nil?
           - cluster_title = title_for_cluster
@@ -82,6 +76,9 @@
             = link_to("#{cluster_title}: #{@record.ems_cluster.name}",
               {:controller => "ems_cluster", :action => 'show', :id => @record.ems_cluster.id.to_s},
               :title => _("Show parent %{cluster} for this %{host}") % {:host => host_title, :cluster => cluster_title})
+
+        - if role_allows?(:feature => "ems_cluster_show") && @record.ems_cluster.nil?
+          = li_link(:if => false, :text => "#{title_for_cluster}: #{_('None')}")
 
         - if role_allows?(:feature => "storage_show_list")
           = li_link(:count => @record.number_of(:storages),
@@ -117,6 +114,16 @@
             :action        => 'drift_history',
             :record_id     => @record.id,
             :title         => _("Show %{host} drift history") % {:host => host_title})
+
+        - if role_allows?(:feature => "physical_server_show") && !@record.physical_server.nil?
+          %li
+            - physical_server_show = {:controller => "physical_server", :action => 'show', :id => @record.physical_server.id}
+            = link_to(_("Physical Server: %{name}") % {:name => @record.physical_server.name},
+              physical_server_show,
+              :title => _("Show Physical Server"))
+
+        - if role_allows?(:feature => "physical_server_show") && @record.physical_server.nil?
+          = li_link(:if => false, :text => _("Physical Server: None"))
 
     = miq_accordion_panel(_("Security"), false, "host_sec") do
       %ul.nav.nav-pills.nav-stacked

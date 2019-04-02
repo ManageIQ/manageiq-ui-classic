@@ -4,18 +4,13 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:leaf     => "ManageIQ::Providers::ConfigurationManager"}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Configuration Manager Providers"),
+      :text    => t = _("All Configuration Manager Providers"),
       :tooltip => t
     }
   end
@@ -47,8 +42,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
   def fetch_unassigned_configuration_profile_objects(count_only, configuration_manager_id)
     unprovisioned_configured_systems = ConfiguredSystem.where(:configuration_profile_id => nil,
                                                               :manager_id               => configuration_manager_id)
-    unprovisioned_configured_systems_filtered = Rbac.filtered(unprovisioned_configured_systems,
-                                                              :match_via_descendants => ConfiguredSystem)
+    unprovisioned_configured_systems_filtered = Rbac.filtered(unprovisioned_configured_systems)
     if unprovisioned_configured_systems_filtered.count > 0
       unassigned_id = "#{configuration_manager_id}-unassigned"
       unassigned_configuration_profile =
@@ -59,10 +53,9 @@ class TreeBuilderConfigurationManager < TreeBuilder
   end
 
   def x_get_tree_cpf_kids(object, count_only)
-    count_only_or_objects_filtered(count_only,
-                                   ConfiguredSystem.where(:configuration_profile_id => object[:id],
-                                                          :manager_id               => object[:manager_id]),
-                                   "hostname", :match_via_descendants => ConfiguredSystem)
+    configured_systems = ConfiguredSystem.where(:configuration_profile_id => object[:id],
+                                                :manager_id               => object[:manager_id])
+    count_only_or_objects_filtered(count_only, configured_systems, "hostname")
   end
 
   def x_get_tree_custom_kids(object_hash, count_only, _options)

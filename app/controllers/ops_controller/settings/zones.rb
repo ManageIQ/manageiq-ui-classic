@@ -5,16 +5,19 @@ module OpsController::Settings::Zones
     case params[:button]
     when "cancel"
       @edit = nil
-      @zone = Zone.find_by_id(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
-      add_flash((@zone && @zone.id) ? _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:table => "miq_zone"), :name => @zone.name} :
-          _("Add of new %{table} was cancelled by the user") % {:table => ui_lookup(:table => "miq_zone")})
+      @zone = Zone.find(session[:edit][:zone_id]) if session[:edit] && session[:edit][:zone_id]
+      if @zone.try(:id)
+        add_flash(_("Edit of Zone \"%{name}\" was cancelled by the user") % {:name => @zone.name})
+      else
+        add_flash(_("Add of new Zone was cancelled by the user"))
+      end
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
-      @zone = @edit[:zone_id] ? Zone.find_by_id(@edit[:zone_id]) : Zone.new
+      @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
       if @edit[:new][:name] == ""
         add_flash(_("Zone name is required"), :error)
       end
@@ -25,18 +28,20 @@ module OpsController::Settings::Zones
         javascript_flash(:spinner_off => true)
         return
       end
-      # zone = @zone.id.blank? ? Zone.new : Zone.find(@zone.id)  # Get new or existing record
+
       zone_set_record_vars(@zone)
       if valid_record?(@zone) && @zone.save
+        zone_save_ntp_server_settings(@zone)
         AuditEvent.success(build_created_audit(@zone, @edit))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "Zone"), :name => @edit[:new][:name]})
+        if params[:button] == "save"
+          add_flash(_("Zone \"%{name}\" was saved") % {:name => @edit[:new][:name]})
+        else
+          add_flash(_("Zone \"%{name}\" was added") % {:name => @edit[:new][:name]})
+        end
         @edit = nil
-        self.x_node = params[:button] == "save" ?
-              "z-#{@zone.id}" : "xx-z"
+        self.x_node = params[:button] == "save" ? "z-#{@zone.id}" : "xx-z"
         get_node_info(x_node)
-        replace_right_cell(:nodetype => "root", :replace_trees => [:settings, :diagnostics])
+        replace_right_cell(:nodetype => "root", :replace_trees => %i(settings diagnostics))
       else
         @in_a_form = true
         @edit[:errors].each { |msg| add_flash(msg, :error) }
@@ -67,11 +72,11 @@ module OpsController::Settings::Zones
       self.x_node = "z-#{zone.id}"
       get_node_info(x_node)
     else
-      add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => ui_lookup(:model => "Zone"), :name => zonename})
+      add_flash(_("Zone \"%{name}\": Delete successful") % {:name => zonename})
       @sb[:active_tab] = "settings_list"
       self.x_node = "xx-z"
       get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node, :replace_trees => [:settings, :diagnostics])
+      replace_right_cell(:nodetype => x_node, :replace_trees => %i(settings diagnostics))
     end
   end
 
@@ -82,8 +87,10 @@ module OpsController::Settings::Zones
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace(@refresh_div, :partial => @refresh_partial,
-                                 :locals  => {:type => "zones", :action_url => 'zone_field_changed'}) if @refresh_div
+      if @refresh_div
+        page.replace(@refresh_div, :partial => @refresh_partial,
+                                   :locals  => {:type => "zones", :action_url => 'zone_field_changed'})
+      end
 
       # checking to see if password/verify pwd fields either both have value or are both blank
       password_fields_changed = !(@edit[:new][:password].blank? ^ @edit[:new][:verify].blank?)
@@ -106,20 +113,24 @@ module OpsController::Settings::Zones
     zone.settings ||= {}
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
-    if @edit[:new][:ntp][:server]
-      temp = []
-      @edit[:new][:ntp][:server].each { |svr| temp.push(svr) unless svr.blank? }
-      zone.settings[:ntp] ||= {}
-      zone.settings[:ntp][:server] = temp
-    end
+
     zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, :save => (mode != :validate))
+  end
+
+  private def zone_save_ntp_server_settings(zone)
+    if (new_servers = new_ntp_servers).present?
+      zone.add_settings_for_resource(:ntp => {:server => new_servers})
+    else
+      zone.remove_settings_path_for_resource(:ntp)
+    end
+    zone.ntp_reload_queue
   end
 
   # Validate the zone record fields
   def valid_record?(zone)
     valid = true
     @edit[:errors] = []
-    if !zone.authentication_password.blank? && zone.authentication_userid.blank?
+    if zone.authentication_password.present? && zone.authentication_userid.blank?
       @edit[:errors].push(_("Username must be entered if Password is entered"))
       valid = false
     end
@@ -132,7 +143,7 @@ module OpsController::Settings::Zones
 
   # Get variables from zone edit form
   def zone_get_form_vars
-    @zone = @edit[:zone_id] ? Zone.find_by_id(@edit[:zone_id]) : Zone.new
+    @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:description] = params[:description] if params[:description]
     @edit[:new][:proxy_server_ip] = params[:proxy_server_ip] if params[:proxy_server_ip]
@@ -141,14 +152,12 @@ module OpsController::Settings::Zones
     @edit[:new][:password] = params[:password] if params[:password]
     @edit[:new][:verify] = params[:verify] if params[:verify]
 
-    @edit[:new][:ntp][:server][0] = params[:ntp_server_1] if params[:ntp_server_1]
-    @edit[:new][:ntp][:server][1] = params[:ntp_server_2] if params[:ntp_server_2]
-    @edit[:new][:ntp][:server][2] = params[:ntp_server_3] if params[:ntp_server_3]
+    settings_get_form_vars_sync_ntp
     set_verify_status
   end
 
   def zone_build_edit_screen
-    @zone = params[:id] ? Zone.find(params[:id]) : Zone.new           # Get existing or new record
+    @zone = params[:id] ? Zone.find(params[:id]) : Zone.new # Get existing or new record
     zone_set_form_vars
     @in_a_form = true
     session[:changed] = false
@@ -170,10 +179,7 @@ module OpsController::Settings::Zones
     @edit[:new][:userid] = @zone.authentication_userid(:windows_domain)
     @edit[:new][:password] = @zone.authentication_password(:windows_domain)
     @edit[:new][:verify] = @zone.authentication_password(:windows_domain)
-    @edit[:new][:ntp] = @zone.settings[:ntp] if !@zone.settings.nil? && !@zone.settings[:ntp].nil?
-
-    @edit[:new][:ntp] ||= {}
-    @edit[:new][:ntp][:server] ||= []
+    @edit[:new][:ntp] = @zone.settings_for_resource.ntp.to_h
 
     session[:verify_ems_status] = nil
     set_verify_status

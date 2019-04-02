@@ -18,7 +18,7 @@ describe('eventNotifications', function() {
   });
 
   it('should add to the notifications list and toast notifications when an event is added', function() {
-    expect(testService.state().groups.length).toBe(2);
+    expect(testService.state().groups.length).toBe(1);
 
     testService.add(testService.EVENT_NOTIFICATION, testService.INFO, "test message", {}, 1);
     expect(testService.state().groups[0].notifications.length).toBe(1);

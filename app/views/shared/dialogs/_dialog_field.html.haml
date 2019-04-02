@@ -23,7 +23,14 @@
                               :auto_refreshable_field_indicies => auto_refreshable_field_indicies,
                               :trigger                         => field.trigger_auto_refresh,
                               :current_index                   => current_index}
-    - locals = {:edit => edit, :field => field, :url => url, :wf => wf, :auto_refresh_options => auto_refresh_options}
+    -# Don't show refresh buttons on Requests page
+    - show_refresh_button = field.show_refresh_button? && !controller.kind_of?(MiqRequestController)
+    - locals = {:edit                 => edit,
+                :field                => field,
+                :url                  => url,
+                :wf                   => wf,
+                :auto_refresh_options => auto_refresh_options,
+                :show_refresh_button  => show_refresh_button}
     - case field.type
     - when 'DialogFieldTextBox'
       = render(:partial => "shared/dialogs/dialog_field_text_box", :locals => locals)
@@ -48,18 +55,16 @@
 
     - when 'DialogFieldTagControl'
       - if edit
-        - multiple = field.single_value? ? {} : {:multiple => true}
         = select_tag(field.name,
                      options_for_select(dialog_dropdown_select_values(field), wf.value(field.name)),
-                     drop_down_options(field, url).merge(multiple))
-
+                     drop_down_options(field, url))
         :javascript
           dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}', undefined, '#{url}', JSON.parse('#{j(auto_refresh_options.to_json)}'));
 
       - else
-        - value = wf.value(field.name) || ''
-        - classification_ids = value.split(',')
-        = h(Classification.where(:id => classification_ids).collect(&:description).join(', '))
+        - value = wf.value(field.name) || '' # it returns in format for example Clasification::id
+        - _, classification_id = value.split('::')
+        = h(Classification.find(classification_id).description)
 
     :javascript
       dialogFieldRefresh.setVisible($('#field_#{field.id}_tr'), #{field.visible});

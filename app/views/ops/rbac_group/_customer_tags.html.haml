@@ -1,5 +1,30 @@
-%br
-= _("This user is limited to items with the selected tags.")
-%br
-%br
-= render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
+#customer_tags_div
+  - if @edit
+    - rec_id = @edit && @edit[:group_id] ? @edit[:group_id] : "new"
+    - url = url_for(:action => 'rbac_group_field_changed', :id => rec_id)
+    %br
+    .form-horizontal
+      .form-group
+        %label.col-md-2.control-label
+          = _("This user is limited to ")
+        .col-md-8
+          - if @edit
+            = select_tag('use_filter_expression',
+                      options_for_select([[_("Specific Tags"), false],
+                                          [_("Tags Based On Expression"), true]],
+                      @edit[:new][:use_filter_expression]),
+                      :class    => "selectpicker")
+            :javascript
+               miqInitSelectPicker();
+               miqSelectPickerEvent('use_filter_expression', "#{url}")
+    - if @edit[:new][:use_filter_expression]
+      = render(:partial => "layouts/group_filter_expression")
+    - else
+      = render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
+  - elsif @use_filter_expression
+    = render(:partial => "layouts/group_filter_expression")
+  - else
+    = _("This user is limited to items with the selected tags.")
+    %br
+    %br
+    = render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})

@@ -55,14 +55,16 @@
     %hr
     %h3
       = _("Export")
-    -# title = @sb[:dbtype] == "pp" ? "Profiles" : "Policies"
     - case @sb[:dbtype]
     - when "pp"
-      - title = "Profiles"
+      - available_title = _('Available Profiles:')
+      - export_title = _('Export Selected Profiles')
     - when "p"
-      - title = "Policies"
+      - available_title = _('Available Policies:')
+      - export_title = _('Export Selected Policies')
     - when "al"
-      - title = "Alerts"
+      - available_title = _('Available Alerts:')
+      - export_title = _('Export Selected Alerts')
 
     .form-horizontal
       .form-group
@@ -77,7 +79,7 @@
             miqSelectPickerEvent('dbtype', '#{url}')
       .form-group
         %label.col-md-2.control-label
-          = _("Available %{title}:") % {:title => title}
+          = available_title
         .col-md-8
           %div{:style => "overflow: auto; width: 400px; border: 1px solid #999999;"}
             = select_tag('choices_chosen[]',
@@ -90,7 +92,6 @@
       %tr
         %td{:align => "right"}
           #buttons
-            - t = _("Export Selected %{title}") % {:title => title}
             = link_to(_('Export'),
               {:action => "export", :button => "export"},
               :class                 => "btn btn-primary export-policies disabled",
@@ -100,7 +101,7 @@
               "data-submit"          => "profile_export_div",
               :remote                => true,
               "data-method"          => :post,
-              :title                 => t)
+              :title                 => export_title)
 :javascript
   $('.selected-policies').change(function() {
     if($(this).val()) {

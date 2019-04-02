@@ -3,7 +3,12 @@ shared_examples_for 'a generic feature button' do
 
   describe '#visible?' do
     subject { button.visible? }
-    before { allow(record).to receive("supports_#{feature}?".to_sym).and_return(supports_feature) }
+    before do
+      allow(record).to receive("respond_to?").with("supports_#{feature}?").and_return(true)
+      # HACK: to mock Array.wrap method for Double
+      allow(record).to receive("respond_to?").with(:to_ary).and_return(false)
+      allow(record).to receive("supports?").with(feature.to_sym).and_return(supports_feature)
+    end
 
     context "when record supports #{feature}" do
       let(:supports_feature) { true }

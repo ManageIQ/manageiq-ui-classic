@@ -1,6 +1,6 @@
 describe ContainerImageRegistryController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -12,13 +12,13 @@ describe ContainerImageRegistryController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
+    ems = FactoryBot.create(:ems_kubernetes)
     container_image_registry =
       ContainerImageRegistry.create(:ext_management_system => ems, :name => "Test Image Registry")
     get :show, :params => { :id => container_image_registry.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Image Registries",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Image Registries",
                                           :url  => "/container_image_registry/show_list?page=&refresh=y"},
                                          {:name => "Test Image Registry (Summary)",
                                           :url  => "/container_image_registry/show/#{container_image_registry.id}"}])
@@ -27,11 +27,11 @@ describe ContainerImageRegistryController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @image_registry = FactoryGirl.create(:container_image_registry)
+      login_as FactoryBot.create(:user)
+      @image_registry = FactoryBot.create(:container_image_registry)
     end
 
-    subject { get :show, :id => @image_registry.id }
+    subject { get :show, :params => { :id => @image_registry.id } }
 
     context "render" do
       render_views

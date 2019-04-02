@@ -1,12 +1,12 @@
 describe ApplicationHelper::Button::HostPerformance do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:vm) }
+  let(:record) { FactoryBot.create(:vm) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
     subject { button[:title] }
     before { allow(record).to receive(:has_perf_data?).and_return(has_perf_data) }
-    before(:each) { button.calculate_properties }
+    before { button.calculate_properties }
 
     context 'and record has performance data' do
       let(:has_perf_data) { true }

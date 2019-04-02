@@ -1,5 +1,6 @@
 class ContainerGroupController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -7,7 +8,7 @@ class ContainerGroupController < ApplicationController
   after_action :set_session_data
 
   def show_list
-    process_show_list(:where_clause => 'container_groups.deleted_on IS NULL')
+    process_show_list(:named_scope => :active)
   end
 
   private
@@ -15,14 +16,27 @@ class ContainerGroupController < ApplicationController
   def textual_group_list
     [
       %i(properties container_labels container_node_selectors volumes),
-      %i(relationships conditions smart_management container_statuses_summary)
+      %i(relationships conditions smart_management)
     ]
   end
   helper_method :textual_group_list
 
   def display_name
-    "Pods"
+    _("Pods")
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Containers")},
+        {:title => _("Pods")},
+        {:url   => controller_url, :title => _("Container Pods")},
+      ],
+    }
   end
 
   menu_section :cnt
+
+  has_custom_buttons
 end

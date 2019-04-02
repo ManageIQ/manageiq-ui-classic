@@ -1,5 +1,7 @@
 module EmsCloudHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualCustomButtonEvents
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -7,7 +9,7 @@ module EmsCloudHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+      %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
     )
   end
 
@@ -16,13 +18,13 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i(
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images orchestration_stacks storage_managers
+        security_groups instances images cloud_volumes orchestration_stacks storage_managers custom_button_events
       )
     )
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status refresh_date))
   end
 
   def textual_group_smart_management
@@ -38,10 +40,9 @@ module EmsCloudHelper::TextualSummary
   #
   # Items
   #
-  def textual_provider_region
-    return nil if @record.provider_region.nil?
-    label_val = @record.type.include?("Google") ? _("Preferred Region") : _("Region")
-    {:label => label_val, :value => @record.description}
+  def textual_description
+    return nil if @record.try(:description).blank?
+    {:label => _("Description"), :value => @record.description}
   end
 
   def textual_region
@@ -66,7 +67,7 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_type
-    @record.emstype_description
+    {:label => _('Type'), :value => @record.emstype_description}
   end
 
   def textual_port
@@ -78,23 +79,31 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = ems_cloud_path(@record.id, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end
 
   def textual_images
-    label = ui_lookup(:tables => "template_cloud")
     num = @record.number_of(:miq_templates)
-    h = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "miq_template_show_list")
+    h = {:label => _('Images'), :icon => "pficon pficon-virtual-machine", :value => num}
+    if num.positive? && role_allows?(:feature => "miq_template_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'images')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Images")
+    end
+    h
+  end
+
+  def textual_cloud_volumes
+    num = @record.number_of(:cloud_volumes)
+    h = {:label => _('Cloud Volumes'), :icon => "pficon pficon-volume", :value => num}
+    if num.positive? && role_allows?(:feature => "cloud_volume_show_list")
+      h[:link] = ems_cloud_path(@record.id, :display => 'cloud_volumes')
+      h[:title] = _("Show Cloud Volumes")
     end
     h
   end
@@ -108,49 +117,43 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_storage_managers
-    label = _("Storage Managers")
     num   = @record.try(:storage_managers) ? @record.number_of(:storage_managers) : 0
-    h     = {:label => label, :icon => "fa fa-database", :value => num}
-    if num > 0 && role_allows?(:feature => "ems_storage_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
+    h     = {:label => _('Storage Managers'), :icon => "fa fa-database", :value => num}
+    if num.positive? && role_allows?(:feature => "ems_storage_show_list")
+      h[:title] = _("Show all Storage Managers")
       h[:link] = ems_cloud_path(@record.id, :display => 'storage_managers')
     end
     h
   end
 
   def textual_availability_zones
-    @record.availability_zones
+    textual_link(@record.availability_zones, :label => _('Availability Zones'))
   end
 
   def textual_host_aggregates
-    @record.host_aggregates
+    textual_link(@record.host_aggregates, :label => _('Host Aggregates'))
   end
 
   def textual_cloud_tenants
-    @record.cloud_tenants
+    textual_link(@record.cloud_tenants, :label => _('Cloud Tenants'))
   end
 
   def textual_orchestration_stacks
-    @record.orchestration_stacks
+    textual_link(@record.orchestration_stacks, :label => _('Orchestration Stacks'))
   end
 
   def textual_flavors
-    @record.flavors
+    textual_link(@record.flavors, :label => _('Flavors'))
   end
 
   def textual_security_groups
-    label = ui_lookup(:tables => "security_group")
     num = @record.number_of(:security_groups)
-    h = {:label => label, :icon => "pficon pficon-cloud-security", :value => num}
-    if num > 0 && role_allows?(:feature => "security_group_show_list")
+    h = {:label => _('Security Groups'), :icon => "pficon pficon-cloud-security", :value => num}
+    if num.positive? && role_allows?(:feature => "security_group_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'security_groups')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Security Groups")
     end
     h
-  end
-
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
 
   def textual_topology

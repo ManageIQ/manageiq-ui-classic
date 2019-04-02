@@ -86,6 +86,10 @@
           "url_parms": "main_div"
         }
       ]
+    },
+    {
+      "id":"view_middleware",
+      "url":""
     }
   ],
   null

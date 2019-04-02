@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
   button_group('ems_storage_vmdb', [
                  button(
                    :refresh_server_summary,
-                   'fa fa-repeat fa-lg',
-                   N_('Reload Current Display'),
+                   'fa fa-refresh fa-lg',
+                   N_('Refresh this page'),
                    nil),
                  select(
                    :ems_storage_vmdb_choice,
@@ -21,7 +21,7 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                      button(
                        :ems_storage_delete,
                        'pficon pficon-delete fa-lg',
-                       t = N_('Remove this Storage Manager'),
+                       t = N_('Remove this Storage Manager from Inventory'),
                        t,
                        :url_parms => "&refresh=y",
                        :confirm   => N_("Warning: This Storage Manager and ALL of its components will be permanently removed!")),
@@ -51,13 +51,13 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
   button_group('ems_storage_monitoring', [
                  select(
                    :ems_storage_monitoring_choice,
-                   'product product-monitoring fa-lg',
+                   'ff ff-monitoring fa-lg',
                    t = N_('Monitoring'),
                    t,
                    :items => [
                      button(
                        :ems_storage_timeline,
-                       'product product-timeline fa-lg',
+                       'ff ff-timeline fa-lg',
                        N_('Show Timelines for this Storage Manager'),
                        N_('Timelines'),
                        :options   => {:feature => :timeline},

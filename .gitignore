@@ -1,5 +1,7 @@
 .bundle/
 .yardoc
+yarn.lock
+package-lock.json
 Gemfile.lock
 Gemfile.dev.rb
 _yardoc/
@@ -12,4 +14,8 @@ spec/reports/
 tmp/
 .rubocop-*
 .idea/
+.vscode/
 .ruby-version
+node_modules/
+config/webpack/paths.json
+*.sw[po]

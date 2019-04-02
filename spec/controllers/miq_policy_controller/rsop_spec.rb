@@ -1,6 +1,6 @@
 describe MiqPolicyController do
   render_views
-  before :each do
+  before do
     EvmSpecHelper.local_miq_server
     stub_user(:features => :all)
   end
@@ -9,7 +9,7 @@ describe MiqPolicyController do
     it "first time on RSOP screen, session[:changed] should be false" do
       session[:changed] = true
       controller.instance_variable_set(:@current_user,
-                                       FactoryGirl.create(:user,
+                                       FactoryBot.create(:user,
                                                           :name       => "foo",
                                                           :miq_groups => [],
                                                           :userid     => "foo"))

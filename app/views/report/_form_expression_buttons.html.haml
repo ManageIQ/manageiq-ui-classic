@@ -1,0 +1,22 @@
+- report_id = @edit[:rpt_id] || 'new'
+-# FIXME: alt/title incosistency
+= link_to({:action => 'filter_change', :button => exp_key, :id => report_id},
+          "data-miq_sparkle_on"  => true,
+          "data-miq_sparkle_off" => true,
+          :remote                => true,
+          "data-method"          => :post) do
+  %button.btn.btn-default
+    - if @edit[@expkey][:expression].key?('???')
+      = create_label
+    - else
+      = display_label
+.spacer
+- unless @edit[@expkey][:expression].key?('???')
+  - @edit[exp_key == "record_filter" ? :record_filter : :display_filter][:exp_table].each do |token|
+    - single_token = [token].flatten.first
+    - if %w(AND OR ( )).include?(single_token)
+      %font{:color => "black"}
+        %b
+          = h(single_token)
+    - else
+      = h(single_token)

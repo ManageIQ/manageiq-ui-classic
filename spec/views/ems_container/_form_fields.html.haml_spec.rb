@@ -1,5 +1,5 @@
 describe "rendering fields in ems_container new/edit form" do
-  before(:each) do
+  before do
     @edit = {:new => {:emstype => "kubernetes"}}
   end
 

@@ -1,6 +1,5 @@
 #class_methods_div
-  - if !@in_a_form
-    = render :partial => "layouts/flash_msg"
+  - if !@in_a_form && !@angular_form
     %h3= _('Methods')
     - if @record.ae_methods.present?
       %table#class_methods_grid.table.table-striped.table-bordered.table-hover.table-clickable.table-checkable
@@ -10,14 +9,17 @@
           %th
           %th
         %tbody{'data-click-url' => '/miq_ae_class/tree_select/'}
-          - @record.ae_methods.each do |record|
+          - @record.ae_methods.order(:name).each do |record|
             - next if record.name == '$'
-            - cls_cid = "#{class_prefix(record.class)}-#{ApplicationRecord.compress_id(record.id)}"
+            - cls_cid = "#{class_prefix(record.class)}-#{record.id}"
             %tr{'data-click-id' => cls_cid}
               %td.table-view-pf-select.noclick
                 %input{:type => 'checkbox', :value => cls_cid}
               %td.table-view-pf-select
-                %i{:class => record.decorate.fonticon}
+                - if record.decorate.try(:fileicon)
+                  %img{:src => ActionController::Base.helpers.image_path(record.decorate.fileicon)}
+                - else
+                  %i{:class => record.decorate.fonticon}
               %td
                 = record_name(record)
       :javascript
@@ -27,7 +29,7 @@
     - else
       = render :partial => "layouts/info_msg",
                :locals  => {:message => _("No methods found")}
-  - elsif @edit[:new][:fields]
-    #form_div
-      = render :partial => "layouts/flash_msg"
-      = render :partial => "method_form", :locals  => {:prefix => "cls_"}
+  - elsif @angular_form || @edit[:new][:fields]
+    .form_div
+      - partial_name = @angular_form ? 'angular_method_form' : 'method_form'
+      = render :partial => partial_name, :locals  => {:prefix => "cls_"}

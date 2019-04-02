@@ -15,25 +15,27 @@
               - if @edit
                 = text_field_tag("description",
                   @edit[:new][:description],
-                  :maxlength         => MAX_DESC_LEN,
+                  :maxlength         => ViewHelper::MAX_DESC_LEN,
                   :class             => "form-control",
                   "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
                 = javascript_tag(javascript_focus('description'))
               - else
-                = h(@action.description)
+                %p.form-control-static
+                  = h(@action.description)
         .form-group
           %label.col-md-2.control-label
             = _('Action Type')
           .col-md-8
             - if @edit
               = select_tag('miq_action_type',
-                options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.invert.sort, @edit[:new][:action_type]),
+                options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.map { |k, v| [_(v), k] }.sort, @edit[:new][:action_type]),
                 :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
                 miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
             - else
-              = h(@action.action_type == "default" ? "Default" : MiqAction::TYPES[@action.action_type])
+              %p.form-control-static
+                = h(@action.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@action.action_type]))
       %hr
       - if @edit
         = render :partial => "action_options"
@@ -55,7 +57,7 @@
             .form-group
               %label.control-label.col-md-2= _('Delete if older than')
               .col-md-8
-                %p.form-control-static= h(SNAPSHOT_AGES[@action.options[:age]])
+                %p.form-control-static= h(MiqPolicyHelper::SNAPSHOT_AGES[@action.options[:age]])
 
           %hr
         - when "custom_automation"
@@ -64,33 +66,31 @@
           .form-horizontal
             .form-group
               .col-md-8
-                %fieldset
-                  %h3
-                    = _('Object Details')
-                  .form-horizontal
-                    .form-group
-                      %label.control-label.col-md-2
-                        = _('Starting Message')
-                      .col-md-8
-                        = h(@action.options[:ae_message])
-                    .form-group
-                      %label.control-label.col-md-2
-                        = _('Request')
-                      .col-md-8
-                        = h(@action.options[:ae_request])
-                %fieldset
-                  %h3
-                    = _('Attribute/Value Pairs')
-                  .form-horizontal
-                    - if !@action.options[:ae_hash].blank?
-                      - @action.options[:ae_hash].each do |k, v|
-                        .form-group
-                          %label.control-label.col-md-2
-                            = h(k)
-                          .col-md-8
-                            = h(v)
-                    - else
-                      = _('No Attribute/Value Pairs found')
+                %h4
+                  = _('Object Details')
+                .form-horizontal
+                  .form-group
+                    %label.control-label.col-md-2
+                      = _('Starting Message')
+                    .col-md-8
+                      = h(@action.options[:ae_message])
+                  .form-group
+                    %label.control-label.col-md-2
+                      = _('Request')
+                    .col-md-8
+                      = h(@action.options[:ae_request])
+                %h4
+                  = _('Attribute/Value Pairs')
+                .form-horizontal
+                  - if !@action.options[:ae_hash].blank?
+                    - @action.options[:ae_hash].each do |k, v|
+                      .form-group
+                        %label.control-label.col-md-2
+                          = h(k)
+                        .col-md-8
+                          = h(v)
+                  - else
+                    = _('No Attribute/Value Pairs found')
           %hr
         - when "email"
           %h3
@@ -214,7 +214,7 @@
             %table.table.table-striped.table-bordered.table-hover
               %tbody
                 - @alert_guids.sort_by(&:description).each do |alert|
-                  - id = "al-#{to_cid(alert.id)}"
+                  - id = "al-#{alert.id}"
                   %tr{:title => _('View This Alert'),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=alert")}
                     %td.table-view-pf-select
@@ -255,7 +255,7 @@
             %table.table.table-striped.table-bordered.table-hover
               %tbody
                 - @action_policies.each do |p|
-                  - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.downcase}_p-#{to_cid(p.id)}"
+                  - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{p.id}"
                   %tr{:title => _("Click to view Policy"),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
                     %td.table-view-pf-select

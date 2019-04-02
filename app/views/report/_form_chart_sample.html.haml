@@ -1,5 +1,4 @@
 #chart_sample_div
   - unless @edit[:new][:graph_type].blank?
     %fieldset
-      - if Charting.backend == :c3
-        = chart_remote('report', :action => 'sample_chart', :id => "my_chart", :zoomed => false)
+      = chart_remote('report', :action => 'sample_chart', :id => "my_chart", :zoomed => false)

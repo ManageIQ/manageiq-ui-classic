@@ -1,7 +1,7 @@
 - if @record.try(:name)
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
-      = render_quadicon(@record, :mode => :icon, :size => 72, :typ => :listnav)
+      = render :partial => 'shared/quadicon', :locals => {:record => @record}
 
     = miq_accordion_panel(_("Properties"), false, "ems_prop") do
       %ul.nav.nav-pills.nav-stacked
@@ -21,6 +21,6 @@
                     :title     => _("Show all Instances"))
         - if role_allows?(:feature => "orchestration_stack_show") && @record.orchestration_stack
           %li
-            = link_to("#{ui_lookup(:table => "orchestration_stack")}: #{@record.orchestration_stack.name}",
+            = link_to(_("Stack: %{name}") % {:name => @record.orchestration_stack.name},
               {:controller => "orchestration_stack", :action => 'show', :id => @record.orchestration_stack.id.to_s},
               :title => _("Show parent Orchestration Stack for this Security Group"))

@@ -4,7 +4,6 @@ describe EmsCloudController do
   let(:controller_name) { "ems_cloud" }
 
   it_behaves_like "A controller that has advanced search routes", true
-  it_behaves_like "A controller that has compare routes"
   it_behaves_like "A controller that has dialog runner routes"
   it_behaves_like "A controller that has discovery routes"
   it_behaves_like "A controller that has download_data routes"
@@ -33,7 +32,6 @@ describe EmsCloudController do
     show
     show_list
     protect
-    squash_toggle
     update
   ).each do |task|
     describe "##{task}" do

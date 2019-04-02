@@ -22,15 +22,16 @@
                     %label.col-md-2.control-label{:title => field.description}
                       = field.label
                     .col-md-8{:title => field.description}
+                      - field_id = "field_#{field.id}"
                       - case field.type
                       - when "DialogFieldTextBox"
                         - if field.protected?
-                          = password_field_tag('field.id', '********', :maxlength => 20, :disabled => true)
+                          = password_field_tag(field_id, '********', :maxlength => 20, :disabled => true)
                         - else
-                          = text_field_tag('field.id', field.sample_text, :maxlength => 20, :disabled => true)
+                          = text_field_tag(field_id, field.sample_text, :maxlength => 20, :disabled => true)
 
                       - when "DialogFieldCheckBox"
-                        = check_box_tag("field.id", "1", false, :disabled => true)
+                        = check_box_tag(field_id, "1", field.default_value == 't', :disabled => true)
                       - when "DialogFieldDateControl", "DialogFieldDateTimeControl"
                         - if field.show_past_dates
                           :javascript
@@ -42,7 +43,8 @@
                         - date_val = field.value ? field.value.split(" ") : ["#{t.month}/#{t.day}/#{t.year}"]
                         = datepicker_input_tag("miq_date_1", h(date_val[0]),
                           :class    => "css1",
-                          :readonly => "true")
+                          :readonly => "true",
+                          :data_date_start => field.show_past_dates ? "" : Time.zone.now.strftime("%Y, %m, %d"))
                         - if field.type == "DialogFieldDateTimeControl"
                           &nbsp;
                           = _('at')
@@ -62,31 +64,18 @@
                             %label{:for => "dialog_field_radio_sample_2"} Option 2
 
                           - if field.type == "DialogFieldDropDownList"
-                            = select_tag("#{field.id}", options_for_select([_("Option 1"), _("Option 2")]))
+                            = select_tag("#{field.id}", options_for_select([_("Option 1"), _("Option 2")]), :class => 'selectpicker')
 
                           - if field.show_refresh_button?
                             = button_tag(_('Refresh'), :disabled => true)
 
                         - else
                           - if field.values.length > 1
-                            - if field.sort_by.to_s != "none"
-                              - if field.data_type == "integer"
-                                - val = field.values.sort_by { |d| field.sort_by == :value ? d.first.to_i : d.last.to_i }
-                                - val = val.reverse if field.sort_order == :descending
-                              - else
-                                - val = field.values.sort_by { |d| field.sort_by == :value ? d.first : d.last }
-                                - val = val.reverse if field.sort_order == :descending
-                            - else
-                              - val = copy_array(field.values)
+                            - val = copy_array(field.values.map {|x, y| x.nil? ? [x,_(y)] : [x, y]})
 
                             - if field.type == "DialogFieldDropDownList"
                               - if field.required
-                                - if field.default_value.nil?
-                                  = select_tag('field.id',
-                                    options_for_select(val.collect(&:reverse), field.default_value))
-                                - else
-                                  = select_tag('field.id',
-                                              options_for_select(val.collect(&:reverse), field.default_value))
+                                = select_tag(field_id, options_for_select(val.collect(&:reverse), field.default_value), :class => 'selectpicker')
 
                               - else
                                 -# NOT REQUIRED
@@ -94,15 +83,14 @@
                                              options_for_select(val.collect(&:reverse), field.default_value),
                                              drop_down_options(field, "someURL"))
                                 :javascript
-                                  dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}',
-                                                                                  '#{field.id}',
-                                                                                  undefined,
-                                                                                  '#{field.trigger_auto_refresh}');
+                                  miqInitSelectPicker();
 
                             - else
                               - val.each_with_index do |rb, i|
-                                %input{:type => "radio", :disabled => true, :checked => (field.default_value == rb[0]),
-                                  :id => rb[0], :value => rb[1], :name => rb[0]}
+                                %input{:type     => "radio",
+                                       :disabled => true,
+                                       :checked  => (field.default_value == rb[0]),
+                                       :value    => rb[0]}
                                 &nbsp;
                                 = rb[1]
                                 &nbsp;
@@ -113,7 +101,7 @@
                         = button_tag(_('Save'), :disabled => true)
                       - when "DialogFieldTagControl"
                         - multiple = field.single_value? ? {} : {:multiple => true}
-                        = select_tag('field.id', options_for_select(dialog_dropdown_select_values(field)), multiple)
+                        = select_tag(field_id, options_for_select(dialog_dropdown_select_values(field)), multiple)
 
 :javascript
   miq_tabs_init("#dialog_tabs");

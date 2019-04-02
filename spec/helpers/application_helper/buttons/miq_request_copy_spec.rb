@@ -5,13 +5,13 @@ describe ApplicationHelper::Button::MiqRequestCopy do
         view_context,
         {},
         {'record' => @record, 'showtype' => @showtype},
-        {:options   => {:feature => 'miq_request_copy'}}
+        {:options => {:feature => 'miq_request_copy'}}
       )
     end
 
     let(:view_context) { setup_view_context_with_sandbox({}) }
-    let(:user) { FactoryGirl.create(:user) }
-    %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest
+    let(:user) { FactoryBot.create(:user) }
+    %w(MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
       let(:request) { "MiqProvisionRequest" }
       let(:username) { user.name }

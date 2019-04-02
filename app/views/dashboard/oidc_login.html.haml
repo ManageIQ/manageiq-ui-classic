@@ -1,0 +1,15 @@
+%html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
+  %head
+    = miq_favicon_link_tag
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+
+  %body
+    - if validation_url
+      :javascript
+        miqFlashClearSaved();
+        window.location = '#{j_str validation_url}';
+    - else
+      :javascript
+        miqFlashClearSaved();
+        window.location = '/dashboard/logout';

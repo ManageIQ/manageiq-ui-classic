@@ -2,6 +2,7 @@ module ContainerNodeHelper::TextualSummary
   #
   # Groups
   #
+  include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
     TextualGroup.new(
@@ -19,7 +20,7 @@ module ContainerNodeHelper::TextualSummary
       _("Relationships"),
       %i(
         ems container_routes container_services container_replicators container_groups containers
-        lives_on container_images
+        lives_on container_images custom_button_events
       )
     )
   end
@@ -41,9 +42,7 @@ module ContainerNodeHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #
@@ -51,7 +50,7 @@ module ContainerNodeHelper::TextualSummary
   #
 
   def textual_num_cpu_cores
-    {:label => _("Number of CPU Cores"),
+    {:label => _("Number of CPU Cores"), :icon => "pficon pficon-cpu",
      :value => @record.hardware.nil? ? _("N/A") : @record.hardware.cpu_total_cores}
   end
 
@@ -61,11 +60,11 @@ module ContainerNodeHelper::TextualSummary
              else
                _("N/A")
              end
-    {:label => _("Memory"), :value => memory}
+    {:label => _("Memory"), :icon => "pficon pficon-memory", :value => memory}
   end
 
   def textual_max_container_groups
-    {:label => _("Max Pods Capacity"),
+    {:label => _("Max Pods Capacity"), :icon => "fa fa-cubes",
      :value => @record.max_container_groups.nil? ? _("N/A") : @record.max_container_groups}
   end
 
@@ -91,7 +90,7 @@ module ContainerNodeHelper::TextualSummary
     lives_on_entity_name = lives_on_ems.kind_of?(EmsCloud) ? _("Instance") : _("Virtual Machine")
     {
       :label => _("Underlying %{name}") % {:name => lives_on_entity_name},
-      :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
+      :image => lives_on_ems.decorate.fileicon,
       :value => @record.lives_on.name.to_s,
       :link  => url_for_only_path(
         :action     => 'show',

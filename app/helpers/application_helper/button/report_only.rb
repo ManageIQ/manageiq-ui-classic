@@ -11,6 +11,6 @@ class ApplicationHelper::Button::ReportOnly < ApplicationHelper::Button::RenderR
 
   def report_records?
     @report.present? && @report_result_id.present? &&
-      MiqReportResult.find(@report_result_id).try(:miq_report_result_details).try(:length).to_i > 0
+      MiqReportResult.find(@report_result_id).try(:miq_report_result_details).try(:exists?)
   end
 end

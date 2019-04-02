@@ -1,13 +1,13 @@
 describe ApplicationHelper do
   before do
-    login_as FactoryGirl.create(:user)
+    login_as FactoryBot.create(:user, :features => "none")
   end
 
   context "build_toolbar" do
     it 'should substitute dynamic function values' do
       req        = ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
       menu_info  = helper.build_toolbar 'storages_center_tb'
-      title_text = ui_lookup(:tables => "storages")
+      title_text = "Datastores"
 
       menu_info[0][:items].collect do |value|
         ['title', :confirm].each do |field|
@@ -26,7 +26,7 @@ describe ApplicationHelper do
                                        :mode        => 'foo')
 
       menu_info  = helper.build_toolbar 'miq_policies_center_tb'
-      title_text = ui_lookup(:model => "Storage")
+      title_text = "Datastore"
 
       menu_info[0][:items].collect do |value|
         next unless value['title']
@@ -38,9 +38,9 @@ describe ApplicationHelper do
 
   describe "#role_allows?" do
     let(:features) { MiqProductFeature.find_all_by_identifier("everything") }
-    before(:each) do
+    before do
       EvmSpecHelper.seed_specific_product_features("miq_report", "service")
-      @user = login_as FactoryGirl.create(:user, :features => features)
+      @user = login_as FactoryBot.create(:user, :features => features)
     end
 
     context "permission store" do
@@ -81,7 +81,7 @@ describe ApplicationHelper do
         end
 
         it "and not entitled" do
-          login_as FactoryGirl.create(:user, :features => "service")
+          login_as FactoryBot.create(:user, :features => "service")
           expect(helper.role_allows?(:feature => "miq_report", :any => true)).to be_falsey
         end
       end
@@ -92,7 +92,7 @@ describe ApplicationHelper do
         end
 
         it "and not entitled" do
-          login_as FactoryGirl.create(:user, :features => "service")
+          login_as FactoryBot.create(:user, :features => "service")
           expect(helper.role_allows?(:feature => "miq_report")).to be_falsey
         end
       end
@@ -130,7 +130,7 @@ describe ApplicationHelper do
     subject { helper.model_to_controller(@record) }
 
     it "when with any record" do
-      @record = FactoryGirl.create(:vm_vmware)
+      @record = FactoryBot.create(:vm_vmware)
       expect(subject).to eq(@record.class.base_model.name.underscore)
     end
 
@@ -141,12 +141,12 @@ describe ApplicationHelper do
 
   describe "#object_types_for_flash_message" do
     before do
-      @record_1 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
-      @record_2 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
-      @record_3 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
-      @record_4 = FactoryGirl.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
-      @record_5 = FactoryGirl.create(:vm_redhat,    :type => ManageIQ::Providers::Redhat::InfraManager::Vm.name)
-      @record_6 = FactoryGirl.create(:vm_vmware,    :type => ManageIQ::Providers::Vmware::InfraManager::Vm.name)
+      @record_1 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
+      @record_2 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Vm.name,       :template => false)
+      @record_3 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
+      @record_4 = FactoryBot.create(:vm_openstack, :type => ManageIQ::Providers::Openstack::CloudManager::Template.name, :template => true)
+      @record_5 = FactoryBot.create(:vm_redhat,    :type => ManageIQ::Providers::Redhat::InfraManager::Vm.name)
+      @record_6 = FactoryBot.create(:vm_vmware,    :type => ManageIQ::Providers::Vmware::InfraManager::Vm.name)
     end
 
     context "when formatting flash message for VM or Templates class" do
@@ -225,8 +225,13 @@ describe ApplicationHelper do
       expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
     end
 
+    it "when record is ManageIQ::Providers::AnsibleTower::AutomationManager" do
+      @record = ManageIQ::Providers::AnsibleTower::AutomationManager.new
+      expect(subject).to eq("/automation_manager/#{@action}")
+    end
+
     it "when record is not VmOrTemplate" do
-      @record = FactoryGirl.create(:host)
+      @record = FactoryBot.create(:host)
       expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
     end
   end
@@ -239,7 +244,7 @@ describe ApplicationHelper do
 
     context "when with @vm" do
       before do
-        @vm = FactoryGirl.create(:vm_vmware)
+        @vm = FactoryBot.create(:vm_vmware)
       end
 
       ["Account", "User", "Group", "Patch", "GuestApplication"].each do |d|
@@ -262,7 +267,7 @@ describe ApplicationHelper do
 
     context "when with @host" do
       before do
-        @host = FactoryGirl.create(:host)
+        @host = FactoryBot.create(:host)
         @lastaction = "list"
       end
 
@@ -528,18 +533,6 @@ describe ApplicationHelper do
     end
   end
 
-  context "#to_cid" do
-    it "converts record id to compressed id" do
-      expect(helper.to_cid(12_000_000_000_056)).to eq('12r56')
-    end
-  end
-
-  context "#from_cid" do
-    it "converts compressed id to record id" do
-      expect(helper.from_cid("12r56")).to eq(12_000_000_000_056)
-    end
-  end
-
   context "#is_browser_ie7?" do
     it "when browser's explorer version 7.x" do
       allow_any_instance_of(ActionController::TestSession)
@@ -671,9 +664,8 @@ describe ApplicationHelper do
     end
   end
 
-  context "#javascript_pf_toolbar_reload" do
-    let(:test_tab) { "some_center_tb" }
-    subject { helper.javascript_pf_toolbar_reload(test_tab, 'foobar') }
+  context "#javascript_reload_toolbars" do
+    subject { helper.javascript_reload_toolbars }
 
     it "returns javascript to reload toolbar" do
       expect(helper).to receive(:toolbar_from_hash).and_return('foobar')
@@ -682,7 +674,7 @@ describe ApplicationHelper do
   end
 
   context "#set_edit_timer_from_schedule" do
-    before(:each) do
+    before do
       @edit = {:tz => 'Eastern Time (US & Canada)', :new => {}}
       @interval = '3'
       @date = "6/28/2012"
@@ -905,7 +897,6 @@ describe ApplicationHelper do
         expect(@sb[:trees][:vm_filter_tree]).to eq(:tree       => :vm_filter_tree,
                                                    :type       => :vm_filter,
                                                    :leaf       => "Vm",
-                                                   :add_root   => true,
                                                    :open_nodes => [])
       end
     end
@@ -932,52 +923,38 @@ describe ApplicationHelper do
   end
 
   describe "update_paging_url_parms", :type => :request do
-    before do
-      MiqServer.seed
+    let!(:zone) { EvmSpecHelper.local_guid_miq_server_zone[2] }
+
+    it "updates the query string with the given hash value and returns the full url path" do
+      get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
+
+      expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
+        "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
     end
 
-    context "when the given parameter is a hash" do
-      before do
-        get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
-        allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
-      end
+    it "uses restful paths for pages" do
+      @record = FactoryBot.create(:ems_cloud, :zone => zone)
+      get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
 
-      it "updates the query string with the given hash value and returns the full url path" do
-        expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
-          "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
-      end
-    end
-    context "when the controller uses restful paths" do
-      before do
-        FactoryGirl.create(:ems_cloud, :zone => Zone.seed)
-        @record = ManageIQ::Providers::CloudManager.first
-        get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
-        allow_any_instance_of(Object).to receive(:query_string).and_return(@request.query_string)
-        allow_message_expectations_on_nil
-      end
-
-      it "uses restful paths for pages" do
-        expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
-      end
+      expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
     end
   end
 
   context "#title_for_cluster_record" do
-    before(:each) do
-      @ems1 = FactoryGirl.create(:ems_vmware)
-      @ems2 = FactoryGirl.create(:ems_openstack_infra)
+    before do
+      @ems1 = FactoryBot.create(:ems_vmware)
+      @ems2 = FactoryBot.create(:ems_openstack_infra)
     end
 
     it "returns 'Cluster' for non-openstack host" do
-      cluster = FactoryGirl.create(:ems_cluster, :ems_id => @ems1.id)
+      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
 
       result = helper.title_for_cluster_record(cluster)
       expect(result).to eq("Cluster")
     end
 
     it "returns 'Deployment Role' for openstack host" do
-      cluster = FactoryGirl.create(:ems_cluster, :ems_id => @ems2.id)
+      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
 
       result = helper.title_for_cluster_record(cluster)
       expect(result).to eq("Deployment Role")
@@ -986,13 +963,13 @@ describe ApplicationHelper do
 
   context "#title_for_host_record" do
     it "returns 'Host' for non-openstack host" do
-      host = FactoryGirl.create(:host_vmware, :ext_management_system => FactoryGirl.create(:ems_vmware))
+      host = FactoryBot.create(:host_vmware, :ext_management_system => FactoryBot.create(:ems_vmware))
 
       expect(helper.title_for_host_record(host)).to eq("Host")
     end
 
     it "returns 'Node' for openstack host" do
-      host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => FactoryGirl.create(:ems_openstack_infra))
+      host = FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
 
       expect(helper.title_for_host_record(host)).to eq("Node")
     end
@@ -1007,8 +984,7 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_truthy
     end
@@ -1021,8 +997,7 @@ describe ApplicationHelper do
                                            :tree => :configuration_scripts_tree,
                                            :type => :configuration_scripts
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_truthy
     end
@@ -1048,14 +1023,13 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.tree_with_advanced_search?
       expect(result).to be_falsey
     end
   end
 
-  context "#show_adv_search?" do
+  describe "#show_adv_search?" do
     it 'should return false for explorer screen with no trees such as automate/simulation' do
       controller.instance_variable_set(:@explorer, true)
       controller.instance_variable_set(:@sb, {})
@@ -1072,14 +1046,13 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_adv_search?
       expect(result).to be_truthy
     end
   end
 
-  context "#show_advanced_search?" do
+  describe "#show_advanced_search?" do
     it 'should return true for VM explorer trees' do
       controller.instance_variable_set(:@sb,
                                        :active_tree => :vms_instances_filter_tree,
@@ -1088,8 +1061,7 @@ describe ApplicationHelper do
                                            :tree => :vms_instances_filter_tree,
                                            :type => :vms_instances_filter
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_advanced_search?
       expect(result).to be_truthy
     end
@@ -1102,8 +1074,7 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       result = helper.show_advanced_search?
       expect(result).to be_falsey
     end
@@ -1116,19 +1087,34 @@ describe ApplicationHelper do
                                            :tree => :reports_tree,
                                            :type => :reports
                                          }
-                                       }
-                                      )
+                                       })
       controller.instance_variable_set(:@show_adv_search, true)
       result = helper.show_advanced_search?
       expect(result).to be_truthy
     end
   end
 
-  context "#listicon_image_tag" do
-    it "returns correct image for job record based upon it's status" do
-      job_attrs = {"state" => "running", "status" => "ok"}
-      image = helper.listicon_image_tag("Job", job_attrs)
-      expect(image).to eq("<i class=\"pficon pficon-running\" title=\"Status = Running\"></i>")
+  describe "#display_adv_search?" do
+    before do
+      controller.instance_variable_set(:@layout, layout)
+    end
+
+    subject { helper.display_adv_search? }
+
+    context 'Volume Snapshots page' do
+      let(:layout) { "cloud_volume_snapshot" }
+
+      it 'returns true' do
+        expect(subject).to be(true)
+      end
+    end
+
+    context 'Volume Backups page' do
+      let(:layout) { "cloud_volume_backup" }
+
+      it 'returns true' do
+        expect(subject).to be(true)
+      end
     end
   end
 
@@ -1216,7 +1202,7 @@ describe ApplicationHelper do
       let(:args) do
         {:if         => true,
          :controller => 'availability_zone',
-         :record     => FactoryGirl.create(:availability_zone),
+         :record     => FactoryBot.create(:availability_zone),
          :action     => 'show_list',
          :display    => 'something',
          :title      => 'sometitle'}
@@ -1226,10 +1212,6 @@ describe ApplicationHelper do
 
       it 'renders url correctly' do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
-      end
-
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
       end
 
       it 'renders title correctly' do
@@ -1241,7 +1223,7 @@ describe ApplicationHelper do
       let(:args) do
         {:if         => true,
          :controller => 'availability_zone',
-         :record_id  => FactoryGirl.create(:availability_zone).id,
+         :record_id  => FactoryBot.create(:availability_zone).id,
          :action     => 'show_list',
          :display    => 'something',
          :title      => 'sometitle'}
@@ -1251,10 +1233,6 @@ describe ApplicationHelper do
 
       it 'renders url correctly' do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
-      end
-
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
       end
 
       it 'renders title correctly' do
@@ -1290,20 +1268,129 @@ describe ApplicationHelper do
     context "When record is a Container Provider" do
       it "Uses polymorphic_path for the show action" do
         stub_user(:features => :all)
-        ems = FactoryGirl.create(:ems_kubernetes)
+        ems = FactoryBot.create(:ems_kubernetes)
         ContainerProject.create(:ext_management_system => ems, :name => "Test Project")
         expect(helper.multiple_relationship_link(ems, "container_project")).to eq("<li><a title=\"Show Projects\" href=\"/ems_container/#{ems.id}?display=container_projects\">Projects (1)</a></li>")
       end
     end
+  end
 
-    context "When record is a Middleware Provider" do
-      it "Routes to the controller's show action" do
-        stub_user(:features => :all)
-        allow(helper).to receive_messages(:controller_name => "ems_middleware")
-        ems = FactoryGirl.create(:ems_hawkular)
-        MiddlewareDatasource.create(:ext_management_system => ems, :name => "Test Middleware")
-        expect(helper.multiple_relationship_link(ems, "middleware_datasource")).to eq("<li><a title=\"Show Middleware \
-Datasources\" href=\"/ems_middleware/#{ems.id}?display=middleware_datasources\">Middleware Datasources (1)</a></li>")
+  describe "#model_to_report_data" do
+    let(:instance) { test_class.new }
+    let(:test_class) do
+      Class.new do
+        include ApplicationHelper
+        attr_accessor :display, :params, :report_data_additional_options
+
+        def controller
+          HostController.new
+        end
+      end
+    end
+
+    it "the prefered case" do
+      instance.report_data_additional_options = {:model => "Something"}
+
+      expect(instance.model_to_report_data).to eq("Something")
+    end
+
+    it "the @display fallback" do
+      instance.display = "vm_or_template"
+
+      expect(instance.model_to_report_data).to eq("VmOrTemplate")
+    end
+
+    it "the params[:db] fallback" do
+      instance.params = {:db => "vm_or_template", :display => "something" }
+
+      expect(instance.model_to_report_data).to eq("VmOrTemplate")
+    end
+
+    it "the params[:display] fallback" do
+      instance.params = {:display => "vm_or_template"}
+
+      expect(instance.model_to_report_data).to eq("VmOrTemplate")
+    end
+
+    it "the controller.class.model fallback case" do
+      instance.params = {}
+
+      expect(instance.model_to_report_data).to eq("Host")
+    end
+  end
+
+  context "calculate_toolbars for ems_container" do
+    before do
+      allow(helper).to receive(:inner_layout_present?).and_return(false)
+      allow(controller).to receive(:restful?).and_return(true)
+      allow(controller.class).to receive(:toolbar_plural).and_return(nil)
+      allow(controller.class).to receive(:toolbar_singular).and_return(nil)
+      allow(controller).to receive(:custom_toolbar)
+      @layout = 'ems_container'
+    end
+
+    it "displays ems_containers_center toolbar for ems_container show_list action" do
+      @lastaction = "show_list"
+      expect(calculate_toolbars).to include("center_tb" => "ems_containers_center_tb")
+    end
+
+    it "displays ems_container_center toolbar for ems_container show_dashboard action" do
+      @lastaction = "show_dashboard"
+      expect(calculate_toolbars).to include("center_tb" => "ems_container_center_tb")
+    end
+
+    it "displays container routes center toolbar for 'container_routes' nested display lists" do
+      @lastaction = "show"
+      @display = "container_routes"
+      expect(calculate_toolbars).to include("center_tb" => "container_routes_center")
+    end
+
+    it "displays container projects center toolbar for 'container_projects' nested display lists" do
+      @lastaction = "show"
+      @display = "container_projects"
+      expect(calculate_toolbars).to include("center_tb" => "container_projects_center")
+    end
+  end
+
+  describe '#provider_paused?' do
+    subject { send(:provider_paused?, record) }
+
+    context 'record is a provider' do
+      let(:record) { FactoryBot.create(:ems_infra) }
+
+      it "true if provider paused" do
+        record.pause!
+        expect(subject).to be_truthy
+      end
+
+      it "false if provider paused" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context 'record is a VM' do
+      let(:record) { FactoryBot.create(:vm, :ext_management_system => FactoryBot.create(:ems_infra)) }
+
+      it "true if provider paused" do
+        record.ext_management_system.pause!
+        expect(subject).to be_truthy
+      end
+
+      it "false if provider paused" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context 'record is a configured_system_foreman' do
+      let(:record) { FactoryBot.create(:configured_system_foreman, :manager => FactoryBot.create(:configuration_manager_foreman)) }
+
+      it "true if provider paused" do
+        record.manager.pause!
+        expect(subject).to be_truthy
+      end
+
+      it "false if provider paused" do
+        expect(subject).to be_falsey
       end
     end
   end

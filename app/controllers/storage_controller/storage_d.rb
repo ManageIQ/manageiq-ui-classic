@@ -2,17 +2,10 @@
 module StorageController::StorageD
   extend ActiveSupport::Concern
 
-  def storage_tree_select
-    @lastaction = "explorer"
-    _typ, id = params[:id].split("_")
-    @record = Storage.find(from_cid(id))
-  end
-
   def storage_list
     @lastaction = "storage_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
-    @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
@@ -32,13 +25,13 @@ module StorageController::StorageD
   def miq_search_node
     options = {:model => "Storage"}
     process_show_list(options)
-    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Datastore")}
+    @right_cell_text = _("All Datastores")
   end
 
   private #######################
 
   # Get information for an event
-  def storage_build_tree
+  def build_storage_tree
     TreeBuilderStorage.new("storage_tree", "storage", @sb)
   end
 
@@ -46,16 +39,16 @@ module StorageController::StorageD
     if treenodeid == "root"
       options = {:model => "Storage"}
       process_show_list(options)
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Storage")}
+      @right_cell_text = _("All Datastores")
     else
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
-        @record = @storage = Storage.find_by_id(from_cid(nodes.last))
-        @right_cell_text = _("%{model} \"%{name}\"") % {:name => @storage.name, :model => ui_lookup(:model => "Storage")}
+        @record = Storage.find(nodes.last)
+        @right_cell_text = _("Datastore \"%{name}\"") % {:name => @record.name}
       else
         miq_search_node
-       end
+      end
     end
   end
 end

@@ -12,21 +12,38 @@ describe ApplicationHelper, "::ToolbarBuilder" do
   end
 
   describe "custom_buttons" do
-    let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
+    let(:user) { FactoryBot.create(:user, :role => "super_administrator") }
 
     shared_examples "no custom buttons" do
-      it("#get_custom_buttons")        { expect(toolbar_builder.get_custom_buttons(subject)).to be_blank }
-      it("#custom_buttons_hash")       { expect(toolbar_builder.custom_buttons_hash(subject)).to be_blank }
-      it("#custom_toolbar_class")      { expect(toolbar_builder.custom_toolbar_class(subject).definition).to be_blank }
+      it "#get_custom_buttons" do
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
+      end
+
+      it "#custom_button_selects" do
+        expect(toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
+      end
+
+      it "#build_custom_toolbar_class" do
+        expect(toolbar_builder.build_custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition).to be_blank
+      end
+
       it("#record_to_service_buttons") { expect(toolbar_builder.record_to_service_buttons(subject)).to be_blank }
     end
 
     shared_examples "with custom buttons" do
+      def add_button_to_set(button_set, button)
+        button_set.add_member(button)
+        button_set.set_data[:button_order] ||= []
+        button_set.set_data[:button_order].push(button.id)
+        button_set.save
+      end
+
       before do
-        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class})
+        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
+        @button_set = FactoryBot.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
-        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {})
-        @button_set.add_member @button1
+        @button1 = FactoryBot.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
+        add_button_to_set(@button_set, @button1)
       end
 
       it "#get_custom_buttons" do
@@ -35,32 +52,37 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :class         => @button1.applies_to_class,
           :name          => @button1.name,
           :description   => @button1.description,
-          :image         => @button1.options[:button_image],
+          :image         => @button1.options[:button_icon],
+          :color         => nil,
           :text_display  => @button1.options.key?(:display) ? @button1.options[:display] : true,
+          :enabled       => true,
+          :disabled_text => nil,
           :target_object => subject.id
         }
         expected_button_set = {
           :id           => @button_set.id,
           :text         => @button_set.name,
           :description  => @button_set.description,
-          :image        => @button_set.set_data[:button_image],
+          :image        => @button_set.set_data[:button_icon],
+          :color        => nil,
           :text_display => @button_set.set_data.key?(:display) ? @button_set.set_data[:display] : true,
           :buttons      => [expected_button1]
         }
 
-        expect(toolbar_builder.get_custom_buttons(subject)).to eq([expected_button_set])
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to eq([expected_button_set])
       end
 
       it "#record_to_service_buttons" do
         expect(toolbar_builder.record_to_service_buttons(subject)).to be_blank
       end
 
-      it "#custom_buttons_hash" do
+      it "#custom_button_selects" do
         escaped_button1_text = CGI.escapeHTML(@button1.name.to_s)
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "product product-custom-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
+          :color     => nil,
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -72,7 +94,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
+          :color   => nil,
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,
@@ -80,15 +103,17 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         }
         items = [button_set_item1]
         name = "custom_buttons_#{@button_set.name}"
-        expect(toolbar_builder.custom_buttons_hash(subject)).to eq([:name => name, :items => items])
+        result = toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))
+        expect(result).to eq([:name => name, :items => items])
       end
 
-      it "#custom_toolbar_class" do
+      it "#build_custom_toolbar_class" do
         escaped_button1_text = CGI.escapeHTML(@button1.name.to_s)
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "product product-custom-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
+          :color     => nil,
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -100,20 +125,21 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
+          :color   => nil,
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,
           :items   => button_set_item1_items
         }
         group_name = "custom_buttons_#{@button_set.name}"
-        expect(toolbar_builder.custom_toolbar_class(subject).definition[group_name].buttons).to eq([button_set_item1])
+        expect(toolbar_builder.build_custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition[group_name].buttons).to eq([button_set_item1])
       end
     end
 
     context "for VM" do
       let(:applies_to_class) { 'Vm' }
-      subject { FactoryGirl.create(:vm_vmware) }
+      subject { FactoryBot.create(:vm_vmware) }
 
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
@@ -121,50 +147,13 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     context "for Service" do
       let(:applies_to_class) { 'ServiceTemplate' }
-      let(:service_template) { FactoryGirl.create(:service_template) }
-      subject                { FactoryGirl.create(:service, :service_template => service_template) }
+      let(:service_template) { FactoryBot.create(:service_template) }
+      subject                { FactoryBot.create(:service, :service_template => service_template) }
 
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
     end
   end
-
-  describe "#get_image" do
-    subject { toolbar_builder.get_image(@img, @button_name) }
-
-    context "when with show_summary" do
-      before do
-        @button_name = "show_summary"
-        @img = "reload"
-      end
-
-      it "and layout is scan_profile" do
-        @layout = "scan_profile"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "and layout is miq_schedule" do
-        @layout = "miq_schedule"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "and layout is miq_proxy" do
-        @layout = "miq_schedule"
-        expect(subject).to eq("summary-green")
-      end
-
-      it "otherwise" do
-        @layout = "some_thing"
-        expect(subject).to eq(@img)
-      end
-    end
-
-    it "when not with show_summary" do
-      @button_name = "summary_reload"
-      @img = "reload"
-      expect(subject).to eq(@img)
-    end
-  end # get_image
 
   describe "#twostate_button_selected" do
     before do
@@ -175,7 +164,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :drift        => 'compressed',
           :compare_mode => 'exists',
           :drift_mode   => 'exists',
-          :treesize     => '32'
         }
       }
     end
@@ -186,16 +174,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         @gtl_type = g
         expect(toolbar_builder.twostate_button_selected("view_#{g}")).to be_truthy
       end
-    end
-
-    it "when with tree_large" do
-      @settings[:views][:treesize] = 32
-      expect(toolbar_builder.twostate_button_selected("tree_large")).to be_truthy
-    end
-
-    it "when with tree_small" do
-      @settings[:views][:treesize] = 16
-      expect(toolbar_builder.twostate_button_selected("tree_small")).to be_truthy
     end
 
     context "when with 'compare_compressed'" do
@@ -235,8 +213,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       btn_num = "x_button_id_001"
       desc = 'the description for the button'
       @input = {:url       => "button",
-                :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class.name}&pressed=custom_button&desc=#{desc}"
-      }
+                :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class.name}&pressed=custom_button&desc=#{desc}"}
       @tb_buttons = {}
       @button = {:id => "custom_#{btn_num}"}
       @button = ApplicationHelper::Button::Basic.new(nil, nil, {}, {:id => "custom_#{btn_num}"})
@@ -295,13 +272,13 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it "does delayed translation of text title and confirm strings" do
         %i(text title confirm).each do |key|
           @input[key] = proc do
-            _("Add New %{model}") % {:model => 'Model'}
+            _("Add New %{table}") % {:table => 'Table'}
           end
         end
         FastGettext.locale = 'ja'
         toolbar_builder.apply_common_props(@button, @input)
         %i(text title confirm).each do |key|
-          expect(@button[key]).not_to match('Add New Model')
+          expect(@button[key]).not_to match('Add New Table')
         end
         FastGettext.locale = 'en'
       end
@@ -315,8 +292,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       desc = 'the description for the button'
       @item = {:button    => "custom_#{btn_num}",
                :url       => "button",
-               :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class}&pressed=custom_button&desc=#{desc}"
-      }
+               :url_parms => "?id=#{@record.id}&button_id=#{btn_num}&cls=#{@record.class}&pressed=custom_button&desc=#{desc}"}
       @tb_buttons = {}
       @item_out = {}
     end
@@ -357,7 +333,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
   describe "update_url_parms", :type => :request do
     before do
-      MiqServer.seed
+      EvmSpecHelper.local_guid_miq_server_zone
     end
 
     context "when the given parameter exists in the request query string" do
@@ -406,42 +382,29 @@ describe ApplicationHelper, "::ToolbarBuilder" do
   context "toolbar_class" do
     before do
       controller.instance_variable_set(:@sb, :active_tree => :foo_tree)
-      @pdf_button = {:id        => "download_choice__download_pdf",
-                     :child_id  => "download_pdf",
-                     :type      => :button,
-                     :img       => "download_pdf.png",
-                     :imgdis    => "download_pdf.png",
-                     :img_url   => ActionController::Base.helpers.image_path("toolbars/download_pdf.png"),
-                     :icon      => "fa fa-file-pdf-o fa-lg",
-                     :text      => "Download as PDF",
-                     :title     => "Download this report in PDF format",
-                     :name      => "download_choice__download_pdf",
-                     :hidden    => false,
-                     :pressed   => nil,
-                     :onwhen    => nil,
-                     :enabled   => true,
-                     :url       => "/download_data",
-                     :url_parms => "?download_type=pdf",
-                     :data      => nil}
+      @pdf_button = {:id           => "download_choice__download_pdf",
+                     :child_id     => "download_pdf",
+                     :type         => :button,
+                     :icon         => "fa fa-file-pdf-o fa-lg",
+                     :color        => nil,
+                     :text         => "Download as PDF",
+                     :title        => "Download this report in PDF format",
+                     :name         => "download_choice__download_pdf",
+                     :hidden       => false,
+                     :pressed      => nil,
+                     :onwhen       => nil,
+                     :enabled      => true,
+                     :url          => "/download_data",
+                     :url_parms    => "?download_type=pdf",
+                     :send_checked => nil,
+                     :data         => nil}
       @layout = "catalogs"
       stub_user(:features => :all)
       allow(helper).to receive(:x_active_tree).and_return(:ot_tree)
     end
 
-    it "Hides PDF button when PdfGenerator is not available" do
-      allow(PdfGenerator).to receive_messages(:available? => false)
-      buttons = helper.build_toolbar('gtl_view_tb').collect { |button| button[:items] if button[:id] == "download_choice" }.compact.flatten
-      expect(buttons).not_to include(@pdf_button)
-    end
-
-    it "Displays PDF button when PdfGenerator is available" do
-      allow(PdfGenerator).to receive_messages(:available? => true)
-      buttons = helper.build_toolbar('gtl_view_tb').collect { |button| button[:items] if button[:id] == "download_choice" }.compact.flatten
-      expect(buttons).to include(@pdf_button)
-    end
-
     it "Enables edit and remove buttons for read-write orchestration templates" do
-      @record = FactoryGirl.create(:orchestration_template)
+      @record = FactoryBot.create(:orchestration_template)
       buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
       edit_btn = buttons.find { |b| b[:id].end_with?("_edit") }
       remove_btn = buttons.find { |b| b[:id].end_with?("_remove") }
@@ -450,7 +413,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     it "Disables edit and remove buttons for read-only orchestration templates" do
-      @record = FactoryGirl.create(:orchestration_template_with_stacks)
+      @record = FactoryBot.create(:orchestration_template_with_stacks)
       buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
       edit_btn = buttons.find { |b| b[:id].end_with?("_edit") }
       remove_btn = buttons.find { |b| b[:id].end_with?("_remove") }
@@ -468,62 +431,82 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end
 
-    context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { 'generic_object_definition_tb' }
+    context "when the toolbar is a generic object instances toolbar" do
+      let(:toolbar_to_build) { 'generic_objects_center_tb' }
 
       before do
+        go_def = FactoryBot.create(:generic_object_definition)
+        @record = FactoryBot.create(:generic_object, :generic_object_definition_id => go_def.id)
+        allow(Rbac).to receive(:role_allows?).and_return(true)
+      end
+
+      it "includes the 'send_checked' parameter" do
+        items_hash = {:child_id     => "generic_object_tag",
+                      :id           => "generic_object_policy_choice__generic_object_tag",
+                      :type         => :button,
+                      :hidden       => false,
+                      :icon         => "pficon pficon-edit fa-lg",
+                      :name         => "generic_object_policy_choice__generic_object_tag",
+                      :onwhen       => "1+",
+                      :send_checked => true,
+                      :enabled      => false,
+                      :title        => "Edit Tags for the selected Generic Object Instances",
+                      :text         => "Edit Tags",
+                      :url_parms    => "main_div"}
+
+        expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
+          :id    => "generic_object_policy_choice",
+          :icon  => "fa fa-shield fa-lg",
+          :title => "Policy",
+          :text  => "Policy",
+          :items => [a_hash_including(items_hash)]
+        )
+      end
+    end
+
+    context "when the toolbar to be built is a generic object toolbar" do
+      let(:toolbar_to_build) { 'generic_object_definitions_center_tb' }
+
+      before do
+        @record = FactoryBot.create(:generic_object_definition)
         allow(Rbac).to receive(:role_allows?).and_return(true)
       end
 
       it "includes the button group" do
         expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
-          :id    => "generic_object_definition_choice",
+          :id    => "generic_object_definition_configuration",
           :type  => :buttonSelect,
           :icon  => "fa fa-cog fa-lg",
           :title => "Configuration",
           :text  => "Configuration"
         )
       end
-
-      it "includes the correct button items" do
+      it "includes the correct button items in the show screen" do
         items = _toolbar_builder.build_toolbar(toolbar_to_build).first[:items]
+
         expect(items[0]).to include(
-          :id    => "generic_object_definition_choice__generic_object_definition_create",
-          :type  => :button,
-          :icon  => "pficon pficon-add-circle-o fa-lg",
-          :title => "Create a new Generic Object Definition",
-          :text  => "Create a new Generic Object Definition",
-          :data  => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showAddForm"}'
-          }
+          :id      => "generic_object_definition_configuration__generic_object_definition_new",
+          :type    => :button,
+          :title   => "Add a new Generic Object Class",
+          :text    => "Add a new Generic Object Class",
+          :onwhen  => nil,
+          :enabled => true,
         )
         expect(items[1]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_edit",
-          :type    => :button,
-          :icon    => "pficon pficon-edit fa-lg",
-          :title   => "Edit this Generic Object Definition",
-          :text    => "Edit this Generic Object Definition",
-          :onwhen  => "1",
-          :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showEditForm"}'
-          }
+          :id    => "generic_object_definition_configuration__generic_object_definition_edit",
+          :type  => :button,
+          :icon  => "pficon pficon-edit fa-lg",
+          :title => "Edit selected Generic Object Class",
+          :text  => "Edit selected Generic Object Class",
         )
         expect(items[2]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Delete this Generic Object Definition",
-          :text    => "Delete this Generic Object Definition",
-          :onwhen  => "1",
+          :title   => "Remove selected Generic Object Classes from Inventory",
+          :text    => "Remove selected Generic Object Classes from Inventory",
+          :onwhen  => "1+",
           :enabled => false,
-          :confirm => "Are you sure you want to delete this Generic Object Definition?",
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "deleteGenericObject"}'
-          }
         )
       end
     end
@@ -539,7 +522,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinition }
+      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter }
 
       before do
         allow(Rbac).to receive(:role_allows?).and_return(true)
@@ -547,7 +530,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
       it "includes the button group" do
         expect(_toolbar_builder.build_toolbar_by_class(toolbar_to_build).first).to include(
-          :id    => "generic_object_definition_choice",
+          :id    => "generic_object_definition_configuration",
           :type  => :buttonSelect,
           :icon  => "fa fa-cog fa-lg",
           :title => "Configuration",
@@ -555,44 +538,32 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         )
       end
 
-      it "includes the correct button items" do
+      it "includes the correct button items in the show_list screen" do
         items = _toolbar_builder.build_toolbar_by_class(toolbar_to_build).first[:items]
         expect(items[0]).to include(
-          :id    => "generic_object_definition_choice__generic_object_definition_create",
+          :id    => "generic_object_definition_configuration__generic_object_definition_new",
           :type  => :button,
           :icon  => "pficon pficon-add-circle-o fa-lg",
-          :title => "Create a new Generic Object Definition",
-          :text  => "Create a new Generic Object Definition",
-          :data  => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showAddForm"}'
-          }
+          :title => "Add a new Generic Object Class",
+          :text  => "Add a new Generic Object Class",
         )
         expect(items[1]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_edit",
+          :id      => "generic_object_definition_configuration__generic_object_definition_edit",
           :type    => :button,
           :icon    => "pficon pficon-edit fa-lg",
-          :title   => "Edit this Generic Object Definition",
-          :text    => "Edit this Generic Object Definition",
+          :title   => "Edit selected Generic Object Class",
+          :text    => "Edit selected Generic Object Class",
           :onwhen  => "1",
           :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "showEditForm"}'
-          }
         )
         expect(items[2]).to include(
-          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Delete this Generic Object Definition",
-          :text    => "Delete this Generic Object Definition",
-          :onwhen  => "1",
+          :title   => "Remove selected Generic Object Classes from Inventory",
+          :text    => "Remove selected Generic Object Classes from Inventory",
+          :onwhen  => "1+",
           :enabled => false,
-          :data    => {
-            'function'      => 'sendDataWithRx',
-            'function-data' => '{"eventType": "deleteGenericObject"}'
-          }
         )
       end
     end

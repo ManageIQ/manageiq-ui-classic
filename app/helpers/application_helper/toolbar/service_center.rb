@@ -5,7 +5,6 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
       'fa fa-cog fa-lg',
       t = N_('Configuration'),
       t,
-      :onwhen => "1+",
       :items  => [
         button(
           :service_edit,
@@ -15,10 +14,11 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
         button(
           :service_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Service'),
-          N_('Remove Service'),
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: This Service and ALL of their components will be permanently removed!")),
+          N_('Remove this Service from Inventory'),
+          N_('Remove Service from Inventory'),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: This Service and ALL of their components will be permanently removed!")),
         separator,
         button(
           :service_ownership,
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Reconfigure the options of this Service'),
           N_('Reconfigure this Service'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :reconfigure}),
       ]
     ),
@@ -48,7 +48,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Service'),
           N_('Edit Tags'),
-          :url_parms => "main_div"),
+          :url_parms    => "main_div",
+          :send_checked => true),
       ]
     ),
   ])
@@ -62,9 +63,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
         button(
           :service_retire,
           'fa fa-clock-o fa-lg',
-          t = N_('Set Retirement Date for this Service'),
+          t = N_('Set Retirement Dates for this Service'),
           t,
-          :confirm => N_("Set Retirement this Service?"),
           :klass   => ApplicationHelper::Button::ServiceRetire
         ),
         button(

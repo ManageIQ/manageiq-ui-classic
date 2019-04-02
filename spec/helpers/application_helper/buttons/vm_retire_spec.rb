@@ -2,7 +2,7 @@ describe ApplicationHelper::Button::VmRetire do
   describe '#visible?' do
     context "when record is retireable" do
       before do
-        @record = FactoryGirl.create(:vm_vmware)
+        @record = FactoryBot.create(:vm_vmware)
         allow(@record).to receive(:supports_retire?).and_return(true)
       end
 
@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::VmRetire do
 
     context "when record is not retiretable" do
       before do
-        @record = FactoryGirl.create(:vm_vmware)
+        @record = FactoryBot.create(:vm_vmware)
         allow(@record).to receive(:supports_retire?).and_return(false)
       end
 
@@ -22,7 +22,7 @@ describe ApplicationHelper::Button::VmRetire do
   describe '#disabled?' do
     context "button should not be disabled" do
       before do
-        @record = FactoryGirl.create(:vm_vmware)
+        @record = FactoryBot.create(:vm_vmware)
         allow(@record).to receive(:retired).and_return(true)
       end
 

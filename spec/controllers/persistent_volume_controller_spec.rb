@@ -1,6 +1,6 @@
 describe PersistentVolumeController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -22,7 +22,7 @@ describe PersistentVolumeController do
     expect(response.body).to_not be_empty
   end
 
-  let(:ems) { FactoryGirl.create(:ems_openshift) }
+  let(:ems) { FactoryBot.create(:ems_openshift) }
   let(:persistent_volume) { PersistentVolume.create(:parent => ems, :name => "Test Volume") }
 
   it "renders grid view" do
@@ -33,7 +33,7 @@ describe PersistentVolumeController do
     }
 
     post :show_list, :params => {:controller => 'persistent_volume', :id => persistent_volume.id}
-    expect(response).to render_template('layouts/gtl/_grid')
+    expect(response).to render_template('layouts/angular/_gtl')
     expect(response.status).to eq(200)
   end
 

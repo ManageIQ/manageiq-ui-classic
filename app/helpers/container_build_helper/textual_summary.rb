@@ -13,9 +13,7 @@ module ContainerBuildHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualTags.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   def textual_group_build_instances
@@ -55,7 +53,7 @@ module ContainerBuildHelper::TextualSummary
   # Items
   #
   def textual_creation_timestamp
-    format_timezone(@record.ems_created_on)
+    {:label => _('Creation Timestamp'), :value => format_timezone(@record.ems_created_on)}
   end
 
   def textual_resource_version
@@ -77,7 +75,7 @@ module ContainerBuildHelper::TextualSummary
       seconds /= 1_000_000_000
     end
 
-    minutes, seconds = seconds.divmod 60
+    minutes, seconds = seconds.divmod(60)
     "#{minutes}m#{seconds}s"
   end
 

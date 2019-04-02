@@ -1,5 +1,5 @@
 describe PxeController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -23,10 +23,12 @@ describe PxeController do
   end
 
   describe 'x_button' do
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+    let(:zone) { FactoryBot.create(:zone) }
+
     before do
       ApplicationController.handle_exceptions = true
     end
-
     describe 'corresponding methods are called for allowed actions' do
       PxeController::PXE_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
@@ -42,15 +44,13 @@ describe PxeController do
     end
 
     it "Pressing Refresh button should show display name in the flash message" do
-      pxe = FactoryGirl.create(:pxe_server)
-      allow(MiqServer).to receive(:my_zone).and_return("default")
+      pxe = FactoryBot.create(:pxe_server)
       controller.instance_variable_set(:@_params, :id => pxe.id)
       controller.instance_variable_set(:@sb,
                                        :trees       => {
                                          :pxe_tree => {:active_node => "ps-#{pxe.id}"}
                                        },
-                                       :active_tree => :pxe_tree
-                                      )
+                                       :active_tree => :pxe_tree)
       allow(controller).to receive(:get_node_info)
       allow(controller).to receive(:replace_right_cell)
       controller.send(:pxe_server_refresh)
@@ -71,6 +71,72 @@ describe PxeController do
                                        :log_verify       => "[FILTERED]")
       controller.send(:restore_password)
       expect(assigns(:edit)[:new][:log_password]).to eq(ps.authentication_password(:default))
+    end
+  end
+
+  describe "#tree_select" do
+    before { login_as FactoryBot.create(:user_admin) }
+
+    subject { post :tree_select, :params => {:id => 'root'} }
+
+    render_views
+    it do
+      bypass_rescue
+      is_expected.to have_http_status 200
+    end
+  end
+
+  describe 'replace_right_cell' do
+    it "Can build all the trees" do
+      seed_session_trees('pxe', :pxe_tree, 'root')
+      session_to_sb
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderPxeServers),
+          instance_of(TreeBuilderPxeImageTypes),
+          instance_of(TreeBuilderPxeImageTypes),
+          instance_of(TreeBuilderPxeCustomizationTemplates),
+          instance_of(TreeBuilderIsoDatastores)
+        )
+      )
+      expect(controller).to receive(:render)
+      controller.send(:replace_right_cell, :replace_trees => %i(pxe_servers pxe_image_types customization_templates iso_datastores))
+    end
+  end
+
+  context "GenericSessionMixin" do
+    let(:lastaction) { 'lastaction' }
+    let(:display) { 'display' }
+    let(:current_page) { 'current_page' }
+
+    describe '#get_session_data' do
+      it "Sets variables correctly" do
+        allow(controller).to receive(:session).and_return(:pxe_lastaction   => lastaction,
+                                                          :pxe_display      => display,
+                                                          :pxe_current_page => current_page)
+        controller.send(:get_session_data)
+
+        expect(controller.instance_variable_get(:@title)).to eq("PXE")
+        expect(controller.instance_variable_get(:@layout)).to eq("pxe")
+        expect(controller.instance_variable_get(:@lastaction)).to eq(lastaction)
+        expect(controller.instance_variable_get(:@display)).to eq(display)
+        expect(controller.instance_variable_get(:@current_page)).to eq(current_page)
+      end
+    end
+
+    describe '#set_session_data' do
+      it "Sets session correctly" do
+        controller.instance_variable_set(:@lastaction, lastaction)
+        controller.instance_variable_set(:@display, display)
+        controller.instance_variable_set(:@current_page, current_page)
+        controller.send(:set_session_data)
+
+        expect(controller.session[:pxe_lastaction]).to eq(lastaction)
+        expect(controller.session[:pxe_display]).to eq(display)
+        expect(controller.session[:pxe_current_page]).to eq(current_page)
+      end
     end
   end
 end

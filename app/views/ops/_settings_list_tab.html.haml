@@ -8,7 +8,7 @@
       %table.table.table-striped.table-bordered.table-hover
         %tbody
           - @zones.sort_by(&:description).each do |z|
-            %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{to_cid(z.id)}');", :title => _("View this Zone's settings")}
+            %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{z.id}');", :title => _("View this Zone's settings")}
               %td.table-view-pf-select
                 %i.pficon.pficon-zone
               %td
@@ -25,13 +25,7 @@
       = render :partial => "schedules_list"
     - elsif tree_node == "xx-sis"
       = render :partial => "aps_list"
-    - elsif tree_node == "xx-l"
-      = render :partial => "ldap_regions_list"
     - elsif tree_node.split("-").first == "sis"
       = render :partial => "ap_show"
     - elsif tree_node.split("-").first == "msc"
       = render :partial => "schedule_show"
-    - elsif tree_node.split("-").first == "lr"
-      = render :partial => "ldap_region_show"
-    - elsif tree_node.split("-").first == "ld"
-      = render :partial => "ldap_domain_show"

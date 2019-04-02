@@ -9,7 +9,7 @@ module FlavorHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        cpus cpu_cores memory supports_32_bit supports_64_bit supports_hvm supports_paravirtual
+        cpus cpu_cores memory enabled publicly_available supports_32_bit supports_64_bit supports_hvm supports_paravirtual
         block_storage_based_only cloud_subnet_required
       )
     )
@@ -24,7 +24,7 @@ module FlavorHelper::TextualSummary
   #
 
   def textual_memory
-    @record.memory && number_to_human_size(@record.memory, :precision => 1)
+    {:label => _('Memory'), :value => @record.memory && number_to_human_size(@record.memory, :precision => 1)}
   end
 
   def textual_cpus
@@ -33,6 +33,14 @@ module FlavorHelper::TextualSummary
 
   def textual_cpu_cores
     {:label => _("CPU Cores"), :value => @record.cpu_cores}
+  end
+
+  def textual_enabled
+    {:label => _("Enabled"), :value => @record.enabled}
+  end
+
+  def textual_publicly_available
+    {:label => _("Public"), :value => @record.publicly_available}
   end
 
   def textual_supports_32_bit
@@ -61,16 +69,15 @@ module FlavorHelper::TextualSummary
   end
 
   def textual_cloud_subnet_required
-    @record.cloud_subnet_required?
+    {:label => _('Cloud Subnet Required'), :value => @record.cloud_subnet_required?}
   end
 
   def textual_instances
-    label = ui_lookup(:tables => "vm_cloud")
     num   = @record.number_of(:vms)
-    h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
-    if num > 0 && role_allows?(:feature => "vm_show_list")
+    h     = {:label => _('Instances'), :icon => "pficon pficon-virtual-machine", :value => num}
+    if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
-      h[:title] = _("Show all %{label}") % {:label => label}
+      h[:title] = _("Show all Instances")
     end
     h
   end

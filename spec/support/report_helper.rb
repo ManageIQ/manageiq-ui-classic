@@ -23,7 +23,7 @@ module Spec
           :dims        => 1,
           :group       => "y",
           :rpt_options => {:summary => {:hide_detail_rows => false}},
-          :col_options => {"num_cpu" => {:grouping => [:avg, :max, :min, :total]},
+          :col_options => {"num_cpu" => {:grouping => %i(avg max min total)},
                            "name"    => {:break_label => "Cloud/Infrastructure Provider : Name: "}},
           :graph       => {:type => "Column", :mode => "values", :column => "Vm-num_cpu:total", :count => 2, :other => other},
           :extras      => {},
@@ -71,6 +71,33 @@ module Spec
         report
       end
 
+      def null_data_chart_with_basic_condition
+        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp:
+          INCLUDES:
+            field: Name
+            value: Amazon
+        ')
+        null_data_chart.tap { |r| r.update(:conditions => exp) }
+      end
+
+      def null_data_chart_with_complex_condition
+        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp:
+          and:
+          - IS:
+              field: VmPerformance-timestamp
+              value: Last Hour
+          - ">":
+              value: "0"
+              field: VmPerformance-cpu_usage_rate_average
+          - INCLUDES:
+              field: VmPerformance.vm-type
+              value: Amazon
+        ')
+        null_data_chart.tap { |r| r.update(:conditions => exp) }
+      end
+
       def numeric_chart_simple_with_long_strings
         report = MiqReport.new(
           :db          => "Host",
@@ -89,7 +116,7 @@ module Spec
         report.table = Ruport::Data::Table.new(
           :column_names => %w(name ram_size id),
           :data         => [
-            [long_category,  512, 1],
+            [long_category, 512, 1],
             ['ladas', 1024, 2],
             ['joker', 2024, 3],
           ]
@@ -215,23 +242,23 @@ module Spec
 
       def cu_chart_without_grouping
         report = MiqReport.new(
-          :db          => "VimPerformanceDaily",
-          :cols        => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
-          :include     => {"resource" => {"columns" => %w(cpu_usagemhz_rate_average_high_over_time_period cpu_usagemhz_rate_average_low_over_time_period)}},
-          :col_order   => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
-          :headers     => ["Date/Time", "Avg Used", "Max Available"],
-          :order       => "Ascending",
-          :sortby      => %w(timestamp),
-          :group       => "n",
-          :graph       => {:type => "Line", :columns => %w(cpu_usagemhz_rate_average max_derived_cpu_available)},
-          :extras      => {:trend => {"trend_max_cpu_usagemhz_rate_average|max_derived_cpu_available"=>"Trending Down"}}
+          :db        => "VimPerformanceDaily",
+          :cols      => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :include   => {"resource" => {"columns" => %w(cpu_usagemhz_rate_average_high_over_time_period cpu_usagemhz_rate_average_low_over_time_period)}},
+          :col_order => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :headers   => ["Date/Time", "Avg Used", "Max Available"],
+          :order     => "Ascending",
+          :sortby    => %w(timestamp),
+          :group     => "n",
+          :graph     => {:type => "Line", :columns => %w(cpu_usagemhz_rate_average max_derived_cpu_available)},
+          :extras    => {:trend => {"trend_max_cpu_usagemhz_rate_average|max_derived_cpu_available"=>"Trending Down"}}
         )
 
         report.table = Ruport::Data::Table.new(
           :column_names => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
           :data         => [
-            [Time.zone.local(2017, 8, 19, 0, 0, 0), 19986.0, 41584.0],
-             [Time.zone.local(2017, 8, 20, 0, 0, 0), 205632.0, 41584.0]
+            [Time.zone.local(2017, 8, 19, 0, 0, 0), 19_986.0, 41_584.0],
+            [Time.zone.local(2017, 8, 20, 0, 0, 0), 205_632.0, 41_584.0]
           ]
         )
         report
@@ -255,9 +282,30 @@ module Spec
         report.table = Ruport::Data::Table.new(
           :column_names => %w(timestamp cpu_usagemhz_rate_average__none_ max_derived_cpu_available_xa),
           :data         => [
-            [Time.zone.local(2017, 8, 19, 0, 0, 0), 19986.0, 41584.0],
-             [Time.zone.local(2017, 8, 20, 0, 0, 0), 205632.0, 41584.0]
+            [Time.zone.local(2017, 8, 19, 0, 0, 0), 19_986.0, 41_584.0],
+            [Time.zone.local(2017, 8, 20, 0, 0, 0), 205_632.0, 41_584.0]
           ]
+        )
+        report
+      end
+
+      def cu_chart_with_no_data
+        report = MiqReport.new(
+          :db        => "VimPerformanceDaily",
+          :cols      => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :include   => {"resource" => {"columns" => %w(cpu_usagemhz_rate_average_high_over_time_period cpu_usagemhz_rate_average_low_over_time_period)}},
+          :col_order => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :headers   => ["Date/Time", "Avg Used", "Max Available"],
+          :order     => "Ascending",
+          :sortby    => %w(timestamp),
+          :group     => "n",
+          :graph     => {:type => "Line", :columns => %w(cpu_usagemhz_rate_average max_derived_cpu_available)},
+          :extras    => {:trend => {"trend_max_cpu_usagemhz_rate_average|max_derived_cpu_available"=>"Trending Down"}}
+        )
+
+        report.table = Ruport::Data::Table.new(
+          :column_names => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :data         => []
         )
         report
       end
@@ -267,7 +315,6 @@ module Spec
          Lord of the Seven Kingdoms, Protector of the Realm, Khaleesi of the Great Grass Sea, called Daenerys Stormborn, the Unburnt,\
           Mother of Dragons.'
       end
-
 
       def long_header
         "Here is header loooooong as hell"

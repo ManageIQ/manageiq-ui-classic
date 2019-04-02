@@ -21,7 +21,6 @@ module Sandbox
       :tree       => name,
       :type       => type,
       :leaf       => leaf,
-      :add_root   => true,
       :open_nodes => []
     }
 
@@ -58,11 +57,11 @@ module Sandbox
     db_tree
     df_tree
     diagnostics_tree
-    dialog_edit_tree
     dialog_import_export_tree
     dialogs_tree
     event_tree
     export_tree
+    generic_object_definitions_tree
     images_filter_tree
     images_tree
     infra_networking_tree
@@ -111,22 +110,21 @@ module Sandbox
   ACCORD_WHITELIST = %w(
     ab
     action
+    ae
     alert
     alert_profile
     automation_manager_providers
     automation_manager_cs_filter
     automation_manager_configuration_scripts
+    bottlenecks
     cb_assignments
     cb_rates
     cb_reports
     configuration_scripts
     condition
-    containers
-    containers_filter
     configuration_manager_cs_filter
     configuration_manager_providers
     customization_templates
-    datastores
     db
     diagnostics
     dialog_import_export
@@ -161,6 +159,7 @@ module Sandbox
     templates_filter
     templates_images_filter
     templates_images_filter
+    utilization
     vandt
     vmdb
     vms_filter

@@ -1,6 +1,6 @@
 describe VmOrTemplateController do
-  let(:template_vmware) { FactoryGirl.create(:template_vmware, :name => 'template_vmware Name') }
-  let(:vm_vmware)       { FactoryGirl.create(:vm_vmware, :name => "vm_vmware Name") }
+  let(:template_vmware) { FactoryBot.create(:template_vmware, :name => 'template_vmware Name') }
+  let(:vm_vmware)       { FactoryBot.create(:vm_vmware, :name => "vm_vmware Name") }
   before { stub_user(:features => :all) }
 
   # All of the x_button is a suplement for Rails routes that is written in
@@ -19,7 +19,7 @@ describe VmOrTemplateController do
     describe 'corresponding methods are called for allowed actions' do
       ApplicationController::Explorer::X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         actual_action = 'vm_' + action_name
-        actual_method = [:s1, :s2].include?(method) ? actual_action : method.to_s
+        actual_method = %i(s1 s2).include?(method) ? actual_action : method.to_s
 
         it "calls the appropriate method: '#{actual_method}' for action '#{actual_action}'" do
           expect(controller).to receive(actual_method)
@@ -37,6 +37,7 @@ describe VmOrTemplateController do
       before { controller.instance_variable_set(:@_orig_action, "x_history") }
 
       it "should set correct VM for right-sizing when on vm list view" do
+        allow(controller).to receive(:find_records_with_rbac) { [vm_vmware] }
         expect(controller).to receive(:replace_right_cell)
         post :x_button, :params => { :pressed => "vm_right_size", :id => vm_vmware.id, :check_10r839 => '1' }
         expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -95,13 +96,21 @@ describe VmOrTemplateController do
         seed_session_trees('vm_or_template', :templates_images_filter_tree, 'root')
 
         get :explorer
-        expect(response.body).to match(/{"text":\s*"template_vmware Name"}/)
+        expect(response.body).to include("modelName: 'MiqTemplate'")
+        expect(response.body).to include("activeTree: 'templates_images_filter_tree'")
+        expect(response.body).to include("gtlType: 'list'")
+        expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+        expect(response.body).to include("showUrl: '/vm_or_template/x_show/'")
       end
 
       it 'show a vm in the vms instances list' do
         vm_vmware
         get :explorer
-        expect(response.body).to match(/{"text":\s*"vm_vmware Name"}/)
+        expect(response.body).to include("modelName: 'Vm'")
+        expect(response.body).to include("activeTree: 'vms_instances_filter_tree'")
+        expect(response.body).to include("gtlType: 'list'")
+        expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+        expect(response.body).to include("showUrl: '/vm_or_template/x_show/'")
       end
     end
 
@@ -121,7 +130,7 @@ describe VmOrTemplateController do
 
           post :tree_select, :params => { :id => 'root', :format => :js }
 
-          expect(response).to render_template('layouts/gtl/_list')
+          expect(response).to render_template('layouts/angular/_gtl')
           expect(response.status).to eq(200)
         end
       end

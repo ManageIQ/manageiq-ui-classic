@@ -1,16 +1,26 @@
 describe TreeBuilderServiceCatalog do
-  include CompressedIds
   before do
     Tenant.seed
-    @catalog = FactoryGirl.create(:service_template_catalog, :name => "My Catalog")
-    FactoryGirl.create(:service_template,
+    @catalog = FactoryBot.create(:service_template_catalog, :name => "My Catalog")
+
+    FactoryBot.create(:service_template_ansible_playbook,
                        :name                     => "Display in Catalog",
                        :service_template_catalog => @catalog,
                        :display                  => true)
-    FactoryGirl.create(:service_template,
+    FactoryBot.create(:service_template,
                        :name                     => "Do not Display in Catalog",
                        :service_template_catalog => @catalog,
                        :display                  => false)
+    FactoryBot.create(:service_template,
+                       :name                     => "Display in Catalog too",
+                       :service_type             => 'generic_ansible_tower',
+                       :service_template_catalog => @catalog,
+                       :display                  => true)
+    FactoryBot.create(:service_template_ansible_playbook,
+                       :service_type             => 'generic_ansible_playbook',
+                       :name                     => "Display in Catalog Playbook",
+                       :service_template_catalog => @catalog,
+                       :display                  => true)
     @tree = TreeBuilderServiceCatalog.new(:svccat_tree, "svccat", {})
   end
 
@@ -21,7 +31,7 @@ describe TreeBuilderServiceCatalog do
 
   it "#x_get_tree_stc_kids returns items that are set to be displayed in catalog" do
     items = @tree.send(:x_get_tree_stc_kids, @catalog, false)
-    expect(items.size).to eq(1)
+    expect(items.size).to eq(3)
     expect(items.first.name).to eq("Display in Catalog")
   end
 end

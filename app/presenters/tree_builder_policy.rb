@@ -1,17 +1,11 @@
 class TreeBuilderPolicy < TreeBuilder
   has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-  has_kids_for MiqEventDefinition, [:x_get_tree_ev_kids, :parents]
+  has_kids_for MiqEventDefinition, %i(x_get_tree_ev_kids parents)
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true,
-     :lazy     => false}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def compliance_control_kids(mode)
@@ -21,33 +15,22 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerGroup      => _("Pod Compliance Policies"),
                                  :ContainerNode       => _("Container Node Compliance Policies"),
                                  :ContainerImage      => _("Container Image Compliance Policies"),
-                                 :ExtManagementSystem => _("Provider Compliance Policies")},
+                                 :ContainerProject    => _("Container Project Compliance Policies"),
+                                 :ExtManagementSystem => _("Provider Compliance Policies"),
+                                 :PhysicalServer      => _("Physical Infrastructure Compliance Policies")},
                  :control    => {:Host                => _("Host Control Policies"),
                                  :Vm                  => _("Vm Control Policies"),
                                  :ContainerReplicator => _("Replicator Control Policies"),
                                  :ContainerGroup      => _("Pod Control Policies"),
                                  :ContainerNode       => _("Container Node Control Policies"),
                                  :ContainerImage      => _("Container Image Control Policies"),
-                                 :ExtManagementSystem => _("Provider Control Policies")}}
+                                 :ContainerProject    => _("Container Project Control Policies"),
+                                 :ExtManagementSystem => _("Provider Control Policies"),
+                                 :PhysicalServer      => _("Physical Infrastructure Control Policies")}}
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
-      icon = case model.to_s
-             when 'Host'
-               'pficon pficon-screen'
-             when 'Vm'
-               'pficon pficon-virtual-machine'
-             when 'ContainerReplicator'
-               'pficon pficon-replicator'
-             when 'ContainerGroup'
-               'fa fa-cubes'
-             when 'ContainerNode'
-               'pficon pficon-container-node'
-             when 'ContainerImage'
-               'pficon pficon-image'
-             when 'ExtManagementSystem'
-               'pficon pficon-server'
-             end
+      icon = model.to_s.safe_constantize.try(:decorate).try(:fonticon)
       {
         :id   => "#{mode}-#{model.name.camelize(:lower)}",
         :icon => icon,
@@ -60,7 +43,7 @@ class TreeBuilderPolicy < TreeBuilder
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Policies"),
+      :text    => t = _("All Policies"),
       :tooltip => t
     }
   end
@@ -79,8 +62,6 @@ class TreeBuilderPolicy < TreeBuilder
 
   # level 2 & 3...
   def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :policy)
-
     # level 2 - host, vm, etc. under compliance/control
     if %w(compliance control).include?(parent[:id])
       mode = parent[:id]
@@ -116,6 +97,16 @@ class TreeBuilderPolicy < TreeBuilder
 
     success = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :success) : [])
     failure = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :failure) : [])
+    unless count_only
+      add_flag_to(success, :success) unless success.empty?
+      add_flag_to(failure, :failure) unless failure.empty?
+    end
     success + failure
+  end
+
+  def add_flag_to(array, flag)
+    array.each do |i|
+      i.instance_variable_set(:@flag, flag)
+    end
   end
 end

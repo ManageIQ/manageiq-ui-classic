@@ -37,27 +37,27 @@ module ConfigurationJobHelper::TextualSummary
     else
       h[:value] = service.name
       h[:title] = _("Show this Service")
-      h[:link]  = url_for_only_path(:controller => 'service', :action => 'show', :id => to_cid(service.id))
+      h[:link]  = url_for_only_path(:controller => 'service', :action => 'show', :id => service.id)
     end
     h
   end
 
   def textual_provider
-    h = {:label => _("Provider"), :image => "svg/vendor-automation_manager_configuration.svg"}
+    h = {:label => _("Provider"), :image => @record.ext_management_system.try(:decorate).try(:fileicon)}
     provider = @record.ext_management_system
     if provider.nil?
       h[:value] = _("None")
     else
       h[:value] = provider.name
       h[:title] = _("Show this Parent Provider")
-      h[:link]  = url_for_only_path(:controller => 'provider_foreman', :action => 'explorer', :id => "at-#{to_cid(provider.id)}")
+      h[:link]  = url_for_only_path(:controller => 'automation_manager', :action => 'explorer', :accordion => "automation_manager_providers", :id => "at-#{provider.id}")
     end
     h
   end
 
   def textual_parameters
     num   = @record.number_of(:parameters)
-    h     = {:label => _("Parameters"), :icon => "product product-parameter", :value => num}
+    h     = {:label => _("Parameters"), :icon => "ff ff-parameter", :value => num}
     if num > 0
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'parameters', :id => @record)
       h[:title] = _("Show all parameters")

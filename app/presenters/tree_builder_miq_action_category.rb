@@ -5,36 +5,27 @@ class TreeBuilderMiqActionCategory < TreeBuilder
 
   def override(node, object, _pid, _options)
     leaf = !object.category?
-    node[:cfmeNoClick] = !leaf
+    node[:selectable] = leaf
     node[:icon] = leaf ? nil : "fa fa-tag"
     node
   end
 
-  def initialize(name, type, sandbox, build = true, tenant_name = nil)
-    @tenant_name = tenant_name
+  def initialize(name, type, sandbox, build = true, **params)
+    @root = params[:root]
     super(name, type, sandbox, build)
   end
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
-      :expand => true,
-      :lazy   => false
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(
-      :id_prefix => "cat_tree",
       :click_url => "/miq_policy/action_tag_pressed/",
-      :onclick   => "miqOnClickTagCat"
-    )
+      :onclick   => "miqOnClickGeneric"
+    }
   end
 
   def root_options
     {
-      :title   => @tenant_name,
-      :tooltip => @tenant_name,
+      :text    => @root,
+      :tooltip => @root,
       :icon    => "fa fa-tag"
     }
   end

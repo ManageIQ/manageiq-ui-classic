@@ -1,7 +1,10 @@
-/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn */
+/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash miqFlashLater miqFlashSaved */
 
-ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log', function($timeout, $document, $q, $log) {
-  this.storedPasswordPlaceholder = "●●●●●●●●";
+ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q, API, $window) {
+  var miqService = this;
+
+  this.storedPasswordPlaceholder = '●●●●●●●●';
+  this.deploymentExists = 'EXISTS';
 
   this.showButtons = function() {
     miqButtons('show');
@@ -29,7 +32,11 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log
   };
 
   this.jqueryRequest = function(url, options) {
-    miqJqueryRequest(url, options);
+    return miqJqueryRequest(url, options);
+  };
+
+  this.refreshSelectpicker = function() {
+    $('select').selectpicker('refresh');
   };
 
   this.sparkleOn = function() {
@@ -40,61 +47,78 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log
     miqSparkleOff();
   };
 
-  // FIXME: merge with add_flash in miq_application.js
-  this.miqFlash = function(type, msg) {
-    $('#flash_msg_div').text("");
-    $("#flash_msg_div").show();
-    var outerMost = $("<div id='flash_text_div' onclick=$('#flash_msg_div').text(''); title='" + __("Click to remove messages") + "'>");
-    var txt = $('<strong>' + msg + '</strong>');
-
-    if(type == "error") {
-      var outerBox = $('<div class="alert alert-danger">');
-      var innerSpan = $('<span class="pficon pficon-error-circle-o">');
-    } else if (type == "warn") {
-      var outerBox = $('<div class="alert alert-warning">');
-      var innerSpan = $('<span class="pficon pficon-warning-triangle-o">');
-    } else if (type == "success") {
-      var outerBox = $('<div class="alert alert-success">');
-      var innerSpan = $('<span class="pficon pficon-ok">');
-    }
-    $(outerBox).append(innerSpan);
-    $(outerBox).append(txt);
-    $(outerMost).append(outerBox);
-    $(outerMost).appendTo($("#flash_msg_div"));
+  this.miqFlash = function(type, msg, options) {
+    miqService.miqFlashClear();
+    add_flash(msg, type, options);
   };
 
+  // FIXME: usually we just hide it, merge the logic
   this.miqFlashClear = function() {
-    $('#flash_msg_div').text("");
-  }
+    $('#flash_msg_div').text('');
+  };
+
+  this.miqFlashLater = function(msgObj) {
+    miqFlashLater(msgObj);
+  };
+
+  this.miqFlashSaved = function() {
+    miqFlashSaved();
+  };
 
   this.saveable = function(form) {
     return form.$valid && form.$dirty;
   };
 
-  this.dynamicAutoFocus = function(element) {
-    $timeout(function() {
-      var queryResult = $document[0].getElementById(element);
-      if (queryResult) {
-        queryResult.focus();
-      }
-    }, 200);
+  this.detectWithRest = function($event, url) {
+    angular.element('#button_name').val('detect');
+    miqSparkleOn();
+    return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
   };
 
-  this.validateWithAjax = function (url) {
+  this.networkProviders = function(options) {
+    options = Object.assign(options || {}, {
+      attributes: ['id', 'name'],
+      handleFailure: miqService.handleFailure,
+    });
+    var url = '/api/providers?collection_class=ManageIQ::Providers::NetworkManager&expand=resources';
+
+    if (options.attributes) {
+      url += '&attributes=' + options.attributes.map(encodeURIComponent).join(',');
+    }
+
+    return API.get(url)
+      .then(function(response) {
+        return response.resources || [];
+      })
+      .catch(options.handleFailure);
+  };
+
+  this.validateWithAjax = function(url, model) {
     miqSparkleOn();
-    miqAjaxButton(url, true);
+    miqAjaxButton(url, model || true);
   };
 
   this.validateWithREST = function($event, credType, url, formSubmit) {
     angular.element('#button_name').val('validate');
     angular.element('#cred_type').val(credType);
-    if(formSubmit) {
+    if (formSubmit) {
       miqSparkleOn();
-      return miqRESTAjaxButton(url, $event.target, 'json');
+      return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
     }
-    else {
-      $event.preventDefault();
-    }
+    $event.preventDefault();
+  };
+
+  this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
+    miqService.validateWithREST($event, authType, url, formSubmit)
+      .then(function success(data) {
+        if (data.level === 'error') {
+          angularForm.default_auth_status.$setViewValue(false);
+        } else {
+          angularForm.default_auth_status.$setViewValue(true);
+        }
+        miqService.miqFlash(data.level, data.message);
+        miqService.sparkleOff();
+      });
   };
 
   this.disabledClick = function($event) {
@@ -124,11 +148,66 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log
 
     return serializedObj;
   };
+
   this.handleFailure = function(e) {
     miqSparkleOff();
-    if (e.message) {
-      $log.log(e.message);
+
+    var message = __('Unknown error');
+    if (e.data && e.data.error && e.data.error.message) {
+      message = e.data.error.message;
+    } else if (e.error && e.error.message) {
+      message = e.error.message;
+    } else if (e.message) {
+      message = e.message;
     }
+
+    console.error(message);
+    miqService.miqFlash('error', message);
+
     return $q.reject(e);
+  };
+
+  this.getCloudNetworksByEms = function(callback) {
+    return function(id) {
+      if (!id) {
+        callback([]);
+        return;
+      }
+      miqService.sparkleOn();
+
+      API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id)
+        .then(getCloudNetworksByEmsData)
+        .catch(miqService.handleFailure);
+    };
+
+    function getCloudNetworksByEmsData(data) {
+      callback(data);
+      miqService.sparkleOff();
+    }
+  };
+
+  this.getProviderTenants = function(callback) {
+    return function(id) {
+      if (!id) {
+        callback([]);
+        return;
+      }
+      miqService.sparkleOn();
+
+      API.get('/api/providers/' + id + '/cloud_tenants?expand=resources&attributes=id,name')
+        .then(getCloudTenantsByEms)
+        .catch(miqService.handleFailure);
+    };
+
+    function getCloudTenantsByEms(data) {
+      callback(data);
+      miqService.sparkleOff();
+    }
+  };
+
+  this.redirectBack = function(message, flashType, redirectUrl) {
+    miqFlashLater({message: message, level: flashType});
+
+    $window.location.href = redirectUrl;
   };
 }]);

@@ -1,0 +1,13 @@
+= render :partial => "layouts/flash_msg"
+.container-fluid.container-tiles-pf.ems-physical-infra-dashboard
+  .row.row-tile-pf
+    %aggregate-status-card{:provider_id => @record.id, :provider_type => 'ems_physical_infra'}
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
+      %server-health-pie-chart{:provider_id => @record.id}
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-6
+      %recent-servers-line-chart{:provider_id => @record.id}
+
+  :javascript
+    miq_bootstrap('.ems-physical-infra-dashboard');

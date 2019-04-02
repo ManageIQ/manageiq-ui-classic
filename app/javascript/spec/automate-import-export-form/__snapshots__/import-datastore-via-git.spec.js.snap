@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Import datastore via git component should render correctly 1`] = `
+<div>
+  <MiqFormRenderer
+    disableSubmit={
+      Array [
+        "pristine",
+        "invalid",
+      ]
+    }
+    initialValues={
+      Object {
+        "git_verify_ssl": true,
+      }
+    }
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "text-field",
+            "label": "Git URL",
+            "name": "git_url",
+            "validate": Array [
+              Object {
+                "type": "required-validator",
+              },
+              Object {
+                "message": "Please provide a valid git URL",
+                "pattern": "^(http|https)://.*",
+                "type": "pattern-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "label": "Username",
+            "name": "git_username",
+          },
+          Object {
+            "component": "text-field",
+            "label": "Password",
+            "name": "git_password",
+            "type": "password",
+          },
+          Object {
+            "component": "checkbox",
+            "label": "Verify Peer Certificate",
+            "name": "git_verify_ssl",
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;

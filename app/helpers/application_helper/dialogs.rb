@@ -9,6 +9,24 @@ module ApplicationHelper::Dialogs
     values
   end
 
+  def dialog_dropdown_selected_value(field)
+    if field.values.blank?
+      return field.value
+    end
+    if field.value.kind_of?(String) && field.value.include?(',')
+      values = field.values.map do |a|
+        a.map!(&:to_s)
+      end.to_h
+      result = field.value.split(',').collect do |val|
+        values.include?(val) ? values[val] : val
+      end
+      result.join(',')
+    else
+      values = field.values.to_h
+      values.include?(field.value) ? values[field.value] : field.value
+    end
+  end
+
   def category_tags(category_id)
     classification = Classification.find_by(:id => category_id)
     return [] if classification.nil?
@@ -47,8 +65,8 @@ module ApplicationHelper::Dialogs
 
   def textarea_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {
-      :class     => "dynamic-text-area-#{field.id} form-control",
-      :size      => "50x6"
+      :class => "dynamic-text-area-#{field.id} form-control",
+      :size  => "50x6"
     }
 
     extra_options = {"data-miq_observe" => {
@@ -77,21 +95,20 @@ module ApplicationHelper::Dialogs
     miq_observe_options = {
       :url => url
     }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json
-    extra_options = {"data-miq_observe_date" => miq_observe_options}
+    extra_options = {"data-miq_observe_date" => miq_observe_options,
+                     "data_date_start"       => field.show_past_dates ? nil : Time.zone.now.iso8601}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
   def time_tag_options(field, url, hour_or_min, auto_refresh_options_hash)
     tag_options = {:class => "dynamic-date-#{hour_or_min}-#{field.id}"}
-    extra_options = {"data-miq_observe" => {
-      :url => url
-    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
-
+    extra_options = {"data_date_start"  => field.show_past_dates ? nil : Time.zone.now.iso8601,
+                     "data-miq_observe" => {:url => url}.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def drop_down_options(field, url)
+  def drop_down_options(field, _url)
     tag_options = {:class => "dynamic-drop-down-#{field.id} selectpicker"}
     multiple = field.force_multi_value ? true : false
     extra_options = {
@@ -104,7 +121,7 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def radio_options(field, url, value, selected_value)
+  def radio_options(field, _url, value, selected_value)
     tag_options = {
       :type    => 'radio',
       :class   => field.id,
@@ -114,19 +131,6 @@ module ApplicationHelper::Dialogs
     }
 
     add_options_unless_read_only({}, tag_options, field)
-  end
-
-  def default_value_form_options(field_type, field_values, field_default_value)
-    no_default_value = [["<#{_('None')}>", nil]]
-    if field_values.empty?
-      values = no_default_value
-    else
-      values = field_values.collect(&:reverse)
-      values = no_default_value + values if field_type == "DialogFieldRadioButton"
-    end
-
-    selected = field_default_value || nil
-    options_for_select(values, selected)
   end
 
   def build_auto_refreshable_field_indicies(workflow)
@@ -154,6 +158,16 @@ module ApplicationHelper::Dialogs
     options.merge(:trigger => trigger_override)
   end
 
+  def force_old_dialogs?(dialog_locals, force_old_dialog_use)
+    return false if force_old_dialog_use == false
+
+    if dialog_locals
+      return dialog_locals[:force_old_dialog_use].to_s == "true"
+    else
+      return true
+    end
+  end
+
   private
 
   def auto_refresh_options(field, auto_refresh_options_hash)
@@ -165,7 +179,8 @@ module ApplicationHelper::Dialogs
         :field_index                     => auto_refresh_options_hash[:field_index],
         :auto_refreshable_field_indicies => auto_refresh_options_hash[:auto_refreshable_field_indicies],
         :current_index                   => auto_refresh_options_hash[:current_index],
-        :trigger                         => auto_refresh_options_hash[:trigger]
+        :trigger                         => auto_refresh_options_hash[:trigger],
+        :initial_trigger                 => auto_refresh_options_hash[:initial_trigger]
       }
     else
       {}

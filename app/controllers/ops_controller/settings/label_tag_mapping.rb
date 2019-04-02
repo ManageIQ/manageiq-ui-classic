@@ -1,16 +1,55 @@
+# frozen_string_literal: true
+
 module OpsController::Settings::LabelTagMapping
   extend ActiveSupport::Concern
+
+  # TODO: Multi-provider support is hacky:
+  # --------------------------------------
+  # Currently we store in labeled_resource_type an arbitrary string that
+  # sometimes looks like a model name, sometimes fake string like "Vm" -
+  # all that matters is these strings match what refresh passes to `map_labels`.
+  #
+  # In any case, this requires different providers use disjoint sets of strings.
+  MappableEntity = Struct.new(:prefix, :model)
+
+  MAPPABLE_ENTITIES = {
+    # TODO: support per-provider "All Amazon" etc?
+    # Currently we have only global "All".
+    # Global "All" categories are named "kubernetes::..." for backward compatibility.
+    nil                   => MappableEntity.new("kubernetes::",
+                                                nil),
+    "Vm"                  => MappableEntity.new("amazon:vm:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Vm"),
+    "VmOpenstack"         => MappableEntity.new("openstack:vm:",
+                                                "ManageIQ::Providers::Openstack::CloudManager::Vm"),
+    "VmAzure"             => MappableEntity.new("azure:vm:",
+                                                "ManageIQ::Providers::Azure::CloudManager::Vm"),
+    "Image"               => MappableEntity.new("amazon:image:",
+                                                "ManageIQ::Providers::Amazon::CloudManager::Template"),
+    "ContainerProject"    => MappableEntity.new("kubernetes:container_project:",
+                                                "ContainerProject"),
+    "ContainerRoute"      => MappableEntity.new("kubernetes:container_route:",
+                                                "ContainerRoute"),
+    "ContainerNode"       => MappableEntity.new("kubernetes:container_node:",
+                                                "ContainerNode"),
+    "ContainerReplicator" => MappableEntity.new("kubernetes:container_replicator:",
+                                                "ContainerReplicator"),
+    "ContainerService"    => MappableEntity.new("kubernetes:container_service:",
+                                                "ContainerService"),
+    "ContainerGroup"      => MappableEntity.new("kubernetes:container_group:",
+                                                "ContainerGroup"),
+    "ContainerBuild"      => MappableEntity.new("kubernetes:container_build:",
+                                                "ContainerBuild"),
+  }.freeze
 
   def label_tag_mapping_edit
     case params[:button]
     when "cancel"
       @lt_map = session[:edit][:lt_map] if session[:edit] && session[:edit][:lt_map]
       if !@lt_map || @lt_map.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping")})
+        add_flash(_("Add of new Container Label Tag Mapping was cancelled by the user"))
       else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => @lt_map.label_name})
+        add_flash(_("Edit of Container Label Tag Mapping \"%{name}\" was cancelled by the user"))
       end
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
@@ -51,23 +90,33 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def entity_ui_name_or_all(entity)
-    if entity.nil?
-      _("<All>")
+    if entity
+      model = MAPPABLE_ENTITIES[entity].model
+      ui_lookup(:model => model)
     else
-      ui_lookup(:model => entity)
+      _("<All>")
+    end
+  end
+
+  def entity_options
+    MAPPABLE_ENTITIES.collect do |entity, _provider|
+      [entity_ui_name_or_all(entity), entity]
     end
   end
 
   def label_tag_mapping_get_all
     # Current UI only supports any-value -> category mappings
-    mapping = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+    mappings = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+
+    # This renders into label_tag_mapping_form view, fields are different from other
+    # functions here, notably `:entity` is the translated ui name.
     @lt_mapping = []
-    mapping.each do |m|
+    mappings.each do |m|
       lt_map = {}
       lt_map[:id] = m.id
       lt_map[:entity] = entity_ui_name_or_all(m.labeled_resource_type)
       lt_map[:label_name] = m.label_name
-      lt_map[:category] = m.tag.category.description
+      lt_map[:category] = m.tag.classification.description
       @lt_mapping.push(lt_map)
     end
   end
@@ -78,13 +127,11 @@ module OpsController::Settings::LabelTagMapping
     @edit[:lt_map] = @lt_map
     @edit[:new] = {}
     @edit[:key] = "label_tag_mapping_edit__#{@lt_map.id || "new"}"
-    @edit[:new][:entity] = @lt_map.labeled_resource_type.nil? ? "<All>" : @lt_map.labeled_resource_type
+    @edit[:new][:entity] = @lt_map.labeled_resource_type
     @edit[:new][:label_name] = @lt_map.label_name
-    @edit[:new][:category] = @lt_map.tag.category.description
+    @edit[:new][:category] = @lt_map.tag.classification.description
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
-      [entity_ui_name_or_all(name), name]
-    end
+    @edit[:new][:options] = entity_options
     session[:edit] = @edit
   end
 
@@ -98,9 +145,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:new][:label_name] = nil
     @edit[:new][:category] = nil
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
-      [entity_ui_name_or_all(name), name]
-    end
+    @edit[:new][:options] = entity_options
     session[:edit] = @edit
   end
 
@@ -111,10 +156,12 @@ module OpsController::Settings::LabelTagMapping
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace(@refresh_div,
-                   :partial => @refresh_partial,
-                   :locals  => {:type       => "container_label_tag_mapping",
-                                :action_url => 'label_tag_mapping_field_changed'}) if @refresh_div
+      if @refresh_div
+        page.replace(@refresh_div,
+                     :partial => @refresh_partial,
+                     :locals  => {:type       => "container_label_tag_mapping",
+                                  :action_url => 'label_tag_mapping_field_changed'})
+      end
       page << javascript_for_miq_button_visibility_changed(@changed)
     end
   end
@@ -128,23 +175,12 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
-    entity_str = ''
-    prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
-
-    # The entity is a string in the form "Provider::ResourceType".
-    if entity && entity.include?('::')
-      prefix, entity = entity.split('::')
-      prefix.downcase!
-      entity_str = entity.underscore
-    else
-      entity_str = entity.underscore if entity
-    end
-
-    cat_name = "#{prefix}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
+    cat_prefix = MAPPABLE_ENTITIES[entity].prefix
+    cat_name = cat_prefix + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
     if Classification.find_by_name(cat_name)
-      add_flash(_("Mapping for %{entity}, %{label} already exists") %
+      add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
                   {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
       javascript_flash
       return
@@ -156,15 +192,15 @@ module OpsController::Settings::LabelTagMapping
                                                    :description  => cat_description,
                                                    :single_value => true,
                                                    :read_only    => true)
-        ContainerLabelTagMapping.create!(:labeled_resource_type => entity, :label_name => label_name,
-                                         :tag => category.tag)
+        ContainerLabelTagMapping.create!(:labeled_resource_type => entity,
+                                         :label_name            => label_name,
+                                         :tag                   => category.tag)
       end
     rescue StandardError => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
-                                                       :name  => label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\" was added") % {:name => label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => "root")
@@ -181,8 +217,7 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
-                                                       :name  => mapping.label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\" was saved") % {:name => mapping.label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => "root")
@@ -191,7 +226,7 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_delete
     mapping = ContainerLabelTagMapping.find(params[:id])
-    category = mapping.tag.category
+    category = mapping.tag.classification
     label_name = mapping.label_name
 
     deleted = false
@@ -201,12 +236,11 @@ module OpsController::Settings::LabelTagMapping
     end
 
     if deleted
-      add_flash(_("%{model} \"%{name}\": Delete successful") %
-                  {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => label_name})
+      add_flash(_("Container Label Tag Mapping \"%{name}\": Delete successful") % {:name => label_name})
       label_tag_mapping_get_all
       render :update do |page|
         page << javascript_prologue
-        page.replace_html 'settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab'
+        page.replace_html('settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab')
       end
     else
       mapping.errors.each { |field, msg| add_flash("#{field.to_s.capitalize} #{msg}", :error) }

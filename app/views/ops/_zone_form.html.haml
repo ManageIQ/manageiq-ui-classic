@@ -1,6 +1,6 @@
 - url = url_for_only_path(:action => 'zone_field_changed', :id => (@zone.id || "new"))
-= render :partial => "layouts/flash_msg"
-- disabled_name = !@zone.name.nil? && !@edit[:current][:name].nil?
+- unless @editing
+  = render :partial => "layouts/flash_msg"
 %h3
   = _("Zone Information")
 .form-horizontal
@@ -11,7 +11,7 @@
       = text_field_tag("name",
                         @edit[:new][:name],
                         :maxlength => 50,
-                        :disabled => disabled_name,
+                        :disabled => @editing,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       - unless @zone.id
@@ -47,20 +47,20 @@
       = _("Servers")
     .col-md-8
       = text_field_tag("ntp_server_1",
-                        @edit[:new][:ntp][:server][0],
-                        :maxlength => MAX_NAME_LEN,
+                        @edit.fetch_path(:new, :ntp, :server, 0),
+                        :maxlength => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       %br/
       = text_field_tag("ntp_server_2",
-                        @edit[:new][:ntp][:server][1],
-                        :maxlength => MAX_NAME_LEN,
+                        @edit.fetch_path(:new, :ntp, :server, 1),
+                        :maxlength => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       %br/
       = text_field_tag("ntp_server_3",
-                        @edit[:new][:ntp][:server][2],
-                        :maxlength => MAX_NAME_LEN,
+                        @edit.fetch_path(:new, :ntp, :server, 2),
+                        :maxlength => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
 = _("* Specified NTP settings apply to this zone only and are not global.")

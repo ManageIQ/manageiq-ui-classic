@@ -1,0 +1,14 @@
+- if @edit.nil?
+  %h3
+    = _('Filter Expression')
+  .form-horizontal.static
+    - if @group && @group.entitlement && @group.entitlement.filter_expression && @group.entitlement.filter_expression.kind_of?(MiqExpression)
+      = h(@group.entitlement.filter_expression.to_human)
+    - else
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("No Filter Expression defined")}
+- else
+  = render :partial => 'layouts/filter_expression',
+           :locals => {:expression_type => :filter_expression,
+                       :action          => "rbac_group_edit",
+                       :id              => @edit[:group_id] || 'new',
+                       :title           => _('Expression')}

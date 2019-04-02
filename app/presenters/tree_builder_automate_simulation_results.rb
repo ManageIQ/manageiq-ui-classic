@@ -2,29 +2,15 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
   include MiqAeClassHelper
 
   has_kids_for Hash, [:x_get_tree_hash_kids]
-  def initialize(name, type, sandbox, build = true, root = nil)
-    @root = root
+  def initialize(name, type, sandbox, build = true, **params)
+    @root = params[:root]
     super(name, type, sandbox, build)
   end
 
   private
 
-  def tree_init_options(_tree_name)
-    {
-      :full_ids => true,
-      :add_root => false,
-      :expand   => true,
-      :lazy     => false
-    }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => false)
-  end
-
-  def root_options
-    {}
+  def tree_init_options
+    {:full_ids => true}
   end
 
   def x_get_tree_roots(_count_only = false, _options = {})
@@ -41,21 +27,15 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       {
         :text    => t = "#{el.attributes["namespace"]} / #{el.attributes["class"]} / #{el.attributes["instance"]}",
         :tooltip => t,
-        :image   => '100/q.png'
+        :image   => 'svg/vendor-redhat.svg'
       }
     elsif el.name == "MiqAeAttribute"
       {
         :text    => el.attributes["name"],
         :tooltip => el.attributes["name"],
-        :icon    => 'product product-attribute'
+        :icon    => 'ff ff-attribute'
       }
-    elsif !el.text.blank?
-      {
-        :text => el.text,
-        :tip  => el.text,
-        :icon => ae_field_fonticon(el.name.underscore)
-      }
-    else
+    elsif el.name.starts_with?('MiqAeService')
       key = el.name.sub(/^MiqAeService/, '').gsub('_', '::')
       base_obj = key.safe_constantize.try(:new)
       obj = TreeNode.new(base_obj) if TreeNode.exists?(base_obj)
@@ -66,14 +46,21 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
         :icon    => obj ? obj.icon : nontreenode_icon(base_obj),
         :image   => obj ? obj.image : nil
       }
+    else
+      text = el.text.presence || el.name
+      {
+        :text => text,
+        :tip  => text,
+        :icon => ae_field_fonticon(el.name.underscore)
+      }
     end
   end
 
   def get_root_elements(el, idx)
     object = {
-      :id          => "e_#{idx}",
-      :elements    => el.each_element { |e| e },
-      :cfmeNoClick => true
+      :id         => "e_#{idx}",
+      :elements   => el.each_element { |e| e },
+      :selectable => false
     }.merge(lookup_attrs(el))
     object[:attributes] = el.attributes if object[:text] == el.name
     object
@@ -81,16 +68,14 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     kids = []
-    if parent[:attributes]
-      parent[:attributes].each_with_index do |k, idx|
-        object = {
-          :id          => "a_#{idx}",
-          :icon        => "product product-attribute",
-          :cfmeNoClick => true,
-          :text        => "#{k.first} = #{k.last}"
-        }
-        kids.push(object)
-      end
+    parent[:attributes]&.each_with_index do |k, idx|
+      object = {
+        :id         => "a_#{idx}",
+        :icon       => "ff ff-attribute",
+        :selectable => false,
+        :text       => "#{k.first} = #{k.last}"
+      }
+      kids.push(object)
     end
     Array(parent[:elements]).each_with_index do |el, i|
       kids.push(get_root_elements(el, i))
@@ -100,8 +85,6 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def nontreenode_icon(obj)
     case obj
-    when ArbitrationProfile
-      'fa fa-list-ul'
     when Authentication
       'fa fa-lock'
     when CloudResourceQuota
@@ -109,9 +92,9 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     when ContainerVolume
       'pficon pficon-volume'
     when GuestApplication
-      'product product-application'
+      'ff ff-software-package'
     when HostAggregate
-      'pficon pficon-screen'
+      'pficon pficon-container-node'
     when MiqRequest
       'fa fa-question'
     when Network

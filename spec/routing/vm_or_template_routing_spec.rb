@@ -37,7 +37,7 @@ describe VmOrTemplateController do
     drift_to_pdf
     drift_to_txt
     launch_html5_console
-    launch_vmware_console
+    launch_vmrc_console
     retirement_info
     vm_show
   ).each do |path|
@@ -97,7 +97,6 @@ describe VmOrTemplateController do
     sort_ds_grid
     sort_host_grid
     sort_iso_img_grid
-    squash_toggle
     tree_select
     users
     vm_pre_prov

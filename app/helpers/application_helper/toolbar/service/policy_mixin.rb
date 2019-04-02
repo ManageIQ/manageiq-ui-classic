@@ -14,9 +14,10 @@ module ApplicationHelper::Toolbar::Service::PolicyMixin
             'pficon pficon-edit fa-lg',
             N_('Edit tags for the selected Items'),
             N_('Edit Tags'),
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1+"),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => "1+"),
         ]
       ),
     ])

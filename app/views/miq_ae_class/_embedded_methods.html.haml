@@ -1,0 +1,47 @@
+#embedded_methods_div
+  - if !@in_a_form && @ae_method
+    - if !@record[:embedded_methods].nil? && !@record[:embedded_methods].empty?
+      %hr
+      %h3
+        = _('Embedded Methods')
+      %table.table.table-striped.table-hover.table-condensed.table-bordered
+        %thead
+          %th= _('Path')
+        %tbody
+          - @record[:embedded_methods].try(:each) do |method|
+            %tr
+              %td
+                %text_field_tag
+                  = _(method.to_s)
+  - else
+    %hr
+    %h3
+      = _('Embedded Methods')
+    #automate-inline-method-select{'ng-controller' => 'aeInlineMethodSelectionController as vm', 'ng-init' => "vm.selectable = {key: '^aem-(?!#{@selectable_methods}$)'};"}
+      .pull-right
+        %button.btn.btn-primary{:type        => "button",
+                                'ng-click'   => 'vm.openModal();',
+                                :align       => "left"}= _('Add Method')
+      .clearfix
+    :javascript
+      miq_bootstrap('#automate-inline-method-select', 'ManageIQ.automateSelector');
+    - if !@edit[:new][:embedded_methods].nil? && !@edit[:new][:embedded_methods].empty?
+      %table.table.table-striped.table-hover.table-condensed.table-bordered
+        %thead
+          %th= _('Path')
+          %th= _('Actions')
+        %tbody
+          - @edit[:new][:embedded_methods].try(:each_with_index) do |method, i|
+            %tr
+              %td
+                %text_field_tag
+                  = _(method.to_s)
+              %td{:class => "action-cell"}
+                = link_to(_('Remove'),
+                  {:action => "embedded_methods_remove", :id => i},
+                  {"data-miq_sparkle_on"  => true,
+                   "data-miq_sparkle_off" => true,
+                   'data-method'          => :post,
+                   :remote                => true,
+                   :class                 => "btn btn-default btn-block btn-sm",
+                   :title                 => _("Click to delete this input field from method")})

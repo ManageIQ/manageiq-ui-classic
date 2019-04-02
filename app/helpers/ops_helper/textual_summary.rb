@@ -3,7 +3,11 @@ module OpsHelper::TextualSummary
   # Groups
   #
 
+  TOP_TABLES_BY_COUNT = 5
+
   def textual_group_vmdb_connection_properties
+    return if @record.nil?
+
     TextualGroup.new(
       _("Properties"),
       %i(
@@ -14,18 +18,26 @@ module OpsHelper::TextualSummary
   end
 
   def textual_group_vmdb_tables_most_rows
-    TextualGroup.new(_("Tables with Most Rows"), %i(vmdb_tables_most_rows))
+    return if @record.nil?
+
+    TextualListview.new_from_hash(textual_vmdb_tables_most_rows)
   end
 
   def textual_group_vmdb_tables_largest_size
-    TextualGroup.new(_("Largest Tables"), %i(vmdb_tables_largest_size))
+    return if @record.nil?
+
+    TextualListview.new_from_hash(textual_vmdb_tables_largest_size)
   end
 
   def textual_group_vmdb_tables_most_wasted_space
-    TextualGroup.new(_("Tables with Most Wasted Space"), %i(vmdb_tables_most_wasted_space))
+    return if @record.nil?
+
+    TextualListview.new_from_hash(textual_vmdb_tables_most_wasted_space)
   end
 
   def textual_group_vmdb_connection_capacity_data
+    return if @record.nil?
+
     TextualGroup.new(
       _("Capacity Data"),
       %i(
@@ -33,10 +45,6 @@ module OpsHelper::TextualSummary
         vmdb_connection_total_index_nodes vmdb_connection_used_index_nodes vmdb_connection_free_index_nodes
       )
     )
-  end
-
-  def textual_group_tenant_quota_allocations
-    %i(tenant_quota_allocations)
   end
 
   #
@@ -107,27 +115,30 @@ module OpsHelper::TextualSummary
   end
 
   def textual_vmdb_tables_most_rows
-    h = {:label     => _("Tables with the Most Rows"),
-         :headers   => [_("Name"), _("Rows")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:rows, TOP_TABLES_BY_ROWS_COUNT)
-    h
+    {
+      :title     => _("Tables with the Most Rows"),
+      :headers   => [_("Name"), _("Rows")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:rows, TOP_TABLES_BY_COUNT)
+    }
   end
 
   def textual_vmdb_tables_largest_size
-    h = {:label     => _("Largest Tables"),
-         :headers   => [_("Name"), _("Size")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:size, TOP_TABLES_BY_SIZE_COUNT)
-    h
+    {
+      :title     => _("Largest Tables"),
+      :headers   => [_("Name"), _("Size")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:size, TOP_TABLES_BY_COUNT)
+    }
   end
 
   def textual_vmdb_tables_most_wasted_space
-    h = {:label     => _("Tables with Most Wasted Space"),
-         :headers   => [_("Name"), _("Wasted")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_WASTED_SPACE_COUNT)
-    h
+    {
+      :title     => _("Tables with Most Wasted Space"),
+      :headers   => [_("Name"), _("Wasted")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_COUNT)
+    }
   end
 
   def vmdb_table_top_rows(typ, limit)
@@ -139,13 +150,13 @@ module OpsHelper::TextualSummary
         :value    => typ == :rows ? number_with_delimiter(row.latest_hourly_metric.send(typ.to_s), :delimeter => ',') :
                                  number_to_human_size(row.latest_hourly_metric.send(typ.to_s), :precision => 1),
         :explorer => true,
-        :link     => "miqTreeActivateNode('vmdb_tree', 'tb-#{to_cid(@sb[:vmdb_tables][row.name])}');"
+        :link     => "tb-#{row.id}"
       }
     end
   end
 
   def textual_tenant_quota_allocations
-    h = {:label     => _("Tenant Quota"),
+    h = {:title     => _("Tenant Quota"),
          :headers   => [_("Name"), _("Total Quota"), _("In Use"), _("Allocated"), _("Available")],
          :col_order => %w(name total in_use allocated available)}
     h[:value] = get_tenant_quota_allocations
@@ -154,18 +165,18 @@ module OpsHelper::TextualSummary
 
   def self.convert_to_format(format, text_modifier, value)
     fmt_value = case format.to_s
-                  when "general_number_precision_0"
-                    value.to_i
-                  when "gigabytes_human"
-                    value.to_f / 1.0.gigabyte
-                  else
-                    value.to_f
+                when "general_number_precision_0"
+                  value.to_i
+                when "gigabytes_human"
+                  value.to_f / 1.0.gigabyte
+                else
+                  value.to_f
                 end
-    return "#{fmt_value} #{text_modifier}"
+    "#{fmt_value} #{text_modifier}"
   end
 
   def convert_to_format_with_default_text(format, text_modifier, value, metric)
-    is_zero_value = value.nil? || value == 0
+    is_zero_value = value.nil? || value.zero?
     can_display_default_text = !TenantQuota.default_text_for(metric).nil?
 
     if is_zero_value && can_display_default_text
@@ -179,15 +190,15 @@ module OpsHelper::TextualSummary
     rows = @record.combined_quotas.values.to_a
     rows.collect do |row|
       {
-        :title => row[:description],
-        :name => row[:description],
-        :in_use => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
+        :title     => row[:description],
+        :name      => row[:description],
+        :in_use    => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
         :allocated => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:allocated],
                                                           :allocated),
         :available => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:available],
                                                           :available),
-        :total => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
-        :explorer => true
+        :total     => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
+        :explorer  => true
       }
     end
   end

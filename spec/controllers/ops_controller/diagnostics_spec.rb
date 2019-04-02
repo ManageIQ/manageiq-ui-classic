@@ -57,6 +57,32 @@ end
 
 describe OpsController do
   render_views
+
+  describe '#report_data' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+      FactoryBot.create(:miq_worker, :miq_server => server)
+    end
+
+    let(:server) { FactoryBot.create(:miq_server) }
+
+    it 'returns workers with checkboxes' do
+      report_data_request(
+        :model       => 'MiqWorker',
+        :parent_id   => nil,
+        :named_scope => [['with_miq_server_id', server.id]],
+        :explorer    => true,
+        :gtl_dbname  => nil,
+        :gtl_type    => 'list'
+      )
+      results = assert_report_data_response
+      expect(results['data']['rows'].length).to eq(1)
+      expect(results['data']['rows'][0]["cells"][0]).to have_key("is_checkbox")
+      expect(results['data']['rows'][0]["cells"][0]["is_checkbox"]).to be_truthy
+    end
+  end
+
   context "#tree_select" do
     it "renders zone list for diagnostics_tree root node" do
       stub_user(:features => :all)
@@ -128,7 +154,7 @@ describe OpsController do
       EvmSpecHelper.local_miq_server
       MiqRegion.seed
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      @miq_server_to_delete = FactoryGirl.create(:miq_server)
+      @miq_server_to_delete = FactoryBot.create(:miq_server)
       @miq_server_to_delete.last_heartbeat -= 20.minutes
       @miq_server_to_delete.save
     end
@@ -141,7 +167,7 @@ describe OpsController do
       post :restart_server
 
       expect(response.body).to include("flash_msg_div")
-      expect(response.body).to include("%{product} Appliance restart initiated successfully" % {:product => I18n.t('product.name')})
+      expect(response.body).to include("%{product} Appliance restart initiated successfully" % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
 
     it "#delete_server returns successful message" do
@@ -167,14 +193,14 @@ describe OpsController do
     describe '#delete_server' do
       context "server does exist" do
         it 'deletes server and refreshes screen' do
-          server = FactoryGirl.create(:miq_server, :zone => @zone)
+          server = FactoryBot.create(:miq_server, :zone => @zone)
           sb_hash = {
             :trees            => {:diagnostics_tree => {:active_node => "z-#{@zone.id}"}},
             :active_tree      => :diagnostics_tree,
             :diag_selected_id => @miq_server_to_delete.id,
             :active_tab       => "diagnostics_roles_servers"
           }
-          @server_role = FactoryGirl.create(
+          @server_role = FactoryBot.create(
             :server_role,
             :name              => "smartproxy",
             :description       => "SmartProxy",
@@ -182,7 +208,7 @@ describe OpsController do
             :external_failover => false,
             :role_scope        => "zone"
           )
-          @assigned_server_role = FactoryGirl.create(
+          @assigned_server_role = FactoryBot.create(
             :assigned_server_role,
             :miq_server_id  => server.id,
             :server_role_id => @server_role.id,
@@ -254,7 +280,7 @@ describe OpsController do
 
       context "#role_start" do
         before do
-          assigned_server_role = FactoryGirl.create(
+          assigned_server_role = FactoryBot.create(
             :assigned_server_role,
             :miq_server_id  => 1,
             :server_role_id => 1,

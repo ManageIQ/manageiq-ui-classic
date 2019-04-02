@@ -25,18 +25,26 @@ module TextualMixins::TextualAuthenticationsStatus
   end
 
   def map_authentications(authentications)
+    type = {
+      :hawkular          => _("Metrics"),
+      :prometheus        => _("Metrics"),
+      :prometheus_alerts => _("Alerts")
+    }
+
     authentications.map do |auth|
-      { :label => _("%{label} Authentication") % { :label => auth.authtype.to_s.titleize },
+      { :label => _("%{label} Authentication") % { :label => type[auth.authtype.to_sym] || auth.authtype.to_s.titleize },
         :value => textual_authentication_value(auth.status, auth.updated_on),
         :title => textual_authentication_title(auth.status, auth.updated_on, auth.last_valid_on) }
     end
   end
 
   def textual_authentications_status
-    authentications = @ems.authentications.order(:authtype).collect
-    return [{ :label => _("%{label} Authentication") % { :label => @ems.default_authentication_type.to_s.titleize },
-              :title => t = _("None"),
-              :value => t }] if authentications.blank?
+    authentications = @record.authentications.order(:authtype).collect
+    if authentications.blank?
+      return [{ :label => _("%{label} Authentication") % { :label => @record.default_authentication_type.to_s.titleize },
+                :title => t = _("None"),
+                :value => t }]
+    end
 
     map_authentications(authentications)
   end

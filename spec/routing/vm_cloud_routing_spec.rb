@@ -51,4 +51,10 @@ describe 'routes for VmCloud' do
       expect(get("/#{controller_name}/filesystem_download")).to route_to("#{controller_name}#filesystem_download")
     end
   end
+
+  describe '#sort_template_grid' do
+    it 'routes with POST' do
+      expect(post("/#{controller_name}/sort_template_grid")).to route_to("#{controller_name}#sort_template_grid")
+    end
+  end
 end

@@ -42,7 +42,7 @@ module ContainerSummaryHelper
   end
 
   def textual_containers
-    textual_link(@record.containers, :feature => "containers") # should it be container_show_list?
+    textual_link(@record.containers) # should it be container_show_list?
   end
 
   def textual_container_nodes
@@ -84,7 +84,7 @@ module ContainerSummaryHelper
   end
 
   def textual_group_container_selectors
-    TextualGroup.new(_("Node Selector"), textual_key_value_group(@record.selector_parts.to_a))
+    TextualGroup.new(_("Selector"), textual_key_value_group(@record.selector_parts.to_a))
   end
 
   def textual_group_container_node_selectors
@@ -111,9 +111,9 @@ module ContainerSummaryHelper
     textual_link(@record.guest_applications, :feature => "container_image_show",
                                              :label   => _("Packages"),
                                              :link    => url_for_only_path(:controller => controller.controller_name,
-                                                                 :action     => 'guest_applications',
-                                                                 :id         => @record,
-                                                                 :db         => controller.controller_name))
+                                                                           :action     => 'guest_applications',
+                                                                           :id         => @record,
+                                                                           :db         => controller.controller_name))
   end
 
   def textual_openscap
@@ -153,8 +153,8 @@ module ContainerSummaryHelper
     object = @record.container_image_registry
     if object.nil? && @record.respond_to?(:display_registry)
       {
-        :label => ui_lookup(:model => ContainerImageRegistry.name),
-        :image => "100/container_image_registry_unknown.png",
+        :label => _('Image Registry'),
+        :icon  => 'pficon pficon-registry-unknown',
         :value => @record.display_registry
       }
     else
@@ -171,7 +171,7 @@ module ContainerSummaryHelper
   end
 
   def textual_persistent_volumes
-    textual_link(@record.persistent_volumes)
+    textual_link(@record.persistent_volumes, :as => PersistentVolume)
   end
 
   def textual_parent
@@ -186,11 +186,5 @@ module ContainerSummaryHelper
         {:value => value.nil? ? field_path : value, :expandable => true}
       ]
     end
-  end
-
-  private
-
-  def textual_key_value_group(items)
-    items.collect { |item| {:label => item.name.to_s, :value => item.value.to_s} }
   end
 end

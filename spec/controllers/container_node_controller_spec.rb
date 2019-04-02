@@ -1,7 +1,8 @@
 describe ContainerNodeController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
+    MiqRegion.seed
   end
 
   it "renders index" do
@@ -12,12 +13,12 @@ describe ContainerNodeController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_kubernetes)
-    container_node = FactoryGirl.create(:container_node, :ext_management_system => ems, :name => "Test Node")
+    ems = FactoryBot.create(:ems_kubernetes)
+    container_node = FactoryBot.create(:container_node, :ext_management_system => ems, :name => "Test Node")
     get :show, :params => { :id => container_node.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Nodes",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Nodes",
                                           :url  => "/container_node/show_list?page=&refresh=y"},
                                          {:name => "Test Node (Summary)",
                                           :url  => "/container_node/show/#{container_node.id}"}])
@@ -26,18 +27,42 @@ describe ContainerNodeController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryGirl.create(:user)
-      @node = FactoryGirl.create(:container_node)
+      login_as FactoryBot.create(:user)
+      @node = FactoryBot.create(:container_node)
     end
 
-    subject { get :show, :id => @node.id }
-
-    context "render" do
+    context "render listnav partial" do
       render_views
 
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_node")
+      it "correctly for summary page" do
+        get :show, :params => {:id => @node.id}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
+        expect(response).to render_template('layouts/_textual_groups_generic')
+      end
+
+      it "correctly for timeline page" do
+        get :show, :params => {:id => @node.id, :display => 'timeline'}
+
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
+      end
+    end
+  end
+
+  describe "#button" do
+    let(:node) { FactoryBot.create(:container_node) }
+
+    context "container_node_check_compliance" do
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        login_as FactoryBot.create(:user)
+      end
+
+      it 'displays a flash message' do
+        post :button, :params => { :pressed => 'container_node_check_compliance', :id => node.id }
+        expect(JSON.parse(response.body)['replacePartials']).to have_key('flash_msg_div')
       end
     end
   end

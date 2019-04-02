@@ -1,6 +1,7 @@
 class ApplicationHelper::ToolbarBuilder
   include MiqAeClassHelper
   include RestfulControllerMixin
+  include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
   def call(toolbar_name)
     build_toolbar(toolbar_name)
@@ -12,15 +13,16 @@ class ApplicationHelper::ToolbarBuilder
   # Returns built toolbar loaded in instance variable `@toolbar`, or `nil`, if
   # no buttons should be in the toolbar.
   def build_toolbar(toolbar_name)
-    build_toolbar_setup
+    return nil if toolbar_name.nil?
 
+    build_toolbar_setup
     toolbar_class = toolbar_class(toolbar_name)
-    build_toolbar_from_class(toolbar_class)
+    build_toolbar_from_class(toolbar_class, @record)
   end
 
   def build_toolbar_by_class(toolbar_class)
     build_toolbar_setup
-    build_toolbar_from_class(toolbar_class)
+    build_toolbar_from_class(toolbar_class, @record)
   end
 
   private
@@ -54,11 +56,19 @@ class ApplicationHelper::ToolbarBuilder
     class_name.constantize
   end
 
+  def controller
+    @view_context.respond_to?(:controller) ? @view_context.controller : @view_context
+  end
+
+  def model_for_custom_toolbar
+    controller.instance_eval { @tree_selected_model } || controller.class.model
+  end
+
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
-    if toolbar_name == "custom_buttons_tb"
-      custom_toolbar_class(@record)
+    if Mixins::CustomButtons::Result === toolbar_name
+      custom_toolbar_class(toolbar_name)
     else
       predefined_toolbar_class(toolbar_name)
     end
@@ -75,13 +85,7 @@ class ApplicationHelper::ToolbarBuilder
   # Build select button and its child buttons
   def build_select_button(bgi, index)
     bs_children = false
-    props = toolbar_button(
-      bgi,
-      :id     => bgi[:id],
-      :type   => :buttonSelect,
-      :img    => img = img_value(bgi),
-      :imgdis => img,
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :buttonSelect)
     return nil if props.nil?
 
     current_item = props
@@ -92,15 +96,7 @@ class ApplicationHelper::ToolbarBuilder
         props = ApplicationHelper::Button::Separator.new(:id => "sep_#{index}_#{bsi_idx}", :hidden => !any_visible)
       else
         bs_children = true
-        props = toolbar_button(
-          bsi,
-          :child_id => bsi[:id],
-          :id       => bgi[:id] + "__" + bsi[:id],
-          :type     => :button,
-          :img      => img = img_value(bsi),
-          :img_url  => ActionController::Base.helpers.image_path("toolbars/#{img}"),
-          :imgdis   => img,
-        )
+        props = toolbar_button(bsi, :child_id => bsi[:id], :id => bgi[:id] + "__" + bsi[:id], :type => :button)
         next if props.nil?
       end
       update_common_props(bsi, props) unless bsi.key?(:separator)
@@ -124,21 +120,23 @@ class ApplicationHelper::ToolbarBuilder
   # Set properties for button
   def apply_common_props(button, input)
     button.update(
-      :icon    => input[:icon],
-      :name    => button[:id],
-      :hidden  => button[:hidden] || !!input[:hidden],
-      :pressed => input[:pressed],
-      :onwhen  => input[:onwhen],
-      :data    => input[:data]
+      :color        => input[:color],
+      :data         => input[:data],
+      :hidden       => button[:hidden] || !!input[:hidden],
+      :icon         => input[:icon],
+      :name         => button[:id],
+      :onwhen       => input[:onwhen],
+      :pressed      => input[:pressed],
+      :send_checked => input[:send_checked],
     )
 
     button[:enabled] = input[:enabled]
-    %i(title text confirm).each do |key|
-      unless input[key].blank?
+    %i(title text confirm enabled).each do |key|
+      if input[key].present?
         button[key] = button.localized(key, input[key])
       end
     end
-    button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) unless input[:url_parms].blank?
+    button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) if input[:url_parms].present?
 
     if input[:popup] # special behavior: button opens window_url in a new window
       button[:popup] = true
@@ -156,14 +154,7 @@ class ApplicationHelper::ToolbarBuilder
   # Build single button
   def build_normal_button(bgi, index)
     @sep_needed = true
-    props = toolbar_button(
-      bgi,
-      :id      => bgi[:id],
-      :type    => :button,
-      :img     => img = "#{get_image(bgi[:image], bgi[:id]) ? get_image(bgi[:image], bgi[:id]) : bgi[:id]}.png",
-      :img_url => ActionController::Base.helpers.image_path("toolbars/#{img}"),
-      :imgdis  => "#{bgi[:image] || bgi[:id]}.png",
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :button)
     return nil if props.nil?
 
     props[:hidden] = false
@@ -182,19 +173,9 @@ class ApplicationHelper::ToolbarBuilder
     @sep_needed = true # Button was added, need separators from now on
   end
 
-  def img_value(button)
-    "#{button[:image] || button[:id]}.png"
-  end
-
   # Build button with more states
   def build_twostate_button(bgi, index)
-    props = toolbar_button(
-      bgi,
-      :id     => bgi[:id],
-      :type   => :buttonTwoState,
-      :img    => img = img_value(bgi),
-      :imgdis => img,
-    )
+    props = toolbar_button(bgi, :id => bgi[:id], :type => :buttonTwoState)
     return nil if props.nil?
 
     props[:selected] = twostate_button_selected(bgi[:id])
@@ -216,117 +197,183 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  # @button_group is set in a controller
-  #
-  def group_skipped?(name)
-    @button_group && (!name.starts_with?(@button_group + "_") &&
-      !name.starts_with?("custom") && !name.starts_with?("dialog") &&
-      !name.starts_with?("miq_dialog") && !name.starts_with?("custom_button") &&
-      !name.starts_with?("instance_") && !name.starts_with?("image_")) &&
-       !%w(record_summary summary_main summary_download tree_main
-           x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
+  def cb_send_checked_list
+    @display.present? && custom_button_appliable_class?(@display.camelize.singularize)
   end
 
-  def create_custom_button_hash(input, record, options = {})
-    options[:enabled] = true unless options.key?(:enabled)
+  def cb_enabled_value_for_nested
+    if @display == 'generic_objects'
+      return false if @lastaction == 'generic_objects'
+      return true if @lastaction == 'generic_object'
+    end
+  end
+
+  def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
+    record_id = if cb_send_checked_list
+                  'LIST'
+                else
+                  record.present? ? record.id : 'LIST'
+                end
+    enabled = cb_send_checked_list ? cb_enabled_value_for_nested : input[:enabled]
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
-      :icon      => "product product-custom-#{input[:image]} fa-lg",
-      :title     => input[:description].to_s,
-      :enabled   => options[:enabled],
+      :icon      => "#{input[:image]} fa-lg",
+      :color     => input[:color],
+      :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
+      :enabled   => enabled,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
-      :url_parms => "?id=#{record.id}&button_id=#{button_id}&cls=#{record.class}&pressed=custom_button&desc=#{button_name}"
+      :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}",
     }
     button[:text] = button_name if input[:text_display]
+    button[:onwhen] = '1+' if cb_send_checked_list
+    button[:send_checked] = true if record_id == 'LIST'
     button
   end
 
   def create_raw_custom_button_hash(cb, record)
+    record_id = record.present? ? record.id : 'LIST'
     {
       :id            => cb.id,
       :class         => cb.applies_to_class,
       :description   => cb.description,
       :name          => cb.name,
-      :image         => cb.options[:button_image],
+      :image         => cb.options[:button_icon],
+      :color         => cb.options[:button_color],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
-      :target_object => record.id.to_i
+      :enabled       => cb.evaluate_enablement_expression_for(record),
+      :disabled_text => cb.disabled_text,
+      :target_object => record_id
     }
   end
 
-  def custom_buttons_hash(record)
-    get_custom_buttons(record).collect do |group|
+  def custom_button_selects(model, record, toolbar_result)
+    get_custom_buttons(model, record, toolbar_result).collect do |group|
+      buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
+
+      enabled = if cb_send_checked_list
+                  cb_enabled_value_for_nested
+                else
+                  record ? true : buttons.all? { |button| button[:enabled] }
+                end
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
-        :icon    => "product product-custom-#{group[:image]} fa-lg",
+        :icon    => "#{group[:image]} fa-lg",
+        :color   => group[:color],
         :title   => group[:description],
-        :enabled => true,
-        :items   => group[:buttons].collect { |b| create_custom_button_hash(b, record) }
+        :enabled => enabled,
+        :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
+      props[:onwhen] = '1+' if cb_send_checked_list
 
       {:name => "custom_buttons_#{group[:text]}", :items => [props]}
     end
   end
 
-  def custom_toolbar_class(record)
+  def custom_toolbar_class(toolbar_result)
+    record = @record
+    if @display == 'generic_objects'
+      model = GenericObjectDefinition
+      record = GenericObject.find_by(:id => @sb[:rec_id])
+    elsif relationship_table_screen?
+      model = custom_button_class_model(@display.camelize.singularize)
+    else
+      model = @record ? @record.class : model_for_custom_toolbar
+    end
+    build_custom_toolbar_class(model, record, toolbar_result)
+  end
+
+  def build_custom_toolbar_class(model, record, toolbar_result)
     # each custom toolbar is an anonymous subclass of this class
+
     toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
-    custom_buttons_hash(record).each do |button_group|
+
+    # This creates several drop-down (select) with custom buttons.
+    # Each select is placed into a separate group.
+    custom_button_selects(model, record, toolbar_result).each do |button_group|
       toolbar.button_group(button_group[:name], button_group[:items])
     end
 
-    service_buttons = record_to_service_buttons(record)
-    unless service_buttons.empty?
-      buttons = service_buttons.collect { |b| create_custom_button_hash(b, record, :enabled => nil) }
-      toolbar.button_group("custom_buttons_", buttons)
-    end
-
+    custom_button_add_related_buttons(model, record, toolbar) if record.present?
     toolbar
   end
 
-  def button_class_name(record)
-    case record
-    when Service then      "ServiceTemplate"            # Service Buttons are defined in the ServiceTemplate class
-    when VmOrTemplate then record.class.base_model.name
-    else               record.class.base_class.name
+  def custom_button_add_related_buttons(model, record, toolbar)
+    # For Service, we include buttons for ServiceTemplate.
+    # These buttons are added as a single group with multiple buttons
+    if record.kind_of?(Service)
+      service_buttons = record_to_service_buttons(record)
+      unless service_buttons.empty?
+        buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
+        toolbar.button_group("custom_buttons_", buttons)
+      end
     end
+
+    if record.kind_of?(GenericObject)
+      generic_object_buttons = record_to_generic_object_buttons(record)
+      unless generic_object_buttons.empty?
+        buttons = generic_object_buttons.collect { |b| create_custom_button(b, model, record) }
+        toolbar.button_group("custom_buttons_", buttons)
+      end
+    end
+  end
+
+  def button_class_name(model)
+    # Service Buttons are defined in the ServiceTemplate class
+    model >= Service ? "ServiceTemplate" : model.base_model.name
   end
 
   def service_template_id(record)
     case record
     when Service then         record.service_template_id
-    when ServiceTemplate then record.id
+    when ServiceTemplate, GenericObjectDefinition then record.id
+    when GenericObject then record.generic_object_definition.id
     end
+  end
+
+  def create_related_custom_buttons(record, item)
+    item.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
   def record_to_service_buttons(record)
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
-    record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+    create_related_custom_buttons(record, record.service_template)
   end
 
-  def get_custom_buttons(record)
-    cbses = CustomButtonSet.find_all_by_class_name(button_class_name(record), service_template_id(record))
-    cbses.sort_by { |cbs| cbs[:set_data][:group_index] }.collect do |cbs|
+  def record_to_generic_object_buttons(record)
+    return [] unless record.kind_of?(GenericObject)
+    create_related_custom_buttons(record, record.generic_object_definition)
+  end
+
+  def get_custom_buttons(model, record, toolbar_result)
+    cbses = CustomButtonSet.find_all_by_class_name(button_class_name(model), service_template_id(record))
+    cbses = CustomButtonSet.filter_with_visibility_expression(cbses, record)
+
+    cbses.sort_by { |cbs| cbs.set_data[:group_index] }.collect do |cbs|
       group = {
         :id           => cbs.id,
         :text         => cbs.name.split("|").first,
         :description  => cbs.description,
-        :image        => cbs.set_data[:button_image],
+        :image        => cbs.set_data[:button_icon],
+        :color        => cbs.set_data[:button_color],
         :text_display => cbs.set_data.key?(:display) ? cbs.set_data[:display] : true
       }
 
-      available = CustomButton.available_for_user(current_user, cbs.name) # get all uri records for this user for specified uri set
-      available = available.select { |b| cbs.members.include?(b) }            # making sure available_for_user uri is one of the members
+      available = cbs.custom_buttons.select(&:visible_for_current_user?)
+      available = available.select do |b|
+        cbs.members.include?(b) && toolbar_result.plural_form_matches(b)
+      end
+
       group[:buttons] = available.collect { |cb| create_raw_custom_button_hash(cb, record) }.uniq
-      if cbs[:set_data][:button_order] # Show custom buttons in the order they were saved
+      if cbs.set_data[:button_order] # Show custom buttons in the order they were saved
         ordered_buttons = []
-        cbs[:set_data][:button_order].each do |bidx|
+        cbs.set_data[:button_order].each do |bidx|
           group[:buttons].each do |b|
             if bidx == b[:id] && !ordered_buttons.include?(b)
               ordered_buttons.push(b)
@@ -340,24 +387,17 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  def get_image(img, b_name)
-    # to change summary screen button to green image
-    return "summary-green" if b_name == "show_summary" && %w(miq_schedule miq_task scan_profile).include?(@layout)
-    img
-  end
-
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
-    return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
+    return true if id.starts_with?("view_") && id.ends_with?("textual") # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
-    return true if id.starts_with?("tree_") && id.ends_with?(settings(:views, :treesize).to_i == 32 ? "large" : "small")
-    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare))
-    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift))
+    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare).to_s)
+    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift).to_s)
     return true if id == "compare_all"
     return true if id == "drift_all"
-    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode))
-    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode))
+    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode).to_s)
+    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode).to_s)
     return true if id == "view_dashboard" && @showtype == "dashboard"
     return true if id == "view_topology" && @showtype == "topology"
     return true if id == "view_summary" && @showtype == "main"
@@ -385,8 +425,8 @@ class ApplicationHelper::ToolbarBuilder
     return url_parm unless url_parm =~ /=/
 
     keep_parms = %w(bc escape menu_click sb_controller)
-    query_string = Rack::Utils.parse_query URI("?#{request.query_string}").query
-    query_string.delete_if { |k, _v| !keep_parms.include? k }
+    query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
+    query_string.delete_if { |k, _v| !keep_parms.include?(k) }
 
     url_parm_hash = preprocess_url_param(url_parm)
     query_string.merge!(url_parm_hash)
@@ -399,7 +439,7 @@ class ApplicationHelper::ToolbarBuilder
     url_parm = parse_questionmark.post_match if parse_questionmark.present?
     url_parm = parse_ampersand.post_match if parse_ampersand.present?
     encoded_url = URI.encode(url_parm)
-    Rack::Utils.parse_query URI("?#{encoded_url}").query
+    Rack::Utils.parse_query(URI("?#{encoded_url}").query)
   end
 
   def build_toolbar_setup
@@ -409,10 +449,8 @@ class ApplicationHelper::ToolbarBuilder
     @sep_added = false
   end
 
-  def build_toolbar_from_class(toolbar_class)
-    toolbar_class.definition.each_with_index do |(name, group), group_index|
-      next if group_skipped?(name)
-
+  def build_toolbar_from_class(toolbar_class, record)
+    toolbar_class.definition(record).each_with_index do |(_name, group), group_index|
       @sep_added = false
       @groups_added.push(group_index)
       case group

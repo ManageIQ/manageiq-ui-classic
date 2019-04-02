@@ -2,10 +2,10 @@ describe TreeBuilderServersByRole do
   context 'TreeBuilderServersByRole' do
     before do
       MiqRegion.seed
-      zone = FactoryGirl.create(:zone)
-      @miq_server = FactoryGirl.create(:miq_server, :zone => zone)
+      zone = FactoryBot.create(:zone)
+      @miq_server = FactoryBot.create(:miq_server, :zone => zone)
       allow(MiqServer).to receive(:my_zone).and_return(zone)
-      @server_role = FactoryGirl.create(
+      @server_role = FactoryBot.create(
         :server_role,
         :name              => "smartproxy",
         :description       => "SmartProxy",
@@ -14,7 +14,7 @@ describe TreeBuilderServersByRole do
         :role_scope        => "zone"
       )
 
-      @assigned_server_role1 = FactoryGirl.create(
+      @assigned_server_role1 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,
@@ -22,7 +22,7 @@ describe TreeBuilderServersByRole do
         :priority       => 1
       )
 
-      @assigned_server_role2 = FactoryGirl.create(
+      @assigned_server_role2 = FactoryBot.create(
         :assigned_server_role,
         :miq_server_id  => @miq_server.id,
         :server_role_id => @server_role.id,
@@ -33,19 +33,12 @@ describe TreeBuilderServersByRole do
       parent = zone
       @sb[:selected_server_id] = parent.id
       @sb[:selected_typ] = "miq_region"
-      @server_tree = TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, parent)
+      @server_tree = TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, :root => parent)
     end
 
     it "is not lazy" do
-      tree_options = @server_tree.send(:tree_init_options, :servers_by_role)
-      expect(tree_options[:lazy]).to eq(false)
-    end
-
-    it 'has no root' do
-      tree_options = @server_tree.send(:tree_init_options, :servers_by_role)
-      root = @server_tree.send(:root_options)
-      expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq({})
+      tree_options = @server_tree.send(:tree_init_options)
+      expect(tree_options[:lazy]).not_to be_truthy
     end
 
     it 'returns server nodes as root kids' do
@@ -54,22 +47,27 @@ describe TreeBuilderServersByRole do
     end
 
     it 'returns Servers by Roles' do
-      nodes = [{'key'     => "role-#{MiqRegion.compress_id(@server_role.id)}",
-                'tooltip' => "Role: SmartProxy (stopped)",
-                "icon"   => "product product-role",
-                'text'    => "Role: SmartProxy (stopped)",
-                'nodes'   => [{'key'   => "asr-#{MiqRegion.compress_id(@assigned_server_role1.id)}",
-                               'image' => ActionController::Base.helpers.image_path('svg/currentstate-suspended.svg'),
-                               'text'  => "<strong>Server: smartproxy [#{@assigned_server_role1.id}]</strong> (primary, available, PID=)",
-                               'state' => { 'expanded' => true },
-                               'class' => 'red', },
-                              {'key'   => "asr-#{MiqRegion.compress_id(@assigned_server_role2.id)}",
-                               'image' => ActionController::Base.helpers.image_path('svg/currentstate-on.svg'),
-                               'text'  => "<strong>Server: smartproxy [#{@assigned_server_role2.id}]</strong> (secondary, active, PID=)",
-                               'state' => { 'expanded' => true },
-                               'class' => ''}],
-                'state'   => { 'expanded' => true },
-                'class'   => '' }]
+      nodes = [{'key'        => "role-#{@server_role.id}",
+                'tooltip'    => "Role: SmartProxy (active)",
+                "icon"       => "ff ff-user-role",
+                'text'       => "Role: SmartProxy (active)",
+                'selectable' => true,
+                'nodes'      => [{'key'            => "asr-#{@assigned_server_role1.id}",
+                                  'icon'           => 'pficon pficon-asleep',
+                                  'iconBackground' => '#FF9900',
+                                  'text'           => "<strong>Server: smartproxy [#{@assigned_server_role1.id}]</strong> (primary, available, PID=)",
+                                  'state'          => { 'expanded' => true },
+                                  'selectable'     => true,
+                                  'class'          => 'red', },
+                                 {'key'            => "asr-#{@assigned_server_role2.id}",
+                                  'icon'           => 'pficon pficon-on',
+                                  'iconBackground' => '#3F9C35',
+                                  'text'           => "<strong>Server: smartproxy [#{@assigned_server_role2.id}]</strong> (secondary, active, PID=)",
+                                  'state'          => { 'expanded' => true },
+                                  'selectable'     => true,
+                                  'class'          => ''}],
+                'state'      => { 'expanded' => true},
+                'class'      => '' }]
       expect(JSON.parse(@server_tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
   end

@@ -6,18 +6,23 @@ class TreeBuilderBelongsToHac < TreeBuilder
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 
   def override(node, object, _pid, options)
-    if [ExtManagementSystem, EmsCluster, Datacenter, EmsFolder, ResourcePool].any? { |klass| object.kind_of?(klass) }
-      node[:select] = options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
+    if [ExtManagementSystem, EmsCluster, Datacenter, EmsFolder, ResourcePool, Host].any? { |klass| object.kind_of?(klass) }
+      node[:select] = if @assign_to
+                        @selected_nodes&.include?("ResourcePool_#{object[:id]}")
+                      else
+                        @selected_nodes&.include?("#{object.class.name}_#{object[:id]}")
+                      end
     end
-    node[:hideCheckbox] = true if object.kind_of?(Host)
-    node[:cfmeNoClick] = true
-    node[:checkable] = options[:checkable_checkboxes] if options.key?(:checkable_checkboxes)
+    node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
+    node[:selectable] = false
+    node[:checkable] = @edit.present? || @assign_to.present?
   end
 
-  def initialize(name, type, sandbox, build, params)
+  def initialize(name, type, sandbox, build, **params)
     @edit = params[:edit]
     @group = params[:group]
-    @selected = params[:selected]
+    @selected_nodes = params[:selected_nodes]
+    @assign_to = params[:assign_to]
     # need to remove tree info
     TreeState.new(sandbox).remove_tree(name)
     super(name, type, sandbox, build)
@@ -25,30 +30,29 @@ class TreeBuilderBelongsToHac < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids             => true,
-     :add_root             => false,
-     :lazy                 => false,
-     :checkable_checkboxes => @edit.present?,
-     :selected             => @selected}
-  end
+  def tree_init_options
+    oncheck, check_url = if @assign_to
+                           ["miqOnCheckGeneric", "/miq_policy/alert_profile_assign_changed/"]
+                         elsif @edit
+                           ["miqOnCheckUserFilters", "/ops/rbac_group_field_changed/#{group_id}___"]
+                         else
+                           [nil, "/ops/rbac_group_field_changed/#{group_id}___"]
+                         end
 
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:id_prefix         => 'hac_',
-                  :check_url         => "/ops/rbac_group_field_changed/#{@group.present? ? @group.id : "new"}___",
-                  :oncheck           => @edit ? "miqOnCheckUserFilters" : nil,
-                  :checkboxes        => true,
-                  :highlight_changes => true,
-                  :onclick           => false)
-  end
-
-  def root_options
-    {}
+    {
+      :full_ids   => true,
+      :checkboxes => true,
+      :oncheck    => oncheck,
+      :check_url  => check_url
+    }
   end
 
   def x_get_tree_roots(count_only, _options)
-    count_only_or_objects(count_only, ExtManagementSystem.all)
+    if @assign_to.present?
+      count_only_or_objects(count_only, ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
+    else
+      count_only_or_objects(count_only, ExtManagementSystem.all)
+    end
   end
 
   def x_get_provider_kids(parent, count_only)
@@ -64,6 +68,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
   def x_get_tree_datacenter_kids(parent, count_only)
     kids = []
     parent.folders.each do |child|
+      kids.concat([child]) if child.kind_of?(EmsFolder) && child.name == 'datastore'
       next unless child.kind_of?(EmsFolder) && child.name == "host"
       kids.concat(child.folders_only)
       kids.concat(child.clusters)

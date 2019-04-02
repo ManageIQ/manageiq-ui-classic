@@ -7,16 +7,11 @@ module OpsController::Db
     @lastaction = "db_list"
     @force_no_grid_xml = true
     model = case @sb[:active_tab] # Build view based on tab selected
-            when "db_connections"
-              VmdbDatabaseConnection
-            when "db_details"
-              VmdbTableEvm
-            when "db_indexes"
-              VmdbIndex
-            when "db_settings"
-              VmdbDatabaseSetting
+            when "db_connections" then VmdbDatabaseConnection
+            when "db_details"     then VmdbTableEvm
+            when "db_indexes"     then VmdbIndex
+            when "db_settings"    then VmdbDatabaseSetting
             end
-    # @explorer = true if model == VmdbIndex
 
     if model == VmdbIndex
       # building a filter with expression to show VmdbTableEvm tables only
@@ -31,19 +26,20 @@ module OpsController::Db
         ]
       )
     elsif model == VmdbDatabaseConnection
-      @zones = Zone.all.sort_by(&:name).collect { |z| [z.name, z.name] }
+      @zones = Zone.visible.order(:name).collect { |z| [z.name, z.name] }
       # for now we dont need this pulldown, need to get a method that gives us a list of workers for filter pulldown
       # @workers = MiqWorker.all.sort_by(&:type).collect { |w| [w.friendly_name, w.id] }
     end
 
     @view, @pages = get_view(model, :filter => exp ? exp : nil) # Get the records (into a view) and the paginator
 
-    @ajax_paging_buttons = true
     @no_checkboxes = true
     @showlinks = true # Need to set @showlinks if @no_checkboxes is set to true
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
-    update_gtl_div('db_list') if params[:action] == "list_view_filter" || pagination_or_gtl_request?
+    if @show_list
+      update_gtl_div('db_list') if params[:action] == "list_view_filter" || pagination_or_gtl_request?
+    end
   end
 
   def list_view_filter
@@ -77,15 +73,15 @@ module OpsController::Db
   # VM clicked on in the explorer right cell
   def x_show
     # @explorer = true
-    @record = VmdbIndex.find_by_id(from_cid(params[:id]))
-    params[:id] = x_build_node_id(@record)  # Get the tree node id
+    @record = VmdbIndex.find(params[:id])
+    params[:id] = x_build_node_id(@record) # Get the tree node id
     tree_select
   end
 
   private #######################
 
   # Build a VMDB tree for Database accordion
-  def db_build_tree
+  def build_vmdb_tree
     TreeBuilderOpsVmdb.new("vmdb_tree", "vmdb", @sb)
   end
 
@@ -98,53 +94,48 @@ module OpsController::Db
         @right_cell_text = _("VMDB Summary")
       elsif @sb[:active_tab] == "db_utilization"
         @record = VmdbDatabase.my_database
-        perf_gen_init_options               # Initialize perf chart options, charts will be generated async
-        @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
-        @sb[:record_id] = @record.id
+        if @record
+          perf_gen_init_options # Initialize perf chart options, charts will be generated async
+          @sb[:record_class] = @record.class.base_class.name # Hang on to record class/id for async trans
+          @sb[:record_id] = @record.id
+        end
         @right_cell_text = _("VMDB Utilization")
       else
         @right_cell_text = case @sb[:active_tab]
-                           when "db_connections"
-                             @right_cell_text = _("VMDB Client Connections")
-                           when "db_details"
-                             @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "VmdbTable")}
-                           when "db_indexes"
-                             @right_cell_text = _("All VMDB Indexes")
-                           else
-                             @right_cell_text = _("VMDB Settings")
+                           when "db_connections" then _("VMDB Client Connections")
+                           when "db_details"     then _("All VMDB Tables")
+                           when "db_indexes"     then _("All VMDB Indexes")
+                           else                       _("VMDB Settings")
                            end
         @force_no_grid_xml = true
         db_list
       end
       @tab_text = _("Tables")
-    else
-      # If table is selected
-      if @sb[:active_tab] == "db_indexes" || params[:action] == "x_show"
-        nodes = x_node.split('-')
-        if nodes.first == "xx"
-          tb = VmdbTableEvm.find_by_id(from_cid(nodes.last))
-          @indexes = get_indexes(tb)
-          @right_cell_text = _("Indexes for %{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbTable"), :name => tb.name}
-          @tab_text = "%{table_name} Indexes" % {:table_name => tb.name}
-        else
-          @vmdb_index = VmdbIndex.find_by_id(from_cid(nodes.last))
-          @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbIndex"), :name => @vmdb_index.name}
-          @tab_text = @vmdb_index.name
-        end
-      elsif @sb[:active_tab] == "db_utilization"
-        @record = VmdbTable.find_by_id(from_cid(x_node.split('-').last))
-        perf_gen_init_options               # Initialize perf chart options, charts will be generated async
-        @sb[:record_class] = @record.class.base_class.name  # Hang on to record class/id for async trans
-        @sb[:record_id] = @record.id
-        @right_cell_text = _("VMDB \"%{name}\" Table Utilization") % {:name => @record.name}
-        @tab_text = @record.name
+    elsif @sb[:active_tab] == "db_indexes" || params[:action] == "x_show" # if table is selected
+      nodes = x_node.split('-')
+      if nodes.first == "xx"
+        tb = VmdbTableEvm.find(nodes.last)
+        @indexes = get_indexes(tb)
+        @right_cell_text = _("Indexes for VMDB Table \"%{name}\"") % {:name => tb.name}
+        @tab_text = "%{table_name} Indexes" % {:table_name => tb.name}
       else
-        @sb[:active_tab] = "db_details"
-        @table = VmdbTable.find_by_id(from_cid(x_node.split('-').last))
-        @indexes = get_indexes(@table)
-        @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "VmdbTable"), :name => @table.name}
-        @tab_text = @table.name
+        @vmdb_index = VmdbIndex.find(nodes.last)
+        @right_cell_text = _("VMDB Index \"%{name}\"") % {:name => @vmdb_index.name}
+        @tab_text = @vmdb_index.name
       end
+    elsif @sb[:active_tab] == "db_utilization"
+      @record = VmdbTable.find(x_node.split('-').last)
+      perf_gen_init_options # Initialize perf chart options, charts will be generated async
+      @sb[:record_class] = @record.class.base_class.name # Hang on to record class/id for async trans
+      @sb[:record_id] = @record.id
+      @right_cell_text = _("VMDB \"%{name}\" Table Utilization") % {:name => @record.name}
+      @tab_text = @record.name
+    else
+      @sb[:active_tab] = "db_details"
+      @table = VmdbTable.find(x_node.split('-').last)
+      @indexes = get_indexes(@table)
+      @right_cell_text = _("VMDB Table \"%{name}\"") % {:name => @table.name}
+      @tab_text = @table.name
     end
   end
 
@@ -159,7 +150,7 @@ module OpsController::Db
     render :update do |page|
       page << javascript_prologue
       page.replace_html(@sb[:active_tab], :partial => "db_details_tab")
-      page << "miqSparkle(false);"    # Need to turn off sparkle in case original ajax element gets replaced
+      page << "miqSparkle(false);" # Need to turn off sparkle in case original ajax element gets replaced
     end
   end
 end

@@ -7,12 +7,15 @@ class TreeBuilderDefaultFilters < TreeBuilder
     :containerservice                              => %w(Containers Services),
     :host                                          => %w(Infrastructure Hosts),
     :miqtemplate                                   => %w(Services Workloads Templates\ &\ Images),
+    :service                                       => %w(Services My\ Services),
     :storage                                       => %w(Infrastructure Datastores),
     :vm                                            => %w(Services Workloads VMs\ &\ Instances),
     :"manageiq::providers::cloudmanager::template" => %w(Cloud Instances Images),
     :"manageiq::providers::inframanager::template" => %w(Infrastructure Virtual\ Machines Templates),
     :"manageiq::providers::cloudmanager::vm"       => %w(Cloud Instances Instances),
-    :"manageiq::providers::inframanager::vm"       => %w(Infrastructure Virtual\ Machines VMs)
+    :"manageiq::providers::inframanager::vm"       => %w(Infrastructure Virtual\ Machines VMs),
+    :physicalserver                                => %w(Physical\ Infrastructure Servers),
+    :physicalswitch                                => %w(Physical\ Infrastructure Switches)
   }.freeze
 
   def prepare_data(data)
@@ -24,29 +27,20 @@ class TreeBuilderDefaultFilters < TreeBuilder
     end
   end
 
-  def initialize(name, type, sandbox, build = true, data = nil)
-    @data = prepare_data(data)
+  def initialize(name, type, sandbox, build = true, **params)
+    @data = prepare_data(params[:data])
     super(name, type, sandbox, build)
   end
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true,
-     :add_root => false,
-     :lazy     => false}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:check_url         => "/configuration/filters_field_changed/",
-                  :onselect          => "miqOnCheckSections",
-                  :checkboxes        => true,
-                  :highlight_changes => true)
-  end
-
-  def root_options
-    {}
+  def tree_init_options
+    {
+      :full_ids   => true,
+      :checkboxes => true,
+      :check_url  => "/configuration/filters_field_changed/",
+      :oncheck    => "miqOnCheckGeneric"
+    }
   end
 
   def x_get_tree_roots(count_only = false, _options)
@@ -55,14 +49,14 @@ class TreeBuilderDefaultFilters < TreeBuilder
        :text         => folder,
        :icon         => "pficon pficon-folder-close",
        :tip          => folder,
-       :cfmeNoClick  => true,
+       :selectable   => false,
        :hideCheckbox => true}
     end
     count_only_or_objects(count_only, roots)
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    unless parent[:id].kind_of?(Fixnum)
+    unless parent[:id].kind_of?(Integer)
       path = parent[:id].split('_')
       kids = @data.fetch_path(path)
       nodes = if kids.kind_of?(Hash)
@@ -72,17 +66,17 @@ class TreeBuilderDefaultFilters < TreeBuilder
                    :text         => folder,
                    :icon         => "pficon pficon-folder-close",
                    :tip          => folder,
-                   :cfmeNoClick  => true,
+                   :selectable   => false,
                    :hideCheckbox => true}
                 end
               else
                 kids.map do |kid|
-                  {:id          => kid[:id],
-                   :text        => kid[:description],
-                   :icon        => 'fa fa-filter',
-                   :tip         => kid[:description],
-                   :cfmeNoClick => true,
-                   :select      => kid[:search_key] != "_hidden_"}
+                  {:id         => kid[:id],
+                   :text       => kid[:description],
+                   :icon       => 'fa fa-filter',
+                   :tip        => kid[:description],
+                   :selectable => false,
+                   :select     => kid[:search_key] != "_hidden_"}
                 end
               end
     end

@@ -1,6 +1,49 @@
 module AutomateTreeHelper
+  def submit_embedded_method(fqname)
+    if @edit[:new][:embedded_methods].include?(fqname)
+      add_flash(_("This embedded method is already selected"), :warning)
+    elsif @edit[:new][:embedded_methods].count >= 20
+      add_flash(_("It is not allowed to have more than 20 embedded methods"), :warning)
+    elsif MiqAeMethod.find_by(:id => (@edit[:ae_method_id])).try(:fqname) == fqname
+      add_flash(_("It is not allowed to choose method itself"), :warning)
+    else
+      @edit[:new][:embedded_methods].push(fqname)
+    end
+  end
+
+  private :submit_embedded_method
+
+  # Build the tree for catalog item entry point selection and automate copy
+  def build_automate_tree(type, name)
+    # build the ae tree to show the tree select box for entry point
+    if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
+      nodes = @edit[:new][:fqname].split("/")
+      @open_nodes = []
+      # if there are more than one nested namespaces
+      nodes.each_with_index do |_node, i|
+        if i == nodes.length - 1
+          # check if @cls is there, to make sure the class/instance still exists in Automate db
+          inst = @cls ? MiqAeInstance.find_by(:class_id => @cls.id, :name => nodes[i]) : nil
+          # show this as selected/expanded node when tree loads
+          if inst
+            @open_nodes.push("aei-#{inst.id}")
+            @active_node = "aei-#{inst.id}"
+          end
+        elsif i == nodes.length - 2
+          @cls = MiqAeClass.find_by(:namespace_id => @ns.id, :name => nodes[i])
+          @open_nodes.push("aec-#{@cls.id}") if @cls
+        else
+          @ns = MiqAeNamespace.find_by(:name => nodes[i])
+          @open_nodes.push("aen-#{@ns.id}") if @ns
+        end
+      end
+    end
+
+    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
+  end
+
   def at_tree_select_toggle(edit_key)
-    build_ae_tree(:automate, :automate_tree)
+    build_automate_tree(:automate, :automate_tree)
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do
@@ -13,17 +56,16 @@ module AutomateTreeHelper
         page << javascript_for_miq_button_visibility(@changed)
         page << "miqSparkle(false);"
       end
-
       case params[:button]
       when 'submit'
-        if @edit[:include_domain_prefix].nil?
-          if MiqAeDatastore.path_includes_domain?(@edit[:automate_tree_selected_path])
-            selected_path = @edit[:automate_tree_selected_path]
-            @edit[:automate_tree_selected_path] = selected_path.slice(selected_path.index('/', 1), selected_path.length)
-          end
-        end
         @edit[:new][@edit[:ae_field_typ]] = @edit[:active_id]
         page << set_element_visible("#{edit_key}_div", true)
+
+        if @edit[:include_domain_prefix] != true && MiqAeDatastore.path_includes_domain?(@edit[:automate_tree_selected_path])
+          selected_path = @edit[:automate_tree_selected_path]
+          @edit[:automate_tree_selected_path] = selected_path.slice(selected_path.index('/', 1), selected_path.length)
+        end
+
         @edit[:new][edit_key] = @edit[:automate_tree_selected_path]
         if @edit[:new][edit_key]
           page << "$('##{edit_key}').val('#{@edit[:new][edit_key]}');"
@@ -61,7 +103,7 @@ module AutomateTreeHelper
           selected_path = @edit[:new][:retire_fqname]
         end
         if @edit[:domain_prefix_check].nil? &&
-           !selected_path.blank? &&
+           selected_path.present? &&
            MiqAeDatastore.path_includes_domain?(selected_path)
           page << javascript_checked('include_domain_prefix_chk')
           @edit[:include_domain_prefix] = true
@@ -74,7 +116,7 @@ module AutomateTreeHelper
         page << "$('#automate_div').addClass('modal fade in');"
         @edit[:ae_tree_select] = true
         type = @edit[:ae_field_typ] || params[:typ]
-        @edit[:current][:selected] = @edit[:new][:selected].nil? ? "" : @edit[:new][:selected]
+        @edit[:current][:selected] = @edit[:new][:selected] unless @edit[:new][:selected].nil?
         unless @edit[:new][type].nil?
           @edit[:new][:selected] = @edit[:new][type]
           if x_node(:automate_tree)
@@ -86,18 +128,16 @@ module AutomateTreeHelper
   end
 
   def at_tree_select(edit_key)
-    id = from_cid(parse_nodetype_and_id(params[:id]).last)
+    id = parse_nodetype_and_id(params[:id]).last
     if params[:id].start_with?("aei-")
-      record = MiqAeInstance.find_by_id(id)
+      record = MiqAeInstance.find_by(:id => id)
     elsif params[:id].start_with?("aen-") && controller_name == "miq_ae_class"
-      record = MiqAeNamespace.find_by_id(id)
+      record = MiqAeNamespace.find_by(:id => id)
       record = nil if record.domain?
     end
-
     @edit[:new][edit_key] = @edit[edit_key] if @edit[:new][edit_key].nil?
     @edit[:current][:selected] = @edit[:new][:selected].nil? ? "" : @edit[:new][:selected]
     @edit[:new][:selected] = params[:id]
-
     if record
       @edit[:automate_tree_selected_path] = controller_name == "miq_ae_class" ? record.fqname_sans_domain : record.fqname
       # save selected id in edit until save button is pressed
@@ -108,7 +148,7 @@ module AutomateTreeHelper
     render :update do |page|
       page << javascript_prologue
       page << javascript_for_miq_button_visibility(@changed, 'automate')
-      @changed ? page << javascript_enable_field(inc_domain_chk) : page << javascript_disable_field(inc_domain_chk)
+      page << (@changed ? javascript_enable_field(inc_domain_chk) : javascript_disable_field(inc_domain_chk))
     end
   end
 end

@@ -1,13 +1,13 @@
 class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   private
 
-  def tree_init_options(_tree_name)
-    {:leaf => "MiqDialog", :open_all => true}
+  def tree_init_options
+    {:open_all => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Dialogs"),
+      :text    => t = _("All Dialogs"),
       :tooltip => t
     }
   end
@@ -16,10 +16,10 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   def x_get_tree_roots(count_only, _options)
     objects = MiqDialog::DIALOG_TYPES.sort.collect do |typ|
       {
-        :id    => "MiqDialog_#{typ[1]}",
-        :text  => typ[0],
-        :icon  => "pficon pficon-folder-close",
-        :tip   => typ[0]
+        :id   => "MiqDialog_#{typ[1]}",
+        :text => typ[0],
+        :icon => "pficon pficon-folder-close",
+        :tip  => typ[0]
       }
     end
     count_only_or_objects(count_only, objects)

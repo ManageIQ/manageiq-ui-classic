@@ -3,7 +3,7 @@ class ApplicationHelper::Button::SetOwnership < ApplicationHelper::Button::Basic
 
   def disabled?
     @error_message = _('Ownership is controlled by tenant mapping') if
-      @record.ext_management_system.tenant_mapping_enabled?
+      @record.try(:ext_management_system).try(:tenant_mapping_enabled?)
     @error_message.present?
   end
 end

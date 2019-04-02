@@ -1,19 +1,15 @@
 class TreeBuilderVmsFilter < TreeBuilder
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {
-      :open_all => true,
-      :leaf      => 'ManageIQ::Providers::InfraManager::Vm'
+      :open_all       => true,
+      :leaf           => 'ManageIQ::Providers::InfraManager::Vm',
+      :allow_reselect => true
     }
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:tree_id => "vms_filter_treebox", :tree_name => "vms_filter_tree")
   end
 
   def root_options
     {
-      :title   => _("All VMs"),
+      :text    => _("All VMs"),
       :tooltip => _("All of the VMs that I can see")
     }
   end
@@ -21,8 +17,8 @@ class TreeBuilderVmsFilter < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     objects =
       [
-        {:id => "global", :text => _("Global Filters"), :icon => "pficon pficon-folder-close", :tip => _("Global Shared Filters"), :cfmeNoClick => true},
-        {:id => "my",     :text => _("My Filters"),     :icon => "pficon pficon-folder-close", :tip => _("My Personal Filters"),   :cfmeNoClick => true}
+        {:id => "global", :text => _("Global Filters"), :icon => "pficon pficon-folder-close", :tip => _("Global Shared Filters"), :selectable => false},
+        {:id => "my",     :text => _("My Filters"),     :icon => "pficon pficon-folder-close", :tip => _("My Personal Filters"),   :selectable => false}
       ]
     count_only_or_objects(count_only, objects)
   end

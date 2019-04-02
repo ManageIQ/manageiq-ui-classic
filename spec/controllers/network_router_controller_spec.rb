@@ -1,34 +1,17 @@
 describe NetworkRouterController do
   include_examples :shared_examples_for_network_router_controller, %w(openstack azure google amazon)
 
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-
-      ApplicationController.handle_exceptions = true
-    end
-
-    it "when Edit Tag is pressed" do
-      # TODO: Fix
-      skip "Not ready yet"
-      expect(controller).to receive(:tag)
-      post :button, :params => { :pressed => "edit_tag", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-  end
-
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ct = FactoryGirl.create(:network_router, :name => "router-01")
+      @ct = FactoryBot.create(:network_router, :name => "router-01")
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
@@ -61,7 +44,7 @@ describe NetworkRouterController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "network_router/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id }
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id, :data => get_tags_json([@tag1, @tag2]) }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end
@@ -70,8 +53,8 @@ describe NetworkRouterController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @router = FactoryGirl.create(:network_router)
-      login_as FactoryGirl.create(:user)
+      @router = FactoryBot.create(:network_router)
+      login_as FactoryBot.create(:user, :features => %w(none))
     end
 
     subject do
@@ -87,12 +70,35 @@ describe NetworkRouterController do
     end
   end
 
+  describe "#new" do
+    let(:feature) { "network_router_new" }
+    let(:user)    { FactoryBot.create(:user, :features => feature) }
+
+    before do
+      bypass_rescue
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as user
+    end
+
+    it "raises exception when used have not privilege" do
+      expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+
+    context "user don't have privilege for cloud tenants" do
+      let(:feature) { %w(network_router_new ems_network_show_list) }
+
+      it "raises exception" do
+        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+      end
+    end
+  end
+
   describe "#create" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack)
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack)
     end
 
     context "#create" do
@@ -102,6 +108,11 @@ describe NetworkRouterController do
           :userid => controller.current_user.userid
         }
       end
+
+      let(:cloud_tenant) do
+        FactoryBot.create(:cloud_tenant)
+      end
+
       let(:queue_options) do
         {
           :class_name  => @ems.class.name,
@@ -110,7 +121,12 @@ describe NetworkRouterController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test"}]
+          :args        => [{
+            :name            => 'test',
+            :admin_state_up  => 'true',
+            :ems_id          => @ems.id.to_s,
+            :cloud_subnet_id => ''
+          }]
         }
       end
 
@@ -121,8 +137,19 @@ describe NetworkRouterController do
 
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
+        post :create, :params => {
+          :button           => 'add',
+          :controller       => 'network_router',
+          :format           => :js,
+          :name             => 'test',
+          :admin_state_up   => 'true',
+          :cloud_subnet_id  => '',
+          :cloud_tenant     => {:id => cloud_tenant.id},
+          :ems_id           => @ems.id,
+          :external_gateway => 'false',
+          :extra_attributes => '',
+          :id               => 'new'
+        }
       end
     end
   end
@@ -131,8 +158,8 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
     end
 
@@ -151,7 +178,7 @@ describe NetworkRouterController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "foo2"}]
+          :args        => [{:name => "foo2", :external_gateway_info => {}}]
         }
       end
 
@@ -162,8 +189,30 @@ describe NetworkRouterController do
 
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :update, :params => { :button => "save", :format => :js, :id => @router.id, :name => "foo2" }
+        post :update, :params => {
+          :button => "save",
+          :format => :js,
+          :id     => @router.id,
+          :name   => "foo2"
+        }
       end
+    end
+  end
+
+  describe "#delete_network_routers" do
+    let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
+    let(:router) { FactoryBot.create(:network_router_openstack, :name => "router-01", :ext_management_system => ems) }
+    before do
+      stub_user(:features => :all)
+      setup_zone
+      controller.instance_variable_set(:@_params, :id => router.id)
+      controller.instance_variable_set(:@lastaction, "show")
+      controller.instance_variable_set(:@layout, "network_router")
+    end
+    it "it calls process_network_routers function" do
+      expect(controller).to receive(:process_network_routers).with([NetworkRouter], "destroy")
+
+      controller.send(:delete_network_routers)
     end
   end
 
@@ -171,8 +220,8 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
       session[:network_router_lastaction] = 'show'
     end
@@ -198,19 +247,28 @@ describe NetworkRouterController do
 
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :button, :params => { :id => @router.id, :pressed => "network_router_delete", :format => :js }
+        controller.instance_variable_set(:@_params,
+                                         :pressed => "network_router_delete",
+                                         :id      => @router.id)
+        controller.instance_variable_set(:@lastaction, "show")
+        controller.instance_variable_set(:@layout, "network_router")
+        controller.instance_variable_set(:@breadcrumbs, [{:name => "foo", :url => "network_router/show_list"}, {:name => "bar", :url => "network_router/show"}])
+        expect(controller).to receive(:render)
+        controller.send(:button)
+        flash_messages = assigns(:flash_array)
+        expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Network Router.",
+                                           :level   => :success)
       end
     end
   end
 
   describe "#add_interface" do
     before do
-      stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
-      @subnet = FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems)
+      @subnet = FactoryBot.create(:cloud_subnet, :ext_management_system => @ems)
     end
 
     context "#add_interface" do
@@ -233,11 +291,57 @@ describe NetworkRouterController do
       end
 
       it "builds add interface screen" do
+        stub_user(:features => :all)
         post :button, :params => { :pressed => "network_router_add_interface", :format => :js, :id => @router.id }
         expect(assigns(:flash_array)).to be_nil
       end
 
+      it 'list subnet choices' do
+        stub_user(:features => :all)
+        allow(controller).to receive(:drop_breadcrumb)
+        controller.instance_variable_set(:@router, @router)
+        controller.instance_variable_set(:@_params, :id => @router.id)
+        controller.send(:add_interface_select)
+        subnet_choices = controller.instance_variable_get(:@subnet_choices)
+
+        expect(subnet_choices).to eq(@subnet.name => @subnet.id)
+        expect(assigns(:flash_array)).to be_nil
+      end
+
+      context 'with restricted user' do
+        let!(:subnet_2) { FactoryBot.create(:cloud_subnet, :ext_management_system => @ems) }
+        let(:user)    { FactoryBot.create(:user, :features => "network_router_add_interface") }
+        let(:tag)     { "/managed/environment/prod" }
+
+        before do
+          allow(controller).to receive(:drop_breadcrumb)
+          controller.instance_variable_set(:@router, @router)
+          controller.instance_variable_set(:@_params, :id => @router.id)
+
+          @router.tag_with(tag, :ns => '')
+          subnet_2.tag_with(tag, :ns => '')
+
+          user.current_group.entitlement.tap do |entitlement|
+            entitlement.set_managed_filters([[tag]])
+            entitlement.save!
+          end
+          login_as user
+          allow(controller).to receive(:current_user).and_return(user)
+        end
+
+        it 'list subnet choices' do
+          controller.instance_variable_set(:@router, @router)
+          controller.instance_variable_set(:@_params, :id => @router.id)
+
+          controller.send(:add_interface_select)
+          subnet_choices = controller.instance_variable_get(:@subnet_choices)
+          expect(subnet_choices).to eq(subnet_2.name => subnet_2.id)
+          expect(assigns(:flash_array)).to be_nil
+        end
+      end
+
       it "queues the add interface action" do
+        stub_user(:features => :all)
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :add_interface, :params => {
           :button          => "add",
@@ -253,10 +357,10 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack).network_manager
-      @router = FactoryGirl.create(:network_router_openstack,
+      @ems = FactoryBot.create(:ems_openstack).network_manager
+      @router = FactoryBot.create(:network_router_openstack,
                                    :ext_management_system => @ems)
-      @subnet = FactoryGirl.create(:cloud_subnet, :ext_management_system => @ems)
+      @subnet = FactoryBot.create(:cloud_subnet, :ext_management_system => @ems)
     end
 
     context "#remove_interface" do
@@ -291,6 +395,30 @@ describe NetworkRouterController do
           :id              => @router.id,
           :cloud_subnet_id => @subnet.id
         }
+      end
+    end
+  end
+
+  describe '#button' do
+    before do
+      controller.instance_variable_set(:@_params, params)
+    end
+
+    context 'tagging instances from a list of instances, accessed from the details page of a network router' do
+      let(:params) { {:pressed => "instance_tag"} }
+
+      it 'calls tag method for tagging instances' do
+        expect(controller).to receive(:tag).with("VmOrTemplate")
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging cloud subnets from a list of subnets, accessed from the details page of a network router' do
+      let(:params) { {:pressed => "cloud_subnet_tag"} }
+
+      it 'calls tag method for tagging cloud subnets' do
+        expect(controller).to receive(:tag).with("CloudSubnet")
+        controller.send(:button)
       end
     end
   end

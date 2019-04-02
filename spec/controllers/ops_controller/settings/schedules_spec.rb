@@ -11,7 +11,7 @@ describe OpsController do
     end
 
     context "when the filter_type is 'vm'" do
-      let(:vm) { FactoryGirl.create(:vm_vmware, :name => "vmtest") }
+      let(:vm) { FactoryBot.create(:vm_vmware, :name => "vmtest") }
       let(:filter_type) { "vm" }
 
       before do
@@ -26,7 +26,7 @@ describe OpsController do
     end
 
     context "when the filter_type is 'ems'" do
-      let(:ext_management_system) { FactoryGirl.create(:ext_management_system, :name => "emstest") }
+      let(:ext_management_system) { FactoryBot.create(:ext_management_system, :name => "emstest") }
       let(:filter_type) { "ems" }
 
       before do
@@ -42,15 +42,15 @@ describe OpsController do
 
     context "when the filter_type is 'cluster'" do
       let(:cluster) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :ems_cluster,
-          :name                => "clustertest"
+          :name => "clustertest"
         )
       end
       let(:filter_type) { "cluster" }
 
       before do
-        cluster.parent = FactoryGirl.create(:datacenter, :name => "datacenter")
+        cluster.parent = FactoryBot.create(:datacenter, :name => "datacenter")
         bypass_rescue
         allow(EmsCluster).to receive(:find).with(:all, {}).and_return([cluster])
         post :schedule_form_filter_type_field_changed, :params => params, :session => session
@@ -63,7 +63,7 @@ describe OpsController do
     end
 
     context "when the filter_type is 'host'" do
-      let(:host) { FactoryGirl.create(:host, :name => "hosttest") }
+      let(:host) { FactoryBot.create(:host, :name => "hosttest") }
       let(:filter_type) { "host" }
 
       before do
@@ -89,8 +89,7 @@ describe OpsController do
       settings = {:username   => "userid",
                   :password   => "password2",
                   :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"
-                 }
+                  :uri_prefix => "smb"}
       expect(controller.send(:build_uri_settings, :mocked_filedepot)).to include(settings)
     end
 
@@ -104,8 +103,7 @@ describe OpsController do
       settings = {:username   => "userid",
                   :password   => "password",
                   :uri        => "smb://samba_uri",
-                  :uri_prefix => "smb"
-                 }
+                  :uri_prefix => "smb"}
       expect(controller.send(:build_uri_settings, mocked_filedepot)).to include(settings)
     end
   end
@@ -114,8 +112,8 @@ describe OpsController do
     let(:zone) { double("Zone", :name => "foo") }
     let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
     let(:user) { stub_user(:features => :all) }
-    let(:schedule) { FactoryGirl.create(:miq_automate_schedule) }
-    let(:vm) { FactoryGirl.create(:vm_vmware) }
+    let(:schedule) { FactoryBot.create(:miq_automate_schedule) }
+    let(:vm) { FactoryBot.create(:vm_vmware) }
 
     before do
       allow(MiqServer).to receive(:my_server).and_return(server)
@@ -159,13 +157,24 @@ describe OpsController do
       expect(schedule.filter.exp[key]["field"]).to eq("Vm-name")
       expect(schedule.sched_action).to eq(:method=>"check_compliance")
     end
+
+    it "sets start time correctly" do
+      params[:start_date] = "Mon Mar 12 2018 20:00:00 GMT-0400 (EDT)"
+      params[:start_hour] = "1"
+      params[:start_min]  = "5"
+      params[:time_zone]  = "UTC"
+
+      allow(controller).to receive(:params).and_return(params)
+      controller.send(:schedule_set_start_time_record_vars, schedule)
+      expect(schedule.run_at[:start_time]).to eq("2018-03-12 01:05:00 UTC")
+    end
   end
 
   context "#build_attrs_from_params" do
     let(:zone) { double("Zone", :name => "foo") }
     let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
     let(:user) { stub_user(:features => :all) }
-    let(:vm) { FactoryGirl.create(:vm_vmware) }
+    let(:vm) { FactoryBot.create(:vm_vmware) }
 
     before do
       allow(MiqServer).to receive(:my_server).and_return(server)
@@ -200,8 +209,8 @@ describe OpsController do
     settings = {}
     it "returns a filtered item list for MiqTemplate" do
       controller.instance_variable_set(:@settings, settings)
-      current_user = FactoryGirl.create(:user)
-      FactoryGirl.create(:miq_search,
+      current_user = FactoryBot.create(:user)
+      FactoryBot.create(:miq_search,
                          :name        => "default_Environment / UAT",
                          :description => "Environment / UAT",
                          :db          => "MiqTemplate",
@@ -213,8 +222,8 @@ describe OpsController do
 
     it "returns a filtered item list for Datastore" do
       controller.instance_variable_set(:@settings, settings)
-      current_user = FactoryGirl.create(:user)
-      FactoryGirl.create(:miq_search,
+      current_user = FactoryBot.create(:user)
+      FactoryBot.create(:miq_search,
                          :name        => "default_Environment_Storage / UAT",
                          :description => "Storage_Environment / UAT",
                          :db          => "Storage",
@@ -226,16 +235,16 @@ describe OpsController do
 
     it "returns a filtered item list for a single Datastore" do
       controller.instance_variable_set(:@settings, settings)
-      storage = FactoryGirl.create(:storage_vmware)
+      storage = FactoryBot.create(:storage_vmware)
       filtered_list = controller.send(:build_filtered_item_list, "storage", "storage")
       expect(filtered_list.first).to include(storage.name)
     end
 
     it "returns a filtered item list for ems providers that have hosts" do
       controller.instance_variable_set(:@settings, settings)
-      ems_cloud = FactoryGirl.create(:ems_cloud)
-      ems_infra_no_hosts = FactoryGirl.create(:ems_openstack_infra)
-      ems_infra_with_hosts = FactoryGirl.create(:ems_openstack_infra_with_stack)
+      ems_cloud = FactoryBot.create(:ems_cloud)
+      ems_infra_no_hosts = FactoryBot.create(:ems_openstack_infra)
+      ems_infra_with_hosts = FactoryBot.create(:ems_openstack_infra_with_stack)
       filtered_list = controller.send(:build_filtered_item_list, "host", "ems")
       expect(filtered_list).not_to include(ems_cloud.name)
       expect(filtered_list).not_to include(ems_infra_no_hosts.name)

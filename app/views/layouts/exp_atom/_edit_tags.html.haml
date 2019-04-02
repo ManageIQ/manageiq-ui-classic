@@ -1,0 +1,38 @@
+- url = url_for_only_path(:action => 'exp_changed')
+
+-#
+  Parameters:
+    exp_model       Model in use for this expression
+
+- opts = ["<#{_('Choose')}>"]
+- opts += MiqExpression.tag_details(nil, {:no_cache => true})
+
+.spacer
+
+= select_tag('chosen_tag', options_for_select(opts, @edit[@expkey][:exp_tag]),
+  :multiple              => false,
+  :class                 => 'selectpicker',
+  'data-live-search'     => true,
+  'data-miq_sparkle_on'  => true,
+  'data-miq_sparkle_off' => true)
+
+- if @edit[@expkey][:exp_tag]
+  .spacer
+  %font{:color => "black"}
+    = h(@edit[@expkey][:exp_key])
+  .spacer
+  - if @edit[@expkey][:exp_value] == :user_input
+    = "<#{_('user input')}>"
+  - else
+    - opts = ["<#{_('Choose')}>"] + MiqExpression.get_entry_details(@edit[@expkey][:exp_tag]).sort_by { |a| a.first.downcase }
+    = select_tag('chosen_value', options_for_select(opts, @edit[@expkey][:exp_value]),
+      :multiple              => false,
+      :class                 => 'selectpicker',
+      "data-miq_sparkle_on"  => true,
+      "data-miq_sparkle_off" => true,
+      "data-miq_observe"     => {:url => url}.to_json)
+
+:javascript
+  miqInitSelectPicker();
+  miqSelectPickerEvent('chosen_tag', '#{url}');
+  miqSelectPickerEvent('chosen_value', '#{url}');

@@ -1,14 +1,14 @@
 class TreeBuilderAction < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
+  def tree_init_options
     {:full_ids => true}
   end
 
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Actions"),
+      :text    => t = _("All Actions"),
       :tooltip => t
     }
   end

@@ -7,7 +7,7 @@
   .row
     .col-md-12
       #brand
-        %img{:src => image_path("layout/brand.svg"), :alt => "ManageIQ"}
+        %img{:src => ::Settings.server.custom_brand ? '/upload/custom_brand.png' : image_path("layout/brand.svg"), :alt => "ManageIQ"}
 
     .col-md-6.col-lg-5.login
       .form-horizontal#login_div
@@ -15,22 +15,22 @@
                  :locals  => {:login => true})
 
         #invalid_sso_credentials_flash{:style => "display: none"}
-          #flash_text_div{:title => _("Click to remove message")}
+          .flash_text_div{:title => _("Click to remove message")}
             .alert.alert-danger
               %span.pficon.pficon-error-circle-o
               %strong= _("Invalid Single Sign-On credentials")
         = render :partial => "layouts/flash_msg"
 
-        - if ext_auth?(:saml_enabled)
+        - if ext_auth?(:saml_enabled) || ext_auth?(:oidc_enabled)
           .form-group
             %label.col-md-3.control-label
             .col-md-9
-              = link_to(_("Login to Corporate System"), {:action => "initiate_saml_login",
-                                                         :button => "saml_login"},
-                        :id                   => "saml_login",
+              = link_to(_("Log In to Corporate System"), {:action => (ext_auth?(:saml_enabled) ? "initiate_saml_login" : "initiate_oidc_login"),
+                                                         :button => (ext_auth?(:saml_enabled) ? "saml_login" : "oidc_login")},
+                        :id                   => (ext_auth?(:saml_enabled) ? "saml_login" : "oidc_login"),
                         :class                => "btn btn-primary form-control",
-                        :alt                  => _("Login"),
-                        :title                => _("Login to Corporate System"),
+                        :alt                  => _("Log In"),
+                        :title                => _("Log In to Corporate System"),
                         :remote               => true,
                         "data-method"         => :post,
                         "data-miq_sparkle_on" => true,
@@ -93,18 +93,18 @@
             - sso_url = url_for_only_path(:action => "kerberos_authenticate",
                                 :button => "sso_login")
 
-            = link_to(_("Login"), '',
+            = link_to(_("Log In"), '',
                       :id                   => "login",
                       :class                => "btn btn-primary",
-                      :alt                  => _("Login"),
-                      :title                => _("Login"),
+                      :alt                  => _("Log In"),
+                      :title                => _("Log In"),
                       :onclick              => ext_auth? ? "miqAjaxExtAuth(); return false;" : "miqAjaxAuth('#{j login_url}'); return false;")
 
-            = link_to(_("SSO Login"), '',
+            = link_to(_("SSO Log In"), '',
                       :id                    => "sso_login",
                       :class                 => "btn btn-primary",
-                      :alt                   => _("SSO Login"),
-                      :title                 => _("SSO Login"),
+                      :alt                   => _("SSO Log In"),
+                      :title                 => _("SSO Log In"),
                       :style                 => "display: none;",
                       :onclick              => "miqAjaxAuthSso('#{j sso_url}'); return false;")
 
@@ -139,6 +139,11 @@
       :javascript
         $(function () {
           $('#saml_login').click();
+        });
+    - elsif ext_auth?(:oidc_enabled)
+      :javascript
+        $(function () {
+          $('#oidc_login').click();
         });
     - else
       :javascript

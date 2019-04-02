@@ -1,71 +1,66 @@
 describe CloudObjectStoreObjectController do
+  let(:object) { FactoryBot.create(:cloud_object_store_object, :name => "cloud-object-store-container-01") }
+  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
+
   before do
     EvmSpecHelper.create_guid_miq_server_zone
     allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
+    FactoryBot.create(:tagging, :tag => tag1.tag, :taggable => object)
+    FactoryBot.create(:tagging, :tag => tag2.tag, :taggable => object)
+    stub_user(:features => :all)
   end
 
-  let :object do
-    FactoryGirl.create(:cloud_object_store_object)
-  end
-
-  context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
-    before(:each) do
-      EvmSpecHelper.create_guid_miq_server_zone
-      @object = FactoryGirl.create(:cloud_object_store_object, :name => "cloud-object-store-container-01")
-      allow(@object).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
-      @tag1 = FactoryGirl.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
-      allow(Classification).to receive(:find_assigned_entries).with(@container).and_return([@tag1, @tag2])
+  describe "#tags_edit" do
+    before do
       session[:tag_db] = "CloudObjectStoreObject"
-      edit = {
-        :key        => "CloudObjectStoreObject_edit_tags__#{@object.id}",
+      session[:edit] = {
+        :key        => "CloudObjectStoreObject_edit_tags__#{object.id}",
         :tagging    => "CloudObjectStoreObject",
-        :object_ids => [@object.id],
+        :object_ids => [object.id],
         :current    => {:assignments => []},
-        :new        => {:assignments => [@tag1.id, @tag2.id]}
+        :new        => {:assignments => [tag1.id, tag2.id]}
       }
-      session[:edit] = edit
-    end
-
-    after(:each) do
-      expect(response.status).to eq(200)
     end
 
     it "builds tagging screen" do
-      post :button, :pressed => "cloud_object_store_object_tag", :format => :js, :id => @object.id
+      post :button, :params => { :pressed => "cloud_object_store_object_tag", :format => :js, :id => object.id }
+
       expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
     end
 
     it "cancels tags edit" do
-      session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{@object.id}"}, 'placeholder']
-      post :tagging_edit, :button => "cancel", :format => :js, :id => @object.id
+      session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{object.id}"}, 'placeholder']
+
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => object.id }
+
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
     end
 
     it "save tags" do
-      session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{@object.id}"}, 'placeholder']
-      post :tagging_edit, :button => "save", :format => :js, :id => @object.id
+      session[:breadcrumbs] = [{:url => "cloud_object_store_object/show/#{object.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => object.id, :data => get_tags_json([tag1, tag2]) }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
     end
   end
 
-  context "delete object store object" do
+  describe "delete object store object" do
     before do
-      login_as FactoryGirl.create(:user, :features => "everything")
+      login_as FactoryBot.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_object"
       allow(controller).to receive(:role_allows?).and_return(true)
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
     end
 
     it "delete invokes process_cloud_object_storage_buttons" do
       expect(controller).to receive(:process_cloud_object_storage_buttons)
+
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
@@ -76,17 +71,27 @@ describe CloudObjectStoreObjectController do
         CloudObjectStoreObject,
         'delete'
       )
+
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
     end
 
-    it "delete redirects to show_list" do
-      expect(controller).to receive(:javascript_redirect).with(
-        :action      => 'show_list',
-        :flash_msg   => anything,
-        :flash_error => false
-      )
+    it "delete redirects to previous breadcrumb if on object's details page" do
+      session[:cloud_object_store_object_display] = "main"
+
+      expect(controller).to receive(:javascript_redirect).with("previous-url")
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+    end
+
+    it "delete does not redirect if on object list page" do
+      session[:cloud_object_store_object_display] = "show_list"
+
+      expect(controller).not_to receive(:javascript_redirect)
+
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
@@ -110,10 +115,7 @@ describe CloudObjectStoreObjectController do
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
 
-      expect(assigns(:flash_array).first[:message]).to include(
-        "Cloud Object Store Object no longer exists"
-      )
-      expect(response.status).to eq(200)
+      expect(response.body).to match(/throw "error"/)
     end
   end
 

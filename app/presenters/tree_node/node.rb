@@ -6,55 +6,7 @@ module TreeNode
       @options = options
     end
 
-    def self.set_attribute(attribute, value = nil, &block)
-      atvar = "@#{attribute}".to_sym
-
-      define_method(attribute) do
-        result = instance_variable_get(atvar)
-
-        if result.nil?
-          if block_given?
-            args = [@object, @options, @parent_id].take(block.arity.abs)
-            result = instance_exec(*args, &block)
-          else
-            result = value
-          end
-          instance_variable_set(atvar, result)
-        end
-
-        result
-      end
-
-      equals_method(attribute)
-    end
-
-    def self.set_attributes(*attributes, &block)
-      attributes.each do |attribute|
-        define_method(attribute) do
-          result = instance_variable_get("@#{attribute}".to_sym)
-
-          if result.nil?
-            results = instance_eval(&block)
-            attributes.each_with_index do |local, index|
-              instance_variable_set("@#{local}".to_sym, results[index])
-              result = results[index] if local == attribute
-            end
-          end
-
-          result
-        end
-
-        equals_method(attribute)
-      end
-    end
-
-    def self.equals_method(attribute)
-      define_method("#{attribute}=".to_sym) do |result|
-        instance_variable_set("@#{attribute}".to_sym, result)
-      end
-    end
-
-    def title
+    def text
       @object.name
     end
 
@@ -70,15 +22,23 @@ module TreeNode
       @object.try(:decorate).try(:fonticon)
     end
 
+    def icon_background
+      nil
+    end
+
     def klass
       nil
     end
 
-    def no_click
-      nil
+    def selectable
+      true
     end
 
     def selected
+      nil
+    end
+
+    def color
       nil
     end
 
@@ -105,8 +65,8 @@ module TreeNode
         base_class = "ManageIQ::Providers::Foreman::ConfigurationManager" if @object.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
         base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)
-        cid = ApplicationRecord.compress_id(@object.id)
-        "#{@options[:full_ids] && !@parent_id.blank? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
+        cid = @object.id
+        "#{@options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
       end
     end
 
@@ -117,16 +77,18 @@ module TreeNode
 
     def to_h
       node = {
-        :key          => key,
-        :title        => escape(title),
-        :tooltip      => escape(tooltip),
-        :icon         => icon,
-        :expand       => expand,
-        :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
-        :addClass     => klass,
-        :cfmeNoClick  => no_click ? no_click : nil,
-        :select       => selected,
-        :checkable    => checkable ? nil : false,
+        :key            => key,
+        :text           => escape(text),
+        :tooltip        => escape(tooltip),
+        :icon           => icon,
+        :iconBackground => icon_background,
+        :iconColor      => color,
+        :expand         => expand,
+        :hideCheckbox   => hide_checkbox ? hide_checkbox : nil,
+        :addClass       => klass,
+        :selectable     => selectable,
+        :select         => selected,
+        :checkable      => checkable ? nil : false,
       }
 
       node[:image] = if !image
@@ -135,11 +97,61 @@ module TreeNode
                        image
                      elsif image =~ %r{^[a-zA-Z0-9]+/}
                        ActionController::Base.helpers.image_path(image)
-                     else
-                       ActionController::Base.helpers.image_path("100/#{image}")
                      end
 
       node.delete_if { |_, v| v.nil? }
+    end
+
+    class << self
+      private
+
+      def set_attribute(attribute, value = nil, &block)
+        atvar = "@#{attribute}".to_sym
+
+        define_method(attribute) do
+          result = instance_variable_get(atvar)
+
+          if result.nil?
+            if block_given?
+              args = [@object, @options, @parent_id].take(block.arity.abs)
+              result = instance_exec(*args, &block)
+            else
+              result = value
+            end
+            instance_variable_set(atvar, result)
+          end
+
+          result
+        end
+
+        equals_method(attribute)
+      end
+
+      def set_attributes(*attributes, &block)
+        attributes.each do |attribute|
+          define_method(attribute) do
+            result = instance_variable_get("@#{attribute}".to_sym)
+
+            if result.nil?
+              results = instance_eval(&block)
+              attributes.each_with_index do |local, index|
+                instance_variable_set("@#{local}".to_sym, results[index])
+                result = results[index] if local == attribute
+              end
+            end
+
+            result
+          end
+
+          equals_method(attribute)
+        end
+      end
+
+      def equals_method(attribute)
+        define_method("#{attribute}=".to_sym) do |result|
+          instance_variable_set("@#{attribute}".to_sym, result)
+        end
+      end
     end
   end
 end

@@ -2,6 +2,7 @@ module Mixins
   module MoreShowActions
     def show_timeline
       @showtype = "timeline"
+      @layout = 'timeline'
       session[:tl_record_id] = params[:id] if params[:id]
       @lastaction = "show_timeline"
       @timeline = @timeline_filter = true
@@ -34,7 +35,7 @@ module Mixins
     end
 
     def update_session_for_compliance_history(count)
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, @record)
+      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
       session[:ch_tree] = @ch_tree.tree_nodes
       session[:tree_name] = "ch_tree"
       session[:squash_open] = (count == 1)
@@ -47,7 +48,8 @@ module Mixins
       else
         drop_breadcrumb(
           :name => _("%{name} (Compliance History - Last %{number} Checks)") % {:name => @record.name, :number => count},
-          :url  => "/#{controller_name}/show/#{@record.id}?display=#{@display}&refresh=n")
+          :url  => "/#{controller_name}/show/#{@record.id}?display=#{@display}&refresh=n"
+        )
       end
     end
   end

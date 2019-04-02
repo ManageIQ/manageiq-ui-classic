@@ -1,5 +1,6 @@
 class AlertsListController < ApplicationController
   extend ActiveSupport::Concern
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :session_data
@@ -7,23 +8,24 @@ class AlertsListController < ApplicationController
   after_action :set_session_data
 
   def show
+    @title = _("All Alerts")
     if params[:id].nil?
       @breadcrumbs.clear
     end
   end
 
   def index
-    redirect_to :action => 'show'
+    redirect_to(:action => 'show')
   end
 
   def class_icons
     res = {}
     [
+      'ManageIQ::Providers::Kubernetes::ContainerManager',
       'ManageIQ::Providers::Kubernetes::ContainerManager::ContainerNode',
       'ManageIQ::Providers::Openshift::ContainerManager',
     ].each do |klass|
-      listicon_image = klass.constantize.decorate.listicon_image
-      res[klass] = ActionController::Base.helpers.image_path(listicon_image)
+      res[klass] = klass.constantize.decorate.fonticon
     end
     render :json => res
   end
@@ -38,5 +40,14 @@ class AlertsListController < ApplicationController
     session[:layout] = @layout
   end
 
-  menu_section :monitor
+  menu_section :monitor_alerts
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Monitor")},
+        {:title => _("Alerts")},
+      ],
+    }
+  end
 end

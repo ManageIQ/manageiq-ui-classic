@@ -1,16 +1,15 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_floating_ip_controller do |providers|
-  include CompressedIds
   render_views
-  before :each do
-    stub_user(:features => :all)
-    setup_zone
-  end
 
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_network_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
 
       describe "#show_list" do
         it "renders index" do
@@ -47,7 +46,7 @@ shared_examples :shared_examples_for_floating_ip_controller do |providers|
 
       describe "#test_toolbars" do
         it 'edit floating ip tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@floating_ip.id), :pressed => "floating_ip_tag"}
+          post :button, :params => {:miq_grid_checks => @floating_ip.id, :pressed => "floating_ip_tag"}
           expect(response.status).to eq(200)
         end
       end

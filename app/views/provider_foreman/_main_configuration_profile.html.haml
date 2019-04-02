@@ -1,8 +1,8 @@
 = render :partial => "layouts/flash_msg"
 .row
   .col-md-12.col-lg-6
-    = render :partial => "shared/summary/textual", :locals => {:title => _("Properties"), :items => textual_configuration_profile_group_properties}
-    = render :partial => "shared/summary/textual", :locals => {:title => _("Environment"), :items => textual_configuration_profile_group_environment}
-    = render :partial => "shared/summary/textual", :locals => {:title => _("Operating System"), :items => textual_configuration_profile_group_os}
+    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Properties'), textual_configuration_profile_group_properties), @record)
+    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Environment'), textual_configuration_profile_group_environment), @record)
+    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Operating System'), textual_configuration_profile_group_os), @record)
   .col-md-12.col-lg-6
-    = render :partial => "shared/summary/textual", :locals => {:title => _("Tenancy"), :items => textual_configuration_profile_group_tenancy}
+    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Tenancy'), textual_configuration_profile_group_tenancy), @record)

@@ -1,12 +1,10 @@
-require 'shared/presenters/tree_node/common'
-
 describe TreeNode::MiqRegion do
   subject { described_class.new(object, nil, {}) }
-  let(:object) { FactoryGirl.create(:miq_region, :description => 'Elbonia') }
+  let(:object) { FactoryBot.create(:miq_region, :description => 'Elbonia') }
 
   include_examples 'TreeNode::Node#key prefix', 'mr-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-regions'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
 
   describe '#expand' do
     it 'returns with true' do

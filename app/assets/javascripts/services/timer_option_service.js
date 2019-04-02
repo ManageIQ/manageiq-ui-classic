@@ -22,18 +22,18 @@ ManageIQ.angular.app.service('timerOptionService', function() {
   };
 
   var hourlyTimeOptions = _.flatten([
-    timeDataBuilder("Hours", 4),
-    timeObject("Hours", 6),
-    timeObject("Hours", 8),
-    timeObject("Hours", 12)
+    timeDataBuilder('Hours', 4),
+    timeObject('Hours', 6),
+    timeObject('Hours', 8),
+    timeObject('Hours', 12),
   ]);
 
   this.timerOptions = {
-    "Once": [],
-    "Hourly": hourlyTimeOptions,
-    "Daily": timeDataBuilder("Days", 6),
-    "Weekly": timeDataBuilder("Weeks", 4),
-    "Monthly": timeDataBuilder("Months", 6)
+    'Once': [],
+    'Hourly': hourlyTimeOptions,
+    'Daily': timeDataBuilder('Days', 6),
+    'Weekly': timeDataBuilder('Weeks', 4),
+    'Monthly': timeDataBuilder('Months', 6),
   };
 
   this.getOptions = function(timerType) {

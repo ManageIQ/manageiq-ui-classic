@@ -1,5 +1,6 @@
 module EmsInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
+  include TextualMixins::TextualZone
   #
   # Groups
   #
@@ -14,14 +15,14 @@ module EmsInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events)
     )
   end
 
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status refresh_date orchestration_stacks_status)
     )
   end
 
@@ -81,8 +82,8 @@ module EmsInfraHelper::TextualSummary
   def textual_infrastructure_folders
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = "#{title_for_hosts} & #{title_for_clusters}"
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
+    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
+    h         = {:label => label, :icon => "pficon pficon-container-node", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders')
       h[:title] = _("Show %{label}") % {:label => label}
@@ -93,7 +94,7 @@ module EmsInfraHelper::TextualSummary
   def textual_folders
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = _("VMs & Templates")
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
+    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
     h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders', :vat => true)
@@ -106,7 +107,7 @@ module EmsInfraHelper::TextualSummary
     label = title_for_clusters
     num   = @record.number_of(:ems_clusters)
     h     = {:label => label, :icon => "pficon pficon-cluster", :value => num}
-    if num > 0 && role_allows?(:feature => "ems_cluster_show_list")
+    if num.positive? && role_allows?(:feature => "ems_cluster_show_list")
       h[:link] = ems_infra_path(@record.id, :display => 'ems_clusters', :vat => true)
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -116,8 +117,8 @@ module EmsInfraHelper::TextualSummary
   def textual_hosts
     label = title_for_hosts
     num   = @record.number_of(:hosts)
-    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
-    if num > 0 && role_allows?(:feature => "host_show_list")
+    h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
+    if num.positive? && role_allows?(:feature => "host_show_list")
       h[:link]  = ems_infra_path(@record.id, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
@@ -128,6 +129,12 @@ module EmsInfraHelper::TextualSummary
     return nil unless @record.provider.respond_to?(:cloud_ems)
 
     textual_link(@record.provider.try(:cloud_ems).first)
+  end
+
+  def textual_network_manager
+    return nil unless @record.ext_management_system.respond_to?(:network_manager)
+
+    textual_link(@record.ext_management_system.try(:network_manager))
   end
 
   def textual_datastores
@@ -163,10 +170,6 @@ module EmsInfraHelper::TextualSummary
     @record.orchestration_stacks
   end
 
-  def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
-  end
-
   def textual_host_default_vnc_port_range
     return nil if @record.host_default_vnc_port_start.blank?
     value = "#{@record.host_default_vnc_port_start} - #{@record.host_default_vnc_port_end}"
@@ -178,5 +181,16 @@ module EmsInfraHelper::TextualSummary
      :icon  => "pficon pficon-topology",
      :link  => url_for_only_path(:controller => '/infra_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
+  end
+
+  def textual_custom_button_events
+    return nil unless User.current_user.super_admin_user? || User.current_user.admin?
+
+    {
+      :label => _('Custom Button Events'),
+      :value => num = @record.number_of(:custom_button_events),
+      :link  => num.positive? ? ems_infra_path(:id => @record, :display => 'custom_button_events') : nil,
+      :icon  => CustomButtonEvent.decorate.fonticon,
+    }
   end
 end

@@ -4,7 +4,7 @@ module ApplicationController::CurrentUser
   included do
     helper_method :current_user,  :current_userid
     helper_method :current_group, :current_group_id
-    helper_method :admin_user?, :super_admin_user?
+    helper_method :report_admin_user?, :super_admin_user?
     private :clear_current_user
   end
 
@@ -20,8 +20,8 @@ module ApplicationController::CurrentUser
     session[:group]   = db_user.current_group_id
   end
 
-  def admin_user?
-    current_user.try(:admin_user?)
+  def report_admin_user?
+    current_user&.report_admin_user?
   end
 
   def super_admin_user?

@@ -1,4 +1,8 @@
 module ApplicationController::Filter
+  EXP_TODAY = "Today".freeze
+  EXP_FROM = "FROM".freeze
+  EXP_IS = "IS".freeze
+
   Expression = Struct.new(
     :alias,
     :expression,
@@ -41,7 +45,7 @@ module ApplicationController::Filter
     end
 
     def drop_cache
-      @available_adv_searches = nil
+      @available_adv_searches = @available_tags = nil
     end
 
     def exp_available_cfields # fields on exp_model for check_all, check_any, and check_count operation
@@ -56,10 +60,10 @@ module ApplicationController::Filter
       if exp_model == '_display_filter_'
         exp_available_tags
       else
-        self.available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
-                                                                       :include_model   => true,
-                                                                       :include_my_tags => use_mytags,
-                                                                       :userid          => User.current_user.userid)
+        @available_tags ||= MiqExpression.model_details(exp_model, :typ             => 'tag',
+                                                                   :include_model   => true,
+                                                                   :include_my_tags => use_mytags,
+                                                                   :userid          => User.current_user.userid)
       end
     end
 
@@ -169,7 +173,10 @@ module ApplicationController::Filter
               self.exp_field = nil
               self.exp_key = nil
             else
-              if exp_model != '_display_filter_' && MiqExpression::Field.parse(exp_field).plural?
+              # for date time fields we should show After/Before etc. options
+              if exp_model != '_display_filter_' &&
+                 MiqExpression::Field.parse(exp_field).plural? &&
+                 !%i(date datetime).include?(MiqExpression.get_col_type(params[:chosen_field]))
                 self.exp_key = 'CONTAINS' # CONTAINS is valid only for plural tables
               else
                 self.exp_key = nil unless MiqExpression.get_col_operators(exp_field).include?(exp_key)
@@ -206,7 +213,7 @@ module ApplicationController::Filter
           if params[:user_input]
             self.exp_value = params[:user_input] == '1' ? :user_input : nil
           end
-        when 'tag'
+        when 'tag', 'tags'
           if params[:chosen_tag] && params[:chosen_tag] != exp_tag
             self.exp_tag = params[:chosen_tag] == '<Choose>' ? nil : params[:chosen_tag]
             self.exp_key = exp_model == '_display_filter_' ? '=' : 'CONTAINS'
@@ -353,8 +360,8 @@ module ApplicationController::Filter
       end
 
       # Check for suffixes changed
-      self.val1_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:choosen_suffix]] if params[:choosen_suffix]
-      self.val2_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:choosen_suffix2]] if params[:choosen_suffix2]
+      self.val1_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:chosen_suffix]] if params[:chosen_suffix]
+      self.val2_suffix = MiqExpression::BYTE_FORMAT_WHITELIST[params[:chosen_suffix2]] if params[:chosen_suffix2]
     end
 
     def update_from_exp_tree(exp)
@@ -564,18 +571,18 @@ module ApplicationController::Filter
     end
 
     def self.through_choices(from_choice) # Return the through_choices pulldown array for FROM datetime/date operators
-      tc = if FROM_HOURS.include?(from_choice)
-             FROM_HOURS
-           elsif FROM_DAYS.include?(from_choice)
-             FROM_DAYS
-           elsif FROM_WEEKS.include?(from_choice)
-             FROM_WEEKS
-           elsif FROM_MONTHS.include?(from_choice)
-             FROM_MONTHS
-           elsif FROM_QUARTERS.include?(from_choice)
-             FROM_QUARTERS
-           elsif FROM_YEARS.include?(from_choice)
-             FROM_YEARS
+      tc = if ViewHelper::FROM_HOURS.include?(from_choice)
+             ViewHelper::FROM_HOURS
+           elsif ViewHelper::FROM_DAYS.include?(from_choice)
+             ViewHelper::FROM_DAYS
+           elsif ViewHelper::FROM_WEEKS.include?(from_choice)
+             ViewHelper::FROM_WEEKS
+           elsif ViewHelper::FROM_MONTHS.include?(from_choice)
+             ViewHelper::FROM_MONTHS
+           elsif ViewHelper::FROM_QUARTERS.include?(from_choice)
+             ViewHelper::FROM_QUARTERS
+           elsif ViewHelper::FROM_YEARS.include?(from_choice)
+             ViewHelper::FROM_YEARS
            end
       # Return the THROUGH choices based on the FROM choice
       tc[0..tc.index(from_choice)]

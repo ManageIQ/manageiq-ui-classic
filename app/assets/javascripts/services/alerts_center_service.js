@@ -1,25 +1,21 @@
-angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
-
-alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$modal', '$http'];
-
-function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
+angular.module('alertsCenter').service('alertsCenterService', ['API', '$q', '$timeout', '$document', '$uibModal', '$http', function(API, $q, $timeout, $document, $uibModal, $http) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
   var alertsURL = '/api/alerts';
   var observerCallbacks = [];
 
-  var notifyObservers = function(){
-    angular.forEach(observerCallbacks, function(callback){
+  var notifyObservers = function() {
+    angular.forEach(observerCallbacks, function(callback) {
       callback();
     });
   };
 
-  _this.registerObserverCallback = function(callback){
+  _this.registerObserverCallback = function(callback) {
     observerCallbacks.push(callback);
   };
 
-  _this.unregisterObserverCallback = function(callback){
+  _this.unregisterObserverCallback = function(callback) {
     var index = observerCallbacks.indexOf(callback);
     if (index > -1) {
       observerCallbacks.splice(index, 1);
@@ -33,27 +29,27 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   _this.displayFilters = [];
 
   // Eventually this should be retrieved from smart tags
-  _this.categories = ["Environment"];
+  _this.categories = ['Environment'];
 
   _this.severities = {
     info: {
-      title: __("Information"),
+      title: __('Information'),
       value: 1,
-      severityIconClass: "pficon pficon-info",
-      severityClass: "alert-info"
+      severityIconClass: 'pficon pficon-info',
+      severityClass: 'alert-info',
     },
     warning: {
-      title: __("Warning"),
+      title: __('Warning'),
       value: 2,
-      severityIconClass: "pficon pficon-warning-triangle-o",
-      severityClass: "alert-warning"
+      severityIconClass: 'pficon pficon-warning-triangle-o',
+      severityClass: 'alert-warning',
     },
     error: {
-      title: __("Error"),
+      title: __('Error'),
       value: 3,
-      severityIconClass: "pficon pficon-error-circle-o",
-      severityClass: "alert-danger"
-    }
+      severityIconClass: 'pficon pficon-error-circle-o',
+      severityClass: 'alert-danger',
+    },
   };
 
   function getSeverityTitles() {
@@ -74,52 +70,52 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       title: __('Severity'),
       placeholder: __('Filter by Severity'),
       filterType: 'select',
-      filterValues: _this.severityTitles
+      filterValues: _this.severityTitles,
     },
     {
       id: 'host',
       title: __('Host Name'),
       placeholder: __('Filter by Host Name'),
-      filterType: 'text'
+      filterType: 'text',
     },
     {
       id: 'name',
       title: __('Provider Name'),
       placeholder: __('Filter by Provider Name'),
-      filterType: 'text'
+      filterType: 'text',
     },
     {
       id: 'objectType',
       title: __('Provider Type'),
       placeholder: __('Filter by Provider Type'),
       filterType: 'select',
-      filterValues: _this.objectTypes
+      filterValues: _this.objectTypes,
     },
     {
       id: 'message',
       title: __('Message Text'),
       placeholder: __('Filter by Message Text'),
-      filterType: 'text'
+      filterType: 'text',
     },
     {
       id: 'assignee',
       title: __('Owner'),
       placeholder: __('Filter by Owner'),
-      filterType: 'text'
+      filterType: 'text',
     },
     {
       id: 'acknowledged',
       title: __('Acknowledged'),
       placeholder: __('Filter by Acknowledged'),
       filterType: 'select',
-      filterValues: [__('Acknowledged'), __('Unacknowledged')]
-    }
+      filterValues: [__('Acknowledged'), __('Unacknowledged')],
+    },
   ];
 
   _this.getFiltersFromLocation = function(searchString, fields) {
     var currentFilters = [];
 
-    if (angular.isString(searchString)) {
+    if (_.isString(searchString)) {
       var filterString = searchString.slice(1);
       var filters = filterString.split('&');
       _.forEach(filters, function(nextFilter) {
@@ -130,17 +126,17 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
         });
 
         // set parameter value (use 'true' if empty)
-        var filterValue = angular.isUndefined(filter[1]) ? true : filter[1];
+        var filterValue = filter[1] === undefined ? true : filter[1];
         filterValue = decodeURIComponent(filterValue);
 
         var filterField = _.find(fields, function(field) {
           return field.id === filterId;
         });
-        if (angular.isDefined(filterField)) {
+        if (filterField !== undefined) {
           currentFilters.push({
             id: filterField.id,
             value: filterValue,
-            title: filterField.title
+            title: filterField.title,
           });
         }
       });
@@ -152,7 +148,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   function filterStringCompare(value1, value2) {
     var match = false;
 
-    if (angular.isString(value1) && angular.isString(value2)) {
+    if (_.isString(value1) && _.isString(value2)) {
       match = value1.toLowerCase().indexOf(value2.toLowerCase()) !== -1;
     }
 
@@ -175,7 +171,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     } else if (filter.id === 'assignee') {
       found = item.assignee_name && item.assignee_name.localeCompare(filter.value);
     } else if (filter.id === 'acknowledged') {
-      found = filter.value == __('Acknowledged') ? item.acknowledged : !item.acknowledged;
+      found = filter.value === __('Acknowledged') ? item.acknowledged : !item.acknowledged;
     } else if (filter.id === 'severityCount') {
       if (filter.value === _this.severityTitles[0]) {
         found = item.info.length > 0;
@@ -206,7 +202,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       }
     });
 
-    return (filteredAlerts)
+    return (filteredAlerts);
   };
 
   _this.compareAlerts = function(item1, item2, sortId, isAscending) {
@@ -245,38 +241,38 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     {
       id: 'time',
       title: __('Time'),
-      sortType: 'numeric'
+      sortType: 'numeric',
     },
     {
       id: 'severity',
       title: __('Severity'),
-      sortType: 'numeric'
+      sortType: 'numeric',
     },
     {
       id: 'host',
       title: __('Host Name'),
-      sortType: 'alpha'
+      sortType: 'alpha',
     },
     {
       id: 'name',
       title: __('Provider Name'),
-      sortType: 'alpha'
+      sortType: 'alpha',
     },
     {
       id: 'objectType',
       title: __('Provider Type'),
-      sortType: 'alpha'
+      sortType: 'alpha',
     },
     {
       id: 'assignee',
       title: __('Owner'),
-      sortType: 'alpha'
+      sortType: 'alpha',
     },
     {
       id: 'acknowledged',
       title: __('Acknowledged'),
-      sortType: 'numeric'
-    }
+      sortType: 'numeric',
+    },
   ];
 
   _this.menuActions = [
@@ -284,41 +280,41 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       id: 'acknowledge',
       name: __('Acknowledge'),
       isVisible: true,
-      actionFn: handleMenuAction
+      actionFn: handleMenuAction,
     },
     {
       id: 'addcomment',
       name: __('Add Note'),
       isVisible: true,
-      actionFn: handleMenuAction
+      actionFn: handleMenuAction,
     },
     {
       id: 'assign',
       name: __('Assign'),
       isVisible: true,
-      actionFn: handleMenuAction
+      actionFn: handleMenuAction,
     },
     {
       id: 'unacknowledge',
       name: __('Unacknowledge'),
       isVisible: true,
-      actionFn: handleMenuAction
+      actionFn: handleMenuAction,
     },
     {
       id: 'unassign',
       name: __('Unassign'),
       isVisible: true,
-      actionFn: handleMenuAction
-    }
+      actionFn: handleMenuAction,
+    },
   ];
 
   _this.updateMenuActionForItemFn = function(action, item) {
     if (action.id === 'unassign') {
       action.isVisible = item.assigned;
     } else if (action.id === 'acknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged !== true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged !== true;
     } else if (action.id === 'unacknowledge') {
-      action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged === true;
+      action.isVisible = (item.assignee_id === _this.currentUser.id) && item.acknowledged === true;
     } else {
       action.isVisbile = true;
     }
@@ -351,7 +347,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     var deferred = $q.defer();
 
     // Get the existing users
-    API.get('/api/users?expand=resources').then(function (response) {
+    API.get('/api/users?expand=resources').then(function(response) {
       // update the existing users list and current user
       _this.existingUsers = response.resources;
       _this.existingUsers.sort(function(user1, user2) {
@@ -387,7 +383,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     return deferred.promise;
   };
 
-  _this.updateAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+  _this.updateAlertsData = function(limit, offset, sortField, sortAscending) {
     // Update data then get the alerts data
     return _this.getCurrentUser()
       .then(_this.updateExistingUsers)
@@ -395,21 +391,21 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       .then(_this.updateTags)
       .then(_this.updateIcons)
       .then(function() {
-        return _this.getAlertsData(limit, offset, filters, sortField, sortAscending);
+        return _this.getAlertsData(limit, offset, sortField, sortAscending);
       });
   };
 
-  _this.updateIcons = function(response) {
+  _this.updateIcons = function() {
     return $http.get('/alerts_list/class_icons')
       .then(function(response) {
         _this.icons = response.data;
         return response;
       });
-    };
+  };
 
-  _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+  _this.getAlertsData = function(limit, offset, sortField, sortAscending) {
     var deferred = $q.defer();
-    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource';
+    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource&filter[]=resolved=false&filter[]=or+resolved=nil';
     var limitOptions = '';
     var offsetOptions = '';
     var sortOptions = '';
@@ -436,7 +432,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   function getObjectType(item) {
     var objectType = item.type;
-    var descriptors = item.type.split("::");
+    var descriptors = item.type.split('::');
 
     if (descriptors.length >= 3) {
       objectType = descriptors[2];
@@ -452,8 +448,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   function updateAlertStatus(updateAlert) {
     if (updateAlert && updateAlert.alert_actions && updateAlert.alert_actions.length > 0) {
-      var i;
       var actionUser;
+      var i;
 
       for (i = 0; i < updateAlert.alert_actions.length; i++) {
         updateAlert.alert_actions[i].created_at = convertApiTime(updateAlert.alert_actions[i].created_at);
@@ -472,7 +468,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       updateAlert.numComments = 0;
       for (i = 0; i < updateAlert.alert_actions.length; i++) {
         actionUser = _this.getUserByIdOrUserId(updateAlert.alert_actions[i].user_id);
-        updateAlert.alert_actions[i].username = angular.isDefined(actionUser) ? actionUser.name : '';
+        updateAlert.alert_actions[i].username = actionUser !== undefined ? actionUser.name : '';
 
         // Bump the comments count if a comment was made
         if (updateAlert.alert_actions[i].comment) {
@@ -481,21 +477,20 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       }
 
       if (updateAlert.numComments === 1) {
-        updateAlert.commentsTooltip = sprintf(__("%d Note"), 1);
+        updateAlert.commentsTooltip = sprintf(__('%d Note'), 1);
       } else {
-        updateAlert.commentsTooltip = sprintf(__("%d Notes"), updateAlert.numComments);
+        updateAlert.commentsTooltip = sprintf(__('%d Notes'), updateAlert.numComments);
       }
     }
   }
 
   function convertAlert(alertData, objectName, objectClassifiedType, objectType, retrievalTime) {
     var hostType = alertData.resource.type;
-
     var newAlert = {
       id: alertData.id,
       description: alertData.description,
       assignee: alertData.assignee,
-      acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
+      acknowledged: alertData.acknowledged !== undefined ? alertData.acknowledged : false,
       hostName: alertData.resource.name,
       hostType: hostType,
       hostImg: _this.icons[hostType],
@@ -503,27 +498,27 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       objectName: objectName,
       objectType: objectType,
       objectTypeImg: _this.icons[objectClassifiedType],
-      objectLink: '/ems_container/' + alertData.ems_id,
+      objectLink: '/restful_redirect/index?model=ExtManagementSystem&id=' + alertData.ems_id,
       sopLink: alertData.url,
       evaluated_on: convertApiTime(alertData.evaluated_on),
       severity: alertData.severity,
-      alert_actions: alertData.alert_actions
+      alert_actions: alertData.alert_actions,
     };
 
-    if (newAlert.severity == 'error') {
+    if (newAlert.severity === 'error') {
       newAlert.severityInfo = _this.severities.error;
-    } else if (newAlert.severity == 'warning') {
+    } else if (newAlert.severity === 'warning') {
       newAlert.severityInfo = _this.severities.warning;
     } else {
       newAlert.severityInfo = _this.severities.info;
     }
 
-    newAlert.age = moment.duration(retrievalTime - newAlert.evaluated_on).format("dd[d] hh[h] mm[m] ss[s]");
-    newAlert.rowClass = "alert " + newAlert.severityInfo.severityClass;
+    newAlert.age = moment.duration(retrievalTime - newAlert.evaluated_on).format('dd[d] hh[h] mm[m] ss[s]');
+    newAlert.rowClass = 'alert ' + newAlert.severityInfo.severityClass;
     newAlert.lastUpdate = newAlert.evaluated_on;
     newAlert.numComments = 0;
 
-    if (angular.isDefined(alertData.assignee)) {
+    if (alertData.assignee !== undefined) {
       newAlert.assigned = true;
       newAlert.assignee_name = alertData.assignee.name;
       newAlert.assignee_id = alertData.assignee.id;
@@ -533,7 +528,6 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     }
 
     updateAlertStatus(newAlert);
-
     return newAlert;
   }
 
@@ -544,30 +538,28 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     var newTypes = [];
     var retrievalTime = (new Date()).getTime();
     var alertProvider;
-    var key;
     var objectType;
     var objectName;
     var objectClassifiedType;
 
     angular.forEach(alertData.resources, function(item) {
-
       alertProvider = _.find(_this.providers, function(provider) {
         return provider.id === item.ems_id;
       });
 
-      if (angular.isDefined(alertProvider)) {
-        key = 'providers';
+      if (alertProvider !== undefined) {
         objectType = getObjectType(alertProvider);
         objectName = alertProvider.name;
         objectClassifiedType = alertProvider.type;
       }
 
       // Add filter for this object type
-      if (newTypes.indexOf(objectType) == -1) {
+      if (newTypes.indexOf(objectType) === -1) {
         newTypes.push(objectType);
       }
-
-      alerts.push(convertAlert(item, objectName, objectClassifiedType, objectType, retrievalTime));
+      if (item.resource) {
+        alerts.push(convertAlert(item, objectName, objectClassifiedType, objectType, retrievalTime));
+      }
     });
 
     newTypes.sort();
@@ -586,7 +578,6 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     // Add each alert in the appropriate group
     angular.forEach(responseData.resources, function(item) {
       var objectType;
-      var providerType;
       var foundType;
       var descriptors;
       var summaryItem;
@@ -609,11 +600,11 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
               tags: [],
               error: [],
               warning: [],
-              info: []
+              info: [],
             };
 
             providerType = getObjectType(provider);
-            descriptors = provider.type.toLowerCase().split("::");
+            descriptors = provider.type.toLowerCase().split('::');
             if (descriptors.length >= 3) {
               summaryItem.displayType = descriptors[1];
               objectType = descriptors[2];
@@ -636,13 +627,13 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
                 matchingTag = _.find(_this.tags, function(nextTag) {
                   return nextTag.id === providerTag.id;
                 });
-                if (angular.isDefined(matchingTag)) {
+                if (matchingTag !== undefined  && matchingTag.categorization.category !== undefined  ) {
                   summaryItem.tags.push({
                     id: providerTag.id,
                     categoryName: matchingTag.categorization.category.name,
                     categoryTitle: matchingTag.categorization.category.description,
                     value: matchingTag.categorization.name,
-                    title: matchingTag.categorization.description
+                    title: matchingTag.categorization.description,
                   });
                 }
               });
@@ -652,7 +643,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
                 foundTag = _.find(summaryItem.tags, function(nextTag) {
                   return nextTag.categoryTitle === nextCategory;
                 });
-                if (angular.isDefined(foundTag)) {
+                if (foundTag !== undefined) {
                   summaryItem[nextCategory] = foundTag.title;
                 }
               });
@@ -668,7 +659,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (angular.isUndefined(item.severity)) {
+        if (!item.severity) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);
@@ -684,7 +675,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     if (response.results && response.results.length > 0) {
       newState = response.results[0];
 
-      if (angular.isUndefined(_this.editItem.alert_actions)) {
+      if (_this.editItem.alert_actions === undefined) {
         _this.editItem.alert_actions = [];
       }
       _this.editItem.alert_actions.push(newState);
@@ -707,7 +698,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
       notifyObservers();
 
-      if (angular.isDefined(_this.doAfterStateChange)) {
+      if (_this.doAfterStateChange !== undefined) {
         _this.newComment = '';
         _this.doAfterStateChange();
         _this.doAfterStateChange = undefined;
@@ -719,7 +710,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     var state = {
       action_type: action,
       comment: _this.newComment,
-      user_id: _this.currentUser.id
+      user_id: _this.currentUser.id,
     };
     if (action === 'assign') {
       state.assignee_id = _this.owner.id;
@@ -738,14 +729,13 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   }
 
   function doAssign() {
-    if (_this.editItem.assignee_id != _this.owner.id) {
+    if (_this.editItem.assignee_id !== _this.owner.id) {
       if (_this.owner) {
         if (_this.currentAcknowledged !== _this.editItem.acknowledged) {
           _this.doAfterStateChange = _this.currentAcknowledged ? doAcknowledge : doUnacknowledge;
         }
 
         doAddState('assign');
-
       } else {
         doUnassign();
       }
@@ -758,7 +748,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   function doAddComment() {
     if (_this.newComment) {
-      doAddState("comment");
+      doAddState('comment');
     }
   }
 
@@ -770,8 +760,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     resolve: {
       editData: function() {
         return _this;
-      }
-    }
+      },
+    },
   };
 
   function showEditDialog(item, title, showAssign, doneCallback, querySelector) {
@@ -786,7 +776,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       }
     }
     _this.newComment = '';
-    var modalInstance = $modal.open(modalOptions);
+    var modalInstance = $uibModal.open(modalOptions);
     modalInstance.result.then(doneCallback);
 
     $timeout(function() {
@@ -799,21 +789,21 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   function handleMenuAction(action, item) {
     switch (action.id) {
-    case 'acknowledge':
-      showEditDialog(item, __("Acknowledge Alert"), false, doAcknowledge, '#edit-alert-ok');
-      break;
-    case 'unacknowledge':
-      showEditDialog(item, __("Uncknowledge Alert"), false, doUnacknowledge, '#edit-alert-ok');
-      break;
-    case 'assign':
-      showEditDialog(item, __("Assign Alert"), true, doAssign, '[data-id="assign-select"]');
-      break;
-    case 'unassign':
-      showEditDialog(item, __("Unassign Alert"), false, doUnassign, '#edit-alert-ok-button');
-      break;
-    case 'addcomment':
-      showEditDialog(item, __("Add Note"), false, doAddComment, '#comment-text-area');
-      break;
+      case 'acknowledge':
+        showEditDialog(item, __('Acknowledge Alert'), false, doAcknowledge, '#edit-alert-ok');
+        break;
+      case 'unacknowledge':
+        showEditDialog(item, __('Uncknowledge Alert'), false, doUnacknowledge, '#edit-alert-ok');
+        break;
+      case 'assign':
+        showEditDialog(item, __('Assign Alert'), true, doAssign, '[data-id="assign-select"]');
+        break;
+      case 'unassign':
+        showEditDialog(item, __('Unassign Alert'), false, doUnassign, '#edit-alert-ok-button');
+        break;
+      case 'addcomment':
+        showEditDialog(item, __('Add Note'), false, doAddComment, '#comment-text-area');
+        break;
     }
   }
-}
+}]);

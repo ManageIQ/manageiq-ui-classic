@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cloud tenant form component should render adding form variant 1`] = `
+<div
+  className="container-fluid"
+>
+  <h3>
+    Basic Information
+  </h3>
+  <MiqFormRenderer
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
+      }
+    }
+    canReset={false}
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "select-field",
+            "label": "Cloud Provider/Parent Cloud Tenant",
+            "name": "ems_id",
+            "options": Array [
+              Object {
+                "label": "Label 1",
+                "value": 1,
+              },
+              Object {
+                "label": "Label 2",
+                "value": 2,
+              },
+              Object {
+                "label": "Label 3",
+                "value": 3,
+              },
+              Object {
+                "label": "Label 4",
+                "value": 4,
+              },
+            ],
+            "placeholder": "<Choose>",
+            "validate": Array [
+              Object {
+                "type": "required-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+          Object {
+            "component": "text-field",
+            "label": "Tenant Name",
+            "maxLength": 128,
+            "name": "name",
+            "validate": Array [
+              Object {
+                "type": "required-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Cloud tenant form component should render editing form variant 1`] = `
+<div
+  className="container-fluid"
+>
+  <h3>
+    Edit Cloud Tenant
+  </h3>
+  <MiqFormRenderer
+    buttonsLabels={
+      Object {
+        "submitLabel": "Save",
+      }
+    }
+    canReset={true}
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "text-field",
+            "label": "Tenant Name",
+            "maxLength": 128,
+            "name": "name",
+            "validate": Array [
+              Object {
+                "type": "required-validator",
+              },
+            ],
+            "validateOnMount": true,
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;

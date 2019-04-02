@@ -7,6 +7,6 @@
           %tr{:title => _("View Condition"),
             :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{f.camelize(:lower)}');"}
             %td.table-view-pf-select
-              %img{:src => image_path("100/#{f.underscore}.png")}
+              %i{:class => TreeBuilderCondition.folder_icon(f)}
             %td
               = _("%{object} Conditions") % {:object => ui_lookup(:model => f)}

@@ -45,6 +45,14 @@
           :label                      => _("Resource Pool"),
           :keys                       => keys})
 
+    - if wf.field_supported(:folder)
+      - keys = [:placement_folder_name]
+      = render(:partial => "/miq_request/prov_dialog_fieldset",
+        :locals         => {:workflow => wf,
+          :dialog                     => dialog,
+          :label                      => _("Folder"),
+          :keys                       => keys})
+
     - keys = [wf.field_supported(:host_filter) ? :host_filter : nil, :placement_host_name].compact
     = render(:partial => "/miq_request/prov_dialog_fieldset",
       :locals         => {:workflow => wf,

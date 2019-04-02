@@ -1,14 +1,14 @@
 describe "ops/_zone_form.html.haml" do
   before do
     assign(:sb, :active_tab => "settings_evm_servers")
-    @selected_zone = FactoryGirl.create(:zone, :name => 'One Zone', :description => " One Description", :settings =>
+    @selected_zone = FactoryBot.create(:zone, :name => 'One Zone', :description => " One Description", :settings =>
                                                 {:proxy_server_ip => '1.2.3.4', :concurrent_vm_scans => 0, :ntp => {:server => ['Server 1']}})
     @servers = []
   end
 
   context "zone selected" do
-    before(:each) do
-      @zone = FactoryGirl.create(:zone)
+    before do
+      @zone = FactoryBot.create(:zone)
       @edit = {:zone_id               => nil,
                :new                   => {:name                => nil,
                                           :description         => nil,
@@ -50,6 +50,7 @@ describe "ops/_zone_form.html.haml" do
       @edit[:current][:name] = 'Test Zone'
       @zone.name = 'Test Zone'
       @zone.id = nil
+      @editing = true
       render :partial => "ops/zone_form"
       expect(response.body).to include('<input type="text" name="name" id="name" maxlength="50" disabled="disabled" class="form-control" data-miq_observe="{&quot;interval&quot;:&quot;.5&quot;,&quot;url&quot;:&quot;/ops/zone_field_changed/new&quot;}" />')
     end

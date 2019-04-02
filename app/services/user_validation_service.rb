@@ -4,8 +4,7 @@ class UserValidationService
   end
 
   extend Forwardable
-  delegate [:session, :initiate_wait_for_task, :session_init, :clear_current_user,
-            :session_reset, :start_url_for_user, :url_for_only_path] => :@controller
+  delegate %i(session initiate_wait_for_task session_init clear_current_user session_reset start_url_for_user url_for_only_path) => :@controller
 
   ValidateResult = Struct.new(:result, :flash_msg, :url)
 
@@ -14,7 +13,7 @@ class UserValidationService
   #
   def validate_user(user, task_id = nil, request = nil, authenticate_options = {})
     if task_id.present?
-      validation = validate_user_collect_task(user, task_id)
+      validate_user_collect_task(user, task_id)
     else # First time thru, kick off authenticate task
       validation = validate_user_kick_off_task(user, request, authenticate_options)
       return validation unless validation.result == :pass
@@ -36,17 +35,20 @@ class UserValidationService
     start_url = session[:start_url] # Hang on to the initial start URL
     db_user = User.find_by_userid(user[:name])
     session_reset
-    feature = missing_user_features(db_user)
-    return ValidateResult.new(
-      :fail,
-      _("Login not allowed, User's %{feature} is missing. Please contact the administrator") % {:feature => feature}
-    ) if feature
+    feature = User.missing_user_features(db_user)
+    if feature
+      return ValidateResult.new(
+        :fail,
+        _("Login not allowed, User's %{feature} is missing. Please contact the administrator") % {:feature => feature}
+      )
+    end
 
     session_init(db_user)
 
     return validate_user_handle_not_ready(db_user) unless server_ready?
 
     # Start super admin at the main db if the main db has no records yet
+    # If the main db has no records the default starting view is set to "Infrastructure Provider" view - the idea here is there is no point showing another view since it would be empty.
     return validate_user_handle_no_records if db_user.super_admin_user? &&
                                               ::Settings.product.maindb &&
                                               !::Settings.product.maindb.constantize.first
@@ -58,22 +60,10 @@ class UserValidationService
     ValidateResult.new(:pass, nil, startpage)
   end
 
-  def missing_user_features(db_user)
-    if !db_user || !db_user.userid
-      "User"
-    elsif !db_user.current_group
-      "Group"
-    elsif !db_user.current_group.miq_user_role
-      "Role"
-    end
-  end
-
   private
 
   def validate_user_handle_no_records
-    ValidateResult.new(:pass, nil, url_for_only_path(
-                                     :controller    => "ems_infra",
-                                     :action        => 'show_list'))
+    ValidateResult.new(:pass, nil, url_for_only_path(:controller => "ems_infra", :action => 'show_list'))
   end
 
   def validate_user_handle_not_ready(db_user)
@@ -83,11 +73,11 @@ class UserValidationService
                                        :action        => 'explorer',
                                        :flash_warning => true,
                                        :no_refresh    => true,
-                                       :flash_msg     => _("The %{product} Server is still starting, you have been redirected to the diagnostics page for problem determination") % {:product => I18n.t('product.name')},
-                                       :escape        => false)
-                        )
+                                       :flash_msg     => _("The %{product} Server is still starting, you have been redirected to the diagnostics page for problem determination") % {:product => Vmdb::Appliance.PRODUCT_NAME},
+                                       :escape        => false
+      ))
     else
-      ValidateResult.new(:fail, _("The %{product} Server is still starting. If this message persists, please contact your %{product} administrator.") % {:product => I18n.t('product.name')})
+      ValidateResult.new(:fail, _("The %{product} Server is still starting. If this message persists, please contact your %{product} administrator.") % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
   end
 
@@ -117,7 +107,7 @@ class UserValidationService
   end
 
   def validate_user_collect_task(user, task_id)
-    task = MiqTask.find_by_id(task_id)
+    task = MiqTask.find(task_id)
     if task.status.downcase != "ok"
       validate = ValidateResult.new(:fail, "Error: " + task.message)
       task.destroy
@@ -135,8 +125,7 @@ class UserValidationService
     return ValidateResult.new(:fail, _("Error: New password and verify password must be the same")) if
       user[:new_password].present? && user[:new_password] != user[:verify_password]
 
-    return ValidateResult.new(:fail, _("Error: New password can not be blank")) if
-      user[:new_password] && user[:new_password].blank?
+    return ValidateResult.new(:fail, _("Error: New password can not be blank")) if user[:new_password] && user[:new_password].blank?
 
     return ValidateResult.new(:fail, _("Error: New password is the same as existing password")) if
       user[:new_password].present? && user[:password] == user[:new_password]

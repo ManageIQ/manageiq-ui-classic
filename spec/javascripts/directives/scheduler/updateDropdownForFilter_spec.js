@@ -15,8 +15,7 @@ describe('update-drop-down-for-filter initialization', function() {
       '    <option>Relish</option>',
       '  </select>',
       '  ',
-      '  <select id="filter_value" name="filter_value" update-dropdown-for-filter dropdown-model="scheduleModel" dropdown-list="filterList" filter-hide="filterValuesEmpty" ng-model="scheduleModel.filter_value" ng-options="item.text for item in filterList track by item.text">',
-      '    <option disabled="" value="" selected="selected">Choose</option>',
+      '  <select id="filter_value" title="Choose" name="filter_value" update-dropdown-for-filter dropdown-model="scheduleModel" dropdown-list="filterList" filter-hide="filterValuesEmpty" ng-model="scheduleModel.filter_value" ng-options="item.text for item in filterList track by item.text">',
       '  </select>',
       '</form>',
     ].join("\n"));

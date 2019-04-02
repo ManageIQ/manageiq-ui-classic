@@ -1,7 +1,7 @@
 describe ApplicationHelper::Title do
   context "#title_from_layout" do
-    let(:title) { I18n.t('product.name') }
-    subject { helper.title_from_layout(@layout) }
+    let(:title) { Vmdb::Appliance.PRODUCT_NAME }
+    subject { helper.productized_title(helper.title_from_layout(@layout)) }
 
     it "when layout is blank" do
       @layout = ""
@@ -28,24 +28,14 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Policy Simulation")
     end
 
-    it "when layout = 'all_ui_tasks'" do
-      @layout = "all_ui_tasks"
-      expect(subject).to eq(title + ": All UI Tasks")
-    end
-
-    it "when layout = 'rss'" do
-      @layout = "rss"
-      expect(subject).to eq(title + ": RSS")
+    it "when layout = 'all_tasks'" do
+      @layout = "all_tasks"
+      expect(subject).to eq(title + ": All Tasks")
     end
 
     it "when layout = 'management_system'" do
       @layout = "management_system"
       expect(subject).to eq(title + ": Management Systems")
-    end
-
-    it "when layout = 'storage_manager'" do
-      @layout = "storage_manager"
-      expect(subject).to eq(title + ": Storage - Storage Managers")
     end
 
     it "when layout = 'ops'" do
@@ -73,9 +63,19 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Control")
     end
 
-    it "when layout likes 'miq_capacity*'" do
-      @layout = "miq_capacity_some_thing"
-      expect(subject).to eq(title + ": Optimize")
+    it "when layout = 'miq_capacity_utilization'" do
+      @layout = "miq_capacity_utilization"
+      expect(subject).to eq(title + ": Utilization")
+    end
+
+    it "when layout = 'miq_capacity_planning'" do
+      @layout = "miq_capacity_planning"
+      expect(subject).to eq(title + ": Planning")
+    end
+
+    it "when layout = 'miq_capacity_bottlenecks'" do
+      @layout = "miq_capacity_bottlenecks"
+      expect(subject).to eq(title + ": Bottlenecks")
     end
 
     it "when layout likes 'miq_request*'" do
@@ -91,20 +91,20 @@ describe ApplicationHelper::Title do
 
   context "#title_for_hosts" do
     it "returns 'Hosts / Nodes' when there are both openstack & non-openstack hosts" do
-      FactoryGirl.create(:host_vmware_esx, :ext_management_system => FactoryGirl.create(:ems_vmware))
-      FactoryGirl.create(:host_openstack_infra, :ext_management_system => FactoryGirl.create(:ems_openstack_infra))
+      FactoryBot.create(:host_vmware_esx, :ext_management_system => FactoryBot.create(:ems_vmware))
+      FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
 
       expect(helper.title_for_hosts).to eq("Hosts / Nodes")
     end
 
     it "returns 'Hosts' when there are only non-openstack hosts" do
-      FactoryGirl.create(:host_vmware_esx, :ext_management_system => FactoryGirl.create(:ems_vmware))
+      FactoryBot.create(:host_vmware_esx, :ext_management_system => FactoryBot.create(:ems_vmware))
 
       expect(helper.title_for_hosts).to eq("Hosts")
     end
 
     it "returns 'Nodes' when there are only openstack hosts" do
-      FactoryGirl.create(:host_openstack_infra, :ext_management_system => FactoryGirl.create(:ems_openstack_infra))
+      FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
 
       expect(helper.title_for_hosts).to eq("Nodes")
     end
@@ -112,41 +112,41 @@ describe ApplicationHelper::Title do
 
   context "#title_for_host" do
     it "returns 'Host' for non-openstack host" do
-      FactoryGirl.create(:host_vmware, :ext_management_system => FactoryGirl.create(:ems_vmware))
+      FactoryBot.create(:host_vmware, :ext_management_system => FactoryBot.create(:ems_vmware))
 
       expect(helper.title_for_host).to eq("Host")
     end
 
     it "returns 'Node' for openstack host" do
-      FactoryGirl.create(:host_openstack_infra, :ext_management_system => FactoryGirl.create(:ems_openstack_infra))
+      FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
 
       expect(helper.title_for_host).to eq("Node")
     end
   end
 
   context "#title_for_clusters" do
-    before(:each) do
-      @ems1 = FactoryGirl.create(:ems_vmware)
-      @ems2 = FactoryGirl.create(:ems_openstack_infra)
+    before do
+      @ems1 = FactoryBot.create(:ems_vmware)
+      @ems2 = FactoryBot.create(:ems_openstack_infra)
     end
 
     it "returns 'Clusters / Deployment Roles' when there are both openstack & non-openstack clusters" do
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems1.id)
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems2.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
 
       result = helper.title_for_clusters
       expect(result).to eq("Clusters / Deployment Roles")
     end
 
     it "returns 'Clusters' when there are only non-openstack clusters" do
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems1.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
 
       result = helper.title_for_clusters
       expect(result).to eq("Clusters")
     end
 
     it "returns 'Deployment Roles' when there are only openstack clusters" do
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems2.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
 
       result = helper.title_for_clusters
       expect(result).to eq("Deployment Roles")
@@ -154,20 +154,20 @@ describe ApplicationHelper::Title do
   end
 
   context "#title_for_cluster" do
-    before(:each) do
-      @ems1 = FactoryGirl.create(:ems_vmware)
-      @ems2 = FactoryGirl.create(:ems_openstack_infra)
+    before do
+      @ems1 = FactoryBot.create(:ems_vmware)
+      @ems2 = FactoryBot.create(:ems_openstack_infra)
     end
 
     it "returns 'Cluster' for non-openstack cluster" do
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems1.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
 
       result = helper.title_for_cluster
       expect(result).to eq("Cluster")
     end
 
     it "returns 'Deployment Role' for openstack cluster" do
-      FactoryGirl.create(:ems_cluster, :ems_id => @ems2.id)
+      FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
 
       result = helper.title_for_cluster
       expect(result).to eq("Deployment Role")

@@ -1,21 +1,21 @@
 class TreeBuilderCondition < TreeBuilder
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true, :lazy => true}
   end
 
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Conditions"),
+      :text    => t = _("All Conditions"),
       :tooltip => t
     }
+  end
+
+  # not using decorators for now because there are some inconsistencies
+  def self.folder_icon(klassname)
+    klassname.safe_constantize.try(:decorate).try(:fonticon)
   end
 
   # level 1 - host / vm
@@ -26,26 +26,14 @@ class TreeBuilderCondition < TreeBuilder
                  :ContainerGroup      => _("Pod Conditions"),
                  :ContainerNode       => _("Container Node Conditions"),
                  :ContainerImage      => _("Container Image Conditions"),
-                 :ExtManagementSystem => _("Provider Conditions")}
+                 :ContainerProject    => _("Container Project Conditions"),
+                 :ExtManagementSystem => _("Provider Conditions"),
+                 :PhysicalServer      => _("Physical Infrastructure Conditions")}
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]
-      icon = case model.to_s
-             when 'Host'
-               'pficon pficon-screen'
-             when 'Vm'
-               'pficon pficon-virtual-machine'
-             when 'ContainerReplicator'
-               'pficon pficon-replicator'
-             when 'ContainerGroup'
-               'fa fa-cubes'
-             when 'ContainerNode'
-               'pficon pficon-container-node'
-             when 'ContainerImage'
-               'pficon pficon-image'
-             when 'ExtManagementSystem'
-               'pficon pficon-server'
-             end
+      icon = self.class.folder_icon(model.to_s)
+
       {
         :id   => model.name.camelize(:lower),
         :icon => icon,
@@ -58,7 +46,6 @@ class TreeBuilderCondition < TreeBuilder
 
   # level 2 - conditions
   def x_get_tree_custom_kids(parent, count_only, options)
-    assert_type(options[:type], :condition)
     towhat = parent[:id].camelize
     return super unless MiqPolicyController::UI_FOLDERS.collect(&:name).include?(towhat)
 

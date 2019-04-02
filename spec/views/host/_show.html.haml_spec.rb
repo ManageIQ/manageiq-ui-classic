@@ -1,4 +1,7 @@
 describe "host/show.html.haml" do
+  helper(GtlHelper)
+  helper(ApplicationHelper)
+
   shared_examples_for "miq_before_onload JS is needed" do
     it "renders proper JS" do
       js_string = "ManageIQ.afterOnload = \"miqAsyncAjax('/host/#{action}/#{host.id}');\""
@@ -7,7 +10,7 @@ describe "host/show.html.haml" do
     end
   end
 
-  let(:host) { FactoryGirl.create(:host_vmware, :name => 'My Host') }
+  let(:host) { FactoryBot.create(:host_vmware, :name => 'My Host') }
   let(:action) { 'index' }
 
   before do

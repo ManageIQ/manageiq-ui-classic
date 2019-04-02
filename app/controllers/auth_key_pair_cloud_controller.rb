@@ -7,17 +7,19 @@ class AuthKeyPairCloudController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericButtonMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.display_methods
     %w(instances)
   end
 
   def show_list
-    process_show_list(:dbname => :authkeypaircloud)
+    process_show_list(:dbname => :authkeypaircloud, :gtl_dbname => :authkeypaircloud)
   end
 
   def breadcrumb_name(_model)
-    ui_lookup(:tables => "auth_key_pair_cloud")
+    _("Key Pairs")
   end
 
   def self.table_name
@@ -28,28 +30,23 @@ class AuthKeyPairCloudController < ApplicationController
     ManageIQ::Providers::CloudManager::AuthKeyPair
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-    return tag("ManageIQ::Providers::CloudManager::AuthKeyPair") if params[:pressed] == 'auth_key_pair_cloud_tag'
-    delete_auth_key_pairs if params[:pressed] == 'auth_key_pair_cloud_delete'
-    new if params[:pressed] == 'auth_key_pair_cloud_new'
-
-    if !@flash_array.nil? && params[:pressed] == "auth_key_pair_cloud_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed] == "auth_key_pair_cloud_new"
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      else
-        javascript_redirect :action => "new"
-      end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
+  def specific_buttons(pressed)
+    case pressed
+    when 'auth_key_pair_cloud_delete'
+      delete_auth_key_pairs
+      false
+    when 'auth_key_pair_cloud_new'
+      javascript_redirect(:action => 'new')
+      true
     end
+  end
+
+  def download_private_key
+    assert_privileges("auth_key_pair_cloud_download")
+    disable_client_cache
+    @key_pair = find_record_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, params[:id])
+    filename = @key_pair.fingerprint.delete(':', '')
+    send_data(@key_pair.auth_key, :filename => "#{filename}.key")
   end
 
   def set_form_vars
@@ -87,10 +84,7 @@ class AuthKeyPairCloudController < ApplicationController
     set_form_vars
     @in_a_form = true
     session[:changed] = nil
-    drop_breadcrumb(
-      :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'auth_key_pair_cloud')},
-      :url  => "/auth_key_pair_cloud/new"
-    )
+    drop_breadcrumb(:name => _("Add New Key Pair"), :url => "/auth_key_pair_cloud/new")
   end
 
   def create
@@ -105,33 +99,34 @@ class AuthKeyPairCloudController < ApplicationController
 
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new %{model} was cancelled by the user") %
-                          {:model => ui_lookup(:table => 'auth_key_pair_cloud')}
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Key Pair was cancelled by the user"))
     when "save"
-      ext_management_system = find_by_id_filtered(ManageIQ::Providers::CloudManager, options[:ems_id])
+      ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
       kls = kls.class_by_ems(ext_management_system)
       if kls.is_available?(:create_key_pair, ext_management_system, options)
         task_id = kls.create_key_pair_queue(session[:userid], ext_management_system, options)
 
-        if task_id.kind_of?(Integer)
-          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
-        else
+        unless task_id.kind_of?(Integer)
           add_flash(_("Key Pair creation failed: Task start failed"), :error)
+        end
+        if @flash_array
           javascript_flash(:spinner_off => true)
+        else
+          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
         end
       else
         @in_a_form = true
         add_flash(kls.is_available_now_error_message(:create_key_pair, ext_management_system, kls))
         drop_breadcrumb(
-          :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'auth_key_pair_cloud')},
+          :name => _("Add New Key Pair"),
           :url  => "/auth_key_pair_cloud/new"
         )
         javascript_flash
       end
     when "validate"
       @in_a_form = true
-      ext_management_system = find_by_id_filtered(ManageIQ::Providers::CloudManager, options[:ems_id])
+      ext_management_system = find_record_with_rbac(ManageIQ::Providers::CloudManager, options[:ems_id])
       kls = kls.class_by_ems(ext_management_system)
       if kls.is_available?(:create_key_pair, ext_management_system, options)
         add_flash(_("Validation successful"))
@@ -157,41 +152,27 @@ class AuthKeyPairCloudController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show_list"
+    flash_to_session
+    javascript_redirect(:action => "show_list")
   end
 
   # delete selected auth key pairs
   def delete_auth_key_pairs
     assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = []
-
-    if @lastaction == "show_list" || (@lastaction == "show" && @layout != "auth_key_pair_cloud")
-      key_pairs = find_checked_items
-    else
-      key_pairs = [params[:id]]
-    end
-
+    key_pairs = find_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, checked_or_params)
     add_flash(_("No Key Pairs were selected for deletion"), :error) if key_pairs.empty?
 
     key_pairs_to_delete = []
-    key_pairs.each do |k|
-      key_pair = ManageIQ::Providers::CloudManager::AuthKeyPair.find_by_id(k)
-      if key_pair.nil?
-        add_flash(_("%{model} no longer exists.") % {:model => ui_lookup(:table => "auth_key_pair_cloud")}, :error)
+    key_pairs.each do |key_pair|
+      if key_pair.is_available?(:delete_key_pair)
+        key_pairs_to_delete.push(key_pair.id)
       else
-        if key_pair.is_available?(:delete_key_pair)
-          key_pairs_to_delete.push(k)
-        else
-          add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
-            :model   => ui_lookup(:table => 'auth_key_pair_cloud'),
-            :name    => key_pair.name,
-            :details => key_pair.is_available_now_error_message(:delete_key_pair)
-          }, :error)
-        end
+        add_flash(_("Couldn't initiate deletion of Key Pair \"%{name}\": %{details}") % {
+          :name    => key_pair.name,
+          :details => key_pair.is_available_now_error_message(:delete_key_pair)
+        }, :error)
       end
     end
     process_deletions(key_pairs_to_delete) unless key_pairs_to_delete.empty?
@@ -202,15 +183,11 @@ class AuthKeyPairCloudController < ApplicationController
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "auth_key_pair_cloud"
       @single_delete = true unless flash_errors?
-      add_flash(_("The selected %{model} was deleted") % {
-        :model => ui_lookup(:table => "auth_key_pair_cloud")
-      }) if @flash_array.nil?
+      add_flash(_("The selected Key Pair was deleted")) if @flash_array.nil?
     end
   end
 
   def process_deletions(key_pairs)
-    return if key_pairs.empty?
-
     ManageIQ::Providers::CloudManager::AuthKeyPair.where(:id => key_pairs).order('lower(name)').each do |kp|
       audit = {
         :event        => "auth_key_pair_cloud_record_delete_initiateed",
@@ -232,6 +209,16 @@ class AuthKeyPairCloudController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Clouds")},
+        {:title => _("Key Pairs"), :url => controller_url},
+      ],
+    }
+  end
 
   menu_section :clo
 end

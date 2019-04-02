@@ -7,7 +7,7 @@
   - elsif @report
     #chart_placeholder{:style => 'position: relative'}
     = render(:partial => 'layouts/timeline',
-        :locals         => {:tl_json          =>  @tl_json || {},
+        :locals         => {:tl_json          =>  @tl_json,
                             :data_action      => "timeline_data"})
     - if @report.filter_summary
       = @report.filter_summary

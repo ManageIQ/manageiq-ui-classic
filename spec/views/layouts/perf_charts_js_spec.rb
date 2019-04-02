@@ -2,8 +2,8 @@ describe 'layouts/_perf_chart_js.html.haml' do
   context "has correct structure for chart interactivity" do
     helper(ChartingHelper)
 
-    let(:chart_data)  { [{:xml => {}, :main_col => column, :menu => menu, :zoom_url => zoom_url}] }
-    let(:chart_data2) { [{:xml => {}, :xml2 => {}, :main_col => column, :menu => menu, :zoom_url => zoom_url}] }
+    let(:chart_data)  { [{:data => {}, :main_col => column, :menu => menu, :zoom_url => zoom_url}] }
+    let(:chart_data2) { [{:data => {}, :data2 => {}, :main_col => column, :menu => menu, :zoom_url => zoom_url}] }
     let(:charts)      { [{:title => "CPU (Mhz)", :type => "Line", :columns => [column], :menu => menu, :applies_to_method => "cpu_mhz_available?"}] }
     let(:column)      { "cpu_usagemhz_rate_average" }
     let(:menu)        { ["Chart-Current-Daily:Back to daily", "Timeline-Current-Hourly:Hourly events on this VM"] }

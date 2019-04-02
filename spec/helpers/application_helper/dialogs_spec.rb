@@ -6,6 +6,7 @@ describe ApplicationHelper::Dialogs do
       :read_only            => read_only,
       :trigger_auto_refresh => trigger_auto_refresh,
       :force_multi_value    => true,
+      :show_past_dates      => true,
     )
   end
   let(:trigger_auto_refresh) { nil }
@@ -33,6 +34,61 @@ describe ApplicationHelper::Dialogs do
     end
   end
 
+  describe "#dialog_dropdown_selected_value" do
+    let(:dialog_field) { instance_double("DialogFieldDropDownList", :values => values, :type => type, :value => value) }
+    let(:type) { "OneDropDown" }
+    let(:values) { [%w(key1 Val1), %w(key2 Val2)] }
+    let(:value) { nil }
+
+    context "when the the selected item exists in the values list" do
+      let(:value) { 'key2' }
+      it "returns the value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('Val2')
+      end
+    end
+
+    context "when the the selected item does not exists in the values list" do
+      let(:value) { 'oldkey' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('oldkey')
+      end
+    end
+
+    context "shows a list of display values for multiselect" do
+      let(:values) { [%w(key1 Val1), %w(key2 Val2), %w(key3 Val3), %w(key4 Val4)] }
+      let(:value) { 'key2,key4' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('Val2,Val4')
+      end
+    end
+
+    context "shows a list of display values and keys for multiselect when some keys not in values" do
+      let(:values) { [%w(key1 Val1), %w(key2 Val2), %w(key3 Val3), %w(key4 Val4)] }
+      let(:value) { 'oldkey,key4' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('oldkey,Val4')
+      end
+    end
+
+    context "when the drop down option list is empty" do
+      let(:values) {}
+      let(:value) { 'key' }
+
+      it "returns the field value if the options list is empty" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('key')
+      end
+    end
+
+    context "can display an integer dropdown value" do
+      let(:values) { [[1, 'one']] }
+      let(:value) { 1 }
+
+      it "returns the field value if the options list is empty" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('one')
+      end
+    end
+  end
+
   describe "#category_tags" do
     before do
       allow(Classification).to receive(:find_by).with(:id => 123).and_return(classification)
@@ -45,9 +101,9 @@ describe ApplicationHelper::Dialogs do
 
       it "returns a list of entries by name and description" do
         expect(helper.category_tags(123)).to eq([
-          {:name => "cat", :description => "Cat"},
-          {:name => "dog", :description => "Dog"}
-        ])
+                                                  {:name => "cat", :description => "Cat"},
+                                                  {:name => "dog", :description => "Dog"}
+                                                ])
       end
     end
 
@@ -68,7 +124,8 @@ describe ApplicationHelper::Dialogs do
         :field_index                     => "300",
         :auto_refreshable_field_indicies => [1, 2, 3],
         :current_index                   => 123,
-        :trigger                         => "true"
+        :trigger                         => "true",
+        :initial_trigger                 => true
       }
     end
 
@@ -115,7 +172,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => true
             }.to_json
           )
         end
@@ -166,7 +224,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
@@ -194,7 +253,8 @@ describe ApplicationHelper::Dialogs do
         :field_index                     => "300",
         :auto_refreshable_field_indicies => [1, 2, 3],
         :current_index                   => 123,
-        :trigger                         => "true"
+        :trigger                         => "true",
+        :initial_trigger                 => false
       }
     end
 
@@ -229,7 +289,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => false
             }.to_json
           )
         end
@@ -285,6 +346,7 @@ describe ApplicationHelper::Dialogs do
           expect(helper.date_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class                  => "css1 dynamic-date-100",
             :readonly               => "true",
+            "data_date_start"       => nil,
             "data-miq_observe_date" => {
               :url                             => "url",
               :auto_refresh                    => true,
@@ -293,7 +355,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
@@ -306,6 +369,7 @@ describe ApplicationHelper::Dialogs do
           expect(helper.date_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class                  => "css1 dynamic-date-100",
             :readonly               => "true",
+            "data_date_start"       => nil,
             "data-miq_observe_date" => '{"url":"url"}'
           )
         end
@@ -346,6 +410,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a few data-miq attributes" do
           expect(helper.time_tag_options(dialog_field, "url", "hour_or_min", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-date-hour_or_min-100",
+            "data_date_start"  => nil,
             "data-miq_observe" => {
               :url                             => "url",
               :auto_refresh                    => true,
@@ -354,7 +419,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
@@ -366,6 +432,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a few data-miq attributes" do
           expect(helper.time_tag_options(dialog_field, "url", "hour_or_min", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-date-hour_or_min-100",
+            "data_date_start"  => nil,
             "data-miq_observe" => '{"url":"url"}'
           )
         end
@@ -520,12 +587,12 @@ describe ApplicationHelper::Dialogs do
 
     it "builds a list of auto refreshable fields and trigger fields with their indicies" do
       expect(helper.build_auto_refreshable_field_indicies(workflow)).to eq([
-        {:tab_index => 0, :group_index => 0, :field_index => 2, :auto_refresh => true},
-        {:tab_index => 0, :group_index => 1, :field_index => 0, :auto_refresh => false},
-        {:tab_index => 0, :group_index => 1, :field_index => 1, :auto_refresh => true},
-        {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
-        {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
-      ])
+                                                                             {:tab_index => 0, :group_index => 0, :field_index => 2, :auto_refresh => true},
+                                                                             {:tab_index => 0, :group_index => 1, :field_index => 0, :auto_refresh => false},
+                                                                             {:tab_index => 0, :group_index => 1, :field_index => 1, :auto_refresh => true},
+                                                                             {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
+                                                                             {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
+                                                                           ])
     end
   end
 
@@ -537,102 +604,41 @@ describe ApplicationHelper::Dialogs do
     end
   end
 
-  describe "#default_value_form_options" do
-    let(:subject) { helper.default_value_form_options(field_type, field_values, field_default_value) }
+  describe "#force_old_dialogs?" do
+    let(:force_old_dialog_use) { true }
 
-    context "when the field values are empty" do
-      let(:field_values) { [] }
+    context "when force_old_dialog_use is false" do
+      let(:force_old_dialog_use) { false }
+      let(:dialog_locals) { nil }
 
-      context "when the field type is a DialogFieldDropDownList" do
-        let(:field_type) { "DialogFieldDropDownList" }
+      it "returns false" do
+        expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(false)
+      end
+    end
 
-        context "when the field default value is set" do
-          let(:field_default_value) { "some default" }
+    context "when dialog locals exist" do
+      context "when the dialog local force old dialog use string matches 'true'" do
+        let(:dialog_locals) { {:force_old_dialog_use => "true"} }
 
-          it "adds the ability to select no default value" do
-            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
-          end
-        end
-
-        context "when the field default value is not set" do
-          let(:field_default_value) { nil }
-
-          it "adds the ability to select no default value" do
-            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
-          end
+        it "returns true" do
+          expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(true)
         end
       end
 
-      context "when the field type is a DialogFieldRadioButton" do
-        let(:field_type) { "DialogFieldRadioButton" }
+      context "when the dialog local force old dialog use string does not match 'true'" do
+        let(:dialog_locals) { {:force_old_dialog_use => "potato"} }
 
-        context "when the field default value is set" do
-          let(:field_default_value) { "some default" }
-
-          it "adds the ability to select no default value" do
-            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
-          end
-        end
-
-        context "when the field default value is not set" do
-          let(:field_default_value) { nil }
-
-          it "adds the ability to select no default value" do
-            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
-          end
+        it "returns false" do
+          expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(false)
         end
       end
     end
 
-    context "when the field values are not empty" do
-      let(:field_values) { [%w(123 456)] }
+    context "when dialog locals do not exist" do
+      let(:dialog_locals) { nil }
 
-      context "when the field type is a DialogFieldDropDownList" do
-        let(:field_type) { "DialogFieldDropDownList" }
-
-        context "when the field default value is set" do
-          let(:field_default_value) { "123" }
-
-          it "selects the default value and does not add any" do
-            expect(subject).to eq("<option selected=\"selected\" value=\"123\">456</option>")
-          end
-        end
-
-        context "when the field default value is not set" do
-          let(:field_default_value) { nil }
-
-          it "does not explicitly select anything" do
-            expect(subject).to eq("<option value=\"123\">456</option>")
-          end
-        end
-      end
-
-      context "when the field type is a DialogFieldRadioButton" do
-        let(:field_type) { "DialogFieldRadioButton" }
-
-        context "when the field default value is set" do
-          let(:field_default_value) { "123" }
-
-          it "adds the ability to select no default value but selects the default" do
-            expected_html = <<-HTML
-<option value=\"\">&lt;None&gt;</option>
-<option selected=\"selected\" value=\"123\">456</option>
-            HTML
-            expect(subject).to eq(expected_html.chomp)
-          end
-        end
-
-        context "when the field default value is not set" do
-          let(:field_default_value) { nil }
-
-          it "adds the ability to select no default value" do
-            expected_html = <<-HTML
-<option value=\"\">&lt;None&gt;</option>
-<option value=\"123\">456</option>
-            HTML
-            expect(subject).to eq(expected_html.chomp)
-          end
-        end
+      it "returns true" do
+        expect(helper.force_old_dialogs?(dialog_locals, force_old_dialog_use)).to eq(true)
       end
     end
   end

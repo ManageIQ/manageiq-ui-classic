@@ -3,7 +3,7 @@ describe OpsController do
   let(:session) { {} }
   let(:zone) { double("Zone", :name => "foo") }
   let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
-  let(:schedule) { FactoryGirl.create(:miq_automate_schedule) }
+  let(:schedule) { FactoryBot.create(:miq_automate_schedule) }
   let(:schedule_new) { MiqSchedule.new }
   let(:user) { stub_user(:features => :all) }
 
@@ -57,6 +57,24 @@ describe OpsController do
         expect(schedule.filter[:ui][:ui_attrs]).to be_a Array
         expect(json['ui_attrs']).to eq [[], [], [], [], []]
         expect(json["object_request"]).to eq "test_request"
+      end
+    end
+  end
+
+  describe "#fetch_target_ids" do
+    include OpsController::Settings::AutomateSchedules
+    let(:ops) { OpsController.new }
+
+    before do
+      ops.instance_variable_set(:@params, {})
+    end
+
+    [nil, 'null'].each do |target|
+      it "skips Rbac if :target_class is #{target}" do
+        ops.params = {:target_class => target }
+        expect(ops).to receive(:render).once
+        expect(Rbac).to receive(:filtered).never
+        ops.fetch_target_ids
       end
     end
   end

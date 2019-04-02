@@ -1,11 +1,11 @@
 - if edit
   - url = url_for_only_path(:action => "ce_accept", :id => "accept")
   - if entry == "new"
-    %tr#new_tr{:class => cycle('row0', 'row1')}
+    %tr{:class => cycle('row0', 'row1')}
       %td
-        = text_field("entry", "name", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
+        = text_field("entry", "name", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
       %td
-        = text_field("entry", "description", :maxlength => MAX_DESC_LEN, :style => "width: 100%;")
+        = text_field("entry", "description", :maxlength => ViewHelper::MAX_DESC_LEN, :style => "width: 100%;")
       %td.action-cell
         %button.btn.btn-default.btn-block.btn-sm{:title => _("Add this entry"),
           "data-submit"         => 'classification_entries_div',
@@ -18,12 +18,12 @@
     %tr{:class => cycle('row0', 'row1'), :id => "#{entry.id}_tr"}
       %td
         = text_field("entry", "name",
-          :maxlength => MAX_NAME_LEN,
+          :maxlength => ViewHelper::MAX_NAME_LEN,
           "value"    => entry.name,
           :style     => "width: 100%;")
       %td
         = text_field("entry", "description",
-          :maxlength => MAX_DESC_LEN,
+          :maxlength => ViewHelper::MAX_DESC_LEN,
           "value"    => entry.description,
           :style     => "width: 100%;")
       %td.action-cell
@@ -36,7 +36,7 @@
           = _("Save")
 - else
   - if entry == "new"
-    %tr#new_tr{:class => cycle('row0', 'row1'), :onclick => remote_function(:url => {:action => 'ce_select', :id => 'new'}), :title => _("Click to add a new entry")}
+    %tr{:class => cycle('row0', 'row1'), :onclick => remote_function(:url => {:action => 'ce_select', :id => 'new'}), :title => _("Click to add a new entry")}
       %td
         = _("<New Entry>")
       %td= _("<Click on this row to create a new entry>")

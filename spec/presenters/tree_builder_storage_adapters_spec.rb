@@ -1,28 +1,27 @@
 describe TreeBuilderStorageAdapters do
   context 'TreeBuilderStorageAdapters' do
     before do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "SA Group")
-      login_as FactoryGirl.create(:user, :userid => 'sa_wilma', :miq_groups => [@group])
-      host = FactoryGirl.create(:host)
+      role = MiqUserRole.find_by(:name => "EvmRole-operator")
+      @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "SA Group")
+      login_as FactoryBot.create(:user, :userid => 'sa_wilma', :miq_groups => [@group])
+      host = FactoryBot.create(:host)
       class << host
         def hardware
-          OpenStruct.new(:storage_adapters => [FactoryGirl.create(:miq_scsi_target,
-                                                                  :miq_scsi_luns => [FactoryGirl.create(:miq_scsi_lun),
-                                                                                     FactoryGirl.create(:miq_scsi_lun),
-                                                                                     FactoryGirl.create(:miq_scsi_lun)
-                                                                                    ])])
+          OpenStruct.new(:storage_adapters => [FactoryBot.create(:miq_scsi_target,
+                                                                  :miq_scsi_luns => [FactoryBot.create(:miq_scsi_lun),
+                                                                                     FactoryBot.create(:miq_scsi_lun),
+                                                                                     FactoryBot.create(:miq_scsi_lun)])])
         end
       end
-      @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, {}, true, host)
+      @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, {}, true, :root => host)
     end
 
     it 'returns Host as root' do
       root = @sa_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @sa_tree.instance_variable_get(:@root).name,
+        :text    => @sa_tree.instance_variable_get(:@root).name,
         :tooltip => "Host: #{@sa_tree.instance_variable_get(:@root).name}",
-        :icon    => 'pficon pficon-screen'
+        :icon    => 'pficon pficon-container-node'
       )
     end
 

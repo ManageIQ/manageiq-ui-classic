@@ -6,6 +6,8 @@ class ConfigurationJobController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
+  include Mixins::BreadcrumbsMixin
 
   def self.model
     ManageIQ::Providers::AnsibleTower::AutomationManager::Job
@@ -15,35 +17,8 @@ class ConfigurationJobController < ApplicationController
     @table_name ||= "configuration_job"
   end
 
-  def ems_path(*args)
-    ems_configprovider_path(*args)
-  end
-
-  def show
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
-    @lastaction = "show"
-    @configuration_job = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@configuration_job)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({:name => _("Configuration_Jobs"),
-                     :url  => "/configuration_job/show_list?page=#{@current_page}&refresh=y"}, true)
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@configuration_job)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @configuration_job.name},
-                      :url  => "/configuration_job/show/#{@configuration_job.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == 'summary_only'
-    end
-
-    replace_gtl_main_div if pagination_request?
-  end
-
   def parameters
-    show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
+    show_association('parameters', _('Parameters'), :parameters, OrchestrationStackParameter)
   end
 
   # handle buttons pressed on the button bar
@@ -62,18 +37,10 @@ class ConfigurationJobController < ApplicationController
     end
     return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @configuration_job = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
-    if !@flash_array.nil? && params[:pressed] == "configurations_job_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+    if single_delete_test
+      single_delete_redirect
     elsif @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
     else
@@ -92,5 +59,16 @@ class ConfigurationJobController < ApplicationController
   end
   helper_method :textual_group_list
 
-  menu_section :conf
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Automation")},
+        {:title => _("Ansible Tower")},
+        {:title => _("Jobs")},
+        {:url   => controller_url, :title => _("Ansible Tower Jobs")},
+      ],
+    }
+  end
+
+  menu_section :at
 end

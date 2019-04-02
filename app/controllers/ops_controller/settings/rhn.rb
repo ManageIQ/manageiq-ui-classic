@@ -11,7 +11,7 @@ module OpsController::Settings::RHN
 
   SUBSCRIPTION_TYPES =
     [['Red Hat Subscription Management', 'sm_hosted'],
-     ['Red Hat Satellite 6',             'rhn_satellite6']]
+     ['Red Hat Satellite 6',             'rhn_satellite6']].freeze
 
   def rhn_subscription_types
     SUBSCRIPTION_TYPES
@@ -66,7 +66,6 @@ module OpsController::Settings::RHN
     MiqServer.in_my_region.order(:name).collect do |server|
       status = server.rh_registered ? 'Unsubscribed' : 'Not registered'
       status = 'Subscribed' if server.rh_subscribed
-      status = 'Subscribed via Proxy' if server.rhn_mirror
 
       MiqHashStruct.new(
         :id                => server.id,
@@ -91,14 +90,15 @@ module OpsController::Settings::RHN
     db = MiqDatabase.first
     username, = db.auth_user_pwd(:registration)
     MiqHashStruct.new(
-      :registered        => !username.blank?,
-      :registration_type => db.registration_type,
-      :user_name         => username,
-      :server            => db.registration_server,
-      :company_name      => db.registration_organization_name,
-      :subscription      => rhn_subscription_map[db.registration_type] || 'None',
-      :update_repo_name  => db.update_repo_name,
-      :version_available => db.cfme_version_available
+      :registered                     => username.present?,
+      :registration_type              => db.registration_type,
+      :user_name                      => username,
+      :server                         => db.registration_server,
+      :company_name                   => db.registration_organization_name,
+      :subscription                   => rhn_subscription_map[db.registration_type] || 'None',
+      :update_repo_name               => db.update_repo_name,
+      :version_available              => db.cfme_version_available,
+      :registration_http_proxy_server => db.registration_http_proxy_server
     )
   end
 
@@ -122,8 +122,8 @@ module OpsController::Settings::RHN
       }
     )
 
-    auth    = {:registration =>  {:userid => credentials[:userid], :password => credentials[:password]}}
-    options = {:required => [:userid, :password]}
+    auth    = {:registration => {:userid => credentials[:userid], :password => credentials[:password]}}
+    options = {:required => %i(userid password)}
     db.update_authentication(auth, options)
     unless credentials[:registration_type] == "sm_hosted"
       db.registration_organization = @edit[:new][:customer_org]
@@ -163,8 +163,8 @@ module OpsController::Settings::RHN
              } : {
                :registration_http_proxy_server   => nil,
                :registration_http_proxy_username => nil,
-               :registration_http_proxy_password => nil}
-            )
+               :registration_http_proxy_password => nil
+             })
   end
 
   def rhn_fire_available_organizations
@@ -194,13 +194,12 @@ module OpsController::Settings::RHN
     @edit[:new][:servers] = {}
 
     params.each do |key, value|
-      if key =~ /^check_server_(\d+)$/
-        server_id = $1.to_i
-        if MiqServer.find(server_id) && (value == '1')
-          @edit[:new][:servers][server_id] = true
-        else
-          @edit[:new][:servers].delete(server_id)
-        end
+      next if key !~ /^check_server_(\d+)$/
+      server_id = $1.to_i
+      if MiqServer.find(server_id) && (value == '1')
+        @edit[:new][:servers][server_id] = true
+      else
+        @edit[:new][:servers].delete(server_id)
       end
     end
   end
@@ -217,7 +216,7 @@ module OpsController::Settings::RHN
   # we can use this method to disable the 'Save' button untill all necessary
   # fields are filled-in.
   def rhn_allow_save?
-    obligatory_fields = [:customer_password, :customer_userid, :server_url, :repo_name]
+    obligatory_fields = %i(customer_password customer_userid server_url repo_name)
     obligatory_fields << :proxy_address if @edit[:new][:use_proxy].to_i == 1
 
     obligatory_fields.find_all do |field|
@@ -256,7 +255,7 @@ module OpsController::Settings::RHN
   def rhn_validate
     rhn_load_session
     rhn_fire_available_organizations do |organizations|
-      if 'rhn_satellite6' == @edit[:new][:register_to]
+      if @edit[:new][:register_to] == 'rhn_satellite6'
         # Hash of display names to key names
         @edit[:organizations] = organizations
         if @edit[:organizations].length == 1
@@ -270,9 +269,11 @@ module OpsController::Settings::RHN
     # rhn_fire_available_organizations is async, if wait_for_task is completed, render the results
     if params[:task_id]
       render :update do |page|
+        @changed = (@edit[:new] != @edit[:current])
         page << javascript_prologue
-        if 'rhn_satellite6' == @edit[:new][:register_to]
+        if @edit[:new][:register_to] == 'rhn_satellite6'
           page.replace_html('settings_rhn', :partial => 'settings_rhn_edit_tab')
+          page << javascript_for_miq_button_visibility(@changed) unless flash_errors?
         else
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         end
@@ -295,34 +296,35 @@ module OpsController::Settings::RHN
         begin
           case params[:button]
           when 'register'
-            verb = _("Registration")
             MiqServer.queue_update_registration_status(server_ids)
+            add_flash(_('Registration has been initiated for the selected Servers'))
           when 'check'
-            verb = _("Check for updates")
             MiqServer.queue_check_updates(server_ids)
+            add_flash(_('Check for updates has been initiated for the selected Servers'))
           when 'update'
-            verb = _("Update")
             MiqServer.queue_apply_updates(server_ids)
+            add_flash(_('Update has been initiated for the selected Servers'))
           end
 
-          add_flash(_("%{item} has been initiated for the selected Servers") % {:item => verb})
+          javascript_flash
         rescue => error
           add_flash(_("Error occured when queuing action: %{message}") % {:message => error.message}, :error)
+          javascript_flash
         end
       end
-    end
-
-    settings_get_info('root')
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html('settings_rhn', :partial => 'settings_rhn_tab')
+    else
+      settings_get_info('root')
+      render :update do |page|
+        page << javascript_prologue
+        page.replace_html('settings_rhn', :partial => 'settings_rhn_tab')
+      end
     end
   end
 
   def edit_rhn
-    @sb[:active_tab]  = 'settings_rhn_edit'
+    @sb[:active_tab] = 'settings_rhn_edit'
     self.x_active_tree = :settings_tree
-    @in_a_form        = true
+    @in_a_form = true
 
     db = MiqDatabase.first
     @edit ||= {}
@@ -351,6 +353,12 @@ module OpsController::Settings::RHN
   end
 
   private
+
+  def rhn_save_enabled?
+    return @changed if @edit[:new][:register_to] != 'rhn_satellite6'
+    # @edit[:organizations] gets set when validate button is pressed
+    @edit[:new][:register_to] == 'rhn_satellite6' && @edit[:organizations]
+  end
 
   def reset_repo_name_from_default
     MiqDatabase.registration_default_value_for_update_repo_name

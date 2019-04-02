@@ -11,12 +11,13 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectCenter < ApplicationHelp
           button(
             :cloud_object_store_object_delete,
             'pficon pficon-delete fa-lg',
-            N_('Remove Object Storage Object'),
-            N_('Remove Object Storage Object'),
-            :url_parms => "main_div",
-            :confirm   => N_("Warning: The selected Object Storage Object will be permanently removed!"),
-            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options   => {:feature => :delete}
+            N_('Remove Object Storage Object from Inventory'),
+            N_('Remove Object Storage Object from Inventory'),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :confirm      => N_("Warning: The selected Object Storage Object will be permanently removed!"),
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete}
           ),
         ]
       ),

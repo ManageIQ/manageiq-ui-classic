@@ -1,54 +1,53 @@
 class NetworkTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::NetworkManager
 
-  def entity_type(entity)
-    if entity.kind_of?(CloudNetwork)
-      entity.class.base_class.name.demodulize
-    else
-      entity.class.name.demodulize
-    end
-  end
-
-  def build_topology
-    topo_items = {}
-    links      = []
-
-    included_relations = [
-      :tags,
-      :availability_zones => [
-        :vms => [
-          :tags,
-          :load_balancers  => :tags,
-          :floating_ips    => :tags,
-          :cloud_tenant    => :tags,
-          :security_groups => :tags
-        ]
-      ],
-      :cloud_subnets      => [
-        :parent_cloud_subnet,
-        :tags,
-        :vms,
-        :cloud_network  => :tags,
-        :network_router => [
-          :tags,
-          :cloud_network => [
-            :floating_ips => :tags
-          ]
+  @included_relations = [
+    :writable_classification_tags,
+    :availability_zones => [
+      :vms => [
+        :writable_classification_tags,
+        :floating_ips    => :writable_classification_tags,
+        :cloud_tenant    => :writable_classification_tags,
+        :security_groups => :writable_classification_tags,
+        :load_balancers  => %i(
+          writable_classification_tags
+          floating_ips
+          security_groups
+        )
+      ]
+    ],
+    :cloud_subnets      => [
+      :parent_cloud_subnet,
+      :writable_classification_tags,
+      :vms,
+      :cloud_network  => :writable_classification_tags,
+      :network_router => [
+        :writable_classification_tags,
+        :cloud_network => [
+          :floating_ips => :writable_classification_tags
         ]
       ]
+    ],
+    :cloud_tenants      => [
+      :network_routers => %i(
+        floating_ips
+        security_groups
+        cloud_subnets
+      ),
+      :cloud_subnets   => [
+        :security_groups
+      ]
     ]
+  ]
 
-    entity_relationships = {:NetworkManager => build_entity_relationships(included_relations)}
+  @kinds = %i(NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone)
 
-    preloaded = @providers.includes(included_relations)
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:NetworkManager], topo_items, links)
+  def entity_type(entity)
+    if entity.kind_of?(CloudNetwork) || entity.kind_of?(CloudSubnet)
+      entity.class.base_class.name.demodulize
+    else
+      super
     end
-
-    populate_topology(topo_items, links, build_kinds, icons)
   end
 
   def entity_display_type(entity)
@@ -58,7 +57,7 @@ class NetworkTopologyService < TopologyService
       name = entity.class.name.demodulize
       if entity.kind_of?(Vm)
         name.upcase # turn Vm to VM because it's an abbreviation
-      elsif ['Public', 'Private'].include?(name) && entity.kind_of?(CloudNetwork)
+      elsif %w(Public Private).include?(name) && entity.kind_of?(CloudNetwork)
         entity_type(entity) + " " + name
       else
         name
@@ -71,7 +70,7 @@ class NetworkTopologyService < TopologyService
     data[:status]       = entity_status(entity)
     data[:display_kind] = entity_display_type(entity)
 
-    if entity.kind_of?(Host) || entity.kind_of?(Vm)
+    if (entity.kind_of?(Host) || entity.kind_of?(Vm)) && entity.try(:ems_id)
       data[:provider] = entity.ext_management_system.name
     end
 
@@ -81,7 +80,7 @@ class NetworkTopologyService < TopologyService
   def entity_status(entity)
     case entity
     when Vm
-      entity.power_state.capitalize
+      entity.power_state.nil? ? "Unknown" : entity.power_state.capitalize
     when ManageIQ::Providers::NetworkManager
       entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
     when NetworkRouter, CloudSubnet, CloudNetwork, FloatingIp
@@ -91,11 +90,5 @@ class NetworkTopologyService < TopologyService
     else
       'Unknown'
     end
-  end
-
-  def build_kinds
-    kinds = [:NetworkRouter, :CloudSubnet, :Vm, :NetworkManager, :FloatingIp, :CloudNetwork, :NetworkPort, :CloudTenant,
-             :SecurityGroup, :LoadBalancer, :Tag, :AvailabilityZone]
-    build_legend_kinds(kinds)
   end
 end

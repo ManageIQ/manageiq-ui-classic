@@ -1,19 +1,10 @@
 describe MiqAeCustomizationController do
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
-  context "#get_node_info" do
-    it "Don't need to validate active node when editing Dialogs" do
-      controller.instance_variable_set(:@sb, :trees => {:dialog_edit_tree => {:active_node => "root"}}, :active_tree => :dialog_edit_tree)
-      expect(controller).not_to receive(:valid_active_node)
-      expect(controller).to receive(:dialog_edit_set_form_vars)
-      controller.send(:get_node_info)
-    end
-  end
-
   describe "group_reorder_field_changed" do
-    before(:each) do
+    before do
       allow(controller).to receive(:load_edit).and_return(true)
       controller.instance_variable_set(:@edit, :new => {:fields => [['test', 100], ['test1', 101], ['test2', 102], ['test3', 103]]})
     end
@@ -56,7 +47,7 @@ describe MiqAeCustomizationController do
   end
 
   describe "#group_form_field_changed" do
-    before(:each) do
+    before do
       allow(controller).to receive(:load_edit).and_return(true)
       controller.instance_variable_set(:@edit, :new => {:fields => [['value', 100], ['value1', 101], ['value2', 102], ['value3', 103]]})
     end
@@ -119,7 +110,7 @@ describe MiqAeCustomizationController do
   end
 
   describe 'x_button' do
-    before(:each) do
+    before do
       ApplicationController.handle_exceptions = true
     end
 
@@ -151,62 +142,62 @@ describe MiqAeCustomizationController do
     end
 
     it "assigns the sandbox active tree" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:active_tree]).to eq(:old_dialogs_tree)
     end
 
     it "assigns the sandbox active accord" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:active_accord]).to eq(:old_dialogs)
     end
 
     it "assigns the sandbox active node on old dialogs tree to root" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(controller.x_node).to eq("root")
     end
 
     it "builds the old dialogs tree" do
-      login_as FactoryGirl.create(:user, :features => "old_dialogs_accord")
+      login_as FactoryBot.create(:user, :features => "old_dialogs_accord")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:old_dialogs_tree)
     end
 
     it "assigns the sandbox active node on dialogs tree to root" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
       expect(controller.x_node).to eq("root")
     end
 
     it "builds the dialog tree" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:dialogs_tree)
     end
 
     it "assigns the sandbox active node on ab tree to root" do
-      login_as FactoryGirl.create(:user, :features => "dialog_accord")
+      login_as FactoryBot.create(:user, :features => "dialog_accord")
       get :explorer
-      expect(expect(controller.x_node).to eq("root"))
+      expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the ab tree" do
-      login_as FactoryGirl.create(:user, :features => "ab_buttons_accord")
+      login_as FactoryBot.create(:user, :features => "ab_buttons_accord")
       allow(controller).to receive(:get_node_info)
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:ab_tree)
     end
 
     it "assigns the sandbox active node on import/export tree to root" do
-      login_as FactoryGirl.create(:user, :features => "miq_ae_class_import_export")
+      login_as FactoryBot.create(:user, :features => "miq_ae_class_import_export")
       get :explorer
-      expect(expect(controller.x_node).to eq("root"))
+      expect(expect(controller.x_node).to(eq("root")))
     end
 
     it "builds the import/export tree" do
-      login_as FactoryGirl.create(:user, :features => "miq_ae_class_import_export")
+      login_as FactoryBot.create(:user, :features => "miq_ae_class_import_export")
       get :explorer
       expect(assigns(:sb)[:trees]).to include(:dialog_import_export_tree)
     end
@@ -228,42 +219,6 @@ describe MiqAeCustomizationController do
       it "does not include the flash message from the sandbox" do
         get :explorer
         expect(assigns(:flash_array)).not_to include("the flash messages")
-      end
-    end
-
-    context "when in dialog edit state" do
-      render_views
-
-      before do
-        FactoryGirl.create(:miq_server, :guid => MiqServer.my_guid)
-        MiqServer.my_server_clear_cache
-
-        # It looks like edit state causes some of the features to be denied
-        # Why?
-        stub_user(:features => :none)
-      end
-
-      it "still renders the main_div" do
-        session[:sandboxes] = {
-          "miq_ae_customization" => {
-            :trees         => {:dialog_edit_tree => {:active_node => "root"},
-                               :dialogs_tree     => {:active_node => "root"}},
-            :active_tree   => :dialog_edit_tree,
-            :active_accord => :dialogs,
-          },
-        }
-        session[:edit] = {
-          :new     => {},
-          :current => {},
-        }
-
-        get :explorer
-
-        expect(assigns(:sb)[:active_tree]).to eq(:dialogs_tree)
-        expect(response).to render_template('miq_ae_customization/explorer')
-
-        # empty main_div
-        expect(response.body).not_to match(/<div id=['"]main_div['"]>\s*<\/div>/)
       end
     end
   end
@@ -328,6 +283,20 @@ describe MiqAeCustomizationController do
           post :upload_import_file, :params => params, :xhr => true
           expect(controller.instance_variable_get(:@flash_array))
             .to include(:message => "Error: the file uploaded is not of the supported format", :level => :error)
+        end
+      end
+
+      context "when the dialog importer raises a circular reference error" do
+        before do
+          allow(dialog_import_service).to receive(:store_for_import)
+            .and_raise(DialogImportValidator::DialogFieldAssociationCircularReferenceError)
+        end
+
+        it "redirects with an error message" do
+          post :upload_import_file, :params => params, :xhr => true
+          expect(controller.instance_variable_get(:@flash_array))
+            .to include(:message => "Error during upload: the following dialog fields to be imported contain circular association references: DialogImportValidator::DialogFieldAssociationCircularReferenceError",
+                        :level   => :error)
         end
       end
 
@@ -465,7 +434,7 @@ describe MiqAeCustomizationController do
     end
 
     context "when there are service dialogs" do
-      let(:service_dialogs) { %w(1, 2, 3) }
+      let(:service_dialogs) { %w(1 2 3) }
 
       before do
         allow(DialogYamlSerializer).to receive(:new).and_return(dialog_yaml_serializer)
@@ -515,7 +484,7 @@ describe MiqAeCustomizationController do
   end
 
   context "#x_button" do
-    before :each do
+    before do
       controller.instance_variable_set(:@sb, :applies_to_class => "EmsCluster")
       session[:sandboxes] = {
         "miq_ae_customization" => {
@@ -533,6 +502,28 @@ describe MiqAeCustomizationController do
       post :x_button, :params => {:pressed => "ab_group_new"}
       expect(response.status).to eq(200)
       expect(response.body).to include("main_div")
+    end
+  end
+
+  describe 'replace_right_cell' do
+    it "Can build all the trees" do
+      seed_session_trees('miq_ae_customization', :ab, 'root')
+      session_to_sb
+      controller.instance_variable_set(:@edit, :new => {})
+
+      expect(controller).to receive(:reload_trees_by_presenter).with(
+        instance_of(ExplorerPresenter),
+        array_including(
+          instance_of(TreeBuilderButtons),
+          instance_of(TreeBuilderProvisioningDialogs),
+          instance_of(TreeBuilderServiceDialogs),
+        )
+      )
+
+      # FIXME: this tree is an exceptional one, it's going to be removed when we replace the
+      # dialog editor.
+      expect(controller).to receive(:render)
+      controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs))
     end
   end
 end

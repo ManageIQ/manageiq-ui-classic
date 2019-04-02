@@ -2,6 +2,7 @@ class VmInfraController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include VmShowMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -17,21 +18,22 @@ class VmInfraController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role  => "vandt_accord",
         :name  => :vandt,
-        :title => _("VMs & Templates")),
-
-      ApplicationController::Feature.new_with_hash(
+        :title => _("VMs & Templates")
+      },
+      {
         :role  => "vms_filter_accord",
         :name  => :vms_filter,
-        :title => _("VMs"),),
-
-      ApplicationController::Feature.new_with_hash(
+        :title => _("VMs")
+      },
+      {
         :role  => "templates_filter_accord",
         :name  => :templates_filter,
-        :title => _("Templates"),),
-    ]
+        :title => _("Templates")
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def prefix_by_nodetype(nodetype)
@@ -42,14 +44,14 @@ class VmInfraController < ApplicationController
   end
 
   def set_elements_and_redirect_unauthorized_user
-    @nodetype, id = parse_nodetype_and_id(params[:id])
+    @nodetype, _id = parse_nodetype_and_id(params[:id])
     prefix = prefix_by_nodetype(@nodetype)
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "vandt_accord")
-      set_active_elements_authorized_user('vandt_tree', 'vandt', true, VmOrTemplate, id)
+      set_active_elements_authorized_user('vandt_tree', 'vandt')
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", false, nil, id)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else
       if (prefix == "vms" && role_allows?(:feature => "vms_instances_filter_accord")) ||
          (prefix == "templates" && role_allows?(:feature => "templates_images_filter_accord"))
@@ -69,6 +71,17 @@ class VmInfraController < ApplicationController
 
   def skip_breadcrumb?
     breadcrumb_prohibited_for_action?
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs    => [
+        {:title => _("Compute")},
+        {:title => _("Infrastructure")},
+        {:title => _("Virtual Machines")},
+      ],
+      :include_record => true,
+    }
   end
 
   menu_section :inf

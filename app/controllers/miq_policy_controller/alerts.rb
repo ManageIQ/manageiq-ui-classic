@@ -1,49 +1,65 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :display_driving_event?
+  end
+
+  def alert_edit_cancel
+    @edit = nil
+    @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
+    if @alert.id.blank?
+      add_flash(_("Add of new Alert was cancelled by the user"))
+    else
+      add_flash(_("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @alert.description})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype, :remove_form_buttons => true)
+  end
+
+  def alert_edit_save_add
+    id = params[:id] && params[:button] != "add" ? params[:id] : "new"
+    return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+    alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
+    alert_set_record_vars(alert)
+
+    unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
+      alert.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      replace_right_cell(:nodetype => "al")
+      return
+    end
+
+    AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
+    flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") : _("Alert \"%{name}\" was added")
+    add_flash(flash_key % {:name => @edit[:new][:description]})
+    alert_get_info(MiqAlert.find(alert.id))
+    alert_sync_provider(@edit[:alert_id] ? :update : :new)
+    @edit = nil
+    @nodetype = "al"
+    @new_alert_node = "al-#{alert.id}"
+    replace_right_cell(:nodetype => "al", :replace_trees => %i(alert_profile alert), :remove_form_buttons => true)
+  end
+
+  def alert_edit_reset
+    alert_build_edit_screen
+    @sb[:action] = "alert_edit"
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "al")
+  end
+
   def alert_edit
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      @edit = nil
-      @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
-      if @alert && @alert.id.blank?
-        add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
-      else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlert"), :name => @alert.description})
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      alert_edit_cancel
     when "save", "add"
-      id = params[:id] && params[:button] != "add" ? params[:id] : "new"
-      return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
-      @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
-      alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
-      alert_set_record_vars(alert)
-      if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
-        AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlert"), :name => @edit[:new][:description]})
-        alert_get_info(MiqAlert.find(alert.id))
-        alert_sync_provider(@edit[:alert_id] ? :update : :new)
-        @edit = nil
-        @nodetype = "al"
-        @new_alert_node = "al-#{to_cid(alert.id)}"
-        replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
-      else
-        alert.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "al")
-      end
+      alert_edit_save_add
     when "reset", nil # Reset or first time in
-      alert_build_edit_screen
-      @sb[:action] = "alert_edit"
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "al")
+      alert_edit_reset
     end
   end
 
@@ -52,11 +68,10 @@ module MiqPolicyController::Alerts
     alerts = []
     # showing 1 alert, delete it
 
-    if params[:id].nil? || MiqAlert.find_by_id(params[:id]).nil?
-      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")},
-                :error)
-    elsif MiqAlert.find_by_id(params[:id]).read_only
-      add_flash(_("%{models} can not be deleted") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
+    if params[:id].nil? || !MiqAlert.exists?(params[:id])
+      add_flash(_("Alert no longer exists"), :error)
+    elsif MiqAlert.find(params[:id]).read_only
+      add_flash(_("Alert can not be deleted"), :error)
     else
       alerts.push(params[:id])
     end
@@ -66,14 +81,14 @@ module MiqPolicyController::Alerts
     process_alerts(alerts, "destroy") unless alerts.empty?
     @new_alert_node = self.x_node = "root"
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => [:alert_profile, :alert])
+    replace_right_cell(:nodetype => "root", :replace_trees => %i(alert_profile alert))
   end
 
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
-    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+    @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
-    @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
+    @edit[:new][:description] = params[:description].presence if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
     if params[:exp_event]
       @edit[:new][:exp_event] = params[:exp_event] == "_hourly_timer_" ? params[:exp_event] : params[:exp_event].to_i
@@ -94,10 +109,11 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
+      @edit[:new][:exp_event] = %w(ContainerNode ContainerProject).include?(@edit[:new][:db]) ? nil : @edit[:current][:exp_event]
     end
 
     if params.key?(:exp_name)
-      if params[:exp_name].blank?                                       # Set to MiqExpression
+      if params[:exp_name].blank? # Set to MiqExpression
         alert_build_blank_exp
       else
         @edit[:new][:expression] = {:eval_method => params[:exp_name], :mode => "internal"}
@@ -105,7 +121,7 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
-      @edit[:new][:repeat_time] = alert_default_repeat_time
+      @edit[:new][:repeat_time] = alert_default_repeat_time if apply_default_repeat_time?
     end
 
     @edit[:new][:expression][:options][:event_types] = [params[:event_types]].reject(&:blank?) if params[:event_types]
@@ -164,6 +180,9 @@ module MiqPolicyController::Alerts
     if params[:value_mw_garbage_collector]
       @edit[:new][:expression][:options][:value_mw_garbage_collector] = params[:value_mw_garbage_collector]
     end
+    if params[:value_mw_threshold]
+      @edit[:new][:expression][:options][:value_mw_threshold] = params[:value_mw_threshold]
+    end
     if params[:select_mw_operator]
       @edit[:new][:expression][:options][:mw_operator] = params[:select_mw_operator]
     end
@@ -193,7 +212,7 @@ module MiqPolicyController::Alerts
       # rebuild hash to hold user's email along with name if user record was found for display, defined as hash so only email id can be sent from form to be deleted from array above
       @email_to = {}
       @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.find_by(:email => e)
         @email_to[e] = u ? "#{u.name} (#{e})" : e
       end
     end
@@ -205,11 +224,9 @@ module MiqPolicyController::Alerts
     @edit[:new][:send_evm_event] = (params[:send_evm_event_cb] == "1") if params.key?(:send_evm_event_cb)
     @edit[:new][:send_event]     = (params[:send_event_cb] == "1") if params.key?(:send_event_cb)
 
-    @alert_refresh = true if params[:miq_alert_db] || params.key?(:exp_name) || params[:exp_event] ||
-                             params.key?(:send_snmp_cb) || params.key?(:send_email_cb) ||
-                             params.key?(:send_event_cb) || params.key?(:select_ems_id) ||
-                             params.key?(:perf_column) || params.key?(:trend_direction)
-    @to_email_refresh = true if params[:user_email] || params[:remove_email] || params[:button] == "add_email"
+    @alert_refresh = %i(exp_event exp_name miq_alert_db perf_column select_ems_id
+                        send_email_cb send_event_cb send_snmp_cb trend_direction).any? { |key| params.key?(key) }
+    @to_email_refresh = params[:user_email] || params[:remove_email] || params[:button] == "add_email"
     send_button_changes
   end
 
@@ -218,6 +235,11 @@ module MiqPolicyController::Alerts
   end
 
   private
+
+  def display_driving_event?
+    (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing") ||
+      %w(ContainerNode ContainerProject).include?(@edit[:new][:db])
+  end
 
   def process_alerts(alerts, task)
     process_elements(alerts, MiqAlert, task)
@@ -228,13 +250,13 @@ module MiqPolicyController::Alerts
     @edit[:new] = {}
     @edit[:current] = {}
 
-    if params[:copy]  # If copying, create a new alert based on the original
+    if params[:copy] # If copying, create a new alert based on the original
       # skip record id when copying attributes
       @alert = MiqAlert.find(params[:id]).dup
     else
       # Get existing record if edit action or create new record
       @alert = params[:id] ? MiqAlert.find(params[:id]) : MiqAlert.new
-      @alert.enabled = true unless @alert.id            # Default enabled to true if new record
+      @alert.enabled = true unless @alert.id # Default enabled to true if new record
     end
     @edit[:key] = "alert_edit__#{@alert.id || "new"}"
     @edit[:rec_id] = @alert.id || nil
@@ -249,7 +271,7 @@ module MiqPolicyController::Alerts
       @email_to = {}
       if @edit[:new][:email] && @edit[:new][:email][:to]
         @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-          u = User.find_by_email(e)
+          u = User.find_by(:email => e)
           @email_to[e] = u ? "#{u.name} (#{e})" : e
         end
       end
@@ -298,23 +320,23 @@ module MiqPolicyController::Alerts
       @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
       alert_build_exp_options_info
     else
-      @edit[:new][:expression] = copy_hash(@alert.expression)             # Copy the builtin exp hash
+      @edit[:new][:expression] = copy_hash(@alert.expression) # Copy the builtin exp hash
       @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
       alert_build_exp_options_info
     end
 
-    if @alert.expression.kind_of?(MiqExpression)                             # If an exp alert, get the event id
-      if @alert.responds_to_events == "_hourly_timer_"                    # Check for hourly timer event
+    if @alert.expression.kind_of?(MiqExpression) # If an exp alert, get the event id
+      if @alert.responds_to_events == "_hourly_timer_" # Check for hourly timer event
         @edit[:new][:exp_event] = @alert.responds_to_events
       else
-        exp_event = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+        exp_event = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
         @edit[:new][:exp_event] = exp_event.nil? ? nil : exp_event.id
       end
     elsif @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method] == "nothing"
-      if @alert.responds_to_events == "_hourly_timer_"                    # Check for hourly timer event
+      if @alert.responds_to_events == "_hourly_timer_" # Check for hourly timer event
         @edit[:new][:exp_event] = @alert.responds_to_events
       else
-        exp_event = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+        exp_event = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
         @edit[:new][:exp_event] = exp_event.nil? ? nil : exp_event.id
       end
     end
@@ -326,11 +348,7 @@ module MiqPolicyController::Alerts
     end
 
     # Set the repeat time based on the existing options
-    @edit[:new][:repeat_time] ||= @alert.options && # Default repeat time to 10 mins
-                                  @alert.options[:notifications] &&
-                                  !@alert.options[:notifications][:delay_next_evaluation].blank? ?
-                                  @alert.options[:notifications][:delay_next_evaluation] :
-                                  alert_default_repeat_time
+    @edit[:new][:repeat_time] ||= @alert.options&.dig(:notifications, :delay_next_evaluation).presence || alert_default_repeat_time
 
     @edit[:current] = copy_hash(@edit[:new])
 
@@ -340,14 +358,26 @@ module MiqPolicyController::Alerts
     end
     @embedded = true
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:alert_id].nil?         # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:alert_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   def alert_default_repeat_time
-    (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "hourly_performance") ||
-      @edit[:new][:exp_event] == "_hourly_timer_" ?
-      1.hour.to_i : 10.minutes.to_i
+    if (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "hourly_performance") ||
+       @edit[:new][:exp_event] == "_hourly_timer_"
+      1.hour.to_i
+    elsif @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "dwh_generic"
+      0.minutes.to_i
+    else
+      10.minutes.to_i
+    end
+  end
+
+  def apply_default_repeat_time?
+    event = @edit[:new]
+    return true if event[:exp_event] == '_hourly_timer_'
+    return false if event[:eval_method].nil?
+    event[:eval_method] =~ /hourly_performance|dwh_generic/
   end
 
   def alert_get_perf_column_unit(val)
@@ -372,10 +402,10 @@ module MiqPolicyController::Alerts
 
   def alert_build_blank_exp
     @edit[:expression] ||= ApplicationController::Filter::Expression.new
-    @edit[:expression][:expression] = []                         # Store exps in an array
+    @edit[:expression][:expression] = []                                  # Store exps in an array
     @edit[:expression][:expression] = {"???" => "???"}                    # Set as new exp element
     @edit[:new][:expression] = copy_hash(@edit[:expression][:expression]) # Copy to new exp
-    @edit[:expression_table] = @edit[:expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:expression][:expression])
+    @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
 
     @expkey = :expression                                               # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])
@@ -400,8 +430,8 @@ module MiqPolicyController::Alerts
         end
 
       when :perf_column
-        @edit[:new][:expression][:options][:perf_column] ||= eo[:values][@edit[:new][:db]].invert.sort[0].last  # Set to first column
-        @edit[:perf_column_options] = eo[:values][@edit[:new][:db]]     # storing perf_column values in hash to use them later for lookup to show units in UI
+        @edit[:new][:expression][:options][:perf_column] ||= eo[:values][@edit[:new][:db]].invert.sort[0].last # Set to first column
+        @edit[:perf_column_options] = eo[:values][@edit[:new][:db]] # storing perf_column values in hash to use them later for lookup to show units in UI
         @edit[:perf_column_unit] = alert_get_perf_column_unit(@edit[:perf_column_options][@edit[:new][:expression][:options][:perf_column]])
       when :value_threshold
         @edit[:new][:expression][:options][:value_threshold] ||= "" # Init value to blank
@@ -439,12 +469,12 @@ module MiqPolicyController::Alerts
     unless @sb[:alert][:events] # Only create this once
       vm_events = MiqAlert.expression_options("event_threshold").find { |eo| eo[:name] == :event_types }[:values] # Get the allowed events
       @sb[:alert][:events] ||= {}
-      EmsEvent.event_groups.each do |_k, v|
+      EmsEvent.event_groups.each_value do |v|
         name = v[:name]
-        v[:detail].each do |d|
+        v[:detail]&.each do |d|
           @sb[:alert][:events][d] = name + ": " + d if vm_events.include?(d)
         end
-        v[:critical].each do |c|
+        v[:critical]&.each do |c|
           @sb[:alert][:events][c] = name + ": " + c if vm_events.include?(c)
         end
       end
@@ -467,26 +497,24 @@ module MiqPolicyController::Alerts
 
     # :rt_time_thresholds
     @sb[:alert][:rt_time_thresholds] ||= {
-      1.minutes.to_i => _("1 Minute"), 2.minutes.to_i => _("2 Minutes"), 3.minutes.to_i => _("3 Minutes"),
+      1.minute.to_i => _("1 Minute"), 2.minutes.to_i => _("2 Minutes"), 3.minutes.to_i => _("3 Minutes"),
       4.minutes.to_i => _("4 Minutes"), 5.minutes.to_i => _("5 Minutes"), 10.minutes.to_i => _("10 Minutes"),
       15.minutes.to_i => _("15 Minutes"), 30.minutes.to_i => _("30 Minutes"), 1.hour.to_i => _("1 Hour"),
       2.hours.to_i => _("2 Hours")
     }
 
     # hourly_performance repeat times for Notify Every pull down
-    @sb[:alert][:hourly_repeat_times] ||= {
-      1.hour.to_i => _("1 Hour"), 2.hours.to_i => _("2 Hours"), 3.hours.to_i => _("3 Hours"),
-      4.hours.to_i => _("4 Hours"), 6.hours.to_i => _("6 Hours"), 12.hours.to_i => _("12 Hours"),
-      1.day.to_i => _("1 Day")
-    }
+    @sb[:alert][:hourly_repeat_times] ||= @sb[:alert][:hourly_time_thresholds]
 
     # repeat times for Notify Every pull down
     @sb[:alert][:repeat_times] ||= {
-      1.minutes.to_i => _("1 Minute"), 2.minutes.to_i => _("2 Minutes"), 3.minutes.to_i => _("3 Minutes"),
-      4.minutes.to_i => _("4 Minutes"), 5.minutes.to_i => _("5 Minutes"), 10.minutes.to_i => _("10 Minutes"),
-      15.minutes.to_i => _("15 Minutes"), 30.minutes.to_i => _("30 Minutes"), 1.hour.to_i => _("1 Hour"),
-      2.hours.to_i => _("2 Hours"), 3.hours.to_i => _("3 Hours"), 4.hours.to_i => _("4 Hours"),
+      3.hours.to_i => _("3 Hours"), 4.hours.to_i => _("4 Hours"),
       6.hours.to_i => _("6 Hours"), 12.hours.to_i => _("12 Hours"), 1.day.to_i => _("1 Day")
+    }.merge(@sb[:alert][:rt_time_thresholds])
+
+    # repeat times for Notify Datawarehouse pull down
+    @sb[:alert][:repeat_times_dwh] ||= {
+      0.minutes.to_i => _("Always Notify")
     }
   end
 
@@ -505,27 +533,25 @@ module MiqPolicyController::Alerts
     alert.description = @edit[:new][:description]
     alert.enabled = @edit[:new][:enabled]
     alert.db = @edit[:new][:db]
-    unless @edit[:new][:expression][:eval_method]
-      alert.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
-      if @edit[:new][:exp_event] == "_hourly_timer_"
-        alert.responds_to_events = @edit[:new][:exp_event]
-      else
-        alert.responds_to_events = @edit[:new][:exp_event] && @edit[:new][:exp_event] > 0 ?
-                                    MiqEventDefinition.find(@edit[:new][:exp_event]).name : nil
-      end
-    else
+    if @edit[:new][:expression][:eval_method]
       alert.expression = copy_hash(@edit[:new][:expression])
       # nothing acts like an expression, exp event is needed
       if @edit[:new][:expression][:eval_method] == "nothing"
-        if @edit[:new][:exp_event] == "_hourly_timer_"
-          alert.responds_to_events = @edit[:new][:exp_event]
-        else
-          alert.responds_to_events = @edit[:new][:exp_event] && @edit[:new][:exp_event] > 0 ?
-                                      MiqEventDefinition.find(@edit[:new][:exp_event]).name : nil
-        end
+        alert.responds_to_events = if @edit[:new][:exp_event] == "_hourly_timer_"
+                                     @edit[:new][:exp_event]
+                                   elsif @edit[:new][:exp_event]&.positive?
+                                     MiqEventDefinition.find(@edit[:new][:exp_event]).name
+                                   end
       end
+    else
+      alert.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
+      alert.respond_to_events = if @edit[:new][:exp_event] == "_hourly_timer_"
+                                  @edit[:new][:exp_event]
+                                elsif @edit[:new][:exp_event]&.positive?
+                                  MiqEventDefinition.find(@edit[:new][:exp_event]).name
+                                end
     end
-    alert.options = Hash.new
+    alert.options = {}
     alert.options[:notifications] = {}
     alert.options[:notifications][:delay_next_evaluation] = @edit[:new][:repeat_time]
     alert.options[:notifications][:email] = copy_hash(@edit[:new][:email]) if @edit[:new][:send_email]
@@ -535,7 +561,7 @@ module MiqPolicyController::Alerts
       alert.options[:notifications][:snmp] = copy_hash(@edit[:new][:snmp])
     end
     alert.options[:notifications][:snmp] = copy_hash(@edit[:new][:snmp]) if @edit[:new][:send_snmp]
-    alert.options[:notifications][:evm_event] = {} if @edit[:new][:send_evm_event]  # Set as empty hash, no parms needed
+    alert.options[:notifications][:evm_event] = {} if @edit[:new][:send_evm_event] # Set as empty hash, no parms needed
     alert.options[:notifications][:automate] = {:event_name => @edit[:new][:event_name]} if @edit[:new][:send_event]
   end
 
@@ -544,7 +570,7 @@ module MiqPolicyController::Alerts
     if alert.expression.nil?
       add_flash(_("A valid expression must be present"), :error)
     end
-    unless @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing"
+    unless display_driving_event?
       add_flash(_("A Driving Event must be selected"), :error) if alert.responds_to_events.blank?
     end
     if alert.options[:notifications][:automate]
@@ -601,6 +627,12 @@ module MiqPolicyController::Alerts
         add_flash(_("Duration Per Minute must be an integer"), :error)
       end
     end
+    if %w(mw_tx_committed mw_tx_timeout mw_tx_heuristics mw_tx_application_rollbacks mw_tx_resource_rollbacks mw_tx_aborted).include?(@edit.fetch_path(:new, :expression, :eval_method))
+      value_mw_threshold = @edit.fetch_path(:new, :expression, :options, :value_mw_threshold)
+      unless value_mw_threshold && is_integer?(value_mw_threshold)
+        add_flash(_("Number must be an integer"), :error)
+      end
+    end
     unless alert.options[:notifications][:email] ||
            alert.options[:notifications][:snmp] ||
            alert.options[:notifications][:evm_event] ||
@@ -611,6 +643,11 @@ module MiqPolicyController::Alerts
     if alert.options[:notifications][:email]
       if alert.options[:notifications][:email][:to].blank?
         add_flash(_("At least one E-mail recipient must be configured"), :error)
+      elsif alert.options[:notifications][:email][:to].find { |i| !i.to_s.email? }
+        add_flash(_("One of e-mail addresses 'To' is not valid"), :error)
+      elsif alert.options[:notifications][:email][:from].present? &&
+            !alert.options[:notifications][:email][:from].email?
+        add_flash(_("E-mail address 'From' is not valid"), :error)
       end
     end
     if alert.options[:notifications][:snmp]
@@ -630,16 +667,16 @@ module MiqPolicyController::Alerts
     if @alert.responds_to_events == "_hourly_timer_"
       @event = _("Hourly Timer")
     else
-      e = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+      e = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
       @event = e.nil? ? _("<No Event configured>") : e.etype.description + ": " + e.description
     end
     if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]
       @alert.options[:notifications][:email][:to].each do |to|
-        user = User.find_by_email(to)
+        user = User.find_by(:email => to)
         @email_to.push(user ? "#{user.name} (#{to})" : to)
       end
     end
-    @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqAlert"), :name => alert.description}
+    @right_cell_text = _("Alert \"%{name}\"") % {:name => alert.description}
     @right_cell_div = "alert_details"
 
     @record = @alert
@@ -650,7 +687,7 @@ module MiqPolicyController::Alerts
     end
 
     if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
-      @ems = ExtManagementSystem.find_by_id(@alert.expression[:options][:ems_id].to_i)
+      @ems = ExtManagementSystem.find_by(:id => @alert.expression[:options][:ems_id])
     end
     if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
       MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|

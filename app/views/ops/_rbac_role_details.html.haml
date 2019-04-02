@@ -1,7 +1,7 @@
 - if @edit
   - url = url_for_only_path(:action => 'rbac_role_field_changed', :id => (@edit[:role_id] || "new"))
 = render :partial => "layouts/flash_msg"
-#main_div
+#role_info
   .row
     .col-md-12.col-lg-6
       %h3
@@ -27,12 +27,13 @@
           .col-md-8
             - if !@edit
               - if @role.settings.kind_of?(Hash) && @role.settings.fetch_path(:restrictions, :vms)
-                = h(MiqUserRole::RESTRICTIONS[@role.settings.fetch_path(:restrictions, :vms)])
+                = h(_(MiqUserRole::RESTRICTIONS[@role.settings.fetch_path(:restrictions, :vms)]))
               - else
                 = _("None")
             - else
+              - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
               = select_tag('vm_restriction',
-                           options_for_select([[_("None"), _("none")]] + MiqUserRole::RESTRICTIONS.invert.sort_by { |name, _value| name.downcase },
+                           options_for_select([[_("None"), "none"]] + restrictions,
                            @edit[:new][:vm_restriction].to_sym),
                            :class    => "selectpicker")
           :javascript
@@ -46,12 +47,13 @@
               - @role.miq_groups.sort_by { |a| a.description.downcase }.each do |g|
                 - if role_allows?(:feature => "rbac_group_show")
                   - params = {:class   => "pointer",
-                              :onclick => "miqTreeActivateNode('rbac_tree', 'g-#{to_cid(g.id)}');",
+                              :onclick => "miqOnClickSelectRbacTreeNode('g-#{g.id}');",
                               :title   => _("View this Group")}
                 - else
                   - params = {}
-                %i.product.product-group{params}
+                %i.ff.ff-group{params}
                 = link_to(g.description, "#", params)
+                %br
     .col-md-12.col-lg-6
       %hr
       - if @edit
@@ -59,14 +61,4 @@
       - else
         = _("Product Features (Read Only)")
       %h3
-      #features_treebox.treeview-pf-hover.treeview-pf-select{:style => "width:100%;height:100%;color:#000"}
-      = render(:partial => "layouts/tree",
-               :locals  => {:tree_id        => "features_treebox",
-                            :tree_name      => "features_tree",
-                            :bs_tree        => @features_tree,
-                            :checkboxes     => true,
-                            :three_checks   => true,
-                            :check_url      => "/ops/rbac_role_field_changed/",
-                            :oncheck        => @edit.nil? ? nil : "miqOnCheckHandler"})
-      &nbsp;&nbsp;*
-      = _("Double click a feature to open/close all children.")
+      = render(:partial => "shared/tree", :locals => {:tree => @rbac_menu_tree, :name => @rbac_menu_tree.name})

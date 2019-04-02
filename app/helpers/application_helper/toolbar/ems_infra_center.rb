@@ -2,8 +2,8 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
   button_group('ems_infra_vmdb', [
     button(
       :refresh_server_summary,
-      'fa fa-repeat fa-lg',
-      N_('Reload Current Display'),
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
       nil),
     select(
       :ems_infra_vmdb_choice,
@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           'fa fa-refresh fa-lg',
           N_('Refresh relationships and power states for all items related to this Infrastructure Provider'),
           N_('Refresh Relationships and Power States'),
-          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?")),
+          :confirm => N_("Refresh relationships and power states for all items related to this Infrastructure Provider?"),
+          :klass   => ApplicationHelper::Button::EmsRefresh),
         button(
           :host_register_nodes,
           'pficon pficon-add-circle-o fa-lg',
@@ -30,6 +31,23 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Infrastructure Provider'),
           t),
+        button(
+          :ems_infra_resume,
+          'pficon pficon-trend-up fa-lg',
+          t = N_('Resume this Infrastructure Provider'),
+          t,
+          :confirm   => N_("Resume this Infrastructure Provider?"),
+          :enabled   => proc { !@record.enabled? },
+          :url_parms => "main_div"),
+        button(
+          :ems_infra_pause,
+          'pficon pficon-trend-down fa-lg',
+          t = N_('Pause this Infrastructure Provider'),
+          t,
+          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
+                         "This may cause gaps in inventory, metrics and events!"),
+          :enabled   => proc { @record.enabled? },
+          :url_parms => "main_div"),
         button(
           :ems_infra_scale,
           'pficon pficon-edit fa-lg',
@@ -47,7 +65,7 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
         button(
           :ems_infra_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Infrastructure Provider'),
+          t = N_('Remove this Infrastructure Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Infrastructure Provider and ALL of its components will be permanently removed!")),
@@ -83,13 +101,13 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
   button_group('ems_infra_monitoring', [
     select(
       :ems_infra_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_infra_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Infrastructure Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,
@@ -111,6 +129,24 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           N_('Re-check Authentication Status'),
           :klass => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
+      ]
+    ),
+  ])
+  button_group('ems_infra_access', [
+    select(
+      :ems_infra_remote_access_choice,
+      'pficon pficon-screen fa-lg',
+      N_('Infrastructure Provider Remote Access'),
+      N_('Access'),
+      :items => [
+        button(
+          :ems_infra_admin_ui,
+          'pficon pficon-screen fa-lg',
+          N_('Open Admin UI for this Infrastructure Provider'),
+          N_('Admin UI'),
+          :url     => "open_admin_ui",
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
+          :options => {:feature => :admin_ui}),
       ]
     ),
   ])

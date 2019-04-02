@@ -57,8 +57,8 @@ module ReportFormatter
       type = c3_convert_type(mri.graph[:type].to_s)
       mri.chart = {
         :miqChart => type,
-        :data     => {:columns => [], :names => {}},
-        :axis     => {:x => {:tick => {}}, :y => {:tick => {}}},
+        :data     => {:columns => [], :names => {}, :empty => {:label => {:text => _('No data available.')}}},
+        :axis     => {:x => {:tick => {}}, :y => {:tick => {}, :padding => {:bottom => 0}}},
         :tooltip  => {:format => {}},
         :miq      => {:name_table => {}, :category_table => {}},
         :legend   => {}
@@ -92,12 +92,13 @@ module ReportFormatter
           mri.chart[:legend] = {:position => 'bottom'}
         end
 
+        return if mri.graph[:columns].blank?
         column = grouped_by_tag_category? ? mri.graph[:columns][0].split(/_+/)[0..-2].join('_') : mri.graph[:columns][0]
         format, options = javascript_format(column, nil)
         return unless format
 
         axis_formatter = {:function => format, :options => options}
-        mri.chart[:axis][:y] = {:tick => {:format => axis_formatter}}
+        mri.chart[:axis][:y][:tick] = {:format => axis_formatter}
         mri.chart[:miq][:format] = axis_formatter
       end
     end
@@ -122,11 +123,9 @@ module ReportFormatter
 
     def no_records_found_chart(*)
       mri.chart = {
-        :miqChart => 'Line',
-        :data     => {:columns => [], :names => {}},
-        :axis     => {:x => {:tick => {}}, :y => {:tick => {}}},
-        :tooltip  => {:format => {}},
-        :miq      => {:name_table => {}}
+        :axis => {:y => {:show => false}},
+        :data => {:columns => [], :empty => {:label => {:text => _('No data available.')}}},
+        :miq  => {:empty => true},
       }
     end
 

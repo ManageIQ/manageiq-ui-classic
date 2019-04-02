@@ -1,6 +1,6 @@
 #main_div
-  - if %w(vms cloud_tenants storages miq_proxies miq_templates resource_pools).include?(@display) && @showtype != "compare"
-    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@host.id}"}
+  - if %w(vms cloud_tenants storages miq_proxies miq_templates resource_pools custom_button_events cloud_networks cloud_subnets).include?(@display) && @showtype != "compare"
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
     - when "details"
@@ -15,8 +15,6 @@
       = render :partial => "layouts/performance_summary"
     - when "timeline"
       = render :partial => "layouts/tl_show_async"
-    - when "dialog_provision"
-      = render :partial => "shared/dialogs/dialog_provision"
     - when "compliance_history"
       = render :partial => "shared/views/compliance_history"
     - when "main"

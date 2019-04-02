@@ -1,0 +1,34 @@
+#dialog-editor{"ng-controller" => "dialogEditorController as vm"}
+  %div{"ng-if" => "vm.dialog"}
+    = render :partial => "layouts/flash_msg"
+    .row
+      .col-md-12
+        %h2= _("General")
+    .row
+      .col-md-12
+        %form.form-horizontal
+          %div{"pf-form-group" => "", "pf-label" => _("Dialog's name")}
+            %input#name{"ng-model" => "vm.dialog.content[0].label",
+              :type => "text",
+              :required => "",
+              :title => _("Dialog's name"),
+              :autofocus => true}
+          %div{"pf-form-group" => "", "pf-label" => _("Dialog's description")}
+            %textarea#description{"ng-model" => "vm.dialog.content[0].description",
+              :title => _("Dialog's description")}
+              {{ vm.dialog.content[0].description }}
+    %dialog-editor{'tree-options' => 'vm.treeOptions'}
+    .pull-right
+      %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
+                              "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) || vm.saveButtonDisabled",
+                              "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
+                              :type => "button"}= _("Save")
+      %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
+                              :type => "button"}= _("Cancel")
+
+:javascript
+  ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
+  miq_bootstrap('#dialog-editor');
+  // Fixes wrong coordinates of draggable element after scrolling in #main-content.
+  // To be selected as scrollParent it cannot have position: static(default setting of #main-content) so it's overridden here
+  $("#main-content").css("position", "relative");

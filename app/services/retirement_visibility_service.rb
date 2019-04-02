@@ -3,7 +3,7 @@ class RetirementVisibilityService
     fields_to_edit = []
     fields_to_hide = []
 
-    if retirement > 0
+    if retirement.positive?
       fields_to_edit += [:retirement_warn]
     else
       fields_to_hide += [:retirement_warn]

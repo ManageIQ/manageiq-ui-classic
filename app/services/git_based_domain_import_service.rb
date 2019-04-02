@@ -25,6 +25,7 @@ class GitBasedDomainImportService
       :class_name  => "MiqAeDomain",
       :method_name => "import_git_repo",
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => [import_options]
     }
 
@@ -42,6 +43,7 @@ class GitBasedDomainImportService
       :method_name => "refresh",
       :instance_id => git_repo_id,
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => []
     }
 
@@ -66,6 +68,7 @@ class GitBasedDomainImportService
       :class_name  => "MiqAeDomain",
       :method_name => "import_git_url",
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => [import_options]
     }
 
@@ -83,6 +86,7 @@ class GitBasedDomainImportService
       :method_name => "destroy",
       :instance_id => domain_id,
       :role        => "git_owner",
+      :user_id     => User.current_user.id,
       :args        => []
     }
 
@@ -94,7 +98,13 @@ class GitBasedDomainImportService
     task = MiqTask.wait_for_taskid(task_id)
 
     domain = task.task_results
-    error_message = _("Selected branch or tag does not contain a valid domain")
+    error_message = if task.message == _('multiple domains')
+                      _('Selected branch or tag contains more than one domain')
+                    elsif task.message == _('locked domain')
+                      _('Selected domain is locked')
+                    else
+                      _('Selected branch or tag does not contain a valid domain')
+                    end
     raise MiqException::Error, error_message unless domain.kind_of?(MiqAeDomain)
     domain.update_attribute(:enabled, true)
   end

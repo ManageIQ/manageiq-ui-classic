@@ -1,5 +1,5 @@
 describe "rendering fields in ems_infra new/edit form" do
-  before(:each) do
+  before do
     @edit = {:new => {:emstype => "vm_ware"}}
   end
 

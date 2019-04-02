@@ -21,7 +21,7 @@ describe TreeBuilder do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
       root = tree.send(:root_options)
       expect(root).to eq(
-        :title   => 'Rates',
+        :text    => 'Rates',
         :tooltip => 'Rates'
       )
     end
@@ -31,24 +31,25 @@ describe TreeBuilder do
     it "builds tree object and sets all settings and add nodes to tree object" do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
       nodes = [{'key'     => "root",
-                'nodes'   => [{'key'     => "xx-Compute",
-                               'tooltip' => "Compute",
-                               'icon'    => "pficon pficon-cpu",
-                               'state'   => { 'expanded' => true },
-                               'text'    => "Compute",
-                               'class'   => ''},
-                              {'key'     => "xx-Storage",
-                               'tooltip' => "Storage",
-                               'icon'    => "fa fa-hdd-o",
-                               'state'   => { 'expanded' => true },
-                               'text'    => "Storage",
-                               'class'   => ''}],
+                'nodes'   => [{'key'        => "xx-Compute",
+                               'tooltip'    => "Compute",
+                               'icon'       => "pficon pficon-cpu",
+                               'state'      => { 'expanded' => true },
+                               'text'       => "Compute",
+                               'selectable' => true,
+                               'class'      => ''},
+                              {'key'        => "xx-Storage",
+                               'tooltip'    => "Storage",
+                               'icon'       => "fa fa-hdd-o",
+                               'state'      => { 'expanded' => true },
+                               'selectable' => true,
+                               'text'       => "Storage",
+                               'class'      => ''}],
                 'state'   => { 'expanded' => true },
                 'text'    => "Rates",
                 'tooltip' => "Rates",
                 'class'   => '',
-                'icon'   => 'pficon pficon-folder-close'
-              }]
+                'icon'    => 'pficon pficon-folder-close'}]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
@@ -79,7 +80,7 @@ describe TreeBuilder do
       Class.new(TreeBuilderChargebackRates) do
         def root_options
           {
-            :title   => "Foo",
+            :text    => "Foo",
             :tooltip => "Bar"
           }
         end
@@ -121,8 +122,8 @@ describe TreeBuilder do
     end
 
     it 'counts things in a Relation' do
-      a = FactoryGirl.create(:user_with_email)
-      FactoryGirl.create(:user_with_email)
+      a = FactoryBot.create(:user_with_email)
+      FactoryBot.create(:user_with_email)
 
       expect(builder.count_only_or_objects(true, User.none)).to eq(0)
       expect(builder.count_only_or_objects(true, User.where(:id => a.id))).to eq(1)
@@ -133,12 +134,12 @@ describe TreeBuilder do
     it 'counts things in an Array' do
       expect(builder.count_only_or_objects(true, [])).to eq(0)
       expect(builder.count_only_or_objects(true, [:x])).to eq(1)
-      expect(builder.count_only_or_objects(true, [:x, :y, :z, :z, :y])).to eq(5)
+      expect(builder.count_only_or_objects(true, %i(x y z z y))).to eq(5)
     end
 
     it 'returns a collection when not counting' do
-      a = FactoryGirl.create(:user_with_email)
-      b = FactoryGirl.create(:user_with_email)
+      a = FactoryBot.create(:user_with_email)
+      b = FactoryBot.create(:user_with_email)
 
       expect(builder.count_only_or_objects(false, User.none)).to eq([])
       expect(builder.count_only_or_objects(false, User.where(:id => a.id))).to eq([a])
@@ -147,7 +148,7 @@ describe TreeBuilder do
 
       expect(builder.count_only_or_objects(false, [])).to eq([])
       expect(builder.count_only_or_objects(false, [:x])).to eq([:x])
-      expect(builder.count_only_or_objects(false, [:x, :y, :z, :z, :y])).to eq([:x, :y, :z, :z, :y])
+      expect(builder.count_only_or_objects(false, %i(x y z z y))).to eq(%i(x y z z y))
     end
 
     it 'sorts the collection' do
@@ -188,30 +189,8 @@ describe TreeBuilder do
 
   context "#build_node_cid" do
     it "returns correct cid for VM" do
-      vm = FactoryGirl.create(:vm)
-      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{ApplicationRecord.compress_id(vm.id)}")
-    end
-  end
-
-  context "#hide_vms" do
-    before(:each) do
-      role = MiqUserRole.find_by_name("EvmRole-operator")
-      @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "TreeBuilder")
-      login_as FactoryGirl.create(:user, :userid => 'treebuilder_wilma', :miq_groups => [@group])
-    end
-
-    it "hide vms if User didn't set it" do
-      expect(TreeBuilder.hide_vms).to eq(true)
-    end
-
-    it "show vms if User had set it so" do
-      User.current_user.settings[:display] = {:display_vms => true}
-      expect(TreeBuilder.hide_vms).to eq(false)
-    end
-
-    it "hide vms if User had set it so" do
-      User.current_user.settings[:display] = {:display_vms => false}
-      expect(TreeBuilder.hide_vms).to eq(true)
+      vm = FactoryBot.create(:vm)
+      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{vm.id}")
     end
   end
 end

@@ -1,6 +1,6 @@
 describe ContainerBuildController do
   render_views
-  before(:each) do
+  before do
     stub_user(:features => :all)
   end
 
@@ -12,12 +12,13 @@ describe ContainerBuildController do
 
   it "renders show screen" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_build = ContainerBuild.create(:ext_management_system => ems, :name => "Test Build")
     get :show, :params => { :id => container_build.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Builds",
+    expect(response).to render_template('layouts/_textual_groups_generic')
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Builds",
                                           :url  => "/container_build/show_list?page=&refresh=y"},
                                          {:name => "Test Build (Summary)",
                                           :url  => "/container_build/show/#{container_build.id}"}])
@@ -37,7 +38,7 @@ describe ContainerBuildController do
 
   it "renders grid view" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
+    ems = FactoryBot.create(:ems_openshift)
     container_build = ContainerBuild.create(:ext_management_system => ems, :name => "Test Build")
 
     session[:settings] = {
@@ -45,7 +46,7 @@ describe ContainerBuildController do
     }
 
     post :show_list, :params => {:controller => 'container_build', :id => container_build.id}
-    expect(response).to render_template('layouts/gtl/_grid')
+    expect(response).to render_template('layouts/angular/_gtl')
     expect(response.status).to eq(200)
   end
 

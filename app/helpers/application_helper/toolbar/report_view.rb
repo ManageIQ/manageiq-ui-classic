@@ -49,10 +49,10 @@ class ApplicationHelper::Toolbar::ReportView < ApplicationHelper::Toolbar::Basic
           :klass     => ApplicationHelper::Button::RenderReport),
         button(
           :render_report_pdf,
-          'fa fa-file-pdf-o fa-lg',
-          N_('Download this report in PDF format'),
-          N_('Download as PDF'),
-          :klass     => ApplicationHelper::Button::RenderReportPdf,
+          'pficon pficon-print fa-lg',
+          N_('Print or export this report in PDF format'),
+          N_('Print or export as PDF'),
+          :klass     => ApplicationHelper::Button::RenderReport,
           :url_parms => "?render_type=pdf"),
       ]
     ),

@@ -1,30 +1,36 @@
 module ApplicationController::DialogRunner
   extend ActiveSupport::Concern
 
-  def redirect_url(flash)
+  def redirect_url
     model = self.class.model
     if restful_routed?(model)
-      polymorphic_path(model.find(session[:edit][:target_id]), :flash_msg => flash)
+      polymorphic_path(model.find(session[:edit][:target_id]))
     else
-      {:action => 'show', :id => session[:edit][:target_id], :flash_msg => flash}
+      {:action => 'show', :id => session[:edit][:target_id]}
     end
   end
 
   def dialog_cancel_form(flash = nil)
     @sb[:action] = @edit = nil
     @in_a_form = false
+    add_flash(flash) if flash.present?
     if session[:edit][:explorer]
-      add_flash(flash)
-      replace_right_cell
+      dialog_replace_right_cell
     else
-      javascript_redirect redirect_url(flash)
+      flash_to_session
+      javascript_redirect(redirect_url)
     end
+  end
+
+  def dialog_replace_right_cell
+    replace_right_cell
   end
 
   def dialog_form_button_pressed
     case params[:button]
     when "cancel"
-      flash = _("%{model} Order was cancelled by the user") % {:model => ui_lookup(:model => 'Service')}
+      return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+      flash = _("Service Order was cancelled by the user")
       dialog_cancel_form(flash)
     when "submit"
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
@@ -34,42 +40,40 @@ module ApplicationController::DialogRunner
         add_flash(_("Error during 'Provisioning': %{error_message}") % {:error_message => bang.message}, :error)
         javascript_flash(:spinner_off => true)
       else
-        unless result[:errors].blank?
+        if result[:errors].present?
           # show validation errors
-          result[:errors].each do |err|
-            add_flash(err, :error)
-          end
+          result[:errors].each { |err| add_flash(err, :error) }
           javascript_flash(:spinner_off => true)
         else
-          flash = _("Order Request was Submitted")
+          add_flash(_("Order Request was Submitted"))
           if role_allows?(:feature => "miq_request_show_list", :any => true)
             @sb[:action] = @edit = nil
             @in_a_form = false
             if session[:edit][:explorer]
-              add_flash(flash)
               if result[:request].nil?
-                replace_right_cell
+                dialog_replace_right_cell
               else
-                javascript_redirect :controller => 'miq_request',
-                                    :action     => 'show_list',
-                                    :flash_msg  => flash
+                flash_to_session
+                javascript_redirect(:controller => 'miq_request', :action => 'show_list')
               end
             else
-              javascript_redirect redirect_url(flash)
+              flash_to_session
+              javascript_redirect(redirect_url)
             end
           else
-            dialog_cancel_form(flash)
+            dialog_cancel_form
           end
         end
       end
-    when "reset"  # Reset
+    when "reset" # Reset
       dialog_reset_form
       flash = _("All changes have been reset")
+      add_flash(flash, :warning)
       if session[:edit][:explorer]
-        add_flash(flash, :warning)
         replace_right_cell(:action => "dialog_provision")
       else
-        javascript_redirect :action => 'dialog_load', :flash_msg => flash, :flash_warning => true, :escape => false # redirect to miq_request show_list screen
+        flash_to_session
+        javascript_redirect(:action => 'dialog_load', :escape => false) # redirect to miq_request show_list screen
       end
     else
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
@@ -89,11 +93,11 @@ module ApplicationController::DialogRunner
   # for non-explorer screen
   def dialog_load
     @edit = session[:edit]
-    @record = Dialog.find_by_id(@edit[:rec_id])
-    @dialog_prov = true
+    @record = Dialog.find(@edit[:rec_id])
     @in_a_form = true
     @showtype = "dialog_provision"
-    render :action => "show"
+    @dialog_locals = params[:dialog_locals]
+    render :template => "shared/dialogs/dialog_provision"
   end
 
   def dynamic_radio_button_refresh
@@ -115,7 +119,7 @@ module ApplicationController::DialogRunner
     refresh_for_textbox_checkbox_or_date
   end
 
-  private     #######################
+  private
 
   def refresh_for_textbox_checkbox_or_date
     field = load_dialog_field(params[:name])
@@ -132,7 +136,7 @@ module ApplicationController::DialogRunner
   def dialog_reset_form
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
     @edit[:new] = copy_hash(@edit[:current])
-    @record = Dialog.find_by_id(@edit[:rec_id])
+    @record = Dialog.find(@edit[:rec_id])
     @right_cell_text = @edit[:right_cell_text]
     @in_a_form = true
   end
@@ -140,13 +144,16 @@ module ApplicationController::DialogRunner
   def dialog_initialize(ra, options)
     @edit = {}
     @edit[:new] = options[:dialog] || {}
+
     opts = {
-      :target => options[:target_kls].constantize.find_by_id(options[:target_id])
+      :target => options[:target_kls].constantize.find(options[:target_id])
     }
+    opts[:reconfigure] = true if options[:dialog_mode] == :reconfigure
+
     @edit[:wf] = ResourceActionWorkflow.new(@edit[:new], current_user, ra, opts)
-    @record = Dialog.find_by_id(ra.dialog_id.to_i)
-    @edit[:rec_id]   = @record.id
-    @edit[:key]     = "dialog_edit__#{@edit[:rec_id] || "new"}"
+    @record = Dialog.find(ra.dialog_id.to_i)
+    @edit[:rec_id] = @record.id
+    @edit[:key] = "dialog_edit__#{@edit[:rec_id] || "new"}"
     @edit[:explorer] = @explorer ? @explorer : false
     @edit[:target_id] = options[:target_id]
     @edit[:target_kls] = options[:target_kls]
@@ -156,14 +163,14 @@ module ApplicationController::DialogRunner
     @in_a_form = true
     @changed = session[:changed] = true
     if @edit[:explorer]
-      replace_right_cell(:action => "dialog_provision")
+      replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
-      javascript_redirect :action => 'dialog_load'
+      javascript_redirect(:action => 'dialog_load', :dialog_locals => options[:dialog_locals])
     end
   end
 
   def dialog_get_form_vars
-    @record = Dialog.find_by_id(@edit[:rec_id])
+    @record = Dialog.find(@edit[:rec_id])
 
     params.each do |parameter_key, parameter_value|
       parameter_key = parameter_key.split("__protected").first if parameter_key.ends_with?("__protected")
@@ -211,10 +218,8 @@ module ApplicationController::DialogRunner
         checkbox_value = parameter_value == "1" ? "t" : "f"
         @edit[:wf].set_value(parameter_key, checkbox_value) if @record.field_name_exist?(parameter_key)
 
-      else
-        if @record.field_name_exist?(parameter_key)
-          @edit[:wf].set_value(parameter_key, parameter_value)
-        end
+      elsif @record.field_name_exist?(parameter_key)
+        @edit[:wf].set_value(parameter_key, parameter_value)
       end
     end
   end

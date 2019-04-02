@@ -10,4 +10,8 @@ class ApplicationHelper::Button::GenericFeatureButtonWithDisable < ApplicationHe
                     end
     @error_message.present?
   end
+
+  def visible?
+    true
+  end
 end

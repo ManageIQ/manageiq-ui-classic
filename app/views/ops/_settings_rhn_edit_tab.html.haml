@@ -84,6 +84,7 @@
                           :record_id    => 'new',
                           :change_url   => url,
                           :validate_url => 'rhn_validate',
+                          :validate_note => @edit[:new][:register_to] == 'rhn_satellite6' && @edit[:organizations].nil? ? _("Note: Validation required") : nil,
                           :validate     => true}
 
     - if 'rhn_satellite6' == @edit[:new][:register_to] && !@edit[:organizations].blank?

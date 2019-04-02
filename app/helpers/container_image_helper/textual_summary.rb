@@ -1,5 +1,6 @@
 module ContainerImageHelper
   module TextualSummary
+    include TextualMixins::TextualCustomButtonEvents
     #
     # Groups
     #
@@ -17,7 +18,7 @@ module ContainerImageHelper
     def textual_group_relationships
       TextualGroup.new(
         _("Relationships"),
-        %i(ems container_image_registry container_projects container_groups containers container_nodes)
+        %i(ems container_image_registry container_projects container_groups containers container_nodes custom_button_events)
       )
     end
 
@@ -26,9 +27,7 @@ module ContainerImageHelper
     end
 
     def textual_group_smart_management
-      items = %w(tags)
-      i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-      TextualTags.new(_("Smart Management"), i)
+      TextualTags.new(_("Smart Management"), %i(tags))
     end
 
     def textual_group_openscap_failed_rules
@@ -67,6 +66,18 @@ module ContainerImageHelper
     def textual_product_name
       name = @record.operating_system.try(:product_name)
       {:label => _("Product Name"), :value => name} if name
+    end
+
+    def textual_author
+      {:label => _('Author'), :value => @record.author}
+    end
+
+    def textual_entrypoint
+      {:label => _('Entrypoint'), :value => @record.entrypoint.present? ? @record.entrypoint.join(' ') : nil}
+    end
+
+    def textual_docker_version
+      {:label => _('Docker Version'), :value => @record.docker_version}
     end
 
     def textual_compliance_history
@@ -129,6 +140,6 @@ module ContainerImageHelper
   end
 
   def textual_group_container_docker_labels
-    TextualGroup.new(_("Docker Labels"), textual_key_value_group(@record.docker_labels.to_a))
+    TextualGroup.new(_("Image Labels"), textual_key_value_group(@record.docker_labels.to_a))
   end
 end

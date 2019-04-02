@@ -1,16 +1,15 @@
 require_relative 'shared_network_manager_context'
 
 shared_examples :shared_examples_for_ems_network_controller do |providers|
-  include CompressedIds
   render_views
-  before :each do
-    stub_user(:features => :all)
-    setup_zone
-  end
 
   providers.each do |t|
     context "for #{t}" do
       include_context :shared_network_manager_context, t
+      before do
+        stub_user(:features => :all)
+        setup_zone
+      end
 
       describe "#show_list" do
         it "renders index" do
@@ -68,15 +67,17 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           assert_nested_list(@ems, [@network_port], 'network_ports', 'All Network Ports')
         end
 
-        it "show associated load balancers" do
-          # TODO: add more cloud providers as the LBaaS is implemented
-          skip unless %w(amazon).include? t
-          assert_nested_list(@ems, [@load_balancer], 'load_balancers', 'All Load Balancers')
+        # TODO: add more cloud providers as the LBaaS is implemented
+        if %w(amazon).include? t
+          it "show associated load balancers" do
+            assert_nested_list(@ems, [@load_balancer], 'load_balancers', 'All Load Balancers')
+          end
         end
       end
 
       describe "#ems_network_form_fields" do
         it "renders ems_network_form_fields json" do
+          Zone.seed
           get :ems_network_form_fields, :params => {:id => @ems.id}
           expect(response.status).to eq(200)
           expect(response.body).to_not be_empty
@@ -98,12 +99,12 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
         end
 
         it 'edit selected network provider' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_edit"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_edit"}
           expect(response.status).to eq(200)
         end
 
         it 'edit network provider tags' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_tag"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_tag"}
           expect(response.status).to eq(200)
         end
 
@@ -111,7 +112,7 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           allow(controller).to receive(:protect_build_tree).and_return(nil)
           controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
 
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_protect"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_protect"}
           expect(response.status).to eq(200)
 
           get :protect
@@ -125,7 +126,7 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
         end
 
         it 'edit network providers' do
-          post :button, :params => {:miq_grid_checks => to_cid(@ems.id), :pressed => "ems_network_edit"}
+          post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_network_edit"}
           expect(response.status).to eq(200)
         end
       end

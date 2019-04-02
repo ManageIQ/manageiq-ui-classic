@@ -2,12 +2,13 @@ describe ProviderForemanController do
   render_views
 
   let(:tags) { ["/managed/quota_max_memory/2048"] }
-  before(:each) do
+  before do
+    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     @zone = EvmSpecHelper.local_miq_server.zone
     Tag.find_or_create_by(:name => tags.first)
 
     @provider = ManageIQ::Providers::Foreman::Provider.create(:name => "testForeman", :url => "10.8.96.102", :zone => @zone)
-    @config_mgr = ManageIQ::Providers::Foreman::ConfigurationManager.find_by_provider_id(@provider.id)
+    @config_mgr = ManageIQ::Providers::Foreman::ConfigurationManager.find_by(:provider_id => @provider.id)
     @config_profile = ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile.create(:name        => "testprofile",
                                                                                                       :description => "testprofile",
                                                                                                       :manager_id  => @config_mgr.id)
@@ -29,7 +30,7 @@ describe ProviderForemanController do
                                                                                   :manager_id               => @config_mgr.id)
 
     @provider2 = ManageIQ::Providers::Foreman::Provider.create(:name => "test2Foreman", :url => "10.8.96.103", :zone => @zone)
-    @config_mgr2 = ManageIQ::Providers::Foreman::ConfigurationManager.find_by_provider_id(@provider2.id)
+    @config_mgr2 = ManageIQ::Providers::Foreman::ConfigurationManager.find_by(:provider_id => @provider2.id)
     @configured_system_unprovisioned2 =
       ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem.create(:hostname                 => "configured_system_unprovisioned2",
                                                                                   :configuration_profile_id => nil,
@@ -58,6 +59,20 @@ describe ProviderForemanController do
     expect(breadcrumbs[0]).to include(:url => '/provider_foreman/show_list')
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
+  end
+
+  it "renders explorer sorted by url" do
+    login_as user_with_feature(%w(providers_accord configured_systems_filter_accord))
+    FactoryBot.create(:provider_foreman, :name => "foremantest1", :url => "z_url")
+    FactoryBot.create(:provider_foreman, :name => "foremantest2", :url => "a_url")
+
+    get :explorer, :params => {:sortby => '2'}
+    expect(response.status).to eq(200)
+    expect(response.body).to include("modelName: 'ManageIQ::Providers::ConfigurationManager'")
+    expect(response.body).to include("activeTree: 'configuration_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/provider_foreman/x_show/'")
   end
 
   context "renders explorer based on RBAC" do
@@ -130,7 +145,7 @@ describe ProviderForemanController do
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
     controller.save_provider
-    expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
+    expect(assigns(:flash_array).last[:message]).to include("Name has already been taken")
   end
 
   context "#edit" do
@@ -142,11 +157,11 @@ describe ProviderForemanController do
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq(_("Edit Provider"))
+      expect(right_cell_text).to eq("Edit Provider")
     end
 
     it "should display the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, @provider)
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
@@ -154,7 +169,7 @@ describe ProviderForemanController do
     end
 
     it "should save the zone field" do
-      new_zone = FactoryGirl.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone, :name => "TestZone")
       controller.instance_variable_set(:@provider, @provider)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
@@ -166,13 +181,26 @@ describe ProviderForemanController do
       expect(@provider.zone).to eq(new_zone)
     end
 
+    it "should save the verify_ssl flag" do
+      controller.instance_variable_set(:@provider, @provider)
+      allow(controller).to receive(:leaf_record).and_return(false)
+      [true, false].each do |verify_ssl|
+        post :edit, :params => { :button     => 'save',
+                                 :id         => @config_mgr.id,
+                                 :url        => @provider.url,
+                                 :verify_ssl => verify_ssl.to_s }
+        expect(response.status).to eq(200)
+        expect(@provider.verify_ssl).to eq(verify_ssl ? 1 : 0)
+      end
+    end
+
     it "renders the edit page when the configuration manager id is selected from a list view" do
       post :edit, :params => { :miq_grid_checks => @config_mgr.id }
       expect(response.status).to eq(200)
     end
 
     it "renders the edit page when the configuration manager id is selected from a grid/tile" do
-      post :edit, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}" => "1" }
+      post :edit, :params => { "check_#{@config_mgr.id}" => "1" }
       expect(response.status).to eq(200)
     end
   end
@@ -198,8 +226,8 @@ describe ProviderForemanController do
 
     it "it refreshes a provider when the configuration manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :refresh, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}"  => "1",
-                                  "check_#{ApplicationRecord.compress_id(@config_mgr2.id)}" => "1" }
+      post :refresh, :params => { "check_#{@config_mgr.id}"  => "1",
+                                  "check_#{@config_mgr2.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 2 providers")
     end
   end
@@ -223,7 +251,7 @@ describe ProviderForemanController do
 
     it "it deletes a provider when the configuration manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { "check_#{ApplicationRecord.compress_id(@config_mgr.id)}" => "1" }
+      post :delete, :params => { "check_#{@config_mgr.id}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
     end
   end
@@ -246,6 +274,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
     end
+
     it "renders right cell text for root node" do
       key = ems_key_for_provider(@provider)
       controller.send(:get_node_info, "root")
@@ -254,6 +283,7 @@ describe ProviderForemanController do
     end
 
     it "renders right cell text for ConfigurationManagerForeman node" do
+      controller.instance_variable_set(:@in_report_data, true)
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
@@ -263,7 +293,7 @@ describe ProviderForemanController do
   end
 
   it "builds foreman child tree" do
-    controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+    controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
     tree_builder = TreeBuilderConfigurationManager.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "fr"}, false, {})
     expected_objects = [@config_mgr, @config_mgr2]
@@ -290,9 +320,10 @@ describe ProviderForemanController do
       controller.send(:build_accordions_and_trees)
     end
 
-    it "renders the list view based on the nodetype(root,provider,config_profile) and the search associated with it" do
+    pending "renders the list view based on the nodetype(root,provider,config_profile) and the search associated with it" do
       controller.instance_variable_set(:@_params, :id => "root")
       controller.instance_variable_set(:@search_text, "manager")
+      controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
@@ -306,6 +337,11 @@ describe ProviderForemanController do
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].description).to eq("testprofile")
 
@@ -316,6 +352,11 @@ describe ProviderForemanController do
       config_profile_id2 = config_profile_key(@config_profile2)
       controller.instance_variable_set(:@_params, :id => config_profile_id2)
       controller.send(:tree_select)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:parentId]).to eq(config_profile_id2)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].hostname).to eq("test2a_configured_system")
 
@@ -341,33 +382,42 @@ describe ProviderForemanController do
       expect(view.table.data.size).to eq(2)
     end
 
-    it "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
+    pending "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
       ems_id = ems_key_for_provider(@provider)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       expect(view.table.data[0].data).to include('description' => "testprofile")
-      expect(view.table.data[2]).to include('description' => _("Unassigned Profiles Group"),
-                                            'name'        => _("Unassigned Profiles Group"))
+      expect(view.table.data[2]).to include('description' => "Unassigned Profiles Group",
+                                            'name'        => "Unassigned Profiles Group")
     end
 
-    it "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
+    pending "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
       ems_id = ems_key_for_provider(@provider2)
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0]).to include('description' => _("Unassigned Profiles Group"),
-                                            'name'        => _("Unassigned Profiles Group"))
+      expect(view.table.data[0]).to include('description' => "Unassigned Profiles Group",
+                                            'name'        => "Unassigned Profiles Group")
     end
 
-    it "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do
+    pending "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do
       controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider)}-unassigned")
+      controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned")
     end
 
-    it "renders tree_select for an 'Unassigned Profiles Group' node for the second provider" do
+    pending "renders tree_select for an 'Unassigned Profiles Group' node for the second provider" do
+      controller.instance_variable_set(:@in_report_data, true)
       controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider2)}-unassigned")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -380,8 +430,25 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_providers_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager", :dbname => :cm_providers).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager",
+                                                    :gtl_dbname => :cm_providers, :dbname => :cm_providers).and_call_original
       controller.send(:accordion_select)
+    end
+
+    it "calls get_view with the associated dbname for the Configuration Profiles list" do
+      stub_user(:features => :all)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_providers_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
+      ems_id = ems_id_for_provider(@provider)
+      controller.instance_variable_set(:@in_report_data, true)
+      controller.instance_variable_set(:@_params, :id => ems_key_for_provider(@provider))
+      allow(controller).to receive(:build_listnav_search_list)
+      allow(controller).to receive(:apply_node_search_text)
+      expect(controller).to receive(:get_view).with("ConfigurationProfile", :match_via_descendants => "ConfiguredSystem",
+                                                                            :named_scope           => [[:with_manager, ems_id]],
+                                                                            :dbname                => :cm_configuration_profiles,
+                                                                            :gtl_dbname            => :cm_configuration_profiles).and_call_original
+      controller.send(:tree_select)
     end
 
     it "calls get_view with the associated dbname for the Configured Systems accordion" do
@@ -390,14 +457,16 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
+                                                    :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
 
-    it "does not display an automation manger configured system in the Configured Systems accordion" do
+    pending "does not display an automation manger configured system in the Configured Systems accordion" do
+      controller.instance_variable_set(:@in_report_data, true)
       stub_user(:features => :all)
-      FactoryGirl.create(:configured_system_ansible_tower)
+      FactoryBot.create(:configured_system_ansible_tower)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
@@ -416,15 +485,26 @@ describe ProviderForemanController do
     session[:tag_items] = [@configured_system.id]
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
-    parent = FactoryGirl.create(:classification, :name => "test_category")
-    FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification, :name => "test_category")
+    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
     post :tagging, :params => { :id => @configured_system.id, :format => :js }
     expect(response.status).to eq(200)
   end
 
+  it "renders tagging editor for a configured system in the manager accordion" do
+    session[:assigned_filters] = []
+    allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
+    allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
+    parent = FactoryBot.create(:classification, :name => "test_category")
+    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
+    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    post :tagging, :params => { :miq_grid_checks => [@configured_system.id], :id => @config_profile.id, :format => :js }
+    expect(response.status).to eq(200)
+  end
+
   it "renders tree_select as js" do
-    controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+    controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
 
     allow(controller).to receive(:process_show_list)
     allow(controller).to receive(:add_unassigned_configuration_profile_record)
@@ -455,7 +535,7 @@ describe ProviderForemanController do
     end
 
     it "does not hide Configuration button in the toolbar" do
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
+      controller.send(:build_configuration_manager_providers_tree, :providers)
       key = ems_key_for_provider(@provider)
       post :tree_select, :params => { :id => key }
       expect(response.status).to eq(200)
@@ -466,7 +546,7 @@ describe ProviderForemanController do
   it "renders textual summary for a configured system" do
     stub_user(:features => :all)
 
-    tree_node_id = ApplicationRecord.compress_id(@configured_system.id)
+    tree_node_id = @configured_system.id
 
     # post to x_show sets session variables and redirects to explorer
     # then get to explorer renders the data for the active node
@@ -515,16 +595,16 @@ describe ProviderForemanController do
   end
 
   context "#build_credentials" do
-    it "uses params[:log_password] for validation if one exists" do
+    it "uses params[:default_password] for validation if one exists" do
       controller.instance_variable_set(:@_params,
-                                       :log_userid   => "userid",
-                                       :log_password => "password2")
+                                       :default_userid   => "userid",
+                                       :default_password => "password2")
       creds = {:userid => "userid", :password => "password2"}
       expect(controller.send(:build_credentials)).to include(:default => creds)
     end
 
-    it "uses the stored password for validation if params[:log_password] does not exist" do
-      controller.instance_variable_set(:@_params, :log_userid => "userid")
+    it "uses the stored password for validation if params[:default_password] does not exist" do
+      controller.instance_variable_set(:@_params, :default_userid => "userid")
       controller.instance_variable_set(:@provider, @provider)
       expect(@provider).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}
@@ -539,8 +619,8 @@ describe ProviderForemanController do
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow_any_instance_of(User).to receive(:get_filters).and_return(user_filters)
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
-      first_child = find_treenode_for_foreman_provider(@provider)
+      tree = controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
+      first_child = find_treenode_for_foreman_provider(tree, @provider)
       expect(first_child).to eq(nil)
     end
 
@@ -553,9 +633,9 @@ describe ProviderForemanController do
                                        :object_ids => @configured_system.id,
                                        :add_ids    => quota_2gb_tag.id,
                                        :delete_ids => [])
-      controller.send(:build_configuration_manager_tree, :providers, :configuration_manager_providers_tree)
-      node1 = find_treenode_for_foreman_provider(@provider)
-      node2 = find_treenode_for_foreman_provider(@provider2)
+      tree = controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
+      node1 = find_treenode_for_foreman_provider(tree, @provider)
+      node2 = find_treenode_for_foreman_provider(tree, @provider2)
       expect(node1).not_to be_nil
       expect(node2).to be_nil
     end
@@ -571,25 +651,109 @@ describe ProviderForemanController do
     end
   end
 
-  def user_with_feature(features)
-    features = EvmSpecHelper.specific_product_features(*features)
-    FactoryGirl.create(:user, :features => features)
+  context "#tags_edit" do
+    let!(:user) { stub_user(:features => :all) }
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
+                                 :name   => "tag1",
+                                 :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag,
+                                 :name   => "tag2",
+                                 :parent => classification)
+      allow(Classification).to receive(:find_assigned_entries).with(@configured_system).and_return([@tag1, @tag2])
+      session[:tag_db] = "ConfiguredSystem"
+      edit = {:key        => "ConfiguredSystem_edit_tags__#{@configured_system.id}",
+              :tagging    => "ConfiguredSystem",
+              :object_ids => [@configured_system.id],
+              :current    => {:assignments => []},
+              :new        => {:assignments => [@tag1.id, @tag2.id]}}
+      session[:edit] = edit
+    end
+
+    it "builds tagging screen" do
+      post :tagging, :params => {:format => :js, :miq_grid_checks => [@configured_system.id]}
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "cancels tags edit" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @configured_system.id}
+      expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
+      expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it "save tags" do
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @configured_system.id, :data => get_tags_json([@tag1, @tag2])}
+      expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
+      expect(assigns(:edit)).to be_nil
+      expect(response.status).to eq(200)
+    end
   end
 
-  def find_treenode_for_foreman_provider(provider)
+  context 'download pdf file' do
+    let(:pdf_options) { controller.instance_variable_get(:@options) }
+
+    before do
+      @record = @config_profile
+      allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
+      allow(controller).to receive(:tagdata).and_return(nil)
+      allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
+      login_as FactoryBot.create(:user_admin)
+      stub_user(:features => :all)
+    end
+
+    it 'request returns 200' do
+      get :download_summary_pdf, :params => {:id => @record.id}
+      expect(response.status).to eq(200)
+    end
+
+    it 'title is set correctly' do
+      get :download_summary_pdf, :params => {:id => @record.id}
+      expect(pdf_options[:title]).to eq("#{ui_lookup(:model => @record.class.name)} \"#{@record.name}\"")
+    end
+  end
+
+  describe '#get_node_info' do
+    before do
+      controller.instance_variable_set(:@right_cell_text, "")
+      controller.instance_variable_set(:@search_text, search)
+    end
+
+    context 'searching text' do
+      let(:search) { "some_text" }
+
+      it 'updates right cell text according to search text' do
+        controller.send(:get_node_info, "root")
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq(" (Names with \"#{search}\")")
+      end
+    end
+  end
+
+  def user_with_feature(features)
+    features = EvmSpecHelper.specific_product_features(*features)
+    FactoryBot.create(:user, :features => features)
+  end
+
+  def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
-    tree = JSON.parse(controller.instance_variable_get(:@configuration_manager_providers_tree))
-    tree[0]['nodes'][0]['nodes'].find { |c| c['key'] == key } unless tree[0]['nodes'][0]['nodes'].nil?
+    tree_nodes = JSON.parse(tree.tree_nodes)
+    tree_nodes[0]['nodes'][0]['nodes']&.find { |c| c['key'] == key }
   end
 
   def ems_key_for_provider(provider)
     ems = ExtManagementSystem.where(:provider_id => provider.id).first
-    "fr-" + ApplicationRecord.compress_id(ems.id)
+    "fr-#{ems.id}"
   end
 
   def config_profile_key(config_profile)
     cp = ConfigurationProfile.where(:id => config_profile.id).first
-    "cp-" + ApplicationRecord.compress_id(cp.id)
+    "cp-#{cp.id}"
   end
 
   def ems_id_for_provider(provider)

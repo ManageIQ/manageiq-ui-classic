@@ -9,7 +9,7 @@ describe 'routes for ProviderForeman' do
   %w(
     download_data
     explorer
-    provider_foreman_form_fields
+    form_fields
     tagging_edit
     show
     show_list

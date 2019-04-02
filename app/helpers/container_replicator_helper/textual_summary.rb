@@ -15,9 +15,7 @@ module ContainerReplicatorHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualTags.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #
@@ -25,11 +23,11 @@ module ContainerReplicatorHelper::TextualSummary
   #
 
   def textual_replicas
-    {:label => _("Requested pods"), :value => @record.replicas}
+    {:label => _("Requested pods"), :icon => "fa fa-cubes", :value => @record.replicas}
   end
 
   def textual_current_replicas
-    {:label => _("Current pods"), :value => @record.current_replicas}
+    {:label => _("Current pods"), :icon => "fa fa-cubes", :value => @record.current_replicas}
   end
 
   def textual_compliance_history

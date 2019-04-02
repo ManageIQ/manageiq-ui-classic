@@ -1,15 +1,16 @@
 = render :partial => "layouts/vertical_navbar"
 .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
+  #breadcrumbs
+    = render :partial => "layouts/breadcrumbs_new"
   - if !@in_a_form && taskbar_in_header?
     .row.toolbar-pf#toolbar.miq-toolbar-menu
-      .col-md-12
-        .toolbar-pf-actions
-          - if @layout == "dashboard"
-            = render :partial => "/layouts/tabs"
-          = render :partial => "layouts/angular/toolbar"
+      .col-sm-12
+        - if @layout == "dashboard"
+          = render :partial => "/layouts/tabs"
+        = render :partial => "layouts/angular/toolbar"
   .row.max-height
     .col-sm-10.col-md-9.col-sm-push-2.col-md-push-3.max-height
-      #main-content.row
+      #main-content.row.miq-layout-center_div_with_listnav
         .col-md-12
           .row
             .col-md-7
@@ -22,17 +23,8 @@
           .row
             .col-md-12
               = yield
-      - unless @in_a_form
-        .col-md-12.no-padding
-          .row.toolbar-pf#paging_div
-            = render(:partial => 'layouts/pagingcontrols',
-                     :locals  => {:pages      => @pages,
-                                  :action_url => action_url_for_views,
-                                  :db         => @view.try(:db),
-                                  :headers    => @view.try(:headers),
-                                  :button_div => 'center_tb'})
+      .row#paging_div{:style => @in_a_form ? '' : 'display: none'}
 
     .col-sm-2.col-md-3.col-sm-pull-10.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
       -# listnav_div
       = render :partial => "layouts/listnav"
-

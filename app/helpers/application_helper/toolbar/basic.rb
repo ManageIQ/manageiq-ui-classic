@@ -1,50 +1,34 @@
-class ApplicationHelper::Toolbar::Basic
-  include Singleton
-
-  class << self
-    extend Forwardable
-    delegate %i(button select twostate separator definition button_group custom_content) => :instance
+class ApplicationHelper::Toolbar::Basic < ApplicationHelper::Toolbar::Base
+  def definition(record = nil)
+    extension_classes_filtered(record).reduce(@definition) do |acc, ext|
+      acc.merge(ext.definition)
+    end
   end
-
-  attr_reader :definition
 
   private
 
-  def custom_content(name, args)
-    @definition[name] = ApplicationHelper::Toolbar::Custom.new(name, args)
+  def extension_classes
+    @extension_classes ||= load_extension_classes
   end
 
-  def button_group(name, buttons)
-    @definition[name] = ApplicationHelper::Toolbar::Group.new(name, buttons)
+  def extension_classes_filtered(record)
+    return extension_classes if record.nil?
+
+    # Example:
+    # "ManageIQ::Providers::Amazon::ToolbarOverrides::EmsCloudCenter" is a match for
+    #   "ManageIQ::Providers::Amazon::CloudManager
+    extension_classes.find_all do |ext|
+      ext.name.split('::')[0..2] == record.class.name.split('::')[0..2]
+    end
   end
 
-  def initialize
-    @definition = {}
-  end
+  def load_extension_classes
+    return [] if self.class.name.nil?
 
-  def button(id, icon, title, text, keys = {})
-    generic_button(:button, id, icon, title, text, keys)
-  end
-
-  def select(id, icon, title, text, keys = {})
-    generic_button(:buttonSelect, id, icon, title, text, keys)
-  end
-
-  def twostate(id, icon, title, text, keys = {})
-    generic_button(:buttonTwoState, id, icon, title, text, keys)
-  end
-
-  def generic_button(type, id, icon, title, text, keys)
-    {
-      :type  => type,
-      :id    => id.to_s,
-      :icon  => icon,
-      :title => title,
-      :text  => text
-    }.merge(keys)
-  end
-
-  def separator
-    {:separator => true}
+    toolbar_base_name = self.class.name.to_s.split('::').last
+    Vmdb::Plugins.collect do |plugin|
+      instance = [plugin.name.chomp('::Engine'), 'ToolbarOverrides', toolbar_base_name].join('::')
+      instance.safe_constantize
+    end.compact
   end
 end

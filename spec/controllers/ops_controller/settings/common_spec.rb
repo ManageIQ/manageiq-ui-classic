@@ -1,19 +1,25 @@
 describe OpsController do
   context "OpsController::Settings::Common" do
+    before do
+      MiqDatabase.seed
+      MiqRegion.seed
+      EvmSpecHelper.local_miq_server(:zone => Zone.seed)
+    end
+
     context "SmartProxy Affinity" do
       before do
-        @zone = FactoryGirl.create(:zone, :name => 'zone1')
+        @zone = FactoryBot.create(:zone, :name => 'zone1')
 
-        @storage1 = FactoryGirl.create(:storage)
-        @storage2 = FactoryGirl.create(:storage)
+        @storage1 = FactoryBot.create(:storage)
+        @storage2 = FactoryBot.create(:storage)
 
-        @host1 = FactoryGirl.create(:host, :name => 'host1', :storages => [@storage1])
-        @host2 = FactoryGirl.create(:host, :name => 'host2', :storages => [@storage2])
+        @host1 = FactoryBot.create(:host, :name => 'host1', :storages => [@storage1])
+        @host2 = FactoryBot.create(:host, :name => 'host2', :storages => [@storage2])
 
-        @ems = FactoryGirl.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
+        @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
 
-        @svr1 = FactoryGirl.create(:miq_server, :name => 'svr1', :zone => @zone)
-        @svr2 = FactoryGirl.create(:miq_server, :name => 'svr2', :zone => @zone)
+        @svr1 = FactoryBot.create(:miq_server, :name => 'svr1', :zone => @zone)
+        @svr2 = FactoryBot.create(:miq_server, :name => 'svr2', :zone => @zone)
 
         @svr1.vm_scan_host_affinity = [@host1]
         @svr2.vm_scan_host_affinity = [@host2]
@@ -133,12 +139,6 @@ describe OpsController do
     end
 
     context "#settings_update" do
-      before do
-        MiqDatabase.seed
-        MiqRegion.seed
-        EvmSpecHelper.local_miq_server(:zone => Zone.seed)
-      end
-
       it "won't render form buttons after rhn settings submission" do
         session[:edit] = {
           :key => "settings_rhn_edit__rhn_edit",
@@ -148,12 +148,15 @@ describe OpsController do
             :customer_password => "password",
             :server_url        => "example.com",
             :repo_name         => "example_repo_name",
-            :use_proxy         => 0}}
+            :use_proxy         => 0
+          }
+        }
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@sb, :trees       =>
                                                                {:settings_tree => {:active_node => 'root'}},
                                                :active_tree => :settings_tree,
                                                :active_tab  => 'settings_rhn_edit')
+        allow(controller).to receive(:x_node).and_return("root")
         controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
         controller.send(:settings_update)
         expect(response).to render_template('ops/_settings_rhn_tab')
@@ -163,29 +166,24 @@ describe OpsController do
 
     context "#settings_get_form_vars" do
       before do
-        miq_server = FactoryGirl.create(:miq_server)
-        current = VMDB::Config.new("vmdb")
-        current.config[:authentication] = {:ldap_role => true,
-                                           :mode      => 'ldap'
-        }
+        miq_server = FactoryBot.create(:miq_server)
+        current = ::Settings.to_hash
+        current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
         edit = {:current => current,
-                :new     => copy_hash(current.config),
-                :key     => "settings_authentication_edit__#{miq_server.id}"
-        }
+                :new     => copy_hash(current),
+                :key     => "settings_authentication_edit__#{miq_server.id}"}
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
         controller.instance_variable_set(:@sb,
                                          :selected_server_id => miq_server.id,
-                                         :active_tab         => 'settings_authentication'
-                                        )
-        controller.x_node = "svr-#{controller.to_cid(miq_server.id)}"
+                                         :active_tab         => 'settings_authentication')
+        controller.x_node = "svr-#{miq_server.id}"
       end
 
       it "sets ldap_role to false to make forest entries div hidden" do
         controller.instance_variable_set(:@_params,
                                          :id                  => 'authentication',
-                                         :authentication_mode => 'database'
-                                        )
+                                         :authentication_mode => 'database')
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
       end
@@ -194,28 +192,305 @@ describe OpsController do
         session[:edit][:new][:authentication][:mode] = 'database'
         controller.instance_variable_set(:@_params,
                                          :id                  => 'authentication',
-                                         :authentication_mode => 'ldap'
-                                        )
+                                         :authentication_mode => 'ldap')
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
       end
     end
 
-    context "#update_exclude_tables_for_remote_region" do
-      render_views
+    describe "#pglogical_save_subscriptions" do
+      before { allow(controller).to receive(:javascript_flash) }
 
-      before do
-        EvmSpecHelper.local_miq_server(:zone => Zone.seed)
-        FactoryGirl.create(:miq_region, :region => 10, :description => "The 10th region")
+      context "remote" do
+        let(:to_exlude) { "---\n- vmdb_databases\n- vmdb_indexes" }
+        let(:params)    { {:replication_type => "remote", :exclusion_list => to_exlude} }
+
+        it "queues operation to updates exclude tables for the remote region" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_remote_region")
+          expect(queue_item.args).to eq([to_exlude])
+        end
       end
 
-      it "updates the exclude tables for the remote region" do
-        allow(MiqRegion).to receive(:replication_type).and_return(:remote)
-        allow(controller).to receive(:javascript_flash)
-        params = {:replication_type => "remote", :exclusion_list => "table1", :button => "save", :id => "new"}
-        controller.instance_variable_set(:@_params, params)
-        controller.send(:pglogical_save_subscriptions)
-        expect(assigns(:flash_array).first[:message]).to include("Replication configuration save was successful")
+      context "global" do
+        let(:db_save)       { "DbName_For_Subscription_To_Save" }
+        let(:db_remove)     { "DbName_For_Subscription_To_Remove" }
+        let(:subscriptions) { {"0" => {"dbname" => db_save}, "1" => {'remove' => "true", "dbname" => db_remove}} }
+        let(:params)        { {:replication_type => "global", :subscriptions => subscriptions} }
+
+        it "queues operation to save and/or remove subscriptions settings for the global region" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_global_region")
+          expect(queue_item.args[0][0].dbname).to eq(db_save)
+          expect(queue_item.args[0][1].dbname).to eq(db_remove)
+        end
+
+        it "encrypts subscription's password before queuing save operation" do
+          password = "some_password"
+          subscriptions["0"] = {"password" => password}
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "save_global_region")
+          queued_password = queue_item.args[0][0].password
+          expect(ManageIQ::Password.encrypted?(queued_password)).to be(true)
+          expect(ManageIQ::Password.decrypt(queued_password)).to eq(password)
+        end
+      end
+
+      context "none" do
+        let(:params) { {:replication_type => "none"} }
+
+        it "queues operations to set replication to none" do
+          controller.instance_variable_set(:@_params, params)
+          controller.send(:pglogical_save_subscriptions)
+          queue_item = MiqQueue.find_by(:method_name => "replication_type=")
+          expect(queue_item.args[0]).to eq(:none)
+        end
+      end
+    end
+
+    describe '#settings_get_info' do
+      before { MiqRegion.seed }
+
+      let(:edit) { controller.instance_variable_get(:@edit) }
+
+      context 'help menu' do
+        it 'current and new in the edit hash equals' do
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_help_menu')
+          controller.send(:settings_get_info, 'root-0')
+          expect(edit[:new]).to eq(edit[:current])
+        end
+      end
+
+      context 'zone node' do
+        it 'sets ntp server info for display' do
+          _guid, miq_server, zone = EvmSpecHelper.local_guid_miq_server_zone
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_zone')
+          controller.instance_variable_set(:@edit, :new => {:ntp => {:server => ["1.example.com", "2.example.com"]}})
+          controller.send(:zone_save_ntp_server_settings, zone)
+          controller.send(:settings_get_info, "z-#{zone.id}")
+          expect(assigns(:ntp_servers)).to eq("1.example.com, 2.example.com")
+        end
+      end
+
+      context 'get advanced config settings' do
+        it 'for selected server' do
+          miq_server = FactoryBot.create(:miq_server)
+          enc_pass = ManageIQ::Password.encrypt('pa$$word')
+          Vmdb::Settings.save!(
+            miq_server,
+            :http_proxy => {
+              :default => {
+                :host     => "proxy.example.com",
+                :user     => "user",
+                :password => enc_pass,
+                :port     => 80
+              }
+            }
+          )
+          miq_server.reload
+          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
+          controller.send(:settings_get_info, "svr-#{miq_server.id}")
+          config = assigns(:edit)[:current][:file_data]
+          expect(config).to include(":host: proxy.example.com")
+          expect(config).to include(":user: user")
+          expect(config).to include(":password: #{enc_pass}")
+          expect(config).to include(":port: 80")
+        end
+
+        it 'for selected zone' do
+          zone = FactoryBot.create(:zone)
+          enc_pass = ManageIQ::Password.encrypt('pa$$word')
+          Vmdb::Settings.save!(
+            zone,
+            :http_proxy => {
+              :default => {
+                :host     => "proxy.example.com",
+                :user     => "user",
+                :password => enc_pass,
+                :port     => 80
+              }
+            }
+          )
+          zone.reload
+          allow(controller).to receive(:x_node).and_return("svr-#{zone.id}")
+          controller.instance_variable_set(:@sb, :active_tab => 'settings_advanced')
+          controller.send(:settings_get_info, "z-#{zone.id}")
+          config = assigns(:edit)[:current][:file_data]
+          expect(config).to include(":host: proxy.example.com")
+          expect(config).to include(":user: user")
+          expect(config).to include(":password: #{enc_pass}")
+          expect(config).to include(":port: 80")
+        end
+      end
+    end
+
+    describe '#settings_update_save' do
+      context "save config settings" do
+        it 'for selected server' do
+          miq_server = FactoryBot.create(:miq_server)
+          allow(controller).to receive(:x_node).and_return("svr-#{miq_server.id}")
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_advanced',
+                                           :selected_server_id => miq_server.id)
+          controller.instance_variable_set(:@_params,
+                                           :id => 'advanced')
+          data = {:api => {:token_ttl => "1.day"}}.to_yaml
+          controller.instance_variable_set(:@edit,
+                                           :new     => {:file_data => data},
+                                           :current => {:file_data => data},
+                                           :key     => "settings_advanced_edit__#{miq_server.id}")
+          session[:edit] = assigns(:edit)
+          expect(controller).to receive(:render)
+          expect(Vmdb::Settings).to receive(:reload!)
+
+          controller.send(:settings_update_save)
+          controller.send(:fetch_advanced_settings, miq_server)
+          expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
+        end
+
+        it 'for selected zone' do
+          zone = FactoryBot.create(:zone)
+          allow(controller).to receive(:x_node).and_return("z-#{zone.id}")
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_advanced',
+                                           :selected_server_id => zone.id)
+          controller.instance_variable_set(:@_params,
+                                           :id => 'advanced')
+          data = {:api => {:token_ttl => "1.day"}}.to_yaml
+          controller.instance_variable_set(:@edit,
+                                           :new     => {:file_data => data},
+                                           :current => {:file_data => data},
+                                           :key     => "settings_advanced_edit__#{zone.id}")
+          session[:edit] = assigns(:edit)
+          expect(controller).to receive(:render)
+          expect(Vmdb::Settings).to receive(:reload!)
+
+          controller.send(:settings_update_save)
+          controller.send(:fetch_advanced_settings, zone)
+          expect(SettingsChange.first).to have_attributes(:key => '/api/token_ttl', :value => "1.day")
+        end
+      end
+
+      context "save server name in server settings only when 'Server' is active tab" do
+        before do
+          @miq_server = FactoryBot.create(:miq_server)
+          allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_server',
+                                           :selected_server_id => @miq_server.id)
+          controller.instance_variable_set(:@_params,
+                                           :id => 'server')
+          @current = ::Settings.to_hash
+          @new = ::Settings.to_hash
+          @new[:server][:name] = ''
+          controller.instance_variable_set(:@edit,
+                                           :new     => @new,
+                                           :current => @current,
+                                           :key     => "settings_server_edit__#{@miq_server.id}")
+          session[:edit] = assigns(:edit)
+          expect(controller).to receive(:render)
+        end
+
+        it "does not allow to save blank appliance name" do
+          controller.send(:settings_update_save)
+          expect(assigns(:flash_array).first[:message]).to include("Appliance name must be entered.")
+        end
+
+        it "saves new server name for server record" do
+          @new[:server][:name] = 'Foo'
+          controller.send(:settings_update_save)
+          @miq_server.reload
+          expect(@miq_server.name).to eq("Foo")
+        end
+
+        it "does not update server name when active tab is Authentication tab" do
+          controller.instance_variable_set(:@sb,
+                                           :active_tab         => 'settings_authentication',
+                                           :selected_server_id => @miq_server.id)
+          @new[:server][:name] = 'Foo'
+          controller.send(:settings_update_save)
+          @miq_server.reload
+          expect(@miq_server.name).to_not eq("Foo")
+        end
+      end
+    end
+
+    describe '#settings_set_form_vars_server' do
+      context 'sets values correctly' do
+        it 'for server in non-current zone' do
+          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
+          server = FactoryBot.create(:miq_server, :zone => zone)
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current][:server][:zone]).to eq(zone.name)
+        end
+
+        it 'for server in default zone' do
+          server = FactoryBot.create(:miq_server, :zone => Zone.find_by(:name => "default"))
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current][:server][:zone]).to eq("default")
+        end
+
+        it 'sets the server name' do
+          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
+          server = FactoryBot.create(:miq_server, :zone => zone, :name => 'ServerName')
+          controller.instance_variable_set(:@sb, :selected_server_id => server.id)
+          controller.send(:settings_set_form_vars_server)
+          edit_current = assigns(:edit)
+          expect(edit_current[:current][:server][:name]).to eq(server.name)
+        end
+      end
+    end
+
+    describe '#settings_set_form_vars_workers' do
+      include ActionView::Helpers::NumberHelper
+      context "set worker settings for selected server" do
+        before do
+          @miq_server = FactoryBot.create(:miq_server)
+          controller.instance_variable_set(:@sb,
+                                           :selected_server_id => @miq_server.id)
+        end
+
+        it "gets worker setting in same format as in sandbox threshold array so correct value is selected in drop down" do
+          controller.send(:settings_set_form_vars_workers)
+          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
+          Hash[*assigns(:sb)[:threshold].flatten].each_value do |v|
+            expect(v.class).to eq(ui_worker_threshold.class)
+          end
+        end
+
+        it "converts '600.megabytes' string correctly to bytes" do
+          Vmdb::Settings.save!(
+            @miq_server,
+            :workers => {
+              :worker_base => {
+                :ui_worker => {
+                  :memory_threshold => "600.megabytes",
+                  :count            => 2
+                }
+              }
+            }
+          )
+          controller.send(:settings_set_form_vars_workers)
+          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
+          ui_worker_count = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :count)
+          expect(ui_worker_threshold).to eq(600.megabytes)
+          expect(ui_worker_count).to eq(2)
+        end
+
+        it "gets worker setting and makes sure it exists in threshold array so correct value can be selected in drop down" do
+          controller.send(:settings_set_form_vars_workers)
+          proxy_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqSmartProxyWorker, :memory_threshold)
+          proxy_worker_threshold_human_size = number_to_human_size(proxy_worker_threshold, :significant => false)
+          expect(assigns(:sb)[:smart_proxy_threshold]).to include([proxy_worker_threshold_human_size, proxy_worker_threshold])
+        end
       end
     end
   end

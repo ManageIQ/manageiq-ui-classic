@@ -13,43 +13,33 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Add a new Router'),
             t,
-            :klass => ApplicationHelper::Button::ButtonNewDiscover
+            :klass => ApplicationHelper::Button::NetworkRouterNew
           ),
-          separator,
-          button(
-            :network_router_edit,
-            'pficon pficon-edit fa-lg',
-            t = N_('Edit selected Router'),
-            t,
-            :url_parms => 'main_div',
-            :enabled   => false,
-            :onwhen    => '1'
-          ),
-          button(
-            :network_router_add_interface,
-            'pficon pficon-edit fa-lg',
-            t = N_('Add Interface to selected Router'),
-            t,
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1"),
-          button(
-            :network_router_remove_interface,
-            'pficon pficon-edit fa-lg',
-            t = N_('Remove Interface from selected Router'),
-            t,
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1"),
           button(
             :network_router_delete,
             'pficon pficon-delete fa-lg',
             t = N_('Delete selected Routers'),
             t,
-            :url_parms => 'main_div',
-            :confirm   => N_('Warning: The selected Routers and ALL of their components will be removed!'),
-            :enabled   => false,
-            :onwhen    => '1+'),
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :confirm      => N_('Warning: This Router and ALL of its components will be removed!'),
+            :enabled      => false,
+            :onwhen       => "1+",
+            :data         => {
+              'function'      => 'sendDataWithRx',
+              'function-data' => {
+                :type       => 'delete',
+                :controller => 'toolbarActions',
+                :payload    => {
+                  :entity => 'network_routers',
+                  :labels => {
+                    :single   => _('Network Router'),
+                    :multiple => _('Network Routers')
+                  }
+                }
+              }.to_json
+            }
+          )
         ]
       )
     ]
@@ -70,9 +60,10 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
             'pficon pficon-edit fa-lg',
             N_('Edit Tags for the selected Network Routers'),
             N_('Edit Tags'),
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1+"),
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => "1+"),
         ]
       )
     ]

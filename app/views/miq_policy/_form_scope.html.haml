@@ -1,23 +1,24 @@
 #form_scope_div
   - if @expkey == :applies_to_exp
-    %h3= _("Scope (Choose an element of the scope to edit)")
+    %h3= _("Choose an element of the scope to edit")
     = render :partial => 'layouts/exp_editor'
     %hr
   - else
-    %h3= _('Scope (Press the "Edit" button to edit the scope)')
-    = link_to(image_tag(image_path('toolbars/edit.png'), :border => "0", :alt => (t = _("Edit this Scope"))),
-      {:action => 'condition_edit',
-       :button => "applies_to_exp",
-       :id => @condition.id || 'new'},
-      "data-miq_sparkle_on"  => true,
-      "data-miq_sparkle_off" => true,
-      :remote                => true,
-      "data-method"          => :post,
-      :title                 => t)
-    %br
-    - if @edit[:scope_table].nil?
-      = render :partial => 'layouts/info_msg', :locals => {:message => _("No scope defined, the scope of this condition includes all elements.")}
-    - else
+    = link_to({:action                => 'condition_edit',
+               :button                => "applies_to_exp",
+               :id                    => @condition.id || 'new'},
+               "data-miq_sparkle_on"  => true,
+               "data-miq_sparkle_off" => true,
+               :remote                => true,
+               "data-method"          => :post) do
+              
+      %button.btn.btn-default
+        - if @edit[:scope_table].nil?
+          = _("Define Scope")
+        - else
+          = _("Edit Scope")
+    - unless @edit[:scope_table].nil?
+      .spacer
       - @edit[:scope_table].each do |token|
         - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
           = h([token].flatten.first)
@@ -25,4 +26,3 @@
           %font{:color => "black"}
             %b
               = h([token].flatten.first)
-    %hr

@@ -3,9 +3,16 @@ module MiqPolicyController::Rsop
 
   def rsop
     @explorer = true
-    @collapse_c_cell = true
     if params[:button] == "submit"
-      unless params[:task_id]                       # First time thru, kick off the report generate task
+      if params[:task_id]                         # First time thru, kick off the report generate task
+        miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
+        if miq_task.results_ready?
+          @sb[:rsop][:results] = miq_task.task_results
+          @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, :root => @sb[:rsop])
+        else
+          add_flash(_("Policy Simulation generation returned: %{error_message}") % {:error_message => miq_task.message}, :error)
+        end
+      else
         case @sb[:rsop][:filter]
         when "vm"
           vms = [Vm.find(@sb[:rsop][:filter_value])]
@@ -16,7 +23,7 @@ module MiqPolicyController::Rsop
         when "host"
           vms = Host.find(@sb[:rsop][:filter_value]).vms
         end
-        if vms.length > 0
+        if vms.length.positive?
           @sb[:rsop][:out_of_scope] = true
           @sb[:rsop][:passed] = true
           @sb[:rsop][:failed] = true
@@ -26,31 +33,21 @@ module MiqPolicyController::Rsop
         else
           add_flash(_("No VMs match the selection criteria"), :error)
         end
-      else
-        miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
-        if !miq_task.results_ready?
-          add_flash(_("Policy Simulation generation returned: %{error_message}") % {:error_message => miq_task.message}, :error)
-        else
-          @sb[:rsop][:results] = miq_task.task_results
-          @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, @sb[:rsop])
-        end
       end
-      c_tb = build_toolbar(center_toolbar_filename)
       render :update do |page|
         page << javascript_prologue
         page.replace_html("main_div", :partial => "rsop_results")
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+        page << javascript_reload_toolbars
         page << "miqSparkle(false);"
       end
     elsif params[:button] == "reset"
-      @sb[:rsop] = {}     # Reset all RSOP stored values
+      @sb[:rsop] = {} # Reset all RSOP stored values
       session[:changed] = nil
-      javascript_redirect :action => 'rsop'
-    else  # No params, first time in
+      javascript_redirect(:action => 'rsop')
+    else # No params, first time in
       @breadcrumbs = []
-      @accords = [{:name => "rsop", :title => _("Options"), :container => "rsop_options_div"}]
       session[:changed] = false
-      @sb[:rsop] ||= {}   # Leave exising values
+      @sb[:rsop] ||= {} # Leave exising values
       rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)
       rsop_put_objects_in_sb(find_filtered(EmsCluster), :clusters)
       rsop_put_objects_in_sb(find_filtered(Host), :hosts)
@@ -120,8 +117,8 @@ module MiqPolicyController::Rsop
     if params[:out_of_scope]
       @sb[:rsop][:out_of_scope] = (params[:out_of_scope] == "1")
     end
-    @sb[:rsop][:open] = false           # reset the open state to select correct button in toolbar, need to replace partial to update checkboxes in form
-    @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, @sb[:rsop])
+    @sb[:rsop][:open] = false # reset the open state to select correct button in toolbar, need to replace partial to update checkboxes in form
+    @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, :root => @sb[:rsop])
     rsop_button_pressed
   end
 
@@ -135,7 +132,6 @@ module MiqPolicyController::Rsop
   end
 
   def rsop_button_pressed
-    c_tb = build_toolbar(center_toolbar_filename)
     render :update do |page|
       page << javascript_prologue
       if params[:action] == "rsop_toggle"
@@ -152,7 +148,7 @@ module MiqPolicyController::Rsop
         # if rsop_show_options came in
         page.replace_html("main_div", :partial => "rsop_results")
       end
-      page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      page << javascript_reload_toolbars
     end
   end
 end

@@ -1,39 +1,5 @@
-require 'kubeclient'
-
 describe EmsCloudController do
   context "::EmsCommon" do
-    context "#get_form_vars" do
-      it "check if the default port for openstack/openstack_infra/rhevm is set" do
-        controller.instance_variable_set(:@edit, :new => {})
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to eq(5000)
-
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack_infra")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to eq(5000)
-
-        controller.instance_variable_set(:@_params, :server_emstype => "ec2")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to be_nil
-      end
-    end
-
-    context "#get_form_vars" do
-      it "check if provider_region gets reset when provider type is changed on add screen" do
-        controller.instance_variable_set(:@edit, :new => {})
-        controller.instance_variable_set(:@_params, :server_emstype => "ec2")
-        controller.instance_variable_set(:@_params, :provider_region => "some_region")
-
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:provider_region]).to eq("some_region")
-
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:provider_region]).to be_nil
-      end
-    end
-
     context "#new" do
       before do
         stub_user(:features => :all)
@@ -53,93 +19,18 @@ describe EmsCloudController do
       end
     end
 
-    context "#form_field_changed" do
-      before :each do
-        stub_user(:features => :all)
-      end
-
-      it "form_div should be updated when server type is sent up" do
-        controller.instance_variable_set(:@edit, :new => {}, :key => "ems_edit__new")
-        session[:edit] = assigns(:edit)
-        post :form_field_changed, :params => { :server_emstype => "rhevm", :id => "new" }
-        expect(response.body).to include("form_div")
-      end
-
-      it "form_div should not be updated when other fields are sent up" do
-        controller.instance_variable_set(:@edit, :new => {}, :key => "ems_edit__new")
-        session[:edit] = assigns(:edit)
-        post :form_field_changed, :params => { :name => "Test", :id => "new" }
-        expect(response.body).not_to include("form_div")
-      end
-    end
-
-    context "#set_record_vars" do
-      context "strip leading/trailing whitespace from hostname/ipaddress" do
-        after :each do
-          stub_user(:features => :all)
-          controller.instance_variable_set(:@edit, :new => {:name     => 'EMS 1',
-                                                            :emstype  => @type,
-                                                            :hostname => '  10.10.10.10  ',
-                                                            :port     => '5000'},
-                                                   :key => 'ems_edit__new')
-          session[:edit] = assigns(:edit)
-          controller.send(:set_record_vars, @ems)
-          expect(@ems.hostname).to eq('10.10.10.10')
-        end
-
-        it "when adding cloud EMS" do
-          @type = 'openstack'
-          @ems  = ManageIQ::Providers::Openstack::CloudManager.new
-        end
-
-        it "when adding infra EMS" do
-          @type = 'rhevm'
-          @ems  = ManageIQ::Providers::Redhat::InfraManager.new
-        end
-      end
-    end
-
-    context "#update_button_validate" do
-      context "when authentication_check" do
-        let(:mocked_ems_cloud) { double(EmsCloud) }
-        before(:each) do
-          controller.instance_variable_set(:@_params, :id => "42", :type => "amqp")
-          expect(controller).to receive(:find_by_id_filtered).with(EmsCloud, "42").and_return(mocked_ems_cloud)
-          expect(controller).to receive(:set_record_vars).with(mocked_ems_cloud, :validate).and_return(mocked_ems_cloud)
-        end
-
-        it "successful flash message (unchanged)" do
-          allow(controller).to receive_messages(:edit_changed? => false)
-          expect(mocked_ems_cloud).to receive(:authentication_check).with("amqp", :save => true).and_return([true, ""])
-          expect(controller).to receive(:add_flash).with(_("Credential validation was successful"))
-          expect(controller).to receive(:render_flash)
-          controller.send(:update_button_validate)
-        end
-
-        it "unsuccessful flash message (changed)" do
-          allow(controller).to receive_messages(:edit_changed? => true)
-          expect(mocked_ems_cloud).to receive(:authentication_check)
-            .with("amqp", :save => false).and_return([false, "Invalid"])
-          expect(controller).to receive(:add_flash).with(_("Credential validation was not successful: Invalid"), :error)
-          expect(controller).to receive(:render_flash)
-          controller.send(:update_button_validate)
-        end
-      end
-    end
-
     context "#button" do
-      before(:each) do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
       end
 
       it "when Retire Button is pressed for a Cloud provider Instance" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_vmware")
-        vm = FactoryGirl.create(:vm_vmware,
+        ems = FactoryBot.create(:ems_vmware)
+        vm = FactoryBot.create(:vm_vmware,
                                 :ext_management_system => ems,
-                                :storage               => FactoryGirl.create(:storage)
-                               )
+                                :storage               => FactoryBot.create(:storage))
         post :button, :params => { :pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
         expect(response.status).to eq 200
         expect(response.body).to include('vm/retire')
@@ -147,11 +38,32 @@ describe EmsCloudController do
 
       it "when Retire Button is pressed for an Orchestration Stack" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_amazon")
-        ost = FactoryGirl.create(:orchestration_stack_cloud, :ext_management_system => ems)
+        ems = FactoryBot.create(:ems_amazon)
+        ost = FactoryBot.create(:orchestration_stack_cloud, :ext_management_system => ems)
         post :button, :params => { :pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks' }
         expect(response.status).to eq 200
         expect(response.body).to include('orchestration_stack/retire')
+      end
+
+      it "when the Tagging Button is pressed for a Cloud provider Instance" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        ems = FactoryBot.create(:ems_vmware)
+        vm = FactoryBot.create(:vm_vmware,
+                                :ext_management_system => ems,
+                                :storage               => FactoryBot.create(:storage))
+        post :button, :params => { :pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
+        expect(response.status).to eq 200
+        expect(response.body).to include('ems_cloud/tagging_edit')
+      end
+
+      it "call tagging_edit when tha Tagging Button is pressed for one or more Cloud provider Image(s)" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        ems = FactoryBot.create(:ems_amazon)
+        vm = FactoryBot.create(:vm_amazon,
+                                :ext_management_system => ems)
+        post :button, :params => { :pressed => "image_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'images' }
+        expect(response.status).to eq 200
+        expect(response.body).to include('ems_cloud/tagging_edit')
       end
 
       it "when Delete Button is pressed for CloudObjectStoreContainer" do
@@ -162,14 +74,14 @@ describe EmsCloudController do
   end
 
   describe "#download_summary_pdf" do
-    let(:provider_openstack) { FactoryGirl.create(:provider_openstack, :name => "Undercloud") }
-    let(:ems_openstack) { FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => provider_openstack) }
+    let(:provider_openstack) { FactoryBot.create(:provider_openstack, :name => "Undercloud") }
+    let(:ems_openstack) { FactoryBot.create(:ems_openstack, :name => "overcloud", :provider => provider_openstack) }
     let(:pdf_options) { controller.instance_variable_get(:@options) }
 
     context "download pdf file" do
-      before :each do
+      before do
         stub_user(:features => :all)
-        allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary').and_return("")
+        allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary.css').and_return("")
         get :download_summary_pdf, :params => {:id => ems_openstack.id}
       end
 
@@ -185,17 +97,12 @@ describe EmsCloudController do
 end
 
 describe EmsContainerController do
-  let(:myhawkularroute) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
-
-  def expect_get_route(&block)
-    mock_client = double('kubeclient')
-    allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-    expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra', &block)
-  end
+  let(:myhawkularroute) { double(:spec => double(:host => "myhawkularroute.com")) }
 
   context "::EmsCommon" do
     context "adding new provider without hawkular endpoint" do
       def test_creating(emstype)
+        raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
         controller.instance_variable_set(:@_params,
                                          :name             => 'NimiCule',
@@ -210,47 +117,35 @@ describe EmsContainerController do
 
       it "doesn't probe routes for kubernetes" do
         test_creating('kubernetes')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular).to eq(nil)
       end
 
-      it "fetches hawkular-metrics route" do
-        expect_get_route { myhawkularroute }
+      it "doesn't probe openshift for kubernetes" do
         test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
-      end
-
-      it "tolerates missing hawkular-metrics route" do
-        expect_get_route { nil }
-        test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
-      end
-
-      it "tolerates errors fetching hawkular-metrics route" do
-        expect_get_route { raise KubeException.new(418, "I'm a Teapot", double('response')) }
-        test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular).to eq(nil)
       end
     end
 
-    context "#update" do
+    describe "#update" do
       context "updates provider with new token" do
-        before :each do
+        before do
           stub_user(:features => :all)
           session[:edit] = assigns(:edit)
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params, :name                       => 'EMS 2',
-                                                      :default_userid             => '_',
-                                                      :default_hostname           => '10.10.10.11',
-                                                      :default_api_port           => '5000',
-                                                      :default_security_protocol  => 'ssl-with-validation-custom-ca',
-                                                      :default_tls_ca_certs       => '-----BEGIN DUMMY...',
-                                                      :default_password           => 'valid-token',
-                                                      :hawkular_hostname          => '10.10.10.10',
-                                                      :hawkular_api_port          => '8443',
-                                                      :hawkular_security_protocol => 'ssl-with-validation',
-                                                      :emstype                    => @type)
+          controller.instance_variable_set(:@_params, :name                      => 'EMS 2',
+                                                      :default_userid            => '_',
+                                                      :default_hostname          => '10.10.10.11',
+                                                      :default_api_port          => '5000',
+                                                      :default_security_protocol => 'ssl-with-validation-custom-ca',
+                                                      :default_tls_ca_certs      => '-----BEGIN DUMMY...',
+                                                      :default_password          => 'valid-token',
+                                                      :metrics_selection         => 'hawkular',
+                                                      :metrics_hostname          => '10.10.10.10',
+                                                      :metrics_api_port          => '8443',
+                                                      :metrics_security_protocol => 'ssl-with-validation',
+                                                      :emstype                   => @type)
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           cc = @ems.connection_configurations
@@ -283,9 +178,8 @@ describe EmsContainerController do
           @ems  = ManageIQ::Providers::Kubernetes::ContainerManager.new
           test_setting_many_fields
 
-          # kubernetes should not probe hawkular-metrics route
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
         end
 
         it "when editing openshift EMS" do
@@ -293,53 +187,112 @@ describe EmsContainerController do
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
           test_setting_many_fields
 
-          expect_get_route { myhawkularroute }
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
+        end
+
+        it 'updates provider options' do
+          @type = 'openshift'
+          @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
+          controller.instance_variable_set(:@_params,
+                                           :provider_options_image_inspector_options_http_proxy => "example.com")
+          controller.send(:set_ems_record_vars, @ems)
+          expect(@ems.options[:image_inspector_options][:http_proxy]).to eq("example.com")
         end
       end
     end
 
-    context "#button" do
-      before(:each) do
+    describe "#button" do
+      before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
       end
 
       it "when VM Migrate is pressed for unsupported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_microsoft)
+        vm = FactoryBot.create(:vm_microsoft)
         post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include('does not apply')
       end
 
-      let(:ems)     { FactoryGirl.create(:ext_management_system) }
-      let(:storage) { FactoryGirl.create(:storage) }
+      let(:ems)     { FactoryBot.create(:ext_management_system) }
+      let(:storage) { FactoryBot.create(:storage) }
 
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
+        vm = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
         post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
 
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware)
+        vm = FactoryBot.create(:vm_vmware)
         post :button, :params => { :pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1" }
         expect(controller.send(:flash_errors?)).not_to be_truthy
+      end
+
+      context 'displaying nested lists from summary page of container provider' do
+        let(:provider) { ManageIQ::Providers::ContainerManager.new }
+
+        before do
+          allow(controller).to receive(:javascript_redirect)
+          allow(controller).to receive(:performed?).and_return(true)
+          controller.instance_variable_set(:@display, display)
+          controller.instance_variable_set(:@_params, :pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id)
+          controller.instance_variable_set(:@breadcrumbs, [])
+        end
+
+        {
+          'container_image'      => 'Container Images',
+          'container_replicator' => 'Container Replicators',
+          'container_node'       => 'Container Nodes',
+          'container_group'      => 'Container Pods'
+        }.each do |display_s, items|
+          context "displaying #{items}" do
+            let(:item) { FactoryBot.create(display_s.to_sym) }
+            let(:display) { display_s.pluralize }
+
+            context "tagging selected #{items}" do
+              let(:press) { "#{display_s}_tag" }
+
+              it 'calls tag method with proper model class' do
+                expect(controller).to receive(:tag).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+
+            context "managing policies of selected #{items}" do
+              let(:press) { "#{display_s}_protect" }
+
+              it 'calls assign_policies method with proper model class' do
+                expect(controller).to receive(:assign_policies).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+
+            context "checking compliance of selected #{items}" do
+              let(:press) { "#{display_s}_check_compliance" }
+
+              it 'calls check_compliance_nested method with proper model class' do
+                expect(controller).to receive(:check_compliance_nested).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+            end
+          end
+        end
       end
     end
 
     describe "#download_summary_pdf" do
-      let(:ems_kubernetes_container) { FactoryGirl.create(:ems_kubernetes, :name => "test") }
+      let(:ems_kubernetes_container) { FactoryBot.create(:ems_kubernetes, :name => "test") }
       let(:pdf_options) { controller.instance_variable_get(:@options) }
 
       context "download pdf file" do
-        before :each do
+        before do
           stub_user(:features => :all)
-          allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary').and_return("")
+          allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary.css').and_return("")
           get :download_summary_pdf, :params => {:id => ems_kubernetes_container.id}
         end
 
@@ -363,22 +316,34 @@ describe EmsInfraController do
       link = controller.send(:show_link, ems, :display => "vms")
       expect(link).to eq("/ems_infra/#{ems.id}?display=vms")
     end
+  end
+  include_examples '#download_summary_pdf', :ems_openstack_infra
+end
 
-    context "#restore_password" do
-      it "populates the password from the ems record if params[:restore_password] exists" do
-        infra_ems = EmsInfra.new
-        allow(infra_ems).to receive(:authentication_password).and_return("default_password")
-        edit = {:ems_id => infra_ems.id, :new => {}}
-        controller.instance_variable_set(:@edit, edit)
-        controller.instance_variable_set(:@ems, infra_ems)
-        controller.instance_variable_set(:@_params,
-                                         :restore_password => true,
-                                         :default_password => "[FILTERED]",
-                                         :default_verify   => "[FILTERED]")
-        controller.send(:restore_password)
-        expect(assigns(:edit)[:new][:default_password]).to eq(infra_ems.authentication_password)
+describe EmsNetworkController do
+  context "::EmsCommon" do
+    context "#button" do
+      before do
+        stub_user(:features => :all)
+        EvmSpecHelper.create_guid_miq_server_zone
+      end
+
+      it "when edit is pressed for unsupported network manager type" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        google_net = FactoryBot.create(:ems_google_network)
+        get :edit, :params => { :id => google_net.id}
+        expect(response.status).to eq(302)
+        expect(session['flash_msgs']).not_to be_empty
+        expect(session['flash_msgs'].first[:message]).to include('is not supported')
+      end
+
+      it "when edit is pressed for supported network manager type" do
+        allow(controller).to receive(:role_allows?).and_return(true)
+        nuage_net = FactoryBot.create(:ems_nuage_network)
+        get :edit, :params => { :id => nuage_net.id}
+        expect(response.status).to eq(200)
+        expect(session['flash_msgs']).to be_nil
       end
     end
   end
-  include_examples '#download_summary_pdf', :ems_openstack_infra
 end

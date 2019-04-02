@@ -1,15 +1,15 @@
 describe CloudVolumeController do
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @volume = FactoryGirl.create(:cloud_volume, :name => "cloud-volume-01")
+      @volume = FactoryBot.create(:cloud_volume, :name => "cloud-volume-01")
       allow(@volume).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryGirl.create(:classification_tag,
+      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)
-      @tag2 = FactoryGirl.create(:classification_tag,
+      @tag2 = FactoryBot.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@volume).and_return([@tag1, @tag2])
@@ -42,7 +42,7 @@ describe CloudVolumeController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_volume/show/#{@volume.id}"}, 'placeholder']
-      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @volume.id}
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @volume.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end
@@ -52,11 +52,11 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @backup = FactoryGirl.create(:cloud_volume_backup)
+      @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
     context "#create_backup" do
@@ -90,15 +90,59 @@ describe CloudVolumeController do
     end
   end
 
+  describe "#new" do
+    let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_volume_new)) }
+    let(:role)    { FactoryBot.create(:miq_user_role, :miq_product_features => feature) }
+    let(:group)   { FactoryBot.create(:miq_group, :miq_user_role => role) }
+    let(:user)    { FactoryBot.create(:user, :miq_groups => [group]) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new))
+
+      login_as user
+    end
+
+    it "raises an exception when the user does not have the privileges" do
+      expect do
+        bypass_rescue
+        post :new, :params => {:button => "new", :format => :js}
+      end.to raise_error(MiqException::RbacPrivilegeException)
+    end
+  end
+
+  describe '#new' do
+    render_views
+
+    let(:features) { MiqProductFeature.find_all_by_identifier(%w(cloud_volume_new cloud_tenant_show_list)) }
+    let(:role)    { FactoryBot.create(:miq_user_role, :miq_product_features => features) }
+    let(:group)   { FactoryBot.create(:miq_group, :miq_user_role => role) }
+    let(:user)    { FactoryBot.create(:user, :miq_groups => [group]) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new cloud_tenant_show_list))
+
+      login_as user
+    end
+
+    it "renders the correct template when the user has the privileges" do
+      post :new, :params => {:button => "new", :format => :js}
+      expect(assigns(:flash_array)).to be_nil
+      expect(response).to render_template('cloud_volume/_common_new_edit')
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe "#restore_backup" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @backup = FactoryGirl.create(:cloud_volume_backup)
+      @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
     context "#restore_backup" do
@@ -136,11 +180,11 @@ describe CloudVolumeController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryGirl.create(:ems_openstack)
-      @volume = FactoryGirl.create(:cloud_volume_openstack,
+      @ems = FactoryBot.create(:ems_openstack)
+      @volume = FactoryBot.create(:cloud_volume_openstack,
                                    :name                  => "cloud-volume-01",
                                    :ext_management_system => @ems)
-      @snapshot = FactoryGirl.create(:cloud_volume_snapshot)
+      @snapshot = FactoryBot.create(:cloud_volume_snapshot)
     end
 
     context "#create_snapshot" do
@@ -211,8 +255,8 @@ describe CloudVolumeController do
 
     context "in OpenStack cloud" do
       before do
-        @ems = FactoryGirl.create(:ems_openstack)
-        @tenant = FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => @ems)
+        @ems = FactoryBot.create(:ems_openstack)
+        @tenant = FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => @ems)
 
         @form_params = { :name => "volume", :size => 1, :cloud_tenant_id => @tenant.id,
                          :emstype => "ManageIQ::Providers::StorageManager::CinderManager" }
@@ -224,9 +268,9 @@ describe CloudVolumeController do
 
     context "in Amazon EBS" do
       before do
-        @cloud_manager = FactoryGirl.create(:ems_amazon)
-        @ems = FactoryGirl.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
-        @availability_zone = FactoryGirl.create(:availability_zone,
+        @cloud_manager = FactoryBot.create(:ems_amazon)
+        @ems = FactoryBot.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
+        @availability_zone = FactoryBot.create(:availability_zone,
                                                 :ems_ref               => "us-east-1e",
                                                 :ext_management_system => @cloud_manager)
 
@@ -250,7 +294,7 @@ describe CloudVolumeController do
       context "for volume type 'gp2'" do
         before do
           # 'gp2' volume type requires only the type
-          @form_params[:aws_volume_type] = "gp2"
+          @form_params[:volume_type] = "gp2"
           @aws_options[:volume_type] = "gp2"
           @aws_options[:encrypted] = nil
         end
@@ -261,7 +305,7 @@ describe CloudVolumeController do
       context "for volume type 'io1'" do
         before do
           # 'io1' volume type requires the IOPS as well.
-          @form_params[:aws_volume_type] = "io1"
+          @form_params[:volume_type] = "io1"
           @form_params[:aws_iops] = "100"
 
           @aws_options[:volume_type] = "io1"
@@ -275,7 +319,7 @@ describe CloudVolumeController do
       context "for encrypted volume" do
         before do
           # 'gp2' volume type requires only the type
-          @form_params[:aws_volume_type] = "gp2"
+          @form_params[:volume_type] = "gp2"
           @form_params[:aws_encryption] = "true"
           @aws_options[:volume_type] = "gp2"
           @aws_options[:encrypted] = "true"

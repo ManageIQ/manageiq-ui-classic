@@ -4,11 +4,11 @@ module VmShowMixin
   def explorer
     @explorer = true
     @lastaction = "explorer"
-    @timeline = @timeline_filter = true    # need to set these to load timelines on vm show screen
+    @timeline = @timeline_filter = true # need to set these to load timelines on vm show screen
     if params[:menu_click]              # Came in from a chart context menu click
       @_params[:id] = parse_nodetype_and_id(x_node_right_cell).last
       @explorer = true
-      perf_menu_click                    # Handle the menu action
+      perf_menu_click                   # Handle the menu action
       return
     end
     # if AJAX request, replace right cell, and return
@@ -26,11 +26,9 @@ module VmShowMixin
     end
 
     # Build the Explorer screen from scratch
-    allowed_features = ApplicationController::Feature.allowed_features(features)
-    @trees = allowed_features.collect { |feature| feature.build_tree(@sb) }
-    @accords = allowed_features.map(&:accord_hash)
+    allowed_features = build_accordions_and_trees_only
 
-    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
+    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms] # Grab any explorer parm overrides
     session.delete(:exp_parms)
 
     if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
@@ -52,41 +50,29 @@ module VmShowMixin
     _partial, action, @right_cell_text = set_right_cell_vars
     locals = {:submit_button => true,
               :no_reset      => true,
-              :action_url    => action
-             }
+              :action_url    => action}
     @x_edit_buttons_locals = locals
   end
 
   # VM or Template show selected, redirect to proper controller, to get links on tasks screen working
   def vm_show
-    record = VmOrTemplate.find_by_id(from_cid(params[:id]))
-    redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
-  end
-
-  # find the vm that was chosen
-  def identify_vm
-    @record = identify_record(params[:id])
+    record = VmOrTemplate.find(params[:id])
+    redirect_to(:action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id)
   end
 
   private
 
-  def set_active_elements(feature)
+  def set_active_elements(feature, _x_node_to_set = nil)
     if feature
-      self.x_active_tree ||= feature.tree_list_name
+      self.x_active_tree ||= feature.tree_name
       self.x_active_accord ||= feature.accord_name
     end
     get_node_info(x_node_right_cell)
   end
 
-  def set_active_elements_authorized_user(tree_name, accord_name, add_nodes, klass, id)
+  def set_active_elements_authorized_user(tree_name, accord_name)
     self.x_active_tree   = tree_name
     self.x_active_accord = accord_name
-    if add_nodes
-      nodes = open_parent_nodes(klass.find_by_id(id))
-      # Create the hash so the view knows to highlight the selected node
-      @add_nodes = {}
-      @add_nodes[tree_name.to_sym] = nodes if nodes # Set nodes that need to be added, if any
-    end
   end
 
   def show_record(id = nil)
@@ -98,19 +84,17 @@ module VmShowMixin
 
     if @record.nil?
       add_flash(_("Error: Record no longer exists in the database"), :error)
-      if request.xml_http_request? && params[:id]  # Is this an Ajax request clicking on a node that no longer exists?
-        @delete_node = params[:id]                  # Set node to be removed from the tree
+      if request.xml_http_request? && params[:id] # Is this an Ajax request clicking on a node that no longer exists?
+        @delete_node = params[:id]                # Set node to be removed from the tree
       end
       return
     end
 
     case @display
-    when "download_pdf", "main", "summary_only"
-      @button_group = @record.kind_of?(MiqTemplate) ? "miq_template" : "vm"
-
+    when "download_pdf", "main"
       get_tagdata(@record)
       @showtype = "main"
-      set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
+      set_summary_pdf_data if ["download_pdf"].include?(@display)
 
     when "performance"
       @showtype = "performance"
@@ -121,7 +105,6 @@ module VmShowMixin
       tl_build_timeline                    # Create the timeline report
     end
 
-    set_config(@record)
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
   end
@@ -138,7 +121,7 @@ module VmShowMixin
     @filters        = get_filters
     @catinfo        = session[:vm_catinfo]
     @display        = session[:vm_display]
-    @polArr         = session[:polArr] || ""          # current tags in effect
+    @polArr         = session[:polArr] || "" # current tags in effect
     @policy_options = session[:policy_options] || ""
   end
 

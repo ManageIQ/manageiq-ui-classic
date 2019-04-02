@@ -1,8 +1,8 @@
 describe MiqPolicyController do
   context "::MiqActions" do
     context "#action_edit" do
-      before :each do
-        @action = FactoryGirl.create(:miq_action, :name => "Test_Action")
+      before do
+        @action = FactoryBot.create(:miq_action, :name => "Test_Action")
         controller.instance_variable_set(:@sb, {})
         allow(controller).to receive(:replace_right_cell)
         allow(controller).to receive(:action_build_cat_tree)
@@ -110,8 +110,8 @@ describe MiqPolicyController do
     end
 
     describe "#action_get_info" do
-      let(:cat1) { FactoryGirl.create(:classification, :description => res.first) }
-      let(:cat2) { FactoryGirl.create(:classification, :description => res.second) }
+      let(:cat1) { FactoryBot.create(:classification, :description => res.first) }
+      let(:cat2) { FactoryBot.create(:classification, :description => res.second) }
 
       before do
         cat1; cat2
@@ -120,7 +120,7 @@ describe MiqPolicyController do
 
       let(:res) { %w(test1 test2) }
       let(:action) do
-        FactoryGirl.create(:miq_action,
+        FactoryBot.create(:miq_action,
                            :action_type => 'inherit_parent_tags',
                            :options     => {:cats => [cat1.name, cat2.name]})
       end

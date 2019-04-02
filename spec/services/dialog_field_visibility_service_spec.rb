@@ -1,6 +1,63 @@
 describe DialogFieldVisibilityService do
   let(:subject) { described_class.new }
 
+  context "accessors" do
+    it "defines an auto_placement_visibility_service accessor" do
+      expect(subject).to respond_to(:auto_placement_visibility_service)
+      expect(subject).to respond_to(:auto_placement_visibility_service=)
+    end
+
+    it "defines an number_of_vms_visibility_service accessor" do
+      expect(subject).to respond_to(:number_of_vms_visibility_service)
+      expect(subject).to respond_to(:number_of_vms_visibility_service=)
+    end
+
+    it "defines an service_template_fields_visibility_service accessor" do
+      expect(subject).to respond_to(:service_template_fields_visibility_service)
+      expect(subject).to respond_to(:service_template_fields_visibility_service=)
+    end
+
+    it "defines an network_visibility_service accessor" do
+      expect(subject).to respond_to(:network_visibility_service)
+      expect(subject).to respond_to(:network_visibility_service=)
+    end
+
+    it "defines an sysprep_auto_logon_visibility_service accessor" do
+      expect(subject).to respond_to(:sysprep_auto_logon_visibility_service)
+      expect(subject).to respond_to(:sysprep_auto_logon_visibility_service=)
+    end
+
+    it "defines an retirement_visibility_service accessor" do
+      expect(subject).to respond_to(:retirement_visibility_service)
+      expect(subject).to respond_to(:retirement_visibility_service=)
+    end
+
+    it "defines an customize_fields_visibility_service accessor" do
+      expect(subject).to respond_to(:customize_fields_visibility_service)
+      expect(subject).to respond_to(:customize_fields_visibility_service=)
+    end
+
+    it "defines an sysprep_custom_spec_visibility_service accessor" do
+      expect(subject).to respond_to(:sysprep_custom_spec_visibility_service)
+      expect(subject).to respond_to(:sysprep_custom_spec_visibility_service=)
+    end
+
+    it "defines an request_type_visibility_service accessor" do
+      expect(subject).to respond_to(:request_type_visibility_service)
+      expect(subject).to respond_to(:request_type_visibility_service=)
+    end
+
+    it "defines an pxe_iso_visibility_service accessor" do
+      expect(subject).to respond_to(:pxe_iso_visibility_service)
+      expect(subject).to respond_to(:pxe_iso_visibility_service=)
+    end
+
+    it "defines an linked_clone_visibility_service accessor" do
+      expect(subject).to respond_to(:linked_clone_visibility_service)
+      expect(subject).to respond_to(:linked_clone_visibility_service=)
+    end
+  end
+
   describe "#determine_visibility" do
     let(:subject) do
       described_class.new(
@@ -114,8 +171,8 @@ describe DialogFieldVisibilityService do
         .to receive(:determine_visibility).with(
           platform, supports_customization_template, customize_fields_list
         ).and_return(
-          :hide => [:customize_fields_hide, :number_hide], # Forces uniq
-          :edit => [:customize_fields_edit, :number_edit, :retirement_hide] # Forces uniq and removal of intersection
+          :hide => %i(customize_fields_hide number_hide), # Forces uniq
+          :edit => %i(customize_fields_edit number_edit retirement_hide) # Forces uniq and removal of intersection
         )
 
       allow(sysprep_custom_spec_visibility_service)
@@ -143,30 +200,30 @@ describe DialogFieldVisibilityService do
 
     it "adds the values to the field names to hide, edit, and show without duplicates or intersections" do
       result = subject.determine_visibility(options)
-      expect(result[:hide]).to match_array([
-        :auto_hide,
-        :customize_fields_hide,
-        :linked_clone_hide,
-        :network_hide,
-        :number_hide,
-        :pxe_iso_hide,
-        :request_type_hide,
-        :service_template_request_hide,
-        :sysprep_auto_logon_hide,
-        :sysprep_custom_spec_hide
-      ])
-      expect(result[:edit]).to match_array([
-        :auto_edit,
-        :customize_fields_edit,
-        :linked_clone_edit,
-        :network_edit,
-        :number_edit,
-        :pxe_iso_edit,
-        :retirement_hide,
-        :retirement_edit,
-        :sysprep_auto_logon_edit,
-        :sysprep_custom_spec_edit
-      ])
+      expect(result[:hide]).to match_array(%i(
+                                             auto_hide
+                                             customize_fields_hide
+                                             linked_clone_hide
+                                             network_hide
+                                             number_hide
+                                             pxe_iso_hide
+                                             request_type_hide
+                                             service_template_request_hide
+                                             sysprep_auto_logon_hide
+                                             sysprep_custom_spec_hide
+                                           ))
+      expect(result[:edit]).to match_array(%i(
+                                             auto_edit
+                                             customize_fields_edit
+                                             linked_clone_edit
+                                             network_edit
+                                             number_edit
+                                             pxe_iso_edit
+                                             retirement_hide
+                                             retirement_edit
+                                             sysprep_auto_logon_edit
+                                             sysprep_custom_spec_edit
+                                           ))
       expect(result[:show]).to match_array([:linked_clone_show])
     end
   end

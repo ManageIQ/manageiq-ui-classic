@@ -17,61 +17,61 @@ describe Menu::DefaultMenu do
 
   context "infrastructure_menu_section" do
     before do
-      @ems_openstack = FactoryGirl.create(:ems_openstack_infra)
-      @ems_vmware = FactoryGirl.create(:ems_vmware)
+      @ems_openstack = FactoryBot.create(:ems_openstack_infra)
+      @ems_vmware = FactoryBot.create(:ems_vmware)
     end
 
     it "shows correct title for Hosts submenu item when openstack only records exist" do
-      FactoryGirl.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
+      FactoryBot.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters", "Nodes", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
 
     it "shows correct title for Hosts submenu item when non-openstack only records exist" do
-      FactoryGirl.create(:host_vmware, :ems_id => @ems_vmware.id)
+      FactoryBot.create(:host_vmware, :ems_id => @ems_vmware.id)
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
 
     it "shows correct title for Hosts submenu item when both openstack & non-openstack only records exist" do
-      FactoryGirl.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
-      FactoryGirl.create(:host_vmware, :ems_id => @ems_vmware.id)
+      FactoryBot.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
+      FactoryBot.create(:host_vmware, :ems_id => @ems_vmware.id)
 
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters", "Hosts / Nodes", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
 
     it "shows correct title for Clusters submenu item when openstack only records exist" do
-      FactoryGirl.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
+      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
 
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Deployment Roles", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
 
     it "shows correct title for Clusters submenu item when non-openstack only records exist" do
-      FactoryGirl.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
+      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
 
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
 
     it "shows correct title for Clusters submenu item when both openstack & non-openstack only records exist" do
-      FactoryGirl.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
-      FactoryGirl.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
+      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
+      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
 
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters / Deployment Roles", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Networking", "Requests", "Topology"]
+                "Datastores", "PXE", "Networking", "Topology"]
       expect(menu).to eq(result)
     end
   end
@@ -105,7 +105,7 @@ describe Menu::DefaultMenu do
 
     it "shows correct content for Block Storage submenu" do
       menu = Menu::DefaultMenu.block_storage_menu_section.items.map(&:name)
-      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups"]
+      result = ["Managers", "Volumes", "Volume Snapshots", "Volume Backups", "Volume Types"]
       expect(menu).to eq(result)
     end
   end
@@ -149,6 +149,14 @@ describe Menu::DefaultMenu do
           "Log",
           "Requests"
         )
+
+        expect(menu.automate_menu_section.items.map(&:rbac_feature)). to match_array([{:feature => "miq_ae_domain_view"},
+                                                                             {:feature => "miq_ae_class_simulation"},
+                                                                             {:feature => "miq_ae_customization_explorer", :any => true},
+                                                                             {:feature => "generic_object_definition"},
+                                                                             {:feature => "miq_ae_class_import_export"},
+                                                                             {:feature => "miq_ae_class_log"},
+                                                                             {:feature => "ae_miq_request_show_list"}])
       end
     end
   end

@@ -10,7 +10,7 @@ module AutomationManagerHelper
 
   def textual_hostname
     {:label => _("Hostname"),
-     :icon  => "product product-configured_system",
+     :icon  => "ff ff-configured-system",
      :value => @record.hostname}
   end
 
@@ -28,7 +28,7 @@ module AutomationManagerHelper
 
   def textual_provider_name
     {:label    => _("Provider"),
-     :image    => "svg/vendor-#{@record.configuration_manager.image_name}.svg",
+     :image    => @record.configuration_manager.decorate.fileicon,
      :value    => @record.configuration_manager.try(:name),
      :explorer => true}
   end
@@ -94,7 +94,7 @@ module AutomationManagerHelper
 
   def textual_survey_group(items)
     return unless items
-    h = {:label     => _("Questions"),
+    h = {:title     => _("Surveys"),
          :headers   => [_('Question Name'), _('Question Description'), _('Variable'),
                         _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')],
          :col_order => %w(question_name question_description variable type min max default required choices)}
@@ -117,7 +117,7 @@ module AutomationManagerHelper
 
   def textual_variables(vars)
     return unless vars
-    h = {:label     => _("Variables"),
+    h = {:title     => _("Variables"),
          :headers   => [_('Name'), _('Value')],
          :col_order => %w(name value)}
     h[:value] = vars.collect do |item|
@@ -127,6 +127,10 @@ module AutomationManagerHelper
       }
     end
     h
+  end
+
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 end
 #

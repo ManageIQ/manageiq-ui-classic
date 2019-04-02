@@ -50,7 +50,7 @@
           .input-group
             = text_field_tag("email",
                              @edit[:email],
-                             :maxlength         => MAX_DESC_LEN,
+                             :maxlength         => ViewHelper::MAX_DESC_LEN,
                              :style             => "float: left; margin-right: 2px",
                              :class             => "form-control",
                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)

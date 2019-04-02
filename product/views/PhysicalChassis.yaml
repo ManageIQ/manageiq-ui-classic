@@ -1,0 +1,65 @@
+#Report title
+title: Physical Chassis
+
+#Menu name
+name: Physical Chassis
+
+
+db: PhysicalChassis
+
+
+# Columns to fetch from main table
+cols:
+- name
+- type
+- health_state
+- asset_detail.location_led_state
+- asset_detail.product_name
+- asset_detail.manufacturer
+
+
+include:
+
+
+include_for_find:
+  :ext_management_system: {}
+  :tags: {}
+
+
+col_order:
+- name
+- type
+- health_state
+- asset_detail.location_led_state
+- asset_detail.product_name
+- asset_detail.manufacturer
+
+col_formats:
+-
+- :model_name
+
+headers:
+- Name
+- Type
+- Health State
+- LED State
+- Product Name
+- Manufacturer
+
+
+conditions:
+
+
+order: Ascending
+
+
+sortby:
+- name
+
+group: n
+
+
+graph:
+
+
+dims:

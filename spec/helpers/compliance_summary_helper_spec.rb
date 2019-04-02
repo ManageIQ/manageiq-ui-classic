@@ -1,10 +1,12 @@
 describe ComplianceSummaryHelper do
+  include ApplicationHelper
+
   before do
-    server  = FactoryGirl.build(:miq_server, :id => 0)
-    @record = FactoryGirl.build(:vm_vmware, :miq_server => server)
-    @compliance1 = FactoryGirl.build(:compliance)
-    @compliance2 = FactoryGirl.build(:compliance)
-    allow_any_instance_of(described_class).to receive(:role_allows?).and_return(true)
+    server  = FactoryBot.build(:miq_server, :id => 0)
+    @record = FactoryBot.build(:vm_vmware, :miq_server => server)
+    @compliance1 = FactoryBot.build(:compliance)
+    @compliance2 = FactoryBot.build(:compliance)
+    allow(self).to receive(:role_allows?).and_return(true)
   end
 
   context "when @explorer is set" do
@@ -16,23 +18,25 @@ describe ComplianceSummaryHelper do
 
     it "#textual_compliance_status" do
       @record.compliances = [@compliance1]
+      @record.save
       date = @compliance1.timestamp
       expect(helper.textual_compliance_status).to eq(:label    => "Status",
                                                      :icon     => "pficon pficon-ok",
                                                      :value    => "Compliant as of #{time_ago_in_words(date.in_time_zone(Time.zone)).titleize} Ago",
                                                      :title    => "Show Details of Compliance Check on #{format_timezone(date)}",
                                                      :explorer => true,
-                                                     :link     => "/vm_infra/show?count=1&display=compliance_history")
+                                                     :link     => "/vm_infra/show/#{@record.id}?count=1&display=compliance_history")
     end
 
     it "#textual_compliance_history" do
       @record.compliances = [@compliance1, @compliance2]
+      @record.save
       expect(helper.textual_compliance_history).to eq(:label    => "History",
                                                       :icon     => "pficon pficon-history",
                                                       :value    => "Available",
                                                       :explorer => true,
                                                       :title    => "Show Compliance History of this VM or Template (Last 10 Checks)",
-                                                      :link     => "/vm_infra/show?display=compliance_history")
+                                                      :link     => "/vm_infra/show/#{@record.id}?display=compliance_history")
     end
   end
 
@@ -44,21 +48,23 @@ describe ComplianceSummaryHelper do
 
     it "#textual_compliance_status" do
       @record.compliances = [@compliance1]
+      @record.save
       date = @compliance1.timestamp
       expect(helper.textual_compliance_status).to eq(:label => "Status",
                                                      :icon  => "pficon pficon-ok",
                                                      :value => "Compliant as of #{time_ago_in_words(date.in_time_zone(Time.zone)).titleize} Ago",
                                                      :title => "Show Details of Compliance Check on #{format_timezone(date)}",
-                                                     :link  => "/host/show?count=1&display=compliance_history")
+                                                     :link  => "/host/show/#{@record.id}?count=1&display=compliance_history")
     end
 
     it "#textual_compliance_history" do
       @record.compliances = [@compliance1, @compliance2]
+      @record.save
       expect(helper.textual_compliance_history).to eq(:label => "History",
                                                       :icon  => "pficon pficon-history",
                                                       :value => "Available",
                                                       :title => "Show Compliance History of this Host / Node (Last 10 Checks)",
-                                                      :link  => "/host/show?display=compliance_history")
+                                                      :link  => "/host/show/#{@record.id}?display=compliance_history")
     end
   end
 end

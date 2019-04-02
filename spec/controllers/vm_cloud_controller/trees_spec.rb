@@ -1,7 +1,8 @@
 describe VmCloudController do
   render_views
-  before :each do
+  before do
     stub_user(:features => :all)
+    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
@@ -13,15 +14,15 @@ describe VmCloudController do
       %w(Images images_filter_tree)
     ].each do |elements, tree|
       it "renders list of #{elements} for #{tree} root node" do
-        FactoryGirl.create(:vm_openstack)
-        FactoryGirl.create(:template_openstack)
+        FactoryBot.create(:vm_openstack)
+        FactoryBot.create(:template_openstack)
 
         session[:settings] = {}
         seed_session_trees('vm_cloud', tree.to_sym)
 
         post :tree_select, :params => { :id => 'root', :format => :js }
 
-        expect(response).to render_template('layouts/gtl/_list')
+        expect(response).to render_template('layouts/angular/_gtl')
         expect(response.status).to eq(200)
       end
     end
@@ -33,15 +34,14 @@ describe VmCloudController do
       %w(vm_amazon Amazon)
     ].each do |instance, name|
       it "renders Instance details for #{name} node" do
-        instance = FactoryGirl.create(instance.to_sym, :with_provider)
+        instance = FactoryBot.create(instance.to_sym, :with_provider)
 
         session[:settings] = {}
         seed_session_trees('vm_cloud', 'instances_tree')
 
-        post :tree_select, :params => { :id => "v-#{instance.compressed_id}", :format => :js }
+        post :tree_select, :params => { :id => "v-#{instance.id}", :format => :js }
 
         expect(response).to render_template('layouts/_textual_groups_generic')
-        expect(response).to render_template('shared/summary/_textual_tags')
         expect(response.status).to eq(200)
       end
     end

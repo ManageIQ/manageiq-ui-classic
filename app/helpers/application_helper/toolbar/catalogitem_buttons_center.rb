@@ -11,8 +11,9 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Button Group'),
           t,
-          :klass => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms => "main_div"),
+          :klass        => ApplicationHelper::Button::CatalogItemButton,
+          :url_parms    => "main_div",
+          :send_checked => true),
         button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',
@@ -24,9 +25,10 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Button Group'),
           t,
-          :klass => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: The selected Button Group will be permanently removed!")),
+          :klass        => ApplicationHelper::Button::CatalogItemButton,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: The selected Button Group will be permanently removed!")),
       ]
     ),
   ])

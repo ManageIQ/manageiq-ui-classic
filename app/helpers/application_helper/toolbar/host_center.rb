@@ -58,8 +58,8 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
         button(
           :host_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this item'),
-          N_('Remove item'),
+          N_('Remove this item from Inventory'),
+          N_('Remove item from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This item and ALL of its components will be permanently removed!?")),
       ]
@@ -77,7 +77,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-edit fa-lg',
           N_('Manage Policies for this item'),
           N_('Manage Policies'),
-          :klass => ApplicationHelper::Button::HostProtect),
+          :klass => ApplicationHelper::Button::Basic),
         button(
           :host_tag,
           'pficon pficon-edit fa-lg',
@@ -100,32 +100,16 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
       ]
     ),
   ])
-  button_group('host_lifecycle', [
-    select(
-      :host_lifecycle_choice,
-      'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
-      :items => [
-        button(
-          :host_miq_request_new,
-          'pficon pficon-add-circle-o fa-lg',
-          t = N_('Provision this item'),
-          t,
-          :klass => ApplicationHelper::Button::HostMiqRequestNew),
-      ]
-    ),
-  ])
   button_group('host_monitoring', [
     select(
       :host_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :host_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this item'),
           N_('Utilization'),
           :url       => "/show",
@@ -133,7 +117,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           :klass   => ApplicationHelper::Button::HostPerformance),
         button(
           :host_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this item'),
           N_('Timelines'),
           :url       => "/show",
@@ -154,7 +138,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Put this item into Maintenance Mode'),
           N_('Enter Maintenance Mode'),
-          :image   => "enter_maint_mode",
+          :icon    => "pficon pficon-maintenance",
           :confirm => N_("Put this item into Maintenance Mode?"),
           :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :enter_maint_mode}),
@@ -163,7 +147,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Take this item out of Maintenance Mode'),
           N_('Exit Maintenance Mode'),
-          :image   => "exit_maint_mode",
+          :icon    => "pficon pficon-maintenance",
           :confirm => N_("Take this item out of Maintenance Mode?"),
           :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :exit_maint_mode}),
@@ -172,7 +156,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Shutdown this item to Standby Mode'),
           N_('Enter Standby Mode'),
-          :image   => "standby",
+          :icon    => "pficon pficon-asleep fa-lg",
           :confirm => N_("Shutdown this item to Standby Mode?"),
           :klass   => ApplicationHelper::Button::HostFeatureButton,
           :options => {:feature => :standby}),
@@ -181,7 +165,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Shutdown this item'),
           N_('Shutdown'),
-          :image   => "guest_shutdown",
+          :icon    => "fa fa-stop fa-lg",
           :confirm => N_("Shutdown this item?"),
           :klass   => ApplicationHelper::Button::HostFeatureButtonWithDisable,
           :options => {:feature => :shutdown}),
@@ -190,7 +174,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Restart this item'),
           N_('Restart'),
-          :image   => "guest_restart",
+          :icon    => "pficon pficon-restart fa-lg",
           :confirm => N_("Restart this item?"),
           :klass   => ApplicationHelper::Button::HostFeatureButton,
           :options => {:feature => :reboot}),
@@ -200,7 +184,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Power On this item'),
           N_('Power On'),
-          :image   => "power_on",
+          :icon    => "pficon pficon-on fa-lg",
           :confirm => N_("Power On this item?"),
           :klass   => ApplicationHelper::Button::HostFeatureButton,
           :options => {:feature => :start}),
@@ -209,7 +193,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Power Off this item'),
           N_('Power Off'),
-          :image   => "power_off",
+          :icon    => "pficon pficon-off fa-lg",
           :confirm => N_("Power Off this item?"),
           :klass   => ApplicationHelper::Button::HostFeatureButton,
           :options => {:feature => :stop}),
@@ -218,7 +202,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           nil,
           N_('Reset this item'),
           N_('Reset'),
-          :image   => "power_reset",
+          :icon    => "fa fa-refresh fa-lg",
           :confirm => N_("Reset this item?"),
           :klass   => ApplicationHelper::Button::HostFeatureButtonWithDisable,
           :options => {:feature => :reset}),

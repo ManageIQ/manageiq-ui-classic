@@ -1,24 +1,18 @@
 class TreeBuilderPolicyProfile < TreeBuilder
   has_kids_for MiqPolicySet, [:x_get_tree_pp_kids]
   has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-  has_kids_for MiqEventDefinition, [:x_get_tree_ev_kids, :parents]
+  has_kids_for MiqEventDefinition, %i(x_get_tree_ev_kids parents)
 
   private
 
-  def tree_init_options(_tree_name)
-    {:full_ids => true,
-     :lazy     => false}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:full_ids => true}
   end
 
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Policy Profiles"),
+      :text    => t = _("All Policy Profiles"),
       :tooltip => t
     }
   end
@@ -49,6 +43,16 @@ class TreeBuilderPolicyProfile < TreeBuilder
 
     success = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :success) : [])
     failure = count_only_or_objects(count_only, pol_rec ? pol_rec.actions_for_event(parent, :failure) : [])
+    unless count_only
+      add_flag_to(success, :success) unless success.empty?
+      add_flag_to(failure, :failure) unless failure.empty?
+    end
     success + failure
+  end
+
+  def add_flag_to(array, flag)
+    array.each do |i|
+      i.instance_variable_set(:@flag, flag)
+    end
   end
 end

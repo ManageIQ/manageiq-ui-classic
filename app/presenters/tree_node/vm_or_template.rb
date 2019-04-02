@@ -1,6 +1,9 @@
 module TreeNode
   class VmOrTemplate < Node
-    set_attribute(:image) { "svg/currentstate-#{@object.normalized_state.downcase}.svg" }
+    set_attributes(:icon, :icon_background) do
+      QuadiconHelper.machine_state(@object.normalized_state).values_at(:fonticon, :background)
+    end
+
     set_attribute(:tooltip) do
       unless @object.template?
         _("VM: %{name} (Click to view)") % {:name => @object.name}

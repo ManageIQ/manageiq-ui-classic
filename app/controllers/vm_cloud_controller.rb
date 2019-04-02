@@ -2,6 +2,7 @@ class VmCloudController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include VmShowMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -15,17 +16,14 @@ class VmCloudController < ApplicationController
   def attach
     assert_privileges("instance_attach")
     @volume_choices = {}
-    @record = @vm = find_by_id_filtered(VmCloud, params[:id])
+    @record = @vm = find_record_with_rbac(VmCloud, params[:id])
     @vm.cloud_tenant.cloud_volumes.where(:status => 'available').each { |v| @volume_choices[v.name] = v.id }
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Attach %{volume} to %{instance_model} \"%{instance_name}\"") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      },
-      :url  => "/vm_cloud/attach")
+      :name => _("Attach Cloud Volume to Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
+      :url  => "/vm_cloud/attach"
+    )
     @in_a_form = true
     @refresh_partial = "vm_common/attach"
   end
@@ -34,25 +32,19 @@ class VmCloudController < ApplicationController
   def detach
     assert_privileges("instance_detach")
     @volume_choices = {}
-    @record = @vm = find_by_id_filtered(VmCloud, params[:id])
+    @record = @vm = find_record_with_rbac(VmCloud, params[:id])
     attached_volumes = @vm.hardware.disks.select(&:backing).map(&:backing)
     attached_volumes.each { |volume| @volume_choices[volume.name] = volume.id }
     if attached_volumes.empty?
-      add_flash(_("%{instance_model} \"%{instance_name}\" has no attached %{volumes}") % {
-        :volumes        => ui_lookup(:tables => 'cloud_volumes'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name})
+      add_flash(_("Instance \"%{instance_name}\" has no attached Cloud Volumes") % {:instance_name => @vm.name})
       javascript_flash
     end
 
     @in_a_form = true
     drop_breadcrumb(
-      :name => _("Detach %{volume} from %{instance_model} \"%{instance_name}\"") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      },
-      :url  => "/vm_cloud/detach")
+      :name => _("Detach Cloud Volume from Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
+      :url  => "/vm_cloud/detach"
+    )
     @in_a_form = true
     @refresh_partial = "vm_common/detach"
   end
@@ -61,16 +53,12 @@ class VmCloudController < ApplicationController
   def attach_volume
     assert_privileges("instance_attach")
 
-    @vm = find_by_id_filtered(VmCloud, params[:id])
+    @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching %{volume_model} to %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
-        :volume_model   => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      })
+      cancel_action(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
     when "attach"
-      volume = find_by_id_filtered(CloudVolume, params[:volume_id])
+      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:attach_volume)
         task_id = volume.attach_volume_queue(session[:userid], @vm.ems_ref, params[:device_path])
 
@@ -90,44 +78,40 @@ class VmCloudController < ApplicationController
   def attach_finished
     task_id = session[:async][:params][:task_id]
     vm_id = session[:async][:params][:id]
-    vm_name = session[:async][:params][:name]
+    vm = find_record_with_rbac(VmCloud, vm_id)
     volume_id = session[:async][:params][:volume_id]
-    volume = find_by_id_filtered(CloudVolume, volume_id)
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
-        :name    => volume.name,
-        :vm_name => vm_name
+        :volume_name => volume.name,
+        :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
         :volume_name => volume.name,
-        :vm_name     => vm_name,
-        :details     => task.message
+        :vm_name     => vm.name,
+        :details     => get_error_message_from_fog(task.message)
       }, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show", :id => vm_id
+    flash_to_session
+    @record = @sb[:action] = nil
+    replace_right_cell
   end
 
   def detach_volume
     assert_privileges("instance_detach")
 
-    @vm = find_by_id_filtered(VmCloud, params[:id])
+    @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching a %{volume} from %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
-        :volume         => ui_lookup(:table => 'cloud_volume'),
-        :instance_model => ui_lookup(:table => 'vm_cloud'),
-        :instance_name  => @vm.name
-      })
+      cancel_action(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
 
     when "detach"
-      volume = find_by_id_filtered(CloudVolume, params[:volume_id])
+      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:detach_volume)
         task_id = volume.detach_volume_queue(session[:userid], @vm.ems_ref)
 
@@ -147,28 +131,28 @@ class VmCloudController < ApplicationController
   def detach_finished
     task_id = session[:async][:params][:task_id]
     vm_id = session[:async][:params][:id]
-    vm_name = session[:async][:params][:name]
+    vm = find_record_with_rbac(VmCloud, vm_id)
     volume_id = session[:async][:params][:volume_id]
-    volume = find_by_id_filtered(CloudVolume, volume_id)
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
-        :name    => volume.name,
-        :vm_name => vm_name
+        :volume_name => volume.name,
+        :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
         :volume_name => volume.name,
-        :vm_name     => vm_name,
-        :details     => task.message
+        :vm_name     => vm.name,
+        :details     => get_error_message_from_fog(task.message)
       }, :error)
     end
 
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show", :id => vm_id
+    flash_to_session
+    @record = @sb[:action] = nil
+    replace_right_cell
   end
 
   def cancel_action(message)
@@ -192,26 +176,27 @@ class VmCloudController < ApplicationController
 
   def features
     [
-      ApplicationController::Feature.new_with_hash(
+      {
         :role  => "instances_accord",
         :name  => :instances,
-        :title => _("Instances by Provider")),
-
-      ApplicationController::Feature.new_with_hash(
+        :title => _("Instances by Provider")
+      },
+      {
         :role  => "images_accord",
         :name  => :images,
-        :title => _("Images by Provider")),
-
-      ApplicationController::Feature.new_with_hash(
+        :title => _("Images by Provider")
+      },
+      {
         :role  => "instances_filter_accord",
         :name  => :instances_filter,
-        :title => _("Instances"),),
-
-      ApplicationController::Feature.new_with_hash(
+        :title => _("Instances")
+      },
+      {
         :role  => "images_filter_accord",
         :name  => :images_filter,
-        :title => _("Images"),)
-    ]
+        :title => _("Images")
+      }
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   # redefine get_filters from VmShow
@@ -227,16 +212,16 @@ class VmCloudController < ApplicationController
   end
 
   def set_elements_and_redirect_unauthorized_user
-    @nodetype, id = parse_nodetype_and_id(params[:id])
+    @nodetype, _id = parse_nodetype_and_id(params[:id])
     prefix = prefix_by_nodetype(@nodetype)
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "instances_accord") && prefix == "instances"
-      set_active_elements_authorized_user('instances_tree', 'instances', true, ManageIQ::Providers::CloudManager::Vm, id)
+      set_active_elements_authorized_user('instances_tree', 'instances')
     elsif role_allows?(:feature => "images_accord") && prefix == "images"
-      set_active_elements_authorized_user('images_tree', 'images', true, ManageIQ::Providers::CloudManager::Template, id)
+      set_active_elements_authorized_user('images_tree', 'images')
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", false, nil, nil)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter")
     else
       if (prefix == "vms" && role_allows?(:feature => "vms_instances_filter_accord")) ||
          (prefix == "templates" && role_allows?(:feature => "templates_images_filter_accord"))
@@ -256,6 +241,16 @@ class VmCloudController < ApplicationController
 
   def skip_breadcrumb?
     breadcrumb_prohibited_for_action?
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Compute")},
+        {:title => _("Cloud")},
+        {:title => _("Instances")},
+      ],
+    }
   end
 
   menu_section :clo

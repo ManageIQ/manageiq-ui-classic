@@ -13,7 +13,7 @@ describe VmInfraController do
       end
 
       it "valid node" do
-        rec = FactoryGirl.create(:service_template_catalog)
+        rec = FactoryBot.create(:service_template_catalog)
         active_node = "stc-#{rec.id}"
 
         controller.instance_variable_set(:@sb, :trees => {active_tree => {:active_node => active_node}}, :active_tree => active_tree)
@@ -23,7 +23,7 @@ describe VmInfraController do
       end
 
       it "node no longer exists" do
-        rec = FactoryGirl.create(:service_template_catalog)
+        rec = FactoryBot.create(:service_template_catalog)
         active_node = "stc-#{rec.id + 1}"
 
         controller.instance_variable_set(:@sb, :trees => {active_tree => {:active_node => active_node}}, :active_tree => active_tree)
@@ -34,18 +34,25 @@ describe VmInfraController do
     end
 
     context "#rbac_filtered_objects" do
-      it "properly calls RBAC" do
-        EvmSpecHelper.create_guid_miq_server_zone
-        ems_folder = FactoryGirl.create(:ems_folder)
-        ems = FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder])
+      let(:ems_folder) { FactoryBot.create(:ems_folder) }
+      let!(:ems) { FactoryBot.create(:ems_vmware, :ems_folders => [ems_folder]) }
+      let(:user)       { FactoryBot.create(:user_admin) }
+      let(:vm)         { FactoryBot.create(:vm_vmware, :ext_management_system => ems) }
 
-        user = FactoryGirl.create(:user_admin)
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
-        login_as user
-        expect(Rbac.filtered([ems_folder], :match_via_descendants => "VmOrTemplate")).to(
-          eq([ems_folder]))
+
+        ems_folder.add_child(vm)
+      end
+
+      it "properly calls RBAC" do
+        vm.tag_with('/managed/service_level/gold', :ns => '*')
+
+        expect(Rbac.filtered(EmsFolder, :match_via_descendants => "VmOrTemplate", :user => user)).to eq([ems_folder])
       end
     end
 
@@ -60,7 +67,7 @@ describe VmInfraController do
         }
       end
 
-      before(:each) do
+      before do
         sb = {
           :active_tree => 'foo_tree',
           :history     => {
@@ -99,22 +106,21 @@ end
 describe ReportController do
   context '#tree_add_child_nodes' do
     it 'calls tree_add_child_nodes TreeBuilder method' do
-      widget = FactoryGirl.create(:miq_widget, :description => "Foo", :title => "Foo", :content_type => "report")
+      widget = FactoryBot.create(:miq_widget, :description => "Foo", :title => "Foo", :content_type => "report")
       controller.instance_variable_set(:@sb,
                                        :trees       => {:widgets_tree => {:active_node => "root",
                                                                           :klass_name  => "TreeBuilderReportWidgets",
                                                                           :open_nodes  => []}},
-                                       :active_tree => :widgets_tree
-
-                                      )
+                                       :active_tree => :widgets_tree)
       TreeBuilderReportWidgets.new('widgets_tree', 'widgets', {})
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
-      expected = [{:key     => "-#{controller.to_cid(widget.id)}",
-                   :text    => "Foo",
-                   :icon    => 'fa fa-file-text-o',
-                   :tooltip => "Foo",
-                   :state   => {:expanded => false},
-                   :class   => ""}]
+      expected = [{:key        => "xx-r_-#{widget.id}",
+                   :text       => "Foo",
+                   :icon       => 'fa fa-file-text-o',
+                   :tooltip    => "Foo",
+                   :state      => {:expanded => false},
+                   :selectable => true,
+                   :class      => ""}]
       expect(nodes).to eq(expected)
     end
   end

@@ -16,7 +16,7 @@ module NetworkPortHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host)
+      %i(parent_ems_cloud ems_network cloud_tenant device cloud_subnets floating_ips security_groups host)
     )
   end
 
@@ -36,28 +36,32 @@ module NetworkPortHelper::TextualSummary
   end
 
   def textual_fixed_ip_addresses
-    @record.fixed_ip_addresses.join(", ") if @record.fixed_ip_addresses
+    @record.fixed_ip_addresses&.join(", ")
   end
 
   def textual_floating_ip_addresses
-    @record.floating_ip_addresses.join(", ") if @record.floating_ip_addresses
+    @record.floating_ip_addresses&.join(", ")
   end
 
   def textual_parent_ems_cloud
-    @record.ext_management_system.try(:parent_manager)
+    textual_link(@record.ext_management_system.try(:parent_manager), :label => _("Parent Cloud Provider"))
   end
 
-  def textual_instance
-    label    = ui_lookup(:table => "vm_cloud")
-    instance = @record.device
-    h        = nil
-    if instance && role_allows?(:feature => "vm_show")
-      h = {:label => label, :icon => "pficon pficon-virtual-machine"}
-      h[:value] = instance.name
-      h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
-      h[:title] = _("Show %{label}") % {:label => label}
+  def textual_device
+    device = @record.device
+    if device.kind_of?(VmOrTemplate)
+      instance = @record.device
+      h        = nil
+      if instance && role_allows?(:feature => "vm_show")
+        h         = {:label => _('Instance'), :icon => "pficon pficon-virtual-machine"}
+        h[:value] = instance.name
+        h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
+        h[:title] = _("Show Instance")
+      end
+      h
+    else
+      device
     end
-    h
   end
 
   def textual_cloud_tenant
@@ -72,10 +76,14 @@ module NetworkPortHelper::TextualSummary
     @record.floating_ips
   end
 
+  def textual_security_groups
+    @record.security_groups
+  end
+
   def textual_host
     return nil unless @record.device_type == "Host"
     {
-      :icon  => "pficon pficon-screen",
+      :icon  => "pficon pficon-container-node",
       :value => @record.device,
       :link  => url_for_only_path(
         :controller => "host",

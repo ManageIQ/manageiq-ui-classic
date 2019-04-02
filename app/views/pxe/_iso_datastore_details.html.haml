@@ -7,8 +7,7 @@
         = render :partial => "iso_datastore_form"
       - else
         = render :partial => "layouts/flash_msg"
-        = render(:partial => "shared/summary/textual",
-          :locals  => {:title => binf, :items => textual_iso_datastore_basicinfo})
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(binf, textual_iso_datastore_basicinfo), @record)
         - unless @isd.iso_images.empty?
           %h3= _('ISO Images')
           %table.table.table-bordered.table-striped.table-hover
@@ -17,7 +16,7 @@
                 %th= _('Name')
             %tbody
               - @isd.iso_images.sort_by { |a| a.name.downcase }.each do |i|
-                %tr{:title => _("View this ISO Image"), :onclick => "miqTreeActivateNode('iso_datastores_tree', 'isi-#{to_cid(i.id)}');"}
+                %tr{:title => _("View this ISO Image"), :onclick => "miqTreeActivateNode('iso_datastores_tree', 'isi-#{i.id}');"}
                   %td
                     = h(i.name)
 
@@ -28,5 +27,4 @@
         = render :partial => "iso_img_form"
       - else
         = render :partial => "layouts/flash_msg"
-        = render :partial => "shared/summary/textual",
-          :locals  => {:title => binf, :items => textual_iso_img_info}
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(binf, textual_iso_img_info), @record)

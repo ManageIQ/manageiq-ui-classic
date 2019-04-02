@@ -4,25 +4,20 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
 
   private
 
-  def tree_init_options(_tree_name)
-    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager"}
-  end
-
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:autoload => true)
+  def tree_init_options
+    {:lazy => true}
   end
 
   def root_options
     {
-      :title   => t = _("All Ansible Tower Providers"),
+      :text    => t = _("All Ansible Tower Providers"),
       :tooltip => t
     }
   end
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    count_only_or_objects_filtered(count_only, ManageIQ::Providers::AnsibleTower::AutomationManager, "name", :match_via_descendants => ConfiguredSystem)
+    count_only_or_objects_filtered(count_only, ManageIQ::Providers::AnsibleTower::AutomationManager, "name")
   end
 
   def x_get_tree_cmat_kids(object, count_only)
@@ -34,6 +29,6 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
   def x_get_tree_igf_kids(object, count_only)
     count_only_or_objects_filtered(count_only,
                                    ConfiguredSystem.where(:inventory_root_group_id=> object[:id]),
-                                   "hostname", :match_via_descendants => ConfiguredSystem)
+                                   "hostname")
   end
 end

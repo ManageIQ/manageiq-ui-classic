@@ -2,8 +2,9 @@
 
 // Handle row click (ajax or normal html trans)
 function miqRowClick(row_id, row_url, row_url_ajax) {
-  if (! row_url)
+  if (!row_url) {
     return;
+  }
 
   if (row_url_ajax) {
     miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true});
@@ -29,7 +30,7 @@ function miqGridGetCheckedRows(grid) {
   var crows = [];
 
   $('#' + grid + ' .list-grid-checkbox').each(function(_idx, elem) {
-    if (! $(elem).prop('checked')) {
+    if (!$(elem).prop('checked')) {
       return;
     }
 
@@ -43,7 +44,7 @@ function miqGridGetCheckedRows(grid) {
 // checks/unchecks all grid rows
 function miqGridCheckAll(state, grid) {
   grid = grid || 'list_grid';
-  state = !! state;
+  state = !!state;
 
   $('#' + grid + ' .list-grid-checkbox')
     .prop('checked', state)
@@ -65,7 +66,7 @@ function miqGridOnCheck(elem, button_div, grid) {
   var crows = miqGridGetCheckedRows(grid);
   ManageIQ.gridChecks = crows;
 
-  miqSetButtons(crows.length, "center_tb");
+  miqSetButtons(crows.length, 'center_tb');
 }
 
 // Handle sort
@@ -74,7 +75,7 @@ function miqGetSortUrl(col_id) {
   var action = ManageIQ.actionUrl;
   var id = null;
 
-  if (action == "sort_ds_grid") {
+  if (action === 'sort_ds_grid') {
     controller = 'miq_request';
   } else if (ManageIQ.record.parentId !== null) {
     controller = ManageIQ.record.parentClass;
@@ -89,7 +90,7 @@ function miqGetSortUrl(col_id) {
     url = url + '/' + id;
   }
 
-  url = url + "?sortby=" + col_id + "&" + window.location.search.substring(1);
+  url = url + '?sortby=' + col_id + '&' + window.location.search.substring(1);
   return url;
 }
 

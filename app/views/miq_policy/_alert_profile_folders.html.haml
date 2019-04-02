@@ -7,7 +7,7 @@
           %tr{:title => _("Open Folder"),
             :onclick => "miqTreeActivateNode('alert_profile_tree', 'xx-#{f.last}');"}
             %td.table-view-pf-select
-              %img{:src => image_path("100/#{f.last.underscore.downcase}.png")}
+              %i{:class => f.last.constantize.decorate.fonticon}
             %td
               = f.first
               &nbsp;

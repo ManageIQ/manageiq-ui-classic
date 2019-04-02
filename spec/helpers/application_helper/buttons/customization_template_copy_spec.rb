@@ -16,7 +16,7 @@ describe ApplicationHelper::Button::CustomizationTemplateCopy do
     end
     context 'when record has system' do
       let(:x_node) { 'does-not-matter' }
-      let(:record) { FactoryGirl.create(:customization_template_cloud_init, :system => true) }
+      let(:record) { FactoryBot.create(:customization_template_cloud_init, :system => true) }
       it { expect(subject.visible?).to be_truthy }
     end
     context 'when other node is active' do

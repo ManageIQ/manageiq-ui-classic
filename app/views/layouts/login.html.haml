@@ -2,10 +2,11 @@
 %html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
-      = h productized_title(_(": Login"))
-    = favicon_link_tag
+      = h productized_title(_("Login"))
+    = miq_favicon_link_tag
     = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
+    = stylesheet_link_tag '/custom.css'
+    = javascript_dependencies
     - if Rails.env.development?
       = javascript_include_tag 'miq_debug'
       = stylesheet_link_tag 'miq_debug'
@@ -20,6 +21,7 @@
       = yield
 
     :javascript
-      API.logout();
       delete localStorage['patternfly-navigation-secondary'];
       delete localStorage['patternfly-navigation-tertiary'];
+      miqFlashClearSaved();
+      API.ws_destroy();
