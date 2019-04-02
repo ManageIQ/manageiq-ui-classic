@@ -894,39 +894,7 @@ class ApplicationController < ActionController::Base
                           :image => ActionController::Base.helpers.image_path(image.to_s),
                           :icon  => icon,
                           :icon2 => icon2}.compact
-
-      view.col_order.each_with_index do |col, col_idx|
-        next if view.column_is_hidden?(col)
-
-        celltext = nil
-
-        if view.col_order[col_idx] == 'approval_state' && view.extras[:filename] == "MiqRequest"
-          celltext = _(PROV_STATES[row[col]])
-        elsif view.col_order[col_idx] == 'prov_type' && view.extras[:filename] == "ServiceTemplate"
-          celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
-        elsif view.col_order[col_idx] == "result" && view.extras[:filename] == "OpenscapRuleResult"
-          new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
-        elsif view.col_order[col_idx] == "severity" && view.extras[:filename] == "OpenscapRuleResult"
-          new_row[:cells] << {:span => severity_span_class(row[col]), :text => row[col].titleize}
-        elsif view.col_order[col_idx] == 'state' && %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
-          celltext = row[col].to_s.titleize
-        elsif view.col_order[col_idx] == 'hardware.bitness' && %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates
-                                                                  ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates
-                                                                  ManageIQ_Providers_CloudManager_Vm ManageIQ_Providers_CloudManager_Vm-vms
-                                                                  ManageIQ_Providers_CloudManager_Template).include?(view.extras[:filename])
-          celltext = row[col] ? "#{row[col]} bit" : ''
-        elsif view.col_order[col_idx] == 'image?' && view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
-          celltext = row[col] ? _("Image") : _("Snapshot")
-        else
-          # Use scheduled tz for formatting, if configured
-          if ['miqschedule'].include?(view.db.downcase)
-            celltz = row['run_at'][:tz] if row['run_at'] && row['run_at'][:tz]
-          end
-          celltext = format_col_for_display(view, row, col, celltz || tz)
-        end
-
-        new_row[:cells] << {:text => celltext} if celltext
-      end
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, tz))
 
       next unless @row_button # Show a button in the last col
       new_row[:cells] << {
@@ -938,28 +906,6 @@ class ApplicationController < ActionController::Base
     end
 
     root
-  end
-
-  def result_span_class(value)
-    case value.downcase
-    when "pass"
-      "label label-success center-block"
-    when "fail"
-      "label label-danger center-block"
-    else
-      "label label-primary center-block"
-    end
-  end
-
-  def severity_span_class(value)
-    case value.downcase
-    when "high"
-      "label label-danger center-block"
-    when "medium"
-      "label label-warning center-block"
-    else
-      "label label-low-severity center-block"
-    end
   end
 
   def listicon_item(view, id = nil)
