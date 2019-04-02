@@ -13,7 +13,7 @@ def create_and_generate_report_for_user(report_name, user_id)
 end
 
 describe ReportHelper do
-  context '#chart_fields_options' do
+  describe '#chart_fields_options' do
     it 'should return fields with models and aggregate functions from summary when "Show Sort Breaks" is not "No"' do
       @edit = {
         :new => {
