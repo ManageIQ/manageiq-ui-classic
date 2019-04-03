@@ -22,13 +22,12 @@ class GtlFormatter
         celltext, span = openscap_role_result_format(view.col_order[col_idx], row[col])
       elsif %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
         celltext = state_format(view.col_order[col_idx], row[col])
-      elsif view.col_order[col_idx] == 'hardware.bitness' && %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates
-                                                                  ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates
-                                                                  ManageIQ_Providers_CloudManager_Vm ManageIQ_Providers_CloudManager_Vm-vms
-                                                                  ManageIQ_Providers_CloudManager_Template).include?(view.extras[:filename])
-        celltext = row[col] ? "#{row[col]} bit" : ''
-      elsif view.col_order[col_idx] == 'image?' && view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
-        celltext = row[col] ? _("Image") : _("Snapshot")
+      elsif %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates ManageIQ_Providers_CloudManager_Vm-vms
+               ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates ManageIQ_Providers_CloudManager_Vm
+               ManageIQ_Providers_CloudManager_Template).include?(view.extras[:filename])
+        celltext = hardware_bitness_format(view.col_order[col_idx], row[col])
+      elsif view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
+        celltext = cloud_manager_template_format(view.col_order[col_idx], row[col])
       else
         # Use scheduled tz for formatting, if configured
         if ['miqschedule'].include?(view.db.downcase)
@@ -41,6 +40,24 @@ class GtlFormatter
       rows.push(item)
     end
     rows
+  end
+
+  def self.cloud_manager_template_format(key, value)
+    if key == 'image?'
+      celltext = value ? _("Image") : _("Snapshot")
+    else
+      celltext = hardware_bitness_format(key, value)
+    end
+    celltext
+  end
+
+  def self.hardware_bitness_format(key, value)
+    if key == 'hardware.bitness'
+      celltext = value ? "#{value} bit" : ''
+    else
+      celltext = format_col_for_display(view, row, col, celltz || tz)
+    end
+    celltext
   end
 
   def self.state_format(key, value)
