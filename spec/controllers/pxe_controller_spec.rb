@@ -81,6 +81,7 @@ describe PxeController do
 
     render_views
     it do
+      allow(controller).to receive(:data_for_breadcrumbs).and_return({})
       bypass_rescue
       is_expected.to have_http_status 200
     end
