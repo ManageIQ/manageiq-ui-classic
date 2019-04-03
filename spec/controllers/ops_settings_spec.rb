@@ -133,6 +133,7 @@ describe OpsController do
       let(:user) { FactoryBot.create(:user, :features => %w(zone_edit zone_new)) }
       before do
         login_as user
+        allow(controller).to receive(:data_for_breadcrumbs).and_return({})
       end
 
       it "#does not allow duplicate names when adding" do
@@ -230,6 +231,7 @@ describe OpsController do
                                        :active_tab    => 'settings_server',
                                        :active_tree   => :settings_tree)
       allow(controller).to receive(:x_node).and_return('xx-svr')
+      allow(controller).to receive(:data_for_breadcrumbs).and_return({})
       expect(controller).to receive(:x_active_tree_replace_cell)
       expect(controller).to receive(:replace_explorer_trees)
       expect(controller).to receive(:rebuild_toolbars)
