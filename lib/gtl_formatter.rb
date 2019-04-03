@@ -14,14 +14,14 @@ class GtlFormatter
       celltext = nil
       span = nil
 
-      if view.col_order[col_idx] == 'approval_state' && view.extras[:filename] == "MiqRequest"
-        celltext = _(PROV_STATES[row[col]])
+      if view.extras[:filename] == "MiqRequest"
+        celltext = miq_request_format(view.col_order[col_idx], row[col])
       elsif view.extras[:filename] == "ServiceTemplate"
         celltext = service_template_format(view.col_order[col_idx], row[col])
       elsif view.extras[:filename] == "OpenscapRuleResult"
         celltext, span = openscap_role_result_format(view.col_order[col_idx], row[col])
-      elsif view.col_order[col_idx] == 'state' && %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
-        celltext = row[col].to_s.titleize
+      elsif %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
+        celltext = state_format(view.col_order[col_idx], row[col])
       elsif view.col_order[col_idx] == 'hardware.bitness' && %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates
                                                                   ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates
                                                                   ManageIQ_Providers_CloudManager_Vm ManageIQ_Providers_CloudManager_Vm-vms
@@ -43,8 +43,26 @@ class GtlFormatter
     rows
   end
 
+  def self.state_format(key, value)
+    if key == 'state'
+      celltext = value.to_s.titleize
+    else
+      celltext = format_col_for_display(view, row, col, celltz || tz)
+    end
+    celltext
+  end
+
+  def self.miq_request_format(key, value)
+    if key == 'approval_state'
+      celltext = _(PROV_STATES[value])
+    else
+      celltext = state_format(key, value)
+    end
+    celltext
+  end
+
   def self.openscap_role_result_format(key, value)
-    celltext, span = nil
+    span = nil
     if key == "result"
       span = result_span_class(value)
       celltext = value.titleize
@@ -58,7 +76,6 @@ class GtlFormatter
   end
 
   def self.service_template_format(key, value)
-    celltext = nil
     if key == "prov_type"
       celltext = value ? _(ServiceTemplate::CATALOG_ITEM_TYPES[value]) : ''
     else
