@@ -5,7 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-4
+## Unreleased as of Sprint 108 ending 2019-04-01
+
+### Added
+- Use supports_volume_resizing? to toggle the Volume size field [(#5346)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5346)
+- Add Enable/Disable button to Schedule summary page [(#5344)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5344)
+- Add Cancel button to policy simulation page [(#5341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5341)
+- Redesigned breadcrumbs with new logic [(#4468)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4468)
+- Add tagging component [(#3570)](https://github.com/ManageIQ/manageiq-ui-classic/pull/3570)
+
+### Fixed
+- Put back the missing TreeBuilderUtilization#get_tree_custom_kids [(#5411)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5411)
+- Cancel and save buttons clear @sb[:action] in miq_ae_class [(#5399)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5399)
+- Fixed display of default memory threshold correctly on new appliance [(#5394)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5394)
+- Fix room display in physical infra summary views [(#5386)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5386)
+- Fix the access to child services from parents under My Services [(#5384)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5384)
+- Fix preselect node in servers by roles tree under diagnostics [(#5382)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5382)
+- Adjust accordion height calculation hack to the new breadcrumbs [(#5381)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5381)
+- Fix missed argument change for compliance history tree [(#5376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5376)
+- Services use turbo button [(#5366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5366)
+- Fixes segmentation_id and physical_network required (in Cloud Network form) [(#5364)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5364)
+- Fixed condition to use correct feature id [(#5362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5362)
+- Subscription ID is required when adding readOnly when editing (Azure) [(#5359)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5359)
+- Fix creating a group after validation message 'already exists' [(#5354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5354)
+- Don't throw exception when template is not found in Provisioning [(#5345)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5345)
+- Add safeguard for VMs without ext_management_system [(#5339)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5339)
+- Allow user to select Network Port for provisioning [(#5103)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5103)
+
+## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Fix enabling Power operations for a template [(#5128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5128)
@@ -58,7 +85,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Allow pausing/resuming foreman and ansible tower providers [(#5173)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5173)
 - Add endpoint url for azure [(#4304)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4304)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Do not allow to embed a method into itself in automate [(#4753)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4753)
