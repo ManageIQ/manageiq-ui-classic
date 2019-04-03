@@ -6,12 +6,15 @@ class GtlFormatter
     "denied"           => N_("Denied")
   }.freeze
 
-  def self.format_cols(view, row, tz)
+  def self.format_cols(view, row)
     rows = []
+    @row = row
+    @view = view
+
     view.col_order.each_with_index do |col, col_idx|
       next if view.column_is_hidden?(col)
-
-      celltext = nil
+      
+      @col = col
       span = nil
 
       if view.extras[:filename] == "MiqRequest"
@@ -29,11 +32,7 @@ class GtlFormatter
       elsif view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
         celltext = cloud_manager_template_format(view.col_order[col_idx], row[col])
       else
-        # Use scheduled tz for formatting, if configured
-        if ['miqschedule'].include?(view.db.downcase)
-          celltz = row['run_at'][:tz] if row['run_at'] && row['run_at'][:tz]
-        end
-        celltext = format_col_for_display(view, row, col, celltz || tz)
+        celltext = format_col_for_display(view, row, col)
       end
       item = {:text => celltext}
       item[:span] = span if span.present?
@@ -55,7 +54,7 @@ class GtlFormatter
     if key == 'hardware.bitness'
       celltext = value ? "#{value} bit" : ''
     else
-      celltext = format_col_for_display(view, row, col, celltz || tz)
+      celltext = format_col_for_display(@view, @row, @col)
     end
     celltext
   end
@@ -64,7 +63,7 @@ class GtlFormatter
     if key == 'state'
       celltext = value.to_s.titleize
     else
-      celltext = format_col_for_display(view, row, col, celltz || tz)
+      celltext = format_col_for_display(@view, @row, @col)
     end
     celltext
   end
@@ -87,7 +86,7 @@ class GtlFormatter
       span = severity_span_class(value)
       celltext = value.titleize
     else
-      celltext = format_col_for_display(view, row, col, celltz || tz)
+      celltext = format_col_for_display(@view, @row, @col)
     end
     [celltext, span]
   end
@@ -96,17 +95,27 @@ class GtlFormatter
     if key == "prov_type"
       celltext = value ? _(ServiceTemplate::CATALOG_ITEM_TYPES[value]) : ''
     else
-      celltext = format_col_for_display(view, row, col, celltz || tz)
+      celltext = format_col_for_display(@view, @row, @col)
     end
     celltext
   end
 
+  def self.timezone(view, row)
+    if view.extras[:filename] == "MiqSchedule"
+      timezone = MiqServer.my_server.server_timezone
+      # Use scheduled tz for formatting, if configured
+      timezone = row['run_at'][:tz] if row['run_at'] && row['run_at'][:tz]
+    else
+      timezone = Time.zone
+    end
+    timezone
+  end
+
   # Format a column in a report view for display on the screen
-  def self.format_col_for_display(view, row, col, tz = nil)
-    tz ||= ["miqschedule"].include?(view.db.downcase) ? MiqServer.my_server.server_timezone : Time.zone
+  def self.format_col_for_display(view, row, col)
     celltext = view.format(col,
                            row[col],
-                           :tz => tz).gsub(/\\/, '\&') # Call format, then escape any backslashes
+                           :tz => timezone(view, row)).gsub(/\\/, '\&') # Call format, then escape any backslashes
     celltext
   end
 

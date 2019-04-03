@@ -815,9 +815,6 @@ class ApplicationController < ActionController::Base
 
   # Render the view data to a Hash structure for the list view
   def view_to_hash(view, fetch_data = false)
-    # Get the time zone in effect for this view
-    tz = view.db.downcase == 'miqschedule' ? server_timezone : Time.zone
-
     root = {:head => [], :rows => []}
 
     has_checkbox = !@embedded && !@no_checkboxes
@@ -894,7 +891,7 @@ class ApplicationController < ActionController::Base
                           :image => ActionController::Base.helpers.image_path(image.to_s),
                           :icon  => icon,
                           :icon2 => icon2}.compact
-      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, tz))
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row))
 
       next unless @row_button # Show a button in the last col
       new_row[:cells] << {
