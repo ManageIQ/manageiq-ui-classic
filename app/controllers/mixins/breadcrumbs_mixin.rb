@@ -9,6 +9,7 @@ module Mixins
       options = breadcrumbs_options || {}
       options[:record_info] ||= (@record || {})
       options[:record_title] ||= :name
+      options[:show_header] ||= false
       breadcrumbs = options[:breadcrumbs] || []
 
       # Different methods for controller with explorers and for non-explorers controllers
@@ -32,12 +33,14 @@ module Mixins
         breadcrumbs_from_tree = build_breadcrumbs_from_tree
         breadcrumbs.concat(breadcrumbs_from_tree)
 
-        if (options[:include_record] || breadcrumbs_from_tree.blank?) && options[:record_info].present? && options[:record_info][options[:record_title]]
+        if (options[:include_record] || breadcrumbs_from_tree.blank?) && options[:record_info].present? && options[:record_info][options[:record_title]] &&
+           !(@tagitems || @politems || @ownershipitems || @retireitems)
           # Append breadcrumb created from record_info if included or if result from tree was empty (eg filters page)
-          breadcrumbs.push(:title => options[:record_info][options[:record_title]])
+          breadcrumbs.push(:title => options[:record_info][options[:record_title]], :key => x_node_right_cell)
+          breadcrumbs.push(:title => @right_cell_text) if options[:show_header] && @right_cell_text
         else
           # Append breadcrumb from the title of right cell
-          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))
+          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems)) unless options[:hide_special_item]
           breadcrumbs.push(:title => @right_cell_text) if @sb["action"] && @right_cell_text
         end
       end
@@ -142,6 +145,11 @@ module Mixins
       {
         :breadcrumbs => [],
       }
+    end
+
+    # return correct node to right cell
+    def x_node_right_cell
+      @sb[@sb[:active_accord]].presence || x_node
     end
   end
 end
