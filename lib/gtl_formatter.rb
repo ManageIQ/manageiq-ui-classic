@@ -18,12 +18,8 @@ class GtlFormatter
         celltext = _(PROV_STATES[row[col]])
       elsif view.col_order[col_idx] == 'prov_type' && view.extras[:filename] == "ServiceTemplate"
         celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
-      elsif view.col_order[col_idx] == "result" && view.extras[:filename] == "OpenscapRuleResult"
-        span = result_span_class(row[col])
-        celltext = row[col].titleize
-      elsif view.col_order[col_idx] == "severity" && view.extras[:filename] == "OpenscapRuleResult"
-        span = severity_span_class(row[col])
-        celltext = row[col].titleize
+      elsif view.extras[:filename] == "OpenscapRuleResult"
+        celltext, span = openscap_role_result_format(view.col_order[col_idx], row[col])
       elsif view.col_order[col_idx] == 'state' && %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
         celltext = row[col].to_s.titleize
       elsif view.col_order[col_idx] == 'hardware.bitness' && %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates
@@ -45,6 +41,20 @@ class GtlFormatter
       rows.push(item)
     end
     rows
+  end
+
+  def self.openscap_role_result_format(key, value)
+    celltext, span = nil
+    if key == "result"
+      span = result_span_class(value)
+      celltext = value.titleize
+    elsif key == "severity"
+      span = severity_span_class(value)
+      celltext = value.titleize
+    else
+      celltext = format_col_for_display(view, row, col, celltz || tz)
+    end
+    [celltext, span]
   end
 
   # Format a column in a report view for display on the screen
