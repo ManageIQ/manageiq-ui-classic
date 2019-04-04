@@ -423,16 +423,19 @@ function miqButtonOnWhen(button, onwhen, count) {
   }
 }
 
+function miqSetToolbarCount(count) {
+  sendDataWithRx({
+    eventType: 'updateToolbarCount',
+    countSelected: count,
+  });
+}
+
 // Set the buttons in a div based on the count of checked items passed in
 function miqSetButtons(count, button_div) {
   if (button_div.match('_tb$') && count === 0) {
     // FIXME: this should be happening regardless of `count === 0`
     // ..but that needs more refactoring around miqUpdateAllCheckboxes, miqUpdateButtons, etc.
-    sendDataWithRx({
-      eventType: 'updateToolbarCount',
-      countSelected: count,
-    });
-
+    miqSetToolbarCount(count);
     return;
   }
 
