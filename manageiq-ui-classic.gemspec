@@ -39,4 +39,6 @@ Gem::Specification.new do |s|
   # core because jasmine has < 3.0, not < 2.6
   s.add_development_dependency "jasmine",  "~> 2.5.2"
   s.add_development_dependency "jasmine-core",  "~> 2.5.2"
+
+  s.add_development_dependency "chrome_remote",  "~> 0.2.0"
 end
