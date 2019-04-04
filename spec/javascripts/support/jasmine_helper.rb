@@ -13,3 +13,11 @@ Jasmine.configure do |config|
   # TLDR: Don't install auto-install PhantomJS on CI. In Travis we trust.
   config.prevent_phantom_js_auto_install = true if ENV['CI']
 end
+
+module Jasmine
+  def self.wait_for_listener(*args)
+    puts "Fake wait_for_listener"
+    sleep 20
+    puts "end wait"
+  end
+end
