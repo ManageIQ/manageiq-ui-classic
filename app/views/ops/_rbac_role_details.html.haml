@@ -7,6 +7,13 @@
       %h3
         = _("Role Information")
       .form-horizontal
+        - unless @edit
+          .form-group
+            %label.col-md-4.control-label
+              = _("ID")
+            .col-md-8
+              %p.form-control-static
+                = h(@role.id)
         .form-group
           %label.col-md-4.control-label
             = _("Name")
