@@ -237,7 +237,7 @@ module OpsController::Settings::AnalysisProfiles
         @scan = ScanItemSet.find_by_id(@edit[:scan_id])
         ap_get_form_vars
 
-        category, nteventlog, registry = %w(category nteventlog registry).map do |x|
+        category, nteventlog, registry = %w[category nteventlog registry].map do |x|
           @edit[:new].fetch_path(x, :definition, 'content')
         end
         file = @edit[:new].fetch_path('file', :definition, 'stats')
@@ -289,7 +289,7 @@ module OpsController::Settings::AnalysisProfiles
           end
         end
       when "reset", nil
-        if params[:button] == "reset" || %w(ap_copy ap_edit).include?(@sb[:action])
+        if params[:button] == "reset" || %w[ap_copy ap_edit].include?(@sb[:action])
           obj = find_record_with_rbac(ScanItemSet, checked_or_params)
         end
         if !params[:tab] && params[:typ] != "copy" # if tab was not changed
@@ -462,10 +462,10 @@ module OpsController::Settings::AnalysisProfiles
     end
 
     [
-      %w(category content),
-      %w(file stats),
-      %w(registry content),
-      %w(nteventlog content)
+      %w[category content],
+      %w[file stats],
+      %w[registry content],
+      %w[nteventlog content]
     ].each do |key, definition_key|
       next if @edit[:new][key].blank?
       scanitem             = ScanItem.new
@@ -720,8 +720,8 @@ module OpsController::Settings::AnalysisProfiles
   def ap_build_edit_screen
     @embedded = true # don't show flash msg or check boxes in analysis profiles partial
     @scan = @edit[:scan_id] ? ScanItemSet.find(@edit[:scan_id]) : ScanItemSet.new
-    @sb[:req] = "new" if %w(new copy create).include?(request.parameters["action"]) || %w(copy Host Vm).include?(params[:typ])
-    @sb[:req] = "edit" if %w(edit update).include?(request.parameters["action"]) || params[:typ] == "edit"
+    @sb[:req] = "new" if %w[new copy create].include?(request.parameters["action"]) || %w[copy Host Vm].include?(params[:typ])
+    @sb[:req] = "edit" if %w[edit update].include?(request.parameters["action"]) || params[:typ] == "edit"
     @scan.members.each do |a|
       case a.item_type
       when "category"

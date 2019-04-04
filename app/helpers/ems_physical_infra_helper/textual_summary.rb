@@ -9,33 +9,33 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname type port guid)
+      %i[hostname type port guid]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         datastores physical_chassis physical_racks physical_servers physical_servers_with_host
         physical_storages physical_switches vms custom_button_events
-      )
+      ]
     )
   end
 
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status refresh_date)
+      textual_authentications(@record.authentication_userid_passwords) + %i[refresh_status refresh_date]
     )
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(zone tags))
+    TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
   def textual_group_topology
-    TextualGroup.new(_("Overview"), %i(topology))
+    TextualGroup.new(_("Overview"), %i[topology])
   end
 
   #

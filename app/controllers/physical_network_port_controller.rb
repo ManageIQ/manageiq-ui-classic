@@ -26,7 +26,7 @@ class PhysicalNetworkPortController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties),
+      %i[properties],
     ]
   end
   helper_method(:textual_group_list)

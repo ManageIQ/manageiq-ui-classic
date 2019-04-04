@@ -29,8 +29,8 @@ module Mixins
 
     def textual_group_list
       [
-        %i(properties status),
-        %i(relationships topology smart_management)
+        %i[properties status],
+        %i[relationships topology smart_management]
       ]
     end
 
@@ -85,7 +85,7 @@ module Mixins
 
     class_methods do
       def display_methods
-        %w(
+        %w[
           availability_zones
           block_storage_managers
           cloud_networks
@@ -137,11 +137,11 @@ module Mixins
           storage_managers
           storages
           vms
-        )
+        ]
       end
 
       def custom_display_modes
-        %w(props ems_folders ad_hoc_metrics)
+        %w[props ems_folders ad_hoc_metrics]
       end
 
       def default_show_template
@@ -297,7 +297,7 @@ module Mixins
         when "orchestration_stack_delete"       then orchestration_stack_delete
         end
 
-        return if params[:pressed].include?("tag") && !%w(host_tag vm_tag miq_template_tag instance_tag image_tag).include?(params[:pressed])
+        return if params[:pressed].include?("tag") && !%w[host_tag vm_tag miq_template_tag instance_tag image_tag].include?(params[:pressed])
         if params[:pressed].include?("orchestration_stack_delete")
           flash_to_session
           javascript_redirect(polymorphic_path(EmsCloud.find(params[:id]), :display => 'orchestration_stacks'))

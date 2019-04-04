@@ -2,7 +2,7 @@ module PhysicalNetworkPortHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _('Properties'),
-      %i(port_name port_type peer_mac_address mac_address)
+      %i[port_name port_type peer_mac_address mac_address]
     )
   end
 

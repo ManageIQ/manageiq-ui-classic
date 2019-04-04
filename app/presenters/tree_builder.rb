@@ -29,7 +29,7 @@ class TreeBuilder
 
     if model == "Hash"
       {:type => prefix, :id => rec_id, :full_id => id}
-    elsif model.nil? && %i(sandt svccat stcat).include?(@type)
+    elsif model.nil? && %i[sandt svccat stcat].include?(@type)
       # Creating empty record to show items under unassigned catalog node
       ServiceTemplateCatalog.new
     elsif model.nil? && [:configuration_manager_providers_tree].include?(@name)
@@ -180,7 +180,7 @@ class TreeBuilder
   end
 
   def add_root_node(nodes)
-    root = nodes.first.merge!(%i(text tooltip).each_with_object(root_options) { |key, hsh| hsh[key] = ERB::Util.html_escape(hsh[key]) })
+    root = nodes.first.merge!(%i[text tooltip].each_with_object(root_options) { |key, hsh| hsh[key] = ERB::Util.html_escape(hsh[key]) })
     if root[:image]
       root[:image] = ActionController::Base.helpers.image_path(root[:image])
     else

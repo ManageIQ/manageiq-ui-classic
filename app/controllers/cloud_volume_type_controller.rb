@@ -14,7 +14,7 @@ class CloudVolumeTypeController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
 
   def breadcrumbs_options

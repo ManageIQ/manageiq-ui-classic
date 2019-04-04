@@ -10,17 +10,17 @@ module CloudSubnetHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name type cidr gateway network_protocol dns_nameservers_show allocation_pools host_routes ip_version)
+      %i[name type cidr gateway network_protocol dns_nameservers_show allocation_pools host_routes ip_version]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network
         network_router parent_subnet managed_subnets network_ports security_groups custom_button_events
-      )
+      ]
     )
   end
 

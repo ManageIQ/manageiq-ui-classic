@@ -164,11 +164,11 @@ module ApplicationController::MiqRequestMethods
     @edit[:prov_type] = "VM Provision"
     @edit[:hide_deprecated_templates] = true if request.parameters[:controller] == "vm_cloud"
 
-    unless %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
+    unless %w[image_miq_request_new miq_template_miq_request_new].include?(params[:pressed])
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", provisioning_report).to_s
       @view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       @view.db = get_template_kls.to_s
-      report_scopes = %i(eligible_for_provisioning non_deprecated)
+      report_scopes = %i[eligible_for_provisioning non_deprecated]
       options = options_for_provisioning(@view.db, report_scopes)
 
       @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
@@ -241,7 +241,7 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_ds_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    field = %w(miq_template vm service_template).include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
+    field = %w[miq_template vm service_template].include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
     sort_grid('ds', @edit[:wf].get_field(field, :environment)[:values])
   end
 
@@ -371,7 +371,7 @@ module ApplicationController::MiqRequestMethods
       "storage_clusters" => _("Storage Clusters"),
     }
 
-    integer_fields = %w(free_space total_space)
+    integer_fields = %w[free_space total_space]
 
     # :datastores, not :dss
     @datastores = _build_whatever_grid('ds', datastores, headers, sort_order, sort_by, integer_fields)
@@ -387,7 +387,7 @@ module ApplicationController::MiqRequestMethods
       :last_update_time => _("Last Updated"),
     }
 
-    integer_fields = %w(last_update_time)
+    integer_fields = %w[last_update_time]
 
     @vcs = _build_whatever_grid('vc', vcs, headers, sort_order, sort_by, integer_fields)
   end
@@ -402,7 +402,7 @@ module ApplicationController::MiqRequestMethods
       :last_update_time => _("Last Updated"),
     }
 
-    integer_fields = %w(last_update_time)
+    integer_fields = %w[last_update_time]
 
     @templates = _build_whatever_grid('template', templates, headers, sort_order, sort_by, integer_fields)
   end
@@ -431,7 +431,7 @@ module ApplicationController::MiqRequestMethods
     # currently the only ones that support the field.
     headers["image?"] = _("Type") if vms.any? { |vm| vm.respond_to?(:image?) }
 
-    integer_fields = %w(allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots)
+    integer_fields = %w[allocated_disk_storage mem_cpu cpu_total_cores v_total_snapshots]
 
     filtered_vms = vms.select { |x| filter_by.call(x) }
     @vms = _build_whatever_grid('vm', filtered_vms, headers, sort_order, sort_by, integer_fields)
@@ -452,7 +452,7 @@ module ApplicationController::MiqRequestMethods
                 "state"       => _("State"),
                 "maintenance" => _("Maintenance") }
 
-    integer_fields = %w(v_total_vms)
+    integer_fields = %w[v_total_vms]
 
     @hosts = _build_whatever_grid('host', hosts, headers, sort_order, sort_by, integer_fields, options)
   end
@@ -692,7 +692,7 @@ module ApplicationController::MiqRequestMethods
         else
           field[:values].each do |v|
             if v.class.name == "MiqHashStruct" && v.evm_object_class == :Storage
-              if %w(miq_template service_template vm).include?(@edit[:org_controller])
+              if %w[miq_template service_template vm].include?(@edit[:org_controller])
                 if params[key] == "__DS__NONE__" # Added this to deselect datastore in grid
                   @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
                 elsif v.id.to_i == val.to_i
@@ -909,7 +909,7 @@ module ApplicationController::MiqRequestMethods
   def workflow_instance_from_vars(req)
     options         = {}
     pre_prov_values = nil
-    if %w(miq_template service_template vm).include?(@edit[:org_controller])
+    if %w[miq_template service_template vm].include?(@edit[:org_controller])
       if params[:prov_type] && !req # only do this new requests
         @edit[:prov_id] = params[:prov_id]
         wf_type =
@@ -1064,10 +1064,10 @@ module ApplicationController::MiqRequestMethods
 
   def provisioning_report
     if request.parameters[:template_klass] == 'cloud' ||
-       %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).include?(request.parameters[:controller])
+       %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud].include?(request.parameters[:controller])
       'ProvisionCloudTemplates.yaml'
     elsif request.parameters[:template_klass] == 'infra' ||
-          %w(ems_cluster ems_infra host resource_pool storage vm_infra).include?(request.parameters[:controller])
+          %w[ems_cluster ems_infra host resource_pool storage vm_infra].include?(request.parameters[:controller])
       'ProvisionInfraTemplates.yaml'
     end
   end

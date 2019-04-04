@@ -5,15 +5,15 @@ module ContainerBuildHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version))
+    TextualGroup.new(_("Properties"), %i[name creation_timestamp resource_version])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_project))
+    TextualGroup.new(_("Relationships"), %i[ems container_project])
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_group_build_instances

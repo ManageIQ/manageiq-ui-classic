@@ -88,7 +88,7 @@ module ApplicationController::Explorer
   def x_button
     model, action = pressed2model_action(params[:pressed])
 
-    allowed_models = %w(common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider configuration_manager_provider)
+    allowed_models = %w[common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider configuration_manager_provider]
     raise ActionController::RoutingError.new('invalid button action') unless
       allowed_models.include?(model)
 
@@ -106,11 +106,11 @@ module ApplicationController::Explorer
     elsif X_BUTTON_ALLOWED_ACTIONS[action] == :s2
       # don't need to set params[:id] and do find_checked_items for methods
       # like ownership, the code in those methods handle it
-      if %w(edit right_size resize attach detach live_migrate evacuate
-            associate_floating_ip disassociate_floating_ip).include?(action)
+      if %w[edit right_size resize attach detach live_migrate evacuate
+            associate_floating_ip disassociate_floating_ip].include?(action)
         @_params[:id] = (params[:id] ? [params[:id]] : find_checked_items)[0]
       end
-      if %w(protect tag).include?(action)
+      if %w[protect tag].include?(action)
         case model
         when 'storage'
           send(method, Storage)
@@ -227,7 +227,7 @@ module ApplicationController::Explorer
   # Add an item to the tree history array
   def x_history_add_item(options)
     x_tree_history.delete_if do |item|
-      !%i(id action button display item).find { |key| item[key] != options[key] }
+      !%i[id action button display item].find { |key| item[key] != options[key] }
     end
     x_tree_history.unshift(options).slice!(11..-1)
   end

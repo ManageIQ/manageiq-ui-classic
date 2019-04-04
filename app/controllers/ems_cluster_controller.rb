@@ -20,13 +20,13 @@ class EmsClusterController < ApplicationController
   end
 
   def self.display_methods
-    %w(descendant_vms all_vms miq_templates vms hosts resource_pools config_info storage custom_button_events)
+    %w[descendant_vms all_vms miq_templates vms hosts resource_pools config_info storage custom_button_events]
   end
 
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(all_vms vms hosts resource_pools).include?(@display) # Were we displaying sub-items
+    params[:display] = @display if %w[all_vms vms hosts resource_pools].include?(@display) # Were we displaying sub-items
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                      "miq_template_",
@@ -76,7 +76,7 @@ class EmsClusterController < ApplicationController
     end
 
     return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
-    return if %w(ems_cluster_tag ems_cluster_compare common_drift ems_cluster_protect).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
+    return if %w[ems_cluster_tag ems_cluster_compare common_drift ems_cluster_protect].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
     check_if_button_is_implemented
 
@@ -97,8 +97,8 @@ class EmsClusterController < ApplicationController
 
   def textual_group_list
     [
-      %i(relationships),
-      %i(host_totals vm_totals configuration tags openstack_status)
+      %i[relationships],
+      %i[host_totals vm_totals configuration tags openstack_status]
     ]
   end
   helper_method :textual_group_list

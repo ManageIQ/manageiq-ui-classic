@@ -12,7 +12,7 @@ class ContainerReplicatorController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties container_labels container_selectors compliance), %i(relationships smart_management)]
+    [%i[properties container_labels container_selectors compliance], %i[relationships smart_management]]
   end
   helper_method :textual_group_list
 

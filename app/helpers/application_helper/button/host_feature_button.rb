@@ -3,7 +3,7 @@ class ApplicationHelper::Button::HostFeatureButton < ApplicationHelper::Button::
   def visible?
     unless @feature.nil? || @record.nil?
       if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
-        return true if %w(start stop).include?(@feature.to_s)
+        return true if %w[start stop].include?(@feature.to_s)
         return false
       end
 

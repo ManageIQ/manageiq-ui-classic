@@ -46,11 +46,11 @@ class EmsPhysicalInfraDashboardService < DashboardService
   end
 
   def attributes_data
-    attributes = %i(physical_chassis
+    attributes = %i[physical_chassis
                     physical_racks
                     physical_servers
                     physical_storages
-                    physical_switches)
+                    physical_switches]
 
     attr_url = {
       :physical_chassis  => 'physical_chassis',

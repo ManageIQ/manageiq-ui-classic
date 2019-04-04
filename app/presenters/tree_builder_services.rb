@@ -37,7 +37,7 @@ class TreeBuilderServices < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     # Get My Filters and Global Filters
-    count_only_or_objects(count_only, x_get_search_results(object)) if %w(my global).include?(object[:id])
+    count_only_or_objects(count_only, x_get_search_results(object)) if %w[my global].include?(object[:id])
   end
 
   def x_get_search_results(object)

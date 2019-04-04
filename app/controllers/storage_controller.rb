@@ -14,11 +14,11 @@ class StorageController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(all_vms hosts all_miq_templates registered_vms unregistered_vms custom_button_events)
+    %w[all_vms hosts all_miq_templates registered_vms unregistered_vms custom_button_events]
   end
 
   def self.custom_display_method
-    %w(all_miq_templates)
+    %w[all_miq_templates]
   end
 
   def display_all_miq_templates
@@ -70,7 +70,7 @@ class StorageController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(all_vms vms hosts).include?(@display) # Were we displaying vms or hosts
+    params[:display] = @display if %w[all_vms vms hosts].include?(@display) # Were we displaying vms or hosts
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                      "miq_template_",
@@ -203,7 +203,7 @@ class StorageController < ApplicationController
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-           %w(reload tree_select).include?(params[:action])
+           %w[reload tree_select].include?(params[:action])
           self.x_node = params[:id]
           quick_search_show
           return
@@ -347,7 +347,7 @@ class StorageController < ApplicationController
     return if @in_a_form
     record_showing = leaf_record
 
-    trees = build_replaced_trees(replace_trees, %i(storage storage_pod))
+    trees = build_replaced_trees(replace_trees, %i[storage storage_pod])
 
     presenter = rendering_objects
     update_partials(record_showing, presenter)
@@ -413,7 +413,7 @@ class StorageController < ApplicationController
   end
 
   def render_tagging_form
-    return if %w(cancel save).include?(params[:button])
+    return if %w[cancel save].include?(params[:button])
     @in_a_form = true
     @right_cell_text = _("Edit Tags for Datastore")
     clear_flash_msg
@@ -483,8 +483,8 @@ class StorageController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties registered_vms relationships),
-      %i(content smart_management)
+      %i[properties registered_vms relationships],
+      %i[content smart_management]
     ]
   end
   helper_method :textual_group_list

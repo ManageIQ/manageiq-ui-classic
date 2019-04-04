@@ -14,9 +14,9 @@ class EmsContainerController < ApplicationController
   after_action :set_session_data
 
   OPENSHIFT_ROUTES = {
-    "hawkular"          => %w(hawkular-metrics openshift-infra),
-    "prometheus"        => %w(prometheus openshift-metrics),
-    "prometheus_alerts" => %w(alerts openshift-metrics)
+    "hawkular"          => %w[hawkular-metrics openshift-infra],
+    "prometheus"        => %w[prometheus openshift-metrics],
+    "prometheus_alerts" => %w[alerts openshift-metrics]
   }.freeze
 
   def self.model
@@ -132,7 +132,7 @@ class EmsContainerController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties endpoints status miq_custom_attributes), %i(relationships topology smart_management)]
+    [%i[properties endpoints status miq_custom_attributes], %i[relationships topology smart_management]]
   end
   helper_method :textual_group_list
 

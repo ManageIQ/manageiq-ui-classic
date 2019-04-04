@@ -40,7 +40,7 @@ module ApplicationController::ExpressionHtml
           ViewHelper.content_tag(:strong, ' NOT ')
         end
 
-        unless %w(and or).include?(exp["not"].keys.first)
+        unless %w[and or].include?(exp["not"].keys.first)
           ViewHelper.concat_tag(:font, :color => main_font) do
             ViewHelper.content_tag(:strong, '(')
           end
@@ -51,7 +51,7 @@ module ApplicationController::ExpressionHtml
           exp['result'] && !e['result'] ? ViewHelper.content_tag(:i, exp_str) : exp_str
         end
 
-        unless %w(and or).include?(exp["not"].keys.first)
+        unless %w[and or].include?(exp["not"].keys.first)
           ViewHelper.concat_tag(:font, :color => main_font) do
             ViewHelper.content_tag(:strong, ')')
           end

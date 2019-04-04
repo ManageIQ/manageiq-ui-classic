@@ -12,13 +12,13 @@ class AvailabilityZoneController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(ems_cloud instances cloud_volumes custom_button_events)
+    %w[ems_cloud instances cloud_volumes custom_button_events]
   end
 
   private
 
   def textual_group_list
-    [%i(relationships), %i(availability_zone_totals tags)]
+    [%i[relationships], %i[availability_zone_totals tags]]
   end
   helper_method :textual_group_list
 

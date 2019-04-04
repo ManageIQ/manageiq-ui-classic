@@ -42,7 +42,7 @@ module ApplicationController::Performance
 
       # Cannot replace button divs that contain toolbars, use code below to turn on/off individual buttons
       # Don't need to do view or center buttons, just the perf stuff
-      if %w(host vm vm_or_template).include?(params[:controller])
+      if %w[host vm vm_or_template].include?(params[:controller])
         pfx = params[:controller] == "vm_or_template" ? "vm_" : ""
         if @perf_options[:typ] == "realtime"
           page << "ManageIQ.toolbars.showItem('#center_tb', '#{pfx}perf_refresh');"
@@ -181,7 +181,7 @@ module ApplicationController::Performance
     # Parse the clicked item to get indexes and selection variables
     chart_click_data = parse_chart_click(params[:menu_click])
     # Swap in 'Instances' for 'VMs' in AZ breadcrumbs (poor man's cloud/infra split hack)
-    bc_model = %w(availability_zone host_aggregate).include?(request.parameters['controller']) && chart_click_data.model == 'VMs' ? 'Instances' : chart_click_data.model
+    bc_model = %w[availability_zone host_aggregate].include?(request.parameters['controller']) && chart_click_data.model == 'VMs' ? 'Instances' : chart_click_data.model
 
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
     data_row = report.table.data[chart_click_data.data_index]
@@ -651,7 +651,7 @@ module ApplicationController::Performance
                             from_dt,
                             to_dt,
                             interval_type]
-      elsif %w(MiddlewareServer).any? { |e| @perf_record.kind_of?(e.constantize) }
+      elsif %w[MiddlewareServer].any? { |e| @perf_record.kind_of?(e.constantize) }
         rpt = perf_get_chart_rpt("vim_perf_#{interval_type}_#{@perf_record.chart_report_name}")
         rpt.where_clause = [
           "resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? " \
@@ -680,7 +680,7 @@ module ApplicationController::Performance
     when "realtime"
       _, to_dt = @perf_record.first_and_last_capture("realtime")
       from_dt = to_dt.nil? ? nil : to_dt - @perf_options[:rt_minutes]
-      suffix = if %w(MiddlewareServer)
+      suffix = if %w[MiddlewareServer]
                   .any? { |e| @perf_record.kind_of?(e.constantize) }
                  "_#{@perf_record.chart_report_name}"
                else
@@ -1186,7 +1186,7 @@ module ApplicationController::Performance
       rpt.time_profile_id = @sb[:options][:time_profile]
 
       # Remove columns not checked in options
-      %i(cpu vcpus memory storage).each do |k|
+      %i[cpu vcpus memory storage].each do |k|
         next if @sb[:vm_opts][k].present? && @sb[:options]["trend_#{k}".to_sym]
         i = rpt.col_order.index("#{k}_vm_count")
         rpt.col_order.delete_at(i)
@@ -1204,7 +1204,7 @@ module ApplicationController::Performance
     chart_layouts = perf_get_chart_layout("planning_charts")
 
     # Remove columns not checked in options
-    %i(cpu vcpus memory storage).each do |k|
+    %i[cpu vcpus memory storage].each do |k|
       if @sb[:vm_opts][k].nil? || !@sb[:options]["trend_#{k == :storage ? "disk" : k.to_s}".to_sym]
         chart_layouts[:VimPerformancePlanning].first[:columns].delete_if { |col| col == "#{k}_vm_count" }
       end
@@ -1445,7 +1445,7 @@ module ApplicationController::Performance
         next unless col.ends_with?("_percent")
 
         # Do NOT show reserve (available) column for Host and Storage nodes
-        next if col.include?("_reserve") && %w(Host Storage).include?(@sb[:options][:model])
+        next if col.include?("_reserve") && %w[Host Storage].include?(@sb[:options][:model])
 
         tip = case s # Override the formatting for certain column groups on single day percent utilization chart
               when "cpu"
@@ -1501,7 +1501,7 @@ module ApplicationController::Performance
   # Remove cols from report object cols and col_order that are not in a chart before the report is run
   def perf_trim_report_cols(report, chart)
     keepcols = []
-    keepcols += %w(timestamp resource_name assoc_ids)
+    keepcols += %w[timestamp resource_name assoc_ids]
     keepcols += chart[:columns]
     keepcols += chart[:chart2][:columns] if chart[:chart2]
     # First remove columns from the col_order and header arrays
@@ -1522,7 +1522,7 @@ module ApplicationController::Performance
     new_rpt = MiqReport.new(report.attributes) # Make a copy of the report
     new_rpt.table = Marshal.load(Marshal.dump(report.table))
     keepcols = []
-    keepcols += %w(timestamp statistic_time) unless @top_chart
+    keepcols += %w[timestamp statistic_time] unless @top_chart
     keepcols += ["resource_name"] if charts[:type].include?("Pie")
     keepcols += charts[:columns]
     keepcols += charts[:chart2][:columns] if charts[:chart2]

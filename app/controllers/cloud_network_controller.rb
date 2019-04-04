@@ -12,12 +12,12 @@ class CloudNetworkController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances cloud_networks network_routers cloud_subnets floating_ips custom_button_events)
+    %w[instances cloud_networks network_routers cloud_subnets floating_ips custom_button_events]
   end
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
+    params[:display] = @display if %w[vms instances images].include?(@display)
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
     @refresh_div = "main_div"
@@ -191,7 +191,7 @@ class CloudNetworkController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

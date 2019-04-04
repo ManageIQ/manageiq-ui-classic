@@ -17,7 +17,7 @@ module ReportController::Reports
       get_all_widgets("report", nodes[3].split('_').last)
     end
     add_flash(_("Report has been successfully queued to run"))
-    replace_right_cell(:replace_trees => %i(reports savedreports))
+    replace_right_cell(:replace_trees => %i[reports savedreports])
   end
 
   def show_preview

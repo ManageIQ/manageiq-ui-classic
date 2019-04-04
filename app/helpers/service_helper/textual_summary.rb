@@ -8,22 +8,22 @@ module ServiceHelper::TextualSummary
   # Groups
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description guid))
+    TextualGroup.new(_("Properties"), %i[name description guid])
   end
 
   def textual_group_provisioning_results
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+    TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_provisioning_details
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Details"), %i(playbook repository verbosity hosts))
+    TextualGroup.new(_("Details"), %i[playbook repository verbosity hosts])
   end
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_provisioning_plays
@@ -33,17 +33,17 @@ module ServiceHelper::TextualSummary
 
   def textual_group_retirement_results
     return nil unless retirement_get_job
-    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+    TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_retirement_details
     return nil unless retirement_get_job
-    TextualGroup.new(_("Details"), %i(playbook repository verbosity hosts))
+    TextualGroup.new(_("Details"), %i[playbook repository verbosity hosts])
   end
 
   def textual_group_retirement_credentials
     return nil unless retirement_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_retirement_plays
@@ -53,17 +53,17 @@ module ServiceHelper::TextualSummary
 
   def textual_group_tower_job_results
     return nil unless fetch_job
-    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+    TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_tower_job_details
     return nil unless fetch_job
-    TextualGroup.new(_("Details"), %i(verbosity))
+    TextualGroup.new(_("Details"), %i[verbosity])
   end
 
   def textual_group_tower_job_credentials
     return nil unless fetch_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential vault_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_tower_job_plays
@@ -75,20 +75,20 @@ module ServiceHelper::TextualSummary
   def textual_group_vm_totals
     TextualGroup.new(
       _("Totals for Service VMs"),
-      %i(
+      %i[
         aggregate_all_vm_cpus aggregate_all_vm_memory
         aggregate_all_vm_disk_count aggregate_all_vm_disk_space_allocated
         aggregate_all_vm_disk_space_used aggregate_all_vm_memory_on_disk
-      )
+      ]
     )
   end
 
   def textual_group_lifecycle
-    TextualGroup.new(_("Lifecycle"), %i(retirement_date retirement_state owner group created))
+    TextualGroup.new(_("Lifecycle"), %i[retirement_date retirement_state owner group created])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(catalog_item parent_service orchestration_stack job custom_button_events))
+    TextualGroup.new(_("Relationships"), %i[catalog_item parent_service orchestration_stack job custom_button_events])
   end
 
   def textual_group_miq_custom_attributes
@@ -96,7 +96,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_group_generic_objects
-    TextualGroup.new(_("Generic Objects"), %i(generic_object_instances))
+    TextualGroup.new(_("Generic Objects"), %i[generic_object_instances])
   end
 
   # Items

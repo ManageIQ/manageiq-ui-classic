@@ -43,12 +43,12 @@ module ApplicationHelper
 
     # application-common contains all the global bits and needs to go first (after vendor)
     def priority_packs
-      %w(manageiq-ui-classic/application-common.js)
+      %w[manageiq-ui-classic/application-common.js]
     end
 
     # ui-classic should go before plugins
     def priority_repos
-      %w(manageiq-ui-classic)
+      %w[manageiq-ui-classic]
     end
 
     def sorted_common_packs
@@ -68,7 +68,7 @@ module ApplicationHelper
         end
       end
 
-      %i(pack repo rest).each do |p|
+      %i[pack repo rest].each do |p|
         priority[p] = [] if priority[p].nil?
         priority[p].sort!
       end

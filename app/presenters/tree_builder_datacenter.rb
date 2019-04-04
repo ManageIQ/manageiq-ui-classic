@@ -1,7 +1,7 @@
 class TreeBuilderDatacenter < TreeBuilder
   has_kids_for Host, [:x_get_tree_host_kids]
-  has_kids_for Datacenter, %i(x_get_tree_datacenter_kids)
-  has_kids_for EmsFolder, %i(x_get_tree_folder_kids)
+  has_kids_for Datacenter, %i[x_get_tree_datacenter_kids]
+  has_kids_for EmsFolder, %i[x_get_tree_folder_kids]
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 

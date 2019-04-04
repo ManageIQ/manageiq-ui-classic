@@ -6,28 +6,28 @@ module PhysicalChassisHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name product_name manufacturer serial_number part_number health_state uid_ems description location_led_state)
+      %i[name product_name manufacturer serial_number part_number health_state uid_ems description location_led_state]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system physical_rack physical_servers physical_storages)
+      %i[ext_management_system physical_rack physical_servers physical_storages]
     )
   end
 
   def textual_group_management_network
     TextualGroup.new(
       _("Management Network"),
-      %i(ipaddress)
+      %i[ipaddress]
     )
   end
 
   def textual_group_slots
     TextualGroup.new(
       _("Chassis Slots"),
-      %i(mm_slot_count switch_slot_count fan_slot_count blade_slot_count powersupply_slot_count)
+      %i[mm_slot_count switch_slot_count fan_slot_count blade_slot_count powersupply_slot_count]
     )
   end
 

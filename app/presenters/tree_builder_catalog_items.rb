@@ -1,6 +1,6 @@
 class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   has_kids_for ServiceTemplateCatalog, [:x_get_tree_stc_kids]
-  has_kids_for ServiceTemplate, %i(x_get_tree_st_kids)
+  has_kids_for ServiceTemplate, %i[x_get_tree_st_kids]
 
   private
 
@@ -17,7 +17,7 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
 
   def x_get_tree_stc_kids(object, count_only)
     templates = if object.id.nil?
-                  Rbac.filtered(ServiceTemplate, :named_scope => %i(public_service_templates without_service_template_catalog_id))
+                  Rbac.filtered(ServiceTemplate, :named_scope => %i[public_service_templates without_service_template_catalog_id])
                 else
                   Rbac.filtered(object.service_templates, :named_scope => :public_service_templates)
                 end

@@ -294,7 +294,7 @@ class CatalogController < ApplicationController
       end
     end
     params[:id] = nil
-    replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat)))
+    replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat]))
   end
 
   def st_edit
@@ -342,7 +342,7 @@ class CatalogController < ApplicationController
           @changed = session[:changed] = false
           @in_a_form = false
           @edit = session[:edit] = @record = nil
-          replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat stcat)))
+          replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
         else
           @st.errors.each do |field, msg|
             add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -399,7 +399,7 @@ class CatalogController < ApplicationController
     elsif params[:upload] && params[:upload][:image] &&
           params[:upload][:image].respond_to?(:read)
       ext = params[:upload][:image].original_filename.split(".").last.downcase
-      if !%w(png jpg).include?(ext)
+      if !%w[png jpg].include?(ext)
         msg = _("Custom Image must be a .png or .jpg file")
         err = true
       else
@@ -583,7 +583,7 @@ class CatalogController < ApplicationController
       @changed = session[:changed] = false
       @in_a_form = false
       @edit = session[:edit] = nil
-      replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat stcat)))
+      replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
     when nil # First time in
       st_catalog_set_form_vars
       @changed = session[:changed] = false
@@ -729,7 +729,7 @@ class CatalogController < ApplicationController
 
   def ot_add_form_field_changed
     return unless load_edit("ot_add__new", "replace_cell__explorer")
-    copy_params_if_set(@edit[:new], params, %i(name description type content manager_id))
+    copy_params_if_set(@edit[:new], params, %i[name description type content manager_id])
     @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
     @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(params[:type])
 
@@ -895,7 +895,7 @@ class CatalogController < ApplicationController
     dialog_catalog_check
 
     # Check the validity of the entry points
-    %i(fqname reconfigure_fqname retire_fqname).each do |fqname|
+    %i[fqname reconfigure_fqname retire_fqname].each do |fqname|
       next if @edit[:new][fqname].blank? || !MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
       case fqname
       when :fqname
@@ -954,7 +954,7 @@ class CatalogController < ApplicationController
       @changed = session[:changed] = false
       @in_a_form = false
       @edit = session[:edit] = @record = nil
-      replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat stcat)))
+      replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
     else
       st.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -967,7 +967,7 @@ class CatalogController < ApplicationController
   def service_template_list(scope, options = {})
     @no_checkboxes = x_active_tree == :svccat_tree
     if x_active_tree == :svccat_tree
-      @gtl_buttons = %w(view_list view_tile)
+      @gtl_buttons = %w[view_list view_tile]
       @gtl_small_tiles = true
       if role_allows?(:feature => 'svc_catalog_provision')
         @row_button = {:label    => _("Order"),
@@ -1105,13 +1105,13 @@ class CatalogController < ApplicationController
   def ot_add_submit_save
     assert_privileges("orchestration_template_add")
     load_edit("ot_add__new", "replace_cell__explorer")
-    template_types = %w(
+    template_types = %w[
       ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate
       ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate
       ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
-    )
+    ]
     if !template_types.include?(@edit[:new][:type])
       render_flash(_("\"%{type}\" is not a valid Orchestration Template type") % {:type => @edit[:new][:type]}, :error)
     elsif params[:content].nil? || params[:content].strip == ""
@@ -1206,7 +1206,7 @@ class CatalogController < ApplicationController
       process_elements(elements, ServiceTemplateCatalog, "destroy") unless elements.empty?
     end
     params[:id] = nil
-    replace_right_cell(:replace_trees => trees_to_replace(%i(sandt svccat stcat)))
+    replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
   end
 
   def trees_to_replace(trees)
@@ -1430,7 +1430,7 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    copy_params_if_set(@edit[:new], params, %i(name description provision_cost catalog_id dialog_id generic_subtype long_description))
+    copy_params_if_set(@edit[:new], params, %i[name description provision_cost catalog_id dialog_id generic_subtype long_description])
 
     @edit[:new][:display] = params[:display] == "1" if params[:display]
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
@@ -1439,7 +1439,7 @@ class CatalogController < ApplicationController
 
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
-    fetch_form_vars_ansible_or_ct if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
+    fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
   end
 
   def available_container_managers
@@ -1623,7 +1623,7 @@ class CatalogController < ApplicationController
           @group_idx = true
         else
           param_name = [vars[0], vars[1]].join('_')
-          keys = %w(provision_index scaling_max scaling_min start_action start_delay stop_action stop_delay)
+          keys = %w[provision_index scaling_max scaling_min start_action start_delay stop_action stop_delay]
           if keys.include?(param_name)
             @edit[:new][:rsc_groups].each_with_index do |groups, i|
               groups.sort_by { |gr| gr[:name].downcase }.each_with_index do |g, k|
@@ -1708,7 +1708,7 @@ class CatalogController < ApplicationController
     typ = root_node_model(x_active_tree)
     @no_checkboxes = true if x_active_tree == :svcs_tree
     if x_active_tree == :svccat_tree
-      service_template_list(%i(displayed with_existent_service_template_catalog_id public_service_templates), :no_checkboxes => true)
+      service_template_list(%i[displayed with_existent_service_template_catalog_id public_service_templates], :no_checkboxes => true)
     else
       process_show_list(get_show_list_options(typ))
     end
@@ -1826,11 +1826,11 @@ class CatalogController < ApplicationController
       buttons_get_node_info(treenodeid)
     else
       @sb[:buttons_node] = false
-      if %w(Vm MiqTemplate ServiceResource).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+      if %w[Vm MiqTemplate ServiceResource].include?(TreeBuilder.get_model_for_prefix(@nodetype))
         get_node_info_handle_simple_leaf_node(id)
       elsif x_node == "root"
         get_node_info_handle_root_node
-      elsif %w(xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap).include?(x_node)
+      elsif %w[xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap].include?(x_node)
         get_node_info_handle_ot_folder_nodes
       elsif x_active_tree == :stcat_tree
         get_node_info_handle_leaf_node_stcat(id)
@@ -1949,11 +1949,11 @@ class CatalogController < ApplicationController
     replace_trees   = @replace_trees   if @replace_trees    # get_node_info might set this
     right_cell_text = @right_cell_text if @right_cell_text  # get_node_info might set this too
 
-    trees = build_replaced_trees(replace_trees, %i(sandt svccat stcat ot))
+    trees = build_replaced_trees(replace_trees, %i[sandt svccat stcat ot])
 
     type, _id = parse_nodetype_and_id(x_node)
 
-    allowed_records = %w(MiqTemplate OrchestrationTemplate Service ServiceTemplate ServiceTemplateCatalog)
+    allowed_records = %w[MiqTemplate OrchestrationTemplate Service ServiceTemplate ServiceTemplateCatalog]
     record_showing = (type && allowed_records.include?(TreeBuilder.get_model_for_prefix(type)) && @record.present?) || params[:action] == "x_show"
     # Clicked on right cell record, open the tree enough to show the node, if not already showing
     if params[:action] == "x_show" && x_active_tree != :stcat_tree &&
@@ -1969,7 +1969,7 @@ class CatalogController < ApplicationController
           if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
             build_toolbar("summary_view_tb")
           end
-        elsif !%w(xx csb cbg cb).include?(@nodetype) && !@in_a_form
+        elsif !%w[xx csb cbg cb].include?(@nodetype) && !@in_a_form
           build_toolbar("x_gtl_view_tb")
         end
       when :svccat_tree, :stcat_tree, :ot_tree
@@ -1998,13 +1998,13 @@ class CatalogController < ApplicationController
     content = if @tagging
                 action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
                 r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
-              elsif action && %w(at_st_new st_new).include?(action)
+              elsif action && %w[at_st_new st_new].include?(action)
                 r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
-              elsif action && %w(st_catalog_new st_catalog_edit).include?(action)
+              elsif action && %w[st_catalog_new st_catalog_edit].include?(action)
                 r[:partial => "stcat_form"]
               elsif action == "dialog_provision"
                 r[:partial => "shared/dialogs/dialog_provision", :locals => options[:dialog_locals]]
-              elsif %w(ot_add ot_copy ot_edit service_dialog_from_ot).include?(action)
+              elsif %w[ot_add ot_copy ot_edit service_dialog_from_ot].include?(action)
                 r[:partial => action]
               elsif record_showing
                 if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
@@ -2042,7 +2042,7 @@ class CatalogController < ApplicationController
       presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
     elsif record_showing || @in_a_form || @sb[:buttons_node] ||
           (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
-      if %w(button_edit group_edit group_reorder at_st_new st_new st_catalog_new st_catalog_edit).include?(action)
+      if %w[button_edit group_edit group_reorder at_st_new st_new st_catalog_new st_catalog_edit].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
@@ -2084,7 +2084,7 @@ class CatalogController < ApplicationController
             ]
           )
         end
-      elsif %w(ot_edit ot_copy ot_add service_dialog_from_ot).include?(action)
+      elsif %w[ot_edit ot_copy ot_add service_dialog_from_ot].include?(action)
         presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).remove_paging
         locals = {:record_id  => @edit[:rec_id],
                   :action_url => "#{action}_submit",
@@ -2093,7 +2093,7 @@ class CatalogController < ApplicationController
           presenter.show(:buttons_on).hide(:buttons_off)
           locals[:record_id] = nil
         end
-        locals[:no_reset] = true if %w(ot_copy service_dialog_from_ot).include?(action)
+        locals[:no_reset] = true if %w[ot_copy service_dialog_from_ot].include?(action)
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
       else
         # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record

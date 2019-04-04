@@ -43,11 +43,11 @@ module VmRemote
   end
 
   def launch_html5_console
-    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w(data: blob: 'self'))
-    %i(secret url proto).each { |p| params.require(p) }
+    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w[data: blob: 'self'])
+    %i[secret url proto].each { |p| params.require(p) }
 
     proto = j(params[:proto]).sub(/\-.*$/, '') # -suffix should be omitted from the protocol name
-    if %w(vnc spice webmks).include?(proto)
+    if %w[vnc spice webmks].include?(proto)
       @console = {
         :url       => j(params[:url]),
         :secret    => j(params[:secret]),
@@ -104,7 +104,7 @@ module VmRemote
       url = if miq_task.task_results[:remote_url]
               miq_task.task_results[:remote_url]
             else
-              console_action = %w(html5 webmks).include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
+              console_action = %w[html5 webmks].include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
               url_for_only_path(:controller => controller_name,
                                 :action     => console_action,
                                 :id         => j(params[:id]),

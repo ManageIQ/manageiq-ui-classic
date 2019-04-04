@@ -47,7 +47,7 @@ class WidgetPresenter
                    :dataMethod => 'post')
     end
 
-    if @widget.contents_for_user(current_user).present? && %w(report chart).include?(@widget.content_type)
+    if @widget.contents_for_user(current_user).present? && %w[report chart].include?(@widget.content_type)
       title = if @widget.content_type == "chart"
                 _("Open the chart and full report in a new window")
               else

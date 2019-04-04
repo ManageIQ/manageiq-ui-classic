@@ -87,7 +87,7 @@ class InfraNetworkingController < ApplicationController
       return
     end
 
-    return unless %w(download_pdf main).include?(@display)
+    return unless %w[download_pdf main].include?(@display)
     @showtype = "main"
     @center_toolbar = 'infra_networking'
   end
@@ -143,7 +143,7 @@ class InfraNetworkingController < ApplicationController
   private
 
   def textual_group_list
-    [%i(relationships), %i(smart_management)]
+    [%i[relationships], %i[smart_management]]
   end
   helper_method :textual_group_list
 
@@ -552,7 +552,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def render_tagging_form
-    return if %w(cancel save).include?(params[:button])
+    return if %w[cancel save].include?(params[:button])
     @in_a_form = true
     @right_cell_text = _("Edit Tags")
     clear_flash_msg

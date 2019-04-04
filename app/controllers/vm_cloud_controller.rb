@@ -166,10 +166,10 @@ class VmCloudController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties lifecycle) +
-        (@record.kind_of?(VmCloud) ? %i(vm_cloud_relationships) : %i(template_cloud_relationships)) +
-        %i(vmsafe miq_custom_attributes ems_custom_attributes labels),
-      %i(compliance power_management security configuration diagnostics tags)
+      %i[properties lifecycle] +
+        (@record.kind_of?(VmCloud) ? %i[vm_cloud_relationships] : %i[template_cloud_relationships]) +
+        %i[vmsafe miq_custom_attributes ems_custom_attributes labels],
+      %i[compliance power_management security configuration diagnostics tags]
     ]
   end
   helper_method :textual_group_list

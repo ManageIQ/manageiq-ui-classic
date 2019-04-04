@@ -83,7 +83,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def self.display_methods
-    %w(generic_objects)
+    %w[generic_objects]
   end
 
   def default_show_template
@@ -281,7 +281,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def textual_group_list
-    [%i(properties relationships attribute_details_list association_details_list method_details_list)]
+    [%i[properties relationships attribute_details_list association_details_list method_details_list]]
   end
 
   helper_method :textual_group_list

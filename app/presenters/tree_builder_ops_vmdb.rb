@@ -1,5 +1,5 @@
 class TreeBuilderOpsVmdb < TreeBuilder
-  has_kids_for VmdbTableEvm, %i(x_get_tree_vmdb_table_kids options)
+  has_kids_for VmdbTableEvm, %i[x_get_tree_vmdb_table_kids options]
 
   private
 

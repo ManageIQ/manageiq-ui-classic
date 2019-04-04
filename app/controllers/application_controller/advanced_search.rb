@@ -13,7 +13,7 @@ module ApplicationController::AdvancedSearch
   def adv_search_build(model)
     # Restore @edit hash if it's saved in @settings
     @expkey = :expression # Reset to use default expression key
-    if session.fetch_path(:adv_search, model.to_s) && %w(tag service_tag).exclude?(@sb[:action])
+    if session.fetch_path(:adv_search, model.to_s) && %w[tag service_tag].exclude?(@sb[:action])
       adv_search_model = session[:adv_search][model.to_s]
       @edit ||= copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
       adv_search_clear_default_search_if_cant_be_seen
@@ -189,7 +189,7 @@ module ApplicationController::AdvancedSearch
       build_configuration_manager_cs_filter_tree(x_active_tree)
       build_accordions_and_trees
       load_or_clear_adv_search
-    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree svcs_tree).include?(x_active_tree.to_s)
+    elsif @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree svcs_tree].include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
@@ -200,7 +200,7 @@ module ApplicationController::AdvancedSearch
         adv_search_redraw_tree_and_main(tree)
         return
       end
-    elsif %w(ems_cloud ems_infra).include?(@layout)
+    elsif %w[ems_cloud ems_infra].include?(@layout)
       build_listnav_search_list(@view.db)
     else
       build_listnav_search_list(@edit[@expkey][:exp_model])
@@ -210,7 +210,7 @@ module ApplicationController::AdvancedSearch
   end
 
   def tree_for_building_accordions?
-    %w(automation_manager_cs_filter_tree
+    %w[automation_manager_cs_filter_tree
        configuration_scripts_tree
        images_filter_tree
        instances_filter_tree
@@ -219,13 +219,13 @@ module ApplicationController::AdvancedSearch
        templates_filter_tree
        templates_images_filter_tree
        vms_filter_tree
-       vms_instances_filter_tree).include?(x_active_tree.to_s)
+       vms_instances_filter_tree].include?(x_active_tree.to_s)
   end
 
   def adv_search_redraw_search_partials(display_mode = nil)
     render :update do |page|
       page << javascript_prologue
-      unless %w(load save).include?(display_mode)
+      unless %w[load save].include?(display_mode)
         @edit[@expkey][:exp_chosen_report] = nil
         @edit[@expkey][:exp_chosen_search] = nil
       end
@@ -318,7 +318,7 @@ module ApplicationController::AdvancedSearch
       format.js do
         @explorer = true
         if (x_active_tree.to_s =~ /_filter_tree$/ || x_active_tree.to_s == "svcs_tree") &&
-           !%w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+           !%w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
           adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit # Set because next method will restore @edit from session

@@ -4,11 +4,11 @@ module CloudVolumeTypeHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description backend_name))
+    TextualGroup.new(_("Properties"), %i[name description backend_name])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_storage))
+    TextualGroup.new(_("Relationships"), %i[parent_ems_cloud ems_storage])
   end
 
   def textual_backend_name

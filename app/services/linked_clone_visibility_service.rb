@@ -17,7 +17,7 @@ class LinkedCloneVisibilityService
         field_names_to_hide += [:snapshot]
       end
     else
-      field_names_to_hide += %i(linked_clone snapshot)
+      field_names_to_hide += %i[linked_clone snapshot]
     end
 
     {:hide => field_names_to_hide, :edit => field_names_to_edit, :show => field_names_to_show}

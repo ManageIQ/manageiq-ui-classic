@@ -103,7 +103,7 @@ module Mixins
 
         def process_hosts_manageable(hosts, display_name)
           each_host(hosts, display_name) do |host|
-            if %w(enroll available adoptfail inspectfail cleanfail).include?(host.hardware.provision_state)
+            if %w[enroll available adoptfail inspectfail cleanfail].include?(host.hardware.provision_state)
               host.manageable_queue(session[:userid])
               add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
             else

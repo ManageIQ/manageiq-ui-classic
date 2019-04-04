@@ -24,11 +24,11 @@ module VmHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(
+      %i[
         id name region server description hostname ipaddress mac_address custom_1 container host_platform
         tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots
         advanced_settings resources guid storage_profile
-      )
+      ]
     )
   end
 
@@ -39,50 +39,50 @@ module VmHelper::TextualSummary
   def textual_group_lifecycle
     TextualGroup.new(
       _("Lifecycle"),
-      %i(discovered analyzed retirement_date retirement_state provisioned owner group)
+      %i[discovered analyzed retirement_date retirement_state provisioned owner group]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems cluster host resource_pool storage service parent_vm genealogy drift scan_history
         cloud_network cloud_subnet custom_button_events
-      )
+      ]
     )
   end
 
   def textual_group_vm_cloud_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
         cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
         floating_ips network_ports load_balancers cloud_volumes custom_button_events
-      )
+      ]
     )
   end
 
   def textual_group_template_cloud_relationships
-    TextualGroup.new(_("Relationships"), %i(ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events))
+    TextualGroup.new(_("Relationships"), %i[ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events])
   end
 
   def textual_group_security
-    TextualGroup.new(_("Security"), %i(users groups patches))
+    TextualGroup.new(_("Security"), %i[users groups patches])
   end
 
   def textual_group_datastore_allocation
     TextualGroup.new(
       _("Datastore Allocation Summary"),
-      %i(disks disks_aligned thin_provisioned allocated_disks allocated_total)
+      %i[disks disks_aligned thin_provisioned allocated_disks allocated_total]
     )
   end
 
   def textual_group_datastore_usage
     TextualGroup.new(
       _("Datastore Actual Usage Summary"),
-      %i(usage_disks usage_snapshots usage_disk_storage usage_overcommitted)
+      %i[usage_disks usage_snapshots usage_disk_storage usage_overcommitted]
     )
   end
 
@@ -94,10 +94,10 @@ module VmHelper::TextualSummary
     TextualCustom.new(
       _("Normal Operating Ranges (over 30 days)"),
       'OperationRanges',
-      %i(
+      %i[
         normal_operating_ranges_cpu normal_operating_ranges_cpu_usage normal_operating_ranges_memory
         normal_operating_ranges_memory_usage
-      )
+      ]
     )
   end
 

@@ -11,14 +11,14 @@ class SecurityGroupController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances network_ports network_routers cloud_subnets custom_button_events)
+    %w[instances network_ports network_routers cloud_subnets custom_button_events]
   end
 
   menu_section :net
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
+    params[:display] = @display if %w[vms instances images].include?(@display)
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
     @refresh_div = "main_div"
@@ -279,7 +279,7 @@ class SecurityGroupController < ApplicationController
   end
 
   def textual_group_list
-    [%i(properties relationships), %i(firewall tags)]
+    [%i[properties relationships], %i[firewall tags]]
   end
   helper_method :textual_group_list
 

@@ -3,7 +3,7 @@ class AutoPlacementVisibilityService
     field_names_to_hide = []
     field_names_to_edit = []
 
-    auto_placement_values = %i(
+    auto_placement_values = %i[
       placement_host_name
       placement_ds_name
       host_filter
@@ -13,7 +13,7 @@ class AutoPlacementVisibilityService
       rp_filter
       placement_rp_name
       placement_dc_name
-    )
+    ]
 
     if auto_placement_enabled
       field_names_to_hide += auto_placement_values

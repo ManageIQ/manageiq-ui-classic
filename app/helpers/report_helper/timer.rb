@@ -50,10 +50,10 @@ module ReportHelper
     end
 
     def update_from_hash(params)
-      %w(typ moths weeks days hours).each do |i|
+      %w[typ moths weeks days hours].each do |i|
         self[i] = params[:"timer_#{i}"] if params[:"timer_#{i}"]
       end
-      %w(start_hour start_min).each do |i|
+      %w[start_hour start_min].each do |i|
         self[i] = params[i.to_sym] if params[i.to_sym]
       end
       self.start_date = params[:miq_date_1] if params[:miq_date_1]

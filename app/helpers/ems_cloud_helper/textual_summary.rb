@@ -9,30 +9,30 @@ module EmsCloudHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
+      %i[description hostname ipaddress type port guid region keystone_v3_domain_id]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
         security_groups instances images cloud_volumes orchestration_stacks storage_managers custom_button_events
-      )
+      ]
     )
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status refresh_date))
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i[refresh_status refresh_date])
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(zone tags))
+    TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
   def textual_group_topology
-    items = %w(topology)
+    items = %w[topology]
     i = items.collect { |m| send("textual_#{m}") }.flatten.compact
     TextualGroup.new(_("Overview"), i)
   end

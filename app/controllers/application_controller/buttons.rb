@@ -99,7 +99,7 @@ module ApplicationController::Buttons
       if params[:readonly]
         @edit[:new][:readonly] = (params[:readonly] != "1")
       end
-      copy_params_if_set(@edit[:new], params, %i(instance_name other_name object_message object_request))
+      copy_params_if_set(@edit[:new], params, %i[instance_name other_name object_message object_request])
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         f = ("attribute_" + (i + 1).to_s)
         v = ("value_" + (i + 1).to_s)
@@ -109,7 +109,7 @@ module ApplicationController::Buttons
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
 
-      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color disabled_text button_type inventory_type))
+      copy_params_if_set(@edit[:new], params, %i[name target_attr_name display_for submit_how description button_icon button_color disabled_text button_type inventory_type])
       @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
       @edit[:new][:open_url] = false if @edit[:new][:disabled_open_url]
       @edit[:new][:dialog_id] = nil if params[:display_for].present? && params[:display_for] != 'single'
@@ -129,7 +129,7 @@ module ApplicationController::Buttons
 
     render :update do |page|
       page << javascript_prologue
-      if %i(display_for instance_name other_name target_class button_type).any? { |k| params.key?(k) }
+      if %i[display_for instance_name other_name target_class button_type].any? { |k| params.key?(k) }
         @sb[:active_tab] = params[:instance_name] ? "ab_advanced_tab" : "ab_options_tab"
         page.replace("ab_form", :partial => "shared/buttons/ab_form")
       end
@@ -189,7 +189,7 @@ module ApplicationController::Buttons
   end
 
   def group_form_valid
-    required = %i(name description button_icon)
+    required = %i[name description button_icon]
 
     required.none? do |field|
       @edit[:new][field].blank?
@@ -738,7 +738,7 @@ module ApplicationController::Buttons
     when 'down'   then move_cols_down
     when 'top'    then move_cols_top
     when 'bottom' then move_cols_bottom
-    else copy_params_if_set(@edit[:new], params, %i(name description display button_icon button_color))
+    else copy_params_if_set(@edit[:new], params, %i[name description display button_icon button_color])
     end
   end
 
@@ -842,7 +842,7 @@ module ApplicationController::Buttons
     button.options[:button_icon] = @edit[:new][:button_icon] if @edit[:new][:button_icon].present?
     button.options[:button_color] = @edit[:new][:button_color] if @edit[:new][:button_color].present?
 
-    %i(button_type display open_url display_for submit_how).each do |key|
+    %i[button_type display open_url display_for submit_how].each do |key|
       button[:options][key] = @edit[:new][key]
     end
     button.visibility ||= {}
@@ -982,8 +982,8 @@ module ApplicationController::Buttons
       @edit[:new][:object_request] = @custom_button.uri_attributes["request"]
 
       button_type = @custom_button.options.try(:[], :button_type) ? @custom_button.options[:button_type] : 'default'
-      default_attributes = %w(request)
-      default_attributes = %w(request service_template_name hosts) if button_type == 'ansible_playbook'
+      default_attributes = %w[request]
+      default_attributes = %w[request service_template_name hosts] if button_type == 'ansible_playbook'
 
       @custom_button.uri_attributes.each do |attr|
         if attr[0] != "object_name" && !default_attributes.include?(attr[0].to_s)

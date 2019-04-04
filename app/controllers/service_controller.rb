@@ -194,7 +194,7 @@ class ServiceController < ApplicationController
   end
 
   def self.display_methods
-    %w(generic_objects custom_button_events)
+    %w[generic_objects custom_button_events]
   end
 
   def display_generic_objects
@@ -219,27 +219,27 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
-      [%i(go_properties attribute_details_list methods go_relationships)]
-    elsif %w(ServiceAnsiblePlaybook ServiceAnsibleTower).include?(@record.type)
-      [%i(properties miq_custom_attributes), %i(lifecycle tags generic_objects)]
+      [%i[go_properties attribute_details_list methods go_relationships]]
+    elsif %w[ServiceAnsiblePlaybook ServiceAnsibleTower].include?(@record.type)
+      [%i[properties miq_custom_attributes], %i[lifecycle tags generic_objects]]
     else
-      [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
+      [%i[properties lifecycle relationships generic_objects miq_custom_attributes], %i[vm_totals tags]]
     end
   end
   helper_method :textual_group_list
 
   def textual_provisioning_group_list
-    [%i(provisioning_results provisioning_plays), %i(provisioning_details provisioning_credentials)]
+    [%i[provisioning_results provisioning_plays], %i[provisioning_details provisioning_credentials]]
   end
   helper_method :textual_provisioning_group_list
 
   def textual_retirement_group_list
-    [%i(retirement_results retirement_plays), %i(retirement_details retirement_credentials)]
+    [%i[retirement_results retirement_plays], %i[retirement_details retirement_credentials]]
   end
   helper_method :textual_retirement_group_list
 
   def textual_tower_job_group_list
-    [%i(tower_job_results tower_job_plays), %i(tower_job_details tower_job_credentials)]
+    [%i[tower_job_results tower_job_plays], %i[tower_job_details tower_job_credentials]]
   end
   helper_method :textual_tower_job_group_list
 
@@ -330,7 +330,7 @@ class ServiceController < ApplicationController
         process_show_list(:named_scope => [[:retired, false], :displayed])
         @right_cell_text = _("Active Services")
       when 'rsrv'
-        process_show_list(:named_scope => %i(retired displayed))
+        process_show_list(:named_scope => %i[retired displayed])
         @right_cell_text = _("Retired Services")
       end
     when "MiqSearch", nil # nil if applying a filter from Advanced search - and @nodetype is root
@@ -361,7 +361,7 @@ class ServiceController < ApplicationController
       listnav_search_selected(id) unless params.key?(:search_text)
       if @edit[:adv_search_applied] &&
          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-         %w(reload tree_select).include?(params[:action])
+         %w[reload tree_select].include?(params[:action])
         self.x_node = params[:id]
         quick_search_show
       end
@@ -430,12 +430,12 @@ class ServiceController < ApplicationController
       :right_cell_text => @right_cell_text
     )
 
-    reload_trees_by_presenter(presenter, build_replaced_trees(replace_trees, %i(svcs)))
+    reload_trees_by_presenter(presenter, build_replaced_trees(replace_trees, %i[svcs]))
 
     # Replace right cell divs
     presenter.update(
       :main_div,
-      if %w(dialog_provision ownership retire service_edit tag service_tag reconfigure_dialog).include?(action)
+      if %w[dialog_provision ownership retire service_edit tag service_tag reconfigure_dialog].include?(action)
         r[:partial => partial, :locals => options[:dialog_locals]]
       elsif params[:display]
         r[:partial => 'layouts/x_gtl', :locals => {:controller => "vm", :action_url => @lastaction}]
@@ -447,9 +447,9 @@ class ServiceController < ApplicationController
         r[:partial => "layouts/x_gtl"]
       end
     )
-    if %w(ownership tag service_tag).include?(action)
+    if %w[ownership tag service_tag].include?(action)
       presenter.show(:form_buttons_div).remove_paging.hide(:toolbar).show(:paging_div)
-      if %w(tag service_tag).include?(action)
+      if %w[tag service_tag].include?(action)
         locals = {:action_url => action_url}
         locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]

@@ -27,7 +27,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       section
     end
 
-    top_nodes += %w(all_vm_rules api_exclusive sui).collect do |additional_feature|
+    top_nodes += %w[all_vm_rules api_exclusive sui].collect do |additional_feature|
       MiqProductFeature.obj_features[additional_feature] &&
         MiqProductFeature.obj_features[additional_feature][:feature]
     end

@@ -2,14 +2,14 @@ module PhysicalRackHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name ems_ref)
+      %i[name ems_ref]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system physical_chassis physical_servers physical_storages)
+      %i[ext_management_system physical_chassis physical_servers physical_storages]
     )
   end
 

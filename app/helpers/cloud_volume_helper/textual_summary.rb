@@ -5,16 +5,16 @@ module CloudVolumeHelper::TextualSummary
   include TextualMixins::TextualCustomButtonEvents
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name size bootable description status))
+    TextualGroup.new(_("Properties"), %i[name size bootable description status])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
         cloud_volume_snapshots attachments custom_button_events
-      )
+      ]
     )
   end
 

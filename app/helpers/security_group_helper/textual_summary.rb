@@ -8,16 +8,16 @@ module SecurityGroupHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(description type))
+    TextualGroup.new(_("Properties"), %i[description type])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports network_router
         cloud_subnet custom_button_events
-      )
+      ]
     )
   end
 

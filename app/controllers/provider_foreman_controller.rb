@@ -92,7 +92,7 @@ class ProviderForemanController < ApplicationController
       listnav_search_selected(search_id) if !params.key?(:search_text) && params[:action] != 'x_show' # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&
          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-         %w(reload tree_select).include?(params[:action])
+         %w[reload tree_select].include?(params[:action])
         self.x_node = params[:id]
         quick_search_show # User will input the value
       end
@@ -201,7 +201,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def textual_group_list
-    [%i(properties environment os), %i(tenancy tags)]
+    [%i[properties environment os], %i[tenancy tags]]
   end
   helper_method :textual_group_list
 
@@ -341,19 +341,19 @@ class ProviderForemanController < ApplicationController
   end
 
   def rebuild_trees(replace_trees)
-    build_replaced_trees(replace_trees, %i(configuration_manager_providers configuration_manager_cs_filter))
+    build_replaced_trees(replace_trees, %i[configuration_manager_providers configuration_manager_cs_filter])
   end
 
   def leaf_record
     get_node_info(x_node)
     @delete_node = params[:id] if @replace_trees
     type, _id = parse_nodetype_and_id(x_node)
-    type && %w(ConfiguredSystem).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w[ConfiguredSystem].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def configuration_profile_record?(node = x_node)
     type, _id = parse_nodetype_and_id(node)
-    type && %w(ConfigurationProfile).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w[ConfigurationProfile].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def foreman_provider_record?(node = x_node)
@@ -412,7 +412,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def active_tab_configured_systems?
-    (%w(x_show x_search_by_name).include?(action_name) && configuration_profile_record?) ||
+    (%w[x_show x_search_by_name].include?(action_name) && configuration_profile_record?) ||
       unassigned_configuration_profile?(x_node)
   end
 

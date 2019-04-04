@@ -606,7 +606,7 @@ module OpsController::OpsRbac
     key = what.to_sym
     if operation != "new"
       record = find_record_with_rbac(klass, checked_or_params)
-      if %i(group role).include?(key) && record && record.read_only && operation != 'copy'
+      if %i[group role].include?(key) && record && record.read_only && operation != 'copy'
         model, name = if key == :role
                         [_('Role'), record.name]
                       else
@@ -746,7 +746,7 @@ module OpsController::OpsRbac
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
     id = params[:id].split('__').first # Get the record id
-    id = id unless %w(new seq).include?(id)
+    id = id unless %w[new seq].include?(id)
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
@@ -765,7 +765,7 @@ module OpsController::OpsRbac
 
     render :update do |page|
       page << javascript_prologue
-      if %w(up down).include?(params[:button])
+      if %w[up down].include?(params[:button])
         if @refresh_div
           page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
           page.replace(@refresh_div, :partial => @refresh_partial)
@@ -1031,7 +1031,7 @@ module OpsController::OpsRbac
 
   # Get variables from group edit form
   def rbac_group_get_form_vars
-    if %w(up down).include?(params[:button])
+    if %w[up down].include?(params[:button])
       move_cols_up   if params[:button] == "up"
       move_cols_down if params[:button] == "down"
     else
@@ -1074,7 +1074,7 @@ module OpsController::OpsRbac
         class_prefix, id = parse_nodetype_and_id(params[:id])
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
         # If ExtManagementSystem/Host is returned get specific class
-        if %w(ExtManagementSystem Host).include?(klass)
+        if %w[ExtManagementSystem Host].include?(klass)
           klass = find_record_with_rbac(klass.constantize, id).class.to_s
         end
         if params[:check] == "0" #   unchecked

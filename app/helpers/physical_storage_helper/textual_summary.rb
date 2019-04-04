@@ -2,14 +2,14 @@ module PhysicalStorageHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name product_name serial_number health_state enclosures drive_bays uid_ems description)
+      %i[name product_name serial_number health_state enclosures drive_bays uid_ems description]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system physical_rack physical_chassis)
+      %i[ext_management_system physical_rack physical_chassis]
     )
   end
 

@@ -6,16 +6,16 @@ module ContainerReplicatorHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name creation_timestamp resource_version replicas current_replicas)
+      %i[name creation_timestamp resource_version replicas current_replicas]
     )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_project container_groups container_nodes))
+    TextualGroup.new(_("Relationships"), %i[ems container_project container_groups container_nodes])
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   #

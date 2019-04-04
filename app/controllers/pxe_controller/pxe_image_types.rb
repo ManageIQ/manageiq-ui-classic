@@ -23,7 +23,7 @@ module PxeController::PxeImageTypes
       @edit = session[:edit] = nil # clean out the saved info
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif %w(add save).include?(params[:button])
+    elsif %w[add save].include?(params[:button])
       id = params[:id] || "new"
       return unless load_edit("pxe_image_type_edit__#{id}", "replace_cell__explorer")
       pxe_image_type_get_form_vars
@@ -41,7 +41,7 @@ module PxeController::PxeImageTypes
         @edit = session[:edit] = nil # clean out the saved info
         add_flash(_("System Image Type \"%{name}\" was added") % {:name => add_pxe.name})
         get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => %i(pxe_image_types customization_templates))
+        replace_right_cell(:nodetype => x_node, :replace_trees => %i[pxe_image_types customization_templates])
       else
         @in_a_form = true
         add_pxe.errors.each do |field, msg|
@@ -82,7 +82,7 @@ module PxeController::PxeImageTypes
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype      => params[:id] ? x_node : "root",
-                       :replace_trees => %i(pxe_image_types customization_templates))
+                       :replace_trees => %i[pxe_image_types customization_templates])
     pxes.count
   end
 

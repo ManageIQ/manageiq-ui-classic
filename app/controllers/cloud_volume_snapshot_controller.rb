@@ -11,7 +11,7 @@ class CloudVolumeSnapshotController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(based_volumes)
+    %w[based_volumes]
   end
 
   def display_based_volumes
@@ -21,7 +21,7 @@ class CloudVolumeSnapshotController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

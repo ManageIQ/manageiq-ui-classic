@@ -4,14 +4,14 @@ module PhysicalSwitchHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name product_name manufacturer serial_number part_number ports health_state uid_ems description)
+      %i[name product_name manufacturer serial_number part_number ports health_state uid_ems description]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ext_management_system connected_physical_servers)
+      %i[ext_management_system connected_physical_servers]
     )
   end
 
@@ -22,7 +22,7 @@ module PhysicalSwitchHelper::TextualSummary
   def textual_group_power_management
     TextualGroup.new(
       _("Power Management"),
-      %i(power_state)
+      %i[power_state]
     )
   end
 
