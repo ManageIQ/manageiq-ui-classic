@@ -136,7 +136,7 @@ class CatalogController < ApplicationController
     get_form_vars
     changed = (@edit[:new] != @edit[:current])
     # Build Catalog Items tree unless @edit[:ae_tree_select]
-    build_automate_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
+    build_automate_tree(:automate_catalog) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
       if ansible_playbook?
@@ -372,7 +372,7 @@ class CatalogController < ApplicationController
     default_entry_point("generic", "composite") if params[:display]
     st_get_form_vars
     changed = (@edit[:new] != @edit[:current])
-    build_automate_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_automate_tree(:automate_catalog) # Build Catalog Items tree
     render :update do |page|
       page << javascript_prologue
       page.replace("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
@@ -441,7 +441,7 @@ class CatalogController < ApplicationController
 
     # if resource has been deleted from group, rearrange groups incase group is now empty.
     rearrange_groups_array
-    build_automate_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_automate_tree(:automate_catalog) # Build Catalog Items tree
     changed = (@edit[:new] != @edit[:current])
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     render :update do |page|
@@ -498,8 +498,8 @@ class CatalogController < ApplicationController
   def ae_tree_select_toggle
     @edit = session[:edit]
     self.x_active_tree = :sandt_tree
-    at_tree_select_toggle(get_ae_tree_edit_key(@edit[:ae_field_typ]))
-    x_node_set(@edit[:active_id], :automate_tree) if params[:button] == 'submit'
+    at_tree_select_toggle(:automate_catalog, get_ae_tree_edit_key(@edit[:ae_field_typ]))
+    x_node_set(@edit[:active_id], :automate_catalog_tree) if params[:button] == 'submit'
     session[:edit] = @edit
   end
 
@@ -508,11 +508,11 @@ class CatalogController < ApplicationController
     @edit = session[:edit]
     @edit[:new][params[:typ]] = nil
     @edit[:new][ae_tree_key] = ''
-    # build_automate_tree(:catalog, :automate_tree) # Build Catalog Items tree unless @edit[:ae_tree_select]
+    # build_automate_tree(:automate_catalog) # Build Catalog Items tree unless @edit[:ae_tree_select]
     render :update do |page|
       page << javascript_prologue
       @changed = (@edit[:new] != @edit[:current])
-      x_node_set(@edit[:active_id], :automate_tree)
+      x_node_set(@edit[:active_id], :automate_catalog_tree)
       page << javascript_hide("ae_tree_select_div")
       page << javascript_hide("blocker_div")
       page << javascript_hide("#{ae_tree_key}_div")
@@ -520,7 +520,7 @@ class CatalogController < ApplicationController
       page << "$('##{ae_tree_key}').prop('title', '#{@edit[:new][ae_tree_key]}');"
       @edit[:ae_tree_select] = false
       page << javascript_for_miq_button_visibility(@changed)
-      page << "miqTreeActivateNodeSilently('automate_tree', 'root');"
+      page << "miqTreeActivateNodeSilently('automate_catalog_tree', 'root');"
       page << "miqSparkle(false);"
     end
     session[:edit] = @edit
@@ -1323,7 +1323,7 @@ class CatalogController < ApplicationController
                        else
                          _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
                        end
-    build_automate_tree(:catalog, :automate_tree) # Build Catalog Items tree
+    build_automate_tree(:automate_catalog) # Build Catalog Items tree
   end
 
   def st_set_form_vars
