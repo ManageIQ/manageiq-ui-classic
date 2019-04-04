@@ -21,7 +21,7 @@ class EmsCloudDashboardService < EmsDashboardService
   end
 
   def attributes_data
-    attributes = %i(flavors cloud_tenants miq_templates vms availability_zones security_groups cloud_networks cloud_volumes)
+    attributes = %i[flavors cloud_tenants miq_templates vms availability_zones security_groups cloud_networks cloud_volumes]
 
     attr_icon = {
       :flavors            => "pficon pficon-flavor",

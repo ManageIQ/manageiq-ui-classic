@@ -185,7 +185,7 @@ module ApplicationController::DialogRunner
 
         @edit[:wf].set_value(field_name, new)
 
-      elsif %w(start_hour start_min).include?(parameter_key)
+      elsif %w[start_hour start_min].include?(parameter_key)
         # find any DateTime field and assume it's the only one..
         field_name = @edit[:wf].dialog.dialog_fields.reverse.find do |f|
           f.type == 'DialogFieldDateTimeControl'

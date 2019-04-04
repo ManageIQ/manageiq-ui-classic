@@ -1,5 +1,5 @@
 class TreeBuilderPxeServers < TreeBuilder
-  has_kids_for PxeServer, %i(x_get_tree_pxe_server_kids options)
+  has_kids_for PxeServer, %i[x_get_tree_pxe_server_kids options]
 
   private
 

@@ -11,13 +11,13 @@ class LoadBalancerController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances network_ports floating_ips security_groups custom_button_events)
+    %w[instances network_ports floating_ips security_groups custom_button_events]
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

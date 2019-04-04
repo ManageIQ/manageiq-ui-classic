@@ -214,7 +214,7 @@ class MiqAeCustomizationController < ApplicationController
   def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
     # fixme, don't call all the time
-    trees = build_replaced_trees(replace_trees, %i(ab old_dialogs dialogs))
+    trees = build_replaced_trees(replace_trees, %i[ab old_dialogs dialogs])
 
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
@@ -390,7 +390,7 @@ class MiqAeCustomizationController < ApplicationController
     presenter[:build_calendar] = true
     # resetting ManageIQ.oneTransition.oneTrans when tab loads
     presenter.reset_one_trans
-    presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
+    presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
   end
 
   def setup_presenter_for_old_dialogs_tree(nodetype, presenter)
@@ -409,7 +409,7 @@ class MiqAeCustomizationController < ApplicationController
                          end
 
       presenter.reset_one_trans
-      presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
+      presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
     end
   end
 

@@ -29,7 +29,7 @@ class TreeBuilderAutomate < TreeBuilder
   end
 
   def x_get_tree_class_kids(object, count_only)
-    count_only_or_objects(count_only, object.ae_instances, %i(display_name name))
+    count_only_or_objects(count_only, object.ae_instances, %i[display_name name])
   end
 
   def x_get_tree_ns_kids(object, count_only)
@@ -48,7 +48,7 @@ class TreeBuilderAutomate < TreeBuilder
       ns_classes = filter_ae_objects(object.ae_classes)
       objects += ns_classes if ns_classes.present?
     end
-    count_only_or_objects(count_only, objects, %i(display_name name))
+    count_only_or_objects(count_only, objects, %i[display_name name])
   end
 
   def filter_ae_objects(objects)

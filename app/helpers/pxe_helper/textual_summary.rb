@@ -1,7 +1,7 @@
 module PxeHelper::TextualSummary
   def textual_group_basicinfo
-    %i(uri_prefix uri access_url pxe_directory windows_images_directory
-       customization_directory last_refreshed_on)
+    %i[uri_prefix uri access_url pxe_directory windows_images_directory
+       customization_directory last_refreshed_on]
   end
 
   def textual_uri_prefix
@@ -33,7 +33,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_group_pxe_image_menus
-    %i(filename)
+    %i[filename]
   end
 
   def textual_filename
@@ -41,7 +41,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_pxe_img_basicinfo
-    %i(pxe_img_name pxe_img_description pxe_img_type pxe_img_kernel pxe_img_win_boot_env)
+    %i[pxe_img_name pxe_img_description pxe_img_type pxe_img_kernel pxe_img_win_boot_env]
   end
 
   def textual_pxe_img_name
@@ -65,7 +65,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_win_img_basicinfo
-    %i(win_img_name win_img_description win_img_type win_img_path win_img_index)
+    %i[win_img_name win_img_description win_img_type win_img_path win_img_index]
   end
 
   def textual_win_img_name
@@ -89,7 +89,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_template_basicinfo
-    %i(template_name template_description template_img_type template_type)
+    %i[template_name template_description template_img_type template_type]
   end
 
   def textual_template_name
@@ -109,7 +109,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_sysimg_type_basicinfo
-    %i(sysimg_type_name sysimg_type_provision_type)
+    %i[sysimg_type_name sysimg_type_provision_type]
   end
 
   def textual_sysimg_type_name
@@ -121,7 +121,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_iso_datastore_basicinfo
-    %i(iso_datastore_name iso_datastore_last_refresh_on)
+    %i[iso_datastore_name iso_datastore_last_refresh_on]
   end
 
   def textual_iso_datastore_name
@@ -133,7 +133,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_iso_img_info
-    %i(iso_img_info_name iso_img_info_type)
+    %i[iso_img_info_name iso_img_info_type]
   end
 
   def textual_iso_img_info_name

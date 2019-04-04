@@ -4,7 +4,7 @@ module AutomationManagerHelper
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname ipmi_present ipaddress mac_address provider_name zone)
+      %i[hostname ipmi_present ipaddress mac_address provider_name zone]
     )
   end
 
@@ -38,8 +38,8 @@ module AutomationManagerHelper
   end
 
   def textual_inventory_group_properties
-    %i(inventory_group_name
-       inventory_group_region)
+    %i[inventory_group_name
+       inventory_group_region]
   end
 
   def textual_inventory_group_name
@@ -67,8 +67,8 @@ module AutomationManagerHelper
   end
 
   def textual_configuration_script_group_properties
-    %i(configuration_script_name
-       configuration_script_region)
+    %i[configuration_script_name
+       configuration_script_region]
   end
 
   def textual_configuration_script_name
@@ -88,8 +88,8 @@ module AutomationManagerHelper
   end
 
   def textual_configuration_script_group_os
-    %i(configuration_script_medium
-       configuration_script_partition_table)
+    %i[configuration_script_medium
+       configuration_script_partition_table]
   end
 
   def textual_survey_group(items)
@@ -97,7 +97,7 @@ module AutomationManagerHelper
     h = {:title     => _("Surveys"),
          :headers   => [_('Question Name'), _('Question Description'), _('Variable'),
                         _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')],
-         :col_order => %w(question_name question_description variable type min max default required choices)}
+         :col_order => %w[question_name question_description variable type min max default required choices]}
     h[:value] = items.collect do |item|
       {
         :title                => item['index'],
@@ -119,7 +119,7 @@ module AutomationManagerHelper
     return unless vars
     h = {:title     => _("Variables"),
          :headers   => [_('Name'), _('Value')],
-         :col_order => %w(name value)}
+         :col_order => %w[name value]}
     h[:value] = vars.collect do |item|
       {
         :name  => item[0].to_s,
@@ -130,7 +130,7 @@ module AutomationManagerHelper
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 end
 #

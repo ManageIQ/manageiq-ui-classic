@@ -394,13 +394,13 @@ module Mixins
           end
 
           # set the disk_add and disk_remove options
-          [%i(vmAddDisks disk_add),
-           %i(vmResizeDisks disk_resize),
-           %i(vmRemoveDisks disk_remove),
-           %i(vmAddNetworkAdapters network_adapter_add),
-           %i(vmRemoveNetworkAdapters network_adapter_remove),
-           %i(vmConnectCDRoms cdrom_connect),
-           %i(vmDisconnectCDRoms cdrom_disconnect)].each do |params_key, options_key|
+          [%i[vmAddDisks disk_add],
+           %i[vmResizeDisks disk_resize],
+           %i[vmRemoveDisks disk_remove],
+           %i[vmAddNetworkAdapters network_adapter_add],
+           %i[vmRemoveNetworkAdapters network_adapter_remove],
+           %i[vmConnectCDRoms cdrom_connect],
+           %i[vmDisconnectCDRoms cdrom_disconnect]].each do |params_key, options_key|
              next if params[params_key].blank?
              params[params_key].each_value do |p|
                p.transform_values! { |v| eval_if_bool_string(v) }

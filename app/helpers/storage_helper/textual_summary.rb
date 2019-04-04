@@ -4,27 +4,27 @@ module StorageHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(store_type free_space used_space total_space))
+    TextualGroup.new(_("Properties"), %i[store_type free_space used_space total_space])
   end
 
   def textual_group_registered_vms
-    TextualGroup.new(_("Information for Registered VMs"), %i(uncommitted_space used_uncommitted_space))
+    TextualGroup.new(_("Information for Registered VMs"), %i[uncommitted_space used_uncommitted_space])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms custom_button_events)
+      %i[hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms custom_button_events]
     )
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_group_content
     return nil if @record["total_space"].nil?
-    TextualGroup.new(_("Content"), %i(files disk_files snapshot_files vm_ram_files vm_misc_files debris_files))
+    TextualGroup.new(_("Content"), %i[files disk_files snapshot_files vm_ram_files vm_misc_files debris_files])
   end
 
   #

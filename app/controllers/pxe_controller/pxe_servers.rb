@@ -32,7 +32,7 @@ module PxeController::PxeServers
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif %w(add save).include?(params[:button])
+    elsif %w[add save].include?(params[:button])
       pxe = params[:id] ? find_record_with_rbac(PxeServer, params[:id]) : PxeServer.new
       pxe_server_validate_fields
       if @flash_array
@@ -369,8 +369,8 @@ module PxeController::PxeServers
   # Get variables from edit form
   def pxe_server_get_form_vars
     @ps = @edit[:pxe_id] ? PxeServer.find(@edit[:pxe_id]) : PxeServer.new
-    copy_params_if_set(@edit[:new], params, %i(name access_url uri pxe_directory windows_images_directory
-                                               customization_directory log_userid log_password log_verify))
+    copy_params_if_set(@edit[:new], params, %i[name access_url uri pxe_directory windows_images_directory
+                                               customization_directory log_userid log_password log_verify])
     @edit[:new][:protocol] = params[:log_protocol] if params[:log_protocol]
     params.each do |var, val|
       vars = var.to_s.split("_")
@@ -438,7 +438,7 @@ module PxeController::PxeServers
     else
       @right_cell_div = "pxe_server_details"
       nodes = treenodeid.split("-")
-      if (nodes[0] == "ps" && nodes.length == 2) || (%w(pxe_xx win_xx).include?(nodes[1]) && nodes.length == 3)
+      if (nodes[0] == "ps" && nodes.length == 2) || (%w[pxe_xx win_xx].include?(nodes[1]) && nodes.length == 3)
         # on pxe server node OR folder node is selected
         @record = @ps = PxeServer.find(nodes.last)
         @right_cell_text = _("PXE Server \"%{name}\"") % {:name => @ps.name}
@@ -462,7 +462,7 @@ module PxeController::PxeServers
     if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].present?
       true
     elsif @edit[:new][:uri_prefix] != "nfs" && (@edit[:new][:log_password] == @edit[:new][:log_verify]) &&
-          %i(uri log_userid log_password log_verify).all? { |field| @edit[:new][field].present? }
+          %i[uri log_userid log_password log_verify].all? { |field| @edit[:new][field].present? }
       true
     else
       false

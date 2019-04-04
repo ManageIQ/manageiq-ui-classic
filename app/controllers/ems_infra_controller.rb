@@ -42,7 +42,7 @@ class EmsInfraController < ApplicationController
   end
 
   def new
-    @disabled_ems_infra_types = [%w(KubeVirt kubevirt)]
+    @disabled_ems_infra_types = [%w[KubeVirt kubevirt]]
     super
   end
 

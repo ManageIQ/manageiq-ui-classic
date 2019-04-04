@@ -1,5 +1,5 @@
 class PrometheusProxyService < HawkularProxyService
-  SPECIAL_TAGS = %w(descriptor_name units metric_type type_id).freeze
+  SPECIAL_TAGS = %w[descriptor_name units metric_type type_id].freeze
 
   def initialize(provider_id, controller)
     @db_name = "Prometheus"

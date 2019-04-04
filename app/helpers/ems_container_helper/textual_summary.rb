@@ -10,33 +10,33 @@ module EmsContainerHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type hostname port cpu_cores memory_resources))
+    TextualGroup.new(_("Properties"), %i[name type hostname port cpu_cores memory_resources])
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
     items = []
-    items.concat(%i(container_projects))
-    items.concat(%i(container_routes)) if @record.respond_to?(:container_routes)
-    items.concat(%i(container_services container_replicators container_groups containers container_nodes
+    items.concat(%i[container_projects])
+    items.concat(%i[container_routes]) if @record.respond_to?(:container_routes)
+    items.concat(%i[container_services container_replicators container_groups containers container_nodes
                     container_image_registries container_images volumes container_builds container_templates
-                    custom_button_events))
+                    custom_button_events])
     TextualGroup.new(_("Relationships"), items)
   end
 
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications_status + %i(authentications_status metrics_status refresh_status refresh_date data_collection_state)
+      textual_authentications_status + %i[authentications_status metrics_status refresh_status refresh_date data_collection_state]
     )
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(zone tags))
+    TextualTags.new(_("Smart Management"), %i[zone tags])
   end
 
   def textual_group_topology
-    items = %w(topology)
+    items = %w[topology]
     i = items.collect { |m| send("textual_#{m}") }.flatten.compact
     TextualGroup.new(_("Overview"), i)
   end

@@ -11,7 +11,7 @@ class PhysicalServerController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(network_devices storage_devices physical_switches)
+    %w[network_devices storage_devices physical_switches]
   end
 
   def display_network_devices
@@ -49,8 +49,8 @@ class PhysicalServerController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties management_networks relationships),
-      %i(power_management firmware_compliance firmware_details asset_details smart_management),
+      %i[properties management_networks relationships],
+      %i[power_management firmware_compliance firmware_details asset_details smart_management],
     ]
   end
   helper_method(:textual_group_list)
@@ -59,7 +59,7 @@ class PhysicalServerController < ApplicationController
     assign_policies(PhysicalServer) if params[:pressed] == "physical_server_protect"
     tag(PhysicalServer) if params[:pressed] == "physical_server_tag"
 
-    return if %w(physical_server_protect physical_server_tag).include?(params[:pressed]) &&
+    return if %w[physical_server_protect physical_server_tag].include?(params[:pressed]) &&
               @flash_array.nil? # Some other screen is showing, so return
     if params[:pressed] == "physical_server_timeline"
       @record = find_record_with_rbac(PhysicalServer, params[:id])

@@ -2,7 +2,7 @@ module ApplicationHelper
   module Listnav
     def render_listnav_filename
       return controller.listnav_filename if controller.respond_to?(:listnav_filename, true)
-      common_layouts = %w(
+      common_layouts = %w[
         auth_key_pair_cloud
         availability_zone
         cloud_network
@@ -58,13 +58,13 @@ module ApplicationHelper
         resource_pool
         security_group
         service
-      )
-      list_vm_specific_layouts = %w(
+      ]
+      list_vm_specific_layouts = %w[
         offline
         retired
         templates
         vm
-      )
+      ]
       if @lastaction == "show_list" && !session[:menu_click] && (common_layouts +
         list_vm_specific_layouts).include?(@layout) && !@in_a_form
         "show_list"
@@ -72,20 +72,20 @@ module ApplicationHelper
         "compare_sections"
       elsif @explorer
         "explorer"
-      elsif (list_vm_specific_layouts + %w(
+      elsif (list_vm_specific_layouts + %w[
         vm_cloud
         vm_or_template
-      )).include?(@layout)
+      ]).include?(@layout)
         "vm"
       elsif @layout == "timeline"
         controller.controller_name == "dashboard" ? "timeline" : controller.controller_name
-      elsif (common_layouts + %w(
+      elsif (common_layouts + %w[
         action
         condition
         miq_schedule
         policy
         scan_profile
-      )).include?(@layout)
+      ]).include?(@layout)
         @layout
       end
     end

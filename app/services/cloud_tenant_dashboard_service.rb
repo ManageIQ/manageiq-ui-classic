@@ -9,7 +9,7 @@ class CloudTenantDashboardService < EmsCloudDashboardService
   end
 
   def attributes_data
-    attributes = %i(cloud_object_store_containers miq_templates vms security_groups cloud_networks cloud_subnets network_ports cloud_volumes)
+    attributes = %i[cloud_object_store_containers miq_templates vms security_groups cloud_networks cloud_subnets network_ports cloud_volumes]
 
     attr_icon = {
       :cloud_object_store_containers => 'ff ff-cloud-object-store',

@@ -1,7 +1,7 @@
 module ApplicationController::Compare
   extend ActiveSupport::Concern
 
-  DRIFT_TIME_COLUMNS = %w(last_scan_on boot_time last_logon).freeze
+  DRIFT_TIME_COLUMNS = %w[last_scan_on boot_time last_logon].freeze
 
   def get_compare_report(model)
     db = model.kind_of?(String) ? model.constantize : model
@@ -1271,7 +1271,7 @@ module ApplicationController::Compare
   def comp_add_header_compressed(view, h, i)
     txt = h[:name].truncate(16)
     html_text = ""
-    if %w(Vm VmOrTemplate).include?(@sb[:compare_db])
+    if %w[Vm VmOrTemplate].include?(@sb[:compare_db])
       img = ActionController::Base.helpers.image_path(h.decorate.fileicon)
       html_text << "<a title=\"#{h[:name]}\" href=\"/#{controller_name}/show/#{h[:id]}\">
                       <img src=\"#{img}\" align=\"middle\" border=\"0\" width=\"20\" height=\"20\"/>
@@ -1550,7 +1550,7 @@ module ApplicationController::Compare
   end
 
   def size_formatting(field_name, val)
-    if %w(used_space free_space size).include?(field_name.to_s) && val != "(empty)"
+    if %w[used_space free_space size].include?(field_name.to_s) && val != "(empty)"
       new_val = number_with_delimiter(val, :delimiter => ",", :separator => ".")
       new_val << " bytes"
     else

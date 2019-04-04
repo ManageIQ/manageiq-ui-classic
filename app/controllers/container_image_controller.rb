@@ -9,9 +9,9 @@ class ContainerImageController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties container_labels compliance),
-      %i(relationships smart_management configuration openscap_failed_rules),
-      %i(env container_docker_labels)
+      %i[properties container_labels compliance],
+      %i[relationships smart_management configuration openscap_failed_rules],
+      %i[env container_docker_labels]
     ]
   end
   helper_method :textual_group_list

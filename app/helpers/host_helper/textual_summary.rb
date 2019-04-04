@@ -13,11 +13,11 @@ module HostHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(
+      %i[
         hostname ipaddress ipmi_ipaddress hypervisor_hostname custom_1 vmm_info model asset_tag service_tag osinfo
         power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
         cpu_cores_per_socket memory guid
-      )
+      ]
     )
   end
 
@@ -27,29 +27,29 @@ module HostHelper::TextualSummary
     additions.push(:cloud_subnets) if @record.respond_to?(:cloud_subnets)
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history
         physical_server network_manager custom_button_events
-      ) + additions
+      ] + additions
     )
   end
 
   def textual_group_security
     return nil if @record.is_vmware_esxi?
-    TextualGroup.new(_("Security"), %i(users groups patches firewall_rules ssh_root))
+    TextualGroup.new(_("Security"), %i[users groups patches firewall_rules ssh_root])
   end
 
   def textual_group_configuration
-    TextualGroup.new(_("Configuration"), %i(guest_applications host_services filesystems advanced_settings))
+    TextualGroup.new(_("Configuration"), %i[guest_applications host_services filesystems advanced_settings])
   end
 
   def textual_group_diagnostics
     return nil unless ::Settings.product.proto
-    TextualGroup.new(_("Diagnostics"), %i(esx_logs))
+    TextualGroup.new(_("Diagnostics"), %i[esx_logs])
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_group_miq_custom_attributes
@@ -78,7 +78,7 @@ module HostHelper::TextualSummary
 
   def textual_group_openstack_hardware_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
-    TextualGroup.new(_("Openstack Hardware"), %i(introspected provision_state))
+    TextualGroup.new(_("Openstack Hardware"), %i[introspected provision_state])
   end
 
   #

@@ -12,12 +12,12 @@ class NetworkRouterController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances cloud_subnets floating_ips security_groups custom_button_events)
+    %w[instances cloud_subnets floating_ips security_groups custom_button_events]
   end
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
+    params[:display] = @display if %w[vms instances images].include?(@display)
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
     @refresh_div = "main_div"
@@ -375,7 +375,7 @@ class NetworkRouterController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 
@@ -396,8 +396,8 @@ class NetworkRouterController < ApplicationController
   end
 
   def form_params(params)
-    options = %i(name admin_state_up ems_id cloud_group_id cloud_subnet_id
-                 cloud_network_id).each_with_object({}) do |param, opt|
+    options = %i[name admin_state_up ems_id cloud_group_id cloud_subnet_id
+                 cloud_network_id].each_with_object({}) do |param, opt|
       opt[param] = params[param] if params[param]
     end
 

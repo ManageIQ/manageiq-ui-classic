@@ -11,12 +11,12 @@ class NetworkPortController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def textual_group_list
-    [%i(properties tags), %i(relationships)]
+    [%i[properties tags], %i[relationships]]
   end
   helper_method :textual_group_list
 
   def self.display_methods
-    %w(cloud_subnets floating_ips security_groups)
+    %w[cloud_subnets floating_ips security_groups]
   end
 
   def breadcrumbs_options

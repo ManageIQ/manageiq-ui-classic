@@ -1,7 +1,7 @@
 module ApplicationHelper::PageLayouts
   def layout_uses_listnav?
     return false if @in_a_form
-    return false if %w(
+    return false if %w[
       about
       all_tasks
       chargeback
@@ -35,15 +35,15 @@ module ApplicationHelper::PageLayouts
       server_build
       storage
       storage_pod
-    ).include?(@layout)
+    ].include?(@layout)
 
-    return false if %w(
+    return false if %w[
       ad_hoc_metrics
       consumption
       dashboard
       dialog_provision
       topology
-    ).include?(@showtype)
+    ].include?(@showtype)
 
     return false if dashboard_no_listnav?
 
@@ -56,24 +56,24 @@ module ApplicationHelper::PageLayouts
 
   def layout_uses_paging?
     # listnav always implies paging, this only handles the non-listnav case
-    %w(
+    %w[
       all_tasks
       miq_request_ae
       miq_request_host
       miq_request_vm
       my_tasks
-    ).include?(@layout) && params[:action] != 'show'
+    ].include?(@layout) && params[:action] != 'show'
   end
 
   def layout_uses_tabs?
-    return false if %w(login authenticate auth_error).include?(controller.action_name)
+    return false if %w[login authenticate auth_error].include?(controller.action_name)
 
     layout = case @layout
              when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview',
                   'monitor_alerts_list', 'monitor_alerts_most_recent', 'monitor_alerts_overview'
                false
              when 'report'
-               !%w(new create edit copy update explorer).include?(controller.action_name)
+               !%w[new create edit copy update explorer].include?(controller.action_name)
              when 'timeline'
                @in_a_form
              when 'vm'
@@ -95,15 +95,15 @@ module ApplicationHelper::PageLayouts
   end
 
   def layout_uses_breadcrumbs?
-    !%w(dashboard exception support configuration).include?(@layout)
+    !%w[dashboard exception support configuration].include?(@layout)
   end
 
   def dashboard_no_listnav?
-    @layout == "dashboard" && %w(
+    @layout == "dashboard" && %w[
       auth_error
       change_tab
       show
-    ).include?(controller.action_name)
+    ].include?(controller.action_name)
   end
 
   def center_div_partial
@@ -140,7 +140,7 @@ module ApplicationHelper::PageLayouts
   def saved_report_paging?
     # saved report doesn't use miq_report object,
     # need to use a different paging view to page thru a saved report
-    @sb[:pages] && @html && %i(reports_tree savedreports_tree cb_reports_tree).include?(x_active_tree)
+    @sb[:pages] && @html && %i[reports_tree savedreports_tree cb_reports_tree].include?(x_active_tree)
   end
 
   def show_advanced_search?
@@ -148,7 +148,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def show_adv_search?
-    show_search = %w(
+    show_search = %w[
       auth_key_pair_cloud
       availability_zone
       automation_manager
@@ -204,7 +204,7 @@ module ApplicationHelper::PageLayouts
       service
       templates
       vm
-    )
+    ]
 
     (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
       (@explorer && x_tree && tree_with_advanced_search? && !@record)

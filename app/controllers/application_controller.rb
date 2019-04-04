@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     # MiqWebServerWorkerMixin.configure_secret_token for rails server, UI, and
     # web service worker processes.
     protect_from_forgery(:secret => SecureRandom.hex(64),
-                         :except => %i(authenticate external_authenticate kerberos_authenticate saml_login initiate_saml_login oidc_login initiate_oidc_login csp_report),
+                         :except => %i[authenticate external_authenticate kerberos_authenticate saml_login initiate_saml_login oidc_login initiate_oidc_login csp_report],
                          :with   => :reset_session)
 
   end
@@ -77,17 +77,17 @@ class ApplicationController < ActionController::Base
 
   before_action :reset_toolbar
   before_action :set_session_tenant
-  before_action :get_global_session_data, :except => %i(resize_layout authenticate)
+  before_action :get_global_session_data, :except => %i[resize_layout authenticate]
   before_action :set_user_time_zone
   before_action :set_gettext_locale
   before_action :allow_websocket
-  after_action :set_global_session_data, :except => %i(csp_report resize_layout)
+  after_action :set_global_session_data, :except => %i[csp_report resize_layout]
 
   TIMELINES_FOLDER = Rails.root.join("product", "timelines")
 
   ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
-  PERPAGE_TYPES = %w(grid tile list reports).each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+  PERPAGE_TYPES = %w[grid tile list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
   TREND_MODEL = "VimPerformanceTrend".freeze # Performance trend model name requiring special processing
 
@@ -628,7 +628,7 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  PASSWORD_FIELDS = %i(password _pwd amazon_secret token).freeze
+  PASSWORD_FIELDS = %i[password _pwd amazon_secret token].freeze
 
   def filter_config(data)
     @parameter_filter ||=
@@ -886,7 +886,7 @@ class ApplicationController < ActionController::Base
       col = view.col_order[i]
       next if view.column_is_hidden?(col)
 
-      align = %i(fixnum integer Fixnum float).include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
+      align = %i[fixnum integer Fixnum float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
 
       root[:head] << {:text    => h,
                       :sort    => 'str',
@@ -1110,7 +1110,7 @@ class ApplicationController < ActionController::Base
 
   def check_button_rbac
     # buttons ids that share a common feature id
-    common_buttons = %w(rbac_project_add rbac_tenant_add)
+    common_buttons = %w[rbac_project_add rbac_tenant_add]
     task = common_buttons.include?(params[:pressed]) ? rbac_common_feature_for_buttons(params[:pressed]) : rbac_feature_id(params[:pressed])
     # Intentional single = so we can check auth later
     rbac_free_for_custom_button?(task, params[:button_id]) || role_allows?(:feature => task)
@@ -1159,7 +1159,7 @@ class ApplicationController < ActionController::Base
 
     return if action_name == 'auth_error'
 
-    pass = %w(button x_button).include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
+    pass = %w[button x_button].include?(action_name) ? handle_button_rbac : handle_generic_rbac(check_generic_rbac)
     $audit_log.failure("Username [#{current_userid}], Role ID [#{current_user.miq_user_role.try(:id)}] attempted to access area [#{controller_name}], type [Action], task [#{action_name}]") unless pass
   end
 
@@ -1248,7 +1248,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_view_calculate_gtl_type(db_sym)
-    gtl_type = settings(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
+    gtl_type = settings(:views, db_sym) unless %w[scanitemset miqschedule pxeserver customizationtemplate].include?(db_sym.to_s)
     gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
     gtl_type ||= 'grid' if params[:records] && params[:records].kind_of?(Array)
     gtl_type ||= 'list' # return a sane default
@@ -1358,7 +1358,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Build the advanced search @edit hash
-    if (@explorer && !@in_a_form && !%w(adv_search_clear tree_select).include?(action_name)) ||
+    if (@explorer && !@in_a_form && !%w[adv_search_clear tree_select].include?(action_name)) ||
        (action_name == "show_list" && !session[:menu_click])
       adv_search_build(db)
     end
@@ -1463,7 +1463,7 @@ class ApplicationController < ActionController::Base
   end
 
   def grid_hash_conditions(view)
-    !%w(Job MiqProvision MiqReportResult MiqTask).include?(view.db) &&
+    !%w[Job MiqProvision MiqReportResult MiqTask].include?(view.db) &&
       !(view.db.ends_with?("Build") && view.db != "ContainerBuild") &&
       !@force_no_grid_xml && (@gtl_type == "list" || @force_grid_xml)
   end
@@ -1519,7 +1519,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
-    if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
+    if %w[ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm]
        .include?(db) && options[:association] == "all_vms_and_templates"
       options[:association] = nil
     end
@@ -1570,7 +1570,7 @@ class ApplicationController < ActionController::Base
     button_div = 'center_tb'
     action_url = if @lastaction == "scan_history"
                    "scan_history"
-                 elsif %w(all_jobs jobs ui_jobs all_ui_jobs).include?(@lastaction)
+                 elsif %w[all_jobs jobs ui_jobs all_ui_jobs].include?(@lastaction)
                    "jobs"
                  elsif @lastaction == "get_node_info"
                    nil
@@ -1580,7 +1580,7 @@ class ApplicationController < ActionController::Base
                    "show_list"
                  end
 
-    ajax_url = !%w(SecurityGroup CloudVolume).include?(view.db)
+    ajax_url = !%w[SecurityGroup CloudVolume].include?(view.db)
     ajax_url = false if request.parameters[:controller] == "service" && view.db == "Vm"
     ajax_url = false unless @explorer
 
@@ -1683,7 +1683,7 @@ class ApplicationController < ActionController::Base
   # renders a flash message in case the records do not support the task
   def task_supported(typ)
     vms = find_records_with_rbac(VmOrTemplate, checked_or_params)
-    if %w(migrate publish).include?(typ) && vms.any?(&:template?)
+    if %w[migrate publish].include?(typ) && vms.any?(&:template?)
       render_flash_not_applicable_to_model(typ, ui_lookup(:table => "miq_template"))
       return
     end
@@ -1742,7 +1742,7 @@ class ApplicationController < ActionController::Base
       if typ
         prov_edit
       else
-        if %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
+        if %w[image_miq_request_new miq_template_miq_request_new].include?(params[:pressed])
           # skip pre prov grid
           set_pre_prov_vars
           template = find_record_with_rbac(VmOrTemplate, checked_or_params)
@@ -1764,7 +1764,7 @@ class ApplicationController < ActionController::Base
   alias_method :miq_template_miq_request_new, :prov_redirect
 
   def template_types_for_controller
-    if %w(ems_cluster ems_infra host resource_pool storage vm_infra).include?(request.parameters[:controller])
+    if %w[ems_cluster ems_infra host resource_pool storage vm_infra].include?(request.parameters[:controller])
       'infra'
     else
       'cloud'
@@ -1807,7 +1807,7 @@ class ApplicationController < ActionController::Base
     url = URI.parse(request.url).path
 
     # Do not include console popup windows urls. Only urls from the main UI are supported.
-    return if %w(launch_vmrc_console launch_html5_console).any? { |i| url.include?(i) }
+    return if %w[launch_vmrc_console launch_html5_console].any? { |i| url.include?(i) }
 
     section.parent_path.each do |sid|
       session[:tab_url][sid] = url
@@ -1840,7 +1840,7 @@ class ApplicationController < ActionController::Base
     @expkey = session[:expkey] ? session[:expkey] : :expression
 
     # Get server hash, if it is in the session for supported controllers
-    @server_options = session[:server_options] if %w(configuration support).include?(controller_name)
+    @server_options = session[:server_options] if %w[configuration support].include?(controller_name)
 
     # Get timelines hash, if it is in the session for the running controller
     @tl_options = tl_session_data
@@ -1915,15 +1915,15 @@ class ApplicationController < ActionController::Base
       when "ems_infra", "datacenter", "ems_cluster", "resource_pool", "storage", "pxe_server"
         session[:tab_bc][:inf] = @breadcrumbs.dup if %(show show_list).include?(action_name)
       when "host"
-        session[:tab_bc][:inf] = @breadcrumbs.dup if %w(show show_list log_viewer).include?(action_name)
+        session[:tab_bc][:inf] = @breadcrumbs.dup if %w[show show_list log_viewer].include?(action_name)
       when "miq_request"
-        if @layout == "miq_request_vm" && %w(show show_list).include?(action_name)
+        if @layout == "miq_request_vm" && %w[show show_list].include?(action_name)
           session[:tab_bc][:vms] = @breadcrumbs.dup
-        elsif %w(show show_list).include?(action_name)
+        elsif %w[show show_list].include?(action_name)
           session[:tab_bc][:inf] = @breadcrumbs.dup
         end
       when "vm"
-        session[:tab_bc][:vms] = @breadcrumbs.dup if %w(
+        session[:tab_bc][:vms] = @breadcrumbs.dup if %w[
           show
           show_list
           usage
@@ -1936,7 +1936,7 @@ class ApplicationController < ActionController::Base
           win32services
           kerneldrivers
           filesystemdrivers
-        ).include?(action_name)
+        ].include?(action_name)
       end
     end
 
@@ -1991,7 +1991,7 @@ class ApplicationController < ActionController::Base
     session[:ch_tree] = nil if !["compliance_history"].include?(params[:display])
     session[:vm_tree] = nil unless ["vmtree_info"].include?(params[:display])
     session[:policy_tree] = nil if params[:action] != "policies" && params[:pressed] != "vm_protect"
-    session[:resolve] = session[:resolve_object] = nil unless %w(catalog miq_ae_customization miq_ae_tools).include?(request.parameters[:controller])
+    session[:resolve] = session[:resolve_object] = nil unless %w[catalog miq_ae_customization miq_ae_tools].include?(request.parameters[:controller])
     session[:report_menu] = session[:report_folders] = session[:menu_roles_tree] = nil if controller_name != "report"
     if session.class != Hash
       session_hash = session.respond_to?(:to_hash) ? session.to_hash : session.data
@@ -2023,7 +2023,7 @@ class ApplicationController < ActionController::Base
     @edit[:new][:visibility_typ] = VISIBILITY_TYPES[params[:visibility_typ]] if typ_changed
 
     visibility_typ = @edit[:new][:visibility_typ]
-    if %w(role group).include?(visibility_typ)
+    if %w[role group].include?(visibility_typ)
       plural = visibility_typ.pluralize
       key    = plural.to_sym
       prefix = "#{plural}_"

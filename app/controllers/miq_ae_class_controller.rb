@@ -10,7 +10,7 @@ class MiqAeClassController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy).freeze
+  MIQ_AE_COPY_ACTIONS = %w[miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy].freeze
 
   # GET /automation_classes
   # GET /automation_classes.xml
@@ -117,7 +117,7 @@ class MiqAeClassController < ApplicationController
       @sb[:namespace_path] = rec.fqname
     end
     @sb[:namespace_path].gsub!(%r{\/}, " / ") if @sb[:namespace_path]
-    @right_cell_text = "#{txt} #{_("\"%s\"") % get_rec_name(rec)}" unless %w(root aei aem).include?(nodes[0])
+    @right_cell_text = "#{txt} #{_("\"%s\"") % get_rec_name(rec)}" unless %w[root aei aem].include?(nodes[0])
   end
 
   def expand_toggle
@@ -214,7 +214,7 @@ class MiqAeClassController < ApplicationController
     nodes.each_with_index do |_, i|
       if i == nodes.length - 1
         selected_node = x_node.split("-")
-        parents.push(record.ae_class) if %w(aei aem).include?(selected_node[0])
+        parents.push(record.ae_class) if %w[aei aem].include?(selected_node[0])
         self.x_node = "#{selected_node[0]}-#{record.id}"
         parents.push(record)
       else
@@ -272,7 +272,7 @@ class MiqAeClassController < ApplicationController
     nodes = x_node.split('-')
 
     @in_a_form = @in_a_form_fields = @in_a_form_props = false if params[:button] == "cancel" ||
-                                                                 (%w(save add).include?(params[:button]) && replace_trees)
+                                                                 (%w[save add].include?(params[:button]) && replace_trees)
     add_nodes = open_parent_nodes(@record) if params[:button] == "copy" ||
                                               params[:action] == "x_show"
     get_node_info(x_node) if !@in_a_form && !@angular_form && @button != "reset"
@@ -287,7 +287,7 @@ class MiqAeClassController < ApplicationController
       :add_nodes       => add_nodes,
     )
 
-    trees = build_replaced_trees(replace_trees, %i(ae))
+    trees = build_replaced_trees(replace_trees, %i[ae])
     reload_trees_by_presenter(presenter, trees)
 
     if @sb[:action] == "miq_ae_field_seq"
@@ -835,7 +835,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      unless %w(up down).include?(params[:button])
+      unless %w[up down].include?(params[:button])
         if params[:field_datatype] == "password"
           page << javascript_hide("field_default_value")
           page << javascript_show("field_password_value")
@@ -1730,7 +1730,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def set_playbook_data
-    params_list = %i(repository_id
+    params_list = %i[repository_id
                      playbook_id
                      credential_id
                      vault_credential_id
@@ -1739,8 +1739,8 @@ class MiqAeClassController < ApplicationController
                      cloud_credential_id
                      execution_ttl
                      hosts
-                     log_output)
-    boolean_params_list = %i(become_enabled)
+                     log_output]
+    boolean_params_list = %i[become_enabled]
     params_hash = copy_params_if_set({}, params, params_list)
     copy_boolean_params(params_hash, params, boolean_params_list)
   end
@@ -1781,25 +1781,25 @@ class MiqAeClassController < ApplicationController
   end
 
   def instance_column_names
-    %w(name description display_name)
+    %w[name description display_name]
   end
 
   def field_column_names
-    %w(aetype collect datatype default_value display_name name on_entry on_error on_exit max_retries max_time substitute)
+    %w[aetype collect datatype default_value display_name name on_entry on_error on_exit max_retries max_time substitute]
   end
 
   def value_column_names
-    %w(collect display_name on_entry on_error on_exit max_retries max_time value)
+    %w[collect display_name on_entry on_error on_exit max_retries max_time value]
   end
 
   def method_input_column_names
-    %w(datatype default_value id name priority)
+    %w[datatype default_value id name priority]
   end
 
   def copy_objects_get_form_vars
-    %w(domain override_existing override_source namespace new_name).each do |field|
+    %w[domain override_existing override_source namespace new_name].each do |field|
       fld = field.to_sym
-      if %w(override_existing override_source).include?(field)
+      if %w[override_existing override_source].include?(field)
         @edit[:new][fld] = params[fld] == "1" if params[fld]
         @edit[:new][:namespace] = nil if @edit[:new][:override_source]
       else
@@ -2108,9 +2108,9 @@ class MiqAeClassController < ApplicationController
   end
 
   def field_attributes
-    %w(aetype class_id collect datatype default_value description
+    %w[aetype class_id collect datatype default_value description
        display_name id max_retries max_time message name on_entry
-       on_error on_exit priority substitute)
+       on_error on_exit priority substitute]
   end
 
   def row_selected_in_grid?
@@ -2123,7 +2123,7 @@ class MiqAeClassController < ApplicationController
     @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
     @in_a_form = true
     @in_a_form_fields = true
-    if params[:item].blank? && !%w(accept save).include?(params[:button]) && params["action"] != "field_delete"
+    if params[:item].blank? && !%w[accept save].include?(params[:button]) && params["action"] != "field_delete"
       field_data = session[:field_data]
       new_field = @edit[:new_field]
 
@@ -2151,7 +2151,7 @@ class MiqAeClassController < ApplicationController
           field_name = "fields_#{field}_#{i}"
           if field == "substitute"
             fld[field] = params[field_name] == "1" if params[field_name]
-          elsif %w(aetype datatype).include?(field)
+          elsif %w[aetype datatype].include?(field)
             var_name = "fields_#{field}#{i}"
             fld[field] = params[var_name.to_sym] if params[var_name.to_sym]
           elsif field == "default_value"
@@ -2250,7 +2250,7 @@ class MiqAeClassController < ApplicationController
   def get_ns_form_vars
     @ae_ns = @edit[:typ].constantize.find_by(:id => @edit[:ae_ns_id])
     @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
-    %i(ns_name ns_description).each do |field|
+    %i[ns_name ns_description].each do |field|
       next unless params[field]
       @edit[:new][field] = params[field].presence
     end
@@ -2263,7 +2263,7 @@ class MiqAeClassController < ApplicationController
     end
 
     @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.each_with_index do |_fld, i|
-      %w(value collect on_entry on_exit on_error max_retries max_time).each do |key|
+      %w[value collect on_entry on_exit on_error max_retries max_time].each do |key|
         @edit[:new][:ae_values][i][key] = params["#{prefix}inst_#{key}_#{i}".to_sym] if params["#{prefix}inst_#{key}_#{i}".to_sym]
       end
       @edit[:new][:ae_values][i]["value"] = params["#{prefix}inst_password_value_#{i}".to_sym] if params["#{prefix}inst_password_value_#{i}".to_sym]

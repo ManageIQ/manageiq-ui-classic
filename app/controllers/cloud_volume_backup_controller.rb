@@ -102,7 +102,7 @@ class CloudVolumeBackupController < ApplicationController
   end
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
 
   helper_method :textual_group_list

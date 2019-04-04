@@ -5,8 +5,8 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
-    OPENSTACK_PARAMS = %i(name provider_region api_version default_security_protocol keystone_v3_domain_id default_hostname default_api_port default_userid event_stream_selection).freeze
-    OPENSTACK_AMQP_PARAMS = %i(name provider_region api_version amqp_security_protocol keystone_v3_domain_id amqp_hostname amqp_api_port amqp_userid event_stream_selection).freeze
+    OPENSTACK_PARAMS = %i[name provider_region api_version default_security_protocol keystone_v3_domain_id default_hostname default_api_port default_userid event_stream_selection].freeze
+    OPENSTACK_AMQP_PARAMS = %i[name provider_region api_version amqp_security_protocol keystone_v3_domain_id amqp_hostname amqp_api_port amqp_userid event_stream_selection].freeze
 
     included do
       include Mixins::GenericFormMixin
@@ -89,9 +89,9 @@ module Mixins
     def create_ems_button_validate
       @in_a_form = true
       ems_type = model.model_from_emstype(params[:emstype])
-      result, details = if %w(ems_cloud ems_infra).include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
+      result, details = if %w[ems_cloud ems_infra].include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
                           realtime_raw_connect(ems_type)
-                        elsif %w(ems_cloud ems_infra).include?(params[:controller])
+                        elsif %w[ems_cloud ems_infra].include?(params[:controller])
                           ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)
@@ -367,7 +367,7 @@ module Mixins
         amqp_fallback_hostname2 = @ems.connection_configurations.amqp_fallback2 ? @ems.connection_configurations.amqp_fallback2.endpoint.hostname : ""
       end
 
-      if %w(ems_cloud ems_network).include?(controller_name)
+      if %w[ems_cloud ems_network].include?(controller_name)
         render :json => {:name                            => @ems.name,
                          :emstype                         => @ems.emstype,
                          :zone                            => zone,
@@ -725,7 +725,7 @@ module Mixins
     def endpoint_security_options(security_protocol, certificate_authority)
       {
         :security_protocol     => security_protocol,
-        :verify_ssl            => %w(ssl-without-validation non-ssl).exclude?(security_protocol),
+        :verify_ssl            => %w[ssl-without-validation non-ssl].exclude?(security_protocol),
         :certificate_authority => security_protocol == 'ssl-with-validation-custom-ca' ? certificate_authority : nil
       }
     end
@@ -734,7 +734,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      %i(default ceilometer amqp amqp_fallback1 amqp_fallback2 console smartstate_docker ssh_keypair metrics hawkular prometheus prometheus_alerts kubevirt).each do |role|
+      %i[default ceilometer amqp amqp_fallback1 amqp_fallback2 console smartstate_docker ssh_keypair metrics hawkular prometheus prometheus_alerts kubevirt].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 

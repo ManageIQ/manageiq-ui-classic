@@ -533,7 +533,7 @@ module OpsController::Diagnostics
     @gtl_type = "list"
     @embedded = @pages = false
     @showlinks = true
-    status = %w(started ready working)
+    status = %w[started ready working]
 
     view_options = {
       :named_scope => [[:with_miq_server_id, @sb[:selected_server_id]],
@@ -718,7 +718,7 @@ module OpsController::Diagnostics
       @sb[:selected_server_id] = @selected_server.id
       @sb[:selected_typ] = "zone"
       if @selected_server.miq_servers.length >= 1 &&
-         %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
+         %w[diagnostics_roles_servers diagnostics_servers_roles].include?(@sb[:active_tab])
         build_server_tree(@selected_server)
       else
         @server_tree = nil
@@ -737,7 +737,7 @@ module OpsController::Diagnostics
     elsif x_node == "root"
       if @sb[:active_tab] == "diagnostics_zones"
         @zones = Zone.visible.in_my_region
-      elsif %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
+      elsif %w[diagnostics_roles_servers diagnostics_servers_roles].include?(@sb[:active_tab])
         @selected_server = MiqRegion.my_region
         @sb[:selected_server_id] = @selected_server.id
         @sb[:selected_typ] = "miq_region"

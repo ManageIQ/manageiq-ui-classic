@@ -29,7 +29,7 @@ module Menu
     def create_custom_menu_item(properties)
       rbac = properties['rbac'].each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
       item_type = properties.key?('item_type') ? properties['item_type'].to_sym : :default
-      %w(id name rbac parent).each do |property|
+      %w[id name rbac parent].each do |property|
         if properties[property].blank?
           raise Menu::Manager::InvalidMenuDefinition,
                 "incomplete definition -- missing #{property}"

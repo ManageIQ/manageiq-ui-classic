@@ -293,7 +293,7 @@ class MiqTaskController < ApplicationController
 
   def build_query_for_status(opts)
     cond = [[]]
-    %i(queued ok error warn running).each do |st|
+    %i[queued ok error warn running].each do |st|
       cond = add_to_condition(cond, *send("build_query_for_" + st.to_s)) if opts[st]
     end
 
@@ -302,7 +302,7 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_queued
-    ["(miq_tasks.state=? OR miq_tasks.state=?)", %w(Waiting_to_start Queued)]
+    ["(miq_tasks.state=? OR miq_tasks.state=?)", %w[Waiting_to_start Queued]]
   end
 
   def build_query_for_ok
@@ -324,13 +324,13 @@ class MiqTaskController < ApplicationController
 
   def build_query_for_running
     sql = "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)"
-    [sql, %w(Finished Waiting_to_start Queued)]
+    [sql, %w[Finished Waiting_to_start Queued]]
   end
 
   def build_query_for_status_none_selected
     sql = "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND "\
           "miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)"
-    [sql, %w(Ok Error Warn Finished Queued Waiting_to_start)]
+    [sql, %w[Ok Error Warn Finished Queued Waiting_to_start]]
   end
 
   def build_query_for_time_period(opts)
@@ -358,7 +358,7 @@ class MiqTaskController < ApplicationController
     end
 
     # Add status scope
-    status = (opts.compact.symbolize_keys.keys & %i(ok queued error warn running))
+    status = (opts.compact.symbolize_keys.keys & %i[ok queued error warn running])
     if status.any?
       status_scope_mapping = { :ok => :completed_ok, :warn => :completed_warn, :error => :completed_error } # remap reserved names
       status.map! { |s| status_scope_mapping[s] ? status_scope_mapping[s] : s }
@@ -389,7 +389,7 @@ class MiqTaskController < ApplicationController
   end
 
   def get_layout
-    %w(my_tasks all_tasks).include?(session[:layout]) ? session[:layout] : "my_tasks"
+    %w[my_tasks all_tasks].include?(session[:layout]) ? session[:layout] : "my_tasks"
   end
 
   def get_session_data

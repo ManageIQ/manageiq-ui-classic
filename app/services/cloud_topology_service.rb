@@ -7,7 +7,7 @@ class CloudTopologyService < TopologyService
     :cloud_tenants      => [:writable_classification_tags, :vms => :writable_classification_tags],
   ]
 
-  @kinds = %i(CloudManager AvailabilityZone CloudTenant Vm Tag)
+  @kinds = %i[CloudManager AvailabilityZone CloudTenant Vm Tag]
 
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::CloudManager)

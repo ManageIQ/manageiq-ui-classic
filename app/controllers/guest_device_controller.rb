@@ -32,7 +32,7 @@ class GuestDeviceController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties physical_network_ports firmware),
+      %i[properties physical_network_ports firmware],
     ]
   end
   helper_method(:textual_group_list)

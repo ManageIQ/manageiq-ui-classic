@@ -327,7 +327,7 @@ module OpsController::Settings::Schedules
     when "container_image"
       filtered_item_list = find_filtered(ContainerImage).sort_by { |ci| ci.name.downcase }.collect(&:name).uniq
     when "ems"
-      filtered_item_list = if %w(emscluster host host_check_compliance storage).include?(action_type)
+      filtered_item_list = if %w[emscluster host host_check_compliance storage].include?(action_type)
                              find_filtered(ExtManagementSystem).collect { |ems| ems.name if ems.number_of(:hosts).positive? }
                                                                .delete_if(&:blank?).sort_by(&:downcase)
                            else
@@ -359,12 +359,12 @@ module OpsController::Settings::Schedules
   end
 
   def schedule_db_backup_or_automate(schedule)
-    %w(db_backup automation_request).include?(schedule.sched_action[:method])
+    %w[db_backup automation_request].include?(schedule.sched_action[:method])
   end
 
   def determine_filter_type_and_value(schedule)
     if schedule.sched_action && schedule.sched_action[:method] && !schedule_db_backup_or_automate(schedule)
-      !%w(db_backup automation_request).include?(schedule.sched_action[:method])
+      !%w[db_backup automation_request].include?(schedule.sched_action[:method])
       if schedule.miq_search # See if a search filter is attached
         filter_type = schedule.miq_search.search_type == "user" ? "my" : "global"
         filter_value = schedule.miq_search.id
@@ -429,8 +429,8 @@ module OpsController::Settings::Schedules
 
   def schedule_validate?(sched)
     valid = true
-    unless %w(db_backup automation_request).include?(params[:action_typ])
-      if %w(global my).include?(params[:filter_typ])
+    unless %w[db_backup automation_request].include?(params[:action_typ])
+      if %w[global my].include?(params[:filter_typ])
         if params[:filter_value].blank? # Check for search filter chosen
           add_flash(_("Filter must be selected"), :error)
           valid = false
@@ -509,7 +509,7 @@ module OpsController::Settings::Schedules
           :object_message => params[:object_message],
         }.merge!(ui_attrs.to_h).merge!(build_attrs_from_params(params))
       }
-    elsif %w(global my).include?(params[:filter_typ]) # Search filter chosen, set up relationship
+    elsif %w[global my].include?(params[:filter_typ]) # Search filter chosen, set up relationship
       schedule.filter     = nil # Clear out existing filter expression
       schedule.miq_search = params[:filter_value] ? MiqSearch.find(params[:filter_value]) : nil # Set up the search relationship
     else # Build the filter expression

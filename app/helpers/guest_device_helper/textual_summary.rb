@@ -2,7 +2,7 @@ module GuestDeviceHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(device_name location manufacturer field_replaceable_unit)
+      %i[device_name location manufacturer field_replaceable_unit]
     )
   end
 

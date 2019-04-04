@@ -42,7 +42,7 @@ module Mixins
 
     def button
       @edit = session[:edit] # Restore @edit for adv search box
-      params[:display] = @display if %w(vms images instances).include?(@display)
+      params[:display] = @display if %w[vms images instances].include?(@display)
       params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
       if params[:pressed] == "custom_button"

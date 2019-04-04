@@ -9,7 +9,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def history_toolbar_filename
-    if x_active_tree == :dialogs_tree || %w(chargeback miq_ae_tools miq_capacity_planning miq_capacity_utilization miq_policy_rsop ops).include?(@layout)
+    if x_active_tree == :dialogs_tree || %w[chargeback miq_ae_tools miq_capacity_planning miq_capacity_utilization miq_policy_rsop ops].include?(@layout)
       nil
     else
       'x_history_tb'
@@ -19,15 +19,15 @@ class ApplicationHelper::ToolbarChooser
   def x_view_toolbar_filename
     if x_gtl_view_tb_render?
       'x_gtl_view_tb'
-    elsif %w(miq_capacity_bottlenecks miq_capacity_planning miq_capacity_utilization).include?(@layout)
+    elsif %w[miq_capacity_bottlenecks miq_capacity_planning miq_capacity_utilization].include?(@layout)
       'miq_capacity_view_tb'
-    elsif @record && @explorer && (%w(services catalogs).include?(@layout) || %w(performance timeline).include?(@display))
+    elsif @record && @explorer && (%w[services catalogs].include?(@layout) || %w[performance timeline].include?(@display))
       nil
     elsif @layout == 'report'
       @report ? "report_view_tb" : nil
     elsif @layout == 'provider_foreman'
       @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
-    elsif %w(vm_infra vm_cloud).include?(@layout)
+    elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
     elsif @layout == 'automation_manager'
       @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "x_gtl_view_tb"
@@ -41,11 +41,11 @@ class ApplicationHelper::ToolbarChooser
       'compare_view_tb'
     elsif @lastaction == "drift"
       'drift_view_tb'
-    elsif %w(ems_container ems_infra ems_physical_infra).include?(@layout) && %w(main dashboard topology).include?(@display)
+    elsif %w[ems_container ems_infra ems_physical_infra].include?(@layout) && %w[main dashboard topology].include?(@display)
       'dashboard_summary_toggle_view_tb'
-    elsif %w(container_project).include?(@layout)
+    elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !%w(all_tasks timeline diagnostics my_tasks miq_server usage).include?(@layout) &&
+    elsif !%w[all_tasks timeline diagnostics my_tasks miq_server usage].include?(@layout) &&
           !@layout.starts_with?("miq_request") && @display == "main" &&
           @showtype == "main" && !@in_a_form
       'summary_view_tb'
@@ -96,9 +96,9 @@ class ApplicationHelper::ToolbarChooser
 
   # Return explorer based toolbar file name
   def center_toolbar_filename_explorer
-    if %w(vm_cloud vm_infra vm_or_template).include?(@layout)
+    if %w[vm_cloud vm_infra vm_or_template].include?(@layout)
       center_toolbar_name_vm_or_template
-    elsif @layout == "provider_foreman" && %i(configuration_manager_providers_tree configuration_manager_cs_filter_tree).include?(x_active_tree)
+    elsif @layout == "provider_foreman" && %i[configuration_manager_providers_tree configuration_manager_cs_filter_tree].include?(x_active_tree)
       center_toolbar_filename_configuration_manager_providers
     elsif @layout == "automation_manager"
       center_toolbar_filename_automation_manager
@@ -108,7 +108,7 @@ class ApplicationHelper::ToolbarChooser
       infra_networking_tree_center_tb(x_node_split)
     elsif x_active_tree == :containers_tree
       center_toolbar_filename_containers
-    elsif %i(sandt_tree svccat_tree stcat_tree svcs_tree ot_tree).include?(x_active_tree)
+    elsif %i[sandt_tree svccat_tree stcat_tree svcs_tree ot_tree].include?(x_active_tree)
       center_toolbar_filename_services
     elsif @layout == "chargeback"
       center_toolbar_filename_chargeback
@@ -212,7 +212,7 @@ class ApplicationHelper::ToolbarChooser
         "services_center_tb"
       end
     elsif x_active_tree == :ot_tree
-      if %w(root xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap).include?(x_node)
+      if %w[root xx-otcfn xx-othot xx-otazu xx-otvnf xx-otvap].include?(x_node)
         "orchestration_templates_center_tb"
       else
         "orchestration_template_center_tb"
@@ -228,7 +228,7 @@ class ApplicationHelper::ToolbarChooser
     if @report && x_active_tree == :cb_reports_tree
       return "chargeback_center_tb"
     elsif x_active_tree == :cb_rates_tree && x_node != "root"
-      if %w(Compute Storage).include?(x_node.split('-').last)
+      if %w[Compute Storage].include?(x_node.split('-').last)
         return "chargebacks_center_tb"
       else
         return "chargeback_center_tb"
@@ -319,7 +319,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_report
     if x_active_tree == :db_tree
       node = x_node
-      if %w(root xx-g).include?(node)
+      if %w[root xx-g].include?(node)
         return nil
       elsif node.split('-').length == 3
         return "miq_widget_sets_center_tb"
@@ -413,13 +413,13 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_classic
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
-    to_display = %w(availability_zones cloud_networks cloud_object_store_containers cloud_subnets
+    to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets
                     cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts
                     load_balancers network_ports network_routers orchestration_stacks resource_pools
                     security_groups storages middleware_deployments
-                    middleware_servers)
-    to_display_center = %w(stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices)
-    performance_layouts = %w(vm host ems_container)
+                    middleware_servers]
+    to_display_center = %w[stack_orchestration_template topology cloud_object_store_objects generic_objects physical_servers guest_devices]
+    performance_layouts = %w[vm host ems_container]
 
     if @lastaction == 'show' && (@view || @display != 'main') && !@layout.starts_with?("miq_request")
       if @display == "vms" || @display == "all_vms"
@@ -454,7 +454,7 @@ class ApplicationHelper::ToolbarChooser
       return nil if @in_a_form
 
       # show_list and show screens
-      if %w(auth_key_pair_cloud
+      if %w[auth_key_pair_cloud
             availability_zone
             host_aggregate
             cloud_object_store_object
@@ -515,7 +515,7 @@ class ApplicationHelper::ToolbarChooser
             timeline
             usage
             guest_device
-            generic_object_definition).include?(@layout)
+            generic_object_definition].include?(@layout)
 
         return @lastaction == 'show_list' ? "#{@layout.pluralize}_center_tb" : "#{@layout}_center_tb"
 
@@ -527,7 +527,7 @@ class ApplicationHelper::ToolbarChooser
         return "logs_center_tb"
       elsif @layout.to_s.starts_with?("miq_request_")
         return @lastaction == 'show_list' ? 'miq_requests_center_tb' : 'miq_request_center_tb'
-      elsif %w(my_tasks all_tasks).include?(@layout)
+      elsif %w[my_tasks all_tasks].include?(@layout)
         return "tasks_center_tb"
       end
     end
@@ -586,7 +586,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def configuration_scripts_tree_center_tb(nodes)
-    if %w(root at).include?(nodes.first)
+    if %w[root at].include?(nodes.first)
       "configuration_scripts_center_tb"
     else
       "configuration_script_center_tb"
@@ -609,7 +609,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def automation_manager_configuration_scripts_tree_center_tb(nodes)
-    if %w(root at).include?(nodes.first)
+    if %w[root at].include?(nodes.first)
       "configuration_scripts_center_tb"
     else
       "configuration_script_center_tb"
@@ -617,7 +617,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def infra_networking_tree_center_tb(nodes)
-    if %w(root e h c).include?(nodes.first)
+    if %w[root e h c].include?(nodes.first)
       "infra_networkings_center_tb"
     end
   end
@@ -638,7 +638,7 @@ class ApplicationHelper::ToolbarChooser
     configuration_profile_center_tb if nodes[2] == "unassigned"
   end
 
-  NO_GTL_VIEW_BUTTONS = %w(chargeback
+  NO_GTL_VIEW_BUTTONS = %w[chargeback
                            generic_object
                            generic_object_definition
                            miq_ae_class
@@ -651,7 +651,7 @@ class ApplicationHelper::ToolbarChooser
                            ops
                            provider_foreman
                            pxe
-                           report).to_set.freeze
+                           report].to_set.freeze
 
   def x_gtl_view_tb_render?
     @record.nil? && @explorer && !NO_GTL_VIEW_BUTTONS.include?(@layout)

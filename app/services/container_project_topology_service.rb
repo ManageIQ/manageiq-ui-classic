@@ -12,5 +12,5 @@ class ContainerProjectTopologyService < ContainerTopologyService
     ]
   ]
 
-  @kinds = %i(ContainerReplicator ContainerGroup Container ContainerNode ContainerService Host Vm ContainerRoute ContainerManager ContainerProject)
+  @kinds = %i[ContainerReplicator ContainerGroup Container ContainerNode ContainerService Host Vm ContainerRoute ContainerManager ContainerProject]
 end

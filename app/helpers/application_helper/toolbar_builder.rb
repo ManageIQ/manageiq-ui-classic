@@ -131,7 +131,7 @@ class ApplicationHelper::ToolbarBuilder
     )
 
     button[:enabled] = input[:enabled]
-    %i(title text confirm enabled).each do |key|
+    %i[title text confirm enabled].each do |key|
       if input[key].present?
         button[key] = button.localized(key, input[key])
       end
@@ -407,7 +407,7 @@ class ApplicationHelper::ToolbarBuilder
   def url_for_button(name, url_tpl, controller_restful)
     url = safer_eval(url_tpl)
 
-    if %w(view_grid view_tile view_list).include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
+    if %w[view_grid view_tile view_list].include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
       # handle restful routes - we want just / if the url is just an id
       url = '/'
     end
@@ -424,7 +424,7 @@ class ApplicationHelper::ToolbarBuilder
   def update_url_parms(url_parm)
     return url_parm unless url_parm =~ /=/
 
-    keep_parms = %w(bc escape menu_click sb_controller)
+    keep_parms = %w[bc escape menu_click sb_controller]
     query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
     query_string.delete_if { |k, _v| !keep_parms.include?(k) }
 

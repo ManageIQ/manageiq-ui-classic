@@ -10,7 +10,7 @@ class ContainerBuildController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties container_labels), %i(relationships smart_management), %i(build_instances)]
+    [%i[properties container_labels], %i[relationships smart_management], %i[build_instances]]
   end
   helper_method :textual_group_list
 

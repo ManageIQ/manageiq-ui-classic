@@ -28,7 +28,7 @@ class PlanningController < ApplicationController
 
     vm_opts = VimPerformancePlanning.vm_default_options(@sb[:options][:vm_mode])
     # Check that at least one required metric is checked
-    if [%i(cpu trend_cpu), %i(vcpus trend_vcpus), %i(memory trend_memory), %i(storage trend_storage)].any? { |x, y| vm_opts[x] && @sb[:options][y] }
+    if [%i[cpu trend_cpu], %i[vcpus trend_vcpus], %i[memory trend_memory], %i[storage trend_storage]].any? { |x, y| vm_opts[x] && @sb[:options][y] }
       perf_planning_gen_data
       @sb[:options][:submitted_vm_mode] = @sb[:options][:vm_mode] # Save for display
       if @sb[:rpt]
@@ -111,7 +111,7 @@ class PlanningController < ApplicationController
     else
       render :update do |page|
         page << javascript_prologue
-        unless %i(trend_cpu_val trend_vcpus_val trend_memory_val trend_storage_val).find { |k| params[k] }
+        unless %i[trend_cpu_val trend_vcpus_val trend_memory_val trend_storage_val].find { |k| params[k] }
           # Don't replace the div when input fields change
           page.replace("planning_options_div", :partial => "planning_options")
         end

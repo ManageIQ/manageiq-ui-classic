@@ -11,10 +11,10 @@ class HostController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(
+    %w[
       hv_info os_info devices network storage_adapters performance timeline storages
       resource_pools vms miq_templates compliance_history custom_button_events cloud_networks cloud_subnets
-    )
+    ]
   end
 
   def display_config_info
@@ -294,7 +294,7 @@ class HostController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms storages).include?(@display) # Were we displaying vms/storages
+    params[:display] = @display if %w[vms storages].include?(@display) # Were we displaying vms/storages
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                      "miq_template_",
@@ -341,8 +341,8 @@ class HostController < ApplicationController
       when 'host_toggle_maintenance' then maintenancehosts
       end
       # Handle Host power buttons
-      if %w(host_shutdown host_reboot host_standby host_enter_maint_mode host_exit_maint_mode host_start
-            host_stop host_reset).include?(params[:pressed])
+      if %w[host_shutdown host_reboot host_standby host_enter_maint_mode host_exit_maint_mode host_start
+            host_stop host_reset].include?(params[:pressed])
         powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
       end
 
@@ -350,7 +350,7 @@ class HostController < ApplicationController
       perf_refresh_data if params[:pressed] == "perf_refresh"
 
       return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
-      return if %w(host_tag host_compare common_drift host_protect perf_reload).include?(params[:pressed]) &&
+      return if %w[host_tag host_compare common_drift host_protect perf_reload].include?(params[:pressed]) &&
                 @flash_array.nil? # Another screen showing, so return
 
       if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
@@ -431,11 +431,11 @@ class HostController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties relationships),
-      %i(
+      %i[properties relationships],
+      %i[
         compliance security configuration diagnostics smart_management miq_custom_attributes
         ems_custom_attributes authentications cloud_services openstack_hardware_status openstack_service_status
-      )
+      ]
     ]
   end
   helper_method :textual_group_list

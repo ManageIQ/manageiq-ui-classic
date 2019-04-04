@@ -2,12 +2,12 @@ module ProviderConfigurationManagerHelper
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties
-    %i(hostname
+    %i[hostname
        ipmi_present
        ipaddress
        mac_address
        provider_name
-       zone)
+       zone]
   end
 
   def textual_hostname

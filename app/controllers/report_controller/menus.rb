@@ -20,7 +20,7 @@ module ReportController::Menus
   end
 
   def menu_editor
-    menu_set_form_vars if %w(explorer tree_select x_history).include?(params[:action])
+    menu_set_form_vars if %w[explorer tree_select x_history].include?(params[:action])
     @in_a_form = true
     @menu_roles_tree = if @menu_lastaction != "menu_editor"
                          build_menu_roles_tree(@edit[:new])

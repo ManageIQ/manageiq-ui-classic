@@ -4,7 +4,7 @@ class CustomizeFieldsVisibilityService
     field_names_to_hide = []
 
     if supports_customization_template
-      field_names_to_edit += %i(
+      field_names_to_edit += %i[
         addr_mode
         customization_template_id
         customization_template_script
@@ -27,9 +27,9 @@ class CustomizeFieldsVisibilityService
         sysprep_product_key
         sysprep_timezone
         sysprep_domain_admin
-      )
+      ]
     else
-      exclude_list = %i(
+      exclude_list = %i[
         sysprep_spec_override
         sysprep_custom_spec
         sysprep_enabled
@@ -41,7 +41,7 @@ class CustomizeFieldsVisibilityService
         gateway
         dns_servers
         dns_suffixes
-      )
+      ]
 
       customize_fields_list.each do |field_name|
         next if exclude_list.include?(field_name)

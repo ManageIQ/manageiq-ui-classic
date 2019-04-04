@@ -1,6 +1,6 @@
 class TreeBuilderPolicy < TreeBuilder
   has_kids_for MiqPolicy, [:x_get_tree_po_kids]
-  has_kids_for MiqEventDefinition, %i(x_get_tree_ev_kids parents)
+  has_kids_for MiqEventDefinition, %i[x_get_tree_ev_kids parents]
 
   private
 
@@ -63,7 +63,7 @@ class TreeBuilderPolicy < TreeBuilder
   # level 2 & 3...
   def x_get_tree_custom_kids(parent, count_only, options)
     # level 2 - host, vm, etc. under compliance/control
-    if %w(compliance control).include?(parent[:id])
+    if %w[compliance control].include?(parent[:id])
       mode = parent[:id]
       objects = compliance_control_kids(mode)
 

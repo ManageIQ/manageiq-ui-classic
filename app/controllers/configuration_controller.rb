@@ -187,7 +187,7 @@ class ConfigurationController < ApplicationController
 
   # Show the users list
   def show_timeprofiles
-    build_tabs if params[:action] == "change_tab" || %w(cancel add save).include?(params[:button])
+    build_tabs if params[:action] == "change_tab" || %w[cancel add save].include?(params[:button])
     @timeprofiles = if report_admin_user?
                       TimeProfile.in_my_region.ordered_by_desc
                     else
@@ -233,9 +233,9 @@ class ConfigurationController < ApplicationController
     hour = hr.to_i
     case hour
     when 0..10  then from = to = "AM"
-    when 11     then from, to = %w(AM PM)
+    when 11     then from, to = %w[AM PM]
     when 12..22 then from = to = "PM"
-    else             from, to = %w(PM AM)
+    else             from, to = %w[PM AM]
     end
     hour = hour >= 12 ? hour - 12 : hour
     "#{hours[hour - 1]}#{from}-#{hours[hour]}#{to}"
@@ -517,7 +517,7 @@ class ConfigurationController < ApplicationController
         :key     => 'config_edit__ui4',
       }
       @edit[:timeprofile_id] = @timeprofile.try(:id)
-      if %w(timeprofile_new timeprofile_copy timeprofile_edit timeprofile_update).include?(params[:action])
+      if %w[timeprofile_new timeprofile_copy timeprofile_edit timeprofile_update].include?(params[:action])
         @edit[:current] = {
           :description  => @timeprofile.description,
           :profile_type => @timeprofile.profile_type || "user",

@@ -29,7 +29,7 @@ module OpsController::Settings::Common
         @refresh_partial = 'settings_server_tab'
       end
     when 'settings_rhn_edit'
-      if params[:use_proxy] || params[:register_to] || %w(rhn_default_server repo_default_name).include?(params[:action])
+      if params[:use_proxy] || params[:register_to] || %w[rhn_default_server repo_default_name].include?(params[:action])
         @refresh_div     = 'settings_rhn'
         @refresh_partial = 'settings_rhn_edit_tab'
       else
@@ -76,7 +76,7 @@ module OpsController::Settings::Common
         end
       when 'settings_authentication'
         if @authmode_changed
-          if %w(ldap ldaps).include?(@edit[:new][:authentication][:mode])
+          if %w[ldap ldaps].include?(@edit[:new][:authentication][:mode])
             page << javascript_show("ldap_div")
             page << javascript_show("ldap_role_div")
             page << javascript_show("ldap_role_div")
@@ -461,7 +461,7 @@ module OpsController::Settings::Common
       save_advanced_settings(resource)
       return
     end
-    if !%w(settings_advanced settings_rhn_edit settings_workers).include?(@sb[:active_tab]) &&
+    if !%w[settings_advanced settings_rhn_edit settings_workers].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
@@ -471,7 +471,7 @@ module OpsController::Settings::Common
 
       config_valid, config_errors = Vmdb::Settings.validate(@update)
       if config_valid
-        if %w(settings_server settings_authentication).include?(@sb[:active_tab])
+        if %w[settings_server settings_authentication].include?(@sb[:active_tab])
           server = MiqServer.find(@sb[:selected_server_id])
           server.add_settings_for_resource(@update)
           update_server_name(server)
@@ -497,7 +497,7 @@ module OpsController::Settings::Common
         session[:changed] = @changed = false
         get_node_info(x_node)
         if @sb[:active_tab] == "settings_server"
-          replace_right_cell(:nodetype => @nodetype, :replace_trees => %i(diagnostics settings))
+          replace_right_cell(:nodetype => @nodetype, :replace_trees => %i[diagnostics settings])
         elsif @sb[:active_tab] == "settings_custom_logos"
           flash_to_session
           javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
@@ -696,8 +696,8 @@ module OpsController::Settings::Common
 
     case @sb[:active_tab] # No @edit[:current] for Filters since there is no config file
     when 'settings_rhn_edit'
-      %i(proxy_address use_proxy proxy_userid proxy_password proxy_verify register_to server_url repo_name
-         customer_org customer_org_display customer_userid customer_password customer_verify).each do |key|
+      %i[proxy_address use_proxy proxy_userid proxy_password proxy_verify register_to server_url repo_name
+         customer_org customer_org_display customer_userid customer_password customer_verify].each do |key|
         new[key] = params[key] if params[key]
       end
       if params[:register_to] || params[:action] == "repo_default_name"
@@ -722,7 +722,7 @@ module OpsController::Settings::Common
       new[:smtp][:authentication] = params[:smtp_authentication] if params[:smtp_authentication]
       new[:server][:locale] = params[:locale] if params[:locale]
       @smtp_auth_none = (new[:smtp][:authentication] == "none")
-      @test_email_button = %i(from host port domain).all? { |item| new[:smtp][item].present? } &&
+      @test_email_button = %i[from host port domain].all? { |item| new[:smtp][item].present? } &&
                            (new[:smtp][:user_name].present? || new[:smtp][:authentication] == "none") && @sb[:new_to].present?
       @sb[:roles] = new[:server][:role].split(",")
       params.each do |var, val|
@@ -896,7 +896,7 @@ module OpsController::Settings::Common
     end
 
     # This section scoops up the config second level keys changed in the UI
-    unless %w(settings_advanced settings_rhn_edit settings_smartproxy_affinity).include?(@sb[:active_tab])
+    unless %w[settings_advanced settings_rhn_edit settings_smartproxy_affinity].include?(@sb[:active_tab])
       @edit[:current].each_key do |category|
         @edit[:current][category].symbolize_keys.each_key do |key|
           if category == :smtp && key == :enable_starttls_auto # Checkbox is handled differently
@@ -926,8 +926,8 @@ module OpsController::Settings::Common
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif @sb[:active_tab] == 'settings_rhn_edit'
       return unless load_edit("#{@sb[:active_tab]}__#{params[:id]}", "replace_cell__explorer")
-    elsif %w(settings_server settings_authentication settings_workers
-             settings_custom_logos settings_advanced).include?(@sb[:active_tab])
+    elsif %w[settings_server settings_authentication settings_workers
+             settings_custom_logos settings_advanced].include?(@sb[:active_tab])
       return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
   end
@@ -1148,7 +1148,7 @@ module OpsController::Settings::Common
     when "settings_advanced" # Advanced yaml editor
       fetch_advanced_settings(MiqServer.find(@sb[:selected_server_id]))
     end
-    if %w(settings_server settings_authentication settings_custom_logos).include?(@sb[:active_tab]) &&
+    if %w[settings_server settings_authentication settings_custom_logos].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
       @edit[:current].each_key do |category|
         @edit[:new][category] = copy_hash(@edit[:current][category])

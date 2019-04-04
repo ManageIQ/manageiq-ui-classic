@@ -165,11 +165,11 @@ module ContainersCommonMixin
 
   class_methods do
     def display_methods
-      %w(
+      %w[
         container_groups containers container_services container_routes container_replicators
         container_projects container_images container_image_registries container_nodes
         persistent_volumes container_builds container_templates custom_button_events
-      )
+      ]
     end
   end
 end

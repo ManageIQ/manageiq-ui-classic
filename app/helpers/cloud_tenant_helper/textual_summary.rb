@@ -7,18 +7,18 @@ module CloudTenantHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description))
+    TextualGroup.new(_("Properties"), %i[name description])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems_cloud instances images cloud_object_store_containers
         cloud_volumes cloud_volume_snapshots cloud_networks cloud_subnets
         network_routers security_groups floating_ips network_ports
         custom_button_events
-      )
+      ]
     )
   end
 

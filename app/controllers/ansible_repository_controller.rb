@@ -15,11 +15,11 @@ class AnsibleRepositoryController < ApplicationController
   menu_section :ansible_repositories
 
   def self.display_methods
-    %w(playbooks)
+    %w[playbooks]
   end
 
   def self.custom_display_modes
-    %w(output)
+    %w[output]
   end
 
   def self.model
@@ -60,7 +60,7 @@ class AnsibleRepositoryController < ApplicationController
 
   def check_button_rbac
     # Allow reload to skip RBAC check
-    if %w(ansible_repository_reload ansible_repositories_reload).include?(params[:pressed])
+    if %w[ansible_repository_reload ansible_repositories_reload].include?(params[:pressed])
       true
     else
       super
@@ -122,14 +122,14 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def toolbar
-    return 'ansible_playbooks_center' if %w(playbooks).include?(@display) # for nested list screen
-    %w(show_list).include?(@lastaction) ? 'ansible_repositories_center' : 'ansible_repository_center'
+    return 'ansible_playbooks_center' if %w[playbooks].include?(@display) # for nested list screen
+    %w[show_list].include?(@lastaction) ? 'ansible_repositories_center' : 'ansible_repository_center'
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships options smart_management)]
+    [%i[properties relationships options smart_management]]
   end
 
   def show_output_link

@@ -18,7 +18,7 @@ class ReportController < ApplicationController
   before_action :get_session_data
   after_action  :cleanup_action
   after_action  :set_session_data
-  layout 'application', :except => %i(render_txt render_csv render_pdf)
+  layout 'application', :except => %i[render_txt render_csv render_pdf]
 
   def index
     @title = _("Reports")
@@ -196,7 +196,7 @@ class ReportController < ApplicationController
     self.x_node = params[:id]
     @sb[:active_tab] = "report_info" if x_active_tree == :reports_tree && params[:action] != "reload"
     if params[:action] == "reload" && @sb[:active_tab] == "saved_reports"
-      replace_right_cell(:replace_trees => %i(reports savedreports))
+      replace_right_cell(:replace_trees => %i[reports savedreports])
     else
       replace_right_cell
     end
@@ -362,12 +362,12 @@ class ReportController < ApplicationController
     @report = rr.report_results # Grab the blobbed report, including table
     @html   = nil
     @render_chart = false
-    if %w(tabular hybrid).include?(params[:type])
+    if %w[tabular hybrid].include?(params[:type])
       @html = report_build_html_table(@report,
                                       rr.html_rows(:page     => @sb[:pages][:current],
                                                    :per_page => @sb[:pages][:perpage]).join)
     end
-    if %w(graph hybrid).include?(params[:type])
+    if %w[graph hybrid].include?(params[:type])
       @render_chart = true
     end
     @ght_type = params[:type]
@@ -515,7 +515,7 @@ class ReportController < ApplicationController
   # Get all info for the node about to be displayed
   def get_node_info(_node = {}, _show_list = true)
     treenodeid = valid_active_node(x_node)
-    if %i(db_tree reports_tree saved_tree savedreports_tree widgets_tree).include?(x_active_tree)
+    if %i[db_tree reports_tree saved_tree savedreports_tree widgets_tree].include?(x_active_tree)
       @nodetype = case x_active_tree
                   when :savedreports_tree
                     parse_nodetype_and_id(treenodeid)[0]
@@ -649,10 +649,10 @@ class ReportController < ApplicationController
     nodetype = options[:menu_edit_action] ? options[:menu_edit_action] : x_node.split('-').first
 
     @sb[:active_tab] = params[:tab_id] ? params[:tab_id] : "report_info" if x_active_tree == :reports_tree &&
-                                                                            params[:action] != "reload" && !%w(miq_report_run saved_report_delete).include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
+                                                                            params[:action] != "reload" && !%w[miq_report_run saved_report_delete].include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
 
     rebuild = @in_a_form ? false : rebuild_trees
-    valid_trees = %i(reports schedules savedreports db widgets).find_all do |tree|
+    valid_trees = %i[reports schedules savedreports db widgets].find_all do |tree|
       tree_exists?(tree.to_s + "_tree")
     end
     trees = build_replaced_trees(rebuild ? valid_trees : replace_trees, valid_trees)
@@ -673,7 +673,7 @@ class ReportController < ApplicationController
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename)
       h_tb = build_toolbar("x_history_tb") unless x_active_tree == :export_tree
-      v_tb = build_toolbar("report_view_tb") if @report && %i(reports_tree savedreports_tree).include?(x_active_tree)
+      v_tb = build_toolbar("report_view_tb") if @report && %i[reports_tree savedreports_tree].include?(x_active_tree)
     end
 
     reload_trees_by_presenter(presenter, trees)
@@ -777,7 +777,7 @@ class ReportController < ApplicationController
         end
         presenter.hide(:menu_div1, :menu_div2).show(:menu_div3)
       end
-    elsif %w(menu_default menu_reset).include?(nodetype)
+    elsif %w[menu_default menu_reset].include?(nodetype)
       presenter.update(:main_div, r[:partial => partial])
       presenter.replace(:menu_div1, r[:partial => "menu_form1", :locals => {:folders => @grid_folders}])
       presenter.hide(:menu_div1, :menu_div2).show(:menu_div3)
@@ -827,7 +827,7 @@ class ReportController < ApplicationController
         presenter[:element_updates][:menu_roles_treebox] = {:class => 'disabled', :remove => true}
       end
       @sb[:tree_err] = false
-    elsif %w(menu_discard_folders menu_discard_reports).include?(nodetype)
+    elsif %w[menu_discard_folders menu_discard_reports].include?(nodetype)
       presenter.replace(:flash_msg_div, r[:partial => 'layouts/flash_msg'])
       presenter.replace(:menu_div1, r[:partial => 'menu_form1', :locals => {:folders => @grid_folders}])
       presenter.hide(:menu_div1, :menu_div2).show(:menu_div3)
@@ -855,7 +855,7 @@ class ReportController < ApplicationController
       presenter.hide(:form_buttons_div)
       presenter.hide(:paging_div)
     end
-    if (@sb[:active_tab] == 'report_info' && x_node.split('-').length == 5 && !@in_a_form) || %w(xx-exportwidgets xx-exportcustomreports).include?(x_node)
+    if (@sb[:active_tab] == 'report_info' && x_node.split('-').length == 5 && !@in_a_form) || %w[xx-exportwidgets xx-exportcustomreports].include?(x_node)
       presenter.hide(:paging_div)
     end
     presenter.set_visibility(!@in_a_form, :toolbar)

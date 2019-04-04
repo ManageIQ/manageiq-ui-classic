@@ -21,10 +21,10 @@ class TreeBuilderAeClass < TreeBuilder
   end
 
   def x_get_tree_class_kids(object, count_only)
-    count_only_or_objects(count_only, object.ae_instances + object.ae_methods, %i(display_name name))
+    count_only_or_objects(count_only, object.ae_instances + object.ae_methods, %i[display_name name])
   end
 
   def x_get_tree_ns_kids(object, count_only)
-    count_only_or_objects(count_only, object.ae_namespaces + object.ae_classes, %i(display_name name))
+    count_only_or_objects(count_only, object.ae_namespaces + object.ae_classes, %i[display_name name])
   end
 end

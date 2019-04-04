@@ -73,7 +73,7 @@ module ApplicationController::CiProcessing
       @host = @record = identify_record(params[:id], Host)
     elsif db == "miq_template"
       @miq_template = @record = identify_record(params[:id], MiqTemplate)
-    elsif %w(vm_infra vm_cloud vm vm_or_template).include?(db)
+    elsif %w[vm_infra vm_cloud vm vm_or_template].include?(db)
       @vm = @record = identify_record(params[:id], VmOrTemplate)
     elsif db == "ems_cloud"
       @ems = @record = identify_record(params[:id], EmsCloud)
@@ -105,7 +105,7 @@ module ApplicationController::CiProcessing
   end
 
   def process_elements(elements, klass, task, display_name = nil, order_field = nil)
-    order_field ||= %w(name description title).find { |field| klass.column_names.include?(field) }
+    order_field ||= %w[name description title].find { |field| klass.column_names.include?(field) }
 
     order_by = order_field == "ems_id" ? order_field : "lower(#{order_field})"
 
@@ -143,7 +143,7 @@ module ApplicationController::CiProcessing
   end
 
   def explorer_controller?
-    %w(vm_cloud vm_infra vm_or_template infra_networking).include?(controller_name)
+    %w[vm_cloud vm_infra vm_or_template infra_networking].include?(controller_name)
   end
 
   def process_element_destroy(element, klass, name)
@@ -207,7 +207,7 @@ module ApplicationController::CiProcessing
       bc_name = breadcrumb_name(model)
       bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
       bc_name += " (filtered)" if @filters && (@filters[:tags].present? || @filters[:cats].present?)
-      action = %w(service vm_cloud vm_infra vm_or_template storage service_template).include?(self.class.table_name) ? "explorer" : "show_list"
+      action = %w[service vm_cloud vm_infra vm_or_template storage service_template].include?(self.class.table_name) ? "explorer" : "show_list"
       drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
     end
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
@@ -291,7 +291,7 @@ module ApplicationController::CiProcessing
     return if objs.empty?
 
     options = {:ids => objs, :task => task, :userid => session[:userid]}
-    options[:snap_selected] = session[:snap_selected] if %w(remove_snapshot revert_to_snapshot).include?(task)
+    options[:snap_selected] = session[:snap_selected] if %w[remove_snapshot revert_to_snapshot].include?(task)
     klass.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
@@ -636,8 +636,8 @@ module ApplicationController::CiProcessing
   #           - false otherwise
   def testable_action(action)
     controller = params[:controller]
-    vm_infra_untestable_actions = %w(check_compliance_queue destroy refresh_ems vm_miq_request_new)
-    ems_cluster_untestable_actions = %w(scan)
+    vm_infra_untestable_actions = %w[check_compliance_queue destroy refresh_ems vm_miq_request_new]
+    ems_cluster_untestable_actions = %w[scan]
     if controller == "vm_infra"
       return vm_infra_untestable_actions.exclude?(action)
     end
@@ -692,7 +692,7 @@ module ApplicationController::CiProcessing
   def scanclusters
     assert_privileges("ems_cluster_scan")
     generic_button_operation('scan', _('Analysis'), cluster_button_action,
-                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
+                             :refresh_partial => %w[vm hosts].include?(@display) ? 'layouts/gtl' : 'config')
   end
 
   # Common Stacks button handler routines
@@ -778,7 +778,7 @@ module ApplicationController::CiProcessing
   def scanstorage
     assert_privileges("storage_scan")
     generic_button_operation('scan', _('SmartState Analysis'), storage_button_action,
-                             :refresh_partial => %w(vm hosts).include?(@display) ? 'layouts/gtl' : 'config')
+                             :refresh_partial => %w[vm hosts].include?(@display) ? 'layouts/gtl' : 'config')
   end
 
   # Delete all selected or single displayed host(s)
@@ -824,7 +824,7 @@ module ApplicationController::CiProcessing
         {:datastore_name => storage.name}, :warning)
     end
     process_storage(storages.ids, 'destroy') unless storages.empty?
-    if !%w(show_list storage_list storage_pod_list).include?(@lastaction) ||
+    if !%w[show_list storage_list storage_pod_list].include?(@lastaction) ||
        (@lastaction == "show" && @layout != "storage")
       @single_delete = !flash_errors?
     end

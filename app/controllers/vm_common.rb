@@ -7,8 +7,8 @@ module VmCommon
 
   def textual_group_list
     [
-      %i(properties lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes),
-      %i(compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags)
+      %i[properties lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes],
+      %i[compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags]
     ]
   end
 
@@ -171,7 +171,7 @@ module VmCommon
 
     rec_cls = @record.class.base_model.to_s == 'MiqTemplate' ? 'miq_template' : 'vm'
     @gtl_url = "/show"
-    if %w(main).include?(@display)
+    if %w[main].include?(@display)
       get_tagdata(@record)
       drop_breadcrumb({:name => _("Virtual Machines"),
                        :url  => "/#{rec_cls}/show_list?page=#{@current_page}&refresh=y"}, true)
@@ -295,7 +295,7 @@ module VmCommon
   end
 
   def processes
-    show_association('processes', _('Running Processes'), %i(operating_system processes), OsProcess,
+    show_association('processes', _('Running Processes'), %i[operating_system processes], OsProcess,
                      'processes')
   end
 
@@ -697,7 +697,7 @@ module VmCommon
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("main_div", :partial => "vm_common/form") if %w(allright left right).include?(params[:button])
+      page.replace_html("main_div", :partial => "vm_common/form") if %w[allright left right].include?(params[:button])
       page << javascript_for_miq_button_visibility(changed)
       page << "miqSparkle(false);"
     end
@@ -879,7 +879,7 @@ module VmCommon
     @sb[:action] = nil
 
     @nodetype, id = parse_nodetype_and_id(params[:id])
-    record_requested = %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+    record_requested = %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
 
     if record_requested && !@record
       @vm = @record = identify_record(id, VmOrTemplate)
@@ -894,7 +894,7 @@ module VmCommon
       listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&
          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-         %w(reload tree_select).include?(params[:action])
+         %w[reload tree_select].include?(params[:action])
         self.x_node = params[:id]
         quick_search_show
         return
@@ -1110,7 +1110,7 @@ module VmCommon
     end
 
     # After adding to history, add name filter suffix if showing a list
-    unless %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+    unless %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
       if @search_text.present?
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
@@ -1136,7 +1136,7 @@ module VmCommon
       # set @delete_node since we don't rebuild vm tree
       @delete_node = params[:id] if @replace_trees  # get_node_info might set this
 
-      record_showing = type && %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(type))
+      record_showing = type && %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
@@ -1145,7 +1145,7 @@ module VmCommon
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
-    elsif %w(compare drift).include?(@sb[:action])
+    elsif %w[compare drift].include?(@sb[:action])
       @in_a_form = true # Turn on Cancel button
       c_tb = build_toolbar("#{@sb[:action]}_center_tb")
       v_tb = build_toolbar("#{@sb[:action]}_view_tb")
@@ -1192,9 +1192,9 @@ module VmCommon
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
 
       locals = {:action_url => action, :record_id => @record.try(:id)}
-      if %w(clone migrate miq_request_new pre_prov publish add_security_group remove_security_group
+      if %w[clone migrate miq_request_new pre_prov publish add_security_group remove_security_group
             reconfigure resize live_migrate attach detach evacuate
-            associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
+            associate_floating_ip disassociate_floating_ip].include?(@sb[:action])
         locals[:no_reset]        = true                              # don't need reset button on the screen
         locals[:submit_button]   = @sb[:action] != 'miq_request_new' # need submit button on the screen
         locals[:continue_button] = @sb[:action] == 'miq_request_new' # need continue button on the screen
@@ -1207,10 +1207,10 @@ module VmCommon
         locals[:create_button] = true
       end
 
-      if %w(ownership protect reconfigure retire tag).include?(@sb[:action])
+      if %w[ownership protect reconfigure retire tag].include?(@sb[:action])
         locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         locals[:record_id]    = @sb[:rec_id] || @edit[:object_ids][0] if @sb[:action] == "tag"
-        unless %w(ownership retire).include?(@sb[:action])
+        unless %w[ownership retire].include?(@sb[:action])
           presenter[:build_calendar] = {
             :date_from => Time.zone.now,
             :date_to   => nil,
@@ -1220,7 +1220,7 @@ module VmCommon
 
       add_ajax = true
 
-      if %w(compare drift).include?(@sb[:action])
+      if %w[compare drift].include?(@sb[:action])
         presenter.update(:custom_left_cell, r[
           :partial => 'layouts/listnav/x_compare_sections', :locals => {:truncate_length => 23}])
         presenter.show(:custom_left_cell).hide(:default_left_cell)
@@ -1242,7 +1242,7 @@ module VmCommon
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
 
-    if add_ajax && %w(performance timeline).include?(@sb[:action])
+    if add_ajax && %w[performance timeline].include?(@sb[:action])
       presenter[:ajax_action] = {
         :controller => request.parameters["controller"],
         :action     => @ajax_action,
@@ -1253,7 +1253,7 @@ module VmCommon
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div, r[
       :partial => 'layouts/x_adv_searchbox',
-      :locals  => {:nameonly => %i(images_tree instances_tree vandt_tree).include?(x_active_tree)}
+      :locals  => {:nameonly => %i[images_tree instances_tree vandt_tree].include?(x_active_tree)}
     ])
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
@@ -1279,10 +1279,10 @@ module VmCommon
             presenter.update(:form_buttons_div, '')
             presenter.remove_paging.hide(:form_buttons_div)
           end
-        elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
-                 associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
+        elsif %w[attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
+                 associate_floating_ip disassociate_floating_ip].include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
-        elsif %w(reconfigure_update retire).exclude?(action) && !hide_x_edit_buttons(action)
+        elsif %w[reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
 
@@ -1325,7 +1325,7 @@ module VmCommon
   end
 
   def show_old_dialog_submit_and_cancel_buttons?(params)
-    %w(vm_transform vm_transform_mass).include?(params[:pressed]) || Settings.product.old_dialog_user_ui
+    %w[vm_transform vm_transform_mass].include?(params[:pressed]) || Settings.product.old_dialog_user_ui
   end
 
   # get the host that this vm belongs to
@@ -1661,7 +1661,7 @@ module VmCommon
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:parent] = params[:chosen_parent].to_i if params[:chosen_parent]
     # if coming from explorer
-    get_vm_child_selection if %w(allright left right).include?(params[:button])
+    get_vm_child_selection if %w[allright left right].include?(params[:button])
   end
 
   # Build the audit object when a record is saved, including all of the changed fields
@@ -1696,6 +1696,6 @@ module VmCommon
   end
 
   def breadcrumb_prohibited_for_action?
-    !%w(accordion_select explorer tree_select).include?(action_name)
+    !%w[accordion_select explorer tree_select].include?(action_name)
   end
 end

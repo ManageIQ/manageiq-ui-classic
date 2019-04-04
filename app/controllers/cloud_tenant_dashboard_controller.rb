@@ -3,7 +3,7 @@ class CloudTenantDashboardController < ApplicationController
 
   before_action :check_privileges
   before_action :get_session_data
-  before_action :get_tenant, :only => %i(data recent_instances_data recent_images_data aggregate_status_data)
+  before_action :get_tenant, :only => %i[data recent_instances_data recent_images_data aggregate_status_data]
   after_action :cleanup_action
   after_action :set_session_data
 

@@ -9,11 +9,11 @@ class NetworkTopologyService < TopologyService
         :floating_ips    => :writable_classification_tags,
         :cloud_tenant    => :writable_classification_tags,
         :security_groups => :writable_classification_tags,
-        :load_balancers  => %i(
+        :load_balancers  => %i[
           writable_classification_tags
           floating_ips
           security_groups
-        )
+        ]
       ]
     ],
     :cloud_subnets      => [
@@ -29,18 +29,18 @@ class NetworkTopologyService < TopologyService
       ]
     ],
     :cloud_tenants      => [
-      :network_routers => %i(
+      :network_routers => %i[
         floating_ips
         security_groups
         cloud_subnets
-      ),
+      ],
       :cloud_subnets   => [
         :security_groups
       ]
     ]
   ]
 
-  @kinds = %i(NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone)
+  @kinds = %i[NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone]
 
   def entity_type(entity)
     if entity.kind_of?(CloudNetwork) || entity.kind_of?(CloudSubnet)
@@ -57,7 +57,7 @@ class NetworkTopologyService < TopologyService
       name = entity.class.name.demodulize
       if entity.kind_of?(Vm)
         name.upcase # turn Vm to VM because it's an abbreviation
-      elsif %w(Public Private).include?(name) && entity.kind_of?(CloudNetwork)
+      elsif %w[Public Private].include?(name) && entity.kind_of?(CloudNetwork)
         entity_type(entity) + " " + name
       else
         name

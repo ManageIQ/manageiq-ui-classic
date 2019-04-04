@@ -105,7 +105,7 @@ module ApplicationController::Performance
 
     # category pulldown for tag charts
     def cats
-      return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
+      return unless %w[EmsCluster Host Storage AvailabilityZone HostAggregate].include?(model)
       self[:cats] ||=
         begin
           cats = Classification.categories.select(&:show).sort_by(&:description)

@@ -1,5 +1,5 @@
 class TreeBuilderIsoDatastores < TreeBuilder
-  has_kids_for IsoDatastore, %i(x_get_tree_iso_datastore_kids options)
+  has_kids_for IsoDatastore, %i[x_get_tree_iso_datastore_kids options]
 
   private
 

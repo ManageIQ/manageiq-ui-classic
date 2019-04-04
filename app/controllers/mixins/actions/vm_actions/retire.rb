@@ -6,13 +6,13 @@ module Mixins
         def retirevms
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
-          if request.parameters[:controller] == "vm" || %w(all_vms instances vms).include?(params[:display])
+          if request.parameters[:controller] == "vm" || %w[all_vms instances vms].include?(params[:display])
             rec_cls = "vm"
             bc_msg = _("Retire VM or Instance")
           elsif request.parameters[:controller] == "service"
             rec_cls =  "service"
             bc_msg = _("Retire Service")
-          elsif request.parameters[:controller] == "orchestration_stack" || %w(orchestration_stacks).include?(params[:display])
+          elsif request.parameters[:controller] == "orchestration_stack" || %w[orchestration_stacks].include?(params[:display])
             rec_cls = "orchestration_stack"
             bc_msg = _("Retire Orchestration Stack")
           end
@@ -20,7 +20,7 @@ module Mixins
           @edit ||= {}
           @edit[:object_ids] = selected_items
           session[:edit] = @edit
-          if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
+          if !%w[orchestration_stack service].include?(request.parameters["controller"]) && !%w[orchestration_stacks].include?(params[:display]) &&
              VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
             add_flash(_("Set Retirement Date does not apply to selected VM Template"), :error)
             javascript_flash(:scroll_top => true)

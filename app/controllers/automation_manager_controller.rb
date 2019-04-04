@@ -70,12 +70,12 @@ class AutomationManagerController < ApplicationController
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if filtering? && %w(xx-csa ms).include?(@nodetype)
+      if filtering? && %w[xx-csa ms].include?(@nodetype)
         search_id = id
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
            MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-           %w(reload tree_select).include?(params[:action])
+           %w[reload tree_select].include?(params[:action])
           self.x_node = params[:id]
           quick_search_show
         end
@@ -183,7 +183,7 @@ class AutomationManagerController < ApplicationController
   helper_method :template_record?
 
   def textual_group_list
-    [%i(properties tags)]
+    [%i[properties tags]]
   end
   helper_method :textual_group_list
 
@@ -240,7 +240,7 @@ class AutomationManagerController < ApplicationController
     end
 
     # Edit right cell text if searching text
-    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w(ConfiguredSystem ConfigurationScript).exclude?(model)
+    @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[ConfiguredSystem ConfigurationScript].exclude?(model)
     # Edit right cell text if using filter
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && filtering? && @edit && @edit[:adv_search_applied]
 
@@ -255,7 +255,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def filtering?
-    %w(automation_manager_cs_filter configuration_scripts).include?(x_tree[:type].to_s)
+    %w[automation_manager_cs_filter configuration_scripts].include?(x_tree[:type].to_s)
   end
 
   def provider_node(id, model)
@@ -361,19 +361,19 @@ class AutomationManagerController < ApplicationController
   end
 
   def rebuild_trees(replace_trees)
-    build_replaced_trees(replace_trees, %i(automation_manager_providers automation_manager_cs_filter configuration_scripts))
+    build_replaced_trees(replace_trees, %i[automation_manager_providers automation_manager_cs_filter configuration_scripts])
   end
 
   def leaf_record
     get_node_info(x_node)
     @delete_node = params[:id] if @replace_trees
     type, _id = parse_nodetype_and_id(x_node)
-    type && %w(ConfiguredSystem ConfigurationScript ConfigurationWorkflow).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w[ConfiguredSystem ConfigurationScript ConfigurationWorkflow].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def managed_group_record?(node = x_node)
     type, _id = parse_nodetype_and_id(node)
-    type && %w(EmsFolder).include?(TreeBuilder.get_model_for_prefix(type))
+    type && %w[EmsFolder].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def automation_manager_manager_record?(node = x_node)
@@ -453,7 +453,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def active_tab_configured_systems?
-    (%w(x_show x_search_by_name).include?(action_name) && managed_group_record?)
+    (%w[x_show x_search_by_name].include?(action_name) && managed_group_record?)
   end
 
   def valid_managed_group_record?(inventory_group_record)

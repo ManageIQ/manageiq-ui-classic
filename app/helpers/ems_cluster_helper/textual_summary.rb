@@ -8,24 +8,24 @@ module EmsClusterHelper::TextualSummary
   def textual_group_host_totals
     TextualGroup.new(
       _("Totals for %{hosts}") % {:hosts => title_for_hosts},
-      %i(
+      %i[
         aggregate_cpu_speed aggregate_memory aggregate_physical_cpus aggregate_cpu_total_cores
         aggregate_disk_capacity block_storage_disk_usage object_storage_disk_usage
-      )
+      ]
     )
   end
 
   def textual_group_vm_totals
-    TextualGroup.new(_("Totals for VMs"), %i(aggregate_vm_memory aggregate_vm_cpus))
+    TextualGroup.new(_("Totals for VMs"), %i[aggregate_vm_memory aggregate_vm_cpus])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems parent_datacenter total_hosts total_direct_vms allvms_size total_miq_templates
         total_vms rps_size states_size custom_button_events
-      )
+      ]
     )
   end
 
@@ -34,7 +34,7 @@ module EmsClusterHelper::TextualSummary
                   @record.drs_automation_level.nil? && @record.drs_migration_threshold.nil?
     TextualGroup.new(
       _("Configuration"),
-      %i(ha_enabled ha_admit_control drs_enabled drs_automation_level drs_migration_threshold)
+      %i[ha_enabled ha_admit_control drs_enabled drs_automation_level drs_migration_threshold]
     )
   end
 

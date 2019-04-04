@@ -15,7 +15,7 @@ class AnsibleCredentialController < ApplicationController
   menu_section :ansible_credentials
 
   def self.display_methods
-    %w(repositories)
+    %w[repositories]
   end
 
   def self.model
@@ -58,14 +58,14 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def toolbar
-    return 'ansible_repositories_center' if %w(repositories).include?(@display) # for nested list screen
-    %w(show_list).include?(@lastaction) ? 'ansible_credentials_center' : 'ansible_credential_center'
+    return 'ansible_repositories_center' if %w[repositories].include?(@display) # for nested list screen
+    %w[show_list].include?(@lastaction) ? 'ansible_credentials_center' : 'ansible_credential_center'
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships options smart_management)]
+    [%i[properties relationships options smart_management]]
   end
   helper_method :textual_group_list
 

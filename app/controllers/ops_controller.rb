@@ -136,13 +136,13 @@ class OpsController < ApplicationController
       @build = nil
       @sb[:user] = nil
       @ldap_group = nil
-    elsif @sb[:active_tab] == 'settings_tags' && %w(settings_import settings_import_tags).include?(@sb[:active_subtab])
+    elsif @sb[:active_tab] == 'settings_tags' && %w[settings_import settings_import_tags].include?(@sb[:active_subtab])
       session[:changed] = !flash_errors?
     end
     # setting active record object here again, since they are no longer there due to redirect
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w(settings_import settings_import_tags).include?(@sb[:active_subtab])))
+    if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w[settings_import settings_import_tags].include?(@sb[:active_subtab])))
       edit_changed?
     end
     render :layout => "application"
@@ -393,7 +393,7 @@ class OpsController < ApplicationController
       end
     when :vmdb_tree
       nodes = x_node.split('-')
-      @sb[:active_tab] = %w(ti xx).include?(nodes[0]) ? "db_indexes" : "db_summary"
+      @sb[:active_tab] = %w[ti xx].include?(nodes[0]) ? "db_indexes" : "db_summary"
     end
   end
 
@@ -414,7 +414,7 @@ class OpsController < ApplicationController
         record_id = my_server.id
       end
     elsif x_active_tree == :settings_tree
-      if @sb[:active_tab] == 'settings_tags' && %w(settings_import settings_import_tags).include?(@sb[:active_subtab])
+      if @sb[:active_tab] == 'settings_tags' && %w[settings_import settings_import_tags].include?(@sb[:active_subtab])
         action_url = "apply_imports"
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_reset] = true
@@ -435,14 +435,14 @@ class OpsController < ApplicationController
         locals[:submit_button] = true
         locals[:no_cancel] = true
         locals[:no_reset] = true
-      elsif %w(settings_evm_servers settings_list).include?(@sb[:active_tab]) && @in_a_form
-        if %w(ap_copy ap_edit ap_host_edit ap_vm_edit).include?(@sb[:action])
+      elsif %w[settings_evm_servers settings_list].include?(@sb[:active_tab]) && @in_a_form
+        if %w[ap_copy ap_edit ap_host_edit ap_vm_edit].include?(@sb[:action])
           action_url = "ap_edit"
           record_id = @edit[:scan_id] ? @edit[:scan_id] : nil
-        elsif %w(schedule_add schedule_edit).include?(@sb[:action])
+        elsif %w[schedule_add schedule_edit].include?(@sb[:action])
           action_url = "schedule_edit"
           record_id = @edit[:sched_id] ? @edit[:sched_id] : nil
-        elsif %w(zone_edit zone_new).include?(@sb[:action])
+        elsif %w[zone_edit zone_new].include?(@sb[:action])
           locals[:serialize] = true
           action_url = "zone_edit"
           record_id = @edit[:zone_id] ? @edit[:zone_id] : nil
@@ -465,16 +465,16 @@ class OpsController < ApplicationController
         locals[:serialize] = true if @sb[:active_tab] == "settings_advanced"
       end
     elsif x_active_tree == :rbac_tree
-      if %w(rbac_user_add rbac_user_copy rbac_user_edit).include?(@sb[:action])
+      if %w[rbac_user_add rbac_user_copy rbac_user_edit].include?(@sb[:action])
         action_url = "rbac_user_edit"
         record_id = @edit[:user_id] ? @edit[:user_id] : nil
-      elsif %w(rbac_role_add rbac_role_copy rbac_role_edit).include?(@sb[:action])
+      elsif %w[rbac_role_add rbac_role_copy rbac_role_edit].include?(@sb[:action])
         action_url = "rbac_role_edit"
         record_id = @edit[:role_id] ? @edit[:role_id] : nil
-      elsif %w(rbac_group_add rbac_group_edit).include?(@sb[:action])
+      elsif %w[rbac_group_add rbac_group_edit].include?(@sb[:action])
         action_url = "rbac_group_edit"
         record_id = @edit[:group_id] ? @edit[:group_id] : nil
-      elsif %w(rbac_group_tags_edit rbac_user_tags_edit rbac_tenant_tags_edit).include?(@sb[:action])
+      elsif %w[rbac_group_tags_edit rbac_user_tags_edit rbac_tenant_tags_edit].include?(@sb[:action])
         action_url = "rbac_tags_edit"
         locals[:multi_record] = true # need save/cancel buttons on edit screen even tho @record.id is not there
         record_id = @edit[:object_ids][0]
@@ -591,8 +591,8 @@ class OpsController < ApplicationController
   def diagnostics_replace_right_cell(nodetype, presenter)
     # need to refresh all_tabs for server by roles and roles by servers screen
     # to show correct buttons on screen when tree node is selected
-    if %w(accordion_select change_tab explorer tree_select).include?(params[:action]) ||
-       %w(diagnostics_roles_servers diagnostics_servers_roles).include?(@sb[:active_tab])
+    if %w[accordion_select change_tab explorer tree_select].include?(params[:action]) ||
+       %w[diagnostics_roles_servers diagnostics_servers_roles].include?(@sb[:active_tab])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "log_depot_edit"
       @right_cell_text = _("Editing Log Depot settings")
@@ -655,10 +655,10 @@ class OpsController < ApplicationController
     when 'rhn' # rhn subscription edit
       presenter[:update_partials][:settings_rhn] = r[:partial => "#{@sb[:active_tab]}_tab"]
     else
-      if %w(accordion_select change_tab tree_select).include?(params[:action]) &&
+      if %w[accordion_select change_tab tree_select].include?(params[:action]) &&
          params[:tab_id] != "settings_advanced"
         presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
-      elsif %w(zone_delete).include?(params[:pressed])
+      elsif %w[zone_delete].include?(params[:pressed])
         presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
       else
         tab = @sb[:active_tab] == 'settings_tags' ? @sb[:active_subtab] : @sb[:active_tab]
@@ -669,7 +669,7 @@ class OpsController < ApplicationController
       if x_node.split("-").first == "svr" && my_server.id == active_id.to_i
         # show all the tabs if on current server node
         @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
-        presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
+        presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
       elsif x_node.split("-").first == "svr" && my_server.id != active_id.to_i
         # show only 4 tabs if not on current server node
         @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
@@ -678,7 +678,7 @@ class OpsController < ApplicationController
   end
 
   def rbac_replace_right_cell(nodetype, presenter)
-    if %w(accordion_select change_tab tree_select).include?(params[:action])
+    if %w[accordion_select change_tab tree_select].include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
       presenter.update(:rbac_details, r[:partial => "ldap_seq_form"])
@@ -778,7 +778,7 @@ class OpsController < ApplicationController
 
   def replace_explorer_trees(replace_trees, presenter)
     # Build hash of trees to replace and optional new node to be selected
-    trees = build_replaced_trees(replace_trees, %i(settings rbac diagnostics vmdb))
+    trees = build_replaced_trees(replace_trees, %i[settings rbac diagnostics vmdb])
     reload_trees_by_presenter(presenter, trees)
   end
 

@@ -454,7 +454,7 @@ class MiqRequestController < ApplicationController
   end
 
   def rbac_feature_id(feature_id)
-    return feature_id unless %w(ae host).include?(session[:request_tab])
+    return feature_id unless %w[ae host].include?(session[:request_tab])
     "#{session[:request_tab]}_#{feature_id}"
   end
 

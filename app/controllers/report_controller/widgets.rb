@@ -260,7 +260,7 @@ module ReportController::Widgets
       @right_cell_text = _(RIGHT_CELL_TEXTS[@sb[:nodes][1]].first)
     else
       @record = @widget = MiqWidget.find(@sb[:nodes].last)
-      @widget_running = true if %w(running queued).include?(@widget.status.downcase)
+      @widget_running = true if %w[running queued].include?(@widget.status.downcase)
       @right_cell_text = _(RIGHT_CELL_TEXTS[WIDGET_CONTENT_TYPE.invert[@widget.content_type]].second) % {:name => @widget.title}
       @right_cell_div  = "widget_list"
       @sb[:wtype] = WIDGET_CONTENT_TYPE.invert[@widget.content_type]
@@ -369,7 +369,7 @@ module ReportController::Widgets
         widget_graph_menus # to build report pulldown with only reports with graphs
       end
       @edit[:new][:repfilter] = @edit[:rpt].id
-    elsif %w(r c).include?(@sb[:wtype])
+    elsif %w[r c].include?(@sb[:wtype])
       @menu = get_reports_menu
       if @sb[:nodes][1] == "c"
         widget_graph_menus # to build report pulldown with only reports with graphs
@@ -462,7 +462,7 @@ module ReportController::Widgets
   def widget_get_form_vars
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
 
-    copy_params_if_set(@edit[:new], params, %i(title description))
+    copy_params_if_set(@edit[:new], params, %i[title description])
     @edit[:new][:filter]  = params[:filter_typ]       if params[:filter_typ]
     @edit[:new][:enabled] = (params[:enabled] == "1") if params[:enabled]
 
@@ -542,7 +542,7 @@ module ReportController::Widgets
     widget.description = @edit[:new][:description]
     widget.enabled     = @edit[:new][:enabled]
     widget.options ||= {}
-    widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w(r rf).include?(@sb[:wtype])
+    widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w[r rf].include?(@sb[:wtype])
     if @sb[:wtype] == "rf"
     else
       widget.resource = @edit[:rpt]
@@ -588,10 +588,10 @@ module ReportController::Widgets
 
   # Validate widget entries before updating record
   def widget_validate_entries
-    if %w(r c).include?(@sb[:wtype]) && (!@edit[:new][:repfilter] || @edit[:new][:repfilter] == "")
+    if %w[r c].include?(@sb[:wtype]) && (!@edit[:new][:repfilter] || @edit[:new][:repfilter] == "")
       add_flash(_("A Report must be selected"), :error)
     end
-    if %w(role group).include?(@edit[:new][:visibility_typ])
+    if %w[role group].include?(@edit[:new][:visibility_typ])
       typ = @edit[:new][:visibility_typ]
       if @edit[:new][typ.pluralize.to_sym].blank?
         add_flash(_("A %{type} must be selected") % {:type => typ.titleize}, :error)

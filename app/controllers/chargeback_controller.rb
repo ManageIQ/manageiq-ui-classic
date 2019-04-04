@@ -229,7 +229,7 @@ class ChargebackController < ApplicationController
     cb_assign_get_form_vars
     render :update do |page|
       page << javascript_prologue
-      except = %i(cbshow_typ cbtag_cat cblabel_key)
+      except = %i[cbshow_typ cbtag_cat cblabel_key]
       changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
       page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
@@ -568,7 +568,7 @@ class ChargebackController < ApplicationController
       @edit[:new][:code_currency] = ChargebackRateDetailCurrency.find(params[:currency]).code
     end
     @edit[:new][:details].each_with_index do |detail, detail_index|
-      %i(per_time per_unit sub_metric).each do |measure|
+      %i[per_time per_unit sub_metric].each do |measure|
         key = "#{measure}_#{detail_index}".to_sym
         detail[measure] = params[key] if params[key]
       end
@@ -578,7 +578,7 @@ class ChargebackController < ApplicationController
       # Save tiers into @edit
       (0..@edit[:new][:num_tiers][detail_index].to_i - 1).each do |tier_index|
         tier = @edit[:new][:tiers][detail_index][tier_index] || {}
-        %i(fixed_rate variable_rate start finish).each do |field|
+        %i[fixed_rate variable_rate start finish].each do |field|
           key = "#{field}_#{detail_index}_#{tier_index}".to_sym
           tier[field] = params[key] if params[key]
         end
@@ -783,7 +783,7 @@ class ChargebackController < ApplicationController
     end
   end
 
-  WHITELIST_INSTANCE_TYPE = %w(enterprise storage ext_management_system ems_cluster tenant ems_container).freeze
+  WHITELIST_INSTANCE_TYPE = %w[enterprise storage ext_management_system ems_cluster tenant ems_container].freeze
   NOTHING_FORM_VALUE = "nil".freeze
 
   def get_cis_all
@@ -895,8 +895,8 @@ class ChargebackController < ApplicationController
 
     if @record || @in_a_form ||
        (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
-      if %w(chargeback_rates_copy chargeback_rates_edit chargeback_rates_new).include?(@sb[:action]) ||
-         (x_active_tree == :cb_assignments_tree && %w(Compute Storage).include?(x_node.split('-').last))
+      if %w[chargeback_rates_copy chargeback_rates_edit chargeback_rates_new].include?(@sb[:action]) ||
+         (x_active_tree == :cb_assignments_tree && %w[Compute Storage].include?(x_node.split('-').last))
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.show(:paging_div, :form_buttons_div).remove_paging

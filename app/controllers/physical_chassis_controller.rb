@@ -21,15 +21,15 @@ class PhysicalChassisController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties relationships),
-      %i(management_network slots)
+      %i[properties relationships],
+      %i[management_network slots]
     ]
   end
   helper_method(:textual_group_list)
   toolbar('physical_chassis_summary', 'physical_chassis_list')
 
   def self.display_methods
-    %w(physical_storages physical_servers)
+    %w[physical_storages physical_servers]
   end
 
   def breadcrumbs_options
