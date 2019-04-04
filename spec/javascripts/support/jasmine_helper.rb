@@ -35,3 +35,34 @@ module Jasmine
     puts "end wait"
   end
 end
+
+
+module Jasmine
+  module Runners
+    class PhantomJs
+      alias_method :run_bak, :run
+
+      def run
+        p [:RUN, {
+          :formatter => @formatter,
+          :jasmine_server_url => @jasmine_server_url,
+          :prevent_phantom_js_auto_install => @prevent_phantom_js_auto_install,
+          :show_console_log => @show_console_log,
+          :phantom_config_script => @phantom_config_script,
+          :show_full_stack_trace => @show_full_stack_trace,
+        }]
+
+        phantom_script = File.join(File.dirname(__FILE__), 'phantom_jasmine_run.js')
+        command = "\"#{phantom_js_path}\" \"#{phantom_script}\" \"#{jasmine_server_url}\" \"#{show_console_log}\" \"#{@phantom_config_script}\""
+        run_details = { 'random' => false }
+        p [{
+          :phantom_script => phantom_script,
+          :command => command,
+          :run_details => run_details,
+        }]
+
+        run_bak
+      end
+    end
+  end
+end
