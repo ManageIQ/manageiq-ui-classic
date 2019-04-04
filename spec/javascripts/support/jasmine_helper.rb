@@ -61,7 +61,10 @@ module Jasmine
           :run_details => run_details,
         }]
 
-        run_bak
+        system("curl '#{jasmine_server_url}'")
+        run_bak.tap do |ret|
+          p [:RUN_BAK, 'done']
+        end
       end
     end
   end
