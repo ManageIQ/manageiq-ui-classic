@@ -50,14 +50,14 @@ class GitBasedDomainImportService
     MiqTask.generic_action_with_callback(task_options, queue_options)
   end
 
-  def queue_refresh_and_import(git_url, ref, ref_type, tenant_id, custom_import_options = {})
+  def queue_refresh_and_import(git_url, ref, ref_type, tenant_id, auth_args = {})
     import_options = {
       "git_url"   => git_url,
       "ref"       => ref,
       "ref_type"  => ref_type,
       "tenant_id" => tenant_id,
       "overwrite" => true
-    }.merge(custom_import_options)
+    }.merge(prepare_auth_options(auth_args))
 
     task_options = {
       :action => "Refresh and import git repository",
@@ -127,5 +127,18 @@ class GitBasedDomainImportService
 
   def self.available?
     MiqRegion.my_region.role_active?("git_owner")
+  end
+
+  private
+
+  def prepare_auth_options(auth_args)
+    auth_args.stringify_keys!
+
+    auth_options = {}
+    auth_options["password"] = ManageIQ::Password.try_encrypt(auth_args["password"]) unless auth_args["password"].nil?
+    auth_options["userid"] = auth_args["userid"] unless auth_args["userid"].nil?
+    auth_options["verify_ssl"] = auth_args["verify_ssl"] unless auth_args["verify_ssl"].nil?
+
+    auth_options
   end
 end
