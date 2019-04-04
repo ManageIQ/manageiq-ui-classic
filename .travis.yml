@@ -11,10 +11,7 @@ addons:
   postgresql: '10'
 env:
   matrix:
-  - TEST_SUITE=spec
   - TEST_SUITE=spec:javascript
-  - TEST_SUITE=spec:compile
-  - TEST_SUITE=spec:jest
 matrix:
   exclude:
   - rvm: 2.4.5
