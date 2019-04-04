@@ -1622,7 +1622,7 @@ class MiqAeClassController < ApplicationController
   def form_copy_objects_field_changed
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
     copy_objects_get_form_vars
-    build_automate_tree(:automate, :automate_tree)
+    build_automate_tree(:automate)
     @changed = (@edit[:new] != @edit[:current])
     @changed = @edit[:new][:override_source] if @edit[:new][:namespace].nil?
     render :update do |page|
@@ -1636,7 +1636,7 @@ class MiqAeClassController < ApplicationController
   def ae_tree_select_toggle
     @edit = session[:edit]
     self.x_active_tree = :ae_tree
-    at_tree_select_toggle(:namespace)
+    at_tree_select_toggle(:automate, :namespace)
 
     if params[:button] == 'submit'
       x_node_set(@edit[:active_id], :automate_tree)
@@ -1853,7 +1853,7 @@ class MiqAeClassController < ApplicationController
     if params[:button] == "reset"
       add_flash(_("All changes have been reset"), :warning)
     end
-    build_automate_tree(:automate, :automate_tree)
+    build_automate_tree(:automate)
     replace_right_cell
   end
 
