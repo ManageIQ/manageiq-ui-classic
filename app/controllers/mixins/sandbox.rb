@@ -38,6 +38,7 @@ module Sandbox
     alert_profile_tree
     alert_tree
     automate_tree
+    automate_catalog_tree
     automation_manager_providers_tree
     automation_manager_cs_filter_tree
     bottlenecks_tree

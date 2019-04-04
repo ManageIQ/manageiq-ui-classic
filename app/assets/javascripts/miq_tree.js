@@ -163,6 +163,11 @@ function miqOnClickAutomate(id) {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
 }
 
+function miqOnClickAutomateCatalog(id) {
+  miqTreeExpandNode('automate_catalog_tree', id);
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
+}
+
 function miqOnClickIncludeDomainPrefix() {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
@@ -424,6 +429,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckSections',
     'miqOnCheckUserFilters',
     'miqOnClickAutomate',
+    'miqOnClickAutomateCatalog',
     'miqOnClickDiagnostics',
     'miqOnClickGeneric',
     'miqOnClickHostNet',

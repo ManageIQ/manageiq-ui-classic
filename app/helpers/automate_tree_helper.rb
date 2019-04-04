@@ -14,9 +14,11 @@ module AutomateTreeHelper
   private :submit_embedded_method
 
   # Build the tree for catalog item entry point selection and automate copy
-  def build_automate_tree(type, name)
+  def build_automate_tree(type)
+    tree_name = "#{type}_tree".to_sym
+
     # build the ae tree to show the tree select box for entry point
-    if x_active_tree == :automate_tree && @edit && @edit[:new][:fqname]
+    if x_active_tree == tree_name && @edit && @edit[:new][:fqname]
       nodes = @edit[:new][:fqname].split("/")
       @open_nodes = []
       # if there are more than one nested namespaces
@@ -39,11 +41,18 @@ module AutomateTreeHelper
       end
     end
 
-    @automate_tree = TreeBuilderAutomate.new(name, type, @sb)
+    klass = case type
+            when :automate
+              TreeBuilderAutomate
+            when :automate_catalog
+              TreeBuilderAutomateCatalog
+            end
+
+    @automate_tree = klass.new(tree_name, type, @sb)
   end
 
-  def at_tree_select_toggle(edit_key)
-    build_automate_tree(:automate, :automate_tree)
+  def at_tree_select_toggle(type, edit_key)
+    build_automate_tree(type)
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do
@@ -88,7 +97,7 @@ module AutomateTreeHelper
 
       when 'domain'
         @edit[:include_domain_prefix] = @edit[:include_domain_prefix].nil? ? true : nil
-        self.x_active_tree = :automate_tree
+        self.x_active_tree = "#{type}_tree".to_sym
 
       else
         @edit[:ae_field_typ] = params[:typ]
@@ -109,7 +118,7 @@ module AutomateTreeHelper
           @edit[:include_domain_prefix] = true
           @edit[:domain_prefix_check] = true
         end
-        self.x_active_tree = :automate_tree
+        self.x_active_tree = "#{type}_tree".to_sym
         page << javascript_show("ae_tree_select_div")
         page << javascript_show("blocker_div")
         page << javascript_show("automate_div")
@@ -119,7 +128,7 @@ module AutomateTreeHelper
         @edit[:current][:selected] = @edit[:new][:selected] unless @edit[:new][:selected].nil?
         unless @edit[:new][type].nil?
           @edit[:new][:selected] = @edit[:new][type]
-          if x_node(:automate_tree)
+          if x_node("#{type}_tree".to_sym)
             page << "miqTreeActivateNodeSilently('automate_tree', '#{@edit[:new][:selected]}');"
           end
         end
