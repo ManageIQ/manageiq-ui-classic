@@ -54,6 +54,16 @@ class EmsNetworkController < ApplicationController
     }.compact
   end
 
+  private
+
+  def textual_group_list
+    [
+      %i[properties status],
+      %i[relationships topology smart_management]
+    ]
+  end
+  helper_method :textual_group_list
+
   menu_section :net
   has_custom_buttons
 end

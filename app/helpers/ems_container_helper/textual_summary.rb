@@ -5,6 +5,7 @@ module EmsContainerHelper::TextualSummary
   include TextualMixins::TextualDataCollectionState
   include TextualMixins::TextualCustomButtonEvents
   include TextualMixins::TextualZone
+  include TextualMixins::EmsCommon
   #
   # Groups
   #

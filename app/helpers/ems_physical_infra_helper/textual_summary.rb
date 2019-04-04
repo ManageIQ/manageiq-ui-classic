@@ -2,6 +2,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualCustomButtonEvents
   include TextualMixins::TextualZone
+  include TextualMixins::EmsCommon
   #
   # Groups
   #

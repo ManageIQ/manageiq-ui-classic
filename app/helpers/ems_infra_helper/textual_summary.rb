@@ -1,6 +1,7 @@
 module EmsInfraHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualZone
+  include TextualMixins::EmsCommon
   #
   # Groups
   #

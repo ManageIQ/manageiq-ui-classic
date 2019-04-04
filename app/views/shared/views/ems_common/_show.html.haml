@@ -34,3 +34,5 @@
     = render :partial => 'show_ad_hoc_metrics'
   - elsif @showtype == 'topology'
     = render :file => 'container_topology/show'
+  - elsif @showtype == "compliance_history"
+    = render :partial => "shared/views/compliance_history"
