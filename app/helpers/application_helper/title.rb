@@ -98,8 +98,6 @@ module ApplicationHelper
         _("Control")
       when /^miq_capacity_utilization/
         _("Utilization")
-      when /^miq_capacity_planning/
-        _("Planning")
       when /^miq_capacity_bottlenecks/
         _("Bottlenecks")
       when /^miq_request/

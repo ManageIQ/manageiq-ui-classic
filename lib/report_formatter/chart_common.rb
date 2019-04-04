@@ -25,7 +25,6 @@ module ReportFormatter
       fun = case graph_options[:chart_type]
             when :performance then :build_performance_chart # performance chart (time based)
             when :util_ts     then :build_util_ts_chart     # utilization timestamp chart (grouped columns)
-            when :planning    then :build_planning_chart    # trend based planning chart
             else                                            # reporting charts
               mri.graph[:mode] == 'values' ? :build_reporting_chart_numeric : :build_reporting_chart
             end
@@ -107,45 +106,6 @@ module ReportFormatter
       add_axis_category_text(categories)
       series.zip(categories) { |ser, category| ser[:tooltip] = category }
       add_series('', series)
-    end
-
-    def build_planning_chart(_maxcols)
-      case mri.graph[:type]
-      when "Column", "ColumnThreed" # Build XML for column charts
-        categories = [] # Store categories and series counts in an array of arrays
-        series     = []
-        mri.graph[:columns].each_with_index do |col, col_idx|
-          mri.table.data.each_with_index do |r, r_idx|
-            break if r_idx > 9 || r[1].to_i == 0      # Skip if more than 10 rows or we find a row with second column (max vms count) of zero
-            if col_idx == 0                           # First column is the category text
-              categories.push((r_idx + 1).ordinalize) # Use 1st, 2nd, etc as the categories on the x axis
-            else
-              series[col_idx - 1] ||= {}
-              series[col_idx - 1][:header] ||= mri.headers[mri.col_order.index(col)] # Add the series header
-              series[col_idx - 1][:data] ||= series_class.new
-              # If a max col size is set, limit the value to that size, else use the actual value
-              val = r[col].to_i
-              val = mri.graph[:max_col_size].to_i if mri.graph[:max_col_size] && val > mri.graph[:max_col_size].to_i
-              tip = "#{Dictionary.gettext(mri.db_options[:options][:target_tags][:compute_type].to_s,
-                                          :type     => :model,
-                                          :notfound => :titleize)}: #{r[0]}"
-              series[col_idx - 1][:data].push(:value => val, :tooltip => tip)
-            end
-          end
-        end
-
-        # Remove any series where all values are zero or nil
-        series.delete_if { |s| s[:data].sum == 0 }
-
-        if series.empty?
-          no_records_found_chart
-          false
-        else
-          add_axis_category_text(categories)
-          series.each { |s| add_series(s[:header], s[:data]) }
-          true
-        end
-      end
     end
 
     def format_bytes_human_size_1

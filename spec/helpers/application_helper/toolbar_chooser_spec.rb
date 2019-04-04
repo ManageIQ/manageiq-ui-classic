@@ -121,7 +121,6 @@ describe ApplicationHelper, "ToolbarChooser" do
           miq_ae_class
           miq_ae_customization
           miq_ae_tools
-          miq_capacity_planning
           miq_capacity_utilization
           miq_policy
           miq_policy_rsop

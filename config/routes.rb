@@ -2207,20 +2207,6 @@ Rails.application.routes.draw do
       )
     },
 
-    :planning                 => {
-      :get  => %w(
-        index
-        report_download
-      ),
-      :post => %w(
-        change_tab
-        option_changed
-        plan
-        reset
-        wait_for_task
-      )
-    },
-
     :bottlenecks              => {
       :get  => %w(
         index
