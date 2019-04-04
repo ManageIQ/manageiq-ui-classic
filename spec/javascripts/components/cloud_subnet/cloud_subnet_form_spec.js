@@ -80,7 +80,10 @@ describe('cloud-subnet-form', function() {
       vm.cloudSubnetModel.gateway = '172.10.1.2';
       vm.cloudSubnetModel.dhcp_enabled = '172.10.1.2';
       vm.cloudSubnetModel.random_field_from_API = "random data from API";
-      var correct_data = _.pick(vm.cloudSubnetModel, 'name', 'gateway', 'dhcp_enabled');
+      vm.cloudSubnetModel.allocation_pools = '172.10.1.10,172.10.1.20';
+      vm.cloudSubnetModel.host_routes = '172.12.1.0/24,172.12.1.1';
+      vm.cloudSubnetModel.dns_nameservers = '172.11.1.1';
+      var correct_data = _.pick(vm.cloudSubnetModel, 'name', 'gateway', 'dhcp_enabled', 'allocation_pools', 'host_routes', 'dns_nameservers');
       vm.saveClicked();
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/cloud_subnet/update/1111?button=save', correct_data, { complete: false });
