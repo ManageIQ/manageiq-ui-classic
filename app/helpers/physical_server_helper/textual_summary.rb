@@ -4,19 +4,19 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores network_devices storage_devices health_state loc_led_state)
+      %i[name model product_name manufacturer machine_type serial_number ems_ref capacity memory cores network_devices storage_devices health_state loc_led_state]
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(host ext_management_system physical_rack physical_chassis physical_switches)
+      %i[host ext_management_system physical_rack physical_chassis physical_switches]
     )
   end
 
   def textual_group_management_networks
-    TextualGroup.new(_("Management Networks"), %i(mac ipv4 ipv6))
+    TextualGroup.new(_("Management Networks"), %i[mac ipv4 ipv6])
   end
 
   def textual_group_asset_details
@@ -29,7 +29,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_power_management
     TextualGroup.new(
       _("Power Management"),
-      %i(power_state)
+      %i[power_state]
     )
   end
 
@@ -40,12 +40,12 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_firmware_compliance
     TextualGroup.new(
       _("Firmware Compliance"),
-      %i(compliance_name compliance_status)
+      %i[compliance_name compliance_status]
     )
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_host

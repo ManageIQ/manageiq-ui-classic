@@ -2,7 +2,7 @@ module GenericObjectHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_go_properties
-    TextualGroup.new(_("Properties"), %i(definition created updated))
+    TextualGroup.new(_("Properties"), %i[definition created updated])
   end
 
   def textual_definition
@@ -68,7 +68,7 @@ module GenericObjectHelper::TextualSummary
   end
 
   def textual_group_go_relationships
-    TextualGroup.new(_("Relationships"), %i(go_custom_button_events))
+    TextualGroup.new(_("Relationships"), %i[go_custom_button_events])
   end
 
   def textual_go_custom_button_events

@@ -8,32 +8,32 @@ module ContainerImageHelper
     def textual_group_properties
       TextualGroup.new(
         _("Properties"),
-        %i(
+        %i[
           name tag id full_name os_distribution product_type product_name architecture author
           command entrypoint docker_version exposed_ports size
-        )
+        ]
       )
     end
 
     def textual_group_relationships
       TextualGroup.new(
         _("Relationships"),
-        %i(ems container_image_registry container_projects container_groups containers container_nodes custom_button_events)
+        %i[ems container_image_registry container_projects container_groups containers container_nodes custom_button_events]
       )
     end
 
     def textual_group_configuration
-      TextualGroup.new(_("Configuration"), %i(guest_applications openscap openscap_html last_scan))
+      TextualGroup.new(_("Configuration"), %i[guest_applications openscap openscap_html last_scan])
     end
 
     def textual_group_smart_management
-      TextualTags.new(_("Smart Management"), %i(tags))
+      TextualTags.new(_("Smart Management"), %i[tags])
     end
 
     def textual_group_openscap_failed_rules
       TextualGroup.new(
         _("OpenSCAP Failed Rules Summary"),
-        %i(openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high)
+        %i[openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high]
       )
     end
 

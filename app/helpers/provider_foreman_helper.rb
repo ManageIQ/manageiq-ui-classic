@@ -4,7 +4,7 @@ module ProviderForemanHelper
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname ipmi_present ipaddress mac_address configuration_profile_desc provider_name zone)
+      %i[hostname ipmi_present ipaddress mac_address configuration_profile_desc provider_name zone]
     )
   end
 
@@ -54,7 +54,7 @@ module ProviderForemanHelper
   def textual_group_environment
     TextualGroup.new(
       _("Environment"),
-      %i(configuration_environment_name configuration_domain_name configuration_realm_name)
+      %i[configuration_environment_name configuration_domain_name configuration_realm_name]
     )
   end
 
@@ -73,10 +73,10 @@ module ProviderForemanHelper
   def textual_group_os
     TextualGroup.new(
       _("Operating System"),
-      %i(
+      %i[
         configuration_compute_profile_name configuration_architecture_name operating_system_flavor_name
         customization_script_medium_name customization_script_ptable_name
-      )
+      ]
     )
   end
 
@@ -101,7 +101,7 @@ module ProviderForemanHelper
   end
 
   def textual_group_tenancy
-    TextualGroup.new(_("Tenancy"), %i(configuration_locations_name configuration_organizations_name))
+    TextualGroup.new(_("Tenancy"), %i[configuration_locations_name configuration_organizations_name])
   end
 
   def textual_configuration_locations_name
@@ -119,9 +119,9 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_profile_group_properties
-    %i(configuration_profile_name
+    %i[configuration_profile_name
        configuration_profile_region
-       configuration_profile_zone)
+       configuration_profile_zone]
   end
 
   def textual_configuration_profile_name
@@ -137,9 +137,9 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_profile_group_environment
-    %i(configuration_profile_environment
+    %i[configuration_profile_environment
        configuration_profile_domain
-       configuration_profile_puppet_realm)
+       configuration_profile_puppet_realm]
   end
 
   def textual_configuration_profile_environment
@@ -155,11 +155,11 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_profile_group_os
-    %i(configuration_profile_compute_profile
+    %i[configuration_profile_compute_profile
        configuration_profile_architecture
        configuration_profile_os
        configuration_profile_medium
-       configuration_profile_partition_table)
+       configuration_profile_partition_table]
   end
 
   def textual_configuration_profile_compute_profile
@@ -183,8 +183,8 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_profile_group_tenancy
-    %i(configuration_profile_configuration_locations
-       configuration_profile_configuration_organizations)
+    %i[configuration_profile_configuration_locations
+       configuration_profile_configuration_organizations]
   end
 
   def textual_configuration_profile_configuration_locations
@@ -202,8 +202,8 @@ module ProviderForemanHelper
   end
 
   def textual_inventory_group_properties
-    %i(inventory_group_name
-       inventory_group_region)
+    %i[inventory_group_name
+       inventory_group_region]
   end
 
   def textual_inventory_group_name
@@ -231,8 +231,8 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_script_group_properties
-    %i(configuration_script_name
-       configuration_script_region)
+    %i[configuration_script_name
+       configuration_script_region]
   end
 
   def textual_configuration_script_name
@@ -252,8 +252,8 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_script_group_os
-    %i(configuration_script_medium
-       configuration_script_partition_table)
+    %i[configuration_script_medium
+       configuration_script_partition_table]
   end
 
   def textual_survey_group(items)
@@ -261,7 +261,7 @@ module ProviderForemanHelper
     h = {:title     => _("Surveys"),
          :headers   => [_('Question Name'), _('Question Description'), _('Variable'),
                         _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')],
-         :col_order => %w(question_name question_description variable type min max default required choices)}
+         :col_order => %w[question_name question_description variable type min max default required choices]}
     h[:value] = items.collect do |item|
       {
         :title                => item['index'],
@@ -283,7 +283,7 @@ module ProviderForemanHelper
     return unless vars
     h = {:label     => _("Variables"),
          :headers   => [_('Name'), _('Value')],
-         :col_order => %w(name value)}
+         :col_order => %w[name value]}
     h[:value] = vars.collect do |item|
       {
         :name  => item[0].to_s,

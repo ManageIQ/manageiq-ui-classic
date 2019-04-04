@@ -37,13 +37,13 @@ class PhysicalRackController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties relationships),
+      %i[properties relationships],
     ]
   end
   helper_method(:textual_group_list)
 
   def self.display_methods
-    %w(physical_chassis physical_storages physical_servers)
+    %w[physical_chassis physical_storages physical_servers]
   end
 
   def breadcrumbs_options

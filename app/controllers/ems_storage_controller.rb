@@ -32,7 +32,7 @@ class EmsStorageController < ApplicationController
     ems_form_fields
   end
 
-  TYPE_CHECK_SHOW_IDENTIFIERS = %w(ems_storage_show).freeze
+  TYPE_CHECK_SHOW_IDENTIFIERS = %w[ems_storage_show].freeze
 
   def check_generic_rbac
     ident = "#{controller_name}_#{action_name == 'report_data' ? 'show_list' : action_name}"

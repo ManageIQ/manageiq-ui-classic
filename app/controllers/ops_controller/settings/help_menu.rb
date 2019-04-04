@@ -36,7 +36,7 @@ module OpsController::Settings::HelpMenu
     return unless load_edit('customize_help_menu')
 
     help_menu_items.each do |item|
-      %i(title href type).map do |field|
+      %i[title href type].map do |field|
         param = params["#{item}_#{field}"]
         next if param.nil?
 

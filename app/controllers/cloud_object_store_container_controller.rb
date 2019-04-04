@@ -37,7 +37,7 @@ class CloudObjectStoreContainerController < ApplicationController
   end
 
   def self.display_methods
-    %w(cloud_object_store_objects custom_button_events)
+    %w[cloud_object_store_objects custom_button_events]
   end
 
   def new
@@ -128,7 +128,7 @@ class CloudObjectStoreContainerController < ApplicationController
   end
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

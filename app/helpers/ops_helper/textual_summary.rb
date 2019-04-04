@@ -10,10 +10,10 @@ module OpsHelper::TextualSummary
 
     TextualGroup.new(
       _("Properties"),
-      %i(
+      %i[
         vmdb_connection_name vmdb_connection_ipaddress vmdb_connection_vendor vmdb_connection_version
         vmdb_connection_data_directory vmdb_connection_data_disk vmdb_connection_last_start_time
-      )
+      ]
     )
   end
 
@@ -40,10 +40,10 @@ module OpsHelper::TextualSummary
 
     TextualGroup.new(
       _("Capacity Data"),
-      %i(
+      %i[
         vmdb_connection_timestamp vmdb_connection_total_space vmdb_connection_used_space vmdb_connection_free_space
         vmdb_connection_total_index_nodes vmdb_connection_used_index_nodes vmdb_connection_free_index_nodes
-      )
+      ]
     )
   end
 
@@ -118,7 +118,7 @@ module OpsHelper::TextualSummary
     {
       :title     => _("Tables with the Most Rows"),
       :headers   => [_("Name"), _("Rows")],
-      :col_order => %w(name value),
+      :col_order => %w[name value],
       :value     => vmdb_table_top_rows(:rows, TOP_TABLES_BY_COUNT)
     }
   end
@@ -127,7 +127,7 @@ module OpsHelper::TextualSummary
     {
       :title     => _("Largest Tables"),
       :headers   => [_("Name"), _("Size")],
-      :col_order => %w(name value),
+      :col_order => %w[name value],
       :value     => vmdb_table_top_rows(:size, TOP_TABLES_BY_COUNT)
     }
   end
@@ -136,7 +136,7 @@ module OpsHelper::TextualSummary
     {
       :title     => _("Tables with Most Wasted Space"),
       :headers   => [_("Name"), _("Wasted")],
-      :col_order => %w(name value),
+      :col_order => %w[name value],
       :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_COUNT)
     }
   end
@@ -158,7 +158,7 @@ module OpsHelper::TextualSummary
   def textual_tenant_quota_allocations
     h = {:title     => _("Tenant Quota"),
          :headers   => [_("Name"), _("Total Quota"), _("In Use"), _("Allocated"), _("Available")],
-         :col_order => %w(name total in_use allocated available)}
+         :col_order => %w[name total in_use allocated available]}
     h[:value] = get_tenant_quota_allocations
     h
   end

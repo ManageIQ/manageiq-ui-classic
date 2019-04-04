@@ -2,7 +2,7 @@ module GenericObjectDefinitionHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name created updated))
+    TextualGroup.new(_("Properties"), %i[name created updated])
   end
 
   def textual_name
@@ -18,7 +18,7 @@ module GenericObjectDefinitionHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(generic_objects))
+    TextualGroup.new(_("Relationships"), %i[generic_objects])
   end
 
   def textual_generic_objects

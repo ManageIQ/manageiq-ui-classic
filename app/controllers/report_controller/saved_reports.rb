@@ -64,7 +64,7 @@ module ReportController::SavedReports
     if params[:type]
       @render_chart = false
 
-      @html = if %w(tabular hybrid).include?(params[:type])
+      @html = if %w[tabular hybrid].include?(params[:type])
                 report_build_html_table(
                   @report,
                   rr.html_rows(:page     => @sb[:pages][:current],
@@ -75,7 +75,7 @@ module ReportController::SavedReports
     else
       @ght_type = @report.graph.blank? ? 'tabular' : 'hybrid'
     end
-    @render_chart = %w(graph hybrid).include?(@ght_type)
+    @render_chart = %w[graph hybrid].include?(@ght_type)
 
     @report.extras ||= {}
     @report.extras[:to_html] ||= @html
@@ -104,7 +104,7 @@ module ReportController::SavedReports
       @report_deleted = true
     end
     self.x_node = "xx-#{@sb[:miq_report_id]}" if x_active_tree == :savedreports_tree && x_node.split('-').first == "rr"
-    replace_right_cell(:replace_trees => %i(reports savedreports))
+    replace_right_cell(:replace_trees => %i[reports savedreports])
   end
 
   # get all saved reports for list view

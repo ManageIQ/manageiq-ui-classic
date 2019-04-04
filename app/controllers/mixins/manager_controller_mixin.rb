@@ -297,7 +297,7 @@ module Mixins
     private
 
     def tag_action
-      (params[:action] == 'x_button' && %w(automation_manager_provider_tag configuration_manager_provider_tag).include?(params[:pressed])) || (params[:action] == 'tagging' && params[:pressed] == 'reset')
+      (params[:action] == 'x_button' && %w[automation_manager_provider_tag configuration_manager_provider_tag].include?(params[:pressed])) || (params[:action] == 'tagging' && params[:pressed] == 'reset')
     end
 
     def replace_right_cell(options = {})
@@ -392,7 +392,7 @@ module Mixins
     end
 
     def render_tagging_form
-      return if %w(cancel save).include?(params[:button])
+      return if %w[cancel save].include?(params[:button])
       @in_a_form = true
       @right_cell_text = _("Edit Tags")
       clear_flash_msg
@@ -406,7 +406,7 @@ module Mixins
     end
 
     def render_service_dialog_form
-      return if %w(cancel save).include?(params[:button])
+      return if %w[cancel save].include?(params[:button])
       @in_a_form = true
       clear_flash_msg
       presenter = rendering_objects

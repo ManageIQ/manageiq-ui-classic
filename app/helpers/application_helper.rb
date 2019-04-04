@@ -110,7 +110,7 @@ module ApplicationHelper
   end
 
   def type_has_quadicon(type)
-    !%w(
+    !%w[
       ConfigurationProfile
       Account
       GuestApplication
@@ -129,7 +129,7 @@ module ApplicationHelper
       MiqTask
       MiqRequest
       PxeServer
-    ).include?(type)
+    ].include?(type)
   end
 
   CONTROLLER_TO_MODEL = {
@@ -197,7 +197,7 @@ module ApplicationHelper
   end
 
   def restful_routed_action?(controller = controller_name, action = action_name)
-    restful_routed?("#{controller.camelize}Controller".constantize.model) && !%w(explorer show_list).include?(action)
+    restful_routed?("#{controller.camelize}Controller".constantize.model) && !%w[explorer show_list].include?(action)
   rescue
     false
   end
@@ -253,14 +253,14 @@ module ApplicationHelper
     if item && restful_routed?(item)
       return polymorphic_path(item)
     end
-    if @vm && %w(Account User Group Patch GuestApplication).include?(db)
+    if @vm && %w[Account User Group Patch GuestApplication].include?(db)
       return url_for_only_path(:controller => "vm_or_template",
                                :action     => @lastaction,
                                :id         => @vm,
                                :show       => @id)
-    elsif @host && %w(Patch GuestApplication).include?(db)
+    elsif @host && %w[Patch GuestApplication].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif %w(ConfiguredSystem ConfigurationProfile).include?(db)
+    elsif %w[ConfiguredSystem ConfigurationProfile].include?(db)
       return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
@@ -302,65 +302,65 @@ module ApplicationHelper
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
       # If we do not want to use redirect or any kind of click action
-      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex).include?(view.db) &&
-         %w(ops).include?(params[:controller])
+      if %w[Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex].include?(view.db) &&
+         %w[ops].include?(params[:controller])
         return false
       end
-      if %w(MiqTask).include?(view.db) && %w(miq_task).include?(params[:controller])
+      if %w[MiqTask].include?(view.db) && %w[miq_task].include?(params[:controller])
         return true
       end
       if @explorer
         # showing a list view of another CI inside vmx
-        if %w(SecurityGroup
+        if %w[SecurityGroup
               FloatingIp
               NetworkRouter
               NetworkPort
               CloudNetwork
               CloudSubnet
               LoadBalancer
-              CloudVolume).include?(view.db)
+              CloudVolume].include?(view.db)
           return url_for_only_path(:controller => controller, :action => "show") + "/"
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
-        elsif %w(ConfigurationProfile).include?(view.db) &&
+        elsif %w[ConfigurationProfile].include?(view.db) &&
               request.parameters[:controller] == "provider_foreman"
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder).include?(view.db) &&
+        elsif %w[ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder].include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
+        elsif %w[ConfiguredSystem].include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(MiqWidget
+        elsif %w[MiqWidget
                  ConfigurationScript
-                 MiqReportResult).include?(view.db) &&
-              %w(report automation_manager).include?(request.parameters[:controller])
+                 MiqReportResult].include?(view.db) &&
+              %w[report automation_manager].include?(request.parameters[:controller])
           suffix = ''
           if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run" || params[:action] == "reload"
             suffix = x_node
           end
           return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
-        elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
-              %w(ops).include?(request.parameters[:controller])
+        elsif %w[User MiqGroup MiqUserRole Tenant].include?(view.db) &&
+              %w[ops].include?(request.parameters[:controller])
           if @tagging
             return false # when tagging Users, Groups, Roles and Tenants, the table is non-clickable
           else
             return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
           end
-        elsif %w(VmdbTableEvm MiqServer).include?(view.db) &&
-              %w(ops report).include?(request.parameters[:controller])
+        elsif %w[VmdbTableEvm MiqServer].include?(view.db) &&
+              %w[ops report].include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
-        elsif %w(MiqAction
+        elsif %w[MiqAction
                  MiqAlert
                  ScanItemSet
                  MiqSchedule
                  PxeServer
                  PxeImageType
                  IsoDatastore
-                 CustomizationTemplate).include?(view.db) &&
-              %w(miq_policy ops pxe report).include?(params[:controller])
+                 CustomizationTemplate].include?(view.db) &&
+              %w[miq_policy ops pxe report].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
-        elsif %w(MiqPolicy).include?(view.db) && %w(miq_policy).include?(params[:controller])
+        elsif %w[MiqPolicy].include?(view.db) && %w[miq_policy].include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{x_node}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
@@ -646,14 +646,14 @@ module ApplicationHelper
     return false if @explorer
     return false if controller.action_name.end_with?("tagging_edit")
 
-    hide_actions = %w(
+    hide_actions = %w[
       auth_error
       change_tab
       show
-    )
+    ]
     return false if @layout == "" && hide_actions.include?(controller.action_name)
 
-    hide_layouts = %w(
+    hide_layouts = %w[
       about
       chargeback
       container_dashboard
@@ -673,7 +673,7 @@ module ApplicationHelper
       pxe
       report
       server_build
-    )
+    ]
     return false if hide_layouts.include?(@layout)
 
     return false if @layout == "configuration" && @tabform != "ui_4"
@@ -794,7 +794,7 @@ module ApplicationHelper
   end
 
   def display_adv_search?
-    %w(auth_key_pair_cloud
+    %w[auth_key_pair_cloud
        availability_zone
        automation_manager
        cloud_network
@@ -851,7 +851,7 @@ module ApplicationHelper
        services
        storage
        templates
-       vm).include?(@layout)
+       vm].include?(@layout)
   end
 
   # Do we show or hide the clear_search link in the list view title
@@ -861,7 +861,7 @@ module ApplicationHelper
 
   # Should we allow the user input checkbox be shown for an atom in the expression editor
   QS_VALID_USER_INPUT_OPERATORS = ["=", "!=", ">", ">=", "<", "<=", "INCLUDES", "STARTS WITH", "ENDS WITH", "CONTAINS"].freeze
-  QS_VALID_FIELD_TYPES = %i(string boolean integer float percent bytes megabytes).freeze
+  QS_VALID_FIELD_TYPES = %i[string boolean integer float percent bytes megabytes].freeze
   def qs_show_user_input_checkbox?
     return true if @edit[:expression_method]
     return false unless @edit[:adv_search_open] # Only allow user input for advanced searches
@@ -979,7 +979,7 @@ module ApplicationHelper
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    %i(ppsetting searchtag entry sortby sort_choice type page).find { |k| params[k] }
+    %i[ppsetting searchtag entry sortby sort_choice type page].find { |k| params[k] }
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
@@ -1075,7 +1075,7 @@ module ApplicationHelper
     "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
   end
 
-  GTL_VIEW_LAYOUTS = %w(action
+  GTL_VIEW_LAYOUTS = %w[action
                         auth_key_pair_cloud
                         availability_zone
                         alerts_overview
@@ -1161,12 +1161,12 @@ module ApplicationHelper
                         security_group
                         services
                         storage
-                        templates).freeze
+                        templates].freeze
 
   def render_gtl_view_tb?
     GTL_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
       !@ownershipitems && !@retireitems && !@politems && !@in_a_form &&
-      %w(show show_list).include?(params[:action]) && @display != "custom_button_events"
+      %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end
 
   def update_paging_url_parms(action_url, parameter_to_update = {}, post = false)
@@ -1182,7 +1182,7 @@ module ApplicationHelper
   end
 
   def update_query_string_params(update_this_param)
-    exclude_params = %w(button flash_msg page ppsetting pressed sortby sort_choice type)
+    exclude_params = %w[button flash_msg page ppsetting pressed sortby sort_choice type]
     query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
     updated_query_string = query_string.symbolize_keys
     updated_query_string.delete_if { |k, _v| exclude_params.include?(k.to_s) }
@@ -1215,7 +1215,7 @@ module ApplicationHelper
   def miq_tab_content(id, active = nil, options = {}, &_block)
     lazy = options[:lazy] && active != id
 
-    classname = %w(tab-pane)
+    classname = %w[tab-pane]
     classname << options[:class] if options[:class]
     classname << 'active' if active == id
     classname << 'lazy' if lazy
@@ -1229,7 +1229,7 @@ module ApplicationHelper
   end
 
   def tree_with_advanced_search?
-    %i(automation_manager_providers
+    %i[automation_manager_providers
        automation_manager_cs_filter
        configuration_manager_cs_filter
        configuration_scripts
@@ -1245,7 +1245,7 @@ module ApplicationHelper
        templates_images_filter
        vandt
        vms_filter
-       vms_instances_filter).include?(x_tree[:type])
+       vms_instances_filter].include?(x_tree[:type])
   end
 
   def fonticon_or_fileicon(item)
@@ -1265,12 +1265,12 @@ module ApplicationHelper
     "chart"  => "c"
   }.freeze
 
-  LIST_ICON_FOR = %w(
+  LIST_ICON_FOR = %w[
     MiqReportResult
     MiqSchedule
     MiqUserRole
     MiqWidget
-  ).freeze
+  ].freeze
 
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
@@ -1374,7 +1374,7 @@ module ApplicationHelper
   def action_url_for_views
     if @lastaction == "scan_history"
       "scan_history"
-    elsif %w(all_jobs jobs ui_jobs all_ui_jobs).include?(@lastaction)
+    elsif %w[all_jobs jobs ui_jobs all_ui_jobs].include?(@lastaction)
       "jobs"
     else
       @lastaction && @lastaction != "get_node_info" ? @lastaction : "show_list"

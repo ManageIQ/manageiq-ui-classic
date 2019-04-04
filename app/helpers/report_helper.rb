@@ -78,7 +78,7 @@ module ReportHelper
     case @edit[:new][:perf_interval]
     when 'hourly'
       end_array += [
-        %w(Today 0),
+        %w[Today 0],
         ['Yesterday', 1.day.to_s]
       ]
       5.times { |i| end_array.push(["#{i + 2} days ago", (i + 2).days.to_s]) }
@@ -86,7 +86,7 @@ module ReportHelper
       5.times { |i| end_array.push(["#{pluralize(i + 2, 'month')} ago", (i + 1).months.to_s]) }
     when 'daily'
       end_array += [
-        %w(Yesterday 0) # Start with yesterday, since we only allow full 24 hour days in daily trending
+        %w[Yesterday 0] # Start with yesterday, since we only allow full 24 hour days in daily trending
       ]
       5.times { |i| end_array.push(["#{i + 2} days ago", (i + 1).days.to_s]) }
       3.times { |i| end_array.push(["#{pluralize((i + 1), 'week')} ago", ((i + 1).weeks - 1.day).to_s]) }

@@ -1,13 +1,13 @@
 module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
   # FIXME: replace with CustomButton.button_classes
   # (ServiceTemplate, VmOrTemplate, GenericObjectDefinition are exceptions)
-  APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
+  APPLIES_TO_CLASS_BASE_MODELS = %w[AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
                                     CloudVolume ContainerGroup ContainerImage ContainerNode ContainerProject
                                     ContainerTemplate ContainerVolume EmsCluster ExtManagementSystem
                                     GenericObject GenericObjectDefinition Host LoadBalancer
                                     MiqGroup MiqTemplate NetworkRouter OrchestrationStack
                                     SecurityGroup Service ServiceTemplate Storage Switch Tenant
-                                    User Vm VmOrTemplate).freeze
+                                    User Vm VmOrTemplate].freeze
 
   def custom_button_appliable_class?(model)
     # FIXME: merge with model replacement in 'custom_button_class_model'

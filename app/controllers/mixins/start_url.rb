@@ -1,7 +1,7 @@
 module StartUrl
   extend ActiveSupport::Concern
 
-  STORAGE_START_PAGES = %w(storage_manager_show_list).to_set.freeze
+  STORAGE_START_PAGES = %w[storage_manager_show_list].to_set.freeze
 
   included do
     helper_method :start_page_options

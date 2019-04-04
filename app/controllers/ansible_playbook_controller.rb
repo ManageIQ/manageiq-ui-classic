@@ -24,13 +24,13 @@ class AnsiblePlaybookController < ApplicationController
   end
 
   def toolbar
-    %w(show_list).include?(@lastaction) ? 'ansible_playbooks_center' : 'ansible_playbook_center'
+    %w[show_list].include?(@lastaction) ? 'ansible_playbooks_center' : 'ansible_playbook_center'
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships smart_management)]
+    [%i[properties relationships smart_management]]
   end
   helper_method :textual_group_list
 

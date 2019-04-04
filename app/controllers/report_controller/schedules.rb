@@ -297,7 +297,7 @@ module ReportController::Schedules
     @folders = []
 
     # Remember how this edit started
-    @edit[:type] = %w(miq_report_schedule_copy miq_report_schedule_new).include?(params[:action]) ? 'schedule_new' : 'schedule_edit'
+    @edit[:type] = %w[miq_report_schedule_copy miq_report_schedule_new].include?(params[:action]) ? 'schedule_new' : 'schedule_edit'
 
     # Get configured tz, default to user's tz
     @edit[:tz] = @schedule.run_at && @schedule.run_at[:tz] ? @schedule.run_at[:tz] : session[:user_tz]

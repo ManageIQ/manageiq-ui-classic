@@ -411,7 +411,7 @@ class MiqPolicyController < ApplicationController
       alert_get_info(MiqAlert.find(nodeid))
     end
     @show_adv_search = (@nodetype == "xx"   && !@folders) ||
-                       (@nodetype == "root" && !%i(alert_profile_tree condition_tree policy_tree).include?(x_active_tree))
+                       (@nodetype == "root" && !%i[alert_profile_tree condition_tree policy_tree].include?(x_active_tree))
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
@@ -540,7 +540,7 @@ class MiqPolicyController < ApplicationController
 
       presenter.update(:main_div, r[:partial => partial_name])
       right_cell_text = _("All %{models}") % {:models => model}
-      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w(alert_profile_tree condition_tree policy_tree).exclude?(x_active_tree.to_s)
+      right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[alert_profile_tree condition_tree policy_tree].exclude?(x_active_tree.to_s)
     when 'pp'
       presenter.update(:main_div, r[:partial => 'profile_details'])
       right_cell_text =
@@ -601,7 +601,7 @@ class MiqPolicyController < ApplicationController
     when 'co'
       # Set the JS types and titles vars if value fields are showing (needed because 2 expression editors are present)
       if @edit && @edit[@expkey]
-        %i(val1 val2).each do |val|
+        %i[val1 val2].each do |val|
           next unless @edit[@expkey][val] # unless an expression with value 1 is showing
           presenter[:exp] = {}
           presenter[:exp]["#{val}_type".to_sym]  = @edit[@expkey][val][:type].to_s if @edit[@expkey][val][:type]
@@ -911,7 +911,7 @@ class MiqPolicyController < ApplicationController
     @sb[:nodeid] = nil
     @sb[:folder] = nodeid.nil? ? nodetype.split("-").last : nodeid
     if x_active_tree == :policy_tree
-      if nodeid.nil? && %w(compliance control).include?(nodetype.split('-').last)
+      if nodeid.nil? && %w[compliance control].include?(nodetype.split('-').last)
         # level 1 - compliance & control
         _, mode = nodetype.split('-')
         @folders = UI_FOLDERS.collect do |model|
@@ -1049,7 +1049,7 @@ class MiqPolicyController < ApplicationController
     if process_variables
       params.each_key do |var|
         vars = var.split("__")
-        next unless %w(oid var_type value).include?(vars[0])
+        next unless %w[oid var_type value].include?(vars[0])
 
         10.times do |i|
           f = ("oid__" + (i + 1).to_s)

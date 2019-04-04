@@ -14,8 +14,8 @@ class ContainerNodeController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties container_labels compliance miq_custom_attributes),
-      %i(relationships conditions smart_management)
+      %i[properties container_labels compliance miq_custom_attributes],
+      %i[relationships conditions smart_management]
     ]
   end
   helper_method :textual_group_list
@@ -41,7 +41,7 @@ class ContainerNodeController < ApplicationController
   end
 
   def self.custom_display_modes
-    %w(ad_hoc_metrics)
+    %w[ad_hoc_metrics]
   end
 
   def breadcrumbs_options

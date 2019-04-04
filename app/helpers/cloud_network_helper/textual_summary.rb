@@ -8,13 +8,13 @@ module CloudNetworkHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type status ems_ref))
+    TextualGroup.new(_("Properties"), %i[name type status ems_ref])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets network_routers floating_ips custom_button_events)
+      %i[parent_ems_cloud ems_network cloud_tenant instances cloud_subnets network_routers floating_ips custom_button_events]
     )
   end
 

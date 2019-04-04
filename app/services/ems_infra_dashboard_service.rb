@@ -37,7 +37,7 @@ class EmsInfraDashboardService < EmsDashboardService
   end
 
   def attributes_data
-    attributes = %i(ems_clusters hosts storages vms miq_templates)
+    attributes = %i[ems_clusters hosts storages vms miq_templates]
 
     attr_icon = {
       :ems_clusters  => 'pficon pficon-cluster',

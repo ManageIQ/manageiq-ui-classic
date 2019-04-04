@@ -131,7 +131,7 @@ module ReportController::Dashboards
         page << "ManageIQ.widget.dashboardUrl = 'report/db_widget_dd_done'"
         page << "miqInitDashboardCols();"
       end
-      if %w(up down).include?(params[:button])
+      if %w[up down].include?(params[:button])
         page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
         page.replace(@refresh_div, :partial => @refresh_partial, :locals => {:action => "db_seq_edit"}) if @refresh_div
       end
@@ -263,7 +263,7 @@ module ReportController::Dashboards
   def db_get_form_vars
     @in_a_form = true
     @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
-    if %w(up down).include?(params[:button])
+    if %w[up down].include?(params[:button])
       db_move_cols_up if params[:button] == "up"
       db_move_cols_down if params[:button] == "down"
     else
@@ -303,7 +303,7 @@ module ReportController::Dashboards
   end
 
   def db_save_members
-    widget_ids = %i(col1 col2 col3).collect { |key| @dashboard.set_data[key] }.flatten
+    widget_ids = %i[col1 col2 col3].collect { |key| @dashboard.set_data[key] }.flatten
     widgets = Array(MiqWidget.where(:id => widget_ids))
 
     @dashboard.replace_children(widgets)

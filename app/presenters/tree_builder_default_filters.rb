@@ -2,20 +2,20 @@ class TreeBuilderDefaultFilters < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
   NAV_TAB_PATH = {
-    :container                                     => %w(Containers Containers),
-    :containergroup                                => %w(Containers Containers\ Groups),
-    :containerservice                              => %w(Containers Services),
-    :host                                          => %w(Infrastructure Hosts),
-    :miqtemplate                                   => %w(Services Workloads Templates\ &\ Images),
-    :service                                       => %w(Services My\ Services),
-    :storage                                       => %w(Infrastructure Datastores),
-    :vm                                            => %w(Services Workloads VMs\ &\ Instances),
-    :"manageiq::providers::cloudmanager::template" => %w(Cloud Instances Images),
-    :"manageiq::providers::inframanager::template" => %w(Infrastructure Virtual\ Machines Templates),
-    :"manageiq::providers::cloudmanager::vm"       => %w(Cloud Instances Instances),
-    :"manageiq::providers::inframanager::vm"       => %w(Infrastructure Virtual\ Machines VMs),
-    :physicalserver                                => %w(Physical\ Infrastructure Servers),
-    :physicalswitch                                => %w(Physical\ Infrastructure Switches)
+    :container                                     => %w[Containers Containers],
+    :containergroup                                => %w[Containers Containers\ Groups],
+    :containerservice                              => %w[Containers Services],
+    :host                                          => %w[Infrastructure Hosts],
+    :miqtemplate                                   => %w[Services Workloads Templates\ &\ Images],
+    :service                                       => %w[Services My\ Services],
+    :storage                                       => %w[Infrastructure Datastores],
+    :vm                                            => %w[Services Workloads VMs\ &\ Instances],
+    :"manageiq::providers::cloudmanager::template" => %w[Cloud Instances Images],
+    :"manageiq::providers::inframanager::template" => %w[Infrastructure Virtual\ Machines Templates],
+    :"manageiq::providers::cloudmanager::vm"       => %w[Cloud Instances Instances],
+    :"manageiq::providers::inframanager::vm"       => %w[Infrastructure Virtual\ Machines VMs],
+    :physicalserver                                => %w[Physical\ Infrastructure Servers],
+    :physicalswitch                                => %w[Physical\ Infrastructure Switches]
   }.freeze
 
   def prepare_data(data)

@@ -6,8 +6,8 @@ module Menu
     class << self
       extend Forwardable
 
-      delegate %i(menu item_in_section? item section section_id_string_to_symbol
-                  section_for_item_id each map detect select) => :instance
+      delegate %i[menu item_in_section? item section section_id_string_to_symbol
+                  section_for_item_id each map detect select] => :instance
     end
 
     def each

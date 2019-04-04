@@ -10,14 +10,14 @@ class ResourcePoolController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(vms descendant_vms all_vms resource_pools)
+    %w[vms descendant_vms all_vms resource_pools]
   end
 
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(all_vms vms resource_pools).include?(@display) # Were we displaying sub-items
-    if %w(all_vms vms resource_pools).include?(@display) # Need to check, since RPs contain RPs
+    params[:display] = @display if %w[all_vms vms resource_pools].include?(@display) # Were we displaying sub-items
+    if %w[all_vms vms resource_pools].include?(@display) # Need to check, since RPs contain RPs
 
       if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
                                        "miq_template_",
@@ -45,7 +45,7 @@ class ResourcePoolController < ApplicationController
       assign_policies(ResourcePool) if params[:pressed] == "resource_pool_protect"
     end
 
-    return if %w(resource_pool_tag resource_pool_protect).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
+    return if %w[resource_pool_tag resource_pool_protect].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
     check_if_button_is_implemented
 
@@ -65,7 +65,7 @@ class ResourcePoolController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(configuration smart_management)]
+    [%i[properties relationships], %i[configuration smart_management]]
   end
   helper_method :textual_group_list
 

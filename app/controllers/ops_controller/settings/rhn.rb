@@ -123,7 +123,7 @@ module OpsController::Settings::RHN
     )
 
     auth    = {:registration => {:userid => credentials[:userid], :password => credentials[:password]}}
-    options = {:required => %i(userid password)}
+    options = {:required => %i[userid password]}
     db.update_authentication(auth, options)
     unless credentials[:registration_type] == "sm_hosted"
       db.registration_organization = @edit[:new][:customer_org]
@@ -216,7 +216,7 @@ module OpsController::Settings::RHN
   # we can use this method to disable the 'Save' button untill all necessary
   # fields are filled-in.
   def rhn_allow_save?
-    obligatory_fields = %i(customer_password customer_userid server_url repo_name)
+    obligatory_fields = %i[customer_password customer_userid server_url repo_name]
     obligatory_fields << :proxy_address if @edit[:new][:use_proxy].to_i == 1
 
     obligatory_fields.find_all do |field|

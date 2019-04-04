@@ -3,19 +3,19 @@ module AnsibleRepositoryHelper::TextualSummary
   include TextualMixins::TextualDescription
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description created updated status))
+    TextualGroup.new(_("Properties"), %i[name description created updated status])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(provider playbooks credential))
+    TextualGroup.new(_("Relationships"), %i[provider playbooks credential])
   end
 
   def textual_group_options
-    TextualGroup.new(_("Repository Options"), %i(scm_type scm_url scm_branch scm_clean scm_delete_on_update scm_update_on_launch))
+    TextualGroup.new(_("Repository Options"), %i[scm_type scm_url scm_branch scm_clean scm_delete_on_update scm_update_on_launch])
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_created

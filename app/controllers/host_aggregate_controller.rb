@@ -12,7 +12,7 @@ class HostAggregateController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances hosts)
+    %w[instances hosts]
   end
 
   def host_aggregate_form_fields
@@ -396,13 +396,13 @@ class HostAggregateController < ApplicationController
   private
 
   def textual_group_list
-    [%i(relationships), %i(tags)]
+    [%i[relationships], %i[tags]]
   end
   helper_method :textual_group_list
 
   def form_params(in_params)
     options = {}
-    %i(name availability_zone ems_id host_id metadata).each do |param|
+    %i[name availability_zone ems_id host_id metadata].each do |param|
       options[param] = in_params[param] if in_params[param]
     end
     options

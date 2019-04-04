@@ -17,7 +17,7 @@ class OrchestrationStackController < ApplicationController
   end
 
   def self.display_methods
-    %w(instances children security_groups stack_orchestration_template custom_button_events)
+    %w[instances children security_groups stack_orchestration_template custom_button_events]
   end
 
   def display_stack_orchestration_template
@@ -106,7 +106,7 @@ class OrchestrationStackController < ApplicationController
         custom_buttons
         return
       end
-      return if %w(orchestration_stack_retire orchestration_stack_tag).include?(params[:pressed]) &&
+      return if %w[orchestration_stack_retire orchestration_stack_tag].include?(params[:pressed]) &&
                 @flash_array.nil? # Tag screen showing, so return
     end
 
@@ -147,7 +147,7 @@ class OrchestrationStackController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties lifecycle relationships), %i(tags)]
+    [%i[properties lifecycle relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

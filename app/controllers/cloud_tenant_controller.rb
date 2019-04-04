@@ -25,7 +25,7 @@ class CloudTenantController < ApplicationController
       # custom button screen, so return, let custom_buttons method handle everything
       custom_buttons
     else
-      editable_objects = CloudTenantController.display_methods.map(&:singularize) - %w(instance image) # handled in super
+      editable_objects = CloudTenantController.display_methods.map(&:singularize) - %w[instance image] # handled in super
       if params[:pressed].starts_with?(*editable_objects) && !params[:pressed].ends_with?('_tag')
         target_controller = editable_objects.find { |n| params[:pressed].starts_with?(n) }
         action = params[:pressed].sub("#{target_controller}_", '')
@@ -47,8 +47,8 @@ class CloudTenantController < ApplicationController
   end
 
   def self.display_methods
-    %w(instances images security_groups cloud_volumes cloud_volume_snapshots cloud_object_store_containers floating_ips
-       network_ports cloud_networks cloud_subnets network_routers custom_button_events)
+    %w[instances images security_groups cloud_volumes cloud_volume_snapshots cloud_object_store_containers floating_ips
+       network_ports cloud_networks cloud_subnets network_routers custom_button_events]
   end
 
   def new
@@ -212,7 +212,7 @@ class CloudTenantController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships quotas), %i(tags)]
+    [%i[properties relationships quotas], %i[tags]]
   end
   helper_method :textual_group_list
 

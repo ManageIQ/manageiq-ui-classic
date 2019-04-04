@@ -117,7 +117,7 @@ class PxeController < ApplicationController
 
     @explorer = true
 
-    trees = build_replaced_trees(replace_trees, %i(pxe_servers pxe_image_types customization_templates iso_datastores))
+    trees = build_replaced_trees(replace_trees, %i[pxe_servers pxe_image_types customization_templates iso_datastores])
 
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
@@ -177,7 +177,7 @@ class PxeController < ApplicationController
           end
         # resetting ManageIQ.oneTransition.oneTrans when tab loads
         presenter.reset_one_trans
-        presenter.one_trans_ie if %w(save reset).include?(params[:button]) && is_browser_ie?
+        presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
       end
     when :iso_datastores_tree
       presenter.update(:main_div, r[:partial => "iso_datastore_list"])

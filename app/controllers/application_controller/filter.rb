@@ -37,13 +37,13 @@ module ApplicationController::Filter
     if flash_errors?
       javascript_flash(:flash_div_id => 'exp_editor_flash')
     else
-      if %w(commit not remove).include?(params[:pressed])
+      if %w[commit not remove].include?(params[:pressed])
         copy = copy_hash(@edit[@expkey][:expression])
         copy.deep_delete :token
         @edit[:new][@expkey] = copy
         @edit[@expkey].history.push(@edit[:new][@expkey])
       end
-      unless %w(and or).include?(params[:pressed]) # Unless adding an AND or OR token
+      unless %w[and or].include?(params[:pressed]) # Unless adding an AND or OR token
         @edit[@expkey][:exp_token] = nil           # clear the current selected token
       end
       changed = (@edit[:new] != @edit[:current])
@@ -63,7 +63,7 @@ module ApplicationController::Filter
           page.replace("exp_editor_div", :partial => "layouts/exp_editor")
         end
 
-        if %w(not discard commit remove).include?(params[:pressed])
+        if %w[not discard commit remove].include?(params[:pressed])
           page << javascript_hide("exp_buttons_on")
           page << javascript_hide("exp_buttons2_on")
           page << javascript_hide("exp_buttons_not")
@@ -611,7 +611,7 @@ module ApplicationController::Filter
   def exp_commit_find(exp)
     if @edit[@expkey][:exp_field].nil?
       add_flash(_("A find field must be chosen to commit this expression element"), :error)
-    elsif %w(checkall checkany).include?(@edit[@expkey][:exp_check]) &&
+    elsif %w[checkall checkany].include?(@edit[@expkey][:exp_check]) &&
           @edit[@expkey][:exp_cfield].nil?
       add_flash(_("A check field must be chosen to commit this expression element"), :error)
     elsif @edit[@expkey][:exp_check] == "checkcount" &&

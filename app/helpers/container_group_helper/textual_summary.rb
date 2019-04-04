@@ -7,7 +7,7 @@ module ContainerGroupHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name status message reason creation_timestamp resource_version restart_policy dns_policy ip)
+      %i[name status message reason creation_timestamp resource_version restart_policy dns_policy ip]
     )
   end
 
@@ -15,10 +15,10 @@ module ContainerGroupHelper::TextualSummary
     # Order of items should be from parent to child
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         ems container_project container_services container_replicator containers container_node
         lives_on container_images persistent_volumes custom_button_events
-      )
+      ]
     )
   end
 
@@ -35,7 +35,7 @@ module ContainerGroupHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   @@key_dictionary = [
@@ -121,7 +121,7 @@ module ContainerGroupHelper::TextualSummary
   end
 
   def textual_group_container_statuses_summary
-    TextualGroup.new(_("Container Statuses Summary"), %i(waiting running terminated))
+    TextualGroup.new(_("Container Statuses Summary"), %i[waiting running terminated])
   end
 
   def textual_compliance_history

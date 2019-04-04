@@ -39,7 +39,7 @@ module MiqPolicyController::Alerts
     @edit = nil
     @nodetype = "al"
     @new_alert_node = "al-#{alert.id}"
-    replace_right_cell(:nodetype => "al", :replace_trees => %i(alert_profile alert), :remove_form_buttons => true)
+    replace_right_cell(:nodetype => "al", :replace_trees => %i[alert_profile alert], :remove_form_buttons => true)
   end
 
   def alert_edit_reset
@@ -81,7 +81,7 @@ module MiqPolicyController::Alerts
     process_alerts(alerts, "destroy") unless alerts.empty?
     @new_alert_node = self.x_node = "root"
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => %i(alert_profile alert))
+    replace_right_cell(:nodetype => "root", :replace_trees => %i[alert_profile alert])
   end
 
   def alert_field_changed
@@ -109,7 +109,7 @@ module MiqPolicyController::Alerts
         @edit[:expression_options] = MiqAlert.expression_options(@edit[:new][:expression][:eval_method])
         alert_build_exp_options_info
       end
-      @edit[:new][:exp_event] = %w(ContainerNode ContainerProject).include?(@edit[:new][:db]) ? nil : @edit[:current][:exp_event]
+      @edit[:new][:exp_event] = %w[ContainerNode ContainerProject].include?(@edit[:new][:db]) ? nil : @edit[:current][:exp_event]
     end
 
     if params.key?(:exp_name)
@@ -224,8 +224,8 @@ module MiqPolicyController::Alerts
     @edit[:new][:send_evm_event] = (params[:send_evm_event_cb] == "1") if params.key?(:send_evm_event_cb)
     @edit[:new][:send_event]     = (params[:send_event_cb] == "1") if params.key?(:send_event_cb)
 
-    @alert_refresh = %i(exp_event exp_name miq_alert_db perf_column select_ems_id
-                        send_email_cb send_event_cb send_snmp_cb trend_direction).any? { |key| params.key?(key) }
+    @alert_refresh = %i[exp_event exp_name miq_alert_db perf_column select_ems_id
+                        send_email_cb send_event_cb send_snmp_cb trend_direction].any? { |key| params.key?(key) }
     @to_email_refresh = params[:user_email] || params[:remove_email] || params[:button] == "add_email"
     send_button_changes
   end
@@ -238,7 +238,7 @@ module MiqPolicyController::Alerts
 
   def display_driving_event?
     (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] != "nothing") ||
-      %w(ContainerNode ContainerProject).include?(@edit[:new][:db])
+      %w[ContainerNode ContainerProject].include?(@edit[:new][:db])
   end
 
   def process_alerts(alerts, task)
@@ -595,7 +595,7 @@ module MiqPolicyController::Alerts
         add_flash(_("Time threshold for the field criteria must be selected"), :error)
       end
     end
-    if %w(mw_heap_used mw_non_heap_used).include?(@edit.fetch_path(:new, :expression, :eval_method))
+    if %w[mw_heap_used mw_non_heap_used].include?(@edit.fetch_path(:new, :expression, :eval_method))
       value_greater_than = @edit.fetch_path(:new, :expression, :options, :value_mw_greater_than)
       non = @edit.fetch_path(:new, :expression, :eval_method) == "mw_non_heap_used" ? "Non" : ""
       an_integer = "an integer"
@@ -627,7 +627,7 @@ module MiqPolicyController::Alerts
         add_flash(_("Duration Per Minute must be an integer"), :error)
       end
     end
-    if %w(mw_tx_committed mw_tx_timeout mw_tx_heuristics mw_tx_application_rollbacks mw_tx_resource_rollbacks mw_tx_aborted).include?(@edit.fetch_path(:new, :expression, :eval_method))
+    if %w[mw_tx_committed mw_tx_timeout mw_tx_heuristics mw_tx_application_rollbacks mw_tx_resource_rollbacks mw_tx_aborted].include?(@edit.fetch_path(:new, :expression, :eval_method))
       value_mw_threshold = @edit.fetch_path(:new, :expression, :options, :value_mw_threshold)
       unless value_mw_threshold && is_integer?(value_mw_threshold)
         add_flash(_("Number must be an integer"), :error)

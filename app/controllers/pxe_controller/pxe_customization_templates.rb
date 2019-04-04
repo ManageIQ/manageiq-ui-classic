@@ -97,7 +97,7 @@ module PxeController::PxeCustomizationTemplates
       end
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
-    elsif %w(add save).include?(params[:button])
+    elsif %w[add save].include?(params[:button])
       ct = if params[:id]
              find_record_with_rbac(CustomizationTemplate, params[:id])
            else

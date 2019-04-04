@@ -2,11 +2,11 @@ module CloudObjectStoreObjectHelper::TextualSummary
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(key content_length last_modified etag))
+    TextualGroup.new(_("Properties"), %i[key content_length last_modified etag])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems cloud_tenant cloud_object_store_container))
+    TextualGroup.new(_("Relationships"), %i[parent_ems_cloud ems cloud_tenant cloud_object_store_container])
   end
 
   def textual_parent_ems_cloud

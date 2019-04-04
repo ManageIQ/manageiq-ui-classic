@@ -8,16 +8,16 @@ module NetworkRouterHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type status main_route_table route_propagation routes))
+    TextualGroup.new(_("Properties"), %i[name type status main_route_table route_propagation routes])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(
+      %i[
         parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway floating_ips
         security_groups custom_button_events
-      )
+      ]
     )
   end
 

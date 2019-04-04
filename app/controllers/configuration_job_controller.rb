@@ -35,7 +35,7 @@ class ConfigurationJobController < ApplicationController
     when "configuration_job_tag"
       tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
     end
-    return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
+    return if %w[configuration_job_tag].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
     check_if_button_is_implemented
 
@@ -55,7 +55,7 @@ class ConfigurationJobController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

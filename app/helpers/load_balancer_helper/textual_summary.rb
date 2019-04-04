@@ -8,13 +8,13 @@ module LoadBalancerHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type description listeners health_checks))
+    TextualGroup.new(_("Properties"), %i[name type description listeners health_checks])
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instances network_ports floating_ips security_groups custom_button_events)
+      %i[parent_ems_cloud ems_network cloud_tenant instances network_ports floating_ips security_groups custom_button_events]
     )
   end
 

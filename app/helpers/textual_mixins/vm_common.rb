@@ -1,12 +1,12 @@
 module TextualMixins::VmCommon
   def textual_group_diagnostics
-    TextualGroup.new(_("Diagnostics"), %i(processes event_logs))
+    TextualGroup.new(_("Diagnostics"), %i[processes event_logs])
   end
 
   def textual_group_vmsafe
     TextualGroup.new(
       _("VMsafe"),
-      %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout)
+      %i[vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout]
     )
   end
 
@@ -19,13 +19,13 @@ module TextualMixins::VmCommon
   end
 
   def textual_group_power_management
-    TextualGroup.new(_("Power Management"), %i(power_state boot_time state_changed_on))
+    TextualGroup.new(_("Power Management"), %i[power_state boot_time state_changed_on])
   end
 
   def textual_group_configuration
     TextualGroup.new(
       _("Configuration"),
-      %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items)
+      %i[guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items]
     )
   end
 

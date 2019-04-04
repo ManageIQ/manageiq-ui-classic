@@ -31,7 +31,7 @@ class PhysicalStorageController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties relationships asset_details),
+      %i[properties relationships asset_details],
     ]
   end
   helper_method(:textual_group_list)

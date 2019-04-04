@@ -63,7 +63,7 @@ class UtilizationController < ApplicationController
   # Send the current utilization report data in text, CSV, or PDF
   def report_download
     report = MiqReport.new(:title     => @sb[:title],
-                           :cols      => cols = %w(section item value),
+                           :cols      => cols = %w[section item value],
                            :col_order => cols,
                            :headers   => [_("Section"), _("Item"), _("Value")],
                            :sortby    => ["section"],

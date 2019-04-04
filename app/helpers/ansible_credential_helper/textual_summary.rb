@@ -2,11 +2,11 @@ module AnsibleCredentialHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type created updated))
+    TextualGroup.new(_("Properties"), %i[name type created updated])
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(repositories))
+    TextualGroup.new(_("Relationships"), %i[repositories])
   end
 
   def textual_group_options
@@ -30,7 +30,7 @@ module AnsibleCredentialHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    TextualTags.new(_("Smart Management"), %i(tags))
+    TextualTags.new(_("Smart Management"), %i[tags])
   end
 
   def textual_type

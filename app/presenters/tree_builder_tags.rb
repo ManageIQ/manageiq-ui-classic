@@ -6,7 +6,7 @@ class TreeBuilderTags < TreeBuilder
     @filters = params[:filters]
     @group = params[:group]
     @categories = Classification.categories.find_all do |c|
-      c if c.show || !%w(folder_path_blue folder_path_yellow).include?(c.name)
+      c if c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name)
     end
     @categories.sort_by! { |c| c.description.downcase }
     super(name, type, sandbox, build)

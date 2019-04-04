@@ -31,7 +31,7 @@ class SupportController < ApplicationController
   end
 
   def get_layout
-    %w(about diagnostics).include?(session[:layout]) ? session[:layout] : "about"
+    %w[about diagnostics].include?(session[:layout]) ? session[:layout] : "about"
   end
 
   def get_session_data

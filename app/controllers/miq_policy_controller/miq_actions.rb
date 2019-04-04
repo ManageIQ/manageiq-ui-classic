@@ -51,7 +51,7 @@ module MiqPolicyController::MiqActions
         @edit = nil
         @nodetype = "a"
         @new_action_node = "a-#{action.id}"
-        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? %i(policy_profile policy action) : %i(action), :remove_form_buttons => true)
+        replace_right_cell(:nodetype => "a", :replace_trees => params[:button] == "save" ? %i[policy_profile policy action] : %i[action], :remove_form_buttons => true)
         @sb[:action] = nil
       else
         action.errors.each do |field, msg|
@@ -78,7 +78,7 @@ module MiqPolicyController::MiqActions
     process_actions(actions, "destroy") unless actions.empty?
     @new_action_node = self.x_node = "root"
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root", :replace_trees => %i(action))
+    replace_right_cell(:nodetype => "root", :replace_trees => %i[action])
   end
 
   def action_field_changed
@@ -369,7 +369,7 @@ module MiqPolicyController::MiqActions
     if edit[:action_type] == "inherit_parent_tags" && options[:parent_type].blank?
       add_flash(_("Parent Type must be selected"), :error)
     end
-    if %w(inherit_parent_tags remove_tags).include?(edit[:action_type]) && options[:cats].blank?
+    if %w[inherit_parent_tags remove_tags].include?(edit[:action_type]) && options[:cats].blank?
       add_flash(_("At least one Category must be selected"), :error)
     end
     if edit[:action_type] == "delete_snapshots_by_age" && options[:age].blank?
@@ -415,7 +415,7 @@ module MiqPolicyController::MiqActions
       @action_policies = @action.miq_policies.sort_by { |p| p.description.downcase }
     end
 
-    if %w(inherit_parent_tags remove_tags).include?(@action.action_type)
+    if %w[inherit_parent_tags remove_tags].include?(@action.action_type)
       @cats = Classification.find_by_names(@action.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
     end
   end

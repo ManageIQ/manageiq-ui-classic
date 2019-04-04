@@ -11,7 +11,7 @@ class AuthKeyPairCloudController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w(instances)
+    %w[instances]
   end
 
   def show_list
@@ -206,7 +206,7 @@ class AuthKeyPairCloudController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i[properties relationships], %i[tags]]
   end
   helper_method :textual_group_list
 

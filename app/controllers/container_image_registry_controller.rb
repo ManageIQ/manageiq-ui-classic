@@ -12,7 +12,7 @@ class ContainerImageRegistryController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties), %i(relationships smart_management)]
+    [%i[properties], %i[relationships smart_management]]
   end
   helper_method :textual_group_list
 
