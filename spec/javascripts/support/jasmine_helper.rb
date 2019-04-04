@@ -43,33 +43,9 @@ module Jasmine
       alias_method :run_bak, :run
 
       def run
-        p [:RUN, {
-          :formatter => @formatter,
-          :jasmine_server_url => @jasmine_server_url,
-          :prevent_phantom_js_auto_install => @prevent_phantom_js_auto_install,
-          :show_console_log => @show_console_log,
-          :phantom_config_script => @phantom_config_script,
-          :show_full_stack_trace => @show_full_stack_trace,
-        }]
+        p [:RUN, jasmine_server_url]
 
-        phantom_script = File.join(File.dirname(__FILE__), 'phantom_jasmine_run.js')
-        command = "\"#{phantom_js_path}\" \"#{phantom_script}\" \"#{jasmine_server_url}\" \"#{show_console_log}\" \"#{@phantom_config_script}\""
-        run_details = { 'random' => false }
-        p [{
-          :phantom_script => phantom_script,
-          :command => command,
-          :run_details => run_details,
-        }]
-
-        IO.popen(command) do |output|
-          p [:IO, output]
-          output.each do |line|
-            p [:X, line]
-          end
-          output.each_line do |line|
-            p [:Y, line]
-          end
-        end
+        system("phantomjs --version")
 
         run_bak.tap do |ret|
           p [:RUN_BAK, 'done']
