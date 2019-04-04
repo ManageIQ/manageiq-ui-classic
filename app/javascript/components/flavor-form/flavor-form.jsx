@@ -4,7 +4,6 @@ import { sprintf } from 'sprintf-js';
 import addSchema from './flavor-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { http, API } from '../../http_api';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 class FlavorForm extends Component {
@@ -14,7 +13,6 @@ class FlavorForm extends Component {
       initialValues: { is_public: true, rxtx_factor: '1.0' },
       schema: addSchema(),
     };
-    cleanVirtualDom();
   }
 
   componentDidMount() {

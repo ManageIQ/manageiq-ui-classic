@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Breadcrumb } from 'patternfly-react';
 import { unescape } from 'lodash';
-import { cleanVirtualDom } from '../../miq-component/helpers';
 
 const parsedText = text => unescape(text).replace(/<[/]{0,1}strong>/g, '');
 
 class Breadcrumbs extends Component {
-  componentDidMount() {
-    cleanVirtualDom();
-  }
-
   renderItems = () => {
     const {
       items, controllerName,
