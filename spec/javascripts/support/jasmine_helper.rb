@@ -51,13 +51,12 @@ module Jasmine
         command = "\"#{phantom_js_path}\" \"#{phantom_script}\" \"#{jasmine_server_url}\" \"#{show_console_log}\" \"#{@phantom_config_script}\""
         run_details = { 'random' => false }
 
+        i = 0
         IO.popen(command) do |output|
           p [:IO, output]
           output.each do |line|
-            p [:X, line]
-          end
-          output.each_line do |line|
-            p [:Y, line]
+            break if i >= 100
+            p [i += 1, line]
           end
         end
 
