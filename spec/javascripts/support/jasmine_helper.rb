@@ -47,6 +47,20 @@ module Jasmine
 
         system("phantomjs --version")
 
+        phantom_script = File.join(File.dirname(__FILE__), 'phantom_jasmine_run.js')
+        command = "\"#{phantom_js_path}\" \"#{phantom_script}\" \"#{jasmine_server_url}\" \"#{show_console_log}\" \"#{@phantom_config_script}\""
+        run_details = { 'random' => false }
+
+        IO.popen(command) do |output|
+          p [:IO, output]
+          output.each do |line|
+            p [:X, line]
+          end
+          output.each_line do |line|
+            p [:Y, line]
+          end
+        end
+
         run_bak.tap do |ret|
           p [:RUN_BAK, 'done']
         end
