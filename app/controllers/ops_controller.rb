@@ -161,6 +161,7 @@ class OpsController < ApplicationController
   def tree_select
     session[:flash_msgs] = @flash_array = nil           # clear out any messages from previous screen i.e import tab
     @sb[:active_node] ||= {}
+    @sb[:action] = nil
     self.x_node = params[:id]
     tree_selected_model
     set_active_tab(params[:id])

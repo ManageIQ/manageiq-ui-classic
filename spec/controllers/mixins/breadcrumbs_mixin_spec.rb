@@ -10,9 +10,9 @@ describe Mixins::BreadcrumbsMixin do
     end
   end
 
-  # dummy for a controller using Mixin
+  # dummies for a controller using Mixin
 
-  class TestMixin < ApplicationController
+  class TestMixinExplorer < ApplicationController
     include Mixins::BreadcrumbsMixin
 
     def features
@@ -40,9 +40,14 @@ describe Mixins::BreadcrumbsMixin do
     end
   end
 
+  class TestMixin < ApplicationController
+    include Mixins::BreadcrumbsMixin
+  end
+
+  let(:mixin_explorer) { TestMixinExplorer.new }
   let(:mixin) { TestMixin.new }
   let(:controller_url) { 'testmixin' }
-  let(:features) { [{:title => "Active Tree", :name => :utilization_tree}] }
+  let(:features) { {:title => "Active Tree", :name => :utilization_tree} }
   let(:breadcrumbs) do
     [
       {:title => _("First Layer")},
@@ -51,35 +56,43 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   before do
-    allow(mixin).to receive(:controller_name).and_return("testmixin")
+    allow(mixin_explorer).to receive(:controller_name).and_return("testmixin")
+    allow(mixin_explorer).to receive(:breadcrumbs_options).and_return(:breadcrumbs => [
+                                                                        {:title => _("First Layer")},
+                                                                        {:title => _("Second Layer")},
+                                                                      ])
+    allow(mixin_explorer).to receive(:x_node).and_return("xx-1")
+    allow(mixin_explorer).to receive(:x_active_accord).and_return(:utilization_tree)
+    allow(mixin_explorer).to receive(:x_active_tree).and_return(:active_tree)
+    allow(mixin_explorer).to receive(:gtl_url).and_return("/show")
+    mixin_explorer.instance_variable_set(:@sb, {})
+
     allow(mixin).to receive(:breadcrumbs_options).and_return(:breadcrumbs => [
                                                                {:title => _("First Layer")},
                                                                {:title => _("Second Layer")},
                                                              ])
-    allow(mixin).to receive(:x_node).and_return("xx-1")
-    allow(mixin).to receive(:x_active_accord).and_return(:utilization_tree)
-    allow(mixin).to receive(:x_active_tree).and_return(:active_tree)
+    allow(mixin).to receive(:controller_name).and_return("testmixin")
     allow(mixin).to receive(:gtl_url).and_return("/show")
     mixin.instance_variable_set(:@sb, {})
   end
 
   describe "#url" do
     it "returns url" do
-      expect(mixin.url('ems', 'show', 'node')).to eq("/ems/show/node")
+      expect(mixin_explorer.url('ems', 'show', 'node')).to eq("/ems/show/node")
     end
   end
 
   describe "#accord_name" do
     context 'when features contains the tree' do
       it "returns name" do
-        expect(mixin.accord_name).to eq(features[0][:name])
+        expect(mixin_explorer.accord_name).to eq(features[:name])
       end
     end
 
     context 'when features do not contains the tree' do
       it "returns nil" do
-        allow(mixin).to receive(:x_active_accord).and_return(:not_tree)
-        expect(mixin.accord_name).to be(nil)
+        allow(mixin_explorer).to receive(:x_active_accord).and_return(:not_tree)
+        expect(mixin_explorer.accord_name).to be(nil)
       end
     end
   end
@@ -87,24 +100,24 @@ describe Mixins::BreadcrumbsMixin do
   describe "#accord_title" do
     context 'when features contains the tree' do
       it "returns title" do
-        expect(mixin.accord_title).to eq(features[0][:title])
+        expect(mixin_explorer.accord_title).to eq(features[:title])
       end
     end
 
     context 'when features do not contains the tree' do
       it "returns nil" do
-        allow(mixin).to receive(:x_active_accord).and_return(:not_tree)
-        expect(mixin.accord_title).to be(nil)
+        allow(mixin_explorer).to receive(:x_active_accord).and_return(:not_tree)
+        expect(mixin_explorer.accord_title).to be(nil)
       end
     end
   end
 
   describe "#build_breadcrumbs_from_tree" do
     it "returns breadcrumbs" do
-      expect(mixin.build_breadcrumbs_from_tree).to eq([
-                                                        {:title => "All Dialogs", :key => "root"},
-                                                        {:title => "Item1", :key => "xx-1"}
-                                                      ])
+      expect(mixin_explorer.build_breadcrumbs_from_tree).to eq([
+                                                                 {:title => "All Dialogs", :key => "root"},
+                                                                 {:title => "Item1", :key => "xx-1"}
+                                                               ])
     end
   end
 
@@ -130,34 +143,20 @@ describe Mixins::BreadcrumbsMixin do
                                                     {:title => "record_info_title", :url => "/testmixin/show/1234"}])
         end
       end
-
-      context "when show_list_title set" do
-        it "creates breadcrumbs" do
-          allow(mixin).to receive(:breadcrumbs_options).and_return(:breadcrumbs => [
-                                                                     {:title => _("First Layer")},
-                                                                     {:title => _("Second Layer")},
-                                                                     {:url   => controller_url, :title => _("Providers")},
-                                                                   ])
-
-          expect(mixin.data_for_breadcrumbs).to eq([{:title => "First Layer"},
-                                                    {:title => "Second Layer"},
-                                                    {:title => "Providers", :url => "testmixin"}])
-        end
-      end
     end
 
     context "when explorer controller" do
       before do
-        mixin.instance_variable_set(:@right_cell_text, "Right text")
-        mixin.instance_variable_set(:@sb, :explorer => true)
+        mixin_explorer.instance_variable_set(:@right_cell_text, "Right text")
+        mixin_explorer.instance_variable_set(:@sb, :explorer => true)
       end
 
       it "creates breadcrumbs" do
-        expect(mixin.data_for_breadcrumbs).to eq([{:title => "First Layer"},
-                                                  {:title => "Second Layer"},
-                                                  {:title => "Active Tree", :key => "utilization_tree_accord", :action => "accordion_select"},
-                                                  {:title => "All Dialogs", :key => "root"},
-                                                  {:title => "Item1", :key => "xx-1"}])
+        expect(mixin_explorer.data_for_breadcrumbs).to eq([{:title => "First Layer"},
+                                                           {:title => "Second Layer"},
+                                                           {:title => "Active Tree", :key => "utilization_tree_accord", :action => "accordion_select"},
+                                                           {:title => "All Dialogs", :key => "root"},
+                                                           {:title => "Item1", :key => "xx-1"}])
       end
     end
   end

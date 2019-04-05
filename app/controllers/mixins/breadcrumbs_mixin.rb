@@ -13,7 +13,7 @@ module Mixins
 
       # Different methods for controller with explorers and for non-explorers controllers
 
-      if @sb[:explorer].blank? && @right_cell_text.blank?
+      if !features?
         # Append breadcrumb from @record item (eg "Openstack")
         breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title]))
 
@@ -26,7 +26,7 @@ module Mixins
         end
       else
         # Append breadcrumb from title of the accordion (eg "Policies")
-        breadcrumbs.push(:title => accord_title, :key => "#{accord_name}_accord", :action => "accordion_select") if features?
+        breadcrumbs.push(:title => accord_title, :key => "#{accord_name}_accord", :action => "accordion_select") if accord_title
 
         # Append breadcrumbs created from the tree (eg "All policies > Red Hat policies > Policy 1")
         breadcrumbs_from_tree = build_breadcrumbs_from_tree
@@ -38,7 +38,7 @@ module Mixins
         else
           # Append breadcrumb from the title of right cell
           breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))
-          breadcrumbs.push(:title => @right_cell_text) if @sb["action"]
+          breadcrumbs.push(:title => @right_cell_text) if @sb["action"] && @right_cell_text
         end
       end
       breadcrumbs.compact
@@ -102,12 +102,9 @@ module Mixins
     # Helper methods
 
     def build_tree
-      if features?
-        allowed_features = ApplicationController::Feature.allowed_features(features)
-        # allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
-        return allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
-      end
-      []
+      allowed_features = ApplicationController::Feature.allowed_features(features)
+      # allow tree to load whole path to active_node with lazyload nodes (@sb[:trees][x_active_tree][:open_all] = true ?)
+      allowed_features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
     end
 
     def accord_title
