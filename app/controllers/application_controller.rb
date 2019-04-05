@@ -497,19 +497,6 @@ class ApplicationController < ActionController::Base
     render 'shared/show_report', :layout => 'report_only'
   end
 
-  def show_statistics
-    db = self.class.model
-
-    @display = "show_statistics"
-    session[:stats_record_id] = params[:id] if params[:id]
-    @record = find_record_with_rbac(db, session[:stats_record_id])
-
-    # Need to use paged_view_search code, once the relationship is working. Following is workaround for the demo
-    @stats = @record.derived_metrics
-    drop_breadcrumb(:name => _("Utilization"), :url => "/#{db}/show_statistics/#{@record.id}?refresh=n")
-    render :template => "show_statistics"
-  end
-
   # moved this method here so it can be accessed from pxe_server controller as well
   # this is a terrible name, it doesn't validate log_depots
   def log_depot_validate
