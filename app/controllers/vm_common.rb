@@ -616,14 +616,6 @@ module VmCommon
     redirect_to(:action => 'list')
   end
 
-  def profile_build
-    @catinfo ||= {}
-    session[:vm].resolve_profiles(session[:policies].keys).each do |policy|
-      cat = policy["description"]
-      @catinfo[cat] = true unless @catinfo.key?(cat)
-    end
-  end
-
   def add_to_service
     @record = find_record_with_rbac(Vm, params[:id])
     @svcs = {}
