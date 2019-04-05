@@ -1150,9 +1150,7 @@ module OpsController::Settings::Common
     end
     if %w[settings_server settings_authentication settings_custom_logos].include?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
-      @edit[:current].each_key do |category|
-        @edit[:new][category] = copy_hash(@edit[:current][category])
-      end
+      @edit[:new] = @edit[:current].deep_clone
       if @sb[:active_tab] == "settings_server"
         session[:selected_roles] = @edit[:new][:server][:role].split(",") if !@edit[:new][:server].nil? && !@edit[:new][:server][:role].nil?
         server_roles = MiqServer.licensed_roles # Get the roles this server is licensed for
