@@ -125,15 +125,6 @@ module ApplicationController::PolicySupport
     redirect_to(previous_breadcrumb_url)
   end
 
-  def profile_build
-    @catinfo ||= {}
-    session[:assignments] = session[:protect_item].get_policies
-    session[:assignments].each do |policy|
-      cat = policy["description"]
-      @catinfo[cat] = true unless @catinfo.key?(cat)
-    end
-  end
-
   private ############################
 
   # Assign policies to selected records of db
