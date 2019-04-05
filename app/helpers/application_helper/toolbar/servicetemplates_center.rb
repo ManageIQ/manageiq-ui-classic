@@ -35,7 +35,9 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           :enabled      => false,
           :onwhen       => "1+",
           :data         => {'function'      => 'sendDataWithRx',
-                            'function-data' => {:type => 'removeCatalogItemModal'}}),
+                            'function-data' => {:controller     => 'provider_dialogs',
+                                                :modal_title    => N_('Remove Catalog Items'),
+                                                :component_name => 'RemoveCatalogItemModal'}.to_json}),
       ]
     ),
   ])

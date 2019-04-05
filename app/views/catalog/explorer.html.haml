@@ -8,8 +8,6 @@
       = render(:partial => "#{x_active_tree}_show",
         :locals  => locals)
 - else
-  #react_include
-    = react("RemoveCatalogItemModal")
   #main_div
     - if @sb[:buttons_node]
       = render :partial => "shared/buttons/ab_list"
