@@ -28,6 +28,9 @@ Jasmine.configure do |config|
     'remote-debugging-port' => 9222,
   }
   config.chrome_startup_timeout = 20
+
+  require 'webmock'
+  WebMock.allow_net_connect!
 end
 
 require "socket"
