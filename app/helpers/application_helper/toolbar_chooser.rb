@@ -559,10 +559,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def center_toolbar_filename_infra_networking
-    infra_networking_tree_center_tb(x_node_split)
-  end
-
   def configuration_manager_providers_tree_center_tb(nodes)
     case nodes.first
     when "root"     then  "configuration_manager_providers_center_tb"
