@@ -3,4 +3,5 @@
     = render :partial => "layouts/gtl"
   - else
     = render :partial => 'layouts/empty',
-             :locals => {:add_message => _("Add a new Network Provider")}
+             :locals => {:add_message => _("Add a new Network Provider"),
+                         :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#network_providers'}

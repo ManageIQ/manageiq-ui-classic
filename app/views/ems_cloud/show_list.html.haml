@@ -3,4 +3,5 @@
     = render :partial => "layouts/gtl"
   - else
     = render :partial => 'layouts/empty',
-             :locals => {:add_message => _("Add a new Cloud Provider")}
+             :locals => {:add_message => _("Add a new Cloud Provider"),
+                         :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#cloud_providers'}
