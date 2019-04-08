@@ -1028,6 +1028,7 @@ module VmCommon
       options[:named_scope] ||= []
       options[:named_scope] << :not_orphaned unless role_allows?(:feature => 'vm_show_list_orphaned')
       options[:named_scope] << :not_archived unless role_allows?(:feature => 'vm_show_list_archived')
+      options[:named_scope] << :not_retired unless role_allows?(:feature => 'vm_show_list_retired')
       if model == "ManageIQ::Providers::CloudManager::Template"
         options[:named_scope] << :without_volume_templates
       end
