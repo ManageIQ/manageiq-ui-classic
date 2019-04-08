@@ -315,7 +315,6 @@ Rails.application.routes.draw do
         ot_edit_submit
         ot_form_field_changed
         ot_tags_edit
-        process_sts
         prov_field_changed
         reload
         resolve
@@ -330,7 +329,6 @@ Rails.application.routes.draw do
         sort_vm_grid
         st_catalog_edit
         st_catalog_form_field_changed
-        st_delete
         st_edit
         st_form_field_changed
         st_tags_edit
