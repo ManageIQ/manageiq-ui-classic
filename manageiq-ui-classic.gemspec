@@ -36,7 +36,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rails-controller-testing", '~> 1.0.2'
   s.add_development_dependency "simplecov"
 
-  # core because jasmine has < 3.0, not < 2.6
-  s.add_development_dependency "jasmine",  "~> 2.5.2"
-  s.add_development_dependency "jasmine-core",  "~> 2.5.2"
+  # core because jasmine gem depends on major version only, meaning breakages when not the latest
+  s.add_development_dependency "jasmine", "~> 3.4.0"
+  s.add_development_dependency "jasmine-core", "~> 3.4.0"
+  s.add_development_dependency "chrome_remote", "~> 0.2.0"
 end

@@ -8,7 +8,7 @@
 # src_files:
 #   - lib/source1.js
 #   - lib/source2.js
-#   - dist/**/*.js
+#   - 'dist/**/*.js'
 #
 src_files:
 - __spec__/helpers/i18n-test.js
@@ -16,9 +16,9 @@ src_files:
 - packs/shims.js
 - packs/vendor.js
 - packs/manageiq-ui-classic/globals.js
-- assets/application
-- assets/jasmine-jquery/lib/jasmine-jquery
-- assets/angular-mocks
+- assets/application.js
+- assets/jasmine-jquery/lib/jasmine-jquery.js
+- assets/angular-mocks.js
 - __spec__/helpers/fixtures-fix.js
 - packs/manageiq-ui-classic/application-common.js
 - packs/manageiq-ui-classic/toolbar-actions-common.js
@@ -33,7 +33,7 @@ src_files:
 #
 # stylesheets:
 #   - css/style.css
-#   - stylesheets/*.css
+#   - 'stylesheets/*.css'
 #
 stylesheets:
 
@@ -45,7 +45,7 @@ stylesheets:
 # EXAMPLE:
 #
 # helpers:
-#   - helpers/**/*.js
+#   - 'helpers/**/*.js'
 #
 helpers:
 - 'helpers/**/*.js'
@@ -58,7 +58,7 @@ helpers:
 # EXAMPLE:
 #
 # spec_files:
-#   - **/*[sS]pec.js
+#   - '**/*[sS]pec.js'
 #
 spec_files:
 - '**/*[sS]pec.js'
@@ -131,6 +131,27 @@ boot_files:
 #
 # rack_options:
 #   server: 'thin'
+
+# phantom_cli_options
+#
+# Extra options to be passed to the phantomjs cli,
+# e.g. to enable localStorage in PhantomJs 2.5
+#
+# EXAMPLE
+#
+# phantom_cli_options:
+#   local-storage-quota: 5000
+
+# random
+#
+# Run specs in semi-random order.
+# Default: true
+#
+# EXAMPLE:
+#
+# random: false
+#
+random: false
 
 # show_console_log
 #
