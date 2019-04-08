@@ -37,6 +37,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "simplecov"
 
   # core because jasmine gem depends on major version only, meaning breakages when not the latest
-  s.add_development_dependency "jasmine",  "~> 2.99.0"
-  s.add_development_dependency "jasmine-core",  "~> 2.99.0"
+  s.add_development_dependency "jasmine",  "~> 3.4.0"
+  s.add_development_dependency "jasmine-core",  "~> 3.4.0"
 end
