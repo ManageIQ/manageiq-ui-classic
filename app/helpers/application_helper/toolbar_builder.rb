@@ -20,11 +20,6 @@ class ApplicationHelper::ToolbarBuilder
     build_toolbar_from_class(toolbar_class, @record)
   end
 
-  def build_toolbar_by_class(toolbar_class)
-    build_toolbar_setup
-    build_toolbar_from_class(toolbar_class, @record)
-  end
-
   private
 
   delegate :request, :current_user, :to => :@view_context
