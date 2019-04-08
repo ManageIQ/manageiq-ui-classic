@@ -33,6 +33,7 @@ class CatalogController < ApplicationController
     'atomic_catalogitem_edit'       => :servicetemplate_edit,
     'atomic_catalogitem_new'        => :servicetemplate_edit,
     'catalogitem_edit'              => :servicetemplate_edit,
+    'catalogitem_copy'              => :servicetemplate_copy,
     'catalogitem_new'               => :servicetemplate_edit,
 
     'catalogitem_tag'               => :st_tags_edit,
@@ -88,6 +89,11 @@ class CatalogController < ApplicationController
 
   def ot_orchestration_managers
     render :json => available_orchestration_managers_for_template_type(params['template_type'])
+  end
+
+  def servicetemplate_copy
+    checked_id = find_checked_items.first || params[:id]
+    @record = find_record_with_rbac(ServiceTemplate, checked_id)
   end
 
   def atomic_st_edit

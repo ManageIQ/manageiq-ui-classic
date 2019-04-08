@@ -28,6 +28,12 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
           :url_parms    => "main_div",
           :send_checked => true),
         button(
+          :catalogitem_copy,
+          'pficon pficon-edit fa-lg',
+          N_('Select a single Item to copy'),
+          N_('Copy Selected Item'),
+          :send_checked => true),
+        button(
           :catalogitem_delete,
           'pficon pficon-delete fa-lg',
           N_('Delete this Catalog Item'),
