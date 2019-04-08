@@ -9,6 +9,7 @@ cache:
   timeout: 600
 addons:
   postgresql: '10'
+  chrome: 'beta'
 env:
   matrix:
   - TEST_SUITE=spec
