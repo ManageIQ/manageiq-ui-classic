@@ -10,7 +10,14 @@
        :target => '_blank'}
       = _("in the documentation.")
   .blank-slate-pf-main-action
-    = link_to(_("Add a Provider"),
+    - title = _("Add a Provider")
+    - if @explorer
+      = button_tag(title,
+      :class => 'btn btn-primary btn-lg',
+      :title => add_message,
+      :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'new')}');")
+    - else
+      = link_to(title,
       {:action => 'new'},
       :class => 'btn btn-primary btn-lg',
       "data-miq_sparkle_on" => true,
