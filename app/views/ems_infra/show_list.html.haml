@@ -2,4 +2,5 @@
   - if EmsInfra.any?
     = render :partial => 'layouts/gtl'
   - else
-    = render :partial => 'layouts/empty', :locals => {:type => _("Infrastructure")}
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Infrastructure Provider")}

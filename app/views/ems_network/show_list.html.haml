@@ -2,4 +2,5 @@
   - if EmsNetwork.any?
     = render :partial => "layouts/gtl"
   - else
-    = render :partial => 'layouts/empty', :locals => {:type => _("Network")}
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Network Provider")}
