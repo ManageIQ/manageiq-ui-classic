@@ -89,6 +89,24 @@ describe('catalogItemFormController', function() {
     });
   });
 
+  describe('#resetClicked', function() {
+    beforeEach(function() {
+      $scope.vm.catalogItemModel.name = 'catalogItemName';
+      $scope.angularForm = {
+        $setPristine: function (value){},
+        $setUntouched: function (value){},
+      };
+      setTimeout($scope.resetClicked);
+    });
+
+    it('resets value of name field to initial value', function(done) {
+      setTimeout(function() {
+        expect($scope.vm.catalogItemModel.name).toEqual('catalogItemName');
+        done();
+      });
+    });
+  });
+
   describe('#saveClicked', function() {
     beforeEach(function() {
       setTimeout($scope.saveClicked);
