@@ -32,6 +32,15 @@ if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../G
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
   require './config/jasmine_overrides'
+
+  # running jasmine outside ci ignores the `random: false` in `jasmine.yml` - needs a message
+  task :jasmine_url do
+    puts
+    puts "Please open http://localhost:#{Jasmine.config.port(:server)}/?random=false"
+    puts
+  end
+
+  Rake::Task['jasmine'].prerequisites.unshift 'jasmine_url'
 end
 
 namespace :spec do
