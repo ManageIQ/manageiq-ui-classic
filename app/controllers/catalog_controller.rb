@@ -2039,7 +2039,6 @@ class CatalogController < ApplicationController
         :ajax_buttons        => true
       }
       presenter.show(:form_buttons_div).remove_paging
-      presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
     elsif record_showing || @in_a_form || @sb[:buttons_node] ||
           (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
       if %w[button_edit group_edit group_reorder at_st_new st_new st_catalog_new st_catalog_edit].include?(action)
