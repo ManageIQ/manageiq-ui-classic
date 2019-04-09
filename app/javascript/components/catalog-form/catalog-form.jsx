@@ -25,7 +25,7 @@ class CatalogForm extends Component {
           const rightValues = service_templates.resources.map(({ href, name }) => ({ key: href, label: name }));
           const options = resources.map(({ href, name }) => ({ key: href, label: name })).concat(rightValues);
           this.setState(() => ({
-            schema: createSchema(options),
+            schema: createSchema(options, catalogId),
             initialValues: {
               name,
               description: description === null ? undefined : description,
@@ -133,7 +133,7 @@ class CatalogForm extends Component {
 }
 
 CatalogForm.propTypes = {
-  catalogId: PropTypes.number,
+  catalogId: PropTypes.string,
 };
 
 CatalogForm.defaultProps = {

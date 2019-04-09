@@ -70,7 +70,7 @@ describe('Catalog form component', () => {
   it('should render edit variant form', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    const wrapper = shallow(<CatalogForm catalogId={1001} />);
+    const wrapper = shallow(<CatalogForm catalogId="1001" />);
 
     setImmediate(() => {
       wrapper.update();
@@ -82,7 +82,7 @@ describe('Catalog form component', () => {
   it('should call cancel callback ', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    const wrapper = mount(<CatalogForm catalogId={1001} />);
+    const wrapper = mount(<CatalogForm catalogId="1001" />);
     const url = '/catalog/st_catalog_edit/1001?button=cancel';
 
     setImmediate(() => {
@@ -113,7 +113,7 @@ describe('Catalog form component', () => {
     fetchMock
       .getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    const wrapper = mount(<CatalogForm catalogId={1001} />);
+    const wrapper = mount(<CatalogForm catalogId="1001" />);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
     expect(fetchMock.called(urlFreeTemplates)).toBe(true);
@@ -209,7 +209,7 @@ describe('Catalog form component', () => {
     fetchMock.getOnce('/api/service_catalogs/1001?expand=service_templates', {});
     fetchMock.postOnce(apiBase, returnObject);
 
-    const wrapper = mount(<CatalogForm catalogId={1001} />);
+    const wrapper = mount(<CatalogForm catalogId="1001" />);
     const spyHandleError = jest.spyOn(wrapper.instance(), 'handleError');
 
     wrapper.instance().setState({ originalRightValues: [] });
@@ -235,7 +235,7 @@ describe('Catalog form component', () => {
     fetchMock.post(`${apiBase}/service_templates`, {});
     fetchMock.get(urlTemplates, assignedResources);
 
-    const wrapper = mount(<CatalogForm catalogId={1001} />);
+    const wrapper = mount(<CatalogForm catalogId="1001" />);
 
     const values = {
       name: 'Some name',
@@ -262,7 +262,7 @@ describe('Catalog form component', () => {
     fetchMock.post(`${apiBase}/service_templates`, {});
     fetchMock.get(urlTemplates, assignedResources);
 
-    const wrapper = mount(<CatalogForm catalogId={1001} />);
+    const wrapper = mount(<CatalogForm catalogId="1001" />);
 
     const values = {
       name: 'Some name',
@@ -285,7 +285,7 @@ describe('Catalog form component', () => {
       const error = {
         data: { error: { message: 'This is some nice error' } },
       };
-      const wrapper = mount(<CatalogForm catalogId={1001} />);
+      const wrapper = mount(<CatalogForm catalogId="1001" />);
 
       expect(wrapper.instance().handleError(error)).toEqual(error.data.error.message);
     });
@@ -294,7 +294,7 @@ describe('Catalog form component', () => {
       const error = {
         data: { error: { message: 'Service catalog: Name has already been taken' } },
       };
-      const wrapper = mount(<CatalogForm catalogId={1001} />);
+      const wrapper = mount(<CatalogForm catalogId="1001" />);
 
       expect(wrapper.instance().handleError(error)).toEqual(__('Name has already been taken'));
     });

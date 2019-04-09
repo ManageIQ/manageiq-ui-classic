@@ -8,28 +8,38 @@ describe('catalog form - promise validator', () => {
   });
 
   it('returns error message when name is taken', () => {
-    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=a1', {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=%27a1%27', {
       resources: [
-        { name: 'a1' },
+        { name: 'a1', id: '1' },
       ],
     });
 
-    return asyncValidator('a1').then(data => expect(data).toEqual(__('Name has already been taken')));
+    return asyncValidator('a1', '2').then(data => expect(data).toEqual(__('Name has already been taken')));
+  });
+
+  it('returns nothing when name is taken but by the same catalog', () => {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=%27a1%27', {
+      resources: [
+        { name: 'a1', id: '1'},
+      ],
+    });
+
+    return asyncValidator('a1', '1').then(data => expect(data).toEqual(undefined));
   });
 
   it('returns error message when name is undefined', () => {
-    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=undefined', {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=%27%27', {
       resources: [],
     });
 
-    return asyncValidator(undefined).then(data => expect(data).toEqual(__("Name can't be blank")));
+    return asyncValidator(undefined, '1').then(data => expect(data).toEqual(__("Name can't be blank")));
   });
 
   it('returns nothing when passes', () => {
-    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=a1', {
+    fetchMock.getOnce('/api/service_catalogs?expand=resources&filter[]=name=%27a1%27', {
       resources: [],
     });
 
-    return asyncValidator('a1').then(data => expect(data).toEqual(undefined));
+    return asyncValidator('a1', '1').then(data => expect(data).toEqual(undefined));
   });
 });
