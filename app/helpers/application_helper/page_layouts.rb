@@ -94,10 +94,6 @@ module ApplicationHelper::PageLayouts
     layout && showtype
   end
 
-  def layout_uses_breadcrumbs?
-    !%w[dashboard exception support configuration].include?(@layout)
-  end
-
   def dashboard_no_listnav?
     @layout == "dashboard" && %w[
       auth_error
