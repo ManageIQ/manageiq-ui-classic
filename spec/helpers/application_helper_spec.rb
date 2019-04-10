@@ -1144,32 +1144,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe '#restful_routed_action?' do
-    context 'When controller is Dashboard and action is maintab' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('dashboard', 'maintab')).to eq(false)
-      end
-    end
-
-    context 'When controller is ems_infra and action is show' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('ems_infra', 'show')).to eq(true)
-      end
-    end
-
-    context 'When controller is ems_cloud and action is show_list' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('ems_cloud', 'show_list')).to eq(false)
-      end
-    end
-
-    context 'When controller is ems_cloud and action is show' do
-      it 'returns true' do
-        expect(helper.restful_routed_action?('ems_cloud', 'show')).to eq(true)
-      end
-    end
-  end
-
   describe '#li_link' do
     context 'with :if condition true' do
       let(:args) do
