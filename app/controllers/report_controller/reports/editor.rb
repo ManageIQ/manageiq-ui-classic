@@ -131,11 +131,24 @@ module ReportController::Reports::Editor
     replace_right_cell
   end
 
+  # Get string with unavailable fields while adding/editing report
+  def unavailable_fields_for_model(model)
+    case model
+    when 'ChargebackVm'
+      _('* Caution: CPU Cores Allocated Metric, CPU Cores Used Metric are not supported for Chargeback for Vms.')
+    when 'ChargebackContainerImage'
+      _('* Caution: CPU Allocated Metric, CPU Used Metric, Disk I/O Used Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Images.')
+    when 'ChargebackContainerProject'
+      _('* Caution: CPU Allocated Metric, CPU Used Metric, CPU Cores Allocated Metric, Disk I/O Used Metric, Memory Allocated Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric are not supported for Chargeback for Projects.')
+    end
+  end
+
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
     return unless load_edit("report_edit__#{params[:id]}", "replace_cell__explorer")
     get_form_vars
     build_edit_screen
+    @unavailable_fields = unavailable_fields_for_model(@edit[:new][:model])
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue

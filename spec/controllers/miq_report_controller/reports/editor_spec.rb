@@ -28,8 +28,8 @@ describe ReportController do
     end
   end
 
-  context "::Reports::Editor" do
-    context "#set_form_vars" do
+  describe "::Reports::Editor" do
+    describe "#set_form_vars" do
       let(:user) { stub_user(:features => :all) }
 
       let(:chargeback_report) do
@@ -109,6 +109,7 @@ describe ReportController do
 
       describe '#reportable_models' do
         subject { controller.send(:reportable_models) }
+
         it 'does not contain duplicate items' do
           duplicates = subject.group_by(&:first).select { |_, v| v.size > 1 }.map(&:first)
           expect(duplicates).to be_empty
@@ -116,7 +117,7 @@ describe ReportController do
       end
     end
 
-    context "#miq_report_edit" do
+    describe "#miq_report_edit" do
       it "should build tabs with correct tab id after reset button is pressed to prevent error when changing tabs" do
         user = stub_user(:features => :all)
         user.save!
@@ -200,7 +201,7 @@ describe ReportController do
       end
     end
 
-    describe "set_form_vars" do
+    describe "#set_form_vars" do
       let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:chargeback_report) do
         FactoryBot.create(:miq_report, :db => "ChargebackVm", :col_order => ["name"], :headers => ["Name"])
@@ -280,6 +281,43 @@ describe ReportController do
 
       it "returns {} given invalid category name" do
         expect(controller.send(:entries_hash, "no_such_name")).to eq({})
+      end
+    end
+
+    describe '#form_field_changed' do
+      before do
+        allow(controller).to receive(:build_edit_screen)
+        allow(controller).to receive(:get_form_vars)
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@edit, :new => {:model => model})
+      end
+
+      context 'configuring Report Columns and Chargeback for VMs' do
+        let(:model) { 'ChargebackVm' }
+
+        it 'sets string with unavailable fields while adding/editing report' do
+          controller.send(:form_field_changed)
+          expect(controller.instance_variable_get(:@unavailable_fields)).to include('CPU Cores Allocated Metric, CPU Cores Used Metric')
+        end
+      end
+
+      context 'configuring Report Columns and Chargeback for Images' do
+        let(:model) { 'ChargebackContainerImage' }
+
+        it 'sets string with unavailable fields while adding/editing report' do
+          controller.send(:form_field_changed)
+          expect(controller.instance_variable_get(:@unavailable_fields)).to include('CPU Allocated Metric, CPU Used Metric, Disk I/O Used Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric')
+        end
+      end
+
+      context 'configuring Report Columns and Chargeback for Projects' do
+        let(:model) { 'ChargebackContainerProject' }
+
+        it 'sets string with unavailable fields while adding/editing report' do
+          controller.send(:form_field_changed)
+          expect(controller.instance_variable_get(:@unavailable_fields)).to include('CPU Allocated Metric, CPU Used Metric, CPU Cores Allocated Metric, Disk I/O Used Metric, Memory Allocated Metric, Fixed Storage Metric, Storage Allocated Metric, Storage Used Metric')
+        end
       end
     end
   end
