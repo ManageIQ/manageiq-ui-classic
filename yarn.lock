@@ -52,10 +52,10 @@
     redux-form-validators "^2.7.0"
     redux-mock-store "^1.5.1"
 
-"@manageiq/ui-components@~1.1.20":
-  version "1.1.20"
-  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.1.20.tgz#c4822c85ffcd91bc9deb6c9581c80aae75dc2210"
-  integrity sha512-U4eUXVYe761ei1roi0ZcTFfCHyxRgf7Ey5ZFf9HfBUGHA2Bh1HToSYQmkTWhGXr0SnwfFxDzAfG3saMhVPesYw==
+"@manageiq/ui-components@~1.1.21":
+  version "1.1.21"
+  resolved "https://registry.yarnpkg.com/@manageiq/ui-components/-/ui-components-1.1.21.tgz#9f8853726dd4083d66eff8cc149793e88a5f50d5"
+  integrity sha512-IC7++3/jCv2vgGX7C1HCtCkx+IeaidejPKHyfAC5+vb4B9LXrz4/+BaO1jqCb2SfEDKtRH0CKAIOxU3PnUStUw==
   dependencies:
     angular-bootstrap-switch "^0.5.1"
     angular-dragdrop "^1.0.13"
