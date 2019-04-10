@@ -493,15 +493,6 @@ class HostController < ApplicationController
     creds
   end
 
-  # gather up the host records from the DB
-  def get_hosts
-    page = params[:page].nil? ? 1 : params[:page].to_i
-    @current_page = page
-
-    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
-    @host_pages, @hosts = paginate(:hosts, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
-  end
-
   def title
     _("Host")
   end
