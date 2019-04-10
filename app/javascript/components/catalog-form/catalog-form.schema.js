@@ -2,20 +2,21 @@ import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import debouncePromise from '../../helpers/promise-debounce';
 import { API } from '../../http_api';
 
-export const asyncValidator = value => API.get(`/api/service_catalogs?expand=resources&filter[]=name=${value}`)
-  .then((json) => {
-    if (json.resources.length > 0) {
-      return __('Name has already been taken');
-    }
-    if (value === '' || value === undefined) {
-      return __("Name can't be blank");
-    }
-    return undefined;
-  });
+export const asyncValidator = (value, catalogId) =>
+  API.get(`/api/service_catalogs?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)
+    .then((json) => {
+      if (json.resources.find(({ id, name }) => name === value && id !== catalogId)) {
+        return __('Name has already been taken');
+      }
+      if (value === '' || value === undefined) {
+        return __("Name can't be blank");
+      }
+      return undefined;
+    });
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
-function createSchema(options) {
+function createSchema(options, catalogId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Info'),
@@ -23,7 +24,7 @@ function createSchema(options) {
       component: componentTypes.TEXT_FIELD,
       name: 'name',
       validate: [
-        asyncValidatorDebounced,
+        value => asyncValidatorDebounced(value, catalogId),
       ],
       label: __('Name'),
       maxLength: 40,
