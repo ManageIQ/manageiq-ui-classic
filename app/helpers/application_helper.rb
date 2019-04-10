@@ -37,14 +37,6 @@ module ApplicationHelper
     settings(*path) || default
   end
 
-  def documentation_link(url = nil, documentation_subject = "")
-    if url
-      link_to(_("For more information, visit the %{subject} documentation.") % {:subject => documentation_subject},
-              url, :rel => 'external',
-              :class => 'documentation-link', :target => '_blank')
-    end
-  end
-
   def websocket_origin
     proto = request.ssl? ? 'wss' : 'ws'
     # Retrieve the host that needs to be explicitly allowed for websocket connections
