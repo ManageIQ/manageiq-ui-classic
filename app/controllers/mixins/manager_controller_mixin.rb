@@ -208,16 +208,6 @@ module Mixins
       replace_right_cell(:replace_trees => [x_active_accord])
     end
 
-    def model_to_type_name(provmodel)
-      if provmodel.include?("ManageIQ::Providers::AnsibleTower")
-        'ansible_tower'
-      elsif provmodel.include?("ManageIQ::Providers::Foreman")
-        'foreman'
-      else
-        raise "Unknown provmodel value: #{provmodel}"
-      end
-    end
-
     def new
       assert_privileges("#{privilege_prefix}_add_provider")
       @provider_manager = concrete_model.new
