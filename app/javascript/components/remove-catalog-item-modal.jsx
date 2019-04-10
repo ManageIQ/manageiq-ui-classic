@@ -20,14 +20,14 @@ const removeCatalogItems = (catalogItems) => {
   Promise.all(apiPromises)
     .then((apiData) => {
       if (catalogItems.length === 1 && apiData[0].result === 'error') {
-        add_flash(sprintf(__('Error removing catalog item "%s": %s'), apiData[0].name, parseApiError(apiData[0].data)), 'error');
+        add_flash(sprintf(__('Error deleting catalog item "%s": %s'), apiData[0].name, parseApiError(apiData[0].data)), 'error');
         miqSparkleOff();
       } else {
         apiData.forEach(item => {
           if (item.result === 'success') {
-            miqFlashLater({message: sprintf(__('The catalog item "%s" has been successfully removed'), item.name)});
+            miqFlashLater({message: sprintf(__('The catalog item "%s" has been successfully deleted'), item.name)});
           } else if (item.result === 'error' && catalogItems.length > 1) {
-            miqFlashLater({message: sprintf(__('Error removing catalog item "%s": %s'), item.name, parseApiError(item.data)), level: 'error'});
+            miqFlashLater({message: sprintf(__('Error deleting catalog item "%s": %s'), item.name, parseApiError(item.data)), level: 'error'});
           }
         });
       }
@@ -76,7 +76,7 @@ class RemoveCatalogItemModal extends React.Component {
     });
     this.props.dispatch({
       type: "FormButtons.customLabel",
-      payload: __('Remove'),
+      payload: __('Delete'),
     });
     this.props.dispatch({
       type: 'FormButtons.saveable',
@@ -113,10 +113,10 @@ class RemoveCatalogItemModal extends React.Component {
 
     const confirmationMessage = (data) => {
       if (data.length === 1 && isCatalogBundle(data[0])) {
-        return __('Are you sure you want to remove the following catalog bundle?');
+        return __('Are you sure you want to permanently delete the following catalog bundle?');
       } else {
-        return n__('Are you sure you want to remove the following catalog item?',
-                   'Are you sure you want to remove the following catalog items?', data.length);
+        return n__('Are you sure you want to permanently delete the following catalog item?',
+                   'Are you sure you want to permanently delete the following catalog items?', data.length);
       }
     };
 
