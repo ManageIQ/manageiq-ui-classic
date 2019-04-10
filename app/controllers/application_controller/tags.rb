@@ -43,31 +43,6 @@ module ApplicationController::Tags
 
   private ############################
 
-  def tag_set_vars_from_params
-    if params[:tag_cat]
-      @edit[:cat] = Classification.find_by(:id => params[:tag_cat])
-      tag_edit_build_entries_pulldown
-    elsif params[:tag_add]
-      tad_add_assignments
-    elsif params[:tag_remove]
-      @edit[:new][:assignments].delete(params[:tag_remove].to_i)
-    end
-    @edit[:new][:assignments].sort!
-  end
-
-  def tad_add_assignments
-    @edit[:new][:assignments].push(params[:tag_add].to_i)
-    @edit[:new][:assignments].each do |a|
-      # skip when same category, single value category, different tag
-      next unless delete_from_assignments?(a)
-      @edit[:new][:assignments].delete(a.id) # Remove prev tag from new
-    end
-  end
-
-  def delete_from_assignments?(value)
-    value.parent.name == @edit[:cat].name && value.parent.single_value && value.id != params[:tag_add].to_i
-  end
-
   def get_tag_items
     record_ids = find_records_with_rbac(
       @tagging.instance_of?(String) ? @tagging.safe_constantize : @tagging,
