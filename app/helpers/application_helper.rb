@@ -1363,16 +1363,6 @@ module ApplicationHelper
     end
   end
 
-  def action_url_for_views
-    if @lastaction == "scan_history"
-      "scan_history"
-    elsif %w[all_jobs jobs ui_jobs all_ui_jobs].include?(@lastaction)
-      "jobs"
-    else
-      @lastaction && @lastaction != "get_node_info" ? @lastaction : "show_list"
-    end
-  end
-
   def route_exists?(hash)
     begin
       url_for_only_path(hash)
