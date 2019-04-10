@@ -737,13 +737,29 @@ class CatalogController < ApplicationController
 
   private
 
+  def build_tenants_tree
+    tenants = @record ? @record.additional_tenants : Tenant.where(:id => @edit[:new][:tenant_ids])
+    catalog_bundle = @edit.present? && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
+    TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :ansible_playbook => ansible_playbook_type?, :catalog_bundle => catalog_bundle)
+  end
+
   def svc_catalog_provision_finish_submit_endpoint
     role_allows?(:feature => "miq_request_show_list", :any => true) ? "/miq_request/show_list" : "/catalog/explorer"
   end
 
+  def ansible_playbook_type?
+    prov_type = if params[:st_prov_type]
+                  params[:st_prov_type]
+                elsif @record
+                  @record.prov_type
+                elsif @edit
+                  @edit[:new][:st_prov_type]
+                end
+    prov_type == 'generic_ansible_playbook'
+  end
+
   def ansible_playbook?
-    prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
-    ansible_playbook = prov_type == "generic_ansible_playbook"
+    ansible_playbook = ansible_playbook_type?
     @current_region = MiqRegion.my_region.region if ansible_playbook
     ansible_playbook
   end
@@ -1258,6 +1274,7 @@ class CatalogController < ApplicationController
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
+    @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
@@ -1396,6 +1413,7 @@ class CatalogController < ApplicationController
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
 
+    @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])

@@ -1,0 +1,5 @@
+.form-group
+  %label.col-md-2.control-label
+    = _('Additional Tenants')
+  .col-md-8
+    = render(:partial => "shared/tree", :locals => {:tree => @tenants_tree, :name => @tenants_tree.name})
