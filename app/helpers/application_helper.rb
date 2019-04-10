@@ -1257,13 +1257,6 @@ module ApplicationHelper
     "chart"  => "c"
   }.freeze
 
-  LIST_ICON_FOR = %w[
-    MiqReportResult
-    MiqSchedule
-    MiqUserRole
-    MiqWidget
-  ].freeze
-
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_quadicon_options(
