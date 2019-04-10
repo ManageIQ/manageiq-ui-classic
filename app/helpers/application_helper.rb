@@ -911,15 +911,6 @@ module ApplicationHelper
     end
   end
 
-  def controller_for_stack(model)
-    case model.to_s
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
-      "configuration_job"
-    else
-      model.name.underscore
-    end
-  end
-
   def model_from_active_tree(tree)
     case tree
     when :automation_manager_cs_filter_tree
