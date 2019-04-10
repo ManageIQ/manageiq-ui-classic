@@ -75,7 +75,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
         </BreadcrumbItem>
         <BreadcrumbItem
           active={false}
-          key="in tree"
+          key="in tree-1"
           onClick={[Function]}
         >
           <li
