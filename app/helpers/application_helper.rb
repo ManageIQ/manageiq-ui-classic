@@ -876,17 +876,6 @@ module ApplicationHelper
     pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider|configuration_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
-  def model_for_ems(record)
-    raise _("Record is not ExtManagementSystem class") unless record.kind_of?(ExtManagementSystem)
-    if record.kind_of?(ManageIQ::Providers::CloudManager)
-      ManageIQ::Providers::CloudManager
-    elsif record.kind_of?(ManageIQ::Providers::ContainerManager)
-      ManageIQ::Providers::ContainerManager
-    else
-      ManageIQ::Providers::InfraManager
-    end
-  end
-
   def model_for_vm(record)
     raise _("Record is not VmOrTemplate class") unless record.kind_of?(VmOrTemplate)
     if record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
