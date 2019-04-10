@@ -1342,23 +1342,8 @@ module ApplicationHelper
     MiqServer.my_server.name
   end
 
-  def vmdb_build_info(key)
-    case key
-    when :version then Vmdb::Appliance.VERSION
-    when :build then Vmdb::Appliance.BUILD
-    end
-  end
-
   def plugin_name(engine)
     engine.respond_to?(:plugin_name) ? engine.plugin_name : engine.to_s.gsub(/ManageIQ::|::Engine/, '')
-  end
-
-  def vmdb_plugins_sha
-    Vmdb::Plugins.versions
-  end
-
-  def user_role_name
-    User.current_user.miq_user_role_name
   end
 
   def rbac_common_feature_for_buttons(pressed)
