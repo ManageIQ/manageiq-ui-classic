@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal } from 'patternfly-react';
+import { API } from '../http_api';
 
 const parseApiError = (error) => {
   const { data: { error: { message } } } = error;
   return message;
 };
 
-const removeCatalogItems = (catalogItems) => {
+export const removeCatalogItems = (catalogItems) => {
   let apiPromises = [];
 
   miqSparkleOn();
