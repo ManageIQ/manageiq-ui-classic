@@ -188,26 +188,6 @@ describe VmCloudController do
       post :x_button, :params => {:pressed => 'instance_miq_request_new'}
       expect(response.status).to eq(200)
     end
-
-    context "skip or drop breadcrumb" do
-      before do
-        get :explorer
-      end
-
-      subject { controller.instance_variable_get(:@breadcrumbs) }
-
-      it 'skips dropping a breadcrumb when a button action is executed' do
-        ApplicationController.handle_exceptions = true
-
-        post :x_button, :params => { :id => nil, :pressed => 'instance_ownership' }
-        expect(subject).to eq([{:name => "Instances", :url => "/vm_cloud/explorer"}])
-      end
-
-      it 'drops a breadcrumb when an action allowing breadcrumbs is executed' do
-        post :accordion_select, :params => { :id => "images_filter" }
-        expect(subject).to eq([{:name => "Images", :url => "/vm_cloud/explorer"}])
-      end
-    end
   end
 
   context "#parse error messages" do

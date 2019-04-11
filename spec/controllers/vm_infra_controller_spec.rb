@@ -570,45 +570,6 @@ describe VmInfraController do
     expect(response.body).to include("miq-button alt='Cancel'")
   end
 
-  context "breadcrumbs" do
-    subject { controller.instance_variable_get(:@breadcrumbs) }
-
-    context "skip or drop breadcrumb" do
-      before { get :explorer }
-
-      it 'skips dropping a breadcrumb when a button action is executed' do
-        post :x_button, :params => {:id => vm_vmware.id, :pressed => 'vm_ownership'}
-        expect(subject).to eq([{:name => "VM or Templates", :url => "/vm_infra/explorer"}])
-      end
-
-      it 'drops a breadcrumb when an action allowing breadcrumbs is executed' do
-        post :accordion_select, :params => {:id => "vms_filter"}
-        expect(subject).to eq([{:name => "Virtual Machines", :url => "/vm_infra/explorer"}])
-      end
-    end
-
-    context "clear or retain existing breadcrumb path" do
-      before { allow(controller).to receive_messages(:render => nil, :build_toolbar => nil) }
-
-      it 'it clears the existing breadcrumb path and assigns the new explorer path when controllers are switched' do
-        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
-        get :explorer
-        expect(subject).to eq([{:name => "VM or Templates", :url => "/vm_infra/explorer"}])
-      end
-
-      it 'retains the breadcrumb path when cancel is pressed from a VM action' do
-        get :explorer
-        allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
-        post :x_button, :params => {:id => vm_vmware.id, :pressed => 'vm_ownership'}
-
-        controller.instance_variable_set(:@in_a_form, nil)
-        post :ownership_update, :params => {:button => 'cancel'}
-
-        expect(subject).to eq([{:name => "VM or Templates", :url => "/vm_infra/explorer"}])
-      end
-    end
-  end
-
   it "gets explorer when the request.referer action is of type 'post'" do
     allow(request).to receive(:referer).and_return("http://localhost:3000/configuration/update")
     get :explorer

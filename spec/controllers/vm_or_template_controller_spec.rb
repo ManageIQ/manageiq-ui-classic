@@ -53,28 +53,6 @@ describe VmOrTemplateController do
     end
   end
 
-  context "skip or drop breadcrumb" do
-    before do
-      session[:settings] = {:views => {}, :perpage => {:list => 10}}
-      EvmSpecHelper.create_guid_miq_server_zone
-      get :explorer
-    end
-
-    it 'skips dropping a breadcrumb when a button action is executed' do
-      ApplicationController.handle_exceptions = true
-
-      post :x_button, :params => { :id => nil, :pressed => 'miq_template_ownership' }
-      breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-      expect(breadcrumbs).to eq([{:name => "VMs and Instances", :url => "/vm_or_template/explorer"}])
-    end
-
-    it 'drops a breadcrumb when an action allowing breadcrumbs is executed' do
-      post :accordion_select, :params => { :id => "templates_images_filter" }
-      breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-      expect(breadcrumbs).to eq([{:name => "VM Templates and Images", :url => "/vm_or_template/explorer"}])
-    end
-  end
-
   context 'render_views' do
     render_views
 
