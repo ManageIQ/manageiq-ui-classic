@@ -295,7 +295,6 @@ describe NetworkRouterController do
 
       it 'list subnet choices' do
         stub_user(:features => :all)
-        allow(controller).to receive(:drop_breadcrumb)
         controller.instance_variable_set(:@router, @router)
         controller.instance_variable_set(:@_params, :id => @router.id)
         controller.send(:add_interface_select)
@@ -311,7 +310,6 @@ describe NetworkRouterController do
         let(:tag)     { "/managed/environment/prod" }
 
         before do
-          allow(controller).to receive(:drop_breadcrumb)
           controller.instance_variable_set(:@router, @router)
           controller.instance_variable_set(:@_params, :id => @router.id)
 

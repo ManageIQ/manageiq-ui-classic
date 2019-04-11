@@ -8,13 +8,10 @@ module Mixins
           # check to see if coming from show_list or drilled into vms from another CI
           if request.parameters[:controller] == "vm" || %w[all_vms instances vms].include?(params[:display])
             rec_cls = "vm"
-            bc_msg = _("Retire VM or Instance")
           elsif request.parameters[:controller] == "service"
             rec_cls =  "service"
-            bc_msg = _("Retire Service")
           elsif request.parameters[:controller] == "orchestration_stack" || %w[orchestration_stacks].include?(params[:display])
             rec_cls = "orchestration_stack"
-            bc_msg = _("Retire Orchestration Stack")
           end
           selected_items = checked_or_params
           @edit ||= {}
@@ -31,8 +28,6 @@ module Mixins
           if @explorer
             retire
           else
-            drop_breadcrumb(:name => bc_msg,
-                            :url  => "/#{session[:controller]}/retire")
             javascript_redirect(:controller => rec_cls, :action => 'retire') # redirect to build the retire screen
           end
         end
@@ -91,8 +86,6 @@ module Mixins
             return
           end
           session[:changed] = @changed = false
-          drop_breadcrumb(:name => _("Retire %{name}") % {:name => ui_lookup(:models => kls.to_s)},
-                          :url  => "/#{session[:controller]}/retire")
           session[:cat] = nil # Clear current category
           build_targets_hash(@retireitems)
           @view = get_db_view(kls) # Instantiate the MIQ Report view object

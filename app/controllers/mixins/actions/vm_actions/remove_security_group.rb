@@ -26,12 +26,6 @@ module Mixins
         def remove_security_group
           assert_privileges("instance_remove_security_group")
           @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
-          unless @explorer
-            drop_breadcrumb(
-              :name => _("Remove Security Group to '%{name}'") % {:name => @record.name},
-              :url  => "/vm_cloud/remove_security_group"
-            )
-          end
           @sb[:explorer] = @explorer
           @in_a_form = true
           @remove_security_group = true

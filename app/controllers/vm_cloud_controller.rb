@@ -20,11 +20,6 @@ class VmCloudController < ApplicationController
     @vm.cloud_tenant.cloud_volumes.where(:status => 'available').each { |v| @volume_choices[v.name] = v.id }
 
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Attach Cloud Volume to Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
-      :url  => "/vm_cloud/attach"
-    )
-    @in_a_form = true
     @refresh_partial = "vm_common/attach"
   end
   alias instance_attach attach
@@ -40,11 +35,6 @@ class VmCloudController < ApplicationController
       javascript_flash
     end
 
-    @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Detach Cloud Volume from Instance \"%{instance_name}\"") % {:instance_name => @vm.name},
-      :url  => "/vm_cloud/detach"
-    )
     @in_a_form = true
     @refresh_partial = "vm_common/detach"
   end

@@ -4,7 +4,6 @@ module Mixins
       module Evacuate
         def evacuate
           assert_privileges("instance_evacuate")
-          drop_breadcrumb(:name => _("Evacuate Instances"), :url => "/vm_cloud/evacuate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @evacuate = true

@@ -66,10 +66,6 @@ class CloudTenantController < ApplicationController
         @ems_choices[tenant_choice_name] = tenant_choice_id
       end
     end
-    drop_breadcrumb(
-      :name => _("Add New Cloud Tenant"),
-      :url  => "/cloud_tenant/new"
-    )
   end
 
   def create
@@ -120,10 +116,6 @@ class CloudTenantController < ApplicationController
     assert_privileges("cloud_tenant_edit")
     @tenant = find_record_with_rbac(CloudTenant, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Cloud Tenant \"%{name}\"") % {:name => @tenant.name},
-      :url  => "/cloud_tenant/edit/#{@tenant.id}"
-    )
   end
 
   def update

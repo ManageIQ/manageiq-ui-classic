@@ -6,7 +6,6 @@ module Mixins
           @sb[:explorer] = true if @explorer
           @request_id = nil
           @in_a_form = @reconfigure = true
-          drop_breadcrumb(:name => _("Reconfigure"), :url => "/vm_common/reconfigure")
 
           reconfigure_ids = params[:rec_ids] if params[:rec_ids]
           @request_id = params[:req_id] if params[:req_id]

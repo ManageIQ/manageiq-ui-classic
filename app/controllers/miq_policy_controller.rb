@@ -24,7 +24,6 @@ class MiqPolicyController < ApplicationController
 
   def export
     @layout = "miq_policy_export"
-    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy/export")
     case params[:button]
     when "cancel"
       @sb = nil
@@ -159,7 +158,6 @@ class MiqPolicyController < ApplicationController
   def import
     @layout = "miq_policy_export"
     @import_file_upload_id = params[:import_file_upload_id]
-    drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy/export")
 
     if params[:commit] == "import"
       begin
@@ -274,7 +272,6 @@ class MiqPolicyController < ApplicationController
     @server_options ||= {}
     @server_options[:server_id] ||= MiqServer.my_server.id
     @server = MiqServer.my_server
-    drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_policy/log")
     render :action => "show"
   end
 

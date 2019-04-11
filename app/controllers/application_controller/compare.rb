@@ -36,8 +36,6 @@ module ApplicationController::Compare
                          when 'MiqTemplate' then 'Templates'
                          else                    'VMs'
                          end
-    drop_breadcrumb(:name => _("Compare %{name}") % {:name => ui_lookup(:model => @sb[:compare_db])},
-                    :url  => "/#{session[:db_title].singularize.downcase}/compare_miq")
     @lastaction = "compare_miq"
     if params[:ppsetting] # User selected new per page value
       @items_per_page = params[:ppsetting].to_i # Set the new per page value
@@ -109,8 +107,6 @@ module ApplicationController::Compare
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
     @compare.remove_id(params[:id].to_i) if @lastaction == "compare_remove"
-    drop_breadcrumb(:name => _("Compare %{name}") % {:name => session[:db_title]},
-                    :url  => "/#{session[:db_title].singularize.downcase}/compare_miq")
     @lastaction = "compare_miq"
     if params[:ppsetting]                                 # User selected new per page value
       @items_per_page = params[:ppsetting].to_i           # Set the new per page value
@@ -374,8 +370,6 @@ module ApplicationController::Compare
       :current_tenant  => current_tenant.name
     )
     drift_to_json(@compare)
-    drop_breadcrumb(:name => _("'%{name}' Drift Analysis") % {:name => @drift_obj.name},
-                    :url  => "/#{@sb[:compare_db].downcase}/drift")
     @sb[:miq_vm_name] = @drift_obj.name
     if params[:ppsetting] # Came in from per page setting
       replace_main_div(:partial => "layouts/compare", :id => @drift_obj.id)
@@ -396,8 +390,6 @@ module ApplicationController::Compare
     identify_obj
 
     drift_to_json(@compare)
-    drop_breadcrumb(:name => _("'%{name}' Drift Analysis") % {:name => @sb[:miq_vm_name]},
-                    :url  => "/#{@sb[:compare_db].downcase}/drift")
     @lastaction = "drift"
     @showtype = "drift"
     update_compare_partial('drift', @sb[:miq_drift_params])
@@ -531,7 +523,6 @@ module ApplicationController::Compare
     @timestamps = @drift_obj.drift_state_timestamps
     session[:timestamps] = @timestamps
     @showtype = "drift_history"
-    drop_breadcrumb(:name => _("Drift History"), :url => "/#{controller_name}/drift_history/#{@drift_obj.id}")
     @lastaction = "drift_history"
     @display = "main"
     if @explorer || request.xml_http_request? # Is this an Ajax request?

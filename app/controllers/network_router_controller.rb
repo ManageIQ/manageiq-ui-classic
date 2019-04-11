@@ -54,10 +54,6 @@ class NetworkRouterController < ApplicationController
     assert_privileges("cloud_tenant_show_list")
 
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Add New Network Router"),
-      :url  => "/network_router/new"
-    )
   end
 
   def create
@@ -124,7 +120,6 @@ class NetworkRouterController < ApplicationController
       add_flash(_("The selected Router was deleted")) if @flash_array.nil?
       flash_to_session
     else
-      drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
@@ -136,10 +131,6 @@ class NetworkRouterController < ApplicationController
     @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     # needs to be initializes for haml
-    drop_breadcrumb(
-      :name => _("Edit Router \"%{name}\"") % {:name => @router.name},
-      :url  => "/network_router/edit/#{@router.id}"
-    )
   end
 
   def update
@@ -205,11 +196,6 @@ class NetworkRouterController < ApplicationController
       else
         redirect_to(:action => "show", :id => params[:id])
       end
-    else
-      drop_breadcrumb(
-        :name => _("Add Interface to Router \"%{name}\"") % {:name => @router.name},
-        :url  => "/network_router/add_interface/#{@router.id}"
-      )
     end
   end
 
@@ -296,11 +282,6 @@ class NetworkRouterController < ApplicationController
       else
         redirect_to(:action => "show", :id => params[:id])
       end
-    else
-      drop_breadcrumb(
-        :name => _("Remove Interface from Router \"%{name}\"") % {:name => @router.name},
-        :url  => "/network_router/remove_interface/#{@router.id}"
-      )
     end
   end
 

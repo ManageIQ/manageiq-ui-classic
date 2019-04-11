@@ -18,11 +18,6 @@ class CloudVolumeBackupController < ApplicationController
 
     @backup = find_record_with_rbac(CloudVolumeBackup, backup_id)
     @in_a_form = true
-
-    drop_breadcrumb(
-      :name => _("Restore Cloud Volume Backup \"%{name}\"") % {:name => @backup.name},
-      :url  => "/cloud_volume_backup/volume_select/#{@backup.id}"
-    )
   end
 
   def volume_form_choices

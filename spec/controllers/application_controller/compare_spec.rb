@@ -7,7 +7,6 @@ describe ApplicationController do
       controller.instance_variable_set(:@drift_obj, vm)
       allow(controller).to receive(:identify_obj)
       allow(controller).to receive(:drift_state_timestamps)
-      allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:render)
       controller.send(:drift_history)
       expect(assigns(:display)).to eq("main")

@@ -43,7 +43,6 @@ class AnsibleCredentialController < ApplicationController
 
   def new
     assert_privileges('embedded_automation_manager_credentials_add')
-    drop_breadcrumb(:name => _("Add a new Credential"), :url => "/ansible_credential/new")
     @in_a_form = true
     @id = 'new'
   end
@@ -51,8 +50,6 @@ class AnsibleCredentialController < ApplicationController
   def edit
     assert_privileges('embedded_automation_manager_credentials_edit')
     auth = ManageIQ::Providers::EmbeddedAutomationManager::Authentication.find(params[:id].to_i)
-    drop_breadcrumb(:name => _("Edit a Credential \"%{name}\"") % {:name => auth.name},
-                    :url  => "/ansible_credential/edit/#{params[:id]}")
     @in_a_form = true
     @id = auth.id
   end

@@ -184,8 +184,6 @@ class ServiceController < ApplicationController
 
     @lastaction = 'generic_object'
     @item = @record.generic_objects.find { |e| e[:id] == params[:generic_object_id].to_i }
-    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url => show_link(@record, :display => 'generic_objects'))
-    drop_breadcrumb(:name => @item.name, :url => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
     @view = get_db_view(GenericObject)
     @sb[:rec_id] = params[:generic_object_id]
     @record = @item

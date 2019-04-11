@@ -79,7 +79,6 @@ class SecurityGroupController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(SecurityGroup.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add New Security Group "), :url => "/security_group/new")
         javascript_flash
       end
     end
@@ -142,15 +141,12 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_edit")
     @security_group = find_record_with_rbac(SecurityGroup, params[:id])
     @in_a_form = true
-    drop_breadcrumb(:name => _("Edit Security Group \"%{name}\"") % { :name => @security_group.name},
-                    :url  => "/security_group/edit/#{@security_group.id}")
   end
 
   def new
     assert_privileges("security_group_new")
     @security_group = SecurityGroup.new
     @in_a_form = true
-    drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")
   end
 
   def update

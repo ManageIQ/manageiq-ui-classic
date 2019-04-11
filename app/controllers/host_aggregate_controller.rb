@@ -30,11 +30,6 @@ class HostAggregateController < ApplicationController
     Rbac::Filterer.filtered(ManageIQ::Providers::CloudManager).select { |ems| ems.supports?(:create_host_aggregate) }.each do |ems|
       @ems_choices[ems.name] = ems.id
     end
-
-    drop_breadcrumb(
-      :name => _("Create New Host Aggregate"),
-      :url  => "/host_aggregate/new"
-    )
   end
 
   def create
@@ -88,10 +83,6 @@ class HostAggregateController < ApplicationController
     assert_privileges("host_aggregate_edit")
     @host_aggregate = find_record_with_rbac(HostAggregate, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
-      :url  => "/host_aggregate/edit/#{@host_aggregate.id}"
-    )
   end
 
   def update
@@ -214,11 +205,6 @@ class HostAggregateController < ApplicationController
       else
         redirect_to(:action => "show", :id => params[:id])
       end
-    else
-      drop_breadcrumb(
-        :name => _("Add Host to Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
-        :url  => "/host_aggregate/add_host/#{@host_aggregate.id}"
-      )
     end
   end
 
@@ -305,11 +291,6 @@ class HostAggregateController < ApplicationController
       else
         redirect_to(:action => "show", :id => params[:id])
       end
-    else
-      drop_breadcrumb(
-        :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
-        :url  => "/host_aggregate/remove_host/#{@host_aggregate.id}"
-      )
     end
   end
 

@@ -44,12 +44,6 @@ module Mixins
         def resize
           assert_privileges("instance_resize")
           @record ||= find_record_with_rbac(VmOrTemplate, params[:rec_id])
-          unless @explorer
-            drop_breadcrumb(
-              :name => _("Reconfigure Instance '%{name}'") % {:name => @record.name},
-              :url  => "/vm/resize"
-            )
-          end
           @sb[:explorer] = @explorer
           @request_id = params[:req_id]
           @in_a_form = true

@@ -26,12 +26,6 @@ module Mixins
         def add_security_group
           assert_privileges("instance_add_security_group")
           @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
-          unless @explorer
-            drop_breadcrumb(
-              :name => _("Add Security Group to '%{name}'") % {:name => @record.name},
-              :url  => "/vm_cloud/add_security_group"
-            )
-          end
           @sb[:explorer] = @explorer
           @in_a_form = true
           @add_security_group = true

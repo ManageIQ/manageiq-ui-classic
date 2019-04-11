@@ -23,7 +23,6 @@ describe ReportController do
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, {})
       session[:edit] = edit
-      allow(controller).to receive(:drop_breadcrumb)
     end
 
     it "reset rbac testing" do

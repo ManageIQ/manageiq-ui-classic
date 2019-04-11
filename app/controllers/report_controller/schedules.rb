@@ -15,7 +15,6 @@ module ReportController::Schedules
       record      = MiqReport.find(@schedule.filter.exp["="]["value"])
       @rep_filter = record.name
     end
-    drop_breadcrumb(:name => @schedule.name, :url => "/report/show_schedule/#{@schedule.id}")
     if @schedule.sched_action[:options] && @schedule.sched_action[:options][:email]
       @email_to = []
       @schedule.sched_action[:options][:email][:to].each_with_index do |e, _e_idx|
@@ -232,7 +231,6 @@ module ReportController::Schedules
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
-        drop_breadcrumb(:name => "Edit Schedule", :url => "/miq_schedule/edit")
         javascript_flash
       end
     when "reset", nil # Reset or first time in

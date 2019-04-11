@@ -67,12 +67,6 @@ module Mixins
       @sb[:summary_mode] = 'textual' if respond_to?(:dashboard_view)
 
       get_tagdata(@record) if @record.try(:taggings)
-      drop_breadcrumb({:name => breadcrumb_name(nil),
-                       :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
-                      true)
-
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
-                      :url  => show_link(@record))
       @showtype = "main"
     end
 
@@ -140,8 +134,6 @@ module Mixins
 
     def display_descendant_vms
       @showtype = "config"
-      drop_breadcrumb(:name => _("%{name} (All VMs - Tree View)") % {:name => @record.name},
-                      :url  => show_link(@record, :display => "descendant_vms", :treestate => true))
       self.x_active_tree = :datacenter_tree
       @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, @sb, true, :root => @record)
     end
@@ -178,11 +170,6 @@ module Mixins
     #   association      -- get_view option association - implicit nil
     def nested_list(model, options = {})
       title = options[:breadcrumb_title] || ui_lookup(:models => model.to_s)
-
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
-                      :url  => "/#{self.class.table_name}/show/#{@record.id}")
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @record.name, :title => title},
-                      :url  => show_link(@record, :display => @display))
 
       view_options = {:parent => @record}
       view_options.update(options.slice(:association, :parent_method, :where_clause, :named_scope, :clickable))

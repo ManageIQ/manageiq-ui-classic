@@ -193,7 +193,6 @@ class ConfigurationController < ApplicationController
                       TimeProfile.in_my_region.for_user(session[:userid]).ordered_by_desc
                     end
     timeprofile_set_days_hours
-    drop_breadcrumb(:name => _("Time Profiles"), :url => "/configuration/change_tab/?tab=4")
   end
 
   def timeprofile_set_days_hours(_timeprofile = @timeprofile)
@@ -246,7 +245,6 @@ class ConfigurationController < ApplicationController
     @timeprofile_action = "timeprofile_new"
     set_form_vars
     @in_a_form = true
-    drop_breadcrumb(:name => _("Add new Time Profile"), :url => "/configuration/timeprofile_edit")
     render :action => "timeprofile_edit"
   end
 
@@ -266,9 +264,6 @@ class ConfigurationController < ApplicationController
     add_flash(_("Global Time Profile cannot be edited")) if @timeprofile.profile_type == "global" && !report_admin_user?
     session[:changed] = false
     @in_a_form = true
-    drop_breadcrumb(:name => _("%{title} '%{description}'") % {:title       => title,
-                                                               :description => @timeprofile.description},
-                    :url  => "/configuration/timeprofile_edit")
   end
 
   # Delete all selected or single displayed VM(s)
@@ -332,8 +327,6 @@ class ConfigurationController < ApplicationController
     @timeprofile_action = "timeprofile_copy"
     set_form_vars
     session[:changed] = false
-    drop_breadcrumb(:name => _("Adding copy of '%{description}'") % {:description => @timeprofile.description},
-                    :url  => "/configuration/timeprofile_edit")
     render :action => "timeprofile_edit"
   end
 
@@ -375,8 +368,6 @@ class ConfigurationController < ApplicationController
         add_flash(_("TimeProfile \"%{name}\": Error during 'save': %{error_message}") %
                       {:name => @timeprofile.description, :error_message => bang.message}, :error)
         @in_a_form = true
-        drop_breadcrumb(:name => _("Edit '%{description}'") % {:description => @timeprofile.description},
-                        :url  => "/configuration/timeprofile_edit")
         javascript_flash
       else
         construct_edit_for_audit(@timeprofile)
@@ -450,10 +441,6 @@ class ConfigurationController < ApplicationController
   end
 
   def build_tabs
-    if @tabform != "ui_4"
-      drop_breadcrumb({:name => _("User Interface Configuration"), :url => "/configuration/edit"}, true)
-    end
-
     @active_tab = @tabform.split("_").last
 
     @tabs = []

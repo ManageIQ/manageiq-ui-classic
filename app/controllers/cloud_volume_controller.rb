@@ -54,10 +54,6 @@ class CloudVolumeController < ApplicationController
     @volume.available_vms.each { |vm| @vm_choices[vm.name] = vm.id }
 
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Attach Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/attach"
-    )
   end
 
   def detach
@@ -67,10 +63,6 @@ class CloudVolumeController < ApplicationController
     @vm_choices = @volume.vms.each_with_object({}) { |vm, hash| hash[vm.name] = vm.id }
 
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Detach Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/detach"
-    )
   end
 
   def attach_volume
@@ -188,10 +180,6 @@ class CloudVolumeController < ApplicationController
     if params[:storage_manager_id]
       @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
     end
-    drop_breadcrumb(
-      :name => _("Add New Cloud Volume"),
-      :url  => "/cloud_volume/new"
-    )
   end
 
   def create
@@ -217,10 +205,6 @@ class CloudVolumeController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(validate_results[:message]), :error) unless validate_results[:message].nil?
-        drop_breadcrumb(
-          :name => _("Add New Cloud Volume"),
-          :url  => "/cloud_volume/new"
-        )
         javascript_flash(:spinner_off => true)
       end
 
@@ -263,10 +247,6 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_edit")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/edit/#{@volume.id}"
-    )
   end
 
   def update
@@ -358,7 +338,6 @@ class CloudVolumeController < ApplicationController
     elsif @lastaction == "show" && @layout == "cloud_volume"
       @single_delete = true unless flash_errors?
     else
-      drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       flash_to_session
       redirect_to(previous_breadcrumb_url)
     end
@@ -368,10 +347,6 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_backup_create")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Create Backup for Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/backup_new/#{@volume.id}"
-    )
   end
 
   def backup_create
@@ -430,10 +405,6 @@ class CloudVolumeController < ApplicationController
       @backup_choices[backup.name] = backup.id
     end
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Restore Cloud Volume \"%{name}\" from a Backup") % {:name => @volume.name},
-      :url  => "/cloud_volume/backup_select/#{@volume.id}"
-    )
   end
 
   def backup_restore
@@ -484,12 +455,6 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_snapshot_create")
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Create Snapshot for Cloud Volume \"%{name}\"") % {
-        :name => @volume.name
-      },
-      :url  => "/cloud_volume/snapshot_new/#{@volume.id}"
-    )
   end
 
   def snapshot_create

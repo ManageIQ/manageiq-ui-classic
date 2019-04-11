@@ -17,7 +17,6 @@ module Mixins
 
         def live_migrate
           assert_privileges("instance_live_migrate")
-          drop_breadcrumb(:name => _("Live Migrate Instances"), :url => "/vm_cloud/live_migrate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @live_migrate = true

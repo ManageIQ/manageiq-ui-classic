@@ -20,10 +20,6 @@ class TopologyController < ApplicationController
   toolbar :topology
 
   def show
-    # When navigated here without id, it means this is a general view for all providers (not for a specific provider)
-    # all previous navigation should not be displayed in breadcrumbs as the user could arrive from
-    # any other page in the application.
-    drop_breadcrumb(:name => _('Topology'), :url => "/#{self.class.layout}/show/#{params[:id]}")
     @lastaction = 'show'
     @display = @showtype = 'topology'
   end

@@ -81,8 +81,6 @@ module ApplicationController::PolicySupport
       session[:edit] = @edit
     end
     @lastaction = "policy_sim"
-    drop_breadcrumb(:name => _("Policy Simulation"),
-                    :url  => "/#{request.parameters["controller"]}/policy_sim?continue=true")
     session[:policies] = {} unless params[:continue] # Clear current policies, unless continuing previous simulation
     records = session[:tag_items] if records.empty? && session[:tag_items].present?
     session[:tag_items] = records
@@ -146,13 +144,6 @@ module ApplicationController::PolicySupport
   end
 
   # Build the policy assignment screen
-  def protect_build_screen
-    drop_breadcrumb(
-      :name => _("'%{model}' Policy Assignment") % {:model => Dictionary.gettext(session[:pol_db].to_s,
-                                                                                 :type     => :model,
-                                                                                 :notfound => :titleize)},
-      :url  => "/#{request.parameters["controller"]}/protecting"
-    )
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
     @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name) # Get the db records
     @view = get_db_view(session[:pol_db], :clickable => false) # Instantiate the MIQ Report view object

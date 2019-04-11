@@ -25,19 +25,9 @@ module Mixins
       id = params[:show] ? params[:show] : params[:x_show]
       if id.present?
         @item = send_nested(@record, method).find(id)
-
-        drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
-                        :url  => "/#{controller_name}/#{action}/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name,
-                        :url  => "/#{controller_name}/#{action}/#{@record.id}?show=#{@item.id}")
         @view = get_db_view(klass, :association => association)
         show_item
       else
-        drop_breadcrumb({:name => @record.name,
-                         :url  => "/#{controller_name}/show/#{@record.id}"}, true)
-        drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
-                        :url  => "/#{controller_name}/#{action}/#{@record.id}")
-
         show_details(klass, :association => association, :scopes => scopes)
       end
     end
@@ -74,17 +64,8 @@ module Mixins
         @view = get_db_view(GuestApplication)
         show_item
       else
-        drop_breadcrumb({:name => @record.name, :url => "/#{@db}/show/#{@record.id}"}, true)
-        drop_breadcrumb(:name => breadcrumb_name % {:name => @record.name},
-                        :url  => "/#{@db}/guest_applications/#{@record.id}")
         show_details(GuestApplication)
       end
-    end
-
-    def item_breadcrumbs(display_name, entity_path)
-      drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
-                      :url  => "/#{controller_name}/#{entity_path}/#{@record.id}?page=#{@current_page}")
-      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?show=#{@item.id}")
     end
 
     def patches
@@ -98,8 +79,6 @@ module Mixins
         @view = get_db_view(Patch)
         show_item
       else
-        drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
-                        :url  => "/#{@db}/patches/#{@record.id}")
         show_details(Patch)
       end
     end
@@ -116,8 +95,6 @@ module Mixins
         @view = get_db_view(Account, :association => "groups")
         show_item
       else
-        drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
-                        :url  => "/#{@db}/groups/#{@record.id}")
         show_details(Account, :association => "groups")
       end
     end
@@ -134,8 +111,6 @@ module Mixins
         @view = get_db_view(Account, :association => "users")
         show_item
       else
-        drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
-                        :url  => "/#{@db}/users/#{@record.id}")
         show_details(Account, :association => "users")
       end
     end
@@ -153,8 +128,6 @@ module Mixins
         @view = get_db_view(Host)
         show_item
       else
-        drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
-                        :url  => "/#{controller_name}/hosts/#{@record.id}")
         show_details(Host, :association => "hosts")
       end
     end

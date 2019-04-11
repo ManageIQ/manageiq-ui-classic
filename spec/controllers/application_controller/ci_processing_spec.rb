@@ -694,7 +694,6 @@ describe ApplicationController do
                                        :to_fourth                    => "0",
                                        "discover_type_virtualcenter" => "1",
                                        "start"                       => "45")
-      allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:render)
       controller.send(:discover)
       to = assigns(:to)
@@ -930,7 +929,6 @@ describe MiqTemplateController do
 
     it "should continue to set ownership for a template" do
       allow(controller).to receive(:role_allows?).and_return(true)
-      allow(controller).to receive(:drop_breadcrumb)
       template = FactoryBot.create(:template,
                                     :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                                     :storage               => FactoryBot.create(:storage))

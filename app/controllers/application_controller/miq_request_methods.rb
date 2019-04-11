@@ -226,12 +226,6 @@ module ApplicationController::MiqRequestMethods
         @edit[:explorer] = true if @explorer
         @tabactive = @edit[:new][:current_tab_key]
       end
-      drop_breadcrumb(:name => if params[:req_id]
-                                 _("Edit %{type}") % {:type => @edit[:prov_type]}
-                               else
-                                 _("Add %{type}") % {:type => @edit[:prov_type]}
-                               end,
-                      :url  => "/vm/provision")
       @in_a_form = true
       #     render :action=>"show"
     end
@@ -774,7 +768,6 @@ module ApplicationController::MiqRequestMethods
       @options[:start_hour] = @options[:schedule_time].hour.to_s
       @options[:start_min] = @options[:schedule_time].min.to_s
     end
-    drop_breadcrumb(:name => @miq_request.description.to_s.split(' submitted')[0], :url => "/miq_request/show/#{@miq_request.id}")
     if @miq_request.workflow_class
       options = {}
       begin

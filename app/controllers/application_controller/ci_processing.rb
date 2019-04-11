@@ -194,21 +194,6 @@ module ApplicationController::CiProcessing
 
     model = options.delete(:model) # Get passed in model override
     @view, @pages = get_view(model || self.class.model, options) # Get the records (into a view) and the paginator
-    if session[:bc] && session[:menu_click] # See if we came from a perf chart menu click
-      drop_breadcrumb(:name => session[:bc],
-                      :url  => url_for_only_path(:controller    => self.class.table_name,
-                                                 :action        => "show_list",
-                                                 :bc            => session[:bc],
-                                                 :sb_controller => params[:sb_controller],
-                                                 :menu_click    => session[:menu_click],
-                                                 :escape        => false))
-    else
-      bc_name = breadcrumb_name(model)
-      bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
-      bc_name += " (filtered)" if @filters && (@filters[:tags].present? || @filters[:cats].present?)
-      action = %w[service vm_cloud vm_infra vm_or_template storage service_template].include?(self.class.table_name) ? "explorer" : "show_list"
-      drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
-    end
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     build_listnav_search_list(@view.db) if !["miq_task"].include?(@layout) && !session[:menu_click]

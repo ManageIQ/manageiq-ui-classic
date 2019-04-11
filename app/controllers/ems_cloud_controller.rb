@@ -48,7 +48,6 @@ class EmsCloudController < ApplicationController
   def sync_users
     ems = find_record_with_rbac(model, params[:id])
     @in_a_form = true
-    drop_breadcrumb(:name => _("Sync Users"), :url => "/ems_cloud/sync_users")
     selected_admin_role = params[:admin_role]
     selected_member_role = params[:member_role]
     selected_password = params[:password]

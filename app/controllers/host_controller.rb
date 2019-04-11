@@ -24,8 +24,6 @@ class HostController < ApplicationController
             when "os_info" then _("OS Information")
             when "devices" then _("Devices")
             end
-    drop_breadcrumb(:name => "#{@record.name} (#{title})",
-                    :url  => show_link(@record, :display => @display))
   end
 
   alias display_hv_info display_config_info
@@ -41,8 +39,6 @@ class HostController < ApplicationController
                     @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, @sb, true, :root => @record)
                     [_("Storage Adapters"), :sa_tree]
                   end
-    drop_breadcrumb(:name => "#{@record.name} (#{title})",
-                    :url  => show_link(@record, :display => @display))
     self.x_active_tree = tree
   end
 
@@ -129,7 +125,6 @@ class HostController < ApplicationController
     assert_privileges("host_new")
     @host = Host.new
     @in_a_form = true
-    drop_breadcrumb(:name => _("Add New Host"), :url => "/host/new")
   end
 
   def create
@@ -154,7 +149,6 @@ class HostController < ApplicationController
         @host.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
-        drop_breadcrumb(:name => _("Add New Host"), :url => "/host/new")
         javascript_flash
       end
     when "validate"
@@ -178,7 +172,6 @@ class HostController < ApplicationController
       @host = find_record_with_rbac(Host, params[:id])
       @in_a_form = true
       session[:changed] = false
-      drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
       @title = _("Info/Settings")
     else # if editing credentials for multi host
       @title = _("Credentials/Settings")
@@ -236,7 +229,6 @@ class HostController < ApplicationController
           @host.errors.each do |field, msg|
             add_flash("#{field.to_s.capitalize} #{msg}", :error)
           end
-          drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
           @in_a_form = true
           javascript_flash
         end
@@ -251,7 +243,6 @@ class HostController < ApplicationController
           flash_to_session(_("Credentials/Settings saved successfully"))
           javascript_redirect(:action => 'show_list')
         else
-          drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
           @in_a_form = true
           javascript_flash
         end

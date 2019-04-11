@@ -40,7 +40,6 @@ module Mixins
             @from = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:from_fourth]}
             @to   = {:first => params[:from_first], :second => params[:from_second], :third => params[:from_third], :fourth => params[:to_fourth]}
             @in_a_form = true
-            drop_breadcrumb(:name => _("%{title} Discovery") % {:title => title}, :url => "/host/discover")
             @discover_type_selected = params[:discover_type_selected]
 
             if params[:discover_type_ipmi].to_s == "1"

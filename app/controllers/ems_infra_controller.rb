@@ -49,7 +49,6 @@ class EmsInfraController < ApplicationController
 
     redirect_to(ems_infra_path(params[:id])) if params[:cancel]
 
-    drop_breadcrumb(:name => _("Scale Infrastructure Provider"), :url => "/ems_infra/scaling")
     @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
@@ -95,7 +94,6 @@ class EmsInfraController < ApplicationController
     # Hiding the toolbars
     @in_a_form = true
 
-    drop_breadcrumb(:name => _("Scale Infrastructure Provider Down"), :url => "/ems_infra/scaling")
     @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
@@ -135,7 +133,6 @@ class EmsInfraController < ApplicationController
 
     # Hiding the toolbars
     @in_a_form = true
-    drop_breadcrumb(:name => _("Register Nodes"), :url => "/ems_infra/register_nodes")
 
     @infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
 

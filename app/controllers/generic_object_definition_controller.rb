@@ -70,13 +70,11 @@ class GenericObjectDefinitionController < ApplicationController
 
   def new
     assert_privileges('generic_object_definition_new')
-    drop_breadcrumb(:name => _("Add a new Generic Object Class"), :url => "/generic_object_definition/new")
     @in_a_form = true
   end
 
   def edit
     assert_privileges('generic_object_definition_edit')
-    drop_breadcrumb(:name => _("Edit Generic Object Class"), :url => "/generic_object_definition/edit/#{params[:id]}")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
     @in_a_form = true
   end

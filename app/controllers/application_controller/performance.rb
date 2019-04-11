@@ -106,44 +106,12 @@ module ApplicationController::Performance
         page << 'miqSparkle(false);'
       end
     else
-      drop_breadcrumb(
-        :name => params[:bc],
-        :url  => url_for_only_path(
-          :id     => @perf_record.id,
-          :action => "perf_top_chart",
-          :bc     => params[:bc],
-          :escape => false
-        )
-      )
       @ajax_action = "perf_top_chart"
       render :action => "show"
     end
   end
 
   private
-
-  def perf_breadcrumb
-    name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
-    url = url_for_only_path(
-      :action  => "show",
-      :id      => @perf_record,
-      :display => "performance",
-      :refresh => "n"
-    )
-    if @perf_options.cat
-      drop_breadcrumb(
-        :name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {
-          :name   => name,
-          :option => @perf_options.cats[@perf_options.cat_model],
-          :model  => @perf_options.cat
-        },
-        :url  => url
-      )
-    else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name}, :url => url)
-    end
-  end
 
   # Initiate the backend refresh of realtime c&u data
   def perf_refresh_data

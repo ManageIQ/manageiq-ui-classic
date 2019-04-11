@@ -68,7 +68,6 @@ class CloudNetworkController < ApplicationController
       else
         @in_a_form = true
         add_flash(_(CloudNetwork.unsupported_reason(:create)), :error)
-        drop_breadcrumb(:name => _("Add New Cloud Network "), :url => "/cloud_network/new")
         javascript_flash
       end
     end
@@ -126,10 +125,6 @@ class CloudNetworkController < ApplicationController
     assert_privileges("cloud_network_edit")
     @network = find_record_with_rbac(CloudNetwork, params[:id])
     @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
-      :url  => "/cloud_network/edit/#{@network.id}"
-    )
   end
 
   def new
@@ -139,8 +134,6 @@ class CloudNetworkController < ApplicationController
 
     @network = CloudNetwork.new
     @in_a_form = true
-
-    drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
   end
 
   def update

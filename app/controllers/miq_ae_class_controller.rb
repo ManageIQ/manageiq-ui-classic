@@ -71,9 +71,7 @@ class MiqAeClassController < ApplicationController
     @sb[:action] = nil
     @explorer = true
     # don't need right bottom cell
-    bc_name = _("Explorer")
-    bc_name += _(" (filtered)") if @filters && (@filters[:tags].present? || @filters[:cats].present?)
-    drop_breadcrumb(:name => bc_name, :url => "/miq_ae_class/explorer")
+
     @lastaction = "replace_right_cell"
 
     build_accordions_and_trees

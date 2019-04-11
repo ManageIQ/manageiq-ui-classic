@@ -3,7 +3,6 @@ describe EmsCloudController do
     context "#new" do
       before do
         stub_user(:features => :all)
-        allow(controller).to receive(:drop_breadcrumb)
       end
 
       it "assigns provider_regions" do

@@ -67,7 +67,6 @@ module ContainersCommonMixin
 
   def create_service_dialog
     assert_privileges(params[:pressed])
-    drop_breadcrumb(:name => _("Create Service Dialog"), :url => "/container_template/service_dialog_from_ct")
     javascript_redirect(:action => 'service_dialog_from_ct',
                         :id     => params[:id],
                         :escape => false)

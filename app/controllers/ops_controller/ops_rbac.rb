@@ -374,7 +374,6 @@ module OpsController::OpsRbac
         get_node_info(x_node)
         replace_right_cell(:nodetype => x_node)
       else
-        drop_breadcrumb(:name => _("Edit User Group Sequence"), :url => "/configuration/ldap_seq_edit")
         @in_a_form = true
         replace_right_cell(:nodetype => "group_seq")
       end

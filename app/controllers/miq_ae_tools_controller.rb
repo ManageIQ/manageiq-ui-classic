@@ -36,7 +36,6 @@ class MiqAeToolsController < ApplicationController
     @layout = "miq_ae_logs"
     @msg_title = "AE"
     @download_action = "fetch_log"
-    drop_breadcrumb(:name => _("Log"), :url => "/miq_ae_tools/log")
     render :action => "show"
   end
 
@@ -82,7 +81,6 @@ class MiqAeToolsController < ApplicationController
 
   def import_export
     @in_a_form = true
-    drop_breadcrumb(:name => _("Import / Export"), :url => "/miq_ae_tools/import_export")
     @lastaction = "import_export"
     @layout = "miq_ae_export"
     @importable_domain_options = []

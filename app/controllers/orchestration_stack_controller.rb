@@ -20,11 +20,6 @@ class OrchestrationStackController < ApplicationController
     %w[instances children security_groups stack_orchestration_template custom_button_events]
   end
 
-  def display_stack_orchestration_template
-    drop_breadcrumb(:name => "%{name} (Orchestration Template)" % {:name => @record.orchestration_template.name},
-                    :url  => show_link(@record, :display => @display))
-  end
-
   def display_children
     show_association('children', _('Children'), :children, OrchestrationStack)
   end

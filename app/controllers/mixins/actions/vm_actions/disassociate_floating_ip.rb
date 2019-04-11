@@ -32,12 +32,6 @@ module Mixins
         def disassociate_floating_ip
           assert_privileges("instance_disassociate_floating_ip")
           @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
-          unless @explorer
-            drop_breadcrumb(
-              :name => _("Disssociate Floating IP from Instance '%{name}'") % {:name => @record.name},
-              :url  => "/vm_cloud/disassociate_floating_ip"
-            )
-          end
           @sb[:explorer] = @explorer
           @in_a_form = true
           @live_migrate = true
