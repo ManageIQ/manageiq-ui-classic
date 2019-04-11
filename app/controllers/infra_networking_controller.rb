@@ -541,10 +541,6 @@ class InfraNetworkingController < ApplicationController
     !(@record || @in_a_form)
   end
 
-  def breadcrumb_name(_model)
-    _("Switch")
-  end
-
   def valid_switch_record?(switch_record)
     switch_record.try(:id)
   end

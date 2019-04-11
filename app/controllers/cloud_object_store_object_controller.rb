@@ -10,10 +10,6 @@ class CloudObjectStoreObjectController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  def breadcrumb_name(_model)
-    _('Cloud Object Store Objects')
-  end
-
   def button
     @edit = session[:edit]
     params[:page] = @current_page unless @current_page.nil?

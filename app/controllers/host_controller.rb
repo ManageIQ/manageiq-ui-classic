@@ -429,10 +429,6 @@ class HostController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def breadcrumb_name(_model)
-    title_for_hosts
-  end
-
   # Validate the host record fields
   def valid_record?
     valid = true

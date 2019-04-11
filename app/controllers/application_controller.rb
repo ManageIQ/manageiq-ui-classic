@@ -1303,7 +1303,6 @@ class ApplicationController < ActionController::Base
       refresh_view = true
       # Creating a new view, remember if came from a menu_click
       session[:menu_click] = params[:menu_click] || options[:menu_click]
-      session[:bc]         = params[:bc] # Remember incoming breadcrumb as well
     end
 
     # Build the advanced search @edit hash
@@ -1849,44 +1848,6 @@ class ApplicationController < ActionController::Base
     # Set timelines hash, if it is in the session for the running controller
     set_tl_session_data
 
-    # Capture breadcrumbs by main tab
-    session[:tab_bc] ||= {}
-    unless session[:menu_click] # Don't save breadcrumbs after a chart menu click
-      case controller_name
-
-      # These controllers don't use breadcrumbs, see above get method to store URL
-      when "dashboard", "report", "support", "alert", "alert_center", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "chargeback", "service", "utilization", "bottlenecks", "planning"
-
-      when "ems_cloud", "availability_zone", "host_aggregate", "flavor"
-        session[:tab_bc][:clo] = @breadcrumbs.dup if %(show show_list).include?(action_name)
-      when "ems_infra", "datacenter", "ems_cluster", "resource_pool", "storage", "pxe_server"
-        session[:tab_bc][:inf] = @breadcrumbs.dup if %(show show_list).include?(action_name)
-      when "host"
-        session[:tab_bc][:inf] = @breadcrumbs.dup if %w[show show_list log_viewer].include?(action_name)
-      when "miq_request"
-        if @layout == "miq_request_vm" && %w[show show_list].include?(action_name)
-          session[:tab_bc][:vms] = @breadcrumbs.dup
-        elsif %w[show show_list].include?(action_name)
-          session[:tab_bc][:inf] = @breadcrumbs.dup
-        end
-      when "vm"
-        session[:tab_bc][:vms] = @breadcrumbs.dup if %w[
-          show
-          show_list
-          usage
-          guest_applications
-          registry_items
-          vmtree
-          users
-          groups
-          linuxinitprocesses
-          win32services
-          kerneldrivers
-          filesystemdrivers
-        ].include?(action_name)
-      end
-    end
-
     # Save settings hash in the session
     session[:settings] = @settings
     session[:css] = @css
@@ -2076,10 +2037,6 @@ class ApplicationController < ActionController::Base
 
   def flip_sort_direction(direction)
     direction == "ASC" ? "DESC" : "ASC" # flip ascending/descending
-  end
-
-  def skip_breadcrumb?
-    false
   end
 
   def restful?

@@ -507,10 +507,6 @@ module Mixins
                      :verify_ssl => params[:verify_ssl]}
     end
 
-    def breadcrumb_name(_model)
-      "#{ui_lookup(:ui_title => 'foreman')} #{_('Provider')}"
-    end
-
     def tagging_explorer_controller?
       @explorer
     end

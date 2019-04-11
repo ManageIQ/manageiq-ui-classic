@@ -199,10 +199,6 @@ module ApplicationController::CiProcessing
     build_listnav_search_list(@view.db) if !["miq_task"].include?(@layout) && !session[:menu_click]
   end
 
-  def breadcrumb_name(_model)
-    ui_lookup(:models => self.class.model.name)
-  end
-
   def process_cloud_object_storage_buttons(pressed)
     assert_privileges(pressed)
 

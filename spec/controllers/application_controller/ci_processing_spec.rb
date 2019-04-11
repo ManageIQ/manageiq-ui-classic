@@ -813,10 +813,6 @@ describe HostController do
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
     end
-
-    it "plularizes breadcrumb name" do
-      expect(controller.send(:breadcrumb_name, nil)).to eq("Hosts")
-    end
   end
 
   describe "#process_objects" do

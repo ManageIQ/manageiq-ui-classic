@@ -18,10 +18,6 @@ class AuthKeyPairCloudController < ApplicationController
     process_show_list(:dbname => :authkeypaircloud, :gtl_dbname => :authkeypaircloud)
   end
 
-  def breadcrumb_name(_model)
-    _("Key Pairs")
-  end
-
   def self.table_name
     @table_name ||= "auth_key_pair_cloud"
   end

@@ -103,10 +103,6 @@ class EmsClusterController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def breadcrumb_name(_model)
-    title_for_clusters
-  end
-
   def set_config(db_record)
     @cluster_config = []
     @cluster_config.push(:field       => "HA Enabled",

@@ -19,10 +19,6 @@ class EmsObjectStorageController < ApplicationController
     @table_name ||= "ems_object_storage"
   end
 
-  def breadcrumb_name(_model)
-    _('Object Storage Managers')
-  end
-
   def ems_path(*args)
     path_hash = {:action => 'show', :id => args[0].id.to_s }
     path_hash.merge(args[1])

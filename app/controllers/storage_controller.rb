@@ -453,10 +453,6 @@ class StorageController < ApplicationController
     !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @record)))
   end
 
-  def breadcrumb_name(_model)
-    _("Datastores")
-  end
-
   def tagging_explorer_controller?
     @explorer
   end

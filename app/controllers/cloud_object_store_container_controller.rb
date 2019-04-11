@@ -10,10 +10,6 @@ class CloudObjectStoreContainerController < ApplicationController
   include Mixins::GenericFormMixin
   include Mixins::BreadcrumbsMixin
 
-  def breadcrumb_name(_model)
-    _('Cloud Object Store Containers')
-  end
-
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box

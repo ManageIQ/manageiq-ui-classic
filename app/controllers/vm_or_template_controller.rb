@@ -53,10 +53,6 @@ class VmOrTemplateController < ApplicationController
     @explorer
   end
 
-  def skip_breadcrumb?
-    breadcrumb_prohibited_for_action?
-  end
-
   def breadcrumbs_options
     {
       :breadcrumbs    => [

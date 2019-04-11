@@ -51,16 +51,9 @@ module Mixins
 
       @lastaction = "guest_applications"
 
-      breadcrumb_name = if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-                          _("Packages")
-                        else
-                          _("Applications")
-                        end
-
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.guest_applications.find(id)
-        item_breadcrumbs(breadcrumb_name, 'guest_applications')
         @view = get_db_view(GuestApplication)
         show_item
       else
@@ -75,7 +68,6 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.patches.find(id)
-        item_breadcrumbs(_("Patches"), 'patches')
         @view = get_db_view(Patch)
         show_item
       else
@@ -90,7 +82,6 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.groups.find(id)
-        item_breadcrumbs(_("Groups"), 'groups')
         @user_names = @item.users
         @view = get_db_view(Account, :association => "groups")
         show_item
@@ -106,7 +97,6 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.users.find(id)
-        item_breadcrumbs(_("Users"), 'users')
         @group_names = @item.groups
         @view = get_db_view(Account, :association => "users")
         show_item
@@ -124,7 +114,6 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.hosts.find(id)
-        item_breadcrumbs(_("Hosts"), 'hosts')
         @view = get_db_view(Host)
         show_item
       else

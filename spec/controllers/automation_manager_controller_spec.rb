@@ -431,10 +431,6 @@ describe AutomationManagerController do
     end
   end
 
-  it "singularizes breadcrumb name" do
-    expect(controller.send(:breadcrumb_name, nil)).to eq("#{ui_lookup(:ui_title => "foreman")} Provider")
-  end
-
   it "renders tagging editor for a configured system" do
     session[:tag_items] = [@ans_configured_system.id]
     session[:assigned_filters] = []
