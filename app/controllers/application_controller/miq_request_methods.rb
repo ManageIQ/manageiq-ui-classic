@@ -1039,7 +1039,6 @@ module ApplicationController::MiqRequestMethods
       end
     end
     @all_tags_tree = TreeBuilder.convert_bs_tree(all_tags).to_json # Add ci node array to root of tree
-    session[:tree] = "all_tags"
   end
 
   def build_template_filter
