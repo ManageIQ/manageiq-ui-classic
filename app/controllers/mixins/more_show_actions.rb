@@ -23,7 +23,7 @@ module Mixins
 
     def show_compliance_history
       count = params[:count] ? params[:count].to_i : 10
-      update_session_for_compliance_history(count)
+      update_session_for_compliance_history
       drop_breadcrumb_for_compliance_history(count)
       @showtype = @display
     end
@@ -34,9 +34,8 @@ module Mixins
                       :url  => show_link(@record, :display => "topology"))
     end
 
-    def update_session_for_compliance_history(count)
+    def update_session_for_compliance_history
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
-      session[:squash_open] = (count == 1)
     end
 
     def drop_breadcrumb_for_compliance_history(count)
