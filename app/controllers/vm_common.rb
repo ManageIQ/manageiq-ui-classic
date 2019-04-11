@@ -1016,7 +1016,6 @@ module VmCommon
         return
       else
         if action_name == "explorer"
-          @breadcrumbs.clear
           drop_breadcrumb({:name => breadcrumb_name(model), :url => "/#{controller_name}/explorer"}, false)
         end
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => model && model != "VmOrTemplate" ? model : TreeBuilder.get_model_for_prefix(@nodetype)).to_s}

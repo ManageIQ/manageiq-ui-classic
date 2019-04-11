@@ -111,7 +111,6 @@ class CloudTenantController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
@@ -165,7 +164,6 @@ class CloudTenantController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => tenant_id)

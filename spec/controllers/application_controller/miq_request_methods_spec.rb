@@ -58,9 +58,6 @@ describe MiqRequestController do
     it 'redirects to the last link in breadcrumbs' do
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       session[:edit] = {}
-      controller.instance_variable_set(:@breadcrumbs, [{:url => "/ems_infra/show_list?page=1&refresh=y"},
-                                                       {:url => "/ems_infra/1000000000001?display=vms"},
-                                                       {}])
       controller.instance_variable_set(:@_params, :id => "new", :button => "cancel")
       allow(controller).to receive(:role_allows?).and_return(true)
       page = double('page')

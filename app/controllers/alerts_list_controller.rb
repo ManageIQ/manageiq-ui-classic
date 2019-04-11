@@ -9,9 +9,6 @@ class AlertsListController < ApplicationController
 
   def show
     @title = _("All Alerts")
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
   end
 
   def index

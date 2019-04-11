@@ -122,7 +122,6 @@ class OpsController < ApplicationController
     @sb[:active_tab] = 'settings_rhn' if @sb[:active_tab] == 'settings_rhn_edit' # cannot return to the edit state
     @timeline = @timeline_filter = true # Load timeline JS modules
     return if params[:edit_key] && !load_edit(params[:edit_key], "explorer")
-    @breadcrumbs = []
     build_accordions_and_trees
 
     tree_selected_model

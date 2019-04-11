@@ -207,7 +207,6 @@ module ApplicationController::MiqRequestMethods
       )
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] = nil # Clear out session[:edit]
-      @breadcrumbs.pop if @breadcrumbs
       prov_request_cancel_submit_response
     elsif params[:button] == "submit" # Update or create the request from the workflow with the new options
       prov_req_submit
@@ -608,7 +607,6 @@ module ApplicationController::MiqRequestMethods
     end
 
     if request
-      @breadcrumbs.pop if @breadcrumbs
       org_controller = @edit[:org_controller]
       title = case org_controller
               when "vm"           then _("VMs")

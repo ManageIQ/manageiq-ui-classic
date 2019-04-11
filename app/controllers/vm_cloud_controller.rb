@@ -95,7 +95,6 @@ class VmCloudController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
     @record = @sb[:action] = nil
@@ -148,7 +147,6 @@ class VmCloudController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
     @record = @sb[:action] = nil

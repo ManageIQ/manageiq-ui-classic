@@ -126,8 +126,6 @@ class DashboardController < ApplicationController
 
   # Main menu section was clicked
   def maintab
-    @breadcrumbs.clear
-
     section = Menu::Manager.section(params[:tab])
     if section.nil?
       render :action => "login"
@@ -623,7 +621,7 @@ class DashboardController < ApplicationController
 
     # Clear instance vars that end up in the session
     @sb = @edit = @view = @settings = @lastaction = @perf_options = @assign = nil
-    @server_options = @pp_choices = @panels = @breadcrumbs = nil
+    @server_options = @pp_choices = @panels = nil
   end
 
   # Initialize session hash variables for the logged in user

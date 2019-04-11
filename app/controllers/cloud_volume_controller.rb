@@ -121,7 +121,6 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => volume_id)
@@ -176,7 +175,6 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => volume_id)
@@ -323,7 +321,6 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => volume_id)
@@ -420,7 +417,6 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => @volume.id)
@@ -479,7 +475,6 @@ class CloudVolumeController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => @volume.id)
@@ -536,7 +531,7 @@ class CloudVolumeController < ApplicationController
         :details => task.message
       }, :error)
     end
-    @breadcrumbs&.pop
+
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => @volume.id)

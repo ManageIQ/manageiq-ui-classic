@@ -45,7 +45,6 @@ module Spec
         parent_route = controller.restful? ? controller.class.table_name : "#{controller.class.table_name}/show"
         child_route  = "#{child_path}/show"
 
-        controller.instance_variable_set(:@breadcrumbs, [])
         # TODO(lsmola) we should just cycle through all gtl types, to test all list views
         controller.instance_variable_set(:@gtl_type, gtl_types.first)
         # Get the nested table

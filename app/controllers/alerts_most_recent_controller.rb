@@ -6,12 +6,6 @@ class AlertsMostRecentController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-  end
-
   def index
     redirect_to(:action => 'show')
   end

@@ -32,11 +32,6 @@ class EmsContainerController < ApplicationController
     process_show_list(:gtl_dbname => 'emscontainer')
   end
 
-  def show
-    @breadcrumbs = [{:name => _('Containers Providers'), :url => '/ems_container/show_list'}]
-    super
-  end
-
   def ems_path(*args)
     ems_container_path(*args)
   end

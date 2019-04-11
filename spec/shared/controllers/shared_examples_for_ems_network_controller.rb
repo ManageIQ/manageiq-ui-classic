@@ -86,7 +86,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
 
       describe "#create" do
         it "adds a new provider" do
-          controller.instance_variable_set(:@breadcrumbs, [])
           get :new
           expect(response.status).to eq(200)
         end

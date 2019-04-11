@@ -4,7 +4,6 @@ describe EmsContainerController do
   end
 
   it "#new" do
-    controller.instance_variable_set(:@breadcrumbs, [])
     get :new
 
     expect(response.status).to eq(200)

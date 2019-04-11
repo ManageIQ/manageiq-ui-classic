@@ -10,9 +10,6 @@ class PhysicalInfraOverviewController < ApplicationController
 
   def show
     @lastaction = 'show_dashboard'
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
   end
 
   def index

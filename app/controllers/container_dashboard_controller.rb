@@ -11,9 +11,6 @@ class ContainerDashboardController < ApplicationController
 
   def show
     @lastaction = "show_dashboard"
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
     @title = title
   end
 

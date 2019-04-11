@@ -207,7 +207,6 @@ class HostController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      @breadcrumbs.pop if @breadcrumbs
       if !session[:host_items].nil?
         flash_to_session(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
         javascript_redirect(:action => @lastaction, :display => session[:host_display])
@@ -225,7 +224,6 @@ class HostController < ApplicationController
         set_record_vars(valid_host, :validate) # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
           flash_to_session(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
-          @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
           if @lastaction == 'show_list'
             javascript_redirect(:action => "show_list")

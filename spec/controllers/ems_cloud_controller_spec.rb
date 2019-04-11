@@ -9,7 +9,6 @@ describe EmsCloudController do
     end
 
     it "adds a new provider" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       get :new
       expect(response.status).to eq(200)
     end

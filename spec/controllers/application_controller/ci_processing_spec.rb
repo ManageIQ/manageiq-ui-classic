@@ -796,7 +796,6 @@ describe HostController do
     end
 
     it "renders show_item" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
       get :guest_applications, :params => { :id => @host.id, :show => @guest_application.id }
       expect(response.status).to eq(200)
@@ -808,7 +807,6 @@ describe HostController do
     end
 
     it "shows associated datastores" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       get :show, :params => {:id => @host.id, :display => 'storages'}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
@@ -817,7 +815,6 @@ describe HostController do
     end
 
     it "renders show_details" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
       get :guest_applications, :params => { :id => @host.id }
       expect(response.status).to eq(200)

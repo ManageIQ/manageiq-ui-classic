@@ -13,7 +13,6 @@ describe EmsPhysicalInfraController do
     end
 
     it "adds a new provider" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       get :new
       expect(response.status).to eq(200)
     end
@@ -51,12 +50,9 @@ describe EmsPhysicalInfraController do
     it "shows associated datastores" do
       @datastore = FactoryBot.create(:storage, :name => 'storage_name')
       @datastore.parent = @ems
-      controller.instance_variable_set(:@breadcrumbs, [])
       get :show, :params => {:id => @ems.id, :display => 'storages'}
       expect(response.status).to eq(200)
       expect(response).to render_template('shared/views/ems_common/show')
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)",
-                                            :url  => "/ems_physical_infra/#{@ems.id}?display=storages"}])
 
       # display needs to be saved to session for GTL pagination and such
       expect(session[:ems_physical_infra_display]).to eq('storages')
@@ -74,10 +70,6 @@ describe EmsPhysicalInfraController do
                                 :pressed         => "storage_tag",
                                 :format          => :js}
       expect(response.status).to eq(200)
-      _breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@ems.name} (All Datastores)",
-                                            :url  => "/ems_physical_infra/#{@ems.id}?display=storages"},
-                                           {:name => "Tag Assignment", :url => "//tagging_edit"}])
     end
   end
 
@@ -88,21 +80,6 @@ describe EmsPhysicalInfraController do
       get :show_list
     end
     it { expect(response.status).to eq(200) }
-  end
-
-  describe "breadcrumbs path on a 'show' page of an Physical Infrastructure Provider accessed from Dashboard maintab" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
-    context "when previous breadcrumbs path contained 'Cloud Providers'" do
-      it "shows 'Physical Infrastructure Providers -> (Dashboard)' breadcrumb path" do
-        ems = FactoryBot.create(:ems_physical_infra)
-        get :show, :params => { :id => ems.id }
-        breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-        expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
-      end
-    end
   end
 
   describe "#build_credentials" do

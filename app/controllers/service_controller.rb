@@ -108,7 +108,6 @@ class ServiceController < ApplicationController
       x_node_to_set = "#{nodetype}-#{id}"
     end
 
-    @breadcrumbs.clear if @breadcrumbs.present?
     build_accordions_and_trees(x_node_to_set)
 
     params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms] # Grab any explorer parm overrides
@@ -318,7 +317,6 @@ class ServiceController < ApplicationController
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"
       show_record(id)
-      drop_breadcrumb(:name => _('Services'), :url => '/service/explorer') if @breadcrumbs.empty?
       @right_cell_text = _("Service \"%{name}\"") % {:name => @record.name}
       @no_checkboxes = true
       @gtl_type = "grid"

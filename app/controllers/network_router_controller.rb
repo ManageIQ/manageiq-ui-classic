@@ -95,7 +95,6 @@ class NetworkRouterController < ApplicationController
                 {:name => router_name, :details => task.message}, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
@@ -247,7 +246,6 @@ class NetworkRouterController < ApplicationController
         add_flash(_("Add Interface not supported by Router \"%{name}\"") % {
           :name => @router.name
         }, :error)
-        @breadcrumbs.pop if @breadcrumbs
         javascript_flash
       end
     end
@@ -273,7 +271,6 @@ class NetworkRouterController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => router_id)
@@ -340,7 +337,6 @@ class NetworkRouterController < ApplicationController
         add_flash(_("Remove Interface not supported by Router \"%{name}\"") % {
           :name => @router.name
         }, :error)
-        @breadcrumbs.pop if @breadcrumbs
         javascript_flash
       end
     end
@@ -366,7 +362,6 @@ class NetworkRouterController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => router_id)

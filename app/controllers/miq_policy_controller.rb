@@ -23,7 +23,6 @@ class MiqPolicyController < ApplicationController
   end
 
   def export
-    @breadcrumbs = []
     @layout = "miq_policy_export"
     drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy/export")
     case params[:button]
@@ -158,7 +157,6 @@ class MiqPolicyController < ApplicationController
   end
 
   def import
-    @breadcrumbs = []
     @layout = "miq_policy_export"
     @import_file_upload_id = params[:import_file_upload_id]
     drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy/export")
@@ -209,7 +207,6 @@ class MiqPolicyController < ApplicationController
   end
 
   def explorer
-    @breadcrumbs = []
     @explorer = true
     session[:export_data] = nil
 
@@ -268,7 +265,6 @@ class MiqPolicyController < ApplicationController
   end
 
   def log
-    @breadcrumbs = []
     @log = $policy_log.contents(nil, 1000)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
     @lastaction = "policy_logs"

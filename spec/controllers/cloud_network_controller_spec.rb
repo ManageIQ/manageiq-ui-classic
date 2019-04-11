@@ -214,7 +214,6 @@ describe CloudNetworkController do
       controller.instance_variable_set(:@_params,
                                        :pressed => "cloud_network_delete",
                                        :id      => network.id)
-      controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_network/show_list"}, 'placeholder'])
     end
 
     it "queues the delete action" do

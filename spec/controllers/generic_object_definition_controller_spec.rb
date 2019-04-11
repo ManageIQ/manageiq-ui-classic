@@ -33,7 +33,6 @@ describe GenericObjectDefinitionController do
         generic_obj_defn = FactoryBot.create(:generic_object_definition)
         FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
         controller.instance_variable_set(:@display, 'generic_objects')
-        controller.instance_variable_set(:@breadcrumbs, [])
         controller.instance_variable_set(:@settings, {})
         params = {:id => generic_obj_defn.id, :type => 'grid'}
         allow(controller).to receive(:params).and_return(params)

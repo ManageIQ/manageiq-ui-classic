@@ -19,7 +19,6 @@ class ConfigurationController < ApplicationController
   end
 
   def index
-    @breadcrumbs = []
     active_tab = nil
     if role_allows?(:feature => "my_settings_visuals")
       active_tab = 1 if active_tab.nil?
@@ -247,7 +246,6 @@ class ConfigurationController < ApplicationController
     @timeprofile_action = "timeprofile_new"
     set_form_vars
     @in_a_form = true
-    @breadcrumbs = []
     drop_breadcrumb(:name => _("Add new Time Profile"), :url => "/configuration/timeprofile_edit")
     render :action => "timeprofile_edit"
   end
@@ -452,7 +450,6 @@ class ConfigurationController < ApplicationController
   end
 
   def build_tabs
-    @breadcrumbs = []
     if @tabform != "ui_4"
       drop_breadcrumb({:name => _("User Interface Configuration"), :url => "/configuration/edit"}, true)
     end

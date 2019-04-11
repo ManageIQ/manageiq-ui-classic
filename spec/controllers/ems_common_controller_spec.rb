@@ -241,7 +241,6 @@ describe EmsContainerController do
           allow(controller).to receive(:performed?).and_return(true)
           controller.instance_variable_set(:@display, display)
           controller.instance_variable_set(:@_params, :pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id)
-          controller.instance_variable_set(:@breadcrumbs, [])
         end
 
         {

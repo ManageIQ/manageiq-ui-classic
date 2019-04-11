@@ -22,7 +22,6 @@ describe MiqAeCustomizationController do
              :trees       => {:ab_tree => {:tree => :ab_tree}},
              :params      => {:instance_name => 'CustomButton_1'}}
       controller.instance_variable_set(:@sb, @sb)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {
         :new               => {:available_dialogs => {:id => '01', :name => '02'},
@@ -50,7 +49,6 @@ describe MiqAeCustomizationController do
              :trees       => {:ab_tree => {:tree => :ab_tree}},
              :params      => {:instance_name => 'CustomButton_1'}}
       controller.instance_variable_set(:@sb, @sb)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {:new                   => {:button_images  => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
                                          :display_for    => 'single',
@@ -80,7 +78,6 @@ describe MiqAeCustomizationController do
              :trees       => {:ab_tree => {:tree => :ab_tree}},
              :params      => {:instance_name => 'MiqEvent'}}
       controller.instance_variable_set(:@sb, @sb)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {:new               => {:button_images => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
                                     :instance_name  => 'MiqEvent',
@@ -103,7 +100,6 @@ describe MiqAeCustomizationController do
              :trees       => {:ab_tree => {:tree => :ab_tree}},
              :params      => {:instance_name => 'MiqEvent'}}
       controller.instance_variable_set(:@sb, @sb)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {:new               => {:button_images  => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
                                      :instance_name  => 'MiqEvent',
@@ -132,7 +128,6 @@ describe MiqAeCustomizationController do
              :trees       => {:ab_tree => {:tree => :ab_tree}},
              :params      => {:instance_name => 'CustomButton_1'}}
       controller.instance_variable_set(:@sb, @sb)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {:new               => {:button_images         => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
                                      :instance_name         => 'CustomButton_1',

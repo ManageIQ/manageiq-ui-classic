@@ -203,7 +203,6 @@ module ApplicationController::CiProcessing
                                                  :menu_click    => session[:menu_click],
                                                  :escape        => false))
     else
-      @breadcrumbs = []
       bc_name = breadcrumb_name(model)
       bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
       bc_name += " (filtered)" if @filters && (@filters[:tags].present? || @filters[:cats].present?)

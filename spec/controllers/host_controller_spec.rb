@@ -148,7 +148,6 @@ describe HostController do
   describe "#create" do
     it "can create a host with custom id and no host name" do
       stub_user(:features => :all)
-      controller.instance_variable_set(:@breadcrumbs, [])
 
       controller.instance_variable_set(
         :@_params,
@@ -167,7 +166,6 @@ describe HostController do
 
     it "doesn't crash when trying to validate a new host" do
       stub_user(:features => :all)
-      controller.instance_variable_set(:@breadcrumbs, [])
       controller.new
 
       controller.instance_variable_set(
@@ -212,7 +210,6 @@ describe HostController do
     end
 
     it "renders show_details for guest applications" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
       get :guest_applications, :params => {:id => @host.id}
       expect(response.status).to eq(200)
@@ -222,7 +219,6 @@ describe HostController do
     end
 
     it "shows associated datastores" do
-      controller.instance_variable_set(:@breadcrumbs, [])
       get :show, :params => {:id => @host.id, :display => 'storages'}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')

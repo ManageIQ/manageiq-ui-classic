@@ -492,7 +492,6 @@ module ApplicationController::Buttons
     name = @edit[:new][:instance_name].presence || @edit[:new][:other_name]
 
     unless button_valid?
-      @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
@@ -561,7 +560,6 @@ module ApplicationController::Buttons
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
 
     unless button_valid?
-      @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
@@ -582,7 +580,6 @@ module ApplicationController::Buttons
         add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
           {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
       end
-      @breadcrumbs = []
       drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
@@ -596,7 +593,6 @@ module ApplicationController::Buttons
     @sb[:active_tab] = "ab_options_tab"
     add_flash(_("All changes have been reset"), :warning)
     @in_a_form = true
-    @breadcrumbs = []
     drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
@@ -668,7 +664,6 @@ module ApplicationController::Buttons
     button_set_form_vars
     @in_a_form = true
     @changed = session[:changed] = false
-    @breadcrumbs = []
     @right_cell_text = if typ == "new"
                          _("Adding a new Button")
                        else

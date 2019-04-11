@@ -45,7 +45,6 @@ module MiqPolicyController::Rsop
       session[:changed] = nil
       javascript_redirect(:action => 'rsop')
     else # No params, first time in
-      @breadcrumbs = []
       session[:changed] = false
       @sb[:rsop] ||= {} # Leave exising values
       rsop_put_objects_in_sb(find_filtered(ExtManagementSystem), :emss)

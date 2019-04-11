@@ -9,9 +9,6 @@ class AlertsOverviewController < ApplicationController
 
   def show
     @title = _("Overview")
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
   end
 
   def index

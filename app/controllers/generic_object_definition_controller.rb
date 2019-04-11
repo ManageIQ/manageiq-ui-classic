@@ -33,7 +33,6 @@ class GenericObjectDefinitionController < ApplicationController
     if params[:display] || @display
       super
     else
-      @breadcrumbs = []
       redirect_to(:action => "show_list")
     end
   end

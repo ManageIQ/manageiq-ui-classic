@@ -15,7 +15,6 @@ module ReportController::Schedules
       record      = MiqReport.find(@schedule.filter.exp["="]["value"])
       @rep_filter = record.name
     end
-    @breadcrumbs = []
     drop_breadcrumb(:name => @schedule.name, :url => "/report/show_schedule/#{@schedule.id}")
     if @schedule.sched_action[:options] && @schedule.sched_action[:options][:email]
       @email_to = []

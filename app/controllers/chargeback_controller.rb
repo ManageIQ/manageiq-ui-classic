@@ -45,7 +45,6 @@ class ChargebackController < ApplicationController
   end
 
   def explorer
-    @breadcrumbs = []
     @explorer    = true
     build_accordions_and_trees
 

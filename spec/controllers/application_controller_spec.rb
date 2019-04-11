@@ -210,7 +210,6 @@ describe ApplicationController do
       controller.instance_variable_set(:@_params,
                                        :pressed         => "image_miq_request_new",
                                        :miq_grid_checks => template.id.to_s)
-      controller.instance_variable_set(:@breadcrumbs, [])
       controller.instance_variable_set(:@sb, {})
       controller.set_response!(response)
       expect(controller).to receive(:vm_pre_prov)

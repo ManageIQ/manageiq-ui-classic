@@ -19,11 +19,6 @@ class EmsInfraController < ApplicationController
     @table_name ||= "ems_infra"
   end
 
-  def show
-    @breadcrumbs =  [{:name => _('Infrastructure Providers'), :url => '/ems_infra/show_list'}]
-    super
-  end
-
   def ems_path(*args)
     ems_infra_path(*args)
   end
