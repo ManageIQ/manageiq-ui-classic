@@ -1840,7 +1840,6 @@ class ApplicationController < ActionController::Base
     # Get all of the global variables used by most of the controllers
     @pp_choices = PPCHOICES
     @panels = session[:panels].nil? ? {} : session[:panels]
-    @breadcrumbs = session[:breadcrumbs].nil? ? [] : session[:breadcrumbs]
     @panels["icon"] = true if @panels["icon"].nil?                # Default icon panels to be open
     @panels["tag_filters"] = true if @panels["tag_filters"].nil?  # Default tag filters panels to be open
     @panels["sections"] = true if @panels["sections"].nil?        # Default sections(compare) panel to be open
@@ -1876,7 +1875,6 @@ class ApplicationController < ActionController::Base
     # Set all of the global variables used by most of the controllers
     session[:layout] = @layout
     session[:panels] = @panels
-    session[:breadcrumbs] = @breadcrumbs
     session[:applied_tags] = @applied_tags # Search box applied tags for the current list view
     session[:miq_compare] = @compare.nil? ? (@keep_compare ? session[:miq_compare] : nil) : Marshal.dump(@compare)
     session[:miq_compressed] = @compressed unless @compressed.nil?

@@ -18,10 +18,6 @@ describe ContainerImageRegistryController do
     get :show, :params => { :id => container_image_registry.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Image Registries",
-                                          :url  => "/container_image_registry/show_list?page=&refresh=y"},
-                                         {:name => "Test Image Registry (Summary)",
-                                          :url  => "/container_image_registry/show/#{container_image_registry.id}"}])
   end
 
   describe "#show" do

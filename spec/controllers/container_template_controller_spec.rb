@@ -18,10 +18,6 @@ describe ContainerTemplateController do
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(response).to render_template('layouts/_textual_groups_generic')
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Templates",
-                                          :url  => "/container_template/show_list?page=&refresh=y"},
-                                         {:name => "Test Template (Summary)",
-                                          :url  => "/container_template/show/#{container_template.id}"}])
   end
 
   it "renders show_list" do

@@ -40,10 +40,6 @@ describe ContainerImageController do
     get :show, :params => { :id => container_image.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Images",
-                                          :url  => "/container_image/show_list?page=&refresh=y"},
-                                         {:name => "Test Image (Summary)",
-                                          :url  => "/container_image/show/#{container_image.id}"}])
   end
 
   describe "#show" do

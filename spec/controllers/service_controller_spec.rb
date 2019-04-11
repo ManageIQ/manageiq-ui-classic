@@ -162,7 +162,6 @@ describe ServiceController do
 
       get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Services with a GO (All Generic Objects)", :url => "/service/show/#{service_with_go.id}?display=generic_objects"}])
     end
 
     it 'displays the selected generic object' do
@@ -182,8 +181,6 @@ describe ServiceController do
       go2.add_to_service(service)
       get :show, :params => { :id => service.id, :display => 'generic_objects', :generic_object_id => go2.id}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"},
-                                           {:name => "GOTest_2", :url => "/service/show/#{service.id}?display=generic_objects&generic_object_id=#{go2.id}"}])
     end
 
     it 'redirects to service detail page when Services maintab is clicked right after viewing the GO object' do
@@ -199,8 +196,6 @@ describe ServiceController do
       go.add_to_service(service)
       get :show, :params => { :id => service.id, :display => 'generic_objects', :generic_object_id => go.id}
       expect(response.status).to eq(200)
-      expect(assigns(:breadcrumbs)).to eq([{:name => "Abc (All Generic Objects)", :url => "/service/show/#{service.id}?display=generic_objects"},
-                                           {:name => "GOTest", :url => "/service/show/#{service.id}?display=generic_objects&generic_object_id=#{go.id}"}])
       is_expected.to render_template("service/show")
 
       get :show, :params => { :id => service.id}

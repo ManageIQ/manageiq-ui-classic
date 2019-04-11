@@ -49,8 +49,6 @@ describe CloudTenantController do
     end
 
     it "cancels tags edit" do
-      session[:breadcrumbs] = [{:url => "cloud_tenant/show/#{ct.id}"}, 'placeholder']
-
       post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => ct.id }
 
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
@@ -59,7 +57,6 @@ describe CloudTenantController do
     end
 
     it "save tags" do
-      session[:breadcrumbs] = [{:url => "cloud_tenant/show/#{ct.id}"}, 'placeholder']
       post :tagging_edit, :params => { :button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2]) }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil

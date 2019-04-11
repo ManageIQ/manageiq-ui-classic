@@ -591,7 +591,6 @@ describe VmInfraController do
       before { allow(controller).to receive_messages(:render => nil, :build_toolbar => nil) }
 
       it 'it clears the existing breadcrumb path and assigns the new explorer path when controllers are switched' do
-        session[:breadcrumbs] = [{:name => "Instances", :url => "/vm_cloud/explorer"}]
         allow(controller).to receive(:x_node).and_return("v-#{vm_vmware.id}")
         get :explorer
         expect(subject).to eq([{:name => "VM or Templates", :url => "/vm_infra/explorer"}])

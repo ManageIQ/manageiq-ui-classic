@@ -18,10 +18,6 @@ describe ContainerBuildController do
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(response).to render_template('layouts/_textual_groups_generic')
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Builds",
-                                          :url  => "/container_build/show_list?page=&refresh=y"},
-                                         {:name => "Test Build (Summary)",
-                                          :url  => "/container_build/show/#{container_build.id}"}])
   end
 
   it "renders show_list" do

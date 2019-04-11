@@ -800,18 +800,12 @@ describe HostController do
       get :guest_applications, :params => { :id => @host.id, :show => @guest_application.id }
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
-                                            :url  => "/host/guest_applications/#{@host.id}?page="},
-                                           {:name => "foo",
-                                            :url  => "/host/guest_applications/#{@host.id}?show=#{@guest_application.id}"}])
     end
 
     it "shows associated datastores" do
       get :show, :params => {:id => @host.id, :display => 'storages'}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (All Datastores)",
-                                            :url  => "/host/show/#{@host.id}?display=storages"}])
     end
 
     it "renders show_details" do
@@ -819,8 +813,6 @@ describe HostController do
       get :guest_applications, :params => { :id => @host.id }
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
-      expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
-                                            :url  => "/host/guest_applications/#{@host.id}"}])
     end
 
     it "plularizes breadcrumb name" do

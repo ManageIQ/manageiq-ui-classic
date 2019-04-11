@@ -23,10 +23,6 @@ describe ContainerController do
     get :show, :params => { :id => container.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Containers",
-                                          :url  => "/container/show_list?page=&refresh=y"},
-                                         {:name => "Test Container (Summary)",
-                                          :url  => "/container/show/#{container.id}"}])
   end
 
   describe "#show" do

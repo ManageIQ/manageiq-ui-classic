@@ -35,10 +35,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           get :show, :params => {:id => @ems.id}
           expect(response.status).to eq(200)
           expect(response.body).to_not be_empty
-          expect(assigns(:breadcrumbs)).to eq([{:name => "Network Managers",
-                                                :url  => "/ems_network/show_list?page=&refresh=y"},
-                                               {:name => "Cloud Manager Network Manager (Summary)",
-                                                :url  => "/ems_network/#{@ems.id}"}])
 
           is_expected.to render_template(:partial => "layouts/listnav/_ems_network")
         end

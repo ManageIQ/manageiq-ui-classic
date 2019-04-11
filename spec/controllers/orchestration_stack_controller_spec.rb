@@ -78,17 +78,6 @@ describe OrchestrationStackController do
   end
 
   describe "#show_list" do
-    context "orchestration stack listing" do
-      before do
-        get :show_list
-      end
-
-      it "correctly constructs breadcrumb url" do
-        expect(session[:breadcrumbs]).not_to be_empty
-        expect(session[:breadcrumbs].first[:url]).to eq("/orchestration_stack/show_list")
-      end
-    end
-
     context "orchestration stack listing hides ansible jobs" do
       before do
         @os_cloud  = FactoryBot.create(:orchestration_stack_cloud, :name => "cloudstack1")

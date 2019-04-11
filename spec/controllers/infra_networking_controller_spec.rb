@@ -81,7 +81,6 @@ describe InfraNetworkingController do
         :current        => {:assignments => []},
         :new            => {:assignments => [tag1.id, tag2.id]}
       }
-      session[:breadcrumbs] = [{:url => "infra_networking/show/#{switch.id}"}, 'placeholder']
     end
 
     it "build switch tagging screen" do

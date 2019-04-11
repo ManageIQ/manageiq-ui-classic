@@ -35,10 +35,6 @@ shared_examples :shared_examples_for_load_balancer_controller do |providers|
           get :show, :params => {:id => @load_balancer.id}
           expect(response.status).to eq(200)
           expect(response.body).to_not be_empty
-          expect(assigns(:breadcrumbs)).to eq([{:name => "Load Balancers",
-                                                :url  => "/load_balancer/show_list?page=&refresh=y"},
-                                               {:name => "Load Balancer (Summary)",
-                                                :url  => "/load_balancer/show/#{@load_balancer.id}"}])
 
           is_expected.to render_template(:partial => "layouts/listnav/_load_balancer")
         end
