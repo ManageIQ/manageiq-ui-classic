@@ -168,6 +168,10 @@ module ApplicationController::Filter
   end
 
   def build_expression_editor_menu(model = 'Vm')
+    @buttons = {
+      :save => {:url => url_for_only_path(:action => 'adv_search_button', :button => "save")},
+      :apply => {:url => url_for_only_path(:action => 'adv_search_button', :button => "apply")}
+    }
     {:id => 'root', :label => 'root', :type => 'root', :next => exp_editor_root_options}
   end
 
