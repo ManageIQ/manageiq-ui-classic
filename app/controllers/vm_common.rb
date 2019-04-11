@@ -227,7 +227,6 @@ module VmCommon
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
-      session[:ch_tree] = @ch_tree.tree_nodes
       session[:tree_name] = "ch_tree"
       session[:squash_open] = (count == 1)
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
