@@ -208,32 +208,6 @@ module ApplicationHelper
     unsupported_record.nil?
   end
 
-  # Default action is show
-  def url_for_record(record, action = "show")
-    @id = record.id
-    db  = if controller.kind_of?(VmOrTemplateController)
-            "vm_or_template"
-          elsif record.kind_of?(VmOrTemplate)
-            controller_for_vm(model_for_vm(record))
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) ||
-                record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryRootGroup)
-            "automation_manager"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
-            "ansible_playbook"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
-            "ansible_credential"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
-            "ansible_repository"
-          elsif record.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
-            "provider_foreman"
-          elsif record.class.respond_to?(:db_name)
-            record.class.db_name
-          else
-            record.class.base_class.to_s
-          end
-    url_for_db(db, action, record)
-  end
-
   # Create a url for a record that links to the proper controller
   def url_for_db(db, action = "show", item = nil)
     if item && restful_routed?(item)

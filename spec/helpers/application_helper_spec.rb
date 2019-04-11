@@ -217,25 +217,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe "#url_for_record" do
-    subject { helper.url_for_record(@record, @action = "show") }
-
-    it "when record is VmOrTemplate" do
-      @record = Vm.new
-      expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
-    end
-
-    it "when record is ManageIQ::Providers::AnsibleTower::AutomationManager" do
-      @record = ManageIQ::Providers::AnsibleTower::AutomationManager.new
-      expect(subject).to eq("/automation_manager/#{@action}")
-    end
-
-    it "when record is not VmOrTemplate" do
-      @record = FactoryBot.create(:host)
-      expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
-    end
-  end
-
   describe "#url_for_db" do
     before do
       @action = 'show'
