@@ -515,12 +515,12 @@ class ProviderForemanController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs  => [
-        {:title => _("Configuration")},
-        {:title => _("Management")},
+        {:title => _("Compute")},
+        {:title => _("Configuration Management")},
       ],
       :record_title => :hostname,
     }
   end
 
-  menu_section :conf
+  menu_section :compute
 end
