@@ -144,6 +144,7 @@ module ApplicationController::PolicySupport
   end
 
   # Build the policy assignment screen
+  def protect_build_screen
     # session[:pol_db] = session[:pol_db] == Vm ? VmOrTemplate : session[:pol_db]
     @politems = session[:pol_db].find(session[:pol_items]).sort_by(&:name) # Get the db records
     @view = get_db_view(session[:pol_db], :clickable => false) # Instantiate the MIQ Report view object
