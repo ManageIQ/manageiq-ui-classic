@@ -36,7 +36,6 @@ module Mixins
 
     def update_session_for_compliance_history(count)
       @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
-      session[:tree_name] = "ch_tree"
       session[:squash_open] = (count == 1)
     end
 
