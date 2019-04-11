@@ -3214,6 +3214,7 @@ Rails.application.routes.draw do
         launch_vmrc_console
         retirement_info
         reconfigure_form_fields
+        policies
         protect
         retire
         show
