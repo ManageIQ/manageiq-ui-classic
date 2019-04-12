@@ -217,25 +217,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe "#url_for_record" do
-    subject { helper.url_for_record(@record, @action = "show") }
-
-    it "when record is VmOrTemplate" do
-      @record = Vm.new
-      expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
-    end
-
-    it "when record is ManageIQ::Providers::AnsibleTower::AutomationManager" do
-      @record = ManageIQ::Providers::AnsibleTower::AutomationManager.new
-      expect(subject).to eq("/automation_manager/#{@action}")
-    end
-
-    it "when record is not VmOrTemplate" do
-      @record = FactoryBot.create(:host)
-      expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
-    end
-  end
-
   describe "#url_for_db" do
     before do
       @action = 'show'
@@ -922,24 +903,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe "update_paging_url_parms", :type => :request do
-    let!(:zone) { EvmSpecHelper.local_guid_miq_server_zone[2] }
-
-    it "updates the query string with the given hash value and returns the full url path" do
-      get "/vm/show_list/100", :params => "bc=VMs+running+on+2014-08-25&menu_click=Display-VMs-on_2-6-5&page=2&sb_controller=host"
-
-      expect(helper.update_paging_url_parms("show_list", :page => 1)).to eq("/vm/show_list/100?bc=VMs+running+on+2014-08-25"\
-        "&menu_click=Display-VMs-on_2-6-5&page=1&sb_controller=host")
-    end
-
-    it "uses restful paths for pages" do
-      @record = FactoryBot.create(:ems_cloud, :zone => zone)
-      get "/ems_cloud/#{@record.id}", :params => { :display => 'images' }
-
-      expect(helper.update_paging_url_parms("show", :page => 2)).to eq("/ems_cloud/#{@record.id}?display=images&page=2")
-    end
-  end
-
   context "#title_for_cluster_record" do
     before do
       @ems1 = FactoryBot.create(:ems_vmware)
@@ -1140,32 +1103,6 @@ describe ApplicationHelper do
       let(:active) { false }
       it 'renders an active accordion' do
         expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"collapsed\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" class=\"panel-collapse collapse \"><div class=\"panel-body\">content</div></div></div>")
-      end
-    end
-  end
-
-  describe '#restful_routed_action?' do
-    context 'When controller is Dashboard and action is maintab' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('dashboard', 'maintab')).to eq(false)
-      end
-    end
-
-    context 'When controller is ems_infra and action is show' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('ems_infra', 'show')).to eq(true)
-      end
-    end
-
-    context 'When controller is ems_cloud and action is show_list' do
-      it 'returns false' do
-        expect(helper.restful_routed_action?('ems_cloud', 'show_list')).to eq(false)
-      end
-    end
-
-    context 'When controller is ems_cloud and action is show' do
-      it 'returns true' do
-        expect(helper.restful_routed_action?('ems_cloud', 'show')).to eq(true)
       end
     end
   end

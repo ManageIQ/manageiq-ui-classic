@@ -37,14 +37,6 @@ module ApplicationHelper
     settings(*path) || default
   end
 
-  def documentation_link(url = nil, documentation_subject = "")
-    if url
-      link_to(_("For more information, visit the %{subject} documentation.") % {:subject => documentation_subject},
-              url, :rel => 'external',
-              :class => 'documentation-link', :target => '_blank')
-    end
-  end
-
   def websocket_origin
     proto = request.ssl? ? 'wss' : 'ws'
     # Retrieve the host that needs to be explicitly allowed for websocket connections
@@ -196,12 +188,6 @@ module ApplicationHelper
     respond_to?("#{model.model_name.route_key}_path")
   end
 
-  def restful_routed_action?(controller = controller_name, action = action_name)
-    restful_routed?("#{controller.camelize}Controller".constantize.model) && !%w[explorer show_list].include?(action)
-  rescue
-    false
-  end
-
   # Returns whether records support feature or not.
   #
   # Params:
@@ -220,32 +206,6 @@ module ApplicationHelper
       end
     end
     unsupported_record.nil?
-  end
-
-  # Default action is show
-  def url_for_record(record, action = "show")
-    @id = record.id
-    db  = if controller.kind_of?(VmOrTemplateController)
-            "vm_or_template"
-          elsif record.kind_of?(VmOrTemplate)
-            controller_for_vm(model_for_vm(record))
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) ||
-                record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryRootGroup)
-            "automation_manager"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
-            "ansible_playbook"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
-            "ansible_credential"
-          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
-            "ansible_repository"
-          elsif record.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
-            "provider_foreman"
-          elsif record.class.respond_to?(:db_name)
-            record.class.db_name
-          else
-            record.class.base_class.to_s
-          end
-    url_for_db(db, action, record)
   end
 
   # Create a url for a record that links to the proper controller
@@ -884,17 +844,6 @@ module ApplicationHelper
     pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider|configuration_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
-  def model_for_ems(record)
-    raise _("Record is not ExtManagementSystem class") unless record.kind_of?(ExtManagementSystem)
-    if record.kind_of?(ManageIQ::Providers::CloudManager)
-      ManageIQ::Providers::CloudManager
-    elsif record.kind_of?(ManageIQ::Providers::ContainerManager)
-      ManageIQ::Providers::ContainerManager
-    else
-      ManageIQ::Providers::InfraManager
-    end
-  end
-
   def model_for_vm(record)
     raise _("Record is not VmOrTemplate class") unless record.kind_of?(VmOrTemplate)
     if record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
@@ -916,15 +865,6 @@ module ApplicationHelper
       "vm_infra"
     else
       "vm_or_template"
-    end
-  end
-
-  def controller_for_stack(model)
-    case model.to_s
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
-      "configuration_job"
-    else
-      model.name.underscore
     end
   end
 
@@ -1169,18 +1109,6 @@ module ApplicationHelper
       %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end
 
-  def update_paging_url_parms(action_url, parameter_to_update = {}, post = false)
-    url = update_query_string_params(parameter_to_update)
-    action, an_id = action_url.split("/", 2)
-    if !post && controller.restful? && action == 'show'
-      polymorphic_path(@record, url)
-    else
-      url[:action] = action
-      url[:id] = an_id unless an_id.nil?
-      url_for_only_path(url)
-    end
-  end
-
   def update_query_string_params(update_this_param)
     exclude_params = %w[button flash_msg page ppsetting pressed sortby sort_choice type]
     query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
@@ -1265,13 +1193,6 @@ module ApplicationHelper
     "chart"  => "c"
   }.freeze
 
-  LIST_ICON_FOR = %w[
-    MiqReportResult
-    MiqSchedule
-    MiqUserRole
-    MiqWidget
-  ].freeze
-
   def process_show_list_options(options, curr_model = nil)
     @report_data_additional_options = ApplicationController::ReportDataAdditionalOptions.from_options(options)
     @report_data_additional_options.with_quadicon_options(
@@ -1353,16 +1274,6 @@ module ApplicationHelper
       "rbac_tenant_add"
     else
       pressed
-    end
-  end
-
-  def action_url_for_views
-    if @lastaction == "scan_history"
-      "scan_history"
-    elsif %w[all_jobs jobs ui_jobs all_ui_jobs].include?(@lastaction)
-      "jobs"
-    else
-      @lastaction && @lastaction != "get_node_info" ? @lastaction : "show_list"
     end
   end
 
