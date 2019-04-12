@@ -2,7 +2,7 @@ class UtilizationController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
-  menu_section(:opt)
+  menu_section(:vi)
 
   include OptimizeHelper
 
