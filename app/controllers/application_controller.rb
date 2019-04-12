@@ -1974,10 +1974,6 @@ class ApplicationController < ActionController::Base
     end
 
     # Clearing out session objects that are no longer needed
-    session[:hac_tree] = session[:vat_tree] = nil if controller_name != "ops"
-    session[:ch_tree] = nil if !["compliance_history"].include?(params[:display])
-    session[:vm_tree] = nil unless ["vmtree_info"].include?(params[:display])
-    session[:policy_tree] = nil if params[:action] != "policies" && params[:pressed] != "vm_protect"
     session[:resolve] = session[:resolve_object] = nil unless %w[catalog miq_ae_customization miq_ae_tools].include?(request.parameters[:controller])
     session[:report_menu] = session[:report_folders] = session[:menu_roles_tree] = nil if controller_name != "report"
     if session.class != Hash
