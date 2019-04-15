@@ -84,7 +84,7 @@ module ApplicationHelper::PageLayouts
 
     showtype = case @showtype
                when 'dashboard'
-                 !@lastaction.to_s.ends_with?("_dashboard")
+                 @in_a_form ? true : !@lastaction.to_s.ends_with?("_dashboard")
                when 'topology'
                  false
                else
