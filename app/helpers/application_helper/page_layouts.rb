@@ -102,6 +102,10 @@ module ApplicationHelper::PageLayouts
     ].include?(controller.action_name)
   end
 
+  def miq_layout_center_div_no_listnav_class
+    !@in_a_form && (@lastaction == "show_dashboard" || @layout == "monitor_alerts_overview") ? 'miq-body' : ''
+  end
+
   def center_div_partial
     if layout_uses_listnav?
       "layouts/center_div_with_listnav"
