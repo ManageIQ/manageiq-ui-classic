@@ -574,10 +574,6 @@ msgstr ""
 msgid "%{model} \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/bottlenecks_controller.rb:113
-msgid "%{model} \"%{name}\" Bottlenecks Summary"
-msgstr ""
-
 #: ../app/controllers/utilization_controller.rb:137
 msgid "%{model} \"%{name}\" Utilization Trend Summary"
 msgstr ""
@@ -2058,10 +2054,6 @@ msgstr ""
 
 #: ../app/helpers/view_helper.rb:20
 msgid "A4 - 210mm x 297mm (default)"
-msgstr ""
-
-#: ../app/controllers/application_controller/filter.rb:733 ../app/views/miq_request/_prov_field.html.haml:26 ../app/views/bottlenecks/_bottlenecks_options.html.haml:10
-msgid "ALL"
 msgstr ""
 
 #: ../app/views/configuration/_timeprofile_form.html.haml:104
@@ -5048,18 +5040,6 @@ msgstr ""
 
 #: ../app/views/layouts/_tl_options.html.haml:65
 msgid "Both"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_report.html.haml:9
-msgid "Bottleneck Event Details"
-msgstr ""
-
-#: ../app/presenters/menu/default_menu.rb:244 ../app/helpers/application_helper/title.rb:104 ../app/controllers/bottlenecks_controller.rb:75 ../app/controllers/bottlenecks_controller.rb:82
-msgid "Bottlenecks"
-msgstr ""
-
-#: ../app/controllers/bottlenecks_controller.rb:11
-msgid "Bottlenecks Summary"
 msgstr ""
 
 #: ../app/views/miq_ae_class/_git_domain_refresh.html.haml:10 ../app/views/miq_ae_tools/_import_export.html.haml:91
@@ -11775,10 +11755,6 @@ msgstr ""
 msgid "Enter your Red Hat account information"
 msgstr ""
 
-#: ../app/presenters/tree_builder_utilization.rb:25 ../app/controllers/utilization_controller.rb:135 ../app/controllers/bottlenecks_controller.rb:111
-msgid "Enterprise"
-msgstr ""
-
 #: ../app/helpers/application_helper/button/container_perf.rb:6 ../app/views/ops/_label_tag_mapping_form.html.haml:15
 msgid "Entity"
 msgstr ""
@@ -11825,10 +11801,6 @@ msgstr ""
 
 #: ../app/controllers/dashboard_controller.rb:805
 msgid "Error building timeline  %{error_message}"
-msgstr ""
-
-#: ../app/controllers/application_controller/timelines.rb:164 ../app/controllers/bottlenecks_controller.rb:187
-msgid "Error building timeline %{error_message}"
 msgstr ""
 
 #: ../app/controllers/application_controller/filter.rb:97
@@ -12263,10 +12235,6 @@ msgstr ""
 
 #: ../app/views/miq_policy/_event_details.html.haml:8
 msgid "Event Group"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_options.html.haml:8
-msgid "Event Groups"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/EventLog-event_logs.yaml
@@ -16840,10 +16808,6 @@ msgstr ""
 msgid "No Time Profiles were selected for deletion"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_tl_detail.html.haml:14
-msgid "No Timeline data available."
-msgstr ""
-
 #: ../app/views/layouts/listnav/_ems_storage.html.haml:13
 msgid "No Timeline data has been collected for Policy or Management Events"
 msgstr ""
@@ -17030,10 +16994,6 @@ msgstr ""
 msgid "No events available for this timeline"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_tl_detail.html.haml:11
-msgid "No events available for this timeline."
-msgstr ""
-
 #: ../app/controllers/report_controller/reports/editor.rb:878
 msgid "No fields were moved up"
 msgstr ""
@@ -17128,10 +17088,6 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/report_only.rb:5 ../app/helpers/application_helper/button/utilization_download.rb:13 ../app/helpers/application_helper/button/chargeback_report_only.rb:3 ../app/helpers/application_helper/button/chargeback_download_choice.rb:3 ../app/helpers/application_helper/button/mixins/render_report_mixin.rb:3 ../app/controllers/chargeback_controller.rb:367 ../app/controllers/application_controller.rb:772 ../app/controllers/report_controller/saved_reports.rb:59 ../app/views/report/_report_list.html.haml:98
 msgid "No records found for this report"
-msgstr ""
-
-#: ../app/controllers/dashboard_controller.rb:736 ../app/controllers/dashboard_controller.rb:811 ../app/controllers/application_controller/timelines.rb:168 ../app/controllers/bottlenecks_controller.rb:199
-msgid "No records found for this timeline"
 msgstr ""
 
 #: ../app/assets/javascripts/controllers/ops/pglogical_replication_form_controller.js:73 ../app/assets/javascripts/controllers/ops/pglogical_replication_form_controller.js:308
@@ -17843,7 +17799,7 @@ msgstr ""
 msgid "Optional, if not specified, method name is used."
 msgstr ""
 
-#: ../app/controllers/miq_policy_controller/rsop.rb:49 ../app/controllers/application_controller/automate.rb:101 ../app/views/vm_common/_reconfigure.html.haml:9 ../app/views/vm_common/_policy_options.html.haml:5 ../app/views/miq_request/_reconfigure_show.html.haml:4 ../app/views/cloud_volume/backup_new.html.haml:21 ../app/views/shared/buttons/_ab_options_form.html.haml:4 ../app/views/shared/buttons/_ab_form.html.haml:20 ../app/views/bottlenecks/_bottlenecks_options.html.haml:4 ../app/views/layouts/_tl_options.html.haml:16 ../app/views/utilization/_utilization_options.html.haml:5
+#: ../app/controllers/miq_policy_controller/rsop.rb:49 ../app/controllers/application_controller/automate.rb:101 ../app/views/vm_common/_reconfigure.html.haml:9 ../app/views/vm_common/_policy_options.html.haml:5 ../app/views/miq_request/_reconfigure_show.html.haml:4 ../app/views/cloud_volume/backup_new.html.haml:21 ../app/views/shared/buttons/_ab_options_form.html.haml:4 ../app/views/shared/buttons/_ab_form.html.haml:20 ../app/views/layouts/_tl_options.html.haml:16 ../app/views/utilization/_utilization_options.html.haml:5
 msgid "Options"
 msgstr ""
 
@@ -21208,10 +21164,6 @@ msgstr ""
 msgid "Replicators"
 msgstr ""
 
-#: ../app/controllers/report_controller/widgets.rb:21 ../app/views/bottlenecks/_bottlenecks_tabs.html.haml:6 ../app/views/utilization/_utilization_tabs.html.haml:8
-msgid "Report"
-msgstr ""
-
 #: ../app/controllers/report_controller/reports.rb:176
 msgid "Report \"%{name}\""
 msgstr ""
@@ -22763,14 +22715,6 @@ msgstr ""
 msgid "Select a filter to set it as my default"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_report.html.haml:3
-msgid "Select a node on the left to view Bottlenecks report."
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_summary.html.haml:3
-msgid "Select a node on the left to view Bottlenecks timeline."
-msgstr ""
-
 #: ../app/views/utilization/_utilization_details.html.haml:12 ../app/views/utilization/_utilization_summary.html.haml:30
 msgid "Select a node on the left to view Utilization information."
 msgstr ""
@@ -23835,10 +23779,6 @@ msgstr ""
 
 #: ../app/views/layouts/listnav/_physical_server.html.haml:20
 msgid "Show Host"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_options.html.haml:21
-msgid "Show Host Events"
 msgstr ""
 
 #: ../app/views/miq_ae_class/_method_form.html.haml:91
@@ -25565,7 +25505,7 @@ msgstr ""
 msgid "Sum 'Other' values"
 msgstr ""
 
-#: ../app/controllers/report_controller/reports/editor.rb:367 ../app/views/ops/_all_tabs.html.haml:140 ../app/views/ops/_all_tabs.html.haml:216 ../app/views/bottlenecks/_bottlenecks_tabs.html.haml:4 ../app/views/static/deploy_containers_provider/deploy-provider-review-summary.html.haml:4 ../app/views/layouts/listnav/_cloud_subnet.html.haml:9 ../app/views/layouts/listnav/_container_template.html.haml:9 ../app/views/layouts/listnav/_host.html.haml:20 ../app/views/layouts/listnav/_container_project.html.haml:9 ../app/views/layouts/listnav/_storage_manager.html.haml:9 ../app/views/layouts/listnav/_storage.html.haml:10 ../app/views/layouts/listnav/_container.html.haml:9 ../app/views/layouts/listnav/_container_replicator.html.haml:9 ../app/views/layouts/listnav/_container_build.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_backup.html.haml:9 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:9 ../app/views/layouts/listnav/_container_service.html.haml:9 ../app/views/layouts/listnav/_container_node.html.haml:9 ../app/views/layouts/listnav/_generic_object_definition.html.haml:7 ../app/views/layouts/listnav/_cloud_object_store_container.html.haml:9 ../app/views/layouts/listnav/_cloud_tenant.html.haml:9 ../app/views/layouts/listnav/_flavor.html.haml:9 ../app/views/layouts/listnav/_persistent_volume.html.haml:9 ../app/views/layouts/listnav/_cloud_network.html.haml:9 ../app/views/layouts/listnav/_cloud_volume.html.haml:9 ../app/views/layouts/listnav/_network_port.html.haml:9 ../app/views/layouts/listnav/_load_balancer.html.haml:9 ../app/views/layouts/listnav/_physical_rack.html.haml:9 ../app/views/layouts/listnav/_ems_network.html.haml:8 ../app/views/layouts/listnav/_physical_switch.html.haml:9 ../app/views/layouts/listnav/_configuration_job.html.haml:9 ../app/views/layouts/listnav/_pxe_server.html.haml:9 ../app/views/layouts/listnav/_floating_ip.html.haml:9 ../app/views/layouts/listnav/_auth_key_pair_cloud.html.haml:9 ../app/views/layouts/listnav/_container_group.html.haml:9 ../app/views/layouts/listnav/_container_route.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_snapshot.html.haml:9 ../app/views/layouts/listnav/_network_router.html.haml:9 ../app/views/layouts/listnav/_resource_pool.html.haml:10 ../app/views/layouts/listnav/_host_aggregate.html.haml:9 ../app/views/layouts/listnav/_physical_server.html.haml:9 ../app/views/layouts/listnav/_ems_cloud.html.haml:9 ../app/views/layouts/listnav/_ems_storage.html.haml:8 ../app/views/layouts/listnav/_container_image_registry.html.haml:9 ../app/views/layouts/listnav/_orchestration_stack.html.haml:9 ../app/views/layouts/listnav/_container_image.html.haml:9 ../app/views/layouts/listnav/_cloud_object_store_object.html.haml:9 ../app/views/layouts/listnav/_ems_infra.html.haml:11 ../app/views/layouts/listnav/_ems_cluster.html.haml:10 ../app/views/layouts/listnav/_availability_zone.html.haml:9 ../app/views/layouts/listnav/_security_group.html.haml:9 ../app/views/layouts/listnav/_ems_container.html.haml:9 ../app/views/layouts/listnav/_miq_ae_class.html.haml:8 ../app/views/provider_foreman/_inventory_group.html.haml:4 ../app/views/provider_foreman/_configuration_profile.html.haml:4 ../app/views/automation_manager/_inventory_group.html.haml:4 ../app/views/utilization/_utilization_tabs.html.haml:4
+#: ../app/controllers/report_controller/reports/editor.rb:367 ../app/views/ops/_all_tabs.html.haml:140 ../app/views/ops/_all_tabs.html.haml:216 ../app/views/static/deploy_containers_provider/deploy-provider-review-summary.html.haml:4 ../app/views/layouts/listnav/_cloud_subnet.html.haml:9 ../app/views/layouts/listnav/_container_template.html.haml:9 ../app/views/layouts/listnav/_host.html.haml:20 ../app/views/layouts/listnav/_container_project.html.haml:9 ../app/views/layouts/listnav/_storage_manager.html.haml:9 ../app/views/layouts/listnav/_storage.html.haml:10 ../app/views/layouts/listnav/_container.html.haml:9 ../app/views/layouts/listnav/_container_replicator.html.haml:9 ../app/views/layouts/listnav/_container_build.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_backup.html.haml:9 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:9 ../app/views/layouts/listnav/_container_service.html.haml:9 ../app/views/layouts/listnav/_container_node.html.haml:9 ../app/views/layouts/listnav/_generic_object_definition.html.haml:7 ../app/views/layouts/listnav/_cloud_object_store_container.html.haml:9 ../app/views/layouts/listnav/_cloud_tenant.html.haml:9 ../app/views/layouts/listnav/_flavor.html.haml:9 ../app/views/layouts/listnav/_persistent_volume.html.haml:9 ../app/views/layouts/listnav/_cloud_network.html.haml:9 ../app/views/layouts/listnav/_cloud_volume.html.haml:9 ../app/views/layouts/listnav/_network_port.html.haml:9 ../app/views/layouts/listnav/_load_balancer.html.haml:9 ../app/views/layouts/listnav/_physical_rack.html.haml:9 ../app/views/layouts/listnav/_ems_network.html.haml:8 ../app/views/layouts/listnav/_physical_switch.html.haml:9 ../app/views/layouts/listnav/_configuration_job.html.haml:9 ../app/views/layouts/listnav/_pxe_server.html.haml:9 ../app/views/layouts/listnav/_floating_ip.html.haml:9 ../app/views/layouts/listnav/_auth_key_pair_cloud.html.haml:9 ../app/views/layouts/listnav/_container_group.html.haml:9 ../app/views/layouts/listnav/_container_route.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_snapshot.html.haml:9 ../app/views/layouts/listnav/_network_router.html.haml:9 ../app/views/layouts/listnav/_resource_pool.html.haml:10 ../app/views/layouts/listnav/_host_aggregate.html.haml:9 ../app/views/layouts/listnav/_physical_server.html.haml:9 ../app/views/layouts/listnav/_ems_cloud.html.haml:9 ../app/views/layouts/listnav/_ems_storage.html.haml:8 ../app/views/layouts/listnav/_container_image_registry.html.haml:9 ../app/views/layouts/listnav/_orchestration_stack.html.haml:9 ../app/views/layouts/listnav/_container_image.html.haml:9 ../app/views/layouts/listnav/_cloud_object_store_object.html.haml:9 ../app/views/layouts/listnav/_ems_infra.html.haml:11 ../app/views/layouts/listnav/_ems_cluster.html.haml:10 ../app/views/layouts/listnav/_availability_zone.html.haml:9 ../app/views/layouts/listnav/_security_group.html.haml:9 ../app/views/layouts/listnav/_ems_container.html.haml:9 ../app/views/layouts/listnav/_miq_ae_class.html.haml:8 ../app/views/provider_foreman/_inventory_group.html.haml:4 ../app/views/provider_foreman/_configuration_profile.html.haml:4 ../app/views/automation_manager/_inventory_group.html.haml:4 ../app/views/utilization/_utilization_tabs.html.haml:4
 msgid "Summary"
 msgstr ""
 
@@ -26526,7 +26466,7 @@ msgstr ""
 msgid "Time Profiles"
 msgstr ""
 
-#: ../app/views/configuration/_ui_1.html.haml:81 ../app/views/ops/_schedule_form_timer.html.haml:25 ../app/views/report/_form_filter_chargeback.html.haml:224 ../app/views/report/_schedule_form_timer.html.haml:52 ../app/views/bottlenecks/_bottlenecks_options.html.haml:29
+#: ../app/views/configuration/_ui_1.html.haml:81 ../app/views/ops/_schedule_form_timer.html.haml:25 ../app/views/report/_form_filter_chargeback.html.haml:224 ../app/views/report/_schedule_form_timer.html.haml:52
 msgid "Time Zone"
 msgstr ""
 

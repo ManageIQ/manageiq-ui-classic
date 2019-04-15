@@ -68,11 +68,6 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Utilization")
     end
 
-    it "when layout = 'miq_capacity_bottlenecks'" do
-      @layout = "miq_capacity_bottlenecks"
-      expect(subject).to eq(title + ": Bottlenecks")
-    end
-
     it "when layout likes 'miq_request*'" do
       @layout = "miq_request_some_thing"
       expect(subject).to eq(title + ": Requests")

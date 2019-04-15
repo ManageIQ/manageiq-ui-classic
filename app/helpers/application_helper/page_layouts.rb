@@ -145,7 +145,7 @@ module ApplicationHelper::PageLayouts
           (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
           (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
           (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-          (params[:controller] == "utilization" || params[:controller] == "bottlenecks")
+          params[:controller] == "utilization"
       end
   end
 
