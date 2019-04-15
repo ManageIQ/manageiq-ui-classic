@@ -34,7 +34,6 @@ class CatalogController < ApplicationController
     'catalogitem_edit'              => :servicetemplate_edit,
     'catalogitem_new'               => :servicetemplate_edit,
 
-    'catalogitem_delete'            => :st_delete,
     'catalogitem_tag'               => :st_tags_edit,
 
     'orchestration_template_add'    => :ot_add,
@@ -204,6 +203,7 @@ class CatalogController < ApplicationController
   def explorer
     @explorer = true
     @lastaction = "explorer"
+    @report_deleted = params[:report_deleted] == 'true' if params[:report_deleted]
 
     # if AJAX request, replace right cell, and return
     if request.xml_http_request?
@@ -269,32 +269,6 @@ class CatalogController < ApplicationController
     end
     params[:id] = x_build_node_id(@record, x_tree(x_active_tree)) # Get the tree node id
     tree_select
-  end
-
-  def st_delete
-    assert_privileges("catalogitem_delete")
-    elements = []
-    if params[:id]
-      elements.push(params[:id])
-      process_sts(elements, 'destroy') unless elements.empty?
-      if @flash_array.nil?
-        add_flash(_("The selected Catalog Item was deleted"))
-        self.x_node = "root"
-      end
-    else # showing 1 element, delete it
-      elements = find_records_with_rbac(ServiceTemplate, find_checked_items).ids
-      if elements.empty?
-        add_flash(_("No Service Catalog Items were selected for deletion"), :error)
-      end
-      process_sts(elements, 'destroy') unless elements.empty?
-      unless flash_errors?
-        add_flash(n_("The selected %{number} Catalog Item was deleted",
-                     "The selected %{number} Catalog Items were deleted",
-                     elements.length) % {:number => elements.length})
-      end
-    end
-    params[:id] = nil
-    replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat]))
   end
 
   def st_edit
@@ -591,33 +565,6 @@ class CatalogController < ApplicationController
       return
     end
   end
-
-  def process_sts(sts, task, _display_name = nil)
-    ServiceTemplate.where(:id => sts).order("lower(name)").each do |st|
-      id = st.id
-      st_name = st.name
-      audit = {:event        => "st_record_delete",
-               :message      => "[#{st_name}] Record deleted",
-               :target_id    => id,
-               :target_class => "ServiceTemplate",
-               :userid       => session[:userid]}
-      begin
-        st.public_send(task.to_sym) if st.respond_to?(task) # Run the task
-      rescue => bang
-        add_flash(_("Service Catalog Item \"%{name}\": Error during '%{task}': %{error_message}") %
-          {:name => st_name, :task => task, :error_message => bang.message}, :error)
-      else
-        if st.errors
-          st.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
-          end
-        else
-          AuditEvent.success(audit)
-        end
-      end
-    end
-  end
-  private :process_sts
 
   def template_to_node_name(object)
     ORCHESTRATION_TEMPLATES_NODES[object.class.name]

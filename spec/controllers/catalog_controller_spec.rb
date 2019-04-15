@@ -19,17 +19,6 @@ describe CatalogController do
       allow_any_instance_of(ApplicationController).to receive(:fetch_path)
     end
 
-    it "checks method st_delete" do
-      login_as admin_user
-      allow(User).to receive(:current_user).and_return(admin_user)
-      allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
-      controller.instance_variable_set(:@_params, {}) # affects params in controller
-      allow(controller).to receive(:find_checked_items).and_return(ServiceTemplate.all.ids)
-      allow(controller).to receive(:replace_right_cell)
-      expect(controller).to receive(:process_sts).with(ServiceTemplate.all.ids, "destroy")
-      controller.send(:st_delete)
-    end
-
     it "checks method x_edit_tags_reset when multiple records selected from list view" do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
@@ -75,14 +64,6 @@ describe CatalogController do
         view, _pages = controller.send(:get_view, ServiceTemplate, {:named_scope => :public_service_templates}, true)
         expect(view.table.data.count).to eq(2)
       end
-    end
-
-    # some methods should not be accessible through the legacy routes
-    # either by being private or through the hide_action mechanism
-    it 'should not allow call of hidden/private actions' do
-      expect do
-        post :process_sts
-      end.to raise_error AbstractController::ActionNotFound
     end
 
     describe '#x_button' do

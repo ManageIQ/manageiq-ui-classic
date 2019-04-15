@@ -30,11 +30,13 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
         button(
           :catalogitem_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Catalog Item'),
-          N_('Remove Catalog Item'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Warning: This Catalog Items and ALL of their components will be permanently removed!")),
+          N_('Delete this Catalog Item'),
+          N_('Delete Catalog Item'),
+          :data => {'function'      => 'sendDataWithRx',
+                    'function-data' => {:controller     => 'provider_dialogs',
+                                        :modal_title    => N_('Delete Catalog Item'),
+                                        :component_name => 'RemoveCatalogItemModal'}.to_json}
+        )
       ]
     ),
   ])
