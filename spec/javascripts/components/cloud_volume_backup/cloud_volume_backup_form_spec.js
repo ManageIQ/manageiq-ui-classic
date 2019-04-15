@@ -24,6 +24,7 @@ describe('cloud-volume-backup-form', function() {
   describe('#init', function() {
     var expectedValue = {
       volume: { name: "original value" },
+      name: ''
     };
 
     it('sets model correctly', function() {

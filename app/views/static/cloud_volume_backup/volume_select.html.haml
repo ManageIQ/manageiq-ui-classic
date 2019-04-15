@@ -11,11 +11,19 @@
       %label.col-md-2.control-label
         = _('Volume')
       .col-md-8
-        = select_tag('volume_id',
-                '',
-                'ng-model'   => 'vm.cloudVolumeBackupModel.volume',
-                'ng-options' => 'volume.name for volume in vm.volume_choices track by volume.id',
-                :required    => '',
-                'miq-select' => true)
+        %select{"name"        => "volume_id",
+                "ng-model"    => "vm.cloudVolumeBackupModel.volume",
+                "ng-options"  => "volume.name for volume in vm.volume_choices track by volume.id",
+                "miq-select"   => true}
+          %option{"value" => ""}
+            = "<#{_('New Volume')}>"
+    .form-group{"ng-if"    => "vm.cloudVolumeBackupModel.volume == null"}
+      %label.col-md-2.control-label
+        = _('New Volume Name')
+      .col-md-8
+        %input.form-control{:type          => "text",
+                            :name          => "name",
+                            'ng-model'     => "vm.cloudVolumeBackupModel.name",
+                            'ng-maxlength' => 128}
 
   = render :partial => 'layouts/angular/generic_form_buttons'
