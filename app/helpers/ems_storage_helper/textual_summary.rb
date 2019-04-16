@@ -11,11 +11,12 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"),
-                     %i[
+    relationships = %i[
                        parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
-                       cloud_object_store_containers cloud_volume_types custom_button_events
-                     ])
+                       cloud_object_store_containers custom_button_events
+      ]
+    relationships.push(:cloud_volume_types) if @record.type.include?("ManageIQ::Providers::StorageManager::CinderManager")
+    TextualGroup.new(_("Relationships"), relationships)
   end
 
   def textual_group_status
