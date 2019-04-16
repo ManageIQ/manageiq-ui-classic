@@ -179,40 +179,37 @@ describe DashboardController do
   end
 
   context "Create Dashboard" do
-    it "dashboard show" do
+    before do
+      @group = FactoryBot.create(:miq_group, :miq_user_role => FactoryBot.create(:miq_user_role))
+      @user = FactoryBot.create(:user, :miq_groups => [@group])
       # create dashboard for a group
-      ws = FactoryBot.create(:miq_widget_set, :name     => "default",
-                                              :set_data => {:last_group_db_updated => Time.now.utc,
-                              :col1 => [1], :col2 => [], :col3 => []})
+      @ws = FactoryBot.create(:miq_widget_set,
+                              :name     => "group_default",
+                              :set_data => {:last_group_db_updated => Time.now.utc,
+                                            :col1 => [], :col2 => [], :col3 => []},
+                              # :userid   => @user.userid,
+                              :group_id => @group.id)
+      @group.update(:settings => {:dashboard_order => [@ws.id]})
+    end
 
-      ur = FactoryBot.create(:miq_user_role)
-      group = FactoryBot.create(:miq_group, :miq_user_role => ur, :settings => {:dashboard_order => [ws.id]})
-      user = FactoryBot.create(:user, :miq_groups => [group])
-
-      controller.instance_variable_set(:@sb, :active_db => ws.name)
+    it "dashboard show" do
+      controller.instance_variable_set(:@sb, :active_db => @ws.name)
       controller.instance_variable_set(:@tabs, [])
-      login_as user
+      login_as @user
       # create a user's dashboard using group dashboard name.
       FactoryBot.create(:miq_widget_set,
-                        :name     => "#{user.userid}|#{group.id}|#{ws.name}",
+                        :name     => "#{@user.userid}|#{@group.id}|#{@ws.name}",
                         :set_data => {:last_group_db_updated => Time.now.utc, :col1 => [1], :col2 => [], :col3 => []})
       controller.show
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "widget_add" do
-      ur = FactoryBot.create(:miq_user_role)
-      group = FactoryBot.create(:miq_group, :miq_user_role => ur)
-      user = FactoryBot.create(:user, :miq_groups => [group])
       wi = FactoryBot.create(:miq_widget)
-      ws = FactoryBot.create(:miq_widget_set, :name     => "default",
-                                              :set_data => {:last_group_db_updated => Time.now.utc,
-                                                             :col1 => [], :col2 => [], :col3 => []},
-                                              :userid   => user.userid,
-                                              :group_id => group.id)
-      session[:sandboxes] = {"dashboard" => {:active_db  => ws.name,
-                                             :dashboards => {ws.name => {:col1 => [], :col2 => [], :col3 => []}}}}
-      login_as user
+      @ws.update(:userid => @user.userid)
+      session[:sandboxes] = {"dashboard" => {:active_db  => @ws.name,
+                                             :dashboards => {@ws.name => {:col1 => [], :col2 => [], :col3 => []}}}}
+      login_as @user
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow(MiqServer).to receive(:my_zone).and_return('default')
       allow(controller).to receive(:check_privileges).and_return(true)
@@ -222,6 +219,36 @@ describe DashboardController do
       post :widget_add, :params => { :widget => wi.id }
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("is already part of the edited dashboard")
+    end
+
+    it "reset user's dashboard upon login" do
+      controller.instance_variable_set(:@tabs, [])
+      controller.instance_variable_set(:@sb, {})
+      # login as a user, that should create a copy of dashboard for a the user
+      login_as @user
+      controller.instance_variable_set(:@sb, :active_db => @ws.name, :active_db_id => @ws.id)
+      controller.show
+
+      # change original dashboard and set reset_upon_login flag to true
+      @ws.update(:set_data => {:last_group_db_updated => Time.now.utc, :reset_upon_login => true, :col1 => [], :col2 => [], :col3 => []})
+
+      # get user's copy of dashboard and add widgets
+      user_dashboard = MiqWidgetSet.find_by(:name => @ws.name, :userid => @user.userid)
+      user_dashboard.update(:set_data => {:last_group_db_updated => Time.now.utc - 1, :col1 => [1, 2, 3], :col2 => [4], :col3 => [5, 7]})
+
+      # verify groupd dashboard and user's dashboard has different widgets
+      expect(user_dashboard.set_data[:col1]).not_to eq(@ws.set_data[:col1])
+      expect(user_dashboard.set_data[:col2]).not_to eq(@ws.set_data[:col2])
+      expect(user_dashboard.set_data[:col3]).not_to eq(@ws.set_data[:col3])
+
+      # login again to verify that the user's copy of dashboard gets reset to group dashboard settings
+      login_as @user
+      controller.instance_variable_set(:@sb, :dashboards => nil)
+      controller.show
+      user_dashboard.reload
+      expect(user_dashboard.set_data[:col1]).to eq(@ws.set_data[:col1])
+      expect(user_dashboard.set_data[:col2]).to eq(@ws.set_data[:col2])
+      expect(user_dashboard.set_data[:col3]).to eq(@ws.set_data[:col3])
     end
   end
 

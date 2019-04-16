@@ -254,6 +254,7 @@ module ReportController::Dashboards
       @sb[:new][:name] = @dashboard.name
       @sb[:new][:description] = @dashboard.description
       @sb[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : true
+      @sb[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : true
       @sb[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
       @sb[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
       @sb[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
@@ -272,6 +273,9 @@ module ReportController::Dashboards
       if params[:locked]
         @edit[:new][:locked] = params[:locked].to_i == 1
       end
+
+      @edit[:new][:reset_upon_login] = params[:reset_upon_login].to_i == 1 if params[:reset_upon_login].present?
+
       if params[:widget] # Make sure we got a widget in
         w = params[:widget].to_i
         if @edit[:new][:col3].length < @edit[:new][:col1].length &&
@@ -300,6 +304,7 @@ module ReportController::Dashboards
     @dashboard.set_data[:col2] = @edit[:new][:col2]
     @dashboard.set_data[:col3] = @edit[:new][:col3]
     @dashboard.set_data[:locked] = @edit[:new][:locked]
+    @dashboard.set_data[:reset_upon_login] = @edit[:new][:reset_upon_login]
   end
 
   def db_save_members
@@ -345,6 +350,7 @@ module ReportController::Dashboards
     @edit[:new][:name] = @dashboard.name
     @edit[:new][:description] = @dashboard.description
     @edit[:new][:locked] = @dashboard[:set_data] && @dashboard[:set_data][:locked] ? @dashboard[:set_data][:locked] : false
+    @edit[:new][:reset_upon_login] = @dashboard[:set_data] && @dashboard[:set_data][:reset_upon_login] ? @dashboard[:set_data][:reset_upon_login] : false
     @edit[:new][:col1] = @dashboard[:set_data] && @dashboard[:set_data][:col1] ? @dashboard[:set_data][:col1] : []
     @edit[:new][:col2] = @dashboard[:set_data] && @dashboard[:set_data][:col2] ? @dashboard[:set_data][:col2] : []
     @edit[:new][:col3] = @dashboard[:set_data] && @dashboard[:set_data][:col3] ? @dashboard[:set_data][:col3] : []
