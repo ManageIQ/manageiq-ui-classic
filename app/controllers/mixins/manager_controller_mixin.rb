@@ -212,6 +212,7 @@ module Mixins
       assert_privileges("#{privilege_prefix}_add_provider")
       @provider_manager = concrete_model.new
       @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
+      @sb[:action] = params[:action]
       render_form
     end
 
@@ -228,6 +229,7 @@ module Mixins
         manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
         @provider_manager     = find_record(concrete_model, manager_id)
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
+        @sb[:action] = params[:action]
         render_form
       end
     end
@@ -373,10 +375,12 @@ module Mixins
     def render_form
       presenter = rendering_objects
       @in_a_form = true
+      @sb[:action] = params[:action]
       presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => controller_name}])
       update_title(presenter)
       rebuild_toolbars(false, presenter)
       handle_bottom_cell(presenter)
+      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
 
       render :json => presenter.for_render
     end
@@ -391,6 +395,7 @@ module Mixins
       update_title(presenter)
       rebuild_toolbars(false, presenter)
       handle_bottom_cell(presenter)
+      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
 
       render :json => presenter.for_render
     end

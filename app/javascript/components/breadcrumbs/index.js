@@ -16,7 +16,7 @@ class Breadcrumbs extends Component {
         if (item.key) {
           return (
             <Breadcrumb.Item
-              key={item.key}
+              key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
               onClick={() => sendDataWithRx({ breadcrumbSelect: { path: `/${controllerName}/tree_select`, key: item.key } })}
             >
               {text}
@@ -32,7 +32,7 @@ class Breadcrumbs extends Component {
           </Breadcrumb.Item>
         );
       }
-      return <li key={index}>{text}</li>;
+      return <li key={index}>{text}</li>; // eslint-disable-line react/no-array-index-key
     });
   };
 

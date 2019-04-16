@@ -122,6 +122,7 @@ class MiqAeCustomizationController < ApplicationController
 
     @lastaction = "automate_button"
     @layout = "miq_ae_customization"
+    @sb[:action] = nil
 
     render :layout => "application" unless request.xml_http_request?
   end
@@ -150,6 +151,7 @@ class MiqAeCustomizationController < ApplicationController
   # Record clicked on in the explorer right cell
   def x_show
     @explorer = true
+    @sb[:action] = nil
     klass = x_active_tree == :old_dialogs_tree ? MiqDialog : Dialog
     @record = identify_record(params[:id], klass)
     params[:id] = x_build_node_id(@record) # Get the tree node id

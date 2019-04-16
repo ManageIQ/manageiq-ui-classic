@@ -245,11 +245,13 @@ class VmCloudController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs    => [
         {:title => _("Compute")},
         {:title => _("Cloud")},
         {:title => _("Instances")},
       ],
+      :include_record => true,
+      :show_header    => @sb[:action],
     }
   end
 

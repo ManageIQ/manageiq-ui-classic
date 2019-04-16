@@ -3,6 +3,7 @@ require "rexml/document"
 class MiqTemplateController < ApplicationController
   include VmCommon
   include Mixins::GenericListMixin
+  include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges
   before_action :get_session_data

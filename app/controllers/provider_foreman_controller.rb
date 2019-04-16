@@ -380,7 +380,6 @@ class ProviderForemanController < ApplicationController
   end
 
   def update_partials(record_showing, presenter)
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
@@ -404,6 +403,7 @@ class ProviderForemanController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
     replace_search_box(presenter)
   end
 
@@ -519,6 +519,7 @@ class ProviderForemanController < ApplicationController
         {:title => _("Management")},
       ],
       :record_title => :hostname,
+      :show_header  => @sb[:action],
     }
   end
 

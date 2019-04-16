@@ -5,6 +5,7 @@ class VmController < ApplicationController
   after_action :set_session_data
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
+  include Mixins::BreadcrumbsMixin
 
   def index
     session[:vm_type] = nil # Reset VM type if coming in from All tab

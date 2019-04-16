@@ -4,7 +4,7 @@ module MiqPolicyController::PolicyProfiles
   def profile_edit
     case params[:button]
     when "cancel"
-      @edit = nil
+      @sb[:action] = @edit = nil
       @profile = MiqPolicySet.find(session[:edit][:profile_id]) if session[:edit] && session[:edit][:profile_id]
       if @profile.blank?
         add_flash(_("Add of new Policy Profile was cancelled by the user"))

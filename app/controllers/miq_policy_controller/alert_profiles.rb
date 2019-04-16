@@ -7,7 +7,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_cancel
     return unless alert_profile_edit_load_edit
-    @edit = nil
+    @sb[:action] = @edit = nil
     if @alert_profile && @alert_profile.id.blank?
       add_flash(_("Add of new Alert Profile was cancelled by the user"))
     else
@@ -58,7 +58,7 @@ module MiqPolicyController::AlertProfiles
     add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
     alert_profile_sync_provider(current, mems.keys)
-    @edit = nil
+    @sb[:action] = @edit = nil
     self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{alert_profile.id}"
     get_node_info(@new_alert_profile_node)
     replace_right_cell(:nodetype => "ap", :replace_trees => %i[alert_profile], :remove_form_buttons => true)

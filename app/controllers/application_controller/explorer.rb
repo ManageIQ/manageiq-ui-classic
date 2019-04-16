@@ -165,6 +165,7 @@ module ApplicationController::Explorer
 
   # Tree node selected in explorer
   def tree_select(node_info = false)
+    @sb[:action] = nil if @sb
     @explorer = true
     @lastaction = "explorer"
     self.x_active_tree = params[:tree] if params[:tree]
@@ -250,7 +251,7 @@ module ApplicationController::Explorer
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
     add_flash(_("Tag Edit was cancelled by the user"))
     get_node_info(x_node)
-    @edit = nil # clean out the saved info
+    @sb[:action] = @edit = nil # clean out the saved info
     replace_right_cell
   end
 
