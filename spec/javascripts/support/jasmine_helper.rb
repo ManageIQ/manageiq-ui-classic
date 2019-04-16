@@ -47,6 +47,16 @@ class WebpackPack
   end
 end
 
+class JasmineConfig
+  def initialize(file)
+    @config = YAML.load_file(file)
+  end
+
+  def call(env)
+    [200, {"Content-Type" => "application/json"}, [@config.to_json]]
+  end
+end
+
 Jasmine.configure do |config|
   # never install phantomjs
   config.prevent_phantom_js_auto_install = true
@@ -73,4 +83,7 @@ Jasmine.configure do |config|
 
   # serve weback-compiled packs from public/packs/ on /packs/
   config.add_rack_path('/packs', -> { WebpackPack.new })
+
+  # serve config as json
+  config.add_rack_path('/jasmine.yml.json', -> { JasmineConfig.new(File.join(__dir__, 'jasmine.yml')) })
 end
