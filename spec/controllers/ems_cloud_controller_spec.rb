@@ -722,7 +722,7 @@ describe EmsCloudController do
     end
 
     it "renders 'Set Default' button when a user defined search exists" do
-      ems = FactoryBot.create(:ems_amazon)
+      FactoryBot.create(:ems_amazon)
       MiqSearch.create(:db          => 'EmsCloud',
                        :search_type => "user",
                        :description => 'abc',
@@ -731,6 +731,17 @@ describe EmsCloudController do
       get :show_list
       expect(response.status).to eq(200)
       expect(response.body).to have_selector("button[title*='Select a filter to set it as my default']", :text => "Set Default")
+    end
+
+    it "renders a welcoming page when no provider exists" do
+      MiqSearch.create(:db          => 'EmsCloud',
+                       :search_type => "user",
+                       :description => 'abc',
+                       :name        => 'abc',
+                       :search_key  => session[:userid])
+      get :show_list
+      expect(response.status).to eq(200)
+      expect(response.body).to have_link("Add a Provider")
     end
 
     it "does not render set default button when a user defined search does not exist" do
