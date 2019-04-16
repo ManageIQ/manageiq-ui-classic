@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 109 ending 2019-04-15
+
+### Added
+- Menu Simplification: move Utilization from Optimize to Cloud Intel [(#5448)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5448)
+- Add Provider to Clusters tile list views [(#5425)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5425)
+- Showing default value for date/time picker in service dialog preview [(#5400)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5400)
+- Add Compliance details to Provider details page [(#5398)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5398)
+- Remove Catalog Item / Catalog Bundle Modal [(#5388)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5388)
+- Display IDs of VMs Reports Result ...  [(#5342)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5342)
+- Allow restoring backups to new volumes [(#4623)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4623)
+
+### Fixed
+- Fix async validation in catalog form [(#5440)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5440)
+- Remove x_edit_buttons from Catalog Edit Tags [(#5439)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5439)
+- Don't show x_edit_buttons for tagging screen [(#5436)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5436)
+- Fix: error loading configuration screen when key/value settings exists on top level [(#5428)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5428)
+- Fix changing title after clicking quadicon in Instance Policy sim page [(#5423)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5423)
+- Fixes breadcrumb when disabling/enabling schedules [(#5422)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5422)
+- Display info about unavailable fields while adding/editing report [(#5418)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5418)
+- Action Details screen styling fix [(#5407)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5407)
+- Fix error while clicking quadicon after running policy simulation [(#5405)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5405)
+- Added automatic virtual DOM clean up. [(#5404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5404)
+- miqSetToolbarCount - fix setting toolbar counts [(#5403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5403)
+- Container Projects Dashboard & Alerts Overview fix [(#5393)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5393)
+- Swap ng-if with ng-show on VMRC Console in ems common. [(#5334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5334)
+
 ## Unreleased as of Sprint 108 ending 2019-04-01
 
 ### Added
