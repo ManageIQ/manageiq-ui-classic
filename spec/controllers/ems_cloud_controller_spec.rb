@@ -722,6 +722,7 @@ describe EmsCloudController do
     end
 
     it "renders 'Set Default' button when a user defined search exists" do
+      ems = FactoryBot.create(:ems_amazon)
       MiqSearch.create(:db          => 'EmsCloud',
                        :search_type => "user",
                        :description => 'abc',

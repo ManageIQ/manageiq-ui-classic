@@ -58,7 +58,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def show_list_with_no_provider?
-    return %w[
+    %w[
       automation_manager
       ems_cloud
       ems_container
@@ -119,9 +119,13 @@ module ApplicationHelper::PageLayouts
   end
 
   def miq_layout_center_div_no_listnav_class
-    (!@in_a_form && (@lastaction == "show_dashboard" ||
-                     @layout == "monitor_alerts_overview")) ||
-    show_list_with_no_provider? ? 'miq-body' : ''
+    if (!@in_a_form && (@lastaction == "show_dashboard" ||
+                        @layout == "monitor_alerts_overview")) ||
+        show_list_with_no_provider?
+      'miq-body'
+    else
+      ''
+    end
   end
 
   def center_div_partial
