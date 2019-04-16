@@ -760,15 +760,26 @@ describe CatalogController do
     end
 
     describe "#st_set_form_vars" do
-      before do
-        bundle = FactoryBot.create(:service_template)
-        controller.instance_variable_set(:@record, bundle)
+      before { controller.instance_variable_set(:@record, bundle) }
+
+      context 'already existing catalog bundle' do
+        let(:bundle) { FactoryBot.create(:service_template) }
+
+        it "loads entry points for Catalog Bundle from the DB" do
+          controller.send(:st_set_form_vars)
+          expect(assigns(:edit)[:new][:fqname]).to eq("")
+          expect(assigns(:edit)[:new][:retire_fqname]).to eq("")
+        end
       end
 
-      it "sets default entry points for Catalog Bundle" do
-        controller.send(:st_set_form_vars)
-        expect(assigns(:edit)[:new][:fqname]).to include("CatalogBundleInitialization")
-        expect(assigns(:edit)[:new][:retire_fqname]).to include("Default")
+      context 'newly created catalog bundle' do
+        let(:bundle) { FactoryBot.build(:service_template) }
+
+        it "sets default entry points for Catalog Bundle" do
+          controller.send(:st_set_form_vars)
+          expect(assigns(:edit)[:new][:fqname]).to include("CatalogBundleInitialization")
+          expect(assigns(:edit)[:new][:retire_fqname]).to include("Default")
+        end
       end
     end
 

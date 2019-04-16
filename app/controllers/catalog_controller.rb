@@ -1281,7 +1281,8 @@ class CatalogController < ApplicationController
     @edit[:new] = {}
     @edit[:current] = {}
     set_form_vars
-    default_entry_point("generic", "composite")
+    # Set the default entry points if the record not yet in the DB
+    default_entry_point("generic", "composite") if @record.id.nil?
     @edit[:new][:service_type] = "composite"
     @edit[:new][:rsc_groups] = []
     @edit[:new][:selected_resources] = []
