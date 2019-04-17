@@ -1,6 +1,7 @@
 class TreeBuilderVmsInstancesFilter < TreeBuilderVmsFilter
-  def tree_init_options
-    super.update(:leaf => 'Vm')
+  def initialize(*args)
+    @root_class = Vm
+    super(*args)
   end
 
   def root_options

@@ -1,6 +1,7 @@
 class TreeBuilderTemplatesImagesFilter < TreeBuilderVmsFilter
-  def tree_init_options
-    super.update(:leaf => 'MiqTemplate')
+  def initialize(*args)
+    @root_class = MiqTemplate
+    super(*args)
   end
 
   def root_options

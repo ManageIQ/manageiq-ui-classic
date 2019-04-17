@@ -1,6 +1,7 @@
 class TreeBuilderInstancesFilter < TreeBuilderVmsFilter
-  def tree_init_options
-    super.update(:leaf => 'ManageIQ::Providers::CloudManager::Vm')
+  def initialize(*args)
+    @root_class = ManageIQ::Providers::CloudManager::Vm
+    super(*args)
   end
 
   def root_options

@@ -1,6 +1,7 @@
 class TreeBuilderImagesFilter < TreeBuilderVmsFilter
-  def tree_init_options
-    super.update(:leaf => 'ManageIQ::Providers::CloudManager::Template')
+  def initialize(*args)
+    @root_class = ManageIQ::Providers::CloudManager::Template
+    super(*args)
   end
 
   def root_options

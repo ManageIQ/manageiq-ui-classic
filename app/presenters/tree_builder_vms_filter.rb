@@ -1,8 +1,12 @@
 class TreeBuilderVmsFilter < TreeBuilder
+  def initialize(*args)
+    @root_class = ManageIQ::Providers::InfraManager::Vm
+    super(*args)
+  end
+
   def tree_init_options
     {
       :open_all       => true,
-      :leaf           => 'ManageIQ::Providers::InfraManager::Vm',
       :allow_reselect => true
     }
   end
@@ -23,8 +27,8 @@ class TreeBuilderVmsFilter < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, options)
-    objects = MiqSearch.where(:db => options[:leaf]).filters_by_type(object[:id])
+  def x_get_tree_custom_kids(object, count_only, _options)
+    objects = MiqSearch.where(:db => @root_class).filters_by_type(object[:id])
     count_only_or_objects(count_only, objects, 'description')
   end
 end
