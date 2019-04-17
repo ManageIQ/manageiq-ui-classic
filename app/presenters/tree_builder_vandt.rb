@@ -3,7 +3,6 @@ class TreeBuilderVandt < TreeBuilder
 
   def tree_init_options
     {
-      :leaf           => 'ManageIQ::Providers::InfraManager::VmOrTemplate',
       :lazy           => true,
       :allow_reselect => true
     }

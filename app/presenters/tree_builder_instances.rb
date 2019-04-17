@@ -4,7 +4,7 @@ class TreeBuilderInstances < TreeBuilder
   include TreeBuilderArchived
 
   def tree_init_options
-    {:leaf => 'VmCloud', :allow_reselect => true}
+    {:allow_reselect => true}
   end
 
   def root_options
