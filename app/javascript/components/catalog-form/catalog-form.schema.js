@@ -29,7 +29,7 @@ function createSchema(options, catalogId) {
       label: __('Name'),
       maxLength: 40,
       autoFocus: true,
-      validateOnMount: true,
+      isRequired: true,
     }, {
       component: componentTypes.TEXT_FIELD,
       name: 'description',

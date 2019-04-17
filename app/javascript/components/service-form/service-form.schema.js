@@ -5,7 +5,7 @@ function createSchema(maxNameLen, maxDescLen) {
       name: 'name',
       maxLength: maxNameLen,
       label: __('Name'),
-      validateOnMount: true,
+      isRequired: true,
       autoFocus: true,
       validate: [{
         type: 'required-validator',
@@ -15,7 +15,7 @@ function createSchema(maxNameLen, maxDescLen) {
       name: 'description',
       maxLength: maxDescLen,
       label: __('Description'),
-      validateOnMount: true,
+      isRequired: true,
       autoFocus: true,
       validate: [{
         type: 'required-validator',

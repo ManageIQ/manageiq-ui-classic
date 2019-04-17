@@ -11,7 +11,7 @@ function createSchema(renderEmsChoices, emsChoices) {
     }],
     label: __('Tenant Name'),
     maxLength: 128,
-    validateOnMount: true,
+    isRequired: true,
   }];
   if (!renderEmsChoices) {
     fields = [{
@@ -19,7 +19,7 @@ function createSchema(renderEmsChoices, emsChoices) {
       name: 'ems_id',
       label: __('Cloud Provider/Parent Cloud Tenant'),
       placeholder: `<${__('Choose')}>`,
-      validateOnMount: true,
+      isRequired: true,
       validate: [{
         type: 'required-validator',
       }],

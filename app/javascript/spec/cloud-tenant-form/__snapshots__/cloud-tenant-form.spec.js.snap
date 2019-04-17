@@ -22,6 +22,7 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
         "fields": Array [
           Object {
             "component": "select-field",
+            "isRequired": true,
             "label": "Cloud Provider/Parent Cloud Tenant",
             "name": "ems_id",
             "options": Array [
@@ -48,10 +49,10 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
                 "type": "required-validator",
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "isRequired": true,
             "label": "Tenant Name",
             "maxLength": 128,
             "name": "name",
@@ -60,7 +61,6 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
                 "type": "required-validator",
               },
             ],
-            "validateOnMount": true,
           },
         ],
       }
@@ -91,6 +91,7 @@ exports[`Cloud tenant form component should render editing form variant 1`] = `
         "fields": Array [
           Object {
             "component": "text-field",
+            "isRequired": true,
             "label": "Tenant Name",
             "maxLength": 128,
             "name": "name",
@@ -99,7 +100,6 @@ exports[`Cloud tenant form component should render editing form variant 1`] = `
                 "type": "required-validator",
               },
             ],
-            "validateOnMount": true,
           },
         ],
       }

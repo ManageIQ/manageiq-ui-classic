@@ -5,7 +5,7 @@ const createSchema = () => ({
     name: 'git_url',
     label: __('Git URL'),
     component: componentTypes.TEXT_FIELD,
-    validateOnMount: true,
+    isRequired: true,
     validate: [{
       type: validatorTypes.REQUIRED,
     }, {

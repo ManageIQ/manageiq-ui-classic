@@ -10,7 +10,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       }],
       options: emsList.map(item => ({ label: item.name, value: item.id })),
       label: __('Provider'),
-      validateOnMount: true,
+      isRequired: true,
       isSearchable: true,
     },
     {
@@ -21,7 +21,7 @@ function addSchema(emsList = [], cloudTenants = []) {
         message: __('Required'),
       }],
       label: __('Name'),
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -44,7 +44,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       label: __('Ram size in MB'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -66,7 +66,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       label: __('VCPUs'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -88,7 +88,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       label: __('Disk size in GB'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -110,7 +110,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       label: __('Swap size in MB'),
       dataType: 'integer',
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.TEXT_FIELD,
@@ -131,7 +131,7 @@ function addSchema(emsList = [], cloudTenants = []) {
       }],
       label: __('RXTX factor'),
       type: 'number',
-      validateOnMount: true,
+      isRequired: true,
     },
     {
       component: componentTypes.SWITCH,

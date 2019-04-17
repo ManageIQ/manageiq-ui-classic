@@ -23,13 +23,13 @@ exports[`Catalog form component should render add variant form 1`] = `
               Object {
                 "autoFocus": true,
                 "component": "text-field",
+                "isRequired": true,
                 "label": "Name",
                 "maxLength": 40,
                 "name": "name",
                 "validate": Array [
                   [Function],
                 ],
-                "validateOnMount": true,
               },
               Object {
                 "component": "text-field",
@@ -113,13 +113,13 @@ exports[`Catalog form component should render edit variant form 1`] = `
               Object {
                 "autoFocus": true,
                 "component": "text-field",
+                "isRequired": true,
                 "label": "Name",
                 "maxLength": 40,
                 "name": "name",
                 "validate": Array [
                   [Function],
                 ],
-                "validateOnMount": true,
               },
               Object {
                 "component": "text-field",

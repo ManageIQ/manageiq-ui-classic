@@ -23,6 +23,7 @@ exports[`Flavor form component should render form 1`] = `
         "fields": Array [
           Object {
             "component": "select-field",
+            "isRequired": true,
             "isSearchable": true,
             "label": "Provider",
             "name": "ems_id",
@@ -32,10 +33,10 @@ exports[`Flavor form component should render form 1`] = `
                 "type": "required-validator",
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "isRequired": true,
             "label": "Name",
             "name": "name",
             "validate": Array [
@@ -44,11 +45,11 @@ exports[`Flavor form component should render form 1`] = `
                 "type": "required-validator",
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "isRequired": true,
             "label": "Ram size in MB",
             "name": "ram",
             "type": "number",
@@ -68,11 +69,11 @@ exports[`Flavor form component should render form 1`] = `
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "isRequired": true,
             "label": "VCPUs",
             "name": "vcpus",
             "type": "number",
@@ -92,11 +93,11 @@ exports[`Flavor form component should render form 1`] = `
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "isRequired": true,
             "label": "Disk size in GB",
             "name": "disk",
             "type": "number",
@@ -116,11 +117,11 @@ exports[`Flavor form component should render form 1`] = `
                 "value": 1,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
             "dataType": "integer",
+            "isRequired": true,
             "label": "Swap size in MB",
             "name": "swap",
             "type": "number",
@@ -140,10 +141,10 @@ exports[`Flavor form component should render form 1`] = `
                 "value": 0,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "component": "text-field",
+            "isRequired": true,
             "label": "RXTX factor",
             "name": "rxtx_factor",
             "type": "number",
@@ -163,7 +164,6 @@ exports[`Flavor form component should render form 1`] = `
                 "value": 0,
               },
             ],
-            "validateOnMount": true,
           },
           Object {
             "assignFieldProvider": true,
