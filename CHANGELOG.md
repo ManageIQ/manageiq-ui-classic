@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-5
+
+### Added
+- Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
+- Add IDs to vertical menu leaf items [(#5063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5063)
+- Added "Preserve owner?" checkbox on Import report screen [(#5060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5060)
+
+### Fixed
+- Fix wrong displayed elapsed time in the service [(#5260)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5260)
+- Add Memory for Amazon Availability Zones [(#5256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5256)
+- Fixed condition to use correct feature id [(#5362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5362)
+- Use ljust to left justify and pad strings [(#5254)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5254)
+- Fix the access to child services from parents under My Services [(#5384)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5384)
+- Fixed display of default memory threshold correctly on new appliance [(#5394)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5394)
+- Add safeguard for VMs without ext_management_system [(#5339)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5339)
+- Don't throw exception when template is not found in Provisioning [(#5345)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5345)
+
 ## Unreleased as of Sprint 109 ending 2019-04-15
 
 ### Added
@@ -43,19 +60,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Put back the missing TreeBuilderUtilization#get_tree_custom_kids [(#5411)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5411)
 - Cancel and save buttons clear @sb[:action] in miq_ae_class [(#5399)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5399)
-- Fixed display of default memory threshold correctly on new appliance [(#5394)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5394)
 - Fix room display in physical infra summary views [(#5386)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5386)
-- Fix the access to child services from parents under My Services [(#5384)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5384)
 - Fix preselect node in servers by roles tree under diagnostics [(#5382)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5382)
 - Adjust accordion height calculation hack to the new breadcrumbs [(#5381)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5381)
 - Fix missed argument change for compliance history tree [(#5376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5376)
 - Services use turbo button [(#5366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5366)
 - Fixes segmentation_id and physical_network required (in Cloud Network form) [(#5364)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5364)
-- Fixed condition to use correct feature id [(#5362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5362)
 - Subscription ID is required when adding readOnly when editing (Azure) [(#5359)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5359)
 - Fix creating a group after validation message 'already exists' [(#5354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5354)
-- Don't throw exception when template is not found in Provisioning [(#5345)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5345)
-- Add safeguard for VMs without ext_management_system [(#5339)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5339)
 - Allow user to select Network Port for provisioning [(#5103)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5103)
 
 ## Hammer-4 - Released 2019-03-29
@@ -100,10 +112,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fixes value of validate_id in host form [(#5289)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5289)
 - Fix add new action [(#5286)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5286)
 - Add All Custom Button Events page to Cloud Network [(#5277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5277)
-- Fix wrong displayed elapsed time in the service [(#5260)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5260)
 - Do not show Refresh button on Monitoring page [(#5258)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5258)
-- Add Memory for Amazon Availability Zones [(#5256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5256)
-- Use ljust to left justify and pad strings [(#5254)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5254)
 - Fix the label of Custom Button Events for infra providers [(#5251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5251)
 - Fixed explanation of brand image positioning under Custom Logos [(#5250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5250)
 - Advanced Search Save: don't create unnecessary flash message [(#5220)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5220)
@@ -160,7 +169,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
 - Send button_order via API [(#5143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5143)
 - Rename WebsocketWorker to RemoteConsoleWorker [(#5136)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5136)
-- Added "Preserve owner?" checkbox on Import report screen  [(#5060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5060)
 - Flavor add form converted to data-driven-forms [(#5055)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5055)
 - Fix labels for Scale Infrastructure Provider form [(#4896)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4896)
 - Allow the suspension of cloud infra and physical infra providers [(#4269)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4269)
@@ -1241,10 +1249,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - Added i18n form data-driven-forms default validation messages. [(#5068)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5068)
-- Add IDs to vertical menu leaf items [(#5063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5063)
 - uib-tooltip - respect newlines in tooltips [(#5038)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5038)
 - Include cloud tenant name column in Security Group list view [(#5037)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5037)
-- Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
 
 ### Fixed
 - Monitoring > Alerts - sparkle when loading [(#5066)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5066)
