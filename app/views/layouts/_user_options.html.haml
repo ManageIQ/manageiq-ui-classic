@@ -1,4 +1,8 @@
 - if current_user
+  - if ApplicationHelper.role_allows?(:feature => 'ops_explorer', :any => true)
+    %li.dropdown
+      %a.nav-item-iconic{:href => '/ops/explorer', :title => _('Configuration')}
+        %i.fa.fa-cog
   %li.dropdown
     %a{:href => "#", :class => "dropdown-toggle nav-item-iconic", :id => "dropdownMenu2", "data-toggle" => "dropdown", "aria-haspopup" => "true"}
       %span.pficon.pficon-user
