@@ -321,6 +321,56 @@ describe MiqRequestController do
     end
   end
 
+  context 'showing details of a physical server provisioning task' do
+    before do
+      @user = stub_admin
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:server1) { FactoryBot.create(:physical_server) }
+    let(:server2) { FactoryBot.create(:physical_server) } # not part of request
+    let(:request) do
+      FactoryBot.create(:physical_server_provision_request,
+                        :type      => 'PhysicalServerProvisionRequest',
+                        :requester => @user,
+                        :options   => {:src_ids => [server1.id]})
+    end
+
+    let(:payload) { { :model_name => 'PhysicalServer', additional_key => additional_val } }
+    let(:additional_val) do
+      {
+        :model       => 'PhysicalServer',
+        :view_suffix => 'PhysicalServerProvisionRequest',
+        :display     => 'main',
+        :gtl_type    => 'list'
+      }
+    end
+
+    context 'angular for grid with affected PhysicalServers is properly initialized' do
+      let(:additional_key) { :report_data_additional_options }
+      it do
+        expect(controller).to receive(:prov_set_show_vars).once.and_call_original
+
+        # Verify Rails correctly initializes Angular which will then perform POST /report_data to fetch the PhysicalServers.
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(**payload)
+
+        get :show, :params => {:id => request.id}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'angular for grid with affected PhysicalServers gets the correct objects with XHR call' do
+      let(:additional_key) { :additional_options }
+      it do
+        post :report_data, :params => payload.merge(:records => [server1.id])
+        expect(response.status).to eq(200)
+
+        # Verify Angular got correct PhysicalServers when sending the payload as set by previous test.
+        expect(JSON.parse(response.body).dig('data', 'rows').map { |row| row['id'] }).to eq([server1.id.to_s])
+      end
+    end
+  end
+
   context "#edit_button" do
     before do
       stub_user(:features => :all)

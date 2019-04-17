@@ -805,6 +805,9 @@ module ApplicationController::MiqRequestMethods
       if (service_id = @miq_request.options[:src_ids].first) && (service = Service.find_by(:id => service_id)) && Rbac.filtered_object(service)
         @view, @pages = get_view(Vm, :parent => service, :view_suffix => 'OrchestrationStackRetireRequest')
       end
+    elsif @miq_request.resource_type == 'PhysicalServerProvisionRequest'
+      @selected_ids = @miq_request.options[:src_ids]
+      @view, @pages = get_view(PhysicalServer, :view_suffix => 'PhysicalServerProvisionRequest')
     else
       @options = @miq_request.options
       @options[:memory], @options[:mem_typ] = reconfigure_calculations(@options[:vm_memory][0]) if @options[:vm_memory]
