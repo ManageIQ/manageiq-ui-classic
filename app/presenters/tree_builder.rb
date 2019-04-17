@@ -56,7 +56,6 @@ class TreeBuilder
 
   # The possible options are
   # * full_ids - whether to generate full node IDs or not
-  # * leaf - class of the leaf nodes
   # * open_all - expand all expandable nodes
   # * lazy - is the tree lazily-loadable
   # * checkboxes - show checkboxes for the nodes
@@ -173,7 +172,6 @@ class TreeBuilder
         :tree       => @name,
         :type       => type,
         :klass_name => self.class.name,
-        :leaf       => @options[:leaf],
         :open_nodes => []
       )
     )
@@ -213,7 +211,6 @@ class TreeBuilder
   # Build an explorer tree, from scratch
   # Options:
   # :type                   # Type of tree, i.e. :handc, :vandt, :filtered, etc
-  # :leaf                   # Model name of leaf nodes, i.e. "Vm"
   # :open_nodes             # Tree node ids of currently open nodes
   # :full_ids               # stack parent id on top of each node id
   # :lazy                   # set if tree is lazy
