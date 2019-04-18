@@ -1109,14 +1109,6 @@ module ApplicationHelper
       %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end
 
-  def update_query_string_params(update_this_param)
-    exclude_params = %w[button flash_msg page ppsetting pressed sortby sort_choice type]
-    query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
-    updated_query_string = query_string.symbolize_keys
-    updated_query_string.delete_if { |k, _v| exclude_params.include?(k.to_s) }
-    updated_query_string.merge!(update_this_param)
-  end
-
   def placeholder_if_present(password)
     password.present? ? "\u25cf" * 8 : ''
   end
