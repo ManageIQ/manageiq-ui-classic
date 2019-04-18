@@ -1004,7 +1004,7 @@ class MiqAeClassController < ApplicationController
       location = method.location
     end
 
-    if %w(ansible_job_template ansible_workflow_template).include?(location)
+    if %w[ansible_job_template ansible_workflow_template].include?(location)
       # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
       list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager
                          .where(:enabled => true)
@@ -2161,7 +2161,7 @@ class MiqAeClassController < ApplicationController
 
   # these are written in angular
   def playbook_style_location?(location)
-    %w(playbook ansible_job_template ansible_workflow_template).include?(location)
+    %w[playbook ansible_job_template ansible_workflow_template].include?(location)
   end
   helper_method :playbook_style_location?
 
