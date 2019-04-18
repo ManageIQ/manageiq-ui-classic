@@ -2782,8 +2782,4 @@ class MiqAeClassController < ApplicationController
   def accord_name
     features.find { |f| f.accord_name == x_active_accord.to_s }.try(:title)
   end
-
-  def accord_container
-    features.find { |f| f.accord_name == x_active_accord.to_s }.try(:container)
-  end
 end
