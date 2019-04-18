@@ -154,9 +154,4 @@ class PrometheusProxyService < HawkularProxyService
   def prometheus_endpoint
     @ems.connection_configurations.prometheus.try(:endpoint)
   end
-
-  def prometheus_uri
-    prometheus_endpoint_empty = prometheus_endpoint.try(:hostname).blank?
-    prometheus_endpoint_empty ? @ems.hostname : prometheus_endpoint.hostname
-  end
 end
