@@ -7,25 +7,25 @@ class TreeBuilderConfiguredSystems < TreeBuilder
     {:lazy => true, :allow_reselect => true}
   end
 
-  def x_get_tree_custom_kids(object, count_only, options)
-    count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
+  def x_get_tree_custom_kids(object, count_only, _options)
+    count_only_or_objects(count_only, x_get_search_results(object))
   end
 
-  def x_get_search_results(object, leaf)
+  def x_get_search_results(object)
     case object[:id]
     when "global" # Global filters
-      x_get_global_filter_search_results(leaf)
+      x_get_global_filter_search_results
     when "my"     # My filters
-      x_get_my_filter_search_results(leaf)
+      x_get_my_filter_search_results
     end
   end
 
-  def x_get_global_filter_search_results(leaf)
-    MiqSearch.where(:db => leaf).visible_to_all.sort_by { |a| a.description.downcase }
+  def x_get_global_filter_search_results
+    MiqSearch.where(:db => @root_class).visible_to_all.sort_by { |a| a.description.downcase }
   end
 
-  def x_get_my_filter_search_results(leaf)
-    MiqSearch.where(:db => leaf, :search_type => "user", :search_key => User.current_user.userid)
+  def x_get_my_filter_search_results
+    MiqSearch.where(:db => @root_class, :search_type => "user", :search_key => User.current_user.userid)
              .sort_by { |a| a.description.downcase }
   end
 

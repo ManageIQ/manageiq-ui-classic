@@ -3,7 +3,6 @@ class TreeBuilderImages < TreeBuilder
 
   def tree_init_options
     {
-      :leaf           => "ManageIQ::Providers::CloudManager::Template",
       :lazy           => true,
       :allow_reselect => true
     }

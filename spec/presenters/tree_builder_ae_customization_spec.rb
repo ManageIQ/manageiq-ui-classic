@@ -7,7 +7,6 @@ describe TreeBuilderAeCustomization do
         :tree        => :dialog_import_export_tree,
         :type        => :dialog_import_export,
         :klass_name  => "TreeBuilderAeCustomization",
-        :leaf        => nil,
         :open_nodes  => [],
         :open_all    => true,
         :active_node => "root"

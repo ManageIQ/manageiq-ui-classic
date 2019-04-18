@@ -1,9 +1,10 @@
 class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSystems
-  private
-
-  def tree_init_options
-    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
+  def initialize(*args)
+    @root_class = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    super(*args)
   end
+
+  private
 
   def root_options
     {
