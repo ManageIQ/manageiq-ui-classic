@@ -404,6 +404,7 @@
   ReportDataController.prototype.setExtraClasses = function(viewType) {
     var mainContent = this.$document.querySelector('#main-content');
     var pagination = this.$document.querySelector('#paging_div .miq-pagination');
+    var formDiv = this.$document.querySelector('form');
 
     if (!mainContent) {
       return;
@@ -414,7 +415,9 @@
     angular.element(pagination).css('display', 'none');
 
     if (viewType === 'grid' || viewType === 'tile') {
-      angular.element(mainContent).addClass('miq-sand-paper');
+      if (typeof formDiv === undefined || formDiv === null) {
+        angular.element(mainContent).addClass('miq-sand-paper');
+      }
       angular.element(pagination).css('display', 'block');
     } else if (viewType === 'list') {
       angular.element(mainContent).addClass('miq-list-content');
