@@ -189,7 +189,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' :
       'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow';
 
-    return API.get(`/api/configuration_scripts?expand=resources&collection_class=${klass}&filter[]=manager_id=${manager.id}`)
+    return API.get(`/api/configuration_scripts?expand=resources&collection_class=${klass}&filter[]=manager_id=${manager.id}&sort_by=name&sort_order=asc`)
       .then(function(data) {
         $scope.vm.aeMethodModel.ansible_templates = data.resources;
       })
