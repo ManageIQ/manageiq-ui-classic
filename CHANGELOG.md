@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-4
+## Hammer-5
+
+### Added
+- Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
+- Add IDs to vertical menu leaf items [(#5063)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5063)
+- Added "Preserve owner?" checkbox on Import report screen [(#5060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5060)
+
+### Fixed
+- Fix wrong displayed elapsed time in the service [(#5260)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5260)
+- Add Memory for Amazon Availability Zones [(#5256)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5256)
+- Fixed condition to use correct feature id [(#5362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5362)
+- Use ljust to left justify and pad strings [(#5254)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5254)
+- Fix the access to child services from parents under My Services [(#5384)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5384)
+- Fixed display of default memory threshold correctly on new appliance [(#5394)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5394)
+- Add safeguard for VMs without ext_management_system [(#5339)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5339)
+- Don't throw exception when template is not found in Provisioning [(#5345)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5345)
+
+## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Fix enabling Power operations for a template [(#5128)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5128)
@@ -18,7 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Ansible job launch confirmation message fix [(#5226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5226)
 - Hide services from the Services tree as its redundant and slow [(#5335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5335)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Do not allow to embed a method into itself in automate [(#4753)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4753)
