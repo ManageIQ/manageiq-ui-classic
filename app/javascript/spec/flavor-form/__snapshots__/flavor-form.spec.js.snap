@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Flavor form component should render form 1`] = `
-<div
-  className="container-fluid"
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
 >
   <MiqFormRenderer
     buttonsLabels={
@@ -12,6 +14,7 @@ exports[`Flavor form component should render form 1`] = `
     }
     initialValues={
       Object {
+        "ems_id": 1,
         "is_public": true,
         "rxtx_factor": "1.0",
       }
@@ -26,7 +29,16 @@ exports[`Flavor form component should render form 1`] = `
             "isSearchable": true,
             "label": "Provider",
             "name": "ems_id",
-            "options": Array [],
+            "options": Array [
+              Object {
+                "label": "name1",
+                "value": 1,
+              },
+              Object {
+                "label": "name2",
+                "value": 2,
+              },
+            ],
             "validate": Array [
               Object {
                 "type": "required-validator",
@@ -185,12 +197,21 @@ exports[`Flavor form component should render form 1`] = `
             "label": "Cloud Tenant",
             "multi": true,
             "name": "cloud_tenant_refs",
-            "options": Array [],
+            "options": Array [
+              Object {
+                "label": "name3",
+                "value": undefined,
+              },
+              Object {
+                "label": "name4",
+                "value": undefined,
+              },
+            ],
             "placeholder": "Nothing selected",
           },
         ],
       }
     }
   />
-</div>
+</Grid>
 `;

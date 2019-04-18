@@ -11,7 +11,7 @@ class FlavorForm extends Component {
     super(props);
     this.state = {
       initialValues: { is_public: true, rxtx_factor: '1.0' },
-      schema: addSchema(),
+      isLoading: true,
     };
   }
 
@@ -23,6 +23,7 @@ class FlavorForm extends Component {
         schema: addSchema(ems_list, cloud_tenants),
         emsList: ems_list,
         cloudTenants: cloud_tenants.map(item => ({ label: item.name, value: item.id })),
+        isLoading: false,
       })), miqSparkleOff());
   }
 
@@ -72,11 +73,17 @@ class FlavorForm extends Component {
   }
 
   render() {
+    const { isLoading, initialValues, schema } = this.state;
+
+    if (isLoading) {
+      return null;
+    }
+
     return (
       <Grid fluid>
         <MiqFormRenderer
-          initialValues={this.state.initialValues}
-          schema={this.state.schema}
+          initialValues={initialValues}
+          schema={schema}
           onSubmit={this.submitValues}
           onCancel={this.cancelClicked}
           buttonsLabels={{

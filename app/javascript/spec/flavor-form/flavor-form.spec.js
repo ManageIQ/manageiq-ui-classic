@@ -8,6 +8,7 @@ import '../helpers/mockAsyncRequest';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/miqFlashLater';
+import { wrap } from 'module';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
@@ -39,20 +40,34 @@ describe('Flavor form component', () => {
     submitSpyMiqSparkleOff.mockRestore();
   });
 
-  it('should render form', () => {
-    const wrapper = shallow(<FlavorForm />).dive();
-    expect(toJson(wrapper)).toMatchSnapshot();
+  it('should render form', (done) => {
+    fetchMock
+      .mock('/flavor/ems_list', emsList)
+      .mock('/flavor/cloud_tenants', cloudTenants);
+    const wrapper = shallow(<FlavorForm />);
+    setImmediate(() => {
+      wrapper.update();
+      expect(toJson(wrapper)).toMatchSnapshot();
+      done();
+    });
   });
 
-  it('should call cancel callback ', () => {
+  it('should call cancel callback ', (done) => {
+    fetchMock
+      .mock('/flavor/ems_list', emsList)
+      .mock('/flavor/cloud_tenants', cloudTenants);
     const wrapper = mount(<FlavorForm />);
     const message = __('Add of Flavor cancelled by user.');
     const url = '/flavor/show_list';
 
-    const button = wrapper.find('button').last();
-    button.simulate('click');
-    expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
-    expect(miqRedirectBack).toHaveBeenCalledWith(message, 'warn', url);
+    setImmediate(() => {
+      wrapper.update();
+      const button = wrapper.find('button').last();
+      button.simulate('click');
+      expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
+      expect(miqRedirectBack).toHaveBeenCalledWith(message, 'warn', url);
+      done();
+    });
   });
 
   it('should request data after mount and set to state', (done) => {
@@ -85,12 +100,21 @@ describe('Flavor form component', () => {
     });
   });
 
-  it('should not submit values when form is not valid', () => {
+  it('should not submit values when form is not valid', (done) => {
+    fetchMock
+      .mock('/flavor/ems_list', emsList)
+      .mock('/flavor/cloud_tenants', cloudTenants);
+
     const wrapper = mount(<FlavorForm />);
     const spy = jest.spyOn(wrapper.instance(), 'submitValues');
-    const button = wrapper.find('button').first();
-    button.simulate('click');
-    expect(spy).toHaveBeenCalledTimes(0);
+
+    setImmediate(() => {
+      wrapper.update();
+      const button = wrapper.find('button').first();
+      button.simulate('click');
+      expect(spy).toHaveBeenCalledTimes(0);
+      done();
+    });
   });
 
   it('should submit values when form is valid', (done) => {
@@ -104,6 +128,7 @@ describe('Flavor form component', () => {
     const spySubmit = jest.spyOn(wrapper.instance(), 'submitValues');
 
     setImmediate(() => {
+      wrapper.update();
       wrapper.find('#ems_id').first().simulate('change', {
         target: {
           value: '1',
