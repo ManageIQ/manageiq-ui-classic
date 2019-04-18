@@ -74,20 +74,6 @@ describe('Vm server relationship form component', () => {
     });
   });
 
-  it('should not submit values when form is not valid', (done) => {
-    fetchMock.getOnce('http://localhost:3000/api/servers?expand=resources&sort_by=name&sort_order=desc', servers);
-    const wrapper = mount(<VmServerRelationShipForm {...props} />);
-    const spy = jest.spyOn(wrapper.instance(), 'onSubmit');
-
-    setImmediate(() => {
-      wrapper.update();
-      const button = wrapper.find('button').first();
-      button.simulate('click');
-      expect(spy).toHaveBeenCalledTimes(0);
-      done();
-    });
-  });
-
   it('onSubmit parses data and post to API', (done) => {
     fetchMock.getOnce('http://localhost:3000/api/servers?expand=resources&sort_by=name&sort_order=desc', servers);
     fetchMock.postOnce('/vm_or_template/evm_relationship_update/10?button=save', {});
