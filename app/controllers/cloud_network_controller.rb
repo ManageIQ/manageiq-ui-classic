@@ -266,6 +266,7 @@ class CloudNetworkController < ApplicationController
         {:title => _("Networks")},
         {:url   => controller_url, :title => _("Cloud Networks")},
       ],
+      :record_info => @network,
     }
   end
 
