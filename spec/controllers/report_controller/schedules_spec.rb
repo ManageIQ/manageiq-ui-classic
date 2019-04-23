@@ -13,7 +13,6 @@ describe ReportController do
       FactoryBot.create(:miq_schedule, :name => "tester2")
 
       allow(controller).to receive(:assert_privileges)
-      allow(controller).to receive(:checked_or_params).and_return(MiqSchedule.all.ids)
       allow(controller).to receive(:replace_right_cell).and_return(true)
 
       timer = ReportHelper::Timer.new('hourly', 1, 1, 1, 1, Time.now.utc, '00', '00')
@@ -27,8 +26,8 @@ describe ReportController do
     end
 
     it "reset rbac testing" do
+      controller.instance_variable_set(:@_params, :button => "reset", :id => schedule.id)
       controller.send(:schedule_edit)
-      controller.instance_variable_set(:@_params, :button => "reset")
       expected_id = controller.instance_variable_get(:@schedule).id
       expect(expected_id).to eq(schedule.id)
     end
