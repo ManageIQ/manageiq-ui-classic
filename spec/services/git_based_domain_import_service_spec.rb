@@ -161,12 +161,13 @@ describe GitBasedDomainImportService do
       allow(task).to receive(:message).and_return(nil)
     end
 
+    let(:git_branches) { [] }
+    let(:ref_name) { "the_tag_name" }
+    let(:ref_type) { "tag" }
+    let(:method_name) { 'import_git_url' }
+    let(:action) { 'Refresh and import git repository' }
+
     context "when git branches that match the given name do not exist" do
-      let(:git_branches) { [] }
-      let(:ref_name) { "the_tag_name" }
-      let(:ref_type) { "tag" }
-      let(:method_name) { 'import_git_url' }
-      let(:action) { 'Refresh and import git repository' }
       let(:import_options) do
         {
           "git_url"   => git_repo.url,
@@ -181,6 +182,46 @@ describe GitBasedDomainImportService do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
 
         expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321)).to eq(task.id)
+      end
+    end
+
+    context "when auth args are provided" do
+      let(:import_options) do
+        {
+          "git_url"    => git_repo.url,
+          "ref"        => ref_name,
+          "ref_type"   => ref_type,
+          "tenant_id"  => 321,
+          "overwrite"  => true,
+          "userid"     => "bob",
+          "verify_ssl" => false
+        }
+      end
+
+      it "calls 'queue_import' with additional auth args using stringified keys" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+
+        expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321, "userid" => "bob", :verify_ssl => false)).to eq(task.id)
+      end
+    end
+
+    context "when a password is provided" do
+      let(:import_options) do
+        {
+          "git_url"   => git_repo.url,
+          "ref"       => ref_name,
+          "ref_type"  => ref_type,
+          "tenant_id" => 321,
+          "overwrite" => true,
+          "userid"    => "bob",
+          "password"  => ManageIQ::Password.try_encrypt("secret")
+        }
+      end
+
+      it "calls 'queue_import' with an encrypted password" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+
+        expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321, "userid" => "bob", :password => "secret")).to eq(task.id)
       end
     end
   end
