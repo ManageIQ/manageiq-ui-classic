@@ -41,7 +41,7 @@ class TagView extends React.Component {
 }
 TagView.propTypes = {
   assignedTags: TaggingPropTypes.tags,
-  onTagDeleteClick: PropTypes.func.isRequired,
+  onTagDeleteClick: PropTypes.func,
   header: PropTypes.string,
 };
 

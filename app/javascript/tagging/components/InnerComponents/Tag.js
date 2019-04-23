@@ -10,7 +10,7 @@ const Tag = ({
     <Label
       key={tagValue.id}
       bsStyle="primary"
-      onRemoveClick={() => onTagDeleteClick(tagCategory, tagValue)}
+      onRemoveClick={onTagDeleteClick ? () => onTagDeleteClick(tagCategory, tagValue) : undefined}
       className="tagColor"
       title={tagValue.description}
     >
@@ -20,7 +20,7 @@ const Tag = ({
 );
 
 Tag.propTypes = {
-  onTagDeleteClick: PropTypes.func.isRequired,
+  onTagDeleteClick: PropTypes.func,
   tagCategory: TaggingPropTypes.category,
   tagValue: TaggingPropTypes.value,
   truncate: PropTypes.func.isRequired,
