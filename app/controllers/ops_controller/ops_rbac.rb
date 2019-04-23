@@ -928,7 +928,7 @@ module OpsController::OpsRbac
 
       assigned_tags.each_with_object([]) do |tag, arr|
         existing_tag = arr.find { |item| item[:id] == tag[:id] }
-        if item
+        if existing_tag
           existing_tag[:values].push(*tag[:values])
         else
           arr << tag
