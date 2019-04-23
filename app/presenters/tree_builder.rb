@@ -27,14 +27,11 @@ class TreeBuilder
   def node_by_tree_id(id)
     model, rec_id, prefix = self.class.extract_node_model_and_id(id)
 
-    if model == "Hash"
+    case model
+    when 'Hash' # create a fake hash node
       {:type => prefix, :id => rec_id, :full_id => id}
-    elsif model.nil? && %i[sandt svccat stcat].include?(@type)
-      # Creating empty record to show items under unassigned catalog node
-      ServiceTemplateCatalog.new
-    elsif model.nil? && [:configuration_manager_providers_tree].include?(@name)
-      # Creating empty record to show items under unassigned catalog node
-      ConfigurationProfile.new
+    when nil # no model, probably super() called from a redefinition
+      nil
     else
       model.constantize.find(rec_id)
     end

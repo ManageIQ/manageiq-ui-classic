@@ -27,6 +27,11 @@ class TreeBuilderConfigurationManager < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
+  def node_by_tree_id(id)
+    # Creating empty record to show items under unassigned profiles group
+    super(id) || ConfigurationProfile.new
+  end
+
   def x_get_tree_cmf_kids(object, count_only)
     assigned_configuration_profile_objs =
       count_only_or_objects_filtered(count_only,
