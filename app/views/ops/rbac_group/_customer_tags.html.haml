@@ -20,7 +20,7 @@
     - if @edit[:new][:use_filter_expression]
       = render(:partial => "layouts/group_filter_expression")
     - else
-      = render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
+      = react 'TaggingWrapperConnected', { :tags => @tags, :urls => @button_urls }
   - elsif @use_filter_expression
     = render(:partial => "layouts/group_filter_expression")
   - else

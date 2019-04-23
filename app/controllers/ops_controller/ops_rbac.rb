@@ -902,6 +902,45 @@ module OpsController::OpsRbac
   def rbac_group_right_tree(selected_nodes)
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
+      cats = Classification.categories.find_all do |c|
+        c if c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name)
+      end
+      cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
+      cats.delete_if { |c| c.read_only? || c.entries.empty? } # Remove categories that are read only or have no entries
+      @tags = cats.map do |cat|
+        {
+          :id          => cat.id,
+          :description => cat.description,
+          :singleValue => cat.single_value,
+          :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
+            { :id => entry.id, :description => entry.description }
+          end
+        }
+      end
+      filters = @edit&.dig(:new)&.dig(:filters) || @filters
+      assigned_tags = Tag.where(:name => filters.flatten).map do |tag|
+        {
+          :description => tag.category.description,
+          :id          => tag.category.id,
+          :values      => [{:id => tag.classification.id, :description => tag.classification.description}]
+        }
+      end
+
+      assigned_tags.each_with_object([]) do |tag, arr|
+        existing_tag = arr.find { |item| item[:id] == tag[:id] }
+        if item
+          existing_tag[:values].push(*tag[:values])
+        else
+          arr << tag
+        end
+      end
+
+      assigned_tags.uniq! { |tag| tag[:id] }
+      @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => []}
+      @button_urls = {
+        :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "save"),
+        :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "cancel")
+      }
       @tags_tree = TreeBuilderTags.new(:tags_tree,
                                        @sb,
                                        true,
@@ -1210,11 +1249,8 @@ module OpsController::OpsRbac
       group.entitlement.set_managed_filters(nil) if group.entitlement.get_managed_filters.present?
       group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
     else
+      @set_filter_values = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| Tag.find(v['id']).name } }
       group.entitlement.filter_expression = nil if group.entitlement.filter_expression
-      @set_filter_values = []
-      @edit[:new][:filters].each_value do |value|
-        @set_filter_values.push(value)
-      end
       rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
       group.entitlement.set_managed_filters(@set_filter_values)
     end
