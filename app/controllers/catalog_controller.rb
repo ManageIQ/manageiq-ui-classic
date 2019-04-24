@@ -1229,6 +1229,7 @@ class CatalogController < ApplicationController
                                   end
     st.prov_type = @edit[:new][:st_prov_type]
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
+    st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
   end
 
   def st_set_record_vars(st)
@@ -1274,6 +1275,7 @@ class CatalogController < ApplicationController
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
+    @edit[:new][:tenant_ids] = @record.additional_tenant_ids
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
@@ -1412,11 +1414,23 @@ class CatalogController < ApplicationController
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
+    checked_tenants if params[:check] # Save checked Additional Tenants to @edit
 
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
+  end
+
+  def checked_tenants
+    new_id = params[:id].split('-').pop.to_i if params[:id].starts_with?('tn')
+    tenant_ids = @edit[:new][:tenant_ids]
+    if params[:check] == '1' # Adding/checking Tenant(s) in the tree for the Catalog Item
+      tenant_ids += [new_id] if tenant_ids.exclude?(new_id)
+    elsif params[:check] == '0' # Unchecking selected Tenant(s)
+      tenant_ids.delete(new_id)
+    end
+    @edit[:new][:tenant_ids] = tenant_ids.sort
   end
 
   def available_container_managers
