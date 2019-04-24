@@ -44,6 +44,12 @@ module Menu
         ])
       end
 
+      def red_hat_cloud_services_menu_section
+        Menu::Section.new(:red_hat_cloud_services, N_("Red Hat Cloud Services"), 'pficon pficon-service', [
+          Menu::Item.new('services', N_('Services'), 'red-hat-cloud-service', {:feature => 'red-hat-cloud-service', :any => true}, '/red_hat_cloud_services/show')
+        ])
+      end
+
       def services_menu_section
         Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service', [
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
@@ -296,7 +302,7 @@ module Menu
       end
 
       def default_menu
-        [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
+        [cloud_inteligence_menu_section, red_hat_cloud_services_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
          optimize_menu_section, monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
       end
