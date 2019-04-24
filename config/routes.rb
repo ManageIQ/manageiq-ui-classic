@@ -413,6 +413,12 @@ Rails.application.routes.draw do
       )
     },
 
+    :red_hat_cloud_services       => {
+      :get => %w(
+        show
+      )
+    },
+
     :cloud_object_store_container => {
       :get => %w(
         dialog_load
