@@ -13,12 +13,11 @@
           "data-width"       => "850px",
           "data-live-search" => "true",
           "data-live-search-focus" => "false",
-          :class             => 'selectpicker',
           :style             => "overflow-x: scroll;",
           :id                => "available_fields",
           :title             => "&lt;#{_('Choose one or more Fields')}&gt;")
         :javascript
-          miqInitSelectPicker();
+          miqInitSelectPicker('#available_fields', {size: false});
       %td
     %tr
       %td.text-center{:style => "padding-top: 15px;"}
