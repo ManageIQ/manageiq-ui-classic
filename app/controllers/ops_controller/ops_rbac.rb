@@ -936,17 +936,11 @@ module OpsController::OpsRbac
       end
 
       assigned_tags.uniq! { |tag| tag[:id] }
-      @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => []}
+      @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => [@group.id]}
       @button_urls = {
         :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "save"),
         :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "cancel")
       }
-      @tags_tree = TreeBuilderTags.new(:tags_tree,
-                                       @sb,
-                                       true,
-                                       :edit    => @edit,
-                                       :filters => @filters,
-                                       :group   => @group)
     when 'rbac_hosts_clusters'
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               @sb,
@@ -1098,7 +1092,9 @@ module OpsController::OpsRbac
 
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
-        cat, tag = params[:id].split('cl-').last.split("_xx-") # Get the category and tag
+        # cat, tag = params[:id].split('cl-').last.split("_xx-") # Get the category and tag
+        cat = params[:cat]
+        tag = params[:val]
         cat_name = Classification.find_by(:id => cat).name
         tag_name = Classification.find_by(:id => tag).name
         if params[:check] == "0" #   unchecked
@@ -1249,7 +1245,10 @@ module OpsController::OpsRbac
       group.entitlement.set_managed_filters(nil) if group.entitlement.get_managed_filters.present?
       group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
     else
-      @set_filter_values = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| Tag.find(v['id']).name } }
+      @set_filter_values = []
+      @edit[:new][:filters].each_value do |value|
+        @set_filter_values.push(value)
+      end
       group.entitlement.filter_expression = nil if group.entitlement.filter_expression
       rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
       group.entitlement.set_managed_filters(@set_filter_values)

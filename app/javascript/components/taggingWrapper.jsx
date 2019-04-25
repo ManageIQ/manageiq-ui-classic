@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { applyMiddleware } from 'redux'
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
-import { TaggingWithButtonsConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
+import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
 import { http } from '../http_api';
 
 class TaggingWrapper extends React.Component {
@@ -21,7 +22,7 @@ class TaggingWrapper extends React.Component {
 
   render() {
     if (!this.props.isLoaded) return <Spinner loading size="lg" />;
-    const { urls } = this.props;
+    const { urls, options } = this.props;
     return (<TaggingWithButtonsConnected
       saveButton={{
         // don't replace $.post with http.post
@@ -51,6 +52,7 @@ class TaggingWrapper extends React.Component {
         description: 'Reset',
         }
       }
+      options={{...options}}
     />);
   }
 }
