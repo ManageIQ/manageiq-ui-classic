@@ -1860,7 +1860,7 @@ class CatalogController < ApplicationController
       parents = [:id => template_to_node_name(record)]
     else
       # Check for parent nodes missing from vandt tree and return them if any
-      parent_rec = ServiceTemplateCatalog.find(record.service_template_catalog_id)
+      parent_rec = ServiceTemplateCatalog.find_by(:id => record.service_template_catalog_id) # nil is a valid value
       parents = if parent_rec.nil?
                   [parent_rec, :id => "-Unassigned"]
                 else
