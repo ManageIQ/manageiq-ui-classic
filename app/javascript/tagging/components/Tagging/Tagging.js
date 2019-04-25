@@ -14,9 +14,9 @@ class Tagging extends React.Component {
       tagValue: selectedTagValue,
     };
     if (this.findSelectedTag(this.props.selectedTagCategory).singleValue) {
-      this.props.onTagValueChange(action);
+      this.props.onTagValueChange(action, this.props.options);
     } else {
-      this.props.onTagMultiValueChange(action);
+      this.props.onTagMultiValueChange(action, this.props.options);
     }
   };
 
@@ -24,7 +24,7 @@ class Tagging extends React.Component {
     this.props.onTagCategoryChange(selectedTagCategory);
 
   onTagDeleteClick = (tagCategory, tagValue) => {
-    this.props.onTagDeleteClick({ tagCategory, tagValue });
+    this.props.onTagDeleteClick({ tagCategory, tagValue }, this.props.options);
   };
 
   getvalues = () =>
@@ -85,6 +85,7 @@ Tagging.propTypes = {
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onTagMultiValueChange: PropTypes.func.isRequired,
+  options: PropTypes.object,
 };
 
 export default Tagging;

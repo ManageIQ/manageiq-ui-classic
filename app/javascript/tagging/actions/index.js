@@ -5,14 +5,16 @@ export const toggleTagCategoryChange = tagCategory => ({
   tagCategory,
 });
 
-export const toggleTagValueChange = tag => ({
+export const toggleTagValueChange = (tag, meta) => ({
   type: actions.TOGGLE_TAG_VALUE_CHANGE,
   tag,
+  meta,
 });
 
-export const deleteAssignedTag = tag => ({
+export const deleteAssignedTag = (tag, meta) => ({
   type: actions.DELETE_ASSIGNED_TAG,
   tag,
+  meta,
 });
 
 export const changeAssignedTag = tag => ({

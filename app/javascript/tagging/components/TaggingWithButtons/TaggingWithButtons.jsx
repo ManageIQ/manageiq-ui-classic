@@ -22,6 +22,7 @@ class TaggingWithButtons extends React.Component {
           onTagDeleteClick={this.props.onTagDeleteClick}
           selectedTagCategory={this.props.selectedTagCategory}
           selectedTagValue={this.props.selectedTagValue}
+          options={this.props.options}
         />
         <Row className="pull-right">
           <ButtonToolbar>
@@ -76,6 +77,7 @@ TaggingWithButtons.propTypes = {
   cancelButton: TaggingPropTypes.button,
   resetButton: TaggingPropTypes.button,
   saveButton: TaggingPropTypes.button,
+  options: PropTypes.object,
 };
 
 TaggingWithButtons.defaultProps = {

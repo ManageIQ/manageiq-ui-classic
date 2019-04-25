@@ -13,14 +13,14 @@ const mapStateToProps = ({ tagging }) => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onTagDeleteClick: (tag) => {
-    dispatch(deleteAssignedTag(tag));
+  onTagDeleteClick: (tag, options) => {
+    dispatch(deleteAssignedTag(tag, options));
   },
   onTagCategoryChange: (cat) => {
     dispatch(toggleTagCategoryChange(cat));
   },
-  onTagValueChange: (val) => {
-    dispatch(toggleTagValueChange(val));
+  onTagValueChange: (val, options) => {
+    dispatch(toggleTagValueChange(val, options));
     dispatch(changeAssignedTag(val));
   },
 
