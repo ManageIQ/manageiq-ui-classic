@@ -1149,23 +1149,25 @@ module ApplicationHelper
   end
 
   def tree_with_advanced_search?
-    %i[automation_manager_providers
-       automation_manager_cs_filter
-       configuration_manager_cs_filter
-       configuration_scripts
-       configuration_manager_providers
-       images
-       images_filter
-       instances
-       instances_filter
-       providers
-       storage
-       svcs
-       templates_filter
-       templates_images_filter
-       vandt
-       vms_filter
-       vms_instances_filter].include?(x_tree[:type])
+    %i[
+      automation_manager_providers_tree
+      automation_manager_cs_filter_tree
+      configuration_manager_cs_filter_tree
+      configuration_scripts_tree
+      configuration_manager_providers_tree
+      images_tree
+      images_filter_tree
+      instances_tree
+      instances_filter_tree
+      providers_tree
+      storage_tree
+      svcs_tree
+      templates_filter_tree
+      templates_images_filter_tree
+      vandt_tree
+      vms_filter_tree
+      vms_instances_filter_tree
+    ].include?(x_tree[:tree])
   end
 
   def fonticon_or_fileicon(item)

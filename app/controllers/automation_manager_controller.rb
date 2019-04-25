@@ -255,7 +255,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def filtering?
-    %w[automation_manager_cs_filter configuration_scripts].include?(x_tree[:type].to_s)
+    %w[automation_manager_cs_filter_tree configuration_scripts_tree].include?(x_tree[:tree].to_s)
   end
 
   def provider_node(id, model)
