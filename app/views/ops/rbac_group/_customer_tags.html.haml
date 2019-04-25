@@ -27,4 +27,7 @@
     = _("This user is limited to items with the selected tags.")
     %br
     %br
-    = react 'TagView', { :assignedTags => @tags[:assignedTags] }
+    - if @tags[:assignedTags].blank?
+      = _('There are not tags assigned to this group.')
+    - else
+      = react 'TagView', { :assignedTags => @tags[:assignedTags] }
