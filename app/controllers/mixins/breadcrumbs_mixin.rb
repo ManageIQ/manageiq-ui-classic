@@ -49,7 +49,7 @@ module Mixins
 
     def build_breadcrumbs_no_explorer(record_info, record_title)
       if record_info[record_title]
-        breadcrumb_url = url(controller_url, gtl_url, record_info[:id])
+        breadcrumb_url = url(controller_url, @gtl_url || gtl_url, record_info[:id])
         {:url => breadcrumb_url, :title => record_info[record_title]}
       end
     end

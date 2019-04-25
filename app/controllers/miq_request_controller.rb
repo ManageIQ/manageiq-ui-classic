@@ -89,6 +89,7 @@ class MiqRequestController < ApplicationController
     identify_request
     return if record_no_longer_exists?(@miq_request)
     @display = params[:display] || "main" unless pagination_or_gtl_request?
+    @gtl_url = "/show"
 
     if @display == "main"
       prov_set_show_vars
@@ -538,19 +539,21 @@ class MiqRequestController < ApplicationController
   end
 
   def breadcrumbs_options
-    if params[:typ] == "ae"
+    if @layout == "miq_request_ae" || @record&.type == "AutomationRequest"
       {
-        :breadcrumbs => [
+        :breadcrumbs  => [
           {:title => _("Automation")},
-          {:title => _("Automate")},
+          {:title => _("Automate"), :url => controller_url},
         ],
+        :record_title => :description,
       }
-    elsif params[:typ] == "service"
+    else
       {
-        :breadcrumbs => [
+        :breadcrumbs  => [
           {:title => _("Services")},
-          {:title => _("Requests")},
+          {:title => _("Requests"), :url => controller_url},
         ],
+        :record_title => :description,
       }
     end
   end
