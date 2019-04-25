@@ -217,6 +217,13 @@ describe VmOrTemplateController do
         controller.send(:replace_right_cell)
         expect(controller.instance_variable_get(:@right_cell_text)).to eq('Instance Policy Simulation')
       end
+
+      it 'sets tree expand all to false for policy simulation tree' do
+        allow(controller).to receive(:params).and_return(:action => 'policy_sim')
+        presenter = ExplorerPresenter.new(:active_tree => :policy_simulation_tree)
+        controller.send(:replace_right_cell)
+        expect(presenter[:tree_expand_all]).to be_falsey
+      end
     end
   end
 

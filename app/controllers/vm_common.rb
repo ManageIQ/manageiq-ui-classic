@@ -1251,7 +1251,10 @@ module VmCommon
     ])
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
-    presenter[:clear_tree_cookies] = "edit_treeOpenStatex" if @sb[:action] == "policy_sim"
+    if @sb[:action] == "policy_sim"
+      presenter[:clear_tree_cookies] = "edit_treeOpenStatex"
+      presenter[:tree_expand_all] = false
+    end
 
     # Handle bottom cell
     if @pages || @in_a_form

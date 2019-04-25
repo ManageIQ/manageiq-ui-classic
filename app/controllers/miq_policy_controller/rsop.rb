@@ -38,6 +38,7 @@ module MiqPolicyController::Rsop
         page << javascript_prologue
         page.replace_html("main_div", :partial => "rsop_results")
         page << javascript_reload_toolbars
+        page << "ManageIQ.tree.expandAll = false;"
         page << "miqSparkle(false);"
       end
     elsif params[:button] == "reset"
