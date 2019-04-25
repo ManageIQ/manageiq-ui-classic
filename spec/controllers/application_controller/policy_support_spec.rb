@@ -37,4 +37,33 @@ describe ApplicationController do
       expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => flash_msg, :level => :success}])
     end
   end
+
+  describe '#policy_sim_build_screen' do
+    before do
+      allow(controller).to receive(:session).and_return(:tag_items => [vm], :tag_db => VmOrTemplate)
+      controller.instance_variable_set(:@_params, :controller => vm_ctrl)
+    end
+
+    context 'VM policy simulation and non explorer screen' do
+      let(:controller) { VmInfraController.new }
+      let(:vm) { FactoryBot.create(:vm_vmware) }
+      let(:vm_ctrl) { 'vm_infra' }
+
+      it 'sets right cell text' do
+        controller.send(:policy_sim_build_screen, [vm])
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Virtual Machine Policy Simulation')
+      end
+    end
+
+    context 'Instance policy simulation and non explorer screen' do
+      let(:controller) { VmCloudController.new }
+      let(:vm) { FactoryBot.create(:vm_openstack, :ext_management_system => FactoryBot.create(:ems_openstack)) }
+      let(:vm_ctrl) { 'vm_cloud' }
+
+      it 'sets right cell text' do
+        controller.send(:policy_sim_build_screen, [vm])
+        expect(controller.instance_variable_get(:@right_cell_text)).to eq('Instance Policy Simulation')
+      end
+    end
+  end
 end
