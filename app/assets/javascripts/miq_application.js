@@ -1168,12 +1168,12 @@ function miqSerializeField(element, fieldName) {
   return $('#' + element + ' :input[id=' + fieldName + ']').serialize();
 }
 
-function miqInitSelectPicker() {
-  $('.selectpicker').selectpicker({
+function miqInitSelectPicker(selector, options) {
+  $(selector || '.selectpicker').selectpicker(Object.assign({
     size: 10,
     dropupAuto: false,
     noneSelectedText: __('Nothing selected'),
-  });
+  }, options || {}));
   $('.bootstrap-select > button[title]').not('.selectpicker').tooltip({container: 'none'});
 }
 
