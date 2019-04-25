@@ -251,6 +251,7 @@ class CatalogController < ApplicationController
   def identify_catalog(id = nil)
     kls = TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate" ? VmOrTemplate : ServiceTemplate
     @record = identify_record(id || params[:id], kls)
+    @tenants_tree = build_tenants_tree if kls == ServiceTemplate # Build the tree with available tenants for the Catalog Item/Bundle
   end
 
   # ST clicked on in the explorer right cell

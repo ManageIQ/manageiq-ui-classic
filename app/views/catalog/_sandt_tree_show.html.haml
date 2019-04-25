@@ -104,6 +104,11 @@
           .col-md-9
             = h(@record.try(:miq_group).try(:name))
         .form-group
+          %label.col-md-3.control-label
+            = _('Additional Tenants')
+          .col-md-8
+            = render(:partial => "shared/tree", :locals => {:tree => @tenants_tree, :name => @tenants_tree.name})
+        .form-group
           .col-md-9
             #tag_group
             :javascript
