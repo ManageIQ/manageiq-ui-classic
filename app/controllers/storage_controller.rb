@@ -193,12 +193,12 @@ class StorageController < ApplicationController
     session[:edit] = @edit
     @explorer = true
 
-    if x_tree[:type] != :storage || x_node == "root"
+    if x_tree[:tree] != :storage_tree || x_node == "root"
       listnav_search_selected(0)
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_tree[:type] == :storage && (@nodetype == "root" || @nodetype == "ms")
+      if x_tree[:tree] == :storage_tree && (@nodetype == "root" || @nodetype == "ms")
         search_id = @nodetype == "root" ? 0 : id
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
@@ -478,7 +478,7 @@ class StorageController < ApplicationController
 
   def set_right_cell_text
     @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && @nodetype != 'ds'
-    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :storage && @edit && @edit[:adv_search_applied]
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:tree] == :storage_tree && @edit && @edit[:adv_search_applied]
   end
 
   def textual_group_list

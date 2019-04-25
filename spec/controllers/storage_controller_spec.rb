@@ -436,7 +436,7 @@ describe StorageController do
 
       context 'using Advanced Search' do
         before do
-          allow(controller).to receive(:x_tree).and_return(:type => :storage)
+          allow(controller).to receive(:x_tree).and_return(:tree => :storage_tree)
           allow(controller).to receive(:valid_active_node).and_return('ms-1')
           controller.instance_variable_set(:@edit, :adv_search_applied => {:text => " - Filtered by \"Filter1\""})
         end

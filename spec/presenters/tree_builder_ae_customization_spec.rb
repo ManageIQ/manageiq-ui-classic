@@ -5,7 +5,6 @@ describe TreeBuilderAeCustomization do
     let(:expected_sandbox_values) do
       {
         :tree        => :dialog_import_export_tree,
-        :type        => :dialog_import_export,
         :klass_name  => "TreeBuilderAeCustomization",
         :open_nodes  => [],
         :open_all    => true,

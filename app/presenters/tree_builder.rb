@@ -167,7 +167,6 @@ class TreeBuilder
     @tree_state.add_tree(
       @options.reverse_merge(
         :tree       => @name,
-        :type       => type,
         :klass_name => self.class.name,
         :open_nodes => []
       )
