@@ -1,9 +1,9 @@
 class TreeBuilderProtect < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @data = params[:data]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

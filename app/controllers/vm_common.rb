@@ -194,7 +194,7 @@ module VmCommon
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
       session[:snap_selected] = nil if Snapshot.find_by(:id => session[:snap_selected]).nil?
       @sb[@sb[:active_accord]] = TreeBuilder.build_node_id(@record)
-      @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, @sb, true, :root => @record)
+      @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, @sb, true, :root => @record)
       selected_snapshot_node = x_node(@snapshot_tree.name)
       @active = if selected_snapshot_node && selected_snapshot_node != 'root'
                   snap_selected = Snapshot.find(selected_snapshot_node.split('-').last)
@@ -221,12 +221,12 @@ module VmCommon
         javascript_flash(:spinner_off => true)
         return
       else
-        @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, :root => @record)
+        @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, @sb, true, :root => @record)
         session[:genealogy_tree_root_id] = @record.parent.presence.try(:id) || @record.id
       end
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
+      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, @sb, true, :root => @record)
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       if count == 1
         drop_breadcrumb(:name => @record.name + _(" (Latest Compliance Check)"),
@@ -457,7 +457,6 @@ module VmCommon
     @policy_options[:passed] = true
     @policy_options[:failed] = true
     @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
-                                                              :policy_simulation,
                                                               @sb,
                                                               true,
                                                               :root      => @polArr,
@@ -490,7 +489,6 @@ module VmCommon
     end
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
-                                                              :policy_simulation,
                                                               @sb,
                                                               true,
                                                               :root      => @polArr,
@@ -505,7 +503,6 @@ module VmCommon
     @policy_options ||= {}
     @policy_options[:out_of_scope] = (params[:out_of_scope] == "1")
     @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
-                                                              :policy_simulation,
                                                               @sb,
                                                               true,
                                                               :root      => @polArr,

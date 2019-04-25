@@ -19,7 +19,6 @@ describe TreeBuilderOpsRbacFeatures do
   let(:tree) do
     TreeBuilderOpsRbacFeatures.new(
       "features_tree",
-      "features",
       {:trees => {}},
       true,
       :role     => role,

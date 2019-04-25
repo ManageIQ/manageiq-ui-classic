@@ -35,7 +35,7 @@ module Mixins
     end
 
     def update_session_for_compliance_history
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, :root => @record)
+      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, @sb, true, :root => @record)
     end
 
     def drop_breadcrumb_for_compliance_history(count)

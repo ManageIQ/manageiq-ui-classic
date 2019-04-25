@@ -1,5 +1,5 @@
 describe TreeBuilderReportWidgets do
-  subject { described_class.new("cb_rates_tree", "cb_rates", {}) }
+  subject { described_class.new("cb_rates_tree", {}) }
 
   it "#set_locals_for_render (private)" do
     expect(subject.send(:set_locals_for_render)).to include(:autoload => true)

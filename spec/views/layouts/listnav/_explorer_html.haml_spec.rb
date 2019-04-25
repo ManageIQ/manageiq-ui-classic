@@ -1,5 +1,5 @@
 describe 'layouts/_explorer.html.haml' do
-  let(:tree_1) { TreeBuilderConfigurationManager.new('tree_1', 'tree_1', {}) }
+  let(:tree_1) { TreeBuilderConfigurationManager.new('tree_1', {}) }
   let(:accord) { {:title => 'foo', :name => 'tree_1'} }
 
   before do

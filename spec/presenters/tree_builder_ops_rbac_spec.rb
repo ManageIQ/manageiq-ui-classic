@@ -6,7 +6,7 @@ describe TreeBuilderOpsRbac do
 
   describe ".new" do
     def assert_tree_nodes(expected)
-      tree_json  = TreeBuilderOpsRbac.new("rbac_tree", "rbac", {}).tree_nodes
+      tree_json  = TreeBuilderOpsRbac.new("rbac_tree", {}).tree_nodes
       tree_nodes = JSON.parse(tree_json).first['nodes'].collect { |h| h['text'] }
       expect(tree_nodes).to match_array expected
     end
@@ -18,7 +18,7 @@ describe TreeBuilderOpsRbac do
 
     it "has :open_all set to false" do
       login_as FactoryBot.create(:user, :features => 'none')
-      tree = TreeBuilderOpsRbac.new("rbac_tree", "rbac", {})
+      tree = TreeBuilderOpsRbac.new("rbac_tree", {})
       expect(tree.send(:tree_init_options)[:open_all]).to be_falsey
     end
 
@@ -55,7 +55,7 @@ describe TreeBuilderOpsRbac do
     end
 
     def x_get_tree_custom_kids_for_and_expect_objects(type_of_model, expected_objects)
-      tree_builder = TreeBuilderOpsRbac.new("rbac_tree", "rbac", {})
+      tree_builder = TreeBuilderOpsRbac.new("rbac_tree", {})
       objects = tree_builder.send(:x_get_tree_custom_kids, {:id => type_of_model}, false, {})
       expect(objects).to match_array(expected_objects)
     end

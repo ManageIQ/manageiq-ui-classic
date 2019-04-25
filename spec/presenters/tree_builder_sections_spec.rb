@@ -45,8 +45,7 @@ describe TreeBuilderSections do
                                                                                       :checked => false,
                                                                                       :key     => :name,
                                                                                       :group   => "Properties"}}})
-      @sections_tree = TreeBuilderSections.new(:all_sections,
-                                               :all_sections_tree,
+      @sections_tree = TreeBuilderSections.new(:all_sections_tree,
                                                {},
                                                true,
                                                :data            => @compare,

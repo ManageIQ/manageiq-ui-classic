@@ -49,6 +49,6 @@ module StorageController::StoragePod
 
   # Get information for an event
   def build_storage_pod_tree
-    TreeBuilderStoragePod.new("storage_pod_tree", "storage_pod", @sb)
+    TreeBuilderStoragePod.new("storage_pod_tree", @sb)
   end
 end

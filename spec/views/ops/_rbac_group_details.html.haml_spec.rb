@@ -20,7 +20,6 @@ describe 'ops/_rbac_group_details.html.haml' do
       view.instance_variable_set(:@sb, sb)
 
       @tags_tree = TreeBuilderTags.new(:tag_tree,
-                                       :tag,
                                        sb,
                                        true,
                                        :edit    => {},
@@ -28,14 +27,12 @@ describe 'ops/_rbac_group_details.html.haml' do
                                        :group   => @group)
       @ems_azure_network = FactoryBot.create(:ems_azure_network)
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                              :hac,
                                               sb,
                                               true,
                                               :edit           => nil,
                                               :group          => @group,
                                               :selected_nodes => {})
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
-                                              :vat,
                                               sb,
                                               true,
                                               :edit           => nil,

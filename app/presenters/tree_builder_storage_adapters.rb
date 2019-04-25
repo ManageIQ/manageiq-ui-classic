@@ -2,10 +2,10 @@ class TreeBuilderStorageAdapters < TreeBuilder
   has_kids_for GuestDevice, [:x_get_tree_guest_device_kids]
   has_kids_for MiqScsiTarget, [:x_get_tree_target_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     sandbox[:sa_root] = params[:root] if params[:root]
     @root = sandbox[:sa_root]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

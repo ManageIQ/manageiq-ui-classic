@@ -455,7 +455,7 @@ module ReportController::Widgets
 
   # Build the main widgets tree
   def build_widgets_tree
-    TreeBuilderReportWidgets.new('widgets_tree', 'widgets', @sb)
+    TreeBuilderReportWidgets.new('widgets_tree', @sb)
   end
 
   # Get variables from edit form

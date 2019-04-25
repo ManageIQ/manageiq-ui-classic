@@ -3,9 +3,9 @@ class TreeBuilderSnapshots < TreeBuilder
 
   attr_reader :selected_node
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @record = params[:root]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

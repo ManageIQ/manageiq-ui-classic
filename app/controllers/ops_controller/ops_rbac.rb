@@ -817,7 +817,7 @@ module OpsController::OpsRbac
 
   # Build the main Access Control tree
   def build_rbac_tree
-    TreeBuilderOpsRbac.new("rbac_tree", "rbac", @sb)
+    TreeBuilderOpsRbac.new("rbac_tree", @sb)
   end
 
   # Get information for an access control node
@@ -903,7 +903,6 @@ module OpsController::OpsRbac
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
       @tags_tree = TreeBuilderTags.new(:tags_tree,
-                                       :tags,
                                        @sb,
                                        true,
                                        :edit    => @edit,
@@ -911,7 +910,6 @@ module OpsController::OpsRbac
                                        :group   => @group)
     when 'rbac_hosts_clusters'
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                              :hac,
                                               @sb,
                                               true,
                                               :edit           => @edit,
@@ -919,7 +917,6 @@ module OpsController::OpsRbac
                                               :selected_nodes => selected_nodes)
     when 'rbac_vms_templates'
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
-                                              :vat,
                                               @sb,
                                               true,
                                               :edit           => @edit,
@@ -937,7 +934,7 @@ module OpsController::OpsRbac
   def build_rbac_feature_tree
     @role = @sb[:typ] == "copy" ? @record.dup : @record if @role.nil? # if on edit screen use @record
     @role.miq_product_features = @record.miq_product_features if @sb[:typ] == "copy"
-    TreeBuilderOpsRbacFeatures.new("features_tree", "features", @sb, true, :role => @role, :editable => @edit.present?)
+    TreeBuilderOpsRbacFeatures.new("features_tree", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
   # Set form variables for role edit

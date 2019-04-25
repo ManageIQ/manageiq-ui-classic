@@ -21,7 +21,7 @@ describe TreeBuilderSnapshots do
                                    :create_time => Time.zone.local(2000, "jan", 1, 20, 15, 1))
     end
 
-    let(:tree) { TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, {}, true, :root => vm) }
+    let(:tree) { TreeBuilderSnapshots.new(:snapshot_tree, {}, true, :root => vm) }
 
     it 'sets root correctly' do
       root = tree.send(:root_options)

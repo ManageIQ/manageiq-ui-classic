@@ -464,7 +464,7 @@ module ReportController::Schedules
   end
 
   def build_schedules_tree
-    TreeBuilderReportSchedules.new('schedules_tree', 'schedules', @sb)
+    TreeBuilderReportSchedules.new('schedules_tree', @sb)
   end
 
   def get_schedule(nodeid)

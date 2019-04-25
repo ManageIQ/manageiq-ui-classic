@@ -126,8 +126,7 @@ module OpsController::Settings::CapAndU
       end
     end
     if @edit[:current][:clusters].present?
-      @cluster_tree = TreeBuilderClusters.new(:cluster,
-                                              :cluster_tree,
+      @cluster_tree = TreeBuilderClusters.new(:cluster_tree,
                                               @sb,
                                               true,
                                               :root => @edit[:current])
@@ -144,8 +143,7 @@ module OpsController::Settings::CapAndU
                                       :location   => s.location) # fields we need
     end
     if @edit[:current][:storages].present?
-      @datastore_tree = TreeBuilderDatastores.new(:datastore,
-                                                  :datastore_tree,
+      @datastore_tree = TreeBuilderDatastores.new(:datastore_tree,
                                                   @sb,
                                                   true,
                                                   :root => @edit[:current][:storages])

@@ -31,7 +31,7 @@ describe TreeBuilderRolesByServer do
       parent = MiqRegion.my_region
       @sb[:selected_server_id] = parent.id
       @sb[:selected_typ] = "miq_region"
-      @server_tree = TreeBuilderRolesByServer.new(:roles_by_server_tree, :roles_by_server, @sb, true, :root => parent)
+      @server_tree = TreeBuilderRolesByServer.new(:roles_by_server_tree, @sb, true, :root => parent)
     end
 
     it "is not lazy" do

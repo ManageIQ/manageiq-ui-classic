@@ -39,7 +39,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def build_tree
-    @tree = TreeBuilderGenericObjectDefinition.new(:generic_object_definitions_tree, :generic_object_definitions, @sb)
+    @tree = TreeBuilderGenericObjectDefinition.new(:generic_object_definitions_tree, @sb)
   end
 
   def button

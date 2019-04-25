@@ -1,10 +1,10 @@
 class TreeBuilderDatastores < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @root = params[:root]
     @data = Storage.all.each_with_object({}) { |st, h| h[st.id] = st; }
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

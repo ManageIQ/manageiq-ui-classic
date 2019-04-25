@@ -16,8 +16,7 @@ describe TreeBuilderTags do
   context 'read-only mode' do
     before do
       edit = nil
-      @tags_tree = TreeBuilderTags.new(:tag,
-                                       :tag_tree,
+      @tags_tree = TreeBuilderTags.new(:tag_tree,
                                        {},
                                        true,
                                        :edit => edit, :filters => @filters, :group => @group)
@@ -70,8 +69,7 @@ describe TreeBuilderTags do
   context "edit mode" do
     before do
       @edit = {:new => {:filters => {}}}
-      @tags_tree = TreeBuilderTags.new(:tag,
-                                       :tag_tree,
+      @tags_tree = TreeBuilderTags.new(:tag_tree,
                                        {},
                                        true,
                                        :edit => @edit, :filters => @filters, :group => nil)

@@ -385,7 +385,7 @@ class ReportController < ApplicationController
 
   # Build the main import/export tree
   def build_export_tree
-    TreeBuilderReportExport.new('export_tree', 'export', @sb)
+    TreeBuilderReportExport.new('export_tree', @sb)
   end
 
   def determine_root_node_info

@@ -262,7 +262,7 @@ module PxeController::IsoDatastores
 
   # Get information for an event
   def build_iso_datastores_tree
-    TreeBuilderIsoDatastores.new("iso_datastores_tree", "iso_datastores", @sb)
+    TreeBuilderIsoDatastores.new("iso_datastores_tree", @sb)
   end
 
   def iso_datastore_get_node_info(treenodeid)

@@ -55,8 +55,7 @@ describe TreeBuilderBelongsToHac do
   end
 
   subject do
-    described_class.new(:hac,
-                        :hac_tree,
+    described_class.new(:hac_tree,
                         {:trees => {}},
                         true,
                         :edit           => edit,

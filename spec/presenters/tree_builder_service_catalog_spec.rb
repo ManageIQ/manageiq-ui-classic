@@ -21,7 +21,7 @@ describe TreeBuilderServiceCatalog do
                        :name                     => "Display in Catalog Playbook",
                        :service_template_catalog => @catalog,
                        :display                  => true)
-    @tree = TreeBuilderServiceCatalog.new(:svccat_tree, "svccat", {})
+    @tree = TreeBuilderServiceCatalog.new(:svccat_tree, {})
   end
 
   it "#x_get_tree_roots" do

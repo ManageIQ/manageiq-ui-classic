@@ -654,8 +654,7 @@ module OpsController::Settings::Common
     end
 
     if @selected_zone.miq_servers.select(&:is_a_proxy?).present?
-      @smartproxy_affinity_tree = TreeBuilderSmartproxyAffinity.new(:smartproxy_affinity,
-                                                                    :smartproxy_affinity_tree,
+      @smartproxy_affinity_tree = TreeBuilderSmartproxyAffinity.new(:smartproxy_affinity_tree,
                                                                     @sb,
                                                                     true,
                                                                     :data => @selected_zone)
@@ -1277,7 +1276,7 @@ module OpsController::Settings::Common
 
   # Build the main Settings tree
   def build_settings_tree
-    TreeBuilderOpsSettings.new("settings_tree", "settings", @sb)
+    TreeBuilderOpsSettings.new("settings_tree", @sb)
   end
 
   def settings_set_view_vars

@@ -294,7 +294,7 @@ describe ProviderForemanController do
 
   it "builds foreman child tree" do
     controller.send(:build_configuration_manager_providers_tree, :configuration_manager_providers)
-    tree_builder = TreeBuilderConfigurationManager.new("root", "", {})
+    tree_builder = TreeBuilderConfigurationManager.new("root", {})
     objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "fr"}, false, {})
     expected_objects = [@config_mgr, @config_mgr2]
     expect(objects).to match_array(expected_objects)

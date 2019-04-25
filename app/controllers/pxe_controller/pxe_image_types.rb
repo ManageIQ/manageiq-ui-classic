@@ -154,7 +154,7 @@ module PxeController::PxeImageTypes
 
   # Get information for an event
   def build_pxe_image_types_tree
-    TreeBuilderPxeImageTypes.new("pxe_image_types_tree", "pxe_image_types", @sb)
+    TreeBuilderPxeImageTypes.new("pxe_image_types_tree", @sb)
   end
 
   def pxe_image_type_get_node_info(treenodeid)

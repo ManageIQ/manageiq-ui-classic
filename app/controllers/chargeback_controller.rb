@@ -331,7 +331,7 @@ class ChargebackController < ApplicationController
 
   # Build a Chargeback Reports explorer tree
   def cb_rpts_build_tree
-    TreeBuilderChargebackReports.new("cb_reports_tree", "cb_reports", @sb)
+    TreeBuilderChargebackReports.new("cb_reports_tree", @sb)
   end
 
   def cb_rpts_show_saved_report
@@ -481,12 +481,12 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rates_build_tree
-    TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", @sb)
+    TreeBuilderChargebackRates.new("cb_rates_tree", @sb)
   end
 
   # Build a Catalog Items explorer tree
   def cb_assignments_build_tree
-    TreeBuilderChargebackAssignments.new("cb_assignments_tree", "cb_assignments", @sb)
+    TreeBuilderChargebackAssignments.new("cb_assignments_tree", @sb)
   end
 
   # Common Schedule button handler routines

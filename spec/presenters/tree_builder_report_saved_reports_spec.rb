@@ -23,7 +23,7 @@ describe TreeBuilderReportSavedReports do
       describe "#x_get_tree_roots" do
         it "is allowed to see report created under Group1 for User2(with current group Group2)" do
           # there is calling of x_get_tree_roots
-          tree = TreeBuilderReportSavedReports.new('savedreports_tree', 'savedreports', {})
+          tree = TreeBuilderReportSavedReports.new('savedreports_tree', {})
 
           saved_reports_in_tree = JSON.parse(tree.tree_nodes).first['nodes']
 
@@ -40,7 +40,7 @@ describe TreeBuilderReportSavedReports do
         it "is allowed to see report results created under Group1 for User2(with current group Group2)" do
           report_result = MiqReportResult.first
 
-          tree = TreeBuilderReportSavedReports.new('savedreports_tree', 'savedreports', {})
+          tree = TreeBuilderReportSavedReports.new('savedreports_tree', {})
           tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => @rpt.id.to_s}, false, {})
 
           expect(tree_report_results).to include(report_result)

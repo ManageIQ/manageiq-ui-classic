@@ -1,5 +1,5 @@
 describe TreeBuilderServices do
-  let(:builder) { TreeBuilderServices.new("x", "y", {}) }
+  let(:builder) { TreeBuilderServices.new("x", {}) }
 
   it "generates tree" do
     User.current_user = FactoryBot.create(:user)
