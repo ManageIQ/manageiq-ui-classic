@@ -243,13 +243,6 @@ module Menu
         ].compact)
       end
 
-      def optimize_menu_section
-        Menu::Section.new(:opt, N_("Optimize"), 'pficon pficon-optimize', [
-          Menu::Item.new('miq_capacity_planning',    N_('Planning'),    'planning',    {:feature => 'planning'},    '/planning'),
-          Menu::Item.new('miq_capacity_bottlenecks', N_('Bottlenecks'), 'bottlenecks', {:feature => 'bottlenecks'}, '/bottlenecks')
-        ])
-      end
-
       def alerts_menu_section
         Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
                             Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview/show'),
@@ -298,7 +291,7 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
-         optimize_menu_section, monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
+         monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
       end
 
       private
