@@ -17,7 +17,7 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerImage      => _("Container Image Compliance Policies"),
                                  :ContainerProject    => _("Container Project Compliance Policies"),
                                  :ExtManagementSystem => _("Provider Compliance Policies"),
-                                 :PhysicalServer      => _("Physical Infrastructure Compliance Policies")},
+                                 :PhysicalServer      => _("Physical Server Compliance Policies")},
                  :control    => {:Host                => _("Host Control Policies"),
                                  :Vm                  => _("Vm Control Policies"),
                                  :ContainerReplicator => _("Replicator Control Policies"),
@@ -26,7 +26,7 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerImage      => _("Container Image Control Policies"),
                                  :ContainerProject    => _("Container Project Control Policies"),
                                  :ExtManagementSystem => _("Provider Control Policies"),
-                                 :PhysicalServer      => _("Physical Infrastructure Control Policies")}}
+                                 :PhysicalServer      => _("Physical Server Control Policies")}}
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
