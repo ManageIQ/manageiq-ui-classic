@@ -815,11 +815,6 @@ module OpsController::OpsRbac
     process_elements(tenants, Tenant, task, _("Tenant"), "name")
   end
 
-  # Build the main Access Control tree
-  def build_rbac_tree
-    TreeBuilderOpsRbac.new("rbac_tree", @sb)
-  end
-
   # Get information for an access control node
   def rbac_get_info
     node, id = x_node.split("-")

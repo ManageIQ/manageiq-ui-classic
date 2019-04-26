@@ -478,9 +478,4 @@ module ReportController::Dashboards
       return [true, first_idx, last_idx]
     end
   end
-
-  # Build the main dashboards tree
-  def build_db_tree
-    TreeBuilderReportDashboards.new('db_tree', @sb)
-  end
 end

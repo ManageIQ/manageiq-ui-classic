@@ -885,10 +885,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def build_diagnostics_tree
-    TreeBuilderOpsDiagnostics.new("diagnostics_tree", @sb)
-  end
-
   def build_supported_depots_for_select
     depots_for_select = FileDepot.supported_depots.values.sort
     # S3 and Swift not currently supported for Log Collection

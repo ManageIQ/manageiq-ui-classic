@@ -258,10 +258,6 @@ class MiqAeClassController < ApplicationController
     existing_node
   end
 
-  def build_ae_tree
-    TreeBuilderAeClass.new(:ae, @sb)
-  end
-
   def replace_right_cell(options = {})
     @explorer = true
     replace_trees = options[:replace_trees]

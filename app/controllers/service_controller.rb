@@ -494,11 +494,6 @@ class ServiceController < ApplicationController
     render :json => presenter.for_render
   end
 
-  # Build a Services explorer tree
-  def build_svcs_tree
-    TreeBuilderServices.new("svcs_tree", @sb)
-  end
-
   def show_record(id = nil)
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"

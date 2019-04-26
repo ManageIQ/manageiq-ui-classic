@@ -152,11 +152,6 @@ module PxeController::PxeImageTypes
     process_elements(pxes, PxeImageType, task)
   end
 
-  # Get information for an event
-  def build_pxe_image_types_tree
-    TreeBuilderPxeImageTypes.new("pxe_image_types_tree", @sb)
-  end
-
   def pxe_image_type_get_node_info(treenodeid)
     if treenodeid == "root"
       pxe_image_type_list

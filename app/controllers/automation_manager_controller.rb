@@ -348,18 +348,6 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  def build_automation_manager_providers_tree
-    TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, @sb)
-  end
-
-  def build_automation_manager_cs_filter
-    TreeBuilderAutomationManagerConfiguredSystems.new(:automation_manager_cs_filter_tree, @sb)
-  end
-
-  def build_configuration_scripts_tree
-    TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, @sb)
-  end
-
   def rebuild_trees(replace_trees)
     build_replaced_trees(replace_trees, %i[automation_manager_providers automation_manager_cs_filter configuration_scripts])
   end

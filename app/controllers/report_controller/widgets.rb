@@ -453,11 +453,6 @@ module ReportController::Widgets
     @edit[:new][:fields] = fields
   end
 
-  # Build the main widgets tree
-  def build_widgets_tree
-    TreeBuilderReportWidgets.new('widgets_tree', @sb)
-  end
-
   # Get variables from edit form
   def widget_get_form_vars
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new

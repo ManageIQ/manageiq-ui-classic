@@ -1274,11 +1274,6 @@ module OpsController::Settings::Common
     end
   end
 
-  # Build the main Settings tree
-  def build_settings_tree
-    TreeBuilderOpsSettings.new("settings_tree", @sb)
-  end
-
   def settings_set_view_vars
     if @sb[:active_tab] == "settings_details"
       # Enterprise Details tab

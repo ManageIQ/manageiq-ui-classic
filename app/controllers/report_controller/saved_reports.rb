@@ -134,11 +134,4 @@ module ReportController::SavedReports
     session["#{x_active_tree}_sortcol".to_sym] = @sortcol
     session["#{x_active_tree}_sortdir".to_sym] = @sortdir
   end
-
-  private
-
-  # Build the main Saved Reports tree
-  def build_savedreports_tree
-    TreeBuilderReportSavedReports.new('savedreports_tree', @sb)
-  end
 end
