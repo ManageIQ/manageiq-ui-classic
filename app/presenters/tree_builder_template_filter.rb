@@ -1,6 +1,6 @@
 class TreeBuilderTemplateFilter < TreeBuilderVmsFilter
   def initialize(*args)
-    @root_class = ManageIQ::Providers::InfraManager::Template
+    @root_class = 'ManageIQ::Providers::InfraManager::Template'
     super(*args)
   end
 

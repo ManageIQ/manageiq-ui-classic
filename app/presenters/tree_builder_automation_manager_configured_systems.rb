@@ -1,6 +1,6 @@
 class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSystems
   def initialize(*args)
-    @root_class = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
+    @root_class = 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem'
     super(*args)
   end
 

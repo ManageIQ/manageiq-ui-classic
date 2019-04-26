@@ -1,6 +1,6 @@
 class TreeBuilderInstancesFilter < TreeBuilderVmsFilter
   def initialize(*args)
-    @root_class = ManageIQ::Providers::CloudManager::Vm
+    @root_class = 'ManageIQ::Providers::CloudManager::Vm'
     super(*args)
   end
 
