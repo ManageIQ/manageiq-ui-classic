@@ -19,6 +19,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
     >
       <TagModifier
         header="Add/Modify tag"
+        hideHeader={false}
       >
         <CategoryModifier
           categoryLabel="Category"
@@ -107,6 +108,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
           ]
         }
         header="Assigned tags"
+        hideHeader={false}
         onTagDeleteClick={[Function]}
       />
     </Col>

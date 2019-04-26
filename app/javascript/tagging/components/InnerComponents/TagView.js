@@ -19,15 +19,14 @@ class TagView extends React.Component {
 
   render() {
     const assignedTags = [...this.props.assignedTags];
-    const h = this.props.hideHeader ? null : (
-      <Row>
-        <Col lg={12}>
-          <h2>{this.props.header}</h2>
-        </Col>
-      </Row>);
     return (
       <React.Fragment>
-        {h}
+        { !this.props.hideHeader &&
+          <Row>
+            <Col lg={12}>
+              <h2>{this.props.header}</h2>
+            </Col>
+          </Row>}
         <Row>
           <Col lg={12}>
             <ul className="list-inline">
