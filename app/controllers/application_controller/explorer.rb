@@ -10,12 +10,14 @@ module ApplicationController::Explorer
   end
 
   def try_build_tree(tree_symbol)
-    method_name = "build_#{tree_symbol}_tree"
-    return unless respond_to?(method_name, true)
-    build_method = method(method_name)
-    # FIXME: This is temporary, we actually need to remove all the build_*_tree methods and
-    # use the Feature::build_tree instead.
-    build_method.call
+    # Legacy support for build_*_tree methods
+    # FIXME: delete this after all of them were converted
+    method_name = :"build_#{tree_symbol}_tree"
+    if respond_to?(method_name, true)
+      method(method_name).call
+    else
+      features.find { |f| f.name == tree_symbol }.try(:build_tree, @sb)
+    end
   end
 
   # Historical tree item selected
