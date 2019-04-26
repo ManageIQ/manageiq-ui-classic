@@ -226,11 +226,11 @@ class ProviderForemanController < ApplicationController
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
-  def build_configuration_manager_providers_tree(_type)
+  def build_configuration_manager_providers_tree
     TreeBuilderConfigurationManager.new(:configuration_manager_providers_tree, @sb)
   end
 
-  def build_configuration_manager_cs_filter_tree(_type)
+  def build_configuration_manager_cs_filter_tree
     TreeBuilderConfigurationManagerConfiguredSystems.new(:configuration_manager_cs_filter_tree, @sb)
   end
 

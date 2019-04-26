@@ -15,7 +15,7 @@ module ApplicationController::Explorer
     build_method = method(method_name)
     # FIXME: This is temporary, we actually need to remove all the build_*_tree methods and
     # use the Feature::build_tree instead.
-    build_method.arity == 1 ? build_method.call(tree_symbol) : build_method.call
+    build_method.call
   end
 
   # Historical tree item selected
