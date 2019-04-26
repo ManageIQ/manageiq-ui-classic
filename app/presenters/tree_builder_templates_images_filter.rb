@@ -1,6 +1,6 @@
 class TreeBuilderTemplatesImagesFilter < TreeBuilderVmsFilter
   def initialize(*args)
-    @root_class = MiqTemplate
+    @root_class = 'MiqTemplate'
     super(*args)
   end
 

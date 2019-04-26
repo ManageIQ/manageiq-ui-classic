@@ -1,6 +1,6 @@
 class TreeBuilderVmsInstancesFilter < TreeBuilderVmsFilter
   def initialize(*args)
-    @root_class = Vm
+    @root_class = 'Vm'
     super(*args)
   end
 
