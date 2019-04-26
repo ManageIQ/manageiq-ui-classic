@@ -50,7 +50,7 @@ class Tagging extends React.Component {
       <Grid>
         <Row>
           <Col xs={12} md={8} lg={6}>
-            <TagModifier>
+            <TagModifier hideHeader={this.props.options && this.props.options.hideHeaders}>
               <CategoryModifier
                 selectedTagCategory={this.props.selectedTagCategory}
                 onTagCategoryChange={this.props.onTagCategoryChange}
@@ -66,6 +66,7 @@ class Tagging extends React.Component {
           </Col>
           <Col xs={12} md={4} lg={6}>
             <TagView
+              hideHeader={this.props.options && this.props.options.hideHeaders}
               assignedTags={this.props.assignedTags}
               onTagDeleteClick={this.onTagDeleteClick}
             />

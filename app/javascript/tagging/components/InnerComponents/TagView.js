@@ -19,13 +19,15 @@ class TagView extends React.Component {
 
   render() {
     const assignedTags = [...this.props.assignedTags];
+    const h = this.props.hideHeader ? null : (
+      <Row>
+        <Col lg={12}>
+          <h2>{this.props.header}</h2>
+        </Col>
+      </Row>);
     return (
       <React.Fragment>
-        <Row>
-          <Col lg={12}>
-            <h2>{this.props.header}</h2>
-          </Col>
-        </Row>
+        {h}
         <Row>
           <Col lg={12}>
             <ul className="list-inline">
@@ -43,10 +45,12 @@ TagView.propTypes = {
   assignedTags: TaggingPropTypes.tags,
   onTagDeleteClick: PropTypes.func,
   header: PropTypes.string,
+  hideHeader: PropTypes.bool,
 };
 
 TagView.defaultProps = {
   header: __('Assigned tags'),
+  hideHeader: false,
 };
 
 export default TagView;
