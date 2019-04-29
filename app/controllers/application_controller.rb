@@ -818,23 +818,31 @@ class ApplicationController < ActionController::Base
   end
 
   def default_reports_menu
-    # TODO: move this into a named scope
-    data = MiqReport.for_user(current_user).where(:template_type => "report").where.not(:rpt_type => 'Custom').order(:rpt_type, :name).pluck(:rpt_group, :name)
-    data.map { |grp, items| [grp.split(/ *- */), items].flatten }.group_by(&:first).map do |grp, items|
-      # Group the items by the secondary group and throw out the group names from the final items list
+    # Retrieve the default reports' groups and their corresponding reports
+    # -> Array [rpt_group, report_name]
+    records = MiqReport.where(:rpt_type => 'Default', :template_type => 'report').order(:rpt_type, :name).pluck(:rpt_group, :name)
+    # Split up the reports' groups into two levels at the '-' character and group them by the first level
+    # -> Hash(rpt_group_1, [rpt_group_2, report_name])
+    grouped = records.map { |grp, items| [grp.split(/ *- */), items].flatten }.group_by(&:first)
+    # Map to the final structure, logically a hash of hashes recursively converted to an array
+    # -> Hash(rpt_group_1, Hash(rpt_group_2, report_name))
+    grouped.map do |grp, items|
+      # Group the items by the secondary group
+      # -> Hash(rpt_group_2, report_name)
       [grp, items.group_by(&:second).map { |subgroup, subitems| [subgroup, subitems.map(&:third)] }]
     end
   end
 
   def get_reports_menu(hide_custom = false, group = current_group)
     reports = group.try(:settings).try(:[], :report_menus) || default_reports_menu
-    # TODO: move this into a named scope
     unless hide_custom
-      # TODO: move this into a named scope
       @sb[:grp_title] = reports_group_title
-      custom = MiqReport.for_user(current_user).where(:template_type => "report", :rpt_type => 'Custom').order(:name).pluck(:name, :miq_group_id)
-      custom.select! { |item| item.second.to_i == current_group.try(:id) } unless current_user.report_admin_user?
-      reports.push([@sb[:grp_title], [[_("Custom"), custom.map(&:first)]]])
+      # Select all custom reports
+      query = {:template_type => 'report', :rpt_type => 'Custom'}
+      # If the current_user is not a report admin, restrict this to the current group only
+      query[:miq_group_id] = current_group.try(:id) unless current_user.report_admin_user?
+      # Add the custom reports in the required format in their own menu item
+      reports.push([@sb[:grp_title], [[_("Custom"), MiqReport.where(query).order(:name).pluck(:name)]]])
     end
     reports
   end
