@@ -1,0 +1,12 @@
+.form-group
+  %label.col-md-2.control-label
+    = _('Expression Object')
+  .col-md-8
+    = select_tag("#{prefix}exp_object",
+                  options_for_select(@edit[:new][:available_expression_objects],
+                  @edit[:new][:exp_object]),
+                  :class    => "selectpicker",
+                  "data-miq_observe" => {:url => url}.to_json)
+    :javascript
+      miqInitSelectPicker();
+      miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})

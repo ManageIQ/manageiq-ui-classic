@@ -507,9 +507,11 @@ class MiqAeClassController < ApplicationController
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
     @selectable_methods = embedded_method_regex(@ae_method.fqname)
-    if @ae_method.location == "playbook"
+    if playbook_style_location?(@ae_method.location)
+      # these variants are implemented in Angular
       angular_form_specific_data
     else
+      # other variants are implemented server side
       set_method_form_vars
       @in_a_form = true
     end
@@ -735,7 +737,6 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:display_name] = @ae_method.display_name
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
-    @edit[:new][:available_locations] = MiqAeMethod.available_locations unless @ae_method.id
     @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location
     if @edit[:new][:location] == "expression"
@@ -913,12 +914,19 @@ class MiqAeClassController < ApplicationController
                            end
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
-      angular_form_specific_data if @edit[:new][:location] == "playbook"
+
+      in_angular = playbook_style_location?(@edit[:new][:location])
+      angular_form_specific_data if in_angular
+
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        if @edit[:new][:location] == "playbook"
-          page.replace_html(@refresh_div, :partial => 'angular_method_form')
+        if in_angular
+          page.replace_html(
+            @refresh_div,
+            :partial => 'angular_method_form',
+            :locals  => {:location => @edit[:new][:location]}
+          )
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
           page.replace_html(@refresh_div, :partial => @refresh_partial)
@@ -986,17 +994,43 @@ class MiqAeClassController < ApplicationController
   end
 
   def method_form_fields
-    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find(params[:id])
+    assert_privileges("miq_ae_method_edit")
+
+    if params[:id] == 'new'
+      method = MiqAeMethod.new
+      location = params['location'] || 'playbook'
+    else
+      method = MiqAeMethod.find(params[:id])
+      location = method.location
+    end
+
+    if %w[ansible_job_template ansible_workflow_template].include?(location)
+      # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
+      list_of_managers = ManageIQ::Providers::AnsibleTower::AutomationManager
+                         .where(:enabled => true)
+                         .pluck(:id, :name)
+                         .map { |r| {:id => r[0], :name => r[1]} }
+
+      if method&.options[:ansible_template_id]
+        manager_id = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
+                     .find_by(:id => method.options[:ansible_template_id])&.manager_id
+      end
+    end
+
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
       :namespace_path      => @sb[:namespace_path],
       :class_id            => method.id ? method.class_id : MiqAeClass.find(x_node.split("-").last).id,
-      :location            => 'playbook',
+      :location            => location,
+      :location_fancy_name => location_fancy_name(location),
       :language            => 'ruby',
       :scope               => "instance",
+      :managers            => list_of_managers,
+      :manager_id          => manager_id,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info         => { :repository_id         => method.options[:repository_id] || '',
+                                :ansible_template_id   => method.options[:ansible_template_id] || '',
                                 :playbook_id           => method.options[:playbook_id] || '',
                                 :credential_id         => method.options[:credential_id] || '',
                                 :vault_credential_id   => method.options[:vault_credential_id] || '',
@@ -1007,7 +1041,7 @@ class MiqAeClassController < ApplicationController
                                 :execution_ttl         => method.options[:execution_ttl] || '',
                                 :hosts                 => method.options[:hosts] || 'localhost',
                                 :log_output            => method.options[:log_output] || 'on_error',
-                                :extra_vars            => method.inputs }
+                                :extra_vars            => location == 'playbook' && method.inputs }
     }
     render :json => method_hash
   end
@@ -1119,43 +1153,51 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def add_update_method_cancel
+    if params[:id] && params[:id] != "new"
+      method = find_record_with_rbac(MiqAeMethod, params[:id])
+      add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => method.name})
+    else
+      add_flash(_("Add of Automate Method was cancelled by the user"))
+    end
+    replace_right_cell
+  end
+
+  def add_update_method_add
+    method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
+    method.name = params["name"]
+    method.display_name = params["display_name"]
+    method.location = params["location"]
+    method.language = params["language"]
+    method.scope = params["scope"]
+    method.class_id = params[:class_id]
+    method.options = set_playbook_data
+    begin
+      MiqAeMethod.transaction do
+        to_save, to_delete = playbook_inputs(method)
+        method.inputs.destroy(MiqAeField.where(:id => to_delete))
+        method.inputs = to_save
+        method.save!
+      end
+    rescue StandardError => bang
+      add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
+      javascript_flash
+    else
+      old_method_attributes = method.attributes.clone
+      add_flash(_('Automate Method "%{name}" was saved') % {:name => method.name})
+      AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
+      replace_right_cell(:replace_trees => [:ae])
+      return
+    end
+  end
+
   def add_update_method
     assert_privileges("miq_ae_method_edit")
     case params[:button]
     when "cancel"
-      if params[:id] && params[:id] != "new"
-        method = find_record_with_rbac(MiqAeMethod, params[:id])
-        add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => method.name})
-      else
-        add_flash(_("Add of Automate Method was cancelled by the user"))
-      end
-      replace_right_cell
+      add_update_method_cancel
     when "add", "save"
-      method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
-      method.name = params["name"]
-      method.display_name = params["display_name"]
-      method.location = params["location"]
-      method.language = params["language"]
-      method.scope = params["scope"]
-      method.class_id = params[:class_id]
-      method.options = set_playbook_data
-      begin
-        MiqAeMethod.transaction do
-          to_save, to_delete = playbook_inputs(method)
-          method.inputs.destroy(MiqAeField.where(:id => to_delete))
-          method.inputs = to_save
-          method.save!
-        end
-      rescue => bang
-        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
-        javascript_flash
-      else
-        old_method_attributes = method.attributes.clone
-        add_flash(_("Automate Method \"%{name}\" was saved") % {:name => method.name})
-        AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
-        replace_right_cell(:replace_trees => [:ae])
-        return
-      end
+      add_update_method_add
     end
   end
 
@@ -1591,6 +1633,16 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def copy_objects_reset(ids)
+    action = params[:pressed] || @sb[:action]
+    klass = case action
+            when 'miq_ae_class_copy'    then MiqAeClass
+            when 'miq_ae_instance_copy' then MiqAeInstance
+            when 'miq_ae_method_copy'   then MiqAeMethod
+            end
+    copy_reset(klass, ids, action)
+  end
+
   def copy_objects
     ids = objects_to_copy
     if ids.blank?
@@ -1600,22 +1652,11 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
       return
     end
+
     case params[:button]
-    when "cancel"
-      copy_cancel
-    when "copy"
-      copy_save
-    when "reset", nil # Reset or first time in
-      action = params[:pressed] || @sb[:action]
-      klass = case action
-              when "miq_ae_class_copy"
-                MiqAeClass
-              when "miq_ae_instance_copy"
-                MiqAeInstance
-              when "miq_ae_method_copy"
-                MiqAeMethod
-              end
-      copy_reset(klass, ids, action)
+    when "cancel"     then copy_cancel
+    when "copy"       then copy_save
+    when "reset", nil then copy_objects_reset(ids)
     end
   end
 
@@ -1730,7 +1771,8 @@ class MiqAeClassController < ApplicationController
   end
 
   def set_playbook_data
-    params_list = %i[repository_id
+    params_list = %i[ansible_template_id
+                     repository_id
                      playbook_id
                      credential_id
                      vault_credential_id
@@ -1740,9 +1782,8 @@ class MiqAeClassController < ApplicationController
                      execution_ttl
                      hosts
                      log_output]
-    boolean_params_list = %i[become_enabled]
     params_hash = copy_params_if_set({}, params, params_list)
-    copy_boolean_params(params_hash, params, boolean_params_list)
+    copy_boolean_params(params_hash, params, %i[become_enabled])
   end
 
   def angular_form_specific_data
@@ -2118,6 +2159,12 @@ class MiqAeClassController < ApplicationController
   end
   helper_method :row_selected_in_grid?
 
+  # these are written in angular
+  def playbook_style_location?(location)
+    %w[playbook ansible_job_template ansible_workflow_template].include?(location)
+  end
+  helper_method :playbook_style_location?
+
   # Get variables from edit form
   def fields_get_form_vars
     @ae_class = MiqAeClass.find_by(:id => @edit[:ae_class_id])
@@ -2198,8 +2245,7 @@ class MiqAeClassController < ApplicationController
       # for method_inputs view
       @edit[:new][:name] = params[:method_name].presence if params[:method_name]
       @edit[:new][:display_name] = params[:method_display_name].presence if params[:method_display_name]
-      @edit[:new][:location] = params[:method_location] if params[:method_location]
-      @edit[:new][:location] ||= "inline"
+      @edit[:new][:location] = params[:method_location] || 'inline'
       @edit[:new][:data] = params[:method_data] if params[:method_data]
       method_form_vars_process_fields
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
@@ -2210,8 +2256,7 @@ class MiqAeClassController < ApplicationController
       # for class_methods view
       @edit[:new][:name] = params[:cls_method_name].presence if params[:cls_method_name]
       @edit[:new][:display_name] = params[:cls_method_display_name].presence if params[:cls_method_display_name]
-      @edit[:new][:location] = params[:cls_method_location] if params[:cls_method_location]
-      @edit[:new][:location] ||= "inline"
+      @edit[:new][:location] = params[:cls_method_location] || 'inline'
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
       @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
       method_form_vars_process_fields('cls_')
@@ -2670,28 +2715,37 @@ class MiqAeClassController < ApplicationController
     if @record.location == 'expression'
       hash = YAML.load(@record.data)
       @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
-    elsif @record.location == "playbook"
-      fetch_playbook_details
+    elsif playbook_style_location?(@record.location)
+      @playbook_details = fetch_playbook_details(@record)
     end
     domain_overrides
     set_right_cell_text(x_node, @record)
   end
 
-  def fetch_playbook_details
-    @playbook_details = {}
-    options = @record.options
-    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id])
-    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id])
-    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id])
-    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
-    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
-    @playbook_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
-    @playbook_details[:verbosity] = options[:verbosity]
-    @playbook_details[:become_enabled] = options[:become_enabled] == true ? _("Yes") : _("No")
-    @playbook_details[:execution_ttl] = options[:execution_ttl]
-    @playbook_details[:hosts] = options[:hosts]
-    @playbook_details[:log_output] = options[:log_output]
-    @playbook_details
+  def fetch_manager_name(ansible_template_id)
+    return nil if ansible_template_id.blank?
+    ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript.find_by(:id => ansible_template_id)&.manager&.name
+  end
+
+  def fetch_playbook_details(record)
+    options = record.options
+    details = {
+      :repository          => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id]),
+      :playbook            => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, options[:playbook_id]),
+      :machine_credential  => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, options[:credential_id]),
+      :verbosity           => options[:verbosity],
+      :become_enabled      => options[:become_enabled] == true ? _("Yes") : _("No"),
+      :execution_ttl       => options[:execution_ttl],
+      :hosts               => options[:hosts],
+      :log_output          => options[:log_output],
+      :ansible_template_id => options[:ansible_template_id],
+      :manager_name        => fetch_manager_name(options[:ansible_template_id]),
+    }
+    details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
+    details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
+    details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
+    details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
+    details
   end
 
   def get_class_node_info(id)

@@ -10,7 +10,7 @@
           = _('Type')
         .col-md-8
           = select_tag("#{prefix}method_location",
-                        options_for_select([[_("<Choose>"), nil]] + @edit[:new][:available_locations].sort,
+                        options_for_select([[_("<Choose>"), nil]] + available_locations_with_labels,
                         @edit[:new][:location]),
                         :class    => "selectpicker",
                         "data-miq_observe" => {:url => url}.to_json)
@@ -23,7 +23,7 @@
           = _('Type')
         .col-md-8
           %p.form-control-static
-            = @edit[:new][:location]
+            = location_fancy_name(@edit[:new][:location])
       .form-group
         %label.col-md-2.control-label
           = _('Fully Qualified Name')
@@ -57,25 +57,13 @@
             = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
       - if @edit[:new][:location] == 'inline'
         = render :partial => "embedded_methods"
-      - if @edit[:new][:location]
-        - if @edit[:new][:location] == 'expression'
-          .form-group
-            %label.col-md-2.control-label
-              = _('Expression Object')
-            .col-md-8
-              = select_tag("#{prefix}exp_object",
-                            options_for_select(@edit[:new][:available_expression_objects],
-                            @edit[:new][:exp_object]),
-                            :class    => "selectpicker",
-                            "data-miq_observe" => {:url => url}.to_json)
-              :javascript
-                miqInitSelectPicker();
-                miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})
-        - else
-          %hr
-          %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
-          = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
-          %hr
+      - if @edit[:new][:location] == 'expression'
+        = render :partial => "expression", :locals => {:prefix => prefix, :url => url}
+      - elsif @edit[:new][:location] # buildin or inline
+        %hr
+        %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
+        = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
+        %hr
     - if @edit[:new][:location] == 'expression'
       .div
         = render :partial => 'layouts/exp_editor'

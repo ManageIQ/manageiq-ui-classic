@@ -9,6 +9,7 @@ class CatalogController < ApplicationController
   after_action :set_session_data
 
   helper ProvisionCustomizeHelper
+  helper MiqAeClassHelper # need the playbook_label
 
   def self.model
     @model ||= ServiceTemplate

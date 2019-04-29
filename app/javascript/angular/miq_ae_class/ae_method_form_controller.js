@@ -1,7 +1,7 @@
 ManageIQ.angular.app.controller('aeMethodFormController', aeMethodFormController);
-aeMethodFormController.$inject = ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin'];
+aeMethodFormController.$inject = ['$http', '$scope', 'aeMethodFormId', 'currentRegion', 'miqService', 'playbookReusableCodeMixin', 'location', 'API'];
 
-function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin) {
+function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, miqService, playbookReusableCodeMixin, location, API) {
   var vm = this;
   var init = function() {
     vm.aeMethodModel = {
@@ -16,6 +16,10 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       key_value: '',
       key_type: 'string',
       available_datatypes: '',
+      managers: [],
+      manager: null,
+      ansible_templates: [],
+      ansible_template: {},
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -44,14 +48,11 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
 
     ManageIQ.angular.scope = $scope;
 
-    $http.get('method_form_fields/' + aeMethodFormId)
+    $http.get('/miq_ae_class/method_form_fields/' + aeMethodFormId + '?location=' + location)
       .then(getMethodFormData)
       .catch(miqService.handleFailure);
     vm.saveable = miqService.saveable;
     vm.newRecord = aeMethodFormId === 'new';
-    if (aeMethodFormId === 'new') {
-      playbookReusableCodeMixin.formOptions(vm);
-    }
   };
 
   function getMethodFormData(response) {
@@ -60,6 +61,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.aeMethodModel.display_name = data.display_name;
     vm.aeMethodModel.namespace_path = data.namespace_path;
     vm.aeMethodModel.location = data.location;
+    vm.aeMethodModel.location_fancy_name = data.location_fancy_name;
     vm.aeMethodModel.class_id = data.class_id;
     vm.aeMethodModel.language = data.language;
     vm.aeMethodModel.scope = data.scope;
@@ -67,7 +69,18 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     playbookReusableCodeMixin.formOptions(vm);
     playbookReusableCodeMixin.formCloudCredentials(vm, data.config_info.cloud_credential_id, null);
     getConfigInfo(data.config_info);
-    vm.modelCopy = angular.copy(vm.aeMethodModel);
+
+    vm.aeMethodModel.managers = data.managers;
+    vm.aeMethodModel.manager = _.find(data.managers, function(m) {
+      return m.id === data.manager_id;
+    });
+    $scope.managerChanged().then(function() {
+      vm.aeMethodModel.ansible_template = _.find(vm.aeMethodModel.ansible_templates, function(m) {
+        return m.id === data.config_info.ansible_template_id;
+      });
+
+      vm.modelCopy = angular.copy(vm.aeMethodModel);
+    });
   }
 
   var getConfigInfo = function(configData) {
@@ -96,7 +109,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
   };
 
   var setExtraVars = function(variableName, extraVars) {
-    if (extraVars !== 'undefined') {
+    if (extraVars) {
       vm.aeMethodModel[variableName] = [];
       extraVars.forEach(function(arrayItem) {
         var inputVars = [arrayItem.name, arrayItem.default_value, arrayItem.datatype, arrayItem.id];
@@ -142,7 +155,9 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       class_id: configData.class_id,
       language: configData.language,
       scope: configData.scope,
-      location: 'playbook',
+      location: configData.location,
+      manager_id: configData.manager && configData.manager.id,
+      ansible_template_id: configData.ansible_template && configData.ansible_template.id,
       repository_id: configData.provisioning_repository_id,
       playbook_id: configData.provisioning_playbook_id,
       credential_id: configData.provisioning_machine_credential_id,
@@ -162,6 +177,23 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
       method.cloud_credential_id = configData.provisioning_cloud_credential_id;
     }
     return method;
+  };
+
+  $scope.managerChanged = function() {
+    const manager = $scope.vm.aeMethodModel.manager;
+    if (! manager) {
+      return Promise.resolve();
+    }
+
+    const klass = $scope.vm.aeMethodModel.location === 'ansible_job_template' ?
+      'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript' :
+      'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationWorkflow';
+
+    return API.get(`/api/configuration_scripts?expand=resources&collection_class=${klass}&filter[]=manager_id=${manager.id}&sort_by=name&sort_order=asc`)
+      .then(function(data) {
+        $scope.vm.aeMethodModel.ansible_templates = data.resources;
+      })
+      .catch(miqService.handleFailure);
   };
 
   $scope.$watch('vm._provisioning_repository', function(value) {

@@ -11,7 +11,7 @@
       %label.col-md-2.control-label{"for" => "name"}
         = _("Type")
       .col-md-8
-        {{vm.aeMethodModel.location}}
+        {{vm.aeMethodModel.location_fancy_name}}
         %input{:type => 'hidden', :id => "location", :value => "vm.aeMethodModel.location"}
         %input{:type => 'hidden', :id => "scope", :value => "vm.aeMethodModel.scope"}
         %input{:type => 'hidden', :id => "language", :value => "vm.aeMethodModel.language"}
@@ -59,4 +59,5 @@
 :javascript
   ManageIQ.angular.app.value('aeMethodFormId', '#{@record.id || "new"}');
   ManageIQ.angular.app.value('currentRegion', '#{@current_region}');
+  ManageIQ.angular.app.value('location', '#{location}');
   miq_bootstrap('#form_div');
