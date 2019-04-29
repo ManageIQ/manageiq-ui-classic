@@ -1013,7 +1013,7 @@ class MiqAeClassController < ApplicationController
 
       if method&.options[:ansible_template_id]
         manager_id = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
-                     .find(method.options[:ansible_template_id])&.manager_id
+                     .find_by(:id => method.options[:ansible_template_id])&.manager_id
       end
     end
 
