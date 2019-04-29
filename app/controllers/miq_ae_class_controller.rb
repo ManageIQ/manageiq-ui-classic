@@ -2722,6 +2722,11 @@ class MiqAeClassController < ApplicationController
     set_right_cell_text(x_node, @record)
   end
 
+  def fetch_manager_name(ansible_template_id)
+    return nil if ansible_template_id.blank?
+    ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript.find_by(:id => ansible_template_id)&.manager&.name
+  end
+
   def fetch_playbook_details(record)
     options = record.options
     details = {
@@ -2734,13 +2739,12 @@ class MiqAeClassController < ApplicationController
       :hosts               => options[:hosts],
       :log_output          => options[:log_output],
       :ansible_template_id => options[:ansible_template_id],
+      :manager_name        => fetch_manager_name(options[:ansible_template_id]),
     }
     details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
     details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
     details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
     details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
-    details[:manager_name] = options[:ansible_template_id] && ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
-                             .find(options[:ansible_template_id])&.manager&.name
     details
   end
 
