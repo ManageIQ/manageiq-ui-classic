@@ -310,27 +310,39 @@ describe ApplicationController do
   end
 
   context "#button_set_record_vars" do
-    it "sets role visibility for custom button" do
-      role = FactoryBot.create(:miq_user_role, :name => "foo")
-      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"})
+    let(:role) { FactoryBot.create(:miq_user_role, :name => "foo") }
+    let(:old_role) { FactoryBot.create(:miq_user_role, :name => "bar") }
+    let(:custom_button) { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"}) }
+    let(:edit) {
+      {:uri => '/test/',
+       :new => {:name           => 'testCB',
+                :description    => 'testCB',
+                :button_icon    => 'img',
+                :object_request => 'request',
+                :open_url       => true,
+                :visibility_typ => 'role',
+                :roles          => [role.id.to_s],
+                :display_for    => :list}
+      }
+    }
+
+    before do
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "test_req"
       custom_button.save
-      edit = {
-        :uri => '/test/',
-        :new => {:name           => 'testCB',
-                 :description    => 'testCB',
-                 :button_icon    => 'img',
-                 :object_request => 'request',
-                 :open_url       => true,
-                 :visibility_typ => 'role',
-                 :roles          => [role.id.to_s],
-                 :display_for    => :list}
-      }
-      controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
+      controller.instance_variable_set(:@edit, edit)
+    end
+
+    it "sets new role visibility for custom button" do
       controller.send(:button_set_record_vars, custom_button)
       expect(custom_button.visibility[:roles]).to eq([role.name])
+    end
+
+    it "sets new role and preserves old role for custom button" do
+      edit[:new][:roles] = [old_role.id, role.id.to_s] # old roles are represented by int and new ones by string
+      controller.send(:button_set_record_vars, custom_button)
+      expect(custom_button.visibility[:roles]).to eq([old_role.name, role.name])
     end
   end
 
