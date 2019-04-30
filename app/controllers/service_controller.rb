@@ -541,6 +541,7 @@ class ServiceController < ApplicationController
       ],
       :show_header => @sb[:action],
       :record_info => @service,
+      :ancestry    => Service,
     }
   end
 

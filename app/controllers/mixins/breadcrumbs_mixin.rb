@@ -36,6 +36,10 @@ module Mixins
         if (options[:include_record] || breadcrumbs_from_tree.blank?) && options[:record_info].present? && options[:record_info][options[:record_title]] &&
            !(@tagitems || @politems || @ownershipitems || @retireitems)
           # Append breadcrumb created from record_info if included or if result from tree was empty (eg filters page)
+
+          # Ancestry parents breadcrumbs
+          breadcrumbs.concat(ancestry_parents(options[:ancestry], options[:record_info], options[:record_title])) if options[:ancestry]
+
           breadcrumbs.push(:title => options[:record_info][options[:record_title]], :key => x_node_right_cell)
           breadcrumbs.push(:title => @right_cell_text) if options[:show_header] && @right_cell_text
         else
@@ -100,6 +104,18 @@ module Mixins
       end
 
       breadcrumbs
+    end
+
+    # Build ancestry parents if user provides an ancestry key
+    def ancestry_parents(parent_class, record, title)
+      breadcrumbs = []
+
+      while record.ancestry
+        record = parent_class.find(record.ancestry)
+        breadcrumbs.push(:title => record[title], :key => TreeBuilder.build_node_id(record))
+      end
+
+      breadcrumbs.reverse
     end
 
     # Helper methods
