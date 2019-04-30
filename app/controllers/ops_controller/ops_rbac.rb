@@ -686,6 +686,7 @@ module OpsController::OpsRbac
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = key == :group ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
+      add_flash(_("Outdated filters were removed from group \"%{name}\"") % {:name => @edit[:new][subkey]}) if what == "group" && @edit[:current][:deleted_belongsto_filters].present?
       @edit = session[:edit] = nil # clean out the saved info
       if add_pressed
         suffix = case rbac_suffix
