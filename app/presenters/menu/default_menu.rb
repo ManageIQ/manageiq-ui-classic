@@ -255,7 +255,7 @@ module Menu
       end
 
       def settings_menu_section
-        Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings', [
+        Menu::Section.new(:set, N_("User Settings"), 'pficon pficon-settings', [
           Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
           Menu::Item.new('my_tasks',      N_('Tasks'),         'tasks',        {:feature => 'tasks', :any => true},        '/miq_task/index?jobs_tab=tasks')
         ], :top_right)
