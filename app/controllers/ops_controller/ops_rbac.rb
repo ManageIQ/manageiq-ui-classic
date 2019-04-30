@@ -902,12 +902,11 @@ module OpsController::OpsRbac
   def rbac_group_right_tree(selected_nodes)
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
-      cats = Classification.categories.find_all do |c|
-        c if c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name)
+      cats = Classification.categories.select do |c|
+        c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name) && !(c.read_only? || c.entries.empty)
       end
       cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
-      cats.delete_if { |c| c.read_only? || c.entries.empty? } # Remove categories that are read only or have no entries
-      @tags = cats.map do |cat|
+      tags = cats.map do |cat|
         {
           :id          => cat.id,
           :description => cat.description,
@@ -917,7 +916,8 @@ module OpsController::OpsRbac
           end
         }
       end
-      filters = @edit&.dig(:new)&.dig(:filters) || @filters
+
+      filters = @edit&.fetch_path(:new, :filters) || @filters
       assigned_tags = Tag.where(:name => filters.flatten).map do |tag|
         {
           :description => tag.category.description,
@@ -936,7 +936,7 @@ module OpsController::OpsRbac
       end
 
       assigned_tags.uniq! { |tag| tag[:id] }
-      @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => [@group.id]}
+      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [@group.id]}
       @button_urls = {
         :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "save"),
         :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "cancel")
@@ -1092,11 +1092,8 @@ module OpsController::OpsRbac
 
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
-        # cat, tag = params[:id].split('cl-').last.split("_xx-") # Get the category and tag
-        cat = params[:cat]
-        tag = params[:val]
-        cat_name = Classification.find_by(:id => cat).name
-        tag_name = Classification.find_by(:id => tag).name
+        cat_name = Classification.find_by(:id => params[:cat]).name
+        tag_name = Classification.find_by(:id => params[:val]).name
         if params[:check] == "0" #   unchecked
           @edit[:new][:filters].except!("#{cat_name}-#{tag_name}") # Remove the tag from the filters array
         else

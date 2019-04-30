@@ -329,7 +329,7 @@ describe OpsController do
 
     it "saves the filters when use_filter_expression is false" do
       @group.entitlement = Entitlement.create!
-      allow(controller).to receive(:params).and_return({'data' => get_tags_json([tag])})
+      allow(controller).to receive(:params).and_return('data' => get_tags_json([tag]))
       controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
                                                         :name                  => 'Name',
                                                         :description           => "Test",
