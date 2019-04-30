@@ -7,6 +7,20 @@
 - can_lookup_groups = mode.downcase.start_with?('ldap')
 - can_lookup_groups = mode.downcase == "httpd" && ! (saml_enabled || oidc_enabled) unless can_lookup_groups
 = render :partial => "layouts/flash_msg"
+
+%div{:id => "warn_div", :style => ""}
+  - if @deleted_belongsto_filters.present?
+    .flash_text_div
+      .alert.alert-warning.alert-dismissable
+        %span.pficon-warning-triangle-o
+        %strong= h('These outdated filters need review as it affects their visibility. We suggest editing and saving the group to delete these outdated filters.')
+        %ul
+          %li
+            %strong= (_("%{title_for_hosts} & %{title_for_clusters}") % {:title_for_hosts => title_for_hosts, :title_for_clusters => title_for_clusters})
+            %ul
+              - @deleted_belongsto_filters.each do |deleted_filter|
+                %li
+                  %strong= h(deleted_filter)
 #group_info
   %h3
     = _("Group Information")
