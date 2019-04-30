@@ -23,7 +23,7 @@ class TaggingWrapper extends React.Component {
   render() {
     if (!this.props.isLoaded) return <Spinner loading size="lg" />;
     const { urls, options } = this.props;
-    return (<TaggingWithButtonsConnected
+    return (options && options.hideButtons && <TaggingConnected options={{...options}}/> || <TaggingWithButtonsConnected
       saveButton={{
         // don't replace $.post with http.post
           onClick: (assignedTags) => {
