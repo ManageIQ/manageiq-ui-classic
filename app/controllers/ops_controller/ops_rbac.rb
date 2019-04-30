@@ -1127,8 +1127,12 @@ module OpsController::OpsRbac
     # Build the belongsto filters hash
     @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
       bobj = MiqFilter.belongsto2object(b)   # Convert to an object
-      next unless bobj
-      @edit[:new][:belongsto][bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+      if bobj
+        @edit[:new][:belongsto][bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+      else
+        @deleted_belongsto_filters ||= []
+        @deleted_belongsto_filters.push(MiqFilter.belongsto2path_human(b))
+      end
     end
 
     # Build roles hash
