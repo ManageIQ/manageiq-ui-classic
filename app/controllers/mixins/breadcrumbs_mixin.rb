@@ -15,14 +15,14 @@ module Mixins
       # Different methods for controller with explorers and for non-explorers controllers
 
       if !features?
-        # Append breadcrumb from @record item (eg "Openstack")
-        breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title]))
+        # Append breadcrumb from @record item (eg "Openstack") when on some action page (not show, display)
+        breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title])) if not_show_page?
 
         # Append tag and policy breadcrumb if they exist
         breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))
 
         # Append title breadcrumb if they exist and not same as previous breadcrumb (eg "Editing name")
-        if @title && not_show_page? && @title != breadcrumbs.compact.last.try(:[], :title)
+        if @title && @title != breadcrumbs.compact.last.try(:[], :title)
           breadcrumbs.push(:title => @title)
         end
       else
@@ -141,7 +141,7 @@ module Mixins
 
     # User is not on show page
     def not_show_page?
-      (action_name == "show" && params["display"]) || (action_name != "show")
+      (action_name == "show" && params["display"] && !%w[dashboard main].include?(params["display"])) || (action_name != "show")
     end
 
     # Controls on tagging screen if the tagged item is floating_ip
