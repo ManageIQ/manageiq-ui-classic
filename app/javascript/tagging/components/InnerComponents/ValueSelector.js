@@ -31,7 +31,7 @@ class ValueSelector extends React.Component {
   );
 
   render() {
-    const val = this.props.selectedOption.id ? { value: this.props.selectedOption.id, label: this.props.selectedOption.description } : undefined;
+    const val = this.props.selectedOption.id ? { value: this.props.selectedOption.id, label: this.props.selectedOption.description } : null;
     return this.selector(
       val,
       this.getvalues(this.props.values),
