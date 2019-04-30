@@ -8,6 +8,7 @@ describe TreeBuilderArchived do
   end
 
   it '#x_get_tree_arch_orph_nodes' do
+    allow(archived).to receive(:role_allows?).and_return(true)
     nodes = archived.x_get_tree_arch_orph_nodes('VMs/Templates')
     expect(nodes).to eq([{:id              => "arch",
                           :text            => "<Archived>",
