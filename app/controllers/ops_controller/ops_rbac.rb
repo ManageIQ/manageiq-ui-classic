@@ -651,7 +651,7 @@ module OpsController::OpsRbac
     end
 
     @in_a_form = true
-    session[:changed] = false
+    session[:changed] = key == :group ? @deleted_belongsto_filters.present? : false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
     replace_right_cell(:nodetype => x_node)
@@ -1168,6 +1168,8 @@ module OpsController::OpsRbac
                        end
 
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
+    @edit[:current][:deleted_belongsto_filters] = @deleted_belongsto_filters
+    @edit[:new][:belongsto].except!(*@deleted_belongsto_filters)
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)
