@@ -41,7 +41,7 @@
     "array-includes": "~3.0.3",
     "awesome-debounce-promise": "^2.1.0",
     "bootstrap-filestyle": "~1.2.1",
-    "bootstrap-switch": "~3.3.4",
+    "bootstrap-switch": "3.3.4",
     "classnames": "~2.2.6",
     "codemirror": "~5.19.0",
     "connected-react-router": "^4.3.0",
