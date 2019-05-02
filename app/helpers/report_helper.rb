@@ -120,13 +120,12 @@ module ReportHelper
   def get_reports_menu(hide_custom = false, group = current_group)
     reports = group.try(:settings).try(:[], :report_menus) || default_reports_menu
     unless hide_custom
-      @sb[:grp_title] = reports_group_title
       # Select all custom reports
       query = {:template_type => 'report', :rpt_type => 'Custom'}
       # If the current_user is not a report admin, restrict this to the current group only
       query[:miq_group_id] = current_group.try(:id) unless current_user.report_admin_user?
       # Add the custom reports in the required format in their own menu item
-      reports.push([@sb[:grp_title], [[_("Custom"), MiqReport.where(query).order(:name).pluck(:name)]]])
+      reports.push([reports_group_title, [[_("Custom"), MiqReport.where(query).order(:name).pluck(:name)]]])
     end
     reports
   end
@@ -138,13 +137,13 @@ module ReportHelper
   end
 
   def reports_group_title
-    tenant_name = current_tenant.name
-    if current_user.report_admin_user?
+    tenant_name = User.current_tenant.name
+    if User.current_user.report_admin_user?
       _("%{tenant_name} (All Groups)") % {:tenant_name => tenant_name}
     else
       _("%{tenant_name} (Group): %{group_description}") %
         {:tenant_name       => tenant_name,
-         :group_description => current_user.current_group.description}
+         :group_description => User.current_user.current_group.description}
     end
   end
 end

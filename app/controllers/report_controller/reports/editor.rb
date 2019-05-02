@@ -1588,7 +1588,7 @@ module ReportController::Reports::Editor
 
   def setnode_for_customreport
     @sb[:rpt_menu].each_with_index do |level1_nodes, i|
-      next unless level1_nodes[0] == @sb[:grp_title]
+      next unless level1_nodes[0] == reports_group_title
       level1_nodes[1].each_with_index do |level2_nodes, k|
         # Check for the existence of the Custom folder in the Reports tree and
         # check if at least one report exists underneath it

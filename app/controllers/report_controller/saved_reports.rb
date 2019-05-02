@@ -46,7 +46,7 @@ module ReportController::SavedReports
         self.x_node = "xx-#{rr.miq_report_id}"
       else
         @sb[:rpt_menu].each_with_index do |lvl1, i|
-          next unless lvl1[0] == @sb[:grp_title]
+          next unless lvl1[0] == reports_group_title
           lvl1[1].each_with_index do |lvl2, k|
             x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{rr.miq_report_id}", :reports_tree) if lvl2[0].downcase == "custom"
           end
