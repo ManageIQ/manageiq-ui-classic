@@ -1,11 +1,13 @@
 class TreeBuilderReportReports < TreeBuilderReportReportsClass
   REPORTS_IN_TREE = true
 
+  include ReportHelper
+
   private
 
   def initialize(name, sandbox, build = true, **_params)
     @rpt_menu  = sandbox[:rpt_menu]
-    @grp_title = sandbox[:grp_title]
+    @grp_title = reports_group_title
     super(name, sandbox, build)
   end
 
