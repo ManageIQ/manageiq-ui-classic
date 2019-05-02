@@ -2,11 +2,11 @@ class TreeBuilderVat < TreeBuilderDatacenter
   has_kids_for Datacenter, %i[x_get_tree_datacenter_kids]
   has_kids_for EmsFolder, %i[x_get_tree_folder_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     sandbox[:vat] = params[:vat] if params[:vat]
     @vat = sandbox[:vat]
     @user_id = User.current_userid
-    super(name, type, sandbox, build, **params)
+    super(name, sandbox, build, **params)
   end
 
   private

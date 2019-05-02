@@ -192,7 +192,7 @@ module ApplicationController::AdvancedSearch
     elsif @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree svcs_tree].include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
-      tree = builder.new(x_active_tree, tree_type, @sb)
+      tree = builder.new(x_active_tree, @sb)
       if tree_for_building_accordions?
         @explorer = true
         build_accordions_and_trees

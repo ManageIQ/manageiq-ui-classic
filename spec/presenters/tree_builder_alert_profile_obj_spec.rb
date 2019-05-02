@@ -20,7 +20,7 @@ describe TreeBuilderAlertProfileObj do
 
   context 'classification tree' do
     subject do
-      described_class.new(:alert_profile_obj_tree, :alert_profile_obj,
+      described_class.new(:alert_profile_obj_tree,
                           {},
                           true,
                           :assign_to      => 'storage-tags',
@@ -98,7 +98,6 @@ describe TreeBuilderAlertProfileObj do
   context 'tenant tree' do
     subject do
       described_class.new(:alert_profile_obj_tree,
-                          :alert_profile_obj,
                           {},
                           true,
                           :assign_to      => 'tenant',

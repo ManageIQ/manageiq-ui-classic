@@ -854,9 +854,9 @@ module OpsController::Diagnostics
   # Method to build the server tree (parent is a zone or region instance)
   def build_server_tree(parent)
     @server_tree = if @sb[:diag_tree_type] == "roles"
-                     TreeBuilderRolesByServer.new(:roles_by_server_tree, :roles_by_server, @sb, true, :root => parent)
+                     TreeBuilderRolesByServer.new(:roles_by_server_tree, @sb, true, :root => parent)
                    else
-                     TreeBuilderServersByRole.new(:servers_by_role_tree, :servers_by_role, @sb, true, :root => parent)
+                     TreeBuilderServersByRole.new(:servers_by_role_tree, @sb, true, :root => parent)
                    end
 
     # Pull out the selected node from the tree state and store it in the sandbox for future use
@@ -887,7 +887,7 @@ module OpsController::Diagnostics
   end
 
   def build_diagnostics_tree
-    TreeBuilderOpsDiagnostics.new("diagnostics_tree", "diagnostics", @sb)
+    TreeBuilderOpsDiagnostics.new("diagnostics_tree", @sb)
   end
 
   def build_supported_depots_for_select

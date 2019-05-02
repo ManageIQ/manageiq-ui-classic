@@ -139,6 +139,6 @@ module ReportController::SavedReports
 
   # Build the main Saved Reports tree
   def build_savedreports_tree
-    TreeBuilderReportSavedReports.new('savedreports_tree', 'savedreports', @sb)
+    TreeBuilderReportSavedReports.new('savedreports_tree', @sb)
   end
 end

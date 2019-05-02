@@ -1,14 +1,14 @@
 describe TreeBuilder do
   context "initialize" do
     it "initializes a tree" do
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       expect(tree).to be_a_kind_of(TreeBuilder)
       expect(tree.name).to eq(:cb_rates_tree)
     end
 
     it "sets sandbox hash that can be accessed by other methods in the class" do
       sb = {}
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", sb)
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", sb)
       expect(tree).to be_a_kind_of(TreeBuilder)
       expect(tree.name).to eq(:cb_rates_tree)
       sb.key?(:trees)
@@ -18,7 +18,7 @@ describe TreeBuilder do
 
   context "title_and_tip" do
     it "sets title and tooltip for the passed in root node" do
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       root = tree.send(:root_options)
       expect(root).to eq(
         :text    => 'Rates',
@@ -29,7 +29,7 @@ describe TreeBuilder do
 
   context "build_tree" do
     it "builds tree object and sets all settings and add nodes to tree object" do
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       nodes = [{'key'     => "root",
                 'nodes'   => [{'key'        => "xx-Compute",
                                'tooltip'    => "Compute",
@@ -57,7 +57,7 @@ describe TreeBuilder do
 
   context "#locals_for_render" do
     it "returns the active node x_node from the TreeState as select_node" do
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
 
       active_node = 'foobar'
       allow_any_instance_of(TreeState).to receive(:x_node).and_return(active_node)
@@ -68,7 +68,7 @@ describe TreeBuilder do
 
   context "#reload!" do
     it "replaces @tree_nodes" do
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       tree.instance_eval { @tree_nodes = "{}" }
       tree.reload!
       expect(tree.tree_nodes).not_to eq("{}")
@@ -84,7 +84,7 @@ describe TreeBuilder do
             :tooltip => "Bar"
           }
         end
-      end.new("cb_rates_tree", "cb_rates", {})
+      end.new("cb_rates_tree", {})
     end
 
     it "descendants can set their own root_options" do
@@ -94,7 +94,7 @@ describe TreeBuilder do
 
   context '#x_get_child_nodes' do
     it 'returns for Hash models' do
-      builder = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      builder = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       nodes = builder.x_get_child_nodes('tf_xx-10')
       expect(nodes).to be_empty
     end
@@ -102,7 +102,7 @@ describe TreeBuilder do
 
   context '#node_by_tree_id' do
     it 'returns a correct Hash for Hash models' do
-      builder = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
+      builder = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       node = builder.node_by_tree_id('tf_xx-10')
       expect(node).to be_a_kind_of(Hash)
       expect(node[:id]).to eq("10")
@@ -118,7 +118,7 @@ describe TreeBuilder do
     let(:builder) do
       Class.new(TreeBuilder) do
         public :count_only_or_objects
-      end.new(:test_tree, :test, {}, false)
+      end.new(:test_tree, {}, false)
     end
 
     it 'counts things in a Relation' do
@@ -169,7 +169,7 @@ describe TreeBuilder do
       sb = {}
       node = 'tf_xx-10'
 
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", sb)
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", sb)
       tree.send(:open_node, node)
 
       expect(sb[:trees][:cb_rates_tree][:open_nodes]).to include(node)
@@ -179,7 +179,7 @@ describe TreeBuilder do
       sb = {}
       node = 'tf_xx-10'
 
-      tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", sb)
+      tree = TreeBuilderChargebackRates.new("cb_rates_tree", sb)
       tree.send(:open_node, node)
       tree.send(:open_node, node)
 

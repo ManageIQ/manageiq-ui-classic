@@ -7,7 +7,7 @@ describe TreeBuilderDatastores do
       @host = FactoryBot.create(:host, :name => 'Host Name')
       FactoryBot.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
       @datastore = [{:id => 1, :name => 'Datastore', :location => 'Location', :capture => false}]
-      @datastores_tree = TreeBuilderDatastores.new(:datastore, :datastore_tree, {}, true, :root => @datastore)
+      @datastores_tree = TreeBuilderDatastores.new(:datastore, {}, true, :root => @datastore)
     end
     it 'sets tree to have full ids, not lazy and no root' do
       root_options = @datastores_tree.send(:tree_init_options)

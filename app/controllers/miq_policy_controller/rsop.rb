@@ -8,7 +8,7 @@ module MiqPolicyController::Rsop
         miq_task = MiqTask.find(params[:task_id]) # Not first time, read the task record
         if miq_task.results_ready?
           @sb[:rsop][:results] = miq_task.task_results
-          @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, :root => @sb[:rsop])
+          @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, @sb, true, :root => @sb[:rsop])
         else
           add_flash(_("Policy Simulation generation returned: %{error_message}") % {:error_message => miq_task.message}, :error)
         end
@@ -118,7 +118,7 @@ module MiqPolicyController::Rsop
       @sb[:rsop][:out_of_scope] = (params[:out_of_scope] == "1")
     end
     @sb[:rsop][:open] = false # reset the open state to select correct button in toolbar, need to replace partial to update checkboxes in form
-    @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, :root => @sb[:rsop])
+    @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, @sb, true, :root => @sb[:rsop])
     rsop_button_pressed
   end
 

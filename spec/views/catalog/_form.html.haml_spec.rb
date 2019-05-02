@@ -10,7 +10,7 @@ describe "catalog/_form.html.haml" do
     login_as user
     create_state_ae_model(:name => 'LUIGI', :ae_class => 'CLASS1', :ae_namespace => 'A/B/C')
     create_ae_model(:name => 'MARIO', :ae_class => 'CLASS3', :ae_namespace => 'C/D/E')
-    @automate_tree = TreeBuilderAeClass.new(:automate_tree, "automate", @sb)
+    @automate_tree = TreeBuilderAeClass.new(:automate_tree, @sb)
     @available_catalogs = [%w(test 1)]
   end
 

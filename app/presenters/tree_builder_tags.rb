@@ -1,7 +1,7 @@
 class TreeBuilderTags < TreeBuilder
   has_kids_for Classification, [:x_get_classification_kids]
 
-  def initialize(name, type, sandbox, build, **params)
+  def initialize(name, sandbox, build, **params)
     @edit = params[:edit]
     @filters = params[:filters]
     @group = params[:group]
@@ -9,7 +9,7 @@ class TreeBuilderTags < TreeBuilder
       c if c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name)
     end
     @categories.sort_by! { |c| c.description.downcase }
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
     @tree_state.x_tree(name)[:open_nodes] = []
   end
 

@@ -26,8 +26,7 @@ describe TreeBuilderSmartproxyAffinity do
       allow_any_instance_of(MiqServer).to receive_messages(:is_a_proxy? => true)
       allow(MiqServer).to receive(:my_server).and_return(OpenStruct.new('id' => 0, :name => 'name'))
 
-      @smartproxy_affinity_tree = TreeBuilderSmartproxyAffinity.new(:smartproxy_affinity,
-                                                                    :smartproxy_affinity_tree,
+      @smartproxy_affinity_tree = TreeBuilderSmartproxyAffinity.new(:smartproxy_affinity_tree,
                                                                     {},
                                                                     true,
                                                                     :data => @selected_zone)

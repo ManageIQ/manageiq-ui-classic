@@ -259,7 +259,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def build_ae_tree
-    TreeBuilderAeClass.new(:ae, :ae_tree, @sb)
+    TreeBuilderAeClass.new(:ae, @sb)
   end
 
   def replace_right_cell(options = {})

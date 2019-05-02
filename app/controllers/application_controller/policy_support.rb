@@ -177,7 +177,7 @@ module ApplicationController::PolicySupport
   def protect_build_tree
     @edit[:controller_name] = controller_name
     @edit[:pol_items] = session[:pol_items]
-    @protect_tree = TreeBuilderProtect.new(:protect, :protect_tree, @sb, true, :data => @edit)
+    @protect_tree = TreeBuilderProtect.new(:protect_tree, @sb, true, :data => @edit)
   end
 
   # Create policy assignment audit record

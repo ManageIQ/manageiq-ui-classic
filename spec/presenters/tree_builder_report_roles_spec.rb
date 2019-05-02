@@ -7,7 +7,7 @@ describe TreeBuilderReportRoles do
     end
 
     it "gets roles/group for the specified user" do
-      tree = TreeBuilderReportRoles.new("roles_tree", "roles", {})
+      tree = TreeBuilderReportRoles.new("roles_tree", {})
       roles = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
       expect(roles).to eq([@group.description])
     end

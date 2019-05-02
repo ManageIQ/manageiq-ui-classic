@@ -1,7 +1,7 @@
 class TreeBuilderDiagnostics < TreeBuilder
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @root = params[:root]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

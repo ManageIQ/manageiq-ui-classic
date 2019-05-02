@@ -3,10 +3,10 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
 
   private
 
-  def initialize(name, type, sandbox, build = true, **_params)
+  def initialize(name, sandbox, build = true, **_params)
     @rpt_menu  = sandbox[:rpt_menu]
     @grp_title = sandbox[:grp_title]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   def tree_init_options

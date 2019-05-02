@@ -13,7 +13,7 @@ describe TreeBuilderAeCustomization do
     end
 
     before do
-      TreeBuilderAeCustomization.new("dialog_import_export_tree", "dialog_import_export", sandbox)
+      TreeBuilderAeCustomization.new("dialog_import_export_tree", sandbox)
     end
 
     it "stores values into the sandbox" do

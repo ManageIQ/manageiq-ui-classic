@@ -3,7 +3,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   has_kids_for Menu::Item,        [:x_get_tree_item_kids]
   has_kids_for MiqProductFeature, [:x_get_tree_feature_kids]
 
-  def initialize(name, type, sandbox, build, **params)
+  def initialize(name, sandbox, build, **params)
     @role     = params[:role]
     @editable = params[:editable]
     @features = @role.miq_product_features.map(&:identifier)
@@ -13,7 +13,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     # Make sure tree_state doesn't hold on to old data between requests
     TreeState.new(sandbox).remove_tree(name)
 
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

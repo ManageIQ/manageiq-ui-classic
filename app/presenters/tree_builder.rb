@@ -1,7 +1,7 @@
 class TreeBuilder
   include TreeKids
 
-  attr_reader :name, :type, :tree_nodes, :bs_tree
+  attr_reader :name, :tree_nodes, :bs_tree
 
   def self.class_for_type(type)
     raise('Obsolete tree type.') if type == :filter
@@ -9,7 +9,7 @@ class TreeBuilder
     @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
   end
 
-  def initialize(name, type, sandbox, build = true, **_params)
+  def initialize(name, sandbox, build = true, **_params)
     @tree_state = TreeState.new(sandbox)
     @sb = sandbox # FIXME: some subclasses still access @sb
 
@@ -17,8 +17,6 @@ class TreeBuilder
     @name               = name.to_sym # includes _tree
     @options            = tree_init_options
     @tree_nodes         = {}.to_json
-    # FIXME: remove @name or @tree, unify
-    @type               = type.to_sym # *usually* same as @name but w/o _tree
 
     add_to_sandbox
     build_tree if build
@@ -135,8 +133,8 @@ class TreeBuilder
   end
 
   # Add child nodes to a tree below node 'id'
-  def self.tree_add_child_nodes(sandbox:, klass_name:, name:, type:, id:)
-    tree = klass_name.constantize.new(name, type, sandbox, false)
+  def self.tree_add_child_nodes(sandbox:, klass_name:, name:, id:)
+    tree = klass_name.constantize.new(name, sandbox, false)
     tree.x_get_child_nodes(id)
   end
 
@@ -206,7 +204,6 @@ class TreeBuilder
 
   # Build an explorer tree, from scratch
   # Options:
-  # :type                   # Type of tree, i.e. :handc, :vandt, :filtered, etc
   # :open_nodes             # Tree node ids of currently open nodes
   # :full_ids               # stack parent id on top of each node id
   # :lazy                   # set if tree is lazy

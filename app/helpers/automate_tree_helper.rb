@@ -48,7 +48,7 @@ module AutomateTreeHelper
               TreeBuilderAutomateCatalog
             end
 
-    @automate_tree = klass.new(tree_name, type, @sb)
+    @automate_tree = klass.new(tree_name, @sb)
   end
 
   def at_tree_select_toggle(type, edit_key)

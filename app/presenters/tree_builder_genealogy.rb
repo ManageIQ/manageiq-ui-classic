@@ -1,9 +1,9 @@
 class TreeBuilderGenealogy < TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
-  def initialize(name, type, sandbox, build, **params)
+  def initialize(name, sandbox, build, **params)
     @root = params[:root]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

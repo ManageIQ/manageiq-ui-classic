@@ -42,10 +42,10 @@ describe TreeController do
 
     before { tree.instance_variable_set(:@bs_tree, :foo => :bar) }
 
-    subject { controller.send(:fetch_tree, klass, :foo, node_id) }
+    subject { controller.send(:fetch_tree, klass, :foo_tree, node_id) }
 
     it 'returns with a tree hash' do
-      expect(klass).to receive(:new).with(:foo, :foo_tree, {}).and_return(tree)
+      expect(klass).to receive(:new).with(:foo_tree, {}).and_return(tree)
       expect(subject).to eq(:foo => :bar)
     end
   end

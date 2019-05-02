@@ -32,7 +32,7 @@ module StorageController::StorageD
 
   # Get information for an event
   def build_storage_tree
-    TreeBuilderStorage.new("storage_tree", "storage", @sb)
+    TreeBuilderStorage.new("storage_tree", @sb)
   end
 
   def storage_get_node_info(treenodeid)

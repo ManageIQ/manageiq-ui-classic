@@ -4,9 +4,9 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
 
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @root = params[:root]
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

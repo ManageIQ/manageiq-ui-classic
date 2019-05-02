@@ -427,7 +427,7 @@ module PxeController::PxeServers
 
   # Get information for an event
   def build_pxe_servers_tree
-    TreeBuilderPxeServers.new("pxe_servers_tree", "pxe_servers", @sb)
+    TreeBuilderPxeServers.new("pxe_servers_tree", @sb)
   end
 
   def pxe_server_get_node_info(treenodeid)

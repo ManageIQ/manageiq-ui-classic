@@ -31,7 +31,6 @@ describe TreeBuilderPolicySimulation do
                                                       'expression'  => exp}]}]}]
 
       @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
-                                                                :policy_simulation,
                                                                 {},
                                                                 true,
                                                                 :root      => @data,
@@ -121,7 +120,6 @@ describe TreeBuilderPolicySimulation do
       login_as FactoryBot.create(:user, :userid => 'no_node_wilma', :miq_groups => [@group])
       @policy_options = {:out_of_scope => true, :passed => true, :failed => true}
       @policy_simulation_tree = TreeBuilderPolicySimulation.new(:policy_simulation_tree,
-                                                                :policy_simulaton,
                                                                 {},
                                                                 true,
                                                                 :root      => {},

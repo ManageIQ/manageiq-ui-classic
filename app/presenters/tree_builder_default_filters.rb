@@ -27,9 +27,9 @@ class TreeBuilderDefaultFilters < TreeBuilder
     end
   end
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     @data = prepare_data(params[:data])
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

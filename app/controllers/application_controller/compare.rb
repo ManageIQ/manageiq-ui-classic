@@ -43,8 +43,7 @@ module ApplicationController::Compare
       @items_per_page = params[:ppsetting].to_i # Set the new per page value
     end
     @compare = create_compare_view
-    @sections_tree = TreeBuilderSections.new(:all_sections,
-                                             :all_sections_tree,
+    @sections_tree = TreeBuilderSections.new(:all_sections_tree,
                                              @sb,
                                              true,
                                              :data            => @compare,
@@ -365,7 +364,6 @@ module ApplicationController::Compare
     @lastaction = "drift"
     @compare = create_drift_view
     @sections_tree = TreeBuilderSections.new(
-      :all_sections,
       :all_sections_tree,
       @sb,
       true,

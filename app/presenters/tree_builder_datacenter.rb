@@ -22,7 +22,7 @@ class TreeBuilderDatacenter < TreeBuilder
     node[:tooltip].concat(suffix) unless node[:tooltip].ends_with?(suffix)
   end
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, sandbox, build = true, **params)
     sandbox[:datacenter_root] = TreeBuilder.build_node_id(params[:root]) if params[:root]
     @root = params[:root]
     unless @root
@@ -30,7 +30,7 @@ class TreeBuilderDatacenter < TreeBuilder
       @root = model.constantize.find_by(:id => id)
     end
     @user_id = User.current_userid
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

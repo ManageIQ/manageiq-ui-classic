@@ -19,7 +19,7 @@ describe TreeBuilderProtect do
       @edit = {:controller_name => 'name'}
       @edit[:new] = @edit[:current] = {set1[:id] => 1}
       @edit[:pol_items] = [101]
-      @protect_tree = TreeBuilderProtect.new(:protect, :protect_tree, {}, true, :data => @edit)
+      @protect_tree = TreeBuilderProtect.new(:protect, {}, true, :data => @edit)
     end
 
     it 'set init options correctly' do

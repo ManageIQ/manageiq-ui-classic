@@ -324,7 +324,6 @@ module ReportController::Menus
   def build_menu_roles_tree(rpt_menu = nil)
     TreeBuilderMenuRoles.new(
       :menu_roles_tree, # name
-      :menu_roles,      # type
       @sb,              # sandbox
       true,             # build
       :role_choice => session[:role_choice],

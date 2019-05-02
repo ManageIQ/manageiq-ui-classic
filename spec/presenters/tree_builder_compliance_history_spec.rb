@@ -18,7 +18,7 @@ describe TreeBuilderComplianceHistory do
       empty_compliance = FactoryBot.create(:compliance)
       compliance = FactoryBot.create(:compliance, :compliance_details => compliance_details)
       root = FactoryBot.create(:host, :compliances => [empty_compliance, compliance])
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, {}, true, :root => root)
+      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, {}, true, :root => root)
     end
     it 'is not lazy' do
       tree_options = @ch_tree.send(:tree_init_options)

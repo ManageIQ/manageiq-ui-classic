@@ -416,15 +416,15 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def build_old_dialogs_tree
-    TreeBuilderProvisioningDialogs.new("old_dialogs_tree", "old_dialogs", @sb)
+    TreeBuilderProvisioningDialogs.new("old_dialogs_tree", @sb)
   end
 
   def build_dialogs_tree
-    TreeBuilderServiceDialogs.new("dialogs_tree", "dialogs", @sb)
+    TreeBuilderServiceDialogs.new("dialogs_tree", @sb)
   end
 
   def build_ab_tree
-    TreeBuilderButtons.new("ab_tree", "ab", @sb)
+    TreeBuilderButtons.new("ab_tree", @sb)
   end
 
   def group_button_add_save(typ)

@@ -49,7 +49,7 @@ module Mixins
       @showtype = "config"
 
       cluster = @record
-      @datacenter_tree = TreeBuilderVat.new(:vat_tree, :vat, @sb, true, :root => cluster, :vat => !!params[:vat])
+      @datacenter_tree = TreeBuilderVat.new(:vat_tree, @sb, true, :root => cluster, :vat => !!params[:vat])
       self.x_active_tree = :vat_tree
     end
 

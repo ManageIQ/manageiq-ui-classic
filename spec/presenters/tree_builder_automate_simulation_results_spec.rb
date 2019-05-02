@@ -2,7 +2,7 @@ describe TreeBuilderAutomateSimulationResults do
   context 'TreeBuilderAutomateSimulationResults' do
     before do
       @data = "<MiqAeWorkspace>\\n<MiqAeObject namespace='ManageIQ/SYSTEM' class='PROCESS' instance='Automation'>\\n</MiqAeObject>\\n</MiqAeWorkspace>\\n"
-      @ae_simulation_tree = TreeBuilderAutomateSimulationResults.new(:ae_simulation_tree, :ae_simulation, {}, true, :root => @data)
+      @ae_simulation_tree = TreeBuilderAutomateSimulationResults.new(:ae_simulation_tree, {}, true, :root => @data)
     end
 
     it 'no root is set' do

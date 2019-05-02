@@ -2,7 +2,7 @@ describe TreeBuilderAutomateCatalog do
   include Spec::Support::AutomationHelper
 
   describe "#initialize" do
-    subject { described_class.new(:automate_tree, :automate, sb) }
+    subject { described_class.new(:automate_tree, sb) }
 
     let(:sb) { {:trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree} }
     let(:domains) { JSON.parse(subject.tree_nodes).first['nodes'].collect { |h| h['text'] } }

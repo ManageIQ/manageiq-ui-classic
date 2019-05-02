@@ -496,7 +496,7 @@ class ServiceController < ApplicationController
 
   # Build a Services explorer tree
   def build_svcs_tree
-    TreeBuilderServices.new("svcs_tree", "svcs", @sb)
+    TreeBuilderServices.new("svcs_tree", @sb)
   end
 
   def show_record(id = nil)

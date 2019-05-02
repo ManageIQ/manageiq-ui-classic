@@ -1,12 +1,12 @@
 class TreeBuilderSections < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build, **params)
+  def initialize(name, sandbox, build, **params)
     @data = params[:data]
     @controller_name = params[:controller_name]
     @current_tenant = params[:current_tenant]
     @sandbox = sandbox
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

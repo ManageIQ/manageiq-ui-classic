@@ -18,14 +18,14 @@ class TreeBuilderBelongsToHac < TreeBuilder
     node[:checkable] = @edit.present? || @assign_to.present?
   end
 
-  def initialize(name, type, sandbox, build, **params)
+  def initialize(name, sandbox, build, **params)
     @edit = params[:edit]
     @group = params[:group]
     @selected_nodes = params[:selected_nodes]
     @assign_to = params[:assign_to]
     # need to remove tree info
     TreeState.new(sandbox).remove_tree(name)
-    super(name, type, sandbox, build)
+    super(name, sandbox, build)
   end
 
   private

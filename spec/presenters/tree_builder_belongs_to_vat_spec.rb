@@ -26,8 +26,7 @@ describe TreeBuilderBelongsToVat do
   end
 
   subject do
-    described_class.new(:vat,
-                        :vat_tree,
+    described_class.new(:vat_tree,
                         {:trees => {}},
                         true,
                         :edit     => edit,

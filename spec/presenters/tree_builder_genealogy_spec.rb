@@ -14,7 +14,7 @@ describe TreeBuilderGenealogy do
   end
 
   subject do
-    described_class.new(:genealogy_tree, :genealogy, {}, true, :root => record)
+    described_class.new(:genealogy_tree, {}, true, :root => record)
   end
 
   describe '#tree_init_options' do
