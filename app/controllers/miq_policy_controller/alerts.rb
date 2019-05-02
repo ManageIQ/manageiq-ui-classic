@@ -545,7 +545,7 @@ module MiqPolicyController::Alerts
       end
     else
       alert.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
-      alert.respond_to_events = if @edit[:new][:exp_event] == "_hourly_timer_"
+      alert.responds_to_events = if @edit[:new][:exp_event] == "_hourly_timer_"
                                   @edit[:new][:exp_event]
                                 elsif @edit[:new][:exp_event]&.positive?
                                   MiqEventDefinition.find(@edit[:new][:exp_event]).name
