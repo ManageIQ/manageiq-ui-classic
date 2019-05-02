@@ -594,7 +594,7 @@ module ReportController::Menus
     # calculating selected reports for selected folder
     if session[:node_selected] == "xx-b__Report Menus for #{session[:role_choice]}"
       @edit[:new].each do |arr|
-        if arr[0] != @sb[:grp_title]
+        if arr[0] != reports_group_title
           @folders.push(arr[0])
         end
       end
