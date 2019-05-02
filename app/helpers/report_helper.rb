@@ -100,4 +100,51 @@ module ReportHelper
   def chart_mode_values_allowed?
     @edit[:new][:group] != 'Counts'
   end
+
+  def default_reports_menu
+    # Retrieve the default reports' groups and their corresponding reports
+    # -> Array [rpt_group, report_name]
+    records = MiqReport.where(:rpt_type => 'Default', :template_type => 'report').order(:rpt_type, :name).pluck(:rpt_group, :name)
+    # Split up the reports' groups into two levels at the '-' character and group them by the first level
+    # -> Hash(rpt_group_1, [rpt_group_2, report_name])
+    grouped = records.map { |grp, items| [grp.split(/ *- */), items].flatten }.group_by(&:first)
+    # Map to the final structure, logically a hash of hashes recursively converted to an array
+    # -> Hash(rpt_group_1, Hash(rpt_group_2, report_name))
+    grouped.map do |grp, items|
+      # Group the items by the secondary group
+      # -> Hash(rpt_group_2, report_name)
+      [grp, items.group_by(&:second).map { |subgroup, subitems| [subgroup, subitems.map(&:third)] }]
+    end
+  end
+
+  def get_reports_menu(hide_custom = false, group = current_group)
+    reports = group.try(:settings).try(:[], :report_menus) || default_reports_menu
+    unless hide_custom
+      @sb[:grp_title] = reports_group_title
+      # Select all custom reports
+      query = {:template_type => 'report', :rpt_type => 'Custom'}
+      # If the current_user is not a report admin, restrict this to the current group only
+      query[:miq_group_id] = current_group.try(:id) unless current_user.report_admin_user?
+      # Add the custom reports in the required format in their own menu item
+      reports.push([@sb[:grp_title], [[_("Custom"), MiqReport.where(query).order(:name).pluck(:name)]]])
+    end
+    reports
+  end
+
+  def populate_reports_menu(hide_custom = false)
+    # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
+    group = session[:role_choice].present? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
+    @sb[:rpt_menu] = get_reports_menu(hide_custom, group)
+  end
+
+  def reports_group_title
+    tenant_name = current_tenant.name
+    if current_user.report_admin_user?
+      _("%{tenant_name} (All Groups)") % {:tenant_name => tenant_name}
+    else
+      _("%{tenant_name} (Group): %{group_description}") %
+        {:tenant_name       => tenant_name,
+         :group_description => current_user.current_group.description}
+    end
+  end
 end
