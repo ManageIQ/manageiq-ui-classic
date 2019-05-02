@@ -745,7 +745,7 @@ module OpsController::OpsRbac
 
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
-    id = params[:id].split('__').first # Get the record id
+    id = params[:id].split('__').first || 'new' # Get the record id
     id = id unless %w[new seq].include?(id)
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
