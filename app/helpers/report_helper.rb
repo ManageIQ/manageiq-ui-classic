@@ -138,13 +138,13 @@ module ReportHelper
   end
 
   def reports_group_title
-    tenant_name = current_tenant.name
-    if current_user.report_admin_user?
+    tenant_name = User.current_tenant.name
+    if User.current_user.report_admin_user?
       _("%{tenant_name} (All Groups)") % {:tenant_name => tenant_name}
     else
       _("%{tenant_name} (Group): %{group_description}") %
         {:tenant_name       => tenant_name,
-         :group_description => current_user.current_group.description}
+         :group_description => User.current_user.current_group.description}
     end
   end
 end
