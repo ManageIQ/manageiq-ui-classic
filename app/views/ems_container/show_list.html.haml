@@ -1,2 +1,7 @@
 #main_div
-  = render :partial => 'layouts/gtl'
+  - if Container.any?
+    = render :partial => 'layouts/gtl'
+  - else
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Containers Provider"),
+                         :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#containers-providers'}

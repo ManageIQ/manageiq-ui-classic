@@ -1,0 +1,26 @@
+.blank-slate-pf{:style => 'border: 0'}
+  .blank-slate-pf-icon
+    %span.pficon.pficon-add-circle-o
+  %h1= _("Add a Provider")
+  %p
+    = _("You don't have any providers to display. Please add a Provider.")
+  %p
+    = _("Learn more about this")
+    %a{:href => documentation,
+       :target => '_blank'}
+      = _("in the documentation.")
+  .blank-slate-pf-main-action
+    - title = _("Add a Provider")
+    - if @explorer
+      = button_tag(title,
+      :class => 'btn btn-primary btn-lg',
+      :title => add_message,
+      :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'new')}');")
+    - else
+      = link_to(title,
+      {:action => 'new'},
+      :class => 'btn btn-primary btn-lg',
+      "data-miq_sparkle_on" => true,
+      "data-miq_sparkle_off" => true,
+      "data-method" => :post,
+      :title => add_message)

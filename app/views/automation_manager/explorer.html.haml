@@ -18,5 +18,9 @@
     = render(:partial => 'automation_manager/configuration_script', :locals => {:controller => "automation_manager"})
 - else
   #main_div
-    = render(:partial => 'layouts/x_gtl')
-
+    - if ManageIQ::Providers::AnsibleTower::AutomationManager.any?
+      = render(:partial => 'layouts/x_gtl')
+    - else
+      = render :partial => 'layouts/empty',
+               :locals => {:add_message => _("Add a new Ansible Tower Provider"),
+                           :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#adding-an-ansible-tower-provider'}

@@ -1,6 +1,9 @@
 module ApplicationHelper::PageLayouts
   def layout_uses_listnav?
+    return false if show_list_with_no_provider?
+
     return false if @in_a_form
+
     return false if %w[
       about
       all_tasks
@@ -54,6 +57,19 @@ module ApplicationHelper::PageLayouts
     true
   end
 
+  def show_list_with_no_provider?
+    %w[
+      automation_manager
+      ems_cloud
+      ems_container
+      ems_infra
+      ems_network
+      ems_physical_infra
+    ].include?(controller_name) &&
+      action_name == 'show_list' &&
+      controller.class.model.none?
+  end
+
   def layout_uses_paging?
     # listnav always implies paging, this only handles the non-listnav case
     %w[
@@ -103,7 +119,13 @@ module ApplicationHelper::PageLayouts
   end
 
   def miq_layout_center_div_no_listnav_class
-    !@in_a_form && (@lastaction == "show_dashboard" || @layout == "monitor_alerts_overview") ? 'miq-body' : ''
+    if (!@in_a_form && (@lastaction == "show_dashboard" ||
+                        @layout == "monitor_alerts_overview")) ||
+        show_list_with_no_provider?
+      'miq-body'
+    else
+      ''
+    end
   end
 
   def center_div_partial

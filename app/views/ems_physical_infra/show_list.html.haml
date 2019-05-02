@@ -1,2 +1,7 @@
 #main_div
-  = render :partial => 'layouts/gtl'
+  - if EmsPhysicalInfra.any?
+    = render :partial => 'layouts/gtl'
+  - else
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Physical Infrastructure Provider"),
+                         :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#infrastructure_providers'}

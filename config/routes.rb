@@ -1201,6 +1201,7 @@ Rails.application.routes.draw do
       ) +
         compare_get,
       :post => %w(
+        new
         button
         create
         dynamic_checkbox_refresh
@@ -1296,6 +1297,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        new
         button
         create
         form_field_changed
@@ -1351,6 +1353,7 @@ Rails.application.routes.draw do
         change_password
       ),
       :post => %w(
+        new
         button
         create
         listnav_search_selected
@@ -1531,6 +1534,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
       ),
       :post => %w(
+        new
         button
         create
         dynamic_checkbox_refresh
@@ -1568,6 +1572,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
       ),
       :post => %w(
+        new
         button
         create
         dynamic_checkbox_refresh
