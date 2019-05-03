@@ -62,8 +62,7 @@
                           'ng-required' => '$ctrl.targetClass',
                           'ng-change'   => '$ctrl.targetIdChange({targetId: $ctrl.targetId})',
                           'miq-select'  => true}
-          %option{'disabled' => '', 'value' => ''} &lt;Choose&gt;
-        %span.help-block{'ng-show' => 'aeResolveOptionsForm.target_id.$error.miqrequired'}
+        %span.help-block{'ng-show' => 'aeResolveOptionsForm.target_id.$error.required'}
           = _('Required')
 
   %div
