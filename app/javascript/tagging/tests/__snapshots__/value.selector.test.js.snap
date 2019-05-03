@@ -27,10 +27,12 @@ exports[`match snapshot 1`] = `
   placeholder="Select tag value"
   styles={
     Object {
+      "clearIndicator": [Function],
       "container": [Function],
       "control": [Function],
       "dropdownIndicator": [Function],
       "indicatorSeparator": [Function],
+      "indicatorsContainer": [Function],
       "input": [Function],
       "menu": [Function],
       "multiValue": [Function],
@@ -39,6 +41,7 @@ exports[`match snapshot 1`] = `
       "option": [Function],
       "placeholder": [Function],
       "singleValue": [Function],
+      "valueContainer": [Function],
     }
   }
   value={
@@ -77,10 +80,12 @@ exports[`match snapshot without multiple values 1`] = `
   placeholder="Select tag value"
   styles={
     Object {
+      "clearIndicator": [Function],
       "container": [Function],
       "control": [Function],
       "dropdownIndicator": [Function],
       "indicatorSeparator": [Function],
+      "indicatorsContainer": [Function],
       "input": [Function],
       "menu": [Function],
       "multiValue": [Function],
@@ -89,6 +94,7 @@ exports[`match snapshot without multiple values 1`] = `
       "option": [Function],
       "placeholder": [Function],
       "singleValue": [Function],
+      "valueContainer": [Function],
     }
   }
   value={
