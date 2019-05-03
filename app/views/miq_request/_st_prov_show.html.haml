@@ -13,12 +13,12 @@
           #dialog_tabs
             %ul.nav.nav-tabs
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = {:class => "active"} if tab_index == 0
+                - options = tab_index == 0 ? {:class => "active"} : {}
                 = miq_tab_header(tab.id, nil, options) do
                   = tab.label
             .tab-content
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-                - options = {:class => "active"} if tab_index == 0
+                - options = tab_index == 0 ? {:class => "active"} : {}
                 = miq_tab_content(tab.id, nil, options) do
                   - tab.dialog_groups.each do |group|
                     %div{:id => "group_#{group.id}_div"}

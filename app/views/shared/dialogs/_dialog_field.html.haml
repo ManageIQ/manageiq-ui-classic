@@ -57,7 +57,8 @@
       - else
         - value = wf.value(field.name) || '' # it returns in format for example Clasification::id
         - _, classification_id = value.split('::')
-        = h(Classification.find(classification_id).description)
+        - current_classification = Classification.find_by(:id => classification_id)
+        = h(current_classification.nil? ? '' : current_classification.description)
 
     :javascript
       dialogFieldRefresh.setVisible($('#field_#{field.id}_tr'), #{field.visible});
