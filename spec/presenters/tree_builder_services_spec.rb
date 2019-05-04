@@ -13,6 +13,21 @@ describe TreeBuilderServices do
       a_hash_including(:id => 'global'),
       a_hash_including(:id => 'my')
     ]
+
+    active_nodes = kid_nodes(root_nodes[0])
+    retired_nodes = kid_nodes(root_nodes[1])
+    expect(active_nodes).to eq(
+      @service => {
+        @service_c1 => {
+          @service_c11 => {},
+          @service_c12 => {
+            @service_c121 => {}
+          }
+        },
+        @service_c2 => {}
+      }
+    )
+    expect(retired_nodes).to eq(@service_c3 => {})
   end
 
   private
