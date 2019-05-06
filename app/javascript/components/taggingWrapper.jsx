@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { applyMiddleware } from 'redux'
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
