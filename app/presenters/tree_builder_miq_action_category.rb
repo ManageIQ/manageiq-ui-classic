@@ -10,8 +10,9 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     node
   end
 
-  def initialize(name, sandbox, build = true, **params)
-    @root = params[:root]
+  def initialize(name, sandbox, build = true)
+    current_tenant = User.current_user.try(:current_tenant) || Tenant.default_tenant
+    @root = "#{current_tenant.name} Tags"
     super(name, sandbox, build)
   end
 
