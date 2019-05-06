@@ -306,6 +306,8 @@ describe OpsController do
   end
 
   describe "::MiqGroup" do
+    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+    let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
     before do
       MiqUserRole.seed
       MiqGroup.seed
@@ -327,16 +329,17 @@ describe OpsController do
 
     it "saves the filters when use_filter_expression is false" do
       @group.entitlement = Entitlement.create!
+      allow(controller).to receive(:params).and_return('data' => get_tags_json([tag]))
       controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
                                                         :name                  => 'Name',
                                                         :description           => "Test",
                                                         :role                  => @role.id,
                                                         :filter_expression     => @exp.exp,
                                                         :belongsto             => {},
-                                                        :filters               => {'managed/env' => '/managed/env'}})
+                                                        :filters               => {'managed/department' => '/managed/department/tag1'}})
       controller.send(:rbac_group_set_record_vars, @group)
       expect(@group.entitlement.filter_expression).to be_nil
-      expect(@group.entitlement.get_managed_filters).to match([["/managed/env"]])
+      expect(@group.entitlement.get_managed_filters).to match([["/managed/department/tag1"]])
     end
 
     it "saves the filter_expression when use_filter_expression true" do
@@ -386,6 +389,7 @@ describe OpsController do
 
       post :tree_select, :params => { :id => 'root', :format => :js }
       expect(MiqExpression).to receive(:tag_details)
+
       post :exp_token_pressed, :params => {:id => 'new', :use_filter_expression => "true", :token => 1}
       @edit = controller.instance_variable_get(:@edit)
       expect(@edit[:filter_expression][:exp_typ]).to eq('tags')
@@ -424,7 +428,8 @@ describe OpsController do
       post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
     end
 
-    it "initializes the group record and tag tree when switching tabs" do
+    it "initializes the group record when switching tabs" do
+      allow(controller).to receive(:url_for_only_path).and_return("")
       controller.instance_variable_set(:@edit,
                                        :group_id => @group.id,
                                        :new      => {:use_filter_expression => true,
@@ -433,12 +438,11 @@ describe OpsController do
                                                      :role                  => @role.id,
                                                      :filter_expression     => @exp.exp,
                                                      :belongsto             => {},
-                                                     :filters               => {'managed/env' => '/managed/env'}})
+                                                     :filters               => {'managed/department' => '/managed/department/tag1'}})
       controller.instance_variable_set(:@sb, :active_rbac_group_tab => 'rbac_customer_tags')
       controller.instance_variable_set(:@_params, :use_filter_expression => "false", :id => @group.id)
       controller.send(:rbac_group_get_form_vars)
       expect(controller.instance_variable_get(:@group).name).to eq(@group.name)
-      expect(controller.instance_variable_get(:@tags_tree)).to_not be_nil
     end
 
     context 'setting group record variables to new values' do
@@ -449,11 +453,6 @@ describe OpsController do
                                                           :filter_expression     => @exp.exp,
                                                           :belongsto             => {},
                                                           :filters               => {}})
-      end
-
-      it 'resets filter expression variable to default value' do
-        controller.send(:rbac_group_set_record_vars, @group)
-        expect(edit[:new][:filter_expression]).to eq({})
       end
     end
   end

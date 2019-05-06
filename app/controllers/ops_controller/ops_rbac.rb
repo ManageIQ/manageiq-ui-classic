@@ -745,7 +745,7 @@ module OpsController::OpsRbac
 
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
-    id = params[:id].split('__').first # Get the record id
+    id = params[:id].split('__').first || 'new' # Get the record id
     id = id unless %w[new seq].include?(id)
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
@@ -902,12 +902,45 @@ module OpsController::OpsRbac
   def rbac_group_right_tree(selected_nodes)
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
-      @tags_tree = TreeBuilderTags.new(:tags_tree,
-                                       @sb,
-                                       true,
-                                       :edit    => @edit,
-                                       :filters => @filters,
-                                       :group   => @group)
+      cats = Classification.categories.select do |c|
+        c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name) && !(c.read_only? || c.entries.empty)
+      end
+      cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
+      tags = cats.map do |cat|
+        {
+          :id          => cat.id,
+          :description => cat.description,
+          :singleValue => cat.single_value,
+          :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
+            { :id => entry.id, :description => entry.description }
+          end
+        }
+      end
+
+      filters = @edit&.fetch_path(:new, :filters) || @filters
+      assigned_tags = Tag.where(:name => filters.flatten).map do |tag|
+        {
+          :description => tag.category.description,
+          :id          => tag.category.id,
+          :values      => [{:id => tag.classification.id, :description => tag.classification.description}]
+        }
+      end
+
+      assigned_tags.each_with_object([]) do |tag, arr|
+        existing_tag = arr.find { |item| item[:id] == tag[:id] }
+        if existing_tag
+          existing_tag[:values].push(*tag[:values])
+        else
+          arr << tag
+        end
+      end
+
+      assigned_tags.uniq! { |tag| tag[:id] }
+      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [@group.id]}
+      @button_urls = {
+        :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "save"),
+        :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "cancel")
+      }
     when 'rbac_hosts_clusters'
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               @sb,
@@ -1059,9 +1092,8 @@ module OpsController::OpsRbac
 
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
-        cat, tag = params[:id].split('cl-').last.split("_xx-") # Get the category and tag
-        cat_name = Classification.find_by(:id => cat).name
-        tag_name = Classification.find_by(:id => tag).name
+        cat_name = Classification.find_by(:id => params[:cat]).name
+        tag_name = Classification.find_by(:id => params[:val]).name
         if params[:check] == "0" #   unchecked
           @edit[:new][:filters].except!("#{cat_name}-#{tag_name}") # Remove the tag from the filters array
         else
@@ -1210,11 +1242,11 @@ module OpsController::OpsRbac
       group.entitlement.set_managed_filters(nil) if group.entitlement.get_managed_filters.present?
       group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
     else
-      group.entitlement.filter_expression = nil if group.entitlement.filter_expression
       @set_filter_values = []
       @edit[:new][:filters].each_value do |value|
         @set_filter_values.push(value)
       end
+      group.entitlement.filter_expression = nil if group.entitlement.filter_expression
       rbac_group_make_subarrays # Need to have category arrays of item arrays for and/or logic
       group.entitlement.set_managed_filters(@set_filter_values)
     end

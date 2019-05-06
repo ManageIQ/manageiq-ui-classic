@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
-import { TaggingWithButtonsConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
+import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
 import { http } from '../http_api';
 
 class TaggingWrapper extends React.Component {
@@ -21,8 +21,8 @@ class TaggingWrapper extends React.Component {
 
   render() {
     if (!this.props.isLoaded) return <Spinner loading size="lg" />;
-    const { urls } = this.props;
-    return (<TaggingWithButtonsConnected
+    const { urls, options } = this.props;
+    return (options && options.hideButtons && <TaggingConnected options={{...options}}/> || <TaggingWithButtonsConnected
       saveButton={{
           // FIXME: jQuery is necessary here as it communicates with the old world
           // don't replace $.post with http.post
@@ -53,6 +53,7 @@ class TaggingWrapper extends React.Component {
         description: 'Reset',
         }
       }
+      options={{...options}}
     />);
   }
 }
