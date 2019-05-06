@@ -38,6 +38,16 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
                             'function-data' => {:controller     => 'provider_dialogs',
                                                 :modal_title    => N_('Delete Catalog Items'),
                                                 :component_name => 'RemoveCatalogItemModal'}.to_json}),
+        separator,
+        button(
+          :catalogitem_ownership,
+          'pficon pficon-user fa-lg',
+          N_('Set Ownership for the selected Catalog Item'),
+          N_('Set Ownership'),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

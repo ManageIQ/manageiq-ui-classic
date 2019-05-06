@@ -62,6 +62,8 @@ module Mixins
 
         def get_class_from_controller_param(controller)
           case controller
+          when "catalog"
+            ServiceTemplate
           when "orchestration_stack"
             OrchestrationStack
           when "service"
