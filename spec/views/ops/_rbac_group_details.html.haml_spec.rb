@@ -19,12 +19,6 @@ describe 'ops/_rbac_group_details.html.haml' do
       }
       view.instance_variable_set(:@sb, sb)
 
-      @tags_tree = TreeBuilderTags.new(:tag_tree,
-                                       sb,
-                                       true,
-                                       :edit    => {},
-                                       :filters => {},
-                                       :group   => @group)
       @ems_azure_network = FactoryBot.create(:ems_azure_network)
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               sb,
