@@ -229,6 +229,7 @@ module ReportController::Reports
   end
 
   # Build the main reports tree
+  # FIXME: get rid of the data passing through session and delete this method
   def build_reports_tree
     populate_reports_menu
     TreeBuilderReportReports.new('reports_tree', @sb)

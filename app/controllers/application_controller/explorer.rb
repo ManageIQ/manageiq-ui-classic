@@ -11,7 +11,7 @@ module ApplicationController::Explorer
 
   def try_build_tree(tree_symbol)
     # Legacy support for build_*_tree methods
-    # FIXME: delete this after all of them were converted
+    # FIXME: delete this after all of them were converted (remaining: build_reports_tree)
     method_name = :"build_#{tree_symbol}_tree"
     if respond_to?(method_name, true)
       method(method_name).call
