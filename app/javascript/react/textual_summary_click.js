@@ -9,6 +9,7 @@ export default function textualSummaryGenericClick(item, event) {
     window.open(item.link, '_blank');
   } else if (item.explorer) {
     const tokenElement = document.querySelector("meta[name=csrf-token]");
+    // FIXME: jQuery is necessary here as it communicates with the old world
     $.ajax({
       data: `authenticity_token=${encodeURIComponent(tokenElement ? tokenElement.getAttribute('content') : '')}`,
       dataType: 'script',
