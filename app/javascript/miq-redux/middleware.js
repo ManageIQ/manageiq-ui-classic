@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'connected-react-router';
 import promiseMiddleware from 'redux-promise-middleware';
 
-const taggingMiddleware = store => next => action => {
+export const taggingMiddleware = store => next => action => {
   const { type, meta, tagCategory, tag } = action;
   if (meta && meta.url) {
     const params = {id: store.getState().tagging.appState.affectedItems[0], cat: tag.tagCategory.id, val: tag.tagValue.id, check: 1, tree_typ: 'tags' };
