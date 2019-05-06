@@ -24,8 +24,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeAssignedTag(val));
   },
 
-  onTagMultiValueChange: (val) => {
-    dispatch(toggleTagValueChange(val));
+  onTagMultiValueChange: (val, options) => {
+    dispatch(toggleTagValueChange(val, options));
     dispatch(addAssignedTag(val));
   },
 
