@@ -59,14 +59,13 @@
           = _('Tag to Apply')
         .col-md-8
           %span#tag_selected
-            = h(@tag_selected)
-    %hr
-    %h3
-      = _('Select a Tag to Apply')
-    .form-horizontal
-      .form-group
-        .col-md-8
-          = render(:partial => 'shared/tree', :locals => {:tree => @category_tree, :name => @category_tree.name})
+            - options = {"" => [["<#{_('Choose')}>", nil]]}.merge(@tags_select)
+            = select_tag("tag", grouped_options_for_select(options, @selected_tag.try(:id)),
+              :class             => 'selectpicker',
+              'data-live-search' => true)
+            :javascript
+              miqInitSelectPicker();
+              miqSelectPickerEvent('tag', '#{url}');
   - when "create_snapshot"
     %h3
       = _("Snapshot Settings")
