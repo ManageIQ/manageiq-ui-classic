@@ -13,6 +13,8 @@ require 'manageiq-ui-classic'
 support_path = Pathname.new(__dir__).join('support')
 Dir[support_path.join("**/*.rb")].each { |f| require f }
 
+require 'miq-hash_struct'
+
 # TODO: isolate the helpers we need for UI specs instead of general Dir glob
 #
 # core_support_path = Rails.root.join('spec/support')
