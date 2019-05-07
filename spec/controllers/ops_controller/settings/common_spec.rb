@@ -487,50 +487,5 @@ describe OpsController do
         end
       end
     end
-
-    describe '#settings_set_form_vars_workers' do
-      include ActionView::Helpers::NumberHelper
-      context "set worker settings for selected server" do
-        before do
-          @miq_server = FactoryBot.create(:miq_server)
-          controller.instance_variable_set(:@sb,
-                                           :selected_server_id => @miq_server.id)
-        end
-
-        it "gets worker setting in same format as in sandbox threshold array so correct value is selected in drop down" do
-          controller.send(:settings_set_form_vars_workers)
-          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
-          Hash[*assigns(:sb)[:threshold].flatten].each_value do |v|
-            expect(v.class).to eq(ui_worker_threshold.class)
-          end
-        end
-
-        it "converts '600.megabytes' string correctly to bytes" do
-          Vmdb::Settings.save!(
-            @miq_server,
-            :workers => {
-              :worker_base => {
-                :ui_worker => {
-                  :memory_threshold => "600.megabytes",
-                  :count            => 2
-                }
-              }
-            }
-          )
-          controller.send(:settings_set_form_vars_workers)
-          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
-          ui_worker_count = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :count)
-          expect(ui_worker_threshold).to eq(600.megabytes)
-          expect(ui_worker_count).to eq(2)
-        end
-
-        it "gets worker setting and makes sure it exists in threshold array so correct value can be selected in drop down" do
-          controller.send(:settings_set_form_vars_workers)
-          proxy_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqSmartProxyWorker, :memory_threshold)
-          proxy_worker_threshold_human_size = number_to_human_size(proxy_worker_threshold, :significant => false)
-          expect(assigns(:sb)[:smart_proxy_threshold]).to include([proxy_worker_threshold_human_size, proxy_worker_threshold])
-        end
-      end
-    end
   end
 end

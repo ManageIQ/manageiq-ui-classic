@@ -774,6 +774,9 @@ class OpsController < ApplicationController
     else
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
+    if @sb[:active_tab] == "settings_workers"
+      presenter.hide(:form_buttons_div)
+    end
   end
 
   def replace_explorer_trees(replace_trees, presenter)
