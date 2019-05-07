@@ -202,14 +202,13 @@ describe OpsController do
       before { allow(controller).to receive(:javascript_flash) }
 
       context "remote" do
-        let(:to_exlude) { "---\n- vmdb_databases\n- vmdb_indexes" }
-        let(:params)    { {:replication_type => "remote", :exclusion_list => to_exlude} }
+        let(:params) { {:replication_type => "remote"} }
 
-        it "queues operation to updates exclude tables for the remote region" do
+        it "queues operation to set the region as a remote type" do
           controller.instance_variable_set(:@_params, params)
           controller.send(:pglogical_save_subscriptions)
-          queue_item = MiqQueue.find_by(:method_name => "save_remote_region")
-          expect(queue_item.args).to eq([to_exlude])
+          queue_item = MiqQueue.find_by(:method_name => "replication_type=")
+          expect(queue_item.args).to eq([:remote])
         end
       end
 

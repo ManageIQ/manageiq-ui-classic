@@ -181,12 +181,10 @@ module OpsController::Settings::Common
     replication_type = MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
-    exclusion_list = replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
 
     render :json => {
       :replication_type => replication_type,
-      :subscriptions    => subscriptions,
-      :exclusion_list   => exclusion_list.to_yaml
+      :subscriptions    => subscriptions
     }
   end
 
@@ -198,10 +196,9 @@ module OpsController::Settings::Common
       queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
                     :args       => [subscriptions_to_save, subsciptions_to_remove]}
     when "remote"
-      task_opts  = {:action => "Save list of table excluded from replication for remote region",
+      task_opts  = {:action => "Configure the database to be a replication remote region",
                     :userid => session[:userid]}
-      queue_opts = {:class_name => "MiqPglogical", :method_name => "save_remote_region",
-                    :args       => [params[:exclusion_list]]}
+      queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:remote]}
     when "none"
       task_opts  = {:action => "Set replication type to none", :userid => session[:userid]}
       queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
