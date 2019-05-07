@@ -90,7 +90,7 @@ module ApplicationController::Buttons
     group_create_update("update")
   end
 
-  MODEL_WITH_OPEN_URL = ["VM and Instance"].freeze
+  MODEL_WITH_OPEN_URL = ["Vm"].freeze
 
   def automate_button_field_changed
     unless params[:target_class]
@@ -994,7 +994,6 @@ module ApplicationController::Buttons
     (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @edit[:new][:starting_object] ||= "SYSTEM/PROCESS"
     @edit[:new][:instance_name] ||= "Request"
-    @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
 
     @edit[:new].update(
       :target_class   => @resolve[:target_class],
@@ -1012,6 +1011,8 @@ module ApplicationController::Buttons
     )
     button_set_expression_vars(:enablement_expression, :enablement_expression_table)
     button_set_expression_vars(:visibility_expression, :visibility_expression_table)
+
+    @edit[:new][:disabled_open_url] = !(MODEL_WITH_OPEN_URL.include?(@resolve[:target_class]) && @edit[:new][:display_for] == 'single')
 
     @edit[:current] = copy_hash(@edit[:new])
 
