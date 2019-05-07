@@ -43,6 +43,11 @@ const CloudProviderForm = ({
     openstackInfraProviders,
   } = state;
 
+  const handleSubmit = (values) => {
+    console.log('Cloud provider form', values);
+    return values;
+  };
+
   if (!isLoaded) return null;
   return (
     <Grid fluid>
@@ -50,7 +55,7 @@ const CloudProviderForm = ({
         <Col md={6}>
           <h1>There will be dragons</h1>
           <MiqFormRenderer
-            onSubmit={console.log}
+            onSubmit={handleSubmit}
             onCancel={() => console.log('Cancel clicked')}
             buttonsLabels={{
               submitLabel: __('Add'),

@@ -1,17 +1,19 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { hostnameValidator, asyncValidate } from './validators';
 
+const prefix = 'ManageIQ::Providers::Openstack::CloudManager';
+
 const createOpenstackEndpointsFields = openstackSecurityProtocols => [{
   component: componentTypes.SUB_FORM,
   name: 'openstack-endpoints',
   title: __('Default Endpoints'),
   condition: {
     when: 'type',
-    is: 'ManageIQ::Providers::Openstack::CloudManager',
+    is: prefix,
   },
   fields: [{
     component: componentTypes.SELECT,
-    name: 'openstacl_security_protocol',
+    name: `${prefix}.security_protocol`,
     label: __('Security Protocol'),
     placeholder: `<${__('Choose')}>`,
     options: openstackSecurityProtocols.map(([label, value]) => ({ value, label })),
@@ -22,7 +24,7 @@ const createOpenstackEndpointsFields = openstackSecurityProtocols => [{
   }, {
     component: componentTypes.TEXT_FIELD,
     type: 'number',
-    name: 'openstack_api_port',
+    name: `${prefix}.port`,
     label: __('API Port'),
     initialValue: 13000,
     validateOnMount: true,
@@ -36,7 +38,7 @@ const createOpenstackEndpointsFields = openstackSecurityProtocols => [{
     fields: [{
       component: componentTypes.TEXT_FIELD,
       label: __('Hostname (or IPv4 or IPv6 address)'),
-      name: 'openstack_hostname',
+      name: `${prefix}.hostname`,
       validateOnMount: true,
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -46,7 +48,7 @@ const createOpenstackEndpointsFields = openstackSecurityProtocols => [{
     }, {
       component: componentTypes.TEXT_FIELD,
       label: __('Client ID'),
-      name: 'azure_userid',
+      name: `${prefix}.credentials.userid`,
       validateOnMount: true,
       validate: [{
         type: validatorTypes.REQUIRED,
@@ -54,7 +56,7 @@ const createOpenstackEndpointsFields = openstackSecurityProtocols => [{
     }, {
       component: componentTypes.TEXT_FIELD,
       label: __('Client Key'),
-      name: 'azure_password',
+      name: `${prefix}.credentials.password`,
       type: 'password',
       validateOnMount: true,
       validate: [{
@@ -70,7 +72,7 @@ const createOpenstackEventsFields = amqpSecurityProtocol => [{
   name: 'openstack-events',
   condition: {
     when: 'type',
-    is: 'ManageIQ::Providers::Openstack::CloudManager',
+    is: prefix,
   },
   fields: [{
     component: componentTypes.RADIO,
@@ -228,7 +230,7 @@ export const createOpenStackGeneralFields = (openStackApiVersion, openstackInfra
   },
 }, {
   component: componentTypes.TEXT_FIELD,
-  name: 'openstack_keystone_domain_id',
+  name: `${prefix}.keystone_domain_id`,
   label: __('Keystone V3 Domain ID'),
   condition: {
     when: 'api_version',

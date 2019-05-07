@@ -37,7 +37,7 @@ const generalFields = (emsTypes, serverZones, providerRegions, openStackApiVersi
   }, {
     component: componentTypes.SWITCH,
     label: __('Tenant Mapping Enabled'),
-    name: 'ems_tenant_mapping_enabled',
+    name: 'ManageIQ::Providers::Openstack::CloudManager.tenant_mapping_enabled',
     bsSize: 'mini',
     onText: __('Yes'),
     offText: __('No'),
