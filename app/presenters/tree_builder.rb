@@ -108,6 +108,11 @@ class TreeBuilder
     build_tree
   end
 
+  def open_node(id)
+    open_nodes = @tree_state.x_tree(@name)[:open_nodes]
+    open_nodes.push(id) unless open_nodes.include?(id)
+  end
+
   # FIXME: temporary conversion, needs to be moved into the generation
   def self.convert_bs_tree(nodes)
     return [] if nodes.nil?
@@ -332,11 +337,6 @@ class TreeBuilder
 
   def count_only_or_objects_filtered(count_only, objects, sort_by = nil, options = {}, &block)
     count_only_or_objects(count_only, Rbac.filtered(objects, options), sort_by, &block)
-  end
-
-  def open_node(id)
-    open_nodes = @tree_state.x_tree(@name)[:open_nodes]
-    open_nodes.push(id) unless open_nodes.include?(id)
   end
 
   def prefixed_title(prefix, title)
