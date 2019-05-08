@@ -1,5 +1,5 @@
 class TreeBuilderIsoDatastores < TreeBuilder
-  has_kids_for IsoDatastore, %i[x_get_tree_iso_datastore_kids options]
+  has_kids_for IsoDatastore, %i[x_get_tree_iso_datastore_kids]
 
   private
 
@@ -19,7 +19,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
     count_only_or_objects(count_only, IsoDatastore.all, "name")
   end
 
-  def x_get_tree_iso_datastore_kids(object, count_only, _options)
+  def x_get_tree_iso_datastore_kids(object, count_only)
     iso_images = object.iso_images
     if count_only
       open_node("xx-isd_xx-#{object.id}")

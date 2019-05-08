@@ -1,5 +1,5 @@
 class TreeBuilderPxeServers < TreeBuilder
-  has_kids_for PxeServer, %i[x_get_tree_pxe_server_kids options]
+  has_kids_for PxeServer, %i[x_get_tree_pxe_server_kids]
 
   private
 
@@ -19,7 +19,7 @@ class TreeBuilderPxeServers < TreeBuilder
     count_only_or_objects(count_only, PxeServer.all, "name")
   end
 
-  def x_get_tree_pxe_server_kids(object, count_only, _options)
+  def x_get_tree_pxe_server_kids(object, count_only)
     pxe_images = object.pxe_images
     win_images = object.windows_images
     if count_only

@@ -1,5 +1,5 @@
 class TreeBuilderOpsVmdb < TreeBuilder
-  has_kids_for VmdbTableEvm, %i[x_get_tree_vmdb_table_kids options]
+  has_kids_for VmdbTableEvm, %i[x_get_tree_vmdb_table_kids]
 
   private
 
@@ -28,7 +28,7 @@ class TreeBuilderOpsVmdb < TreeBuilder
     count_only_or_objects(count_only, vmdb_indexes, "name")
   end
 
-  def x_get_tree_vmdb_table_kids(object, count_only, _options)
+  def x_get_tree_vmdb_table_kids(object, count_only)
     if count_only
       1 # each table has any index
     else
