@@ -93,5 +93,30 @@ describe MiqPolicyController do
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
     end
+
+    context "#alert_profile_assign_changed" do
+      before do
+        alert_profile_set = FactoryBot.create(:miq_alert_set, :set_type => "MiqAlertSet", :mode => "MiqServer")
+        assign = {
+          :new            => {:assign_to => "miq_server", :objects => [10]},
+          "alert_profile" => alert_profile_set,
+        }
+        controller.instance_variable_set(:@sb, :assign => assign)
+      end
+
+      it "Changing Assign Tos drop down value, initializes the tree" do
+        controller.instance_variable_set(:@_params, :chosen_assign_to => "miq_server")
+        expect(controller).to receive(:render)
+        controller.alert_profile_assign_changed
+        expect(assigns(:assign)[:obj_tree]).not_to be_nil
+      end
+
+      it "does not throw an error when selecting items in the servers tree" do
+        controller.instance_variable_set(:@_params, :check => "1", :id => "svr-1")
+        expect(controller).to receive(:render)
+        controller.alert_profile_assign_changed
+        expect(assigns(:assign)[:new][:objects]).to eq([1, 10])
+      end
+    end
   end
 end

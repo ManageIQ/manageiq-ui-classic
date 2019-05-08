@@ -171,10 +171,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(params[:id].split("-").last)
+        @assign[:new][:objects].push(params[:id].split("-").last.to_i)
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(params[:id].split("-").last)
+        @assign[:new][:objects].delete(params[:id].split("-").last.to_i)
       end
     end
 
@@ -198,19 +198,18 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_build_obj_tree
     return nil if alert_profile_get_assign_to_objects_empty?
     if @assign[:new][:assign_to] == "ems_folder"
-      instantiate_tree("TreeBuilderBelongsToVat", :vat_tree, :vat,
+      instantiate_tree("TreeBuilderBelongsToVat", :vat_tree,
                        @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
     elsif @assign[:new][:assign_to] == "resource_pool"
-      instantiate_tree("TreeBuilderBelongsToHac", :hac_tree, :hac,
+      instantiate_tree("TreeBuilderBelongsToHac", :hac_tree,
                        @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
     else
-      instantiate_tree("TreeBuilderAlertProfileObj", :object_tree, :object, @assign[:new][:objects])
+      instantiate_tree("TreeBuilderAlertProfileObj", :object_tree, @assign[:new][:objects])
     end
   end
 
-  def instantiate_tree(tree_class, tree_name, type, selected_nodes)
+  def instantiate_tree(tree_class, tree_name, selected_nodes)
     tree_class.constantize.new(tree_name,
-                               type,
                                @sb,
                                true,
                                :assign_to      => @assign[:new][:assign_to],
