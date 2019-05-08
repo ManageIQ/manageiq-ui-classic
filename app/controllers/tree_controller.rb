@@ -16,8 +16,18 @@ class TreeController < ApplicationController
 
   private
 
+  # This method returns with a JSON that can be directly consumed by a frontend
+  # treeview component. If a node_id is set, it only returns the subtree under
+  # the node represented by this id. There's also an option to pass a block to
+  # the method and customize the tree before building it. This way we can easily
+  # define custom behavior without creating an if/else spaghetti.
   def fetch_tree(klass, name, node_id = nil)
-    tree = klass.new(name, {})
+    tree = klass.new(name, {}, false)
+
+    # FIXME: maybe here we would need instance_exec/eval instead
+    yield(tree) if block_given?
+
+    tree.reload!
 
     if node_id
       TreeBuilder.convert_bs_tree(tree.x_get_child_nodes(node_id)).to_json

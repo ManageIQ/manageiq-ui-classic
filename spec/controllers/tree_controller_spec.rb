@@ -45,7 +45,8 @@ describe TreeController do
     subject { controller.send(:fetch_tree, klass, :foo_tree, node_id) }
 
     it 'returns with a tree hash' do
-      expect(klass).to receive(:new).with(:foo_tree, {}).and_return(tree)
+      expect(klass).to receive(:new).with(:foo_tree, {}, false).and_return(tree)
+      expect(tree).to receive(:reload!)
       expect(subject).to eq(:foo => :bar)
     end
   end
