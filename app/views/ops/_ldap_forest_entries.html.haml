@@ -47,7 +47,7 @@
               = text_field("user_proxies", "bind_dn", "size" => 20, "maxlength" => 50)
             %td
               = password_field("user_proxies", "bind_pwd", "size" => 20, "maxlength" => 128)
-        - @edit[:new][:authentication][:user_proxies].sort_by { |a| a[:ldaphost] }.each do |forest|
+        - @edit[:new][:authentication][:user_proxies].sort_by { |a| a[:ldaphost].to_s }.each do |forest|
           - if entry != nil && entry != "new" && entry[:ldaphost] == forest[:ldaphost]
             %tr
               %td
