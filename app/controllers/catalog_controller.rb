@@ -666,17 +666,11 @@ class CatalogController < ApplicationController
   def ot_add
     assert_privileges("orchestration_template_add")
     ot_type = x_node == "root" ? "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate" : node_name_to_template_name(x_node)
-    @edit = {:new => {:name        => "",
-                      :description => "",
-                      :content     => "",
-                      :type        => ot_type,
-                      :draft       => false,
-                      :manager_id  => ''}}
+    @edit = {:new => {:type        => ot_type}}
     @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(ot_type)
     @edit[:current] = @edit[:new].dup
     @edit[:key] = "ot_add__new"
     @right_cell_text = _("Adding a new Orchestration Template")
-    @in_a_form = true
     replace_right_cell(:action => "ot_add")
   end
 
