@@ -298,13 +298,7 @@
             - check = @miq_request.id
           - else
             - check = 'new'
-          = render(:partial => "layouts/tree",
-                   :locals => {:tree_id       => "all_tags_treebox",
-                               :tree_name     => "all_tags_tree",
-                               :bs_tree       => @all_tags_tree,
-                               :oncheck       => "miqOnCheckProvTags",
-                               :check_url     => "/miq_request/prov_field_changed/#{check}",
-                               :checkboxes    => true})
+          = react 'TaggingWrapperConnected', { :tags => @tags, :urls => @button_urls, :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true,  :url => url_for_only_path(:action => 'prov_field_changed')} }
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
