@@ -187,6 +187,9 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (_.isString(data.clearTreeCookies)) {
     miqDeleteTreeCookies(data.clearTreeCookies);
   }
+  if (_.isBoolean(data.treeExpandAll)) {
+    ManageIQ.tree.expandAll = data.treeExpandAll;
+  }
   if (_.isString(data.accordionSwap)) {
     miqAccordionSwap('#accordion .panel-collapse.collapse.in', '#' + data.accordionSwap + '_accord');
   }

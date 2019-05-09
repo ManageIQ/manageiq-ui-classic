@@ -259,6 +259,7 @@ class ExplorerPresenter
 
     data[:showMiqButtons] = @options[:show_miq_buttons]
     data[:clearTreeCookies] = @options[:clear_tree_cookies]
+    data[:treeExpandAll] = @options[:tree_expand_all]
 
     # Open an accordion inside an other AJAX call
     data[:accordionSwap] = @options[:open_accord] unless @options[:open_accord].to_s.empty?
