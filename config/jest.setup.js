@@ -16,3 +16,18 @@ window.listenToRx = listenToRx;
 import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new EnzymeAdapter() });
+
+// mock document.body.createTextRange for code mirror
+document.body.createTextRange = () => ({
+  setEnd: () => {},
+  setStart: () => {},
+  getBoundingClientRect: () => {
+    return {right: 0};
+  },
+  getClientRects: () => {
+    return {
+      length: 0,
+      left: 0,
+      right: 0,
+    };
+  }});

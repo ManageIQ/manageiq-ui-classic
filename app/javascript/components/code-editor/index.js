@@ -13,7 +13,12 @@ const getMode = mode => ({
   json: { name: 'javascript', json: true },
 })[mode] || mode;
 
-const CodeEditor = ({ mode, modes, ...props }) => {
+const CodeEditor = ({
+  onBeforeChange,
+  mode,
+  modes,
+  ...props
+}) => {
   const [codeMode, setCodeMode] = useState(mode);
 
   return (
@@ -35,6 +40,7 @@ const CodeEditor = ({ mode, modes, ...props }) => {
           gutters: ['CodeMirror-lint-markers'],
         }}
         style={{ height: 'auto' }}
+        onBeforeChange={onBeforeChange}
         {...props}
       />
     </div>
@@ -44,6 +50,7 @@ const CodeEditor = ({ mode, modes, ...props }) => {
 CodeEditor.propTypes = {
   mode: PropTypes.oneOf(['json', 'yaml']),
   modes: PropTypes.arrayOf(PropTypes.string),
+  onBeforeChange: PropTypes.func.isRequired,
 };
 
 CodeEditor.defaultProps = {

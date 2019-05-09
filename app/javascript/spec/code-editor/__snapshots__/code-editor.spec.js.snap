@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeEditor component should render correctly 1`] = `
+<div>
+  <Controlled
+    onBeforeChange={[MockFunction]}
+    options={
+      Object {
+        "autoCloseBrackets": true,
+        "gutters": Array [
+          "CodeMirror-lint-markers",
+        ],
+        "lineNumbers": true,
+        "lineWrapping": true,
+        "lint": true,
+        "mode": "yaml",
+        "styleActiveLine": true,
+        "theme": "eclipse",
+      }
+    }
+    style={
+      Object {
+        "height": "auto",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`CodeEditor component should render mode switches 1`] = `
+<div>
+  <ul>
+    <li
+      key="yaml"
+    >
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        yaml
+      </button>
+    </li>
+    <li
+      key="json"
+    >
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        json
+      </button>
+    </li>
+  </ul>
+  <Controlled
+    onBeforeChange={[MockFunction]}
+    options={
+      Object {
+        "autoCloseBrackets": true,
+        "gutters": Array [
+          "CodeMirror-lint-markers",
+        ],
+        "lineNumbers": true,
+        "lineWrapping": true,
+        "lint": true,
+        "mode": "yaml",
+        "styleActiveLine": true,
+        "theme": "eclipse",
+      }
+    }
+    style={
+      Object {
+        "height": "auto",
+      }
+    }
+  />
+</div>
+`;

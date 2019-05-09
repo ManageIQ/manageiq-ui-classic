@@ -13,22 +13,14 @@ const OrcherstrationTemplateForm = ({ managers }) => {
   const onSubmit = (values) => {
     miqSparkleOn();
     API.post('/api/orchestration_templates', values)
-      .then(({ error }) => {
-        if (error) {
-          /**
-           * Bad request error handling
-           */
-          return add_flash(error.message, 'error');
-        }
-        return miqRedirectBack(
-          sprintf(__('Service Dialog %s was successfully created'), values.name),
-          'success',
-          '/catalog/explorer',
-        );
-      })
+      .then(() => miqRedirectBack(
+        sprintf(__('Service Dialog %s was successfully created'), values.name),
+        'success',
+        '/catalog/explorer',
+      ))
       .catch(() => {
         /**
-         * 500 errors should be handled by the global error handling
+         * API errors should be handled by the global error handling
          */
         miqSparkleOff();
       });
@@ -41,7 +33,7 @@ const OrcherstrationTemplateForm = ({ managers }) => {
         onCancel={() => miqRedirectBack(
           __('Creation of a new Service Dialog was cancelled by the user'),
           'success',
-          '/catalog/ot_add_submit?button=cancel',
+          '/catalog/explorer',
         )}
         buttonsLabels={{
           submitLabel: __('Add'),
@@ -52,7 +44,7 @@ const OrcherstrationTemplateForm = ({ managers }) => {
 };
 
 OrcherstrationTemplateForm.propTypes = {
-  managers: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string).isRequired).isRequired,
+  managers: PropTypes.arrayOf(PropTypes.array.isRequired).isRequired,
 };
 
 export default OrcherstrationTemplateForm;
