@@ -12,6 +12,7 @@ describe "catalog/_form.html.haml" do
     create_ae_model(:name => 'MARIO', :ae_class => 'CLASS3', :ae_namespace => 'C/D/E')
     @automate_tree = TreeBuilderAeClass.new(:automate_tree, @sb)
     @available_catalogs = [%w(test 1)]
+    assign(:tenants_tree, TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => [], :selectable => true))
   end
 
   it "Renders form when adding catalog bundle and st_prov_type is not set" do
