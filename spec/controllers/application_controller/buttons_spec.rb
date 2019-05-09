@@ -195,6 +195,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:button_icon]).to eq('fa fa-info')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
       expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
+      expect(assigns(:edit)[:new][:disabled_open_url]).to eq(false)
 
       controller.instance_variable_set(:@sb,
                                        :trees       => {
@@ -228,6 +229,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:enablement_expression]).to eq(e_expression.exp)
       expect(assigns(:edit)[:new][:visibility_expression]).to eq(v_expression.exp)
       expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
+      expect(assigns(:edit)[:new][:disabled_open_url]).to eq(false)
 
       controller.instance_variable_set(:@sb,
                                        :trees       => { :ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
@@ -265,6 +267,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:object_request]).to eq('Order_Ansible_Playbook')
       expect(assigns(:edit)[:new][:service_template_id]).to eq(service_template.id)
       expect(assigns(:edit)[:new][:inventory_type]).to eq('localhost')
+      expect(assigns(:edit)[:new][:disabled_open_url]).to eq(false)
 
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
@@ -381,7 +384,7 @@ describe ApplicationController do
       end
       it "to false for Vm and Template" do
         controller.instance_variable_set(:@_params, "id" => button_for_vm.id, "dialog_id" => "")
-        controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
+        controller.instance_variable_set(:@resolve, :target_class => "Vm")
         controller.instance_variable_set(:@custom_button, button_for_vm)
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:disabled_open_url]).to be false
