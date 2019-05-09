@@ -666,21 +666,12 @@ class CatalogController < ApplicationController
   def ot_add
     assert_privileges("orchestration_template_add")
     ot_type = x_node == "root" ? "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate" : node_name_to_template_name(x_node)
-    @edit = {:new => {:type        => ot_type}}
+    @edit = {:new => {:type => ot_type}}
     @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(ot_type)
     @edit[:current] = @edit[:new].dup
     @edit[:key] = "ot_add__new"
     @right_cell_text = _("Adding a new Orchestration Template")
     replace_right_cell(:action => "ot_add")
-  end
-
-  def ot_add_submit
-    case params[:button]
-    when "cancel"
-      ot_add_submit_cancel
-    when "add"
-      ot_add_submit_save
-    end
   end
 
   def ot_add_form_field_changed
@@ -1064,58 +1055,6 @@ class CatalogController < ApplicationController
           self.x_node = x_node_elems.join('-')
         end
 
-        @changed = session[:changed] = false
-        @in_a_form = false
-        @edit = session[:edit] = nil
-        replace_right_cell(:replace_trees => trees_to_replace([:ot]))
-      end
-    end
-  end
-
-  def ot_add_submit_cancel
-    add_flash(_("Creation of a new Orchestration Template was cancelled by the user"))
-    @in_a_form = false
-    @sb[:action] = @edit = @record = nil
-    replace_right_cell
-  end
-
-  def ot_add_submit_save
-    assert_privileges("orchestration_template_add")
-    load_edit("ot_add__new", "replace_cell__explorer")
-    template_types = %w[
-      ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate
-      ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate
-      ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate
-      ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate
-      ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
-    ]
-    if !template_types.include?(@edit[:new][:type])
-      render_flash(_("\"%{type}\" is not a valid Orchestration Template type") % {:type => @edit[:new][:type]}, :error)
-    elsif params[:content].nil? || params[:content].strip == ""
-      render_flash(_("Error during Orchestration Template creation: new template content cannot be empty"), :error)
-    else
-      ot = OrchestrationTemplate.new(
-        :name         => @edit[:new][:name],
-        :description  => @edit[:new][:description],
-        :type         => @edit[:new][:type],
-        :content      => params[:content],
-        :draft        => @edit[:new][:draft],
-        :ems_id       => @edit[:new][:manager_id],
-        :remote_proxy => true
-      )
-      begin
-        ot.save_as_orderable!
-      rescue => bang
-        render_flash(_("Error during 'Orchestration Template creation': %{error_message}") %
-          {:error_message => bang.message}, :error)
-      else
-        add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-        subtree = template_to_node_name(ot)
-        x_tree[:open_nodes].push(subtree) unless x_tree[:open_nodes].include?(subtree)
-        ot_type = template_to_node_name(ot)
-        self.x_node = "xx-%{type}_ot-%{cid}" % {:type => ot_type,
-                                                :cid  => ot.id}
-        x_tree[:open_nodes].push(x_node)
         @changed = session[:changed] = false
         @in_a_form = false
         @edit = session[:edit] = nil

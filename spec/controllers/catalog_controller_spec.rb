@@ -515,63 +515,6 @@ describe CatalogController do
       end
     end
 
-    describe "#ot_create" do
-      before do
-        @new_name = "New Name"
-        new_description = "New Description"
-        new_type = "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate"
-        @new_content = '{"AWSTemplateFormatVersion" : "2010-09-09"}'
-        edit = {
-          :new => {
-            :name        => @new_name,
-            :description => new_description,
-            :content     => @new_content,
-            :type        => new_type,
-            :draft       => false
-          },
-          :key => "ot_add__new",
-        }
-        session[:edit] = edit
-        controller.instance_variable_set(:@sb, :trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree)
-      end
-
-      it "Orchestration Template is created" do
-        controller.params = {:content => @new_content, :button => "add"}
-        allow(controller).to receive(:replace_right_cell)
-        controller.send(:ot_add_submit)
-        expect(controller.send(:flash_errors?)).not_to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("was saved")
-        expect(assigns(:edit)).to be_nil
-        expect(response.status).to eq(200)
-        expect(OrchestrationTemplate.where(:name => @new_name).first).not_to be_nil
-      end
-
-      it "Orchestration Template draft is created" do
-        controller.params = {:content => @new_content, :button => "add"}
-        session[:edit][:new][:draft] = true
-        allow(controller).to receive(:replace_right_cell)
-        controller.send(:ot_add_submit)
-        expect(controller.send(:flash_errors?)).not_to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("was saved")
-        expect(assigns(:edit)).to be_nil
-        expect(response.status).to eq(200)
-        ot = OrchestrationTemplate.where(:name => @new_name).first
-        expect(ot).not_to be_nil
-        expect(ot.draft).to be_truthy
-      end
-
-      it "Orchestration Template creation is cancelled" do
-        controller.params = {:content => @new_content, :button => "cancel"}
-        allow(controller).to receive(:replace_right_cell)
-        controller.send(:ot_add_submit)
-        expect(controller.send(:flash_errors?)).not_to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("was cancelled")
-        expect(assigns(:edit)).to be_nil
-        expect(response.status).to eq(200)
-        expect(OrchestrationTemplate.where(:name => @new_name).first).to be_nil
-      end
-    end
-
     describe "#tags_edit" do
       before do
         @ot = FactoryBot.create(:orchestration_template, :name => "foo")
