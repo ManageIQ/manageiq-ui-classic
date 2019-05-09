@@ -651,7 +651,7 @@ module OpsController::OpsRbac
     end
 
     @in_a_form = true
-    session[:changed] = false
+    session[:changed] = key == :group ? @deleted_belongsto_filters.present? : false
     add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
     @sb[:pre_edit_node] = x_node  unless params[:button] # Save active tree node before edit
     replace_right_cell(:nodetype => x_node)
@@ -686,6 +686,7 @@ module OpsController::OpsRbac
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = key == :group ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
+      add_flash(_("Outdated filters were removed from group \"%{name}\"") % {:name => @edit[:new][subkey]}) if what == "group" && @edit[:current][:deleted_belongsto_filters].present?
       @edit = session[:edit] = nil # clean out the saved info
       if add_pressed
         suffix = case rbac_suffix
@@ -886,8 +887,12 @@ module OpsController::OpsRbac
       # Build the belongsto filters hash
       @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
         bobj = MiqFilter.belongsto2object(b) # Convert to an object
-        next unless bobj
-        @belongsto[bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+        if bobj
+          @belongsto[bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+        else
+          @deleted_belongsto_filters ||= []
+          @deleted_belongsto_filters.push(MiqFilter.belongsto2path_human(b))
+        end
       end
       # Build the managed filters hash
       [@group.get_managed_filters].flatten.each do |f|
@@ -1155,8 +1160,12 @@ module OpsController::OpsRbac
     # Build the belongsto filters hash
     @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
       bobj = MiqFilter.belongsto2object(b)   # Convert to an object
-      next unless bobj
-      @edit[:new][:belongsto][bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+      if bobj
+        @edit[:new][:belongsto][bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+      else
+        @deleted_belongsto_filters ||= []
+        @deleted_belongsto_filters.push(MiqFilter.belongsto2path_human(b))
+      end
     end
 
     # Build roles hash
@@ -1192,6 +1201,8 @@ module OpsController::OpsRbac
                        end
 
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
+    @edit[:current][:deleted_belongsto_filters] = @deleted_belongsto_filters
+    @edit[:new][:belongsto].except!(*@deleted_belongsto_filters)
   end
 
   def rbac_group_filter_expression_vars(field_expression, field_expression_table)

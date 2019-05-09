@@ -327,6 +327,106 @@ describe OpsController do
       allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
     end
 
+    context "outdated belongsto filters" do
+      let(:ems) { FactoryBot.create(:ems_vmware, :name => 'ems') }
+      let(:root) do
+        datacenters = FactoryBot.create(:ems_folder, :name => "Datacenters")
+        datacenters.parent = ems
+        datacenters
+      end
+
+      let(:dc) do
+        datacenter = FactoryBot.create(:ems_folder, :name => "Datacenter1")
+        datacenter.parent = root
+        datacenter
+      end
+
+      let(:hfolder) do
+        hfolder = FactoryBot.create(:ems_folder, :name => "host")
+        hfolder.parent = dc
+        hfolder
+      end
+      let(:cluster_1) do
+        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 1")
+        cluster.parent = hfolder
+        cluster
+      end
+
+      let(:cluster_2) do
+        cluster = FactoryBot.create(:ems_cluster, :name => "MTC Development 2")
+        cluster.parent = hfolder
+        cluster
+      end
+
+      let(:vm_folder_path) { "/belongsto/ExtManagementSystem|#{ems.name}/EmsFolder|#{root.name}/EmsFolder|#{dc.name}/EmsFolder|#{hfolder.name}/EmsCluster|#{cluster_1.name}" }
+
+      let(:outdated_belongs_to_filters) { ["#{vm_folder_path}XXXX", "#{vm_folder_path}YYYY"] }
+
+      before do
+        @group.entitlement = Entitlement.new
+        @group.entitlement.set_belongsto_filters([vm_folder_path] + outdated_belongs_to_filters)
+        @group.entitlement.set_managed_filters([])
+        @group.save!
+      end
+
+      it "removes outdated belongs to filters" do
+        belongsto_filters = {}
+        @group.get_belongsto_filters.each do |b|
+          bobj = MiqFilter.belongsto2object(b)
+          belongsto_filters[bobj.class.to_s + "_" + bobj.id.to_s] = b if bobj
+        end
+
+        expect(@group.get_belongsto_filters).to match_array([vm_folder_path] + outdated_belongs_to_filters)
+
+        controller.instance_variable_set(:@edit, :new     => {:group_id              => @group.id,
+                                                              :use_filter_expression => false,
+                                                              :name                  => "Name",
+                                                              :description           => "Test",
+                                                              :role                  => @role.id,
+                                                              :filter_expression     => @exp.exp,
+                                                              :belongsto             => belongsto_filters,
+                                                              :filters               => {} },
+                                                 :current => {:deleted_belongsto_filters => outdated_belongs_to_filters})
+
+        controller.send(:rbac_group_set_record_vars, @group)
+
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:build_saved_audit).and_return({})
+        allow(controller).to receive(:get_node_info)
+        allow(controller).to receive(:replace_right_cell)
+        controller.send(:rbac_edit_save_or_add, "group")
+
+        expect(@group.get_belongsto_filters).to match_array([vm_folder_path])
+
+        controller.instance_variable_set(:@record, @group)
+
+        controller.send(:rbac_group_set_form_vars)
+      end
+
+      it "removes outdated belongs to filters" do
+        controller.instance_variable_set(:@record, @group)
+
+        allow(controller).to receive(:rbac_group_right_tree)
+        controller.send(:rbac_group_set_form_vars)
+
+        expect(controller.instance_variable_get(:@deleted_belongsto_filters)).to match_array(outdated_belongs_to_filters.map { |x| MiqFilter.belongsto2path_human(x) })
+      end
+    end
+
+    it "saves the filters when use_filter_expression is false" do
+      @group.entitlement = Entitlement.create!
+      controller.instance_variable_set(:@edit, :new => {:use_filter_expression => false,
+                                                        :name                  => 'Name',
+                                                        :description           => "Test",
+                                                        :role                  => @role.id,
+                                                        :filter_expression     => @exp.exp,
+                                                        :belongsto             => {},
+                                                        :filters               => {'managed/env' => '/managed/env'}})
+      controller.send(:rbac_group_set_record_vars, @group)
+      expect(@group.entitlement.filter_expression).to be_nil
+      expect(@group.entitlement.get_managed_filters).to match([["/managed/env"]])
+    end
+
     it "saves the filters when use_filter_expression is false" do
       @group.entitlement = Entitlement.create!
       allow(controller).to receive(:params).and_return('data' => get_tags_json([tag]))
