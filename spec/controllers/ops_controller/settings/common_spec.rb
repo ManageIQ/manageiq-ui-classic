@@ -139,10 +139,12 @@ describe OpsController do
     end
 
     context "#settings_update" do
-      it "won't render form buttons after rhn settings submission" do
+      let(:orgs) { [1] }
+      before do
         session[:edit] = {
-          :key => "settings_rhn_edit__rhn_edit",
-          :new => {
+          :key           => "settings_rhn_edit__rhn_edit",
+          :organizations => orgs,
+          :new           => {
             :register_to       => "sm_hosted",
             :customer_userid   => "username",
             :customer_password => "password",
@@ -158,9 +160,21 @@ describe OpsController do
                                                :active_tab  => 'settings_rhn_edit')
         allow(controller).to receive(:x_node).and_return("root")
         controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
+      end
+
+      it "won't render form buttons after rhn settings submission" do
         controller.send(:settings_update)
         expect(response).to render_template('ops/_settings_rhn_tab')
         expect(response).not_to render_template(:partial => "layouts/_x_edit_buttons")
+      end
+
+      context "number of orgs > 1" do
+        let(:orgs) { [1, 2] }
+
+        it "makes organization field obligatory" do
+          controller.send(:settings_update)
+          expect(controller.instance_variable_get(:@flash_array)).to include(a_hash_including(:message => "Organization is required"))
+        end
       end
     end
 

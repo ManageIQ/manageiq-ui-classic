@@ -210,6 +210,7 @@ module OpsController::Settings::RHN
     :server_url        => _('Server Address'),
     :repo_name         => _('Repository Name'),
     :proxy_address     => _('HTTP Proxy Address'),
+    :customer_org      => _('Organization'),
   }.freeze
 
   # FIXME: once we have a way to separately allow 'Save' and 'Reset' buttons
@@ -217,6 +218,7 @@ module OpsController::Settings::RHN
   # fields are filled-in.
   def rhn_allow_save?
     obligatory_fields = %i[customer_password customer_userid server_url repo_name]
+    obligatory_fields << :customer_org if @edit[:organizations].length > 1
     obligatory_fields << :proxy_address if @edit[:new][:use_proxy].to_i == 1
 
     obligatory_fields.find_all do |field|
