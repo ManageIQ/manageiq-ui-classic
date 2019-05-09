@@ -2245,7 +2245,8 @@ class MiqAeClassController < ApplicationController
       # for method_inputs view
       @edit[:new][:name] = params[:method_name].presence if params[:method_name]
       @edit[:new][:display_name] = params[:method_display_name].presence if params[:method_display_name]
-      @edit[:new][:location] = params[:method_location] || 'inline'
+      @edit[:new][:location] ||= 'inline'
+      @edit[:new][:location] = params[:method_location] if params[:method_location]
       @edit[:new][:data] = params[:method_data] if params[:method_data]
       method_form_vars_process_fields
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
@@ -2256,7 +2257,7 @@ class MiqAeClassController < ApplicationController
       # for class_methods view
       @edit[:new][:name] = params[:cls_method_name].presence if params[:cls_method_name]
       @edit[:new][:display_name] = params[:cls_method_display_name].presence if params[:cls_method_display_name]
-      @edit[:new][:location] = params[:cls_method_location] || 'inline'
+      @edit[:new][:location] = params[:cls_method_location] if params[:cls_method_location]
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
       @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
       method_form_vars_process_fields('cls_')
