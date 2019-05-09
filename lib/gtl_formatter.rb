@@ -1,5 +1,4 @@
 class GtlFormatter
-
   PROV_STATES = {
     "pending_approval" => N_("Pending Approval"),
     "approved"         => N_("Approved"),
@@ -13,7 +12,7 @@ class GtlFormatter
 
     view.col_order.each_with_index do |col, col_idx|
       next if view.column_is_hidden?(col)
-      
+
       @col = col
       span = nil
 
@@ -23,11 +22,11 @@ class GtlFormatter
         celltext = service_template_format(view.col_order[col_idx], row[col])
       elsif view.extras[:filename] == "OpenscapRuleResult"
         celltext, span = openscap_role_result_format(view.col_order[col_idx], row[col])
-      elsif %w(AutomationRequest MiqRequest Container MiqTask MiqProvision).include?(view.extras[:filename])
+      elsif %w[AutomationRequest MiqRequest Container MiqTask MiqProvision].include?(view.extras[:filename])
         celltext = state_format(view.col_order[col_idx], row[col])
-      elsif %w(ManageIQ_Providers_CloudManager_Template-all_vms_and_templates ManageIQ_Providers_CloudManager_Vm-vms
+      elsif %w[ManageIQ_Providers_CloudManager_Template-all_vms_and_templates ManageIQ_Providers_CloudManager_Vm-vms
                ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates ManageIQ_Providers_CloudManager_Vm
-               ManageIQ_Providers_CloudManager_Template).include?(view.extras[:filename])
+               ManageIQ_Providers_CloudManager_Template].include?(view.extras[:filename])
         celltext = hardware_bitness_format(view.col_order[col_idx], row[col])
       elsif view.extras[:filename] == "ManageIQ_Providers_CloudManager_Template"
         celltext = cloud_manager_template_format(view.col_order[col_idx], row[col])
@@ -43,38 +42,34 @@ class GtlFormatter
 
   def self.cloud_manager_template_format(key, value)
     if key == 'image?'
-      celltext = value ? _("Image") : _("Snapshot")
+      value ? _("Image") : _("Snapshot")
     else
-      celltext = hardware_bitness_format(key, value)
+      hardware_bitness_format(key, value)
     end
-    celltext
   end
 
   def self.hardware_bitness_format(key, value)
     if key == 'hardware.bitness'
-      celltext = value ? "#{value} bit" : ''
+      value ? "#{value} bit" : ''
     else
-      celltext = format_col_for_display(@view, @row, @col)
+      format_col_for_display(@view, @row, @col)
     end
-    celltext
   end
 
   def self.state_format(key, value)
     if key == 'state'
-      celltext = value.to_s.titleize
+      value.to_s.titleize
     else
-      celltext = format_col_for_display(@view, @row, @col)
+      format_col_for_display(@view, @row, @col)
     end
-    celltext
   end
 
   def self.miq_request_format(key, value)
     if key == 'approval_state'
-      celltext = _(PROV_STATES[value])
+      _(PROV_STATES[value])
     else
-      celltext = state_format(key, value)
+      state_format(key, value)
     end
-    celltext
   end
 
   def self.openscap_role_result_format(key, value)
@@ -93,11 +88,10 @@ class GtlFormatter
 
   def self.service_template_format(key, value)
     if key == "prov_type"
-      celltext = value ? _(ServiceTemplate::CATALOG_ITEM_TYPES[value]) : ''
+      value ? _(ServiceTemplate::CATALOG_ITEM_TYPES[value]) : ''
     else
-      celltext = format_col_for_display(@view, @row, @col)
+      format_col_for_display(@view, @row, @col)
     end
-    celltext
   end
 
   def self.timezone(view, row)
@@ -113,10 +107,7 @@ class GtlFormatter
 
   # Format a column in a report view for display on the screen
   def self.format_col_for_display(view, row, col)
-    celltext = view.format(col,
-                           row[col],
-                           :tz => timezone(view, row)).gsub(/\\/, '\&') # Call format, then escape any backslashes
-    celltext
+    view.format(col, row[col], :tz => timezone(view, row)).gsub(/\\/, '\&') # Call format, then escape any backslashes
   end
 
   def self.result_span_class(value)
