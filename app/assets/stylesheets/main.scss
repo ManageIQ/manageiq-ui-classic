@@ -39,6 +39,7 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "alerts";
 @import "graphql_explorer";
 @import "dual_list";
+@import "codemirror_editor";
 
 .login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
   height: 38px;

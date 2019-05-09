@@ -4,6 +4,7 @@ import DualListSelect from '../../components/dual-list-select';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import EditSecretField from '../../components/async-credentials/edit-secret-field';
 import SecretSwitchField from '../../components/async-credentials/secret-switch-field';
+import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 
 const fieldsMapper = {
   ...formFieldsMapper,
@@ -12,6 +13,7 @@ const fieldsMapper = {
   'validate-credentials': AsyncCredentials,
   'credentials-password-edit': EditSecretField,
   'secret-switch-field': SecretSwitchField,
+  'code-editor': DataDrivenFormCodeEditor,
 };
 
 export default fieldsMapper;
