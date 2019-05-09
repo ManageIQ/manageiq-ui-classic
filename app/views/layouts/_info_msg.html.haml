@@ -1,4 +1,7 @@
-.alert.alert-info
-  %span.pficon.pficon-info
-  %strong
+.pf-c-alert.pf-m-info{"aria-label" => "Information Alert"}
+  .pf-c-alert__icon
+    %i.fas.fa-info-circle{"aria-hidden" => "true"}
+  %h4.pf-c-alert__title
+    %span.pf-screen-reader
+      Info alert:
     = h(message)
