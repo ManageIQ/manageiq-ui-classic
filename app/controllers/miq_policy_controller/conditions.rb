@@ -37,7 +37,7 @@ module MiqPolicyController::Conditions
       assert_privileges("condition_#{@condition.id ? "edit" : "new"}")
       policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"]) unless x_active_tree == :condition_tree
       adding = @condition.id.blank?
-      condition = adding ? Condition.new : Condition.find(@condition.id) # Get new or existing record
+      condition = @condition # Get new or existing record
       condition.description = @edit[:new][:description]
       condition.notes = @edit[:new][:notes]
       condition.towhat = @edit[:new][:towhat] if adding # Set the proper model if adding a record
@@ -62,8 +62,8 @@ module MiqPolicyController::Conditions
         end
         @sb[:action] = @edit = nil
         @nodetype = "co"
-        if adding # If add
-          condition_get_info(condition)
+        condition_get_info(condition)
+        if adding
           case x_active_tree
           when :condition_tree
             @new_condition_node = "xx-#{condition.towhat.camelize(:lower)}_co-#{condition.id}"
@@ -78,7 +78,6 @@ module MiqPolicyController::Conditions
             replace_right_cell(:nodetype => "co", :replace_trees => %i[policy_profile policy condition], :remove_form_buttons => true)
           end
         else
-          condition_get_info(Condition.find(condition.id))
           replace_right_cell(:nodetype => "co", :replace_trees => %i[policy_profile policy condition], :remove_form_buttons => true)
         end
       else

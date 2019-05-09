@@ -393,7 +393,7 @@ class MiqPolicyController < ApplicationController
     end
     @sb[:node_ids] ||= {}
     @sb[:node_ids][x_active_tree] = node_ids
-    get_root_node_info  if x_node == "root"                     # Get node info of tree roots
+    get_root_node_info if x_node == "root" # Get node info of tree roots
     folder_get_info(treenodeid) if treenodeid != "root"         # Get folder info for all node types
     case @nodetype
     when "pp" # Policy Profile
