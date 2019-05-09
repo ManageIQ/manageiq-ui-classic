@@ -299,7 +299,7 @@ module MiqPolicyController::MiqActions
     @edit[:current] = copy_hash(@edit[:new])
     get_tags_tree
     @in_a_form = true
-    @edit[:current][:add] = @edit[:action_id].nil? # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:action_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
