@@ -58,15 +58,18 @@ export const DataDrivenFormCodeEditor = ({
   <FieldProvider {...props}>
     {({
       input: { value, onChange },
-      meta: _meta,
+      meta: { error },
       formOptions: _formOptions,
       ...props
     }) => (
-      <CodeEditor
-        onBeforeChange={(_editor, _data, value) => onChange(value)}
-        value={value}
-        {...props}
-      />
+      <div>
+        {error && <h2>{error}</h2>}
+        <CodeEditor
+          onBeforeChange={(_editor, _data, value) => onChange(value)}
+          value={value}
+          {...props}
+        />
+      </div>
     )}
   </FieldProvider>
 );

@@ -23,6 +23,7 @@ const orchestrationFormSchema = managers => ({
     name: 'name',
     label: __('Name'),
     isRequired: true,
+    validateOnMount: true,
     validate: [{
       type: validatorTypes.REQUIRED,
     }],
@@ -46,6 +47,8 @@ const orchestrationFormSchema = managers => ({
     options: managers.map(([label, value]) => ({ value, label })),
     placeholder: `<${__('Choose')}>`,
     isRequired: true,
+    validateOnMount: true,
+    clearOnUnmount: true,
     validate: [{
       type: validatorTypes.REQUIRED,
     }],
@@ -58,8 +61,12 @@ const orchestrationFormSchema = managers => ({
     name: 'form-separator',
   }, {
     component: 'code-editor',
-    name: 'add-ot-code-editor',
-    modes: ['json', 'yaml'],
+    name: 'content',
+    modes: ['yaml', 'json'],
+    validateOnMount: true,
+    validate: [{
+      type: validatorTypes.REQUIRED,
+    }],
   }],
 });
 
