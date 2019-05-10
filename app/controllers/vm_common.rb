@@ -842,18 +842,18 @@ module VmCommon
     elsif vm.archived
       "xx-arch"
     elsif vm.cloud && vm.template
-      TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      TreeBuilder.build_node_cid(vm.ext_management_system)
     elsif vm.cloud && vm.availability_zone_id.nil?
-      TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      TreeBuilder.build_node_cid(vm.ext_management_system)
     elsif vm.cloud
-      TreeBuilder.build_node_cid(vm.availability_zone_id, 'AvailabilityZone')
+      TreeBuilder.build_node_cid(AvailabilityZone.find_by(:id => vm.availability_zone_id))
     elsif (blue_folder = vm.parent_blue_folder) && !blue_folder.hidden
-      TreeBuilder.build_node_cid(blue_folder.id, 'EmsFolder')
+      TreeBuilder.build_node_cid(blue_folder)
     elsif vm.ems_id # has no folder parent but is in the tree
       if vm.parent_datacenter
-        TreeBuilder.build_node_cid(vm.parent_datacenter.id, 'Datacenter')
+        TreeBuilder.build_node_cid(vm.parent_datacenter)
       else
-        TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+        TreeBuilder.build_node_cid(vm.ext_management_system)
       end
     end
   end

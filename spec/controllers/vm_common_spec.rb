@@ -280,8 +280,8 @@ describe VmOrTemplateController do
       allow(vm_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
       template_infra_datacenter.with_relationship_type("ems_metadata") { template_infra_datacenter.parent = datacenter }
       allow(template_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
-      expect(controller.parent_folder_id(vm_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter.id, 'Datacenter'))
-      expect(controller.parent_folder_id(template_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter.id, 'Datacenter'))
+      expect(controller.parent_folder_id(vm_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter))
+      expect(controller.parent_folder_id(template_infra_datacenter)).to eq(TreeBuilder.build_node_cid(datacenter))
     end
 
     it 'returns id of blue folder for VM/Template with one' do
