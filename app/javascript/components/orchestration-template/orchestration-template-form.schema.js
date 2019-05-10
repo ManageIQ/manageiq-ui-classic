@@ -62,8 +62,10 @@ const orchestrationFormSchema = managers => ({
   }, {
     component: 'code-editor',
     name: 'content',
+    label: __('Content'),
     modes: ['yaml', 'json'],
     validateOnMount: true,
+    isRequired: true,
     validate: [{
       type: validatorTypes.REQUIRED,
     }],

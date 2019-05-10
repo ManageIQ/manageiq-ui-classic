@@ -3,6 +3,7 @@
 exports[`CodeEditor component should render correctly 1`] = `
 <div>
   <Controlled
+    className="miq-codemirror "
     onBeforeChange={[MockFunction]}
     options={
       Object {
@@ -29,29 +30,40 @@ exports[`CodeEditor component should render correctly 1`] = `
 
 exports[`CodeEditor component should render mode switches 1`] = `
 <div>
-  <ul>
-    <li
-      key="yaml"
-    >
-      <button
-        onClick={[Function]}
-        type="button"
+  <FormGroup
+    bsClass="form-group"
+    controlId="radioGroup"
+    disabled={false}
+  >
+    <div>
+      <Radio
+        bsClass="radio"
+        checked={true}
+        disabled={false}
+        inline={true}
+        key="yaml"
+        name="yaml"
+        onChange={[Function]}
+        title=""
       >
         yaml
-      </button>
-    </li>
-    <li
-      key="json"
-    >
-      <button
-        onClick={[Function]}
-        type="button"
+      </Radio>
+      <Radio
+        bsClass="radio"
+        checked={false}
+        disabled={false}
+        inline={true}
+        key="json"
+        name="json"
+        onChange={[Function]}
+        title=""
       >
         json
-      </button>
-    </li>
-  </ul>
+      </Radio>
+    </div>
+  </FormGroup>
   <Controlled
+    className="miq-codemirror "
     onBeforeChange={[MockFunction]}
     options={
       Object {
