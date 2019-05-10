@@ -93,7 +93,7 @@ module ApplicationController::PolicySupport
       @in_a_form = true
       if params[:action] == "policy_sim"
         @refresh_partial = "layouts/policy_sim"
-        replace_right_cell
+        replace_right_cell(:refresh_breadcrumbs => false)
       end
     end
   end

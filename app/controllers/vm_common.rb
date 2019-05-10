@@ -469,7 +469,7 @@ module VmCommon
         return
       end
       @in_a_form = true
-      replace_right_cell(:action => 'policy_sim')
+      replace_right_cell(:action => 'policy_sim', :refresh_breadcrumbs => false)
     else
       render :template => 'vm/show'
     end
@@ -1114,7 +1114,8 @@ module VmCommon
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
-    action, presenter = options.values_at(:action, :presenter)
+    action, presenter, refresh_breadcrumbs = options.values_at(:action, :presenter, :refresh_breadcrumbs)
+    refresh_breadcrumbs = true unless options.key?(:refresh_breadcrumbs)
 
     @explorer = true
     @sb[:action] = action unless action.nil?
@@ -1316,7 +1317,7 @@ module VmCommon
     presenter[:hide_modal] = true
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new']) if refresh_breadcrumbs
 
     render :json => presenter.for_render
   end
