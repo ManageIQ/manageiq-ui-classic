@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Unreleased as of Sprint 110 ending 2019-04-29
+
+### Added
+- Menu Simplification: Drop the Optimize section [(#5485)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5485)
+- Menu Simplification: extract Configuration into the top-right bar [(#5453)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5453)
+
+## Hammer-5 - Released 2019-04-23
 
 ### Added
 - Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
