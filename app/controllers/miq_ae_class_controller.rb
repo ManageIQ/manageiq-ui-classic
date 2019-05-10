@@ -913,7 +913,7 @@ class MiqAeClassController < ApplicationController
                              @edit[:new][:data]
                            end
       @changed = (@edit[:new] != @edit[:current])
-      @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
+      @edit[:default_verify_status] = %w(builtin inline).include?(@edit[:new][:location]) && @edit[:new][:data] && @edit[:new][:data] != ""
 
       in_angular = playbook_style_location?(@edit[:new][:location])
       angular_form_specific_data if in_angular
