@@ -187,10 +187,10 @@ describe TreeBuilder do
     end
   end
 
-  context "#build_node_cid" do
-    it "returns correct cid for VM" do
+  context "#build_node_id" do
+    it "returns correct id for VM" do
       vm = FactoryBot.create(:vm)
-      expect(TreeBuilder.build_node_cid(vm)).to eq("v-#{vm.id}")
+      expect(TreeBuilder.build_node_id(vm)).to eq("v-#{vm.id}")
     end
   end
 end

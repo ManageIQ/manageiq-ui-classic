@@ -390,7 +390,7 @@ module ApplicationController::Performance
         @_params[:refresh] = "n"
         show_timeline
       elsif data_row["resource_type"] == "VmOrTemplate"
-        tree_node_id = TreeBuilder.build_node_id(@record.class.base_model, @record.id)
+        tree_node_id = TreeBuilder.build_node_id(@record)
         session[:exp_parms] = {:display => "timeline", :refresh => "n", :id => tree_node_id}
         javascript_redirect(:controller => data_row["resource_type"].underscore.downcase.singularize,
                             :action     => "explorer")
