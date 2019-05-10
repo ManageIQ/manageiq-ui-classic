@@ -1,5 +1,5 @@
 class TreeBuilderOpsVmdb < TreeBuilder
-  has_kids_for VmdbTableEvm, %i[x_get_tree_vmdb_table_kids options]
+  has_kids_for VmdbTableEvm, %i[x_get_tree_vmdb_table_kids]
 
   private
 
@@ -28,12 +28,12 @@ class TreeBuilderOpsVmdb < TreeBuilder
     count_only_or_objects(count_only, vmdb_indexes, "name")
   end
 
-  def x_get_tree_vmdb_table_kids(object, count_only, options)
+  def x_get_tree_vmdb_table_kids(object, count_only)
     if count_only
       1 # each table has any index
     else
       # load this node expanded on autoload
-      options[:open_nodes].push("xx-#{object.id}") unless options[:open_nodes].include?("xx-#{object.id}")
+      open_node("xx-#{object.id}")
       [
         {
           :id            => object.id.to_s,
