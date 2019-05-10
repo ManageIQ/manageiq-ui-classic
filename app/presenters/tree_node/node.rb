@@ -1,9 +1,12 @@
 module TreeNode
   class Node
-    def initialize(object, parent_id, options)
+    attr_reader :tree
+
+    def initialize(object, parent_id, options, tree)
       @object = object
       @parent_id = parent_id
       @options = options
+      @tree = tree
     end
 
     def text

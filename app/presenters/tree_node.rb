@@ -5,8 +5,8 @@ module TreeNode
     #   :open_nodes -- Tree node ids of currently open nodes
     #   FIXME: fill in missing docs
     #
-    def new(object, parent_id = nil, options = {})
-      subclass(object).new(object, parent_id, options)
+    def new(object, parent_id = nil, options = {}, tree = nil)
+      subclass(object).new(object, parent_id, options, tree)
     end
 
     def exists?(object)
