@@ -40,12 +40,13 @@ class Breadcrumbs extends Component {
     const {
       items, title, controllerName, ...rest
     } = this.props;
+
     return (
       <Breadcrumb style={{ marginBottom: 0 }} {...rest}>
         {items && this.renderItems()}
         <Breadcrumb.Item active>
           <strong>
-            {items ? parsedText(items[items.length - 1].title) : parsedText(title)}
+            {items && items.length > 0 ? parsedText(items[items.length - 1].title) : parsedText(title)}
           </strong>
         </Breadcrumb.Item>
       </Breadcrumb>
