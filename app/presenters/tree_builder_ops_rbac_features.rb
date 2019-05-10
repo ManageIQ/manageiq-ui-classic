@@ -18,18 +18,15 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   private
 
-  def x_get_tree_roots(count_only = false, _options)
-    top_nodes = Menu::Manager.map do |section|
-      next if section.id == :cons && !Settings.product.consumption
-      next if section.name.nil?
-      next unless Vmdb::PermissionStores.instance.can?(section.id)
-
-      section
+  def x_get_tree_roots(count_only, _options)
+    top_nodes = Menu::Manager.select do |section|
+      return false if section.id == :cons && !Settings.product.consumption
+      return false if section.name.nil?
+      Vmdb::PermissionStores.instance.can?(section.id)
     end
 
-    top_nodes += %w[all_vm_rules api_exclusive sui ops_explorer].collect do |additional_feature|
-      MiqProductFeature.obj_features[additional_feature] &&
-        MiqProductFeature.obj_features[additional_feature][:feature]
+    top_nodes += %w[all_vm_rules api_exclusive sui ops_explorer].collect do |feature|
+      MiqProductFeature.obj_features[feature].try(:[], :feature)
     end
 
     count_only_or_objects(count_only, top_nodes.compact)
@@ -37,9 +34,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def x_get_tree_section_kids(parent, count_only = false)
     kids = parent.items.reject do |item|
-      if item.kind_of?(Menu::Item)
-        item.feature.nil? || !MiqProductFeature.feature_exists?(item.feature)
-      end
+      item.kind_of?(Menu::Item) && !MiqProductFeature.feature_exists?(item.try(:feature))
     end
 
     count_only_or_objects(count_only, kids)
