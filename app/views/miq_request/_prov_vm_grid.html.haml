@@ -24,15 +24,7 @@
           %tr{:class => cls, :onclick => "miqAjax('/miq_request/prov_field_changed/?#{field_id}=__VM__NONE__&id=#{id}');"}
             %td
               = "<#{_('None')}>"
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            %td
-            - if @edit[:vm_headers].key? 'cloud_tenant'
+            - (@edit[:vm_headers].length - 1).times do
               %td
 
         - @vms.each do |row|
