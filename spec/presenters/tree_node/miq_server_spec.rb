@@ -1,4 +1,5 @@
 describe TreeNode::MiqServer do
+  before { EvmSpecHelper.local_miq_server }
   subject { described_class.new(object, nil, {}) }
   let(:object) do
     zone = FactoryBot.create(:zone)
