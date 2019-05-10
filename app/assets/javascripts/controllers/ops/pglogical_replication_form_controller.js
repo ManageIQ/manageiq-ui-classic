@@ -5,7 +5,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscriptions: [],
       addEnabled: false,
       updateEnabled: false,
-      exclusion_list: null,
     };
     $scope.formId = pglogicalReplicationFormId;
     $scope.afterGet = false;
@@ -45,14 +44,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         object.splice(index, 1);
       }
     });
-    var updated_exclusion_list = '';
-    if ($scope.pglogicalReplicationModel.replication_type === 'remote' && !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
-      updated_exclusion_list = angular.copy($scope.pglogicalReplicationModel.exclusion_list);
-    }
     pglogicalManageSubscriptionsButtonClicked('save', {
       'replication_type': $scope.pglogicalReplicationModel.replication_type,
       'subscriptions': $scope.pglogicalReplicationModel.subscriptions,
-      'exclusion_list': updated_exclusion_list,
     });
   };
 
@@ -85,10 +79,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
     if (new_value !== 'global') {
       $scope.pglogicalReplicationModel.subscriptions = [];
-    }
-
-    if (new_value !== 'remote') {
-      $scope.pglogicalReplicationModel.exclusion_list = angular.copy($scope.modelCopy.exclusion_list);
     }
 
     if (new_value === 'global' && original_value === 'global') {
@@ -216,12 +206,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
       return false;
     }
-    saveable = form.$dirty && form.$valid;
-    if (saveable && (($scope.modelCopy.replication_type !== 'remote') || !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list))) {
-      return true;
-    }
-
-    return false;
+    return form.$dirty && form.$valid;
   };
 
   // method to set flag to disable certain buttons when add of subscription in progress
@@ -307,7 +292,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
     $scope.pglogicalReplicationModel.replication_type = data.replication_type;
     $scope.pglogicalReplicationModel.subscriptions = angular.copy(data.subscriptions);
-    $scope.pglogicalReplicationModel.exclusion_list = angular.copy(data.exclusion_list);
 
     if ($scope.pglogicalReplicationModel.replication_type === 'none') {
       miqService.miqFlash('warn', __('No replication role has been set'));
