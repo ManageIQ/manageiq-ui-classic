@@ -2,7 +2,7 @@ describe PhysicalSwitchController do
   render_views
 
   let(:physical_switch) do
-    ems = FactoryBot.create(:ems_physical_infra)
+    ems = FactoryBot.create(:ems_redfish_physical_infra)
     hardware = FactoryBot.create(:hardware)
     asset_detail = FactoryBot.create(:asset_detail)
 

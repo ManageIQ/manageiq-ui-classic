@@ -24,7 +24,7 @@ describe EmsPhysicalInfraController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user, :features => "none")
-      @ems = FactoryBot.create(:ems_physical_infra)
+      @ems = FactoryBot.create(:ems_redfish_physical_infra)
     end
 
     let(:url_params) { {} }
