@@ -40,6 +40,9 @@ describe TreeNode do
         next if type == :Hash
 
         type.to_s.constantize.descendants.each do |subtype|
+          # Skip the subtypes that have been already tested above
+          next if TreeNode.constants.include?(subtype.to_s.to_sym)
+
           describe(subtype) do
             let(:klass) { subtype }
 
