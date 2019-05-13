@@ -2,7 +2,7 @@ dist: xenial
 language: ruby
 python: '2.7'
 rvm:
-- 2.4.5
+- 2.4.6
 - 2.5.3
 cache:
   bundler: true
@@ -10,7 +10,7 @@ cache:
   timeout: 600
 addons:
   postgresql: '10'
-  chrome: 'beta'
+  chrome: beta
 env:
   matrix:
   - TEST_SUITE=spec
