@@ -1,5 +1,5 @@
 describe TreeNode::CustomButtonSet do
-  subject { described_class.new(object, nil, {}) }
+  subject { described_class.new(object, nil, {}, nil) }
   let(:object) { FactoryBot.create(:custom_button_set, :description => "custom button set description") }
 
   include_examples 'TreeNode::Node#key prefix', 'cbg-'

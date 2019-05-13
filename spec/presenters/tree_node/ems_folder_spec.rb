@@ -1,5 +1,5 @@
 describe TreeNode::EmsFolder do
-  subject { described_class.new(object, nil, options) }
+  subject { described_class.new(object, nil, options, nil) }
   let(:options) { {} }
 
   %i(
