@@ -53,7 +53,7 @@ module ManageIQ
           )
         end
 
-        def vmdb_plugin?
+        def self.vmdb_plugin?
           true
         end
 
