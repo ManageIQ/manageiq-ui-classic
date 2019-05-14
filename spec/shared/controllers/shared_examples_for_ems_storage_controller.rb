@@ -57,7 +57,7 @@ shared_examples :shared_examples_for_ems_storage_controller do |providers|
 
         it 'manage storage provider policies' do
           allow(controller).to receive(:protect_build_tree).and_return(nil)
-          controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name"))
+          controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name", :locals_for_render => {}))
 
           post :button, :params => {:miq_grid_checks => @ems.id, :pressed => "ems_storage_protect"}
           expect(response.status).to eq(200)
