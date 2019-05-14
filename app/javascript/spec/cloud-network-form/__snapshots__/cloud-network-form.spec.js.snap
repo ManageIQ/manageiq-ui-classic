@@ -1,0 +1,734 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cloud Network form component should render edit variant 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
+  <MiqFormRenderer
+    buttonsLabels={
+      Object {
+        "submitLabel": "Save",
+      }
+    }
+    canReset={true}
+    initialValues={
+      Object {
+        "cidr": null,
+        "cloud_tenant": "2",
+        "cloud_tenant_id": "2",
+        "ems_id": "8",
+        "ems_ref": "121455-asad5516a-145dsa6-d1453ad",
+        "enabled": true,
+        "ext_management_system": Object {
+          "name": "OpenStack Network Manager",
+        },
+        "external_facing": true,
+        "extra_attributes": Object {
+          "maximum_transmission_unit": 1496,
+          "port_security_enabled": true,
+          "qos_policy_id": null,
+        },
+        "href": "http://localhost:3000/api/cloud_networks/50",
+        "id": "50",
+        "name": "ext",
+        "orchestration_stack_id": null,
+        "provider_network_type": "vlan",
+        "provider_physical_network": "datacentre",
+        "provider_segmentation_id": "17",
+        "shared": true,
+        "status": "active",
+        "type": "Type",
+        "vlan_transparent": null,
+      }
+    }
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "select-field",
+                "isDisabled": true,
+                "label": "Network Manager",
+                "name": "ems_id",
+                "options": Array [
+                  Object {
+                    "label": "OpenStack Network Manager",
+                    "value": "8",
+                  },
+                ],
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+            ],
+            "title": "Network Provider",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "isNotEmpty": true,
+              "when": "ems_id",
+            },
+            "fields": Array [
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "8",
+                  "when": "ems_id",
+                },
+                "isDisabled": true,
+                "key": "id-8",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+            ],
+            "title": "Placement",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "isNotEmpty": true,
+              "when": "cloud_tenant",
+            },
+            "fields": Array [
+              Object {
+                "component": "select-field",
+                "isDisabled": true,
+                "label": "Provider Network Type",
+                "name": "provider_network_type",
+                "options": Array [
+                  Object {
+                    "label": "None",
+                  },
+                  Object {
+                    "label": "Local",
+                    "value": "local",
+                  },
+                  Object {
+                    "label": "Flat",
+                    "value": "flat",
+                  },
+                  Object {
+                    "label": "GRE",
+                    "value": "gre",
+                  },
+                  Object {
+                    "label": "VLAN",
+                    "value": "vlan",
+                  },
+                  Object {
+                    "label": "VXLAN",
+                    "value": "vxlan",
+                  },
+                ],
+                "placeholder": "Nothing selected",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "flat",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": true,
+                    "label": "Physical Network",
+                    "maxLength": 128,
+                    "name": "provider_physical_network",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-1",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "gre",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": true,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-2",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "vlan",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": true,
+                    "label": "Physical Network",
+                    "maxLength": 128,
+                    "name": "provider_physical_network",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": true,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-3",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "vxlan",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": true,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                  },
+                ],
+                "key": "subform-4",
+              },
+            ],
+            "title": "Network Provider Information",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "label": "Network Name",
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_external_facing",
+                "label": "External Router",
+                "name": "external_facing",
+                "offText": "No",
+                "onText": "Yes",
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_enabled",
+                "label": "Administrative State",
+                "name": "enabled",
+                "offText": "Down",
+                "onText": "Up",
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_shared",
+                "label": "Shared",
+                "name": "shared",
+                "offText": "No",
+                "onText": "Yes",
+              },
+            ],
+            "title": "Network Information",
+          },
+        ],
+      }
+    }
+  />
+</Grid>
+`;
+
+exports[`Cloud Network form component should render form 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
+  <MiqFormRenderer
+    buttonsLabels={
+      Object {
+        "submitLabel": "Add",
+      }
+    }
+    canReset={false}
+    initialValues={
+      Object {
+        "enabled": true,
+        "external_facing": false,
+        "shared": false,
+      }
+    }
+    onCancel={[Function]}
+    onReset={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "select-field",
+                "isDisabled": false,
+                "label": "Network Manager",
+                "name": "ems_id",
+                "options": Array [
+                  Object {
+                    "label": "<Choose>",
+                    "value": undefined,
+                  },
+                  Object {
+                    "label": "Provider 4",
+                    "value": "4",
+                  },
+                  Object {
+                    "label": "Provider 31",
+                    "value": "31",
+                  },
+                  Object {
+                    "label": "Provider 8",
+                    "value": "8",
+                  },
+                  Object {
+                    "label": "Provider 50",
+                    "value": "50",
+                  },
+                  Object {
+                    "label": "Provider 18",
+                    "value": "18",
+                  },
+                  Object {
+                    "label": "Provider 39",
+                    "value": "39",
+                  },
+                ],
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+            ],
+            "title": "Network Provider",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "isNotEmpty": true,
+              "when": "ems_id",
+            },
+            "fields": Array [
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": undefined,
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-undefined",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "4",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-4",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "31",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-31",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "8",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-8",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "50",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-50",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "18",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-18",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "clearOnUnmount": true,
+                "component": "select-field",
+                "condition": Object {
+                  "is": "39",
+                  "when": "ems_id",
+                },
+                "isDisabled": false,
+                "key": "id-39",
+                "label": "Cloud Tenant",
+                "loadOptions": [Function],
+                "name": "cloud_tenant",
+                "placeholder": "<Choose>",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+            ],
+            "title": "Placement",
+          },
+          Object {
+            "component": "sub-form",
+            "condition": Object {
+              "isNotEmpty": true,
+              "when": "cloud_tenant",
+            },
+            "fields": Array [
+              Object {
+                "component": "select-field",
+                "isDisabled": false,
+                "label": "Provider Network Type",
+                "name": "provider_network_type",
+                "options": Array [
+                  Object {
+                    "label": "None",
+                  },
+                  Object {
+                    "label": "Local",
+                    "value": "local",
+                  },
+                  Object {
+                    "label": "Flat",
+                    "value": "flat",
+                  },
+                  Object {
+                    "label": "GRE",
+                    "value": "gre",
+                  },
+                  Object {
+                    "label": "VLAN",
+                    "value": "vlan",
+                  },
+                  Object {
+                    "label": "VXLAN",
+                    "value": "vxlan",
+                  },
+                ],
+                "placeholder": "Nothing selected",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "flat",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": false,
+                    "label": "Physical Network",
+                    "maxLength": 128,
+                    "name": "provider_physical_network",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-1",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "gre",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": false,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-2",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "vlan",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": false,
+                    "label": "Physical Network",
+                    "maxLength": 128,
+                    "name": "provider_physical_network",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": false,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                    "validate": Array [
+                      Object {
+                        "message": "Required",
+                        "type": "required-validator",
+                      },
+                    ],
+                    "validateOnMount": true,
+                  },
+                ],
+                "key": "subform-3",
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "is": "vxlan",
+                  "when": "provider_network_type",
+                },
+                "fields": Array [
+                  Object {
+                    "component": "text-field",
+                    "isDisabled": false,
+                    "label": "Segmentation ID",
+                    "maxLength": 128,
+                    "name": "provider_segmentation_id",
+                  },
+                ],
+                "key": "subform-4",
+              },
+            ],
+            "title": "Network Provider Information",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "label": "Network Name",
+                "name": "name",
+                "validate": Array [
+                  Object {
+                    "message": "Required",
+                    "type": "required-validator",
+                  },
+                ],
+                "validateOnMount": true,
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_external_facing",
+                "label": "External Router",
+                "name": "external_facing",
+                "offText": "No",
+                "onText": "Yes",
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_enabled",
+                "label": "Administrative State",
+                "name": "enabled",
+                "offText": "Down",
+                "onText": "Up",
+              },
+              Object {
+                "bsSize": "mini",
+                "component": "switch-field",
+                "id": "cloud_network_shared",
+                "label": "Shared",
+                "name": "shared",
+                "offText": "No",
+                "onText": "Yes",
+              },
+            ],
+            "title": "Network Information",
+          },
+        ],
+      }
+    }
+  />
+</Grid>
+`;

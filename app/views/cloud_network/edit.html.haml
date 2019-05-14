@@ -1,6 +1,4 @@
 = render :partial => "layouts/flash_msg"
 
-%cloud-network-form{'cloud-network-form-id' => @network.id}
+= react('CloudNetworkForm', {:cloudNetworkId => @network.id.to_s})
 
-:javascript
-  miq_bootstrap('cloud-network-form');

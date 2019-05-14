@@ -6,6 +6,7 @@ import { taggingApp, TagView } from '@manageiq/react-ui-components/dist/tagging'
 
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
+import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
@@ -29,6 +30,7 @@ import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
+ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
