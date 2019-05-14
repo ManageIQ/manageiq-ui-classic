@@ -64,7 +64,7 @@ module TreeNode
         "-#{@object.name.split('|').last}"
       else
         base_class = @object.class.base_model.name # i.e. Vm or MiqTemplate
-        base_class = "Datacenter" if base_class == "EmsFolder" && @object.kind_of?(Datacenter)
+        base_class = "Datacenter" if base_class == "EmsFolder" && @object.kind_of?(::Datacenter)
         base_class = "ManageIQ::Providers::Foreman::ConfigurationManager" if @object.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
         base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)

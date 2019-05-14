@@ -23,12 +23,4 @@ describe TreeNode::EmsFolder do
       end
     end
   end
-
-  context 'Datacenter' do
-    let(:object) { FactoryBot.create(:datacenter) }
-
-    include_examples 'TreeNode::Node#key prefix', 'dc-'
-    include_examples 'TreeNode::Node#icon', 'fa fa-building-o'
-    include_examples 'TreeNode::Node#tooltip prefix', 'Datacenter'
-  end
 end
