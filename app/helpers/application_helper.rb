@@ -1257,10 +1257,6 @@ module ApplicationHelper
     MiqServer.my_server.name
   end
 
-  def plugin_name(engine)
-    engine.respond_to?(:plugin_name) ? engine.plugin_name : engine.to_s.gsub(/ManageIQ::|::Engine/, '')
-  end
-
   def rbac_common_feature_for_buttons(pressed)
     # return feature that should be checked for the button that came in
     case pressed
