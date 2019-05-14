@@ -126,7 +126,7 @@ class EmsClusterController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => _("Clusters / Deployment Roles")},
+        {:title => title_for_clusters, :url => controller_url},
       ],
       :record_info => @ems,
     }.compact
