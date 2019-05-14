@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 111 ending 2019-05-13
+
+### Added
+- Remove the need for the options argument when fetching node kids in TreeBuilder [(#5547)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5547)
+- Remove the replication exclude tables [(#5546)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5546)
+- Add support for PF4 styling through webpack [(#5537)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5537)
+- Inform user about outdates belongsto filters [(#5511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5511)
+- Remove the second (type) argument from TreeBuilder classes [(#5495)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5495)
+- Add new Tagging instead of RBAC tree for groups [(#5482)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5482)
+- Adding a welcoming page prompting to add a Provider [(#5434)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5434)
+
+### Fixed
+- Removed 'type' argument passed to the tree builder [(#5549)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5549)
+- Fix adding new trusted forests for LDAP authentication [(#5548)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5548)
+- Make Organization required on RHN updates upon 1+ available orgs [(#5540)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5540)
+- Unify sorting in GOD of Button Groups [(#5513)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5513)
+- Remove wrong and redundant check [(#5506)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5506)
+- Fix squash button functionality on Policy Sim tree [(#5492)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5492)
+
 ## Unreleased as of Sprint 110 ending 2019-04-29
 
 ### Added
