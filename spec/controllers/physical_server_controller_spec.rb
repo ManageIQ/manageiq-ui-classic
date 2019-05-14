@@ -8,7 +8,7 @@ describe PhysicalServerController do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryBot.create(:user)
-    ems = FactoryBot.create(:ems_physical_infra)
+    ems = FactoryBot.create(:ems_redfish_physical_infra)
     asset_detail = FactoryBot.create(:asset_detail)
     computer_system = FactoryBot.create(:computer_system, :hardware => FactoryBot.create(:hardware))
     @physical_server = FactoryBot.create(:physical_server,

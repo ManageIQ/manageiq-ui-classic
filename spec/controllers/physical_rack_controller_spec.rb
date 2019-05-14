@@ -2,7 +2,7 @@ describe PhysicalRackController do
   render_views
 
   let(:physical_rack) do
-    ems = FactoryBot.create(:ems_physical_infra)
+    ems = FactoryBot.create(:ems_redfish_physical_infra)
     FactoryBot.create(:physical_rack, :ems_id => ems.id, :id => 1)
   end
 
