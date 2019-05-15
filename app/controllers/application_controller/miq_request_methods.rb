@@ -855,6 +855,10 @@ module ApplicationController::MiqRequestMethods
         end
       end
       @edit[:new][:src_vm_id] = [nil, nil] unless @edit[:new][:src_vm_id]
+      # Check that the provisioning template exists
+      if @edit[:wf].request_type == 'template' && @edit[:new][:src_vm_id][0].present?
+        @edit[:new][:src_vm_id][0] = nil if MiqTemplate.exists?(@edit[:new][:src_vm_id][0])
+      end
       @edit[:new][tag_symbol_for_workflow] ||= [] # Initialize for new record
       @edit[:current] ||= {}
       @edit[:current] = copy_hash(@edit[:new])
