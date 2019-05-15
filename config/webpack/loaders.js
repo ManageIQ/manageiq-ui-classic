@@ -25,7 +25,7 @@ if (env.WEBPACK_VERBOSE) {
 
 module.exports = [
   merge(base, {
-    test: /\.(mjs|js|jsx)$/,
+    test: /\.(js|jsx)$/,
     use: [{
       loader: 'babel-loader',
       options: babelOptions,
