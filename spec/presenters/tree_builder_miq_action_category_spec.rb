@@ -3,6 +3,7 @@ describe TreeBuilderMiqActionCategory do
     role = MiqUserRole.find_by(:name => "EvmRole-operator")
     group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
     login_as FactoryBot.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
+    allow(Tenant).to receive(:default_tenant).and_return(tenant)
   end
 
   let!(:tag1) { FactoryBot.create(:classification, :name => 'tag1', :show => false) }
@@ -17,11 +18,11 @@ describe TreeBuilderMiqActionCategory do
     f2.entries.push(tag2)
     f2
   end
-  let!(:tenant) { "TestTenant Tags" }
+  let!(:tenant) { FactoryBot.create(:tenant, :name => "TestTenant") }
   let!(:tree_name) { :action_tags }
 
   subject do
-    described_class.new(:action_tags_tree, {}, true, :root => tenant)
+    described_class.new(:action_tags_tree, {}, true)
   end
 
   describe '#tree_init_options' do
@@ -51,8 +52,8 @@ describe TreeBuilderMiqActionCategory do
   describe '#root_options' do
     it 'sets root_options correctly' do
       expect(subject.send(:root_options)).to eq(
-        :text    => tenant,
-        :tooltip => tenant,
+        :text    => "#{tenant.name} Tags",
+        :tooltip => "#{tenant.name} Tags",
         :icon    => "fa fa-tag"
       )
     end
