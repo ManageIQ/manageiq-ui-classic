@@ -82,17 +82,6 @@ class TreeBuilder
     "#{prefix}-#{record.id}"
   end
 
-  def self.build_node_cid(record_or_id, type = nil)
-    if record_or_id.kind_of?(Integer)
-      prefix = get_prefix_for_model(type)
-      id = record_or_id
-    else
-      prefix = get_prefix_for_model(record_or_id.class.base_model)
-      id = record_or_id.id
-    end
-    "#{prefix}-#{id}"
-  end
-
   # return this nodes model and record id
   def self.extract_node_model_and_id(node_id)
     prefix, record_id = node_id.split("_").last.split('-')
