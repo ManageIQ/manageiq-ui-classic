@@ -47,8 +47,8 @@ class TagSelector extends React.Component {
         options={this.tagCategories}
         onChange={this.handleChange}
         name="form-field-name"
-        filterOptions={(options, filter) =>
-          options.filter(item => item.keyWord.includes(filter.toLowerCase()))
+        filterOption={(option, filter) =>
+          option.data.keyWord.includes(filter.toLowerCase())
         }
         clearable={false}
       />
