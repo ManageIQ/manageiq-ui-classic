@@ -4,6 +4,8 @@ import * as resolve from 'table-resolver';
 
 import {
   customHeaderFormattersDefinition,
+  Filter,
+  FormControl,
   Paginator,
   PAGINATION_VIEW,
   sortableHeaderCellFormatter,
@@ -11,8 +13,6 @@ import {
   Table,
   TABLE_SORT_DIRECTION,
 } from 'patternfly-react';
-
-import { cleanVirtualDom } from '../miq-component/helpers';
 
 const makeColumn = (name, label, index) => ({
   property: name,
@@ -31,6 +31,13 @@ const makeColumn = (name, label, index) => ({
     },
     formatters: [tableCellFormatter],
   },
+});
+
+const makeFilterColumn = (name, label, _index) => ({
+  id: name,
+  title: label,
+  placeholder: sprintf(__('Filter by %s'), label),
+  filterType: 'text',
 });
 
 const sortColumnAndDirection = (sortingColumns) => {
@@ -67,6 +74,22 @@ const reducer = (state, action) => {
         sortingColumns: action.sortingColumns,
         pagination: action.pagination,
       };
+    case 'filterSelected':
+      return {
+        ...state,
+        filter: {
+          string: state.filter && state.filter.string,
+          field: action.field,
+        },
+      };
+    case 'filterTextUpdate':
+      return {
+        ...state,
+        filter: {
+          string: action.string,
+          field: state.filter && state.filter.field,
+        },
+      };
     default:
       throw new Error();
   }
@@ -84,17 +107,21 @@ const initialState = {
   },
 };
 
-const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination) => {
+const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, filter = {}) => {
   const { sortBy, sortDirection } = sortColumnAndDirection(sortingColumns);
   const limit = pagination.perPage;
   const offset = pagination.perPage * (pagination.page - 1);
 
   miqSparkleOn();
 
+  const filterString = (filter && filter.field && filter.string)
+    ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
+    : '';
+
   API.get(`/api/results/${reportResultId}?\
 hash_attribute=result_set&\
 sort_by=${sortBy}&sort_order=${sortDirection}&\
-limit=${limit}&offset=${offset}`).then((data) => {
+limit=${limit}&offset=${offset}${filterString}`).then((data) => {
     dispatch({
       type: 'loadedData',
       data,
@@ -112,6 +139,7 @@ const ReportDataTable = (props) => {
   useEffect(() => fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination), []);
 
   const columns = state.columns.map((item, index) => makeColumn(item.name, item.label, index));
+  const filterColumns = state.columns.map((item, index) => makeFilterColumn(item.name, item.label, index));
 
   const setPage = page => fetchReportPage(
     dispatch,
@@ -121,6 +149,7 @@ const ReportDataTable = (props) => {
       ...state.pagination,
       page,
     },
+    state.filter,
   );
 
   const perPageSelect = (perPage, _e) => {
@@ -129,7 +158,7 @@ const ReportDataTable = (props) => {
       perPage,
       page: 1,
     };
-    fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination);
+    fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, state.filter);
   };
 
   const onSort = (e, column, sortDirection) => {
@@ -143,11 +172,45 @@ const ReportDataTable = (props) => {
       },
     };
 
-    fetchReportPage(dispatch, props.reportResultId, newSortingColumns, state.pagination);
+    fetchReportPage(dispatch, props.reportResultId, newSortingColumns, state.pagination, state.filter);
   };
+
+  const filterTypeSelected = field => dispatch({
+    type: 'filterSelected',
+    field: field && field.id,
+  });
+
+  const filterTextUpdate = event => dispatch({
+    type: 'filterTextUpdate',
+    string: event.target.value,
+  });
+
+  const filterKeyPress = (keyEvent) => {
+    if (keyEvent.key === 'Enter') {
+      fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination, state.filter);
+      keyEvent.stopPropagation();
+      keyEvent.preventDefault();
+    }
+  };
+
+  const filterColumn = filterColumns.find(c => c.id === (state.filter && state.filter.field)) || filterColumns[0];
 
   return (
     <React.Fragment>
+      <Filter>
+        <Filter.TypeSelector
+          filterTypes={filterColumns}
+          currentFilterType={filterColumn}
+          onFilterTypeSelected={filterTypeSelected}
+        />
+        <FormControl
+          type="text"
+          value={state.filter && state.filter.text}
+          placeholder={__('search text')}
+          onChange={filterTextUpdate}
+          onKeyPress={filterKeyPress}
+        />
+      </Filter>
       <Table.PfProvider
         striped
         bordered
