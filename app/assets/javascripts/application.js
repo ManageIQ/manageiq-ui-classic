@@ -37,4 +37,3 @@
 //= require ./miq_c3
 //= require ./miq_explorer
 //= require ./miq_timeline
-//= require @manageiq/ui-components/dist/js/ui-components
