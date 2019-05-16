@@ -89,7 +89,9 @@ class RemoveCatalogItemModal extends React.Component {
     const usedServicesMessage = (data) => {
       let warningItems = [];
       if (data.length === 1) { // We're deleting just one catalog item
-        warningItems = data[0].services.map(service => ({id: service.id, name: service.name}));
+        let services = {};
+        data[0].services.forEach(service => { services[service.name] = service.id })
+        warningItems = Object.keys(services).map(item => ({id: services[item], name: item}));
       } else {                 // We're deleting multiple catalog items
         warningItems = data.filter(item => item.services && item.services.length > 0);
       }
