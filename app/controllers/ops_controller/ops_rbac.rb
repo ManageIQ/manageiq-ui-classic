@@ -936,10 +936,11 @@ module OpsController::OpsRbac
       end
 
       assigned_tags.uniq! { |tag| tag[:id] }
-      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [@group.id]}
+      group_id = @group&.id
+      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [group_id]}
       @button_urls = {
-        :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "save"),
-        :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => @group.id, :button => "cancel")
+        :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => group_id, :button => "save"),
+        :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => group_id, :button => "cancel")
       }
     when 'rbac_hosts_clusters'
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
