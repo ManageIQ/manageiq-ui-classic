@@ -3305,6 +3305,20 @@ Rails.application.routes.draw do
                pre_prov_post +
                snap_post
     },
+
+    :firmware                 => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        accordion_select
+        explorer
+        firmware_registry_list
+        reload
+        tree_autoload
+        tree_select
+      ) + x_post
+    },
   }
 
   if Rails.env.development?

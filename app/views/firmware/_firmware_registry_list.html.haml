@@ -1,0 +1,5 @@
+- if x_active_tree == :firmware_registries_tree
+  - if x_node == "root" && @view
+    = render :partial => 'layouts/x_gtl', :locals => {:action_url => "firmware_registry_list"}
+  - else
+    = render :partial => "firmware_registry_details"

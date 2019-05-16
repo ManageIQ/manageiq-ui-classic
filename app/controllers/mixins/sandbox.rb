@@ -62,6 +62,7 @@ module Sandbox
     dialogs_tree
     event_tree
     export_tree
+    firmware_registries_tree
     generic_object_definitions_tree
     images_filter_tree
     images_tree
@@ -132,6 +133,7 @@ module Sandbox
     dialogs
     event
     export
+    firmware_registries
     configuration_manager_providers
     images
     images_filter

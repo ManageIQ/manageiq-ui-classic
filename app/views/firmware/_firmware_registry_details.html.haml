@@ -1,0 +1,72 @@
+#pxe_server_details_div
+  -# if PXE Server is seleted
+  - if @ps
+    #pxe_info_div
+      - if @edit
+        = render(:partial => "pxe_form")
+      - else
+        = render :partial => "layouts/flash_msg"
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_group_basicinfo), @record)
+        - if @ps.pxe_menus.count > 0
+          %hr
+          = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('PXE Image Menus'), textual_group_pxe_image_menus), @record)
+        - unless @ps.pxe_images.empty?
+          %hr
+          %h3= _('PXE Images')
+          %table.table.table-bordered.table-hover.table-striped
+            %thead
+              %tr
+                %th= _('Name')
+                %th= _('Description')
+                %th= _('Kernel')
+                %th= _('Windows Boot Env')
+            %tbody
+              - @ps.pxe_images.sort_by { |a| a.name.downcase }.each do |i|
+                %tr{:title => _("View this PXE Image"), :onclick => "miqTreeActivateNode('pxe_servers_tree', 'pi-#{i.id}');"}
+                  %td
+                    = h(i.name)
+                  %td
+                    = h(i.description)
+                  %td
+                    = h(i.kernel)
+                  %td
+                    = h(i.default_for_windows ? "Yes" : "")
+        - unless @ps.windows_images.empty?
+          %hr
+          %h3= _('Windows Images')
+          %table.table.table-bordered.table-hover.table-striped
+            %thead
+              %tr
+                %th= _('Name')
+                %th= _('Description')
+                %th= _('Path')
+                %th= _('Index')
+            %tbody
+              - @ps.windows_images.sort_by { |a| a.name.downcase }.each do |i|
+                %tr{:title => _("View this Windows Image"), :onclick => "miqTreeActivateNode('pxe_servers_tree', 'pi-#{i.id}');"}
+                  %td
+                    = h(i.name)
+                  %td
+                    = h(i.description)
+                  %td
+                    = h(i.path)
+                  %td
+                    = h(i.index)
+
+  -# PXE Image is selected
+  - if @img
+    #pxe_img__info_div
+      - if @edit
+        = render(:partial => "pxe_img_form")
+      - else
+        = render(:partial => "layouts/flash_msg")
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_pxe_img_basicinfo), @record)
+
+  -# Windows Image is selected
+  - if @wimg
+    #pxe_wimg__info_div
+      - if @edit
+        = render(:partial => "pxe_wimg_form")
+      - else
+        = render(:partial => "layouts/flash_msg")
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_win_img_basicinfo), @record)

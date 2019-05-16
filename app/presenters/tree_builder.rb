@@ -437,6 +437,10 @@ class TreeBuilder
     #### ISO Datastores
     :iso_datastores                  => "TreeBuilderIsoDatastores",
 
+    ### Firmware
+    #### Firmware Registries
+    :firmware_registries            => "TreeBuilderFirmwareRegistries",
+
     ### Networking
     #### Switches
     :infra_networking                => "TreeBuilderInfraNetworking",
@@ -549,6 +553,7 @@ class TreeBuilder
     "csf"  => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
     "csa"  => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
     "f"    => "EmsFolder",
+    "fwr"  => "FirmwareRegistry",
     "fr"   => "ManageIQ::Providers::Foreman::ConfigurationManager",
     "g"    => "MiqGroup",
     "gd"   => "GuestDevice",
