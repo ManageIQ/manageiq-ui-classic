@@ -30,7 +30,6 @@
 //= require codemirror/mode/shell/shell
 //= require codemirror/mode/xml/xml
 //= require codemirror/mode/yaml/yaml
-//= require jquery-hotkeys
 //= require ./miq_formatters
 //= require ./miq_grid
 //= require ./miq_list_grid
