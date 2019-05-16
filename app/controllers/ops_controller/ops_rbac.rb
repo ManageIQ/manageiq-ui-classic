@@ -915,7 +915,7 @@ module OpsController::OpsRbac
         {
           :id          => cat.id,
           :description => cat.description,
-          :singleValue => cat.single_value,
+          :singleValue => false,
           :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
             { :id => entry.id, :description => entry.description }
           end
