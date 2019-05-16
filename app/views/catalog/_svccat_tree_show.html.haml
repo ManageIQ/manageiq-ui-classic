@@ -28,6 +28,12 @@
           .col-md-8
             %p.form-control-static#long_description
               %miq-sanitize{:value => @record.long_description}
+        .form-group
+          %label.col-md-2.control-label
+            = _('Dialog')
+          .col-md-8
+            %p.form-control-static
+              = @sb[:dialog_label]
 
     .form-group
       .col-md-1{:align => "center"}
