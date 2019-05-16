@@ -20,7 +20,7 @@ class TagView extends React.Component {
   render() {
     const assignedTags = [...this.props.assignedTags];
     return (
-      <React.Fragment>
+      <div id="assignments_div">
         { !this.props.hideHeader &&
           <Row>
             <Col lg={12}>
@@ -36,7 +36,7 @@ class TagView extends React.Component {
             </ul>
           </Col>
         </Row>
-      </React.Fragment>
+      </div>
     );
   }
 }

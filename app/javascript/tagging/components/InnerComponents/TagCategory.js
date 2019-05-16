@@ -18,7 +18,7 @@ class TagCategory extends React.Component {
     const values = [...this.props.values];
     return (
       <ul className="tag-category list-inline">
-        <li key={this.props.tagCategory.id}>
+        <li key={this.props.tagCategory.id} id={`tag_category_${this.props.tagCategory.id}`}>
           <div className="category-label" title={this.props.tagCategory.description}>
             {this.props.categoryTruncate(this.props.tagCategory.description)}
           </div>

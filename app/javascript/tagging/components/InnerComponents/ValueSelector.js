@@ -17,6 +17,7 @@ class ValueSelector extends React.Component {
 
   selector = (value, values) => (
     <Select
+      id="cat_tags_div"
       className="final-form-select"
       optionClassName="selected-option final-form-select-option"
       styles={customStyles}

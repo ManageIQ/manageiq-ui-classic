@@ -9,6 +9,7 @@ const Tag = ({
   <li key={tagValue.id} className="tag">
     <Label
       key={tagValue.id}
+      id={`tag_value_${tagValue.id}`}
       bsStyle="primary"
       onRemoveClick={onTagDeleteClick ? () => onTagDeleteClick(tagCategory, tagValue) : undefined}
       className="tagColor"

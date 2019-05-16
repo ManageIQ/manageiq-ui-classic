@@ -39,6 +39,7 @@ class TagSelector extends React.Component {
     const val = this.props.selectedOption.id ? { value: this.props.selectedOption.id, label: this.props.selectedOption.description } : null;
     return (
       <Select
+        id="tag_cat"
         value={val}
         className="final-form-select"
         optionClassName="selected-option final-form-select-option"
