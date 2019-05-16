@@ -180,6 +180,20 @@ describe MiqAeToolsController do
           MESSAGE
           expect(response.body).to eq([{:message => expected_message.chomp, :level => :success}].to_json)
         end
+
+        context 'when importing playbook method type' do
+          let(:error_msg) { "Error: Playbook method 'method_name' contains below listed error(s):" }
+
+          it 'returns the flash message' do
+            allow(automate_import_service).to receive(:import_datastore).and_raise(
+              MiqAeException::AttributeNotFound, error_msg
+            )
+            post :import_automate_datastore, :params => params, :xhr => true
+            expect(response.body).to eq(
+              [{:message => error_msg, :level => :error}].to_json
+            )
+          end
+        end
       end
 
       context "when the import file does not exist" do
