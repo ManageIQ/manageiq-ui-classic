@@ -524,6 +524,7 @@ describe MiqAeClassController do
         :new         => {
           :name         => "method01",
           :display_name => nil,
+          :embedded_methods => [],
           :fields       => [field, field],
           :scope        => "instance",
           :language     => "ruby"
@@ -567,6 +568,7 @@ describe MiqAeClassController do
           :name     => @method.name,
           :language => 'ruby',
           :scope    => 'instance',
+          :embedded_methods => [],
           :location => 'inline',
           :fields   => [field]
         }
