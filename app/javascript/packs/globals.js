@@ -19,6 +19,7 @@ require('jquery-ujs');
 require('jquery.observe_field');
 require('patternfly-bootstrap-treeview');
 require('patternfly/dist/js/patternfly.min');
+require('jquery.hotkeys');
 
 window.angular = require('angular');
 require('angular-ui-bootstrap');

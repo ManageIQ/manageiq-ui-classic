@@ -31,6 +31,10 @@ describe('packs/global.js', function() {
     it('loads eonasdan-bootstrap-datetimepicker', function() {
       expect($.fn.datetimepicker).toBeDefined();
     });
+
+    it('loads jquery.hotkeys', function() {
+      expect($.hotkeys).toBeDefined();
+    });
   });
 
   context('angular modules', function() {
