@@ -16,7 +16,7 @@ end
 if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   namespace :spec do
     desc "Setup environment for specs"
-    task :setup => ["app:test:initialize", "app:test:verify_no_db_access_loading_rails_environment", "app:test:setup_db"]
+    task :setup => ["app:test:initialize", "app:test:verify_no_db_access_loading_rails_environment", "app:test:setup_db", "app:db:seed"]
   end
 
   RSpec::Core::RakeTask.new(:spec => ["app:test:initialize", "app:evm:compile_sti_loader"]) do |t|
