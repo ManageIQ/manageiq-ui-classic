@@ -3016,6 +3016,7 @@ Rails.application.routes.draw do
         launch_html5_console
         launch_vmrc_console
         perf_chart_chooser
+        policies
         protect
         retire
         right_size_print
