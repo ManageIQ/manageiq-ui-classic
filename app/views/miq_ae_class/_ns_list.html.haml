@@ -11,6 +11,8 @@
         %th= _('Name')
         %th= _('Description')
         %th= _('Enabled')
+        - if User.current_user.super_admin_user?
+          %th= _('Tenant')
       %tbody{'data-click-url' => '/miq_ae_class/tree_select/'}
         - @grid_data.each do |record|
           - next if record.name == '$'
@@ -33,6 +35,9 @@
               = record.description
             %td
               = record.enabled
+            - if User.current_user.super_admin_user?
+              %td
+                = record.tenant.name
     :javascript
       $(function () {
         $('#ns_list_grid').miqGrid();
