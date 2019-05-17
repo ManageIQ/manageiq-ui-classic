@@ -10,7 +10,6 @@
 //= require_tree ./directives/
 //= require_tree ./components/
 //= require_tree ./services/
-//= require kubernetes-topology-graph/dist/topology-graph
 //= require ./miq_browser_detect
 //= require ./miq_application
 //= require ./miq_flash

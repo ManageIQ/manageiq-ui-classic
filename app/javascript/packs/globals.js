@@ -31,6 +31,7 @@ require('angular-dragdrop'); // ngDragDrop, used by ui-components
 require('angular-ui-sortable'); // ui.sortable, used by ui-components
 require('angular-patternfly');
 require('angular-bootstrap-switch');
+require('kubernetes-topology-graph');
 
 window._ = require('lodash');
 window.numeral = require('numeral');
