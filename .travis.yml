@@ -19,11 +19,11 @@ env:
   - TEST_SUITE=spec:jest
 matrix:
   exclude:
-  - rvm: 2.4.5
+  - rvm: 2.4.6
     env: TEST_SUITE=spec:javascript
-  - rvm: 2.4.5
+  - rvm: 2.4.6
     env: TEST_SUITE=spec:compile
-  - rvm: 2.4.5
+  - rvm: 2.4.6
     env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
