@@ -77,5 +77,9 @@ class ApplicationController
     def with_no_checkboxes(no_checkboxes)
       self.no_checkboxes = no_checkboxes
     end
+
+    def in_a_form(in_a_form)
+      self.in_a_form = in_a_form
+    end
   end
 end
