@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-6
+
+### Fixed
+- miqSetToolbarCount - fix setting toolbar counts [(#5403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5403)
+- Do not reset entrypoints when editing an existing catalog bundle [(#5462)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5462)
+- Region Replication - refresh code mirror after load [(#5095)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5095)
+- Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
+- Delete the "report_menus" instead of :report_menus when resetting [(#5212)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5212)
+- Use base_model name instead of demodulize [(#5182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5182)
+- Fix the label of Custom Button Events for infra providers [(#5251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5251)
+- Fixed explanation of brand image positioning under Custom Logos [(#5250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5250)
+- Remove logic for request screen dialogs [(#5126)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5126)
+- Fix error when clicking on created Catalog Item in the list [(#5481)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5481)
+- Fixed check in if condition [(#5176)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5176)
+- Use numeric comparison for IDs [(#5503)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5503)
+- Validate Classification before accessing description [(#5526)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5526)
+
 ## Unreleased as of Sprint 111 ending 2019-05-13
 
 ### Added
@@ -69,7 +86,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Action Details screen styling fix [(#5407)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5407)
 - Fix error while clicking quadicon after running policy simulation [(#5405)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5405)
 - Added automatic virtual DOM clean up. [(#5404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5404)
-- miqSetToolbarCount - fix setting toolbar counts [(#5403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5403)
 - Container Projects Dashboard & Alerts Overview fix [(#5393)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5393)
 - Swap ng-if with ng-show on VMRC Console in ems common. [(#5334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5334)
 
@@ -138,8 +154,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix add new action [(#5286)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5286)
 - Add All Custom Button Events page to Cloud Network [(#5277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5277)
 - Do not show Refresh button on Monitoring page [(#5258)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5258)
-- Fix the label of Custom Button Events for infra providers [(#5251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5251)
-- Fixed explanation of brand image positioning under Custom Logos [(#5250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5250)
 - Advanced Search Save: don't create unnecessary flash message [(#5220)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5220)
 - Fix sumary screen for catalog item with deleted provider template [(#5193)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5193)
 - Allow pausing/resuming foreman and ansible tower providers [(#5173)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5173)
@@ -191,7 +205,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Properly handle non-existent hash key [(#5161)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5161)
 - Show breadcrumbs when redirected from another controller [(#5148)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5148)
 - Unify sorting in GOD page [(#5146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5146)
-- Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
 - Send button_order via API [(#5143)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5143)
 - Rename WebsocketWorker to RemoteConsoleWorker [(#5136)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5136)
 - Flavor add form converted to data-driven-forms [(#5055)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5055)
@@ -216,11 +229,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - set_ownership - use miq_template (not vm) for images [(#5113)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5113)
 - Clean out cache of MiqProductFeature at CUD tenant actions in UI process [(#5108)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5108)
 - Fix CatalogItem tree_select() [(#5096)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5096)
-- Region Replication - refresh code mirror after load [(#5095)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5095)
-
-### Removed
-- Remove logic for request screen dialogs [(#5126)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5126)
-
 
 ## Hammer-1 - Released 2019-01-15
 
