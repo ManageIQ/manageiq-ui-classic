@@ -315,6 +315,8 @@ Rails.application.routes.draw do
         ot_edit_submit
         ot_form_field_changed
         ot_tags_edit
+        ownership_form_fields
+        ownership_update
         prov_field_changed
         reload
         resolve

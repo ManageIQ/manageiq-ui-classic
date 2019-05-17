@@ -36,6 +36,7 @@ class CatalogController < ApplicationController
     'catalogitem_new'               => :servicetemplate_edit,
 
     'catalogitem_tag'               => :st_tags_edit,
+    'catalogitem_ownership'         => :servicetemplate_ownership,
 
     'orchestration_template_add'    => :ot_add,
     'orchestration_template_edit'   => :ot_edit,
@@ -543,6 +544,12 @@ class CatalogController < ApplicationController
       add_flash(_("No Ordering Dialog is available"), :warning)
       replace_right_cell
     end
+  end
+
+  def servicetemplate_ownership
+    @explorer = true
+    set_ownership
+    replace_right_cell(:action => 'ownership')
   end
 
   def st_catalog_edit
@@ -1952,6 +1959,8 @@ class CatalogController < ApplicationController
                 r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
               elsif action && %w[at_st_new st_new].include?(action)
                 r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
+              elsif action && %w[ownership].include?(action)
+                r[:partial => @refresh_partial]
               elsif action && %w[st_catalog_new st_catalog_edit].include?(action)
                 r[:partial => "stcat_form"]
               elsif action == "dialog_provision"

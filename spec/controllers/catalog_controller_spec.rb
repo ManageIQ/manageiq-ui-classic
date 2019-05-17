@@ -803,6 +803,16 @@ describe CatalogController do
       end
     end
 
+    describe "#servicetemplate_ownership" do
+      it "renders ownership views successfully after button is pressed" do
+        st = FactoryBot.create(:service_template)
+        allow(controller).to receive(:x_node).and_return("st-#{st.id}")
+        post :x_button, :params => {:pressed => 'catalogitem_ownership', :id => st.id}
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => 'shared/views/_ownership')
+      end
+    end
+
     describe "#need_ansible_locals?" do
       before do
         controller.instance_variable_set(:@nodetype, 'st')
