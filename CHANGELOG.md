@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Hammer-6
+
+### Fixed
+- miqSetToolbarCount - fix setting toolbar counts [(#5403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5403)
+- Do not reset entrypoints when editing an existing catalog bundle [(#5462)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5462)
+- Region Replication - refresh code mirror after load [(#5095)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5095)
+- Dont show gtl checkbox when display list from chart click [(#5144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5144)
+- Delete the "report_menus" instead of :report_menus when resetting [(#5212)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5212)
+- Use base_model name instead of demodulize [(#5182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5182)
+- Fix the label of Custom Button Events for infra providers [(#5251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5251)
+- Fixed explanation of brand image positioning under Custom Logos [(#5250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5250)
+- Remove logic for request screen dialogs [(#5126)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5126)
+- Fix error when clicking on created Catalog Item in the list [(#5481)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5481)
+- Fixed check in if condition [(#5176)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5176)
+- Use numeric comparison for IDs [(#5503)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5503)
+- Validate Classification before accessing description [(#5526)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5526)
+
+## Hammer-5 - Released 2019-04-23
 
 ### Added
 - Add MenuUpdateMixin [(#4999)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4999)
