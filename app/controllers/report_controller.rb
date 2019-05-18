@@ -849,7 +849,8 @@ class ReportController < ApplicationController
         end
       elsif @sb[:pages]
         presenter.update(:paging_div, r[:partial => 'layouts/saved_report_paging_bar', :locals => @sb[:pages]])
-        presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
+        #presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
+        presenter.hide(:form_buttons_div).hide(:rpb_div_1).remove_paging
       end
       presenter.show(:paging_div)
     else

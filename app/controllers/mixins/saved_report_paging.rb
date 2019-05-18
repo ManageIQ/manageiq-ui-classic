@@ -21,8 +21,8 @@ module Mixins
       render :update do |page|
         page << javascript_prologue
         page.replace("report_html_div", :partial => "layouts/report_html")
-        page.replace_html("paging_div", :partial => 'layouts/saved_report_paging_bar',
-                                        :locals  => {:pages => @sb[:pages]})
+        #page.replace_html("paging_div", :partial => 'layouts/saved_report_paging_bar',
+        #                                :locals  => {:pages => @sb[:pages]})
         page << javascript_hide_if_exists("form_buttons_div")
         page << javascript_show_if_exists("rpb_div_1")
         page << "miqSparkle(false)"
