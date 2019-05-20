@@ -1,5 +1,5 @@
 class TreeBuilderServices < TreeBuilder
-  # Services are returned in a tree - kids are discovered automatically
+  has_kids_for Service, [:x_get_tree_nested_services]
 
   private
 
@@ -48,8 +48,28 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, options)
-    # Get My Filters and Global Filters
-    count_only_or_objects(count_only, x_get_search_results(object, options[:leaf])) if %w(my global).include?(object[:id])
+    case object[:id]
+    when 'my', 'global'
+      # Get My Filters and Global Filters
+      count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
+    when 'asrv', 'rsrv'
+      retired = object[:id] != 'asrv'
+      services = Rbac.filtered(Service.where(:retired => retired, :display => true))
+      return sevices.size if count_only
+      subtree_root_services_with_preload(services)
+    end
+  end
+
+  def x_get_tree_nested_services(object, count_only)
+    services = Rbac.filtered(object.descendants.where(:retired => object.retired, :display => true))
+    return services.size if count_only
+    subtree_root_services_with_preload(services)
+  end
+
+  def subtree_root_services_with_preload(services)
+    subtree = Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] }).keys
+    MiqPreloader.preload(subtree, :picture)
+    subtree
   end
 
   def x_get_search_results(object, leaf)
