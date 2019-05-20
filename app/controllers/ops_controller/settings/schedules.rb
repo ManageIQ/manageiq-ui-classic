@@ -693,7 +693,7 @@ module OpsController::Settings::Schedules
   end
 
   def retrieve_aws_regions
-    ManageIQ::Providers::Amazon::Regions.regions.collect { |region| [region[1][:name]] }
+    ManageIQ::Providers::Amazon::Regions.regions.flat_map { |region| [region[1].values_at(:description, :name)] }
   end
 
   def retrieve_openstack_api_versions
