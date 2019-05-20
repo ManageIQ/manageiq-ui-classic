@@ -39,6 +39,20 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function init(dialog) {
+
+    var sessionStorageId = requestDialogAction() === 'edit' ?
+      String(requestDialogId()) : 'new'
+    var restoredDialog = DialogEditor.restoreSessionStorage(sessionStorageId);
+    if (restoredDialog !== null ) {
+      if (confirm(__('Restore previous changes?'))) {
+        dialog = _.cloneDeepWith(restoredDialog, customizer);
+        dialog.id = restoredDialog.id
+        dialog.content[0].id = restoredDialog.content[0].id
+      } else {
+        DialogEditor.clearSessionStorage(sessionStorageId);
+      }
+    }
+
     function translateResponderNamesToIds(dialog) {
       var dynamicFields = [];
       var allFields = [];
@@ -73,6 +87,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
     vm.DialogEditor = DialogEditor;
+    DialogEditor.backupSessionStorage(sessionStorageId, vm.dialog);
   }
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeepWith
@@ -135,10 +150,16 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function dismissChanges() {
+    if (confirm(__('Abandon changes?'))) {
+      DialogEditor.clearSessionStorage(DialogEditor.getDialogId());
+    } else {
+      return;
+    }
     getBack(__('Dialog editing was canceled by the user.'), true);
   }
 
   function saveSuccess() {
+    DialogEditor.clearSessionStorage(DialogEditor.getDialogId());
     getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
