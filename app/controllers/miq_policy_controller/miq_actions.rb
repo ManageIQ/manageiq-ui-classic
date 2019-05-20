@@ -129,19 +129,30 @@ module MiqPolicyController::MiqActions
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
     @edit[:new][:options][:hosts] = params[:hosts] if params[:hosts]
 
+    # Note that the params[:tag] here is intentionally singular
+    @edit[:new][:options][:tags] = params[:tag].present? ? [Classification.find(params[:tag]).tag.name] : nil if params[:tag]
+
     if params[:miq_action_type] && params[:miq_action_type] != @edit[:new][:action_type] # action type was changed
       @edit[:new][:action_type] = params[:miq_action_type]
       @edit[:new][:options] = {} # Clear out the options
       action_build_alert_choices if params[:miq_action_type] == "evaluate_alerts" # Build alert choices hash
       action_build_snmp_variables if params[:miq_action_type] == "snmp_trap"      # Build snmp_trap variables hash
       action_initialize_playbook_variables
-      if params[:miq_action_type] == "tag"
-        get_tags_tree
-      end
+      @tags_select = build_tags_select if params[:miq_action_type] == "tag"
       @action_type_changed = true
     end
 
     send_button_changes
+  end
+
+  def build_tags_select
+    Classification.categories.sort_by(&:description).each_with_object({}) do |cls, obj|
+      next unless cls.show && cls.entries.any? && !cls.read_only
+      obj[cls.description] = cls.entries.sort_by(&:description).map do |ent|
+        # The third argument here allows better fuzzy search in the dropdown
+        [ent.description, ent.id, 'data-tokens' => cls.description]
+      end
+    end
   end
 
   def action_initialize_playbook_variables
@@ -158,17 +169,6 @@ module MiqPolicyController::MiqActions
     @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
   end
 
-  def action_tag_pressed
-    @edit = session[:edit]
-    @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
-    _, id = parse_nodetype_and_id(params[:id])
-    tag_name = Classification.find(id).tag.name
-    @tag_selected = Classification.tag2human(tag_name)
-    @edit[:new][:options][:tags] = {} unless tag_name.nil?
-    @edit[:new][:options][:tags] = [tag_name] unless tag_name.nil?
-    send_button_changes
-  end
-
   def action_get_all
     peca_get_all('action', -> { get_view(MiqAction) })
   end
@@ -177,10 +177,6 @@ module MiqPolicyController::MiqActions
 
   def process_actions(actions, task)
     process_elements(actions, MiqAction, task)
-  end
-
-  def get_tags_tree
-    action_build_cat_tree
   end
 
   def action_build_snmp_variables
@@ -259,17 +255,6 @@ module MiqPolicyController::MiqActions
       @edit[:new][:attrs][i][1] = kv[1]
     end
 
-    unless @edit[:new][:options][:tags].nil?
-      cats = Classification.categories.select(&:show).sort_by(&:name)
-      cats.each do |c|
-        c.entries.each do |e|
-          if e.tag.name == @edit[:new][:options][:tags][0]
-            @tag_selected = c.description + ": " + e.description
-          end
-        end
-      end
-    end
-
     @edit[:new][:scan_profiles] = ScanItemSet.order(:name).pluck(:name)
 
     action_build_alert_choices
@@ -297,7 +282,13 @@ module MiqPolicyController::MiqActions
     action_build_playbook_variables if @action.action_type == "run_ansible_playbook"
 
     @edit[:current] = copy_hash(@edit[:new])
-    get_tags_tree
+
+    # Build the category entity dropdown organized by categories
+    @tags_select = build_tags_select
+
+    # Retrieve the selected tag's object based on the stored tag name
+    @selected_tag = Classification.tag_name_to_objects(@edit[:new][:options][:tags].to_a.first).last if @edit[:new][:options][:tags].present?
+
     @in_a_form = true
     @edit[:current][:add] = true if @edit[:action_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
@@ -307,10 +298,6 @@ module MiqPolicyController::MiqActions
   def action_build_alert_choices
     @edit[:choices] = MiqAlert.all.each_with_object({}) { |a, h| h[a.description] = a.guid } # Build the hash of alert choices
     @edit[:new][:alerts] = {} # Clear out the alerts hash
-  end
-
-  def action_build_cat_tree
-    @category_tree = TreeBuilderMiqActionCategory.new(:action_tags_tree, @sb, true, :root => "#{current_tenant.name} Tags")
   end
 
   # Set action record variables to new values
