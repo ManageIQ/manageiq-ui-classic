@@ -5,7 +5,7 @@ describe CloudVolumeSnapshotController do
       EvmSpecHelper.create_guid_miq_server_zone
       @snapshot = FactoryBot.create(:cloud_volume_snapshot, :name => "cloud-volume-snapshot-01")
       allow(@snapshot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+      classification = Classification.find_by_name("department")
       @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)

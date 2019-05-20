@@ -6,7 +6,7 @@ describe ApplicationHelper::Button::RbacUserDelete do
     before { button.calculate_properties }
 
     context 'when user is the root administrator' do
-      let(:record) { FactoryBot.create(:user_admin, :userid => 'admin') }
+      let(:record) { User.find_by(:userid => 'admin') }
       it_behaves_like 'a disabled button', 'Default Administrator can not be deleted'
     end
     context 'when user is a common administrator' do

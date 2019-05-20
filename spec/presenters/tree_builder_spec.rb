@@ -30,26 +30,65 @@ describe TreeBuilder do
   context "build_tree" do
     it "builds tree object and sets all settings and add nodes to tree object" do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
-      nodes = [{'key'     => "root",
-                'nodes'   => [{'key'        => "xx-Compute",
-                               'tooltip'    => "Compute",
-                               'icon'       => "pficon pficon-cpu",
-                               'state'      => { 'expanded' => true },
-                               'text'       => "Compute",
-                               'selectable' => true,
-                               'class'      => ''},
-                              {'key'        => "xx-Storage",
-                               'tooltip'    => "Storage",
-                               'icon'       => "fa fa-hdd-o",
-                               'state'      => { 'expanded' => true },
-                               'selectable' => true,
-                               'text'       => "Storage",
-                               'class'      => ''}],
-                'state'   => { 'expanded' => true },
-                'text'    => "Rates",
-                'tooltip' => "Rates",
-                'class'   => '',
-                'icon'    => 'pficon pficon-folder-close'}]
+      nodes = [
+        {
+          "key"   => "root",
+          "nodes" => [
+            {
+              "key"        => "xx-Compute",
+              "text"       => "Compute",
+              "tooltip"    => "Compute",
+              "icon"       => "pficon pficon-cpu",
+              "selectable" => true,
+              "nodes"      => [
+                {
+                  "key"        => "xx-Compute_cr-#{ChargebackRate.find_by(:description => "Default", :rate_type => "Compute").id}",
+                  "text"       => "Default",
+                  "icon"       => "fa fa-file-text-o",
+                  "selectable" => true,
+                  "state"      => {"expanded" => true},
+                  "class"      => ""
+                },
+                {
+                  "key"        => "xx-Compute_cr-#{ChargebackRate.find_by(:description => "Default Container Image Rate", :rate_type => "Compute").id}",
+                  "text"       => "Default Container Image Rate",
+                  "icon"       => "fa fa-file-text-o",
+                  "selectable" => true,
+                  "state"      => {"expanded" => true},
+                  "class"      => ""
+                }
+              ],
+              "state" => {"expanded" => true},
+              "class" => ""
+            },
+            {
+              "key"        => "xx-Storage",
+              "text"       => "Storage",
+              "tooltip"    => "Storage",
+              "icon"       => "fa fa-hdd-o",
+              "selectable" => true,
+              "nodes"      => [
+                {
+                  "key"        => "xx-Storage_cr-#{ChargebackRate.find_by(:description => "Default", :rate_type => "Storage").id}",
+                  "text"       => "Default",
+                  "icon"       => "fa fa-file-text-o",
+                  "selectable" => true,
+                  "state"      => {"expanded" => true},
+                  "class"      => ""
+                }
+              ],
+              "state" => {"expanded" => true},
+              "class" => ""
+            }
+          ],
+          "text"    => "Rates",
+          "tooltip" => "Rates",
+          "icon"    => "pficon pficon-folder-close",
+          "state"   => {"expanded" => true},
+          "class"   => ""
+        }
+      ]
+
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
@@ -127,8 +166,8 @@ describe TreeBuilder do
 
       expect(builder.count_only_or_objects(true, User.none)).to eq(0)
       expect(builder.count_only_or_objects(true, User.where(:id => a.id))).to eq(1)
-      expect(builder.count_only_or_objects(true, User.all)).to eq(2)
-      expect(builder.count_only_or_objects(true, User.select('id, name'))).to eq(2)
+      expect(builder.count_only_or_objects(true, User.all)).to eq(3)
+      expect(builder.count_only_or_objects(true, User.select('id, name'))).to eq(3)
     end
 
     it 'counts things in an Array' do
@@ -140,11 +179,12 @@ describe TreeBuilder do
     it 'returns a collection when not counting' do
       a = FactoryBot.create(:user_with_email)
       b = FactoryBot.create(:user_with_email)
+      c = User.find_by(:userid => "admin")
 
       expect(builder.count_only_or_objects(false, User.none)).to eq([])
       expect(builder.count_only_or_objects(false, User.where(:id => a.id))).to eq([a])
-      expect(builder.count_only_or_objects(false, User.all).sort).to eq([a, b].sort)
-      expect(builder.count_only_or_objects(false, User.select('id', 'name')).sort).to eq([a, b].sort)
+      expect(builder.count_only_or_objects(false, User.all).sort).to eq([a, b, c].sort)
+      expect(builder.count_only_or_objects(false, User.select('id', 'name')).sort).to eq([a, b, c].sort)
 
       expect(builder.count_only_or_objects(false, [])).to eq([])
       expect(builder.count_only_or_objects(false, [:x])).to eq([:x])

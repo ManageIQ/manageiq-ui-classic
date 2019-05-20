@@ -52,7 +52,7 @@ describe EmsInfraHelper::TextualSummary do
     end
 
     context 'Tenant is available for admin user' do
-      let(:user) { FactoryBot.create(:user_admin, :userid => 'admin') }
+      let(:user) { User.find_by(:userid => 'admin') }
 
       include_examples 'textual_tenant', :label => _("Tenant"), :value => 'Tenant name'
     end

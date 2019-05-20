@@ -9,7 +9,7 @@ describe CloudObjectStoreContainerController do
     let!(:user) { stub_user(:features => :all) }
     before do
       allow(@container).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+      classification = Classification.find_by_name("department")
       @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)

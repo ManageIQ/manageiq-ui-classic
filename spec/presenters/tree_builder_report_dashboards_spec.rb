@@ -9,7 +9,7 @@ describe TreeBuilderReportDashboards do
   let(:user)             { FactoryBot.create(:user, :miq_groups => [group]) }
   let!(:other_group)     { FactoryBot.create(:miq_group) }
   let!(:miq_widget_set) do
-    widget_set_params = {:name => "default", :read_only => true, :owner_id => group.id, :owner_type => "MiqGroup"}
+    widget_set_params = {:read_only => true, :owner_id => group.id, :owner_type => "MiqGroup"}
     FactoryBot.create(:miq_widget_set, widget_set_params)
   end
 

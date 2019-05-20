@@ -42,7 +42,7 @@ describe ConfigurationJobController do
       EvmSpecHelper.create_guid_miq_server_zone
       @cj = FactoryBot.create(:ansible_tower_job, :name => "testJob")
       allow(@cj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      classification = Classification.find_by_name("department")
       @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
                                  :parent => classification)

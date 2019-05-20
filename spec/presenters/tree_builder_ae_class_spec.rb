@@ -13,7 +13,7 @@ describe TreeBuilderAeClass do
     it "a tree without filter" do
       tree = TreeBuilderAeClass.new(:automate_tree, @sb)
       domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
-      expect(domains).to match_array %w(LUIGI MARIO)
+      expect(domains).to include("LUIGI", "MARIO")
     end
   end
 
@@ -30,8 +30,8 @@ describe TreeBuilderAeClass do
     it "should only return domains in a user's current tenant" do
       tree = TreeBuilderAeClass.new("ae_tree", {})
       domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
-      expect(domains).to match_array %w(test1)
-      expect(domains).not_to include %w(test2)
+      expect(domains).to include("test1")
+      expect(domains).not_to include("test2")
     end
   end
 
@@ -47,7 +47,7 @@ describe TreeBuilderAeClass do
     it "should return domains in correct order" do
       tree = TreeBuilderAeClass.new("ae_tree", {})
       domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
-      expect(domains).to eq(%w(test2 test1))
+      expect(domains).to eq(["test2", "test1", "ManageIQ (Locked)"])
     end
   end
 end

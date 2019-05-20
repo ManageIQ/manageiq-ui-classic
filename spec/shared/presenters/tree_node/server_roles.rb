@@ -1,14 +1,6 @@
 shared_context 'server roles' do
   let(:miq_server) { EvmSpecHelper.local_miq_server }
-
-  let(:server_role) do
-    FactoryBot.create(:server_role,
-                       :name              => "smartproxy",
-                       :description       => "SmartProxy",
-                       :max_concurrent    => 1,
-                       :external_failover => false,
-                       :role_scope        => "zone")
-  end
+  let(:server_role) { ServerRole.find_by(:name => "smartproxy") }
 
   let(:assigned_server_role) do
     FactoryBot.create(:assigned_server_role,

@@ -18,6 +18,6 @@ describe TreeBuilderReportWidgets do
     widget2 = FactoryBot.create(:miq_widget)
     FactoryBot.create(:miq_widget, :content_type => "menu")
 
-    expect(subject.send(:x_get_tree_custom_kids, {:id => "-r"}, false, nil)).to match_array([widget1, widget2])
+    expect(subject.send(:x_get_tree_custom_kids, {:id => "-r"}, false, nil)).to include(widget1, widget2)
   end
 end

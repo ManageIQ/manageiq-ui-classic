@@ -1,5 +1,5 @@
 describe "catalog/_sandt_tree_show.html.haml" do
-  let(:admin_user) { FactoryBot.create(:user_admin) }
+  let(:admin_user) { User.find_by(:userid => 'admin') }
   let(:bundle)     { FactoryBot.create(:service_template, :service_type => "composite", :display => true, :tenant => tenant) }
   let(:tenant)     { FactoryBot.create(:tenant) }
 

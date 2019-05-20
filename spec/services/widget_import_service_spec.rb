@@ -55,12 +55,12 @@ describe WidgetImportService do
     end
 
     it "builds a new widget" do
-      expect(MiqWidget.first).to be_nil
+      old_count = MiqWidget.count
       miq_widget = widget_import_service.import_widget_from_hash(widget_to_import)
+      expect(MiqWidget.count).to eq(old_count + 1)
 
       expect(miq_widget.miq_schedule.filter.exp["="]["value"]).to eq(miq_widget.id)
       expect(miq_widget.miq_schedule.filter.exp["="]["value"]).not_to eq(miq_widget_id)
-      expect(MiqWidget.first).not_to be_nil
     end
   end
 
@@ -248,7 +248,7 @@ describe WidgetImportService do
 
           it "uses the existing schedule" do
             widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-            widget = MiqWidget.first
+            widget = MiqWidget.find_by(:title => "not_potato")
             expect(widget.miq_schedule.description).to eq("old schedule description")
           end
         end

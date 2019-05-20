@@ -1401,7 +1401,7 @@ describe ReportController do
       end
 
       it 'returns with the correct name for custom folder' do
-        expect(subject.first.first).to eq("#{user.current_tenant.name} (Group): #{user.current_group.name}")
+        expect(subject.last.first).to eq("#{user.current_tenant.name} (Group): #{user.current_group.name}")
       end
     end
   end

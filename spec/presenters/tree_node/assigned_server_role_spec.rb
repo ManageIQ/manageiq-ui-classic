@@ -8,7 +8,7 @@ describe TreeNode::AssignedServerRole do
 
   describe '#title' do
     it 'returns with the title' do
-      expect(subject.text).to eq("<strong>Role: SmartProxy</strong> (primary, active, PID=)")
+      expect(subject.text).to eq("<strong>Role: SmartProxy</strong> (active, PID=)")
     end
   end
 

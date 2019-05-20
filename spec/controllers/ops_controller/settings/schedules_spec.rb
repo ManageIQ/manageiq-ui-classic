@@ -202,27 +202,19 @@ describe OpsController do
     it "returns a filtered item list for MiqTemplate" do
       controller.instance_variable_set(:@settings, settings)
       current_user = FactoryBot.create(:user)
-      FactoryBot.create(:miq_search,
-                         :name        => "default_Environment / UAT",
-                         :description => "Environment / UAT",
-                         :db          => "MiqTemplate",
-                         :search_type => "default")
+      search = FactoryBot.create(:miq_search, :db => "MiqTemplate", :search_type => "default")
       allow(controller).to receive(:current_user).and_return(current_user)
       filtered_list = controller.send(:build_filtered_item_list, "miq_template", "global")
-      expect(filtered_list.first).to include("Environment / UAT")
+      expect(filtered_list).to include([search.id, search.description])
     end
 
     it "returns a filtered item list for Datastore" do
       controller.instance_variable_set(:@settings, settings)
       current_user = FactoryBot.create(:user)
-      FactoryBot.create(:miq_search,
-                         :name        => "default_Environment_Storage / UAT",
-                         :description => "Storage_Environment / UAT",
-                         :db          => "Storage",
-                         :search_type => "default")
+      search = FactoryBot.create(:miq_search, :db => "Storage", :search_type => "default")
       allow(controller).to receive(:current_user).and_return(current_user)
       filtered_list = controller.send(:build_filtered_item_list, "storage", "global")
-      expect(filtered_list.first).to include("Storage_Environment / UAT")
+      expect(filtered_list).to include([search.id, search.description])
     end
 
     it "returns a filtered item list for a single Datastore" do

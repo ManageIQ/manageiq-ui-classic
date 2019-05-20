@@ -99,7 +99,7 @@ describe "miq_ae_class/_ns_list.html.haml" do
       end
 
       context 'admin user' do
-        let(:user) { FactoryBot.create(:user_admin, :userid => 'admin') }
+        let(:user) { User.find_by(:userid => 'admin') }
 
         it 'renders Tenant name' do
           render

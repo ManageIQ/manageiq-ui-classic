@@ -1,6 +1,6 @@
 describe AuthKeyPairCloudController do
   let(:kp) { FactoryBot.create(:auth_key_pair_cloud) }
-  let(:classification) { FactoryBot.create(:classification) }
+  let(:classification) { Classification.find_by_name("department") }
   let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
   let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
 

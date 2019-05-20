@@ -95,7 +95,7 @@ describe ReportController do
 
     it "returns custom reports in available_reports array along with other default available reports" do
       controller.send(:edit_reports)
-      expect(assigns(:available_reports)).to eq(["custom report 1", "custom report 2", "Provisioning 2"])
+      expect(assigns(:available_reports)).to include("custom report 1", "custom report 2", "Provisioning 2")
     end
   end
 end

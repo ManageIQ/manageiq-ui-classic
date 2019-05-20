@@ -221,7 +221,6 @@ describe OpsController do
     before do
       miq_server = EvmSpecHelper.local_miq_server
       MiqRegion.seed
-      expect(MiqRegion.my_region.zones).to eq([miq_server.zone])
     end
 
     it "it renders replace_right_cell" do

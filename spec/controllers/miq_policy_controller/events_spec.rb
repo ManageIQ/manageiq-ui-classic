@@ -3,8 +3,8 @@ describe MiqPolicyController do
     context "#event_edit" do
       before do
         stub_user(:features => :all)
-        @action = FactoryBot.create(:miq_action, :name => "compliance_failed")
-        @event = FactoryBot.create(:miq_event_definition, :name => "vm_compliance_check")
+        @action = MiqAction.find_by(:name => "compliance_failed")
+        @event = MiqEventDefinition.find_by(:name => "vm_compliance_check")
         @policy = FactoryBot.create(:miq_policy, :name => "Foo")
 
         controller.instance_variable_set(:@sb,

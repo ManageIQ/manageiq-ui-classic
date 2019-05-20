@@ -17,12 +17,13 @@ describe TreeBuilderAutomateCatalog do
       before { sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines }
 
       it 'returns a tree with the filtered domain' do
-        expect(domains).to match_array ['LUIGI']
+        expect(domains).to include("LUIGI")
+        expect(domains).not_to include("MARIO")
       end
     end
 
     it 'returns a tree with both domains' do
-      expect(domains).to match_array %w[LUIGI MARIO]
+      expect(domains).to include("LUIGI", "MARIO")
     end
   end
 end

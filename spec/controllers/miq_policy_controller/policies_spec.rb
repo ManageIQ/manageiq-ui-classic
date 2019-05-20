@@ -7,8 +7,6 @@ describe MiqPolicyController do
       render_views
 
       before do
-        FactoryBot.create(:miq_event_definition, :name => "containergroup_compliance_check")
-        FactoryBot.create(:miq_action, :name => "compliance_failed")
         allow(controller).to receive(:policy_get_node_info)
         allow(controller).to receive(:get_node_info)
       end

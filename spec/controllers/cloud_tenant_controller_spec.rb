@@ -1,5 +1,5 @@
 describe CloudTenantController do
-  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+  let(:classification) { Classification.find_by_name("department") }
   let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
   let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
   let(:ct) { FactoryBot.create(:cloud_tenant, :name => "cloud-tenant-01") }

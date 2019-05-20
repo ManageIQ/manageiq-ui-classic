@@ -2,8 +2,6 @@ describe ApplicationHelper::Button::CockpitConsole do
   describe '#disabled?' do
     before do
       @record = FactoryBot.create(:vm)
-      MiqRegion.seed
-      EvmSpecHelper.create_guid_miq_server_zone
 
       allow(@record).to receive(:platform).and_return('linux')
       allow(@record).to receive(:power_state).and_return('on')
@@ -14,18 +12,12 @@ describe ApplicationHelper::Button::CockpitConsole do
 
     context 'passes checks' do
       before do
-        @server_role = FactoryBot.create(
-          :server_role,
-          :name              => 'cockpit_ws',
-          :description       => 'Cockpit WS',
-          :max_concurrent    => 1,
-          :external_failover => false,
-          :role_scope        => 'zone'
-        )
+        MiqServer.first.update!(:status => "started")
+        server_role = ServerRole.find_by(:name => 'cockpit_ws')
         FactoryBot.create(
           :assigned_server_role,
           :miq_server_id  => MiqServer.first.id,
-          :server_role_id => @server_role.id,
+          :server_role_id => server_role.id,
           :active         => true,
           :priority       => 1
         )

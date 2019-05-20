@@ -258,17 +258,18 @@ describe ReportController do
       it "returns non-empty categories" do
         non_empty_category
         empty_category
-        expect(controller.send(:categories_hash)).to eq("non_empty" => "Has entries")
+        expect(controller.send(:categories_hash)).to include("non_empty" => "Has entries")
+        expect(controller.send(:categories_hash)).not_to include("empty" => "Zero entries")
       end
 
       it "omits show: false categories" do
         non_empty_category(:show => false)
-        expect(controller.send(:categories_hash)).to eq({})
+        expect(controller.send(:categories_hash)).not_to include("non_empty" => "Has entries")
       end
 
       it "includes read_only categories" do
         non_empty_category(:read_only => true)
-        expect(controller.send(:categories_hash)).to eq("non_empty" => "Has entries")
+        expect(controller.send(:categories_hash)).to include("non_empty" => "Has entries")
       end
     end
 

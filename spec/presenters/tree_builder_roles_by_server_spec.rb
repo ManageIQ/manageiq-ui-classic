@@ -2,15 +2,8 @@ describe TreeBuilderRolesByServer do
   context 'TreeBuilderRolesByServer' do
     before do
       MiqRegion.seed
-      @miq_server = EvmSpecHelper.local_miq_server
-      @server_role = FactoryBot.create(
-        :server_role,
-        :name              => "smartproxy",
-        :description       => "SmartProxy",
-        :max_concurrent    => 1,
-        :external_failover => false,
-        :role_scope        => "zone"
-      )
+      @miq_server = MiqServer.first
+      @server_role = ServerRole.find_by(:name => "smartproxy")
 
       @assigned_server_role1 = FactoryBot.create(
         :assigned_server_role,
@@ -46,25 +39,31 @@ describe TreeBuilderRolesByServer do
 
     it 'returns Roles by Servers' do
       nodes = [{'key'        => "svr-#{@miq_server.id}",
-                'tooltip'    => "Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)",
+                'text'       => "<strong>Server: #{@miq_server.name} [#{@miq_server.id}] (current) ()</strong>",
+                'tooltip'    => "Server: #{@miq_server.name} [#{@miq_server.id}] (current) ()",
                 'icon'       => "pficon pficon-server",
-                'text'       => "<strong>Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)</strong>",
                 'selectable' => true,
-                'nodes'      => [{'key'            => "asr-#{@assigned_server_role1.id}",
-                                  'icon'           => 'pficon pficon-on',
-                                  'iconBackground' => '#3F9C35',
-                                  'text'           => "<strong>Role: SmartProxy</strong> (primary, active, PID=)",
-                                  'state'          => {'expanded' => true},
-                                  'selectable'     => true,
-                                  'class'          => ''},
-                                 {'key'            => "asr-#{@assigned_server_role2.id}",
-                                  'icon'           => 'pficon pficon-on',
-                                  'iconBackground' => '#3F9C35',
-                                  'text'           => "<strong>Role: SmartProxy</strong> (secondary, active, PID=)",
-                                  'state'          => {'expanded' => true},
-                                  'selectable'     => true,
-                                  'class'          => ''},],
-                'state'      => {'expanded' => true, 'selected' => true},
+                'nodes'      => [
+                  {
+                    'key'            => "asr-#{@assigned_server_role1.id}",
+                    'text'           => "<strong>Role: SmartProxy</strong> (unavailable)",
+                    'icon'           => 'pficon pficon-off',
+                    'iconBackground' => '#CC0000',
+                    'selectable'     => true,
+                    'state'          => {'expanded' => true},
+                    'class'          => 'red'
+                  },
+                  {
+                    'key'            => "asr-#{@assigned_server_role2.id}",
+                    'text'           => "<strong>Role: SmartProxy</strong> (unavailable)",
+                    'icon'           => 'pficon pficon-off',
+                    'iconBackground' => '#CC0000',
+                    'selectable'     => true,
+                    'state'          => {'expanded' => true},
+                    'class'          => ''
+                  },
+                ],
+                'state'      => {'expanded' => true},
                 'class'      => ''}]
       expect(JSON.parse(@server_tree.locals_for_render[:bs_tree])).to eq(nodes)
     end

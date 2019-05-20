@@ -10,7 +10,7 @@ describe SecurityGroupController do
 
   describe "#tags_edit" do
     let(:ct) { FactoryBot.create(:security_group, :name => "security-group-01") }
-    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+    let(:classification) { Classification.find_by_name("department") }
     let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
     let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
 

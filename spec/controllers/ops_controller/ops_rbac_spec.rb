@@ -249,7 +249,7 @@ describe OpsController do
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         allow(@tenant).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+        classification = Classification.find_by_name("department")
         @tag1 = FactoryBot.create(:classification_tag,
                                   :name   => "tag1",
                                   :parent => classification)
@@ -311,7 +311,7 @@ describe OpsController do
   end
 
   describe "::MiqGroup" do
-    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
+    let(:classification) { Classification.find_by_name("department") }
     let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
     before do
       MiqUserRole.seed
@@ -322,12 +322,6 @@ describe OpsController do
       stub_user(:features => :all)
       @group = FactoryBot.create(:miq_group)
       @role = MiqUserRole.find_by(:name => "EvmRole-operator")
-      FactoryBot.create(
-        :classification,
-        :name        => "env",
-        :description => "Environment",
-        :children    => [FactoryBot.create(:classification)]
-      )
       @exp = MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1)
       allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
     end
@@ -743,8 +737,8 @@ describe OpsController do
   end
 
   describe "#rbac_user_delete_restriction?" do
-    let(:default_admin_user) { FactoryBot.create(:user, :userid => "admin", :role => "super_administrator") }
-    let(:custom_admin_user) { FactoryBot.create(:user, :userid => "somename", :role => "super_administrator") }
+    let(:default_admin_user) { User.find_by(:userid => "admin") }
+    let(:custom_admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
     let(:other_user) { FactoryBot.create(:user) }
 
     it "returns true because user is default super admin" do

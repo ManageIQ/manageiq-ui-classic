@@ -55,7 +55,7 @@ describe GenericObjectController do
       generic_obj_defn = FactoryBot.create(:generic_object_definition)
       @gobj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       allow(@gobj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
+      classification = Classification.find_by_name("department")
       @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag_1",
                                  :parent => classification)

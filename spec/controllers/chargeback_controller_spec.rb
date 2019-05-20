@@ -15,7 +15,7 @@ describe ChargebackController do
 
         result = {category.id => {tag.id.to_s => tag.description}, tag.id => { entry.id.to_s => entry.description}, entry.id => {}}
 
-        expect(assigns(:edit)[:cb_assign][:tags]).to eq(result)
+        expect(assigns(:edit)[:cb_assign][:tags]).to include(result)
       end
     end
 

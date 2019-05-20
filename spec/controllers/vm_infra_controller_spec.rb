@@ -270,7 +270,7 @@ describe VmInfraController do
   end
 
   it 'can open Edit Tags' do
-    classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+    classification = Classification.find_by_name("department")
     @tag1 = FactoryBot.create(:classification_tag,
                                :name   => "tag1",
                                :parent => classification)
@@ -289,7 +289,7 @@ describe VmInfraController do
   end
 
   it 'The VM quadicons on the tagging screen do not links' do
-    classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
+    classification = Classification.find_by_name("department")
     @tag1 = FactoryBot.create(:classification_tag,
                                :name   => "tag1",
                                :parent => classification)
@@ -421,7 +421,7 @@ describe VmInfraController do
   end
 
   context 'transform VM dialog' do
-    let(:dialog)           { FactoryBot.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+    let(:dialog)           { Dialog.find_by(:label => 'Transform VM') }
     let!(:resource_action) { FactoryBot.create(:resource_action, :dialog => dialog) }
 
     it 'can Transform selected VM' do

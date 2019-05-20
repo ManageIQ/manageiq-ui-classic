@@ -1,8 +1,8 @@
 shared_examples_for 'a smart state scan button' do
   let(:my_zone) { MiqServer.my_server.zone }
   let(:server) { FactoryBot.create(:miq_server, :zone => my_zone, :active_roles => roles) }
-  let(:smartproxy_role) { FactoryBot.create(:server_role, :name => 'smartproxy') }
-  let(:smartscan_role) { FactoryBot.create(:server_role, :name => 'smartstate') }
+  let(:smartproxy_role) { ServerRole.find_by(:name => 'smartproxy') }
+  let(:smartscan_role) { ServerRole.find_by(:name => 'smartstate') }
 
   describe '#calculate_properties' do
     before do

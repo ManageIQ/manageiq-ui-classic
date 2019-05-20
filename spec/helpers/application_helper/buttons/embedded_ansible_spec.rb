@@ -9,17 +9,10 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
 
   context 'Embedded Ansible role is turned on and provider is present' do
     before do
-      server_role = FactoryBot.create(
-        :server_role,
-        :name              => "embedded_ansible",
-        :description       => "Embedded Ansible",
-        :max_concurrent    => 1,
-        :external_failover => false,
-        :role_scope        => "zone"
-      )
+      server_role = ServerRole.find_by(:name => "embedded_ansible")
       FactoryBot.create(
         :assigned_server_role,
-        :miq_server_id  => MiqServer.first.id,
+        :miq_server_id  => MiqRegion.my_region.active_miq_servers.first.id,
         :server_role_id => server_role.id,
         :active         => true,
         :priority       => 1

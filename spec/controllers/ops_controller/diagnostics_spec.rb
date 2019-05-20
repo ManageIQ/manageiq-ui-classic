@@ -196,14 +196,7 @@ describe OpsController do
             :diag_selected_id => @miq_server_to_delete.id,
             :active_tab       => "diagnostics_roles_servers"
           }
-          @server_role = FactoryBot.create(
-            :server_role,
-            :name              => "smartproxy",
-            :description       => "SmartProxy",
-            :max_concurrent    => 1,
-            :external_failover => false,
-            :role_scope        => "zone"
-          )
+          @server_role = ServerRole.find_by(:name => "smartproxy")
           @assigned_server_role = FactoryBot.create(
             :assigned_server_role,
             :miq_server_id  => server.id,

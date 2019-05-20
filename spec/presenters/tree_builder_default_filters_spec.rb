@@ -4,27 +4,9 @@ describe TreeBuilderDefaultFilters do
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Default filters Group")
       login_as FactoryBot.create(:user, :userid => 'default_filters__wilma', :miq_groups => [@group])
-      @filters = [FactoryBot.create(:miq_search,
-                                     :name        => "default_Platform / HyperV",
-                                     :description => "Platform / HyperV",
-                                     :options     => nil,
-                                     :db          => "Host",
-                                     :search_type => "default",
-                                     :search_key  => nil)]
-      @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / UAT",
-                                       :description => "Environment / UAT",
-                                       :options     => nil,
-                                       :db          => "MiqTemplate",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
-      @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "MiqTemplate",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+      @filters = [MiqSearch.find_by(:description => "Platform / HyperV", :db => "Host")]
+      @filters.push(MiqSearch.find_by(:description => "Environment / UAT", :db => "MiqTemplate"))
+      @filters.push(MiqSearch.find_by(:description => "Environment / Prod", :db => "MiqTemplate"))
       @filters.push(FactoryBot.create(:miq_search,
                                        :name        => "default_Environment / Prod",
                                        :description => "Environment / Prod",
@@ -53,13 +35,7 @@ describe TreeBuilderDefaultFilters do
                                        :db          => "Storage",
                                        :search_type => "default",
                                        :search_key  => "_hidden_"))
-      @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "Vm",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+      @filters.push(MiqSearch.find_by(:description => "Environment / Prod", :db => "Vm"))
       @sb = {:active_tree => :default_filters_tree}
       @default_filters_tree = TreeBuilderDefaultFilters.new(:df_tree, @sb, true, :data => @filters)
     end
