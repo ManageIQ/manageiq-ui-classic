@@ -27,6 +27,7 @@
     "@manageiq/react-ui-components": "~0.11.14",
     "@manageiq/ui-components": "~1.2.5",
     "@patternfly/patternfly": "^2.6.6",
+    "@patternfly/react-core": "^3.16.10",
     "@pf3/select": "~1.12.6",
     "@pf3/timeline": "~1.0.8",
     "angular": "~1.6.6",
