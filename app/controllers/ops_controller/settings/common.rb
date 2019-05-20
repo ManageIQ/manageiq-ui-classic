@@ -534,6 +534,7 @@ module OpsController::Settings::Common
           session[:customer_name] = @update[:server][:company]
           session[:vmdb_name] = @update[:server][:name]
         end
+        settings_set_form_vars_workers
         @changed = false
       else
         config_errors.each do |field, msg|
