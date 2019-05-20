@@ -513,7 +513,7 @@ class HostController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => _("Hosts / Nodes"), :url => controller_url},
+        {:title => title_for_hosts, :url => controller_url},
       ],
       :record_info => @host,
     }.compact
