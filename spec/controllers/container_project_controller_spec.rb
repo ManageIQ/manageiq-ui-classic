@@ -26,7 +26,7 @@ describe ContainerProjectController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user)
+      login_as FactoryBot.create(:user_with_group)
       @project = FactoryBot.create(:container_project)
     end
 

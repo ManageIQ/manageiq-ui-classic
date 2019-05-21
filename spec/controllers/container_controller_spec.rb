@@ -32,7 +32,7 @@ describe ContainerController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user)
+      login_as FactoryBot.create(:user_with_group)
 
       ems = FactoryBot.create(:ems_kubernetes)
       container_project = ContainerProject.create(:ext_management_system => ems)
