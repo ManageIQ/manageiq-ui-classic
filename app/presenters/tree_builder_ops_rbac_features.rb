@@ -3,7 +3,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   has_kids_for Menu::Item,        [:x_get_tree_item_kids]
   has_kids_for MiqProductFeature, [:x_get_tree_feature_kids]
 
-  attr_reader :node_id_prefix, :features
+  attr_reader :node_id_prefix, :features, :editable
 
   def initialize(name, sandbox, build, **params)
     @node_id_prefix = params[:role].id || "new"
@@ -51,7 +51,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :editable     => @editable,
       :checkboxes   => true,
       :three_checks => true,
       :post_check   => true,
