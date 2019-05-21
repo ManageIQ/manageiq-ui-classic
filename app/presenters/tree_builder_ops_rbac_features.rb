@@ -58,6 +58,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   end
 
   def root_options
+    root_feature = MiqProductFeature.feature_root
     root_details = MiqProductFeature.feature_details(root_feature)
 
     {
@@ -69,9 +70,5 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :selectable => false,
       :checkable  => @editable
     }
-  end
-
-  def root_feature
-    @root_feature ||= MiqProductFeature.feature_root
   end
 end
