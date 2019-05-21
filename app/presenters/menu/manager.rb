@@ -6,7 +6,7 @@ module Menu
     class << self
       extend Forwardable
 
-      delegate %i[menu item_in_section? item section section_id_string_to_symbol
+      delegate %i[menu item_in_section? item items section section_id_string_to_symbol
                   section_for_item_id each map detect select] => :instance
     end
 
@@ -18,6 +18,10 @@ module Menu
       @menu.each do |menu_section|
         yield menu_section if menu_section.placement == placement
       end
+    end
+
+    def items
+      @menu
     end
 
     def item(item_id)
