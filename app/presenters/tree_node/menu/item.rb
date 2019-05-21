@@ -17,11 +17,11 @@ module TreeNode
       end
 
       def parent_selected?
-        @options[:features].include?(feature_parent.identifier)
+        @tree.features.include?(feature_parent.identifier)
       end
 
       def self_selected?
-        @options[:features].include?(@object.feature)
+        @tree.features.include?(@object.feature)
       end
     end
   end
