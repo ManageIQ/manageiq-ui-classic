@@ -20,6 +20,7 @@ import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GraphQLExplorer from '../graphql-explorer';
 import { HierarchicalTreeView } from '../components/tree-view';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
+import MainMenu from '../components/main_menu';
 import MiqAboutModal from '../components/miq-about-modal';
 import MiqToolbar from '../components/miq-toolbar';
 import OptimizationList from '../optimization/optimization_list';
