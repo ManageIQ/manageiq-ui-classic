@@ -58,6 +58,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   end
 
   def root_options
+    root_details = MiqProductFeature.feature_details(root_feature)
+
     {
       :key        => "#{@node_id_prefix}__#{root_feature}",
       :icon       => "pficon pficon-folder-close",
@@ -67,10 +69,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :selectable => false,
       :checkable  => @editable
     }
-  end
-
-  def root_details
-    @root_details ||= MiqProductFeature.feature_details(root_feature)
   end
 
   def root_feature
