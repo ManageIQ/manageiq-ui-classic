@@ -10,8 +10,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     @editable = params[:editable]
     @features = params[:role].miq_product_features.map(&:identifier)
 
-    @root_counter = []
-
     # Make sure tree_state doesn't hold on to old data between requests
     TreeState.new(sandbox).remove_tree(name)
 
@@ -67,7 +65,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :tooltip    => _(root_details[:description]) || _(root_details[:name]),
       :expand     => true,
       :selectable => false,
-      :select     => root_select_state,
       :checkable  => @editable
     }
   end
@@ -76,25 +73,13 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     @root_details ||= MiqProductFeature.feature_details(root_feature)
   end
 
-  def root_select_state
-    @features.include?(root_feature) || select_state_from_counter
-  end
-
-  def select_state_from_counter
-    return false if @root_counter.empty?
-    return true if @root_counter.all? { |n| n == true } # true not truthy
-    return 'undefined' if @root_counter.any? { |n| n || n == 'undefined' }
-
-    false
-  end
-
   def root_feature
     @root_feature ||= MiqProductFeature.feature_root
   end
 
   def all_vm_options
     text = _("Access Rules for all Virtual Machines")
-    checked = @features.include?("all_vm_rules") || root_select_state
+    checked = @features.include?("all_vm_rules") || @features.include?(root_feature)
 
     {
       :key     => "#{@node_id_prefix}___tab_all_vm_rules",
@@ -107,8 +92,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def override(node, object, _, _)
     case object
-    when Menu::Section
-      @root_counter << node[:select]
     when MiqProductFeature
       if object.identifier == "all_vm_rules"
         node.merge!(all_vm_options)
