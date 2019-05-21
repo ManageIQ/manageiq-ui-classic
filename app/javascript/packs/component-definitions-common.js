@@ -12,6 +12,7 @@ import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
+import MainMenu from '../components/main_menu';
 import MiqAboutModal from '../components/miq-about-modal';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal.jsx';
 import ServiceForm from '../components/service-form';
