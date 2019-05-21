@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag view match snapshot 1`] = `
-<Fragment>
+<div
+  id="assignments_div"
+>
   <Row
     bsClass="row"
     componentClass="div"
@@ -55,5 +57,5 @@ exports[`Tag view match snapshot 1`] = `
       </ul>
     </Col>
   </Row>
-</Fragment>
+</div>
 `;

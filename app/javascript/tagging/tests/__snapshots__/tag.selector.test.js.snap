@@ -8,6 +8,7 @@ exports[`Tagging modifier match snapshot 1`] = `
   defaultMenuIsOpen={false}
   defaultValue={null}
   filterOption={[Function]}
+  id="tag_cat"
   name="form-field-name"
   onChange={[Function]}
   optionClassName="selected-option final-form-select-option"

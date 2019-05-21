@@ -5,6 +5,7 @@ exports[`TagCategory Component match snapshot 1`] = `
   className="tag-category list-inline"
 >
   <li
+    id="tag_category_1"
     key="1"
   >
     <div
