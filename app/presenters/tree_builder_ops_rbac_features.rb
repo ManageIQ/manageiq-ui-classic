@@ -3,7 +3,10 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   has_kids_for Menu::Item,        [:x_get_tree_item_kids]
   has_kids_for MiqProductFeature, [:x_get_tree_feature_kids]
 
+  attr_reader :node_id_prefix
+
   def initialize(name, sandbox, build, **params)
+    @node_id_prefix = params[:role].id || "new"
     @role     = params[:role]
     @editable = params[:editable]
     @features = @role.miq_product_features.map(&:identifier)
@@ -49,21 +52,20 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :role           => @role,
-      :features       => @features,
-      :editable       => @editable,
-      :node_id_prefix => node_id_prefix,
-      :checkboxes     => true,
-      :three_checks   => true,
-      :post_check     => true,
-      :check_url      => "/ops/rbac_role_field_changed/",
-      :oncheck        => @editable ? "miqOnCheckGeneric" : false
+      :role         => @role,
+      :features     => @features,
+      :editable     => @editable,
+      :checkboxes   => true,
+      :three_checks => true,
+      :post_check   => true,
+      :check_url    => "/ops/rbac_role_field_changed/",
+      :oncheck      => @editable ? "miqOnCheckGeneric" : false
     }
   end
 
   def root_options
     {
-      :key        => "#{node_id_prefix}__#{root_feature}",
+      :key        => "#{@node_id_prefix}__#{root_feature}",
       :icon       => "pficon pficon-folder-close",
       :text       => _(root_details[:name]),
       :tooltip    => _(root_details[:description]) || _(root_details[:name]),
@@ -90,10 +92,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     false
   end
 
-  def node_id_prefix
-    @role.id || "new"
-  end
-
   def root_feature
     @root_feature ||= MiqProductFeature.feature_root
   end
@@ -103,7 +101,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     checked = @features.include?("all_vm_rules") || root_select_state
 
     {
-      :key     => "#{node_id_prefix}___tab_all_vm_rules",
+      :key     => "#{@node_id_prefix}___tab_all_vm_rules",
       :text    => text,
       :tooltip => text,
       :icon    => "pficon pficon-folder-close",
