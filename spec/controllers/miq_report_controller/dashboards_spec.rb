@@ -42,7 +42,7 @@ describe ReportController do
         controller.send(:db_save_members)
 
         miq_widget_set.reload
-        expect(miq_widget_set.members).to match_array(MiqWidget.all)
+        expect(miq_widget_set.members.uniq).to match_array((set_data[:col1] + set_data[:col2] + set_data[:col3]).uniq)
       end
     end
 
