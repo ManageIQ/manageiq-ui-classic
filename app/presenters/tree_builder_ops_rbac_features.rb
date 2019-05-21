@@ -74,26 +74,4 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   def root_feature
     @root_feature ||= MiqProductFeature.feature_root
   end
-
-  def all_vm_options
-    text = _("Access Rules for all Virtual Machines")
-    checked = @features.include?("all_vm_rules") || @features.include?(root_feature)
-
-    {
-      :key     => "#{@node_id_prefix}___tab_all_vm_rules",
-      :text    => text,
-      :tooltip => text,
-      :icon    => "pficon pficon-folder-close",
-      :select  => checked
-    }
-  end
-
-  def override(node, object, _, _)
-    case object
-    when MiqProductFeature
-      if object.identifier == "all_vm_rules"
-        node.merge!(all_vm_options)
-      end
-    end
-  end
 end
