@@ -7,9 +7,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def initialize(name, sandbox, build, **params)
     @node_id_prefix = params[:role].id || "new"
-    @role     = params[:role]
     @editable = params[:editable]
-    @features = @role.miq_product_features.map(&:identifier)
+    @features = params[:role].miq_product_features.map(&:identifier)
 
     @root_counter = []
 
@@ -52,7 +51,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :role         => @role,
       :features     => @features,
       :editable     => @editable,
       :checkboxes   => true,
