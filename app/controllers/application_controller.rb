@@ -811,7 +811,7 @@ class ApplicationController < ActionController::Base
 
     view.headers.each_with_index do |h, i|
       col = view.col_order[i]
-      next if view.column_is_hidden?(col)
+      next if view.column_is_hidden?(col, self)
 
       align = %i[fixnum integer Fixnum float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
 
@@ -873,7 +873,7 @@ class ApplicationController < ActionController::Base
                           :image => ActionController::Base.helpers.image_path(image.to_s),
                           :icon  => icon,
                           :icon2 => icon2}.compact
-      new_row[:cells].concat(::GtlFormatter.format_cols(view, row))
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
 
       next unless @row_button # Show a button in the last col
       new_row[:cells] << {
