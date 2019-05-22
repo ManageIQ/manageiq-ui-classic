@@ -9,6 +9,12 @@ class MiqRequestController < ApplicationController
 
   helper ProvisionCustomizeHelper
 
+  PROV_STATES = {
+    "pending_approval" => N_("Pending Approval"),
+    "approved"         => N_("Approved"),
+    "denied"           => N_("Denied")
+  }.freeze
+
   def index
     @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
     redirect_to(:action => 'show_list')

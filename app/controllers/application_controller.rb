@@ -199,12 +199,6 @@ class ApplicationController < ActionController::Base
 
   AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
 
-  PROV_STATES = {
-    "pending_approval" => N_("Pending Approval"),
-    "approved"         => N_("Approved"),
-    "denied"           => N_("Denied")
-  }.freeze
-
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
@@ -815,9 +809,6 @@ class ApplicationController < ActionController::Base
 
   # Render the view data to a Hash structure for the list view
   def view_to_hash(view, fetch_data = false)
-    # Get the time zone in effect for this view
-    tz = view.db.downcase == 'miqschedule' ? server_timezone : Time.zone
-
     root = {:head => [], :rows => []}
 
     has_checkbox = !@embedded && !@no_checkboxes
@@ -894,39 +885,7 @@ class ApplicationController < ActionController::Base
                           :image => ActionController::Base.helpers.image_path(image.to_s),
                           :icon  => icon,
                           :icon2 => icon2}.compact
-
-      view.col_order.each_with_index do |col, col_idx|
-        next if view.column_is_hidden?(col)
-
-        celltext = nil
-
-        case view.col_order[col_idx]
-        when 'db'
-          celltext = Dictionary.gettext(row[col], :type => :model, :notfound => :titleize)
-        when 'approval_state'
-          celltext = _(PROV_STATES[row[col]])
-        when 'prov_type'
-          celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
-        when "result"
-          new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
-        when "severity"
-          new_row[:cells] << {:span => severity_span_class(row[col]), :text => row[col].titleize}
-        when 'state'
-          celltext = row[col].to_s.titleize
-        when 'hardware.bitness'
-          celltext = row[col] ? "#{row[col]} bit" : ''
-        when 'image?'
-          celltext = row[col] ? _("Image") : _("Snapshot")
-        else
-          # Use scheduled tz for formatting, if configured
-          if ['miqschedule'].include?(view.db.downcase)
-            celltz = row['run_at'][:tz] if row['run_at'] && row['run_at'][:tz]
-          end
-          celltext = format_col_for_display(view, row, col, celltz || tz)
-        end
-
-        new_row[:cells] << {:text => celltext} if celltext
-      end
+      new_row[:cells].concat(::GtlFormatter.format_cols(view, row))
 
       next unless @row_button # Show a button in the last col
       new_row[:cells] << {
@@ -938,28 +897,6 @@ class ApplicationController < ActionController::Base
     end
 
     root
-  end
-
-  def result_span_class(value)
-    case value.downcase
-    when "pass"
-      "label label-success center-block"
-    when "fail"
-      "label label-danger center-block"
-    else
-      "label label-primary center-block"
-    end
-  end
-
-  def severity_span_class(value)
-    case value.downcase
-    when "high"
-      "label label-danger center-block"
-    when "medium"
-      "label label-warning center-block"
-    else
-      "label label-low-severity center-block"
-    end
   end
 
   def listicon_item(view, id = nil)
@@ -1335,7 +1272,7 @@ class ApplicationController < ActionController::Base
     view =
       if options['report_name']
         path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", options['report_name']).to_s
-        MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
+        MiqReport.load_from_filename(path_to_report, {})
       else
         refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
       end
