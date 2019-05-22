@@ -2089,26 +2089,6 @@ class CatalogController < ApplicationController
       @record.prov_type == "generic_container_template"
   end
 
-  # Build a Catalog Items explorer tree
-  def build_sandt_tree
-    TreeBuilderCatalogItems.new('sandt_tree', @sb)
-  end
-
-  # Build a Services explorer tree
-  def build_svccat_tree
-    TreeBuilderServiceCatalog.new('svccat_tree', @sb)
-  end
-
-  # Build a Catalogs explorer tree
-  def build_stcat_tree
-    TreeBuilderCatalogs.new('stcat_tree', @sb)
-  end
-
-  # Build a Orchestration Templates explorer tree
-  def build_ot_tree
-    TreeBuilderOrchestrationTemplates.new('ot_tree', @sb)
-  end
-
   def show_record(id = nil)
     @sb[:action] = nil
     @display = params[:display] || "main" unless pagination_or_gtl_request?

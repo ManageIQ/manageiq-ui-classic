@@ -425,11 +425,6 @@ module PxeController::PxeServers
     process_elements(pxes, PxeServer, task, display_name)
   end
 
-  # Get information for an event
-  def build_pxe_servers_tree
-    TreeBuilderPxeServers.new("pxe_servers_tree", @sb)
-  end
-
   def pxe_server_get_node_info(treenodeid)
     if treenodeid == "root"
       pxe_server_list

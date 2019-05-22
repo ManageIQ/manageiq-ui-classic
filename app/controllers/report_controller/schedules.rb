@@ -463,10 +463,6 @@ module ReportController::Schedules
     end
   end
 
-  def build_schedules_tree
-    TreeBuilderReportSchedules.new('schedules_tree', @sb)
-  end
-
   def get_schedule(nodeid)
     @record = @schedule = MiqSchedule.find(nodeid.split('__').last.to_i)
     show_schedule

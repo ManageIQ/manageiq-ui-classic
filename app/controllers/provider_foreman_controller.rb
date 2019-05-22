@@ -226,14 +226,6 @@ class ProviderForemanController < ApplicationController
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
-  def build_configuration_manager_providers_tree(_type)
-    TreeBuilderConfigurationManager.new(:configuration_manager_providers_tree, @sb)
-  end
-
-  def build_configuration_manager_cs_filter_tree(_type)
-    TreeBuilderConfigurationManagerConfiguredSystems.new(:configuration_manager_cs_filter_tree, @sb)
-  end
-
   def get_node_info(treenodeid, show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))

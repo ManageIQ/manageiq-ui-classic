@@ -253,9 +253,4 @@ module PxeController::PxeCustomizationTemplates
       end
     end
   end
-
-  # Get information for an event
-  def build_customization_templates_tree
-    TreeBuilderPxeCustomizationTemplates.new("customization_templates_tree", @sb)
-  end
 end

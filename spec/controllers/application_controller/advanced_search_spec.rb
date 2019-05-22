@@ -7,10 +7,11 @@ describe ProviderForemanController, "::AdvancedSearch" do
   describe "#adv_search_redraw_left_div" do
     before { controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_cs_filter_tree) }
 
-    it "calls build_configuration_manager_cs_filter_tree method in Config Mgmt Configured Systems when saving a filter" do
+    it "calls build_accordions_and_trees method in Config Mgmt Configured Systems when saving a filter" do
       allow(controller).to receive(:adv_search_redraw_listnav_and_main)
 
-      expect(controller).to receive(:build_configuration_manager_cs_filter_tree).once
+      expect(controller).to receive(:build_accordions_and_trees).and_call_original.once
+      expect(TreeBuilderConfigurationManagerConfiguredSystems).to receive(:new).and_call_original
       controller.send(:adv_search_redraw_left_div)
     end
   end

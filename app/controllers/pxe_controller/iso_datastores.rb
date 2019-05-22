@@ -260,11 +260,6 @@ module PxeController::IsoDatastores
     process_elements(elements, IsoDatastore, task, display_name, "ems_id")
   end
 
-  # Get information for an event
-  def build_iso_datastores_tree
-    TreeBuilderIsoDatastores.new("iso_datastores_tree", @sb)
-  end
-
   def iso_datastore_get_node_info(treenodeid)
     if treenodeid == "root"
       iso_datastore_list
