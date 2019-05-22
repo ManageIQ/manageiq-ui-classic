@@ -1,10 +1,4 @@
 class GtlFormatter
-  PROV_STATES = {
-    "pending_approval" => N_("Pending Approval"),
-    "approved"         => N_("Approved"),
-    "denied"           => N_("Denied")
-  }.freeze
-
   def self.format_cols(view, row)
     cols = []
 
@@ -68,7 +62,7 @@ class GtlFormatter
   end
 
   def self.miq_request_format(value)
-    [_(PROV_STATES[value]), nil]
+    [_(MiqRequestController::PROV_STATES[value]), nil]
   end
 
   def self.service_template_format(value)
