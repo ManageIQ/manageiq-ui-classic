@@ -149,7 +149,7 @@ describe WidgetImportService do
       context "when the list of widgets to import from the yaml do not include an existing widget" do
         context "when the report with the same name already exists" do
           before do
-            MiqReport.create!(
+            @report = MiqReport.create!(
               :db        => "Vm",
               :name      => "menu name",
               :rpt_group => "Custom",
@@ -167,9 +167,8 @@ describe WidgetImportService do
 
           it "uses the existing report" do
             widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-            widget = MiqWidget.first
-            expect(widget.resource).to eq(MiqReport.first)
-            expect(MiqReport.first.title).to eq("original report title")
+            widget = MiqWidget.find_by(:title => "not_potato")
+            expect(widget.resource).to eq(@report)
           end
         end
 
@@ -186,8 +185,9 @@ describe WidgetImportService do
 
           it "builds a report associated to the widget" do
             widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-            widget = MiqWidget.first
-            expect(widget.resource).to eq(MiqReport.first)
+            resource = MiqWidget.find_by(:title => "not_potato").resource
+            expect(resource).to be_kind_of(MiqReport)
+            expect(resource.persisted?).to eq(true)
           end
         end
 
@@ -203,7 +203,7 @@ describe WidgetImportService do
 
           it "builds a new miq schedule associated to the widget" do
             widget_import_service.import_widgets(import_file_upload, widgets_to_import)
-            widget = MiqWidget.first
+            widget = MiqWidget.find_by(:title => "not_potato")
             expect(widget.miq_schedule.description).to eq("new schedule description")
           end
         end
