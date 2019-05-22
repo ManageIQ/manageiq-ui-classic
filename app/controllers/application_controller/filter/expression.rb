@@ -174,7 +174,7 @@ module ApplicationController::Filter
               self.exp_key = nil
             else
               # for date time fields we should show After/Before etc. options
-              chosen_field_col_type = MiqExpression.get_col_type(params[:chosen_field])
+              chosen_field_col_type = MiqExpression.parse_field_or_tag(params[:chosen_field]).try(:column_type)
               if exp_model != '_display_filter_' &&
                  MiqExpression::Field.parse(exp_field).plural? &&
                  !%i[date datetime].include?(chosen_field_col_type) &&
