@@ -216,11 +216,11 @@ class DashboardController < ApplicationController
       # get user dashboard version
       ws = MiqWidgetSet.where_unique_on(db.name, current_user).first
       # update user's copy if group dashboard has been updated by admin
-      if ws&.set_data && (!ws.set_data[:last_group_db_updated] ||
-         (ws.set_data[:last_group_db_updated] && db.updated_on > ws.set_data[:last_group_db_updated]))
+      if ws&.set_data && (db.set_data[:reset_upon_login] || (!ws.set_data[:last_group_db_updated] ||
+         (ws.set_data[:last_group_db_updated] && db.updated_on > ws.set_data[:last_group_db_updated])))
         # if group dashboard was locked earlier but now it is unlocked,
         # reset everything  OR if admin makes changes to a locked db do a reset on user's copies
-        if (db.set_data[:locked] && !ws.set_data[:locked]) || (db.set_data[:locked] && ws.set_data[:locked])
+        if db.set_data[:reset_upon_login] || (db.set_data[:locked] && !ws.set_data[:locked]) || (db.set_data[:locked] && ws.set_data[:locked])
           ws.set_data = db.set_data
           ws.set_data[:last_group_db_updated] = db.updated_on
           ws.save

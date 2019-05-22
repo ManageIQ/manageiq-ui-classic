@@ -34,6 +34,12 @@
       .col-md-8
         = check_box_tag("locked", "1", @edit[:new][:locked],
                         "data-miq_observe_checkbox" => {:url => url}.to_json)
+    .form-group
+      %label.control-label.col-md-2
+        = _('Reset Dashboard upon login')
+      .col-md-8
+        = check_box_tag("reset_upon_login", "1", @edit[:new][:reset_upon_login],
+                        "data-miq_observe_checkbox" => {:url => url}.to_json)
   %hr
   = render :partial => "db_widgets"
   - if read_only
