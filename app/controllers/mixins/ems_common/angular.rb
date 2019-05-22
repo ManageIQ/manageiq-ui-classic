@@ -137,7 +137,16 @@ module Mixins
           end
         when 'ManageIQ::Providers::Amazon::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
-          [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true, uri]
+          [
+            user,
+            password,
+            :EC2,
+            params[:provider_region],
+            ems.http_proxy_uri,
+            true,
+            uri,
+            :assume_role => params[:service_account].presence,
+          ]
         when 'ManageIQ::Providers::Azure::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
           [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region], uri]
@@ -355,6 +364,10 @@ module Mixins
         if @ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager)
           host_default_vnc_port_start = @ems.host_default_vnc_port_start.to_s
           host_default_vnc_port_end = @ems.host_default_vnc_port_end.to_s
+        end
+
+        if @ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
+          service_account = @ems.authentication_service_account
         end
 
         if @ems.kind_of?(ManageIQ::Providers::Azure::CloudManager)
@@ -789,10 +802,14 @@ module Mixins
           console_password = params[:console_password] ? params[:console_password] : ems.authentication_password(:console)
           creds[:console] = {:userid => params[:console_userid], :password => console_password, :save => (mode != :validate)} # FIXME: skateman was here
         end
-        if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager) &&
-           ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
-          smartstate_docker_password = params[:smartstate_docker_password] ? params[:smartstate_docker_password] : ems.authentication_password(:smartstate_docker)
-          creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
+        if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
+          if ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
+            smartstate_docker_password = params[:smartstate_docker_password] || ems.authentication_password(:smartstate_docker)
+            creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
+          else
+            creds[:default] ||= {}
+            creds[:default][:service_account] = params[:service_account]
+          end
         end
         if (ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ||
             ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) ||

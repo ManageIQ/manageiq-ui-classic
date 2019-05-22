@@ -1,0 +1,24 @@
+- prefix     ||= 'default'
+- input_type ||= 'text'
+- input_name ||= ''
+- input_desc ||= ''
+- input_emsg ||= ''
+- input_id   ||= [prefix, input_name].select(&:present?).join("_")
+
+%div
+  .form-group{"ng-class" => "{'has-error': angularForm.#{input_id}.$invalid}"}                                    |
+    %label.col-md-2.control-label{"for" => input_id}
+      = _(input_desc)
+    .col-md-4
+      %input.form-control{"type"                    => input_type,
+                          "id"                      => input_id,
+                          "ng-required"             => false,
+                          "name"                    => input_id,
+                          "ng-model"                => "#{ng_model}.#{input_id}",
+                          "checkchange"             => "",
+                          "ng-trim"                 => false,
+                          "detect_spaces"           => "",
+                          "prefix"                  => prefix,
+                          "reset-validation-status" => "#{prefix}_auth_status"}
+      %span.help-block{"ng-show" => "angularForm.#{input_id}.$error.url"}
+        = _(input_emsg)
