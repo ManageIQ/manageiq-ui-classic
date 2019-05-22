@@ -26,6 +26,8 @@ module Menu
 
     def item(item_id)
       @menu.each do |menu_section|
+        return menu_section if Menu::Item === menu_section && menu_section.id == item_id
+
         menu_section.items.each do |el|
           the_item = el.item(item_id)
           return the_item if the_item.present?
@@ -73,6 +75,7 @@ module Menu
       load_default_items
       load_custom_items(Menu::YamlLoader)
       load_custom_items(Menu::CustomLoader)
+      load_custom_items(Menu::SettingsLoader)
     end
 
     def merge_sections(sections)
@@ -100,10 +103,12 @@ module Menu
     def merge_items(items)
       items.each do |item|
         parent = @id_to_section[item.parent_id]
-        raise InvalidMenuDefinition, 'Invalid parent' if parent.nil?
-
-        parent.items << item
-        item.parent = parent
+        if parent.nil?
+          @menu << item
+        else
+          parent.items << item
+          item.parent = parent
+        end
       end
     end
 
@@ -123,12 +128,12 @@ module Menu
       @id_to_section = @menu.index_by(&:id)
       # recursively add subsections to the @id_to_section hash
       @menu.each do |section|
-        section.preprocess_sections(@id_to_section)
+        section.preprocess_sections(@id_to_section) if section.respond_to?(:preprocess_sections)
       end
     end
 
     def valid_sections
-      # format is {"vi" => :vi, "svc" => :svc . . }
+     # format is {"vi" => :vi, "svc" => :svc . . }
       @valid_sections ||= @id_to_section.keys.index_by(&:to_s)
     end
   end

@@ -1,7 +1,15 @@
 .nav-pf-vertical.nav-pf-vertical-with-sub-menus.nav-pf-vertical-collapsible-menus
   %ul#maintab.list-group
     - Menu::Manager.menu do |menu_section|
-      - if menu_section.visible?
+      - next unless menu_section.visible?
+      - if Menu::Item === menu_section
+        %li.list-group-item{:class => item_nav_class(menu_section), :id => "menu_item_#{menu_section.id}"}
+          %a{menu_section.link_params}
+            %span{:class => menu_section.icon}
+            %span.list-group-item-value
+              = _(menu_section.name)
+
+      - else
         %li.list-group-item.secondary-nav-item-pf{"data-target" => "#menu-#{menu_section.id}", :class => section_nav_class(menu_section)}
           %a{menu_section.link_params}
             %span{:class => menu_section.icon}
