@@ -12,7 +12,7 @@
   %nav.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right.navbar-iconic
       %li{:class => "dropdown brand-white-label #{::Settings.server.custom_logo ? "whitelabeled" : ""}"}
-      %li.drawer-pf-trigger.dropdown{"open" => "!hideDrawer"}
+      %li.dropdown{"open" => "!hideDrawer"}
         %a{:class => "nav-item-iconic drawer-pf-trigger-icon", :title => "{{vm.notificationsIndicatorTooltip}}", "ng-click" => "vm.toggleNotificationsList()"}
           %span.fa.fa-bell
           %span{"ng-class" => "{'badge badge-pf-bordered': vm.newNotifications}"} 
@@ -22,7 +22,6 @@
           %li.dropdown
             %a#help-menu.dropdown-toggle.nav-item-iconic{"data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
               %span.pficon.pficon-help{:title => _("Help")}
-              %span.caret
             %ul.dropdown-menu{"aria-labelledby" => "help-menu"}
               - menu_section.items.each do |menu_item|
                 - if menu_item.visible?
