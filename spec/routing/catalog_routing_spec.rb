@@ -41,7 +41,6 @@ describe 'routes for CatalogController' do
     orchestration_template_copy
     orchestration_template_edit
     ot_copy_submit
-    ot_edit_submit
     ot_form_field_changed
     ot_tags_edit
     prov_field_changed
