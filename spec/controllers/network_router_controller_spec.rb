@@ -54,7 +54,7 @@ describe NetworkRouterController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @router = FactoryBot.create(:network_router)
-      login_as FactoryBot.create(:user, :features => %w(none))
+      login_as FactoryBot.create(:user, :features => "network_router_show")
     end
 
     subject do

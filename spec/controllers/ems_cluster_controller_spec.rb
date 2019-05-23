@@ -65,7 +65,7 @@ describe EmsClusterController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @cluster = FactoryBot.create(:ems_cluster)
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "ems_cluster_show")
     end
 
     context "render listnav partial" do

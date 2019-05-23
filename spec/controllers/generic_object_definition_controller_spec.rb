@@ -5,7 +5,7 @@ describe GenericObjectDefinitionController do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "generic_object_definition_show")
     end
 
     it "should redirect to #show_list" do

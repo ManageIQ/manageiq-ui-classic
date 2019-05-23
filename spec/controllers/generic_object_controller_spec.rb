@@ -5,7 +5,7 @@ describe GenericObjectController do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "generic_object_show")
       generic_obj_defn = FactoryBot.create(:generic_object_definition)
       generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show, :params => {:id => generic_obj.id}

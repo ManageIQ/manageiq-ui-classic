@@ -51,7 +51,7 @@ describe CloudSubnetController do
   describe "#show" do
     let(:subnet) { FactoryBot.create(:cloud_subnet) }
 
-    before { login_as FactoryBot.create(:user) }
+    before { login_as FactoryBot.create(:user, :features => "cloud_subnet_show") }
 
     render_views
 

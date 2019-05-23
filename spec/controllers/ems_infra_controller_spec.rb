@@ -274,7 +274,7 @@ describe EmsInfraController do
     render_views
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "ems_infra_show")
       @ems = FactoryBot.create(:ems_vmware)
     end
 

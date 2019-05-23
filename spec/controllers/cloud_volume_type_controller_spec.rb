@@ -52,7 +52,7 @@ describe CloudVolumeTypeController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @volume_type = FactoryBot.create(:cloud_volume_type)
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "cloud_volume_type_show")
     end
 
     subject do
@@ -72,7 +72,7 @@ describe CloudVolumeTypeController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @volume_type = FactoryBot.create(:cloud_volume_type)
-      login_as FactoryBot.create(:user, :features => "none")
+      login_as FactoryBot.create(:user, :features => "cloud_volume_type_show_list")
     end
 
     subject do

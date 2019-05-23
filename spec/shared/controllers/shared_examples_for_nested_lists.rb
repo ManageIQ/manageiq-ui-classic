@@ -1,7 +1,7 @@
 shared_examples 'relationship table screen with GTL' do |displays, parent_factory|
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-    login_as FactoryBot.create(:user, :features => "none")
+    login_as FactoryBot.create(:user, :features => "ems_cloud_show")
     @parent = FactoryBot.create(parent_factory)
   end
 
