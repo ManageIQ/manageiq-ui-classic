@@ -129,6 +129,8 @@
     = render :partial => "ae_prov_show"
   - elsif %w[PhysicalServerProvisionRequest PhysicalServerFirmwareUpdateRequest].include?(@miq_request.type)
     = render :partial => "physical_server_provision_show"
+  - elsif @miq_request.type == "PhysicalServerFirmwareUpdateRequest"
+    = render :partial => "physical_server_firmware_update_show"
   - else
     = render :partial => "reconfigure_show"
 
