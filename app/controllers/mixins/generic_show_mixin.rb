@@ -138,14 +138,6 @@ module Mixins
       nested_list(display.camelize.singularize.constantize)
     end
 
-    def display_descendant_vms
-      @showtype = "config"
-      drop_breadcrumb(:name => _("%{name} (All VMs - Tree View)") % {:name => @record.name},
-                      :url  => show_link(@record, :display => "descendant_vms", :treestate => true))
-      self.x_active_tree = :datacenter_tree
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, @sb, true, :root => @record)
-    end
-
     def display_all_vms
       nested_list(Vm, :association => "all_vms")
     end

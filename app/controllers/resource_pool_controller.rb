@@ -10,7 +10,7 @@ class ResourcePoolController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods
-    %w[vms descendant_vms all_vms resource_pools]
+    %w[vms all_vms resource_pools]
   end
 
   # handle buttons pressed on the button bar

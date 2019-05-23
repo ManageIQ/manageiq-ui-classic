@@ -15,7 +15,6 @@ describe ResourcePoolHelper::TextualSummary do
     parent_host
     direct_vms
     allvms_size
-    total_vms
     resource_pools
   )
 

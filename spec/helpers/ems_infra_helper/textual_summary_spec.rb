@@ -5,8 +5,6 @@ describe EmsInfraHelper::TextualSummary do
   end
 
   include_examples "textual_group", "Relationships", %i(
-    infrastructure_folders
-    folders
     clusters
     hosts
     datastores

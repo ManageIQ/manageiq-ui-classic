@@ -20,7 +20,7 @@ class EmsClusterController < ApplicationController
   end
 
   def self.display_methods
-    %w[descendant_vms all_vms miq_templates vms hosts resource_pools config_info storage custom_button_events]
+    %w[all_vms miq_templates vms hosts resource_pools config_info storage custom_button_events]
   end
 
   # handle buttons pressed on the button bar

@@ -16,7 +16,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events]
+      %i[clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events]
     )
   end
 
@@ -78,30 +78,6 @@ module EmsInfraHelper::TextualSummary
 
   def textual_guid
     {:label => _("Management Engine GUID"), :value => @record.guid}
-  end
-
-  def textual_infrastructure_folders
-    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
-    label     = "#{title_for_hosts} & #{title_for_clusters}"
-    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-container-node", :value => available ? _("Available") : _("N/A")}
-    if available
-      h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders')
-      h[:title] = _("Show %{label}") % {:label => label}
-    end
-    h
-  end
-
-  def textual_folders
-    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
-    label     = _("VMs & Templates")
-    available = @record.number_of(:ems_folders).positive? && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
-    if available
-      h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders', :vat => true)
-      h[:title] = _("Show Virtual Machines & Templates")
-    end
-    h
   end
 
   def textual_clusters
