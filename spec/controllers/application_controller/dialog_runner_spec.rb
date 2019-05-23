@@ -148,7 +148,15 @@ describe CatalogController do
     it "redirects to requests show list after the dialog is submitted if a request is created" do
       controller.params = {:button => 'submit', :id => 'foo'}
       allow(controller).to receive(:role_allows?).and_return(true)
-      allow(wf).to receive(:submit_request).and_return(:request => workflow.make_request(nil, {}))
+      allow(workflow).to receive(:validate_sysprep_field)
+      allow(workflow).to receive(:validate_sysprep_upload)
+      allow(workflow).to receive(:validate_placement)
+      allow(workflow).to receive(:validate_vm_name)
+      allow(workflow).to receive(:validate_pxe_image_id)
+      allow(workflow).to receive(:validate_pxe_server_id)
+      allow(workflow).to receive(:validate_pxe_server_id)
+      req = workflow.make_request(nil, {})
+      allow(wf).to receive(:submit_request).and_return(:request => req)
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
       expect(page).to receive(:redirect_to).with(:controller => "miq_request",
