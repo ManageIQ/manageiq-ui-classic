@@ -100,4 +100,48 @@ describe('OrcherstrationTemplate form', () => {
       });
     });
   });
+
+  it('should render copy variant', (done) => {
+    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
+    fetchMock.postOnce('/api/orchestration_templates/123', {});
+    fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
+      name: 'foo',
+      content: 'content',
+    });
+    /**
+     * async load
+     */
+    setImmediate(() => {
+      /**
+       * state update
+       */
+      setImmediate(() => {
+        wrapper.update();
+        wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
+        /**
+         * manually change content value
+         * Code component is not standard input element
+         * Two first parameters are codemirror element and data
+         */
+        wrapper.find(CodeEditor).props().onBeforeChange(null, null, 'updated content');
+        wrapper.update();
+        wrapper.find('button.btn.btn-primary').simulate('click');
+        /**
+         * after copy request
+         */
+        setImmediate(() => {
+          expect(fetchMock.lastCall()).toBeTruthy();
+          expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
+            action: 'copy',
+            resource: {
+              name: 'bar',
+              content: 'updated content',
+            },
+          }));
+          expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+          done();
+        });
+      });
+    });
+  });
 });

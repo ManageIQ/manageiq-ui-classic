@@ -8,15 +8,31 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import orchestrationFormSchema from './orchestration-template-form.schema';
 
-const OrcherstrationTemplateForm = ({ managers, otId }) => {
+const submitNewTemplate = (values, message) => API.post('/api/orchestration_templates', values)
+  .then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
+  .catch(() => miqSparkleOff());
+
+const updateTemplate = (values, message, otId) => API.patch(`/api/orchestration_templates/${otId}`, values)
+  .then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
+  .catch(() => miqSparkleOff());
+
+const copyTemplate = (values, message, otId) => API.post(`/api/orchestration_templates/${otId}`, {
+  action: 'copy',
+  resource: values,
+}).then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
+  .catch(() => miqSparkleOff());
+
+const OrcherstrationTemplateForm = ({ managers, otId, copy }) => {
   const [initialValues, setinitialValues] = useState({});
+  const [submitAction, setSubmitAction] = useState();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    setSubmitAction(() => (copy ? copyTemplate : otId ? updateTemplate : submitNewTemplate));
     if (otId) {
       API.get(`/api/orchestration_templates/${otId}?attributes=name,description,type,ems_id,draft,content`)
         .then((data) => {
-          setinitialValues(data);
+          setinitialValues(copy ? { ...data, name: `Copy of ${data.name}` } : data);
           setLoading(false);
         });
     } else {
@@ -24,22 +40,13 @@ const OrcherstrationTemplateForm = ({ managers, otId }) => {
     }
   }, []);
 
-  const schema = orchestrationFormSchema(managers, !!otId);
+  const schema = orchestrationFormSchema(managers, !!otId, copy, initialValues);
 
-  const onSubmit = (values) => {
+  const onSubmit = ({ href: _href, id: _id, ...values }) => {
     miqSparkleOn();
-    const sucessMessage = sprintf(__(`Orchestration Template %s was ${otId ? 'saved' : 'successfully created'}`), values.name);
-    if (otId) {
-      return API.patch(`/api/orchestration_templates/${otId}`, values)
-        .then(() => miqRedirectBack(sucessMessage, 'success', '/catalog/explorer'))
-        .catch(() => miqSparkleOff());
-    }
-
-    return API.post('/api/orchestration_templates', values)
-      .then(() => miqRedirectBack(sucessMessage, 'success', '/catalog/explorer'))
-      .catch(() => miqSparkleOff());
+    const successMessage = sprintf(__(`Orchestration Template %s was ${otId ? 'saved' : 'successfully created'}`), values.name);
+    return submitAction(values, successMessage, otId);
   };
-
 
   if (isLoading) {
     return null;
@@ -56,10 +63,10 @@ const OrcherstrationTemplateForm = ({ managers, otId }) => {
         onSubmit={onSubmit}
         initialValues={initialValues}
         onCancel={() => miqRedirectBack(cancelMessage, 'success', '/catalog/explorer')}
-        canReset={!!otId}
+        canReset={!!otId && !copy}
         onReset={() => add_flash(__('All changes have been reset'), 'warning')}
         buttonsLabels={{
-          submitLabel: otId ? __('Save') : __('Add'),
+          submitLabel: otId && !copy ? __('Save') : __('Add'),
         }}
       />
     </Grid>
@@ -69,11 +76,13 @@ const OrcherstrationTemplateForm = ({ managers, otId }) => {
 OrcherstrationTemplateForm.propTypes = {
   managers: PropTypes.arrayOf(PropTypes.array.isRequired),
   otId: PropTypes.number,
+  copy: PropTypes.bool,
 };
 
 OrcherstrationTemplateForm.defaultProps = {
   otId: undefined,
   managers: [],
+  copy: false,
 };
 
 export default OrcherstrationTemplateForm;

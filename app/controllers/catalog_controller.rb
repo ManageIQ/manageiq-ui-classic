@@ -623,17 +623,12 @@ class CatalogController < ApplicationController
     self.x_active_tree = 'ot_tree'
   end
 
-  def ot_form_field_changed
-    dialog_creation_form_field_changed("ot_edit__#{params[:id]}")
+  def ot_copy_submit
+    self.x_active_tree = 'ot_tree'
   end
 
-  def ot_copy_submit
-    case params[:button]
-    when "cancel"
-      ot_copy_submit_cancel
-    when "add"
-      ot_copy_submit_add
-    end
+  def ot_form_field_changed
+    dialog_creation_form_field_changed("ot_edit__#{params[:id]}")
   end
 
   def ot_remove_submit
@@ -962,56 +957,6 @@ class CatalogController < ApplicationController
     @edit[:key] = "ot_edit__#{@record.id}"
     @right_cell_text = right_cell_text % {:record_name => @record.name}
     @in_a_form = true
-  end
-
-  def ot_copy_submit_cancel
-    add_flash(_("Copy of Orchestration Template \"%{name}\" was cancelled by the user") %
-      {:name => session[:edit][:current][:name]})
-    @in_a_form = false
-    @sb[:action] = @edit = @record = nil
-    replace_right_cell
-  end
-
-  def ot_copy_submit_add
-    assert_privileges("orchestration_template_copy")
-    id = params[:original_ot_id]
-    return unless load_edit("ot_edit__#{id}", "replace_cell__explorer")
-    old_ot = OrchestrationTemplate.find(id)
-    if params[:template_content] == old_ot.content
-      render_flash(_("Unable to create a new template copy \"%{name}\": old and new template content have to differ.") %
-          {:name => @edit[:new][:name]}, :error)
-    elsif params[:template_content].nil? || params[:template_content] == ""
-      render_flash(_("Unable to create a new template copy \"%{name}\": new template content cannot be empty.") %
-        {:name => @edit[:new][:name]}, :error)
-    else
-      ot = OrchestrationTemplate.new(
-        :name         => @edit[:new][:name],
-        :description  => @edit[:new][:description],
-        :type         => old_ot.type,
-        :content      => params[:template_content],
-        :draft        => @edit[:new][:draft] == true || @edit[:new][:draft] == "true",
-        :ems_id       => @edit[:new][:manager_id],
-        :remote_proxy => true
-      )
-      begin
-        ot.save_as_orderable!
-      rescue => bang
-        render_flash(_("Error during 'Orchestration Template Copy': %{error_message}") %
-          {:error_message => bang.message}, :error)
-      else
-        add_flash(_("Orchestration Template \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-        x_node_elems = x_node.split('-')
-        if !x_node_elems[2].nil? && x_node_elems[2] != ot.id
-          x_node_elems[2] = ot.id
-          self.x_node = x_node_elems.join('-')
-        end
-
-        @changed = session[:changed] = false
-        @in_a_form = false
-        @edit = session[:edit] = nil
-        replace_right_cell(:replace_trees => trees_to_replace([:ot]))
-      end
-    end
   end
 
   def service_dialog_from_ot_submit_cancel
@@ -1991,7 +1936,7 @@ class CatalogController < ApplicationController
     end
 
     # hide form buttons and toolbar for react forms actions
-    if %w[ot_add ot_edit].include?(action)
+    if %w[ot_add ot_edit ot_copy].include?(action)
       presenter.hide(:toolbar, :paging_div, :form_buttons_div)
     else
       presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)

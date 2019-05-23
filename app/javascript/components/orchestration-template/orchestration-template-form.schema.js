@@ -17,7 +17,19 @@ const templateTypeOptions = [{
   value: 'ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate',
 }];
 
-const orchestrationFormSchema = (managers, isEditing = false) => ({
+const validateCopyContent = (value, { name, content }, copy) => {
+  if (!copy) {
+    return undefined;
+  }
+
+  if (value === content) {
+    return sprintf(__('Unable to create a new template copy %s: old and new template content have to differ.'), name);
+  }
+
+  return undefined;
+};
+
+const orchestrationFormSchema = (managers, isEditing = false, isCopying = false, initialValues = {}) => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
     name: 'name',
@@ -44,20 +56,24 @@ const orchestrationFormSchema = (managers, isEditing = false) => ({
         initialValue: templateTypeOptions[0].value,
       }],
   }, {
-    condition: {
-      when: 'type',
-      is: 'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate',
-    },
-    name: 'ems_id',
-    label: __('Provider'),
-    component: componentTypes.SELECT,
-    options: managers.map(([label, value]) => ({ value: value.toString(), label })),
-    placeholder: `<${__('Choose')}>`,
-    isRequired: true,
-    validateOnMount: true,
-    clearOnUnmount: true,
-    validate: [{
-      type: validatorTypes.REQUIRED,
+    component: componentTypes.SUB_FORM,
+    name: 'provider-type',
+    fields: isCopying ? [] : [{
+      condition: {
+        when: 'type',
+        is: 'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate',
+      },
+      name: 'ems_id',
+      label: __('Provider'),
+      component: componentTypes.SELECT,
+      options: managers.map(([label, value]) => ({ value: value.toString(), label })),
+      placeholder: `<${__('Choose')}>`,
+      isRequired: true,
+      validateOnMount: true,
+      clearOnUnmount: true,
+      validate: [{
+        type: validatorTypes.REQUIRED,
+      }],
     }],
   }, {
     name: 'draft',
@@ -75,7 +91,7 @@ const orchestrationFormSchema = (managers, isEditing = false) => ({
     isRequired: true,
     validate: [{
       type: validatorTypes.REQUIRED,
-    }],
+    }, value => validateCopyContent(value, initialValues, isCopying)],
   }],
 });
 
