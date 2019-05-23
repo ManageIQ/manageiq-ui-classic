@@ -34,10 +34,15 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
   describe '#disabled?' do
     context 'when record is a class of a locked domain' do
       context 'and button is miq_ae_instance_copy with an editable record' do
+        before do
+          MiqAeDomain.destroy_all
+          allow(record).to receive(:editable?).and_return(false)
+        end
+
         let(:child_id) { 'miq_ae_instance_copy' }
-        before { allow(record).to receive(:editable?).and_return(false) }
         it { expect(subject.disabled?).to be_truthy }
       end
+
       context 'and button is miq_ae_method_copy' do
         let(:child_id) { 'miq_ae_method_copy' }
         it { expect(subject.visible?).to be_truthy }

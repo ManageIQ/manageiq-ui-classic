@@ -50,6 +50,7 @@ describe ApplicationController do
       let(:vm_ctrl) { 'vm_infra' }
 
       it 'sets right cell text' do
+        MiqPolicySet.destroy_all
         controller.send(:policy_sim_build_screen, [vm])
         expect(controller.instance_variable_get(:@right_cell_text)).to eq('Virtual Machine Policy Simulation')
       end
@@ -61,6 +62,7 @@ describe ApplicationController do
       let(:vm_ctrl) { 'vm_cloud' }
 
       it 'sets right cell text' do
+        MiqPolicySet.destroy_all
         controller.send(:policy_sim_build_screen, [vm])
         expect(controller.instance_variable_get(:@right_cell_text)).to eq('Instance Policy Simulation')
       end
