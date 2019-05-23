@@ -486,8 +486,6 @@ class TreeBuilder
     ## Utilization
     ### Utilization (TODO)
     :utilization                     => "TreeBuilderUtilization",
-    ### Bottlenecks (TODO)
-    :bottlenecks                     => "TreeBuilderUtilization",
 
     # OPS (Configuration)
     ## Settings

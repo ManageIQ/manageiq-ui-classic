@@ -41,7 +41,6 @@ module Sandbox
     automate_catalog_tree
     automation_manager_providers_tree
     automation_manager_cs_filter_tree
-    bottlenecks_tree
     cb_assignments_tree
     cb_rates_tree
     cb_reports_tree
@@ -117,7 +116,6 @@ module Sandbox
     automation_manager_providers
     automation_manager_cs_filter
     automation_manager_configuration_scripts
-    bottlenecks
     cb_assignments
     cb_rates
     cb_reports

@@ -1,27 +1,4 @@
 describe ApplicationController do
-  context "#perf_planning_gen_data" do
-    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryBot.create(:zone) }
-
-    it "should not get nil error when submitting up Manual Input data" do
-      _enterprise = FactoryBot.create(:miq_enterprise)
-      sb = {
-        :options => {
-          :target_typ => "EmsCluster",
-          :vm_mode    => :manual,
-          :values     => {
-            :cpu => 2
-          }
-        },
-        :vm_opts => {
-          :cpu => 2
-        }
-      }.with_indifferent_access
-      controller.instance_variable_set(:@sb, sb)
-      allow(controller).to receive(:initiate_wait_for_task)
-      controller.send(:perf_planning_gen_data)
-    end
-  end
 
   describe '#skip_days_from_time_profile' do
     subject { ->(l) { described_class.new.send(:skip_days_from_time_profile, l) } }

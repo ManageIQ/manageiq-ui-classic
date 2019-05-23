@@ -90,8 +90,6 @@ module ReportFormatter
       end
       unless rec.nil?
         case mri.db
-        when "BottleneckEvent"
-          e_title = rec[:resource_name]
         when "Vm"
           e_title = rec[:name]
         when "Host"

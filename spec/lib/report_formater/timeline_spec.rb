@@ -53,29 +53,6 @@ describe ReportFormatter::TimelineMessage do
     end
   end
 
-  describe '#message_html on bottleneck event' do
-    row = {}
-    let(:ems_cluster) { FactoryBot.create(:ems_cluster, :id => 42, :name => 'Test Cluster') }
-    let(:event) do
-      FactoryBot.create(:bottleneck_event,
-                         :event_type    => 'MemoryUsage',
-                         :resource_id   => 42,
-                         :resource_name => ems_cluster.name,
-                         :resource_type => 'EmsCluster')
-    end
-
-    tests = {'event_type'    => 'MemoryUsage',
-             'resource_name' => '<a href=/ems_cluster/show/42>Test Cluster</a>'}
-
-    tests.each do |column, href|
-      it "Evaluate column #{column} content" do
-        row[column] = 'MemoryUsage'
-        val = ReportFormatter::TimelineMessage.new(row, event, {}, 'BottleneckEvent').message_html(column)
-        expect(val).to eq(href)
-      end
-    end
-  end
-
   describe '#message_html on policy event' do
     row = {}
     let(:vm) { FactoryBot.create(:vm_redhat, :id => 42, :name => 'Test VM') }

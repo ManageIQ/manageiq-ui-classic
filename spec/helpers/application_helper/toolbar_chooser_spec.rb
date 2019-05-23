@@ -121,7 +121,6 @@ describe ApplicationHelper, "ToolbarChooser" do
           miq_ae_class
           miq_ae_customization
           miq_ae_tools
-          miq_capacity_planning
           miq_capacity_utilization
           miq_policy
           miq_policy_rsop
@@ -170,13 +169,6 @@ describe ApplicationHelper, "ToolbarChooser" do
       it "displays summary toolbar" do
         @sb = {:active_tab => 'configured_systems'}
         expect(ApplicationHelper::ToolbarChooser.new(nil, nil, :record => @record, :explorer => true, :layout => 'automation_manager', :sb => @sb).send(:x_view_toolbar_filename)).to eq("x_gtl_view_tb")
-      end
-    end
-
-    context 'when in bottlenecks explorer' do
-      it "displays toolbar" do
-        @sb = {:active_tab => 'summary'}
-        expect(ApplicationHelper::ToolbarChooser.new(nil, nil, :record => @record, :explorer => true, :layout => 'miq_capacity_bottlenecks', :sb => @sb).send(:x_view_toolbar_filename)).to eq("miq_capacity_view_tb")
       end
     end
   end

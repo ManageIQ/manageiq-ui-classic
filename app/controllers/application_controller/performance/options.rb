@@ -16,7 +16,7 @@ module ApplicationController::Performance
     :cats,              # hash of available categories (model -> option)
     :cat_model,         # key to :cats hash
     :ght_type,          # hybrid/?
-    :chart_type,        # :performance/:summary/:planning/:util_ts
+    :chart_type,        # :performance/:summary/:util_ts
     :index,             # index to charts, if one selected
     :model,             # class for which we query performance
     :parent,            # compare_to parent

@@ -100,7 +100,7 @@ class UtilizationController < ApplicationController
   def change_tab
     @sb[:active_tab] = params[:tab_id]
 
-    # build timeline data when coming back to Summary tab for bottlenecks
+    # build timeline data when coming back to Summary tab
     render :update do |page|
       page << javascript_prologue
       page << javascript_reload_toolbars

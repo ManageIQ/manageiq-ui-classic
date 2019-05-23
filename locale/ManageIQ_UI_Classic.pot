@@ -574,10 +574,6 @@ msgstr ""
 msgid "%{model} \"%{name}\""
 msgstr ""
 
-#: ../app/controllers/bottlenecks_controller.rb:113
-msgid "%{model} \"%{name}\" Bottlenecks Summary"
-msgstr ""
-
 #: ../app/controllers/utilization_controller.rb:137
 msgid "%{model} \"%{name}\" Utilization Trend Summary"
 msgstr ""
@@ -1282,10 +1278,6 @@ msgstr ""
 msgid "* Dates/Times on this page are based on time zone: %{time_zone}."
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:175
-msgid "* Disk space not supported for OpenStack providers"
-msgstr ""
-
 #: ../app/views/miq_policy/_rsop_results.html.haml:51
 msgid "* Enter Policy Simulation options on the left and press Submit"
 msgstr ""
@@ -1308,10 +1300,6 @@ msgstr ""
 
 #: ../app/views/utilization/_utilization_details.html.haml:19 ../app/views/utilization/_utilization_report.html.haml:37 ../app/views/utilization/_utilization_summary.html.haml:36
 msgid "* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone."
-msgstr ""
-
-#: ../app/views/planning/_planning_summary.html.haml:47 ../app/views/planning/_planning_report.html.haml:15
-msgid "* Information shown is based on available trend data going back %{weeks}."
 msgstr ""
 
 #: ../app/views/miq_policy/_rsop_results.html.haml:38
@@ -1382,10 +1370,6 @@ msgstr ""
 msgid "* Select one or more consecutive groups to move up or down."
 msgstr ""
 
-#: ../app/views/planning/_planning_vm_profile.html.haml:73
-msgid "* Set in Time Profile"
-msgstr ""
-
 #: ../app/views/report/_form_chart.html.haml:65
 msgid "* Some charts my not produce desired results with a single sort field"
 msgstr ""
@@ -1412,10 +1396,6 @@ msgstr ""
 
 #: ../app/helpers/view_helper.rb:123
 msgid "1 (Verbose)"
-msgstr ""
-
-#: ../app/views/planning/_planning_instructions.html.haml:6
-msgid "1 - Select a Reference VM."
 msgstr ""
 
 #: ../app/controllers/miq_policy_controller/alerts.rb:484 ../app/controllers/miq_policy_controller/alerts.rb:491 ../app/controllers/miq_policy_controller/alerts.rb:508
@@ -1546,10 +1526,6 @@ msgstr ""
 msgid "2 (More Verbose)"
 msgstr ""
 
-#: ../app/views/planning/_planning_instructions.html.haml:10
-msgid "2 - Specify the VM Options to define the source of the values used for the plan calculations."
-msgstr ""
-
 #: ../app/helpers/report_helper/timer.rb:5
 msgid "2 Days"
 msgstr ""
@@ -1630,10 +1606,6 @@ msgstr ""
 msgid "3 (Debug)"
 msgstr ""
 
-#: ../app/views/planning/_planning_instructions.html.haml:14
-msgid "3 - Specify Target Options to qualify target %{hosts} or %{clusters}."
-msgstr ""
-
 #: ../app/helpers/report_helper/timer.rb:6
 msgid "3 Days"
 msgstr ""
@@ -1699,10 +1671,6 @@ msgstr ""
 msgid "4 (Connection Debug)"
 msgstr ""
 
-#: ../app/views/planning/_planning_instructions.html.haml:18
-msgid "4 - Change the Trend Options used to calculate the daily trends, if desired."
-msgstr ""
-
 #: ../app/helpers/report_helper/timer.rb:7
 msgid "4 Days"
 msgstr ""
@@ -1757,10 +1725,6 @@ msgstr ""
 
 #: ../app/helpers/view_helper.rb:127
 msgid "5 (WinRM Debug)"
-msgstr ""
-
-#: ../app/views/planning/_planning_instructions.html.haml:22
-msgid "5 - Press the Submit button."
 msgstr ""
 
 #: ../app/helpers/report_helper/timer.rb:8
@@ -2090,10 +2054,6 @@ msgstr ""
 
 #: ../app/helpers/view_helper.rb:20
 msgid "A4 - 210mm x 297mm (default)"
-msgstr ""
-
-#: ../app/controllers/application_controller/filter.rb:733 ../app/views/miq_request/_prov_field.html.haml:26 ../app/views/bottlenecks/_bottlenecks_options.html.haml:10
-msgid "ALL"
 msgstr ""
 
 #: ../app/views/configuration/_timeprofile_form.html.haml:104
@@ -3404,7 +3364,7 @@ msgstr ""
 msgid "Alerts to Evaluate"
 msgstr ""
 
-#: ../app/helpers/security_group_helper/textual_summary.rb:77 ../app/controllers/miq_request_controller.rb:430 ../app/views/configuration/_timeprofile_form.html.haml:48 ../app/views/configuration/_timeprofile_form.html.haml:92 ../app/views/miq_task/_tasks_options.html.haml:73 ../app/views/report/_form_sort.html.haml:110 ../app/views/report/_form_sort.html.haml:119 ../app/views/planning/_planning_options.html.haml:198
+#: ../app/helpers/security_group_helper/textual_summary.rb:77 ../app/controllers/miq_request_controller.rb:430 ../app/views/configuration/_timeprofile_form.html.haml:48 ../app/views/configuration/_timeprofile_form.html.haml:92 ../app/views/miq_task/_tasks_options.html.haml:73 ../app/views/report/_form_sort.html.haml:110 ../app/views/report/_form_sort.html.haml:119
 msgid "All"
 msgstr ""
 
@@ -3742,10 +3702,6 @@ msgstr ""
 msgid "All VMs for Providers"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:9
-msgid "All VMs/Instances"
-msgstr ""
-
 #: ../app/presenters/tree_builder_report_widgets.rb:22 ../app/controllers/report_controller/widgets.rb:266 ../app/controllers/report_controller/widgets.rb:280
 msgid "All Widgets"
 msgstr ""
@@ -3826,10 +3782,6 @@ msgstr ""
 #. TRANSLATORS: file: product/views/Vm__restricted.yaml
 #: ../config/yaml_strings.rb:996
 msgid "Allocated Storage"
-msgstr ""
-
-#: ../app/helpers/planning_helper.rb:11
-msgid "Allocation"
 msgstr ""
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-mode.html.haml:8
@@ -4506,10 +4458,6 @@ msgstr ""
 msgid "At least one To E-mail address must be configured"
 msgstr ""
 
-#: ../app/controllers/planning_controller.rb:47
-msgid "At least one VM Option must be selected"
-msgstr ""
-
 #: ../app/controllers/miq_policy_controller/events.rb:35
 msgid "At least one action must be selected to save this Policy Event"
 msgstr ""
@@ -5013,14 +4961,6 @@ msgstr ""
 msgid "Belongs to Profiles"
 msgstr ""
 
-#: ../app/controllers/planning_controller.rb:293
-msgid "Best Fit Clusters"
-msgstr ""
-
-#: ../app/controllers/planning_controller.rb:291
-msgid "Best Fit Hosts"
-msgstr ""
-
 #: ../app/controllers/mixins/actions/vm_actions/reconfigure.rb:100
 msgid "Between %{min} and %{max}"
 msgstr ""
@@ -5100,18 +5040,6 @@ msgstr ""
 
 #: ../app/views/layouts/_tl_options.html.haml:65
 msgid "Both"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_report.html.haml:9
-msgid "Bottleneck Event Details"
-msgstr ""
-
-#: ../app/presenters/menu/default_menu.rb:244 ../app/helpers/application_helper/title.rb:104 ../app/controllers/bottlenecks_controller.rb:75 ../app/controllers/bottlenecks_controller.rb:82
-msgid "Bottlenecks"
-msgstr ""
-
-#: ../app/controllers/bottlenecks_controller.rb:11
-msgid "Bottlenecks Summary"
 msgstr ""
 
 #: ../app/views/miq_ae_class/_git_domain_refresh.html.haml:10 ../app/views/miq_ae_tools/_import_export.html.haml:91
@@ -5281,22 +5209,6 @@ msgstr ""
 msgid "By Cloud/Infrastructure Providers"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:9
-msgid "By Clusters / Deployment Roles"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:9
-msgid "By Filter"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:9
-msgid "By Host"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:9
-msgid "By Providers"
-msgstr ""
-
 #: ../app/views/shared/buttons/_ab_show.html.haml:147 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:72
 msgid "By Role"
 msgstr ""
@@ -5411,7 +5323,7 @@ msgstr ""
 msgid "CPU Shares Level"
 msgstr ""
 
-#: ../app/helpers/textual_mixins/textual_devices.rb:31 ../app/views/planning/_planning_options.html.haml:106 ../app/views/planning/_planning_options.html.haml:210 ../app/views/planning/_planning_vm_profile.html.haml:9 ../app/views/planning/_planning_vm_profile.html.haml:36
+#: ../app/helpers/textual_mixins/textual_devices.rb:31 
 msgid "CPU Speed"
 msgstr ""
 
@@ -6125,7 +6037,7 @@ msgstr ""
 msgid "Choices"
 msgstr ""
 
-#: ../app/views/cloud_tenant/new.html.haml:15 ../app/views/miq_policy/_action_options.html.haml:91 ../app/views/miq_policy/_action_options.html.haml:265 ../app/views/miq_policy/_action_options.html.haml:324 ../app/views/miq_policy/_alert_details.html.haml:88 ../app/views/miq_policy/_rsop_form.html.haml:12 ../app/views/miq_policy/_rsop_form.html.haml:19 ../app/views/miq_policy/_rsop_form.html.haml:26 ../app/views/miq_policy/_rsop_form.html.haml:35 ../app/views/miq_policy/_rsop_form.html.haml:41 ../app/views/miq_policy/_rsop_form.html.haml:47 ../app/views/miq_policy/_rsop_form.html.haml:53 ../app/views/miq_policy/_alert_builtin_exp.html.haml:11 ../app/views/miq_policy/_alert_builtin_exp.html.haml:29 ../app/views/miq_policy/_alert_builtin_exp.html.haml:43 ../app/views/miq_policy/_alert_builtin_exp.html.haml:57 ../app/views/miq_policy/_alert_builtin_exp.html.haml:189 ../app/views/miq_policy/_alert_builtin_exp.html.haml:213 ../app/views/miq_policy/_action_details.html.haml:29 ../app/views/vm_common/_reconfigure.html.haml:69 ../app/views/vm_common/_reconfigure.html.haml:69 ../app/views/vm_common/_reconfigure.html.haml:84 ../app/views/vm_common/_reconfigure.html.haml:84 ../app/views/vm_common/_reconfigure.html.haml:351 ../app/views/vm_common/_reconfigure.html.haml:351 ../app/views/vm_common/_reconfigure.html.haml:365 ../app/views/vm_common/_reconfigure.html.haml:367 ../app/views/vm_common/_reconfigure.html.haml:367 ../app/views/vm_common/_reconfigure.html.haml:402 ../app/views/vm_common/_reconfigure.html.haml:402 ../app/views/cloud_object_store_container/new.html.haml:23 ../app/views/cloud_object_store_container/new.html.haml:50 ../app/views/cloud_object_store_container/new.html.haml:50 ../app/views/configuration/_timeprofile_form.html.haml:34 ../app/views/configuration/_timeprofile_form.html.haml:34 ../app/views/floating_ip/_common_new_edit.html.haml:28 ../app/views/floating_ip/_common_new_edit.html.haml:51 ../app/views/floating_ip/_common_new_edit.html.haml:74 ../app/views/host_aggregate/add_host_select.html.haml:10 ../app/views/host_aggregate/new.html.haml:32 ../app/views/host_aggregate/remove_host_select.html.haml:10 ../app/views/ops/_settings_import_tab.html.haml:15 ../app/views/miq_request/_prov_field.html.haml:175 ../app/views/miq_request/_prov_field.html.haml:210 ../app/views/miq_request/_prov_field.html.haml:256 ../app/views/miq_request/_prov_field.html.haml:355 ../app/views/miq_request/_prov_field.html.haml:396 ../app/views/cloud_subnet/new.html.haml:25 ../app/views/cloud_subnet/new.html.haml:43 ../app/views/cloud_subnet/new.html.haml:61 ../app/views/cloud_volume/attach.html.haml:16 ../app/views/cloud_volume/attach.html.haml:16 ../app/views/cloud_volume/_common_new_edit.html.haml:14 ../app/views/cloud_volume/_common_new_edit.html.haml:31 ../app/views/cloud_volume/_common_new_edit.html.haml:48 ../app/views/cloud_volume/_common_new_edit.html.haml:79 ../app/views/cloud_volume/backup_select.html.haml:14 ../app/views/cloud_volume/detach.html.haml:16 ../app/views/cloud_volume/detach.html.haml:16 ../app/views/shared/_playbook_options.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:26 ../app/views/shared/views/ems_common/angular/_form.html.haml:26 ../app/views/shared/views/ems_common/angular/_form.html.haml:51 ../app/views/shared/views/ems_common/angular/_form.html.haml:51 ../app/views/pxe/_iso_datastore_form.html.haml:11 ../app/views/pxe/_template_form.html.haml:28 ../app/views/pxe/_template_form.html.haml:38 ../app/views/pxe/_pxe_form.html.haml:19 ../app/views/report/_form_filter_chargeback.html.haml:38 ../app/views/report/_schedule_form_filter.html.haml:11 ../app/views/report/_schedule_form_filter.html.haml:24 ../app/views/report/_schedule_form_filter.html.haml:36 ../app/views/report/_schedule_form_filter.html.haml:50 ../app/views/report/_schedule_form_filter.html.haml:62 ../app/views/report/_schedule_form_filter.html.haml:73 ../app/views/report/_widget_form_report.html.haml:11 ../app/views/report/_widget_form_report.html.haml:21 ../app/views/report/_widget_form_report.html.haml:31 ../app/views/report/_form_columns_trend.html.haml:6 ../app/views/static/ae_resolve_options/ae-resolve-options-component.html.haml:52 ../app/views/static/cloud_network/cloud-network-form.html.haml:24 ../app/views/static/cloud_network/cloud-network-form.html.haml:48 ../app/views/static/generic_object/generic_object_table.html.haml:47 ../app/views/static/generic_object/main_custom_button_form.html.haml:20 ../app/views/static/generic_object/main_custom_button_form.html.haml:36 ../app/views/static/generic_object/main_custom_button_form.html.haml:61 ../app/views/static/generic_object/main_custom_button_form.html.haml:74 ../app/views/static/generic_object/main_custom_button_form.html.haml:87 ../app/views/security_group/_fw_rules.haml:38 ../app/views/security_group/_fw_rules.haml:45 ../app/views/security_group/_fw_rules.haml:53 ../app/views/security_group/new.html.haml:27 ../app/views/security_group/new.html.haml:47 ../app/views/ems_infra/_form.html.haml:26 ../app/views/ems_infra/_form.html.haml:26 ../app/views/ems_physical_infra/_form.html.haml:26 ../app/views/ems_physical_infra/_form.html.haml:26 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:30 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:45 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:60 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:71 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:94 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:106 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:279 ../app/views/layouts/angular/_multi_auth_credentials.html.haml:573 ../app/views/layouts/angular/_multi_auth_credentials.html.haml:573 ../app/views/layouts/exp_atom/_editor.html.haml:32 ../app/views/layouts/exp_atom/_edit_count.html.haml:8 ../app/views/layouts/exp_atom/_edit_field.html.haml:7 ../app/views/layouts/exp_atom/_edit_field.html.haml:56 ../app/views/layouts/exp_atom/_edit_tag.html.haml:7 ../app/views/layouts/exp_atom/_edit_tag.html.haml:40 ../app/views/layouts/exp_atom/_edit_tags.html.haml:7 ../app/views/layouts/exp_atom/_edit_tags.html.haml:27 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:28 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:28 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:39 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:39 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:46 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:46 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:55 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:55 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:65 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:65 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:76 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:76 ../app/views/layouts/angular-bootstrap/_ae_resolve_options.html.haml:50 ../app/views/host/_form.html.haml:47 ../app/views/host/_form.html.haml:47 ../app/views/planning/_planning_options.html.haml:9 ../app/views/planning/_planning_options.html.haml:48 ../app/views/planning/_planning_options.html.haml:58 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:30 ../app/views/ems_container/_form.html.haml:26 ../app/views/catalog/_ot_add.html.haml:46 ../app/views/catalog/_ot_edit.html.haml:31 ../app/views/catalog/_form_resources_info.html.haml:15 ../app/views/catalog/_st_form.html.haml:15 ../app/views/catalog/_ot_copy.html.haml:34 ../app/views/catalog/_form_basic_info.html.haml:72 ../app/views/catalog/_form_basic_info.html.haml:84 ../app/views/catalog/_form_basic_info.html.haml:96 ../app/views/catalog/_form_basic_info.html.haml:108 ../app/views/network_router/_common_new_edit.haml:26 ../app/views/network_router/_common_new_edit.haml:82 ../app/views/network_router/_common_new_edit.haml:100 ../app/views/network_router/_common_new_edit.haml:116 ../app/views/network_router/add_interface_select.html.haml:13 ../app/views/network_router/remove_interface_select.html.haml:13
+#: ../app/views/cloud_tenant/new.html.haml:15 ../app/views/miq_policy/_action_options.html.haml:91 ../app/views/miq_policy/_action_options.html.haml:265 ../app/views/miq_policy/_action_options.html.haml:324 ../app/views/miq_policy/_alert_details.html.haml:88 ../app/views/miq_policy/_rsop_form.html.haml:12 ../app/views/miq_policy/_rsop_form.html.haml:19 ../app/views/miq_policy/_rsop_form.html.haml:26 ../app/views/miq_policy/_rsop_form.html.haml:35 ../app/views/miq_policy/_rsop_form.html.haml:41 ../app/views/miq_policy/_rsop_form.html.haml:47 ../app/views/miq_policy/_rsop_form.html.haml:53 ../app/views/miq_policy/_alert_builtin_exp.html.haml:11 ../app/views/miq_policy/_alert_builtin_exp.html.haml:29 ../app/views/miq_policy/_alert_builtin_exp.html.haml:43 ../app/views/miq_policy/_alert_builtin_exp.html.haml:57 ../app/views/miq_policy/_alert_builtin_exp.html.haml:189 ../app/views/miq_policy/_alert_builtin_exp.html.haml:213 ../app/views/miq_policy/_action_details.html.haml:29 ../app/views/vm_common/_reconfigure.html.haml:69 ../app/views/vm_common/_reconfigure.html.haml:69 ../app/views/vm_common/_reconfigure.html.haml:84 ../app/views/vm_common/_reconfigure.html.haml:84 ../app/views/vm_common/_reconfigure.html.haml:351 ../app/views/vm_common/_reconfigure.html.haml:351 ../app/views/vm_common/_reconfigure.html.haml:365 ../app/views/vm_common/_reconfigure.html.haml:367 ../app/views/vm_common/_reconfigure.html.haml:367 ../app/views/vm_common/_reconfigure.html.haml:402 ../app/views/vm_common/_reconfigure.html.haml:402 ../app/views/cloud_object_store_container/new.html.haml:23 ../app/views/cloud_object_store_container/new.html.haml:50 ../app/views/cloud_object_store_container/new.html.haml:50 ../app/views/configuration/_timeprofile_form.html.haml:34 ../app/views/configuration/_timeprofile_form.html.haml:34 ../app/views/floating_ip/_common_new_edit.html.haml:28 ../app/views/floating_ip/_common_new_edit.html.haml:51 ../app/views/floating_ip/_common_new_edit.html.haml:74 ../app/views/host_aggregate/add_host_select.html.haml:10 ../app/views/host_aggregate/new.html.haml:32 ../app/views/host_aggregate/remove_host_select.html.haml:10 ../app/views/ops/_settings_import_tab.html.haml:15 ../app/views/miq_request/_prov_field.html.haml:175 ../app/views/miq_request/_prov_field.html.haml:210 ../app/views/miq_request/_prov_field.html.haml:256 ../app/views/miq_request/_prov_field.html.haml:355 ../app/views/miq_request/_prov_field.html.haml:396 ../app/views/cloud_subnet/new.html.haml:25 ../app/views/cloud_subnet/new.html.haml:43 ../app/views/cloud_subnet/new.html.haml:61 ../app/views/cloud_volume/attach.html.haml:16 ../app/views/cloud_volume/attach.html.haml:16 ../app/views/cloud_volume/_common_new_edit.html.haml:14 ../app/views/cloud_volume/_common_new_edit.html.haml:31 ../app/views/cloud_volume/_common_new_edit.html.haml:48 ../app/views/cloud_volume/_common_new_edit.html.haml:79 ../app/views/cloud_volume/backup_select.html.haml:14 ../app/views/cloud_volume/detach.html.haml:16 ../app/views/cloud_volume/detach.html.haml:16 ../app/views/shared/_playbook_options.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:26 ../app/views/shared/views/ems_common/angular/_form.html.haml:26 ../app/views/shared/views/ems_common/angular/_form.html.haml:51 ../app/views/shared/views/ems_common/angular/_form.html.haml:51 ../app/views/pxe/_iso_datastore_form.html.haml:11 ../app/views/pxe/_template_form.html.haml:28 ../app/views/pxe/_template_form.html.haml:38 ../app/views/pxe/_pxe_form.html.haml:19 ../app/views/report/_form_filter_chargeback.html.haml:38 ../app/views/report/_schedule_form_filter.html.haml:11 ../app/views/report/_schedule_form_filter.html.haml:24 ../app/views/report/_schedule_form_filter.html.haml:36 ../app/views/report/_schedule_form_filter.html.haml:50 ../app/views/report/_schedule_form_filter.html.haml:62 ../app/views/report/_schedule_form_filter.html.haml:73 ../app/views/report/_widget_form_report.html.haml:11 ../app/views/report/_widget_form_report.html.haml:21 ../app/views/report/_widget_form_report.html.haml:31 ../app/views/report/_form_columns_trend.html.haml:6 ../app/views/static/ae_resolve_options/ae-resolve-options-component.html.haml:52 ../app/views/static/cloud_network/cloud-network-form.html.haml:24 ../app/views/static/cloud_network/cloud-network-form.html.haml:48 ../app/views/static/generic_object/generic_object_table.html.haml:47 ../app/views/static/generic_object/main_custom_button_form.html.haml:20 ../app/views/static/generic_object/main_custom_button_form.html.haml:36 ../app/views/static/generic_object/main_custom_button_form.html.haml:61 ../app/views/static/generic_object/main_custom_button_form.html.haml:74 ../app/views/static/generic_object/main_custom_button_form.html.haml:87 ../app/views/security_group/_fw_rules.haml:38 ../app/views/security_group/_fw_rules.haml:45 ../app/views/security_group/_fw_rules.haml:53 ../app/views/security_group/new.html.haml:27 ../app/views/security_group/new.html.haml:47 ../app/views/ems_infra/_form.html.haml:26 ../app/views/ems_infra/_form.html.haml:26 ../app/views/ems_physical_infra/_form.html.haml:26 ../app/views/ems_physical_infra/_form.html.haml:26 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:30 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:45 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:60 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:71 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:94 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:106 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:279 ../app/views/layouts/angular/_multi_auth_credentials.html.haml:573 ../app/views/layouts/angular/_multi_auth_credentials.html.haml:573 ../app/views/layouts/exp_atom/_editor.html.haml:32 ../app/views/layouts/exp_atom/_edit_count.html.haml:8 ../app/views/layouts/exp_atom/_edit_field.html.haml:7 ../app/views/layouts/exp_atom/_edit_field.html.haml:56 ../app/views/layouts/exp_atom/_edit_tag.html.haml:7 ../app/views/layouts/exp_atom/_edit_tag.html.haml:40 ../app/views/layouts/exp_atom/_edit_tags.html.haml:7 ../app/views/layouts/exp_atom/_edit_tags.html.haml:27 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:28 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:28 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:39 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:39 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:46 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:46 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:55 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:55 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:65 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:65 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:76 ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:76 ../app/views/layouts/angular-bootstrap/_ae_resolve_options.html.haml:50 ../app/views/host/_form.html.haml:47 ../app/views/host/_form.html.haml:47 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:30 ../app/views/ems_container/_form.html.haml:26 ../app/views/catalog/_ot_add.html.haml:46 ../app/views/catalog/_ot_edit.html.haml:31 ../app/views/catalog/_form_resources_info.html.haml:15 ../app/views/catalog/_st_form.html.haml:15 ../app/views/catalog/_ot_copy.html.haml:34 ../app/views/catalog/_form_basic_info.html.haml:72 ../app/views/catalog/_form_basic_info.html.haml:84 ../app/views/catalog/_form_basic_info.html.haml:96 ../app/views/catalog/_form_basic_info.html.haml:108 ../app/views/network_router/_common_new_edit.haml:26 ../app/views/network_router/_common_new_edit.haml:82 ../app/views/network_router/_common_new_edit.haml:100 ../app/views/network_router/_common_new_edit.haml:116 ../app/views/network_router/add_interface_select.html.haml:13 ../app/views/network_router/remove_interface_select.html.haml:13
 msgid "Choose"
 msgstr ""
 
@@ -6145,14 +6057,6 @@ msgstr ""
 msgid "Choose Provider"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:38
-msgid "Choose a %{cluster}"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:27
-msgid "Choose a %{host}"
-msgstr ""
-
 #: ../app/views/layouts/_adv_search_body.html.haml:49
 msgid "Choose a %{model} report filter"
 msgstr ""
@@ -6161,20 +6065,12 @@ msgstr ""
 msgid "Choose a Category"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:58
-msgid "Choose a Filter"
-msgstr ""
-
 #: ../app/views/report/_export.html.haml:4
 msgid "Choose a Import/Export type from the menus on the left."
 msgstr ""
 
 #: ../app/views/report/_form_filter_chargeback.html.haml:167
 msgid "Choose a Label"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:48
-msgid "Choose a Provider"
 msgstr ""
 
 #: ../app/views/miq_policy/_alert_builtin_exp.html.haml:221
@@ -6203,10 +6099,6 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/timeline_download.rb:7 ../app/views/dashboard/_tl_detail.html.haml:15
 msgid "Choose a Timeline from the menus on the left."
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:74
-msgid "Choose a VM"
 msgstr ""
 
 #: ../app/views/report/_form_filter_chargeback.html.haml:94
@@ -7001,7 +6893,7 @@ msgid "Cluster: %{name}"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/EmsCluster.yaml
-#: ../app/presenters/menu/default_menu.rb:73 ../app/helpers/application_helper/title.rb:144 ../app/helpers/planning_helper.rb:5 ../app/services/ems_infra_dashboard_service.rb:70 ../app/controllers/ems_cluster_controller.rb:120 ../app/controllers/application_controller/compare.rb:730 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/infra_topology/show.html.haml:17 ../config/yaml_strings.rb:396
+#: ../app/presenters/menu/default_menu.rb:73 ../app/helpers/application_helper/title.rb:144 ../app/services/ems_infra_dashboard_service.rb:70 ../app/controllers/ems_cluster_controller.rb:120 ../app/controllers/application_controller/compare.rb:730 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/infra_topology/show.html.haml:17 ../config/yaml_strings.rb:396
 msgid "Clusters"
 msgstr ""
 
@@ -8058,10 +7950,6 @@ msgstr ""
 msgid "Counts"
 msgstr ""
 
-#: ../app/controllers/planning_controller.rb:148
-msgid "Counts of VMs (%{profile})"
-msgstr ""
-
 #: ../app/views/layouts/_x_edit_buttons.html.haml:80
 msgid "Create"
 msgstr ""
@@ -8713,10 +8601,6 @@ msgstr ""
 
 #: ../app/assets/javascripts/controllers/schedule/schedule_form_controller.js:175
 msgid "Datastore Selection"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:252 ../app/views/planning/_planning_vm_profile.html.haml:51
-msgid "Datastore Space"
 msgstr ""
 
 #: ../app/helpers/storage_helper/textual_summary.rb:35
@@ -9860,10 +9744,6 @@ msgstr ""
 msgid "Disk Size"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:159 ../app/views/planning/_planning_vm_profile.html.haml:24
-msgid "Disk Space"
-msgstr ""
-
 #: ../app/helpers/service_helper/textual_summary.rb:99
 msgid "Disk Space Allocated"
 msgstr ""
@@ -9918,7 +9798,7 @@ msgstr ""
 msgid "Display Names"
 msgstr ""
 
-#: ../app/views/miq_policy/_rsop_results.html.haml:7 ../app/views/planning/_planning_summary.html.haml:5
+#: ../app/views/miq_policy/_rsop_results.html.haml:7
 msgid "Display Options"
 msgstr ""
 
@@ -11647,10 +11527,6 @@ msgstr ""
 msgid "Elapsed"
 msgstr ""
 
-#: ../app/views/planning/_planning_summary.html.haml:26
-msgid "Eligible %{type} "
-msgstr ""
-
 #. TRANSLATORS: file: product/views/MiqAlert.yaml
 #: ../config/yaml_strings.rb:1404
 msgid "Email"
@@ -11879,10 +11755,6 @@ msgstr ""
 msgid "Enter your Red Hat account information"
 msgstr ""
 
-#: ../app/presenters/tree_builder_utilization.rb:25 ../app/controllers/utilization_controller.rb:135 ../app/controllers/bottlenecks_controller.rb:111
-msgid "Enterprise"
-msgstr ""
-
 #: ../app/helpers/application_helper/button/container_perf.rb:6 ../app/views/ops/_label_tag_mapping_form.html.haml:15
 msgid "Entity"
 msgstr ""
@@ -11929,10 +11801,6 @@ msgstr ""
 
 #: ../app/controllers/dashboard_controller.rb:805
 msgid "Error building timeline  %{error_message}"
-msgstr ""
-
-#: ../app/controllers/application_controller/timelines.rb:164 ../app/controllers/bottlenecks_controller.rb:187
-msgid "Error building timeline %{error_message}"
 msgstr ""
 
 #: ../app/controllers/application_controller/filter.rb:97
@@ -12369,10 +12237,6 @@ msgstr ""
 msgid "Event Group"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_options.html.haml:8
-msgid "Event Groups"
-msgstr ""
-
 #. TRANSLATORS: file: product/views/EventLog-event_logs.yaml
 #: ../config/yaml_strings.rb:1210
 msgid "Event Id"
@@ -12737,7 +12601,7 @@ msgid_plural "Filesystem Drivers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../app/controllers/report_controller/reports/editor.rb:350 ../app/controllers/report_controller/reports/editor.rb:357 ../app/controllers/report_controller/reports/editor.rb:366 ../app/views/ops/_schedule_form_filter.html.haml:8 ../app/views/ops/_schedule_show.html.haml:29 ../app/views/report/_widget_form_chart.html.haml:9 ../app/views/report/_schedule_form_filter.html.haml:9 ../app/views/report/_schedule_form_filter.html.haml:48 ../app/views/report/_widget_form_report.html.haml:9 ../app/views/report/_widget_show.html.haml:78 ../app/views/planning/_planning_options.html.haml:196
+#: ../app/controllers/report_controller/reports/editor.rb:350 ../app/controllers/report_controller/reports/editor.rb:357 ../app/controllers/report_controller/reports/editor.rb:366 ../app/views/ops/_schedule_form_filter.html.haml:8 ../app/views/ops/_schedule_show.html.haml:29 ../app/views/report/_widget_form_chart.html.haml:9 ../app/views/report/_schedule_form_filter.html.haml:9 ../app/views/report/_schedule_form_filter.html.haml:48 ../app/views/report/_widget_form_report.html.haml:9 ../app/views/report/_widget_show.html.haml:78
 msgid "Filter"
 msgstr ""
 
@@ -13073,7 +12937,7 @@ msgstr ""
 msgid "Fully Qualified Name"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:173 ../app/assets/javascripts/controllers/ems_infra_dashboard/charts-mixin.js:60 ../app/assets/javascripts/controllers/ems_infra_dashboard/charts-mixin.js:69 ../app/assets/javascripts/controllers/container_dashboard/util/charts-mixin.js:73
+#: ../app/assets/javascripts/controllers/ems_infra_dashboard/charts-mixin.js:60 ../app/assets/javascripts/controllers/ems_infra_dashboard/charts-mixin.js:69 ../app/assets/javascripts/controllers/container_dashboard/util/charts-mixin.js:73
 msgid "GB"
 msgstr ""
 
@@ -13677,7 +13541,7 @@ msgstr ""
 #. TRANSLATORS: file: product/views/ManageIQ_Providers_InfraManager.yaml
 #. TRANSLATORS: file: product/views/ManageIQ_Providers_PhysicalInfraManager.yaml
 #. TRANSLATORS: file: product/views/SniaLocalFileSystem.yaml
-#: ../app/presenters/menu/default_menu.rb:72 ../app/helpers/application_helper/title.rb:129 ../app/helpers/host_aggregate_helper/textual_summary.rb:18 ../app/helpers/planning_helper.rb:6 ../app/helpers/service_helper/textual_summary.rb:217 ../app/services/ems_infra_dashboard_service.rb:71 ../app/services/ems_infra_dashboard_service.rb:148 ../app/controllers/application_controller/miq_request_methods.rb:614 ../app/controllers/mixins/explorer_show.rb:152 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/container_topology/show.html.haml:37 ../app/views/miq_ae_class/_method_inputs.html.haml:58 ../app/views/physical_infra_topology/show.html.haml:21 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:110 ../app/views/catalog/_sandt_tree_show.html.haml:251 ../app/views/catalog/_sandt_tree_show.html.haml:345 ../config/yaml_strings.rb:406
+#: ../app/presenters/menu/default_menu.rb:72 ../app/helpers/application_helper/title.rb:129 ../app/helpers/host_aggregate_helper/textual_summary.rb:18 ../app/helpers/service_helper/textual_summary.rb:217 ../app/services/ems_infra_dashboard_service.rb:71 ../app/services/ems_infra_dashboard_service.rb:148 ../app/controllers/application_controller/miq_request_methods.rb:614 ../app/controllers/mixins/explorer_show.rb:152 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/container_topology/show.html.haml:37 ../app/views/miq_ae_class/_method_inputs.html.haml:58 ../app/views/physical_infra_topology/show.html.haml:21 ../app/views/layouts/angular/_ansible_form_options_angular.html.haml:110 ../app/views/catalog/_sandt_tree_show.html.haml:251 ../app/views/catalog/_sandt_tree_show.html.haml:345 ../config/yaml_strings.rb:406
 msgid "Hosts"
 msgstr ""
 
@@ -14930,10 +14794,6 @@ msgstr ""
 msgid "Limit CPU cores"
 msgstr ""
 
-#: ../app/views/planning/_planning_summary.html.haml:7
-msgid "Limit Chart to"
-msgstr ""
-
 #: ../app/helpers/container_helper/textual_summary.rb:150
 msgid "Limit Memory bytes"
 msgstr ""
@@ -15184,11 +15044,11 @@ msgid_plural "MAC Addresses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../app/helpers/textual_mixins/textual_devices.rb:32 ../app/views/planning/_planning_options.html.haml:155
+#: ../app/helpers/textual_mixins/textual_devices.rb:32
 msgid "MB"
 msgstr ""
 
-#: ../app/helpers/textual_mixins/textual_devices.rb:31 ../app/views/planning/_planning_options.html.haml:120 ../app/assets/javascripts/miq_application.js:91 ../app/assets/javascripts/miq_application.js:92
+#: ../app/helpers/textual_mixins/textual_devices.rb:31 ../app/assets/javascripts/miq_application.js:91 ../app/assets/javascripts/miq_application.js:92
 msgid "MHz"
 msgstr ""
 
@@ -15494,10 +15354,6 @@ msgstr ""
 msgid "Managers"
 msgstr ""
 
-#: ../app/helpers/planning_helper.rb:14
-msgid "Manual Input"
-msgstr ""
-
 #. TRANSLATORS: file: product/views/GuestDevice.yaml
 #. TRANSLATORS: file: product/views/PhysicalServer.yaml
 #. TRANSLATORS: file: product/views/PhysicalSwitch.yaml
@@ -15581,10 +15437,6 @@ msgstr ""
 msgid "Max Time"
 msgstr ""
 
-#: ../app/views/planning/_planning_summary.html.haml:32
-msgid "Max VMs"
-msgstr ""
-
 #: ../app/views/ops/_settings_evm_servers_tab.html.haml:33
 msgid "Max active VM Scans"
 msgstr ""
@@ -15641,7 +15493,7 @@ msgid "Memory Shares Level"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/MiqWorker.yaml
-#: ../app/views/miq_policy/_action_options.html.haml:104 ../app/views/miq_policy/_action_details.html.haml:139 ../app/views/ops/_selected_by_roles.html.haml:68 ../app/views/ops/_server_desc.html.haml:27 ../app/views/ops/_selected_by_servers.html.haml:43 ../app/views/planning/_planning_options.html.haml:141 ../app/views/planning/_planning_options.html.haml:238 ../app/views/planning/_planning_vm_profile.html.haml:19 ../app/views/planning/_planning_vm_profile.html.haml:46 ../config/yaml_strings.rb:1761
+#: ../app/views/miq_policy/_action_options.html.haml:104 ../app/views/miq_policy/_action_details.html.haml:139 ../app/views/ops/_selected_by_roles.html.haml:68 ../app/views/ops/_server_desc.html.haml:27 ../app/views/ops/_selected_by_servers.html.haml:43 ../config/yaml_strings.rb:1761
 msgid "Memory Size"
 msgstr ""
 
@@ -16209,7 +16061,7 @@ msgstr ""
 #. TRANSLATORS: file: product/views/VmdbTableEvm.yaml
 #. TRANSLATORS: file: product/views/ems_block_storage.yaml
 #. TRANSLATORS: file: product/views/ems_object_storage.yaml
-#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:25 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/physical_switch_helper/textual_summary.rb:30 ../app/helpers/physical_switch_helper/textual_summary.rb:47 ../app/helpers/container_service_helper/textual_summary.rb:14 ../app/helpers/container_build_helper/textual_summary.rb:25 ../app/helpers/container_project_helper/textual_summary.rb:27 ../app/helpers/container_project_helper/textual_summary.rb:49 ../app/helpers/provider_foreman_helper.rb:128 ../app/helpers/provider_foreman_helper.rb:210 ../app/helpers/provider_foreman_helper.rb:239 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/persistent_volume_helper/textual_summary.rb:180 ../app/helpers/automation_manager_helper.rb:46 ../app/helpers/automation_manager_helper.rb:75 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:27 ../app/helpers/pxe_helper/textual_summary.rb:48 ../app/helpers/pxe_helper/textual_summary.rb:72 ../app/helpers/pxe_helper/textual_summary.rb:96 ../app/helpers/pxe_helper/textual_summary.rb:116 ../app/helpers/pxe_helper/textual_summary.rb:140 ../app/helpers/service_helper/textual_summary.rb:291 ../app/helpers/generic_object_definition_helper/textual_summary.rb:9 ../app/helpers/generic_object_definition_helper/textual_summary.rb:40 ../app/helpers/generic_object_definition_helper/textual_summary.rb:51 ../app/helpers/generic_object_definition_helper/textual_summary.rb:72 ../app/helpers/container_node_helper/textual_summary.rb:31 ../app/helpers/physical_server_helper/textual_summary.rb:37 ../app/helpers/physical_server_helper/textual_summary.rb:200 ../app/helpers/physical_network_port_helper/textual_summary.rb:10 ../app/helpers/ops_helper/textual_summary.rb:55 ../app/helpers/ops_helper/textual_summary.rb:120 ../app/helpers/ops_helper/textual_summary.rb:129 ../app/helpers/ops_helper/textual_summary.rb:138 ../app/helpers/ops_helper/textual_summary.rb:160 ../app/helpers/guest_device_helper/textual_summary.rb:10 ../app/helpers/guest_device_helper/textual_summary.rb:25 ../app/helpers/guest_device_helper/textual_summary.rb:40 ../app/controllers/application_controller/miq_request_methods.rb:318 ../app/controllers/application_controller/miq_request_methods.rb:330 ../app/controllers/application_controller/miq_request_methods.rb:341 ../app/controllers/application_controller/miq_request_methods.rb:353 ../app/controllers/application_controller/miq_request_methods.rb:370 ../app/controllers/application_controller/miq_request_methods.rb:385 ../app/controllers/application_controller/miq_request_methods.rb:401 ../app/controllers/application_controller/miq_request_methods.rb:436 ../app/controllers/application_controller/miq_request_methods.rb:442 ../app/views/miq_policy/_action_details.html.haml:47 ../app/views/vm_common/_reconfigure.html.haml:129 ../app/views/vm_common/_reconfigure.html.haml:318 ../app/views/vm_common/_reconfigure.html.haml:392 ../app/views/configuration/_timeprofile_form.html.haml:215 ../app/views/ansible_credential/_credential_form.html.haml:15 ../app/views/container_project/_show_dashboard.html.haml:89 ../app/views/ops/_ap_form_file.html.haml:8 ../app/views/ops/_classification_entries.html.haml:6 ../app/views/ops/_settings_co_categories_tab.html.haml:5 ../app/views/ops/_rbac_role_details.html.haml:12 ../app/views/ops/_category_form.html.haml:57 ../app/views/ops/_zone_form.html.haml:9 ../app/views/ops/_ap_show.html.haml:8 ../app/views/ops/_ap_show.html.haml:41 ../app/views/ops/_rbac_tenant_details.html.haml:9 ../app/views/ops/_rbac_tenant_details.html.haml:47 ../app/views/ops/_rbac_tenant_details.html.haml:61 ../app/views/ops/_ap_form.html.haml:10 ../app/views/ops/_schedule_form.html.haml:13 ../app/views/ops/_db_info.html.haml:8 ../app/views/ops/_db_info.html.haml:49 ../app/views/ops/_db_info.html.haml:89 ../app/views/ops/_ap_form_nteventlog.html.haml:8 ../app/views/ops/_settings_evm_servers_tab.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:9 ../app/views/flavor/_flavor_form.html.haml:29 ../app/views/miq_ae_class/_instance_fields.html.haml:8 ../app/views/miq_ae_class/_instance_form.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:45 ../app/views/miq_ae_class/_ns_list.html.haml:11 ../app/views/miq_ae_class/_ns_list.html.haml:55 ../app/views/miq_ae_class/_inputs.html.haml:9 ../app/views/miq_ae_class/_class_props.html.haml:14 ../app/views/miq_ae_class/_angular_method_form.html.haml:28 ../app/views/miq_ae_class/_class_form.html.haml:13 ../app/views/miq_ae_class/_method_inputs.html.haml:17 ../app/views/miq_ae_class/_method_form.html.haml:35 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/pxe/_template_form.html.haml:9 ../app/views/pxe/_pxe_form.html.haml:9 ../app/views/pxe/_iso_datastore_details.html.haml:16 ../app/views/pxe/_pxe_image_type_form.html.haml:9 ../app/views/pxe/_pxe_server_details.html.haml:19 ../app/views/pxe/_pxe_server_details.html.haml:40 ../app/views/orchestration_stack/_copy_orchestration_template.html.haml:11 ../app/views/orchestration_stack/_stack_orchestration_template.html.haml:9 ../app/views/report/_db_form.html.haml:12 ../app/views/report/_db_show.html.haml:6 ../app/views/report/_report_list.html.haml:26 ../app/views/report/_report_list.html.haml:45 ../app/views/report/_report_list.html.haml:61 ../app/views/report/_schedule_form.html.haml:9 ../app/views/report/_report_info.html.haml:58 ../app/views/chargeback/_cb_assignments.html.haml:57 ../app/views/chargeback/_cb_assignments.html.haml:90 ../app/views/chargeback/_cb_assignments.html.haml:109 ../app/views/chargeback/_cb_assignments.html.haml:128 ../app/views/chargeback/_reports_list.html.haml:32 ../app/views/static/ops/tenant/tenant.html.haml:10 ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:30 ../app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml:6 ../app/views/static/generic_object/generic_object_definition.html.haml:11 ../app/views/ems_infra/_form.html.haml:9 ../app/views/configuration_manager/_shared_form.html.haml:16 ../app/views/ems_physical_infra/_form.html.haml:9 ../app/views/auth_key_pair_cloud/_form.html.haml:19 ../app/views/host/_form.html.haml:18 ../app/views/planning/_planning_summary.html.haml:31 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:9 ../app/views/miq_ae_customization/_old_dialogs_details.html.haml:12 ../app/views/service/_service_form.html.haml:18 ../app/views/ems_container/_form.html.haml:9 ../app/views/ansible_repository/_repository_form.html.haml:16 ../app/views/catalog/_ot_add.html.haml:8 ../app/views/catalog/_ot_edit.html.haml:8 ../app/views/catalog/_form_resources_info.html.haml:32 ../app/views/catalog/_sandt_tree_show.html.haml:157 ../app/views/catalog/_st_angular_form.html.haml:14 ../app/views/catalog/_ot_tree_show.html.haml:5 ../app/views/catalog/_ot_copy.html.haml:11 ../app/views/catalog/_stcat_form.html.haml:11 ../app/views/catalog/_svccat_tree_show.html.haml:15 ../app/views/catalog/_stcat_tree_show.html.haml:6 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:23 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:24 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:25 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-master-nodes-controller.js:238 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-no-provider-controller.js:89 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-existing-vms-controller.js:20 ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:54 ../config/yaml_strings.rb:140
+#: ../app/helpers/container_image_helper/textual_summary.rb:130 ../app/helpers/container_group_helper/textual_summary.rb:25 ../app/helpers/container_group_helper/textual_summary.rb:65 ../app/helpers/container_helper/textual_summary.rb:134 ../app/helpers/container_template_helper/textual_summary.rb:25 ../app/helpers/physical_switch_helper/textual_summary.rb:30 ../app/helpers/physical_switch_helper/textual_summary.rb:47 ../app/helpers/container_service_helper/textual_summary.rb:14 ../app/helpers/container_build_helper/textual_summary.rb:25 ../app/helpers/container_project_helper/textual_summary.rb:27 ../app/helpers/container_project_helper/textual_summary.rb:49 ../app/helpers/provider_foreman_helper.rb:128 ../app/helpers/provider_foreman_helper.rb:210 ../app/helpers/provider_foreman_helper.rb:239 ../app/helpers/provider_foreman_helper.rb:285 ../app/helpers/persistent_volume_helper/textual_summary.rb:180 ../app/helpers/automation_manager_helper.rb:46 ../app/helpers/automation_manager_helper.rb:75 ../app/helpers/automation_manager_helper.rb:121 ../app/helpers/generic_object_helper/textual_summary.rb:27 ../app/helpers/pxe_helper/textual_summary.rb:48 ../app/helpers/pxe_helper/textual_summary.rb:72 ../app/helpers/pxe_helper/textual_summary.rb:96 ../app/helpers/pxe_helper/textual_summary.rb:116 ../app/helpers/pxe_helper/textual_summary.rb:140 ../app/helpers/service_helper/textual_summary.rb:291 ../app/helpers/generic_object_definition_helper/textual_summary.rb:9 ../app/helpers/generic_object_definition_helper/textual_summary.rb:40 ../app/helpers/generic_object_definition_helper/textual_summary.rb:51 ../app/helpers/generic_object_definition_helper/textual_summary.rb:72 ../app/helpers/container_node_helper/textual_summary.rb:31 ../app/helpers/physical_server_helper/textual_summary.rb:37 ../app/helpers/physical_server_helper/textual_summary.rb:200 ../app/helpers/physical_network_port_helper/textual_summary.rb:10 ../app/helpers/ops_helper/textual_summary.rb:55 ../app/helpers/ops_helper/textual_summary.rb:120 ../app/helpers/ops_helper/textual_summary.rb:129 ../app/helpers/ops_helper/textual_summary.rb:138 ../app/helpers/ops_helper/textual_summary.rb:160 ../app/helpers/guest_device_helper/textual_summary.rb:10 ../app/helpers/guest_device_helper/textual_summary.rb:25 ../app/helpers/guest_device_helper/textual_summary.rb:40 ../app/controllers/application_controller/miq_request_methods.rb:318 ../app/controllers/application_controller/miq_request_methods.rb:330 ../app/controllers/application_controller/miq_request_methods.rb:341 ../app/controllers/application_controller/miq_request_methods.rb:353 ../app/controllers/application_controller/miq_request_methods.rb:370 ../app/controllers/application_controller/miq_request_methods.rb:385 ../app/controllers/application_controller/miq_request_methods.rb:401 ../app/controllers/application_controller/miq_request_methods.rb:436 ../app/controllers/application_controller/miq_request_methods.rb:442 ../app/views/miq_policy/_action_details.html.haml:47 ../app/views/vm_common/_reconfigure.html.haml:129 ../app/views/vm_common/_reconfigure.html.haml:318 ../app/views/vm_common/_reconfigure.html.haml:392 ../app/views/configuration/_timeprofile_form.html.haml:215 ../app/views/ansible_credential/_credential_form.html.haml:15 ../app/views/container_project/_show_dashboard.html.haml:89 ../app/views/ops/_ap_form_file.html.haml:8 ../app/views/ops/_classification_entries.html.haml:6 ../app/views/ops/_settings_co_categories_tab.html.haml:5 ../app/views/ops/_rbac_role_details.html.haml:12 ../app/views/ops/_category_form.html.haml:57 ../app/views/ops/_zone_form.html.haml:9 ../app/views/ops/_ap_show.html.haml:8 ../app/views/ops/_ap_show.html.haml:41 ../app/views/ops/_rbac_tenant_details.html.haml:9 ../app/views/ops/_rbac_tenant_details.html.haml:47 ../app/views/ops/_rbac_tenant_details.html.haml:61 ../app/views/ops/_ap_form.html.haml:10 ../app/views/ops/_schedule_form.html.haml:13 ../app/views/ops/_db_info.html.haml:8 ../app/views/ops/_db_info.html.haml:49 ../app/views/ops/_db_info.html.haml:89 ../app/views/ops/_ap_form_nteventlog.html.haml:8 ../app/views/ops/_settings_evm_servers_tab.html.haml:8 ../app/views/shared/views/ems_common/angular/_form.html.haml:9 ../app/views/flavor/_flavor_form.html.haml:29 ../app/views/miq_ae_class/_instance_fields.html.haml:8 ../app/views/miq_ae_class/_instance_form.html.haml:13 ../app/views/miq_ae_class/_instance_form.html.haml:45 ../app/views/miq_ae_class/_ns_list.html.haml:11 ../app/views/miq_ae_class/_ns_list.html.haml:55 ../app/views/miq_ae_class/_inputs.html.haml:9 ../app/views/miq_ae_class/_class_props.html.haml:14 ../app/views/miq_ae_class/_angular_method_form.html.haml:28 ../app/views/miq_ae_class/_class_form.html.haml:13 ../app/views/miq_ae_class/_method_inputs.html.haml:17 ../app/views/miq_ae_class/_method_form.html.haml:35 ../app/views/miq_ae_class/_class_fields.html.haml:10 ../app/views/miq_ae_class/_class_fields.html.haml:54 ../app/views/pxe/_template_form.html.haml:9 ../app/views/pxe/_pxe_form.html.haml:9 ../app/views/pxe/_iso_datastore_details.html.haml:16 ../app/views/pxe/_pxe_image_type_form.html.haml:9 ../app/views/pxe/_pxe_server_details.html.haml:19 ../app/views/pxe/_pxe_server_details.html.haml:40 ../app/views/orchestration_stack/_copy_orchestration_template.html.haml:11 ../app/views/orchestration_stack/_stack_orchestration_template.html.haml:9 ../app/views/report/_db_form.html.haml:12 ../app/views/report/_db_show.html.haml:6 ../app/views/report/_report_list.html.haml:26 ../app/views/report/_report_list.html.haml:45 ../app/views/report/_report_list.html.haml:61 ../app/views/report/_schedule_form.html.haml:9 ../app/views/report/_report_info.html.haml:58 ../app/views/chargeback/_cb_assignments.html.haml:57 ../app/views/chargeback/_cb_assignments.html.haml:90 ../app/views/chargeback/_cb_assignments.html.haml:109 ../app/views/chargeback/_cb_assignments.html.haml:128 ../app/views/chargeback/_reports_list.html.haml:32 ../app/views/static/ops/tenant/tenant.html.haml:10 ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:30 ../app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml:6 ../app/views/static/generic_object/generic_object_definition.html.haml:11 ../app/views/ems_infra/_form.html.haml:9 ../app/views/configuration_manager/_shared_form.html.haml:16 ../app/views/ems_physical_infra/_form.html.haml:9 ../app/views/auth_key_pair_cloud/_form.html.haml:19 ../app/views/host/_form.html.haml:18 ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:9 ../app/views/miq_ae_customization/_old_dialogs_details.html.haml:12 ../app/views/service/_service_form.html.haml:18 ../app/views/ems_container/_form.html.haml:9 ../app/views/ansible_repository/_repository_form.html.haml:16 ../app/views/catalog/_ot_add.html.haml:8 ../app/views/catalog/_ot_edit.html.haml:8 ../app/views/catalog/_form_resources_info.html.haml:32 ../app/views/catalog/_sandt_tree_show.html.haml:157 ../app/views/catalog/_st_angular_form.html.haml:14 ../app/views/catalog/_ot_tree_show.html.haml:5 ../app/views/catalog/_ot_copy.html.haml:11 ../app/views/catalog/_stcat_form.html.haml:11 ../app/views/catalog/_svccat_tree_show.html.haml:15 ../app/views/catalog/_stcat_tree_show.html.haml:6 ../app/assets/javascripts/components/generic_object/main-custom-button-form-component.js:57 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:23 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:24 ../app/assets/javascripts/components/generic_object/generic-object-definition-component.js:25 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-master-nodes-controller.js:238 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-no-provider-controller.js:89 ../app/assets/javascripts/controllers/container_deployment/deploy_provider/deploy-provider-details-existing-vms-controller.js:20 ../app/assets/javascripts/controllers/alerts/alerts_overview_controller.js:54 ../config/yaml_strings.rb:140
 msgid "Name"
 msgstr ""
 
@@ -16948,20 +16800,12 @@ msgstr ""
 msgid "No System Image Types were selected to %{button}"
 msgstr ""
 
-#: ../app/views/planning/_planning_vm_profile.html.haml:64
-msgid "No Time Profile Selected"
-msgstr ""
-
-#: ../app/views/report/_form_filter_performance.html.haml:32 ../app/views/layouts/_perf_options.html.haml:115 ../app/views/planning/_planning_options.html.haml:284 ../app/views/utilization/_utilization_options.html.haml:37
+#: ../app/views/report/_form_filter_performance.html.haml:32 ../app/views/layouts/_perf_options.html.haml:115 ../app/views/utilization/_utilization_options.html.haml:37
 msgid "No Time Profiles found"
 msgstr ""
 
 #: ../app/controllers/configuration_controller.rb:284
 msgid "No Time Profiles were selected for deletion"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_tl_detail.html.haml:14
-msgid "No Timeline data available."
 msgstr ""
 
 #: ../app/views/layouts/listnav/_ems_storage.html.haml:13
@@ -17018,14 +16862,6 @@ msgstr ""
 
 #: ../app/views/ops/_diagnostics_utilization_tab.html.haml:8
 msgid "No Utilization data available for this Server's Virtual Machine."
-msgstr ""
-
-#: ../app/controllers/planning_controller.rb:39
-msgid "No Utilization data available to generate planning results"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:72
-msgid "No VMs found"
 msgstr ""
 
 #: ../app/controllers/miq_policy_controller/rsop.rb:26
@@ -17158,10 +16994,6 @@ msgstr ""
 msgid "No events available for this timeline"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_tl_detail.html.haml:11
-msgid "No events available for this timeline."
-msgstr ""
-
 #: ../app/controllers/report_controller/reports/editor.rb:878
 msgid "No fields were moved up"
 msgstr ""
@@ -17242,10 +17074,6 @@ msgstr ""
 msgid "No performance data is available for the selected item."
 msgstr ""
 
-#: ../app/views/planning/_planning_summary.html.haml:22
-msgid "No planning data is available for the selected item."
-msgstr ""
-
 #: ../app/views/layouts/_policy_sim.html.haml:30
 msgid "No policies have been chosen yet"
 msgstr ""
@@ -17260,10 +17088,6 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/report_only.rb:5 ../app/helpers/application_helper/button/utilization_download.rb:13 ../app/helpers/application_helper/button/chargeback_report_only.rb:3 ../app/helpers/application_helper/button/chargeback_download_choice.rb:3 ../app/helpers/application_helper/button/mixins/render_report_mixin.rb:3 ../app/controllers/chargeback_controller.rb:367 ../app/controllers/application_controller.rb:772 ../app/controllers/report_controller/saved_reports.rb:59 ../app/views/report/_report_list.html.haml:98
 msgid "No records found for this report"
-msgstr ""
-
-#: ../app/controllers/dashboard_controller.rb:736 ../app/controllers/dashboard_controller.rb:811 ../app/controllers/application_controller/timelines.rb:168 ../app/controllers/bottlenecks_controller.rb:199
-msgid "No records found for this timeline"
 msgstr ""
 
 #: ../app/assets/javascripts/controllers/ops/pglogical_replication_form_controller.js:73 ../app/assets/javascripts/controllers/ops/pglogical_replication_form_controller.js:308
@@ -17975,7 +17799,7 @@ msgstr ""
 msgid "Optional, if not specified, method name is used."
 msgstr ""
 
-#: ../app/controllers/miq_policy_controller/rsop.rb:49 ../app/controllers/application_controller/automate.rb:101 ../app/views/vm_common/_reconfigure.html.haml:9 ../app/views/vm_common/_policy_options.html.haml:5 ../app/views/miq_request/_reconfigure_show.html.haml:4 ../app/views/cloud_volume/backup_new.html.haml:21 ../app/views/shared/buttons/_ab_options_form.html.haml:4 ../app/views/shared/buttons/_ab_form.html.haml:20 ../app/views/bottlenecks/_bottlenecks_options.html.haml:4 ../app/views/layouts/_tl_options.html.haml:16 ../app/views/utilization/_utilization_options.html.haml:5
+#: ../app/controllers/miq_policy_controller/rsop.rb:49 ../app/controllers/application_controller/automate.rb:101 ../app/views/vm_common/_reconfigure.html.haml:9 ../app/views/vm_common/_policy_options.html.haml:5 ../app/views/miq_request/_reconfigure_show.html.haml:4 ../app/views/cloud_volume/backup_new.html.haml:21 ../app/views/shared/buttons/_ab_options_form.html.haml:4 ../app/views/shared/buttons/_ab_form.html.haml:20 ../app/views/layouts/_tl_options.html.haml:16 ../app/views/utilization/_utilization_options.html.haml:5
 msgid "Options"
 msgstr ""
 
@@ -18712,26 +18536,6 @@ msgstr ""
 
 #: ../app/views/shared/views/_prov_dialog.html.haml:136
 msgid "Placement - Options"
-msgstr ""
-
-#: ../app/views/planning/_planning_instructions.html.haml:2
-msgid "Plan for VM placement on %{hosts} or %{clusters}"
-msgstr ""
-
-#: ../app/presenters/menu/default_menu.rb:243 ../app/helpers/application_helper/title.rb:102 ../app/controllers/planning_controller.rb:179
-msgid "Planning"
-msgstr ""
-
-#: ../app/controllers/planning_controller.rb:11 ../app/controllers/planning_controller.rb:23 ../app/controllers/planning_controller.rb:165
-msgid "Planning Options"
-msgstr ""
-
-#: ../app/controllers/planning_controller.rb:235
-msgid "Planning Summary"
-msgstr ""
-
-#: ../app/controllers/planning_controller.rb:238
-msgid "Planning options have been reset by the user"
 msgstr ""
 
 #. TRANSLATORS: file: product/views/Host-hosts.yaml
@@ -19871,10 +19675,6 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-#: ../app/views/planning/_planning_summary.html.haml:30
-msgid "Rank"
-msgstr ""
-
 #: ../app/views/chargeback/_cb_assignments.html.haml:58 ../app/views/chargeback/_cb_assignments.html.haml:91 ../app/views/chargeback/_cb_assignments.html.haml:110 ../app/views/chargeback/_cb_assignments.html.haml:129 ../app/views/chargeback/_cb_rate_show.html.haml:22 ../app/views/ems_container/ad_hoc/_chart_view_form.html.haml:31
 msgid "Rate"
 msgstr ""
@@ -20154,14 +19954,6 @@ msgstr ""
 
 #: ../app/helpers/report_helper.rb:5
 msgid "Red Text"
-msgstr ""
-
-#: ../app/views/planning/_planning_vm_profile.html.haml:2
-msgid "Reference VM Profile"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:6
-msgid "Reference VM Selection"
 msgstr ""
 
 #: ../app/views/miq_policy/_alert_details.html.haml:294
@@ -21372,10 +21164,6 @@ msgstr ""
 msgid "Replicators"
 msgstr ""
 
-#: ../app/controllers/report_controller/widgets.rb:21 ../app/views/bottlenecks/_bottlenecks_tabs.html.haml:6 ../app/views/planning/_planning_tabs.html.haml:6 ../app/views/utilization/_utilization_tabs.html.haml:8
-msgid "Report"
-msgstr ""
-
 #: ../app/controllers/report_controller/reports.rb:176
 msgid "Report \"%{name}\""
 msgstr ""
@@ -21679,11 +21467,7 @@ msgstr ""
 msgid "Required. Used to gather Utilization data."
 msgstr ""
 
-#: ../app/helpers/planning_helper.rb:12
-msgid "Reservation"
-msgstr ""
-
-#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:292 ../app/helpers/application_helper/toolbar/host_center.rb:220 ../app/helpers/application_helper/toolbar/x_vm_center.rb:241 ../app/helpers/application_helper/toolbar/hosts_center.rb:258 ../app/helpers/application_helper/toolbar/x_edit_view.rb:22 ../app/controllers/application_controller/ci_processing.rb:537 ../app/views/miq_policy/_rsop_options.html.haml:16 ../app/views/miq_policy/_rsop_options.html.haml:30 ../app/views/vm_common/_reconfigure.html.haml:444 ../app/views/miq_task/_tasks_options.html.haml:82 ../app/views/miq_task/_tasks_options.html.haml:102 ../app/views/host_aggregate/edit.html.haml:25 ../app/views/host_aggregate/new.html.haml:56 ../app/views/ops/_settings_replication_tab.html.haml:201 ../app/views/cloud_volume/attach.html.haml:46 ../app/views/cloud_volume/backup_new.html.haml:52 ../app/views/cloud_volume/backup_select.html.haml:29 ../app/views/cloud_volume/snapshot_new.html.haml:29 ../app/views/static/miq-request-options.html.haml:54 ../app/views/layouts/_edit_buttons.html.haml:26 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:9 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:10 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:17 ../app/views/layouts/angular/_generic_form_buttons.html.haml:17 ../app/views/layouts/_edit_form_buttons.html.haml:76 ../app/views/layouts/_edit_form_buttons.html.haml:90 ../app/views/layouts/_edit_form_buttons.html.haml:98 ../app/views/layouts/_edit_form_buttons.html.haml:130 ../app/views/layouts/_adv_search_footer.html.haml:55 ../app/views/layouts/_adv_search_footer.html.haml:60 ../app/views/layouts/_x_dialog_buttons.html.haml:32 ../app/views/layouts/_x_dialog_buttons.html.haml:54 ../app/views/layouts/_x_edit_buttons.html.haml:107 ../app/views/layouts/_x_edit_buttons.html.haml:141 ../app/views/layouts/_form_buttons.html.haml:42 ../app/views/layouts/_form_buttons.html.haml:48 ../app/views/layouts/_form_buttons.html.haml:66 ../app/views/planning/index.html.haml:15 ../app/views/planning/index.html.haml:28 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:21 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:42 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:8
+#: ../app/helpers/application_helper/toolbar/vm_infras_center.rb:292 ../app/helpers/application_helper/toolbar/host_center.rb:220 ../app/helpers/application_helper/toolbar/x_vm_center.rb:241 ../app/helpers/application_helper/toolbar/hosts_center.rb:258 ../app/helpers/application_helper/toolbar/x_edit_view.rb:22 ../app/controllers/application_controller/ci_processing.rb:537 ../app/views/miq_policy/_rsop_options.html.haml:16 ../app/views/miq_policy/_rsop_options.html.haml:30 ../app/views/vm_common/_reconfigure.html.haml:444 ../app/views/miq_task/_tasks_options.html.haml:82 ../app/views/miq_task/_tasks_options.html.haml:102 ../app/views/host_aggregate/edit.html.haml:25 ../app/views/host_aggregate/new.html.haml:56 ../app/views/ops/_settings_replication_tab.html.haml:201 ../app/views/cloud_volume/attach.html.haml:46 ../app/views/cloud_volume/backup_new.html.haml:52 ../app/views/cloud_volume/backup_select.html.haml:29 ../app/views/cloud_volume/snapshot_new.html.haml:29 ../app/views/static/miq-request-options.html.haml:54 ../app/views/layouts/_edit_buttons.html.haml:26 ../app/views/layouts/angular/_custom_form_buttons_controller_as.html.haml:9 ../app/views/layouts/angular/_x_custom_form_buttons_angular.html.haml:10 ../app/views/layouts/angular/_x_edit_buttons_angular.html.haml:17 ../app/views/layouts/angular/_generic_form_buttons.html.haml:17 ../app/views/layouts/_edit_form_buttons.html.haml:76 ../app/views/layouts/_edit_form_buttons.html.haml:90 ../app/views/layouts/_edit_form_buttons.html.haml:98 ../app/views/layouts/_edit_form_buttons.html.haml:130 ../app/views/layouts/_adv_search_footer.html.haml:55 ../app/views/layouts/_adv_search_footer.html.haml:60 ../app/views/layouts/_x_dialog_buttons.html.haml:32 ../app/views/layouts/_x_dialog_buttons.html.haml:54 ../app/views/layouts/_x_edit_buttons.html.haml:107 ../app/views/layouts/_x_edit_buttons.html.haml:141 ../app/views/layouts/_form_buttons.html.haml:42 ../app/views/layouts/_form_buttons.html.haml:48 ../app/views/layouts/_form_buttons.html.haml:66 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:21 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:42 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:8
 msgid "Reset"
 msgstr ""
 
@@ -21705,10 +21489,6 @@ msgstr ""
 
 #: ../app/helpers/textual_mixins/textual_os_info.rb:46
 msgid "Reset Lockout Counter"
-msgstr ""
-
-#: ../app/views/planning/index.html.haml:15 ../app/views/planning/index.html.haml:28
-msgid "Reset all Planning options"
 msgstr ""
 
 #: ../app/views/miq_policy/_rsop_options.html.haml:15 ../app/views/miq_policy/_rsop_options.html.haml:29
@@ -22935,24 +22715,12 @@ msgstr ""
 msgid "Select a filter to set it as my default"
 msgstr ""
 
-#: ../app/views/bottlenecks/_bottlenecks_report.html.haml:3
-msgid "Select a node on the left to view Bottlenecks report."
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_summary.html.haml:3
-msgid "Select a node on the left to view Bottlenecks timeline."
-msgstr ""
-
 #: ../app/views/utilization/_utilization_details.html.haml:12 ../app/views/utilization/_utilization_summary.html.haml:30
 msgid "Select a node on the left to view Utilization information."
 msgstr ""
 
 #: ../app/views/utilization/_utilization_report.html.haml:15
 msgid "Select a node on the left to view Utilization report."
-msgstr ""
-
-#: ../app/views/planning/index.html.haml:25
-msgid "Select a reference VM or Manual Input source to Submit the Planning Options"
 msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:38
@@ -23795,7 +23563,7 @@ msgstr ""
 msgid "Shortcuts"
 msgstr ""
 
-#: ../app/views/shared/buttons/_ab_show.html.haml:150 ../app/views/shared/views/_show_alerts_most_recent.html.haml:16 ../app/views/report/_widget_show.html.haml:179 ../app/views/layouts/_role_visibility.html.haml:9 ../app/views/layouts/_perf_options.html.haml:37 ../app/views/layouts/_perf_options.html.haml:69 ../app/views/planning/_planning_options.html.haml:182 ../app/views/planning/_planning_vm_profile.html.haml:31
+#: ../app/views/shared/buttons/_ab_show.html.haml:150 ../app/views/shared/views/_show_alerts_most_recent.html.haml:16 ../app/views/report/_widget_show.html.haml:179 ../app/views/layouts/_role_visibility.html.haml:9 ../app/views/layouts/_perf_options.html.haml:37 ../app/views/layouts/_perf_options.html.haml:69
 msgid "Show"
 msgstr ""
 
@@ -24011,10 +23779,6 @@ msgstr ""
 
 #: ../app/views/layouts/listnav/_physical_server.html.haml:20
 msgid "Show Host"
-msgstr ""
-
-#: ../app/views/bottlenecks/_bottlenecks_options.html.haml:21
-msgid "Show Host Events"
 msgstr ""
 
 #: ../app/views/miq_ae_class/_method_form.html.haml:91
@@ -25220,7 +24984,7 @@ msgstr ""
 #. TRANSLATORS: file: product/views/EventLog-event_logs.yaml
 #. TRANSLATORS: file: product/views/MiqReportResult-all.yaml
 #. TRANSLATORS: file: product/views/MiqReportResult.yaml
-#: ../app/helpers/security_group_helper/textual_summary.rb:36 ../app/views/ops/_ap_form_nteventlog.html.haml:11 ../app/views/chargeback/_reports_list.html.haml:33 ../app/views/planning/_planning_options.html.haml:92 ../app/views/planning/_planning_vm_profile.html.haml:4 ../config/yaml_strings.rb:610
+#: ../app/helpers/security_group_helper/textual_summary.rb:36 ../app/views/ops/_ap_form_nteventlog.html.haml:11 ../app/views/chargeback/_reports_list.html.haml:33 ../config/yaml_strings.rb:610
 msgid "Source"
 msgstr ""
 
@@ -25620,7 +25384,7 @@ msgstr ""
 msgid "Sub-claim:"
 msgstr ""
 
-#: ../app/views/miq_policy/_rsop_options.html.haml:7 ../app/views/miq_policy/_rsop_options.html.haml:26 ../app/views/vm_common/_live_migrate.html.haml:72 ../app/views/vm_common/_reconfigure.html.haml:438 ../app/views/vm_common/_evacuate.html.haml:70 ../app/views/vm_common/_resize.html.haml:33 ../app/views/ops/_diagnostics_database_tab.html.haml:106 ../app/views/ops/_diagnostics_database_tab.html.haml:125 ../app/views/miq_request/_request.html.haml:115 ../app/views/miq_request/_prov_form_buttons.html.haml:13 ../app/views/miq_request/_prov_form_buttons.html.haml:33 ../app/views/shared/dialogs/_dialog_user.html.haml:9 ../app/views/shared/dialogs/_reconfigure_dialog.html.haml:10 ../app/views/shared/buttons/_ab_show.html.haml:62 ../app/views/shared/buttons/_ab_options_form.html.haml:87 ../app/views/static/generic_object/main_custom_button_form.html.haml:66 ../app/views/layouts/_x_dialog_buttons.html.haml:20 ../app/views/layouts/_x_dialog_buttons.html.haml:50 ../app/views/layouts/_x_edit_buttons.html.haml:68 ../app/views/layouts/_x_edit_buttons.html.haml:132 ../app/views/planning/index.html.haml:6 ../app/views/planning/index.html.haml:25 ../app/views/miq_ae_tools/_import_export.html.haml:56 ../app/views/miq_ae_tools/_import_export.html.haml:110 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:4 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:39 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:6
+#: ../app/views/miq_policy/_rsop_options.html.haml:7 ../app/views/miq_policy/_rsop_options.html.haml:26 ../app/views/vm_common/_live_migrate.html.haml:72 ../app/views/vm_common/_reconfigure.html.haml:438 ../app/views/vm_common/_evacuate.html.haml:70 ../app/views/vm_common/_resize.html.haml:33 ../app/views/ops/_diagnostics_database_tab.html.haml:106 ../app/views/ops/_diagnostics_database_tab.html.haml:125 ../app/views/miq_request/_request.html.haml:115 ../app/views/miq_request/_prov_form_buttons.html.haml:13 ../app/views/miq_request/_prov_form_buttons.html.haml:33 ../app/views/shared/dialogs/_dialog_user.html.haml:9 ../app/views/shared/dialogs/_reconfigure_dialog.html.haml:10 ../app/views/shared/buttons/_ab_show.html.haml:62 ../app/views/shared/buttons/_ab_options_form.html.haml:87 ../app/views/static/generic_object/main_custom_button_form.html.haml:66 ../app/views/layouts/_x_dialog_buttons.html.haml:20 ../app/views/layouts/_x_dialog_buttons.html.haml:50 ../app/views/layouts/_x_edit_buttons.html.haml:68 ../app/views/layouts/_x_edit_buttons.html.haml:132 ../app/views/miq_ae_tools/_import_export.html.haml:56 ../app/views/miq_ae_tools/_import_export.html.haml:110 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:4 ../app/views/miq_ae_tools/_resolve_form_buttons.html.haml:39 ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:6
 msgid "Submit"
 msgstr ""
 
@@ -25630,10 +25394,6 @@ msgstr ""
 
 #: ../app/assets/javascripts/controllers/buttons/paging_div_button_group_controller.js:7
 msgid "Submit Changes"
-msgstr ""
-
-#: ../app/views/planning/index.html.haml:6
-msgid "Submit Planning options"
 msgstr ""
 
 #: ../app/views/miq_policy/_rsop_options.html.haml:6
@@ -25745,7 +25505,7 @@ msgstr ""
 msgid "Sum 'Other' values"
 msgstr ""
 
-#: ../app/controllers/report_controller/reports/editor.rb:367 ../app/views/ops/_all_tabs.html.haml:140 ../app/views/ops/_all_tabs.html.haml:216 ../app/views/bottlenecks/_bottlenecks_tabs.html.haml:4 ../app/views/static/deploy_containers_provider/deploy-provider-review-summary.html.haml:4 ../app/views/layouts/listnav/_cloud_subnet.html.haml:9 ../app/views/layouts/listnav/_container_template.html.haml:9 ../app/views/layouts/listnav/_host.html.haml:20 ../app/views/layouts/listnav/_container_project.html.haml:9 ../app/views/layouts/listnav/_storage_manager.html.haml:9 ../app/views/layouts/listnav/_storage.html.haml:10 ../app/views/layouts/listnav/_container.html.haml:9 ../app/views/layouts/listnav/_container_replicator.html.haml:9 ../app/views/layouts/listnav/_container_build.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_backup.html.haml:9 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:9 ../app/views/layouts/listnav/_container_service.html.haml:9 ../app/views/layouts/listnav/_container_node.html.haml:9 ../app/views/layouts/listnav/_generic_object_definition.html.haml:7 ../app/views/layouts/listnav/_cloud_object_store_container.html.haml:9 ../app/views/layouts/listnav/_cloud_tenant.html.haml:9 ../app/views/layouts/listnav/_flavor.html.haml:9 ../app/views/layouts/listnav/_persistent_volume.html.haml:9 ../app/views/layouts/listnav/_cloud_network.html.haml:9 ../app/views/layouts/listnav/_cloud_volume.html.haml:9 ../app/views/layouts/listnav/_network_port.html.haml:9 ../app/views/layouts/listnav/_load_balancer.html.haml:9 ../app/views/layouts/listnav/_physical_rack.html.haml:9 ../app/views/layouts/listnav/_ems_network.html.haml:8 ../app/views/layouts/listnav/_physical_switch.html.haml:9 ../app/views/layouts/listnav/_configuration_job.html.haml:9 ../app/views/layouts/listnav/_pxe_server.html.haml:9 ../app/views/layouts/listnav/_floating_ip.html.haml:9 ../app/views/layouts/listnav/_auth_key_pair_cloud.html.haml:9 ../app/views/layouts/listnav/_container_group.html.haml:9 ../app/views/layouts/listnav/_container_route.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_snapshot.html.haml:9 ../app/views/layouts/listnav/_network_router.html.haml:9 ../app/views/layouts/listnav/_resource_pool.html.haml:10 ../app/views/layouts/listnav/_host_aggregate.html.haml:9 ../app/views/layouts/listnav/_physical_server.html.haml:9 ../app/views/layouts/listnav/_ems_cloud.html.haml:9 ../app/views/layouts/listnav/_ems_storage.html.haml:8 ../app/views/layouts/listnav/_container_image_registry.html.haml:9 ../app/views/layouts/listnav/_orchestration_stack.html.haml:9 ../app/views/layouts/listnav/_container_image.html.haml:9 ../app/views/layouts/listnav/_cloud_object_store_object.html.haml:9 ../app/views/layouts/listnav/_ems_infra.html.haml:11 ../app/views/layouts/listnav/_ems_cluster.html.haml:10 ../app/views/layouts/listnav/_availability_zone.html.haml:9 ../app/views/layouts/listnav/_security_group.html.haml:9 ../app/views/layouts/listnav/_ems_container.html.haml:9 ../app/views/layouts/listnav/_miq_ae_class.html.haml:8 ../app/views/provider_foreman/_inventory_group.html.haml:4 ../app/views/provider_foreman/_configuration_profile.html.haml:4 ../app/views/planning/_planning_tabs.html.haml:4 ../app/views/automation_manager/_inventory_group.html.haml:4 ../app/views/utilization/_utilization_tabs.html.haml:4
+#: ../app/controllers/report_controller/reports/editor.rb:367 ../app/views/ops/_all_tabs.html.haml:140 ../app/views/ops/_all_tabs.html.haml:216 ../app/views/static/deploy_containers_provider/deploy-provider-review-summary.html.haml:4 ../app/views/layouts/listnav/_cloud_subnet.html.haml:9 ../app/views/layouts/listnav/_container_template.html.haml:9 ../app/views/layouts/listnav/_host.html.haml:20 ../app/views/layouts/listnav/_container_project.html.haml:9 ../app/views/layouts/listnav/_storage_manager.html.haml:9 ../app/views/layouts/listnav/_storage.html.haml:10 ../app/views/layouts/listnav/_container.html.haml:9 ../app/views/layouts/listnav/_container_replicator.html.haml:9 ../app/views/layouts/listnav/_container_build.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_backup.html.haml:9 ../app/views/layouts/listnav/_ems_physical_infra.html.haml:9 ../app/views/layouts/listnav/_container_service.html.haml:9 ../app/views/layouts/listnav/_container_node.html.haml:9 ../app/views/layouts/listnav/_generic_object_definition.html.haml:7 ../app/views/layouts/listnav/_cloud_object_store_container.html.haml:9 ../app/views/layouts/listnav/_cloud_tenant.html.haml:9 ../app/views/layouts/listnav/_flavor.html.haml:9 ../app/views/layouts/listnav/_persistent_volume.html.haml:9 ../app/views/layouts/listnav/_cloud_network.html.haml:9 ../app/views/layouts/listnav/_cloud_volume.html.haml:9 ../app/views/layouts/listnav/_network_port.html.haml:9 ../app/views/layouts/listnav/_load_balancer.html.haml:9 ../app/views/layouts/listnav/_physical_rack.html.haml:9 ../app/views/layouts/listnav/_ems_network.html.haml:8 ../app/views/layouts/listnav/_physical_switch.html.haml:9 ../app/views/layouts/listnav/_configuration_job.html.haml:9 ../app/views/layouts/listnav/_pxe_server.html.haml:9 ../app/views/layouts/listnav/_floating_ip.html.haml:9 ../app/views/layouts/listnav/_auth_key_pair_cloud.html.haml:9 ../app/views/layouts/listnav/_container_group.html.haml:9 ../app/views/layouts/listnav/_container_route.html.haml:9 ../app/views/layouts/listnav/_cloud_volume_snapshot.html.haml:9 ../app/views/layouts/listnav/_network_router.html.haml:9 ../app/views/layouts/listnav/_resource_pool.html.haml:10 ../app/views/layouts/listnav/_host_aggregate.html.haml:9 ../app/views/layouts/listnav/_physical_server.html.haml:9 ../app/views/layouts/listnav/_ems_cloud.html.haml:9 ../app/views/layouts/listnav/_ems_storage.html.haml:8 ../app/views/layouts/listnav/_container_image_registry.html.haml:9 ../app/views/layouts/listnav/_orchestration_stack.html.haml:9 ../app/views/layouts/listnav/_container_image.html.haml:9 ../app/views/layouts/listnav/_cloud_object_store_object.html.haml:9 ../app/views/layouts/listnav/_ems_infra.html.haml:11 ../app/views/layouts/listnav/_ems_cluster.html.haml:10 ../app/views/layouts/listnav/_availability_zone.html.haml:9 ../app/views/layouts/listnav/_security_group.html.haml:9 ../app/views/layouts/listnav/_ems_container.html.haml:9 ../app/views/layouts/listnav/_miq_ae_class.html.haml:8 ../app/views/provider_foreman/_inventory_group.html.haml:4 ../app/views/provider_foreman/_configuration_profile.html.haml:4 ../app/views/automation_manager/_inventory_group.html.haml:4 ../app/views/utilization/_utilization_tabs.html.haml:4
 msgid "Summary"
 msgstr ""
 
@@ -26082,14 +25842,6 @@ msgstr ""
 
 #: ../app/views/miq_policy/_action_options.html.haml:347 ../app/views/shared/_playbook_options.html.haml:29
 msgid "Target Machine"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:178
-msgid "Target Options / Limits"
-msgstr ""
-
-#: ../app/views/planning/_planning_vm_profile.html.haml:29
-msgid "Target Options/Limits"
 msgstr ""
 
 #: ../app/helpers/container_service_helper/textual_summary.rb:14
@@ -26698,7 +26450,7 @@ msgstr ""
 msgid "Time Delay:"
 msgstr ""
 
-#: ../app/controllers/configuration_controller.rb:264 ../app/views/report/_form_filter_performance.html.haml:29 ../app/views/layouts/_perf_options.html.haml:111 ../app/views/planning/_planning_options.html.haml:281 ../app/views/planning/_planning_vm_profile.html.haml:61 ../app/views/utilization/_utilization_options.html.haml:34
+#: ../app/controllers/configuration_controller.rb:264 ../app/views/report/_form_filter_performance.html.haml:29 ../app/views/layouts/_perf_options.html.haml:111 ../app/views/utilization/_utilization_options.html.haml:34
 msgid "Time Profile"
 msgstr ""
 
@@ -26714,7 +26466,7 @@ msgstr ""
 msgid "Time Profiles"
 msgstr ""
 
-#: ../app/views/configuration/_ui_1.html.haml:81 ../app/views/ops/_schedule_form_timer.html.haml:25 ../app/views/report/_form_filter_chargeback.html.haml:224 ../app/views/report/_schedule_form_timer.html.haml:52 ../app/views/bottlenecks/_bottlenecks_options.html.haml:29 ../app/views/planning/_planning_vm_profile.html.haml:68
+#: ../app/views/configuration/_ui_1.html.haml:81 ../app/views/ops/_schedule_form_timer.html.haml:25 ../app/views/report/_form_filter_chargeback.html.haml:224 ../app/views/report/_schedule_form_timer.html.haml:52
 msgid "Time Zone"
 msgstr ""
 
@@ -27074,10 +26826,6 @@ msgstr ""
 msgid "Total memory (mb)"
 msgstr ""
 
-#: ../app/views/planning/_planning_report.html.haml:10
-msgid "Total number of VMs that can fit on all of the above %{models}: %{count}"
-msgstr ""
-
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:9
 msgid "Totals for %{hosts}"
 msgstr ""
@@ -27134,10 +26882,6 @@ msgstr ""
 msgid "Trend"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:265 ../app/views/planning/_planning_vm_profile.html.haml:56
-msgid "Trend Options"
-msgstr ""
-
 #: ../app/controllers/miq_policy_controller/alerts.rb:589
 msgid "Trend Steepness must be an integer"
 msgstr ""
@@ -27162,10 +26906,6 @@ msgstr ""
 msgid "Trend Target Percents"
 msgstr ""
 
-#: ../app/views/planning/_planning_vm_profile.html.haml:58
-msgid "Trend for Past"
-msgstr ""
-
 #: ../app/views/report/_form_columns_trend.html.haml:4
 msgid "Trending for"
 msgstr ""
@@ -27174,7 +26914,7 @@ msgstr ""
 msgid "Trending for is required"
 msgstr ""
 
-#: ../app/views/planning/_planning_options.html.haml:269 ../app/views/utilization/_utilization_options.html.haml:9
+#: ../app/views/utilization/_utilization_options.html.haml:9
 msgid "Trends for past"
 msgstr ""
 
@@ -27767,10 +27507,6 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-#: ../app/helpers/planning_helper.rb:13
-msgid "Usage"
-msgstr ""
-
 #: ../app/assets/javascripts/controllers/ems_infra_dashboard/heatmap_controller.js:50 ../app/assets/javascripts/controllers/container_dashboard/util/charts-mixin.js:166
 msgid "Usage: "
 msgstr ""
@@ -28112,10 +27848,6 @@ msgstr ""
 msgid "VM Console"
 msgstr ""
 
-#: ../app/views/planning/_planning_report.html.haml:6
-msgid "VM Counts per %{model}"
-msgstr ""
-
 #: ../app/views/miq_request/_prov_vm_migrate_dialog.html.haml:75
 msgid "VM Hardware"
 msgstr ""
@@ -28134,10 +27866,6 @@ msgstr ""
 
 #: ../app/views/miq_request/_prov_field.html.haml:148 ../app/views/miq_request/_prov_field.html.haml:155
 msgid "VM Number"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:88
-msgid "VM Options"
 msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:188
@@ -28278,7 +28006,7 @@ msgstr ""
 #. TRANSLATORS: file: product/views/Vm-all_vms.yaml
 #. TRANSLATORS: file: product/views/Vm.yaml
 #. TRANSLATORS: file: product/views/Vm__restricted.yaml
-#: ../app/helpers/host_helper/textual_summary.rb:300 ../app/services/ems_infra_dashboard_service.rb:73 ../app/services/ems_infra_dashboard_service.rb:164 ../app/controllers/vm_common.rb:1038 ../app/controllers/application_controller/miq_request_methods.rb:612 ../app/controllers/vm_infra_controller.rb:28 ../app/views/cloud_topology/show.html.haml:9 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/container_topology/show.html.haml:33 ../app/views/infra_topology/show.html.haml:13 ../app/views/physical_infra_topology/show.html.haml:25 ../app/views/ems_infra/scaledown.html.haml:21 ../app/views/layouts/listnav/_host.html.haml:98 ../app/views/layouts/listnav/_storage.html.haml:29 ../app/views/layouts/listnav/_ems_infra.html.haml:50 ../app/views/planning/_planning_summary.html.haml:13 ../app/views/network_topology/show.html.haml:17 ../app/views/service/_svcs_show.html.haml:34 ../config/yaml_strings.rb:453
+#: ../app/helpers/host_helper/textual_summary.rb:300 ../app/services/ems_infra_dashboard_service.rb:73 ../app/services/ems_infra_dashboard_service.rb:164 ../app/controllers/vm_common.rb:1038 ../app/controllers/application_controller/miq_request_methods.rb:612 ../app/controllers/vm_infra_controller.rb:28 ../app/views/cloud_topology/show.html.haml:9 ../app/views/configuration/_ui_2.html.haml:109 ../app/views/container_topology/show.html.haml:33 ../app/views/infra_topology/show.html.haml:13 ../app/views/physical_infra_topology/show.html.haml:25 ../app/views/ems_infra/scaledown.html.haml:21 ../app/views/layouts/listnav/_host.html.haml:98 ../app/views/layouts/listnav/_storage.html.haml:29 ../app/views/layouts/listnav/_ems_infra.html.haml:50 ../app/views/network_topology/show.html.haml:17 ../app/views/service/_svcs_show.html.haml:34 ../config/yaml_strings.rb:453
 msgid "VMs"
 msgstr ""
 
@@ -29777,18 +29505,6 @@ msgstr ""
 
 #: ../app/presenters/tree_builder_orchestration_templates.rb:45 ../app/presenters/tree_builder_orchestration_templates.rb:47
 msgid "vApp Templates"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:124 ../app/views/planning/_planning_vm_profile.html.haml:14
-msgid "vCPU Count"
-msgstr ""
-
-#: ../app/views/planning/_planning_vm_profile.html.haml:41
-msgid "vCPU per Core"
-msgstr ""
-
-#: ../app/views/planning/_planning_options.html.haml:224
-msgid "vCPUs per Core"
 msgstr ""
 
 #: ../app/views/vm_common/_reconfigure.html.haml:319
