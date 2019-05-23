@@ -67,6 +67,17 @@
                   'miq-select'        => true}
       = render(:partial => "tenants_tree_show", :locals => {:angular => true})
 
+      .form-group
+        %label.col-md-2.control-label{"for" => "zone_id"}
+          = _('Zone')
+        .col-md-8
+          %select{"ng-model"         => "vm._zone",
+                  "name"             => "zone_id",
+                  'ng-options'       => 'zone as zone.description for zone in vm.zones',
+                  "data-live-search" => "true",
+                  'miq-select'        => true}
+            %option{"value" => ""} &lt;Choose&gt;
+
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
              :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
     = render :partial => "layouts/angular/x_edit_buttons_angular"
