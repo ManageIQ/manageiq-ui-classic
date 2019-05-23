@@ -218,7 +218,7 @@ describe MiqAeCustomizationController do
     context "when the sandbox does not have flash messages" do
       it "does not include the flash message from the sandbox" do
         get :explorer
-        expect(assigns(:flash_array)).not_to include("the flash messages")
+        expect(assigns(:flash_array)).to be_nil
       end
     end
   end
