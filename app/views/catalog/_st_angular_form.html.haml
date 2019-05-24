@@ -68,11 +68,12 @@
       = render(:partial => "tenants_tree_show", :locals => {:angular => true})
 
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
-            :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
+             :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
   ManageIQ.angular.app.value('catalogItemFormId', '#{@record.id || "new"}');
   ManageIQ.angular.app.value('currentRegion', '#{@current_region}');
   ManageIQ.angular.app.value('allCatalogsNames', #{@available_catalogs});
+  ManageIQ.angular.app.value('additionalTenantIds', #{@additional_tenants});
   miq_bootstrap('#form_div');

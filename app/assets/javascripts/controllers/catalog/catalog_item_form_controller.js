@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'currentRegion', 'miqService', 'postService', 'catalogItemDataFactory', 'playbookReusableCodeMixin', 'allCatalogsNames', function($scope, catalogItemFormId, currentRegion, miqService, postService, catalogItemDataFactory, playbookReusableCodeMixin, allCatalogsNames) {
+ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeout', 'catalogItemFormId', 'currentRegion', 'miqService', 'postService', 'catalogItemDataFactory', 'playbookReusableCodeMixin', 'allCatalogsNames', 'additionalTenantIds', function($scope, $timeout, catalogItemFormId, currentRegion, miqService, postService, catalogItemDataFactory, playbookReusableCodeMixin, allCatalogsNames, additionalTenantIds) {
   var vm = this;
   var init = function() {
     vm.catalogItemModel = {
@@ -44,6 +44,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_become_enabled: false,
       retirement_verbosity: '0',
       retirement_log_output: 'on_error',
+      additional_tenant_ids: additionalTenantIds,
     };
     vm.model = 'catalogItemModel';
     vm.log_output_types = playbookReusableCodeMixin.getLogOutputTypes();
@@ -81,6 +82,34 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       });
     }
   };
+
+  listenToRx(function(data) {
+    if (data.controller !== 'catalogItemFormController') {
+      return;
+    }
+
+    if (data.key) {
+      $timeout(function() {
+        // get ids of checked additional tenants in the tree
+        var new_ids = miqTreeObject('tenants_tree').getChecked().map(getTenantId);
+
+        // filter unnecessary root node if present
+        new_ids = new_ids.filter(function(tenant_id) {
+          return tenant_id;
+        });
+
+        if (new_ids) {
+          vm.catalogItemModel.additional_tenant_ids = new_ids.sort();
+        }
+      });
+    }
+  });
+
+  function getTenantId(obj) {
+    if (obj.key.startsWith('tn')) {
+      return obj.key.split('-')[1];
+    }
+  }
 
   var getConfigInfo = function(configData) {
     vm.catalogItemModel.provisioning_repository_id = configData.provision.repository_id;
@@ -218,6 +247,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       service_template_catalog_id: configData.catalog_id,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
+      additional_tenant_ids: configData.additional_tenant_ids,
       config_info: {
         provision: {
           repository_id: configData.provisioning_repository_id,

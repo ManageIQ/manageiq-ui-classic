@@ -1279,6 +1279,7 @@ class CatalogController < ApplicationController
     @edit[:new][:tenant_ids] = @record.additional_tenant_ids
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
+    @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
@@ -1419,6 +1420,7 @@ class CatalogController < ApplicationController
 
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
+    @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
   end

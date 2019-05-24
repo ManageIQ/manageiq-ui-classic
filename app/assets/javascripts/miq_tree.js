@@ -30,6 +30,14 @@ function miqOnCheckGeneric(node) {
   miqJqueryRequest(url);
 }
 
+function miqOnCheckTenantTree(node) {
+  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
+  sendDataWithRx({
+    controller: 'catalogItemFormController',
+    key: node.key,
+  })
+}
+
 // Generic OnClick handler for selecting nodes in tree
 function miqOnClickGeneric(id) {
   miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
@@ -435,6 +443,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickHostNet',
     'miqOnClickSnapshots',
     'miqOnClickUtilization',
+    'miqOnCheckTenantTree',
   ];
 
   if (whitelist.includes(func)) {
