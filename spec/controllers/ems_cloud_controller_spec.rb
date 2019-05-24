@@ -83,7 +83,8 @@ describe EmsCloudController do
           'ap-southeast-1',
           nil,
           true,
-          instance_of(URI::Generic)
+          instance_of(URI::Generic),
+          :assume_role => nil,
         ]),
         User.current_user.userid,
         zone.name

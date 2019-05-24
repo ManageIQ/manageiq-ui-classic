@@ -224,7 +224,8 @@ describe Mixins::EmsCommon::Angular do
         @params = {
           :default_userid   => "abc",
           :default_password => "abc",
-          :default_url      => "http://abc.test/mypath"
+          :default_url      => "http://abc.test/mypath",
+          :service_account  => "test_arn",
         }
         @ems = FactoryBot.create(:ems_amazon)
         allow(@ems).to receive(:to_s).and_return('ManageIQ::Providers::Amazon::CloudManager')
@@ -234,7 +235,16 @@ describe Mixins::EmsCommon::Angular do
         @params[:cred_type] = "default"
         @ems_cloud_controller.params = @params
 
-        expected_connect_options = ["abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", :EC2, nil, nil, true, URI.parse("http://abc.test/mypath")]
+        expected_connect_options = [
+          "abc",
+          "v2:{XpADRTTI7f11hNT7AuDaKg==}",
+          :EC2,
+          nil,
+          nil,
+          true,
+          URI.parse("http://abc.test/mypath"),
+          :assume_role => "test_arn",
+        ]
         expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
       end
     end
