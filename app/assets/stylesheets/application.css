@@ -15,7 +15,6 @@
  *= require ./metrics
  *= require ./service_dialogs
  *= require @manageiq/ui-components/dist/css/ui-components
- *= require ui-select/dist/select
  *= require ./remote_console
  *= require ./piecharts
 */
