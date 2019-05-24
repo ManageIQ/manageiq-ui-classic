@@ -12,6 +12,7 @@ describe "catalog/_form.html.haml" do
     create_ae_model(:name => 'MARIO', :ae_class => 'CLASS3', :ae_namespace => 'C/D/E')
     @automate_tree = TreeBuilderAeClass.new(:automate_tree, @sb)
     @available_catalogs = [%w(test 1)]
+    @zones = [{1 => 'zone 1', 2 => 'zone 2'}]
     assign(:tenants_tree, TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => [], :selectable => true))
   end
 
