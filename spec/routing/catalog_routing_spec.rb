@@ -40,13 +40,11 @@ describe 'routes for CatalogController' do
     orchestration_template_add
     orchestration_template_copy
     orchestration_template_edit
-    ot_form_field_changed
     ot_tags_edit
     prov_field_changed
     reload
     resolve
     resource_delete
-    service_dialog_from_ot_submit
     servicetemplate_edit
     sort_ds_grid
     sort_host_grid

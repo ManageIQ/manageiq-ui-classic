@@ -16,6 +16,7 @@ import ImportDatastoreViaGit from '../components/automate-import-export-form/imp
 import MiqAboutModal from '../components/miq-about-modal';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
+import ServiceDialogFromOtForm from '../components/orchestration-template/service-dialog-from-ot';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
@@ -44,6 +45,7 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
+ManageIQ.component.addReact('ServiceDialogFromOtForm', ServiceDialogFromOtForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
 ManageIQ.component.addReact('SetServiceOwnershipForm', SetServiceOwnershipForm);
 ManageIQ.component.addReact('TableListView', TableListView);

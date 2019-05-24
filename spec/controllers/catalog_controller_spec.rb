@@ -419,34 +419,6 @@ describe CatalogController do
       end
     end
 
-    describe "#service_dialog_create_from_ot" do
-      before do
-        @ot = FactoryBot.create(:orchestration_template_amazon_in_json)
-        @dialog_label = "New Dialog 01"
-        session[:edit] = {
-          :new    => {:dialog_name => @dialog_label},
-          :key    => "ot_edit__#{@ot.id}",
-          :rec_id => @ot.id
-        }
-        controller.instance_variable_set(:@sb, :trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree)
-        controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-      end
-
-      after(:each) do
-        expect(controller.send(:flash_errors?)).not_to be_truthy
-        expect(assigns(:edit)).to be_nil
-        expect(response.status).to eq(200)
-      end
-
-      it "Service Dialog is created from an Orchestration Template" do
-        controller.params = {:button => "save", :id => @ot.id}
-        allow(controller).to receive(:replace_right_cell)
-        controller.send(:service_dialog_from_ot_submit)
-        expect(assigns(:flash_array).first[:message]).to include("was successfully created")
-        expect(Dialog.where(:label => @dialog_label).first).not_to be_nil
-      end
-    end
-
     describe "#ot_rendering" do
       render_views
       before do

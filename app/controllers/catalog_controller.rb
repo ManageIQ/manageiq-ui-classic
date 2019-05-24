@@ -620,10 +620,6 @@ class CatalogController < ApplicationController
     replace_right_cell(:action => "ot_copy")
   end
 
-  def ot_form_field_changed
-    dialog_creation_form_field_changed("ot_edit__#{params[:id]}")
-  end
-
   def ot_remove_submit
     assert_privileges("orchestration_template_remove")
     elements = find_records_with_rbac(OrchestrationTemplate, checked_or_params)
@@ -651,7 +647,6 @@ class CatalogController < ApplicationController
     assert_privileges("orchestration_template_add")
     ot_type = x_node == "root" ? "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate" : node_name_to_template_name(x_node)
     @edit = {:new => {:type => ot_type}}
-    @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(ot_type)
     @edit[:current] = @edit[:new].dup
     @edit[:key] = "ot_add__new"
     @right_cell_text = _("Adding a new Orchestration Template")
@@ -659,39 +654,14 @@ class CatalogController < ApplicationController
     replace_right_cell(:action => "ot_add")
   end
 
-  def ot_add_form_field_changed
-    return unless load_edit("ot_add__new", "replace_cell__explorer")
-    copy_params_if_set(@edit[:new], params, %i[name description type content manager_id])
-    @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(params[:type])
-
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_hide("buttons_off")
-      page << javascript_show("buttons_on")
-      page << "miqSparkle(false);"
-      page.replace("form_div", :partial => "ot_add") if params[:type]
-    end
-  end
-
   def service_dialog_from_ot
     assert_privileges("service_dialog_from_ot")
     ot = OrchestrationTemplate.find(params[:id])
     @right_cell_text = _("Adding a new Service Dialog from Orchestration Template \"%{name}\"") % {:name => ot.name}
-    @edit = {:new    => {:dialog_name => ""},
-             :key    => "ot_edit__#{ot.id}",
-             :rec_id => ot.id}
+    # id for create service dialog from ot for react form
+    @edit = {:rec_id => ot.id}
     @in_a_form = true
     replace_right_cell(:action => "service_dialog_from_ot")
-  end
-
-  def service_dialog_from_ot_submit
-    case params[:button]
-    when "cancel"
-      service_dialog_from_ot_submit_cancel
-    when "save"
-      service_dialog_from_ot_submit_save
-    end
   end
 
   def ot_show
@@ -950,32 +920,6 @@ class CatalogController < ApplicationController
     @edit[:key] = "ot_edit__#{@record.id}"
     @right_cell_text = right_cell_text % {:record_name => @record.name}
     @in_a_form = true
-  end
-
-  def service_dialog_from_ot_submit_cancel
-    add_flash(_("Creation of a new Service Dialog was cancelled by the user"))
-    @in_a_form = false
-    @sb[:action] = @edit = @record = nil
-    replace_right_cell
-  end
-
-  def service_dialog_from_ot_submit_save
-    assert_privileges("service_dialog_from_ot")
-    load_edit("ot_edit__#{params[:id]}", "replace_cell__explorer")
-    begin
-      ot = OrchestrationTemplate.find(params[:id])
-      Dialog::OrchestrationTemplateServiceDialog.new.create_dialog(@edit[:new][:dialog_name], ot)
-    rescue => bang
-      add_flash(_("Error when creating a Service Dialog from Orchestration Template: %{error_message}") %
-        {:error_message => bang.message}, :error)
-      javascript_flash
-    else
-      add_flash(_("Service Dialog \"%{name}\" was successfully created") %
-        {:name => @edit[:new][:dialog_name]}, :success)
-      @in_a_form = false
-      @edit = @record = nil
-      replace_right_cell
-    end
   end
 
   def st_catalog_set_form_vars
@@ -1916,13 +1860,6 @@ class CatalogController < ApplicationController
             ]
           )
         end
-      elsif %w[service_dialog_from_ot].include?(action)
-        presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).remove_paging
-        locals = {:record_id  => @edit[:rec_id],
-                  :action_url => "#{action}_submit",
-                  :serialize  => true,
-                  :no_reset   => true}
-        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
       else
         # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record
         presenter.hide(:buttons_on, :form_buttons_div).show(:toolbar).hide(:paging_div)
@@ -1932,7 +1869,7 @@ class CatalogController < ApplicationController
     end
 
     # hide form buttons and toolbar for react forms actions
-    if %w[ot_add ot_edit ot_copy].include?(action)
+    if %w[ot_add ot_edit ot_copy service_dialog_from_ot].include?(action)
       presenter.hide(:toolbar, :paging_div, :form_buttons_div)
     else
       presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
