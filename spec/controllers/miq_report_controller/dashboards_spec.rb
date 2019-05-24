@@ -42,7 +42,7 @@ describe ReportController do
         controller.send(:db_save_members)
 
         miq_widget_set.reload
-        expect(miq_widget_set.members).to match_array(MiqWidget.all)
+        expect(miq_widget_set.members.uniq).to match_array((set_data[:col1] + set_data[:col2] + set_data[:col3]).uniq)
       end
     end
 
@@ -82,12 +82,12 @@ describe ReportController do
         expect(assigns(:flash_array)).to be_nil
       end
 
-      it 'No flash message set when tab title is changed for Default Dashboard' do
-        default_dashboard = FactoryBot.create(:miq_widget_set, :read_only => true, :name => "default", :description => "Default Dashboard", :set_data => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
-        controller.instance_variable_set(:@sb, :nodes => ["xx", default_dashboard.id])
+      it 'No flash message set when tab title is changed for read-only Dashboard' do
+        dashboard = FactoryBot.create(:miq_widget_set, :read_only => true, :set_data => {:col1 => [@widget1.id], :col2 => [], :col3 => []})
+        controller.instance_variable_set(:@sb, :nodes => ["xx", dashboard.id])
         controller.instance_variable_set(:@edit, :db_id => @miq_widget_set.id, :read_only => true, :type => "db_edit", :key => "db_edit__#{@miq_widget_set.id}",
-                                                 :new => {:name => "default", :description => "NEW Default Dashboard", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},
-                                                 :current => {:name => "default", :description => "Default Dashboard", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []})
+                                                 :new => {:name => "default", :description => "NEW #{dashboard.description}", :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []},
+                                                 :current => {:name => "default", :description => dashboard.description, :locked => false, :col1 => [@widget1.id], :col2 => [], :col3 => []})
         controller.send(:db_fields_validation)
         expect(assigns(:flash_array)).to be_nil
       end

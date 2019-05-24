@@ -24,8 +24,8 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
         :active         => true,
         :priority       => 1
       )
-      # Add embedded Ansible provider if there is none
-      FactoryBot.create(:provider_embedded_ansible) if ManageIQ::Providers::EmbeddedAnsible::Provider.count == 0
+
+      FactoryBot.create(:provider_embedded_ansible)
     end
     it '#disabled? returns false' do
       expect(subject.disabled?).to be false
