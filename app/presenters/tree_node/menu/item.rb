@@ -1,27 +1,19 @@
 module TreeNode
   module Menu
     class Item < TreeNode::Menu::Node
-      set_attribute(:key) { "#{@options[:node_id_prefix]}__#{@object.feature}" }
-      set_attribute(:text) { _(details[:name]) }
-      set_attribute(:tooltip) { _(details[:description]) || _(details[:name]) }
-      set_attribute(:selected) { parent_selected? || self_selected? }
+      set_attribute(:key) { "#{@tree.node_id_prefix}__#{@object.feature}" }
 
-      private
-
-      def details
-        ::MiqProductFeature.obj_features[@object.feature].try(:[], :feature).try(:details)
+      set_attribute(:text, :tooltip) do
+        details = ::MiqProductFeature.obj_features[@object.feature].try(:[], :feature).try(:details)
+        [_(details[:name]), _(details[:description]) || _(details[:name])]
       end
 
-      def feature_parent
-        ::MiqProductFeature.obj_features[::MiqProductFeature.feature_parent(@object.feature)][:feature]
-      end
+      set_attribute(:selected) do
+        parent_feature = ::MiqProductFeature.obj_features[::MiqProductFeature.feature_parent(@object.feature)][:feature]
 
-      def parent_selected?
-        @options[:features].include?(feature_parent.identifier)
-      end
-
-      def self_selected?
-        @options[:features].include?(@object.feature)
+        [parent_feature.identifier, @object.feature].any? do |item|
+          @tree.features.include?(item)
+        end
       end
     end
   end
