@@ -6,8 +6,9 @@ module TreeNode
       status = "stopped"
       @object.assigned_server_roles.where(:active => true).each do |asr| # Go thru all active assigned server roles
         next unless asr.miq_server.started? # Find a started server
-        if @options[:parent_kls] == "MiqRegion" || # it's in the region
-           (@options[:parent_kls] == "Zone" && asr.miq_server.my_zone == @options[:parent_name]) # it's in the zone
+
+        if @tree.root.kind_of?(::MiqRegion) || # it's in the region
+           (@tree.root.kind_of?(::Zone) && asr.miq_server.my_zone == @tree.root.try(:name)) # it's in the zone
           status = "active"
           break
         end

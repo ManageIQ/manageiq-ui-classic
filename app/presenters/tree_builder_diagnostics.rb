@@ -1,4 +1,6 @@
 class TreeBuilderDiagnostics < TreeBuilder
+  attr_reader :root
+
   def initialize(name, sandbox, build = true, **params)
     @root = params[:root]
     super(name, sandbox, build)
@@ -13,11 +15,5 @@ class TreeBuilderDiagnostics < TreeBuilder
       :onclick         => "miqOnClickDiagnostics",
       :silent_activate => true
     }
-  end
-
-  def x_build_single_node(object, pid, options)
-    options[:parent_kls]  = @root.class.name
-    options[:parent_name] = @root.name
-    super(object, pid, options)
   end
 end
