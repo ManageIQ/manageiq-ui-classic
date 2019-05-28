@@ -667,7 +667,7 @@ describe MiqAeClassController do
 
   context "#copy_objects_edit_screen" do
     it "sets only current tenant's domains to be displayed in To Domain pull down" do
-      FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      FactoryBot.create(:miq_ae_domain)
       FactoryBot.create(:miq_ae_domain, :tenant => FactoryBot.create(:tenant))
       controller.instance_variable_set(:@sb, {})
       ns = FactoryBot.create(:miq_ae_namespace)
@@ -679,7 +679,7 @@ describe MiqAeClassController do
   context "#delete_namespaces_or_classes" do
     before do
       stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      domain = FactoryBot.create(:miq_ae_domain)
       @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
       @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => 1)
       controller.instance_variable_set(:@sb,
@@ -720,7 +720,7 @@ describe MiqAeClassController do
   context "#update_namespace" do
     before do
       stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      domain = FactoryBot.create(:miq_ae_domain)
       @namespace = FactoryBot.create(:miq_ae_namespace,
                                       :name        => "foo_namespace",
                                       :description => "foo_description",
@@ -763,7 +763,7 @@ describe MiqAeClassController do
   context "#deleteclasses" do
     before do
       stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      domain = FactoryBot.create(:miq_ae_domain)
       @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
       @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
@@ -952,7 +952,7 @@ describe MiqAeClassController do
   context "#deleteinstances" do
     before do
       stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      domain = FactoryBot.create(:miq_ae_domain)
       @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
       @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
@@ -987,7 +987,7 @@ describe MiqAeClassController do
   context "#deletemethods" do
     before do
       stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      domain = FactoryBot.create(:miq_ae_domain)
       @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
       @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => @namespace.id)
       controller.instance_variable_set(:@sb,
