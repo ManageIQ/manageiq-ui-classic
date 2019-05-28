@@ -1,4 +1,8 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { http } from '../../http_api';
+
+const getManagers = () => http.get('/catalog/ot_orchestration_managers?template_type=ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate')
+  .then(managers => managers.map(([label, value]) => ({ value: value.toString(), label })));
 
 const templateTypeOptions = [{
   label: 'Amazon CloudFormation',
@@ -29,7 +33,7 @@ const validateCopyContent = (value, { name, content }, copy) => {
   return undefined;
 };
 
-const orchestrationFormSchema = (managers, isEditing = false, isCopying = false, initialValues = {}) => ({
+const orchestrationFormSchema = (isEditing = false, isCopying = false, initialValues = {}) => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
     name: 'name',
@@ -58,7 +62,7 @@ const orchestrationFormSchema = (managers, isEditing = false, isCopying = false,
   }, {
     component: componentTypes.SUB_FORM,
     name: 'provider-type',
-    fields: isCopying ? [] : [{
+    fields: isCopying || isEditing ? [] : [{
       condition: {
         when: 'type',
         is: 'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate',
@@ -66,7 +70,7 @@ const orchestrationFormSchema = (managers, isEditing = false, isCopying = false,
       name: 'ems_id',
       label: __('Provider'),
       component: componentTypes.SELECT,
-      options: managers.map(([label, value]) => ({ value: value.toString(), label })),
+      loadOptions: getManagers,
       placeholder: `<${__('Choose')}>`,
       isRequired: true,
       validateOnMount: true,

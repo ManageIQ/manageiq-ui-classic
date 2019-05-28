@@ -77,6 +77,10 @@ class CatalogController < ApplicationController
     end
   end
 
+  def ot_orchestration_managers
+    render :json => available_orchestration_managers_for_template_type(params['template_type'])
+  end
+
   def atomic_st_edit
     # reset the active tree back to :sandt_tree, it was changed temporairly to display automate entry point tree in a popup div
     self.x_active_tree = 'sandt_tree'
@@ -1314,7 +1318,6 @@ class CatalogController < ApplicationController
   def available_orchestration_managers_for_template_type(template_type)
     template_type = template_type.to_s.safe_constantize
     return [] unless template_type && template_type < OrchestrationTemplate
-
     template_type.eligible_managers.collect { |m| [m.name, m.id] }.sort
   end
 

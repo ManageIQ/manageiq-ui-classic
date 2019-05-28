@@ -22,8 +22,8 @@ const copyTemplate = (values, message, otId) => API.post(`/api/orchestration_tem
 }).then(() => miqRedirectBack(message, 'success', '/catalog/explorer'))
   .catch(() => miqSparkleOff());
 
-const OrcherstrationTemplateForm = ({ managers, otId, copy }) => {
-  const [initialValues, setinitialValues] = useState({});
+const OrcherstrationTemplateForm = ({ otId, copy }) => {
+  const [initialValues, setinItialValues] = useState({});
   const [submitAction, setSubmitAction] = useState();
   const [isLoading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ const OrcherstrationTemplateForm = ({ managers, otId, copy }) => {
     if (otId) {
       API.get(`/api/orchestration_templates/${otId}?attributes=name,description,type,ems_id,draft,content`)
         .then((data) => {
-          setinitialValues(copy ? { ...data, name: `Copy of ${data.name}` } : data);
+          setinItialValues(copy ? { ...data, name: `Copy of ${data.name}` } : data);
           setLoading(false);
         });
     } else {
@@ -40,11 +40,13 @@ const OrcherstrationTemplateForm = ({ managers, otId, copy }) => {
     }
   }, []);
 
-  const schema = orchestrationFormSchema(managers, !!otId, copy, initialValues);
+  const schema = orchestrationFormSchema(!!otId, copy, initialValues);
 
   const onSubmit = ({ href: _href, id: _id, ...values }) => {
     miqSparkleOn();
-    const successMessage = sprintf(__(`Orchestration Template %s was ${otId ? 'saved' : 'successfully created'}`), values.name);
+    const successMessage = otId
+      ? sprintf(__('Orchestration Template %s was saved'), values.name)
+      : sprintf(__('Orchestration Template %s was successfully created'), values.name);
     return submitAction(values, successMessage, otId);
   };
 
@@ -74,14 +76,12 @@ const OrcherstrationTemplateForm = ({ managers, otId, copy }) => {
 };
 
 OrcherstrationTemplateForm.propTypes = {
-  managers: PropTypes.arrayOf(PropTypes.array.isRequired),
   otId: PropTypes.number,
   copy: PropTypes.bool,
 };
 
 OrcherstrationTemplateForm.defaultProps = {
   otId: undefined,
-  managers: [],
   copy: false,
 };
 

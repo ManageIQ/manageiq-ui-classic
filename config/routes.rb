@@ -286,6 +286,7 @@ Rails.application.routes.draw do
         download_data
         explorer
         ot_edit
+        ot_orchestration_managers
         ot_show
         show
       ),
