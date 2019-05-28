@@ -343,7 +343,7 @@ class InfraNetworkingController < ApplicationController
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
 
-    replace_search_box(presenter)
+    replace_search_box(presenter, :nameonly => x_active_tree == :infra_networking_tree)
     handle_bottom_cell(presenter)
     rebuild_toolbars(record_showing, presenter)
     presenter[:right_cell_text] = @right_cell_text
@@ -483,11 +483,8 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
-  def replace_search_box(presenter)
-    # Replace the searchbox
-    presenter.replace(:adv_searchbox_div,
-                      r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => x_active_tree == :infra_networking_tree}])
+  def replace_search_box(presenter, locals = {})
+    super(presenter, locals)
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end

@@ -9,6 +9,10 @@ module ApplicationController::Explorer
                 .compact
   end
 
+  def replace_search_box(presenter, locals = {})
+    presenter.replace(:adv_searchbox_div, r[:partial => 'layouts/x_adv_searchbox', :locals => locals])
+  end
+
   def try_build_tree(tree_symbol)
     # Legacy support for build_*_tree methods
     # FIXME: delete this after all of them were converted (remaining: build_reports_tree)
