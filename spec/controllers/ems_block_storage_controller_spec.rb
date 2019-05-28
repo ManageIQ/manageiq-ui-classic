@@ -7,7 +7,6 @@ describe EmsBlockStorageController do
 
     before do
       setup_zone
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new ems_block_storage_show_list))
       login_as user
     end
 

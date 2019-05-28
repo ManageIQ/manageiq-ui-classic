@@ -1,8 +1,6 @@
 describe TextualMixins::TextualZone do
   describe '#textual_zone' do
     before do
-      MiqRegion.seed
-      Zone.seed
       assign(:record, ems)
     end
 

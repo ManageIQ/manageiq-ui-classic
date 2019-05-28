@@ -1,8 +1,4 @@
 describe OpsController do
-  before do
-    MiqRegion.seed
-  end
-
   context '#cu_build_edit_screen' do
     before do
       tree_hash = {

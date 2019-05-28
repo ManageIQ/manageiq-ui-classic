@@ -1,7 +1,6 @@
 describe TreeBuilderRolesByServer do
   context 'TreeBuilderRolesByServer' do
     before do
-      MiqRegion.seed
       @miq_server = MiqServer.first
       @server_role = ServerRole.find_by(:name => "smartproxy")
 

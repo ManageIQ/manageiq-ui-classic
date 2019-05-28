@@ -88,7 +88,6 @@ describe ReportController do
       end
 
       it 'renders list of Dashboards in Dashboards tree' do
-        MiqWidgetSet.seed
         post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_list')
       end
@@ -110,7 +109,6 @@ describe ReportController do
       it 'renders show of Dashboards in Dashboards tree' do
         ApplicationController.handle_exceptions = true
 
-        MiqWidgetSet.seed
         widget_set = FactoryBot.create(:miq_widget_set, :group_id => user.current_group.id)
         post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_-#{widget_set.id}", :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_show')

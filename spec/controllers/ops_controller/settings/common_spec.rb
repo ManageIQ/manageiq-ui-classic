@@ -1,8 +1,6 @@
 describe OpsController do
   context "OpsController::Settings::Common" do
     before do
-      MiqDatabase.seed
-      MiqRegion.seed
       EvmSpecHelper.local_miq_server(:zone => Zone.seed)
     end
 
@@ -269,8 +267,6 @@ describe OpsController do
     end
 
     describe '#settings_get_info' do
-      before { MiqRegion.seed }
-
       let(:edit) { controller.instance_variable_get(:@edit) }
 
       context 'help menu' do

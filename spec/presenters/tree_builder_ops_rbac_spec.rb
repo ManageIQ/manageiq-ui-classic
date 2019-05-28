@@ -1,6 +1,5 @@
 describe TreeBuilderOpsRbac do
   before do
-    MiqRegion.seed
     EvmSpecHelper.local_miq_server
   end
 

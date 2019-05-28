@@ -98,7 +98,6 @@ describe CloudVolumeController do
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new))
 
       login_as user
     end
@@ -121,7 +120,6 @@ describe CloudVolumeController do
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_volume_new cloud_tenant_show_list))
 
       login_as user
     end

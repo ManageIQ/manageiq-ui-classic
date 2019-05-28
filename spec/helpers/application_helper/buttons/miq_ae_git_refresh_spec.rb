@@ -3,8 +3,6 @@ describe ApplicationHelper::Button::MiqAeGitRefresh do
   let(:record) { FactoryBot.create(:miq_ae_git_domain) }
   subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_git_refresh'}) }
 
-  before { MiqRegion.seed }
-
   describe '#visible?' do
     context 'when git not enabled' do
       before do

@@ -13,7 +13,6 @@ describe EmsStorageController do
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(ems_block_storage_show ems_block_storage_show_list))
       login_as user
     end
 

@@ -71,7 +71,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
 
       describe "#ems_network_form_fields" do
         it "renders ems_network_form_fields json" do
-          Zone.seed
           get :ems_network_form_fields, :params => {:id => @ems.id}
           expect(response.status).to eq(200)
           expect(response.body).to_not be_empty

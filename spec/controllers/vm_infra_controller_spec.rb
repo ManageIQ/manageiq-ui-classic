@@ -10,7 +10,6 @@ describe VmInfraController do
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name", :locals_for_render => {}))
 
-    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 

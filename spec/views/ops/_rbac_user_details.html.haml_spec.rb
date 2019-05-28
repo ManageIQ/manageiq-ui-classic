@@ -2,7 +2,7 @@ describe 'ops/_rbac_user_details.html.haml' do
   context "edit user" do
     before do
       user = FactoryBot.build(:user_with_group, :name => "Joe Test", :userid => "tester")
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       allow(view).to receive(:session).and_return(:assigned_filters => [])
       edit = {:new    => {:name   => user.name,
                           :email  => user.email,

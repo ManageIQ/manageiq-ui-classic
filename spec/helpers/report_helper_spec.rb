@@ -4,7 +4,6 @@ def create_user_with_group(user_id, group_name, role)
 end
 
 def create_and_generate_report_for_user(report_name, user_id)
-  MiqReport.seed_report(report_name)
   @rpt = MiqReport.where(:name => report_name).last
   @rpt.generate_table(:userid => user_id)
   report_result = @rpt.build_create_results(:userid => user_id)

@@ -164,7 +164,6 @@ describe ReportController do
       it "should allow user with miq_report_edit access to edit a report" do
         user = FactoryBot.create(:user, :features => %w(miq_report_edit))
         login_as user
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
         ApplicationController.handle_exceptions = true
 
         rep = FactoryBot.create(
@@ -189,7 +188,6 @@ describe ReportController do
 
       it "should allow user with miq_report_new access to add a new report" do
         login_as FactoryBot.create(:user, :features => %w(miq_report_new))
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
         ApplicationController.handle_exceptions = true
 
         allow(controller).to receive(:load_edit).and_return(true)
@@ -345,7 +343,7 @@ describe ReportController do
   chargeback_tabs = %i(formatting filter preview)
 
   describe '#build_edit_screen' do
-    let(:default_tenant) { Tenant.seed }
+    let(:default_tenant) { Tenant.default_tenant }
     let(:user) { FactoryBot.create(:user_with_group, :tenant => default_tenant) }
     let(:user_group) do
       group = user.miq_groups.first

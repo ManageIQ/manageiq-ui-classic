@@ -3,8 +3,6 @@ describe OpsController do
 
   describe "::Tenants" do
     before do
-      Tenant.seed
-      MiqRegion.seed
       stub_user(:features => :all)
       allow(controller).to receive(:data_for_breadcrumbs).and_return([{:title => "title", :action => "action", :key => "key"}])
     end
@@ -314,11 +312,6 @@ describe OpsController do
     let(:classification) { Classification.find_by_name("department") }
     let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
     before do
-      MiqUserRole.seed
-      MiqGroup.seed
-      MiqRegion.seed
-      Tenant.seed
-
       stub_user(:features => :all)
       @group = FactoryBot.create(:miq_group)
       @role = MiqUserRole.find_by(:name => "EvmRole-operator")
@@ -558,9 +551,6 @@ describe OpsController do
 
   describe "#rbac_role_edit" do
     before do
-      MiqUserRole.seed
-      MiqGroup.seed
-      MiqRegion.seed
       stub_user(:features => :all)
     end
 
@@ -581,15 +571,11 @@ describe OpsController do
 
   describe "#rbac_role_set_form_vars" do
     before do
-      MiqUserRole.seed
-      MiqGroup.seed
-      MiqRegion.seed
       stub_user(:features => :all)
       @vm_role = FactoryBot.create(:miq_user_role, :features => %w(embedded_automation_manager))
     end
 
     it "the feature list to edit should contain the children roles" do
-      EvmSpecHelper.seed_specific_product_features(%w(everything embedded_automation_manager embedded_configuration_script_source_view))
       sb_hash = {:trees => {:active_tree => :rbac_tree, :typ => 'new'}}
       controller.instance_variable_set(:@sb, sb_hash)
       record = MiqUserRole.new
@@ -614,10 +600,7 @@ describe OpsController do
   describe "::MiqRegion" do
     before do
       EvmSpecHelper.local_miq_server
-      root_tenant = Tenant.seed
-      MiqUserRole.seed
-      MiqGroup.seed
-      MiqRegion.seed
+      root_tenant = Tenant.default_tenant
       role = MiqUserRole.find_by(:name => "EvmRole-SuperAdministrator")
       @t1 = FactoryBot.create(:tenant, :name => "ten1", :parent => root_tenant)
       @g1 = FactoryBot.create(:miq_group, :description => 'group1', :tenant => @t1, :miq_user_role => role)
@@ -707,10 +690,8 @@ describe OpsController do
     before do
       EvmSpecHelper.local_miq_server
       login_as admin_user
-      MiqRegion.seed
     end
 
-    let!(:root_tenant) { Tenant.seed } # creates first root Tenant in active region
     let(:group) { FactoryBot.create(:miq_group) }
     let(:inactive_region) { FactoryBot.create(:miq_region) }
     let!(:root_tenant_in_inactive_region) do

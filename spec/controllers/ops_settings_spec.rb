@@ -138,7 +138,6 @@ describe OpsController do
 
       it "#does not allow duplicate names when adding" do
         miq_server = EvmSpecHelper.local_miq_server
-        MiqRegion.seed
         EvmSpecHelper.create_guid_miq_server_zone
         expect(controller).to receive(:render)
         @zone = FactoryBot.create(:zone, :name => 'zoneName', :description => "description1")
@@ -220,7 +219,6 @@ describe OpsController do
   context "replace_right_cell" do
     before do
       miq_server = EvmSpecHelper.local_miq_server
-      MiqRegion.seed
     end
 
     it "it renders replace_right_cell" do

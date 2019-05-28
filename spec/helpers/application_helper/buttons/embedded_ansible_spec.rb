@@ -1,6 +1,5 @@
 describe ApplicationHelper::Button::EmbeddedAnsible do
   before do
-    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 

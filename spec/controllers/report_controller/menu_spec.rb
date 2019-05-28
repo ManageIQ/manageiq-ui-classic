@@ -70,8 +70,6 @@ describe ReportController do
 
   describe "#edit_reports" do
     before do
-      MiqUserRole.seed
-
       role = MiqUserRole.find_by(:name => "EvmRole-administrator")
       current_group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Current Group")
       @current_user = FactoryBot.create(:user, :userid => "Current User", :miq_groups => [current_group],

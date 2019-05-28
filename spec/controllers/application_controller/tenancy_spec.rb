@@ -1,7 +1,5 @@
 describe DashboardController do
   before do
-    Tenant.seed
-
     ApplicationController.handle_exceptions = true
   end
 
@@ -21,7 +19,6 @@ describe DashboardController do
 
     # context "#with unknown subdomain or domain" do
     #   before do
-    #     Tenant.seed
     #     @request.host = "www.example.com"
     #   end
 

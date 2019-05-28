@@ -3,7 +3,6 @@ describe ContainerDashboardService do
   let(:time_profile) { FactoryBot.create(:time_profile_utc) }
 
   before do
-    MiqRegion.seed
     @zone = EvmSpecHelper.create_guid_miq_server_zone[2]
   end
 

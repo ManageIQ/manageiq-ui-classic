@@ -1,7 +1,6 @@
 describe TreeBuilderServersByRole do
   context 'TreeBuilderServersByRole' do
     before do
-      MiqRegion.seed
       zone = FactoryBot.create(:zone)
       @miq_server = FactoryBot.create(:miq_server, :zone => zone)
       allow(MiqServer).to receive(:my_zone).and_return(zone)

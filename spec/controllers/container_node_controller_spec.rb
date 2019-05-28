@@ -2,7 +2,6 @@ describe ContainerNodeController do
   render_views
   before do
     stub_user(:features => :all)
-    MiqRegion.seed
   end
 
   it "renders index" do

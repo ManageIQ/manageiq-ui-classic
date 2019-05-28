@@ -85,7 +85,6 @@ describe OpsController do
     it "renders zone list for diagnostics_tree root node" do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
 
       session[:sandboxes] = {"ops" => {:active_tree => :diagnostics_tree}}
       post :tree_select, :params => { :id => 'root', :format => :js }
@@ -99,7 +98,6 @@ describe OpsController do
     it "renders log_collection_form_fields" do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
 
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       file_depot = FileDepotNfs.create(:name => "abc", :uri => "nfs://abc")
@@ -118,7 +116,6 @@ describe OpsController do
     it "uses params[:log_password] to set the creds hash if it exists" do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
 
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       controller.instance_variable_set(:@record, @miq_server)
@@ -131,7 +128,6 @@ describe OpsController do
     it "uses stored password to set the creds hash" do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
 
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       file_depot = FileDepotSmb.create(:name => "abc", :uri => "smb://abc")
@@ -148,7 +144,6 @@ describe OpsController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.local_miq_server
-      MiqRegion.seed
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       @miq_server_to_delete = FactoryBot.create(:miq_server)
       @miq_server_to_delete.last_heartbeat -= 20.minutes

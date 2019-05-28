@@ -156,10 +156,8 @@ describe DashboardController do
     end
 
     it "returns url for the user with access to only Containers maintab" do
-      MiqShortcut.seed
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
-      EvmSpecHelper.seed_specific_product_features("container")
       feature_id = MiqProductFeature.find_all_by_identifier(["container"])
       user = FactoryBot.create(:user, :features => feature_id)
       allow(User).to receive(:authenticate).and_return(user)
@@ -302,7 +300,6 @@ describe DashboardController do
 
   describe "#start_url_for_user" do
     before do
-      MiqShortcut.seed
       allow(controller).to receive(:check_privileges).and_return(true)
     end
 

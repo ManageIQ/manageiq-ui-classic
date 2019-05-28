@@ -9,7 +9,7 @@ describe 'ops/_rbac_group_details.html.haml' do
               :projects_tenants    => [["projects", %w(foo bar)]]}
       view.instance_variable_set(:@edit, edit)
       @group = FactoryBot.create(:miq_group, :description => 'flintstones')
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       allow(view).to receive(:session).and_return(:assigned_filters => [])
       FactoryBot.create(:classification, :name => 'folder_selected', :show => true)
 

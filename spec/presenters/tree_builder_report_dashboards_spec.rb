@@ -1,6 +1,5 @@
 describe TreeBuilderReportDashboards do
   before do
-    MiqRegion.seed
     allow(User).to receive_messages(:server_timezone => "UTC")
     login_as user
   end

@@ -70,7 +70,6 @@ describe ApplicationController do
 
   describe "#assert_privileges" do
     before do
-      EvmSpecHelper.seed_specific_product_features("host_new", "host_edit", "perf_reload")
       feature = MiqProductFeature.find_all_by_identifier(["host_new"])
       login_as FactoryBot.create(:user, :features => feature)
     end
@@ -336,7 +335,6 @@ describe ApplicationController do
   describe "#build_user_emails_for_edit" do
     before do
       EvmSpecHelper.local_miq_server
-      MiqUserRole.seed
 
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
 

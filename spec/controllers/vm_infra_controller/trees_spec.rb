@@ -2,7 +2,6 @@ describe VmInfraController do
   render_views
   before do
     stub_user(:features => :all)
-    MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
 

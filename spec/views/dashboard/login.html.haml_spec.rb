@@ -8,7 +8,7 @@ describe "dashboard/login.html.haml" do
     end
 
     it "when authentication is 'database'" do
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       allow(User).to receive(:mode).and_return("database")
       render
       expect(response).to have_selector("div#login_div:has(input#browser_name)")
@@ -18,7 +18,7 @@ describe "dashboard/login.html.haml" do
     end
 
     it "when authentication is not 'database'" do
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       allow(User).to receive(:mode).and_return("ldap")
       render
       expect(response).to have_selector("div#login_div:has(input#browser_name)")
@@ -32,11 +32,10 @@ describe "dashboard/login.html.haml" do
     let(:labels) { %w(Region: Zone: Appliance:) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      MiqRegion.seed
     end
 
     it "show" do
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       stub_settings(:server => {}, :session => {:show_login_info => true}, :authentication => {})
       render
       labels.each do |label|
@@ -45,7 +44,7 @@ describe "dashboard/login.html.haml" do
     end
 
     it "hide" do
-      allow(view).to receive(:current_tenant).and_return(Tenant.seed)
+      allow(view).to receive(:current_tenant).and_return(Tenant.default_tenant)
       stub_settings(:server => {}, :session => {:show_login_info => false}, :authentication => {})
       render
       labels.each do |label|

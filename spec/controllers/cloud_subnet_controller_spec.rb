@@ -67,8 +67,6 @@ describe CloudSubnetController do
     before do
       bypass_rescue
 
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_subnet_new ems_network_show_list cloud_network_show_list cloud_tenant_show_list))
-
       feature = MiqProductFeature.find_all_by_identifier(%w(cloud_subnet_new))
       role = FactoryBot.create(:miq_user_role, :miq_product_features => feature)
       group = FactoryBot.create(:miq_group, :miq_user_role => role)

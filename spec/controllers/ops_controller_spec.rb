@@ -2,7 +2,6 @@ describe OpsController do
   let(:user) { FactoryBot.create(:user, :role => "super_administrator") }
   before do
     EvmSpecHelper.create_guid_miq_server_zone
-    MiqRegion.seed
     login_as user
   end
 
@@ -35,10 +34,6 @@ describe OpsController do
       context 'with using real user' do
         let(:feature) { %w(rbac_group_edit) }
         let(:user)    { FactoryBot.create(:user, :features => feature) }
-
-        before do
-          EvmSpecHelper.seed_specific_product_features(%w(rbac_group_edit))
-        end
 
         it 'rbac group edit' do
           allow(controller).to receive(:x_node).and_return('xx-g')
@@ -281,7 +276,6 @@ end
 
 describe OpsController do
   before do
-    MiqRegion.seed
     EvmSpecHelper.local_miq_server
     login_as FactoryBot.create(:user, :features => "ops_rbac")
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
@@ -497,8 +491,6 @@ describe OpsController do
     let(:user_alpha)  { FactoryBot.create(:user, :miq_groups => [group_alpha]) }
 
     before do
-      EvmSpecHelper.seed_specific_product_features(%w(rbac_tenant_manage_quotas))
-      Tenant.seed
       User.current_user = user_alpha
     end
 

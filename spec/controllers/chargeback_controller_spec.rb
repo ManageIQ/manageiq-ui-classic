@@ -218,7 +218,6 @@ describe ChargebackController do
       EvmSpecHelper.local_miq_server
       allow_any_instance_of(described_class).to receive(:center_toolbar_filename).and_return("chargeback_center_tb")
       seed_session_trees('chargeback', :cb_rates_tree, "xx-Compute")
-      [ChargebackRateDetailMeasure, ChargeableField].each(&:seed)
     end
 
     def expect_input(body, selector, value)
@@ -397,10 +396,6 @@ describe ChargebackController do
       let(:compute_chargeback_rate_hash_from_yaml) do
         rates_hash = YAML.load_file(chargeback_rate_from_yaml)
         rates_hash.find { |rate| rate[:rate_type] == "Compute" }
-      end
-
-      before do
-        [ChargebackRateDetailCurrency, ChargebackRate].each(&:seed)
       end
 
       it "adds new chargeback rate using default values" do

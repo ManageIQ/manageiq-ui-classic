@@ -1,6 +1,5 @@
 describe TreeBuilderServiceCatalog do
   before do
-    Tenant.seed
     @catalog = FactoryBot.create(:service_template_catalog, :name => "My Catalog")
 
     FactoryBot.create(:service_template_ansible_playbook,

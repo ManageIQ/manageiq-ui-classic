@@ -1,14 +1,6 @@
 describe "shared/views/_ownership" do
-  let(:root_tenant) do
-    Tenant.seed
-  end
-
-  let(:default_tenant) do
-    root_tenant
-    Tenant.default_tenant
-  end
   let(:user)         { FactoryBot.create(:user, :userid => 'user', :miq_groups => [tenant_group]) }
-  let(:tenant)       { FactoryBot.build(:tenant, :parent => default_tenant) }
+  let(:tenant)       { FactoryBot.build(:tenant, :parent => Tenant.default_tenant) }
   let(:tenant_users) { FactoryBot.create(:miq_user_role, :name => "tenant-users") }
   let(:tenant_group) { FactoryBot.create(:miq_group, :miq_user_role => tenant_users, :tenant => tenant) }
   let(:user_role)    { FactoryBot.create(:miq_user_role) }

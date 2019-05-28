@@ -6,7 +6,6 @@ describe TreeBuilderReportSavedReports do
       before do
         EvmSpecHelper.local_miq_server
 
-        MiqUserRole.seed
         role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
         # User1 with current group Group2

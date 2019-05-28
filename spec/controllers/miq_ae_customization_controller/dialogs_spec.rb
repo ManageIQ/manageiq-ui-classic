@@ -38,7 +38,6 @@ describe MiqAeCustomizationController do
       let(:permissions) { %w(dialog_new_editor dialog_edit_editor) }
 
       before do
-        EvmSpecHelper.seed_specific_product_features(permissions)
         allow(controller).to receive(:find_records_with_rbac).and_return(dialog)
         allow(controller).to receive(:javascript_redirect)
       end

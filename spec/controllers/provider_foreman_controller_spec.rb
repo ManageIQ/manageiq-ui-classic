@@ -625,7 +625,6 @@ describe ProviderForemanController do
     it "builds foreman tree with only those nodes that contain the filtered configured systems" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow_any_instance_of(User).to receive(:get_filters).and_return(user_filters)
-      Classification.seed
       quota_2gb_tag = Classification.where("description" => "2GB").first
       Classification.bulk_reassignment(:model      => "ConfiguredSystem",
                                        :object_ids => @configured_system.id,

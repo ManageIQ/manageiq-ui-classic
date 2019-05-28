@@ -3,7 +3,6 @@ describe OpsController do
 
   before do
     EvmSpecHelper.local_miq_server
-    MiqRegion.seed
     stub_admin
 
     controller.instance_variable_set(:@sb, {})

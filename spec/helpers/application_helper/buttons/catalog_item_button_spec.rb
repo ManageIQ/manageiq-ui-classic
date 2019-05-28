@@ -14,7 +14,6 @@ describe ApplicationHelper::Button::CatalogItemButton do
     end
 
     it "won't be skipped" do
-      EvmSpecHelper.seed_specific_product_features("catalogitem_new")
       feature = MiqProductFeature.find_all_by_identifier(["everything"])
       allow(@view_context).to receive(:current_user).and_return(FactoryBot.create(:user, :features => feature))
       expect(@button.role_allows_feature?).to be true
