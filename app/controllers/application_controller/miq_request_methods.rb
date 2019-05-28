@@ -663,7 +663,7 @@ module ApplicationController::MiqRequestMethods
     @edit[:new][:start_min]     = params[:start_min] if params[:start_min]
     @edit[:new][:schedule_time] = Time.zone.parse("#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}")
 
-    params.each_key do |key|
+    params.each do |key, _value|
       next unless key.include?("__")
       d, f  = key.split("__") # Parse dialog and field names from the parameter key
       field = @edit[:wf].get_field(f.to_sym, d.to_sym) # Get the field hash

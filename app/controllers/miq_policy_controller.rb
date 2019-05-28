@@ -1046,7 +1046,7 @@ class MiqPolicyController < ApplicationController
     @edit[:new][subkey][:trap_id]      = params[:trap_id] if params[:trap_id]
     refresh = true if params[:snmp_version]
     if process_variables
-      params.each_key do |var|
+      params.each do |var, _value|
         vars = var.split("__")
         next unless %w[oid var_type value].include?(vars[0])
 

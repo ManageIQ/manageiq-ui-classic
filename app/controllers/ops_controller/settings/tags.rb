@@ -255,7 +255,7 @@ module OpsController::Settings::Tags
                                                                      :name        => entry.name}
     event = "classification_entry_add"
     i = 0
-    params["entry"].each_key do |k|
+    params["entry"].each do |k, _v|
       msg += ", " if i.positive?
       i += 1
       msg = msg + k.to_s + ":[" + params["entry"][k].to_s + "]"
