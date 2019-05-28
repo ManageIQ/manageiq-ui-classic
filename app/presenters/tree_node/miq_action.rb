@@ -2,10 +2,10 @@ module TreeNode
   class MiqAction < Node
     set_attribute(:text, &:description)
     set_attribute(:icon) do
-      if @options[:tree] != :action_tree
-        flag_of(@object) == :success ? "pficon pficon-ok" : "pficon pficon-error-circle-o"
-      else
+      if @tree.instance_of?(TreeBuilderAction)
         @object.decorate.fonticon
+      else
+        flag_of(@object) == :success ? "pficon pficon-ok" : "pficon pficon-error-circle-o"
       end
     end
 

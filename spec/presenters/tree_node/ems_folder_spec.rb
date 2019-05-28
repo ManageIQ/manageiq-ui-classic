@@ -1,6 +1,6 @@
 describe TreeNode::EmsFolder do
-  subject { described_class.new(object, nil, options, nil) }
-  let(:options) { {} }
+  let(:tree) { nil }
+  subject { described_class.new(object, nil, {}, tree) }
 
   %i(
     ems_folder
@@ -17,7 +17,7 @@ describe TreeNode::EmsFolder do
       include_examples 'TreeNode::Node#tooltip prefix', 'Folder'
 
       context 'type is vat' do
-        let(:options) { {:tree => :vat_tree} }
+        let(:tree) { TreeBuilderVat.allocate }
 
         include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close-blue'
       end
