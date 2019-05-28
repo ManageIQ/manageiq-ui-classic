@@ -366,6 +366,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
   });
 
+  $scope.$watch('vm.catalogItemModel.additional_tenant_ids', function(value) {
+    playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
+  });
+
   vm.addKeyValue = function(prefix) {
     if (vm.catalogItemModel[prefix + '_variables'].hasOwnProperty(vm.catalogItemModel[prefix + '_key'])) {
       return miqService.miqFlash('error', __('Variable name must be unique'));
