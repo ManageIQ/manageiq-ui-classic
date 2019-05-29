@@ -94,6 +94,16 @@
               .col-md-9
                 = h(@sb[entry_points_op[1]])
         .form-group
+          %label.col-md-3.control-label
+            = _('Owner')
+          .col-md-9
+            = h(@record.try(:evm_owner).try(:name))
+        .form-group
+          %label.col-md-3.control-label
+            = _('Ownership Group')
+          .col-md-9
+            = h(@record.try(:miq_group).try(:name))
+        .form-group
           .col-md-9
             #tag_group
             :javascript
