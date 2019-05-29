@@ -1,5 +1,6 @@
 import React from 'react';
-import FormRender, { Validators } from '@data-driven-forms/react-form-renderer';
+import { Form } from 'patternfly-react';
+import FormRender, { Validators, layoutComponents } from '@data-driven-forms/react-form-renderer';
 import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
 import formFieldsMapper from './mappers/formsFieldsMapper';
 
@@ -14,10 +15,15 @@ const buttonLabels = {
   cancelLabel: __('Cancel'),
 };
 
+const FormWrapper = ({ children, ...props }) => <Form {...props} className="form-react">{children}</Form>;
+
 const MiqFormRenderer = props => (
   <FormRender
     formFieldsMapper={formFieldsMapper}
-    layoutMapper={layoutMapper}
+    layoutMapper={{
+      ...layoutMapper,
+      [layoutComponents.FORM_WRAPPER]: FormWrapper,
+    }}
     disableSubmit={[
       'pristine',
       'invalid',
