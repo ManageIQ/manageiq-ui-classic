@@ -1,8 +1,8 @@
 /*
- *= require main
+ *= require ./main
  *= require ./automate_import_export
  *= require ./dialog_fields
- *= require angular
+ *= require ./angular
  *= require ./notifications
  *= require ./schedule_editor
  *= require ./miq_tree
@@ -17,5 +17,5 @@
  *= require @manageiq/ui-components/dist/css/ui-components
  *= require ui-select/dist/select
  *= require ./remote_console
- *= require piecharts
+ *= require ./piecharts
 */
