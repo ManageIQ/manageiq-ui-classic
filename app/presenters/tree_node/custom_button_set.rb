@@ -1,7 +1,8 @@
 module TreeNode
   class CustomButtonSet < Node
     set_attribute(:text) do
-      if %i[sandt_tree generic_object_definitions_tree].include?(@options[:tree])
+      case @tree
+      when TreeBuilderCatalogItems, TreeBuilderGenericObjectDefinition
         _("%{button_group_name} (Group)") % {:button_group_name => @object.name.split("|").first}
       else
         @object.name.split("|").first

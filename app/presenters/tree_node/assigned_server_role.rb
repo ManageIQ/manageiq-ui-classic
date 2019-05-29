@@ -2,7 +2,7 @@ module TreeNode
   class AssignedServerRole < Node
     set_attributes(:text, :icon, :icon_background, :klass) do
       text = ViewHelper.content_tag(:strong) do
-        if @options[:tree] == :servers_by_role_tree
+        if @tree.instance_of?(TreeBuilderServersByRole)
           "#{_('Server')}: #{@object.name} [#{@object.id}]"
         else
           "Role: #{@object.server_role.description}"
