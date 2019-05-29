@@ -32,7 +32,7 @@ module TreeNode
         end
         klass = "red" if @object.priority == 1
       end
-      if @options[:parent_kls] == "Zone" && @object.server_role.regional_role?
+      if @tree.root.kind_of?(::Zone) && @object.server_role.regional_role?
         klass = "opacity"
       end
 
