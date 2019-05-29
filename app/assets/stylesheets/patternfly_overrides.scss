@@ -60,9 +60,9 @@
 
 .resizer-box {
   bottom: 100px;
-  left: -20px;
+  left: -18px;
   position: absolute;
-  width: 40px;
+  width: 38px;
 }
 
 .resizer .btn {
@@ -824,13 +824,6 @@ td.action > .btn.btn-default {
 
 .modal-body p {
   word-wrap: break-word;
-}
-
-/// override PF4 override of PF3 sidebar-pf
-.sidebar-pf {
-  background: #fafafa !important;
-  padding-right: 20px !important;
-  padding-left: 20px !important;
 }
 
 /// Panel in sidebar doesn't need bottom margin
