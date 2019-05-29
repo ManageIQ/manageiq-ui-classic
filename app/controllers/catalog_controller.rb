@@ -347,7 +347,9 @@ class CatalogController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def st_form_field_changed
-    return unless load_edit("st_edit__#{params[:id]}", "replace_cell__explorer")
+    id = session[:edit][:rec_id] || 'new'
+    return unless load_edit("st_edit__#{id}", "replace_cell__explorer")
+
     @group_idx = false
     default_entry_point("generic", "composite") if params[:display]
     st_get_form_vars
@@ -424,6 +426,7 @@ class CatalogController < ApplicationController
     build_automate_tree(:automate_catalog) # Build Catalog Items tree
     changed = (@edit[:new] != @edit[:current])
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
+    @tenants_tree = build_tenants_tree # Build the tree with available tenants
     render :update do |page|
       page << javascript_prologue
       page.replace("basic_info_div", :partial => "form_basic_info")
@@ -742,6 +745,11 @@ class CatalogController < ApplicationController
     tenants = @record ? @record.additional_tenants : Tenant.where(:id => @edit[:new][:tenant_ids])
     catalog_bundle = @edit.present? && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
     TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :ansible_playbook => ansible_playbook_type?, :catalog_bundle => catalog_bundle)
+  end
+
+  # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
+  def catalog_bundle?
+    @edit.present? && @edit[:key].starts_with?('st_edit')
   end
 
   def svc_catalog_provision_finish_submit_endpoint
