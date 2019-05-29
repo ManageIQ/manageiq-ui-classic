@@ -402,7 +402,7 @@ module Mixins
            %i[vmConnectCDRoms cdrom_connect],
            %i[vmDisconnectCDRoms cdrom_disconnect]].each do |params_key, options_key|
              next if params[params_key].blank?
-             params[params_key].each_value do |p|
+             params[params_key].each do |_key, p|
                p.transform_values! { |v| eval_if_bool_string(v) }
              end
              options[options_key] = params[params_key].values
