@@ -1,4 +1,6 @@
-ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService) {
+ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', 'API', '$q', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService, API, $q) {
+  var sortOptions = '&sort_by=name&sort_order=ascending';
+  var allApiPromises = [];
   var init = function() {
     $scope.scheduleModel = {
       action_typ: '',
@@ -24,6 +26,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       uri: '',
       uri_prefix: '',
       filter_value: '',
+      zone_id: '',
     };
     $scope.date_from = new Date();
     $scope.formId = scheduleFormId;
@@ -93,6 +96,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.v3_domain_ident      = data.v3_domain_ident;
       $scope.scheduleModel.swift_api_port       = data.swift_api_port;
       $scope.scheduleModel.security_protocol    = data.security_protocol;
+      $scope.scheduleModel.zone_id              = data.zone_id;
 
       $scope.setTimerType();
 
@@ -116,6 +120,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       if ($scope.scheduleModel.log_userid !== '') {
         $scope.scheduleModel.log_password = miqService.storedPasswordPlaceholder;
       }
+
+      $scope.buildZonesList();
+      checkFormDataRetrieval($scope);
 
       $scope.afterGet = true;
       $scope.modelCopy = angular.copy( $scope.scheduleModel );
@@ -211,6 +218,16 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return $scope.scheduleModel.action_typ === 'automation_request';
   };
 
+  $scope.buildZonesList = function() {
+    allApiPromises.push(API.get('/api/zones/?expand=resources&attributes=id,description')
+      .then(function (data) {
+        $scope.zones = data.resources;
+        $scope._zone = _.find($scope.zones, {id: $scope.scheduleModel.zone_id});
+      })
+      .catch(miqService.handleFailure)
+    );
+  };
+
   $scope.credsProtocol = function() {
     return $scope.dbBackup() && ($scope.scheduleModel.log_protocol === 'Samba' || $scope.scheduleModel.log_protocol === 'AWS S3' || $scope.scheduleModel.log_protocol === 'OpenStack Swift');
   };
@@ -234,6 +251,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $http.post('/ops/automate_schedules_set_vars/' + scheduleFormId)
         .then(postAutomateSchedulesSetVarsComplete)
         .catch(miqService.handleFailure);
+
+      $scope.buildZonesList();
+      checkFormDataRetrieval($scope);
     } else {
       $scope.scheduleModel.filter_typ = 'all';
     }
@@ -259,6 +279,22 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       miqService.sparkleOff();
     }
   };
+
+  var checkFormDataRetrieval = function(vm) {
+    $q.all(allApiPromises)
+      .then(function() {
+        retrievedFormData(vm);
+      });
+  };
+
+  function retrievedFormData(vm) {
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
+
+  $scope.$watch('_zone', function(value) {
+    $scope.scheduleModel.zone_id = value ? value.id : '';
+  });
 
   $scope.targetClassChanged = function(targetClass) {
     miqService.sparkleOn();

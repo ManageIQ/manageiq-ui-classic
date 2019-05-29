@@ -191,7 +191,8 @@ module OpsController::Settings::Schedules
         :targets         => automate_request[:targets],
         :target_id       => automate_request[:target_id],
         :ui_attrs        => automate_request[:ui_attrs],
-        :filter_type     => nil
+        :filter_type     => nil,
+        :zone_id         => schedule.zone_id.to_s
       )
     end
     render :json => schedule_hash
@@ -487,6 +488,7 @@ module OpsController::Settings::Schedules
       uri_settings[:save] = true
       schedule.verify_file_depot(uri_settings)
     elsif params[:action_typ] == "automation_request"
+      schedule.zone_id = params[:zone_id].presence || MiqServer.my_server.zone_id
       ui_attrs = []
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         next unless params[:ui_attrs] && params[:ui_attrs][i.to_s]
