@@ -74,15 +74,6 @@ describe ResourcePoolController do
       end
     end
 
-    context "All VMs - Tree View" do
-      render_views
-      let(:url_params) { { :display => "descendant_vms" } }
-      it "renders" do
-        expect(subject).to have_http_status(200)
-        expect(subject).to render_template(:partial => "layouts/_tree")
-      end
-    end
-
     context "Direct VMs" do
       let(:url_params) { { :display => "vms" } }
       it "renders" do

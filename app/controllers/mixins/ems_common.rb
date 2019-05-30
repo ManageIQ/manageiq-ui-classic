@@ -38,21 +38,6 @@ module Mixins
       drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
     end
 
-    def show_ems_folders
-      if params[:vat]
-        drop_breadcrumb(:name => @ems.name + _(" (VMs & Templates)"),
-                        :url  => show_link(@ems, :display => "ems_folder", :vat => "true"))
-      else
-        drop_breadcrumb(:name => @ems.name + _(" (Hosts & Clusters)"),
-                        :url  => show_link(@ems, :display => "ems_folders"))
-      end
-      @showtype = "config"
-
-      cluster = @record
-      @datacenter_tree = TreeBuilderVat.new(:vat_tree, @sb, true, :root => cluster, :vat => !!params[:vat])
-      self.x_active_tree = :vat_tree
-    end
-
     def show_ad_hoc_metrics
       @showtype = "ad_hoc_metrics"
       @lastaction = "show_ad_hoc_metrics"
@@ -141,7 +126,7 @@ module Mixins
       end
 
       def custom_display_modes
-        %w[props ems_folders ad_hoc_metrics]
+        %w[props ad_hoc_metrics]
       end
 
       def default_show_template

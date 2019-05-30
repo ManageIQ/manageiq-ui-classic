@@ -24,7 +24,7 @@ module EmsClusterHelper::TextualSummary
       _("Relationships"),
       %i[
         ems parent_datacenter total_hosts total_direct_vms allvms_size total_miq_templates
-        total_vms rps_size states_size custom_button_events
+        rps_size states_size custom_button_events
       ]
     )
   end
@@ -174,16 +174,6 @@ module EmsClusterHelper::TextualSummary
     if num.positive? && role_allows?(:feature => "miq_template_show_list")
       h[:title] = _("Show all Templates in this %{title}") % {:title => cluster_title}
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'miq_templates')
-    end
-    h
-  end
-
-  def textual_total_vms
-    num = @record.total_vms
-    h = {:label => _("All VMs (Tree View)"), :icon => "pficon pficon-virtual-machine", :value => num}
-    if num.positive? && role_allows?(:feature => "vm_show_list")
-      h[:title] = _("Show tree of all VMs by Resource Pool in this %{title}") % {:title => cluster_title}
-      h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'descendant_vms')
     end
     h
   end

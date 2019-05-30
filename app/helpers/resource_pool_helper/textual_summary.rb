@@ -16,7 +16,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[parent_datacenter parent_cluster parent_host direct_vms allvms_size total_vms resource_pools]
+      %i[parent_datacenter parent_cluster parent_host direct_vms allvms_size resource_pools]
     )
   end
 
@@ -115,17 +115,6 @@ module ResourcePoolHelper::TextualSummary
     if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all VMs in this Resource Pool")
       h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
-    end
-    h
-  end
-
-  def textual_total_vms
-    num = @record.v_total_vms
-    h = {:label => _("All VMs (Tree View)"), :icon => "pficon pficon-virtual-machine", :value => num}
-    # TODO: Why is this role_allows? resource_pool_show_list but the previous 2 methods are for vm_show_list
-    if num.positive? && role_allows?(:feature => "resource_pool_show_list")
-      h[:title] = _("Show tree of all VMs in this Resource Pool")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'descendant_vms')
     end
     h
   end

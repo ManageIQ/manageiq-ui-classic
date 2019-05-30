@@ -44,13 +44,6 @@
             :record_id     => @record.id,
             :title         => _('Show all VMs in this Resource Pool'))
 
-        - if role_allows?(:feature => "_show_list")
-          = li_link(:count => @record.v_total_vms,
-            :text          => _("All VMs (Tree View)"),
-            :display       => "descendant_vms",
-            :record_id     => @record.id,
-            :title         => _('Show tree of all VMs in this Resource Pool'))
-
         - if role_allows?(:feature => "resource_pool_show_list")
           = li_link(:count => @record.all_resource_pools.size,
             :text          => _("Resource Pools"),

@@ -16,7 +16,6 @@ describe EmsClusterHelper::TextualSummary do
     total_direct_vms
     allvms_size
     total_miq_templates
-    total_vms
     rps_size
     states_size
     custom_button_events
