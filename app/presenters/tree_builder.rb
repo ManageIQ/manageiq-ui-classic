@@ -253,10 +253,13 @@ class TreeBuilder
                       object[:load_children]
                     end
 
-    node[:expand] = Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
-                    !!options[:open_all]                                               ||
-                    node[:expand]                                                      ||
-                    @tree_state.x_tree(@name)[:active_node] == node[:key]
+    # A node should be also expanded in three cases:
+    # - it has been already expanded in a previous session
+    # - the open_all setting is present in the tree_init_options
+    # - the node is set as active_node in the tree state
+    node[:expand] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
+                      !!options[:open_all]                                               ||
+                      @tree_state.x_tree(@name)[:active_node] == node[:key]
     if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, options, false, parents)).map do |o|
