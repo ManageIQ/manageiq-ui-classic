@@ -145,6 +145,10 @@ class OpsController < ApplicationController
     if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w[settings_import settings_import_tags].include?(@sb[:active_subtab])))
       edit_changed?
     end
+    # do not show buttons, when settings_workers - it uses react form buttons
+    if @sb[:active_tab] == "settings_workers"
+      @x_edit_buttons_locals = nil
+    end
     render :layout => "application"
   end
 
