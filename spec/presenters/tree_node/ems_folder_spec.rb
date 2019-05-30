@@ -17,7 +17,7 @@ describe TreeNode::EmsFolder do
       include_examples 'TreeNode::Node#tooltip prefix', 'Folder'
 
       context 'type is vat' do
-        let(:tree) { TreeBuilderVat.allocate }
+        let(:tree) { TreeBuilderVandt.allocate }
 
         include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close-blue'
       end
