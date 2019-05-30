@@ -15,7 +15,7 @@ class VmServerRelationShipForm extends Component {
 
   componentDidMount() {
     const { serverId } = this.props;
-    API.get('http://localhost:3000/api/servers?expand=resources&sort_by=name&sort_order=desc')
+    API.get('/api/servers?expand=resources&sort_by=name&sort_order=desc')
       .then(({ resources }) => {
         const assignedServer = resources.find(({ id }) => id === serverId);
         const serverHref = assignedServer ? assignedServer.href : undefined;
