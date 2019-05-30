@@ -483,14 +483,6 @@ module ApplicationHelper
     ui_lookup(:model => (controller.camelize + "Controller").constantize.model.name)
   end
 
-  def is_browser_ie?
-    browser_info(:name) == "explorer"
-  end
-
-  def is_browser_ie7?
-    is_browser_ie? && browser_info(:version).starts_with?("7")
-  end
-
   def is_browser?(name)
     browser_name = browser_info(:name)
     name.kind_of?(Array) ? name.include?(browser_name) : (browser_name == name)

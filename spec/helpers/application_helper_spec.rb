@@ -514,38 +514,6 @@ describe ApplicationHelper do
     end
   end
 
-  context "#is_browser_ie7?" do
-    it "when browser's explorer version 7.x" do
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :name).and_return('explorer')
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :version).and_return('7.10')
-      expect(helper.is_browser_ie7?).to be_truthy
-    end
-
-    it "when browser's NOT explorer version 7.x" do
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :name).and_return('explorer')
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :version).and_return('6.10')
-      expect(helper.is_browser_ie7?).to be_falsey
-    end
-  end
-
-  context "#is_browser_ie?" do
-    it "when browser's explorer" do
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :name).and_return('explorer')
-      expect(helper.is_browser_ie?).to be_truthy
-    end
-
-    it "when browser's NOT explorer" do
-      allow_any_instance_of(ActionController::TestSession)
-        .to receive(:fetch_path).with(:browser, :name).and_return('safari')
-      expect(helper.is_browser_ie?).to be_falsey
-    end
-  end
-
   context "#is_browser?" do
     it "when browser's name is in the list" do
       allow_any_instance_of(ActionController::TestSession)
