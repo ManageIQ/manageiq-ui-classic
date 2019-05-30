@@ -54,7 +54,7 @@ module TreeNode
     end
 
     def hide_checkbox
-      @options.key?(:hideCheckbox) && @options[:hideCheckbox]
+      nil
     end
 
     def key
@@ -87,7 +87,7 @@ module TreeNode
         :iconBackground => icon_background,
         :iconColor      => color,
         :expand         => expand,
-        :hideCheckbox   => hide_checkbox ? hide_checkbox : nil,
+        :hideCheckbox   => hide_checkbox,
         :addClass       => klass,
         :selectable     => selectable,
         :select         => selected,
