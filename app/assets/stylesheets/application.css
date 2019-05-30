@@ -1,12 +1,9 @@
 /*
- *= require c3/c3
- *= require patternfly-bootstrap-treeview/dist/bootstrap-treeview.min
- *= require main
+ *= require ./main
  *= require ./automate_import_export
  *= require ./dialog_fields
- *= require angular
+ *= require ./angular
  *= require ./notifications
- *= require angular-patternfly/dist/styles/angular-patternfly
  *= require ./schedule_editor
  *= require ./miq_tree
  *= require codemirror/lib/codemirror
@@ -17,12 +14,8 @@
  *= require ./physical_infra_topology
  *= require ./metrics
  *= require ./service_dialogs
- *= require @pf3/timeline/style
  *= require @manageiq/ui-components/dist/css/ui-components
  *= require ui-select/dist/select
  *= require ./remote_console
- *= require graphiql/graphiql.css
- *= require piecharts
- *= require @manageiq/react-ui-components/dist/textual_summary
- *= require @manageiq/react-ui-components/dist/tagging.css
+ *= require ./piecharts
 */
