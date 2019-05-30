@@ -392,7 +392,6 @@ class MiqAeCustomizationController < ApplicationController
     presenter[:build_calendar] = true
     # resetting ManageIQ.oneTransition.oneTrans when tab loads
     presenter.reset_one_trans
-    presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
   end
 
   def setup_presenter_for_old_dialogs_tree(nodetype, presenter)
@@ -411,7 +410,6 @@ class MiqAeCustomizationController < ApplicationController
                          end
 
       presenter.reset_one_trans
-      presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
     end
   end
 

@@ -308,9 +308,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (data.resetOneTrans) {
     ManageIQ.oneTransition.oneTrans = 0;
   }
-  if (data.oneTransIE) {
-    ManageIQ.oneTransition.IEButtonPressed = true;
-  }
 
   ManageIQ.explorer.focus(data);
 

@@ -113,7 +113,6 @@ describe('miq_application.js', function() {
   describe('miqSendOneTrans', function () {
     beforeEach(function() {
       ManageIQ.oneTransition.oneTrans = undefined;
-      ManageIQ.oneTransition.IEButtonPressed = false;
 
       spyOn(window, 'miqObserveRequest');
       spyOn(window, 'miqJqueryRequest');
