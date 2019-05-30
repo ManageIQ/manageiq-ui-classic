@@ -1074,3 +1074,23 @@ table.table-compressed tr td .piechart {
 .miq-toolbar-actions {
   margin-top: -20px !important;
 }
+
+/* responsive styling for new react forms (refactor after all forms are converted )*/
+
+@media (max-width: $screen-sm){
+  .container-fluid form.form-react {
+    width: 100%;
+  }
+}
+
+@media (min-width: $screen-md) {
+  .container-fluid form.form-react {
+    width: 75%
+  }
+}
+
+@media (min-width: $screen-lg) {
+  .container-fluid form.form-react {
+    width: 50%
+  }
+}
