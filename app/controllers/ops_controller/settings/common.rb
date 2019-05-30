@@ -11,12 +11,6 @@ module OpsController::Settings::Common
 
   # AJAX driven routine to check for changes in ANY field on the form
   def settings_form_field_changed
-    tab = params[:id] ? "settings_#{params[:id]}" : nil # workaround to prevent an error that happens when IE sends a transaction when tab is changed when there is text_area in the form, checking for tab id
-    if tab && tab != @sb[:active_tab] && params[:id] != 'new'
-      head :ok
-      return
-    end
-
     settings_get_form_vars
     return unless @edit
     @assigned_filters = []

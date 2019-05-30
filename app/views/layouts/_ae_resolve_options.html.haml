@@ -33,8 +33,7 @@
                          :class             => "form-control",
                          "data-miq_observe" => {:interval => '.5',
                                                 :url      => url}.to_json)
-        - unless is_browser_ie?
-          = javascript_tag("if (!$('#description').length) #{javascript_focus('object_message')}")
+        = javascript_tag("if (!$('#description').length) #{javascript_focus('object_message')}")
     .form-group
       %label.col-md-2.control-label
         = _("Request")
