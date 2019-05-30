@@ -935,7 +935,7 @@ class ChargebackController < ApplicationController
       presenter[:lock_sidebar] = @in_a_form && @edit
     end
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

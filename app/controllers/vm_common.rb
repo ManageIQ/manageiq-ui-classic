@@ -1317,7 +1317,7 @@ module VmCommon
     presenter[:hide_modal] = true
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new']) if refresh_breadcrumbs
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs']) if refresh_breadcrumbs
 
     render :json => presenter.for_render
   end

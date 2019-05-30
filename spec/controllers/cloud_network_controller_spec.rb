@@ -69,7 +69,7 @@ describe CloudNetworkController do
       get(:show, :params => {:id => network.id})
 
       expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => "layouts/_breadcrumbs_new")
+      expect(response).to render_template(:partial => "layouts/_breadcrumbs")
     end
   end
 

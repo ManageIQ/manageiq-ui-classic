@@ -862,7 +862,7 @@ class ReportController < ApplicationController
     # Lock current tree if in edit or assign, else unlock all trees
     presenter[:lock_sidebar] = @edit && @edit[:current]
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

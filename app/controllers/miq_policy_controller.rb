@@ -688,7 +688,7 @@ class MiqPolicyController < ApplicationController
 
     presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

@@ -380,7 +380,7 @@ module Mixins
       update_title(presenter)
       rebuild_toolbars(false, presenter)
       handle_bottom_cell(presenter)
-      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
       render :json => presenter.for_render
     end
@@ -395,7 +395,7 @@ module Mixins
       update_title(presenter)
       rebuild_toolbars(false, presenter)
       handle_bottom_cell(presenter)
-      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+      presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
       render :json => presenter.for_render
     end

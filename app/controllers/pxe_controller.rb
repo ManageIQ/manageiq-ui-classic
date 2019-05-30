@@ -253,7 +253,7 @@ class PxeController < ApplicationController
     presenter[:osf_node] = x_node
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end
