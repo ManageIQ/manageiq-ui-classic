@@ -324,11 +324,6 @@ class ApplicationController < ActionController::Base
             end
     end
 
-    # Following works around a caching issue that causes timeouts for charts in IE using SSL
-    if is_browser_ie?
-      response.headers["Cache-Control"] = "cache, must-revalidate"
-      response.headers["Pragma"] = "public"
-    end
     rpt.to_chart(settings(:display, :reporttheme), true, MiqReport.graph_options)
     render Charting.render_format => rpt.chart
   end
@@ -655,14 +650,7 @@ class ApplicationController < ActionController::Base
   # Disable client side caching of the response being sent
   def disable_client_cache
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
-
-    # IE will not allow downloads if no-cache is used because it won't save the file in the temp folder, so use private
-    response.headers["Pragma"] = if is_browser_ie?
-                                   'private'
-                                 else
-                                   'no-cache'
-                                 end
-
+    response.headers["Pragma"] = 'no-cache'
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
