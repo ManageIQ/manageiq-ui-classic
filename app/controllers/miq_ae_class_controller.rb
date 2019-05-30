@@ -726,7 +726,6 @@ class MiqAeClassController < ApplicationController
     @edit[:ae_class_id] = @ae_class.id
     @edit[:rec_id] = @ae_method.id || nil
     @edit[:key] = "aemethod_edit__#{@ae_method.id || "new"}"
-    @sb[:form_vars_set] = true
     @sb[:squash_state] ||= true
 
     @edit[:new][:name] = @ae_method.name
@@ -870,122 +869,118 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
-    if !@sb[:form_vars_set] # workaround to prevent an error that happens when IE sends a transaction form form even after save button is clicked when there is text_area in the form
-      head :ok
+    return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
+    get_method_form_vars
+
+    if @edit[:new][:location] == 'expression'
+      @edit[:new][:exp_object] ||= @edit[:new][:available_expression_objects].first
+      exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
+      expression_setup(exp_object) if exp_object
     else
-      return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
-      get_method_form_vars
+      expression_cleanup
+    end
+    if row_selected_in_grid?
+      @refresh_div = "class_methods_div"
+      @refresh_partial = "class_methods"
+      @field_name = "cls_method"
+    else
+      @refresh_div = "method_inputs_div"
+      @refresh_partial = "method_inputs"
+      @field_name = "method"
+    end
+    if @edit[:current][:location] == "inline" && @edit[:current][:data]
+      @edit[:method_prev_data] = @edit[:current][:data]
+    end
+    @edit[:new][:data] = if @edit[:new][:location] == "inline" && !params[:cls_method_data] &&
+                            !params[:method_data] && !params[:transOne]
+                            if !@edit[:method_prev_data]
+                              MiqAeMethod.default_method_text
+                            else
+                              @edit[:method_prev_data]
+                            end
+                          elsif params[:cls_method_location] || params[:method_location]
+                            # reset data if location is changed
+                            ''
+                          else
+                            @edit[:new][:data]
+                          end
+    @changed = (@edit[:new] != @edit[:current])
+    @edit[:default_verify_status] = %w(builtin inline).include?(@edit[:new][:location]) && @edit[:new][:data] && @edit[:new][:data] != ""
 
-      if @edit[:new][:location] == 'expression'
-        @edit[:new][:exp_object] ||= @edit[:new][:available_expression_objects].first
-        exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
-        expression_setup(exp_object) if exp_object
-      else
-        expression_cleanup
+    in_angular = playbook_style_location?(@edit[:new][:location])
+    angular_form_specific_data if in_angular
+
+    render :update do |page|
+      page << javascript_prologue
+      page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
+      if in_angular
+        page.replace_html(
+          @refresh_div,
+          :partial => 'angular_method_form',
+          :locals  => {:location => @edit[:new][:location]}
+        )
+        page << javascript_hide("form_buttons_div")
+      elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+        page.replace_html(@refresh_div, :partial => @refresh_partial)
       end
-      if row_selected_in_grid?
-        @refresh_div = "class_methods_div"
-        @refresh_partial = "class_methods"
-        @field_name = "cls_method"
-      else
-        @refresh_div = "method_inputs_div"
-        @refresh_partial = "method_inputs"
-        @field_name = "method"
+
+      if params[:cls_field_datatype]
+        if session[:field_data][:datatype] == "password"
+          page << javascript_hide("cls_field_default_value")
+          page << javascript_show("cls_field_password_value")
+          page << "$('#cls_field_password_value').val('');"
+        else
+          page << javascript_hide("cls_field_password_value")
+          page << javascript_show("cls_field_default_value")
+          page << "$('#cls_field_default_value').val('');"
+        end
       end
-      if @edit[:current][:location] == "inline" && @edit[:current][:data]
-        @edit[:method_prev_data] = @edit[:current][:data]
+      if params[:method_field_datatype]
+        if session[:field_data][:datatype] == "password"
+          page << javascript_hide("method_field_default_value")
+          page << javascript_show("method_field_password_value")
+          page << "$('#method_field_password_value').val('');"
+        else
+          page << javascript_hide("method_field_password_value")
+          page << javascript_show("method_field_default_value")
+          page << "$('#method_field_default_value').val('');"
+        end
       end
-      @edit[:new][:data] = if @edit[:new][:location] == "inline" && !params[:cls_method_data] &&
-                              !params[:method_data] && !params[:transOne]
-                             if !@edit[:method_prev_data]
-                               MiqAeMethod.default_method_text
-                             else
-                               @edit[:method_prev_data]
-                             end
-                           elsif params[:cls_method_location] || params[:method_location]
-                             # reset data if location is changed
-                             ''
-                           else
-                             @edit[:new][:data]
-                           end
-      @changed = (@edit[:new] != @edit[:current])
-      @edit[:default_verify_status] = %w(builtin inline).include?(@edit[:new][:location]) && @edit[:new][:data] && @edit[:new][:data] != ""
 
-      in_angular = playbook_style_location?(@edit[:new][:location])
-      angular_form_specific_data if in_angular
-
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        if in_angular
-          page.replace_html(
-            @refresh_div,
-            :partial => 'angular_method_form',
-            :locals  => {:location => @edit[:new][:location]}
-          )
-          page << javascript_hide("form_buttons_div")
-        elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
-          page.replace_html(@refresh_div, :partial => @refresh_partial)
+      params.each do |field, _value|
+        if field.to_s.starts_with?("cls_fields_datatype_")
+          f = field.split('cls_fields_datatype_')
+          def_field = "cls_fields_value_" << f[1].to_s
+          pwd_field = "cls_fields_password_value_" << f[1].to_s
+        elsif field.to_s.starts_with?("fields_datatype_")
+          f = field.split('fields_datatype_')
+          def_field = "fields_value_" << f[1].to_s
+          pwd_field = "fields_password_value_" << f[1].to_s
         end
 
-        if params[:cls_field_datatype]
-          if session[:field_data][:datatype] == "password"
-            page << javascript_hide("cls_field_default_value")
-            page << javascript_show("cls_field_password_value")
-            page << "$('#cls_field_password_value').val('');"
-          else
-            page << javascript_hide("cls_field_password_value")
-            page << javascript_show("cls_field_default_value")
-            page << "$('#cls_field_default_value').val('');"
-          end
-        end
-        if params[:method_field_datatype]
-          if session[:field_data][:datatype] == "password"
-            page << javascript_hide("method_field_default_value")
-            page << javascript_show("method_field_password_value")
-            page << "$('#method_field_password_value').val('');"
-          else
-            page << javascript_hide("method_field_password_value")
-            page << javascript_show("method_field_default_value")
-            page << "$('#method_field_default_value').val('');"
-          end
-        end
+        next unless f
 
-        params.each do |field, _value|
-          if field.to_s.starts_with?("cls_fields_datatype_")
-            f = field.split('cls_fields_datatype_')
-            def_field = "cls_fields_value_" << f[1].to_s
-            pwd_field = "cls_fields_password_value_" << f[1].to_s
-          elsif field.to_s.starts_with?("fields_datatype_")
-            f = field.split('fields_datatype_')
-            def_field = "fields_value_" << f[1].to_s
-            pwd_field = "fields_password_value_" << f[1].to_s
-          end
-
-          next unless f
-
-          if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-            page << javascript_hide(def_field)
-            page << javascript_show(pwd_field)
-            page << "$('##{pwd_field}').val('');"
-          else
-            page << javascript_hide(pwd_field)
-            page << javascript_show(def_field)
-            page << "$('##{def_field}').val('');"
-          end
-          @edit[:new][:fields][f[1].to_i]['default_value'] = nil
+        if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
+          page << javascript_hide(def_field)
+          page << javascript_show(pwd_field)
+          page << "$('##{pwd_field}').val('');"
+        else
+          page << javascript_hide(pwd_field)
+          page << javascript_show(def_field)
+          page << "$('##{def_field}').val('');"
         end
-        if @edit[:default_verify_status] != session[:log_depot_default_verify_status]
-          session[:log_depot_default_verify_status] = @edit[:default_verify_status]
-          page << if @edit[:default_verify_status]
-                    "miqValidateButtons('show', 'default_');"
-                  else
-                    "miqValidateButtons('hide', 'default_');"
-                  end
-        end
-        page << javascript_for_miq_button_visibility_changed(@changed)
-        page << "miqSparkle(false)"
+        @edit[:new][:fields][f[1].to_i]['default_value'] = nil
       end
+      if @edit[:default_verify_status] != session[:log_depot_default_verify_status]
+        session[:log_depot_default_verify_status] = @edit[:default_verify_status]
+        page << if @edit[:default_verify_status]
+                  "miqValidateButtons('show', 'default_');"
+                else
+                  "miqValidateButtons('hide', 'default_');"
+                end
+      end
+      page << javascript_for_miq_button_visibility_changed(@changed)
+      page << "miqSparkle(false)"
     end
   end
 
@@ -1206,7 +1201,6 @@ class MiqAeClassController < ApplicationController
     when "cancel"
       @sb[:action] = session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of Automate Method \"%{name}\" was cancelled by the user") % {:name => @ae_method.name})
-      @sb[:form_vars_set] = false
       @in_a_form = false
       replace_right_cell
     when "save"
@@ -1233,7 +1227,6 @@ class MiqAeClassController < ApplicationController
         add_flash(_("Automate Method \"%{name}\" was saved") % {:name => ae_method.name})
         AuditEvent.success(build_saved_audit(ae_method, @edit))
         @sb[:action] = session[:edit] = nil # clean out the saved info
-        @sb[:form_vars_set] = false
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1319,7 +1312,6 @@ class MiqAeClassController < ApplicationController
     case params[:button]
     when "cancel"
       add_flash(_("Add of new Automate Method was cancelled by the user"))
-      @sb[:form_vars_set] = false
       @in_a_form = false
       replace_right_cell
     when "add"
@@ -1344,13 +1336,11 @@ class MiqAeClassController < ApplicationController
         javascript_flash
       else
         add_flash(_("Automate Method \"%{name}\" was added") % {:name => add_aemethod.name})
-        @sb[:form_vars_set] = false
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
       end
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
-      @sb[:form_vars_set] = false
       add_active_node_to_open_nodes
       replace_right_cell(:replace_trees => [:ae])
     end
