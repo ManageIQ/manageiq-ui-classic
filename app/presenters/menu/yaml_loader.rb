@@ -32,9 +32,7 @@ module Menu
     # Else assume string and return:
     #   { :feature => rbac }
     def parse_rbac_property(rbac)
-      rbac === Hash ?
-        rbac.each_with_object({}) { |(k, v), h| h[k.to_sym] = v } :
-        { :feature => rbac }
+      rbac.kind_of?(Hash) ? rbac.symbolize_keys : { :feature => rbac }
     end
 
     def create_custom_menu_item(properties)
@@ -46,7 +44,7 @@ module Menu
       end
 
       rbac = parse_rbac_property(properties['rbac'])
-      item_type = properties.key?('item_type') ? properties['item_type'].to_sym : :default
+      item_type = properties.fetch('item_type', :default).to_sym
 
       item = Item.new(
         properties['id'],

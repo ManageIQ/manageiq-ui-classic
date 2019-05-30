@@ -26,7 +26,7 @@ module Menu
 
     def item(item_id)
       @menu.each do |menu_section|
-        return menu_section if Menu::Item === menu_section && menu_section.id == item_id
+        return menu_section if menu_section.kind_of?(Menu::Item) && menu_section.id == item_id
 
         menu_section.items.each do |el|
           the_item = el.item(item_id)
@@ -133,7 +133,7 @@ module Menu
     end
 
     def valid_sections
-     # format is {"vi" => :vi, "svc" => :svc . . }
+      # format is {"vi" => :vi, "svc" => :svc . . }
       @valid_sections ||= @id_to_section.keys.index_by(&:to_s)
     end
   end

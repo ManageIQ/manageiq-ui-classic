@@ -1,6 +1,7 @@
 module Menu
   class SettingsLoader < YamlLoader
     include Singleton
+    include Vmdb::Logging
 
     def self.load
       instance.load_from_settings
@@ -10,27 +11,29 @@ module Menu
       begin
         settings = ::Settings.ui.custom_menu
         items = (settings || []).map { |i| create_custom_item(HashWithIndifferentAccess.new(i)) }
-      rescue => e
+      rescue StandardError => e
         # if we encounter an error while loading the menus, we ignore the whole settings
-        $log.error("Error loading custom menu from settings: #{e}")
-        $log.error("Settings were: #{settings}")
+        _log.error("Error loading custom menu from settings: #{e}")
+        _log.error("Settings were: #{settings}")
         return [[], []]
       end
       [[], items]
     end
 
-    private 
+    private
 
     def create_custom_item(item)
       # only alow:
       #  * items,
       #  * displayed in the iframe,
       #  * and at the top menu level.
-      create_custom_menu_item(item.merge(
-        'type'      => 'items',
-        'item_type' => 'big_iframe',
-        'parent'    => nil
-      ))
+      create_custom_menu_item(
+        item.merge(
+          'type'      => 'items',
+          'item_type' => 'big_iframe',
+          'parent'    => nil
+        )
+      )
     end
   end
 end
