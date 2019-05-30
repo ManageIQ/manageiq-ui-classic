@@ -73,7 +73,7 @@ module ApplicationHelper
       elsif @explorer
         "explorer"
       elsif @layout == "timeline"
-        controller.controller_name == "dashboard" ? "timeline" : controller.controller_name
+        controller.controller_name
       elsif common_layouts.include?(@layout)
         @layout
       end
