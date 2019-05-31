@@ -858,6 +858,8 @@ module OpsController::Diagnostics
                      TreeBuilderServersByRole.new(:servers_by_role_tree, @sb, true, :root => parent)
                    end
 
+    return if @record # Do not continue if the @record is already initialized
+
     # Pull out the selected node from the tree state and store it in the sandbox for future use
     prefix, @sb[:diag_selected_id] = x_node(@server_tree.name).split('-')
     @sb[:diag_selected_model] = TreeBuilder.get_model_for_prefix(prefix)
