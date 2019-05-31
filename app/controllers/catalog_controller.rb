@@ -2072,7 +2072,7 @@ class CatalogController < ApplicationController
     presenter.reset_changes
     presenter.reset_one_trans
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

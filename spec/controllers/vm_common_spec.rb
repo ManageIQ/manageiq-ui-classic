@@ -188,7 +188,7 @@ describe VmOrTemplateController do
       controller.instance_eval { @in_a_form = true }
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :vandt_tree)
-      expect(controller).to receive(:render_to_string).with(:partial => "layouts/breadcrumbs_new").exactly(1).times
+      expect(controller).to receive(:render_to_string).with(:partial => "layouts/breadcrumbs").exactly(1).times
       expect(controller).to receive(:render_to_string).with(:partial => "miq_request/prov_edit",
                                                             :locals  => {:controller => "vm"}).exactly(1).times
       expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_adv_searchbox",

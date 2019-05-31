@@ -346,7 +346,7 @@ class MiqAeClassController < ApplicationController
     presenter[:osf_node] = x_node
     presenter.show_miq_buttons if @changed
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

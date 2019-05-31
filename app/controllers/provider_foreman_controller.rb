@@ -395,7 +395,7 @@ class ProviderForemanController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
     replace_search_box(presenter)
   end
 

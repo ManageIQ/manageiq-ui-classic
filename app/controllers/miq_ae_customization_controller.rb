@@ -232,7 +232,7 @@ class MiqAeCustomizationController < ApplicationController
     setup_dialog_sample_buttons(nodetype, presenter)
     set_miq_record_id(presenter)
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end

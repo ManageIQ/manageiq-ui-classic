@@ -570,7 +570,7 @@ class OpsController < ApplicationController
     extra_js_commands(presenter)
 
     presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs_new'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end
