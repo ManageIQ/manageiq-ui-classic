@@ -50,7 +50,7 @@ module TreeNode
     end
 
     def expand
-      @options[:open_all].present? && @options[:open_all] && @options[:expand] != false
+      false
     end
 
     def hide_checkbox
