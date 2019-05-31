@@ -1,6 +1,4 @@
 class TreeBuilderConfiguredSystems < TreeBuilder
-  attr_reader :tree_nodes
-
   private
 
   def tree_init_options
@@ -21,11 +19,11 @@ class TreeBuilderConfiguredSystems < TreeBuilder
   end
 
   def x_get_global_filter_search_results
-    MiqSearch.where(:db => @root_class).visible_to_all.sort_by { |a| a.description.downcase }
+    MiqSearch.where(:db => filter_root_class).visible_to_all.sort_by { |a| a.description.downcase }
   end
 
   def x_get_my_filter_search_results
-    MiqSearch.where(:db => @root_class, :search_type => "user", :search_key => User.current_user.userid)
+    MiqSearch.where(:db => filter_root_class, :search_type => "user", :search_key => User.current_user.userid)
              .sort_by { |a| a.description.downcase }
   end
 
@@ -44,5 +42,10 @@ class TreeBuilderConfiguredSystems < TreeBuilder
                  :tip        => _("My Personal Filters"),
                  :selectable => false)
     count_only_or_objects(count_only, objects)
+  end
+
+  # overriden in subclasses
+  def filter_root_class
+    nil
   end
 end

@@ -1,9 +1,4 @@
 class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilderConfiguredSystems
-  def initialize(*args)
-    @root_class = 'ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem'
-    super(*args)
-  end
-
   private
 
   def root_options
@@ -21,5 +16,9 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilderConfiguredSy
       :tip           => t,
       :load_children => true
     }
+  end
+
+  def filter_root_class
+    'ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem'
   end
 end

@@ -1,9 +1,4 @@
 class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSystems
-  def initialize(*args)
-    @root_class = 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem'
-    super(*args)
-  end
-
   private
 
   def root_options
@@ -21,5 +16,9 @@ class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSyste
       :tip           => t,
       :load_children => true
     }
+  end
+
+  def filter_root_class
+    'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem'
   end
 end

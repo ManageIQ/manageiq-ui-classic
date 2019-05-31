@@ -1,13 +1,14 @@
 class TreeBuilderVmsInstancesFilter < TreeBuilderVmsFilter
-  def initialize(*args)
-    @root_class = 'Vm'
-    super(*args)
-  end
+  private
 
   def root_options
     {
       :text    => _("All VMs & Instances"),
       :tooltip => _("All of the VMs & Instances that I can see")
     }
+  end
+
+  def filter_root_class
+    'Vm'
   end
 end
