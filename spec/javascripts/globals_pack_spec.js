@@ -53,10 +53,6 @@ describe('packs/global.js', function() {
     it('loads kubernetes-topology-graph', function() {
       expect(angular.module('kubernetesUI')).toBeDefined();
     });
-
-    it('loads ui-select', function() {
-      expect(angular.module('ui.select')).toBeDefined();
-    });
   });
 
   context('d3 plugins', function() {
