@@ -99,7 +99,7 @@ describe CloudTenantController do
     end
     let(:queue_options) do
       {
-        :class_name  => CloudTenant.class_by_ems(ems),
+        :class_name  => CloudTenant.class_by_ems(ems).name,
         :method_name => "create_cloud_tenant",
         :priority    => MiqQueue::HIGH_PRIORITY,
         :role        => "ems_operations",
