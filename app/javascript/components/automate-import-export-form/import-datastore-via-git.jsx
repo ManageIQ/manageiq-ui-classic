@@ -9,15 +9,10 @@ const submitForm = values =>
     .then(data => add_flash(data[0].message, data[0].level));
 
 const ImportDatastoreViaGit = ({ disableSubmit }) => (
-  <div>
+  <div style={{ paddingBottom: 16 }}>
     {disableSubmit
     && (
-    <form className="form-horizontal">
-      <div className="form-group">
-        <div className="control-label col-md-2" />
-        <div className="col-md-10"><h3>{__('Please enable the git owner role in order to import git repositories')}</h3></div>
-      </div>
-    </form>
+    <h3>{__('Please enable the git owner role in order to import git repositories')}</h3>
     )}
     <MiqFormRenderer
       initialValues={{ git_verify_ssl: true }}
