@@ -870,6 +870,7 @@ class MiqAeClassController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_method_form_vars
 
     if @edit[:new][:location] == 'expression'
@@ -891,21 +892,20 @@ class MiqAeClassController < ApplicationController
     if @edit[:current][:location] == "inline" && @edit[:current][:data]
       @edit[:method_prev_data] = @edit[:current][:data]
     end
-    @edit[:new][:data] = if @edit[:new][:location] == "inline" && !params[:cls_method_data] &&
-                            !params[:method_data] && !params[:transOne]
-                            if !@edit[:method_prev_data]
-                              MiqAeMethod.default_method_text
-                            else
-                              @edit[:method_prev_data]
-                            end
-                          elsif params[:cls_method_location] || params[:method_location]
-                            # reset data if location is changed
-                            ''
-                          else
-                            @edit[:new][:data]
-                          end
+    @edit[:new][:data] = if @edit[:new][:location] == "inline" && !params[:cls_method_data] && !params[:method_data] && !params[:transOne]
+                           if !@edit[:method_prev_data]
+                             MiqAeMethod.default_method_text
+                           else
+                             @edit[:method_prev_data]
+                           end
+                         elsif params[:cls_method_location] || params[:method_location]
+                           # reset data if location is changed
+                           ''
+                         else
+                           @edit[:new][:data]
+                         end
     @changed = (@edit[:new] != @edit[:current])
-    @edit[:default_verify_status] = %w(builtin inline).include?(@edit[:new][:location]) && @edit[:new][:data] && @edit[:new][:data] != ""
+    @edit[:default_verify_status] = %w[builtin inline].include?(@edit[:new][:location]) && @edit[:new][:data] && @edit[:new][:data] != ""
 
     in_angular = playbook_style_location?(@edit[:new][:location])
     angular_form_specific_data if in_angular
