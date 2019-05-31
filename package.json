@@ -23,10 +23,8 @@
   "dependencies": {
     "@data-driven-forms/pf3-component-mapper": "^1.9.9",
     "@data-driven-forms/react-form-renderer": "^1.9.9",
-    "@fortawesome/fontawesome-free": "^5.8.1",
     "@manageiq/react-ui-components": "~0.11.17",
     "@manageiq/ui-components": "~1.2.5",
-    "@patternfly/patternfly": "^2.8.1",
     "@pf3/select": "~1.12.6",
     "@pf3/timeline": "~1.0.8",
     "angular": "~1.6.6",

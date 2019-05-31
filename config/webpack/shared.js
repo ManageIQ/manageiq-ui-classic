@@ -133,6 +133,8 @@ module.exports = {
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
       'moment': resolveModule('moment'), // fix moment-strftime peerDependency issue
       'angular': resolveModule('angular'), // fix for "Tried to load angular more than once"
+      '@patternfly/patternfly': resolveModule('NONEXISTENT'),
+      '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
     },
     extensions: settings.extensions,
     modules: [],
