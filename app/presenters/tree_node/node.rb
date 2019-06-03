@@ -115,12 +115,7 @@ module TreeNode
           result = instance_variable_get(atvar)
 
           if result.nil?
-            if block_given?
-              args = [@object, @options, @parent_id].take(block.arity.abs)
-              result = instance_exec(*args, &block)
-            else
-              result = value
-            end
+            result = block_given? ? instance_eval(&block) : value
             instance_variable_set(atvar, result)
           end
 
