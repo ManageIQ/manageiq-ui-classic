@@ -258,7 +258,7 @@ class TreeBuilder
     # - the open_all setting is present in the tree_init_options
     # - the node is set as active_node in the tree state
     node[:expand] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
-                      !!options[:open_all]                                               ||
+                      !!@options[:open_all]                                              ||
                       @tree_state.x_tree(@name)[:active_node] == node[:key]
     if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
