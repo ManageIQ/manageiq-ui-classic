@@ -384,37 +384,6 @@ describe OpsController do
         end
       end
 
-      context 'for generic worker' do
-        it 'resets edit for workers settings' do
-          @miq_server = FactoryBot.create(:miq_server)
-          allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
-          controller.instance_variable_set(:@sb,
-                                           :active_tab         => 'settings_workers',
-                                           :selected_server_id => @miq_server.id)
-          controller.params = {:action     => 'settings_update',
-                               :button     => 'save',
-                               :controller => 'ops',
-                               :id         => 'workers'}
-          @updated_memory_threshold = 600.megabytes
-          @new = ::Settings.to_hash
-          @new[:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold] = @updated_memory_threshold
-          controller.instance_variable_set(:@edit,
-                                           :new     => @new,
-                                           :current => ::Settings.to_hash,
-                                           :key     => "settings_workers_edit__#{@miq_server.id}")
-          session[:edit] = assigns(:edit)
-          allow(OpsController::Settings).to receive(:settings_get_form_vars).and_return(true)
-          allow(Vmdb::Settings).to receive(:validate).and_return(true)
-          edit_before_render = assigns(:edit)
-          expect(edit_before_render[:new][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).not_to eq(edit_before_render[:current][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold])
-          expect(controller).to receive(:render)
-          controller.send(:settings_update_save)
-          edit_after_render = assigns(:edit)
-          expect(edit_after_render[:current][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).to eq(@updated_memory_threshold)
-          expect(edit_after_render[:new][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).to eq(@updated_memory_threshold)
-        end
-      end
-
       context "save server name in server settings only when 'Server' is active tab" do
         before do
           @miq_server = FactoryBot.create(:miq_server)
