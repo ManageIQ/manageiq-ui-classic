@@ -5,6 +5,8 @@ module MiqPolicyController::Alerts
     helper_method :display_driving_event?
   end
 
+  SEVERITIES = {"info" => N_('Info'), "warning" => N_('Warning'), "error" => N_('Error')}.freeze
+
   def alert_edit_cancel
     @sb[:action] = @edit = nil
     @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
@@ -90,6 +92,7 @@ module MiqPolicyController::Alerts
 
     @edit[:new][:description] = params[:description].presence if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
+    @edit[:new][:severity] = params[:miq_alert_severity] if params.key?(:miq_alert_severity)
     if params[:exp_event]
       @edit[:new][:exp_event] = params[:exp_event] == "_hourly_timer_" ? params[:exp_event] : params[:exp_event].to_i
       @edit[:new][:repeat_time] = alert_default_repeat_time
@@ -309,6 +312,7 @@ module MiqPolicyController::Alerts
 
     @edit[:new][:description] = @alert.description
     @edit[:new][:enabled] = @alert.enabled == true
+    @edit[:new][:severity] = @alert.severity
     @edit[:new][:db] = @alert.db.nil? ? "Vm" : @alert.db
     @edit[:expression_types] = MiqAlert.expression_types(@edit[:new][:db])
 
@@ -532,6 +536,7 @@ module MiqPolicyController::Alerts
   def alert_set_record_vars(alert)
     alert.description = @edit[:new][:description]
     alert.enabled = @edit[:new][:enabled]
+    alert.severity = @edit[:new][:severity]
     alert.db = @edit[:new][:db]
     if @edit[:new][:expression][:eval_method]
       alert.expression = copy_hash(@edit[:new][:expression])
@@ -572,6 +577,9 @@ module MiqPolicyController::Alerts
     end
     unless display_driving_event?
       add_flash(_("A Driving Event must be selected"), :error) if alert.responds_to_events.blank?
+    end
+    if alert.severity.nil?
+      add_flash(_('Severity must be selected'), :error)
     end
     if alert.options[:notifications][:automate]
       add_flash(_("Event name is required"), :error) if alert.options[:notifications][:automate][:event_name].blank?

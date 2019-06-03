@@ -32,6 +32,23 @@
             .col-md-8
               %p.form-control-static
                 = @alert.enabled ? _("Yes") : _("No")
+        .form-group
+          %label.control-label.col-md-2
+            = _("Severity")
+          - if @edit
+            .col-md-8
+              - options = [[_("<Choose>"), nil]]
+              - controller.class::SEVERITIES.each { |key, value| options.push([_(value), key]) }
+              = select_tag('miq_alert_severity',
+                options_for_select(options, @edit[:new][:severity]),
+                :class => "selectpicker")
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent('miq_alert_severity', '#{url}', {beforeSend: true, complete: true})
+          - else
+            .col-md-8
+              %p.form-control-static
+                = _(controller.class::SEVERITIES[@alert.severity])
         -# Based on (model)
         .form-group
           %label.control-label.col-md-2

@@ -1,6 +1,7 @@
 describe "miq_policy/_alert_details.html.haml" do
   before do
     @alert = FactoryBot.create(:miq_alert)
+    ActionView::TestCase::TestController::SEVERITIES = MiqPolicyController::SEVERITIES
     exp = {:eval_method => 'nothing', :mode => 'internal', :options => {}}
     allow(@alert).to receive(:expression).and_return(exp)
     set_controller_for_view("miq_policy")

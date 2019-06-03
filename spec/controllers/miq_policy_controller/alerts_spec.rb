@@ -136,7 +136,8 @@ describe MiqPolicyController do
           :miq_alert,
           :db         => "Host",
           :options    => {:notifications => {:email => {:to => ["fred@test.com"]}}},
-          :expression => expression
+          :expression => expression,
+          :severity   => 'info'
         )
         edit = {
           :new => {
@@ -159,6 +160,7 @@ describe MiqPolicyController do
             :name       => "New Name",
             :expression => {:eval_method => nil},
             :db         => "ContainerNode",
+            :severity   => 'info'
           }
         }
         controller.instance_variable_set(:@edit, edit)
@@ -171,7 +173,8 @@ describe MiqPolicyController do
           FactoryBot.create(:miq_alert,
                              :expression         => {:eval_method => 'nothing'},
                              :options            => {:notifications => {:delay_next_evaluation => 3600, :evm_event => {}}},
-                             :responds_to_events => '_hourly_timer_')
+                             :responds_to_events => '_hourly_timer_',
+                             :severity           => 'info')
         end
         let(:edit) { {:new => {:db => 'ContainerNode', :expression => {:eval_method => 'nothing'}}} }
 
