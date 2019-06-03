@@ -53,6 +53,8 @@ class MiqAeCustomizationController < ApplicationController
         add_flash(_("Error during upload: the following dialog fields to be imported contain circular association references: %{error}") % {:error => $ERROR_INFO}, :error)
       rescue DialogImportValidator::InvalidDialogFieldTypeError
         add_flash(_("Error during upload: one of the DialogField types is not supported"), :error)
+      rescue DialogImportValidator::InvalidDialogVersionError
+        add_flash(_("Error during upload: the version of exported dialog is not supported in this release"), :error)
       end
     end
     get_node_info
