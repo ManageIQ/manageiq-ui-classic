@@ -25,7 +25,7 @@ module TreeNode
         "-Unassigned"
       else
         prefix = TreeBuilder.get_prefix_for_model("Hash")
-        "#{@options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{@object[:id]}"
+        "#{@tree.options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{@object[:id]}"
       end
     end
   end
