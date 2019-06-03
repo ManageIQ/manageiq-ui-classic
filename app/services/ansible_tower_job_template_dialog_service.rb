@@ -90,13 +90,17 @@ class AnsibleTowerJobTemplateDialogService
 
   def create_parameter_dropdown_list(parameter, group, position)
     dropdown_list = parameter['choices'].split("\n").collect { |v| [v, v] }
-    # currently we do not support multi-selected dropdown, has to take only the first default value
-    default_value = parameter['default'].try(:split, "\n").try(:first)
+    default_value = if parameter['type'] == 'multiselect'
+                      parameter['default'].try(:split, "\n")
+                    else # 'multiplechoice'
+                      parameter['default'].try(:split, "\n").try(:first)
+                    end
     group.dialog_fields.build(
       :type           => "DialogFieldDropDownList",
       :name           => "param_#{parameter['variable']}",
       :display        => "edit",
       :required       => parameter['required'],
+      :options        => {:force_multi_value => parameter["type"] == "multiselect"},
       :values         => dropdown_list,
       :default_value  => default_value || dropdown_list.first,
       :label          => parameter['question_name'],
