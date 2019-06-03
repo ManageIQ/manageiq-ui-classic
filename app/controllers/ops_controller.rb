@@ -760,7 +760,7 @@ class OpsController < ApplicationController
 
   def handle_bottom_cell(nodetype, presenter, locals)
     # Handle bottom cell
-    if @pages || @in_a_form
+    if @pages || @in_a_form && locals[:action_url] != "rbac_tags_edit"
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
