@@ -28,7 +28,7 @@ matrix:
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 install: true
-script: bundle exec rake $TEST_SUITE
+script: bundle exec rake spec:setup $TEST_SUITE
 after_script: source tools/ci/after_install.sh
 notifications:
   webhooks:
