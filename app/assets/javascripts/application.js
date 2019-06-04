@@ -38,4 +38,3 @@
 //= require ./miq_explorer
 //= require ./miq_timeline
 //= require @manageiq/ui-components/dist/js/ui-components
-//= require ui-select/dist/select
