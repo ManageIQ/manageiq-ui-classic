@@ -1,6 +1,4 @@
 ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', 'API', '$q', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService, API, $q) {
-  var sortOptions = '&sort_by=name&sort_order=ascending';
-  var allApiPromises = [];
   var init = function() {
     $scope.scheduleModel = {
       action_typ: '',
@@ -121,12 +119,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.scheduleModel.log_password = miqService.storedPasswordPlaceholder;
       }
 
-      $scope.buildZonesList();
-      checkFormDataRetrieval($scope);
+      if ($scope.automateRequest()) {
+        $scope.buildZonesList()
+      }
 
       $scope.afterGet = true;
       $scope.modelCopy = angular.copy( $scope.scheduleModel );
-
       miqService.sparkleOff();
     }
 
@@ -219,13 +217,12 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
   };
 
   $scope.buildZonesList = function() {
-    allApiPromises.push(API.get('/api/zones/?expand=resources&attributes=id,description')
+    return API.get('/api/zones/?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending')
       .then(function (data) {
         $scope.zones = data.resources;
         $scope._zone = _.find($scope.zones, {id: $scope.scheduleModel.zone_id});
       })
-      .catch(miqService.handleFailure)
-    );
+      .catch(miqService.handleFailure);
   };
 
   $scope.credsProtocol = function() {
@@ -248,12 +245,14 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     } else if ($scope.automateRequest()) {
       miqService.sparkleOn();
 
-      $http.post('/ops/automate_schedules_set_vars/' + scheduleFormId)
-        .then(postAutomateSchedulesSetVarsComplete)
-        .catch(miqService.handleFailure);
+      $q.all([
+        $http.post('/ops/automate_schedules_set_vars/' + scheduleFormId)
+          .then(postAutomateSchedulesSetVarsComplete)
+          .catch(miqService.handleFailure),
+        $scope.buildZonesList(),
+      ])
+        .then(miqService.sparkleOff);
 
-      $scope.buildZonesList();
-      checkFormDataRetrieval($scope);
     } else {
       $scope.scheduleModel.filter_typ = 'all';
     }
@@ -279,18 +278,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       miqService.sparkleOff();
     }
   };
-
-  var checkFormDataRetrieval = function(vm) {
-    $q.all(allApiPromises)
-      .then(function() {
-        retrievedFormData(vm);
-      });
-  };
-
-  function retrievedFormData(vm) {
-    vm.afterGet = true;
-    miqService.sparkleOff();
-  }
 
   $scope.$watch('_zone', function(value) {
     $scope.scheduleModel.zone_id = value ? value.id : '';

@@ -2,8 +2,8 @@
   .div
     .div
       -# %h4 {{buildLegend()}}
-      %div{"ng-switch" => "", "on" => "automateRequest()"}
-        .form-group{"ng-class" => "{'has-error': angularForm.target_id.$invalid}", "ng-show" => "!dbBackup() && automateRequest()"}
+      %div{"ng-switch" => "", "on" => "scheduleModel.action_typ"}
+        .form-group{"ng-class" => "{'has-error': angularForm.target_id.$invalid}", "ng-show" => "automateRequest()"}
           %label.col-md-2.control-label{"for" => "zone_id"}
             = _("Zone")
           .col-md-8
@@ -94,14 +94,6 @@
                                  "ng-required"                => "!automateRequest() && filterValueRequired(scheduleModel.filter_value)",
                                  "checkchange"                => ""}
               %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
-
-            -#%select#zone_id{"ng-model"         => "scheduleModel",
-            -#                "ng-show"          => "automateRequest()",
-            -#                "name"             => "zone_id",
-            -#                'ng-options'       => 'zone as zone.description for zone in zones',
-            -#                "data-live-search" => "true",
-            -#                'miq-select'       => true}
-            -#  %option{"value" => ""} &lt;Choose&gt;
 
         %ae-resolve-options{"ng-if"                 => "automateRequest()",
                             "instance-name"         => "scheduleModel.instance_name",
