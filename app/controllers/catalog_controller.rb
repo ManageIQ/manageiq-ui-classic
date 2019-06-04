@@ -619,18 +619,6 @@ class CatalogController < ApplicationController
     replace_right_cell(:action => "ot_copy")
   end
 
-  def ot_edit_submit
-    self.x_active_tree = 'ot_tree'
-  end
-
-  def ot_add_submit
-    self.x_active_tree = 'ot_tree'
-  end
-
-  def ot_copy_submit
-    self.x_active_tree = 'ot_tree'
-  end
-
   def ot_form_field_changed
     dialog_creation_form_field_changed("ot_edit__#{params[:id]}")
   end
@@ -1919,16 +1907,12 @@ class CatalogController < ApplicationController
             ]
           )
         end
-      elsif %w[ot_edit ot_copy ot_add service_dialog_from_ot].include?(action)
+      elsif %w[service_dialog_from_ot].include?(action)
         presenter.hide(:toolbar).show(:paging_div, :form_buttons_div).remove_paging
         locals = {:record_id  => @edit[:rec_id],
                   :action_url => "#{action}_submit",
-                  :serialize  => true}
-        if action == "ot_copy"
-          presenter.show(:buttons_on).hide(:buttons_off)
-          locals[:record_id] = nil
-        end
-        locals[:no_reset] = true if %w[ot_copy service_dialog_from_ot].include?(action)
+                  :serialize  => true,
+                  :no_reset   => true}
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
       else
         # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record
