@@ -44,6 +44,7 @@ function modal(title, Inner, closed, removeId) {
         show
         onHide={closed}
         onExited={closed}
+        id="provider-modal"
       >
         <Modal.Header>
           <button
