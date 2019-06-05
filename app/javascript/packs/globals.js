@@ -48,9 +48,9 @@ require('moment-duration-format')(window.moment);
 require('@pf3/timeline');
 
 window.CodeMirror = require('codemirror');
-require('codemirror/mode/css/css.js');
+require('codemirror/mode/css/css.js');  // not referenced directly, needed by htmlmixed
 require('codemirror/mode/htmlmixed/htmlmixed.js');
-require('codemirror/mode/javascript/javascript.js');
+require('codemirror/mode/javascript/javascript.js');  // not referenced directly, needed by htmlmixed
 require('codemirror/mode/ruby/ruby.js');
 require('codemirror/mode/shell/shell.js');
 require('codemirror/mode/xml/xml.js');
