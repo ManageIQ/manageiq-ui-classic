@@ -19,12 +19,14 @@ class WidgetImportService
     new_or_existing_widget.title ||= widget["title"]
     new_or_existing_widget.content_type ||= "report"
     new_or_existing_widget.resource = build_report_contents(widget)
-    new_or_existing_widget.miq_schedule = build_miq_schedule(widget)
     widget.delete("resource_id")
+    schedule_from_widget = widget.delete("MiqSchedule")
 
     log_widget_import_message(new_or_existing_widget)
 
     new_or_existing_widget.update_attributes(widget)
+    new_or_existing_widget.miq_schedule = build_miq_schedule(schedule_from_widget.merge("widget_id" => new_or_existing_widget.id))
+    new_or_existing_widget
   end
 
   def import_widgets(import_file_upload, widgets_to_import)
@@ -89,9 +91,7 @@ class WidgetImportService
     new_or_existing_report
   end
 
-  def build_miq_schedule(widget)
-    schedule_contents = widget.delete("MiqSchedule")
-
+  def build_miq_schedule(schedule_contents)
     return if schedule_contents.blank?
 
     new_or_existing_schedule = MiqSchedule.where(
@@ -99,6 +99,11 @@ class WidgetImportService
       :resource_type => schedule_contents["resource_type"]
     ).first_or_initialize
     new_or_existing_schedule.update_attributes(schedule_contents) if new_or_existing_schedule.new_record?
+
+    if new_or_existing_schedule
+      filter = MiqExpression.new("=" => {"field" => "MiqWidget-id", "value" => new_widget_id})
+      new_or_existing_schedule.update(:filter => filter)
+    end
 
     new_or_existing_schedule
   end
