@@ -17,6 +17,14 @@ module OpsHelper::TextualSummary
     )
   end
 
+  def textual_group_properties
+    TextualTags.new(_('Properties'), %i[description parent groups subtenant project])
+  end
+
+  def textual_group_smart_management
+    TextualTags.new(_("Smart Management"), %i[tags])
+  end
+
   def textual_group_vmdb_tables_most_rows
     return if @record.nil?
 
@@ -139,6 +147,84 @@ module OpsHelper::TextualSummary
       :col_order => %w[name value],
       :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_COUNT)
     }
+  end
+
+  def textual_description
+    {:label => _('Description'), :value => @record.description}
+  end
+
+  def textual_parent
+    parent = @record.parent
+    return nil unless parent&.allowed?
+
+    {
+      :label    => _('Parent'),
+      :explorer => true,
+      :value    => parent.name,
+      :title    => _('View Parent Tenant'),
+      :link     => url_for_only_path(:controller => 'ops', :action => 'tree_select', :id => "tn-#{parent.id}")
+    }
+  end
+
+  def textual_groups
+    return nil if @record.miq_groups.non_tenant_groups.blank?
+
+    {:label => _('Groups'), :value => groups_from_record}
+  end
+
+  def textual_subtenant
+    return nil if @record.all_subtenants.blank?
+
+    {:label => _('Child Tenants'), :value => subtenants_from_record}
+  end
+
+  def textual_project
+    return nil if @record.all_subprojects.blank?
+
+    {:label => _('Projects'), :value => subprojects_from_record}
+  end
+
+  def groups_from_record
+    record_groups = []
+    @record.miq_groups.non_tenant_groups.sort_by { |group| group.name.downcase }.each do |g|
+      if role_allows?(:feature => "rbac_group_show")
+        record_groups.push(
+          :value    => g.name,
+          :title    => _("Click to view %{name} Group") % {:name => g.name},
+          :explorer => true,
+          :link     => url_for_only_path(:controller => 'ops', :action => 'tree_select', :id => "g-#{g.id}")
+        )
+      else
+        record_groups.push(:value => g.name)
+      end
+    end
+    record_groups
+  end
+
+  def subtenants_from_record
+    subtenants = []
+    @record.all_subtenants.sort_by { |t| t.name.downcase }.each do |tenant|
+      subtenants.push(
+        :value    => tenant.name,
+        :title    => _("Click to view %{name} Tenant") % {:name => tenant.name},
+        :explorer => true,
+        :link     => url_for_only_path(:controller => 'ops', :action => 'tree_select', :id => "tn-#{tenant.id}")
+      )
+    end
+    subtenants
+  end
+
+  def subprojects_from_record
+    subprojects = []
+    @record.all_subprojects.sort_by { |proj| proj.name.downcase }.each do |project|
+      subprojects.push(
+        :value    => project.name,
+        :title    => _("Click to view %{name} TenantProject") % {:name => project.name},
+        :explorer => true,
+        :link     => url_for_only_path(:controller => 'ops', :action => 'tree_select', :id => "tn-#{project.id}")
+      )
+    end
+    subprojects
   end
 
   def vmdb_table_top_rows(typ, limit)
