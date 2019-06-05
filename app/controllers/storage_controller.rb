@@ -378,7 +378,7 @@ class StorageController < ApplicationController
 
     presenter = rendering_objects
     update_partials(record_showing, presenter)
-    replace_search_box(presenter)
+    replace_search_box(presenter, :nameonly => x_active_tree == :storage)
     handle_bottom_cell(presenter)
     reload_trees_by_presenter(presenter, trees)
     rebuild_toolbars(record_showing, presenter)
@@ -414,11 +414,8 @@ class StorageController < ApplicationController
     end
   end
 
-  def replace_search_box(presenter)
-    # Replace the searchbox
-    presenter.replace(:adv_searchbox_div,
-                      r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => x_active_tree == :storage}])
+  def replace_search_box(presenter, locals = {})
+    super(presenter, locals)
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end

@@ -1,11 +1,7 @@
 -# If set, don't show advanced search and add nameonly class to name fields
 - nameonly ||= false
-#adv_searchbox_div{:style => "display: none;"}
-  -# Hidden advanced search box
-  = hidden_div_if(@edit && @edit[:adv_search_open] != true, :id => "adv_search_div") do
-    - if @edit && @edit[:adv_search_open]
-      = render :partial => 'layouts/adv_search'
 
+#adv_searchbox_div{:style => "display: none;"}
   -# Name based search box
   #searchbox.search-pf.has-button.form-group.pull-right{:class => ::Settings.server.custom_logo ? "whitelabeled" : ""}
     .form-group.has-clear

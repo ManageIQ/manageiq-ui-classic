@@ -9,6 +9,11 @@ module ApplicationController::Explorer
                 .compact
   end
 
+  def replace_search_box(presenter, locals = {})
+    presenter.replace(:adv_searchbox_div, r[:partial => 'layouts/x_adv_searchbox', :locals => locals])
+    presenter.replace(:advsearchModal, r[:partial => 'layouts/adv_search'])
+  end
+
   def try_build_tree(tree_symbol)
     method_name = "build_#{tree_symbol}_tree"
     return unless respond_to?(method_name, true)

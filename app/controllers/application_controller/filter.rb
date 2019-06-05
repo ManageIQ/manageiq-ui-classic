@@ -53,8 +53,8 @@ module ApplicationController::Filter
         # Don't need to replace flash div as it's included throught
         # exp_editor. That is rendered either throught adv_search_body or directly.
         if !@edit[:adv_search_open].nil?
-          page.replace("adv_search_body", :partial => "layouts/adv_search_body")
-          page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
+          page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:force => true})
+          page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:force => true})
         else
           page.replace("exp_editor_div", :partial => "layouts/exp_editor")
         end
@@ -159,8 +159,8 @@ module ApplicationController::Filter
     render :update do |page|
       page << javascript_prologue
       page << "ManageIQ.explorer.clearSearchToggle(#{clear_search_status});"
-      page.replace("adv_search_body", :partial => "layouts/adv_search_body")
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
+      page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:force => true})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:force => true})
       page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
       @edit[@expkey].render_values_to(page)
       page << set_spinner_off

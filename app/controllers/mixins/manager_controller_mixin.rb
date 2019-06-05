@@ -442,10 +442,8 @@ module Mixins
       @sb["#{controller_name.underscore}_search_text".to_sym][:current_node] = x_node
     end
 
-    def replace_search_box(presenter)
-      # Replace the searchbox
-      presenter.replace(:adv_searchbox_div,
-                        r[:partial => 'layouts/x_adv_searchbox'])
+    def replace_search_box(presenter, locals = {})
+      super(presenter, locals)
 
       presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     end
