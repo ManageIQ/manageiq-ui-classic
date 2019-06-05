@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-6
+## Hammer-7
+
+### Added
+- Inform user about outdates belongsto filters [(#5511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5511)
+- Showing default value for date/time picker in service dialog preview [(#5400)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5400)
+
+### Fixed
+- Remove wrong and redundant check [(#5506)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5506)
+- Do not load advanced search on pre-provisioning screen. [(#5581)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5581)
+- Fix creating a group after validation message 'already exists' [(#5354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5354)
+
+## Hammer-6 - Released 2019-05-22
 
 ### Fixed
 - miqSetToolbarCount - fix setting toolbar counts [(#5403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5403)
