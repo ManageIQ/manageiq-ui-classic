@@ -132,7 +132,7 @@
     "jasmine-jquery": "~2.1.1",
     "jest": "^22.0.6",
     "jest-cli": "^22.0.0",
-    "js-yaml": "~3.8.3",
+    "js-yaml": "~3.13.1",
     "ng-annotate-loader": "~0.6.1",
     "node-sass": "~4.9.3",
     "path-complete-extname": "~0.1.0",
