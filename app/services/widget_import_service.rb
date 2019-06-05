@@ -25,7 +25,7 @@ class WidgetImportService
     log_widget_import_message(new_or_existing_widget)
 
     new_or_existing_widget.update_attributes(widget)
-    new_or_existing_widget.miq_schedule = build_miq_schedule(schedule_from_widget.merge("widget_id" => new_or_existing_widget.id))
+    new_or_existing_widget.update(:miq_schedule => build_miq_schedule(schedule_from_widget.merge("widget_id" => new_or_existing_widget.id))) if schedule_from_widget
     new_or_existing_widget
   end
 
@@ -93,6 +93,7 @@ class WidgetImportService
 
   def build_miq_schedule(schedule_contents)
     return if schedule_contents.blank?
+    new_widget_id = schedule_contents.delete("widget_id")
 
     new_or_existing_schedule = MiqSchedule.where(
       :name          => schedule_contents["name"],
