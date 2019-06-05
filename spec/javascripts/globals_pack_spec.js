@@ -62,4 +62,15 @@ describe('packs/global.js', function() {
       expect(d3.chart.timeline().end).toBeDefined();
     });
   });
+
+  context('codemirror', function() {
+    it('loads codemirror', function() {
+      expect(window.CodeMirror).toBeDefined();
+    });
+
+    it('loads codemirror modes', function() {
+      var expected = ['css', 'htmlmixed', 'javascript', 'ruby', 'shell', 'xml', 'yaml'];
+      expect(Object.keys(window.CodeMirror.modes)).toEqual(jasmine.arrayContaining(expected));
+    });
+  });
 });
