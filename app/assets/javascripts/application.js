@@ -21,14 +21,6 @@
 //= require ./miq_c3_config
 //= require ./miq_ujs_bindings
 //= require ./miq_tree
-//= require codemirror/lib/codemirror
-//= require codemirror/mode/css/css
-//= require codemirror/mode/htmlmixed/htmlmixed
-//= require codemirror/mode/javascript/javascript
-//= require codemirror/mode/ruby/ruby
-//= require codemirror/mode/shell/shell
-//= require codemirror/mode/xml/xml
-//= require codemirror/mode/yaml/yaml
 //= require ./miq_formatters
 //= require ./miq_grid
 //= require ./miq_list_grid
