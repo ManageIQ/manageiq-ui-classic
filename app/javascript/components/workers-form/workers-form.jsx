@@ -185,6 +185,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
           submitLabel: __('Save'),
         }}
         canReset
+        className=""
       />
     </Grid>
   );
