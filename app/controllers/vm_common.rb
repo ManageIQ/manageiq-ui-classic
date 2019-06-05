@@ -1245,11 +1245,7 @@ module VmCommon
       }
     end
 
-    # Replace the searchbox
-    presenter.replace(:adv_searchbox_div, r[
-      :partial => 'layouts/x_adv_searchbox',
-      :locals  => {:nameonly => %i[images_tree instances_tree vandt_tree].include?(x_active_tree)}
-    ])
+    replace_search_box(presenter, :nameonly => %i[images_tree instances_tree vandt_tree].include?(x_active_tree))
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     if @sb[:action] == "policy_sim"

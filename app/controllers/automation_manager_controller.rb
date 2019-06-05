@@ -411,13 +411,8 @@ class AutomationManagerController < ApplicationController
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
-    replace_search_box(presenter)
-  end
 
-  def replace_search_box(presenter)
-    presenter.replace(:adv_searchbox_div,
-                      r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => providers_active_tree?}])
+    replace_search_box(presenter, :nameonly => providers_active_tree?)
   end
 
   def group_summary_tab_selected?

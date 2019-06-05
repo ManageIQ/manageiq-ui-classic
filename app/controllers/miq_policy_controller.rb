@@ -678,8 +678,7 @@ class MiqPolicyController < ApplicationController
 
     presenter.hide(:form_buttons_div) if options[:remove_form_buttons]
 
-    # Replace the searchbox
-    presenter.replace(:adv_searchbox_div, r[:partial => 'layouts/x_adv_searchbox', :locals => {:nameonly => true}])
+    replace_search_box(presenter, :nameonly => true)
 
     # Hide/show searchbox depending on if a list is showing
     presenter.set_visibility(@show_adv_search, :adv_searchbox_div)

@@ -364,13 +364,6 @@ class ProviderForemanController < ApplicationController
     node
   end
 
-  def replace_search_box(presenter)
-    # Replace the searchbox
-    presenter.replace(:adv_searchbox_div,
-                      r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => provider_active_tree?}])
-  end
-
   def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
@@ -396,7 +389,8 @@ class ProviderForemanController < ApplicationController
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
-    replace_search_box(presenter)
+
+    replace_search_box(presenter, :nameonly => provider_active_tree?)
   end
 
   def group_summary_tab_selected?

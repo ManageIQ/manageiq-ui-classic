@@ -169,8 +169,8 @@ module ApplicationController::AdvancedSearch
     render :update do |page|
       page << javascript_prologue
       page.replace("#{tree_name}_div",  :partial => "shared/tree",               :locals => {:tree => tree, :name => tree_name})
-      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode, :force => true})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode, :force => true})
     end
   end
 
@@ -179,8 +179,8 @@ module ApplicationController::AdvancedSearch
     render :update do |page|
       page << javascript_prologue
       page.replace(:listnav_div, :partial => "layouts/listnav")
-      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode, :force => true})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode, :force => true})
     end
   end
 
@@ -228,8 +228,8 @@ module ApplicationController::AdvancedSearch
         @edit[@expkey][:exp_chosen_report] = nil
         @edit[@expkey][:exp_chosen_search] = nil
       end
-      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode, :force => true})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode, :force => true})
     end
   end
 
