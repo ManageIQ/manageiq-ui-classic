@@ -5,10 +5,6 @@ Rails.application.config.assets.precompile << proc do |filename, path|
 end
 
 Rails.application.config.assets.precompile += %w(
-  codemirror/mode/*.js
-  codemirror/mode/*/*.js
-  codemirror/theme/*.css
-
   jquery/dist/jquery.js
   jquery-ui/ui/*.js
   jquery-ui/ui/widgets/*.js
