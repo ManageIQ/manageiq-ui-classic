@@ -283,6 +283,14 @@ class OpsController < ApplicationController
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
+  def textual_group_list
+    [
+      %i[properties],
+      %i[smart_management]
+    ]
+  end
+  helper_method :textual_group_list
+
   def set_active_elements(feature, _x_node_to_set = nil)
     if feature
       self.x_active_tree ||= feature.tree_name
