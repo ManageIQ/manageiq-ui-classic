@@ -94,6 +94,37 @@ class CatalogController < ApplicationController
   def servicetemplate_copy
     checked_id = find_checked_items.first || params[:id]
     @record = find_record_with_rbac(ServiceTemplate, checked_id)
+    @tabactive = false
+    @in_a_form = true
+    @edit = {}
+    session[:changed] = false
+    replace_right_cell(:action => "copy_catalog")
+  end
+
+  def save_copy_catalog
+    record = find_record_with_rbac(ServiceTemplate, params[:id])
+    message  = nil
+    if record.present?
+      saved = record.template_copy(params[:name])
+    else
+      saved = false
+      message = _("Record not found.")
+    end
+    render :json => {:message => message} , :status => saved ? 200 : 400
+  end
+
+  def servicetemplate_copy_cancel
+    add_flash(_("Copy of a Service Catalog Item was cancelled by the user"), :warning)
+    @sb[:action] = @edit = @record = nil
+    @in_a_form = false
+    replace_right_cell
+  end
+
+  def servicetemplate_copy_saved()
+      add_flash(_("Copy of a Service Catalog Item was successfully saved"))
+      @sb[:action] = @edit = @record = nil
+      @in_a_form = false
+      replace_right_cell
   end
 
   def atomic_st_edit
@@ -1817,7 +1848,7 @@ class CatalogController < ApplicationController
                 r[:partial => "stcat_form"]
               elsif action == "dialog_provision"
                 r[:partial => "shared/dialogs/dialog_provision", :locals => options[:dialog_locals]]
-              elsif %w[ot_add ot_copy ot_edit service_dialog_from_ot].include?(action)
+              elsif %w[ot_add ot_copy ot_edit service_dialog_from_ot copy_catalog].include?(action)
                 r[:partial => action]
               elsif record_showing
                 if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
@@ -1854,11 +1885,11 @@ class CatalogController < ApplicationController
       presenter.show(:form_buttons_div).remove_paging
     elsif record_showing || @in_a_form || @sb[:buttons_node] ||
           (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
-      if %w[button_edit group_edit group_reorder at_st_new st_new st_catalog_new st_catalog_edit].include?(action)
+      if %w[button_edit group_edit group_reorder at_st_new st_new st_catalog_new st_catalog_edit copy_catalog].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
-        if (action == 'at_st_new' && ansible_playbook?) || (action == 'st_catalog_new' || action == 'st_catalog_edit')
+        if (action == 'at_st_new' && ansible_playbook?) || (action == 'st_catalog_new' || action == 'st_catalog_edit' || action == 'copy_catalog')
           presenter.hide(:form_buttons_div)
         else
           presenter.show(:form_buttons_div)
@@ -1913,7 +1944,7 @@ class CatalogController < ApplicationController
     presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
 
     presenter[:record_id] = determine_record_id_for_presenter
-    presenter[:lock_sidebar] = @edit && @edit[:current]
+    presenter[:lock_sidebar] = @edit && @edit[:current] || action == 'copy_catalog'
     presenter[:osf_node] = x_node
     presenter.reset_changes
     presenter.reset_one_trans
