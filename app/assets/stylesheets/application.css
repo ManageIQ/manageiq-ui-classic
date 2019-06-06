@@ -14,7 +14,6 @@
  *= require ./physical_infra_topology
  *= require ./metrics
  *= require ./service_dialogs
- *= require @manageiq/ui-components/dist/css/ui-components
  *= require ./remote_console
  *= require ./piecharts
 */
