@@ -6,8 +6,6 @@
  *= require ./notifications
  *= require ./schedule_editor
  *= require ./miq_tree
- *= require codemirror/lib/codemirror
- *= require codemirror/theme/eclipse
  *= require ./timeline
  *= require ./topology
  *= require ./container_topology

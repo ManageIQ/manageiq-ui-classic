@@ -50,6 +50,10 @@ describe('packs/global.js', function() {
       expect(angular.module('ui.bootstrap')).toBeDefined();
     });
 
+    it('loads codemirror', function() {
+      expect(angular.module('ui.codemirror')).toBeDefined();
+    });
+
     it('loads kubernetes-topology-graph', function() {
       expect(angular.module('kubernetesUI')).toBeDefined();
     });
@@ -60,6 +64,17 @@ describe('packs/global.js', function() {
       expect(d3.chart.timeline).toBeDefined();
       expect(d3.chart.timeline().start).toBeDefined();
       expect(d3.chart.timeline().end).toBeDefined();
+    });
+  });
+
+  context('codemirror', function() {
+    it('loads codemirror', function() {
+      expect(window.CodeMirror).toBeDefined();
+    });
+
+    it('loads codemirror modes', function() {
+      var expected = ['css', 'htmlmixed', 'javascript', 'ruby', 'shell', 'xml', 'yaml'];
+      expect(Object.keys(window.CodeMirror.modes)).toEqual(jasmine.arrayContaining(expected));
     });
   });
 });
