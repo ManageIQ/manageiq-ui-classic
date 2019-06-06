@@ -1,9 +1,4 @@
-/*
- * Unfortunately ui-components needs to be loaded like this :(
- * This is due to the fact that we have ui-components through yarn
- *= require @manageiq/ui-components/dist/css/ui-components
- */
-
+@import '~@manageiq/ui-components/dist/css/ui-components.css';
 @import '~patternfly-sprockets';
 @import '~patternfly/variables';
 @import '~patternfly/icons';
