@@ -4,8 +4,8 @@ $navbar-pf-navbar-navbar-brand-min-width:   270px;
 $navbar-pf-navbar-navbar-brand-padding:     8px 0 2px;
 $dropdown-link-hover-bg:                    #d4edfa;  // sets dropdown link hover
 $link-color:                                #0099d3;  // sets link (also accordion hover, selected table cell) color globally
-$navbar-pf-vertical-border-color:           #063451;  // sets 3px border color at top of screen
-$navbar-pf-alt-bg-color:                    #0c69a5;  // sets background color of navigation bar
+$navbar-pf-vertical-border-color:           #3c69a3;  // sets 3px border color at top of screen
+$navbar-pf-alt-bg-color:                    #3c69a3;  // sets background color of navigation bar
 $nav-pf-vertical-width:                     225px;    // sets width of primary navigation
 $navbar-pf-alt-navbar-toggle-icon-bar-hover-bg: #fff;
 $img-bg-navbar:                             "layout/navbar.png"; // sets a custom background image in the header
@@ -17,13 +17,12 @@ $color-low-severity:                        #f0ab00;  //(pf-gold-200)
 // Product overrides for 'About' Modal
 
 $modal-about-pf-bg-img:                     "layout/bg-modal-about-pf.png"; // sets background image of 'About' modal
-$modal-about-pf-bg-color:                   #083c5a; // sets background color of 'About' modal
+$modal-about-pf-bg-color:                   #101010; // sets background color of 'About' modal
 
 // Product overrides of Patternfly Login variables
 $img-bg-login:                              "layout/bg-login.png";
-$img-bg-login-2:                            "layout/bg-login-2.png";
 $img-bg-login-whitelabel:                   "/upload/custom_login_logo.png";
-$login-bg-color:                            #083c5a;
+$login-bg-color:                            #101010;
 $login-container-bg-color:                  #000000;
 $login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
 $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
@@ -33,7 +32,6 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "patternfly-sprockets";
 @import "patternfly";
 @import "patternfly_overrides";
-@import "login";
 @import "icon_customizations";
 @import "header_background"; // sets a custom background image in the header
 @import "about_modal_background"; // sets a custom background image in the 'About' modal
@@ -66,3 +64,4 @@ body.whitelabel {
   background: url($img-bg-login-whitelabel);
   background-size: 100% auto;
 }
+
