@@ -9,7 +9,7 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
     count_only_or_objects(count_only, filter_ae_objects(User.current_tenant.visible_domains))
   end
 
-  def override(node, object, _pid, _options)
+  def override(node, object, _pid)
     # Only the instance items should be clickable when selecting a catalog item entry point
     node[:selectable] = false unless object.kind_of?(MiqAeInstance)
   end

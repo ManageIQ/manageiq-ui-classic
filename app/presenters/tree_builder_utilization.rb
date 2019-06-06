@@ -9,7 +9,7 @@ class TreeBuilderUtilization < TreeBuilder
     {:lazy => true}
   end
 
-  def override(node, _object, _pid, _options)
+  def override(node, _object, _pid)
     node[:selectable] = node[:key].split('-')[1].split('_')[0] != 'folder'
   end
 

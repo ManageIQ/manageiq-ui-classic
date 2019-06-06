@@ -7,7 +7,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       blue?(object.parent)
   end
 
-  def override(node, object, _pid, options)
+  def override(node, object, _pid)
     node[:selectable] = false
     node[:checkable] = @edit.present? || @assign_to.present?
     if [ExtManagementSystem, EmsCluster, Datacenter].any? { |klass| object.kind_of?(klass) }

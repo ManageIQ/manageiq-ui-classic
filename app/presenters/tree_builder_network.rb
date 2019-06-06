@@ -2,7 +2,7 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Lan, [:x_get_tree_lan_kids]
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
-  def override(node, _object, _pid, _options)
+  def override(node, _object, _pid)
     node[:selectable] = false # if node[:image].nil? || !node[:image].include?('svg/currentstate-')
   end
 

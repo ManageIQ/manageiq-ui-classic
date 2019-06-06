@@ -9,7 +9,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
 
   private
 
-  def override(node, _object, _pid, _options)
+  def override(node, _object, _pid)
     node[:selectable] = false
   end
 

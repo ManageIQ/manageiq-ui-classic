@@ -12,7 +12,7 @@ class TreeBuilderAutomate < TreeBuilder
     count_only_or_objects(count_only, [MiqAeDomain.find_by(:id => @sb[:domain_id])])
   end
 
-  def override(node, object, _pid, _options)
+  def override(node, object, _pid)
     node[:selectable] = false if object.kind_of?(MiqAeNamespace) && object.domain?
   end
 
