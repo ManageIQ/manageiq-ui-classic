@@ -50,6 +50,10 @@ describe('packs/global.js', function() {
       expect(angular.module('ui.bootstrap')).toBeDefined();
     });
 
+    it('loads codemirror', function() {
+      expect(angular.module('ui.codemirror')).toBeDefined();
+    });
+
     it('loads kubernetes-topology-graph', function() {
       expect(angular.module('kubernetesUI')).toBeDefined();
     });
