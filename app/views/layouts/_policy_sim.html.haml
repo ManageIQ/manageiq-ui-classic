@@ -1,8 +1,9 @@
 - url = url_for_only_path(:action => 'policy_sim_add')
 #main_div
 
-  %h1
-    = @right_cell_text unless @explorer
+  %h1#explorer_title
+    %span#explorer_title_text
+      = @right_cell_text unless @explorer
   #flash_msg_div
     = render :partial => "layouts/flash_msg"
 
