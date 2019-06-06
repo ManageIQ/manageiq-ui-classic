@@ -1,5 +1,5 @@
 describe('catalogItemFormController', function() {
-  var $scope, $controller, currentRegion, postService, allCatalogsNames;
+  var $scope, $controller, currentRegion, postService, allCatalogsNames, additionalTenantIds;
 
   beforeEach(module('ManageIQ'));
 
@@ -23,6 +23,7 @@ describe('catalogItemFormController', function() {
       service_template_catalog_id:  10000000000012,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
+      additional_tenant_ids: additionalTenantIds,
       config_info:                  {
         provision: {
           dialog_id:     '10000000000031',
@@ -43,7 +44,7 @@ describe('catalogItemFormController', function() {
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          verbosity:         '0',
+          verbosity:        '0',
           log_output:       'on_error',
         }
       }
@@ -55,6 +56,7 @@ describe('catalogItemFormController', function() {
       $scope: $scope,
       currentRegion: currentRegion,
       allCatalogsNames: allCatalogsNames,
+      additionalTenantIds: additionalTenantIds,
       catalogItemFormId: 1000000000001
     });
   }));

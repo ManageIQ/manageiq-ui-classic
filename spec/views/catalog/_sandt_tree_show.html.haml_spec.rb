@@ -9,6 +9,7 @@ describe "catalog/_sandt_tree_show.html.haml" do
                                 :display      => true)
     assign(:record, bundle)
     assign(:sb, {})
+    assign(:tenants_tree, TreeBuilderTenants.new('tenants_tree', {}, true, :additional_tenants => [], :selectable => false))
   end
 
   it "Renders bundle summary screen" do

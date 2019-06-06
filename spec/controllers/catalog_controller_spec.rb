@@ -87,32 +87,37 @@ describe CatalogController do
     end
 
     describe "#atomic_form_field_changed" do
+      let(:edit) do
+        {:key          => "prov_edit__new",
+         :rec_id       => 1,
+         :st_prov_type => "generic",
+         :new          => {:name         => "New Name",
+                           :description  => "New Description",
+                           :st_prov_type => prov_type,
+                           :tenant_ids   => []}}
+      end
+      let(:prov_type) { 'generic' }
+
       before do
+        allow(controller).to receive(:session).and_return(:edit => edit)
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@record, ServiceTemplate.new(:prov_type => "generic"))
-        edit = {
-          :key          => "prov_edit__new",
-          :rec_id       => 1,
-          :st_prov_type => "generic",
-          :new          => {
-            :name         => "New Name",
-            :description  => "New Description",
-            :st_prov_type => "generic"
-          }
-        }
-        session[:edit] = edit
       end
+
       # these types do not have tabs on the screen, because we don't show tabs if there is only single tab on screen.
       it "replaces form_div when generic type catalog item type is being added" do
         post :atomic_form_field_changed, :params => {:display => "1", :id => "new"}
         expect(response.body).to include("form_div")
       end
 
-      # these types already have tabs on the screen so it's only matter of show/hide Details tab for those.
-      it "does not replace form_div when non-generic type catalog item type is being added" do
-        session[:edit][:new][:st_prov_type] = "vmware"
-        post :atomic_form_field_changed, :params => {:display => "1", :id => "new"}
-        expect(response.body).not_to include("form_div")
+      context 'non-generic catalog item type' do
+        let(:prov_type) { 'vmware' }
+
+        # these types already have tabs on the screen so it's only matter of show/hide Details tab for those.
+        it "does not replace form_div when non-generic type catalog item type is being added" do
+          post :atomic_form_field_changed, :params => {:display => "1", :id => "new"}
+          expect(response.body).not_to include("form_div")
+        end
       end
     end
 
@@ -153,7 +158,8 @@ describe CatalogController do
             :description        => "New Description",
             :reconfigure_fqname => recon_fqname,
             :retire_fqname      => retire_fqname,
-            :fqname             => provision_fqname
+            :fqname             => provision_fqname,
+            :tenant_ids         => []
           },
           :key          => "prov_edit__new",
           :rec_id       => st.id,
@@ -227,24 +233,28 @@ describe CatalogController do
     end
 
     describe "#st_edit" do
-      it "@record is cleared out after Service Template is added" do
-        controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => "add")
-        st = FactoryBot.create(:service_template)
-        controller.instance_variable_set(:@record, st)
-        provision_fqname = 'ns1/cls1/inst1'
-        edit = {
-          :new    => {:name               => "New Name",
-                      :description        => "New Description",
-                      :selected_resources => [st.id],
-                      :rsc_groups         => [[{:name => "Some name"}]],
-                      :fqname             => provision_fqname, },
-          :key    => "st_edit__new",
-          :rec_id => st.id,
-        }
-        controller.instance_variable_set(:@edit, edit)
-        session[:edit] = edit
+      let(:edit) do
+        {:new    => {:name               => "New Name",
+                     :description        => "New Description",
+                     :selected_resources => [st.id],
+                     :rsc_groups         => [[{:name => "Some name"}]],
+                     :fqname             => 'ns1/cls1/inst1',
+                     :tenant_ids         => []},
+         :key    => "st_edit__new",
+         :rec_id => st.id}
+      end
+      let(:st) { FactoryBot.create(:service_template) }
+
+      before do
         allow(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:session).and_return(:edit => edit)
+        controller.instance_variable_set(:@edit, edit)
+        controller.instance_variable_set(:@_params, :button => "add")
+        controller.instance_variable_set(:@record, st)
+        controller.instance_variable_set(:@sb, {})
+      end
+
+      it "@record is cleared out after Service Template is added" do
         controller.send(:st_edit)
         expect(assigns(:record)).to be_nil
       end
@@ -723,6 +733,7 @@ describe CatalogController do
         }
         controller.instance_variable_set(:@edit, edit)
       end
+
       it "saves resource action" do
         controller.send(:set_resource_action, @st)
         expect(@st.resource_actions.pluck(:action)).to match_array(%w(Provision Retirement Reconfigure))
@@ -760,7 +771,10 @@ describe CatalogController do
     end
 
     describe "#st_set_form_vars" do
-      before { controller.instance_variable_set(:@record, bundle) }
+      before do
+        controller.instance_variable_set(:@record, bundle)
+        controller.instance_variable_set(:@sb, {})
+      end
 
       context 'already existing catalog bundle' do
         let(:bundle) { FactoryBot.create(:service_template) }
@@ -868,7 +882,7 @@ describe CatalogController do
         expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
       end
 
-      context "#get_available_resources" do
+      describe "#get_available_resources" do
         let(:user_role) { FactoryBot.create(:miq_user_role) }
         let(:miq_group) { FactoryBot.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
 
@@ -1053,38 +1067,60 @@ describe CatalogController do
                            :ext_management_system => ems,
                            :name                  => "Test Template")
       end
+      let(:ns) { FactoryBot.create(:miq_ae_namespace, :name => "ns") }
+      let(:cls) { FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls") }
+
 
       let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
       let(:dialog) { FactoryBot.create(:dialog) }
+      let(:tenant) { FactoryBot.create(:tenant) }
+      let(:edit) do
+        {:key          => "prov_edit__new",
+         :st_prov_type => "generic_container_template",
+         :new          => {:name         => "New Name",
+                           :description  => "New Description",
+                           :st_prov_type => "generic_container_template",
+                           :fqname       => "ns/cls/inst",
+                           :display      => true,
+                           :dialog_id    => dialog.id,
+                           :template_id  => container_template.id,
+                           :manager_id   => ems.id,
+                           :tenant_ids   => [tenant]}}
+      end
 
       before do
+        allow(controller).to receive(:session).and_return(:edit => edit)
+        allow(controller).to receive(:replace_right_cell)
         controller.instance_variable_set(:@sb, {})
-        ns = FactoryBot.create(:miq_ae_namespace, :name => "ns")
-        cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls")
         FactoryBot.create(:miq_ae_instance, :class_id => cls.id, :name => "inst")
-        edit = {
-          :key          => "prov_edit__new",
-          :st_prov_type => "generic_container_template",
-          :new          => {
-            :name         => "New Name",
-            :description  => "New Description",
-            :st_prov_type => "generic_container_template",
-            :fqname       => "ns/cls/inst",
-            :display      => true,
-            :dialog_id    => dialog.id,
-            :template_id  => container_template.id,
-            :manager_id   => ems.id
-          }
-        }
-        session[:edit] = edit
       end
 
       it "Adds ServiceTemplateContainerTemplate record and it config_info" do
         options = {:provision => {:container_template_id => container_template.id, :dialog_id => dialog.id, :fqname => "ns/cls/inst"}}
-        allow(controller).to receive(:replace_right_cell)
         controller.send(:atomic_req_submit)
         expect(assigns(:flash_array).first[:message]).to include("Service Catalog Item \"New Name\" was added")
         expect(ServiceTemplateContainerTemplate.first.config_info).to eq(options)
+      end
+
+      context 'saving additional tenants with the Catalog Item' do
+        let(:cat_item) { FactoryBot.create(:service_template) }
+
+        before do
+          allow(controller).to receive(:add_flash)
+          allow(controller).to receive(:load_edit).and_return(true)
+          allow(controller).to receive(:render)
+          controller.instance_variable_set(:@edit, :rec_id => cat_item.id,
+                                                   :key    => 'prov_edit__new',
+                                                   :new    => {:name         => cat_item.name,
+                                                               :st_prov_type => 'generic',
+                                                               :tenant_ids   => [tenant]})
+        end
+
+        it 'saves additional tenants' do
+          controller.send(:atomic_req_submit)
+          s = ServiceTemplate.find(cat_item.id)
+          expect(s.additional_tenants).to match_array([tenant])
+        end
       end
     end
 
@@ -1254,30 +1290,98 @@ describe CatalogController do
   end
 
   describe '#set_form_vars' do
+    let(:t1) { FactoryBot.create(:tenant) }
+    let(:t2) { FactoryBot.create(:tenant) }
+    let(:record) { FactoryBot.create(:service_template, :additional_tenants => [t1, t2]) }
+
     before do
       allow(controller).to receive(:build_automate_tree)
-      controller.instance_variable_set(:@edit, :new => {})
-      controller.instance_variable_set(:@record, FactoryBot.create(:service_template))
+      controller.instance_variable_set(:@edit, :new => {}, :key => "prov_edit__#{record.id}")
+      controller.instance_variable_set(:@record, record)
+      controller.instance_variable_set(:@sb, {})
     end
 
-    context 'getting all available catalogs with tenants and ancestors' do
-      it 'sets @available_catalogs' do
-        controller.send(:set_form_vars)
-        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
-      end
+    it 'sets @available_catalogs' do
+      controller.send(:set_form_vars)
+      expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+    end
+
+    it 'calls build_tenants_tree to build the tree with available tenants' do
+      expect(controller).to receive(:build_tenants_tree)
+      controller.send(:set_form_vars)
+    end
+
+    it 'sets @tenants_tree' do
+      controller.send(:set_form_vars)
+      expect(controller.instance_variable_get(:@tenants_tree).name).to eq(:tenants_tree)
+    end
+
+    it 'gets new tenant ids from actual record' do
+      controller.send(:set_form_vars)
+      expect(controller.instance_variable_get(:@edit)[:new][:tenant_ids]).to eq(record.additional_tenant_ids)
     end
   end
 
   describe '#get_form_vars' do
     before do
-      controller.instance_variable_set(:@edit, :new => {})
+      controller.instance_variable_set(:@edit, :new => {:tenant_ids => []}, :key => 'prov_edit__new')
+      controller.instance_variable_set(:@_params, :id => 'tn-1', :check => '1')
+      controller.instance_variable_set(:@sb, {})
     end
 
-    context 'getting all available catalogs with tenants and ancestors' do
-      it 'sets @available_catalogs' do
-        controller.send(:get_form_vars)
-        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+    subject { controller.instance_variable_get(:@edit)[:new][:tenant_ids] }
+
+    it 'sets @available_catalogs' do
+      controller.send(:get_form_vars)
+      expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+    end
+
+    it 'calls build_tenants_tree to build the tree with available tenants' do
+      expect(controller).to receive(:build_tenants_tree)
+      controller.send(:get_form_vars)
+    end
+
+    it 'sets @tenants_tree' do
+      controller.send(:get_form_vars)
+      expect(controller.instance_variable_get(:@tenants_tree).name).to eq(:tenants_tree)
+    end
+
+    it 'calls checked_tenants method to get selected Tenants in the tree' do
+      expect(controller).to receive(:checked_tenants)
+      controller.send(:get_form_vars)
+    end
+
+    it 'gets tenant id of newly checked Tenant in the tree' do
+      controller.send(:get_form_vars)
+      expect(subject).to eq([1])
+    end
+
+    context 'unchecking Tenant in the tree' do
+      before do
+        controller.instance_variable_set(:@edit, :new => {:tenant_ids => [1, 2]}, :key => 'prov_edit__new')
+        controller.instance_variable_set(:@_params, :id => 'tn-2', :check => '0')
       end
+
+      it 'removes Tenant id from @edit' do
+        controller.send(:get_form_vars)
+        expect(subject).to eq([1])
+      end
+    end
+  end
+
+  describe '#identify_catalog' do
+    let(:record) { FactoryBot.create(:service_template) }
+
+    before { controller.instance_variable_set(:@sb, {}) }
+
+    it 'calls build_tenants_tree to build the tree with available tenants' do
+      expect(controller).to receive(:build_tenants_tree)
+      controller.send(:identify_catalog, record.id)
+    end
+
+    it 'sets @tenants_tree' do
+      controller.send(:identify_catalog, record.id)
+      expect(controller.instance_variable_get(:@tenants_tree).name).to eq(:tenants_tree)
     end
   end
 
@@ -1314,14 +1418,80 @@ describe CatalogController do
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:rearrange_groups_array)
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@edit, :new => {:rsc_groups => {1 => {}}, :current => {}})
+      controller.instance_variable_set(:@edit, :key => 'prov_edit__new',
+                                               :new => {:st_prov_type => nil,
+                                                        :rsc_groups   => {1 => {}},
+                                                        :current      => {},
+                                                        :tenant_ids   => []})
       controller.instance_variable_set(:@_params, :grp_id => 1, :id => 1)
+      controller.instance_variable_set(:@sb, {})
     end
 
-    context 'getting all available catalogs with tenants and ancestors' do
-      it 'sets @available_catalogs' do
-        controller.send(:resource_delete)
-        expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+    it 'sets @available_catalogs with tenants and ancestors' do
+      controller.send(:resource_delete)
+      expect(controller.instance_variable_get(:@available_catalogs)).not_to be_nil
+    end
+
+    it 'sets @tenants_tree' do
+      controller.send(:resource_delete)
+      expect(controller.instance_variable_get(:@tenants_tree)).not_to be_nil
+    end
+  end
+
+  describe '#build_tenants_tree' do
+    let(:edit) { nil }
+    let(:tenant) { FactoryBot.create(:tenant) }
+    let(:cat_bundle) { false }
+    let(:tree) do
+      TreeBuilderTenants.new('tenants_tree', {}, true, :additional_tenants => [tenant],
+                                                       :selectable         => edit.present?,
+                                                       :ansible_playbook   => edit.present? && edit[:new][:st_prov_type] == 'generic_ansible_playbook',
+                                                       :catalog_bundle     => cat_bundle)
+    end
+
+    before do
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    subject { controller.send(:build_tenants_tree).to_json }
+
+    context 'displaying Catalog Item/Bundle info' do
+      let(:st) { FactoryBot.create(:service_template, :additional_tenants => [tenant]) }
+
+      before { controller.instance_variable_set(:@record, st) }
+
+      it 'builds tenants tree' do
+        expect(subject).to eq(tree.to_json)
+      end
+    end
+
+    context 'adding/editing Catalog Item' do
+      let(:edit) { {:new => {:tenant_ids => [tenant.id]}, :key => 'prov_edit__new'} }
+
+      it 'builds tenants tree' do
+        expect(subject).to eq(tree.to_json)
+      end
+    end
+
+    context 'adding/editing Catalog Item of Ansible Playbook type' do
+      let(:edit) do
+        {:new => {:st_prov_type => 'generic_ansible_playbook',
+                  :tenant_ids   => [tenant.id]},
+         :key => 'prov_edit__new'}
+      end
+
+      it 'builds tenants tree' do
+        expect(subject).to eq(tree.to_json)
+      end
+    end
+
+    context 'adding/editing Catalog Bundle' do
+      let(:cat_bundle) { true }
+      let(:edit) { {:new => {:tenant_ids => [tenant.id]}, :key => 'st_edit__new'} }
+
+      it 'builds tenants tree' do
+        expect(subject).to eq(tree.to_json)
       end
     end
   end
