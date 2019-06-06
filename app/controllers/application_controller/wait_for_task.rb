@@ -19,7 +19,7 @@ module ApplicationController::WaitForTask
     if MiqTask.find(params[:task_id].to_i).state != "Finished" # Task not done --> retry
       browser_refresh_task(params[:task_id])
     else # Task done
-      @_params.instance_variable_get(:@parameters).merge!(session[:async][:params]) # Merge in the original parms and
+      session[:async][:params].each { |k, v| @_params[k] = v } # Merge in the original params and
       send(session.fetch_path(:async, :params, :action)) # call the orig. method
     end
   end

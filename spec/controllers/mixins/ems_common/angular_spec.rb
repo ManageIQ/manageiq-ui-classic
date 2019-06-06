@@ -85,25 +85,25 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for openstack cloud default tab" do
         @params[:cred_type] = "default"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
                                     {:default_security_protocol => "ssl",
                                      :default_hostname          => "host_default",
                                      :default_api_port          => "13000",
-                                     :default_userid            => "abc"}]
+                                     :default_userid            => "abc"}.with_indifferent_access]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::CloudManager')).to eq(expected_connect_options)
       end
 
       it "returns connect options for openstack cloud AMQP tab" do
         @params[:cred_type] = "amqp"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
                                     {:amqp_security_protocol => "non_ssl",
                                      :amqp_hostname          => "host_amqp",
                                      :amqp_api_port          => "5462",
-                                     :amqp_userid            => "xyz"}]
+                                     :amqp_userid            => "xyz"}.with_indifferent_access]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::CloudManager')).to eq(expected_connect_options)
       end
     end
@@ -126,7 +126,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for vmware cloud default tab" do
         @params[:cred_type] = "default"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["host_default", "443", "abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", nil, true]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::CloudManager')).to eq(expected_connect_options)
@@ -134,7 +134,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for vmware cloud AMQP tab" do
         @params[:cred_type] = "amqp"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["host_amqp", "5472", "xyz", "v2:{k8Sm5ygvDAvvY5zkvev1ag==}", nil, true]
         expect(@ems_cloud_controller.send(:get_task_args, 'ManageIQ::Providers::Vmware::CloudManager')).to eq(expected_connect_options)
@@ -160,25 +160,25 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for openstack infra default tab" do
         @params[:cred_type] = "default"
-        @ems_infra_controller.instance_variable_set(:@_params, @params)
+        @ems_infra_controller.params = @params
 
         expected_connect_options = ["v2:{XpADRTTI7f11hNT7AuDaKg==}",
                                     {:default_security_protocol => "ssl",
                                      :default_hostname          => "host_default",
                                      :default_api_port          => "13000",
-                                     :default_userid            => "abc"}]
+                                     :default_userid            => "abc"}.with_indifferent_access]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
       end
 
       it "returns connect options for openstack infra AMQP tab" do
         @params[:cred_type] = "amqp"
-        @ems_infra_controller.instance_variable_set(:@_params, @params)
+        @ems_infra_controller.params = @params
 
         expected_connect_options = ["v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
                                     {:amqp_security_protocol => "non_ssl",
                                      :amqp_hostname          => "host_amqp",
                                      :amqp_api_port          => "5462",
-                                     :amqp_userid            => "xyz"}]
+                                     :amqp_userid            => "xyz"}.with_indifferent_access]
         expect(@ems_infra_controller.send(:get_task_args, 'ManageIQ::Providers::Openstack::InfraManager')).to eq(expected_connect_options)
       end
     end
@@ -197,7 +197,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for vmware infra default tab" do
         @params[:cred_type] = "default"
-        @ems_infra_controller.instance_variable_set(:@_params, @params)
+        @ems_infra_controller.params = @params
 
         expected_connect_options = [{:pass       => "v2:{XpADRTTI7f11hNT7AuDaKg==}",
                                      :user       => "abc",
@@ -208,7 +208,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for vmware infra console tab" do
         @params[:cred_type] = "console"
-        @ems_infra_controller.instance_variable_set(:@_params, @params)
+        @ems_infra_controller.params = @params
 
         expected_connect_options = [{:pass       => "v2:{k8Sm5ygvDAvvY5zkvev1ag==}",
                                      :user       => "xyz",
@@ -232,7 +232,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for aws cloud" do
         @params[:cred_type] = "default"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", :EC2, nil, nil, true, URI.parse("http://abc.test/mypath")]
         expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
@@ -256,7 +256,7 @@ describe Mixins::EmsCommon::Angular do
 
       it "returns connect options for azure cloud" do
         @params[:cred_type] = "default"
-        @ems_cloud_controller.instance_variable_set(:@_params, @params)
+        @ems_cloud_controller.params = @params
 
         expected_connect_options = ["abc", "v2:{XpADRTTI7f11hNT7AuDaKg==}", "77ecefb6-cff0-4e8d-a446-757a69cb9444", "2586c64b-38b4-4527-a140-012d49dfc444", nil, "East US", URI.parse("http://abc.test/mypath")]
         expect(@ems_cloud_controller.send(:get_task_args, @ems)).to eq(expected_connect_options)
