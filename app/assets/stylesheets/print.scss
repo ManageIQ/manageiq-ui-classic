@@ -4,12 +4,12 @@
  *= require @manageiq/ui-components/dist/css/ui-components
  */
 
-@import 'patternfly-sprockets';
-@import 'patternfly/variables';
-@import 'patternfly/icons';
-@import 'font-awesome';
-@import "font-fabulous-sprockets";
-@import "font-fabulous";
+@import '~patternfly-sprockets';
+@import '~patternfly/variables';
+@import '~patternfly/icons';
+@import '~font-awesome';
+@import "~font-fabulous-sprockets";
+@import "~font-fabulous";
 
 @page {
   margin-top: 40pt;
