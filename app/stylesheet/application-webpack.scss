@@ -7,3 +7,19 @@
 @import '~@manageiq/react-ui-components/dist/textual_summary.css';
 @import '~@manageiq/react-ui-components/dist/tagging.css';
 @import '~@manageiq/ui-components/dist/css/ui-components.css';
+
+@import './legacy/main.scss';
+@import './legacy/automate_import_export.css';
+@import './legacy/dialog_fields.css';
+@import './legacy/angular.css';
+@import './legacy/notifications.scss';
+@import './legacy/schedule_editor.scss';
+@import './legacy/miq_tree.scss';
+@import './legacy/timeline.scss';
+@import './legacy/topology.css';
+@import './legacy/container_topology.css';
+@import './legacy/physical_infra_topology.scss';
+@import './legacy/metrics.scss';
+@import './legacy/service_dialogs.css';
+@import './legacy/remote_console.scss';
+@import './legacy/piecharts.scss';
