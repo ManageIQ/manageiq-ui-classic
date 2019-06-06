@@ -24,7 +24,7 @@ class TreeController < ApplicationController
             next
           else
             # Set the related tree nodes to open if all the records have been found
-            open_nodes.each { |node| tree.open_node(TreeNode.new(node, {}, {}).key) }
+            open_nodes.each { |node| tree.open_node(TreeNode.new(node, {}).key) }
           end
         end
       end

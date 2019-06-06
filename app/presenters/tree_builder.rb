@@ -274,9 +274,9 @@ class TreeBuilder
     node
   end
 
-  def x_build_single_node(object, pid, options)
+  def x_build_single_node(object, pid, _options)
     # FIXME: to_h is for backwards compatibility with hash-trees, it needs to be removed in the future
-    node = TreeNode.new(object, pid, options, self).to_h
+    node = TreeNode.new(object, pid, self).to_h
     override(node, object, pid) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
     node
   end

@@ -2,7 +2,7 @@ module TreeNode
   class Node
     attr_reader :tree
 
-    def initialize(object, parent_id, _options, tree)
+    def initialize(object, parent_id, tree)
       @object = object
       @parent_id = parent_id
       @tree = tree
