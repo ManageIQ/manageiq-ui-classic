@@ -27,8 +27,13 @@ $login-container-bg-color:                  #000000;
 $login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
 $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
+
+@import "~@manageiq/font-fabulous/assets/stylesheets/_font-fabulous-sprockets.scss";
 @import "~@manageiq/font-fabulous/assets/stylesheets/_font-fabulous.scss";
+
+@import "~patternfly/dist/sass/_patternfly-sprockets.scss";
 @import "~patternfly/dist/sass/_patternfly.scss";
+
 @import "./patternfly_overrides";
 @import "./icon_customizations";
 @import "./header_background"; // sets a custom background image in the header
