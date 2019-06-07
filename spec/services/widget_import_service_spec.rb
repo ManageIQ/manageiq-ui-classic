@@ -33,16 +33,33 @@ describe WidgetImportService do
   end
 
   describe "#import_widget_from_hash" do
+    let(:miq_widget_id) { 500 }
+    let(:expression) { MiqExpression.new("=" => {"field" => "MiqWidget-id", "value" => miq_widget_id}) }
+    let(:schedule_to_import) do
+      {
+        :name          => 'vms1',
+        :description   => 'vms1',
+        :sched_action  => {:method => 'generate_widget'},
+        :filter        => expression,
+        :resource_type => "MiqWidget",
+        :run_at        => { :start_time => "2019-05-30 00:00:00 UTC", :tz => "UTC", :interval => { :unit => "hourly", :value => 1 } }
+      }
+    end
+
     let(:widget_to_import) do
       {
         "description" => "Test2",
-        "title"       => "potato"
+        "title"       => "potato",
+        "MiqSchedule" => schedule_to_import
       }
     end
 
     it "builds a new widget" do
       expect(MiqWidget.first).to be_nil
-      widget_import_service.import_widget_from_hash(widget_to_import)
+      miq_widget = widget_import_service.import_widget_from_hash(widget_to_import)
+
+      expect(miq_widget.miq_schedule.filter.exp["="]["value"]).to eq(miq_widget.id)
+      expect(miq_widget.miq_schedule.filter.exp["="]["value"]).not_to eq(miq_widget_id)
       expect(MiqWidget.first).not_to be_nil
     end
   end
