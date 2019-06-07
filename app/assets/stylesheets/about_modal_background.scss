@@ -7,10 +7,13 @@
   background-image: image-url($modal-about-pf-bg-img);
 }
 
-.about-modal-pf.whitelabel {
- background-image: image-url($img-bg-login-whitelabel);
-  background-size: 100% 100%;
+body.whitelabel {
+  .about-modal-pf {
+    background-image: image-url($img-bg-login-whitelabel);
+    background-size: 100% 100%;
+  }
 }
+
 
 .about-visible-scrollbar::-webkit-scrollbar {
   width: 10px;
