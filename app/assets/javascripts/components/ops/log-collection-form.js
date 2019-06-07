@@ -8,6 +8,7 @@ ManageIQ.angular.app.component('logCollectionForm', {
     'logCollectionFormFieldsUrl': '@',
     'saveUrl': '@',
     'logProtocolChangedUrl': '@',
+    'message': '@',
   },
 
 });
