@@ -104,11 +104,6 @@ class ExplorerPresenter
     self
   end
 
-  def one_trans_ie
-    @options[:one_trans_ie] = true
-    self
-  end
-
   def focus(element_id)
     @options[:focus] = element_id
     self
@@ -317,7 +312,6 @@ class ExplorerPresenter
     data[:removeSand] = !!@options[:remove_sand]
     data[:removePaging] = !!@options[:remove_paging]
     data[:resetOneTrans] = !!@options[:reset_one_trans]
-    data[:oneTransIE] = !!@options[:one_trans_ie]
     data[:focus] = @options[:focus]
     data[:clearSearch] = @options[:clear_search_toggle] if @options.key?(:clear_search_toggle)
     data[:hideModal] if @options[:hide_modal]

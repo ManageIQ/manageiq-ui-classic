@@ -884,8 +884,9 @@ describe MiqAeClassController do
       stub_user(:features => :all)
       @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
                                    :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
-      controller.instance_variable_set(:@sb, :trees => {:ae_tree => {:active_node => "aec-someid"}},
-                                       :active_tree => :ae_tree, :form_vars_set => true)
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:ae_tree => {:active_node => "aec-someid"}},
+                                       :active_tree => :ae_tree)
     end
 
     it "make sure data in data field still exists when edititng that field" do

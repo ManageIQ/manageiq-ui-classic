@@ -177,7 +177,6 @@ class PxeController < ApplicationController
           end
         # resetting ManageIQ.oneTransition.oneTrans when tab loads
         presenter.reset_one_trans
-        presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
       end
     when :iso_datastores_tree
       presenter.update(:main_div, r[:partial => "iso_datastore_list"])

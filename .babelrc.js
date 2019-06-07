@@ -8,10 +8,9 @@ module.exports = {
       {
         targets: {
           browsers: [
-            "> 1%",
+            "> 3%",
             "last 2 versions",
             "Firefox ESR",
-            "IE 11",
           ],
         },
       },

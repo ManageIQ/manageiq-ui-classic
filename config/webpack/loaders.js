@@ -3,15 +3,6 @@ const merge = require('webpack-merge')
 const { env, publicPath } = require('./configuration.js')
 const babelrc = require('../../.babelrc.js');
 
-// set WEBPACK_EXCLUDE_NODE_MODULES=1 to skip compiling code in node_modules
-let base = {};
-if (env.WEBPACK_EXCLUDE_NODE_MODULES) {
-  base.exclude = /node_modules/;
-} else {
-  // FIXME: won't be needed with d3 4+
-  base.exclude = /node_modules\/d3/;
-}
-
 let babelOptions = merge(babelrc, {
   babelrc: false,
   compact: false,
@@ -24,13 +15,14 @@ if (env.WEBPACK_VERBOSE) {
 }
 
 module.exports = [
-  merge(base, {
+  {
     test: /\.(js|jsx)$/,
     use: [{
       loader: 'babel-loader',
       options: babelOptions,
     }],
-  }),
+    exclude: /node_modules/,
+  },
 
   {
     test: require.resolve('bootstrap-datepicker'),

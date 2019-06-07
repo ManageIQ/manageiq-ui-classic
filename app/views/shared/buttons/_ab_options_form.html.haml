@@ -33,8 +33,7 @@
               = check_box_tag("display", "1", @edit[:new][:display],
                                "data-miq_observe_checkbox" => {:interval => '.5', :url => url}.to_json)
               = _('Display on Button')
-      - unless is_browser_ie?
-        = javascript_tag(javascript_focus('name'))
+      = javascript_tag(javascript_focus('name'))
     .form-group
       %label.control-label.col-md-2
         = _('Hover Text')

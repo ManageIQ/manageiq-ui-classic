@@ -670,7 +670,6 @@ class OpsController < ApplicationController
       if x_node.split("-").first == "svr" && my_server.id == active_id.to_i
         # show all the tabs if on current server node
         @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
-        presenter.one_trans_ie if %w[save reset].include?(params[:button]) && is_browser_ie?
       elsif x_node.split("-").first == "svr" && my_server.id != active_id.to_i
         # show only 4 tabs if not on current server node
         @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record

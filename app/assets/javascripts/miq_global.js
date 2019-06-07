@@ -58,7 +58,6 @@ if (!window.ManageIQ) {
       queue: [], // a queue of pending requests
     },
     oneTransition: {
-      IEButtonPressed: false, // pressed save/reset button identificator
       oneTrans: null, // used to generate Ajax request only once for a drawn screen
     },
     qe: {

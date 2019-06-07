@@ -21,18 +21,13 @@ module ApplicationController::Automate
         add_flash(_("Automation Error: %{error_message}") % {:error_message => bang.message}, :error)
       end
     end
-    # IE7 doesn't redraw the tree until the screen is clicked, so redirect back to this method for a refresh
-    if is_browser_ie? && browser_info(:version) == "7"
-      javascript_redirect(:action => 'resolve')
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("left_cell_bottom", :partial => "resolve_form_buttons")
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("main_div", :partial => "results_tabs")
-        page << javascript_reload_toolbars
-        page << "miqSparkle(false);"
-      end
+    render :update do |page|
+      page << javascript_prologue
+      page.replace("left_cell_bottom", :partial => "resolve_form_buttons")
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page.replace_html("main_div", :partial => "results_tabs")
+      page << javascript_reload_toolbars
+      page << "miqSparkle(false);"
     end
   end
   private :resolve_button_throw
