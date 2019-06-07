@@ -1,4 +1,5 @@
 const merge = require('webpack-merge')
+const { resolve } = require('path');
 
 const { env, publicPath } = require('./configuration.js')
 const babelrc = require('../../.babelrc.js');
@@ -68,6 +69,7 @@ module.exports = [
         loader: 'sass-loader',
         options: {
           sourceMap: true,
+          includePaths: ['bootstrap-sass', 'font-awesome-sass'].map((pkg) => resolve(__dirname, '../../node_modules', pkg, 'assets/stylesheets')),
         },
       },
     ],
