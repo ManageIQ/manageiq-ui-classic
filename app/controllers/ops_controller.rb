@@ -286,7 +286,7 @@ class OpsController < ApplicationController
   def textual_group_list
     [
       %i[properties],
-      %i[smart_management]
+      %i[relationships smart_management]
     ]
   end
   helper_method :textual_group_list

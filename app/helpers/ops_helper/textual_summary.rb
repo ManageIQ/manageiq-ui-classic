@@ -21,6 +21,10 @@ module OpsHelper::TextualSummary
     TextualTags.new(_('Properties'), %i[description parent groups subtenant project])
   end
 
+  def textual_group_relationships
+    TextualGroup.new(_('Relationships'), %i[catalog_items automate_domains providers])
+  end
+
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[tags])
   end
@@ -182,6 +186,48 @@ module OpsHelper::TextualSummary
     return nil if @record.all_subprojects.blank?
 
     {:label => _('Projects'), :value => subprojects_from_record}
+  end
+
+  def textual_catalog_items
+    cat_items_num = ServiceTemplate.with_tenant(@record.id).count # Number of relevant Catalog Items and Bundles
+    cat_items = {:label => _('Catalog Items and Bundles'),
+                 :value => cat_items_num,
+                 :icon  => 'ff ff-group'}
+
+    if cat_items_num.positive?
+      cat_items[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'service_templates')
+      cat_items[:title] = _('View the list of relevant Catalog Items and Bundles')
+    end
+
+    cat_items
+  end
+
+  def textual_automate_domains
+    aedomains_num = MiqAeDomain.with_tenant(@record.id).count # Number of relevant Automate Domains
+    aedomains = {:label => _('Automate Domains'),
+                 :value => aedomains_num,
+                 :icon  => 'ff ff-group'}
+
+    if aedomains_num.positive?
+      aedomains[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'ae_domains')
+      aedomains[:title] = _('View the list of relevant Automate Domains')
+    end
+
+    aedomains
+  end
+
+  def textual_providers
+    providers_num = ExtManagementSystem.with_tenant(@record.id).count # Number of relevant Providers
+    providers = {:label => _('Providers'),
+                 :value => providers_num,
+                 :icon  => 'ff ff-group'}
+
+    if providers_num.positive?
+      providers[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'providers')
+      providers[:title] = _('View the list of relevant Providers')
+    end
+
+    providers
   end
 
   def groups_from_record
