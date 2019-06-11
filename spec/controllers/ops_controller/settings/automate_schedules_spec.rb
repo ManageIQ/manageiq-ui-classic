@@ -66,7 +66,7 @@ describe OpsController do
     let(:ops) { OpsController.new }
 
     before do
-      ops.instance_variable_set(:@params, {})
+      ops.params = {}
     end
 
     [nil, 'null'].each do |target|
