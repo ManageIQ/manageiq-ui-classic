@@ -13,7 +13,7 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = MiqDialog::DIALOG_TYPES.sort.collect do |typ|
       {
         :id   => "MiqDialog_#{typ[1]}",

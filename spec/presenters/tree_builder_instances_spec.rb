@@ -52,8 +52,8 @@ describe TreeBuilderInstances do
   end
 
   it 'sets availability zones correctly if vms are hidden' do
-    provider_with_az = @instances_tree.x_get_tree_roots(false, nil)[0] # provider with vm that has availability zone
-    provider_without_az = @instances_tree.x_get_tree_roots(false, nil)[1] # provider with vm that doesn't have availability zone
+    provider_with_az = @instances_tree.x_get_tree_roots(false)[0] # provider with vm that has availability zone
+    provider_without_az = @instances_tree.x_get_tree_roots(false)[1] # provider with vm that doesn't have availability zone
     allow(provider_with_az).to receive(:availability_zones) { [@vm_cloud_with_az.availability_zone] }
     az = @instances_tree.x_get_tree_ems_kids(provider_with_az, false)
     vm_without_az = @instances_tree.x_get_tree_ems_kids(provider_without_az, false)

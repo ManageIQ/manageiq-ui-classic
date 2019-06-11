@@ -49,7 +49,7 @@ class TreeBuilderPolicy < TreeBuilder
   end
 
   # level 1 - compliance & control
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = []
     objects << {:id => "compliance", :text => _("Compliance Policies"), :icon => "pficon pficon-history", :tip => _("Compliance Policies")}
     objects << {:id => "control", :text => _("Control Policies"), :icon => "fa fa-shield", :tip => _("Control Policies")}

@@ -20,7 +20,7 @@ class TreeBuilderAlertProfile < TreeBuilder
   end
 
   # level 1 - * alert profiles
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = alert_profile_kinds.map do |db|
       # Set alert profile folder nodes to open so we pre-load all children
       open_node("xx-#{db}")

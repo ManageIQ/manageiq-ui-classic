@@ -18,7 +18,7 @@ class TreeBuilderDatastores < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only = false)
     nodes = @root.map do |node|
       children = []
       if @data[node[:id]].hosts.present?

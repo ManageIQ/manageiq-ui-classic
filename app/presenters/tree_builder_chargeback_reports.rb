@@ -13,7 +13,7 @@ class TreeBuilderChargebackReports < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     items = MiqReportResult.with_saved_chargeback_reports
                            .select_distinct_results
                            .group("miq_report_results.miq_report_id, miq_reports.name, miq_report_results.id, \

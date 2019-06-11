@@ -48,7 +48,7 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     return super + 1 if count_only
 
     # FIXME: adding gettext here would break the tree_select for languages other than English

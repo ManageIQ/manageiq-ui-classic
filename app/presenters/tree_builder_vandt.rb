@@ -15,9 +15,9 @@ class TreeBuilderVandt < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only, options)
+  def x_get_tree_roots(count_only)
     objects = count_only_or_objects_filtered(count_only, EmsInfra, "name", :match_via_descendants => VmOrTemplate)
-    objects.collect! { |o| TreeBuilderVmsAndTemplates.new(o, options.dup).tree } unless count_only
+    objects.collect! { |o| TreeBuilderVmsAndTemplates.new(o).tree } unless count_only
     root_nodes = count_only_or_objects(count_only, x_get_tree_arch_orph_nodes("VMs and Templates"))
 
     objects + root_nodes

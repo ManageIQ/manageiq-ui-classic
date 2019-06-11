@@ -25,7 +25,7 @@ class TreeBuilderServices < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = [
       services_root('asrv', _('Active Services'),  _('Active Services')),
       services_root('rsrv', _('Retired Services'), _('Retired Services')),

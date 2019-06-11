@@ -3,7 +3,7 @@ class TreeBuilderServersByRole < TreeBuilderDiagnostics
 
   private
 
-  def x_get_tree_roots(_count_only, _options)
+  def x_get_tree_roots(_count_only)
     x_get_tree_server_roles
   end
 

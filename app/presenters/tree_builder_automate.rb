@@ -8,7 +8,7 @@ class TreeBuilderAutomate < TreeBuilder
     {:full_ids => false, :lazy => true, :onclick => "miqOnClickAutomate"}
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     count_only_or_objects(count_only, [MiqAeDomain.find_by(:id => @sb[:domain_id])])
   end
 

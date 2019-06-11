@@ -14,7 +14,7 @@ class TreeBuilderEvent < TreeBuilder
   end
 
   # level 1 - events
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     count_only_or_objects(count_only, MiqPolicy.all_policy_events, :description)
   end
 end

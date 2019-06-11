@@ -31,7 +31,7 @@ class TreeBuilderNetwork < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only = false)
     kids = count_only ? 0 : []
     kids = count_only_or_objects(count_only, @root.switches) unless @root.switches.empty?
     kids
