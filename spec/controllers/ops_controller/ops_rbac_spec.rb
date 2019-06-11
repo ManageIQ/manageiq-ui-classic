@@ -212,15 +212,16 @@ describe OpsController do
       end
 
       it "saves tenant quotas record changes" do
-        controller.instance_variable_set(:@_params,
-                                         :name      => "OneTenant",
-                                         :quotas    => {
-                                           :cpu_allocated => {:value => 1024.0},
-                                           :mem_allocated => {:value => 4096.0}
-                                         },
-                                         :id        => @tenant.id,
-                                         :button    => "save",
-                                         :divisible => "true")
+        controller.params = {
+          :name      => "OneTenant",
+          :id        => @tenant.id,
+          :button    => "save",
+          :divisible => "true",
+          :quotas    => {
+            :cpu_allocated => {:value => 1024.0},
+            :mem_allocated => {:value => 4096.0}
+          }
+        }
         expect(controller).to receive(:render)
         expect(response.status).to eq(200)
         controller.send(:rbac_tenant_manage_quotas)

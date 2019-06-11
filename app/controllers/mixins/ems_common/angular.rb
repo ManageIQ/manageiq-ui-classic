@@ -131,9 +131,9 @@ module Mixins
         when 'ManageIQ::Providers::Openstack::CloudManager', 'ManageIQ::Providers::Openstack::InfraManager'
           case params[:cred_type]
           when 'default'
-            [password, params.to_hash.symbolize_keys.slice(*OPENSTACK_PARAMS)]
+            [password, params.to_unsafe_h.slice(*OPENSTACK_PARAMS)]
           when 'amqp'
-            [ManageIQ::Password.encrypt(params[:amqp_password]), params.to_hash.symbolize_keys.slice(*OPENSTACK_AMQP_PARAMS)]
+            [ManageIQ::Password.encrypt(params[:amqp_password]), params.to_unsafe_h.slice(*OPENSTACK_AMQP_PARAMS)]
           end
         when 'ManageIQ::Providers::Amazon::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
