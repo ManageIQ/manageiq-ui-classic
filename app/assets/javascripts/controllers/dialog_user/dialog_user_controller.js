@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', '$window', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http, $window) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'realTargetType', 'openUrl', '$http', '$window', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, realTargetType, openUrl, $http, $window) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -50,6 +50,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       resourceActionId: resourceActionId,
       targetId: targetId,
       targetType: targetType,
+      realTargetType: realTargetType,
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -73,13 +74,23 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     }
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
       .then(function(response) {
+        console.log(response);
+        console.log(vm.openUrl);
+
         if (vm.openUrl === 'true') {
+          console.log('it is true');
           return API.wait_for_task(response.task_id)
             .then(function() {
-              return $http.post('open_url_after_dialog', {targetId: vm.targetId});
+              console.log('calling open_url_after_dialog');
+              console.log('realTargetType: ' + realTargetType);
+              return $http.post('open_url_after_dialog', {targetId: vm.targetId, realTargetType: realTargetType});
             })
             .then(function(response) {
+              console.log('phase 2');
+              console.log(response);
               if (response.data.open_url) {
+                console.log('opening.....');
+                console.log(response.data.open_url);
                 $window.open(response.data.open_url);
                 miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
               } else {

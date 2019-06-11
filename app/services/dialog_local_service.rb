@@ -6,6 +6,7 @@ class DialogLocalService
       :resource_action_id     => resource_action.id,
       :target_id              => target.id,
       :target_type            => target.kind_of?(ServiceTemplate) ? "service_template" : target.class.name.underscore,
+      :real_target_type       => target.class.name, # FIXME: or Service?
       :dialog_id              => resource_action.dialog_id,
       :force_old_dialog_use   => false,
       :api_submit_endpoint    => api_submit_endpoint,
@@ -23,6 +24,7 @@ class DialogLocalService
       :resource_action_id     => resource_action.id,
       :target_id              => obj.id,
       :target_type            => determine_target_type(obj),
+      :real_target_type       => obj.class.name,
       :dialog_id              => resource_action.dialog_id,
       :force_old_dialog_use   => false,
       :api_submit_endpoint    => submit_endpoint,

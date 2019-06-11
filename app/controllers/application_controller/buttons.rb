@@ -246,8 +246,18 @@ module ApplicationController::Buttons
   end
 
   def open_url_after_dialog
-    system_console = SystemConsole.find_by(:vm_id => params[:targetId])
-    url = system_console.try(:url)
+    saved_url = SavedUrl.find_by(
+      :refers_to_id   => params[:targetId],
+      :refers_to_type => params[:realTargetType]
+    )
+    # FIXME: remove this fallback, once the form passes the targetClass
+    saved_url ||= SavedUrl.find_by(:refers_to_id   => params[:targetId])
+
+    # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
+    saved_url = SystemConsole.find_by(:vm_id => params[:targetId])
+
+    url = saved_url.try(:url)
+
     render :json => {:open_url => url}
   end
 

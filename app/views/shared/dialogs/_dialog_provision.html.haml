@@ -7,6 +7,7 @@
   - cancel_endpoint ||= @dialog_locals[:cancel_endpoint]
   - target_id ||= @dialog_locals[:target_id]
   - target_type ||= @dialog_locals[:target_type]
+  - real_target_type ||= @dialog_locals[:real_target_type]
   - dialog_id ||= @dialog_locals[:dialog_id]
   - resource_action_id ||= @dialog_locals[:resource_action_id]
   - force_old_dialog_use = @dialog_locals[:force_old_dialog_use].to_s == "true"
@@ -48,6 +49,7 @@
                 :resource_action_id     => resource_action_id,
                 :target_id              => target_id,
                 :target_type            => target_type,
+                :real_target_type       => real_target_type,
                 :finish_submit_endpoint => finish_submit_endpoint,
                 :api_submit_endpoint    => api_submit_endpoint,
                 :api_action             => api_action,
