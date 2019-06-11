@@ -36,6 +36,13 @@ module VmHelper::TextualSummary
     { :label => _("ID"), :value => @record.id }
   end
 
+  def textual_group_multi_region
+    TextualGroup.new(
+      _('Multi Region'),
+      %i[region_with_button_link]
+    )
+  end
+
   def textual_group_lifecycle
     TextualGroup.new(
       _("Lifecycle"),

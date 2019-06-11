@@ -7,7 +7,7 @@ module VmCommon
 
   def textual_group_list
     [
-      %i[properties lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes],
+      %i[properties multi_region lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes],
       %i[compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags]
     ]
   end
