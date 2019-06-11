@@ -665,7 +665,7 @@ describe OpsController do
       allow(controller).to receive(getvars).and_call_original
       allow(controller).to receive(:render).and_return(true)
 
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
       controller.instance_variable_set(:@edit, edit)
     end
 

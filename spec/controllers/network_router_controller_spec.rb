@@ -401,7 +401,7 @@ describe NetworkRouterController do
 
   describe '#button' do
     before do
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'tagging instances from a list of instances, accessed from the details page of a network router' do

@@ -54,7 +54,7 @@ describe AnsibleRepositoryController do
 
   describe '#button' do
     before do
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'editing an existing repository' do

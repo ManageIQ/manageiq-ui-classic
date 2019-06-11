@@ -200,7 +200,7 @@ describe SecurityGroupController do
   end
 
   describe '#button' do
-    before { controller.instance_variable_set(:@_params, params) }
+    before { controller.params = params }
 
     context 'tagging instances from their list, accessed from the details page of a security group' do
       let(:params) { {:pressed => "instance_tag"} }

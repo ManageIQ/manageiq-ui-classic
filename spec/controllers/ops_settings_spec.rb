@@ -109,7 +109,7 @@ describe OpsController do
       it "#does not allow duplicate names when adding" do
         @params[:id] = "new"
         @params[:name] = @schedule.name
-        controller.instance_variable_set(:@_params, @params)
+        controller.params = @params
         controller.send(:schedule_edit)
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
@@ -118,7 +118,7 @@ describe OpsController do
       it "#does not allow duplicate names when editing" do
         @params[:id] = @schedule.id
         @params[:name] = "schedule01"
-        controller.instance_variable_set(:@_params, @params)
+        controller.params = @params
         FactoryBot.create(:miq_schedule, :name => @params[:name], :userid => user.userid, :resource_type => "Vm")
         controller.send(:schedule_edit)
         expect(controller.send(:flash_errors?)).to be_truthy
@@ -152,7 +152,7 @@ describe OpsController do
                          :description => "description02",
                          :ntp         => {}}}
         controller.instance_variable_set(:@edit, edit)
-        controller.instance_variable_set(:@_params, @params)
+        controller.params = @params
         seed_session_trees('ops', :settings_tree)
         allow(controller).to receive(:load_edit).and_return(true)
         controller.send(:zone_edit)

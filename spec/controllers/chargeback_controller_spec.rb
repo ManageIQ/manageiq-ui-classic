@@ -641,7 +641,7 @@ describe ChargebackController do
       allow(controller).to receive(:x_node).and_call_original
       allow(controller).to receive(:render).and_return(true)
 
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
       controller.instance_variable_set(:@sb, sandbox)
     end
 

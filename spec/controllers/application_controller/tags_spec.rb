@@ -97,7 +97,7 @@ describe ApplicationController do
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:session).and_return(s)
 
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'resetting changes' do
@@ -118,7 +118,7 @@ describe ApplicationController do
   describe EmsInfraController do
     before do
       login_as FactoryBot.create(:user, :features => %w(storage_tag ems_infra_tag))
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'check for correct feature id when tagging selected storage thru Provider relationship and directly from summary screen' do

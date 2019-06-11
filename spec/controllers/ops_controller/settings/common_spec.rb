@@ -219,7 +219,7 @@ describe OpsController do
         let(:params) { {:replication_type => "remote"} }
 
         it "queues operation to set the region as a remote type" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args).to eq([:remote])
@@ -233,7 +233,7 @@ describe OpsController do
         let(:params)        { {:replication_type => "global", :subscriptions => subscriptions} }
 
         it "queues operation to save and/or remove subscriptions settings for the global region" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           expect(queue_item.args[0][0].dbname).to eq(db_save)
@@ -243,7 +243,7 @@ describe OpsController do
         it "encrypts subscription's password before queuing save operation" do
           password = "some_password"
           subscriptions["0"] = {"password" => password}
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           queued_password = queue_item.args[0][0].password
@@ -256,7 +256,7 @@ describe OpsController do
         let(:params) { {:replication_type => "none"} }
 
         it "queues operations to set replication to none" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args[0]).to eq(:none)

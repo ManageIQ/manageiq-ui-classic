@@ -230,7 +230,7 @@ describe CloudNetworkController do
   end
 
   describe '#button' do
-    before { controller.instance_variable_set(:@_params, params) }
+    before { controller.params = params }
 
     context 'tagging instances from a list of instances, accessed from the details page of a network' do
       let(:params) { {:pressed => "instance_tag"} }

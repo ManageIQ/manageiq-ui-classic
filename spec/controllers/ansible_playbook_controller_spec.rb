@@ -39,7 +39,7 @@ describe AnsiblePlaybookController do
 
   describe "#button" do
     before do
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'tagging one or more playbooks' do

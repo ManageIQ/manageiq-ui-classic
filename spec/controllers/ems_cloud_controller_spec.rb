@@ -311,7 +311,7 @@ describe EmsCloudController do
     let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default"} }
     before do
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params, mocked_params)
+      controller.params = mocked_params
       allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_class)
     end
 
