@@ -471,13 +471,11 @@ describe CatalogController do
         new_description = "New description for copied OT"
 
         allow(controller).to receive(:replace_right_cell)
-        controller.instance_variable_set(:@_params,
-                                         :name        => new_name,
+        controller.params = {:name        => new_name,
                                          :description => new_description,
                                          :id          => ot.id.to_s)
         controller.send(:ot_form_field_changed)
-        controller.instance_variable_set(:@_params,
-                                         :button           => "add",
+        controller.params = {:button           => "add",
                                          :original_ot_id   => ot.id,
                                          :template_content => new_content)
         controller.send(:ot_copy_submit)

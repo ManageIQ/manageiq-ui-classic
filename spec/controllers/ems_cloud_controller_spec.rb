@@ -269,8 +269,7 @@ describe EmsCloudController do
     let(:amqp_creds)    { {:userid => "amqp_userid",    :password => "amqp_password"} }
 
     it "uses the passwords from params for validation if they exist" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => default_creds[:userid],
+      controller.params = {:default_userid   => default_creds[:userid],
                                        :default_password => default_creds[:password],
                                        :amqp_userid      => amqp_creds[:userid],
                                        :amqp_password    => amqp_creds[:password])
@@ -281,8 +280,7 @@ describe EmsCloudController do
     end
 
     it "uses the stored passwords for validation if passwords dont exist in params" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid => default_creds[:userid],
+      controller.params = {:default_userid => default_creds[:userid],
                                        :amqp_userid    => amqp_creds[:userid])
       expect(mocked_ems).to receive(:authentication_password).and_return(default_creds[:password])
       expect(mocked_ems).to receive(:authentication_password).with(:amqp).and_return(amqp_creds[:password])

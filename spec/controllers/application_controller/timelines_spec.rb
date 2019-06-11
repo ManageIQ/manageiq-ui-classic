@@ -28,8 +28,7 @@ describe ApplicationController, "#Timelines" do
       end
 
       it "sets categories for policy timelines correctly" do
-        controller.instance_variable_set(:@_params,
-                                         :id            => @ems.id,
+        controller.params = {:id            => @ems.id,
                                          :tl_show       => "policy_timeline",
                                          :tl_categories => ["VM Operation"])
         expect(controller).to receive(:render)
@@ -39,8 +38,7 @@ describe ApplicationController, "#Timelines" do
       end
 
       it "selecting critical option of the selectpicker in the timeline should append them to events filter list" do
-        controller.instance_variable_set(:@_params,
-                                         :id            => @ems.id,
+        controller.params = {:id            => @ems.id,
                                          :tl_show       => "timeline",
                                          :tl_levels     => ["critical"],
                                          :tl_categories => ["Power Activity"])
@@ -52,8 +50,7 @@ describe ApplicationController, "#Timelines" do
       end
 
       it "selecting details option of the selectpicker in the timeline should append them to events filter list" do
-        controller.instance_variable_set(:@_params,
-                                         :id            => @ems.id,
+        controller.params = {:id            => @ems.id,
                                          :tl_show       => "timeline",
                                          :tl_levels     => ["detail"],
                                          :tl_categories => ["Power Activity"])
@@ -65,8 +62,7 @@ describe ApplicationController, "#Timelines" do
       end
 
       it "selecting two options of the selectpicker in the timeline should append both to events filter list" do
-        controller.instance_variable_set(:@_params,
-                                         :id            => @ems.id,
+        controller.params = {:id            => @ems.id,
                                          :tl_show       => "timeline",
                                          :tl_levels     => %w(critical detail),
                                          :tl_categories => ["Power Activity"])

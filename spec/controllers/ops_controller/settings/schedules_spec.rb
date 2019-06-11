@@ -80,8 +80,7 @@ describe OpsController do
   context "#build_uri_settings" do
     let(:mocked_filedepot) { double(FileDepotSmb) }
     it "uses params[:log_password] for validation if one exists" do
-      controller.instance_variable_set(:@_params,
-                                       :log_userid   => "userid",
+      controller.params = {:log_userid   => "userid",
                                        :log_password => "password2",
                                        :uri_prefix   => "smb",
                                        :uri          => "samba_uri",
@@ -94,8 +93,7 @@ describe OpsController do
     end
 
     it "uses the stored password for validation if params[:log_password] does not exist" do
-      controller.instance_variable_set(:@_params,
-                                       :log_userid   => "userid",
+      controller.params = {:log_userid   => "userid",
                                        :uri_prefix   => "smb",
                                        :uri          => "samba_uri",
                                        :log_protocol => "Samba")

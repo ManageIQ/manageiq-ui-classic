@@ -80,8 +80,7 @@ describe EmsContainerController do
       end
 
       it "detects openshift hawkular metric route" do
-        controller.instance_variable_set(:@_params,
-                                         :id                => openshift_manager.id,
+        controller.params = {:id                => openshift_manager.id,
                                          :current_tab       => "metrics",
                                          :metrics_selection => 'hawkular')
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
@@ -97,8 +96,7 @@ describe EmsContainerController do
       end
 
       it "detects openshift prometheus metric route" do
-        controller.instance_variable_set(:@_params,
-                                         :id                => openshift_manager.id,
+        controller.params = {:id                => openshift_manager.id,
                                          :current_tab       => "metrics",
                                          :metrics_selection => 'prometheus')
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
@@ -115,8 +113,7 @@ describe EmsContainerController do
 
       it "detects openshift prometheus alert route" do
         require 'kubeclient'
-        controller.instance_variable_set(:@_params,
-                                         :id          => openshift_manager.id,
+        controller.params = {:id          => openshift_manager.id,
                                          :current_tab => "alerts")
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
@@ -131,8 +128,7 @@ describe EmsContainerController do
       end
 
       it "tolerates detection exceptions" do
-        controller.instance_variable_set(:@_params,
-                                         :id                => openshift_manager.id,
+        controller.params = {:id                => openshift_manager.id,
                                          :current_tab       => "metrics",
                                          :metrics_selection => 'hawkular')
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
@@ -311,8 +307,7 @@ describe EmsContainerController do
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params,
-                                           :name                       => 'EMS 2',
+          controller.params = {:name                       => 'EMS 2',
                                            :default_userid             => '_',
                                            :default_hostname           => '10.10.10.11',
                                            :default_api_port           => '5000',

@@ -65,8 +65,7 @@ describe PxeController do
       edit = {:pxe_id => ps.id, :new => {}}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@ps, ps)
-      controller.instance_variable_set(:@_params,
-                                       :restore_password => "true",
+      controller.params = {:restore_password => "true",
                                        :log_password     => "[FILTERED]",
                                        :log_verify       => "[FILTERED]")
       controller.send(:restore_password)

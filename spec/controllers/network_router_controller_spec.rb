@@ -247,8 +247,7 @@ describe NetworkRouterController do
 
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        controller.instance_variable_set(:@_params,
-                                         :pressed => "network_router_delete",
+        controller.params = {:pressed => "network_router_delete",
                                          :id      => @router.id)
         controller.instance_variable_set(:@lastaction, "show")
         controller.instance_variable_set(:@layout, "network_router")

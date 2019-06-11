@@ -104,8 +104,7 @@ describe EmsContainerController do
       def test_creating(emstype)
         raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
-        controller.instance_variable_set(:@_params,
-                                         :name             => 'NimiCule',
+        controller.params = {:name             => 'NimiCule',
                                          :default_userid   => '_',
                                          :default_hostname => 'mytest.com',
                                          :default_api_port => '8443',
@@ -134,7 +133,7 @@ describe EmsContainerController do
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params, :name                      => 'EMS 2',
+          controller.params = {:name                      => 'EMS 2',
                                                       :default_userid            => '_',
                                                       :default_hostname          => '10.10.10.11',
                                                       :default_api_port          => '5000',
@@ -194,8 +193,7 @@ describe EmsContainerController do
         it 'updates provider options' do
           @type = 'openshift'
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
-          controller.instance_variable_set(:@_params,
-                                           :provider_options_image_inspector_options_http_proxy => "example.com")
+          controller.params = {:provider_options_image_inspector_options_http_proxy => "example.com")
           controller.send(:set_ems_record_vars, @ems)
           expect(@ems.options[:image_inspector_options][:http_proxy]).to eq("example.com")
         end

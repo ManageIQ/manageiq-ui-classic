@@ -366,8 +366,7 @@ describe HostController do
   describe "#set_credentials" do
     let(:mocked_host) { double(Host) }
     it "uses params[:default_password] for validation if one exists" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
+      controller.params = {:default_userid   => "default_userid",
                                        :default_password => "default_password2")
       creds = {:userid => "default_userid", :password => "default_password2"}
       expect(mocked_host).to receive(:update_authentication).with({:default => creds}, {:save => false})
@@ -383,8 +382,7 @@ describe HostController do
     end
 
     it "uses the passwords from param for validation if they exist" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
+      controller.params = {:default_userid   => "default_userid",
                                        :default_password => "default_password2",
                                        :remote_userid    => "remote_userid",
                                        :remote_password  => "remote_password2")
@@ -398,8 +396,7 @@ describe HostController do
     end
 
     it "uses the stored passwords for validation if passwords dont exist in params" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid => "default_userid",
+      controller.params = {:default_userid => "default_userid",
                                        :remote_userid  => "remote_userid",)
       expect(mocked_host).to receive(:authentication_password).and_return('default_password')
       expect(mocked_host).to receive(:authentication_password).with(:remote).and_return('remote_password')
@@ -413,8 +410,7 @@ describe HostController do
     end
 
     it "uses the stored passwords/passwords from params to do validation" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
+      controller.params = {:default_userid   => "default_userid",
                                        :default_password => "default_password2",
                                        :ws_userid        => "ws_userid",
                                        :ipmi_userid      => "ipmi_userid")

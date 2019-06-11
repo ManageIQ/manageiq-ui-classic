@@ -55,7 +55,7 @@ describe MiqAeCustomizationController do
 
       it 'will show a flash error without Dialog Type' do
         allow(controller).to receive(:load_edit).and_return(true)
-        controller.instance_variable_set(:@_params, :button => 'add',
+        controller.params = {:button => 'add',
                                                     :id     => 'new')
         controller.instance_variable_set(:@edit, :new    => {:name        => 'name',
                                                              :description => 'description',

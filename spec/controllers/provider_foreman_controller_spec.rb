@@ -595,8 +595,7 @@ describe ProviderForemanController do
 
   context "#build_credentials" do
     it "uses params[:default_password] for validation if one exists" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "userid",
+      controller.params = {:default_userid   => "userid",
                                        :default_password => "password2")
       creds = {:userid => "userid", :password => "password2"}
       expect(controller.send(:build_credentials)).to include(:default => creds)

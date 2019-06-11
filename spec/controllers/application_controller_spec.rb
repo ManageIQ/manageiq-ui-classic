@@ -154,7 +154,7 @@ describe ApplicationController do
     it "returns flash message when Migrate button is pressed with list containing SCVMM VM" do
       vm1 = FactoryBot.create(:vm_vmware)
       vm2 = FactoryBot.create(:vm_microsoft)
-      controller.instance_variable_set(:@_params, :pressed         => "vm_migrate",
+      controller.params = {:pressed         => "vm_migrate",
                                                   :miq_grid_checks => "#{vm1.id},#{vm2.id}")
       controller.set_response!(response)
       controller.send(:prov_redirect, "migrate")
@@ -167,7 +167,7 @@ describe ApplicationController do
     it "sets variables when Migrate button is pressed with list of VMware VMs" do
       vm1 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
       vm2 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
-      controller.instance_variable_set(:@_params, :pressed         => "vm_migrate",
+      controller.params = {:pressed         => "vm_migrate",
                                                   :miq_grid_checks => "#{vm1.id},#{vm2.id}")
       controller.set_response!(response)
       controller.send(:prov_redirect, "migrate")
@@ -189,8 +189,7 @@ describe ApplicationController do
                                     :name     => "template 1",
                                     :vendor   => "vmware",
                                     :location => "template1.vmtx")
-      controller.instance_variable_set(:@_params,
-                                       :pressed         => "image_miq_request_new",
+      controller.params = {:pressed         => "image_miq_request_new",
                                        :miq_grid_checks => template.id.to_s)
       controller.set_response!(response)
       expect(controller).not_to receive(:vm_pre_prov)
@@ -207,8 +206,7 @@ describe ApplicationController do
                                     :vendor                => "vmware",
                                     :location              => "template1.vmtx",
                                     :ext_management_system => ems)
-      controller.instance_variable_set(:@_params,
-                                       :pressed         => "image_miq_request_new",
+      controller.params = {:pressed         => "image_miq_request_new",
                                        :miq_grid_checks => template.id.to_s)
       controller.instance_variable_set(:@breadcrumbs, [])
       controller.instance_variable_set(:@sb, {})

@@ -770,7 +770,7 @@ describe ReportController do
       end
 
       it "contains current group id in sched_action field" do
-        controller.instance_variable_set(:@_params, :button => "add", :controller => "report",
+        controller.params = {:button => "add", :controller => "report",
                                                     :action => "schedule_edit")
         controller.miq_report_schedule_disable
         allow(controller).to receive_messages(:load_edit => true)
@@ -1322,7 +1322,7 @@ describe ReportController do
 
         it "is allowed to see miq report result for User1(with current group Group2)" do
           report_result_id = @rpt.miq_report_results.first.id
-          controller.instance_variable_set(:@_params, :id => report_result_id,
+          controller.params = {:id => report_result_id,
                                                       :controller => "report", :action => "explorer")
           controller.instance_variable_set(:@sb, :last_savedreports_id => nil)
           controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
