@@ -32,7 +32,7 @@ describe OpsController do
         allow(controller).to receive(:get_node_info)
         allow(controller).to receive(:replace_right_cell)
         allow(controller).to receive(:session).and_return(:edit => edit)
-        controller.instance_variable_set(:@_params, :button => 'add')
+        controller.params = {:button => 'add'}
       end
 
       it 'sets the flash message for adding a new Analysis Profile properly' do

@@ -41,7 +41,7 @@ describe ChargebackController do
 
     describe '#cb_assign_get_form_vars' do
       before do
-        controller.instance_variable_set(:@_params, :cblabel_key => 'null')
+        controller.params = {:cblabel_key => 'null'}
         controller.instance_variable_set(:@edit, :new => {:cbshow_typ => '-labels'}, :cb_assign => {})
       end
 
@@ -56,7 +56,7 @@ describe ChargebackController do
       end
 
       it "initializes hash when data are no available (params[:cblabel_key] == nil)" do
-        controller.instance_variable_set(:@_params, :cblabel_key => nil)
+        controller.params = {:cblabel_key => nil}
         controller.send(:cb_assign_get_form_vars)
         docker_label_values = controller.instance_variable_get(:@edit)[:cb_assign][:docker_label_values]
         expect(docker_label_values).to eq({})
@@ -85,7 +85,7 @@ describe ChargebackController do
       controller.instance_variable_set(:@report, report)
       controller.instance_variable_set(:@html, html)
       controller.instance_variable_set(:@layout, "chargeback")
-      controller.instance_variable_set(:@_params, :id => node)
+      controller.params = {:id => node}
       controller.send(:tree_select)
       expect(response).to                        render_template('layouts/_saved_report_paging_bar')
       expect(controller.send(:flash_errors?)).to be_falsey

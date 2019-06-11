@@ -35,7 +35,7 @@ describe CatalogController do
     it "checks method x_edit_tags_reset when tagging from summary screen" do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
-      controller.instance_variable_set(:@_params, :id => service_template_with_child_tenant.id.to_s)
+      controller.params = {:id => service_template_with_child_tenant.id.to_s}
       controller.instance_variable_set(:@sb, :action => nil)
       allow(controller).to receive(:checked_or_params).and_return([])
       allow(controller).to receive(:find_checked_items).and_return([])
@@ -142,7 +142,7 @@ describe CatalogController do
     describe "#atomic_st_edit" do
       it "Atomic Service Template and its valid Resource Actions are saved" do
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => "save")
+        controller.params = {:button => "save"}
         st = FactoryBot.create(:service_template)
         3.times.each do |i|
           ns = FactoryBot.create(:miq_ae_namespace, :name => "ns#{i}")
@@ -177,7 +177,7 @@ describe CatalogController do
       it "Atomic Service Template and its invalid Resource Actions are not saved" do
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => 'save')
+        controller.params = {:button => 'save'}
         st = FactoryBot.create(:service_template)
         retire_fqname    = 'ns/cls/inst'
         provision_fqname = 'ns1/cls1/inst1'
@@ -249,7 +249,7 @@ describe CatalogController do
         allow(controller).to receive(:replace_right_cell)
         allow(controller).to receive(:session).and_return(:edit => edit)
         controller.instance_variable_set(:@edit, edit)
-        controller.instance_variable_set(:@_params, :button => "add")
+        controller.params = {:button => "add"}
         controller.instance_variable_set(:@record, st)
         controller.instance_variable_set(:@sb, {})
       end
@@ -265,7 +265,7 @@ describe CatalogController do
         ApplicationController.handle_exceptions = true
 
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => "save")
+        controller.params = {:button => "save"}
         @st = FactoryBot.create(:service_template)
         3.times.each do |i|
           ns = FactoryBot.create(:miq_ae_namespace, :name => "ns#{i}")
@@ -312,7 +312,7 @@ describe CatalogController do
     describe "#ot_edit" do
       before do
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => "save")
+        controller.params = {:button => "save"}
         @new_name = "New Name"
         @new_description = "New Description"
         @new_content = "{\"AWSTemplateFormatVersion\" : \"new-version\"}\n"
@@ -379,7 +379,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template content cannot be empty during edit" do
-        controller.instance_variable_set(:@_params, :button => "save")
+        controller.params = {:button => "save"}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         ot = FactoryBot.create(:orchestration_template)
         session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -412,7 +412,7 @@ describe CatalogController do
     describe "#ot_copy" do
       before do
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :button => "add")
+        controller.params = {:button => "add"}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
         ot = FactoryBot.create(:orchestration_template_amazon)
         controller.x_node = "xx-otcfn_ot-#{ot.id}"
@@ -489,7 +489,7 @@ describe CatalogController do
     describe "#ot_delete" do
       before do
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :pressed => "orchestration_template_remove")
+        controller.params = {:pressed => "orchestration_template_remove"}
         allow(controller).to receive(:replace_right_cell)
       end
 
@@ -500,7 +500,7 @@ describe CatalogController do
       it "Orchestration Template is deleted" do
         ot = FactoryBot.create(:orchestration_template)
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-        controller.instance_variable_set(:@_params, :id => ot.id)
+        controller.params = {:id => ot.id}
         controller.send(:ot_remove_submit)
         expect(controller.send(:flash_errors?)).not_to be_truthy
         expect(assigns(:flash_array).first[:message]).to include("was deleted")
@@ -538,7 +538,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template is created" do
-        controller.instance_variable_set(:@_params, :content => @new_content, :button => "add")
+        controller.params = {:content => @new_content, :button => "add"}
         allow(controller).to receive(:replace_right_cell)
         controller.send(:ot_add_submit)
         expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -549,7 +549,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template draft is created" do
-        controller.instance_variable_set(:@_params, :content => @new_content, :button => "add")
+        controller.params = {:content => @new_content, :button => "add"}
         session[:edit][:new][:draft] = true
         allow(controller).to receive(:replace_right_cell)
         controller.send(:ot_add_submit)
@@ -563,7 +563,7 @@ describe CatalogController do
       end
 
       it "Orchestration Template creation is cancelled" do
-        controller.instance_variable_set(:@_params, :content => @new_content, :button => "cancel")
+        controller.params = {:content => @new_content, :button => "cancel"}
         allow(controller).to receive(:replace_right_cell)
         controller.send(:ot_add_submit)
         expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -610,7 +610,7 @@ describe CatalogController do
         EvmSpecHelper.create_guid_miq_server_zone
 
         controller.instance_variable_set(:@sb, :action => "ot_tags_edit")
-        controller.instance_variable_set(:@_params, :miq_grid_checks => @ot.id.to_s)
+        controller.params = {:miq_grid_checks => @ot.id.to_s}
         allow(controller).to receive(:button_url).with("catalog", @ot.id, "save").and_return("save_url")
         allow(controller).to receive(:button_url).with("catalog", @ot.id, "cancel").and_return("cancel_url")
 
@@ -619,14 +619,14 @@ describe CatalogController do
       end
 
       it "cancels tags edit" do
-        controller.instance_variable_set(:@_params, :button => "cancel", :id => @ot.id)
+        controller.params = {:button => "cancel", :id => @ot.id}
         controller.send(:tags_edit, "OrchestrationTemplate")
         expect(assigns(:flash_array).first[:message]).to include("was cancelled")
         expect(assigns(:edit)).to be_nil
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @ot.id, 'data' => get_tags_json([@tag1, @tag2]))
+        controller.params = {:button => "save", :id => @ot.id, 'data' => get_tags_json([@tag1, @tag2])}
         controller.send(:tags_edit, "OrchestrationTemplate")
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil
@@ -653,7 +653,7 @@ describe CatalogController do
       end
 
       it "Service Dialog is created from an Orchestration Template" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @ot.id)
+        controller.params = {:button => "save", :id => @ot.id}
         allow(controller).to receive(:replace_right_cell)
         controller.send(:service_dialog_from_ot_submit)
         expect(assigns(:flash_array).first[:message]).to include("was successfully created")
@@ -800,7 +800,7 @@ describe CatalogController do
     describe "#st_catalog_new" do
       it "renders views successfully after button is pressed" do
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :pressed => 'st_catalog_new', :action => 'x_button')
+        controller.params = {:pressed => 'st_catalog_new', :action => 'x_button'}
         edit = {
           :new => {:name             => "",
                    :description      => "",
@@ -1266,7 +1266,7 @@ describe CatalogController do
         EvmSpecHelper.create_guid_miq_server_zone
 
         controller.instance_variable_set(:@sb, :action => "catalogitem_tag")
-        controller.instance_variable_set(:@_params, :miq_grid_checks => @st.id.to_s)
+        controller.params = {:miq_grid_checks => @st.id.to_s}
         allow(controller).to receive(:button_url).with("catalog", @st.id, "save").and_return("save_url")
         allow(controller).to receive(:button_url).with("catalog", @st.id, "cancel").and_return("cancel_url")
         controller.send(:st_tags_edit)
@@ -1274,14 +1274,14 @@ describe CatalogController do
       end
 
       it "cancels tags edit" do
-        controller.instance_variable_set(:@_params, :button => "cancel", :id => @st.id)
+        controller.params = {:button => "cancel", :id => @st.id}
         controller.send(:st_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("was cancelled")
         expect(assigns(:edit)).to be_nil
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @st.id, 'data' => get_tags_json([@tag1, @tag2]))
+        controller.params = {:button => "save", :id => @st.id, 'data' => get_tags_json([@tag1, @tag2])}
         controller.send(:st_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil
@@ -1325,7 +1325,7 @@ describe CatalogController do
   describe '#get_form_vars' do
     before do
       controller.instance_variable_set(:@edit, :new => {:tenant_ids => []}, :key => 'prov_edit__new')
-      controller.instance_variable_set(:@_params, :id => 'tn-1', :check => '1')
+      controller.params = {:id => 'tn-1', :check => '1'}
       controller.instance_variable_set(:@sb, {})
     end
 
@@ -1359,7 +1359,7 @@ describe CatalogController do
     context 'unchecking Tenant in the tree' do
       before do
         controller.instance_variable_set(:@edit, :new => {:tenant_ids => [1, 2]}, :key => 'prov_edit__new')
-        controller.instance_variable_set(:@_params, :id => 'tn-2', :check => '0')
+        controller.params = {:id => 'tn-2', :check => '0'}
       end
 
       it 'removes Tenant id from @edit' do
@@ -1423,7 +1423,7 @@ describe CatalogController do
                                                         :rsc_groups   => {1 => {}},
                                                         :current      => {},
                                                         :tenant_ids   => []})
-      controller.instance_variable_set(:@_params, :grp_id => 1, :id => 1)
+      controller.params = {:grp_id => 1, :id => 1}
       controller.instance_variable_set(:@sb, {})
     end
 

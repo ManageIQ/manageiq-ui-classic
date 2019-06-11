@@ -52,7 +52,7 @@ describe MiqAeToolsController, "ApplicationController::Automate" do
         sb = {:name => 'test', :vmdb_object => nil, :attrs => {'a' => 1}}
         controller.instance_variable_set(:@resolve, resolve)
         controller.instance_variable_set(:@sb, sb)
-        controller.instance_variable_set(:@_params, :button => 'throw')
+        controller.params = {:button => 'throw'}
         allow(MiqAeEngine).to receive(:resolve_automation_object).and_return(workspace)
         data = "<MiqAeWorkspace>\\n<MiqAeObject namespace='ManageIQ/SYSTEM'>\\n</MiqAeObject>\\n</MiqAeWorkspace>\\n"
         allow(workspace).to receive(:to_expanded_xml).and_return(data)
@@ -72,7 +72,7 @@ describe MiqAeToolsController, "ApplicationController::Automate" do
         sb = {:name => 'test', :vmdb_object => nil, :attrs => {'a' => 1}}
         controller.instance_variable_set(:@resolve, resolve)
         controller.instance_variable_set(:@sb, sb)
-        controller.instance_variable_set(:@_params, :button => 'retry')
+        controller.params = {:button => 'retry'}
         allow(MiqAeEngine).to receive(:resolve_automation_object).and_return(workspace)
         data = "<MiqAeWorkspace>\\n<MiqAeObject namespace='ManageIQ/SYSTEM'>\\n</MiqAeObject>\\n</MiqAeWorkspace>\\n"
         allow(workspace).to receive(:to_expanded_xml).and_return(data)

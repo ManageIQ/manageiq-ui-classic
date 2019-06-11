@@ -44,7 +44,7 @@ describe VmCloudController do
             # get :x_button, :params => { :id => nil, :pressed => actual_action }
             # we mock a bit and use `send`. This saves 10s of test run.
             allow(controller).to receive(:performed?).and_return(true)
-            controller.instance_variable_set(:@_params, :id => nil, :pressed => actual_action)
+            controller.params = {:id => nil, :pressed => actual_action}
             controller.instance_variable_set(:@sb, {})
             controller.send(:x_button)
           end

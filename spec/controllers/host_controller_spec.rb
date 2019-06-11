@@ -134,7 +134,7 @@ describe HostController do
         allow(request).to receive(:parameters).and_return(:pressed => 'vm_miq_request_new')
         controller.instance_variable_set(:@display, 'vms')
         controller.instance_variable_set(:@lastaction, 'show')
-        controller.instance_variable_set(:@_params, :pressed => 'vm_miq_request_new')
+        controller.params = {:pressed => 'vm_miq_request_new'}
       end
 
       it 'calls render_or_redirect_partial method' do
@@ -375,7 +375,7 @@ describe HostController do
     end
 
     it "uses the stored password for validation if params[:default_password] does not exist" do
-      controller.instance_variable_set(:@_params, :default_userid => "default_userid")
+      controller.params = {:default_userid => "default_userid"}
       expect(mocked_host).to receive(:authentication_password).and_return('default_password')
       creds = {:userid => "default_userid", :password => "default_password"}
       expect(mocked_host).to receive(:update_authentication).with({:default => creds}, {:save => false})

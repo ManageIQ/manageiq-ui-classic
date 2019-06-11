@@ -504,13 +504,13 @@ describe OpsController do
 
     it "doesn't perform any manage quota action on tenant_omega" do
       allow(controller).to receive(:rbac_tenant_manage_quotas_save_add)
-      controller.instance_variable_set(:@_params, :id => tenant_omega.id, :button => 'add')
+      controller.params = {:id => tenant_omega.id, :button => 'add'}
       expect { controller.rbac_tenant_manage_quotas }.not_to raise_error
     end
 
     it "does perform any manage quota action on tenant_alpha" do
       allow(controller).to receive(:rbac_tenant_manage_quotas_save_add)
-      controller.instance_variable_set(:@_params, :id => tenant_alpha.id, :button => 'add')
+      controller.params = {:id => tenant_alpha.id, :button => 'add'}
       expect { controller.rbac_tenant_manage_quotas }.to raise_error(MiqException::RbacPrivilegeException)
     end
   end

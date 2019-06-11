@@ -8,7 +8,7 @@ describe ApplicationController do
 
     context "with a resource_action dialog" do
       it "Vm button" do
-        controller.instance_variable_set(:@_params, :id => vm.id, :button_id => button.id)
+        controller.params = {:id => vm.id, :button_id => button.id}
         expect(controller).to receive(:dialog_initialize) do |action, options|
           expect(action).to eq(resource_action)
           expect(options[:target_id]).to eq(vm.id)
@@ -23,7 +23,7 @@ describe ApplicationController do
       it "Host button" do
         button.applies_to = host
         button.save
-        controller.instance_variable_set(:@_params, :id => host.id, :button_id => button.id)
+        controller.params = {:id => host.id, :button_id => button.id}
 
         expect(controller).to receive(:dialog_initialize) do |action, options|
           expect(action).to eq(resource_action)
@@ -39,7 +39,7 @@ describe ApplicationController do
 
     it "Host button with a subclass, not base_class in applies_to_class" do
       button.update_attributes(:applies_to_class => host.class.name)
-      controller.instance_variable_set(:@_params, :id => host.id, :button_id => button.id)
+      controller.params = {:id => host.id, :button_id => button.id}
       expect { controller.send(:custom_buttons) }.to raise_error(ArgumentError)
     end
 
@@ -51,7 +51,7 @@ describe ApplicationController do
       end
 
       it "Vm button" do
-        controller.instance_variable_set(:@_params, :id => vm.id, :button_id => button.id)
+        controller.params = {:id => vm.id, :button_id => button.id}
         expect_any_instance_of(CustomButton).to receive(:invoke_async).with(vm, 'UI')
 
         controller.send(:custom_buttons)
@@ -67,7 +67,7 @@ describe ApplicationController do
       end
 
       it "Vm button" do
-        controller.instance_variable_set(:@_params, :id => vm.id, :button_id => button.id)
+        controller.params = {:id => vm.id, :button_id => button.id}
         expect_any_instance_of(CustomButton).to receive(:invoke).with(vm, 'UI')
 
         controller.send(:custom_buttons)
@@ -78,7 +78,7 @@ describe ApplicationController do
       it "Host button" do
         button.applies_to = host
         button.save
-        controller.instance_variable_set(:@_params, :id => host.id, :button_id => button.id)
+        controller.params = {:id => host.id, :button_id => button.id}
         expect_any_instance_of(CustomButton).to receive(:invoke).with(host, 'UI')
 
         controller.send(:custom_buttons)
@@ -89,7 +89,7 @@ describe ApplicationController do
       it "ServiceTemplate button" do
         button.applies_to = ServiceTemplate
         button.save
-        controller.instance_variable_set(:@_params, :id => service.id, :button_id => button.id)
+        controller.params = {:id => service.id, :button_id => button.id}
         expect_any_instance_of(CustomButton).to receive(:invoke).with(service, 'UI')
 
         controller.send(:custom_buttons)
@@ -101,7 +101,7 @@ describe ApplicationController do
     context "#button_create_update" do
       it "no need to set @record when add/cancel form buttons are pressed" do
         custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
-        controller.instance_variable_set(:@_params, :button => "cancel", :id => custom_button.id)
+        controller.params = {:button => "cancel", :id => custom_button.id}
         edit = {
           :new           => {},
           :current       => {},
@@ -120,7 +120,7 @@ describe ApplicationController do
 
       it "the active tab is Advanced when the button pressed is an expression" do
         custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
-        controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
+        controller.params = {:button => "enablement_expression", :id => custom_button.id}
         edit = {:new           => {},
                 :current       => {},
                 :custom_button => custom_button}
@@ -138,7 +138,7 @@ describe ApplicationController do
 
       it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
         custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
-        controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
+        controller.params = {:button => "enablement_expression", :id => custom_button.id}
         edit = {:new           => {},
                 :current       => {},
                 :custom_button => custom_button}
@@ -155,7 +155,7 @@ describe ApplicationController do
 
       it "calls replace_right_cell with action='button_edit' when the edit expression button was pressed" do
         custom_button = FactoryBot.create(:custom_button, :applies_to_class => "Host")
-        controller.instance_variable_set(:@_params, :button => "enablement_expression", :id => custom_button.id)
+        controller.params = {:button => "enablement_expression", :id => custom_button.id}
         edit = {:new           => {},
                 :current       => {},
                 :custom_button => custom_button}
@@ -182,7 +182,7 @@ describe ApplicationController do
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "req"
       custom_button.save
-      controller.instance_variable_set(:@_params, :id => custom_button.id)
+      controller.params = {:id => custom_button.id}
       controller.instance_variable_set(:@custom_button, custom_button)
       controller.instance_variable_set(:@sb,
                                        :trees       => {
@@ -216,7 +216,7 @@ describe ApplicationController do
       custom_button.uri_attributes["request"] = "test_req"
       custom_button.resource_action.dialog_id = 42
       custom_button.save
-      controller.instance_variable_set(:@_params, :id => custom_button.id)
+      controller.params = {:id => custom_button.id}
       controller.instance_variable_set(:@custom_button, custom_button)
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ab_tree => {:active_node => "-ub-Vm_cb-10r51"}},
@@ -253,7 +253,7 @@ describe ApplicationController do
       custom_button.uri_attributes[:inventory_type] = "localhost"
       custom_button.uri_attributes["request"] = "Order_Ansible_Playbook"
       custom_button.save
-      controller.instance_variable_set(:@_params, :id => custom_button.id)
+      controller.params = {:id => custom_button.id}
       controller.instance_variable_set(:@custom_button, custom_button)
       controller.instance_variable_set(:@sb,
                                        :trees       => {:ab_tree => {:active_node => "-ub-Vm_cb-10r51"}},
@@ -366,14 +366,14 @@ describe ApplicationController do
       end
 
       it "to id of selected dialog" do
-        controller.instance_variable_set(:@_params, {:id => button.id, :dialog_id => 42}.with_indifferent_access)
+        controller.params = {{:id => button.id, :dialog_id => 42}.with_indifferent_access}
         controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
       end
 
       it "to nil if no dialog selected" do
-        controller.instance_variable_set(:@_params, "id" => button.id, "dialog_id" => "")
+        controller.params = {"id" => button.id, "dialog_id" => ""}
         controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:dialog_id]).to eq(nil)
@@ -395,7 +395,7 @@ describe ApplicationController do
         session[:edit] = edit
       end
       it "to false for Vm and Template" do
-        controller.instance_variable_set(:@_params, "id" => button_for_vm.id, "dialog_id" => "")
+        controller.params = {"id" => button_for_vm.id, "dialog_id" => ""}
         controller.instance_variable_set(:@resolve, :target_class => "Vm")
         controller.instance_variable_set(:@custom_button, button_for_vm)
         controller.send(:automate_button_field_changed)
@@ -403,7 +403,7 @@ describe ApplicationController do
       end
 
       it "to true for Availability Zone" do
-        controller.instance_variable_set(:@_params, "id" => button_for_az.id, "dialog_id" => "")
+        controller.params = {"id" => button_for_az.id, "dialog_id" => ""}
         controller.instance_variable_set(:@resolve, :target_class => "Availability Zone")
         controller.instance_variable_set(:@custom_button, button_for_az)
         controller.send(:automate_button_field_changed)

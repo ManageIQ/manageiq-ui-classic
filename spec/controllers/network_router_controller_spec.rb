@@ -205,7 +205,7 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       setup_zone
-      controller.instance_variable_set(:@_params, :id => router.id)
+      controller.params = {:id => router.id}
       controller.instance_variable_set(:@lastaction, "show")
       controller.instance_variable_set(:@layout, "network_router")
     end
@@ -300,7 +300,7 @@ describe NetworkRouterController do
         stub_user(:features => :all)
         allow(controller).to receive(:drop_breadcrumb)
         controller.instance_variable_set(:@router, @router)
-        controller.instance_variable_set(:@_params, :id => @router.id)
+        controller.params = {:id => @router.id}
         controller.send(:add_interface_select)
         subnet_choices = controller.instance_variable_get(:@subnet_choices)
 
@@ -316,7 +316,7 @@ describe NetworkRouterController do
         before do
           allow(controller).to receive(:drop_breadcrumb)
           controller.instance_variable_set(:@router, @router)
-          controller.instance_variable_set(:@_params, :id => @router.id)
+          controller.params = {:id => @router.id}
 
           @router.tag_with(tag, :ns => '')
           subnet_2.tag_with(tag, :ns => '')
@@ -331,7 +331,7 @@ describe NetworkRouterController do
 
         it 'list subnet choices' do
           controller.instance_variable_set(:@router, @router)
-          controller.instance_variable_set(:@_params, :id => @router.id)
+          controller.params = {:id => @router.id}
 
           controller.send(:add_interface_select)
           subnet_choices = controller.instance_variable_get(:@subnet_choices)

@@ -185,7 +185,7 @@ describe OpsController do
         end
 
         it 'is an existing record' do
-          controller.instance_variable_set(:@_params, :user_proxies_mode => '', :user_proxies => @user_proxies)
+          controller.params = {:user_proxies_mode => '', :user_proxies => @user_proxies}
           session[:edit] = {:current => @vmdb, :new => {:authentication => {:user_proxies => [@user_proxies]}}}
           session[:entry] = @user_proxies
           controller.send(:forest_accept)
@@ -193,7 +193,7 @@ describe OpsController do
 
         it 'LDAP Host exists' do
           @user_proxies[:ldaphost] = ''
-          controller.instance_variable_set(:@_params, :user_proxies_mode => '', :user_proxies => @user_proxies)
+          controller.params = {:user_proxies_mode => '', :user_proxies => @user_proxies}
           session[:edit] = {:current => @vmdb, :new => {:authentication => {:user_proxies => [@user_proxies]}}}
           session[:entry] = @user_proxies
 
@@ -204,7 +204,7 @@ describe OpsController do
         end
 
         it 'LDAP Host is unique' do
-          controller.instance_variable_set(:@_params, :user_proxies_mode => '', :user_proxies => @user_proxies)
+          controller.params = {:user_proxies_mode => '', :user_proxies => @user_proxies}
           session[:edit] = {:current => @vmdb, :new => {:authentication => {:user_proxies => [@user_proxies, @user_proxies]}}}
           session[:entry] = 'new'
 

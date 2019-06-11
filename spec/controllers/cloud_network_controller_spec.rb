@@ -256,7 +256,7 @@ describe CloudNetworkController do
   describe "#delete_networks" do
     before do
       login_as FactoryBot.create(:user, :role => "super_administrator")
-      controller.instance_variable_set(:@_params, :id => network.id, :pressed => 'cloud_network_delete')
+      controller.params = {:id => network.id, :pressed => 'cloud_network_delete'}
       allow(controller).to receive(:process_cloud_networks).with([network], "destroy")
     end
 

@@ -28,7 +28,7 @@ describe MiqPolicyController do
         allow(controller).to receive(:replace_right_cell)
         controller.instance_variable_set(:@sb, :trees       => {:policy_tree => {:active_node => active_node}},
                                                :active_tree => :policy_tree)
-        controller.instance_variable_set(:@_params, :button => "add")
+        controller.params = {:button => "add"}
         controller.policy_edit
         sb = assigns(:sb)
         expect(sb[:trees][sb[:active_tree]][:active_node]).to include("#{active_node}_p-")

@@ -95,7 +95,7 @@ describe Mixins::Actions::VmActions::Rename do
 
       before do
         allow(controller).to receive(:render).and_return(true)
-        controller.instance_variable_set(:@_params, :id => vm.id.to_s)
+        controller.params = {:id => vm.id.to_s}
       end
 
       it 'resets VM Rename changes' do

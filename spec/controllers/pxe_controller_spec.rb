@@ -5,7 +5,7 @@ describe PxeController do
 
   describe '#tree_select ' do
     it 'calls methods with x_node as param' do
-      controller.instance_variable_set(:@_params, :id => 'root', :tree => :pxe_servers_tree)
+      controller.params = {:id => 'root', :tree => :pxe_servers_tree}
       expect(controller).to receive(:get_node_info).with("root")
       expect(controller).to receive(:replace_right_cell).with(:nodetype => "root")
       controller.tree_select
@@ -14,7 +14,7 @@ describe PxeController do
 
   describe '#accordion_select ' do
     it 'calls methods with x_node as param' do
-      controller.instance_variable_set(:@_params, :id => 'pxe_servers_accord', :tree => :pxe_servers_tree)
+      controller.params = {:id => 'pxe_servers_accord', :tree => :pxe_servers_tree}
       allow(controller).to receive(:x_node).and_return('root')
       expect(controller).to receive(:get_node_info).with("root")
       expect(controller).to receive(:replace_right_cell).with(:nodetype => "root")
@@ -45,7 +45,7 @@ describe PxeController do
 
     it "Pressing Refresh button should show display name in the flash message" do
       pxe = FactoryBot.create(:pxe_server)
-      controller.instance_variable_set(:@_params, :id => pxe.id)
+      controller.params = {:id => pxe.id}
       controller.instance_variable_set(:@sb,
                                        :trees       => {
                                          :pxe_tree => {:active_node => "ps-#{pxe.id}"}

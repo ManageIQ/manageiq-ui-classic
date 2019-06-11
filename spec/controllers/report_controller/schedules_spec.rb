@@ -26,7 +26,7 @@ describe ReportController do
     end
 
     it "reset rbac testing" do
-      controller.instance_variable_set(:@_params, :button => "reset", :id => schedule.id)
+      controller.params = {:button => "reset", :id => schedule.id}
       controller.send(:schedule_edit)
       expected_id = controller.instance_variable_get(:@schedule).id
       expect(expected_id).to eq(schedule.id)

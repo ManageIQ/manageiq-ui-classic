@@ -19,7 +19,7 @@ describe MiqAeCustomizationController do
         allow(controller).to receive(:replace_right_cell)
 
         # Now delete the Dialog
-        controller.instance_variable_set(:@_params, "check_#{dialog1.id}" => "1", "check_#{dialog2.id}" => "1")
+        controller.params = {"check_#{dialog1.id}" => "1", "check_#{dialog2.id}" => "1"}
         controller.send(:old_dialogs_button_operation, 'destroy', 'Test Dialog')
 
         # Check for Dialog Label to be part of flash message displayed
@@ -39,7 +39,7 @@ describe MiqAeCustomizationController do
         allow(controller).to receive(:replace_right_cell)
 
         # Now delete the Dialog
-        controller.instance_variable_set(:@_params, :id => dialog.id)
+        controller.params = {:id => dialog.id}
         controller.send(:old_dialogs_button_operation, 'destroy', 'Test Dialog')
 
         # Check for Dialog Label to be part of flash message displayed

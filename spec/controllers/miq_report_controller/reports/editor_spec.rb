@@ -182,7 +182,7 @@ describe ReportController do
         allow(controller).to receive(:load_edit).and_return(true)
         allow(controller).to receive(:replace_right_cell)
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :id => rep.id)
+        controller.params = {:id => rep.id}
         controller.send(:miq_report_edit)
         expect(response.status).to eq(200)
       end
@@ -195,7 +195,7 @@ describe ReportController do
         allow(controller).to receive(:load_edit).and_return(true)
         allow(controller).to receive(:replace_right_cell)
         controller.instance_variable_set(:@sb, {})
-        controller.instance_variable_set(:@_params, :pressed => 'miq_report_new')
+        controller.params = {:pressed => 'miq_report_new'}
         controller.send(:miq_report_edit)
         expect(response.status).to eq(200)
       end
@@ -413,7 +413,7 @@ describe ReportController do
       it "check existence of flash message when tab is changed to #{title} without selecting (time) fields" do
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@edit, :new => {:fields => []})
-        controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
+        controller.params = {:tab => "new_#{tab_number}"}
         controller.send(:check_tabs)
         flash_messages = assigns(:flash_array)
         flash_str = if tab_number == 6
@@ -431,7 +431,7 @@ describe ReportController do
                                            :fields  => [['Date Created', 'Vm-ems_created_on']],
                                            :sortby1 => 'some_field'
                                          })
-        controller.instance_variable_set(:@_params, :tab => "new_#{tab_number}")
+        controller.params = {:tab => "new_#{tab_number}"}
         controller.send(:check_tabs)
         expect(assigns(:flash_array)).to be_nil
       end
@@ -440,7 +440,7 @@ describe ReportController do
     it 'check existence of flash message when tab is changed to preview without selecting filters(chargeback report)' do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@edit, :new => {:fields => [['Date Created']], :model => 'ChargebackVm'})
-      controller.instance_variable_set(:@_params, :tab => 'new_7') # preview
+      controller.params = {:tab => 'new_7'} # preview
       controller.send(:check_tabs)
       flash_messages = assigns(:flash_array)
       expect(flash_messages).not_to be_nil

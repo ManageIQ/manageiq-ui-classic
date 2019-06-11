@@ -38,7 +38,7 @@ describe FloatingIpController do
         login_as admin_user
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:performed?)
-        controller.instance_variable_set(:@_params, :id => floating_ip.id, :pressed => 'host_NECO')
+        controller.params = {:id => floating_ip.id, :pressed => 'host_NECO'}
       end
 
       it "delete floating ips" do

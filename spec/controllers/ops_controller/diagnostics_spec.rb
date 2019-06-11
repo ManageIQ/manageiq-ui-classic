@@ -216,7 +216,7 @@ describe OpsController do
             :priority       => 1
           )
           controller.instance_variable_set(:@sb, sb_hash)
-          controller.instance_variable_set(:@_params, :pressed => "zone_delete_server")
+          controller.params = {:pressed => "zone_delete_server"}
           expect(controller).to receive :render
 
           controller.send(:delete_server)
@@ -295,7 +295,7 @@ describe OpsController do
           }
 
           controller.instance_variable_set(:@sb, sb_hash)
-          controller.instance_variable_set(:@_params, :pressed => "role_start", :action => "x_button")
+          controller.params = {:pressed => "role_start", :action => "x_button"}
           expect(controller).to receive :build_server_tree
           expect(controller).to receive(:render)
         end

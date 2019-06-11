@@ -151,7 +151,7 @@ describe EmsContainerController do
 
     it "errors on kubernetes detection" do
       EvmSpecHelper.create_guid_miq_server_zone
-      controller.instance_variable_set(:@_params, :id => kubernetes_manager.id)
+      controller.params = {:id => kubernetes_manager.id}
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
       controller.send(:update_ems_button_detect)
@@ -352,7 +352,7 @@ describe EmsContainerController do
 
         def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
-          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
+          controller.params = {:name => 'EMS 3', :default_userid => '_'}
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           expect(@ems.authentication_token("default")).to eq('valid-token')

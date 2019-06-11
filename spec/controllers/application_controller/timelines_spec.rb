@@ -14,7 +14,7 @@ describe ApplicationController, "#Timelines" do
         options.date.end   = dt
         options.date.start = dt
 
-        controller.instance_variable_set(:@_params, :id => @ems.id, :tl_show => "policy_timeline")
+        controller.params = {:id => @ems.id, :tl_show => "policy_timeline"}
         expect(controller).to receive(:render)
 
         expect(options.date[:start]).to eq(dt)

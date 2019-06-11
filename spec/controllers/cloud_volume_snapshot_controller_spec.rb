@@ -93,7 +93,7 @@ describe CloudVolumeSnapshotController do
       allow(User).to receive(:current_user).and_return(admin_user)
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:render_flash)
-      controller.instance_variable_set(:@_params, :id => snapshot.id, :pressed => 'host_NECO')
+      controller.params = {:id => snapshot.id, :pressed => 'host_NECO'}
     end
 
     it "call cloud volume snapshots" do

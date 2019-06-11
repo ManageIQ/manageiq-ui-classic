@@ -300,7 +300,7 @@ describe EmsCloudController do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
       allow(controller).to receive(:find_record_with_rbac).and_return(mocked_ems)
-      controller.instance_variable_set(:@_params, :button => "validate", :id => mocked_ems.id, :cred_type => "default")
+      controller.params = {:button => "validate", :id => mocked_ems.id, :cred_type => "default"}
 
       expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
       controller.send(:update_ems_button_validate)
@@ -503,7 +503,7 @@ describe EmsCloudController do
     end
 
     it "redirects to requests show list after dialog is submitted" do
-      controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
+      controller.params = {:button => 'submit', :id => 'foo'}
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(wf).to receive(:submit_request).and_return({})
       page = double('page')

@@ -166,7 +166,7 @@ describe EmsContainerController do
 
         def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
-          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
+          controller.params = {:name => 'EMS 3', :default_userid => '_'}
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
@@ -240,7 +240,7 @@ describe EmsContainerController do
           allow(controller).to receive(:javascript_redirect)
           allow(controller).to receive(:performed?).and_return(true)
           controller.instance_variable_set(:@display, display)
-          controller.instance_variable_set(:@_params, :pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id)
+          controller.params = {:pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id}
           controller.instance_variable_set(:@breadcrumbs, [])
         end
 

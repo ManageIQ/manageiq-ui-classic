@@ -6,7 +6,7 @@ describe ReportController do
     before do
       controller.instance_variable_set(:@edit, :new => {})
       controller.instance_variable_set(:@sb, :new => {})
-      controller.instance_variable_set(:@_params, :button => "default")
+      controller.params = {:button => "default"}
       allow(controller).to receive(:current_user).and_return(user)
       login_as user
       report
@@ -26,7 +26,7 @@ describe ReportController do
     context "report menu set to default" do
       it "clears the report_menus from the selected group settings" do
         controller.instance_variable_set(:@sb, :new => {}, :menu_default => true)
-        controller.instance_variable_set(:@_params, :button => "save")
+        controller.params = {:button => "save"}
 
         expect(controller).to receive(:menu_get_form_vars)
         expect(controller).to receive(:get_tree_data)

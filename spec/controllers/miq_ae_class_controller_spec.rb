@@ -37,7 +37,7 @@ describe MiqAeClassController do
     it "Marks domain as locked/readonly" do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_domain_enabled)
-      controller.instance_variable_set(:@_params, :id => ns.id)
+      controller.params = {:id => ns.id}
       allow(controller).to receive(:replace_right_cell)
       controller.send(:domain_lock)
       ns.reload
@@ -49,7 +49,7 @@ describe MiqAeClassController do
     it "Marks domain as unlocked/editable" do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_domain_disabled)
-      controller.instance_variable_set(:@_params, :id => ns.id)
+      controller.params = {:id => ns.id}
       allow(controller).to receive(:replace_right_cell)
       controller.send(:domain_unlock)
       ns.reload
@@ -70,7 +70,7 @@ describe MiqAeClassController do
         :key     => "priority__edit",
         :current => {:domain_order => order},
       }
-      controller.instance_variable_set(:@_params, :button => "save")
+      controller.params = {:button => "save"}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, {})
       session[:edit] = edit
@@ -94,7 +94,7 @@ describe MiqAeClassController do
                                        :active_tree => :ae_tree,
                                        :action      => "miq_ae_class_copy",
                                        :trees       => {:ae_tree => {:active_node => node}})
-      controller.instance_variable_set(:@_params, :button => "reset", :id => cls1.id)
+      controller.params = {:button => "reset", :id => cls1.id}
       allow(controller).to receive(:open_parent_nodes)
       expect(controller).to receive(:reload_trees_by_presenter).with(anything, [])
       expect(controller).to receive(:render)
@@ -121,7 +121,7 @@ describe MiqAeClassController do
         :current        => new,
         :selected_items => selected_items,
       }
-      controller.instance_variable_set(:@_params, :button => "copy", :id => cls1.id)
+      controller.params = {:button => "copy", :id => cls1.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
       session[:edit] = edit
@@ -148,7 +148,7 @@ describe MiqAeClassController do
         :current        => new,
         :selected_items => selected_items,
       }
-      controller.instance_variable_set(:@_params, :button => "copy", :id => cls1.id)
+      controller.params = {:button => "copy", :id => cls1.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
       session[:edit] = edit
@@ -178,7 +178,7 @@ describe MiqAeClassController do
         :current        => new,
         :selected_items => selected_items,
       }
-      controller.instance_variable_set(:@_params, :button => "copy", :id => cls1.id)
+      controller.params = {:button => "copy", :id => cls1.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
       session[:edit] = edit
@@ -206,7 +206,7 @@ describe MiqAeClassController do
         :current        => new,
         :selected_items => selected_items,
       }
-      controller.instance_variable_set(:@_params, :button => "copy", :id => cls1.id)
+      controller.params = {:button => "copy", :id => cls1.id}
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@sb, :action => "miq_ae_class_copy")
       session[:edit] = edit
@@ -405,7 +405,7 @@ describe MiqAeClassController do
     before do
       allow(GitBasedDomainImportService).to receive(:new).and_return(git_service)
       stub_user(:features => :all)
-      controller.instance_variable_set(:@_params, :miq_grid_checks => ids)
+      controller.params = {:miq_grid_checks => ids}
       allow(controller).to receive(:replace_right_cell)
     end
 
@@ -457,7 +457,7 @@ describe MiqAeClassController do
       field = {:aetype   => "attribute"}
       controller.instance_variable_set(:@edit, session[:edit])
       session[:field_data] = field
-      controller.instance_variable_set(:@_params, :button => "accept", :id => @cls.id)
+      controller.params = {:button => "accept", :id => @cls.id}
       controller.send(:field_accept)
 
       expect(assigns(:flash_array).first[:message]).to include("Name is required")
@@ -467,7 +467,7 @@ describe MiqAeClassController do
       field = {:name => "name"}
       controller.instance_variable_set(:@edit, session[:edit])
       session[:field_data] = field
-      controller.instance_variable_set(:@_params, :button => "accept", :id => @cls.id)
+      controller.params = {:button => "accept", :id => @cls.id}
       controller.send(:field_accept)
 
       expect(assigns(:flash_array).first[:message]).to include("Type is required")
@@ -477,7 +477,7 @@ describe MiqAeClassController do
       field = {}
       controller.instance_variable_set(:@edit, session[:edit])
       session[:field_data] = field
-      controller.instance_variable_set(:@_params, :button => "accept", :id => @cls.id)
+      controller.params = {:button => "accept", :id => @cls.id}
       controller.send(:field_accept)
 
       expect(assigns(:flash_array).first[:message]).to include("Name and Type is required")
@@ -488,7 +488,7 @@ describe MiqAeClassController do
                "datatype" => "string",
                "name"     => "name01"}
       session[:edit][:new][:fields] = [field, field]
-      controller.instance_variable_set(:@_params, :button => "save", :id => @cls.id)
+      controller.params = {:button => "save", :id => @cls.id}
       controller.send(:update_fields)
       expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
     end
@@ -507,7 +507,7 @@ describe MiqAeClassController do
           :fields => [field, field]
         }
       }
-      controller.instance_variable_set(:@_params, :button => "save", :id => @method.id)
+      controller.params = {:button => "save", :id => @method.id}
       controller.send(:update_method)
       expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
     end
@@ -530,7 +530,7 @@ describe MiqAeClassController do
           :language     => "ruby"
         }
       }
-      controller.instance_variable_set(:@_params, :button => "add")
+      controller.params = {:button => "add"}
       controller.send(:create_method)
       expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
     end
@@ -573,7 +573,7 @@ describe MiqAeClassController do
           :fields   => [field]
         }
       }
-      controller.instance_variable_set(:@_params, :button => "save", :id => @method.id)
+      controller.params = {:button => "save", :id => @method.id}
       controller.send(:update_method)
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.status).to eq(200)
@@ -593,7 +593,7 @@ describe MiqAeClassController do
           :fields    => [field]
         }
       }
-      controller.instance_variable_set(:@_params, :button => "save", :id => @cls.id)
+      controller.params = {:button => "save", :id => @cls.id}
       controller.send(:update_fields)
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.status).to eq(200)
@@ -623,7 +623,7 @@ describe MiqAeClassController do
       allow(controller).to receive(:render)
       controller.send(:fields_form_field_changed)
       expect(@cls.ae_fields.first.default_value).to eq("Wilma")
-      controller.instance_variable_set(:@_params, :button => "save", :id => @cls.id)
+      controller.params = {:button => "save", :id => @cls.id}
       controller.send(:update_fields)
       @cls.reload
       expect(@cls.ae_fields.first.name).to eq("freddie")
@@ -654,7 +654,7 @@ describe MiqAeClassController do
                                        :button                => 'accept')
       allow(controller).to receive(:render)
       controller.send(:fields_form_field_changed)
-      controller.instance_variable_set(:@_params, :button => "save", :id => @cls.id)
+      controller.params = {:button => "save", :id => @cls.id}
       controller.send(:update_fields)
       @cls.reload
       expect(@cls.ae_fields.last.name).to eq("Bar")
@@ -839,7 +839,7 @@ describe MiqAeClassController do
     it "moves selected field down" do
       controller.send(:fields_seq_edit_screen, @cls.id)
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name01)", "(name02)"])
-      controller.instance_variable_set(:@_params, :button => 'down', :id => 'seq', :seq_fields => "['(name01)']")
+      controller.params = {:button => 'down', :id => 'seq', :seq_fields => "['(name01)']"}
       expect(controller).to receive(:render)
       controller.fields_seq_field_changed
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
@@ -848,7 +848,7 @@ describe MiqAeClassController do
     it "moves selected field up" do
       controller.send(:fields_seq_edit_screen, @cls.id)
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name01)", "(name02)"])
-      controller.instance_variable_set(:@_params, :button => 'up', :id => 'seq', :seq_fields => "['(name02)']")
+      controller.params = {:button => 'up', :id => 'seq', :seq_fields => "['(name02)']"}
       expect(controller).to receive(:render)
       controller.fields_seq_field_changed
       expect(assigns(:edit)[:new][:fields_list]).to match_array(["(name02)", "(name01)"])
@@ -906,7 +906,7 @@ describe MiqAeClassController do
         :new              => new,
         :current          => new
       }
-      controller.instance_variable_set(:@_params, :transOne => "1", :id => @method.id)
+      controller.params = {:transOne => "1", :id => @method.id}
       allow(controller).to receive(:render)
       controller.send(:form_method_field_changed)
       expect(assigns(:edit)[:new][:data]).to eq("exit MIQ_OK...")

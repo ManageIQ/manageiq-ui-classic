@@ -322,26 +322,26 @@ describe AutomationManagerController do
     # throught the GTL component and the /report_data JSON endpoint.
     pending "renders the list view based on the nodetype(root,provider) and the search associated with it" do
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => "root")
+      controller.params = {:id => "root"}
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(3)
 
       ems_id = ems_key_for_provider(automation_provider1)
-      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.params = {:id => ems_id}
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].name).to eq("testinvgroup")
 
-      controller.instance_variable_set(:@_params, :id => "at")
+      controller.params = {:id => "at"}
       controller.instance_variable_set(:@search_text, "2")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].name).to eq("ansibletest2 Automation Manager")
 
       invgroup_id2 = inventory_group_key(@inventory_group2)
-      controller.instance_variable_set(:@_params, :id => invgroup_id2)
+      controller.params = {:id => invgroup_id2}
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].hostname).to eq("test2b_ans_configured_system")
@@ -353,14 +353,14 @@ describe AutomationManagerController do
 
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "automation_manager_cs_filter")
+      controller.params = {:id => "automation_manager_cs_filter"}
       controller.send(:accordion_select)
       controller.instance_variable_set(:@search_text, "brew")
       allow(controller).to receive(:x_tree).and_return(:type => :providers)
-      controller.instance_variable_set(:@_params, :id => "automation_manager_providers")
+      controller.params = {:id => "automation_manager_providers"}
       controller.send(:accordion_select)
 
-      controller.instance_variable_set(:@_params, :id => "root")
+      controller.params = {:id => "root"}
       controller.send(:tree_select)
       search_text = controller.instance_variable_get(:@search_text)
       expect(search_text).to eq("manager")
@@ -373,9 +373,9 @@ describe AutomationManagerController do
     it "renders tree_select for ansible tower job templates tree node" do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => "configuration_scripts")
+      controller.params = {:id => "configuration_scripts"}
       controller.send(:accordion_select)
-      controller.instance_variable_set(:@_params, :id => "at-#{@automation_manager1.id}")
+      controller.params = {:id => "at-#{@automation_manager1.id}"}
       controller.send(:tree_select)
       # view = controller.instance_variable_get(:@view)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
@@ -395,7 +395,7 @@ describe AutomationManagerController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      controller.instance_variable_set(:@_params, :id => "cf-#{record.id}")
+      controller.params = {:id => "cf-#{record.id}"}
       controller.send(:tree_select)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
       title = controller.instance_variable_get(:@right_cell_text)
@@ -408,7 +408,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
       allow(controller).to receive(:x_active_accord).and_return(:automation_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "automation_manager_providers")
+      controller.params = {:id => "automation_manager_providers"}
       expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :gtl_dbname => "automation_manager_providers").and_call_original
       controller.send(:accordion_select)
     end
@@ -417,7 +417,7 @@ describe AutomationManagerController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "automation_manager_cs_filter")
+      controller.params = {:id => "automation_manager_cs_filter"}
       expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :gtl_dbname => "automation_manager_configured_systems").and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
@@ -427,7 +427,7 @@ describe AutomationManagerController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
-      controller.instance_variable_set(:@_params, :id => "configuration_scripts")
+      controller.params = {:id => "configuration_scripts"}
       expect(controller).to receive(:get_view).with("ConfigurationScript", :gtl_dbname => "automation_manager_configuration_scripts").and_call_original
       controller.send(:accordion_select)
     end
@@ -578,7 +578,7 @@ describe AutomationManagerController do
     end
 
     it "uses the stored password for validation if params[:default_password] does not exist" do
-      controller.instance_variable_set(:@_params, :default_userid => "userid")
+      controller.params = {:default_userid => "userid"}
       controller.instance_variable_set(:@provider, automation_provider1)
       expect(automation_provider1).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}
@@ -627,7 +627,7 @@ describe AutomationManagerController do
     end
 
     it "Service Dialog is created from an Ansible Tower Job Template" do
-      controller.instance_variable_set(:@_params, :button => "save", :id => @cs.id)
+      controller.params = {:button => "save", :id => @cs.id}
       allow(controller).to receive(:replace_right_cell)
       controller.send(:configscript_service_dialog_submit)
       expect(assigns(:flash_array).first[:message]).to include("was successfully created")

@@ -159,7 +159,7 @@ describe OpsController do
                                                :active_tree => :settings_tree,
                                                :active_tab  => 'settings_rhn_edit')
         allow(controller).to receive(:x_node).and_return("root")
-        controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
+        controller.params = {:id => 'rhn_edit', :button => "save"}
       end
 
       it "won't render form buttons after rhn settings submission" do

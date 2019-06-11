@@ -41,7 +41,7 @@ describe MiqRequestController do
       @wf.instance_variable_set(:@dialogs, :dialogs => {:environment => {:fields => {:placement_dc_name => {:values => {datacenter.id.to_s => datacenter.name}}}}})
       controller.instance_variable_set(:@edit, :wf => @wf, :new => {:src_vm_id => template.id.to_s})
       controller.instance_variable_set(:@last_vm_id, vm2.id)
-      controller.instance_variable_set(:@_params, 'service__src_vm_id' => template.id, :id => "new", :controller => "miq_request")
+      controller.params = {'service__src_vm_id' => template.id, :id => "new", :controller => "miq_request"}
       @wf.instance_variable_set(:@values, :placement_dc_name=>[datacenter.id.to_s, datacenter.name])
       edit = {:wf => @wf, :new => {:placement_dc_name => [datacenter.id, datacenter.name]}}
       @wf.instance_variable_set(:@edit, edit)
@@ -61,7 +61,7 @@ describe MiqRequestController do
       controller.instance_variable_set(:@breadcrumbs, [{:url => "/ems_infra/show_list?page=1&refresh=y"},
                                                        {:url => "/ems_infra/1000000000001?display=vms"},
                                                        {}])
-      controller.instance_variable_set(:@_params, :id => "new", :button => "cancel")
+      controller.params = {:id => "new", :button => "cancel"}
       allow(controller).to receive(:role_allows?).and_return(true)
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
@@ -73,7 +73,7 @@ describe MiqRequestController do
 
   describe '#get_template_kls' do
     before do
-      controller.instance_variable_set(:@_params, :controller => ctrl, :template_klass => kls)
+      controller.params = {:controller => ctrl, :template_klass => kls}
       allow(request).to receive(:parameters).and_return(:template_klass => kls, :controller => ctrl)
     end
 

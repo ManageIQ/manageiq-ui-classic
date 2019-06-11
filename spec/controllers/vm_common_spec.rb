@@ -56,7 +56,7 @@ describe VmOrTemplateController do
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
       allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
-      controller.instance_variable_set(:@_params, :id => @vm.id.to_s)
+      controller.params = {:id => @vm.id.to_s}
       controller.reload
       expect(controller.params[:id]).to eq("v-#{@vm.id}")
     end
@@ -323,13 +323,13 @@ describe VmOrTemplateController do
     end
 
     it 'does not set new server when params[:server_id] is not set' do
-      controller.instance_variable_set(:@_params, :server_id => '')
+      controller.params = {:server_id => ''}
       controller.send(:evm_relationship_get_form_vars)
       expect(assigns(:edit)[:new][:server]).to be(nil)
     end
 
     it 'sets new server when params[:server_id] is set' do
-      controller.instance_variable_set(:@_params, :server_id => '42')
+      controller.params = {:server_id => '42'}
       controller.send(:evm_relationship_get_form_vars)
       expect(assigns(:edit)[:new][:server]).to eq(controller.params[:server_id])
     end

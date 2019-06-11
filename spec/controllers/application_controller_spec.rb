@@ -19,7 +19,7 @@ describe ApplicationController do
 
     it "uses correct variables for rendering result of report" do
       controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_report.id })
-      controller.instance_variable_set(:@_params, :rr_id => report_result_for_report.id)
+      controller.params = {:rr_id => report_result_for_report.id}
 
       expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
       controller.send(:report_only)
@@ -32,7 +32,7 @@ describe ApplicationController do
 
     it "uses correct variables for rendering result of report" do
       controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_widget.id })
-      controller.instance_variable_set(:@_params, :rr_id => report_result_for_widget.id)
+      controller.params = {:rr_id => report_result_for_widget.id}
 
       expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
       controller.send(:report_only)
@@ -106,17 +106,17 @@ describe ApplicationController do
 
   describe "#find_checked_items" do
     it "returns empty array when button is pressed from summary screen with params as symbol" do
-      controller.instance_variable_set(:@_params, :id => "1")
+      controller.params = {:id => "1"}
       expect(controller.send(:find_checked_items)).to eq([])
     end
 
     it "returns empty array when button is pressed from summary screen with params as string" do
-      controller.instance_variable_set(:@_params, "id" => "1")
+      controller.params = {"id" => "1"}
       expect(controller.send(:find_checked_items)).to eq([])
     end
 
     it "returns list of items selected from list view" do
-      controller.instance_variable_set(:@_params, :miq_grid_checks => "1, 2, 3, 4")
+      controller.params = {:miq_grid_checks => "1, 2, 3, 4"}
       expect(controller.send(:find_checked_items)).to eq([1, 2, 3, 4])
     end
   end
@@ -128,17 +128,17 @@ describe ApplicationController do
     end
 
     it "returns true for list views" do
-      controller.instance_variable_set(:@_params, :action => "show_list")
+      controller.params = {:action => "show_list"}
       expect(controller.send(:render_gtl_view_tb?)).to be_truthy
     end
 
     it "returns true for list views when navigating thru relationships" do
-      controller.instance_variable_set(:@_params, :action => "show")
+      controller.params = {:action => "show"}
       expect(controller.send(:render_gtl_view_tb?)).to be_truthy
     end
 
     it "returns false for sub list views" do
-      controller.instance_variable_set(:@_params, :action => "host_services")
+      controller.params = {:action => "host_services"}
       expect(controller.send(:render_gtl_view_tb?)).to be_falsey
     end
   end

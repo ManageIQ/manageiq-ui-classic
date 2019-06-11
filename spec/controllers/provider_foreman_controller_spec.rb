@@ -130,10 +130,10 @@ describe ProviderForemanController do
     it "Provision action should not be allowed only for a Configured System marked as not provisionable" do
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter")
+      controller.params = {:id => "configuration_manager_cs_filter"}
       allow(controller).to receive(:replace_right_cell)
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params, :id => @configured_system2a.id)
+      controller.params = {:id => @configured_system2a.id}
       controller.send(:provision)
       expect(controller.send(:flash_errors?)).to_not be_truthy
     end
@@ -285,7 +285,7 @@ describe ProviderForemanController do
     it "renders right cell text for ConfigurationManagerForeman node" do
       controller.instance_variable_set(:@in_report_data, true)
       ems_id = ems_key_for_provider(@provider)
-      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.params = {:id => ems_id}
       controller.send(:tree_select)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
       expect(right_cell_text).to eq("Configuration Profiles under Foreman Provider \"testForeman Configuration Manager\"")
@@ -320,21 +320,21 @@ describe ProviderForemanController do
     end
 
     pending "renders the list view based on the nodetype(root,provider,config_profile) and the search associated with it" do
-      controller.instance_variable_set(:@_params, :id => "root")
+      controller.params = {:id => "root"}
       controller.instance_variable_set(:@search_text, "manager")
       controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
 
-      controller.instance_variable_set(:@_params, :id => "xx-fr")
+      controller.params = {:id => "xx-fr"}
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
 
       ems_id = ems_key_for_provider(@provider)
-      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.params = {:id => ems_id}
       controller.send(:tree_select)
       gtl_init_data = controller.init_report_data('reportDataController')
       expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
@@ -349,7 +349,7 @@ describe ProviderForemanController do
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].description).to eq("testprofile2")
       config_profile_id2 = config_profile_key(@config_profile2)
-      controller.instance_variable_set(:@_params, :id => config_profile_id2)
+      controller.params = {:id => config_profile_id2}
       controller.send(:tree_select)
       gtl_init_data = controller.init_report_data('reportDataController')
       expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
@@ -366,14 +366,14 @@ describe ProviderForemanController do
 
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter")
+      controller.params = {:id => "configuration_manager_cs_filter"}
       controller.send(:accordion_select)
       controller.instance_variable_set(:@search_text, "brew")
       allow(controller).to receive(:x_tree).and_return(:type => :providers)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_providers")
+      controller.params = {:id => "configuration_manager_providers"}
       controller.send(:accordion_select)
 
-      controller.instance_variable_set(:@_params, :id => "root")
+      controller.params = {:id => "root"}
       controller.send(:tree_select)
       search_text = controller.instance_variable_get(:@search_text)
       expect(search_text).to eq("manager")
@@ -384,7 +384,7 @@ describe ProviderForemanController do
     pending "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.params = {:id => ems_id}
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       gtl_init_data = controller.init_report_data('reportDataController')
@@ -400,7 +400,7 @@ describe ProviderForemanController do
     pending "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
       ems_id = ems_key_for_provider(@provider2)
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => ems_id)
+      controller.params = {:id => ems_id}
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0]).to include('description' => "Unassigned Profiles Group",
@@ -408,7 +408,7 @@ describe ProviderForemanController do
     end
 
     pending "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do
-      controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider)}-unassigned")
+      controller.params = {:id => "-#{ems_id_for_provider(@provider)}-unassigned"}
       controller.instance_variable_set(:@in_report_data, true)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -417,7 +417,7 @@ describe ProviderForemanController do
 
     pending "renders tree_select for an 'Unassigned Profiles Group' node for the second provider" do
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => "-#{ems_id_for_provider(@provider2)}-unassigned")
+      controller.params = {:id => "-#{ems_id_for_provider(@provider2)}-unassigned"}
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned2")
@@ -428,7 +428,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_providers_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_providers_accord")
+      controller.params = {:id => "configuration_manager_providers_accord"}
       expect(controller).to receive(:get_view).with("ManageIQ::Providers::ConfigurationManager",
                                                     :gtl_dbname => :cm_providers, :dbname => :cm_providers).and_call_original
       controller.send(:accordion_select)
@@ -440,7 +440,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
       ems_id = ems_id_for_provider(@provider)
       controller.instance_variable_set(:@in_report_data, true)
-      controller.instance_variable_set(:@_params, :id => ems_key_for_provider(@provider))
+      controller.params = {:id => ems_key_for_provider(@provider)}
       allow(controller).to receive(:build_listnav_search_list)
       allow(controller).to receive(:apply_node_search_text)
       expect(controller).to receive(:get_view).with("ConfigurationProfile", :match_via_descendants => "ConfiguredSystem",
@@ -455,7 +455,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
+      controller.params = {:id => "configuration_manager_cs_filter_accord"}
       expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
                                                     :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
@@ -469,7 +469,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
+      controller.params = {:id => "configuration_manager_cs_filter_accord"}
       controller.send(:accordion_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(5)
@@ -603,7 +603,7 @@ describe ProviderForemanController do
     end
 
     it "uses the stored password for validation if params[:default_password] does not exist" do
-      controller.instance_variable_set(:@_params, :default_userid => "userid")
+      controller.params = {:default_userid => "userid"}
       controller.instance_variable_set(:@provider, @provider)
       expect(@provider).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}

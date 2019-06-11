@@ -30,7 +30,7 @@ describe MiqPolicyController do
         }
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
-        controller.instance_variable_set(:@_params, :id => @event.id.to_s, :button => "save")
+        controller.params = {:id => @event.id.to_s, :button => "save"}
         controller.event_edit
         expect(@policy.actions_for_event(@event, :success)).to include(@action)
       end
@@ -50,7 +50,7 @@ describe MiqPolicyController do
         }
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
-        controller.instance_variable_set(:@_params, :id => @event.id.to_s, :button => "save")
+        controller.params = {:id => @event.id.to_s, :button => "save"}
         expect(controller).to receive(:render)
         controller.event_edit
         expect(assigns(:flash_array).first[:message]).to include("At least one action must be selected to save this Policy Event")
