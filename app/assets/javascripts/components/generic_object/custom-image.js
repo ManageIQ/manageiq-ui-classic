@@ -35,7 +35,7 @@ function customImageController($timeout) {
     var imageFile;
 
     if (angular.element('#generic_object_definition_image_file')[0].files.length === 0) {
-      add_flash(__("No file chosen."), 'error');
+      add_flash(__("No file chosen."), 'error', {id: "image-missing"});
       vm.imageMissing = true;
       return;
     }
