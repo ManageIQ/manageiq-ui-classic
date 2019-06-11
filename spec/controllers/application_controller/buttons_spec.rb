@@ -366,7 +366,7 @@ describe ApplicationController do
       end
 
       it "to id of selected dialog" do
-        controller.params = {{:id => button.id, :dialog_id => 42}.with_indifferent_access}
+        controller.params = {:id => button.id, :dialog_id => 42}.with_indifferent_access
         controller.instance_variable_set(:@resolve, :target_class => "VM and Instance")
         controller.send(:automate_button_field_changed)
         expect(assigns(:edit)[:new][:dialog_id]).to eq(42)
