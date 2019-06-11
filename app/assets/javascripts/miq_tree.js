@@ -120,25 +120,6 @@ function miqExpandParentNodes(treename, selected_node) {
   }
 }
 
-// OnCheck handler for the tags trees
-function miqOnCheckProvTags(node, treename) {
-  var tree = miqTreeObject(treename);
-  // Allow only one node among siblings to be checked
-  if (node.state.checked) {
-    var siblings = $.grep(tree.getParents(node)[0].nodes, function(item) {
-      return item.key !== node.key;
-    });
-    tree.uncheckNode(siblings, {silent: true });
-  }
-
-  var all_checked = tree.getChecked().map(function(item) {
-    return encodeURIComponent(item.key);
-  });
-
-  miqJqueryRequest(ManageIQ.tree.checkUrl + '?ids_checked=' + all_checked);
-  return true;
-}
-
 function miqOnClickSelectRbacTreeNode(id) {
   var tree = 'rbac_tree';
   miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
@@ -433,7 +414,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckGeneric',
     'miqOnClickMenuRoles',
     'miqOnCheckProtect',
-    'miqOnCheckProvTags',
     'miqOnCheckSections',
     'miqOnCheckUserFilters',
     'miqOnClickAutomate',
