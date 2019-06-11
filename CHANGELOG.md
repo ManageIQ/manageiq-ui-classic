@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-7
+## Unreleased as of Sprint 113 ending 2019-06-10
+
+### Added
+- Use feature detection to determine whether AZ should be selectable [(#5522)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5522)
+- Add Tenants tree to Catalog Item Edit page [(#5445)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5445)
+- Add severity to Alerts [(#5326)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5326)
+
+### Fixed
+- Do not reinitalize the @record when building Server/Roles trees [(#5661)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5661)
+- set `@root_class` only if it is not already set by subclass [(#5658)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5658)
+- Update Workers Settings form data in @edit after saving [(#5609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5609)
+
+### Removed
+- Drop patternfly 4 support again [(#5642)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5642)
+- Drop the timeline listnav decision logic for dashboard/timelines [(#5639)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5639)
+- Drop trees displaying VMs for providers clusters resource pools [(#5623)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5623)
+
+## Hammer-7 - Released 2019-06-10
 
 ### Added
 - Inform user about outdates belongsto filters [(#5511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5511)
