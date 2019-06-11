@@ -125,7 +125,7 @@ describe OpsController do
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       controller.instance_variable_set(:@record, @miq_server)
       controller.params = {:log_userid   => "default_userid",
-                                       :log_password => "default_password2")
+                           :log_password => "default_password2"}
       default_creds = {:userid => "default_userid", :password => "default_password2"}
       expect(controller.send(:set_credentials)).to include(:default => default_creds)
     end
@@ -140,7 +140,7 @@ describe OpsController do
       expect(@miq_server).to receive(:log_file_depot).and_return(file_depot)
       expect(file_depot).to receive(:authentication_password).and_return('default_password')
       controller.instance_variable_set(:@record, @miq_server)
-      controller.params = {:log_userid => "default_userid")
+      controller.params = {:log_userid => "default_userid"}
       default_creds = {:userid => "default_userid", :password => "default_password"}
       expect(controller.send(:set_credentials)).to include(:default => default_creds)
     end
@@ -338,8 +338,8 @@ describe OpsController do
         allow(controller).to receive(:set_credentials)
           .and_return(:default => {:userid => "testuser", :password => 'password'})
         controller.params = {:log_userid => "default_user",
-                                         :button     => "validate",
-                                         :id         => server_id)
+                             :button     => "validate",
+                             :id         => server_id}
         expect(controller).to receive(:render)
         expect(response.status).to eq(200)
         controller.send(:log_depot_edit)

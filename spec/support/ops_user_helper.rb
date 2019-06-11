@@ -11,8 +11,8 @@ module Spec
 
       def existing_user_edit(user, data = {})
         controller.params = {:typ    => nil,
-                                                    :button => nil,
-                                                    :id     => user.id)
+                             :button => nil,
+                             :id     => user.id}
         controller.rbac_user_edit # set up @edit for the user
 
         edit = controller.instance_variable_get(:@edit)

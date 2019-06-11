@@ -617,8 +617,8 @@ describe MiqAeClassController do
         }
       }
       controller.params = {"fields_default_value_0" => "Pebbles",
-                                       "fields_name_0"          => "freddie",
-                                       :id                      => @cls.id)
+                           "fields_name_0"          => "freddie",
+                           :id                      => @cls.id}
       allow(controller).to receive(:render)
       controller.send(:fields_form_field_changed)
       expect(@cls.ae_fields.first.default_value).to eq("Wilma")
@@ -647,9 +647,9 @@ describe MiqAeClassController do
         }
       }
       controller.params = {"fields_default_value" => "Foo",
-                                       "fields_name"          => "Bar",
-                                       :id                    => @cls.id,
-                                       :button                => 'accept')
+                           "fields_name"          => "Bar",
+                           :id                    => @cls.id,
+                           :button                => 'accept'}
       allow(controller).to receive(:render)
       controller.send(:fields_form_field_changed)
       controller.params = {:button => "save", :id => @cls.id}
@@ -691,7 +691,7 @@ describe MiqAeClassController do
 
     it "Should delete multiple selected items from list" do
       controller.params = {:miq_grid_checks => "aec-#{@ae_class.id},aen-#{@namespace.id}",
-                                       :id              => @namespace.id)
+                           :id              => @namespace.id}
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
@@ -699,7 +699,7 @@ describe MiqAeClassController do
     end
 
     it "Should delete selected namespace in the tree" do
-      controller.params = {:id => @namespace.id)
+      controller.params = {:id => @namespace.id}
 
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
@@ -708,7 +708,7 @@ describe MiqAeClassController do
 
     it "Should use description in flash message when available" do
       controller.params = {:miq_grid_checks => "aen-#{@namespace.id}",
-                                       :id              => @namespace.id)
+                           :id              => @namespace.id}
       @namespace.update_column(:description, "foo_description")
       @namespace.reload
       controller.send(:delete_namespaces_or_classes)
@@ -751,9 +751,9 @@ describe MiqAeClassController do
 
     it "Should use description in flash message when editing a namespace" do
       controller.params = {:button      => "save",
-                                       :name        => 'name',
-                                       :description => 'desc',
-                                       :id          => @namespace.id)
+                           :name        => 'name',
+                           :description => 'desc',
+                           :id          => @namespace.id}
       controller.send(:update_namespace)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
@@ -774,7 +774,7 @@ describe MiqAeClassController do
 
     it "Should delete selected class in the tree" do
       controller.x_node = "aec-#{@ae_class.id}"
-      controller.params = {:id => @namespace.id)
+      controller.params = {:id => @namespace.id}
 
       controller.send(:deleteclasses)
       flash_messages = assigns(:flash_array)
@@ -965,15 +965,15 @@ describe MiqAeClassController do
     it "Should delete selected instance from details screen" do
       controller.x_node = "aei-#{@instance.id}"
       controller.params = {:pressed => "miq_ae_instance_delete",
-                                       :id      => @instance.id)
+                           :id      => @instance.id}
       controller.send(:deleteinstances)
     end
 
     it "Should delete selected instance in the list" do
       controller.x_node = "aec-#{@ae_class.id}"
       controller.params = {:miq_grid_checks => "aei-#{@instance.id}",
-                                       :pressed         => "miq_ae_instance_delete",
-                                       :id              => @ae_class.id)
+                           :pressed         => "miq_ae_instance_delete",
+                           :id              => @ae_class.id}
       controller.send(:deleteinstances)
     end
 
@@ -1003,15 +1003,15 @@ describe MiqAeClassController do
     it "Should delete selected method from details screen" do
       controller.x_node = "aem-#{@method.id}"
       controller.params = {:pressed => "miq_ae_method_delete",
-                                       :id      => @method.id)
+                           :id      => @method.id}
       controller.send(:deletemethods)
     end
 
     it "Should delete selected method in the list" do
       controller.x_node = "aec-#{@ae_class.id}"
       controller.params = {:miq_grid_checks => "aem-#{@method.id},aem-#{@method2.id}",
-                                       :pressed         => "miq_ae_method_delete",
-                                       :id              => @ae_class.id)
+                           :pressed         => "miq_ae_method_delete",
+                           :id              => @ae_class.id}
       controller.send(:deletemethods)
     end
 

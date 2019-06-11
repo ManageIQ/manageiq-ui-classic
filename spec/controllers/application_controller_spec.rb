@@ -155,7 +155,7 @@ describe ApplicationController do
       vm1 = FactoryBot.create(:vm_vmware)
       vm2 = FactoryBot.create(:vm_microsoft)
       controller.params = {:pressed         => "vm_migrate",
-                                                  :miq_grid_checks => "#{vm1.id},#{vm2.id}")
+                           :miq_grid_checks => "#{vm1.id},#{vm2.id}"}
       controller.set_response!(response)
       controller.send(:prov_redirect, "migrate")
       expect(assigns(:flash_array).first[:message]).to include("does not apply to at least one of the selected")
@@ -168,7 +168,7 @@ describe ApplicationController do
       vm1 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
       vm2 = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
       controller.params = {:pressed         => "vm_migrate",
-                                                  :miq_grid_checks => "#{vm1.id},#{vm2.id}")
+                           :miq_grid_checks => "#{vm1.id},#{vm2.id}"}
       controller.set_response!(response)
       controller.send(:prov_redirect, "migrate")
       expect(controller.send(:flash_errors?)).to be_falsey
@@ -190,7 +190,7 @@ describe ApplicationController do
                                     :vendor   => "vmware",
                                     :location => "template1.vmtx")
       controller.params = {:pressed         => "image_miq_request_new",
-                                       :miq_grid_checks => template.id.to_s)
+                           :miq_grid_checks => template.id.to_s}
       controller.set_response!(response)
       expect(controller).not_to receive(:vm_pre_prov)
       controller.send(:prov_redirect)
@@ -207,7 +207,7 @@ describe ApplicationController do
                                     :location              => "template1.vmtx",
                                     :ext_management_system => ems)
       controller.params = {:pressed         => "image_miq_request_new",
-                                       :miq_grid_checks => template.id.to_s)
+                           :miq_grid_checks => template.id.to_s}
       controller.instance_variable_set(:@breadcrumbs, [])
       controller.instance_variable_set(:@sb, {})
       controller.set_response!(response)

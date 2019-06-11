@@ -81,8 +81,8 @@ describe EmsContainerController do
 
       it "detects openshift hawkular metric route" do
         controller.params = {:id                => openshift_manager.id,
-                                         :current_tab       => "metrics",
-                                         :metrics_selection => 'hawkular')
+                             :current_tab       => "metrics",
+                             :metrics_selection => 'hawkular'}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
         expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
@@ -97,8 +97,8 @@ describe EmsContainerController do
 
       it "detects openshift prometheus metric route" do
         controller.params = {:id                => openshift_manager.id,
-                                         :current_tab       => "metrics",
-                                         :metrics_selection => 'prometheus')
+                             :current_tab       => "metrics",
+                             :metrics_selection => 'prometheus'}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
         expect(mock_client).to receive(:get_route).with('prometheus', 'openshift-metrics')
@@ -114,7 +114,7 @@ describe EmsContainerController do
       it "detects openshift prometheus alert route" do
         require 'kubeclient'
         controller.params = {:id          => openshift_manager.id,
-                                         :current_tab => "alerts")
+                             :current_tab => "alerts"}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
         expect(mock_client).to receive(:get_route).with('alerts', 'openshift-metrics')
@@ -129,8 +129,8 @@ describe EmsContainerController do
 
       it "tolerates detection exceptions" do
         controller.params = {:id                => openshift_manager.id,
-                                         :current_tab       => "metrics",
-                                         :metrics_selection => 'hawkular')
+                             :current_tab       => "metrics",
+                             :metrics_selection => 'hawkular'}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
 
         expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
@@ -308,19 +308,19 @@ describe EmsContainerController do
 
         def test_setting_many_fields
           controller.params = {:name                       => 'EMS 2',
-                                           :default_userid             => '_',
-                                           :default_hostname           => '10.10.10.11',
-                                           :default_api_port           => '5000',
-                                           :default_security_protocol  => 'ssl-with-validation-custom-ca',
-                                           :default_tls_ca_certs       => '-----BEGIN DUMMY...',
-                                           :default_password           => 'valid-token',
-                                           :virtualization_selection   => 'kubevirt',
-                                           :kubevirt_hostname          => '10.10.10.11',
-                                           :kubevirt_api_port          => '5000',
-                                           :kubevirt_security_protocol => 'ssl-with-validation-custom-ca',
-                                           :kubevirt_tls_ca_certs      => '-----BEGIN DUMMY...',
-                                           :kubevirt_password          => 'other-valid-token',
-                                           :emstype                    => @type)
+                               :default_userid             => '_',
+                               :default_hostname           => '10.10.10.11',
+                               :default_api_port           => '5000',
+                               :default_security_protocol  => 'ssl-with-validation-custom-ca',
+                               :default_tls_ca_certs       => '-----BEGIN DUMMY...',
+                               :default_password           => 'valid-token',
+                               :virtualization_selection   => 'kubevirt',
+                               :kubevirt_hostname          => '10.10.10.11',
+                               :kubevirt_api_port          => '5000',
+                               :kubevirt_security_protocol => 'ssl-with-validation-custom-ca',
+                               :kubevirt_tls_ca_certs      => '-----BEGIN DUMMY...',
+                               :kubevirt_password          => 'other-valid-token',
+                               :emstype                    => @type}
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           cc = @ems.connection_configurations

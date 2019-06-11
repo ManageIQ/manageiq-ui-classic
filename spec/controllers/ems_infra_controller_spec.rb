@@ -425,11 +425,11 @@ describe EmsInfraController do
 
       it "uses the passwords from params for validation if they exist" do
         controller.params = {:default_userid       => default_creds[:userid],
-                                         :default_password     => default_creds[:password],
-                                         :amqp_userid          => amqp_creds[:userid],
-                                         :amqp_password        => amqp_creds[:password],
-                                         :ssh_keypair_userid   => ssh_keypair_creds[:userid],
-                                         :ssh_keypair_password => ssh_keypair_creds[:auth_key])
+                             :default_password     => default_creds[:password],
+                             :amqp_userid          => amqp_creds[:userid],
+                             :amqp_password        => amqp_creds[:password],
+                             :ssh_keypair_userid   => ssh_keypair_creds[:userid],
+                             :ssh_keypair_password => ssh_keypair_creds[:auth_key]}
         expect(@ems).to receive(:supports_authentication?).with(:amqp).and_return(true)
         expect(@ems).to receive(:supports_authentication?).with(:ssh_keypair).and_return(true)
         expect(@ems).to receive(:supports_authentication?).with(:oauth)
@@ -441,8 +441,8 @@ describe EmsInfraController do
 
       it "uses the stored passwords for validation if passwords dont exist in params" do
         controller.params = {:default_userid     => default_creds[:userid],
-                                         :amqp_userid        => amqp_creds[:userid],
-                                         :ssh_keypair_userid => ssh_keypair_creds[:userid])
+                             :amqp_userid        => amqp_creds[:userid],
+                             :ssh_keypair_userid => ssh_keypair_creds[:userid]}
         expect(@ems).to receive(:authentication_password).and_return(default_creds[:password])
         expect(@ems).to receive(:authentication_password).with(:amqp).and_return(amqp_creds[:password])
         expect(@ems).to receive(:supports_authentication?).with(:amqp).and_return(true)

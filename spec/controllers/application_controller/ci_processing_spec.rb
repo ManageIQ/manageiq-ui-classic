@@ -687,12 +687,12 @@ describe ApplicationController do
       from_second = "1"
       from_third = "1"
       controller.params = {:from_first                   => from_first,
-                                       :from_second                  => from_second,
-                                       :from_third                   => from_third,
-                                       :from_fourth                  => "1",
-                                       :to_fourth                    => "0",
-                                       "discover_type_virtualcenter" => "1",
-                                       "start"                       => "45")
+                           :from_second                  => from_second,
+                           :from_third                   => from_third,
+                           :from_fourth                  => "1",
+                           :to_fourth                    => "0",
+                           "discover_type_virtualcenter" => "1",
+                           "start"                       => "45"}
       allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:render)
       controller.send(:discover)
@@ -945,7 +945,7 @@ describe MiqTemplateController do
                                     :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                                     :storage               => FactoryBot.create(:storage))
       controller.params = {:miq_grid_checks => template.id.to_s,
-                                       :pressed         => 'miq_template_set_ownership')
+                           :pressed         => 'miq_template_set_ownership'}
       expect(controller).to receive(:javascript_redirect).with(:controller => "miq_template",
                                                                :action     => 'ownership',
                                                                :rec_ids    => [template.id],

@@ -66,8 +66,8 @@ describe PxeController do
       controller.instance_variable_set(:@edit, edit)
       controller.instance_variable_set(:@ps, ps)
       controller.params = {:restore_password => "true",
-                                       :log_password     => "[FILTERED]",
-                                       :log_verify       => "[FILTERED]")
+                           :log_password     => "[FILTERED]",
+                           :log_verify       => "[FILTERED]"}
       controller.send(:restore_password)
       expect(assigns(:edit)[:new][:log_password]).to eq(ps.authentication_password(:default))
     end

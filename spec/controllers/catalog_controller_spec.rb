@@ -472,12 +472,12 @@ describe CatalogController do
 
         allow(controller).to receive(:replace_right_cell)
         controller.params = {:name        => new_name,
-                                         :description => new_description,
-                                         :id          => ot.id.to_s)
+                             :description => new_description,
+                             :id          => ot.id.to_s}
         controller.send(:ot_form_field_changed)
         controller.params = {:button           => "add",
-                                         :original_ot_id   => ot.id,
-                                         :template_content => new_content)
+                             :original_ot_id   => ot.id,
+                             :template_content => new_content}
         controller.send(:ot_copy_submit)
         expect(OrchestrationTemplate.where(:name        => new_name,
                                            :description => new_description).first).to_not be_nil

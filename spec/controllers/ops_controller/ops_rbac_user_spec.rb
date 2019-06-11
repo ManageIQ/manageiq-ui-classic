@@ -69,8 +69,8 @@ describe OpsController do
       existing_user_edit(user, :group => "")
 
       controller.params = {:typ    => nil,
-                                                  :button => 'save', # attempt to save
-                                                  :id     => user.id)
+                           :button => 'save', # attempt to save
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the unset group in the first place
@@ -88,8 +88,8 @@ describe OpsController do
                                :name  => "") # fails record.valid?
 
       controller.params = {:typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+                           :button => 'save',
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the name
@@ -109,8 +109,8 @@ describe OpsController do
       existing_user_edit(user, :name => "changed")
 
       controller.params = {:typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+                           :button => 'save',
+                           :id     => user.id}
 
       controller.send(:rbac_edit_save_or_add, 'user')
 
@@ -138,7 +138,7 @@ describe OpsController do
       )
 
       controller.params = {:typ    => nil,
-                                                  :button => 'add')
+                           :button => 'add'}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
@@ -154,8 +154,8 @@ describe OpsController do
       existing_user_edit(user, :group => group.id.to_s)
 
       controller.params = {:typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+                           :button => 'save',
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success

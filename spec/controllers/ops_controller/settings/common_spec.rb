@@ -196,7 +196,7 @@ describe OpsController do
 
       it "sets ldap_role to false to make forest entries div hidden" do
         controller.params = {:id                  => 'authentication',
-                                         :authentication_mode => 'database')
+                             :authentication_mode => 'database'}
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
       end
@@ -204,7 +204,7 @@ describe OpsController do
       it "resets ldap_role to it's original state so forest entries div can be displayed" do
         session[:edit][:new][:authentication][:mode] = 'database'
         controller.params = {:id                  => 'authentication',
-                                         :authentication_mode => 'ldap')
+                             :authentication_mode => 'ldap'}
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
       end
@@ -347,7 +347,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
                                            :selected_server_id => miq_server.id)
-          controller.params = {:id => 'advanced')
+          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
           controller.instance_variable_set(:@edit,
                                            :new     => {:file_data => data},
@@ -368,7 +368,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
                                            :selected_server_id => zone.id)
-          controller.params = {:id => 'advanced')
+          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
           controller.instance_variable_set(:@edit,
                                            :new     => {:file_data => data},
@@ -392,9 +392,9 @@ describe OpsController do
                                            :active_tab         => 'settings_workers',
                                            :selected_server_id => @miq_server.id)
           controller.params = {:action     => 'settings_update',
-                                           :button     => 'save',
-                                           :controller => 'ops',
-                                           :id         => 'workers')
+                               :button     => 'save',
+                               :controller => 'ops',
+                               :id         => 'workers'}
           @updated_memory_threshold = 600.megabytes
           @new = ::Settings.to_hash
           @new[:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold] = @updated_memory_threshold
@@ -422,7 +422,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_server',
                                            :selected_server_id => @miq_server.id)
-          controller.params = {:id => 'server')
+          controller.params = {:id => 'server'}
           @current = ::Settings.to_hash
           @new = ::Settings.to_hash
           @new[:server][:name] = ''

@@ -212,7 +212,8 @@ describe OpsController do
       end
 
       it "saves tenant quotas record changes" do
-        controller.params = {:name      => "OneTenant",
+        controller.params = {
+          :name      => "OneTenant",
           :id        => @tenant.id,
           :button    => "save",
           :divisible => "true",

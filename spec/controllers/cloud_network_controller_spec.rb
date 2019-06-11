@@ -212,7 +212,7 @@ describe CloudNetworkController do
       stub_user(:features => :all)
       session[:cloud_network_lastaction] = 'show'
       controller.params = {:pressed => "cloud_network_delete",
-                                       :id      => network.id)
+                           :id      => network.id}
       controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_network/show_list"}, 'placeholder'])
     end
 

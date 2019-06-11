@@ -81,10 +81,10 @@ describe OpsController do
     let(:mocked_filedepot) { double(FileDepotSmb) }
     it "uses params[:log_password] for validation if one exists" do
       controller.params = {:log_userid   => "userid",
-                                       :log_password => "password2",
-                                       :uri_prefix   => "smb",
-                                       :uri          => "samba_uri",
-                                       :log_protocol => "Samba")
+                           :log_password => "password2",
+                           :uri_prefix   => "smb",
+                           :uri          => "samba_uri",
+                           :log_protocol => "Samba"}
       settings = {:username   => "userid",
                   :password   => "password2",
                   :uri        => "smb://samba_uri",
@@ -94,9 +94,9 @@ describe OpsController do
 
     it "uses the stored password for validation if params[:log_password] does not exist" do
       controller.params = {:log_userid   => "userid",
-                                       :uri_prefix   => "smb",
-                                       :uri          => "samba_uri",
-                                       :log_protocol => "Samba")
+                           :uri_prefix   => "smb",
+                           :uri          => "samba_uri",
+                           :log_protocol => "Samba"}
       expect(mocked_filedepot).to receive(:try).with(:authentication_password).and_return('password')
       settings = {:username   => "userid",
                   :password   => "password",
