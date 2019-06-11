@@ -10,7 +10,7 @@ export const taggingMiddleware = store => next => action => {
       $.post(meta.url, params)
     } else if (type === 'UI-COMPONENTS_TAGGING_DELETE_ASSIGNED_TAG') {
       params = meta.onDelete(meta.type, params, tag.tagValue.id);
-      $.post(meta.url, {...params, check: 0})
+      $.post(meta.url, params)
     }
   }
   let result = next(action)

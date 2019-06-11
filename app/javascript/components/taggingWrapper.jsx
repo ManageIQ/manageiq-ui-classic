@@ -21,7 +21,7 @@ const params = (type = 'default', state, tag = {}) => ({
 })[type]
 
 const onDelete = (type = 'default', params = [], deleted_element) => ({
-  provision: {...params, ids_checked: params.ids_checked.filter(element => element !== deleted_element)},
+  provision: {...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element)},
   default: params,
 })[type]
 
@@ -85,7 +85,7 @@ TaggingWrapper.propTypes = {
   urls: PropTypes.shape({
     cancel_url: PropTypes.string.isRequired,
     save_url: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   tags: PropTypes.shape({
     tags: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,

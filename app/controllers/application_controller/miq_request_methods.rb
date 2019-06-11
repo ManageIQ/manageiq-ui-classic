@@ -986,15 +986,15 @@ module ApplicationController::MiqRequestMethods
   def build_tags_tree(wf, vm_tags, edit_mode)
     # for some reason @tags is set in wf, and it is changed by map bellow which causes bugs
     wf.instance_variable_set(:@tags, nil)
-    tags = wf.allowed_tags
-    tags.each do |cat|
-      cat[:values] = cat[:children].map do |tag|
-        { :id => tag.first, :description => tag.second[:description] }
-      end
-      cat[:id] = cat[:name]
-      cat[:singleValue] = cat[:single_value]
-      cat.delete(:children)
-      cat.delete(:name)
+    tags = wf.allowed_tags.map do |cat|
+      {
+        :values      => cat[:children].map do |tag|
+          {:id => tag.first, :description => tag.second[:description]}
+        end,
+        :id          => cat[:name],
+        :description => cat[:description],
+        :singleValue => cat[:single_value],
+      }
     end
 
     assignments = Classification.select { |tag| vm_tags.include?(tag.id) }
@@ -1008,10 +1008,6 @@ module ApplicationController::MiqRequestMethods
       }
     end.uniq
 
-    @button_urls = {
-        :save_url   => '',
-        :cancel_url => ''
-      }
     @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => []}
   end
 

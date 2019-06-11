@@ -31,7 +31,7 @@ it('calls post for UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE action', () => 
   };
   const action = { type: 'UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE', meta: { url: 'url/bla', params: jest.fn() }, tag: {tagCategory: {id: 1}, tagValue: { id:2 }}}
   taggingMiddleware(store)(next)(action);
-  expect(next.mock.calls).toEqual( [[{"meta": {"url": "url/bla", "params": [Function mockConstructor]}, "tag": {"tagCategory": {"id": 1}, "tagValue": {"id": 2}}, "type": "UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE"}]]);
+  expect(next.mock.calls).toEqual( [[{"meta": {"url": "url/bla", "params": jest.fn()}, "tag": {"tagCategory": {"id": 1}, "tagValue": {"id": 2}}, "type": "UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE"}]]);
   expect(spy).toHaveBeenCalledWith("url/bla", {"cat": 1, "check": 1, "id": {}, "tree_typ": "tags", "val": 2});
 });
 
