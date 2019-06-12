@@ -79,7 +79,7 @@
         = check_box_tag("open_url", "1", @edit[:new][:open_url], "data-miq_observe_checkbox" => {:interval => '.5', :url => url}.to_json, disabled: @edit[:new][:disabled_open_url])
         - if @edit[:new][:disabled_open_url]
           .note
-            = _("Only available for VM with \"Display for\" set to \"Single\"")
+            = _("Only available for VM, Provider, Service, User, Group, Tenant, Cloud Tenant and Generic Object with \"Display for\" set to \"Single\"")
     .form-group
       %label.control-label.col-md-2
         = _('Display for')

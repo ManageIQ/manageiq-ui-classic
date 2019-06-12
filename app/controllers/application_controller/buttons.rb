@@ -90,7 +90,9 @@ module ApplicationController::Buttons
     group_create_update("update")
   end
 
-  MODEL_WITH_OPEN_URL = ["Vm"].freeze
+  # Provider, Service, User, Group, Tenant, Cloud Tenant, Generic Object
+  # TODO: test each
+  MODEL_WITH_OPEN_URL = %w(Provider Service User MiqGroup Tenant CloudTenant GenericObject Vm).freeze
 
   def automate_button_field_changed
     unless params[:target_class]
