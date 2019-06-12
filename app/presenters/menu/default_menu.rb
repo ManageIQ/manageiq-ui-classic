@@ -2,16 +2,6 @@
 module Menu
   class DefaultMenu
     class << self
-      def graphql_menu_section
-        return nil unless Rails.env.development?
-        Menu::Section.new(
-          :graphql_explorer,
-          N_("GraphQL"),
-          'fa fa-lightbulb-o',
-          [Menu::Item.new('graphql_explorer', N_('Explorer'), 'product', {:feature => 'product'}, '/graphql_explorer')]
-        )
-      end
-
       def compute_menu_section
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
@@ -31,7 +21,6 @@ module Menu
         Menu::Section.new(:vi, N_("Cloud Intel"), 'fa fa-dashboard', [
           Menu::Item.new('dashboard',  N_('Dashboard'),  'dashboard',  {:feature => 'dashboard_view'},           '/dashboard/show'),
           Menu::Item.new('report',     N_('Reports'),    'miq_report', {:feature => 'miq_report', :any => true}, '/report/explorer'),
-          # Menu::Item.new('usage',    N_('Usage'),      'usage',      {:feature => 'usage'},                    '/report/usage/'), #  / Hiding usage for now - release 5.2
           Settings.product.consumption ? consumption_menu_section : nil,
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
           Menu::Item.new('chargeback', N_('Chargeback'), 'chargeback', {:feature => 'chargeback', :any => true}, '/chargeback/explorer'),
@@ -291,7 +280,7 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
-         monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
+         monitor_menu_section, settings_menu_section, help_menu_section].compact
       end
 
       private
