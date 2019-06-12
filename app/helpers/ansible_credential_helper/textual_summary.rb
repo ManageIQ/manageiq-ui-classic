@@ -9,8 +9,16 @@ module AnsibleCredentialHelper::TextualSummary
     TextualGroup.new(_("Relationships"), %i[repositories])
   end
 
+  def textual_error_missing_attributes
+    {:label => _("Missing API_ATTRIBUTES on class"), :value => @record.type}
+  end
+
   def textual_group_options
     options = []
+
+    unless @record.type.constantize.const_defined?(:API_ATTRIBUTES)
+      return TextualGroup.new(_("Credential Options ERROR"), %i[error_missing_attributes])
+    end
 
     @record.type.constantize::API_ATTRIBUTES.each do |key, value|
       options << key
