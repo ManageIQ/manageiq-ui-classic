@@ -3,6 +3,7 @@
 exports[`Tagging modifier match snapshot 1`] = `
 <StateManager
   className="final-form-select"
+  classNamePrefix="react-select"
   clearable={false}
   defaultInputValue=""
   defaultMenuIsOpen={false}

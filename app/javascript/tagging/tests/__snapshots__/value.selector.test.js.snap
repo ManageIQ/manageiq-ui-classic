@@ -3,6 +3,7 @@
 exports[`match snapshot 1`] = `
 <StateManager
   className="final-form-select"
+  classNamePrefix="react-select"
   clearable={false}
   defaultInputValue=""
   defaultMenuIsOpen={false}
@@ -56,6 +57,7 @@ exports[`match snapshot 1`] = `
 exports[`match snapshot without multiple values 1`] = `
 <StateManager
   className="final-form-select"
+  classNamePrefix="react-select"
   clearable={false}
   defaultInputValue=""
   defaultMenuIsOpen={false}
