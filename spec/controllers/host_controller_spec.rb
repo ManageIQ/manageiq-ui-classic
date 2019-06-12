@@ -134,7 +134,7 @@ describe HostController do
         allow(request).to receive(:parameters).and_return(:pressed => 'vm_miq_request_new')
         controller.instance_variable_set(:@display, 'vms')
         controller.instance_variable_set(:@lastaction, 'show')
-        controller.instance_variable_set(:@_params, :pressed => 'vm_miq_request_new')
+        controller.params = {:pressed => 'vm_miq_request_new'}
       end
 
       it 'calls render_or_redirect_partial method' do
@@ -366,16 +366,15 @@ describe HostController do
   describe "#set_credentials" do
     let(:mocked_host) { double(Host) }
     it "uses params[:default_password] for validation if one exists" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
-                                       :default_password => "default_password2")
+      controller.params = {:default_userid   => "default_userid",
+                           :default_password => "default_password2"}
       creds = {:userid => "default_userid", :password => "default_password2"}
       expect(mocked_host).to receive(:update_authentication).with({:default => creds}, {:save => false})
       expect(controller.send(:set_credentials, mocked_host, :validate)).to include(:default => creds)
     end
 
     it "uses the stored password for validation if params[:default_password] does not exist" do
-      controller.instance_variable_set(:@_params, :default_userid => "default_userid")
+      controller.params = {:default_userid => "default_userid"}
       expect(mocked_host).to receive(:authentication_password).and_return('default_password')
       creds = {:userid => "default_userid", :password => "default_password"}
       expect(mocked_host).to receive(:update_authentication).with({:default => creds}, {:save => false})
@@ -383,11 +382,10 @@ describe HostController do
     end
 
     it "uses the passwords from param for validation if they exist" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
-                                       :default_password => "default_password2",
-                                       :remote_userid    => "remote_userid",
-                                       :remote_password  => "remote_password2")
+      controller.params = {:default_userid   => "default_userid",
+                           :default_password => "default_password2",
+                           :remote_userid    => "remote_userid",
+                           :remote_password  => "remote_password2"}
       default_creds = {:userid => "default_userid", :password => "default_password2"}
       remote_creds = {:userid => "remote_userid", :password => "remote_password2"}
       expect(mocked_host).to receive(:update_authentication).with({:default => default_creds,
@@ -398,9 +396,8 @@ describe HostController do
     end
 
     it "uses the stored passwords for validation if passwords dont exist in params" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid => "default_userid",
-                                       :remote_userid  => "remote_userid",)
+      controller.params = {:default_userid => "default_userid",
+                           :remote_userid  => "remote_userid"}
       expect(mocked_host).to receive(:authentication_password).and_return('default_password')
       expect(mocked_host).to receive(:authentication_password).with(:remote).and_return('remote_password')
       default_creds = {:userid => "default_userid", :password => "default_password"}
@@ -413,11 +410,10 @@ describe HostController do
     end
 
     it "uses the stored passwords/passwords from params to do validation" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => "default_userid",
-                                       :default_password => "default_password2",
-                                       :ws_userid        => "ws_userid",
-                                       :ipmi_userid      => "ipmi_userid")
+      controller.params = {:default_userid   => "default_userid",
+                           :default_password => "default_password2",
+                           :ws_userid        => "ws_userid",
+                           :ipmi_userid      => "ipmi_userid"}
       expect(mocked_host).to receive(:authentication_password).with(:ws).and_return('ws_password')
       expect(mocked_host).to receive(:authentication_password).with(:ipmi).and_return('ipmi_password')
       default_creds = {:userid => "default_userid", :password => "default_password2"}

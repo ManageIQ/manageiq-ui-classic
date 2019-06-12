@@ -104,13 +104,12 @@ describe EmsContainerController do
       def test_creating(emstype)
         raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
-        controller.instance_variable_set(:@_params,
-                                         :name             => 'NimiCule',
-                                         :default_userid   => '_',
-                                         :default_hostname => 'mytest.com',
-                                         :default_api_port => '8443',
-                                         :default_password => 'valid-token',
-                                         :emstype          => emstype)
+        controller.params = {:name             => 'NimiCule',
+                             :default_userid   => '_',
+                             :default_hostname => 'mytest.com',
+                             :default_api_port => '8443',
+                             :default_password => 'valid-token',
+                             :emstype          => emstype}
         controller.send(:set_ems_record_vars, @ems)
         expect(@flash_array).to be_nil
       end
@@ -134,18 +133,18 @@ describe EmsContainerController do
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params, :name                      => 'EMS 2',
-                                                      :default_userid            => '_',
-                                                      :default_hostname          => '10.10.10.11',
-                                                      :default_api_port          => '5000',
-                                                      :default_security_protocol => 'ssl-with-validation-custom-ca',
-                                                      :default_tls_ca_certs      => '-----BEGIN DUMMY...',
-                                                      :default_password          => 'valid-token',
-                                                      :metrics_selection         => 'hawkular',
-                                                      :metrics_hostname          => '10.10.10.10',
-                                                      :metrics_api_port          => '8443',
-                                                      :metrics_security_protocol => 'ssl-with-validation',
-                                                      :emstype                   => @type)
+          controller.params = {:name                      => 'EMS 2',
+                               :default_userid            => '_',
+                               :default_hostname          => '10.10.10.11',
+                               :default_api_port          => '5000',
+                               :default_security_protocol => 'ssl-with-validation-custom-ca',
+                               :default_tls_ca_certs      => '-----BEGIN DUMMY...',
+                               :default_password          => 'valid-token',
+                               :metrics_selection         => 'hawkular',
+                               :metrics_hostname          => '10.10.10.10',
+                               :metrics_api_port          => '8443',
+                               :metrics_security_protocol => 'ssl-with-validation',
+                               :emstype                   => @type}
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           cc = @ems.connection_configurations
@@ -166,7 +165,7 @@ describe EmsContainerController do
 
         def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
-          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
+          controller.params = {:name => 'EMS 3', :default_userid => '_'}
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
@@ -194,8 +193,7 @@ describe EmsContainerController do
         it 'updates provider options' do
           @type = 'openshift'
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
-          controller.instance_variable_set(:@_params,
-                                           :provider_options_image_inspector_options_http_proxy => "example.com")
+          controller.params = {:provider_options_image_inspector_options_http_proxy => "example.com"}
           controller.send(:set_ems_record_vars, @ems)
           expect(@ems.options[:image_inspector_options][:http_proxy]).to eq("example.com")
         end
@@ -240,7 +238,7 @@ describe EmsContainerController do
           allow(controller).to receive(:javascript_redirect)
           allow(controller).to receive(:performed?).and_return(true)
           controller.instance_variable_set(:@display, display)
-          controller.instance_variable_set(:@_params, :pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id)
+          controller.params = {:pressed => press, :miq_grid_checks => item.id.to_s, :id => provider.id}
           controller.instance_variable_set(:@breadcrumbs, [])
         end
 

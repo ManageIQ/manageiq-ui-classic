@@ -269,11 +269,10 @@ describe EmsCloudController do
     let(:amqp_creds)    { {:userid => "amqp_userid",    :password => "amqp_password"} }
 
     it "uses the passwords from params for validation if they exist" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid   => default_creds[:userid],
-                                       :default_password => default_creds[:password],
-                                       :amqp_userid      => amqp_creds[:userid],
-                                       :amqp_password    => amqp_creds[:password])
+      controller.params = {:default_userid   => default_creds[:userid],
+                           :default_password => default_creds[:password],
+                           :amqp_userid      => amqp_creds[:userid],
+                           :amqp_password    => amqp_creds[:password]}
       expect(mocked_ems).to receive(:supports_authentication?).with(:amqp).and_return(true)
       expect(mocked_ems).to receive(:supports_authentication?).with(:oauth)
       expect(mocked_ems).to receive(:supports_authentication?).with(:auth_key)
@@ -281,9 +280,8 @@ describe EmsCloudController do
     end
 
     it "uses the stored passwords for validation if passwords dont exist in params" do
-      controller.instance_variable_set(:@_params,
-                                       :default_userid => default_creds[:userid],
-                                       :amqp_userid    => amqp_creds[:userid])
+      controller.params = {:default_userid => default_creds[:userid],
+                           :amqp_userid    => amqp_creds[:userid]}
       expect(mocked_ems).to receive(:authentication_password).and_return(default_creds[:password])
       expect(mocked_ems).to receive(:authentication_password).with(:amqp).and_return(amqp_creds[:password])
       expect(mocked_ems).to receive(:supports_authentication?).with(:amqp).and_return(true)
@@ -300,7 +298,7 @@ describe EmsCloudController do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
       allow(controller).to receive(:find_record_with_rbac).and_return(mocked_ems)
-      controller.instance_variable_set(:@_params, :button => "validate", :id => mocked_ems.id, :cred_type => "default")
+      controller.params = {:button => "validate", :id => mocked_ems.id, :cred_type => "default"}
 
       expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
       controller.send(:update_ems_button_validate)
@@ -311,7 +309,7 @@ describe EmsCloudController do
     let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default"} }
     before do
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params, mocked_params)
+      controller.params = mocked_params
       allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_class)
     end
 
@@ -503,7 +501,7 @@ describe EmsCloudController do
     end
 
     it "redirects to requests show list after dialog is submitted" do
-      controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
+      controller.params = {:button => 'submit', :id => 'foo'}
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(wf).to receive(:submit_request).and_return({})
       page = double('page')

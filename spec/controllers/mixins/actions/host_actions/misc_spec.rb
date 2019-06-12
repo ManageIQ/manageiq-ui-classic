@@ -12,7 +12,7 @@ describe Mixins::Actions::HostActions::Misc do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
       allow(controller).to receive(:process_hosts).with([host.id], 'refresh_ems', 'Refresh')
-      controller.instance_variable_set(:@_params, :id => Host.all.ids)
+      controller.params = {:id => Host.all.ids}
     end
 
     it "tests that find_records_with_rbac is called and does not fail" do

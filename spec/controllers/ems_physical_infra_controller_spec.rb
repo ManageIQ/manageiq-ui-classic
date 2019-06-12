@@ -113,15 +113,13 @@ describe EmsPhysicalInfraController do
       let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
 
       it "uses the passwords from params for validation if they exist" do
-        controller.instance_variable_set(:@_params,
-                                         :default_userid   => default_creds[:userid],
-                                         :default_password => default_creds[:password])
+        controller.params = {:default_userid   => default_creds[:userid],
+                             :default_password => default_creds[:password]}
         expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
       end
 
       it "uses the stored passwords for validation if passwords dont exist in params" do
-        controller.instance_variable_set(:@_params,
-                                         :default_userid => default_creds[:userid])
+        controller.params = {:default_userid => default_creds[:userid]}
         expect(@ems).to receive(:authentication_password).and_return(default_creds[:password])
         expect(controller.send(:build_credentials, @ems, :validate)).to eq(:default => default_creds.merge!(:save => false))
       end

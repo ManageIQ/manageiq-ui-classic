@@ -205,7 +205,7 @@ describe NetworkRouterController do
     before do
       stub_user(:features => :all)
       setup_zone
-      controller.instance_variable_set(:@_params, :id => router.id)
+      controller.params = {:id => router.id}
       controller.instance_variable_set(:@lastaction, "show")
       controller.instance_variable_set(:@layout, "network_router")
     end
@@ -247,9 +247,8 @@ describe NetworkRouterController do
 
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        controller.instance_variable_set(:@_params,
-                                         :pressed => "network_router_delete",
-                                         :id      => @router.id)
+        controller.params = {:pressed => "network_router_delete",
+                             :id      => @router.id}
         controller.instance_variable_set(:@lastaction, "show")
         controller.instance_variable_set(:@layout, "network_router")
         controller.instance_variable_set(:@breadcrumbs, [{:name => "foo", :url => "network_router/show_list"}, {:name => "bar", :url => "network_router/show"}])
@@ -300,7 +299,7 @@ describe NetworkRouterController do
         stub_user(:features => :all)
         allow(controller).to receive(:drop_breadcrumb)
         controller.instance_variable_set(:@router, @router)
-        controller.instance_variable_set(:@_params, :id => @router.id)
+        controller.params = {:id => @router.id}
         controller.send(:add_interface_select)
         subnet_choices = controller.instance_variable_get(:@subnet_choices)
 
@@ -316,7 +315,7 @@ describe NetworkRouterController do
         before do
           allow(controller).to receive(:drop_breadcrumb)
           controller.instance_variable_set(:@router, @router)
-          controller.instance_variable_set(:@_params, :id => @router.id)
+          controller.params = {:id => @router.id}
 
           @router.tag_with(tag, :ns => '')
           subnet_2.tag_with(tag, :ns => '')
@@ -331,7 +330,7 @@ describe NetworkRouterController do
 
         it 'list subnet choices' do
           controller.instance_variable_set(:@router, @router)
-          controller.instance_variable_set(:@_params, :id => @router.id)
+          controller.params = {:id => @router.id}
 
           controller.send(:add_interface_select)
           subnet_choices = controller.instance_variable_get(:@subnet_choices)
@@ -401,7 +400,7 @@ describe NetworkRouterController do
 
   describe '#button' do
     before do
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'tagging instances from a list of instances, accessed from the details page of a network router' do

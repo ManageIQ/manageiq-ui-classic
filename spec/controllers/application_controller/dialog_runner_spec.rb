@@ -146,7 +146,7 @@ describe CatalogController do
     end
 
     it "redirects to requests show list after the dialog is submitted if a request is created" do
-      controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
+      controller.params = {:button => 'submit', :id => 'foo'}
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(wf).to receive(:submit_request).and_return(:request => workflow.make_request(nil, {}))
       page = double('page')
@@ -159,7 +159,7 @@ describe CatalogController do
     end
 
     it "stay on the current model page after the dialog is submitted if a request is not created" do
-      controller.instance_variable_set(:@_params, :button => 'submit', :id => 'foo')
+      controller.params = {:button => 'submit', :id => 'foo'}
       st = FactoryBot.create(:service_template)
       controller.x_node = "xx-st st-#{st.id}"
       allow(controller).to receive(:role_allows?).and_return(true)

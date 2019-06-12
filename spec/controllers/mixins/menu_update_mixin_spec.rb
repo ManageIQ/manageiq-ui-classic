@@ -13,7 +13,7 @@ describe Mixins::MenuUpdateMixin do
     end
 
     it "updates session[:tab_url]" do
-      controller.instance_variable_set(:@_params, :section => :vi, :url => '/url/after%26')
+      controller.params = {:section => :vi, :url => '/url/after%26'}
       controller.send(:menu_section_url)
       expect(session[:tab_url][:vi]).to eq('/url/after&')
     end

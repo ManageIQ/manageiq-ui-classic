@@ -68,9 +68,9 @@ describe OpsController do
       old_groups = user.miq_groups.pluck(:id).sort
       existing_user_edit(user, :group => "")
 
-      controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'save', # attempt to save
-                                                  :id     => user.id)
+      controller.params = {:typ    => nil,
+                           :button => 'save', # attempt to save
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the unset group in the first place
@@ -87,9 +87,9 @@ describe OpsController do
       existing_user_edit(user, :group => group.id.to_s,
                                :name  => "") # fails record.valid?
 
-      controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+      controller.params = {:typ    => nil,
+                           :button => 'save',
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it complains about the name
@@ -108,9 +108,9 @@ describe OpsController do
     it "updates record even for existing users" do
       existing_user_edit(user, :name => "changed")
 
-      controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+      controller.params = {:typ    => nil,
+                           :button => 'save',
+                           :id     => user.id}
 
       controller.send(:rbac_edit_save_or_add, 'user')
 
@@ -137,8 +137,8 @@ describe OpsController do
         :verify   => "foo",
       )
 
-      controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'add')
+      controller.params = {:typ    => nil,
+                           :button => 'add'}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success
@@ -153,9 +153,9 @@ describe OpsController do
     it "should set current_group when editing" do
       existing_user_edit(user, :group => group.id.to_s)
 
-      controller.instance_variable_set(:@_params, :typ    => nil,
-                                                  :button => 'save',
-                                                  :id     => user.id)
+      controller.params = {:typ    => nil,
+                           :button => 'save',
+                           :id     => user.id}
       controller.send(:rbac_edit_save_or_add, 'user')
 
       # make sure it returned success

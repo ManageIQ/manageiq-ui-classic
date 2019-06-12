@@ -9,7 +9,7 @@ describe ApplicationController do
       login_as admin_user
       allow(User).to receive(:current_user).and_return(admin_user)
       allow(controller).to receive(:assert_privileges)
-      controller.instance_variable_set(:@_params, :id=> host.id)
+      controller.params = {:id=> host.id}
     end
 
     it "redirects to protect" do
@@ -41,7 +41,7 @@ describe ApplicationController do
   describe '#policy_sim_build_screen' do
     before do
       allow(controller).to receive(:session).and_return(:tag_items => [vm], :tag_db => VmOrTemplate)
-      controller.instance_variable_set(:@_params, :controller => vm_ctrl)
+      controller.params = {:controller => vm_ctrl}
     end
 
     context 'VM policy simulation and non explorer screen' do

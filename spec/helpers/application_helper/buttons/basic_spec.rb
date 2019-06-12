@@ -23,13 +23,13 @@ describe ApplicationHelper::Button::Basic do
     end
 
     it "doesn't displays button Manage Tenant Quota for alpha tenant without tenant product permission for alpha tenant" do
-      controller.instance_variable_set(:@_params, :id => "tn-#{tenant_alpha.id}")
+      controller.params = {:id => "tn-#{tenant_alpha.id}"}
 
       expect(button.role_allows_feature?).to be_falsey
     end
 
     it "displays button Manage Tenant Quota from a tenant omega with tenant product permission for omega tenant" do
-      controller.instance_variable_set(:@_params, :id => "tn-#{tenant_omega.id}")
+      controller.params = {:id => "tn-#{tenant_omega.id}"}
 
       expect(button.role_allows_feature?).to be_truthy
     end

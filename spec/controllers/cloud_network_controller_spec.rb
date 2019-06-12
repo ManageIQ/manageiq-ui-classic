@@ -211,9 +211,8 @@ describe CloudNetworkController do
     before do
       stub_user(:features => :all)
       session[:cloud_network_lastaction] = 'show'
-      controller.instance_variable_set(:@_params,
-                                       :pressed => "cloud_network_delete",
-                                       :id      => network.id)
+      controller.params = {:pressed => "cloud_network_delete",
+                           :id      => network.id}
       controller.instance_variable_set(:@breadcrumbs, [{:url => "cloud_network/show_list"}, 'placeholder'])
     end
 
@@ -230,7 +229,7 @@ describe CloudNetworkController do
   end
 
   describe '#button' do
-    before { controller.instance_variable_set(:@_params, params) }
+    before { controller.params = params }
 
     context 'tagging instances from a list of instances, accessed from the details page of a network' do
       let(:params) { {:pressed => "instance_tag"} }
@@ -256,7 +255,7 @@ describe CloudNetworkController do
   describe "#delete_networks" do
     before do
       login_as FactoryBot.create(:user, :role => "super_administrator")
-      controller.instance_variable_set(:@_params, :id => network.id, :pressed => 'cloud_network_delete')
+      controller.params = {:id => network.id, :pressed => 'cloud_network_delete'}
       allow(controller).to receive(:process_cloud_networks).with([network], "destroy")
     end
 

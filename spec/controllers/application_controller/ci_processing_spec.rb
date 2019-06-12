@@ -39,7 +39,7 @@ describe ApplicationController do
 
     context 'the UI action is also a queryable feature' do
       before do
-        controller.instance_variable_set(:@_params, :id => record.id)
+        controller.params = {:id => record.id}
         allow(controller).to receive(:render)
       end
 
@@ -57,7 +57,7 @@ describe ApplicationController do
 
     context 'the UI action is not a queryable feature' do
       before do
-        controller.instance_variable_set(:@_params, :id => record.id)
+        controller.params = {:id => record.id}
         allow(controller).to receive(:render)
       end
 
@@ -599,7 +599,7 @@ describe ApplicationController do
 
   it "Certain actions should not be allowed for a MiqTemplate record" do
     template = FactoryBot.create(:template_vmware)
-    controller.instance_variable_set(:@_params, :id => template.id)
+    controller.params = {:id => template.id}
     actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
       expect(controller).to receive(:render)
@@ -613,7 +613,7 @@ describe ApplicationController do
     feature = MiqProductFeature.find_all_by_identifier(["everything"])
     login_as FactoryBot.create(:user, :features => feature)
     vm = FactoryBot.create(:vm_vmware)
-    controller.instance_variable_set(:@_params, :id => vm.id)
+    controller.params = {:id => vm.id}
     actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
       expect(controller).to receive(:render)
@@ -625,7 +625,7 @@ describe ApplicationController do
   context "Verify the reconfigurable flag for VMs" do
     it "Reconfigure VM action should be allowed only for a VM marked as reconfigurable" do
       vm = FactoryBot.create(:vm_vmware)
-      controller.instance_variable_set(:@_params, :id => vm.id)
+      controller.params = {:id => vm.id}
       record = controller.send(:get_record, "vm")
       action = :vm_reconfigure
       expect(controller).to receive(:render)
@@ -637,7 +637,7 @@ describe ApplicationController do
     end
     it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
       vm = FactoryBot.create(:vm_microsoft)
-      controller.instance_variable_set(:@_params, :id => vm.id)
+      controller.params = {:id => vm.id}
       record = controller.send(:get_record, "vm")
       action = :vm_reconfigure
       expect(controller).to receive(:render)
@@ -686,14 +686,13 @@ describe ApplicationController do
       from_first = "1"
       from_second = "1"
       from_third = "1"
-      controller.instance_variable_set(:@_params,
-                                       :from_first                   => from_first,
-                                       :from_second                  => from_second,
-                                       :from_third                   => from_third,
-                                       :from_fourth                  => "1",
-                                       :to_fourth                    => "0",
-                                       "discover_type_virtualcenter" => "1",
-                                       "start"                       => "45")
+      controller.params = {:from_first                   => from_first,
+                           :from_second                  => from_second,
+                           :from_third                   => from_third,
+                           :from_fourth                  => "1",
+                           :to_fourth                    => "0",
+                           "discover_type_virtualcenter" => "1",
+                           "start"                       => "45"}
       allow(controller).to receive(:drop_breadcrumb)
       expect(controller).to receive(:render)
       controller.send(:discover)
@@ -737,7 +736,7 @@ describe ApplicationController do
   describe "#get_record" do
     it "use passed in db to set class for identify_record call" do
       host = FactoryBot.create(:host)
-      controller.instance_variable_set(:@_params, :id => host.id)
+      controller.params = {:id => host.id}
       record = controller.send(:get_record, "host")
       expect(record).to be_a_kind_of(Host)
     end
@@ -771,7 +770,7 @@ describe ApplicationController do
       @vm_or_template = FactoryBot.create(:vm_or_template)
       @ownership_items = [@vm_or_template.id]
       login_as(admin_user)
-      controller.instance_variable_set(:@_params, :controller => 'vm_or_template')
+      controller.params = {:controller => 'vm_or_template'}
       controller.instance_variable_set(:@user, nil)
 
       controller.build_ownership_info(@ownership_items)
@@ -876,7 +875,7 @@ describe HostController do
     it "when the vm_or_template supports scan,  returns false" do
       vm1 =  FactoryBot.create(:vm_microsoft)
       vm2 =  FactoryBot.create(:vm_vmware)
-      controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm1.id}, #{vm2.id}")
+      controller.params = {:miq_grid_checks => "#{vm1.id}, #{vm2.id}"}
       controller.send(:generic_button_operation,
                       'scan',
                       "Smartstate Analysis",
@@ -889,7 +888,7 @@ describe HostController do
       vm = FactoryBot.create(:vm_vmware,
                               :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                               :storage               => FactoryBot.create(:storage))
-      controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
+      controller.params = {:miq_grid_checks => vm.id.to_s}
       process_proc = controller.send(:vm_button_action)
       expect(process_proc).to receive(:call)
       controller.send(:generic_button_operation,
@@ -920,7 +919,7 @@ describe ServiceController do
                                     :storage               => FactoryBot.create(:storage))
       service.update_attribute(:id, template.id)
       service.reload
-      controller.instance_variable_set(:@_params, :miq_grid_checks => service.id.to_s)
+      controller.params = {:miq_grid_checks => service.id.to_s}
       expect(controller).to receive(:show_list)
       process_proc = controller.send(:vm_button_action)
       controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
@@ -945,9 +944,8 @@ describe MiqTemplateController do
       template = FactoryBot.create(:template,
                                     :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                                     :storage               => FactoryBot.create(:storage))
-      controller.instance_variable_set(:@_params,
-                                       :miq_grid_checks => template.id.to_s,
-                                       :pressed         => 'miq_template_set_ownership')
+      controller.params = {:miq_grid_checks => template.id.to_s,
+                           :pressed         => 'miq_template_set_ownership'}
       expect(controller).to receive(:javascript_redirect).with(:controller => "miq_template",
                                                                :action     => 'ownership',
                                                                :rec_ids    => [template.id],
@@ -982,7 +980,7 @@ describe VmOrTemplateController do
         :ext_management_system => FactoryBot.create(:ems_openstack_infra),
         :storage               => FactoryBot.create(:storage)
       )
-      controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
+      controller.params = {:miq_grid_checks => "#{vm.id}, #{template.id}"}
       process_proc = controller.send(:vm_button_action)
       redirect_details = {
         :redirect => {
@@ -1002,7 +1000,7 @@ describe VmOrTemplateController do
         :storage               => FactoryBot.create(:storage)
       )
 
-      controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
+      controller.params = {:miq_grid_checks => vm.id.to_s}
       expect(controller).to receive(:show_list)
       process_proc = controller.send(:vm_button_action)
       controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc)
@@ -1028,7 +1026,7 @@ describe OrchestrationStackController do
     it "should render error flash message if OrchestrationStack doesn't exist" do
       id = orchestration_stack_deleted.id
       orchestration_stack_deleted.destroy
-      controller.instance_variable_set(:@_params, :miq_grid_checks => id.to_s) # Orchestration Stack id that doesn't exist
+      controller.params = {:miq_grid_checks => id.to_s} # Orchestration Stack id that doesn't exist
       expect(controller).to receive(:show_list)
       controller.send('orchestration_stack_delete')
       flash_messages = assigns(:flash_array)
@@ -1037,7 +1035,7 @@ describe OrchestrationStackController do
     end
 
     it "should render success flash message if OrchestrationStack deletion was initiated" do
-      controller.instance_variable_set(:@_params, :miq_grid_checks => orchestration_stack.id.to_s) # Orchestration Stack id that exists
+      controller.params = {:miq_grid_checks => orchestration_stack.id.to_s} # Orchestration Stack id that exists
       expect(controller).to receive(:show_list)
       controller.send('orchestration_stack_delete')
       flash_messages = assigns(:flash_array)
@@ -1071,7 +1069,7 @@ end
 describe VmInfraController do
   describe '#testable_action' do
     before do
-      controller.instance_variable_set(:@_params, :controller => 'vm_infra')
+      controller.params = {:controller => 'vm_infra'}
     end
 
     context 'power operations and vm infra controller' do

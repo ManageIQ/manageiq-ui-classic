@@ -54,7 +54,7 @@ describe ApplicationController, "::Filter" do
       edit = {:filter_expression => exp}
       edit[:new] = {:filter_expression => {:test => "foo", :token => 1}}
       session[:edit] = edit
-      controller.instance_variable_set(:@_params, :pressed => "discard")
+      controller.params = {:pressed => "discard"}
       controller.instance_variable_set(:@expkey, :filter_expression)
       expect(controller).to receive(:render)
       controller.send(:exp_button)
@@ -66,7 +66,7 @@ describe ApplicationController, "::Filter" do
       edit = {:expression => expression, :edit_exp => exp}
       edit[:new] = {:expression => {:test => "foo", :token => 1}}
       session[:edit] = edit
-      controller.instance_variable_set(:@_params, :pressed => "discard")
+      controller.params = {:pressed => "discard"}
       controller.instance_variable_set(:@expkey, :expression)
       expect(controller).to receive(:render)
       controller.send(:exp_button)
@@ -85,7 +85,7 @@ describe ApplicationController, "::Filter" do
       login_as user
       controller.instance_variable_set(:@settings, {})
       controller.instance_variable_set(:@_response, double.as_null_object)
-      controller.instance_variable_set(:@_params, :id => search.id)
+      controller.params = {:id => search.id}
       session[:view] = controller.send(:get_db_view, Host)
 
       controller.send(:save_default_search)

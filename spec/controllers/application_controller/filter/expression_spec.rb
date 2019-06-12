@@ -56,16 +56,16 @@ describe ApplicationController::Filter do
         edit[:new] = {:record_filter => {:test => "foo", :token => 1}}
         session[:edit] = edit
         controller.instance_variable_set(:@expkey, :record_filter)
-        controller.instance_variable_set(:@_params, :chosen_field => "PolicyEvent-chain_id")
+        controller.params = {:chosen_field => "PolicyEvent-chain_id"}
         expect(controller).to receive(:render)
         controller.send(:exp_changed)
         expect(expression.exp_key).to eq('=')
-        controller.instance_variable_set(:@_params, :chosen_field => "PolicyEvent.miq_actions-created_on")
+        controller.params = {:chosen_field => "PolicyEvent.miq_actions-created_on"}
         expect(controller).to receive(:render)
         controller.send(:exp_changed)
         expect(expression.exp_key).to eq('IS')
         controller.instance_variable_set(:@expkey, :record_filter)
-        controller.instance_variable_set(:@_params, :chosen_field => "Flavor.cloud_tenants-id")
+        controller.params = {:chosen_field => "Flavor.cloud_tenants-id"}
         expect(controller).to receive(:render)
         controller.send(:exp_changed)
         expect(expression.exp_key).to_not eq('CONTAINS')

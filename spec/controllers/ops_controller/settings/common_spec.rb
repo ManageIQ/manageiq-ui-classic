@@ -159,7 +159,7 @@ describe OpsController do
                                                :active_tree => :settings_tree,
                                                :active_tab  => 'settings_rhn_edit')
         allow(controller).to receive(:x_node).and_return("root")
-        controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
+        controller.params = {:id => 'rhn_edit', :button => "save"}
       end
 
       it "won't render form buttons after rhn settings submission" do
@@ -195,18 +195,16 @@ describe OpsController do
       end
 
       it "sets ldap_role to false to make forest entries div hidden" do
-        controller.instance_variable_set(:@_params,
-                                         :id                  => 'authentication',
-                                         :authentication_mode => 'database')
+        controller.params = {:id                  => 'authentication',
+                             :authentication_mode => 'database'}
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
       end
 
       it "resets ldap_role to it's original state so forest entries div can be displayed" do
         session[:edit][:new][:authentication][:mode] = 'database'
-        controller.instance_variable_set(:@_params,
-                                         :id                  => 'authentication',
-                                         :authentication_mode => 'ldap')
+        controller.params = {:id                  => 'authentication',
+                             :authentication_mode => 'ldap'}
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
       end
@@ -219,7 +217,7 @@ describe OpsController do
         let(:params) { {:replication_type => "remote"} }
 
         it "queues operation to set the region as a remote type" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args).to eq([:remote])
@@ -233,7 +231,7 @@ describe OpsController do
         let(:params)        { {:replication_type => "global", :subscriptions => subscriptions} }
 
         it "queues operation to save and/or remove subscriptions settings for the global region" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           expect(queue_item.args[0][0].dbname).to eq(db_save)
@@ -243,7 +241,7 @@ describe OpsController do
         it "encrypts subscription's password before queuing save operation" do
           password = "some_password"
           subscriptions["0"] = {"password" => password}
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           queued_password = queue_item.args[0][0].password
@@ -256,7 +254,7 @@ describe OpsController do
         let(:params) { {:replication_type => "none"} }
 
         it "queues operations to set replication to none" do
-          controller.instance_variable_set(:@_params, params)
+          controller.params = params
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args[0]).to eq(:none)
@@ -349,8 +347,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
                                            :selected_server_id => miq_server.id)
-          controller.instance_variable_set(:@_params,
-                                           :id => 'advanced')
+          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
           controller.instance_variable_set(:@edit,
                                            :new     => {:file_data => data},
@@ -371,8 +368,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_advanced',
                                            :selected_server_id => zone.id)
-          controller.instance_variable_set(:@_params,
-                                           :id => 'advanced')
+          controller.params = {:id => 'advanced'}
           data = {:api => {:token_ttl => "1.day"}}.to_yaml
           controller.instance_variable_set(:@edit,
                                            :new     => {:file_data => data},
@@ -395,11 +391,10 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_workers',
                                            :selected_server_id => @miq_server.id)
-          controller.instance_variable_set(:@_params,
-                                           :action     => 'settings_update',
-                                           :button     => 'save',
-                                           :controller => 'ops',
-                                           :id         => 'workers')
+          controller.params = {:action     => 'settings_update',
+                               :button     => 'save',
+                               :controller => 'ops',
+                               :id         => 'workers'}
           @updated_memory_threshold = 600.megabytes
           @new = ::Settings.to_hash
           @new[:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold] = @updated_memory_threshold
@@ -427,8 +422,7 @@ describe OpsController do
           controller.instance_variable_set(:@sb,
                                            :active_tab         => 'settings_server',
                                            :selected_server_id => @miq_server.id)
-          controller.instance_variable_set(:@_params,
-                                           :id => 'server')
+          controller.params = {:id => 'server'}
           @current = ::Settings.to_hash
           @new = ::Settings.to_hash
           @new[:server][:name] = ''

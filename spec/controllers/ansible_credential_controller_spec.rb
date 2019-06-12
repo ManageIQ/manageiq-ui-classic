@@ -34,7 +34,7 @@ describe AnsibleCredentialController do
 
   describe '#button' do
     before do
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
     end
 
     context 'adding a new ansible credential' do

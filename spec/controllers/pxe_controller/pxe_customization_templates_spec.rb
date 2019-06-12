@@ -18,8 +18,8 @@ describe PxeController do
       }
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
-      controller.instance_variable_set(:@_params,                                           :id     => customization_template.id,
-                                                                                            :button => "reset")
+      controller.params = {:id     => customization_template.id,
+                           :button => "reset"}
       expect(controller).to receive(:customization_template_edit)
       controller.template_create_update
       expect(assigns(:flash_array).first[:message]).to include("reset")

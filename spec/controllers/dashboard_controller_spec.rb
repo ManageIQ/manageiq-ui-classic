@@ -400,7 +400,7 @@ describe DashboardController do
     before do
       login_as user
 
-      controller.instance_variable_set(:@_params, :tab => wset.id)
+      controller.params = {:tab => wset.id}
       controller.instance_variable_set(
         :@sb,
         :active_db  => wset.name, :active_db_id => wset.id,
@@ -531,7 +531,7 @@ describe DashboardController do
 
       before do
         login_as user
-        controller.instance_variable_set(:@_params, 'uib-tab' => ws2.id.to_s)
+        controller.params = {'uib-tab' => ws2.id.to_s}
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@current_user, user)
         group.update_attributes(:settings => { :dashboard_order => [ws1.id.to_s, ws2.id.to_s] })

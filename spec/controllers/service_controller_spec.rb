@@ -33,7 +33,7 @@ describe ServiceController do
       allow(service_template).to receive(:resource_actions).and_return(ar_association_dummy)
       allow(ar_association_dummy).to receive(:find_by).with(:action => 'Reconfigure').and_return(resource_action)
       allow(controller).to receive(:replace_right_cell)
-      controller.instance_variable_set(:@_params, :id => 321)
+      controller.params = {:id => 321}
     end
 
     it "sets the right cell text" do
@@ -66,7 +66,7 @@ describe ServiceController do
       allow(controller).to receive(:replace_right_cell)
 
       # Now delete the Service
-      controller.instance_variable_set(:@_params, :id => svc.id)
+      controller.params = {:id => svc.id}
       controller.send(:service_delete)
 
       # Check for Service Description to be part of flash message displayed
@@ -81,7 +81,7 @@ describe ServiceController do
       allow(controller).to receive(:x_build_tree)
       controller.instance_variable_set(:@settings, {})
       controller.instance_variable_set(:@sb, {})
-      controller.instance_variable_set(:@_params, :id => service.id)
+      controller.params = {:id => service.id}
       expect(controller).to receive(:render)
       expect(response.status).to eq(200)
       controller.send(:service_delete)
@@ -96,7 +96,7 @@ describe ServiceController do
 
       before do
         allow(controller).to receive(:replace_right_cell)
-        controller.instance_variable_set(:@_params, :id => service.id)
+        controller.params = {:id => service.id}
       end
 
       it 'sets x_node to return to Active Services' do
@@ -416,7 +416,7 @@ describe ServiceController do
 
       before do
         allow(controller).to receive(:session).and_return(s)
-        controller.instance_variable_set(:@_params, :action => 'tree_select')
+        controller.params = {:action => 'tree_select'}
         controller.instance_variable_set(:@sb, {})
       end
 

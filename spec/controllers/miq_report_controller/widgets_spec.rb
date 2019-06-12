@@ -21,7 +21,7 @@ describe ReportController do
 
     context "add new widget" do
       before do
-        controller.instance_variable_set(:@_params, :button => "add")
+        controller.params = {:button => "add"}
       end
 
       context "valid attributes" do

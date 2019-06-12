@@ -268,7 +268,7 @@ describe MiqPolicyController do
       let(:tree) { :any_tree }
 
       before do
-        controller.instance_variable_set(:@_params, :action => 'adv_search_text_clear')
+        controller.params = {:action => 'adv_search_text_clear'}
         controller.instance_variable_set(:@sb, :active_tree => tree, :pol_search_text => {tree => search})
         controller.instance_variable_set(:@search_text, search)
       end
@@ -352,7 +352,7 @@ describe MiqPolicyController do
 
     before do
       login_as FactoryBot.create(:user, :features => 'condition_remove')
-      controller.instance_variable_set(:@_params, :policy_id => policy.id, :id => condition.id)
+      controller.params = {:policy_id => policy.id, :id => condition.id}
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_node).and_return("pp_pp-1r36_p-#{policy.id}_co-#{condition.id}")
     end

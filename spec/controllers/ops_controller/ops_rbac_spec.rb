@@ -106,7 +106,7 @@ describe OpsController do
           :active_tab  => "rbac_details"
         }
         controller.instance_variable_set(:@sb, sb_hash)
-        controller.instance_variable_set(:@_params, :id => @t.id)
+        controller.params = {:id => @t.id}
         expect(controller).to receive(:render)
       end
 
@@ -191,7 +191,7 @@ describe OpsController do
       end
 
       it "resets tenant manage quotas" do
-        controller.instance_variable_set(:@_params, :id => @tenant.id, :button => "reset")
+        controller.params = {:id => @tenant.id, :button => "reset"}
         expect(controller).to receive(:render)
         expect(response.status).to eq(200)
         controller.send(:rbac_tenant_manage_quotas)
@@ -201,7 +201,7 @@ describe OpsController do
       end
 
       it "cancels tenant manage quotas" do
-        controller.instance_variable_set(:@_params, :id => @tenant.id, :button => "cancel", :divisible => "true")
+        controller.params = {:id => @tenant.id, :button => "cancel", :divisible => "true"}
         expect(controller).to receive(:render)
         expect(response.status).to eq(200)
         controller.send(:rbac_tenant_manage_quotas)
@@ -273,14 +273,14 @@ describe OpsController do
         allow(controller).to receive(:button_url).with("ops", @tenant.id, "save").and_return("save_url")
         allow(controller).to receive(:button_url).with("ops", @tenant.id, "cancel").and_return("cancel_url")
         controller.instance_variable_set(:@sb, :action => "rbac_tenant_tags_edit")
-        controller.instance_variable_set(:@_params, :miq_grid_checks => @tenant.id.to_s)
+        controller.params = {:miq_grid_checks => @tenant.id.to_s}
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array)).to be_nil
         expect(response.status).to eq(200)
       end
 
       it "cancels tags edit" do
-        controller.instance_variable_set(:@_params, :button => "cancel", :id => @tenant.id)
+        controller.params = {:button => "cancel", :id => @tenant.id}
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("was cancelled")
         expect(assigns(:edit)).to be_nil
@@ -290,14 +290,14 @@ describe OpsController do
       it "resets tags edit" do
         allow(controller).to receive(:button_url).with("ops", @tenant.id, "save").and_return("save_url")
         allow(controller).to receive(:button_url).with("ops", @tenant.id, "cancel").and_return("cancel_url")
-        controller.instance_variable_set(:@_params, :button => "reset", :id => @tenant.id)
+        controller.params = {:button => "reset", :id => @tenant.id}
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("All changes have been reset")
         expect(response.status).to eq(200)
       end
 
       it "save tags" do
-        controller.instance_variable_set(:@_params, :button => "save", :id => @tenant.id, 'data' => get_tags_json([@tag1, @tag2]))
+        controller.params = {:button => "save", :id => @tenant.id, 'data' => get_tags_json([@tag1, @tag2])}
         controller.send(:rbac_tenant_tags_edit)
         expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
         expect(assigns(:edit)).to be_nil
@@ -468,7 +468,7 @@ describe OpsController do
              :belongsto             => {},
              :filters               => {'managed/env' => '/managed/env'}}
       allow(controller).to receive(:replace_right_cell)
-      controller.instance_variable_set(:@_params, :use_filter_expression => "true", :id => "new")
+      controller.params = {:use_filter_expression => "true", :id => "new"}
 
       edit = {:key      => "rbac_group_edit__new",
               :new      => new,
@@ -504,7 +504,7 @@ describe OpsController do
              :belongsto             => {},
              :filters               => {'managed/env' => '/managed/env'}}
       allow(controller).to receive(:replace_right_cell)
-      controller.instance_variable_set(:@_params, :use_filter_expression => "true", :id => "new")
+      controller.params = {:use_filter_expression => "true", :id => "new"}
 
       edit = {:key      => "rbac_group_edit__new",
               :new      => new,
@@ -541,7 +541,7 @@ describe OpsController do
                                                      :belongsto             => {},
                                                      :filters               => {'managed/department' => '/managed/department/tag1'}})
       controller.instance_variable_set(:@sb, :active_rbac_group_tab => 'rbac_customer_tags')
-      controller.instance_variable_set(:@_params, :use_filter_expression => "false", :id => @group.id)
+      controller.params = {:use_filter_expression => "false", :id => @group.id}
       controller.send(:rbac_group_get_form_vars)
       expect(controller.instance_variable_get(:@group).name).to eq(@group.name)
     end
@@ -568,7 +568,7 @@ describe OpsController do
 
     it "creates a new user role successfully" do
       allow(controller).to receive(:replace_right_cell)
-      controller.instance_variable_set(:@_params, :button => "add")
+      controller.params = {:button => "add"}
       new = {:features => ["everything"], :name => "foo"}
       edit = {:key     => "rbac_role_edit__new",
               :new     => new,
@@ -599,7 +599,7 @@ describe OpsController do
       controller.instance_variable_set(:@record, record)
       allow(controller).to receive(:replace_right_cell)
       allow(controller).to receive(:build_rbac_feature_tree)
-      controller.instance_variable_set(:@_params, :button => "add")
+      controller.params = {:button => "add"}
 
       new = {:features => ["everything"], :name => "foo"}
       edit = {:key     => "rbac_role_edit__new",
@@ -665,7 +665,7 @@ describe OpsController do
       allow(controller).to receive(getvars).and_call_original
       allow(controller).to receive(:render).and_return(true)
 
-      controller.instance_variable_set(:@_params, params)
+      controller.params = params
       controller.instance_variable_set(:@edit, edit)
     end
 

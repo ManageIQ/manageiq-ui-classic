@@ -19,8 +19,8 @@ describe ApplicationController do
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
     end
     it "should return report data for VM" do
-      controller.instance_variable_set(:@_params, :active_tree => "vandt_tree")
-      controller.instance_variable_set(:@_params, :model_name => "manageiq/providers/infra_manager/vms")
+      controller.params = {:active_tree => "vandt_tree"}
+      controller.params = {:model_name => "manageiq/providers/infra_manager/vms"}
       report_data = JSON.parse(controller.report_data)
       expect(report_data["settings"]).to eql(basic_settings)
       headder = report_data["data"]["head"]
@@ -42,7 +42,7 @@ describe ApplicationController do
     end
 
     it "should have default number of perpage records set for reports" do
-      controller.instance_variable_set(:@_params, :model_name => "MiqReportResult")
+      controller.params = {:model_name => "MiqReportResult"}
       allow(controller).to receive(:settings_default).with(10, :perpage, :reports).and_return(5)
       report_data = JSON.parse(controller.report_data)
       expect(report_data["settings"]["perpage"]).to eql(5)
@@ -53,9 +53,9 @@ describe ApplicationController do
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
       view = MiqReport.new(YAML.safe_load(File.open(path_to_report), [Symbol]))
       expect(controller).to_not receive(:get_db_view)
-      controller.instance_variable_set(:@_params, :active_tree => "instances_tree")
-      controller.instance_variable_set(:@_params, :model_name => "ManageIQ::Providers::CloudManager::Template")
-      controller.instance_variable_set(:@_params, :additional_options => { "report_name" => report_name })
+      controller.params = {:active_tree => "instances_tree"}
+      controller.params = {:model_name => "ManageIQ::Providers::CloudManager::Template"}
+      controller.params = {:additional_options => { "report_name" => report_name }}
       controller.report_data
       expect(assigns(:view).cols).to eq(view.cols)
     end

@@ -31,13 +31,13 @@ describe MiqPolicyController do
 
       describe "#alert_build_edit_screen" do
         it "it should skip id when copying all attributes of an existing alert" do
-          controller.instance_variable_set(:@_params, :id => @miq_alert.id, :copy => "copy")
+          controller.params = {:id => @miq_alert.id, :copy => "copy"}
           controller.send(:alert_build_edit_screen)
           expect(assigns(:alert).id).to eq(nil)
         end
 
         it "it should select correct record when editing an existing alert" do
-          controller.instance_variable_set(:@_params, :id => @miq_alert.id)
+          controller.params = {:id => @miq_alert.id}
           controller.send(:alert_build_edit_screen)
           expect(assigns(:alert).id).to eq(@miq_alert.id)
         end

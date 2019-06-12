@@ -23,7 +23,7 @@ describe MiqAeCustomizationController do
         allow(controller).to receive(:replace_right_cell)
 
         # Now delete the Dialog
-        controller.instance_variable_set(:@_params, :id => dialog.id)
+        controller.params = {:id => dialog.id}
         controller.send(:dialog_delete)
 
         # Check for Dialog Label to be part of flash message displayed
