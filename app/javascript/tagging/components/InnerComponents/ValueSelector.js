@@ -25,6 +25,7 @@ class ValueSelector extends React.Component {
       value={value}
       placeholder="Select tag value"
       onChange={this.handleChange}
+      classNamePrefix="react-select"
       options={values}
       clearable={false}
       ignoreCase

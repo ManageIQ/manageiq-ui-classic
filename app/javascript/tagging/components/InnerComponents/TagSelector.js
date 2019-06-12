@@ -48,6 +48,7 @@ class TagSelector extends React.Component {
         options={this.tagCategories}
         onChange={this.handleChange}
         name="form-field-name"
+        classNamePrefix="react-select"
         filterOption={(option, filter) =>
           option.data.keyWord.includes(filter.toLowerCase())
         }
