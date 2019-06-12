@@ -49,7 +49,7 @@ const selectedTagCategory = {};
 const selectedTagValue = {};
 const defaultState = { tags, assignedTags };
 const defaultStateSingle = { singleTags, assignedTags };
-const store = createStore(taggingApp);
+const store = createStore((state = {}, action) => ({tagging: taggingApp(state, action)}));
 store.dispatch(loadState(defaultState));
 const storeSingle = createStore(taggingApp);
 storeSingle.dispatch(loadState(defaultStateSingle));
