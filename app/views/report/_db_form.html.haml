@@ -1,45 +1,15 @@
-- url = url_for_only_path(:action => 'db_form_field_changed', :id => (@dashboard.id || 'new'))
 #form_div
   = render :partial => "layouts/flash_msg"
-  - read_only = @edit && @edit[:db_id] && @edit[:db_id] ? true : false
-  %h3
-    = _('Basic Information')
-  .form-horizontal
-    .form-group
-      %label.control-label.col-md-2
-        - if read_only
-          *
-        = _('Name')
-      .col-md-8
-        = text_field_tag("name",
-                          @edit[:new][:name],
-                          :maxlength         => 50,
-                          :class             => "form-control",
-                          :disabled          => read_only,
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        - unless read_only
-          = javascript_tag(javascript_focus('name'))
-    .form-group
-      %label.control-label.col-md-2
-        = _('Tab Title')
-      .col-md-8
-        = text_field_tag("description",
-                          @edit[:new][:description],
-                          :maxlength         => 20,
-                          :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    .form-group
-      %label.control-label.col-md-2
-        = _('Locked')
-      .col-md-8
-        = check_box_tag("locked", "1", @edit[:new][:locked],
-                        "data-miq_observe_checkbox" => {:url => url}.to_json)
-    .form-group
-      %label.control-label.col-md-2
-        = _('Reset Dashboard upon login')
-      .col-md-8
-        = check_box_tag("reset_upon_login", "1", @edit[:new][:reset_upon_login],
-                        "data-miq_observe_checkbox" => {:url => url}.to_json)
+  - read_only = @edit && @edit[:db_id] ? true : false
+  = react('DashboardForm', { :dbAction => params[:pressed] || '',
+                             :dashboardId => @edit[:db_id] || 'new',
+                             :initialValues => { :name             => @edit[:current][:name],
+                                                 :description      => @edit[:current][:description],
+                                                 :locked           => @edit[:current][:locked] || false,
+                                                 :reset_upon_login => @edit[:current][:reset_upon_login] || true},
+                             :maxDescLen => ViewHelper::MAX_DESC_LEN,
+                             :maxNameLen => ViewHelper::MAX_NAME_LEN,
+                             :readOnly => read_only })
   %hr
   = render :partial => "db_widgets"
   - if read_only

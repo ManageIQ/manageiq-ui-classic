@@ -12,6 +12,11 @@ class ApplicationHelper::Toolbar::MiqWidgetSetCenter < ApplicationHelper::Toolba
           t = N_('Edit this Dashboard'),
           t),
         button(
+          :db_copy,
+          'pficon pficon-applications fa-lg',
+          t = N_('Copy this Dashboard'),
+          t),
+        button(
           :db_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Dashboard from the Database'),

@@ -104,6 +104,11 @@ module ReportController::Dashboards
     end
   end
 
+  def db_copy
+    db_edit
+    # MiqWidgetSet.copy_dashboard(source_widget_set, destination_name, destination_description, assign_to_group_id = nil)
+  end
+
   # Delete all selected or single displayed action(s)
   def db_delete
     assert_privileges("db_delete")

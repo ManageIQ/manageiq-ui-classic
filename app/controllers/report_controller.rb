@@ -48,6 +48,7 @@ class ReportController < ApplicationController
     'saved_report_delete'         => :saved_report_delete,
     'db_new'                      => :db_new,
     'db_edit'                     => :db_edit,
+    'db_copy'                     => :db_copy,
     'db_delete'                   => :db_delete,
     'db_seq_edit'                 => :db_seq_edit,
     'widget_refresh'              => :widget_refresh,

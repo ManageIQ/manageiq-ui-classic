@@ -2711,6 +2711,7 @@ Rails.application.routes.draw do
 
     :report                   => {
       :get  => %w(
+        dashboard_form_fields
         db_widget_dd_done
         download_report
         explorer
