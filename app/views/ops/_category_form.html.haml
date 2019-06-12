@@ -67,7 +67,7 @@
           = _("Description")
         .col-md-8
           = text_field_tag("description", @edit[:new][:description],
-                           :maxlength         => 50,
+                           :maxlength         => ViewHelper::MAX_DESC_LEN,
                            :class             => "form-control",
                            "data-miq_observe" => {:interval => '.5',
                                                   :url      => url}.to_json)
