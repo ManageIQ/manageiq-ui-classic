@@ -1,27 +1,20 @@
-import { AnyComponentInstance } from './component-typings';
-
 /**
  * Proxy writes to properties of the given object.
  */
-export function writeProxy<T extends object>(
-  object: T,
-  onWrite: (propName, value) => void
-): T {
+export function writeProxy(object, onWrite) {
   return new Proxy<T>(object, {
-    set(target, prop, value): boolean {
+    set(target, prop, value) {
       target[prop] = value;
       onWrite(prop, value);
       return true;
-    }
+    },
   });
 }
 
 /**
  * Prevent access to existing instance properties except for `id`.
  */
-export function lockInstanceProperties(
-  instance: AnyComponentInstance
-): AnyComponentInstance {
+export function lockInstanceProperties(instance) {
   const descriptors = {};
 
   Object.keys(instance)
@@ -34,7 +27,7 @@ export function lockInstanceProperties(
         set() {
           throw new Error(`Tried to write property ${propName} of destroyed instance ${instance.id}`);
         },
-        enumerable: true
+        enumerable: true,
       };
     });
 

@@ -1,5 +1,5 @@
-import * as registry from './registry.ts';
-import reactBlueprint from './react-blueprint.tsx';
+import * as registry from './registry.js';
+import reactBlueprint from './react-blueprint.jsx';
 
 export function addReact(name, component) {
   return registry.define(name, reactBlueprint(component));

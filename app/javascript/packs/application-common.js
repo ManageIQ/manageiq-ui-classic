@@ -18,7 +18,7 @@ import * as helpers from '../miq-component/helpers';
 import { rxSubject, sendDataWithRx, listenToRx } from '../miq_observable';
 
 import { initializeStore } from '../miq-redux';
-import { history } from '../miq-component/react-history.ts';
+import { history } from '../miq-component/react-history.js';
 import createReduxRoutingActions from '../miq-redux/redux-router-actions';
 import { formButtonsActionTypes, createFormButtonsActions } from '../forms/form-buttons-reducer';
 

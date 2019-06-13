@@ -2,22 +2,8 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import {
-  ComponentProps,
-  BasicComponentInstance,
-  ManagedComponentInstance,
-  ComponentBlueprint
-} from '../miq-component/component-typings'
-
-// TODO(vs) importing from @types/react and @types/react-dom causes TypeScript
-// compiler to generate tons of errors, updating TypeScript related dependencies
-// should fix the problem
-
-export default (
-  ReactElement: (props: ComponentProps) => any,
-  mapPropsToInteract: (props: ComponentProps) => any = () => undefined
-): ComponentBlueprint => {
-  function render(props: ComponentProps, container: HTMLElement) {
+export default (ReactElement, mapPropsToInteract) => {
+  function render(props, container) {
     ReactDOM.render(
       <Provider store={ManageIQ.redux.store}>
         <ReactElement {...props} />
