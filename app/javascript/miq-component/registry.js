@@ -58,8 +58,8 @@ export function define(name, blueprint = {}, instances = null) {
 
   // add existing instances to the registry
   if (Array.isArray(instances)) {
-    instances.filter(instance => !!instance)
-      .forEach(instance => {
+    instances.filter((instance) => !!instance)
+      .forEach((instance) => {
         sanitizeAndFreezeInstanceId(instance, newDefinition);
         validateInstance(instance, newDefinition);
         registry.get(newDefinition).add(instance);
@@ -70,7 +70,7 @@ export function define(name, blueprint = {}, instances = null) {
 /**
  * Implementation of the `ComponentApi.newInstance` method.
  */
-export function newInstance(name, initialPropse = {}, mountTo = null) {
+export function newInstance(name, initialProps = {}, mountTo = null) {
   // clean all left over components
   cleanVirtualDom();
   // validate inputs
