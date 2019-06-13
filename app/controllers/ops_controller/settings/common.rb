@@ -236,7 +236,7 @@ module OpsController::Settings::Common
   def prepare_subscriptions_for_saving
     to_save = []
     to_remove = []
-    params[:subscriptions].each_value do |subscription_params|
+    params[:subscriptions].each do |_k, subscription_params|
       subscription = find_or_new_subscription(subscription_params['id'])
       if subscription.id && subscription_params['remove'] == "true"
         to_remove << subscription
