@@ -69,6 +69,7 @@
     "prop-types": "^15.6.0",
     "proxy-polyfill": "^0.1.7",
     "react": "~16.8.2",
+    "react-codemirror2": "^6.0.0",
     "react-dom": "~16.8.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

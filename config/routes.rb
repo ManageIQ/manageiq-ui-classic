@@ -286,6 +286,7 @@ Rails.application.routes.draw do
         download_data
         explorer
         ot_edit
+        ot_orchestration_managers
         ot_show
         show
       ),
@@ -310,9 +311,6 @@ Rails.application.routes.draw do
         orchestration_template_copy
         orchestration_template_edit
         ot_add_form_field_changed
-        ot_add_submit
-        ot_copy_submit
-        ot_edit_submit
         ot_form_field_changed
         ot_tags_edit
         ownership_form_fields

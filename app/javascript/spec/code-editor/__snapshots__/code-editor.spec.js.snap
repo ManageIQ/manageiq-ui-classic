@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeEditor component should render correctly 1`] = `
+<div>
+  <Controlled
+    className="miq-codemirror "
+    onBeforeChange={[MockFunction]}
+    options={
+      Object {
+        "autoCloseBrackets": true,
+        "gutters": Array [
+          "CodeMirror-lint-markers",
+        ],
+        "lineNumbers": true,
+        "lineWrapping": true,
+        "lint": true,
+        "mode": "yaml",
+        "styleActiveLine": true,
+        "theme": "eclipse",
+      }
+    }
+    style={
+      Object {
+        "height": "auto",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`CodeEditor component should render mode switches 1`] = `
+<div>
+  <FormGroup
+    bsClass="form-group"
+    controlId="radioGroup"
+    disabled={false}
+  >
+    <div>
+      <Radio
+        bsClass="radio"
+        checked={true}
+        disabled={false}
+        inline={true}
+        key="yaml"
+        name="yaml"
+        onChange={[Function]}
+        title=""
+      >
+        yaml
+      </Radio>
+      <Radio
+        bsClass="radio"
+        checked={false}
+        disabled={false}
+        inline={true}
+        key="json"
+        name="json"
+        onChange={[Function]}
+        title=""
+      >
+        json
+      </Radio>
+    </div>
+  </FormGroup>
+  <Controlled
+    className="miq-codemirror "
+    onBeforeChange={[MockFunction]}
+    options={
+      Object {
+        "autoCloseBrackets": true,
+        "gutters": Array [
+          "CodeMirror-lint-markers",
+        ],
+        "lineNumbers": true,
+        "lineWrapping": true,
+        "lint": true,
+        "mode": "yaml",
+        "styleActiveLine": true,
+        "theme": "eclipse",
+      }
+    }
+    style={
+      Object {
+        "height": "auto",
+      }
+    }
+  />
+</div>
+`;
