@@ -7,7 +7,7 @@ class TreeController < ApplicationController
   def automate_entrypoint
     json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, params[:id]) do |tree|
       if params[:fqname].present?
-        MiqAeInstance.get_homonymic_across_domains_noprefix(current_user, params[:fqname], true).each do |instance|
+        MiqAeInstance.get_homonymic_across_domains(current_user, params[:fqname], true, :prefix => false).each do |instance|
           # Parse the namespace, class and instance from the fqname
           namespace, klass, instance, _ = MiqAeEngine::MiqAePath.split(instance.fqname)
 
