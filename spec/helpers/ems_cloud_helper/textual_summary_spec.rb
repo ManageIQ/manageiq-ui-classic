@@ -27,7 +27,7 @@ describe EmsCloudHelper::TextualSummary do
 
   context "#textual_groups" do
     before do
-      instance_variable_set(:@record, FactoryBot.create(:ems_cloud))
+      instance_variable_set(:@record, FactoryBot.create(:ems_vmware_cloud))
       allow(self).to receive(:textual_authentications).and_return([])
       allow(@record).to receive(:authentication_for_summary).and_return([])
     end
@@ -55,7 +55,7 @@ describe EmsCloudHelper::TextualSummary do
   end
 
   describe '#textual_description' do
-    let(:ems) { FactoryBot.create(:ems_cloud) }
+    let(:ems) { FactoryBot.create(:ems_vmware_cloud) }
 
     before do
       instance_variable_set(:@record, ems)

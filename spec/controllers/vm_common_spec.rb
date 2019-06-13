@@ -267,16 +267,16 @@ describe VmOrTemplateController do
     end
 
     it 'returns id of Provider folder for infra VM/Template without blue folder' do
-      vm_infra = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
-      template_infra = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_infra))
+      vm_infra = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_vmware))
+      template_infra = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_vmware))
       expect(controller.parent_folder_id(vm_infra)).to eq(TreeBuilder.build_node_id(vm_infra.ext_management_system))
       expect(controller.parent_folder_id(template_infra)).to eq(TreeBuilder.build_node_id(template_infra.ext_management_system))
     end
 
     it 'returns id of Datacenter folder for infra VM/Template without blue folder but with Datacenter parent' do
       datacenter = FactoryBot.create(:datacenter, :hidden => true)
-      vm_infra_datacenter = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
-      template_infra_datacenter = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_infra))
+      vm_infra_datacenter = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_vmware))
+      template_infra_datacenter = FactoryBot.create(:template_infra, :ext_management_system => FactoryBot.create(:ems_vmware))
       vm_infra_datacenter.with_relationship_type("ems_metadata") { vm_infra_datacenter.parent = datacenter }
       allow(vm_infra_datacenter).to receive(:parent_datacenter).and_return(datacenter)
       template_infra_datacenter.with_relationship_type("ems_metadata") { template_infra_datacenter.parent = datacenter }
@@ -287,10 +287,10 @@ describe VmOrTemplateController do
 
     it 'returns id of blue folder for VM/Template with one' do
       folder = FactoryBot.create(:ems_folder)
-      vm_infra_folder = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_infra))
+      vm_infra_folder = FactoryBot.create(:vm_infra, :ext_management_system => FactoryBot.create(:ems_vmware))
       vm_infra_folder.with_relationship_type("ems_metadata") { vm_infra_folder.parent = folder } # add folder
       template_infra_folder = FactoryBot.create(:template_infra,
-                                                 :ext_management_system => FactoryBot.create(:ems_infra))
+                                                :ext_management_system => FactoryBot.create(:ems_vmware))
       template_infra_folder.with_relationship_type("ems_metadata") { template_infra_folder.parent = folder } # add folder
       expect(controller.parent_folder_id(vm_infra_folder)).to eq(TreeBuilder.build_node_id(folder))
       expect(controller.parent_folder_id(template_infra_folder)).to eq(TreeBuilder.build_node_id(folder))

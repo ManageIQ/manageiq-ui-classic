@@ -49,7 +49,7 @@ describe "shared/views/ems_common/show" do
 
     let(:showtype) { "main" }
     let(:display) { 'cloud_volumes' }
-    let(:ems) { FactoryBot.create(:ems_storage, :hostname => '1.1.1.1') }
+    let(:ems) { FactoryBot.create(:ems_amazon, :hostname => '1.1.1.1') }
 
     it "should show render gtl for list of cloud_volumes" do
       render

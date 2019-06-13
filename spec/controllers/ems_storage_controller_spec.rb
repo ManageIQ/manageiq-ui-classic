@@ -32,7 +32,7 @@ describe EmsStorageController do
 
     it "sets @ems in init_show for a selected record" do
       controller.action_name = 'show'
-      ems_storage = FactoryBot.create(:ems_storage, :name => "foo")
+      ems_storage = FactoryBot.create(:ems_amazon_ebs)
       allow(controller).to receive(:type_feature_role_check).and_return(true)
       controller.params = {:id => ems_storage.id}
       controller.send(:init_show)

@@ -727,7 +727,7 @@ describe ApplicationController do
     end
 
     it "Verify @record is set for passed in ID" do
-      ems = FactoryBot.create(:ext_management_system)
+      ems = FactoryBot.create(:ems_vmware)
       record = controller.send(:identify_record, ems.id, ExtManagementSystem)
       expect(record).to be_a_kind_of(ExtManagementSystem)
     end

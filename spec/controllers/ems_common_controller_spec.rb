@@ -214,7 +214,7 @@ describe EmsContainerController do
         expect(assigns(:flash_array).first[:message]).to include('does not apply')
       end
 
-      let(:ems)     { FactoryBot.create(:ext_management_system) }
+      let(:ems)     { FactoryBot.create(:ems_microsoft) }
       let(:storage) { FactoryBot.create(:storage) }
 
       it "when VM Migrate is pressed for supported type" do

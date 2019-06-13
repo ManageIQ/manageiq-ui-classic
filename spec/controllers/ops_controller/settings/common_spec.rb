@@ -16,7 +16,7 @@ describe OpsController do
         @host1 = FactoryBot.create(:host, :name => 'host1', :storages => [@storage1])
         @host2 = FactoryBot.create(:host, :name => 'host2', :storages => [@storage2])
 
-        @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
+        @ems = FactoryBot.create(:ems_vmware, :hosts => [@host1, @host2], :zone => @zone)
 
         @svr1 = FactoryBot.create(:miq_server, :name => 'svr1', :zone => @zone)
         @svr2 = FactoryBot.create(:miq_server, :name => 'svr2', :zone => @zone)

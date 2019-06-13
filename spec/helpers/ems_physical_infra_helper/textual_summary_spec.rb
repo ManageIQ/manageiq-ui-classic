@@ -1,6 +1,6 @@
 describe EmsPhysicalInfraHelper::TextualSummary do
   before do
-    instance_variable_set(:@record, FactoryBot.create(:ems_infra))
+    instance_variable_set(:@record, FactoryBot.create(:ems_vmware))
     allow(@record).to receive(:authentication_userid_passwords).and_return([])
     allow(self).to receive(:textual_authentications).and_return([])
   end

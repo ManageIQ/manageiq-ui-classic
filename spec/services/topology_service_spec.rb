@@ -72,7 +72,7 @@ describe TopologyService do
   end
 
   describe '#map_to_graph' do
-    let(:provider) { FactoryBot.create(:ext_management_system) }
+    let(:provider) { FactoryBot.create(:ems_vmware) }
     let(:tag) { FactoryBot.create(:tag) }
     let(:vm) { FactoryBot.create(:vm, :ext_management_system => provider, :tags => [tag]) }
     let(:graph) { {:vms => {:tags => nil}} }

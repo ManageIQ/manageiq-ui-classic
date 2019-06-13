@@ -30,7 +30,7 @@ describe TreeNode::ExtManagementSystem do
     :automation_manager_ansible_tower => { :key_prefix => 'at-' },
     :configuration_manager_foreman    => { :key_prefix => 'fr-' },
     :provisioning_manager_foreman     => {},
-    :ems_physical_infra               => {},
+    :ems_redfish_physical_infra       => {},
     :ems_openshift                    => {},
     :ems_azure_network                => {},
     :ems_amazon_network               => {},

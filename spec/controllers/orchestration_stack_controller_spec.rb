@@ -49,7 +49,7 @@ describe OrchestrationStackController do
     end
 
     context "orchestration templates" do
-      let(:ems) { FactoryBot.create(:ems_cloud) }
+      let(:ems) { FactoryBot.create(:ems_vmware_cloud) }
       let(:record) { FactoryBot.create(:orchestration_stack_cloud_with_template, :ext_management_system => ems, :name => 'stack01') }
 
       before do

@@ -97,7 +97,7 @@ describe EmsPhysicalInfraController do
     end
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Physical Infrastructure Providers -> (Dashboard)' breadcrumb path" do
-        ems = FactoryBot.create(:ems_physical_infra)
+        ems = FactoryBot.create(:ems_redfish_physical_infra)
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
@@ -107,7 +107,7 @@ describe EmsPhysicalInfraController do
 
   describe "#build_credentials" do
     before do
-      @ems = FactoryBot.create(:ems_physical_infra)
+      @ems = FactoryBot.create(:ems_redfish_physical_infra)
     end
     context "#build_credentials only contains credentials that it supports and has a username for in params" do
       let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
