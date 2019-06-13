@@ -310,7 +310,6 @@ Rails.application.routes.draw do
         orchestration_template_add
         orchestration_template_copy
         orchestration_template_edit
-        ot_add_form_field_changed
         ot_form_field_changed
         ot_tags_edit
         ownership_form_fields

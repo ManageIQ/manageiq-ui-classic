@@ -658,21 +658,6 @@ class CatalogController < ApplicationController
     replace_right_cell(:action => "ot_add")
   end
 
-  def ot_add_form_field_changed
-    return unless load_edit("ot_add__new", "replace_cell__explorer")
-    copy_params_if_set(@edit[:new], params, %i[name description type content manager_id])
-    @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(params[:type])
-
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_hide("buttons_off")
-      page << javascript_show("buttons_on")
-      page << "miqSparkle(false);"
-      page.replace("form_div", :partial => "ot_add") if params[:type]
-    end
-  end
-
   def service_dialog_from_ot
     assert_privileges("service_dialog_from_ot")
     ot = OrchestrationTemplate.find(params[:id])
