@@ -1183,7 +1183,7 @@ function miqInitCodemirror(options) {
     lineNumbers: options.line_numbers,
     matchBrackets: true,
     theme: 'eclipse',
-    readOnly: options.read_only,
+    readOnly: options.read_only ? 'nocursor' : false,
     viewportMargin: Infinity,
   });
 
@@ -1203,7 +1203,7 @@ function miqInitCodemirror(options) {
   $('.CodeMirror').css('height', options.height);
   $('.CodeMirror').css('width', options.width);
 
-  if (!options.no_focus) {
+  if (! options.no_focus && ! options.read_only) {
     ManageIQ.editor.focus();
   }
 }
