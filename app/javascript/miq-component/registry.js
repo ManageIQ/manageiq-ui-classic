@@ -70,7 +70,7 @@ export function define(name, blueprint = {}, instances = null) {
 /**
  * Implementation of the `ComponentApi.newInstance` method.
  */
-export function newInstance(name, initialProps = {}, mountTo = null) {
+export function newInstance(name, initialProps = {}, mountTo = undefined) {
   // clean all left over components
   cleanVirtualDom();
   // validate inputs
