@@ -51,6 +51,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def button_actions
+    @button_acton = params[:pressed]
     javascript_redirect(
       case params[:pressed]
       when 'generic_object_definition_new'
@@ -71,14 +72,14 @@ class GenericObjectDefinitionController < ApplicationController
 
   def new
     assert_privileges('generic_object_definition_new')
-    drop_breadcrumb(:name => _("Add a new Generic Object Class"), :url => "/generic_object_definition/new")
+    @right_cell_text = _("Add a new Generic Object Definition")
     @in_a_form = true
   end
 
   def edit
     assert_privileges('generic_object_definition_edit')
-    drop_breadcrumb(:name => _("Edit Generic Object Class"), :url => "/generic_object_definition/edit/#{params[:id]}")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
+    @right_cell_text = _("Edit a Generic Object Definition '%{name}'") % {:name => @generic_object_definition.name}
     @in_a_form = true
   end
 
@@ -96,35 +97,35 @@ class GenericObjectDefinitionController < ApplicationController
 
   def custom_button_group_new
     assert_privileges('ab_group_new')
-    title = _("Add a new Custom Button Group")
+    @right_cell_text = _("Add a new Custom Button Group")
     @generic_object_definition = GenericObjectDefinition.find(params[:id])
-    render_form(title, 'custom_button_group_form')
+    render_form(@right_cell_text, 'custom_button_group_form')
   end
 
   def custom_button_group_edit
     assert_privileges('ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
-    title = _("Edit Custom Button Group '%{name}'") % {:name => @custom_button_group.name}
-    render_form(title, 'custom_button_group_form')
+    @right_cell_text = _("Edit Custom Button Group '%{name}'") % {:name => @custom_button_group.name}
+    render_form(@right_cell_text, 'custom_button_group_form')
   end
 
   def custom_button_new
     assert_privileges('ab_button_new')
-    title = _("Add a new Custom Button")
+    @right_cell_text = _("Add a new Custom Button")
     if node_type(x_node || params[:id]) == :button_group
       @custom_button_group = CustomButtonSet.find(params[:id])
       @generic_object_definition = GenericObjectDefinition.find(@custom_button_group.set_data[:applies_to_id])
     else
       @generic_object_definition = GenericObjectDefinition.find(params[:id])
     end
-    render_form(title, 'custom_button_form')
+    render_form(@right_cell_text, 'custom_button_form')
   end
 
   def custom_button_edit
     assert_privileges('ab_button_edit')
     @custom_button = CustomButton.find(params[:id])
-    title = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
-    render_form(title, 'custom_button_form')
+    @right_cell_text = _("Edit Custom Button '%{name}'") % {:name => @custom_button.name}
+    render_form(@right_cell_text, 'custom_button_form')
   end
 
   def retrieve_distinct_instances_across_domains
@@ -209,10 +210,11 @@ class GenericObjectDefinitionController < ApplicationController
 
     @in_a_form = true
     presenter[:right_cell_text] = title
-    presenter.replace(:main_div, r[:partial => form_partial])
+    presenter.update(:main_div, r[:partial => form_partial])
     presenter.hide(:paging_div)
     presenter[:lock_sidebar] = true
     presenter.set_visibility(false, :toolbar)
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
   end
@@ -297,12 +299,17 @@ class GenericObjectDefinitionController < ApplicationController
     }
   end
 
-  def build_breadcrumbs_from_tree
-    breadcrumbs = []
-    tree = build_tree if @tree.nil?
-    if x_node && tree
-      breadcrumbs = current_tree_path(JSON.parse(tree.bs_tree).first, x_node)
-    end
-    breadcrumbs
+  def features
+    [
+      {
+        :role  => "god_accord",
+        :name  => :god,
+        :title => _("Generic Object Classes"),
+      },
+    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
+  end
+
+  def action_breadcrumb?
+    @right_cell_text && params[:action] != "tree_select"
   end
 end

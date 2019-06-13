@@ -130,6 +130,7 @@ module Sandbox
     dialogs
     event
     export
+    god
     configuration_manager_providers
     images
     images_filter
