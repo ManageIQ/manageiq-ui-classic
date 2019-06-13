@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-export default (ReactElement, mapPropsToInteract) => {
+export default (ReactElement, mapPropsToInteract = () => undefined) => {
   function render(props, container) {
     ReactDOM.render(
       <Provider store={ManageIQ.redux.store}>
