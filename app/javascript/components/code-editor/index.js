@@ -52,7 +52,11 @@ const CodeEditor = ({
           gutters: ['CodeMirror-lint-markers'],
         }}
         style={{ height: 'auto' }}
-        onBeforeChange={onBeforeChange}
+        onBeforeChange={(editor, ...rest) => {
+          editor.refresh();
+          onBeforeChange(editor, ...rest);
+        }}
+        editorDidMount={editor => editor.refresh()}
         {...props}
       />
     </div>

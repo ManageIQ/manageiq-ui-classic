@@ -4,7 +4,8 @@ exports[`CodeEditor component should render correctly 1`] = `
 <div>
   <Controlled
     className="miq-codemirror "
-    onBeforeChange={[MockFunction]}
+    editorDidMount={[Function]}
+    onBeforeChange={[Function]}
     options={
       Object {
         "autoCloseBrackets": true,
@@ -64,7 +65,8 @@ exports[`CodeEditor component should render mode switches 1`] = `
   </FormGroup>
   <Controlled
     className="miq-codemirror "
-    onBeforeChange={[MockFunction]}
+    editorDidMount={[Function]}
+    onBeforeChange={[Function]}
     options={
       Object {
         "autoCloseBrackets": true,
