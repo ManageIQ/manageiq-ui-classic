@@ -114,6 +114,8 @@
           = _('Region:')
           %span
             = (MiqRegion.my_region.description)
+            - if MiqRegion.replication_type != :none
+              = " #{MiqRegion.replication_type == :global ? _('(Global)') : _('(Remote)')}"
         %p
           = _('Zone:')
           %span
