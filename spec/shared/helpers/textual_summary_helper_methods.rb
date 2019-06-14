@@ -38,3 +38,11 @@ shared_examples_for 'textual_description' do |value|
     it { is_expected.to eq(value) }
   end
 end
+
+shared_examples_for 'textual_tenant' do |value|
+  describe "#textual_tenant" do
+    subject { send("textual_tenant") }
+
+    it { is_expected.to eq(value) }
+  end
+end

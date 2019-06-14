@@ -19,7 +19,8 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups instances images cloud_volumes orchestration_stacks storage_managers custom_button_events
+        security_groups instances images cloud_volumes orchestration_stacks storage_managers
+        custom_button_events tenant
       ]
     )
   end
@@ -162,5 +163,11 @@ module EmsCloudHelper::TextualSummary
      :icon  => "pficon pficon-topology",
      :link  => url_for_only_path(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
+  end
+
+  def textual_tenant
+    return nil unless User.current_user.super_admin_user?
+
+    {:label => _('Tenant'), :value => @record.tenant.name}
   end
 end

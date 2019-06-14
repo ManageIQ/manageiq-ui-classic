@@ -16,7 +16,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events]
+      %i[clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager custom_button_events tenant]
     )
   end
 
@@ -169,5 +169,11 @@ module EmsInfraHelper::TextualSummary
       :link  => num.positive? ? ems_infra_path(:id => @record, :display => 'custom_button_events') : nil,
       :icon  => CustomButtonEvent.decorate.fonticon,
     }
+  end
+
+  def textual_tenant
+    return nil unless User.current_user.super_admin_user?
+
+    {:label => _('Tenant'), :value => @record.tenant.name}
   end
 end

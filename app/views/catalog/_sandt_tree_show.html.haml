@@ -93,6 +93,12 @@
                 #{entry_points_op[0]} #{_('Entry Point')}
               .col-md-9
                 = h(@sb[entry_points_op[1]])
+        - if User.current_user.super_admin_user?
+          .form-group
+            %label.col-md-3.control-label
+              = _('Tenant')
+            .col-md-8
+              = h(@record.tenant.name)
         .form-group
           %label.col-md-3.control-label
             = _('Owner')

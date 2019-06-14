@@ -46,7 +46,9 @@ describe EmsCloudHelper::TextualSummary do
       orchestration_stacks
       storage_managers
       custom_button_events
+      tenant
     )
+
     include_examples "textual_group", "Properties", %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
 
     include_examples "textual_group", "Status", %i(refresh_status refresh_date)
@@ -57,9 +59,7 @@ describe EmsCloudHelper::TextualSummary do
   describe '#textual_description' do
     let(:ems) { FactoryBot.create(:ems_cloud) }
 
-    before do
-      instance_variable_set(:@record, ems)
-    end
+    before { instance_variable_set(:@record, ems) }
 
     context "EMS instance doesn't support :description" do
       include_examples 'textual_description', nil
@@ -67,7 +67,32 @@ describe EmsCloudHelper::TextualSummary do
 
     context "EMS instance has :description" do
       before { allow(ems).to receive(:description).and_return('EmsCloud instance description') }
+
       include_examples 'textual_description', :label => _("Description"), :value => 'EmsCloud instance description'
+    end
+  end
+
+  describe '#textual_tenant' do
+    let(:ems) { FactoryBot.create(:ems_cloud) }
+    let(:tenant) { FactoryBot.create(:tenant) }
+
+    before do
+      login_as user
+      instance_variable_set(:@record, ems)
+      allow(ems).to receive(:tenant).and_return(tenant)
+      allow(tenant).to receive(:name).and_return('Tenant name')
+    end
+
+    context 'Tenant is not available for non admin user' do
+      let(:user) { FactoryBot.create(:user) }
+
+      include_examples 'textual_tenant', nil
+    end
+
+    context 'Tenant is available for admin user' do
+      let(:user) { FactoryBot.create(:user_admin, :userid => 'admin') }
+
+      include_examples 'textual_tenant', :label => _("Tenant"), :value => 'Tenant name'
     end
   end
 end
