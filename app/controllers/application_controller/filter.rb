@@ -66,7 +66,6 @@ module ApplicationController::Filter
         if %w(not discard commit remove).include?(params[:pressed])
           page << javascript_hide("exp_buttons_on")
           page << javascript_hide("exp_buttons2_on")
-          page << javascript_hide("exp_buttons_not")
           page << javascript_hide("exp_buttons2_not")
           page << javascript_show("exp_buttons_off")
           page << javascript_show("exp_buttons2_off")
@@ -106,12 +105,10 @@ module ApplicationController::Filter
         page << javascript_hide("exp_buttons_off")
         page << javascript_hide("exp_buttons2_off")
         if exp.key?("not") || @parent_is_not
-          page << javascript_hide("exp_buttons_on")
-          page << javascript_show("exp_buttons_not")
+          page << javascript_show("exp_buttons_on")
           page << javascript_hide("exp_buttons2_on")
           page << javascript_show("exp_buttons2_not")
         else
-          page << javascript_hide("exp_buttons_not")
           page << javascript_show("exp_buttons_on")
           page << javascript_hide("exp_buttons2_not")
           page << javascript_show("exp_buttons2_on")
