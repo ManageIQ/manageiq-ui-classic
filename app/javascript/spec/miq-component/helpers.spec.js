@@ -1,4 +1,4 @@
-import { define } from '../../miq-component/registry.ts';
+import { define } from '../../miq-component/registry.js';
 import { cleanVirtualDom } from '../../miq-component/helpers';
 
 describe('Helpers', () => {

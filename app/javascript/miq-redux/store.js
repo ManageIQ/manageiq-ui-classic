@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createReducer from './reducer';
 import createMiddlewares from './middleware';
-import { history } from '../miq-component/react-history.ts';
+import { history } from '../miq-component/react-history.js';
 
 const initialState = {};
 

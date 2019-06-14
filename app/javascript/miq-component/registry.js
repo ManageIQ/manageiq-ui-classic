@@ -1,37 +1,19 @@
-import {
-  ComponentProps,
-  BasicComponentInstance,
-  ManagedComponentInstance,
-  AnyComponentInstance,
-  ComponentBlueprint
-} from './component-typings';
-
 import { writeProxy, lockInstanceProperties } from './utils';
 import { cleanVirtualDom } from './helpers';
 
-interface ComponentDefinition {
-  name: string;
-  blueprint: ComponentBlueprint;
-}
-
-const registry: Map<ComponentDefinition, Set<AnyComponentInstance>> = new Map();
+const registry = new Map(); // Map<definition, Set<instance>>
 
 /**
  * Get definition of a component with the given `name`.
  */
-export function getDefinition(
-  name: string
-): ComponentDefinition | undefined {
+export function getDefinition(name) {
   return Array.from(registry.keys()).find(definition => definition.name === name);
 }
 
 /**
  * Make sure the instance `id` is sane and cannot be changed.
  */
-export function sanitizeAndFreezeInstanceId(
-  instance: AnyComponentInstance,
-  definition: ComponentDefinition
-): void {
+export function sanitizeAndFreezeInstanceId(instance, definition) {
   const id = typeof instance.id === 'string'
     ? instance.id
     : `${definition.name}-${registry.get(definition).size}`;
@@ -43,7 +25,7 @@ export function sanitizeAndFreezeInstanceId(
     set() {
       throw new Error(`Attempt to modify id of instance ${instance.id}`);
     },
-    enumerable: true
+    enumerable: true,
   });
 }
 
@@ -52,10 +34,7 @@ export function sanitizeAndFreezeInstanceId(
  * - the given instance isn't already in the registry
  * - the given instance `id` isn't already taken
  */
-export function validateInstance(
-  instance: AnyComponentInstance,
-  definition: ComponentDefinition
-): void {
+export function validateInstance(instance, definition) {
   if (Array.from(registry.get(definition)).find(existingInstance => existingInstance === instance)) {
     throw new Error('Instance already present, check your blueprint.create implementation');
   }
@@ -67,24 +46,20 @@ export function validateInstance(
 /**
  * Implementation of the `ComponentApi.define` method.
  */
-export function define(
-  name: string,
-  blueprint: ComponentBlueprint = {},
-  instances?: BasicComponentInstance[]
-): void {
+export function define(name, blueprint = {}, instances = null) {
   // validate inputs
   if (typeof name !== 'string' || isDefined(name)) {
     return;
   }
 
   // add new definition to the registry
-  const newDefinition: ComponentDefinition = { name, blueprint };
+  const newDefinition = { name, blueprint };
   registry.set(newDefinition, new Set());
 
   // add existing instances to the registry
   if (Array.isArray(instances)) {
-    instances.filter(instance => !!instance)
-      .forEach(instance => {
+    instances.filter((instance) => !!instance)
+      .forEach((instance) => {
         sanitizeAndFreezeInstanceId(instance, newDefinition);
         validateInstance(instance, newDefinition);
         registry.get(newDefinition).add(instance);
@@ -95,11 +70,7 @@ export function define(
 /**
  * Implementation of the `ComponentApi.newInstance` method.
  */
-export function newInstance(
-  name: string,
-  initialProps: ComponentProps = {},
-  mountTo?: HTMLElement
-): ManagedComponentInstance | undefined {
+export function newInstance(name, initialProps = {}, mountTo = undefined) {
   // clean all left over components
   cleanVirtualDom();
   // validate inputs
@@ -134,7 +105,7 @@ export function newInstance(
   let actualProps = writeProxy(Object.assign({}, initialProps), handlePropUpdate);
 
   // create new instance
-  let newInstance = blueprint.create(actualProps, mountTo) as ManagedComponentInstance;
+  let newInstance = blueprint.create(actualProps, mountTo);
   if (!newInstance) {
     throw new Error(`blueprint.create returned falsy value when trying to instantiate ${name}`);
   }
@@ -154,7 +125,7 @@ export function newInstance(
       throw new Error(`Attempt to rewrite props associated with instance ${newInstance.id}`);
     },
     enumerable: true,
-    configurable: true
+    configurable: true,
   });
 
   // provide instance update method
@@ -194,10 +165,7 @@ export function newInstance(
 /**
  * Implementation of the `ComponentApi.getInstance` method.
  */
-export function getInstance(
-  name: string,
-  id: string
-): AnyComponentInstance | undefined {
+export function getInstance(name, id) {
   const definition = getDefinition(name);
   return definition && Array.from(registry.get(definition)).find(instance => instance.id === id);
 }
@@ -205,25 +173,21 @@ export function getInstance(
 /**
  * Implementation of the `ComponentApi.isDefined` method.
  */
-export function isDefined(
-  name: string
-): boolean {
-  return getDefinition(name) ? true : false;
+export function isDefined(name) {
+  return !! getDefinition(name);
 }
 
 /**
  * Test helper: get names of all components.
  */
-export function getComponentNames(): string[] {
+export function getComponentNames() {
   return Array.from(registry.keys()).map(definition => definition.name);
 }
 
 /**
  * Test helper: get all instances of the given component.
  */
-export function getComponentInstances(
-  name: string
-): AnyComponentInstance[] {
+export function getComponentInstances(name) {
   const definition = getDefinition(name);
   return definition ? Array.from(registry.get(definition).values()) : [];
 }
@@ -231,6 +195,6 @@ export function getComponentInstances(
 /**
  * Test helper: remove all component data.
  */
-export function clearRegistry(): void {
+export function clearRegistry() {
   registry.clear();
 }

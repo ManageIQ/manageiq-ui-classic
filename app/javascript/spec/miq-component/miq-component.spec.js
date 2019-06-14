@@ -9,13 +9,13 @@ import {
   getComponentNames,
   getComponentInstances,
   clearRegistry,
-} from '../../miq-component/registry.ts';
+} from '../../miq-component/registry.js';
 
 
 import {
   writeProxy,
   lockInstanceProperties,
-} from '../../miq-component/utils.ts';
+} from '../../miq-component/utils.js';
 
 describe('Component API', () => {
   let mountingElement;
