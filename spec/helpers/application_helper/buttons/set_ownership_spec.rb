@@ -2,7 +2,7 @@ describe ApplicationHelper::Button::SetOwnership do
   let(:view_context) { setup_view_context_with_sandbox({}) }
 
   let(:ext_management_system) do
-    FactoryBot.create(:ext_management_system, :tenant_mapping_enabled => tenant_mapping_enabled)
+    FactoryBot.create(:ems_vmware, :tenant_mapping_enabled => tenant_mapping_enabled)
   end
 
   let(:record) { FactoryBot.create(:vm, :ext_management_system => ext_management_system) }

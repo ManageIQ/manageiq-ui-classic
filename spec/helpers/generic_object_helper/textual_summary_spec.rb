@@ -45,7 +45,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays the GO Associations when Associations exist" do
       vm1 = FactoryBot.create(:vm_vmware)
       vm2 = FactoryBot.create(:vm_openstack)
-      ems = FactoryBot.create(:ems_cloud)
+      ems = FactoryBot.create(:ems_openstack)
       @record = FactoryBot.create(:generic_object,
                                    :generic_object_definition_id => @generic_obj_defn.id,
                                    :cp                           => [ems],
