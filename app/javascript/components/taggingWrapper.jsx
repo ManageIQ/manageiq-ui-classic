@@ -21,7 +21,7 @@ class TaggingWrapper extends React.Component {
 
   render() {
     if (!this.props.isLoaded) return <Spinner loading size="lg" />;
-    const { urls, options } = this.props;
+    const { urls, options, tagging } = this.props;
     return (options && options.hideButtons && <TaggingConnected options={{...options}}/> || <TaggingWithButtonsConnected
       saveButton={{
           // FIXME: jQuery is necessary here as it communicates with the old world
@@ -31,7 +31,7 @@ class TaggingWrapper extends React.Component {
           },
           href: '',
           type: 'button',
-          disabled: false,
+          disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
           description: 'Save',
         }
       }
@@ -49,7 +49,7 @@ class TaggingWrapper extends React.Component {
         onClick: () => this.reset(),
         href: '',
         type: 'button',
-        disabled: false,
+        disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
         description: 'Reset',
         }
       }
@@ -94,6 +94,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = ({ tagging }) => ({
   isLoaded: !!tagging,
+  tagging: tagging
 });
 
 const TaggingWrapperConnected = connect(
