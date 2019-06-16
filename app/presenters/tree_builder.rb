@@ -3,10 +3,64 @@ class TreeBuilder
 
   attr_reader :name, :tree_nodes, :bs_tree
 
-  def self.class_for_type(type)
-    raise('Obsolete tree type.') if type == :filter
-    @x_tree_node_classes ||= {}
-    @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
+  class << self
+    def class_for_type(type)
+      raise('Obsolete tree type.') if type == :filter
+      @x_tree_node_classes ||= {}
+      @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
+    end
+
+    # Get nodes model (folder, Vm, Cluster, etc)
+    def get_model_for_prefix(node_prefix)
+      X_TREE_NODE_PREFIXES[node_prefix]
+    end
+
+    def get_prefix_for_model(model)
+      model = model.to_s unless model.kind_of?(String)
+      X_TREE_NODE_PREFIXES_INVERTED[model]
+    end
+
+    def build_node_id(record)
+      prefix = get_prefix_for_model(record.class.base_model)
+      "#{prefix}-#{record.id}"
+    end
+
+    # return this nodes model and record id
+    def extract_node_model_and_id(node_id)
+      prefix, record_id = node_id.split("_").last.split('-')
+      model = get_model_for_prefix(prefix)
+      [model, record_id, prefix]
+    end
+
+    # FIXME: temporary conversion, needs to be moved into the generation
+    def convert_bs_tree(nodes)
+      return [] if nodes.nil?
+      nodes = [nodes] if nodes.kind_of?(Hash)
+      stack = nodes.dup
+      while stack.any?
+        node = stack.pop
+        stack += node[:children] if node.key?(:children)
+        stack += node[:nodes] if node.key?(:nodes)
+        node[:text] = node.delete(:title) if node.key?(:title)
+        node[:nodes] = node.delete(:children) if node.key?(:children)
+        node[:lazyLoad] = node.delete(:isLazy) if node.key?(:isLazy)
+        node[:state] = {}
+        node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
+        node[:state][:checked] = node.delete(:select) if node.key?(:select)
+        node[:state][:selected] = node.delete(:highlighted) if node.key?(:highlighted)
+        node[:selectable] = !node.delete(:cfmeNoClick) if node.key?(:cfmeNoClick)
+        node[:class] = ''
+        node[:class] = node.delete(:addClass) if node.key?(:addClass) && !node[:addClass].nil?
+        node[:class] = node[:class].split(' ').push('no-cursor').join(' ') if node[:selectable] == false
+      end
+      nodes
+    end
+
+    # Add child nodes to a tree below node 'id'
+    def tree_add_child_nodes(sandbox:, klass_name:, name:, id:)
+      tree = klass_name.constantize.new(name, sandbox, false)
+      tree.x_get_child_nodes(id)
+    end
   end
 
   def initialize(name, sandbox, build = true, **_params)
@@ -63,28 +117,6 @@ class TreeBuilder
     {}
   end
 
-  # Get nodes model (folder, Vm, Cluster, etc)
-  def self.get_model_for_prefix(node_prefix)
-    X_TREE_NODE_PREFIXES[node_prefix]
-  end
-
-  def self.get_prefix_for_model(model)
-    model = model.to_s unless model.kind_of?(String)
-    X_TREE_NODE_PREFIXES_INVERTED[model]
-  end
-
-  def self.build_node_id(record)
-    prefix = get_prefix_for_model(record.class.base_model)
-    "#{prefix}-#{record.id}"
-  end
-
-  # return this nodes model and record id
-  def self.extract_node_model_and_id(node_id)
-    prefix, record_id = node_id.split("_").last.split('-')
-    model = get_model_for_prefix(prefix)
-    [model, record_id, prefix]
-  end
-
   def locals_for_render
     @locals_for_render.update(:select_node => @tree_state.x_node(@name).to_s)
   end
@@ -96,36 +128,6 @@ class TreeBuilder
   def open_node(id)
     open_nodes = @tree_state.x_tree(@name)[:open_nodes]
     open_nodes.push(id) unless open_nodes.include?(id)
-  end
-
-  # FIXME: temporary conversion, needs to be moved into the generation
-  def self.convert_bs_tree(nodes)
-    return [] if nodes.nil?
-    nodes = [nodes] if nodes.kind_of?(Hash)
-    stack = nodes.dup
-    while stack.any?
-      node = stack.pop
-      stack += node[:children] if node.key?(:children)
-      stack += node[:nodes] if node.key?(:nodes)
-      node[:text] = node.delete(:title) if node.key?(:title)
-      node[:nodes] = node.delete(:children) if node.key?(:children)
-      node[:lazyLoad] = node.delete(:isLazy) if node.key?(:isLazy)
-      node[:state] = {}
-      node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
-      node[:state][:checked] = node.delete(:select) if node.key?(:select)
-      node[:state][:selected] = node.delete(:highlighted) if node.key?(:highlighted)
-      node[:selectable] = !node.delete(:cfmeNoClick) if node.key?(:cfmeNoClick)
-      node[:class] = ''
-      node[:class] = node.delete(:addClass) if node.key?(:addClass) && !node[:addClass].nil?
-      node[:class] = node[:class].split(' ').push('no-cursor').join(' ') if node[:selectable] == false
-    end
-    nodes
-  end
-
-  # Add child nodes to a tree below node 'id'
-  def self.tree_add_child_nodes(sandbox:, klass_name:, name:, id:)
-    tree = klass_name.constantize.new(name, sandbox, false)
-    tree.x_get_child_nodes(id)
   end
 
   private
