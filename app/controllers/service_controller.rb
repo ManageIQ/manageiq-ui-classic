@@ -125,7 +125,7 @@ class ServiceController < ApplicationController
   # ST clicked on in the explorer right cell
   def x_show
     identify_service(params[:id])
-    generic_x_show(x_tree(:svcs_tree))
+    generic_x_show
   end
 
   def service_edit
