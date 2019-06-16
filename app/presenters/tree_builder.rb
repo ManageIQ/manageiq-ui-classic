@@ -61,7 +61,42 @@ class TreeBuilder
       tree = klass_name.constantize.new(name, sandbox, false)
       tree.x_get_child_nodes(id)
     end
+
+    # DSL for specifying the options for the tree (formerly tree_init_options)
+    #
+    # It sets an instance variable on the TreeBuilder itself and it is being delegated to the instance as well
+    # All the allowed options should be specified below in the ALLOWED_OPTIONS constant
+    #
+    # Usage: tree_init_option :option, value = true
+
+    ALLOWED_OPTIONS = [
+      :allow_reselect,
+      :check_url,
+      :checkboxes,
+      :click_url,
+      :full_ids,
+      :lazy,
+      :oncheck,
+      :onclick,
+      :open_all,
+      :post_check,
+      :silent_activate,
+      :three_checks,
+    ].freeze
+
+    attr_reader(*ALLOWED_OPTIONS)
+
+    private
+
+    def tree_init_option(option, value = true)
+      raise ArgumentError unless ALLOWED_OPTIONS.include?(option)
+
+      instance_variable_set("@#{option}".to_sym, value)
+    end
   end
+
+  # Delegate the values from the tree option DSL to the parent class
+  delegate(*singleton_class::ALLOWED_OPTIONS, :to => :class)
 
   def initialize(name, sandbox, build = true, **_params)
     @tree_state = TreeState.new(sandbox)
