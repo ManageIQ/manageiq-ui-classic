@@ -220,7 +220,7 @@ module ApplicationController::Explorer
           redirect_to(:action => "explorer")
           return
         end
-        params[:id] = x_build_node_id(@record, x_node_build_options)
+        params[:id] = x_build_node_id(@record)
         tree_select
       end
       format.html do # HTML, redirect to explorer
