@@ -226,6 +226,10 @@ describe OpsController do
         expect(response.status).to eq(200)
         controller.send(:rbac_tenant_manage_quotas)
         flash_message = assigns(:flash_array).first
+        @tenant.reload
+        tenant_quotas = @tenant.get_quotas
+        expect(tenant_quotas[:cpu_allocated][:value]).to be(1024.0)
+        expect(tenant_quotas[:mem_allocated][:value]).to be(4096.0)
         expect(flash_message[:message]).to include("Quotas for Tenant \"OneTenant\" were saved")
         expect(flash_message[:level]).to be(:success)
       end
