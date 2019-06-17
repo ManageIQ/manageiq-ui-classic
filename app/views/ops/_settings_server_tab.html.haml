@@ -71,6 +71,7 @@
         = select_tag('server_timezone',
                       options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:server][:timezone]),
                       "data-live-search" => "true",
+                      "data-container"   => "body",
                       :class             => "selectpicker")
     :javascript
       miqSelectPickerEvent('server_timezone', "#{url}")
