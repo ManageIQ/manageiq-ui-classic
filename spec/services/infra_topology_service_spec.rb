@@ -84,8 +84,10 @@ describe InfraTopologyService do
       expect(infra_topology_service).to receive(:entity_display_type).exactly(2).times.and_call_original
 
       icons = infra_topology_service.build_icons
-      expect(icons["Openstack"]).to eq(:type => "image", :icon  => "/images/svg/vendor-openstack_infra.svg")
-      expect(icons["Vmware"]).to    eq(:type => "image", :icon  => "/images/svg/vendor-vmwarews.svg")
+      expect(icons["Openstack"][:type]).to eq("image")
+      expect(icons["Openstack"][:icon]).to include("vendor-openstack_infra")
+      expect(icons["Vmware"][:type]).to eq("image")
+      expect(icons["Vmware"][:icon]).to include("vendor-vmwarews")
       expect(icons[:EmsCluster]).to eq(:type => "glyph", :class => "pficon pficon-cluster")
       expect(icons[:Host]).to       eq(:type => "glyph", :class => "pficon pficon-container-node")
     end
