@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
+import { __ } from '../../../global-functions';
 import TaggingPropTypes from '../TaggingPropTypes';
 import customStyles from '../../../forms/select-styles';
 
@@ -23,7 +24,7 @@ class ValueSelector extends React.Component {
       styles={customStyles}
       name="form-field-name"
       value={value}
-      placeholder="Select tag value"
+      placeholder={__('Select tag value')}
       onChange={this.handleChange}
       classNamePrefix="react-select"
       options={values}

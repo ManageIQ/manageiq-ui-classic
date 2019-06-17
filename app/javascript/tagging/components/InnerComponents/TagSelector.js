@@ -51,7 +51,7 @@ class TagSelector extends React.Component {
         className="final-form-select"
         optionClassName="selected-option final-form-select-option"
         styles={customStyles}
-        placeholder="Select tag category"
+        placeholder={__('Select tag category')}
         options={this.tagCategories}
         onChange={this.handleChange}
         name="form-field-name"
