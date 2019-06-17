@@ -63,7 +63,7 @@ describe ApplicationController do
     end
 
     it "Verify record gets set when valid id is passed in" do
-      ems = FactoryBot.create(:ems_vmware)
+      ems = FactoryBot.create(:ext_management_system)
       expect(controller.send(:find_record_with_rbac, ExtManagementSystem, ems.id)).to eq(ems)
     end
   end
@@ -161,7 +161,7 @@ describe ApplicationController do
       expect(assigns(:flash_array).first[:message]).to include("does not apply to at least one of the selected")
     end
 
-    let(:ems)     { FactoryBot.create(:ems_vmware) }
+    let(:ems)     { FactoryBot.create(:ext_management_system) }
     let(:storage) { FactoryBot.create(:storage) }
 
     it "sets variables when Migrate button is pressed with list of VMware VMs" do

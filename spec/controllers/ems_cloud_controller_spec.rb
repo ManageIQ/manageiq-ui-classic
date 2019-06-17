@@ -480,8 +480,8 @@ describe EmsCloudController do
     end
 
     it 'displays only associated storage_managers' do
-      FactoryBot.create(:ems_amazon_ebs, :parent_ems_id => @ems.id)
-      FactoryBot.create(:ems_amazon_ebs, :parent_ems_id => @ems.id)
+      FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
+      FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
       expect(response).to render_template('layouts/angular/_gtl')
       expect(response.status).to eq(200)

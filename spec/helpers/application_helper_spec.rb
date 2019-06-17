@@ -1261,7 +1261,7 @@ describe ApplicationHelper do
     subject { send(:provider_paused?, record) }
 
     context 'record is a provider' do
-      let(:record) { FactoryBot.create(:ems_vmware) }
+      let(:record) { FactoryBot.create(:ems_infra) }
 
       it "true if provider paused" do
         record.pause!
@@ -1274,7 +1274,7 @@ describe ApplicationHelper do
     end
 
     context 'record is a VM' do
-      let(:record) { FactoryBot.create(:vm, :ext_management_system => FactoryBot.create(:ems_vmware)) }
+      let(:record) { FactoryBot.create(:vm, :ext_management_system => FactoryBot.create(:ems_infra)) }
 
       it "true if provider paused" do
         record.ext_management_system.pause!

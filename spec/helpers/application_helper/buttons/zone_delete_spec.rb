@@ -18,7 +18,7 @@ describe ApplicationHelper::Button::ZoneDelete do
 
     context 'when selected zone is not the default one' do
       context 'and zone has ext_management_systems' do
-        let(:set_relationships) { selected_zone.ext_management_systems << FactoryBot.create(:ems_vmware) }
+        let(:set_relationships) { selected_zone.ext_management_systems << FactoryBot.create(:ext_management_system) }
         it_behaves_like 'a disabled button', 'Cannot delete a Zone that has Relationships'
       end
 
