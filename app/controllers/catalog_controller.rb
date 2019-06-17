@@ -186,6 +186,7 @@ class CatalogController < ApplicationController
           page << javascript_for_miq_button_visibility(changed)
           session[:changed] = changed
         end
+        page.replace_html("rate_span", @edit[:new][:code_currency])
         page << set_spinner_off
       end
     end
@@ -898,6 +899,8 @@ class CatalogController < ApplicationController
         st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
       end
     end
+    st.currency = ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) if @edit[:new][:currency]
+    st.price    = @edit[:new][:price] if @edit[:new][:price]
 
     if st.save
       set_resource_action(st) unless st.kind_of?(ServiceTemplateContainerTemplate)
@@ -1116,6 +1119,10 @@ class CatalogController < ApplicationController
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
 
+    @edit[:new][:currency] = @record.currency ? @record.currency.id : nil
+    @edit[:new][:code_currency] = code_currency_label(@record.currency) if @record.currency
+    @edit[:new][:price] = @record.price
+
     # initialize fqnames
     @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = ""
     @record.resource_actions.each do |ra|
@@ -1258,8 +1265,19 @@ class CatalogController < ApplicationController
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
+
+    if params[:currency]
+      @edit[:new][:currency] = params[:currency].to_i
+      @edit[:new][:code_currency] = code_currency_label(params[:currency])
+    end
+    @edit[:new][:price] = params[:price]
+
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
+  end
+
+  def code_currency_label(currency)
+    _('Rate (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
   end
 
   def checked_tenants

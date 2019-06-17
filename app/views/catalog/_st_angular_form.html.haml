@@ -78,6 +78,27 @@
                   'miq-select'        => true}
             %option{"value" => ""} &lt;Choose&gt;
 
+      .form-group
+        %label.col-md-2.control-label{"for" => "currency_id"}
+          = _('Select currency')
+        .col-md-8
+          %select{"ng-model"         => "vm._currency",
+                  "name"             => "currency_id",
+                  'ng-options'       => 'currency as currency.symbol + " [" + currency.full_name + "]" for currency in vm.currencies',
+                  "data-live-search" => "true",
+                  'miq-select'        => true}
+
+      .form-group
+        %label.col-md-2.control-label{"for" => "price"}
+          = _("Rate (in {{vm.catalogItemModel.currency_name}})")
+        .col-md-8
+          %input.form-control{"type"        => "text",
+                                "id"          => "price",
+                                "name"        => "price",
+                                "ng-model"    => "vm.catalogItemModel.price",
+                                "maxlength"   => 60,
+                                "checkchange" => ""}
+
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
              :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
     = render :partial => "layouts/angular/x_edit_buttons_angular"

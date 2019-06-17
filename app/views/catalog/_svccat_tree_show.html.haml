@@ -34,7 +34,12 @@
           .col-md-8
             %p.form-control-static
               = @sb[:dialog_label]
-
+        .form-group
+          %label.col-md-2.control-label
+            = @record.currency ? _('Rate (in %{currency})') % {:currency => @record.currency.code} : _('Rate')
+          .col-md-8
+            %p.form-control-static
+              = @record.currency ? @record.price : _('Not Selected')
     .form-group
       .col-md-1{:align => "center"}
         #buttons

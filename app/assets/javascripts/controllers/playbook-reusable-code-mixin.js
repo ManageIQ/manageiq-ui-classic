@@ -170,6 +170,16 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       .catch(miqService.handleFailure)
     );
 
+    allApiPromises.push(API.get('/api/currencies/?expand=resources&attributes=id,full_name,symbol,code&sort_by=full_name&sort_order=ascending')
+      .then(function(data) {
+        vm.currencies = data.resources;
+        vm._currency = _.find(vm.currencies, {id: vm[vm.model].currency_id});
+        if (vm._currency)
+          vm[vm.model].currency_name = vm._currency.code;
+      })
+      .catch(miqService.handleFailure)
+    );
+
     // list of machine credentials
     getCredentialsForType('machine', '/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name', vm);
 

@@ -25,6 +25,8 @@ describe('catalogItemFormController', function() {
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       additional_tenant_ids: additionalTenantIds,
+      currency_id: '',
+      price: '',
       config_info:                  {
         provision: {
           dialog_id:     '10000000000031',
