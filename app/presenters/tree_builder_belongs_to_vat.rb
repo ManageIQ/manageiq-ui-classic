@@ -24,16 +24,12 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)
-    kids = []
-    parent.folders.each do |child|
-      next unless child.kind_of?(EmsFolder)
-      next if child.name == "host"
-      if child.name == "vm"
-        kids.concat(child.folders_only)
-      else
-        kids.push(child)
-      end
+    children = parent.folders.each_with_object([]) do |child, arr|
+      next if !child.kind_of?(EmsFolder) || child.name == 'host'
+
+      child.name == 'vm' ? arr.concat(child.folders_only) : arr.push(child)
     end
-    count_only_or_objects(count_only, kids)
+
+    count_only_or_objects(count_only, children)
   end
 end
