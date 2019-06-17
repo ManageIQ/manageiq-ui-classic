@@ -97,6 +97,34 @@ describe DialogLocalService do
                        "cloud_subnet", "cloud_subnets", "/cloud_subnet"
     end
 
+    context "when the object is an EmsStorage" do
+      let(:obj) { double(:class => ManageIQ::Providers::StorageManager, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "ext_management_system", "providers", "/ems_infra"
+    end
+
+    context "when the object is an Ebs" do
+      let(:obj) { double(:class => ManageIQ::Providers::Amazon::StorageManager::Ebs, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "ems_storage", "providers", "/ems_infra"
+    end
+
+    context "when the object is an CinderManager" do
+      let(:obj) { double(:class => ManageIQ::Providers::StorageManager::CinderManager, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "ext_management_system", "providers", "/ems_block_storage"
+    end
+
+    context "when the object is an SwiftManager" do
+      let(:obj) { double(:class => ManageIQ::Providers::StorageManager::SwiftManager, :id => 123) }
+
+      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
+                       "ext_management_system", "providers", "/ems_object_storage"
+    end
+
     context "when the object is a CloudTenant" do
       let(:obj) { double(:class => ManageIQ::Providers::Openstack::CloudManager::CloudTenant, :id => 123) }
 
