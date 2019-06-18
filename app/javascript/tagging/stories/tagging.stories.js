@@ -10,10 +10,10 @@ import taggingApp from '../reducers/';
 import { loadState } from '../actions';
 
 const tags = [
-  { description: 'Name', id: 1, singleValue: true, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
-  { description: 'Number', id: 2, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
-  { description: 'Animal', id: 3, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
-  { description: 'Food', id: 4, values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
+  { description: 'Name veryyyyyveryyyy loooong namee', id: 1, singleValue: true, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
+  { description: 'Number xxx xxxxxxxxxxxx xxx xxxxxxxxx xxx', id: 2, singleValue: true, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
+  { description: 'Animal', id: 3, singleValue: true, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
+  { description: 'Food xxx xxxxxxxxxxxx xxx xxxxxxxxx xxx', id: 4,singleValue: true,  values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
   {
     description: 'Something',
     id: 5,
@@ -22,7 +22,7 @@ const tags = [
   },
 ];
 const singleTags = [
-  { description: 'Name', id: 1, singleValue: true, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
+  { description: 'Name veryyyyyveryyyy loooong nameeeeeeee', id: 1, singleValue: true, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
   { description: 'Number', id: 2, singleValue: true, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
   { description: 'Animal', id: 3,singleValue: true, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
   { description: 'Food', id: 4, singleValue: true, values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
