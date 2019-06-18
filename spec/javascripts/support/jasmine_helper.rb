@@ -21,9 +21,14 @@ class StaticOrHaml
 
     scope.extend(ApplicationHelper)
 
-    compiled = Haml::Engine.new(raw).render(scope)
+    compiled = hamlit_compile(raw, scope)
 
     [200, {"Content-Type" => "text/html"}, [compiled]]
+  end
+
+  def hamlit_compile(template, scope)
+    code = Hamlit::Engine.new.call(template)
+    scope.instance_eval(code)
   end
 end
 
