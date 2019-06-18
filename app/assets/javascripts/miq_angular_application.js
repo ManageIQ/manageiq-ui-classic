@@ -74,6 +74,14 @@ function miq_bootstrap(selector, app) {
   return angular.bootstrap($(selector), [app], { strictDi: true });
 }
 
+function tree_action() {
+  listenToRx(function(payload) {
+    if (payload.breadcrumbSelect) {
+      window.location.href = "/generic_object_definition/show_list";
+    }
+  });
+};
+
 function miqCallAngular(data) {
   ManageIQ.angular.scope.$apply(function() {
     ManageIQ.angular.scope[data.name].apply(ManageIQ.angular.scope, data.args);

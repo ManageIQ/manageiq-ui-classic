@@ -45,10 +45,14 @@ module Mixins
         else
           # Append breadcrumb from the title of right cell
           breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems)) unless options[:hide_special_item]
-          breadcrumbs.push(:title => @right_cell_text) if @sb["action"] && @right_cell_text
+          breadcrumbs.push(:title => @right_cell_text) if action_breadcrumb?
         end
       end
       breadcrumbs.compact
+    end
+
+    def action_breadcrumb?
+      @sb["action"] && @right_cell_text
     end
 
     def build_breadcrumbs_no_explorer(record_info, record_title)
