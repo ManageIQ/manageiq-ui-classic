@@ -26,7 +26,7 @@ describe OpsController do
     end
 
     context "when the filter_type is 'ems'" do
-      let(:ext_management_system) { FactoryBot.create(:ems_vmware) }
+      let(:ext_management_system) { FactoryBot.create(:ext_management_system) }
       let(:filter_type) { "ems" }
 
       before do
@@ -240,7 +240,7 @@ describe OpsController do
 
     it "returns a filtered item list for ems providers that have hosts" do
       controller.instance_variable_set(:@settings, settings)
-      ems_cloud = FactoryBot.create(:ems_openstack)
+      ems_cloud = FactoryBot.create(:ems_cloud)
       ems_infra_no_hosts = FactoryBot.create(:ems_openstack_infra)
       ems_infra_with_hosts = FactoryBot.create(:ems_openstack_infra_with_stack)
       filtered_list = controller.send(:build_filtered_item_list, "host", "ems")

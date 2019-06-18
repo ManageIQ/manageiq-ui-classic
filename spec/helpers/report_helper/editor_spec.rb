@@ -3,7 +3,7 @@ describe ReportHelper do
     let(:project) { FactoryBot.create(:container_project) }
     let(:image) { FactoryBot.create(:container_image) }
     let(:provider) do
-      FactoryBot.build(:ems_kubernetes).tap do |e|
+      FactoryBot.build(:ems_container).tap do |e|
         e.container_projects = [project]
         e.container_images = [image]
         e.save!

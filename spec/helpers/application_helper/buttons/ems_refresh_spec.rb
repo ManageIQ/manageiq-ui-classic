@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::EmsRefresh do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryBot.create(:ems_vmware) }
+  let(:record) { FactoryBot.create(:ems_infra) }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do

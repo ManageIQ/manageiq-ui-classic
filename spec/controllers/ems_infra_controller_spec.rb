@@ -69,7 +69,7 @@ describe EmsInfraController do
     end
 
     it "should set correct VM for right-sizing when on list of VM's of another CI" do
-      ems_infra = FactoryBot.create(:ems_microsoft)
+      ems_infra = FactoryBot.create(:ext_management_system)
       vm = FactoryBot.create(:vm_vmware, :ext_management_system => ems_infra)
       allow(controller).to receive(:find_records_with_rbac) { [vm] }
       post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
