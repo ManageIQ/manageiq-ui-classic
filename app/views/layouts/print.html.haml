@@ -4,6 +4,8 @@
     %title= @options[:title]
     = miq_favicon_link_tag
     = stylesheet_link_tag 'print', :media => 'all'
+    = javascript_essential_dependencies
+    = javascript_pack_tag 'manageiq-ui-classic/print.js'
     -# Mock the gettext calls in javascript
     :javascript
       window.__ = function (data) { return data };
