@@ -253,10 +253,10 @@ module ApplicationController::Buttons
       :refers_to_type => params[:realTargetType]
     )
     # FIXME: remove this fallback, once the form passes the targetClass
-    saved_url ||= SavedUrl.find_by(:refers_to_id   => params[:targetId])
+    saved_url ||= SavedUrl.find_by(:refers_to_id => params[:targetId])
 
     # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
-    saved_url = SystemConsole.find_by(:vm_id => params[:targetId])
+    saved_url ||= SystemConsole.find_by(:vm_id => params[:targetId])
 
     url = saved_url.try(:url)
 
@@ -268,8 +268,18 @@ module ApplicationController::Buttons
   BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
 
   def custom_button_done
-    url = SystemConsole.find_by(:vm => params[:id]).try(:url)
+    saved_url = SavedUrl.find_by(
+      :refers_to_id   => params[:id],
+      :refers_to_type => params[:cls]
+    )
 
+    # FIXME: remove this fallback once we have the class here
+    saved_url ||= SavedUrl.find_by(:refers_to_id => params[:id])
+
+    # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
+    saved_url ||= SystemConsole.find_by(:vm_id => params[:id])
+
+    url = saved_url.try(:url)
     if url.present?
       javascript_open_window(url)
     else
