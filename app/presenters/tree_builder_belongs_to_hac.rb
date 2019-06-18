@@ -46,11 +46,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
-    if @assign_to.present?
-      count_only_or_objects(count_only, ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
-    else
-      count_only_or_objects(count_only, ExtManagementSystem.all)
-    end
+    count_only_or_objects(count_only, ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
   end
 
   def x_get_provider_kids(parent, count_only)

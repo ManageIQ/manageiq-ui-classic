@@ -86,14 +86,7 @@ describe TreeBuilderBelongsToHac do
   end
 
   describe '#x_get_tree_roots' do
-    it 'returns all ExtManagementSystems' do
-      expect(subject.send(:x_get_tree_roots, false, nil)).to eq(ExtManagementSystem.all)
-    end
-  end
-
-  describe '#x_get_tree_roots' do
-    it 'returns all ExtManagementSystems except the Embedded Ansible when @assign_to is present' do
-      subject.instance_variable_set(:@assign_to, "ems_folder")
+    it 'returns all ExtManagementSystems except the Embedded Ansible' do
       expect(subject.send(:x_get_tree_roots, false, nil)).to eq(ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
     end
   end
