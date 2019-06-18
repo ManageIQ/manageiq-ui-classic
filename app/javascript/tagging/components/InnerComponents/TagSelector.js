@@ -16,7 +16,14 @@ class TagSelector extends React.Component {
 
   labelWithIcon = (description, infoText) => (
     <div>
-      <span>{description}</span>
+      <span
+        style={{
+          display: 'inline-block',
+          width: 'calc(100% - 18px)',
+        }}
+      >
+        {description}
+      </span>
       <span
         className="pull-right pficon pficon-info tag-icon"
         title={infoText}
