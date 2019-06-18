@@ -197,20 +197,26 @@ const ReportDataTable = (props) => {
 
   return (
     <React.Fragment>
-      <Filter>
-        <Filter.TypeSelector
-          filterTypes={filterColumns}
-          currentFilterType={filterColumn}
-          onFilterTypeSelected={filterTypeSelected}
-        />
-        <FormControl
-          type="text"
-          value={state.filter && state.filter.text}
-          placeholder={__('search text')}
-          onChange={filterTextUpdate}
-          onKeyPress={filterKeyPress}
-        />
-      </Filter>
+      <div className="row toolbar-pf table-view-pf-toolbar">
+        <form className="toolbar-pf-actions">
+          <div className="form-group toolbar-pf-filter">
+            <Filter>
+              <Filter.TypeSelector
+                filterTypes={filterColumns}
+                currentFilterType={filterColumn}
+                onFilterTypeSelected={filterTypeSelected}
+              />
+              <FormControl
+                type="text"
+                value={state.filter && state.filter.text}
+                placeholder={__('search text')}
+                onChange={filterTextUpdate}
+                onKeyPress={filterKeyPress}
+              />
+            </Filter>
+          </div>
+        </form>
+      </div>
       <Table.PfProvider
         striped
         bordered
