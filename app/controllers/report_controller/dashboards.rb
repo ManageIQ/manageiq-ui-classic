@@ -51,6 +51,47 @@ module ReportController::Dashboards
     db_edit
   end
 
+  def db_copy
+    case params[:button]
+    when "cancel"
+      db_copy_cancel
+    when "save"
+      add_flash(_("Copy of Dashboard was saved"))
+      get_node_info
+      replace_right_cell
+    else
+      checked_id = find_checked_items.first || params[:id]
+      @record = find_record_with_rbac(MiqWidgetSet, checked_id)
+      @tabactive = false
+      @in_a_form = true
+      @edit = {}
+      @edit[:db_id] = @record.id
+      session[:changed] = false
+      replace_right_cell(:action => "copy_dashboard")
+    end
+  end
+
+  def db_copy_cancel
+    @dashboard = MiqWidgetSet.find_by(:id => session[:edit][:db_id]) if session[:edit] && session[:edit][:db_id]
+    if !@dashboard || @dashboard.id.blank?
+      add_flash(_("Add of new Dashboard was cancelled by the user"))
+    else
+      add_flash(_("Edit of Dashboard \"%{name}\" was cancelled by the user") % {:name => get_record_display_name(@dashboard)})
+    end
+    get_node_info
+    @edit = session[:edit] = nil # clean out the saved info
+    @dashboard = nil
+    replace_right_cell
+  end
+
+  def dashboard_get
+    dashboard = MiqWidgetSet.select(:name, :description).find_by(:id => params[:id])
+    render :json => {
+      :name        => dashboard.name,
+      :description => dashboard.description
+    }
+  end
+
   def db_edit
     case params[:button]
     when "cancel"

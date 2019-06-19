@@ -19,6 +19,14 @@ class ApplicationHelper::Toolbar::MiqWidgetSetsCenter < ApplicationHelper::Toolb
           t = N_('Edit Sequence of Dashboards'),
           t,
           :klass => ApplicationHelper::Button::DbSeqEdit),
+        button(
+          :db_copy,
+          'pficon pficon-edit fa-lg',
+          N_('Select a single Dashboard to copy'),
+          N_('Copy Selected Dashboard'),
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
       ]
     ),
   ])
