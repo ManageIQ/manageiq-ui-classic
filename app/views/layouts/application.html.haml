@@ -23,6 +23,8 @@
       ManageIQ.charts.provider = "#{Charting.backend}";
       ManageIQ.browser = "#{j browser_info(:name_ui)}";
       ManageIQ.controller = "#{j controller_name}";
+      ManageIQ.product_name = "#{j I18n.t("product.name")}";
+      ManageIQ.product_name_full = "#{j I18n.t("product.name_full")}";
 
     - if ::Settings.server.asynchronous_notifications
       :javascript
