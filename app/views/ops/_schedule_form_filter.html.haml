@@ -3,6 +3,17 @@
     .div
       -# %h4 {{buildLegend()}}
       %div{"ng-switch" => "", "on" => "scheduleModel.action_typ"}
+        .form-group{"ng-class" => "{'has-error': angularForm.target_id.$invalid}", "ng-show" => "automateRequest()"}
+          %label.col-md-2.control-label{"for" => "zone_id"}
+            = _("Zone")
+          .col-md-8
+            %select#zone_id{"ng-model"         => "_zone",
+                            "name"             => "zone_id",
+                            "ng-options"       => "zone as zone.description for zone in zones",
+                            "data-live-search" => "true",
+                            "checkchange"      => "",
+                            "miq-select"       => true}
+              %option{"disabled" => "", "value" => ""} &lt;Choose&gt;
         .form-group
           %label.col-md-2.control-label{"for" => "filter_typ", "ng-hide" => "dbBackup() || automateRequest()"}
             = _("Filter")

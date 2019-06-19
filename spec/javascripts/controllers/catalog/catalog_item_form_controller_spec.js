@@ -21,6 +21,7 @@ describe('catalogItemFormController', function() {
       long_description:             'catalogItemLongDescription',
       display:                      true,
       service_template_catalog_id:  10000000000012,
+      zone_id:                      10000000000001,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       additional_tenant_ids: additionalTenantIds,

@@ -141,6 +141,14 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       );
     }
 
+    allApiPromises.push(API.get('/api/zones/?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending')
+      .then(function(data) {
+        vm.zones = data.resources;
+        vm._zone = _.find(vm.zones, {id: vm[vm.model].zone_id});
+      })
+      .catch(miqService.handleFailure)
+    );
+
     // list of service dialogs
     if (vm[vm.model].provisioning_dialog_id !== undefined) {
       allApiPromises.push(API.get('/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending')

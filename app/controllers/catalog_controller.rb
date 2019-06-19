@@ -1059,6 +1059,7 @@ class CatalogController < ApplicationController
                                   end
     st.prov_type = @edit[:new][:st_prov_type]
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
+    st.zone_id = @edit[:new][:zone_id]
     st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
   end
 
@@ -1112,6 +1113,8 @@ class CatalogController < ApplicationController
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
+    fetch_zones
+    @edit[:new][:zone_id] = @record.zone_id
 
     # initialize fqnames
     @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = ""
@@ -1132,6 +1135,10 @@ class CatalogController < ApplicationController
                          _("Editing Service Catalog Item \"%{name}\"") % {:name => @record.name}
                        end
     build_automate_tree(:automate_catalog) # Build Catalog Items tree
+  end
+
+  def fetch_zones
+    @zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :id)
   end
 
   def st_set_form_vars
@@ -1239,12 +1246,13 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    copy_params_if_set(@edit[:new], params, %i[name description provision_cost catalog_id dialog_id generic_subtype long_description])
+    copy_params_if_set(@edit[:new], params, %i[name description provision_cost catalog_id dialog_id generic_subtype long_description zone_id])
 
     @edit[:new][:display] = params[:display] == "1" if params[:display]
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
+    fetch_zones
     checked_tenants if params[:check] # Save checked Additional Tenants to @edit
 
     @tenants_tree = build_tenants_tree # Build the tree with available tenants

@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
       prov_type: 'generic_ansible_playbook',
       location: 'playbook',
       catalog_id: '',
+      zone_id: '',
       key: '',
       key_value: '',
       provisioning_repository_id: '',
@@ -57,6 +58,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     vm.afterGet = false;
     vm.inventory_mode = 'localhost';
     vm.all_catalogs = allCatalogsNames;
+    vm.zones = [];
 
     ManageIQ.angular.scope = $scope;
 
@@ -74,6 +76,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
         vm.catalogItemModel.long_description = catalogItemData.long_description;
         vm.catalogItemModel.display = catalogItemData.display;
         vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id === undefined ? '' : catalogItemData.service_template_catalog_id;
+        vm.catalogItemModel.zone_id = catalogItemData.zone_id === undefined ? '' : catalogItemData.zone_id;
         vm.catalogItemModel.provisioning_dialog_id = catalogItemData.config_info.provision.dialog_id;
         playbookReusableCodeMixin.formOptions(vm);
         playbookReusableCodeMixin.formCloudCredentials(vm, catalogItemData.config_info.provision.cloud_credential_id, catalogItemData.config_info.retirement.cloud_credential_id);
@@ -245,6 +248,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
       long_description: configData.long_description,
       display: configData.display,
       service_template_catalog_id: configData.catalog_id,
+      zone_id: configData.zone_id,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       additional_tenant_ids: configData.additional_tenant_ids,
@@ -447,7 +451,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
   };
 
   // watch for all the drop downs on screen
-  'catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_vault_credential retirement_vault_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog'.split(' ').forEach(idWatch);
+  'catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_vault_credential retirement_vault_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog zone'.split(' ').forEach(idWatch);
 
   function idWatch(name) {
     var fieldName = 'vm._' + name;
