@@ -743,11 +743,16 @@ describe OpsController do
   end
 
   describe "#rbac_user_delete_restriction?" do
-    let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+    let(:default_admin_user) { FactoryBot.create(:user, :userid => "admin", :role => "super_administrator") }
+    let(:custom_admin_user) { FactoryBot.create(:user, :userid => "somename", :role => "super_administrator") }
     let(:other_user) { FactoryBot.create(:user) }
 
-    it "returns true because user is super admin" do
-      expect(controller.send(:rbac_user_delete_restriction?, admin_user)).to be_truthy
+    it "returns true because user is default super admin" do
+      expect(controller.send(:rbac_user_delete_restriction?, default_admin_user)).to be_truthy
+    end
+
+    it "returns false because user is custom super admin" do
+      expect(controller.send(:rbac_user_delete_restriction?, custom_admin_user)).to be_falsy
     end
 
     it "returns true because user is current user" do
