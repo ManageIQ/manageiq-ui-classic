@@ -7,20 +7,16 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       blue?(object.parent)
   end
 
-  def override(node, object, _pid, options)
+  def override(node, object, _pid, _options)
     node[:selectable] = false
     node[:checkable] = @edit.present? || @assign_to.present?
-    if [ExtManagementSystem, EmsCluster, Datacenter].any? { |klass| object.kind_of?(klass) }
+
+    if object.kind_of?(EmsFolder) && blue?(object)
+      node[:icon] = "pficon pficon-folder-close-blue"
+    else
       node[:hideCheckbox] = true
     end
-    if object.kind_of?(EmsFolder)
-      if blue?(object)
-        node[:icon] = "pficon pficon-folder-close-blue"
-      else
-        node[:hideCheckbox] = true
-      end
-      node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
-    end
+    node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)
