@@ -60,15 +60,17 @@ class TreeBuilderBelongsToHac < TreeBuilder
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)
-    kids = []
-    parent.folders.each do |child|
-      kids.concat([child]) if child.kind_of?(EmsFolder) && child.name == 'datastore'
-      next unless child.kind_of?(EmsFolder) && child.name == "host"
-      kids.concat(child.folders_only)
-      kids.concat(child.clusters)
-      kids.concat(child.hosts)
+    children = parent.folders.each_with_object([]) do |child, arr|
+      next unless child.kind_of?(EmsFolder)
+
+      case child.name
+      when 'datastore'
+        arr.push(child)
+      when 'host'
+        [:folders_only, :clusters, :hosts].each { |m| arr.concat(child.send(m)) }
+      end
     end
-    count_only_or_objects(count_only, kids)
+    count_only_or_objects(count_only, children)
   end
 
   def x_get_tree_cluster_kids(parent, count_only)
