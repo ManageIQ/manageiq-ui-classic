@@ -1294,8 +1294,12 @@ module ApplicationHelper
     "#{prefix}-#{rand(36**8).to_s(36)}"
   end
 
+  def self.miq_favicon_path
+    Settings.server.custom_favicon ? '/upload/custom_favicon.ico' : ActionController::Base.helpers.image_path('favicon.ico')
+  end
+
   def miq_favicon_link_tag
-    Settings.server.custom_favicon ? favicon_link_tag('/upload/custom_favicon.ico') : favicon_link_tag
+    favicon_link_tag(ApplicationHelper.miq_favicon_path)
   end
 
   def provider_paused?(record)

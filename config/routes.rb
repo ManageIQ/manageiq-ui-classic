@@ -3337,6 +3337,9 @@ Rails.application.routes.draw do
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false
 
+  # prevent No route matches [GET] "/favicon.ico"
+  get '/favicon.ico' => 'static#favicon', :format => false
+
   resources :ems_cloud,          :as => :ems_clouds
   resources :ems_infra,          :as => :ems_infras
   resources :ems_physical_infra, :as => :ems_physical_infras

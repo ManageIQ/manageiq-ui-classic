@@ -6,4 +6,8 @@ class StaticController < ActionController::Base
 
   include HighVoltage::StaticPage
   helper ApplicationHelper
+
+  def favicon
+    redirect_to(ApplicationHelper.miq_favicon_path)
+  end
 end
