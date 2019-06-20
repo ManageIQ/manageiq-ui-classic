@@ -67,12 +67,12 @@ describe('OrcherstrationTemplate form', () => {
   });
 
   it('should render edit variant', (done) => {
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} />);
     fetchMock.patchOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',
       content: 'content',
     });
+    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} />);
     /**
      * async load
      */
@@ -102,12 +102,12 @@ describe('OrcherstrationTemplate form', () => {
   });
 
   it('should render copy variant', (done) => {
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
     fetchMock.postOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',
       content: 'content',
     });
+    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
     /**
      * async load
      */
