@@ -48,6 +48,7 @@ class ReportController < ApplicationController
     'saved_report_delete'         => :saved_report_delete,
     'db_new'                      => :db_new,
     'db_edit'                     => :db_edit,
+    'db_copy'                     => :db_copy,
     'db_delete'                   => :db_delete,
     'db_seq_edit'                 => :db_seq_edit,
     'widget_refresh'              => :widget_refresh,
@@ -573,7 +574,7 @@ class ReportController < ApplicationController
       action_url = "widget_edit"
       record_id = @edit[:widget_id] ? @edit[:widget_id] : nil
     elsif x_active_tree == :db_tree
-      if @edit[:new][:dashboard_order]
+      if @edit[:new] && @edit[:new][:dashboard_order]
         action_url = "db_seq_edit"
         locals[:multi_record] = true
       else
@@ -636,7 +637,7 @@ class ReportController < ApplicationController
   # :replace_trees key can be an array of tree symbols to be replaced
   def replace_right_cell(options = {})
     @explorer = true
-
+    action = options[:action]
     replace_trees = options[:replace_trees] || []
     get_node_info unless @in_a_form
     replace_trees = @replace_trees if @replace_trees # get_node_info might set this
@@ -675,8 +676,9 @@ class ReportController < ApplicationController
     presenter[:osf_node] = x_node # Open, select, and focus on this node
 
     session[:changed] = (@edit[:new] != @edit[:current]) if @edit && @edit[:current] # to get save/reset buttons to highlight when something is changed
-
-    if nodetype == 'root' || (nodetype != 'root' && x_active_tree != :roles_tree)
+    if %w[copy_dashboard].include?(action)
+      presenter.update(:main_div, r[:partial => action])
+    elsif nodetype == 'root' || (nodetype != 'root' && x_active_tree != :roles_tree)
       presenter.update(:main_div, r[:partial => partial])
       case x_active_tree
       when :db_tree
@@ -839,8 +841,12 @@ class ReportController < ApplicationController
       if @pages
         presenter.hide(:form_buttons_div, :rpb_div_1)
       elsif @in_a_form
-        presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
-        presenter.remove_paging.hide(:rpb_div_1).show(:form_buttons_div)
+        if %w[copy_dashboard].include?(action)
+          presenter.hide(:form_buttons_div).hide(:rpb_div_1).remove_paging
+        else
+          presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
+          presenter.remove_paging.hide(:rpb_div_1).show(:form_buttons_div)
+        end
       elsif @sb[:pages]
         presenter.update(:paging_div, r[:partial => 'layouts/saved_report_paging_bar', :locals => @sb[:pages]])
         presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging

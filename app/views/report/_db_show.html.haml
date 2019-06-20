@@ -18,12 +18,14 @@
       = _('Locked')
     .col-md-8
       %p.form-control-static
-        = h(widget.set_data[:locked])
+        - if widget.set_data && widget.set_data[:locked]
+          = h(widget.set_data[:locked])
   .form-group
     %label.control-label.col-md-2
       = _('Reset Dashboard upon login')
     .col-md-8
       %p.form-control-static
-        = h(widget.set_data[:reset_upon_login])
+        - if widget.set_data && widget.set_data[:reset_upon_login]
+          = h(widget.set_data[:reset_upon_login])
 %hr
 = render :partial => 'db_widgets', :locals => {:widget => widget}

@@ -2710,6 +2710,8 @@ Rails.application.routes.draw do
 
     :report                   => {
       :get  => %w(
+        dashboard_get
+        db_copy
         db_widget_dd_done
         download_report
         explorer
@@ -2730,6 +2732,8 @@ Rails.application.routes.draw do
         accordion_select
         change_tab
         create
+        dashboard_render
+        db_copy
         db_edit
         db_form_field_changed
         db_seq_edit

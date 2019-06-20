@@ -51,6 +51,61 @@ module ReportController::Dashboards
     db_edit
   end
 
+  def db_copy
+    case params[:button]
+    when "cancel"
+      db_copy_cancel
+    when "save"
+      dashboard = find_record_with_rbac(MiqWidgetSet, params[:dashboard_id])
+      begin
+        MiqWidgetSet.copy_dashboard(dashboard, params[:name], params[:description], params[:group_id])
+        render :json => { :name => dashboard.name }, :status => :ok
+      rescue => bang
+        render :json => { :error => { :message => _("Error during 'Validate': %{message}") % {:message => bang.to_s} } }, :status => :bad_request
+      end
+    else
+      checked_id = find_checked_items.first || params[:id]
+      @record = find_record_with_rbac(MiqWidgetSet, checked_id)
+      @tabactive = false
+      @in_a_form = true
+      @edit = {}
+      @edit[:db_id] = @record.id
+      session[:changed] = false
+      @right_cell_text = _("Copy of \"%{dashboard}\" Dashboard") % {:dashboard => @record.name}
+      replace_right_cell(:action => "copy_dashboard")
+    end
+  end
+
+  def db_copy_cancel
+    add_flash(_("Copy of Dashboard was cancelled by the user"))
+    get_node_info
+    @edit = session[:edit] = @sb[:action] = nil # clean out the saved info
+    @dashboard = nil
+    replace_right_cell
+  end
+
+  def dashboard_get
+    if params[:name]
+      dashboard = MiqWidgetSet.where(:name => params[:name]).to_a
+      render :json => {:length => dashboard.length}
+    else
+      dashboard = MiqWidgetSet.select(:name, :description, :owner_id).find_by(:id => params[:id])
+      render :json => {
+        :name        => dashboard.name,
+        :description => dashboard.description,
+        :owner_id    => dashboard.owner_id.to_s
+      }
+    end
+  end
+
+  def dashboard_render
+    get_node_info
+    @edit = session[:edit] = @sb[:action] = nil # clean out the saved info
+    @dashboard = nil
+    add_flash(_("Copy of \"%{original_name}\" Dashboard: \"%{name}\" was succesfully saved into \"%{group}\" Group.") % {:original_name => params[:original_name], :name => params[:name], :group => params[:group]})
+    replace_right_cell(:replace_trees => [:db])
+  end
+
   def db_edit
     case params[:button]
     when "cancel"
