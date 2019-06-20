@@ -431,6 +431,7 @@ class CatalogController < ApplicationController
     changed = (@edit[:new] != @edit[:current])
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
+    fetch_zones
     render :update do |page|
       page << javascript_prologue
       page.replace("basic_info_div", :partial => "form_basic_info")
