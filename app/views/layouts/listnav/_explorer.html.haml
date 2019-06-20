@@ -6,10 +6,12 @@
       = miq_accordion_panel(accord[:title], selected == accord, accord[:container]) do
         -# Set the first tree to be rendered if there is a mismatch with the name/type
         - tree = @trees.find(-> { @trees.first }) { |t| t.name == "#{accord[:name]}_tree".to_sym  }
+        :javascript
+          ManageIQ.tree.data['#{tree.name}'] = #{tree.locals_for_render[:bs_tree]};
         %miq-tree-view{:name       => tree.name,
                        :data       => "vm.data['#{tree.name}']",
                        :reselect   => tree.locals_for_render[:allow_reselect],
-                       "ng-init"   => "vm.initData('#{tree.name}', #{tree.locals_for_render[:bs_tree]}, '#{tree.locals_for_render[:select_node]}')",
+                       "ng-init"   => "vm.initData('#{tree.name}', '#{tree.locals_for_render[:select_node]}')",
                        'on-select' => "vm.nodeSelect(node, '/#{request.parameters[:controller]}/tree_select')",
                        'selected'  => "vm.selectedNodes['#{tree.name}']",
                        'persist'   => 'key',
