@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dual group component should render 1`] = `
+<Dualgroup
+  fields={
+    Array [
+      Object {
+        "name": "John",
+      },
+      Object {
+        "name": "Arthur",
+      },
+    ]
+  }
+  formOptions={
+    Object {
+      "renderForm": [Function],
+    }
+  }
+  name="dualgroup"
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <div
+      className="row"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        key="John"
+        md={6}
+      >
+        <div
+          className="col-md-6"
+        >
+          hello John
+        </div>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        key="Arthur"
+        md={6}
+      >
+        <div
+          className="col-md-6"
+        >
+          hello Arthur
+        </div>
+      </Col>
+    </div>
+  </Row>
+  <hr
+    style={
+      Object {
+        "margin": 0,
+      }
+    }
+  />
+</Dualgroup>
+`;

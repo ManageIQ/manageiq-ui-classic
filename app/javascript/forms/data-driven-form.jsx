@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'patternfly-react';
 import FormRender, { Validators, layoutComponents } from '@data-driven-forms/react-form-renderer';
 import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
@@ -15,14 +16,12 @@ const buttonLabels = {
   cancelLabel: __('Cancel'),
 };
 
-const FormWrapper = ({ children, ...props }) => <Form {...props} className="form-react">{children}</Form>;
-
-const MiqFormRenderer = props => (
+const MiqFormRenderer = ({ className, ...props }) => (
   <FormRender
     formFieldsMapper={formFieldsMapper}
     layoutMapper={{
       ...layoutMapper,
-      [layoutComponents.FORM_WRAPPER]: FormWrapper,
+      [layoutComponents.FORM_WRAPPER]: props => <Form {...props} className={className} />,
     }}
     disableSubmit={[
       'pristine',
@@ -32,4 +31,13 @@ const MiqFormRenderer = props => (
     {...props}
   />
 );
+
+MiqFormRenderer.propTypes = {
+  className: PropTypes.string,
+};
+
+MiqFormRenderer.defaultProps = {
+  className: 'form-react',
+};
+
 export default MiqFormRenderer;

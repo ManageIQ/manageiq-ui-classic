@@ -12,6 +12,7 @@ exports[`Flavor form component should render form 1`] = `
         "submitLabel": "Add",
       }
     }
+    className="form-react"
     initialValues={
       Object {
         "ems_id": 1,

@@ -13,6 +13,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
       }
     }
     canReset={true}
+    className="form-react"
     initialValues={
       Object {
         "cidr": null,
@@ -316,6 +317,7 @@ exports[`Cloud Network form component should render form 1`] = `
       }
     }
     canReset={false}
+    className="form-react"
     initialValues={
       Object {
         "enabled": true,

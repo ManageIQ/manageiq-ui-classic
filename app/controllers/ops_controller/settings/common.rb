@@ -30,11 +30,6 @@ module OpsController::Settings::Common
         @refresh_div = nil
       end
       @changed = false unless rhn_save_enabled?
-    when 'settings_workers'
-      @changed = (@edit[:new] != @edit[:current])
-      if @edit[:new][:workers][:worker_base][:ui_worker][:count] != @edit[:current][:workers][:worker_base][:ui_worker][:count]
-        add_flash(_("Changing the UI Workers Count will immediately restart the webserver"), :warning)
-      end
     when 'settings_advanced' # Advanced yaml edit
       @changed = (@edit[:new] != @edit[:current])
     end
@@ -389,54 +384,6 @@ module OpsController::Settings::Common
         server.save
       end
       @update = server.settings
-    when "settings_workers" # Workers Settings
-      @changed = (@edit[:new] != @edit[:current])
-      qwb = @edit[:new][:workers][:worker_base][:queue_worker_base]
-      w = qwb[:generic_worker]
-      set_worker_setting(@edit[:new], MiqGenericWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqGenericWorker, :memory_threshold, w[:memory_threshold])
-
-      w = qwb[:priority_worker]
-      set_worker_setting(@edit[:new], MiqPriorityWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqPriorityWorker, :memory_threshold, w[:memory_threshold])
-
-      w = qwb[:ems_metrics_collector_worker][:defaults]
-      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold, w[:memory_threshold])
-
-      w = qwb[:ems_metrics_processor_worker]
-      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqEmsMetricsProcessorWorker, :memory_threshold, w[:memory_threshold])
-
-      w = qwb[:ems_refresh_worker][:defaults]
-      set_worker_setting(@edit[:new], MiqEmsRefreshWorker, :defaults, :memory_threshold, w[:memory_threshold])
-
-      wb = @edit[:new][:workers][:worker_base]
-      w = wb[:event_catcher]
-      set_worker_setting(@edit[:new], MiqEventCatcher, :memory_threshold, w[:memory_threshold])
-
-      w = wb[:vim_broker_worker]
-      set_worker_setting(@edit[:new], MiqVimBrokerWorker, :memory_threshold, w[:memory_threshold])
-
-      w = qwb[:smart_proxy_worker]
-      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqSmartProxyWorker, :memory_threshold, w[:memory_threshold])
-
-      w = wb[:ui_worker]
-      set_worker_setting(@edit[:new], MiqUiWorker, :count, w[:count].to_i)
-
-      w = qwb[:reporting_worker]
-      set_worker_setting(@edit[:new], MiqReportingWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqReportingWorker, :memory_threshold, w[:memory_threshold])
-
-      w = wb[:web_service_worker]
-      set_worker_setting(@edit[:new], MiqWebServiceWorker, :count, w[:count].to_i)
-      set_worker_setting(@edit[:new], MiqWebServiceWorker, :memory_threshold, w[:memory_threshold])
-
-      w = wb[:remote_console_worker]
-      set_worker_setting(@edit[:new], MiqRemoteConsoleWorker, :count, w[:count].to_i)
-
-      @update = MiqServer.find(@sb[:selected_server_id]).settings
     when "settings_custom_logos" # Custom Logo tab
       @changed = (@edit[:new] != @edit[:current])
       @update = ::Settings.to_hash
@@ -810,52 +757,6 @@ module OpsController::Settings::Common
       auth[:local_login_disabled] = (params[:local_login_disabled].to_s == "1") if params[:local_login_disabled]
       auth[:default_group_for_users] = params[:authentication_default_group_for_users] if params[:authentication_default_group_for_users]
 
-    when "settings_workers" # Workers Settings tab
-      wb  = new[:workers][:worker_base]
-      qwb = wb[:queue_worker_base]
-
-      w = qwb[:generic_worker]
-      w[:count] = params[:generic_worker_count].to_i if params[:generic_worker_count]
-      w[:memory_threshold] = params[:generic_worker_threshold].to_i if params[:generic_worker_threshold]
-
-      w = qwb[:priority_worker]
-      w[:count] = params[:priority_worker_count].to_i if params[:priority_worker_count]
-      w[:memory_threshold] = params[:priority_worker_threshold].to_i if params[:priority_worker_threshold]
-
-      w = qwb[:ems_metrics_collector_worker][:defaults]
-      w[:count] = params[:ems_metrics_collector_worker_count].to_i if params[:ems_metrics_collector_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_collector_worker_threshold].to_i if params[:ems_metrics_collector_worker_threshold]
-
-      w = qwb[:ems_metrics_processor_worker]
-      w[:count] = params[:ems_metrics_processor_worker_count].to_i if params[:ems_metrics_processor_worker_count]
-      w[:memory_threshold] = params[:ems_metrics_processor_worker_threshold].to_i if params[:ems_metrics_processor_worker_threshold]
-
-      w = qwb[:ems_refresh_worker][:defaults]
-      w[:memory_threshold] = params[:ems_refresh_worker_threshold].to_i if params[:ems_refresh_worker_threshold]
-
-      w = wb[:event_catcher]
-      w[:memory_threshold] = params[:event_catcher_threshold].to_i if params[:event_catcher_threshold]
-
-      w = wb[:vim_broker_worker]
-      w[:memory_threshold] = params[:vim_broker_worker_threshold].to_i if params[:vim_broker_worker_threshold]
-
-      w = qwb[:smart_proxy_worker]
-      w[:count] = params[:proxy_worker_count].to_i if params[:proxy_worker_count]
-      w[:memory_threshold] = params[:proxy_worker_threshold].to_i if params[:proxy_worker_threshold]
-
-      w = wb[:ui_worker]
-      w[:count] = params[:ui_worker_count].to_i if params[:ui_worker_count]
-
-      w = qwb[:reporting_worker]
-      w[:count] = params[:reporting_worker_count].to_i if params[:reporting_worker_count]
-      w[:memory_threshold] = params[:reporting_worker_threshold].to_i if params[:reporting_worker_threshold]
-
-      w = wb[:web_service_worker]
-      w[:count] = params[:web_service_worker_count].to_i if params[:web_service_worker_count]
-      w[:memory_threshold] = params[:web_service_worker_threshold].to_i if params[:web_service_worker_threshold]
-
-      w = wb[:remote_console_worker]
-      w[:count] = params[:remote_console_worker_count].to_i if params[:remote_console_worker_count]
     when "settings_custom_logos" # Custom Logo tab
       new[:server][:custom_logo] = (params[:server_uselogo] == "true") if params[:server_uselogo]
       new[:server][:custom_login_logo] = (params[:server_useloginlogo] == "true") if params[:server_useloginlogo]
@@ -971,105 +872,6 @@ module OpsController::Settings::Common
   end
 
   def settings_set_form_vars_workers
-    # getting value in "1.megabytes" bytes from backend, converting it into "1 MB" to display in UI, and then later convert it into "1.megabytes" to before saving it back into config.
-    @edit = {}
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
-    @edit[:new] = MiqServer.find(@sb[:selected_server_id]).settings
-    @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
-    @sb[:threshold] = []
-    (200.megabytes...550.megabytes).step(50.megabytes) do |x|
-      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
-    end
-    (600.megabytes...1000.megabytes).step(100.megabytes) do |x|
-      # adding values in 100 MB increments from 600 to 1gb, dividing in two statements else it puts 1000MB instead of 1GB in pulldown
-      @sb[:threshold] << [number_to_human_size(x, :significant => false), x]
-    end
-    (1.gigabytes...1.5.gigabytes).step(100.megabytes) do |x|
-      # adding values in 100 MB increments from 1gb to 1.5 gb
-      @sb[:threshold] << [number_to_human_size(x, :significant => false), x.to_i]
-    end
-
-    cwb = @edit[:current][:workers][:worker_base] ||= {}
-    qwb = (cwb[:queue_worker_base] ||= {})
-    w = (qwb[:generic_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqGenericWorker, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqGenericWorker, :memory_threshold) || 400.megabytes
-    @sb[:generic_threshold] = []
-    @sb[:generic_threshold] = copy_array(@sb[:threshold])
-
-    w = (qwb[:priority_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqPriorityWorker, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqPriorityWorker, :memory_threshold) || 200.megabytes
-    @sb[:priority_threshold] = []
-    @sb[:priority_threshold] = copy_array(@sb[:threshold])
-
-    qwb[:ems_metrics_collector_worker] ||= {}
-    qwb[:ems_metrics_collector_worker][:defaults] ||= {}
-    w = qwb[:ems_metrics_collector_worker][:defaults]
-    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold) || 400.megabytes
-    @sb[:ems_metrics_collector_threshold] = []
-    @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
-
-    w = (qwb[:ems_metrics_processor_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
-    @sb[:ems_metrics_processor_threshold] = []
-    @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
-
-    w = (qwb[:smart_proxy_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :count) || 3
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :memory_threshold) || 400.megabytes
-    @sb[:smart_proxy_threshold] = []
-    @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
-    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:smart_proxy_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-
-    qwb[:ems_refresh_worker] ||= {}
-    qwb[:ems_refresh_worker][:defaults] ||= {}
-    w = qwb[:ems_refresh_worker][:defaults]
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsRefreshWorker, :defaults, :memory_threshold) || 400.megabytes
-    @sb[:ems_refresh_threshold] = []
-    (200.megabytes...550.megabytes).step(50.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-
-    wb = @edit[:current][:workers][:worker_base]
-    w = (wb[:event_catcher] ||= {})
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEventCatcher, :memory_threshold) || 1.gigabytes
-    @sb[:event_catcher_threshold] = []
-    (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-
-    w = (wb[:vim_broker_worker] ||= {})
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
-    @sb[:vim_broker_threshold] = []
-    (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
-    (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-    (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
-
-    w = (wb[:ui_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2
-
-    w = (qwb[:reporting_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqReportingWorker, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqReportingWorker, :memory_threshold) || 400.megabytes
-    @sb[:reporting_threshold] = []
-    @sb[:reporting_threshold] = copy_array(@sb[:threshold])
-
-    w = (wb[:web_service_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :count) || 2
-    w[:memory_threshold] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :memory_threshold) || 400.megabytes
-    @sb[:web_service_threshold] = []
-    @sb[:web_service_threshold] = copy_array(@sb[:threshold])
-
-    w = (wb[:remote_console_worker] ||= {})
-    w[:count] = get_worker_setting(@edit[:current], MiqRemoteConsoleWorker, :count) || 2
-
-    @edit[:new] = copy_hash(@edit[:current])
     session[:log_depot_default_verify_status] = true
     @in_a_form = true
   end

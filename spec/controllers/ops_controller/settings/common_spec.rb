@@ -384,37 +384,6 @@ describe OpsController do
         end
       end
 
-      context 'for generic worker' do
-        it 'resets edit for workers settings' do
-          @miq_server = FactoryBot.create(:miq_server)
-          allow(controller).to receive(:x_node).and_return("svr-#{@miq_server.id}")
-          controller.instance_variable_set(:@sb,
-                                           :active_tab         => 'settings_workers',
-                                           :selected_server_id => @miq_server.id)
-          controller.params = {:action     => 'settings_update',
-                               :button     => 'save',
-                               :controller => 'ops',
-                               :id         => 'workers'}
-          @updated_memory_threshold = 600.megabytes
-          @new = ::Settings.to_hash
-          @new[:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold] = @updated_memory_threshold
-          controller.instance_variable_set(:@edit,
-                                           :new     => @new,
-                                           :current => ::Settings.to_hash,
-                                           :key     => "settings_workers_edit__#{@miq_server.id}")
-          session[:edit] = assigns(:edit)
-          allow(OpsController::Settings).to receive(:settings_get_form_vars).and_return(true)
-          allow(Vmdb::Settings).to receive(:validate).and_return(true)
-          edit_before_render = assigns(:edit)
-          expect(edit_before_render[:new][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).not_to eq(edit_before_render[:current][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold])
-          expect(controller).to receive(:render)
-          controller.send(:settings_update_save)
-          edit_after_render = assigns(:edit)
-          expect(edit_after_render[:current][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).to eq(@updated_memory_threshold)
-          expect(edit_after_render[:new][:workers][:worker_base][:queue_worker_base][:generic_worker][:memory_threshold]).to eq(@updated_memory_threshold)
-        end
-      end
-
       context "save server name in server settings only when 'Server' is active tab" do
         before do
           @miq_server = FactoryBot.create(:miq_server)
@@ -484,51 +453,6 @@ describe OpsController do
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
           expect(edit_current[:current][:server][:name]).to eq(server.name)
-        end
-      end
-    end
-
-    describe '#settings_set_form_vars_workers' do
-      include ActionView::Helpers::NumberHelper
-      context "set worker settings for selected server" do
-        before do
-          @miq_server = FactoryBot.create(:miq_server)
-          controller.instance_variable_set(:@sb,
-                                           :selected_server_id => @miq_server.id)
-        end
-
-        it "gets worker setting in same format as in sandbox threshold array so correct value is selected in drop down" do
-          controller.send(:settings_set_form_vars_workers)
-          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
-          Hash[*assigns(:sb)[:threshold].flatten].each_value do |v|
-            expect(v.class).to eq(ui_worker_threshold.class)
-          end
-        end
-
-        it "converts '600.megabytes' string correctly to bytes" do
-          Vmdb::Settings.save!(
-            @miq_server,
-            :workers => {
-              :worker_base => {
-                :ui_worker => {
-                  :memory_threshold => "600.megabytes",
-                  :count            => 2
-                }
-              }
-            }
-          )
-          controller.send(:settings_set_form_vars_workers)
-          ui_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :memory_threshold)
-          ui_worker_count = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqUiWorker, :count)
-          expect(ui_worker_threshold).to eq(600.megabytes)
-          expect(ui_worker_count).to eq(2)
-        end
-
-        it "gets worker setting and makes sure it exists in threshold array so correct value can be selected in drop down" do
-          controller.send(:settings_set_form_vars_workers)
-          proxy_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqSmartProxyWorker, :memory_threshold)
-          proxy_worker_threshold_human_size = number_to_human_size(proxy_worker_threshold, :significant => false)
-          expect(assigns(:sb)[:smart_proxy_threshold]).to include([proxy_worker_threshold_human_size, proxy_worker_threshold])
         end
       end
     end
