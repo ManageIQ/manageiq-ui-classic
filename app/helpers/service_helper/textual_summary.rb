@@ -84,7 +84,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_group_lifecycle
-    TextualGroup.new(_("Lifecycle"), %i[retirement_date retirement_state owner group created])
+    TextualGroup.new(_("Lifecycle"), %i[lifecycle_state retirement_date retirement_state owner group created])
   end
 
   def textual_group_relationships
@@ -140,6 +140,10 @@ module ServiceHelper::TextualSummary
 
   def textual_retirement_state
     {:label => _("Retirement State"), :value => @record.retirement_state.to_s.capitalize}
+  end
+
+  def textual_lifecycle_state
+    {:label => _("State"), :value => @record.lifecycle_state ? @record.lifecycle_state.humanize.capitalize : _("None")}
   end
 
   def textual_catalog_item
