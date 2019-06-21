@@ -88,6 +88,7 @@ if (! window.ManageIQ) {
       checkUrl: null,
       clickUrl: null,
       expandAll: true,
+      data: {},
     },
     widget: {
       dashboardUrl: null, // set dashboard widget drag drop url

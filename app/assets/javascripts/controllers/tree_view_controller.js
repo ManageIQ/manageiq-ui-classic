@@ -81,8 +81,9 @@
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: node };
     };
 
-    vm.initData = function(tree, data, selected) {
-      vm.data[tree] = vm.data[tree] || data;
+    vm.initData = function(tree, selected) {
+      vm.data[tree] = vm.data[tree] || ManageIQ.tree.data[tree];
+      ManageIQ.tree.data.delete(tree);
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: selected };
     };
 
