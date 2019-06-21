@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import * as resolve from 'table-resolver';
+import { API } from '../http_api';
 
 import {
   customHeaderFormattersDefinition,
