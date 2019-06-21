@@ -1,10 +1,12 @@
 - return if @display == 'generic_objects' || @display == 'main'
 = miq_accordion_panel(_("Generic Object Classes"), true, "god") do
+  :javascript
+    ManageIQ.tree.data['#{@tree.name}'] = #{@tree.locals_for_render[:bs_tree]};
   %tree_div{'ng-controller' => 'treeViewController as vm'}
     %miq-tree-view{:name       => @tree.name,
                    :data       => "vm.data['#{@tree.name}']",
                    :reselect   => @tree.locals_for_render[:allow_reselect],
-                   "ng-init"   => "vm.initData('#{@tree.name}', #{@tree.locals_for_render[:bs_tree]}, '#{@tree.locals_for_render[:select_node]}')",
+                   "ng-init"   => "vm.initData('#{@tree.name}', '#{@tree.locals_for_render[:select_node]}')",
                    'on-select' => "vm.nodeSelect(node, '/#{request.parameters[:controller]}/tree_select')",
                    'selected'  => "vm.selectedNodes['#{@tree.name}']",
                    'persist'   => 'key',
