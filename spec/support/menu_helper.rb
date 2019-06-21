@@ -36,6 +36,27 @@ EOF
       def item_file
         create_temp_file(ITEM_DEF)
       end
+
+      def settings_custom_items
+        [
+          {
+            :type => 'item',
+            :icon => 'fa fa-bug',
+            :id   => 'custom_i1',
+            :name => 'Custom Item 1',
+            :href => 'https://www.redhat.com',
+            :rbac => 'vm_explorer'
+          },
+          {
+            :type => 'item',
+            :icon => 'pficon pficon-help',
+            :id   => 'custom_i2',
+            :name => 'Custom Item 2',
+            :href => 'https://www.hmpf.cz',
+            :rbac => 'vm_explorer'
+          }
+        ]
+      end
     end
   end
 end
