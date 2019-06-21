@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
+import { act } from 'react-test-renderer';
+
 import './helpers/mockAsyncRequest';
 import './helpers/miqSparkle';
 
@@ -31,7 +33,11 @@ limit=${limit}&offset=${offset}`;
 
     fetchMock.getOnce(url, { report: { col_order: [] }, count: 0, result_set: [] });
 
-    const wrapper = mount(<ReportDataTable {...initialProps} />);
+    let wrapper;
+
+    act(() => {
+      wrapper = mount(<ReportDataTable {...initialProps} />);
+    });
 
     setTimeout(() => {
       expect(fetchMock.calls()).toHaveLength(1);
