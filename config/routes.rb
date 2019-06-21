@@ -1988,6 +1988,7 @@ Rails.application.routes.draw do
         edit
         new
         retrieve_distinct_instances_across_domains
+        service_template_ansible_playbooks
         show
         show_list
         tagging_edit

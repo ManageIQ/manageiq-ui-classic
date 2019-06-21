@@ -17,7 +17,13 @@ describe('main-custom-button-form', function() {
         distinct_instances_across_domains: ["Automation", "Event", "GenericObject", "MiqEvent", "Request", "parse_automation_request", "parse_event_stream", "parse_provider_category"]
       }
     };
+    var serviceTemplatesResponse = {
+      data: {
+        templates: [{name: "Ansible Catalog Item", id: 0}],
+      }
+    };
     $httpBackend.whenGET('/generic_object_definition/retrieve_distinct_instances_across_domains').respond(domainsResponse);
+    $httpBackend.whenGET('/generic_object_definition/service_template_ansible_playbooks').respond(serviceTemplatesResponse);
     vm.$onInit();
     $httpBackend.flush();
   }));

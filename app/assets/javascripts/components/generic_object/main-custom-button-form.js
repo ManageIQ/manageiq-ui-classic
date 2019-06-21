@@ -15,11 +15,6 @@ mainCustomButtonFormController.$inject = ['API', 'miqService', '$q', '$http'];
 function mainCustomButtonFormController(API, miqService, $q, $http) {
   var vm = this;
 
-  var optionsPromise = null;
-  var serviceDialogsPromise = null;
-  var rolesPromise = null;
-  var instancesPromise = null;
-
   vm.$onInit = function() {
     vm.entity = __('Custom Button');
     vm.saveable = miqService.saveable;
@@ -47,11 +42,14 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       attributeValuesTableChanged: false,
       current_visibility: 'all',
       available_roles: [],
+      uri_attributes: {"request": "", service_template: null, hosts: null},
     };
 
     vm.dialogs = [];
     vm.button_types = [];
     vm.ae_instances = [];
+    vm.templates = [];
+    vm.inventory = 'localhost';
 
     vm.attributeValueTableHeaders = [__('Name'), __('Value'), __('Actions')];
 
@@ -72,26 +70,16 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     ];
 
     miqService.sparkleOn();
-    optionsPromise = API.options('/api/custom_buttons')
-      .then(getCustomButtonOptions)
-      .catch(miqService.handleFailure);
-
-    serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
-      .then(getServiceDialogs)
-      .catch(miqService.handleFailure);
-
-    rolesPromise = API.get('/api/roles?expand=resources&attributes=name')
-      .then(getRoles)
-      .catch(miqService.handleFailure);
-
-    instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
-      .then(getDistinctInstancesAcrossDomains)
-      .catch(miqService.handleFailure);
-
+    var optionsPromise = API.options('/api/custom_buttons')
+      .then(function(response) {
+        _.forEach(response.data.custom_button_types, function(name, id) {
+          vm.button_types.push({id: id, name: name});
+        });
+      });
+    var dataPromise;
     if (vm.customButtonRecordId) {
       vm.newRecord = false;
-      miqService.sparkleOn();
-      var dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action')
+      dataPromise = API.get('/api/custom_buttons/' + vm.customButtonRecordId + '?attributes=resource_action,uri_attributes')
         .then(getCustomButtonFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -99,8 +87,38 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.modelCopy = angular.copy( vm.customButtonModel );
     }
 
-    $q.all([optionsPromise, serviceDialogsPromise, rolesPromise, instancesPromise, dataPromise])
-      .then(promisesResolvedForLoad);
+    var serviceDialogsPromise = API.get('/api/service_dialogs?expand=resources&attributes=label')
+      .then(function(response) {
+        _.forEach(response.resources, function(item) {
+          vm.dialogs.push({id: item.id, label: item.label});
+        });
+      });
+
+    var rolesPromise = API.get('/api/roles?expand=resources&attributes=name')
+      .then(function(response) {
+        _.forEach(response.resources, function(item) {
+          vm.customButtonModel.available_roles.push({name: item.name, value: false});
+        });
+      });
+
+    var instancesPromise = $http.get('/generic_object_definition/retrieve_distinct_instances_across_domains')
+      .then(function(response) {
+        _.forEach(response.data.distinct_instances_across_domains, function(item) {
+          vm.ae_instances.push({id: item, name: item});
+        });
+      });
+
+    var serviceTemplateAnsiblePlaybooks = $http.get('/generic_object_definition/service_template_ansible_playbooks')
+      .then(function(response) {
+        vm.templates = response.data.templates;
+      });
+
+    $q.all([optionsPromise, dataPromise, serviceDialogsPromise, rolesPromise, instancesPromise, serviceTemplateAnsiblePlaybooks])
+      .then(function() {
+        vm.afterGet = true;
+        miqService.sparkleOff();
+      })
+      .catch(miqService.handleFailure);
   };
 
   vm.cancelClicked = function() {
@@ -187,6 +205,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
         return role.value === true;
       }), 'name');
     }
+    // set uri_attributes to default for non-Ansible button
+    if (vm.customButtonModel.button_type == "default") {
+      vm.customButtonModel.uri_attributes = {"request": "", service_template: null, hosts: null};
+    };
 
     vm.customButtonModel.visibility = {
       roles: vm.customButtonModel.roles.length === 0 ? ['_ALL_'] : vm.customButtonModel.roles,
@@ -200,6 +222,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       options: vm.customButtonModel.options,
       resource_action: vm.customButtonModel.resource_action,
       visibility: vm.customButtonModel.visibility,
+      uri_attributes: vm.customButtonModel.uri_attributes,
     };
   };
 
@@ -243,23 +266,30 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
 
     vm.genericObjectDefinitionRecordId = response.applies_to_id;
 
-    optionsPromise.then(function() {
-      if (vm.customButtonModel.current_visibility === 'role') {
-        _.forEach(vm.customButtonModel.available_roles, function(role, index) {
-          if (_.includes(response.visibility.roles, role.name)) {
-            vm.customButtonModel.available_roles[index].value = true;
-          }
-        });
-      }
+    vm.customButtonModel.uri_attributes = response.uri_attributes;
 
-      delete vm.customButtonModel.resource_action.ae_attributes.request;
-      vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
-        vm.customButtonModel.resource_action.ae_attributes,
-        vm.customButtonModel.attribute_names,
-        vm.customButtonModel.attribute_values);
+    if (vm.customButtonModel.current_visibility === 'role') {
+      _.forEach(vm.customButtonModel.available_roles, function(role, index) {
+        if (_.includes(response.visibility.roles, role.name)) {
+          vm.customButtonModel.available_roles[index].value = true;
+        }
+      });
+    }
 
-      vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
-    });
+    delete vm.customButtonModel.resource_action.ae_attributes.request;
+    vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
+      vm.customButtonModel.resource_action.ae_attributes,
+      vm.customButtonModel.attribute_names,
+      vm.customButtonModel.attribute_values);
+
+    if (!vm.customButtonModel.uri_attributes.hosts || vm.customButtonModel.uri_attributes.hosts === "localhost") {
+      vm.inventory = "localhost";
+    } else if (vm.customButtonModel.uri_attributes.hosts === "vmdb_object") {
+      vm.inventory = "vmdb_object";
+    } else {
+      vm.inventory = "manual";
+    }
+    vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
   }
 
   function assignAllObjectsToKeyValueArrays(purge) {
@@ -290,34 +320,5 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       });
     }
     return _.size(keyArray);
-  }
-
-  function getCustomButtonOptions(response) {
-    _.forEach(response.data.custom_button_types, function(name, id) {
-      vm.button_types.push({id: id, name: name});
-    });
-  }
-
-  function getServiceDialogs(response) {
-    _.forEach(response.resources, function(item) {
-      vm.dialogs.push({id: item.id, label: item.label});
-    });
-  }
-
-  function getRoles(response) {
-    _.forEach(response.resources, function(item) {
-      vm.customButtonModel.available_roles.push({name: item.name, value: false});
-    });
-  }
-
-  function getDistinctInstancesAcrossDomains(response) {
-    _.forEach(response.data.distinct_instances_across_domains, function(item) {
-      vm.ae_instances.push({id: item, name: item});
-    });
-  }
-
-  function promisesResolvedForLoad() {
-    vm.afterGet = true;
-    miqService.sparkleOff();
   }
 }

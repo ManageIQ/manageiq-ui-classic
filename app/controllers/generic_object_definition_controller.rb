@@ -136,6 +136,11 @@ class GenericObjectDefinitionController < ApplicationController
     render :json => {:distinct_instances_across_domains => distinct_instances_across_domains}
   end
 
+  def service_template_ansible_playbooks
+    templates = ServiceTemplateAnsiblePlaybook.order(:name).map { |item| {:name => item.name, :id => item.id} } || []
+    render :json => {:templates => templates}
+  end
+
   def add_button_in_group
     custom_button_set = CustomButtonSet.find(params[:id])
     custom_button_set.set_data[:button_order] ||= []
