@@ -877,7 +877,7 @@ module ApplicationHelper
 
   def configuration_manager_scripts_tree(tree)
     case tree
-    when :automation_manager_cs_filter_tree
+    when :automation_manager_cs_filter_tree, :automation_manager_providers_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
     when :configuration_manager_cs_filter_tree
       "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
