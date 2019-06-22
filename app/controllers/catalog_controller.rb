@@ -712,7 +712,7 @@ class CatalogController < ApplicationController
 
   def build_tenants_tree
     tenants = @record ? @record.additional_tenants : Tenant.where(:id => @edit[:new][:tenant_ids])
-    catalog_bundle = @edit.present? && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
+    catalog_bundle = @edit.present? && @edit[:key] && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
     TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :ansible_playbook => ansible_playbook_type?, :catalog_bundle => catalog_bundle)
   end
 
