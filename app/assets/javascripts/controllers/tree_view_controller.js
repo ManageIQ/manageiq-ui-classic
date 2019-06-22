@@ -88,7 +88,7 @@
 
     vm.initData = function(tree, selected) {
       vm.data[tree] = vm.data[tree] || ManageIQ.tree.data[tree];
-      ManageIQ.tree.data.delete(tree);
+      delete ManageIQ.tree.data[tree];
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: selected };
     };
 
