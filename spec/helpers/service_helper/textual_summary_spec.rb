@@ -143,7 +143,7 @@ describe ServiceHelper::TextualSummary do
     aggregate_all_vm_memory_on_disk
   ), "vm_totals"
 
-  include_examples "textual_group", "Lifecycle", %i(retirement_date retirement_state owner group created)
+  include_examples "textual_group", "Lifecycle", %i(lifecycle_state retirement_date retirement_state owner group created)
 
   include_examples "textual_group", "Relationships", %i(catalog_item parent_service orchestration_stack job custom_button_events)
 
