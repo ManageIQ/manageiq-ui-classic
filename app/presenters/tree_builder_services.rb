@@ -54,22 +54,45 @@ class TreeBuilderServices < TreeBuilder
       count_only_or_objects(count_only, x_get_search_results(object, options[:leaf]))
     when 'asrv', 'rsrv'
       retired = object[:id] != 'asrv'
-      services = Rbac.filtered(Service.where(:retired => retired, :display => true))
-      return sevices.size if count_only
-      subtree_root_services_with_preload(services)
+      # Cache the tree data to speed up child (count) retrieval
+      @tree_data = fetch_services(Service, retired)
+      services = @tree_data.keys
+
+      return services.size if count_only
+
+      # Preload the custom pictures for services
+      MiqPreloader.preload(services.to_a, :picture)
+      services
     end
   end
 
   def x_get_tree_nested_services(object, count_only)
-    services = Rbac.filtered(object.descendants.where(:retired => object.retired, :display => true))
-    return services.size if count_only
-    subtree_root_services_with_preload(services)
-  end
+    subtree = if @tree_data # If the cached tree data is available, find the child nodes in it
+                deep_find(@tree_data, object).keys
+              else # If it's a lazy load call, we have to retrieve the data manually
+                fetch_services(object.descendants, object.retired).keys
+              end
 
-  def subtree_root_services_with_preload(services)
-    subtree = Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] }).keys
+    return subtree.size if count_only
+
+    # Preload the custom pictures for services
     MiqPreloader.preload(subtree, :picture)
     subtree
+  end
+
+  def fetch_services(query, retired)
+    services = Rbac.filtered(query.where(:retired => retired, :display => true))
+    Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
+  end
+
+  def deep_find(hash, key)
+    return hash[key] if hash.try(:[], key)
+
+    if hash.kind_of?(Hash)
+      found = nil
+      hash.find { |_, value| found = deep_find(value, key) }
+      found
+    end
   end
 
   def x_get_search_results(object, leaf)
