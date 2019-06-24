@@ -68,9 +68,9 @@
         = _('Select currency')
       .col-md-4
         %p.form-control-static
-          - currency = ChargebackRateDetailCurrency.currencies_for_select
+          - currency = Array(ChargebackRateDetailCurrency.currencies_for_select)
           = select_tag("currency",
-            options_for_select(currency, @edit[:new][:currency]),
+            options_for_select([[_("<Choose>"), nil]] + currency, @edit[:new][:currency]),
             "data-live-search" => "true",
             "class"            => "selectpicker")
           :javascript

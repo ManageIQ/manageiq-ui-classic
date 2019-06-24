@@ -462,7 +462,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     var fieldName = 'vm._' + name;
     $scope.$watch(fieldName, function(value) {
       vm.catalogItemModel[name + '_id'] = value ? value.id : '';
-      if (name ==  'currency')
+      if (name ==  'currency' && typeof value !== 'undefined')
         vm.catalogItemModel.currency_name = _.find(vm.currencies, {id: value.id}).code;
       playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
     });

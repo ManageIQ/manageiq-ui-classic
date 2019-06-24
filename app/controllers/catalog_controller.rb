@@ -1120,7 +1120,7 @@ class CatalogController < ApplicationController
     @edit[:new][:zone_id] = @record.zone_id
 
     @edit[:new][:currency] = @record.currency ? @record.currency.id : nil
-    @edit[:new][:code_currency] = code_currency_label(@record.currency) if @record.currency
+    @edit[:new][:code_currency] = code_currency_label(@record.currency.id) if @record.currency
     @edit[:new][:price] = @record.price
 
     # initialize fqnames
@@ -1270,7 +1270,7 @@ class CatalogController < ApplicationController
       @edit[:new][:currency] = params[:currency].to_i
       @edit[:new][:code_currency] = code_currency_label(params[:currency])
     end
-    @edit[:new][:price] = params[:price]
+    @edit[:new][:price] = params[:price] if params[:price]
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
