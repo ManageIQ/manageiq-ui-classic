@@ -7,6 +7,6 @@ fi
 
 if [ "$TEST_SUITE" = "spec:javascript" ]; then
   echo "travis_fold:start:YARN_LOCK"
-  #yarn list
+  yarn list
   echo "travis_fold:end:YARN_LOCK"
 fi
