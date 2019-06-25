@@ -139,7 +139,7 @@ describe AutomationManagerController do
     end
 
     it "should display the zone field" do
-      new_zone = FactoryBot.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone)
       controller.instance_variable_set(:@provider, automation_provider1)
       post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
@@ -147,7 +147,7 @@ describe AutomationManagerController do
     end
 
     it "should save the zone field" do
-      new_zone = FactoryBot.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone)
       controller.instance_variable_set(:@provider, automation_provider1)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
