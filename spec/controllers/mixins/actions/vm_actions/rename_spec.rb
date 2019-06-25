@@ -42,8 +42,7 @@ describe Mixins::Actions::VmActions::Rename do
 
   describe '#rename_save' do
     let(:controller) { VmInfraController.new }
-    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryBot.create(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server }
 
     before do
       allow(controller).to receive(:session).and_return(:userid => 'admin')

@@ -1,6 +1,5 @@
 describe GenericObjectDefinitionController do
-  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryBot.build(:zone) }
+  let!(:server) { EvmSpecHelper.local_miq_server }
 
   describe "#show" do
     render_views

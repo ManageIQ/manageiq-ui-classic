@@ -1,8 +1,7 @@
 describe PhysicalServerController do
   render_views
 
-  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryBot.build(:zone) }
+  let!(:server) { EvmSpecHelper.local_miq_server }
 
   before do
     stub_user(:features => :all)

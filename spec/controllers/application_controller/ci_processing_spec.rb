@@ -1,6 +1,5 @@
 describe ApplicationController do
-  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryBot.create(:zone) }
+  let!(:server) { EvmSpecHelper.local_miq_server }
 
   before do
     EvmSpecHelper.local_miq_server
@@ -781,8 +780,7 @@ describe ApplicationController do
 end
 
 describe HostController do
-  let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone) { FactoryBot.create(:zone) }
+  let!(:server) { EvmSpecHelper.local_miq_server }
 
   describe "#show_association" do
     before do
