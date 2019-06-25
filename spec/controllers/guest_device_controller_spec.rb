@@ -7,7 +7,7 @@ describe GuestDeviceController do
     stub_user(:features => :all)
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryBot.create(:user)
-    @guest_device = FactoryBot.create(:guest_device, :id => 1)
+    @guest_device = FactoryBot.create(:guest_device)
   end
 
   describe "#show_list" do

@@ -2,7 +2,7 @@ describe ComplianceSummaryHelper do
   include ApplicationHelper
 
   before do
-    server  = FactoryBot.build(:miq_server, :id => 0)
+    server  = FactoryBot.build(:miq_server)
     @record = FactoryBot.build(:vm_vmware, :miq_server => server)
     @compliance1 = FactoryBot.build(:compliance)
     @compliance2 = FactoryBot.build(:compliance)

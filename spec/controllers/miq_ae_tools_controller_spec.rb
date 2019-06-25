@@ -321,7 +321,7 @@ describe MiqAeToolsController do
         end
 
         context "when everything works fine" do
-          let(:git_repo) { double("GitRepository", :id => 123) }
+          let(:git_repo) { FactoryBot.create(:git_repository) }
           let(:git_based_domain_import_service) { double("GitBasedDomainImportService") }
 
           before do
@@ -332,14 +332,14 @@ describe MiqAeToolsController do
               "gitverifyssl"
             ).and_return(:git_repo_id => git_repo.id, :new_git_repo? => false)
             allow(GitBasedDomainImportService).to receive(:new).and_return(git_based_domain_import_service)
-            allow(git_based_domain_import_service).to receive(:queue_refresh).with(123).and_return(321)
+            allow(git_based_domain_import_service).to receive(:queue_refresh).with(git_repo.id).and_return(321)
           end
 
           it "responds with task information" do
             post :retrieve_git_datastore, :params => params, :xhr => true
             expect(response.body).to eq({
               :task_id      => 321,
-              :git_repo_id  => 123,
+              :git_repo_id  => git_repo.id,
               :new_git_repo => false
             }.to_json)
           end
@@ -351,8 +351,9 @@ describe MiqAeToolsController do
   describe "#check_git_task" do
     include_context "valid session"
 
+    let(:git_repo) { FactoryBot.create(:git_repository) }
     let(:params) do
-      {:task_id => 123, :git_repo_id => 321, :new_git_repo => new_git_repo}
+      {:task_id => 123, :git_repo_id => git_repo.id, :new_git_repo => new_git_repo}
     end
     let(:new_git_repo) { false }
 
@@ -374,13 +375,9 @@ describe MiqAeToolsController do
 
     context "when the task's state is finished" do
       let(:state) { MiqTask::STATE_FINISHED }
-      let(:git_repo) { double("GitRepository", :id => 321, :git_branches => git_branches, :git_tags => git_tags) }
-      let(:git_branches) { [double("GitBranch", :name => "branches")] }
-      let(:git_tags) { [double("GitTag", :name => "tags")] }
-
-      before do
-        allow(GitRepository).to receive(:find).with("321").and_return(git_repo)
-      end
+      let(:git_repo) { FactoryBot.create(:git_repository, :git_branches => git_branches, :git_tags => git_tags) }
+      let(:git_branches) { [FactoryBot.create(:git_branch, :name => "branches")] }
+      let(:git_tags) { [FactoryBot.create(:git_tag, :name => "tags")] }
 
       context "when the status is 'Ok'" do
         let(:status) { "Ok" }
@@ -390,7 +387,7 @@ describe MiqAeToolsController do
           expect(response.body).to eq({
             :git_branches => ["branches"],
             :git_tags     => ["tags"],
-            :git_repo_id  => 321,
+            :git_repo_id  => git_repo.id,
             :success      => true,
             :message      => {
               :message => "Successfully found git repository, please choose a branch or tag",
@@ -404,11 +401,8 @@ describe MiqAeToolsController do
         context "when the repository is new" do
           let(:new_git_repo) { true }
 
-          before do
-            allow(git_repo).to receive(:destroy)
-          end
-
           it "destroys the git repository" do
+            expect(GitRepository).to receive(:find).with(git_repo.id.to_s).and_return(git_repo)
             expect(git_repo).to receive(:destroy)
             get :check_git_task, :params => params, :xhr => true
           end

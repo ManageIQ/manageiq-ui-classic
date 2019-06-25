@@ -216,22 +216,22 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   describe "#ancestry_parents" do
-    let(:service1) { FactoryBot.create(:service, :id => 1, :name => "Level 1", :ancestry => nil) }
-    let(:service2) { FactoryBot.create(:service, :id => 2, :name => "Level 2", :ancestry => "1") }
-    let(:service3) { FactoryBot.create(:service, :id => 3, :name => "Level 3", :ancestry => "2") }
+    let(:service1) { FactoryBot.create(:service, :ancestry => nil) }
+    let(:service2) { FactoryBot.create(:service, :ancestry => service1.id) }
+    let(:service3) { FactoryBot.create(:service, :ancestry => service2.id) }
 
     it "creates one level nested breadcrumbs" do
       expect(Service).to receive(:find).and_return(service1)
-      expect(TreeBuilder).to receive(:build_node_id).and_return("xx-1")
-      expect(mixin.ancestry_parents(Service, service2, :name)).to eq([{:title => service1.name, :key => "xx-1"}])
+      expect(TreeBuilder).to receive(:build_node_id).and_return("xx-#{service1.id}")
+      expect(mixin.ancestry_parents(Service, service2, :name)).to eq([{:title => service1.name, :key => "xx-#{service1.id}"}])
     end
 
     it "creates two level nested breadcrumbs" do
       expect(Service).to receive(:find).and_return(service2, service1)
-      expect(TreeBuilder).to receive(:build_node_id).and_return("xx-2", "xx-1")
+      expect(TreeBuilder).to receive(:build_node_id).and_return("xx-#{service2.id}", "xx-#{service1.id}")
       expect(mixin.ancestry_parents(Service, service3, :name)).to eq([
-                                                                       {:title => service1.name, :key => "xx-1"},
-                                                                       {:title => service2.name, :key => "xx-2"},
+                                                                       {:title => service1.name, :key => "xx-#{service1.id}"},
+                                                                       {:title => service2.name, :key => "xx-#{service2.id}"},
                                                                      ])
     end
   end

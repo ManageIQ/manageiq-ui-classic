@@ -1,6 +1,6 @@
 describe PictureController do
   let(:picture_content) { "BINARY IMAGE CONTENT" }
-  let(:picture) { FactoryBot.create(:picture, :id => 10_000_000_000_005, :extension => "jpg") }
+  let(:picture) { FactoryBot.create(:picture, :extension => "jpg") }
 
   before do
     stub_user(:features => :all)

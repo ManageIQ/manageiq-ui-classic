@@ -13,8 +13,7 @@ describe PhysicalServerController do
     @physical_server = FactoryBot.create(:physical_server,
                                           :asset_detail    => asset_detail,
                                           :computer_system => computer_system,
-                                          :ems_id          => ems.id,
-                                          :id              => 1)
+                                          :ems_id          => ems.id)
   end
 
   describe "#provision" do
