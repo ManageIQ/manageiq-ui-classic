@@ -8,18 +8,18 @@ describe OpsController do
 
     context "SmartProxy Affinity" do
       before do
-        @zone = FactoryBot.create(:zone, :name => 'zone1')
+        @zone = FactoryBot.create(:zone)
 
         @storage1 = FactoryBot.create(:storage)
         @storage2 = FactoryBot.create(:storage)
 
-        @host1 = FactoryBot.create(:host, :name => 'host1', :storages => [@storage1])
-        @host2 = FactoryBot.create(:host, :name => 'host2', :storages => [@storage2])
+        @host1 = FactoryBot.create(:host, :storages => [@storage1])
+        @host2 = FactoryBot.create(:host, :storages => [@storage2])
 
         @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
 
-        @svr1 = FactoryBot.create(:miq_server, :name => 'svr1', :zone => @zone)
-        @svr2 = FactoryBot.create(:miq_server, :name => 'svr2', :zone => @zone)
+        @svr1 = FactoryBot.create(:miq_server, :zone => @zone)
+        @svr2 = FactoryBot.create(:miq_server, :zone => @zone)
 
         @svr1.vm_scan_host_affinity = [@host1]
         @svr2.vm_scan_host_affinity = [@host2]
@@ -430,7 +430,7 @@ describe OpsController do
     describe '#settings_set_form_vars_server' do
       context 'sets values correctly' do
         it 'for server in non-current zone' do
-          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
+          zone = FactoryBot.create(:zone)
           server = FactoryBot.create(:miq_server, :zone => zone)
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
@@ -447,8 +447,7 @@ describe OpsController do
         end
 
         it 'sets the server name' do
-          zone = FactoryBot.create(:zone, :name => 'Foo Zone')
-          server = FactoryBot.create(:miq_server, :zone => zone, :name => 'ServerName')
+          server = FactoryBot.create(:miq_server)
           controller.instance_variable_set(:@sb, :selected_server_id => server.id)
           controller.send(:settings_set_form_vars_server)
           edit_current = assigns(:edit)
