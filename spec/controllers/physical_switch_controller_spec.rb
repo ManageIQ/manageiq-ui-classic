@@ -18,7 +18,6 @@ describe PhysicalSwitchController do
   before do
     EvmSpecHelper.local_miq_server
     stub_user(:features => :all)
-    EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryBot.create(:user)
   end
 
