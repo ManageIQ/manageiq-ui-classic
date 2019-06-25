@@ -149,8 +149,8 @@ module MiqPolicyController::AlertProfiles
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
 
-    @edit[:new][:description] = params[:description].presence
-    @edit[:new][:notes] = params[:notes].presence
+    @edit[:new][:description] = params[:description].presence if params[:description]
+    @edit[:new][:notes] = params[:notes].presence if params[:notes]
 
     send_button_changes
   end

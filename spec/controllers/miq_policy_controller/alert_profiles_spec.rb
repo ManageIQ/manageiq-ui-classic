@@ -94,6 +94,26 @@ describe MiqPolicyController do
       end
     end
 
+    context '#alert_profile_field_changed' do
+      before do
+        @ap = FactoryBot.create(:miq_alert_set)
+        allow(controller).to receive(:send_button_changes)
+        edit = {
+          :key => "alert_profile_edit__#{@ap.id}",
+          :new => {:name => "foo", :description => "foo description"}
+        }
+        session[:edit] = edit
+      end
+
+      it 'Edit of notes field does not reset value of description field' do
+        controller.params = {:id => @ap.id, :notes => 'foo note'}
+        controller.alert_profile_field_changed
+        edit_new = assigns(:edit)[:new]
+        expect((edit_new)[:description]).to eq("foo description")
+        expect((edit_new)[:notes]).to eq("foo note")
+      end
+    end
+
     context "#alert_profile_assign_changed" do
       before do
         alert_profile_set = FactoryBot.create(:miq_alert_set, :set_type => "MiqAlertSet", :mode => "MiqServer")
