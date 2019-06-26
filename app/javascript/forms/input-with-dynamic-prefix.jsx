@@ -37,8 +37,8 @@ const DataDrivenInputWithPrefix = ({
       {...rest}
       validate={(value) => {
         const implicitValidator = validate(value);
-        const mussingUri = value === prefix ? __('Required') : undefined;
-        return implicitValidator || mussingUri;
+        const missingPrefix = value === prefix ? __('Required') : undefined;
+        return implicitValidator || missingPrefix;
       }}
     >
       {({
