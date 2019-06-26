@@ -12,13 +12,19 @@ class ApplicationHelper::Toolbar::Basic < ApplicationHelper::Toolbar::Base
   end
 
   def extension_classes_filtered(record)
-    return extension_classes if record.nil?
-
-    # Example:
+    # If the toolbar class reponds to `record_valid?`, we call it. Even for null record.
+    #
+    # Else we use a mechanism that matches records with provider names.
+    # In this case null record means "match".
+    #
+    # Example for matching:
+    #
     # "ManageIQ::Providers::Amazon::ToolbarOverrides::EmsCloudCenter" is a match for
     #   "ManageIQ::Providers::Amazon::CloudManager
     extension_classes.find_all do |ext|
-      ext.name.split('::')[0..2] == record.class.name.split('::')[0..2]
+      ext.respond_to?(:record_valid?) ?
+        ext.record_valid?(record) :
+        (record.nil? || ext.name.split('::')[0..2] == record.class.name.split('::')[0..2])
     end
   end
 
