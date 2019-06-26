@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 114 ending 2019-06-24
+
+### Added
+- Display Lifecycle State on Service details screen [(#5736)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5736)
+- Increased size of Description field [(#5695)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5695)
+- Added Zone drop down to angular and non-angular catalog item editor & Automate Task Schedules [(#5626)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5626)
+- Add Tenant relationship in Providers Automate Domain and Services [(#5575)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5575)
+
+### Fixed
+- Rebuild list of zones when deleting a resource from Catalog bundle [(#5734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5734)
+- Added missing Model name to return that is used to load advanced search [(#5733)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5733)
+- Require and permit the :quotas subhash [(#5717)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5717)
+- Expression Editor fix [(#5710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5710)
+- Add Ansible related inputs to GOD haml [(#5166)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5166)
+
 ## Unreleased as of Sprint 113 ending 2019-06-10
 
 ### Added
