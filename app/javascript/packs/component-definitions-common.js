@@ -69,3 +69,4 @@ ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('TaggingWrapperConnected', TaggingWrapperConnected);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
+
