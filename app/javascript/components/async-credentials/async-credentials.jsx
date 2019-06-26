@@ -1,6 +1,6 @@
 import React, { Fragment, useState, createContext } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
+import { isEqual, get, set } from 'lodash';
 import {
   Button,
   FormGroup,
@@ -60,7 +60,10 @@ const AsyncCredentials = ({
     }
     change(name, fieldValue);
     const { values } = formOptions.getState();
-    const currentValues = asyncFields.reduce((acc, curr) => ({ ...acc, [curr]: values[curr] }), {});
+    const currentValues = asyncFields.reduce((acc, curr) => {
+      set(acc, curr, get(values, curr));
+      return { ...acc };
+    }, {});
     const valid = (isEqual(lastValid, currentValues) || isEqual(initialValues, currentValues)) ? undefined : false;
     setAsyncError(validateDefaultError);
     change(validateName, valid);
@@ -78,7 +81,7 @@ const AsyncCredentials = ({
           <FormGroup validationState={meta.error ? 'error' : null}>
             <Col md={2} componentClass="label" className="control-label" />
             <Col md={8}>
-              <input type="hidden" {...input} />
+            <input type="hidden" {...input} />
               <CheckErrors subscription={{ valid: true, invalid: true, active: true }} names={asyncFields} FieldProvider={FieldProvider}>
                 {valid => (
                   <Fragment>
