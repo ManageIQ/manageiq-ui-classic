@@ -9,7 +9,7 @@ describe PhysicalStorageController do
 
   before do
     stub_user(:features => :all)
-    EvmSpecHelper.local_miq_server(:zone => FactoryBot.build(:zone))
+    EvmSpecHelper.local_miq_server
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryBot.create(:user)
   end

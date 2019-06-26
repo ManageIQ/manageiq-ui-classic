@@ -23,8 +23,7 @@ describe PxeController do
   end
 
   describe 'x_button' do
-    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-    let(:zone) { FactoryBot.create(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server }
 
     before do
       ApplicationController.handle_exceptions = true
