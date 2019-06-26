@@ -707,17 +707,17 @@ describe AutomationManagerController do
   end
 
   def ems_key_for_provider(provider)
-    ems = ExtManagementSystem.where(:provider_id => provider.id).first
+    ems = ExtManagementSystem.find_by(:provider_id => provider.id)
     "at-#{ems.id}"
   end
 
   def inventory_group_key(inv_group)
-    ig = ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
+    ig = ManageIQ::Providers::AutomationManager::InventoryGroup.find_by(:id => inv_group.id)
     "f-#{ig.id}"
   end
 
   def ems_id_for_provider(provider)
-    ems = ExtManagementSystem.where(:provider_id => provider.id).first
+    ems = ExtManagementSystem.find_by(:provider_id => provider.id)
     ems.id
   end
 end
