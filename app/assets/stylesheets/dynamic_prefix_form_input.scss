@@ -1,0 +1,10 @@
+.dynamic-prefix-input {
+  display: flex;
+  .final-form-select {
+    min-width: 100px;
+  }
+  .input-group {
+    flex-grow: 1;
+    margin-left: 8px;
+  }
+}
