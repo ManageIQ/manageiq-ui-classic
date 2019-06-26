@@ -87,6 +87,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
         vm.modelCopy = angular.copy(vm.catalogItemModel);
       });
     }
+    vm.priceRequired();
   };
 
   listenToRx(function(data) {
@@ -446,6 +447,11 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     vm.catalogItemModel[prefix  + '_dialog_name'] = '';
   };
 
+  vm.priceRequired = function() {
+    return (typeof vm.catalogItemModel.currency_id !== 'undefined' && vm.catalogItemModel.currency_id !== ''
+      && (typeof vm.catalogItemModel.price === 'undefined' || vm.catalogItemModel.price === ''))
+  };
+
   vm.fieldsRequired = function(prefix) {
     return prefix === 'provisioning';
   };
@@ -462,8 +468,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     var fieldName = 'vm._' + name;
     $scope.$watch(fieldName, function(value) {
       vm.catalogItemModel[name + '_id'] = value ? value.id : '';
-      if (name ==  'currency' && typeof value !== 'undefined')
+      if (name ==  'currency' && typeof value !== 'undefined') {
         vm.catalogItemModel.currency_name = _.find(vm.currencies, {id: value.id}).code;
+        vm.priceRequired();
+      }
       playbookReusableCodeMixin.checkFormPristine(vm.catalogItemModel, vm.modelCopy, $scope.angularForm);
     });
   }

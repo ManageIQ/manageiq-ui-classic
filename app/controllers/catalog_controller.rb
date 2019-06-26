@@ -307,6 +307,7 @@ class CatalogController < ApplicationController
         add_flash(_("Resource must be selected"), :error)
       end
       add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
+      validate_price
       dialog_catalog_check
 
       if @flash_array
@@ -843,7 +844,7 @@ class CatalogController < ApplicationController
     end
 
     add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
-
+    validate_price
     # Check for a Dialog if Display in Catalog is selected
     dialog_catalog_check
 
@@ -1064,6 +1065,8 @@ class CatalogController < ApplicationController
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
     st.zone_id = @edit[:new][:zone_id]
     st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
+    st.currency = ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) if @edit[:new][:currency]
+    st.price    = @edit[:new][:price] if @edit[:new][:price]
   end
 
   def st_set_record_vars(st)
@@ -2007,6 +2010,12 @@ class CatalogController < ApplicationController
   def dialog_catalog_check
     return unless @edit[:new][:display] && (@edit[:new][:dialog_id].nil? || @edit[:new][:dialog_id].to_i.zero?)
     add_flash(_("Dialog has to be set if Display in Catalog is chosen"), :error)
+  end
+
+  def validate_price
+    if @edit[:new][:currency] && @edit[:new][:price].blank?
+      add_flash(_("Price is required"), :error)
+    end
   end
 
   def x_edit_tags_reset(db)
