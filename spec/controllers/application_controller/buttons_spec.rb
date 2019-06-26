@@ -3,7 +3,7 @@ describe ApplicationController do
     let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
     let(:button)          { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
     let(:host)            { FactoryBot.create(:host_vmware) }
-    let(:vm)              { FactoryBot.create(:vm_vmware, :name => "My VM") }
+    let(:vm)              { FactoryBot.create(:vm_vmware) }
     let(:service)         { FactoryBot.create(:service) }
 
     context "with a resource_action dialog" do
@@ -242,14 +242,14 @@ describe ApplicationController do
       # button_set_form_vars expects that the simulation screen will be built,
       #   which, in turn, needs *something* to come back from automate
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
-      service_template = FactoryBot.create(:service_template_ansible_playbook, :name => "playbook_test")
+      service_template = FactoryBot.create(:service_template_ansible_playbook)
       custom_button = FactoryBot.create(:custom_button,
                                          :applies_to_class => "Vm",
                                          :options          => {:display     => false,
                                                                :button_icon => "fa fa-info",
                                                                :button_type => "ansible_playbook"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
-      custom_button.uri_attributes[:service_template_name] = "playbook_test"
+      custom_button.uri_attributes[:service_template_name] = service_template.name
       custom_button.uri_attributes[:inventory_type] = "localhost"
       custom_button.uri_attributes["request"] = "Order_Ansible_Playbook"
       custom_button.save
@@ -313,8 +313,8 @@ describe ApplicationController do
   end
 
   context "#button_set_record_vars" do
-    let(:role) { FactoryBot.create(:miq_user_role, :name => "foo") }
-    let(:old_role) { FactoryBot.create(:miq_user_role, :name => "bar") }
+    let(:role) { FactoryBot.create(:miq_user_role) }
+    let(:old_role) { FactoryBot.create(:miq_user_role) }
     let(:custom_button) { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"}) }
     let(:edit) {
       {:uri => '/test/',
@@ -382,8 +382,8 @@ describe ApplicationController do
 
     context 'sets @edit[:new][:disabled_open_url]' do
       let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
-      let(:button_for_vm) { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
-      let(:button_for_az) { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "AvailabilityZone", :resource_action => resource_action) }
+      let(:button_for_vm) { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :resource_action => resource_action) }
+      let(:button_for_az) { FactoryBot.create(:custom_button, :applies_to_class => "AvailabilityZone", :resource_action => resource_action) }
       before do
         allow(controller).to receive(:render).and_return(nil)
         edit = {
