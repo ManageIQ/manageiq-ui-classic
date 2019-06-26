@@ -259,37 +259,17 @@ module PxeController::PxeServers
     end
   end
 
+  def pxe_server_async_cred_validation
+    begin
+      PxeServer.verify_depot_settings(params[:pxe])
+    rescue => bang
+      render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
+    else
+      render :json => {:status => 'success', :message => _('PXE Credentials successfuly validated')}
+    end
+  end
+
   private #######################
-
-  def pxe_server_validate_fields
-    if @edit[:new][:name].blank?
-      add_flash(_("Name is required"), :error)
-    end
-    if @edit[:new][:uri_prefix].blank?
-      add_flash(_("Depot Type is required"), :error)
-    end
-    if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].blank?
-      add_flash(_("URI is required"), :error)
-    end
-    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp" ||
-       @edit[:new][:uri_prefix] == "s3"
-      pxe_server_validate_creds
-    end
-  end
-
-  def pxe_server_validate_creds
-    if @edit[:new][:uri].blank?
-      add_flash(_("URI is required"), :error)
-    end
-    if @edit[:new][:log_userid].blank?
-      add_flash(_("Username is required"), :error)
-    end
-    if @edit[:new][:log_password].blank?
-      add_flash(_("Password is required"), :error)
-    elsif @edit[:new][:log_password] != @edit[:new][:log_verify]
-      add_flash(_("Password/Verify Password do not match"), :error)
-    end
-  end
 
   # Get variables from edit form
   def pxe_img_get_form_vars
