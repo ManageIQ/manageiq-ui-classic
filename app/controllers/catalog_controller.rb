@@ -186,7 +186,7 @@ class CatalogController < ApplicationController
           page << javascript_for_miq_button_visibility(changed)
           session[:changed] = changed
         end
-        page.replace_html("rate_span", @edit[:new][:code_currency])
+        page.replace_html("price_span", @edit[:new][:code_currency])
         page << set_spinner_off
       end
     end
@@ -1277,7 +1277,7 @@ class CatalogController < ApplicationController
   end
 
   def code_currency_label(currency)
-    _('Rate (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
+    _('Price (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
   end
 
   def checked_tenants
