@@ -1145,8 +1145,9 @@ class ApplicationController < ActionController::Base
     # Don't apply sub_filter when viewing sub-list view of a CI.
     # This applies when search is active and you go Vm -->
     # {Processes,Users,...} in that case, search shoult NOT be applied.
+    # If loading a form such as provisioning, don't filter records
     # FIXME: This needs to be changed to apply search in some explicit way.
-    return nil if @display
+    return nil if @display || @in_a_form
 
     # If we came in through Chart pop-up menu click we don't filter records.
     return nil if session[:menu_click]
