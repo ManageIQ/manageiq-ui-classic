@@ -2,7 +2,7 @@ import React from 'react';
 
 import '@manageiq/react-ui-components/dist/tagging.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
-import { taggingApp, TagView } from '@manageiq/react-ui-components/dist/tagging';
+import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
@@ -11,11 +11,11 @@ import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
-import GraphQLExplorer from "../graphql-explorer";
+import GraphQLExplorer from '../graphql-explorer';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
-import RemoveCatalogItemModal from '../components/remove-catalog-item-modal.jsx';
+import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
