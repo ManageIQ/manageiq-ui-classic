@@ -203,6 +203,16 @@ describe Mixins::BreadcrumbsMixin do
         )
       end
     end
+
+    context "when no title" do
+      before do
+        mixin.instance_variable_set(:@tagitems, [{:id => "1789", :description => "item"}])
+      end
+
+      it "returns nil" do
+        expect(mixin.special_page_breadcrumb(mixin.instance_variable_get(:@tagitems))).to eq(nil)
+      end
+    end
   end
 
   describe "#ancestry_parents" do
