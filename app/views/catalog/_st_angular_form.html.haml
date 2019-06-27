@@ -91,7 +91,7 @@
 
       .form-group{"ng-class" => "{'has-error': vm.priceRequired()}"}
         %label.col-md-2.control-label{"for" => "price"}
-          = _("Price (in {{vm.catalogItemModel.currency_name}})")
+          = _("Price / Month (in {{vm.catalogItemModel.currency_name}})")
         .col-md-8
           %input.form-control{"type"        => "text",
                                 "id"          => "price",

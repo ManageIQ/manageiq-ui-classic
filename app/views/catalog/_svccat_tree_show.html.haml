@@ -37,7 +37,7 @@
         - if @record.currency && @record.price
           .form-group
             %label.col-md-2.control-label
-              = _('Price (in %{currency})') % {:currency => @record.currency.code}
+              = _('Price / Month (in %{currency})') % {:currency => @record.currency.code}
             .col-md-8
               %p.form-control-static
                 = @record.price

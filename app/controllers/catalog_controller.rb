@@ -1280,7 +1280,7 @@ class CatalogController < ApplicationController
   end
 
   def code_currency_label(currency)
-    _('Price (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
+    _('Price / Month (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
   end
 
   def checked_tenants
@@ -2014,7 +2014,7 @@ class CatalogController < ApplicationController
 
   def validate_price
     if @edit[:new][:currency] && @edit[:new][:price].blank?
-      add_flash(_("Price is required"), :error)
+      add_flash(_("Price / Month is required"), :error)
     end
   end
 
