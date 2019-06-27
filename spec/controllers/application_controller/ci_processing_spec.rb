@@ -742,26 +742,24 @@ describe ApplicationController do
   end
 
   describe "#build_ownership_info" do
-    let(:child_role)                     { FactoryBot.create(:miq_user_role, :name => "Role_1") }
-    let(:grand_child_tenant_role)        { FactoryBot.create(:miq_user_role, :name => "Role_2") }
-    let(:great_grand_child_tenant_role)  { FactoryBot.create(:miq_user_role, :name => "Role_3") }
+    let(:child_role)                     { FactoryBot.create(:miq_user_role) }
+    let(:grand_child_tenant_role)        { FactoryBot.create(:miq_user_role) }
+    let(:great_grand_child_tenant_role)  { FactoryBot.create(:miq_user_role) }
 
     let(:child_tenant)             { FactoryBot.create(:tenant) }
     let(:grand_child_tenant)       { FactoryBot.create(:tenant, :parent => child_tenant) }
     let(:great_grand_child_tenant) { FactoryBot.create(:tenant, :parent => grand_child_tenant) }
 
     let(:child_group) do
-      FactoryBot.create(:miq_group, :description => "Child group", :role => child_role, :tenant => child_tenant)
+      FactoryBot.create(:miq_group, :role => child_role, :tenant => child_tenant)
     end
 
     let(:grand_child_group) do
-      FactoryBot.create(:miq_group, :description => "Grand child group", :role => grand_child_tenant_role,
-                                     :tenant => grand_child_tenant)
+      FactoryBot.create(:miq_group, :role => grand_child_tenant_role, :tenant => grand_child_tenant)
     end
 
     let(:great_grand_child_group) do
-      FactoryBot.create(:miq_group, :description => "Great Grand Child group", :role => great_grand_child_tenant_role,
-                                     :tenant => great_grand_child_tenant)
+      FactoryBot.create(:miq_group, :role => great_grand_child_tenant_role, :tenant => great_grand_child_tenant)
     end
     let(:admin_user) { FactoryBot.create(:user_admin) }
 
@@ -787,8 +785,8 @@ describe HostController do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @host = FactoryBot.create(:host)
-      @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host_id => @host.id)
-      @datastore = FactoryBot.create(:storage, :name => 'storage_name')
+      @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host => @host)
+      @datastore = FactoryBot.create(:storage)
       @datastore.parent = @host
     end
 
