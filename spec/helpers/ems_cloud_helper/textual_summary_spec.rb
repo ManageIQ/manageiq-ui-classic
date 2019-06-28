@@ -1,7 +1,7 @@
 describe EmsCloudHelper::TextualSummary do
   context "#textual_instances and #textual_images" do
     before do
-      @record = FactoryBot.create(:ems_openstack, :zone => FactoryBot.build(:zone))
+      @record = FactoryBot.create(:ems_openstack)
       allow(self).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:restful?).and_return(true)
       allow(controller).to receive(:controller_name).and_return("ems_cloud")
@@ -57,18 +57,16 @@ describe EmsCloudHelper::TextualSummary do
   end
 
   describe '#textual_description' do
-    let(:ems) { FactoryBot.create(:ems_cloud) }
-
-    before { instance_variable_set(:@record, ems) }
-
     context "EMS instance doesn't support :description" do
+      before { instance_variable_set(:@record, FactoryBot.create(:ext_management_system)) }
+
       include_examples 'textual_description', nil
     end
 
     context "EMS instance has :description" do
-      before { allow(ems).to receive(:description).and_return('EmsCloud instance description') }
+      before { instance_variable_set(:@record, FactoryBot.create(:ems_cloud)) }
 
-      include_examples 'textual_description', :label => _("Description"), :value => 'EmsCloud instance description'
+      include_examples 'textual_description', :label => _("Description"), :value => "US East (N. Virginia)"
     end
   end
 
