@@ -67,12 +67,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           assert_nested_list(@ems, [@network_port], 'network_ports', 'All Network Ports')
         end
 
-        # TODO: add more cloud providers as the LBaaS is implemented
-        if %w(amazon).include? t
-          it "show associated load balancers" do
-            assert_nested_list(@ems, [@load_balancer], 'load_balancers', 'All Load Balancers')
-          end
-        end
       end
 
       describe "#ems_network_form_fields" do

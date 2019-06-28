@@ -52,27 +52,5 @@ shared_context :shared_network_manager_context do |t|
                        :network_port => @network_port,
                        :address      => "10.10.0.2")
 
-    if %w(amazon).include? t
-      @load_balancer              = FactoryBot.create("load_balancer_#{t}".to_sym,
-                                                       :ems_id => @ems.id,
-                                                       :name   => "Load Balancer")
-      @load_balancer_2            = FactoryBot.create("load_balancer_#{t}".to_sym)
-      @load_balancer_pool         = FactoryBot.create("load_balancer_pool_#{t}".to_sym)
-      @load_balancer_listener     = FactoryBot.create("load_balancer_listener_#{t}".to_sym,
-                                                       :load_balancer => @load_balancer)
-      @load_balancer_pool_member  = FactoryBot.create("load_balancer_pool_member_#{t}".to_sym,
-                                                       :vm => @vm)
-      @load_balancer_health_check = FactoryBot.create("load_balancer_health_check_#{t}".to_sym)
-
-      FactoryBot.create("load_balancer_listener_pool".to_sym,
-                         :load_balancer_pool     => @load_balancer_pool,
-                         :load_balancer_listener => @load_balancer_listener)
-      FactoryBot.create("load_balancer_pool_member_pool".to_sym,
-                         :load_balancer_pool        => @load_balancer_pool,
-                         :load_balancer_pool_member => @load_balancer_pool_member)
-      FactoryBot.create("load_balancer_health_check_member".to_sym,
-                         :load_balancer_health_check => @load_balancer_health_check,
-                         :load_balancer_pool_member  => @load_balancer_pool_member)
-    end
   end
 end
