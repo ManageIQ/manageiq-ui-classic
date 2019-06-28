@@ -255,27 +255,19 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       N_('Access'),
       :items => [
         button(
-          :vm_webmks_console,
+          :vm_html5_console,
           'pficon pficon-screen fa-lg',
-          N_('Open a web-based WebMKS console for this VM'),
-          N_('VM Console'),
-          :url     => "console",
-          :confirm => N_("Open a WebMKS console for this VM"),
-          :klass   => ApplicationHelper::Button::VmWebmksConsole),
-        button(
-          :vm_vnc_console,
-          'pficon pficon-screen fa-lg',
-          N_('Open a web-based VNC or SPICE console for this VM'),
+          N_('Open a web-based HTML5 console for this VM'),
           N_('VM Console'),
           :url   => "html5_console",
-          :klass => ApplicationHelper::Button::VmVncConsole),
+          :klass => ApplicationHelper::Button::VmHtml5Console),
         button(
           :vm_vmrc_console,
           'pficon pficon-screen fa-lg',
-          N_('Open a web-based VMRC console for this VM.  This requires that VMRC is pre-configured to work in your browser.'),
-          N_('VM Console'),
+          N_('Open a VMRC console for this VM.  This requires that VMRC is installed and pre-configured to work in your browser.'),
+          N_('VMRC Console'),
           :url     => "vmrc_console",
-          :confirm => N_("Opening a VM web-based VMRC console requires that VMRC is pre-configured to work in your browser.  Are you sure?"),
+          :confirm => N_("Opening a VMRC console requires that VMRC is installed and pre-configured to work in your browser. Are you sure?"),
           :klass   => ApplicationHelper::Button::VmVmrcConsole),
         button(
           :cockpit_console,

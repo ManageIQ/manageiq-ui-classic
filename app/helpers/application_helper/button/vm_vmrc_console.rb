@@ -1,8 +1,8 @@
-class ApplicationHelper::Button::VmVmrcConsole < ApplicationHelper::Button::VmConsole
+class ApplicationHelper::Button::VmVmrcConsole < ApplicationHelper::Button::Basic
   needs :@record
 
   def visible?
-    console_supports_type?('VMRC')
+    @record.vendor == 'vmware'
   end
 
   def disabled?
