@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-8
+
+### Fixed
+- Advanced search modal - only render once, always, hidden [(#5629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5629)
+- Services use turbo button [(#5366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5366)
+- Display the custom login logo on the about modal [(#5685)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5685)
+- Added missing Model name to return that is used to load advanced search [(#5733)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5733)
+
 ## Unreleased as of Sprint 114 ending 2019-06-24
 
 ### Added
@@ -15,7 +23,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Rebuild list of zones when deleting a resource from Catalog bundle [(#5734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5734)
-- Added missing Model name to return that is used to load advanced search [(#5733)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5733)
 - Require and permit the :quotas subhash [(#5717)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5717)
 - Expression Editor fix [(#5710)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5710)
 - Add Ansible related inputs to GOD haml [(#5166)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5166)
@@ -152,7 +159,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix preselect node in servers by roles tree under diagnostics [(#5382)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5382)
 - Adjust accordion height calculation hack to the new breadcrumbs [(#5381)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5381)
 - Fix missed argument change for compliance history tree [(#5376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5376)
-- Services use turbo button [(#5366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5366)
 - Fixes segmentation_id and physical_network required (in Cloud Network form) [(#5364)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5364)
 - Subscription ID is required when adding readOnly when editing (Azure) [(#5359)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5359)
 - Allow user to select Network Port for provisioning [(#5103)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5103)
