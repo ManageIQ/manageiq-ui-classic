@@ -69,13 +69,14 @@ module Mixins
       # EMS has key instead of name
       return unless variable
       if variable.first[:key]
-        {:title => variable.first[:key]}
+        title = variable.first[:key]
       # FloatingIps do not have name
       elsif floating_ip_address?(variable.first)
-        {:title => variable.first[:address]}
+        title = variable.first[:address]
       else
-        {:title => variable.first[:name]}
+        title = variable.first[:name]
       end
+      {:title => title} if title
     end
 
     # Explorer controller methods
