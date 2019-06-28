@@ -482,6 +482,52 @@ describe OpsController do
           proxy_worker_threshold_human_size = number_to_human_size(proxy_worker_threshold, :significant => false)
           expect(assigns(:sb)[:smart_proxy_threshold]).to include([proxy_worker_threshold_human_size, proxy_worker_threshold])
         end
+
+        it "gets custom worker setting and makes sure it exists in threshold array so correct value can be selected in drop down" do
+          Vmdb::Settings.save!(
+            @miq_server,
+            :workers => {
+              :worker_base => {
+                :queue_worker_base => {
+                  :generic_worker => {
+                    :memory_threshold => 2.5.gigabytes
+                  }
+                }
+              }
+            }
+          )
+          controller.send(:settings_set_form_vars_workers)
+          generic_worker_threshold = controller.send(:get_worker_setting, assigns(:edit)[:current], MiqGenericWorker, :memory_threshold)
+          generic_worker_threshold_human_size = number_to_human_size(generic_worker_threshold, :significant => false)
+          expect(assigns(:sb)[:generic_threshold]).to include(["#{generic_worker_threshold_human_size} (Custom Value)", generic_worker_threshold])
+        end
+      end
+    end
+
+    describe '#insert_custom_threshold_value' do
+      include ActionView::Helpers::NumberHelper
+      before do
+        @miq_server = FactoryBot.create(:miq_server)
+        threshold = []
+        (200.megabytes...500.megabytes).step(100.megabytes) do |x|
+          threshold << [number_to_human_size(x, :significant => false), x]
+        end
+        generic_threshold = copy_array(threshold)
+        controller.instance_variable_set(:@sb,
+                                         :selected_server_id => @miq_server.id,
+                                         :threshold          => threshold,
+                                         :generic_threshold  => generic_threshold)
+      end
+
+      it "does not insert an existing value into a threshold array" do
+        original_generic_threshold = copy_array(assigns(:sb)[:generic_threshold])
+        controller.send(:insert_custom_threshold_value, assigns(:sb)[:generic_threshold], 200.megabytes)
+        expect(assigns(:sb)[:generic_threshold]).to eq(original_generic_threshold)
+      end
+
+      it "inserts a custom value into a threshold array" do
+        controller.send(:insert_custom_threshold_value, assigns(:sb)[:generic_threshold], 2.gigabytes)
+        expect(assigns(:sb)[:generic_threshold]).to include(["2 GB (Custom Value)", 2.gigabytes.to_i])
       end
     end
   end

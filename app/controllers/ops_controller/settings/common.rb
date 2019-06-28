@@ -1013,12 +1013,14 @@ module OpsController::Settings::Common
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqGenericWorker, :memory_threshold) || 400.megabytes
     @sb[:generic_threshold] = []
     @sb[:generic_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:generic_threshold], w[:memory_threshold])
 
     w = (qwb[:priority_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqPriorityWorker, :count) || 2
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqPriorityWorker, :memory_threshold) || 200.megabytes
     @sb[:priority_threshold] = []
     @sb[:priority_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:priority_threshold], w[:memory_threshold])
 
     qwb[:ems_metrics_collector_worker] ||= {}
     qwb[:ems_metrics_collector_worker][:defaults] ||= {}
@@ -1027,12 +1029,14 @@ module OpsController::Settings::Common
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsCollectorWorker, :defaults, :memory_threshold) || 400.megabytes
     @sb[:ems_metrics_collector_threshold] = []
     @sb[:ems_metrics_collector_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:ems_metrics_collector_threshold], w[:memory_threshold])
 
     w = (qwb[:ems_metrics_processor_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :count) || 2
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqEmsMetricsProcessorWorker, :memory_threshold) || 200.megabytes
     @sb[:ems_metrics_processor_threshold] = []
     @sb[:ems_metrics_processor_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:ems_metrics_processor_threshold], w[:memory_threshold])
 
     w = (qwb[:smart_proxy_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqSmartProxyWorker, :count) || 3
@@ -1040,6 +1044,7 @@ module OpsController::Settings::Common
     @sb[:smart_proxy_threshold] = []
     @sb[:smart_proxy_threshold] = copy_array(@sb[:threshold])
     (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:smart_proxy_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    insert_custom_threshold_value(@sb[:smart_proxy_threshold], w[:memory_threshold])
 
     qwb[:ems_refresh_worker] ||= {}
     qwb[:ems_refresh_worker][:defaults] ||= {}
@@ -1050,6 +1055,7 @@ module OpsController::Settings::Common
     (600.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:ems_refresh_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    insert_custom_threshold_value(@sb[:ems_refresh_threshold], w[:memory_threshold])
 
     wb = @edit[:current].config[:workers][:worker_base]
     w = (wb[:event_catcher] ||= {})
@@ -1058,6 +1064,7 @@ module OpsController::Settings::Common
     (500.megabytes...1000.megabytes).step(100.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:event_catcher_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    insert_custom_threshold_value(@sb[:event_catcher_threshold], w[:memory_threshold])
 
     w = (wb[:vim_broker_worker] ||= {})
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqVimBrokerWorker, :memory_threshold) || 1.gigabytes
@@ -1065,6 +1072,7 @@ module OpsController::Settings::Common
     (500.megabytes..900.megabytes).step(100.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x] }
     (1.gigabytes..2.9.gigabytes).step(0.1.gigabyte) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
     (3.gigabytes..10.gigabytes).step(512.megabytes) { |x| @sb[:vim_broker_threshold] << [number_to_human_size(x, :significant => false), x.to_i] }
+    insert_custom_threshold_value(@sb[:vim_broker_threshold], w[:memory_threshold])
 
     w = (wb[:ui_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqUiWorker, :count) || 2
@@ -1074,12 +1082,14 @@ module OpsController::Settings::Common
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqReportingWorker, :memory_threshold) || 400.megabytes
     @sb[:reporting_threshold] = []
     @sb[:reporting_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:reporting_threshold], w[:memory_threshold])
 
     w = (wb[:web_service_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :count) || 2
     w[:memory_threshold] = get_worker_setting(@edit[:current], MiqWebServiceWorker, :memory_threshold) || 400.megabytes
     @sb[:web_service_threshold] = []
     @sb[:web_service_threshold] = copy_array(@sb[:threshold])
+    insert_custom_threshold_value(@sb[:web_service_threshold], w[:memory_threshold])
 
     w = (wb[:websocket_worker] ||= {})
     w[:count] = get_worker_setting(@edit[:current], MiqWebsocketWorker, :count) || 2
@@ -1087,6 +1097,15 @@ module OpsController::Settings::Common
     @edit[:new].config = copy_hash(@edit[:current].config)
     session[:log_depot_default_verify_status] = true
     @in_a_form = true
+  end
+
+  def insert_custom_threshold_value(threshold, value)
+    # insert custom value entered from Advanced tab into Worker threshold select options if needed
+    value_exists = false
+    threshold.each do |x|
+      value_exists = true if x.include?(value)
+    end
+    threshold << ["#{number_to_human_size(value, :significant => false)} (Custom Value)", value.to_i] unless value_exists
   end
 
   private def get_worker_setting(config, klass, *setting)
