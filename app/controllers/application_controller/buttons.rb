@@ -248,17 +248,20 @@ module ApplicationController::Buttons
   end
 
   def open_url_after_dialog
-    saved_url = SavedUrl.find_by(
+    external_url = ExternalUrl.find_by(
       :refers_to_id   => params[:targetId],
-      :refers_to_type => params[:realTargetType]
+      :refers_to_type => params[:realTargetType],
+      :user           => User.current_user
     )
+    binding.pry if external_url.nil?
+
     # FIXME: remove this fallback, once the form passes the targetClass
-    saved_url ||= SavedUrl.find_by(:refers_to_id => params[:targetId])
+    #external_url ||= ExternalUrl.find_by(:refers_to_id => params[:targetId])
 
     # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
-    saved_url ||= SystemConsole.find_by(:vm_id => params[:targetId])
+    external_url ||= SystemConsole.find_by(:vm_id => params[:targetId])
 
-    url = saved_url.try(:url)
+    url = external_url.try(:url)
 
     render :json => {:open_url => url}
   end
@@ -268,18 +271,20 @@ module ApplicationController::Buttons
   BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
 
   def custom_button_done
-    saved_url = SavedUrl.find_by(
+    external_url = ExternalUrl.find_by(
       :refers_to_id   => params[:id],
-      :refers_to_type => params[:cls]
+      :refers_to_type => params[:cls],
+      :user           => User.current_user
     )
+    binding.pry if external_url.nil?
 
     # FIXME: remove this fallback once we have the class here
-    saved_url ||= SavedUrl.find_by(:refers_to_id => params[:id])
+    external_url ||= ExternalUrl.find_by(:refers_to_id => params[:id])
 
     # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
-    saved_url ||= SystemConsole.find_by(:vm_id => params[:id])
+    external_url ||= SystemConsole.find_by(:vm_id => params[:id])
 
-    url = saved_url.try(:url)
+    url = external_url.try(:url)
     if url.present?
       javascript_open_window(url)
     else
