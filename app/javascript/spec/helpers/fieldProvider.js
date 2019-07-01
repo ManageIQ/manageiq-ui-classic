@@ -1,4 +1,5 @@
 import React, { createElement } from 'react';
+import { composeValidators } from '@data-driven-forms/react-form-renderer';
 /**
  * Mocks FieldProvider for custom data driven form fields
  */
@@ -11,8 +12,15 @@ export const FieldProviderComponent = ({
   ...rest
 }) => {
   const fieldInput = {
-    onChange: jest.fn(),
     ...input,
+    onChange: (value) => {
+      if (input.onChange) {
+        input.onChange(value);
+      }
+      if (rest.validate) {
+        rest.validate(value);
+      }
+    },
   };
   const fieldMeta = {
     ...meta,

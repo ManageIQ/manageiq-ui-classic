@@ -76,7 +76,7 @@ exports[`Dual list component is rendered correctly 1`] = `
       allToRight={false}
       input={
         Object {
-          "onChange": [MockFunction],
+          "onChange": [Function],
           "value": Array [
             "key3",
           ],
@@ -410,7 +410,7 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
       allToRight={true}
       input={
         Object {
-          "onChange": [MockFunction],
+          "onChange": [Function],
           "value": Array [
             "key3",
           ],

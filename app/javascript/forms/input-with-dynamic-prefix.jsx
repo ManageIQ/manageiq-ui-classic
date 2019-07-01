@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   ControlLabel,
   InputGroup,
@@ -36,8 +37,14 @@ const DataDrivenInputWithPrefix = ({
     <FieldProvider
       {...rest}
       validate={(value) => {
-        const implicitValidator = validate(value);
-        const missingPrefix = (value && value.replace(prefixMatcher, '') === '') || (value === prefix) ? __('Required') : undefined;
+        let implicitValidator;
+        let missingPrefix;
+        if (validate) {
+          implicitValidator = validate(value);
+        }
+        if (prefix) {
+          missingPrefix = (value && value.replace(prefixMatcher, '') === '') || (value === prefix) ? __('Required') : undefined;
+        }
         return implicitValidator || missingPrefix;
       }}
     >
@@ -56,6 +63,7 @@ const DataDrivenInputWithPrefix = ({
           <div className="dynamic-prefix-input">
             <rawComponents.Select
               invalid={isRequired && !prefix}
+              id={`dynamic-prefix-select-${rest.name}`}
               input={{
                 onChange: (prefix) => {
                   onChange(`${prefix}${value.replace(prefixMatcher, '')}`);
@@ -74,6 +82,7 @@ const DataDrivenInputWithPrefix = ({
                 onChange={({ target: { value } }) => onChange(`${prefix}${value}`)}
                 value={value.replace(prefixMatcher, '')}
                 name={name}
+                id={`dynamic-prefix-text-input-${rest.name}`}
               />
             </InputGroup>
             )}
@@ -85,8 +94,19 @@ const DataDrivenInputWithPrefix = ({
   );
 };
 
+DataDrivenInputWithPrefix.propTypes = {
+  name: PropTypes.string.isRequired,
+  prefixSeparator: PropTypes.string,
+  validate: PropTypes.func,
+  prefixOptions: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.any })).isRequired,
+  formOptions: PropTypes.shape({
+    getFieldState: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 DataDrivenInputWithPrefix.defaultProps = {
   prefixSeparator: '://',
+  validate: undefined,
 };
 
 
