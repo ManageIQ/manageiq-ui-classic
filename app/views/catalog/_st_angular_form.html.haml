@@ -99,10 +99,13 @@
                                 "ng-model"    => "vm.catalogItemModel.price",
                                 "ng-change"   => "vm.priceRequired()",
                                 "ng-required" => "vm.priceRequired()",
+                                "ng-pattern"  => "/(^([0-9]+)(\.)?([0-9]+)?)|(^([0-9]+)?(\.)([0-9]+))/",
                                 "maxlength"   => 60,
                                 "checkchange" => ""}
           %span.help-block{"ng-show" => "vm.priceRequired()"}
             = _("Required")
+          %span.help-block{"ng-show" => "angularForm.price.$error.pattern"}
+            = _("Must be a numeric value")
 
     = render :partial => "layouts/angular/multi_tab_ansible_form_options",
              :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}

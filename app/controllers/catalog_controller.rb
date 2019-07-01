@@ -1123,7 +1123,7 @@ class CatalogController < ApplicationController
     @edit[:new][:zone_id] = @record.zone_id
 
     @edit[:new][:currency] = @record.currency ? @record.currency.id : nil
-    @edit[:new][:code_currency] = code_currency_label(@record.currency.id) if @record.currency
+    @edit[:new][:code_currency] = @record.currency ? code_currency_label(@record.currency.id) : _("Price / Month")
     @edit[:new][:price] = @record.price
 
     # initialize fqnames
@@ -1270,8 +1270,8 @@ class CatalogController < ApplicationController
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
 
     if params[:currency]
-      @edit[:new][:currency] = params[:currency].to_i
-      @edit[:new][:code_currency] = code_currency_label(params[:currency])
+      @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
+      @edit[:new][:code_currency] = code_currency_label(params[:currency]) if @edit[:new][:currency]
     end
     @edit[:new][:price] = params[:price] if params[:price]
 
@@ -2016,7 +2016,13 @@ class CatalogController < ApplicationController
     if @edit[:new][:currency] && @edit[:new][:price].blank?
       add_flash(_("Price / Month is required"), :error)
     end
+    add_flash(_("Price must be a numeric value"), :error) if !@edit[:new][:price].blank? && !is_float_value(@edit[:new][:price])
   end
+
+  def is_float_value(fl)
+   fl =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
+  end
+
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
