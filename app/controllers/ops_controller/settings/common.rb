@@ -674,7 +674,6 @@ module OpsController::Settings::Common
         session[:selected_roles] = new[:server][:role].split(",") if !new[:server].nil? && !new[:server][:role].nil?
       end
       @host_choices = session[:host_choices]
-      new[:server][:remote_console_type] = params[:console_type] if params[:console_type]
 
       settings_get_form_vars_sync_ntp
 
@@ -836,7 +835,6 @@ module OpsController::Settings::Common
     @edit[:current][:server][:role] = @edit[:current][:server][:role] ? @edit[:current][:server][:role].split(",").sort.join(",") : ""
     @edit[:current][:server][:timezone] = "UTC" if @edit[:current][:server][:timezone].blank?
     @edit[:current][:server][:locale] = "default" if @edit[:current][:server][:locale].blank?
-    @edit[:current][:server][:remote_console_type] ||= "VNC"
     @edit[:current][:smtp][:enable_starttls_auto] = GenericMailer.default_for_enable_starttls_auto if @edit[:current][:smtp][:enable_starttls_auto].nil?
     @edit[:current][:smtp][:openssl_verify_mode] ||= "none"
     @edit[:current][:ntp] ||= {}
