@@ -249,14 +249,14 @@ module ApplicationController::Buttons
 
   def open_url_after_dialog
     external_url = ExternalUrl.find_by(
-      :refers_to_id   => params[:targetId],
-      :refers_to_type => params[:realTargetType],
+      :resource_id   => params[:targetId],
+      :resource_type => params[:realTargetType],
       :user           => User.current_user
     )
     binding.pry if external_url.nil?
 
     # FIXME: remove this fallback, once the form passes the targetClass
-    #external_url ||= ExternalUrl.find_by(:refers_to_id => params[:targetId])
+    #external_url ||= ExternalUrl.find_by(:resource_id => params[:targetId])
 
     # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
     external_url ||= SystemConsole.find_by(:vm_id => params[:targetId])
@@ -272,14 +272,14 @@ module ApplicationController::Buttons
 
   def custom_button_done
     external_url = ExternalUrl.find_by(
-      :refers_to_id   => params[:id],
-      :refers_to_type => params[:cls],
+      :resource_id   => params[:id],
+      :resource_type => params[:cls],
       :user           => User.current_user
     )
     binding.pry if external_url.nil?
 
     # FIXME: remove this fallback once we have the class here
-    external_url ||= ExternalUrl.find_by(:refers_to_id => params[:id])
+    external_url ||= ExternalUrl.find_by(:resource_id => params[:id])
 
     # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
     external_url ||= SystemConsole.find_by(:vm_id => params[:id])
