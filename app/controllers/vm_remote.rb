@@ -1,12 +1,9 @@
 module VmRemote
   extend ActiveSupport::Concern
 
-  # Launch a VM console
-  def console
-    console_type = ::Settings.server.remote_console_type.downcase
-    params[:task_id] ? console_after_task(console_type) : console_before_task(console_type)
+  def vmrc_console
+    params[:task_id] ? console_after_task('vmrc') : console_before_task('vmrc')
   end
-  alias vmrc_console console # VMRC needs its own URL for RBAC checking
 
   def launch_cockpit
     vm = identify_record(params[:id], VmOrTemplate)
@@ -25,7 +22,6 @@ module VmRemote
   end
 
   def launch_vmrc_console
-    console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
     options = {
@@ -37,7 +33,7 @@ module VmRemote
       :name        => @record.name,
       :vmrc_uri    => build_vmrc_uri(host, @record.ems_ref, params[:ticket])
     }
-    render :template => "vm_common/console_#{console_type}",
+    render :template => "vm_common/console_vmrc",
            :layout   => false,
            :locals   => options
   end
@@ -70,7 +66,6 @@ module VmRemote
     record = identify_record(params[:id], VmOrTemplate)
     ems = record.ext_management_system
     if ems.class.ems_type == 'vmwarews'
-      ticket_type = :vnc if console_type == 'html5'
       begin
         ems.validate_remote_console_vmrc_support
       rescue MiqException::RemoteConsoleNotSupportedError => e
@@ -104,7 +99,7 @@ module VmRemote
       url = if miq_task.task_results[:remote_url]
               miq_task.task_results[:remote_url]
             else
-              console_action = %w[html5 webmks].include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
+              console_action = %w[html5].include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
               url_for_only_path(:controller => controller_name,
                                 :action     => console_action,
                                 :id         => j(params[:id]),
