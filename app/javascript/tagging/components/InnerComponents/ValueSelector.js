@@ -25,6 +25,7 @@ class ValueSelector extends React.Component {
       name="form-field-name"
       value={value}
       placeholder={__('Select tag value')}
+      noOptionsMessage={() => __('No options')}
       onChange={this.handleChange}
       classNamePrefix="react-select"
       options={values}
