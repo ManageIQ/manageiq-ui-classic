@@ -5,7 +5,7 @@ describe "shared/views/ems_common/show" do
     TestSetup.new(:ems_vmware,    EmsInfraHelper::TextualSummary),
   ].each do |setup|
     let!(:server) { EvmSpecHelper.local_miq_server }
-    let(:ems) { FactoryBot.create(setup.ems_type, :zone => server.zone) }
+    let(:ems) { FactoryBot.create(setup.ems_type) }
     let(:action) { 'index' }
 
     before do
@@ -48,7 +48,7 @@ describe "shared/views/ems_common/show" do
 
     let(:showtype) { "main" }
     let(:display) { 'cloud_volumes' }
-    let(:ems) { FactoryBot.create(:ems_storage) }
+    let(:ems) { FactoryBot.create(:ext_management_system) }
 
     it "should show render gtl for list of cloud_volumes" do
       render
