@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import debouncePromise from '../../helpers/promise-debounce';
-import { http } from '../../http_api';
+import { http, API } from '../../http_api';
 
 export const asyncValidator = (value, serverId) =>
   API.get(`/api/pxe_servers?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)

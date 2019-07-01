@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PxeServersForm should render correctly 1`] = `
+<div
+  className="container-fluid"
+>
+  <MiqFormRenderer
+    canReset={false}
+    className="form-react"
+    initialValues={Object {}}
+    onCancel={[Function]}
+    onSubmit={[Function]}
+    schema={
+      Object {
+        "fields": Array [
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "isRequired": true,
+                "label": "Name",
+                "name": "name",
+                "validate": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "component": "input-with-dynamic-prefix",
+                "isRequired": true,
+                "label": "Uri",
+                "name": "uri",
+                "prefixOptions": Array [
+                  Object {
+                    "label": "Amazon Web Services",
+                    "value": "s3://",
+                  },
+                  Object {
+                    "label": "Network File System",
+                    "value": "nfs://",
+                  },
+                  Object {
+                    "label": "OpenStack Swift",
+                    "value": "swift://",
+                  },
+                  Object {
+                    "label": "Samba",
+                    "value": "smb://",
+                  },
+                ],
+                "validate": Array [
+                  Object {
+                    "type": "required-validator",
+                  },
+                ],
+              },
+              Object {
+                "component": "sub-form",
+                "condition": Object {
+                  "pattern": /\\^\\(\\?!nfs:\\\\/\\\\/\\)\\.\\+\\.\\*/,
+                  "when": "uri",
+                },
+                "fields": Array [
+                  Object {
+                    "asyncValidate": [Function],
+                    "component": "validate-credentials",
+                    "edit": false,
+                    "fields": Array [
+                      Object {
+                        "component": "text-field",
+                        "isRequired": true,
+                        "label": "Username",
+                        "name": "authentication.userid",
+                        "validate": Array [
+                          Object {
+                            "type": "required-validator",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "secret-switch-field",
+                        "edit": false,
+                        "isRequired": true,
+                        "label": "Password",
+                        "name": "authentication.password",
+                        "validate": Array [
+                          Object {
+                            "type": "required-validator",
+                          },
+                        ],
+                      },
+                    ],
+                    "name": "authentication.valid",
+                    "validationDependencies": Array [
+                      "uri",
+                    ],
+                  },
+                ],
+                "name": "authentication-subform",
+              },
+              Object {
+                "component": "text-field",
+                "label": "Access URL",
+                "name": "access_url",
+              },
+              Object {
+                "component": "text-field",
+                "label": "PXE Directory",
+                "name": "pxe_directory",
+              },
+              Object {
+                "component": "text-field",
+                "label": "Windows Images Directory",
+                "name": "windows_images_directory",
+              },
+              Object {
+                "component": "text-field",
+                "label": "Customization Directory",
+                "name": "customization_directory",
+              },
+            ],
+            "title": "Basic Information",
+          },
+          Object {
+            "component": "hr",
+            "name": "form-divider",
+          },
+          Object {
+            "component": "sub-form",
+            "fields": Array [
+              Object {
+                "component": "text-field",
+                "label": "Filename",
+                "name": "pxe_menus[0].file_name",
+              },
+            ],
+            "title": "PXE Image Menus",
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;

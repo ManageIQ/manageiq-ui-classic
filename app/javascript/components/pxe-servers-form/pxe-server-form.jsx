@@ -25,21 +25,23 @@ const PxeServersForm = ({ id }) => {
 
   useEffect(() => {
     if (id) {
+      miqSparkleOn();
       API.get(`/api/pxe_servers/${id}?attributes=${REQUEST_ATTRIBUTES}`)
         .then(({
           id: _id,
           href: _h,
-          pxe_menus,
+          pxe_menus, // eslint-disable-line camelcase
           authentications,
           ...data
         }) => setInitialValues({
           ...data,
-          pxe_menus: pxe_menus.map(({ file_name }) => ({ file_name })),
+          pxe_menus: pxe_menus.map(({ file_name }) => ({ file_name })), // eslint-disable-line camelcase
           authentication: authentications[0] ? ({
             userid: authentications[0].userid,
           }) : ({}),
         }))
-        .then(() => setIsLoading(false));
+        .then(() => setIsLoading(false))
+        .then(miqSparkleOff);
     }
   }, []);
 
@@ -63,12 +65,11 @@ const PxeServersForm = ({ id }) => {
       }) : ({}),
     };
     const request = () => (id ? API.patch(`/api/pxe_servers/${id}`, pxeServer) : API.post('/api/pxe_servers', pxeServer));
-
     return request().then(() => miqRedirectBack(message, 'success', RETURN_URL));
   };
 
   if (isLoading) {
-    return <span>Loading</span>;
+    return null;
   }
 
   return (
@@ -76,6 +77,14 @@ const PxeServersForm = ({ id }) => {
       <MiqFormRenderer initialValues={initialValues} canReset={!!id} onSubmit={onSubmit} onCancel={onCancel} schema={createSchema(!!id)} />
     </Grid>
   );
+};
+
+PxeServersForm.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+PxeServersForm.defaultProps = {
+  id: undefined,
 };
 
 export default PxeServersForm;
