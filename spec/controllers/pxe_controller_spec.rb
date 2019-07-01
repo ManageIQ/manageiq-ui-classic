@@ -57,21 +57,6 @@ describe PxeController do
     end
   end
 
-  context "#restore_password" do
-    it "populates the password from the pxe record if params[:restore_password] exists" do
-      ps = PxeServer.create
-      allow(ps).to receive(:authentication_password).with(:default).and_return("default_password")
-      edit = {:pxe_id => ps.id, :new => {}}
-      controller.instance_variable_set(:@edit, edit)
-      controller.instance_variable_set(:@ps, ps)
-      controller.params = {:restore_password => "true",
-                           :log_password     => "[FILTERED]",
-                           :log_verify       => "[FILTERED]"}
-      controller.send(:restore_password)
-      expect(assigns(:edit)[:new][:log_password]).to eq(ps.authentication_password(:default))
-    end
-  end
-
   describe "#tree_select" do
     before { login_as FactoryBot.create(:user_admin) }
 
