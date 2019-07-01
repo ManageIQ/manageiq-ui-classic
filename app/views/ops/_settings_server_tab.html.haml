@@ -81,7 +81,7 @@
         = _("Default Locale")
       .col-md-8
         = select_tag('locale',
-                      options_for_select([['Client Browser Setting', 'default']] + FastGettext.human_available_locales,
+                      options_for_select([[_('Client Browser Setting'), 'default']] + FastGettext.human_available_locales,
                                          @edit[:new][:server][:locale]),
                       :class    => "selectpicker")
     :javascript
@@ -205,7 +205,7 @@
         = _("SSL Verify Mode")
       .col-md-8
         = select_tag('smtp_openssl_verify_mode',
-                      options_for_select(GenericMailer.openssl_verify_modes.collect { |m| [m.titleize, m] }, @edit[:new][:smtp][:openssl_verify_mode]),
+                      options_for_select(GenericMailer.openssl_verify_modes.collect { |m| [_(m.titleize), m] }, @edit[:new][:smtp][:openssl_verify_mode]),
                       :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('smtp_openssl_verify_mode', "#{url}")
@@ -214,7 +214,7 @@
         = _("Authentication")
       .col-md-8
         = select_tag('smtp_authentication',
-                      options_for_select(GenericMailer.authentication_modes, @edit[:new][:smtp][:authentication]),
+                      options_for_select(_(GenericMailer.authentication_modes), @edit[:new][:smtp][:authentication]),
                       :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('smtp_authentication', "#{url}")
@@ -269,7 +269,7 @@
         = _("Mode")
       .col-md-8
         = select_tag('webservices_mode',
-                      options_for_select(%w(invoke disable), @edit[:new][:webservices][:mode]),
+                      options_for_select([_("invoke"), _("disable")], @edit[:new][:webservices][:mode]),
                       :class    => "selectpicker")
     :javascript
       miqSelectPickerEvent('webservices_mode', "#{url}")
@@ -278,7 +278,7 @@
         = _("Security")
       .col-md-8
         = select_tag('webservices_security',
-                      options_for_select(%w(none ws-security), @edit[:new][:webservices][:security]),
+                      options_for_select([_("none"), _("ws-security")], @edit[:new][:webservices][:security]),
                       :class    => "selectpicker")
     :javascript
       miqSelectPickerEvent('webservices_security', "#{url}")
