@@ -16,9 +16,11 @@ module AnsibleCredentialHelper::TextualSummary
       options << key
 
       define_singleton_method "textual_#{key}" do
-        h = {:label => _(value[:label]), :title => _(value[:help_text])}
-        h[:value] = attribute_value(value[:type], key, @record)
-        h
+        {
+          :label => _(value[:label]),
+          :title => _(value[:help_text]),
+          :value => attribute_value(value[:type], key, @record)
+        }
       end
     end
 
@@ -26,11 +28,8 @@ module AnsibleCredentialHelper::TextualSummary
   end
 
   def attribute_value(attr_type, key, rec)
-    if attr_type == :password && (rec.try(key).present? || rec.options.try(:[], key).present?)
-      '●●●●●●●●'
-    else
-      rec.try(key) || rec.options.try(:[], key)
-    end
+    val = (rec.try(key) || rec.options.try(:[], key)).presence
+    attr_type == :password && val ? '●●●●●●●●' : val
   end
   private :attribute_value
 
