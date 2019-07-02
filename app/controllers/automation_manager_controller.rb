@@ -478,7 +478,7 @@ class AutomationManagerController < ApplicationController
     load_edit("cs_edit__#{params[:id]}", "replace_cell__explorer")
     begin
       cs = ConfigurationScript.find_by(:id => params[:id])
-      AnsibleTowerJobTemplateDialogService.new.create_dialog(cs, @edit[:new][:dialog_name])
+      Dialog::AnsibleTowerJobTemplateDialogService.create_dialog(cs, @edit[:new][:dialog_name])
     rescue => bang
       add_flash(_("Error when creating Service Dialog: %{error_message}") %
                   {:error_message => bang.message}, :error)
