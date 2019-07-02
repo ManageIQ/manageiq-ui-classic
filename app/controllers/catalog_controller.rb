@@ -120,11 +120,15 @@ class CatalogController < ApplicationController
     replace_right_cell
   end
 
-  def servicetemplate_copy_saved()
+  def servicetemplate_copy_saved
       add_flash(_("Copy of a Service Catalog Item was successfully saved"))
       @sb[:action] = @edit = @record = nil
       @in_a_form = false
       replace_right_cell
+  end
+
+  def servicetemplates_names
+    render :json => {:names => ServiceTemplate.all.pluck(:name)}
   end
 
   def atomic_st_edit

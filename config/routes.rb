@@ -289,6 +289,7 @@ Rails.application.routes.draw do
         ot_edit
         ot_orchestration_managers
         ot_show
+        servicetemplates_names
         show
       ),
       :post => %w(
