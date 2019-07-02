@@ -26,10 +26,10 @@ module AnsibleCredentialHelper::TextualSummary
   end
 
   def attribute_value(attr_type, key, rec)
-    if attr_type == :password && (rec.try(key).present? || rec.options[key].present?)
+    if attr_type == :password && (rec.try(key).present? || rec.options.try(:[], key).present?)
       '●●●●●●●●'
     else
-      rec.try(key) || rec.options[key]
+      rec.try(key) || rec.options.try(:[], key)
     end
   end
   private :attribute_value
