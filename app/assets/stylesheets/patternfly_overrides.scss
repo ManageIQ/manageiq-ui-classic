@@ -635,6 +635,9 @@ table.table tbody td img {
 
 /// Overrides patternfly style for disabled accordion items
 
+.nav-stacked > li.disabled > a {
+  color: #9c9c9c;
+}
 .nav-stacked > li.disabled:hover > a {
   background: transparent;
   border: transparent;
