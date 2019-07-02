@@ -255,8 +255,7 @@ module OpsController::OpsRbac
       else
         restricted_users = []
         users.each do |u|
-          user = User.find(u)
-          restricted_users.push(user) if rbac_user_delete_restriction?(user)
+          restricted_users.push(u) if rbac_user_delete_restriction?(u)
         end
         # deleting elements in temporary array, had to create temp array to hold id's to be delete, .each gets confused if i deleted them in above loop
         restricted_users.each do |u|
