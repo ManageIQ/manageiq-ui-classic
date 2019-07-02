@@ -226,7 +226,7 @@ describe OpsController do
         it "task name is visible in the resulting flash message" do
           controller.params = params
           controller.send(:pglogical_save_subscriptions)
-          expect(assigns(:flash_array).first[:message]).to eq("Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on MyTasks screen")
+          expect(assigns(:flash_array).first[:message]).to eq("Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen")
         end
       end
 
