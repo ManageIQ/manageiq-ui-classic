@@ -51,6 +51,10 @@ class ApplicationController < ActionController::Base
     def pp_choices
       PPCHOICES
     end
+
+    def pp_options
+      PPOPTIONS
+    end
   end
 
   include_concern 'AdvancedSearch'

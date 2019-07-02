@@ -101,11 +101,6 @@ const initialState = {
   columns: [],
   sortingColumns: {},
   total: 0,
-  pagination: {
-    page: 1,
-    perPage: 20,
-    perPageOptions: [5, 10, 20, 50, 100, 200, 500, 1000],
-  },
 };
 
 const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, filter = {}) => {
@@ -135,7 +130,17 @@ limit=${limit}&offset=${offset}${filterString}`).then((data) => {
 };
 
 const ReportDataTable = (props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const initState = {
+    ...initialState,
+    pagination: {
+      page: 1,
+      perPage: props.perPageDefault,
+      perPageOptions: props.perPageOptions,
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination), []);
 
@@ -253,6 +258,8 @@ const ReportDataTable = (props) => {
 
 ReportDataTable.propTypes = {
   reportResultId: PropTypes.number.isRequired,
+  perPageOptions: PropTypes.arrayOf(PropTypes.number).isRequired,
+  perPageDefault: PropTypes.number.isRequired,
 };
 
 export default ReportDataTable;
