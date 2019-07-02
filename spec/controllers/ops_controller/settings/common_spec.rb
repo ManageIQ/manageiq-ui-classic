@@ -222,6 +222,12 @@ describe OpsController do
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args).to eq([:remote])
         end
+
+        it "task name is visible in the resulting flash message" do
+          controller.params = params
+          controller.send(:pglogical_save_subscriptions)
+          expect(assigns(:flash_array).first[:message]).to eq("Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen")
+        end
       end
 
       context "global" do
