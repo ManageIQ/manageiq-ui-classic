@@ -61,7 +61,7 @@ headers:
 - Server
 
 # Condition(s) string for the SQL query
-conditions: {}
+conditions:
 
 # Order string for the SQL query
 order: Descending
