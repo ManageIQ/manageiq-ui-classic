@@ -194,7 +194,7 @@ module OpsController::Settings::Common
     end
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
     add_flash(_("Replication configuration save initiated. Check status of task \"%{task_name}\" on MyTasks screen") %
-                {:task_name => task_opts[:action]})
+                {:task_name => task_opts[:name]})
     javascript_flash
   end
 
