@@ -48,6 +48,7 @@ class TagSelector extends React.Component {
       <Select
         id="tag_cat"
         value={val}
+        breakAll
         className="final-form-select"
         optionClassName="selected-option final-form-select-option"
         styles={customStyles}
