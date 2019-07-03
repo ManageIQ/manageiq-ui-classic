@@ -7,13 +7,58 @@ class OpsController < ApplicationController
   include OpsHelper::MyServer
   include Mixins::CustomButtonDialogFormMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::GenericShowMixin
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
 
+  def self.table_name
+    @table_name ||= 'ops'
+  end
+
+  def self.model
+    Tenant
+  end
+
   def index
     redirect_to(:action => 'explorer')
+  end
+
+  def self.display_methods
+    %w[service_templates providers ae_namespaces]
+  end
+
+  def display_service_templates
+    nested_list(
+      ServiceTemplate,
+      :breadcrumb_title => _('Catalog Items and Bundles'),
+      :association      => :nested_service_templates,
+      :parent           => @record,
+      :no_checkboxes    => true
+    )
+  end
+
+  def display_providers
+    nested_list(
+      ExtManagementSystem,
+      :breadcrumb_title => _('Providers'),
+      :association      => :nested_providers,
+      :parent           => @record,
+      :no_checkboxes    => true,
+      :clickable        => false
+    )
+  end
+
+  def display_ae_namespaces
+    nested_list(
+      MiqAeDomain,
+      :breadcrumb_title => _('Automate Domains'),
+      :association      => :nested_ae_namespaces,
+      :parent           => @record,
+      :no_checkboxes    => true,
+      :clickable        => false
+    )
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
@@ -848,6 +893,16 @@ class OpsController < ApplicationController
         {:title => _("Configuration")},
       ],
     }
+  end
+
+  def nested_list(model, options = {})
+    super # (from GenericShowMixin)
+    add_to_breadcrumbs(:title => options[:breadcrumb_title])
+
+    ex = ExplorerPresenter.main_div.update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
+    ex.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
+
+    render :json => ex.for_render
   end
 
   menu_section :set
