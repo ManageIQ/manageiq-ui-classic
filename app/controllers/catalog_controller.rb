@@ -2016,13 +2016,12 @@ class CatalogController < ApplicationController
     if @edit[:new][:currency] && @edit[:new][:price].blank?
       add_flash(_("Price / Month is required"), :error)
     end
-    add_flash(_("Price must be a numeric value"), :error) if !@edit[:new][:price].blank? && !is_float_value(@edit[:new][:price])
+    add_flash(_("Price must be a numeric value"), :error) if @edit[:new][:price].present? && !float_value?(@edit[:new][:price])
   end
 
-  def is_float_value(fl)
-   fl.to_s =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
+  def float_value?(value)
+    value.to_s =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
   end
-
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
