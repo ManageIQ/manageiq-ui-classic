@@ -209,7 +209,7 @@ module OpsHelper::TextualSummary
                  :icon  => 'ff ff-group'}
 
     if aedomains_num.positive?
-      aedomains[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'ae_domains')
+      aedomains[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'ae_namespaces')
       aedomains[:title] = _('View the list of relevant Automate Domains')
     end
 

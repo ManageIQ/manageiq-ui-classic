@@ -2461,6 +2461,7 @@ Rails.application.routes.draw do
         log_protocol_changed
         pglogical_subscriptions_form_fields
         schedule_form_fields
+        show
         show_product_update
         tenant_quotas_form_fields
         tenant_form_fields
