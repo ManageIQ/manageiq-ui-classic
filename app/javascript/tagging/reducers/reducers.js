@@ -14,28 +14,27 @@ function deleteAssignedTag(state, actionTag) {
   ].filter(tag => (tag.values.length !== 0));
 }
 
-function changeAssignedTag(state, actionTag) {
+/**
+ * Replaces all assigned tags with the received ones.
+ *
+ * If single value tags are used it will receive array with length 1.
+ * With multi select enabled it can receive arrays with variable sizes.
+ * When receiving an empty array it removes also the category from the
+ * assigned arrays.
+ */
+function changeAssignedTags(state, actionTag) {
   const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
-  return [
-    ...filteredState,
-    {
-      description: actionTag.tagCategory.description,
-      id: actionTag.tagCategory.id,
-      values: [actionTag.tagValue],
-    },
-  ];
-}
 
-function addAssignedTag(state, actionTag) {
-  const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
-  const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id)) || { values: [] };
-  const oldValues = selectedItem.values.filter(tagValue => (tagValue.id !== actionTag.tagValue.id));
-  return [...filteredState,
-    {
-      description: actionTag.tagCategory.description,
-      id: actionTag.tagCategory.id,
-      values: [...oldValues].concat([actionTag.tagValue]),
-    }];
+  if (actionTag.tagValue !== null && actionTag.tagValue.length > 0) {
+    return [...filteredState,
+      {
+        description: actionTag.tagCategory.description,
+        id: actionTag.tagCategory.id,
+        values: actionTag.tagValue,
+      }];
+  }
+
+  return [...filteredState];
 }
 
 export const modifyAssignedTags = (state = [], action) => {
@@ -44,10 +43,9 @@ export const modifyAssignedTags = (state = [], action) => {
       return deleteAssignedTag(state, action.tag);
     case actionsConstants.DELETE_ALL_ASSIGNED_TAGS:
       return [];
-    case actionsConstants.CHANGE_ASSIGNED_TAG:
-      return changeAssignedTag(state, action.tag);
+    case actionsConstants.CHANGE_ASSIGNED_TAGS:
     case actionsConstants.ADD_ASSIGNED_TAG:
-      return addAssignedTag(state, action.tag);
+      return changeAssignedTags(state, action.tag);
     default:
       return state;
   }
@@ -59,7 +57,7 @@ export const toggle = (state = { tagCategory: {}, tagValue: {} }, action) => {
     case actionsConstants.TOGGLE_TAG_CATEGORY_CHANGE:
       return { tagCategory: action.tagCategory, tagValue: {} };
     case actionsConstants.TOGGLE_TAG_VALUE_CHANGE:
-      return { tagCategory: state.tagCategory, tagValue: action.tag.tagValue };
+      return { tagCategory: state.tagCategory, tagValue: action.tag.tagValue[action.tag.tagValue.length - 1] };
     default:
       return state;
   }

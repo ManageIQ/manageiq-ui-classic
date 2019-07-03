@@ -67,6 +67,7 @@ const tags = [
   {
     description: 'Something',
     id: 5,
+    singleValue: false,
     values: [{
       description: 'Knedlik',
       id: 51,
@@ -135,6 +136,7 @@ const singleTags = [
   {
     description: 'Something',
     id: 5,
+    singleValue: false,
     values: [{
       description: 'Knedlik',
       id: 51,
@@ -201,7 +203,6 @@ storiesOf('Tagging', module)
         tags={tags}
         assignedTags={assignedTags}
         onTagValueChange={action('onTagValueChange')}
-        onTagMultiValueChange={action('onTagMultiValueChange')}
         onTagCategoryChange={action('onTagCategoryChange')}
         onTagDeleteClick={action('onTagDeleteClick')}
         onSingleTagValueChange={action('onSingleTagValueChange')}

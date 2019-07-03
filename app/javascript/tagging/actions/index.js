@@ -21,13 +21,8 @@ export const deleteAllAssignedTags = () => ({
   type: actions.DELETE_ALL_ASSIGNED_TAGS,
 });
 
-export const changeAssignedTag = tag => ({
-  type: actions.CHANGE_ASSIGNED_TAG,
-  tag,
-});
-
-export const addAssignedTag = tag => ({
-  type: actions.ADD_ASSIGNED_TAG,
+export const changeAssignedTags = tag => ({
+  type: actions.CHANGE_ASSIGNED_TAGS,
   tag,
 });
 

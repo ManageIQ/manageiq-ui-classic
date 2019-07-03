@@ -30,14 +30,14 @@ describe('modifyAssignedTags reducer', () => {
   it('simple add new tag', () => {
     expect(modifyAssignedTags(
       [],
-      actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+      actions.replaceAssignedTagsInCategory({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }] }]);
   });
 
   it('add to existing tag', () => {
     expect(modifyAssignedTags(
       [{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }],
-      actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+      actions.replaceAssignedTagsInCategory({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }, { description: 'Pepa', id: 11 }] }]);
   });
 });

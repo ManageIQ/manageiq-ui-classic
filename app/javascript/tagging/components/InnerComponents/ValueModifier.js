@@ -8,7 +8,7 @@ import TaggingPropTypes from '../TaggingPropTypes';
 const ValueModifier = ({
   values,
   onTagValueChange,
-  selectedTagValue,
+  selectedTagValues,
   multiValue,
   valueLabel,
 }) => (
@@ -20,7 +20,7 @@ const ValueModifier = ({
       <ValueSelector
         values={values}
         onTagValueChange={onTagValueChange}
-        selectedOption={selectedTagValue}
+        selectedOption={selectedTagValues}
         multiValue={multiValue}
       />
     </Col>
@@ -28,7 +28,7 @@ const ValueModifier = ({
 );
 
 ValueModifier.propTypes = {
-  selectedTagValue: TaggingPropTypes.value,
+  selectedTagValues: PropTypes.arrayOf(TaggingPropTypes.value),
   onTagValueChange: PropTypes.func.isRequired,
   valueLabel: PropTypes.string,
   multiValue: PropTypes.bool,
