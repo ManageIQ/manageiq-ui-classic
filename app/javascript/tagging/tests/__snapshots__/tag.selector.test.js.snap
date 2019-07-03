@@ -2,6 +2,7 @@
 
 exports[`Tagging modifier match snapshot 1`] = `
 <StateManager
+  breakAll={true}
   className="final-form-select"
   classNamePrefix="react-select"
   clearable={false}
