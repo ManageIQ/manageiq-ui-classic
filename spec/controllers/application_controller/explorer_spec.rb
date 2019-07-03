@@ -106,7 +106,7 @@ end
 describe ReportController do
   context '#tree_add_child_nodes' do
     it 'calls tree_add_child_nodes TreeBuilder method' do
-      widget = FactoryBot.create(:miq_widget, :description => "Foo", :title => "Foo", :content_type => "report")
+      widget = FactoryBot.create(:miq_widget)
       controller.instance_variable_set(:@sb,
                                        :trees       => {:widgets_tree => {:active_node => "root",
                                                                           :klass_name  => "TreeBuilderReportWidgets",
@@ -115,9 +115,9 @@ describe ReportController do
       TreeBuilderReportWidgets.new('widgets_tree', {})
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
       expected = [{:key        => "xx-r_-#{widget.id}",
-                   :text       => "Foo",
+                   :text       => widget.name,
                    :icon       => 'fa fa-file-text-o',
-                   :tooltip    => "Foo",
+                   :tooltip    => widget.name,
                    :state      => {:expanded => false},
                    :selectable => true,
                    :class      => ""}]

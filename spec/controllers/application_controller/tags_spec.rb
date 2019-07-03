@@ -57,12 +57,12 @@ describe ApplicationController do
 
     before do
       # setup classification/entries with same name in different regions
-      clergy = FactoryBot.create(:classification, :description => "Clergy")
+      clergy = FactoryBot.create(:classification)
       add_entry(clergy, :name => "bishop", :description => "Bishop")
 
       # add another classification with different description,
       # then change description to be same as above after updating region id of record
-      clergy2 = FactoryBot.create(:classification, :description => "Clergy2")
+      clergy2 = FactoryBot.create(:classification)
       update_record_region(clergy2)
       clergy2.update_column(:description, "Clergy")
 
@@ -70,7 +70,7 @@ describe ApplicationController do
       update_record_region(clergy_bishop2)
 
       allow(Classification).to receive(:my_region_number).and_return(convert_to_region_id(clergy_bishop2.id))
-      @st = FactoryBot.create(:service_template, :name => 'foo')
+      @st = FactoryBot.create(:service_template)
     end
 
     it "region id of classification/entries should match" do
