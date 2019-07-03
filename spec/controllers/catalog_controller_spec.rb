@@ -309,6 +309,14 @@ describe CatalogController do
         controller.send(:st_edit)
         expect(assigns(:flash_array).first[:message]).to include('Catalog Bundle "New Name" was added')
       end
+
+      it "currency and price both are set, user tries to unset currency" do
+        edit[:new][:currency] = currency.id
+        edit[:new][:price] = 100.0
+        controller.params = {:currency => '', :button => 'add'}
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Catalog Bundle "New Name" was added')
+      end
     end
 
     describe "#st_upload_image" do

@@ -468,7 +468,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     var fieldName = 'vm._' + name;
     $scope.$watch(fieldName, function(value) {
       vm.catalogItemModel[name + '_id'] = value ? value.id : '';
-      if (name ==  'currency' && typeof value !== 'undefined') {
+      if (name == 'currency' && !value) {
+        vm.catalogItemModel.currency_name = '';
+      } else if (name ==  'currency' && value && typeof value !== 'undefined') {
         vm.catalogItemModel.currency_name = _.find(vm.currencies, {id: value.id}).code;
         vm.priceRequired();
       }

@@ -2020,7 +2020,7 @@ class CatalogController < ApplicationController
   end
 
   def is_float_value(fl)
-   fl =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
+   fl.to_s =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
   end
 
 
