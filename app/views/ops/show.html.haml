@@ -1,0 +1,3 @@
+#main_div
+  - if %w(service_templates).include?(@display)
+    = render :partial => 'layouts/gtl', :locals => {:action_url => "show/#{@record.id}"}

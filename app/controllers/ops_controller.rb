@@ -7,13 +7,30 @@ class OpsController < ApplicationController
   include OpsHelper::MyServer
   include Mixins::CustomButtonDialogFormMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::GenericShowMixin
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
 
+  def self.table_name
+    @table_name ||= 'ops'
+  end
+
+  def self.model
+    Tenant
+  end
+
   def index
     redirect_to(:action => 'explorer')
+  end
+
+  def self.display_methods
+    %w[service_templates]
+  end
+
+  def display_service_templates
+    nested_list(ServiceTemplate, :breadcrumb_title => _('Catalog Items and Bundles'), :named_scope => :with_tenant, :parent => @record)
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
