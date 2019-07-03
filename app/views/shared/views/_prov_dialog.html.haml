@@ -184,6 +184,7 @@
         :keys                       => keys})
   - when :customize
     - if select_check?(wf)
+      - edit_or_options = (@edit && @edit[:new] && @edit[:new][:sysprep_enabled]) || (@options && @options[:sysprep_enabled])
       - keys = [:sysprep_enabled]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
@@ -191,9 +192,9 @@
           :label                      => _("Basic Options"),
           :prefix                     => "/miq_request/",
           :keys                       => keys})
-      - if (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "fields") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "fields")
+      - if edit_or_options[0] == "fields"
         - if wf.kind_of?(ManageIQ::Providers::Redhat::InfraManager::ProvisionWorkflow)
-          - if @edit[:new][:sysprep_enabled][1] == "Sysprep Specification"
+          - if edit_or_options[1] == "Sysprep Specification"
             - keys = [:sysprep_computer_name, :sysprep_organization, :sysprep_admin_password, :sysprep_product_key]
             = render(:partial => "/miq_request/prov_dialog_fieldset",
               :locals         => {:workflow => wf,
@@ -335,7 +336,7 @@
                 :label                      => _("Naming"),
                 :prefix                     => "/miq_request/",
                 :keys                       => keys})
-      - elsif (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "file") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "file")
+      - elsif edit_or_options[0] == "file"
         - keys = [:sysprep_custom_spec, :sysprep_spec_override]
         = render(:partial => "/miq_request/prov_dialog_fieldset",
           :locals         => {:workflow => wf,
@@ -368,7 +369,7 @@
               :label                      => label,
               :prefix                     => "/miq_request/",
               :keys                       => keys})
-      - elsif (@edit && @edit[:new] && @edit[:new][:sysprep_enabled] && @edit[:new][:sysprep_enabled][0] == "customspec") || (@options && @options[:sysprep_enabled] && @options[:sysprep_enabled][0] == "customspec")
+      - elsif edit_or_options[0] == "customspec"
         - keys = [:sysprep_custom_spec]
         = render(:partial => "/miq_request/prov_dialog_fieldset",
           :locals         => {:workflow => wf,
