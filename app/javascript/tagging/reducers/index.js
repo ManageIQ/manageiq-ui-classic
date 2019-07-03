@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { modifyassignedTags as assignedTags, toggle as selected, tags, initialize, affectedItems } from './reducers';
+import { modifyAssignedTags as assignedTags, toggle as selected, tags, initialize, affectedItems } from './reducers';
 
 const combinedReducers = combineReducers({
   tags,

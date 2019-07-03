@@ -1,41 +1,41 @@
-import { modifyassignedTags, toggle } from '../reducers/reducers';
+import { modifyAssignedTags, toggle } from '../reducers/reducers';
 import * as actions from '../actions';
 
-describe('modifyassignedTags reducer', () => {
+describe('modifyAssignedTags reducer', () => {
   it('should return the initial state', () => {
-    expect(modifyassignedTags(undefined, {})).toEqual([]);
+    expect(modifyAssignedTags(undefined, {})).toEqual([]);
   });
 
   it('simple delete set tag', () => {
-    expect(modifyassignedTags(
+    expect(modifyAssignedTags(
       [{ description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }] }],
       actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([]);
   });
 
   it('should delete only one tag value if multiple present', () => {
-    expect(modifyassignedTags(
+    expect(modifyAssignedTags(
       [{  description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] }],
       actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }]);
   });
 
   it('delete not assigned tag does nothing', () => {
-    expect(modifyassignedTags(
+    expect(modifyAssignedTags(
       [{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }],
       actions.deleteAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }]);
   });
 
   it('simple add new tag', () => {
-    expect(modifyassignedTags(
+    expect(modifyAssignedTags(
       [],
       actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }] }]);
   });
 
   it('add to existing tag', () => {
-    expect(modifyassignedTags(
+    expect(modifyAssignedTags(
       [{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }],
       actions.addAssignedTag({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }, { description: 'Pepa', id: 11 }] }]);

@@ -1,10 +1,9 @@
 import React from 'react';
-import { TaggingWithButtonsConnected } from '../containers/tagging';
-import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons'
-import Tagging from '../components/Tagging/Tagging';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { TaggingWithButtonsConnected } from '../containers/tagging';
+import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons'
 
 
 const tags = [

@@ -13,6 +13,13 @@ class Tagging extends React.Component {
       tagCategory: this.props.selectedTagCategory,
       tagValue: selectedTagValue,
     };
+
+    // Single Tag Only
+    if (this.props.options && this.props.options.onlySingleTag) {
+      this.props.onSingleTagValueChange(action);
+      return;
+    }
+
     if (this.findSelectedTag(this.props.selectedTagCategory).singleValue) {
       this.props.onTagValueChange(action, this.props.options);
     } else {
@@ -86,7 +93,18 @@ Tagging.propTypes = {
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onTagMultiValueChange: PropTypes.func.isRequired,
-  options: PropTypes.object,
+  onSingleTagValueChange: PropTypes.func.isRequired,
+  options: PropTypes.shape({
+    onlySingleTag: PropTypes.bool,
+    hideHeaders: PropTypes.bool,
+  }),
+};
+
+Tagging.defaultProps = {
+  options: {
+    onlySingleTag: false,
+    hideHeaders: false,
+  },
 };
 
 export default Tagging;

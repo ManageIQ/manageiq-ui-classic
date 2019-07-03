@@ -1,5 +1,6 @@
 import * as actionsConstants from '../actions/actions';
-// state = state.assignedTags
+
+/* ================== SECTION: state = state.assignedTags ================== */
 function deleteAssignedTag(state, actionTag) {
   const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
   const selectedItem = state.find(tag => (tag.id === actionTag.tagCategory.id));
@@ -37,21 +38,22 @@ function addAssignedTag(state, actionTag) {
     }];
 }
 
-export const modifyassignedTags = (state = [], action) => {
+export const modifyAssignedTags = (state = [], action) => {
   switch (action.type) {
     case actionsConstants.DELETE_ASSIGNED_TAG:
       return deleteAssignedTag(state, action.tag);
+    case actionsConstants.DELETE_ALL_ASSIGNED_TAGS:
+      return [];
     case actionsConstants.CHANGE_ASSIGNED_TAG:
       return changeAssignedTag(state, action.tag);
     case actionsConstants.ADD_ASSIGNED_TAG:
       return addAssignedTag(state, action.tag);
-      // sort((a, b) => (a.description > b.description))
     default:
       return state;
   }
 };
 
-// state = state.selected
+/* ================ SECTION: state = state = state.selected ================ */
 export const toggle = (state = { tagCategory: {}, tagValue: {} }, action) => {
   switch (action.type) {
     case actionsConstants.TOGGLE_TAG_CATEGORY_CHANGE:

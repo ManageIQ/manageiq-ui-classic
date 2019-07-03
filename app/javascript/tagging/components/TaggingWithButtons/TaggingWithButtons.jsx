@@ -17,6 +17,7 @@ class TaggingWithButtons extends React.Component {
           tags={this.props.tags}
           assignedTags={this.props.assignedTags}
           onTagValueChange={this.props.onTagValueChange}
+          onSingleTagValueChange={this.props.onSingleTagValueChange}
           onTagMultiValueChange={this.props.onTagMultiValueChange}
           onTagCategoryChange={this.props.onTagCategoryChange}
           onTagDeleteClick={this.props.onTagDeleteClick}
@@ -72,16 +73,21 @@ TaggingWithButtons.propTypes = {
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
+  onSingleTagValueChange: PropTypes.func,
   onTagMultiValueChange: PropTypes.func,
   showReset: PropTypes.bool,
   cancelButton: TaggingPropTypes.button,
   resetButton: TaggingPropTypes.button,
   saveButton: TaggingPropTypes.button,
-  options: PropTypes.object,
+  options: PropTypes.shape({
+    onlySingleTag: PropTypes.bool,
+    hideHeaders: PropTypes.bool,
+  }),
 };
 
 TaggingWithButtons.defaultProps = {
   showReset: true,
+  onSingleTagValueChange: () => {},
   onTagMultiValueChange: () => {},
 };
 

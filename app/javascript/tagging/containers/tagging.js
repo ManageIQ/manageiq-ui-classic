@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { changeAssignedTag, deleteAssignedTag, toggleTagCategoryChange, toggleTagValueChange, loadState, addAssignedTag } from '../actions';
+import {
+  changeAssignedTag, deleteAssignedTag, deleteAllAssignedTags,
+  toggleTagCategoryChange, toggleTagValueChange, loadState,
+  addAssignedTag,
+} from '../actions';
 import Tagging from '../components/Tagging/Tagging';
 import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons';
 
@@ -23,12 +27,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(toggleTagValueChange(val, options));
     dispatch(changeAssignedTag(val));
   },
-
+  onSingleTagValueChange: (val) => {
+    dispatch(deleteAllAssignedTags());
+    dispatch(addAssignedTag(val));
+  },
   onTagMultiValueChange: (val, options) => {
     dispatch(toggleTagValueChange(val, options));
     dispatch(addAssignedTag(val));
   },
-
   onLoadState: (state) => {
     dispatch(loadState(state));
   },
