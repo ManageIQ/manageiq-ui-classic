@@ -254,7 +254,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
       service_template_catalog_id: configData.catalog_id,
       zone_id: configData.zone_id,
       currency_id: configData.currency_id,
-      price: configData.price,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       additional_tenant_ids: configData.additional_tenant_ids,
@@ -270,6 +269,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
         },
       },
     };
+
+    if (typeof vm.catalogItemModel.currency_id !== 'undefined' && vm.catalogItemModel.currency_id !== '') {
+      catalog_item.price = configData.price
+    } else {
+      catalog_item.price = '';
+    }
     if (vm.catalogItemModel.provisioning_execution_ttl !== undefined) {
       catalog_item.config_info.provision.execution_ttl = configData.provisioning_execution_ttl;
     }

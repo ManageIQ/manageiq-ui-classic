@@ -900,8 +900,8 @@ class CatalogController < ApplicationController
         st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
       end
     end
-    st.currency = ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) if @edit[:new][:currency]
-    st.price    = @edit[:new][:price] if @edit[:new][:price]
+    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
 
     if st.save
       set_resource_action(st) unless st.kind_of?(ServiceTemplateContainerTemplate)
@@ -1065,8 +1065,8 @@ class CatalogController < ApplicationController
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
     st.zone_id = @edit[:new][:zone_id]
     st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
-    st.currency = ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) if @edit[:new][:currency]
-    st.price    = @edit[:new][:price] if @edit[:new][:price]
+    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
   end
 
   def st_set_record_vars(st)
@@ -1271,7 +1271,7 @@ class CatalogController < ApplicationController
 
     if params[:currency]
       @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
-      @edit[:new][:code_currency] = code_currency_label(params[:currency]) if @edit[:new][:currency]
+      @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
     end
     @edit[:new][:price] = params[:price] if params[:price]
 
