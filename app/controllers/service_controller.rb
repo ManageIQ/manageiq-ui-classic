@@ -459,8 +459,8 @@ class ServiceController < ApplicationController
         presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
       else
         locals = {:record_id => @edit[:rec_id], :action_url => action_url}
+        presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
       end
-      presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals]) unless action == "ownership"
     elsif (action != "retire") && (record_showing ||
         (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0)))
       # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box
