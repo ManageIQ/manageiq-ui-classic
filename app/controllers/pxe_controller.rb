@@ -193,6 +193,7 @@ class PxeController < ApplicationController
 
     # FIXME: check where @right_cell_text is set and replace that with loca variable
     presenter[:right_cell_text] = right_cell_text || @right_cell_text
+
     if !@view || @in_a_form ||
        (@pages && (@items_per_page == ONE_MILLION || @pages[:items]&.zero?))
       if @in_a_form
@@ -250,7 +251,12 @@ class PxeController < ApplicationController
     presenter[:osf_node] = x_node
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
+    presenter.update(:breadcrumbs, r[
+      :partial => "layouts/breadcrumbs",
+      :locals  => {
+        :right_cell_text => right_cell_text || @right_cell_text,
+      }
+    ])
 
     render :json => presenter.for_render
   end
@@ -266,7 +272,6 @@ class PxeController < ApplicationController
   end
 
   def breadcrumbs_options
-    @right_cell_text = "editing" unless @edit.nil?
     {
       :breadcrumbs => [
         {:title => _("Compute")},
