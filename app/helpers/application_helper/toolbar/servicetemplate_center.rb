@@ -30,9 +30,11 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
         button(
           :catalogitem_copy,
           'pficon pficon-edit fa-lg',
-          N_('Select a single Item to copy'),
+          N_('This Item cannot be copied'),
           N_('Copy Selected Item'),
-          :send_checked => true),
+          :send_checked => true,
+          :klass        => ApplicationHelper::Button::CatalogItemCopyButton
+        ),
         button(
           :catalogitem_delete,
           'pficon pficon-delete fa-lg',
