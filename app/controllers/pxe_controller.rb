@@ -252,7 +252,12 @@ class PxeController < ApplicationController
     presenter[:osf_node] = x_node
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
+    presenter.update(:breadcrumbs, r[
+      :partial => "layouts/breadcrumbs",
+      :locals  => {
+        :right_cell_text => right_cell_text || @right_cell_text,
+      }
+    ])
 
     render :json => presenter.for_render
   end
@@ -268,7 +273,6 @@ class PxeController < ApplicationController
   end
 
   def breadcrumbs_options
-    @right_cell_text = "editing" unless @edit.nil?
     {
       :breadcrumbs => [
         {:title => _("Compute")},
