@@ -82,6 +82,7 @@ describe Mixins::BreadcrumbsMixin do
       before do
         allow(subject).to receive(:x_node).and_return("xx-1")
         allow(subject).to receive(:x_node_right_cell).and_return("xx-1")
+        allow(subject).to receive(:params).and_return({})
         allow(TreeBuilderUtilization).to receive(:new).and_return(tree)
         allow(tree).to receive(:tree_nodes).and_return(tree_nodes)
       end
@@ -140,6 +141,41 @@ describe Mixins::BreadcrumbsMixin do
               {:title => service_2.name, :key => "xx-#{service_2.id}"},
             ]
           )
+        end
+      end
+
+      describe "#action_breadcrumb?" do
+        let(:options) do
+          {
+            :right_cell_text => 'Record Edit of Item 1'
+          }
+        end
+
+        before do
+          subject.instance_variable_set(:@sb, :explorer => true, :action => 'record_edit')
+          subject.instance_variable_set(:@trees, [tree])
+        end
+
+        it "returns action breadcrumb" do
+          expect(subject.data_for_breadcrumbs(options).last).to eq(:title => "Record Edit of Item 1")
+        end
+
+        it "not return action breadcrumb if cancel button" do
+          allow(subject).to receive(:params).and_return(:button => 'cancel')
+
+          expect(subject.data_for_breadcrumbs(options).last).to eq(:title => "Item 1", :key => "xx-1")
+        end
+
+        it "not return action breadcrumb if actions is prohibited to build breadcrumb" do
+          allow(subject).to receive(:action_name).and_return('tree_select')
+
+          expect(subject.data_for_breadcrumbs(options).last).to eq(:title => "Item 1", :key => "xx-1")
+        end
+
+        it "not return action breadcrumb if save button" do
+          allow(subject).to receive(:params).and_return(:button => 'save')
+
+          expect(subject.data_for_breadcrumbs(options).last).to eq(:title => "Item 1", :key => "xx-1")
         end
       end
 
