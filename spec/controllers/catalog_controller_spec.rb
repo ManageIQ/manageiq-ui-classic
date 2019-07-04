@@ -260,6 +260,65 @@ describe CatalogController do
       end
     end
 
+    describe "#st_edit" do
+      let(:edit) do
+        {:new    => {:name               => "New Name",
+                     :description        => "New Description",
+                     :selected_resources => [st.id],
+                     :rsc_groups         => [[{:name => "Some name"}]],
+                     :fqname             => 'ns1/cls1/inst1',
+                     :currency           => nil,
+                     :price              => nil,
+                     :tenant_ids         => []},
+         :key    => "st_edit__new",
+         :rec_id => st.id}
+      end
+      let(:st) { FactoryBot.create(:service_template) }
+      let(:symbol) { '฿' }
+      let(:currency) { FactoryBot.create(:chargeback_rate_detail_currency, :symbol => symbol) }
+
+      before do
+        allow(controller).to receive(:replace_right_cell)
+        allow(controller).to receive(:session).and_return(:edit => edit)
+        controller.instance_variable_set(:@edit, edit)
+        allow(controller).to receive(:build_tenants_tree)
+      end
+
+      it "currency is set but price is not set" do
+        controller.params = {:currency => currency.id, :price => '', :button => 'add'}
+        expect(controller).to receive(:render)
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Price / Month is required')
+      end
+
+      it "currency and price both are not set" do
+        controller.params = {:button => 'add'}
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Catalog Bundle "New Name" was added')
+      end
+
+      it "currency and price both are set, but price is non numeric value" do
+        controller.params = {:currency => currency.id, :price => 'aaa', :button => 'add'}
+        expect(controller).to receive(:render)
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Price must be a numeric value')
+      end
+
+      it "currency and price both are set, price is numeric value" do
+        controller.params = {:currency => currency.id, :price => '100.0', :button => 'add'}
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Catalog Bundle "New Name" was added')
+      end
+
+      it "currency and price both are set, user tries to unset currency" do
+        edit[:new][:currency] = currency.id
+        edit[:new][:price] = 100.0
+        controller.params = {:currency => '', :button => 'add'}
+        controller.send(:st_edit)
+        expect(assigns(:flash_array).first[:message]).to include('Catalog Bundle "New Name" was added')
+      end
+    end
+
     describe "#st_upload_image" do
       before do
         ApplicationController.handle_exceptions = true

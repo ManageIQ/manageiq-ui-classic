@@ -47,6 +47,12 @@
               = _('Dialog')
             .col-md-9
               = h(@sb[:dialog_label])
+        - if @record.currency && @record.price
+          .form-group
+            %label.col-md-3.control-label
+              = _('Price / Month (in %{currency})') % {:currency => @record.currency.code}
+            .col-md-9
+              = @record.price
         - if @record.prov_type
           .form-group
             %label.col-md-3.control-label

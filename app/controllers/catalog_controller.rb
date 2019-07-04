@@ -186,6 +186,7 @@ class CatalogController < ApplicationController
           page << javascript_for_miq_button_visibility(changed)
           session[:changed] = changed
         end
+        page.replace_html("price_span", @edit[:new][:code_currency])
         page << set_spinner_off
       end
     end
@@ -306,6 +307,7 @@ class CatalogController < ApplicationController
         add_flash(_("Resource must be selected"), :error)
       end
       add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
+      validate_price
       dialog_catalog_check
 
       if @flash_array
@@ -843,7 +845,7 @@ class CatalogController < ApplicationController
     end
 
     add_flash(_("Provisioning Entry Point is required"), :error) if @edit[:new][:fqname].blank?
-
+    validate_price
     # Check for a Dialog if Display in Catalog is selected
     dialog_catalog_check
 
@@ -899,6 +901,8 @@ class CatalogController < ApplicationController
         st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
       end
     end
+    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
 
     if st.save
       set_resource_action(st) unless st.kind_of?(ServiceTemplateContainerTemplate)
@@ -1062,6 +1066,8 @@ class CatalogController < ApplicationController
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
     st.zone_id = @edit[:new][:zone_id]
     st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
+    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
   end
 
   def st_set_record_vars(st)
@@ -1116,6 +1122,10 @@ class CatalogController < ApplicationController
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
+
+    @edit[:new][:currency] = @record.currency ? @record.currency.id : nil
+    @edit[:new][:code_currency] = @record.currency ? code_currency_label(@record.currency.id) : _("Price / Month")
+    @edit[:new][:price] = @record.price
 
     # initialize fqnames
     @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = ""
@@ -1259,8 +1269,19 @@ class CatalogController < ApplicationController
     @tenants_tree = build_tenants_tree # Build the tree with available tenants
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
+
+    if params[:currency]
+      @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
+      @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
+    end
+    @edit[:new][:price] = params[:price] if params[:price]
+
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
+  end
+
+  def code_currency_label(currency)
+    _('Price / Month (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
   end
 
   def checked_tenants
@@ -1990,6 +2011,17 @@ class CatalogController < ApplicationController
   def dialog_catalog_check
     return unless @edit[:new][:display] && (@edit[:new][:dialog_id].nil? || @edit[:new][:dialog_id].to_i.zero?)
     add_flash(_("Dialog has to be set if Display in Catalog is chosen"), :error)
+  end
+
+  def validate_price
+    if @edit[:new][:currency] && @edit[:new][:price].blank?
+      add_flash(_("Price / Month is required"), :error)
+    end
+    add_flash(_("Price must be a numeric value"), :error) if @edit[:new][:price].present? && !float_value?(@edit[:new][:price])
+  end
+
+  def float_value?(value)
+    value.to_s =~ /(^(\d+)(\.)?(\d+)?)|(^(\d+)?(\.)(\d+))/
   end
 
   def x_edit_tags_reset(db)
