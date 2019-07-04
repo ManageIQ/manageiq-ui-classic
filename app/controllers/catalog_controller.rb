@@ -94,11 +94,19 @@ class CatalogController < ApplicationController
   def servicetemplate_copy
     checked_id = find_checked_items.first || params[:id]
     @record = find_record_with_rbac(ServiceTemplate, checked_id)
-    @tabactive = false
-    @in_a_form = true
-    @edit = {}
-    session[:changed] = false
-    replace_right_cell(:action => "copy_catalog")
+    if !@record.template_valid?
+      add_flash(_("This item is not valid and cannot be copied."), :error)
+      javascript_flash
+    elsif @record.type == 'ServiceTemplateAnsiblePlaybook'
+      add_flash(_("ServiceTemplateAnsiblePlaybook cannot be copied."), :error)
+      javascript_flash
+    else
+      @tabactive = false
+      @in_a_form = true
+      @edit = {}
+      session[:changed] = false
+      replace_right_cell(:action => "copy_catalog")
+    end
   end
 
   def save_copy_catalog
