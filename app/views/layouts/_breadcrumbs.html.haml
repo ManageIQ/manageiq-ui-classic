@@ -1,1 +1,5 @@
-= react('Breadcrumbs', { :items => (data_for_breadcrumbs if respond_to?(:data_for_breadcrumbs)), :controllerName => controller_name, :title => @title })
+- right_cell_text ||= @right_cell_text
+= react('Breadcrumbs',
+        :items => (data_for_breadcrumbs({:right_cell_text => right_cell_text}) if respond_to?(:data_for_breadcrumbs)),
+        :controllerName => controller_name,
+        :title => @title)

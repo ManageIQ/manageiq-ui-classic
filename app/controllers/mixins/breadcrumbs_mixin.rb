@@ -6,13 +6,20 @@ module Mixins
       c.after_action(:x_node_text_save_to_session)
     end
 
+    # These actions won't generate additional breadcrumb with their right_cell_text
+    PROHIBITED_ACTIONS_TREE = %w[explorer tree_select accordion_select].freeze
+
+    # Save actions buttons
+    PROHIBITED_PARAMS_BUTTONS = %w[cancel save add].freeze
+
     # Main method which creates all breadcrumbs and returns them (to view page which will parse them into breadcrumbs nav)
-    def data_for_breadcrumbs
+    def data_for_breadcrumbs(controller_options = {})
       options = breadcrumbs_options || {}
       options[:record_info] ||= (@record || {})
       options[:record_title] ||= :name
       options[:not_tree] ||= false
       options[:hide_title] ||= false
+
       breadcrumbs = options[:breadcrumbs] || []
 
       # Different methods for controller with explorers and for non-explorers controllers
@@ -30,6 +37,7 @@ module Mixins
         end
       else
         options[:x_node] ||= x_node
+        right_cell_text = controller_options[:right_cell_text] || title_for_breadcrumbs
 
         self.x_node_text = params[:text] if action_name == "tree_select" # get text of the active node
 
@@ -39,7 +47,7 @@ module Mixins
         # On special page (tagitems, politems, etc.)
         if @tagitems || @politems || @ownershipitems || @retireitems
           breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems, true, options[:x_node])) unless options[:hide_special_item]
-          breadcrumbs.push(:title => @right_cell_text)
+          breadcrumbs.push(:title => right_cell_text)
         else
           # Ancestry parents breadcrumbs (only in services)
           breadcrumbs.concat(ancestry_parents(options[:ancestry], options[:record_info], options[:record_title])) if options[:ancestry]
@@ -66,7 +74,7 @@ module Mixins
           #          4. Fallbacks (sent text, title of the record, right_cell_text)
           key = node ? node.key : options[:x_node]
           title = if options[:x_node] == 'root' # After switching accordion, there is no way how to get root text
-                    @right_cell_text
+                    right_cell_text
                   elsif node                    # Use node's text and key
                     node.text
                   elsif @trees.present?         # Select a node when coming from different page (the tree is built)
@@ -80,15 +88,16 @@ module Mixins
           # Append seperate action header breadcrumb when there is some action
           # (User is not on show page)
           # i.e. editing, copying, adding, etc.
-          extra_title = @right_cell_text || @title
+          extra_title = right_cell_text || @title
           breadcrumbs.push(:title => extra_title) if action_breadcrumb? && extra_title && title != extra_title
         end
       end
       breadcrumbs.compact
     end
 
+    # append action right_cell_text if actions is not prohibited
     def action_breadcrumb?
-      @sb["action"]
+      !PROHIBITED_ACTIONS_TREE.include?(action_name) && !PROHIBITED_PARAMS_BUTTONS.include?(params[:button])
     end
 
     def build_breadcrumbs_no_explorer(record_info, record_title)
