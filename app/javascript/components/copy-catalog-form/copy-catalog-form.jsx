@@ -17,7 +17,7 @@ class CopyCatalogForm extends Component {
     this.setState(() => ({
       schema: createSchema(),
       initialValues: {
-        name: 'Copy of',
+        name: 'Copy of ' + this.props.originName,
       },
       isLoaded: true,
     }));
@@ -56,10 +56,12 @@ class CopyCatalogForm extends Component {
 
 CopyCatalogForm.propTypes = {
   catalogId: PropTypes.string,
+  originName: PropTypes.string,
 };
 
 CopyCatalogForm.defaultProps = {
   catalogId: undefined,
+  originName: '',
 };
 
 export default CopyCatalogForm;
