@@ -190,9 +190,9 @@ module PxeController::PxeServers
       PxeServer.verify_depot_settings(params[:pxe])
     rescue => bang
       render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
-    else
-      render :json => {:status => 'success', :message => _('PXE Credentials successfuly validated')}
     end
+
+    render :json => {:status => 'success', :message => _('PXE Credentials successfuly validated')}
   end
 
   private #######################

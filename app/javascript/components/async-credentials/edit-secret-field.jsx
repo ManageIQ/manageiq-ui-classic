@@ -32,7 +32,15 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
           {isRequired ? <RequiredLabel label={label} /> : label }
         </ControlLabel>
         <InputGroup>
-          <FormControl {...input} id={`${input.name}-input`} autoFocus {...rest} disabled={editMode || isDisabled} type="password" />
+          <FormControl
+            style={{ zIndex: 'initial' }}
+            {...input}
+            id={`${input.name}-input`}
+            autoFocus
+            {...rest}
+            disabled={editMode || isDisabled}
+            type="password"
+          />
           <InputGroup.Button>
             <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
           </InputGroup.Button>

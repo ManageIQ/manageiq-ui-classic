@@ -53,6 +53,7 @@ const PxeServersForm = ({ id }) => {
   };
 
   const onSubmit = (values) => {
+    miqSparkleOn();
     const message = id
       ? sprintf(__('PXE Server %s was saved'), values.name)
       : sprintf(__('PXE Server %s was added'), values.name);
@@ -65,7 +66,7 @@ const PxeServersForm = ({ id }) => {
       }) : ({}),
     };
     const request = () => (id ? API.patch(`/api/pxe_servers/${id}`, pxeServer) : API.post('/api/pxe_servers', pxeServer));
-    return request().then(() => miqRedirectBack(message, 'success', RETURN_URL));
+    return request().then(() => miqRedirectBack(message, 'success', RETURN_URL)).catch(miqSparkleOff);
   };
 
   if (isLoading) {

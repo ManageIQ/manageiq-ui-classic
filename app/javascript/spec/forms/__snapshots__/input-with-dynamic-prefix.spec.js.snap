@@ -40,6 +40,7 @@ exports[`DataDrivenInputWithPrefix should render correctly 1`] = `
           },
         ]
       }
+      simpleValue={true}
     />
   </div>
 </FormGroup>
