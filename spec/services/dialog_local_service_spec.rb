@@ -223,13 +223,6 @@ describe DialogLocalService do
                        "ext_management_system", "providers", "/ems_cloud"
     end
 
-    context "when the object is a LoadBalancer" do
-      let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::LoadBalancer, :id => 123) }
-
-      include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "load_balancer", "load_balancers", "/load_balancer"
-    end
-
     context "when the object is a NetworkRouter" do
       let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager::NetworkRouter, :id => 123) }
 
