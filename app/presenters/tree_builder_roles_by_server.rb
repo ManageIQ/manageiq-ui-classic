@@ -7,8 +7,18 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
     x_get_tree_miq_servers
   end
 
+  def override(node, _object, _pid, _options)
+    if @sb[:diag_selected_id] && node[:key] == "svr-#{@sb[:diag_selected_id]}"
+      node[:highlighted] = true
+    end
+  end
+
   def x_get_tree_miq_servers
     @root.miq_servers.sort_by { |s| s.name.to_s }.each_with_object([]) do |server, objects|
+      unless @sb[:diag_selected_id] # Set default selected record vars
+        @sb[:diag_selected_model] = server.class.to_s
+        @sb[:diag_selected_id] = server.id
+      end
       objects.push(server)
     end
   end

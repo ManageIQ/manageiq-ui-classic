@@ -9,11 +9,6 @@ class TreeBuilderDiagnostics < TreeBuilder
   private
 
   def tree_init_options
-    {
-      :open_all        => true,
-      :click_url       => "/ops/diagnostics_tree_select/",
-      :onclick         => "miqOnClickDiagnostics",
-      :silent_activate => true
-    }
+    {:open_all => true, :click_url => "/ops/diagnostics_tree_select/", :onclick => "miqOnClickDiagnostics"}
   end
 end
