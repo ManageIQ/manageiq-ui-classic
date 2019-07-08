@@ -16,18 +16,22 @@ module AnsibleCredentialHelper::TextualSummary
       options << key
 
       define_singleton_method "textual_#{key}" do
-        h = {:label => _(value[:label]), :title => _(value[:help_text])}
-        h[:value] = if value[:type] == :password && (@record.try(key).present? || @record.options[key].present?)
-                      '●●●●●●●●'
-                    else
-                      @record.try(key) || @record.options[key]
-                    end
-        h
+        {
+          :label => _(value[:label]),
+          :title => _(value[:help_text]),
+          :value => attribute_value(value[:type], key, @record)
+        }
       end
     end
 
     TextualGroup.new(_("Credential Options"), options)
   end
+
+  def attribute_value(attr_type, key, rec)
+    val = (rec.try(key) || rec.options.try(:[], key)).presence
+    attr_type == :password && val ? '●●●●●●●●' : val
+  end
+  private :attribute_value
 
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i[tags])
