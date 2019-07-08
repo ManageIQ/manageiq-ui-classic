@@ -73,6 +73,7 @@ plugins:
   rubocop:
     enabled: true
     config: '.rubocop_cc.yml'
+    channel: rubocop-0-69
   stylelint:
     enabled: true
 prepare:
