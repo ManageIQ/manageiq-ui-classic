@@ -111,28 +111,28 @@ class CatalogController < ApplicationController
 
   def save_copy_catalog
     record = find_record_with_rbac(ServiceTemplate, params[:id])
-    message  = nil
+    message = nil
     if record.present?
       saved = record.template_copy(params[:name])
     else
       saved = false
       message = _("Record not found.")
     end
-    render :json => {:message => message} , :status => saved ? 200 : 400
+    render :json => {:message => message}, :status => saved ? 200 : 400
   end
 
   def servicetemplate_copy_cancel
     add_flash(_("Copy of a Service Catalog Item was cancelled by the user"), :warning)
     @sb[:action] = @edit = @record = nil
     @in_a_form = false
-    replace_right_cell
+    replace_right_cell(:replace_trees => trees_to_replace([:sandt]))
   end
 
   def servicetemplate_copy_saved
-      add_flash(_("Copy of a Service Catalog Item was successfully saved"))
-      @sb[:action] = @edit = @record = nil
-      @in_a_form = false
-      replace_right_cell
+    add_flash(_("Copy of a Service Catalog Item was successfully saved"))
+    @sb[:action] = @edit = @record = nil
+    @in_a_form = false
+    replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat]))
   end
 
   def servicetemplates_names
