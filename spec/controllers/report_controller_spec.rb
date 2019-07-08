@@ -1338,6 +1338,13 @@ describe ReportController do
           fetched_report.id = @rpt.id # Reports serialized into the report column don't have ids
           expect(fetched_report).to eq(@rpt)
         end
+
+        it "doesn't set the report id upon an accordion change" do
+          controller.params = {:id => "savedreports_accord"}
+          controller.instance_variable_set(:@sb, :last_savedreports_id => 123)
+          expect(controller).to receive(:fetch_saved_report).with(123)
+          controller.send(:show_saved_report)
+        end
       end
     end
   end
