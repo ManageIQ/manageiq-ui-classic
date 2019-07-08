@@ -17,20 +17,6 @@ module OpsController::Settings::AutomateSchedules
     }
   end
 
-  def name_included?(klass)
-    klass.safe_constantize.column_names.include?('name')
-  end
-
-  def columns_for_klass(klass)
-    if klass == 'Tenant'
-      [:name, :use_config_for_attributes]
-    elsif name_included?(klass)
-      [:name]
-    else
-      [:description]
-    end
-  end
-
   def fetch_target_ids
     if params[:target_class] && params[:target_class] != 'null'
       targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class]))
