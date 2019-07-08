@@ -1,8 +1,8 @@
 describe AuthKeyPairCloudController do
-  let(:kp) { FactoryBot.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-01") }
-  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
-  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
+  let(:kp) { FactoryBot.create(:auth_key_pair_cloud) }
+  let(:classification) { FactoryBot.create(:classification) }
+  let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
 
   before do
     stub_user(:features => :all)
