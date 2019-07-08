@@ -5,8 +5,11 @@ import { Modal } from 'patternfly-react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
-  const { data: { error: { message } } } = error;
-  return message;
+  if (error.hasOwnProperty('data')) {
+    return error.data.error.message;
+  } else if (error.hasOwnProperty('message')) {
+    return error.message;
+  }
 };
 
 export const removeCatalogItems = (catalogItems) => {
@@ -15,7 +18,7 @@ export const removeCatalogItems = (catalogItems) => {
   miqSparkleOn();
   catalogItems.forEach(item => {
     apiPromises.push(API.post(`/api/service_templates/${item.id}`, {action: 'delete'}, {skipErrors: [400, 500]})
-                       .then((apiResult) => ({result: 'success', data: apiResult, name: item.name}))
+                       .then((apiResult) => ({result: apiResult.success ? 'success' : 'error', data: apiResult, name: item.name}))
                        .catch((apiResult) => ({result: 'error', data: apiResult, name: item.name})))
   });
   Promise.all(apiPromises)
