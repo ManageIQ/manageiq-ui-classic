@@ -80,7 +80,7 @@ describe MiqPolicyController do
           end
 
           context "when there is not an error while importing" do
-            let(:import_file_upload) { double("ImportFileUpload", :id => 123) }
+            let(:import_file_upload) { FactoryBot.create(:import_file_upload) }
 
             before do
               allow(miq_policy_import_service).to receive(:store_for_import).and_return(import_file_upload)
@@ -98,7 +98,7 @@ describe MiqPolicyController do
 
             it "redirects to import with the import_file_upload_id" do
               post :upload, :params => params
-              expect(response).to redirect_to(:action => "import", :dbtype => "dbtype", :import_file_upload_id => 123)
+              expect(response).to redirect_to(:action => "import", :dbtype => "dbtype", :import_file_upload_id => import_file_upload.id)
             end
           end
 

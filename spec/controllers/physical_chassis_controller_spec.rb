@@ -6,7 +6,7 @@ describe PhysicalChassisController do
   let(:physical_chassis) do
     ems = FactoryBot.create(:ems_redfish_physical_infra)
     asset_detail = FactoryBot.create(:asset_detail)
-    FactoryBot.create(:physical_chassis, :ems_id => ems.id, :id => 1, :asset_detail => asset_detail)
+    FactoryBot.create(:physical_chassis, :ems_id => ems.id, :asset_detail => asset_detail)
   end
 
   before do

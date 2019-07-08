@@ -11,7 +11,6 @@ describe PhysicalSwitchController do
       :hardware     => hardware,
       :asset_detail => asset_detail,
       :ems_id       => ems.id,
-      :id           => 1
     )
   end
 

@@ -1,8 +1,6 @@
 describe OpsController do
   let(:params) { {} }
   let(:session) { {} }
-  let(:zone) { double("Zone", :name => "foo") }
-  let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
   let(:schedule) { FactoryBot.create(:miq_automate_schedule) }
   let(:schedule_new) { MiqSchedule.new }
   let(:user) { stub_user(:features => :all) }
@@ -10,8 +8,7 @@ describe OpsController do
   include_context "valid session"
 
   before do
-    allow(MiqServer).to receive(:my_server).and_return(server)
-    allow(server).to receive(:zone_id).and_return(1)
+    EvmSpecHelper.local_miq_server
     stub_user(:features => :all)
   end
 

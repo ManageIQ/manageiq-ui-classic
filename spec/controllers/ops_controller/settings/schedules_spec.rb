@@ -107,15 +107,12 @@ describe OpsController do
   end
 
   context "#schedule_set_record_vars" do
-    let(:zone) { double("Zone", :name => "foo") }
-    let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
     let(:user) { stub_user(:features => :all) }
     let(:schedule) { FactoryBot.create(:miq_automate_schedule) }
     let(:vm) { FactoryBot.create(:vm_vmware) }
 
     before do
-      allow(MiqServer).to receive(:my_server).and_return(server)
-      allow(server).to receive(:zone_id).and_return(1)
+      EvmSpecHelper.local_miq_server
       stub_user(:features => :all)
     end
 
@@ -169,14 +166,11 @@ describe OpsController do
   end
 
   context "#build_attrs_from_params" do
-    let(:zone) { double("Zone", :name => "foo") }
-    let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
     let(:user) { stub_user(:features => :all) }
     let(:vm) { FactoryBot.create(:vm_vmware) }
 
     before do
-      allow(MiqServer).to receive(:my_server).and_return(server)
-      allow(server).to receive(:zone_id).and_return(1)
+      EvmSpecHelper.local_miq_server
       stub_user(:features => :all)
     end
 

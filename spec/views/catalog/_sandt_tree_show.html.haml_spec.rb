@@ -1,13 +1,7 @@
 describe "catalog/_sandt_tree_show.html.haml" do
-  let(:admin_user) { FactoryBot.create(:user_admin, :userid => 'admin') }
-  let(:bundle) do
-    FactoryBot.create(:service_template, :name         => 'My Bundle',
-                                         :id           => 1,
-                                         :service_type => "composite",
-                                         :display      => true,
-                                         :tenant       => tenant)
-  end
-  let(:tenant) { FactoryBot.create(:tenant) }
+  let(:admin_user) { FactoryBot.create(:user_admin) }
+  let(:bundle)     { FactoryBot.create(:service_template, :service_type => "composite", :display => true, :tenant => tenant) }
+  let(:tenant)     { FactoryBot.create(:tenant) }
 
   before do
     set_controller_for_view("catalog")
@@ -20,7 +14,7 @@ describe "catalog/_sandt_tree_show.html.haml" do
 
   it "Renders bundle summary screen" do
     render
-    expect(rendered).to include('My Bundle')
+    expect(rendered).to include(bundle.name)
     expect(rendered).to include(bundle.tenant.name)
   end
 end

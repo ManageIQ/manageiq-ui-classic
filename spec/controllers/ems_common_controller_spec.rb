@@ -308,7 +308,7 @@ end
 
 describe EmsInfraController do
   context "#show_link" do
-    let(:ems) { double(EmsInfra, :id => 1) }
+    let(:ems) { FactoryBot.create(:ems_infra) }
     it "sets relative url" do
       controller.instance_variable_set(:@table_name, "ems_infra")
       link = controller.send(:show_link, ems, :display => "vms")

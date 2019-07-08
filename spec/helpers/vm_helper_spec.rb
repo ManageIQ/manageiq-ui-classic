@@ -3,7 +3,7 @@
 describe VmHelper do
   describe "#last_date_processes" do
     it "supports vm with os and processes" do
-      server = FactoryBot.build(:miq_server, :id => 99_999)
+      server = FactoryBot.build(:miq_server)
       operating_system = FactoryBot.build(:operating_system)
       @record = FactoryBot.create(:vm_vmware, :miq_server => server, :operating_system => operating_system)
       now = Time.now.utc

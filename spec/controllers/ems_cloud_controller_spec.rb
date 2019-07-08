@@ -292,7 +292,7 @@ describe EmsCloudController do
   end
 
   context "#update_ems_button_validate" do
-    let(:mocked_ems) { double(ManageIQ::Providers::Openstack::CloudManager, :id => 1) }
+    let(:mocked_ems) { FactoryBot.create(:ems_openstack) }
 
     it "calls authentication_check with save = false" do
       allow(controller).to receive(:set_ems_record_vars)

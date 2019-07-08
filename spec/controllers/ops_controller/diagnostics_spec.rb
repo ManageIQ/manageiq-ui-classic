@@ -1,7 +1,5 @@
 shared_examples "logs_collect" do |type|
   let(:klass) { type.classify.constantize }
-  let(:zone) { double("Zone", :name => "foo") }
-  let(:server) { double("MiqServer", :logon_status => :ready, :id => 1, :my_zone => zone) }
   before do
     sb_hash = {
       :trees            => {:diagnostics_tree => {:active_node => active_node}},
@@ -10,7 +8,7 @@ shared_examples "logs_collect" do |type|
       :active_tab       => "diagnostics_roles_servers"
     }
     controller.instance_variable_set(:@sb, sb_hash)
-    allow(MiqServer).to receive(:my_server).and_return(server)
+    EvmSpecHelper.local_miq_server
   end
 
   it "not running" do
