@@ -17,9 +17,6 @@ name: Service
 # Main DB table report is based on
 db: Service
 
-db_options:
-  :use_sql_view: true
-
 # Columns to fetch from the main table
 cols:
 - name
