@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-7
+## Hammer-8
+
+### Fixed
+- Advanced search modal - only render once, always, hidden [(#5629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5629)
+- Services use turbo button [(#5366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5366)
+- Display the custom login logo on the about modal [(#5685)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5685)
+- Added missing Model name to return that is used to load advanced search [(#5733)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5733)
+
+## Hammer-7 - Released 2019-06-10
 
 ### Added
 - Inform user about outdates belongsto filters [(#5511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5511)
