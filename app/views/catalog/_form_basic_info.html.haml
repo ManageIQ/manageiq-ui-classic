@@ -51,17 +51,18 @@
                         :class                => "selectpicker")
           :javascript
             miqSelectPickerEvent('dialog_id', '#{url}')
-    .form-group
-      %label.col-md-2.control-label
-        = _('Zone')
-      .col-md-4
-        %p.form-control-static
-          = select_tag('zone_id',
-                        options_for_select([["<Choose>", nil]] + @zones, @edit[:new][:zone_id]),
-                        "data-miq_sparkle_on" => true,
-                        :class                => "selectpicker")
-          :javascript
-            miqSelectPickerEvent('zone_id', '#{url}')
+    - unless @edit[:new][:service_type] == "composite"
+      .form-group
+        %label.col-md-2.control-label
+          = _('Zone')
+        .col-md-4
+          %p.form-control-static
+            = select_tag('zone_id',
+                          options_for_select([[_("<Choose>"), nil]] + @zones, @edit[:new][:zone_id]),
+                          "data-miq_sparkle_on" => true,
+                          :class                => "selectpicker")
+            :javascript
+              miqSelectPickerEvent('zone_id', '#{url}')
     /Add a new selector for the currencies
     .form-group
       %label.col-md-2.control-label
