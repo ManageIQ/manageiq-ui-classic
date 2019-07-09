@@ -14,8 +14,8 @@ describe AutomationManagerController do
     @automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
     @automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
 
-    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @automation_manager1.id)
-    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @automation_manager2.id)
+    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:ems_id => @automation_manager1.id)
+    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:ems_id => @automation_manager2.id)
     @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
                                                                                                            :inventory_root_group_id => @inventory_group.id,
                                                                                                            :manager_id              => @automation_manager1.id)
@@ -118,8 +118,8 @@ describe AutomationManagerController do
   end
 
   it "#automation_manager_save_provider save does not accept a duplicate name" do
-    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1", :zone => zone)
-    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2", :zone => zone)
+    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1")
+    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2")
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
     controller.save_provider
@@ -639,9 +639,9 @@ describe AutomationManagerController do
       session[:assigned_filters] = []
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       allow(controller).to receive(:tagging_explorer_controller?).and_return(true)
-      parent = FactoryBot.create(:classification, :name => "test_category")
-      FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-      FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+      parent = FactoryBot.create(:classification)
+      FactoryBot.create(:classification_tag, :parent => parent)
+      FactoryBot.create(:classification_tag, :parent => parent)
       post :tagging, :params => {:id => @cs.id, :format => :js}
       expect(response.status).to eq(200)
       expect(response.body).to include('Template (Ansible Tower) Being Tagged')
@@ -653,13 +653,9 @@ describe AutomationManagerController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@ans_configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
-      @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+      classification = FactoryBot.create(:classification)
+      @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ans_configured_system).and_return([@tag1, @tag2])
       session[:tag_db] = "ConfiguredSystem"
       edit = {:key        => "ConfiguredSystem_edit_tags__#{@ans_configured_system.id}",
