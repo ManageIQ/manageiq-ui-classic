@@ -8,11 +8,8 @@ import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
-<<<<<<< HEAD
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
-=======
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
->>>>>>> Add React component CopyCatalogForm
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
