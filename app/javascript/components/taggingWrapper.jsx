@@ -32,7 +32,7 @@ class TaggingWrapper extends React.Component {
           href: '',
           type: 'button',
           disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
-          description: 'Save',
+          description: __('Save'),
         }
       }
       cancelButton={{
@@ -42,7 +42,7 @@ class TaggingWrapper extends React.Component {
         href: '',
         type: 'button',
         disabled: false,
-        description: 'Cancel',
+        description: __('Cancel'),
         }
       }
       resetButton={{
@@ -50,7 +50,7 @@ class TaggingWrapper extends React.Component {
         href: '',
         type: 'button',
         disabled: _.isEqual({...tagging.initialState, selected: undefined}, {...tagging.appState, selected: undefined}),
-        description: 'Reset',
+        description: __('Reset'),
         }
       }
       options={{...options}}
