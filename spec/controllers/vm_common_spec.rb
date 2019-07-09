@@ -52,6 +52,7 @@ describe VmOrTemplateController do
       allow(controller).to receive(:tree_select).and_return(nil)
       @folder = FactoryBot.create(:ems_folder)
       @vm = FactoryBot.create(:vm_cloud)
+      @vm = FactoryBot.create(:vm_cloud) if @folder.id == @vm.id # prevent sporadic failure
     end
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
@@ -60,7 +61,6 @@ describe VmOrTemplateController do
       controller.reload
       expect(controller.params[:id]).to eq("v-#{@vm.id}")
     end
-
   end
 
   describe "#show" do
