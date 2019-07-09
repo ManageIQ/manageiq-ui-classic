@@ -176,6 +176,33 @@ describe DashboardController do
       expect(validation.flash_msg).to be_nil
       expect(validation.url).to eq('some_url')
     end
+
+    context 'handling no records and super admin user' do
+      let(:user) { FactoryBot.create(:user_admin, :userid => 'admin') }
+      let(:emb_ansible) { FactoryBot.create(:provider_embedded_ansible) }
+      let(:providers) { [emb_ansible] }
+
+      before do
+        allow(User).to receive(:authenticate).and_return(user)
+        allow(controller).to receive(:session).and_return(:start_url => '/dashboard/show')
+        allow(::Settings.product.maindb).to receive(:constantize).and_return(providers)
+      end
+
+      subject { controller.send(:validate_user, user) }
+
+      it 'redirects to Infrastructure Providers page if no records found' do
+        expect(subject.url).to eq('/ems_infra/show_list')
+      end
+
+      context 'some provider present' do
+        let(:vmware) { FactoryBot.create(:ems_vmware) }
+        let(:providers) { [emb_ansible, vmware] }
+
+        it 'displays the dashboard' do
+          expect(subject.url).to eq('/dashboard/show')
+        end
+      end
+    end
   end
 
   context "Create Dashboard" do
