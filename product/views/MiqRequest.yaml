@@ -28,10 +28,10 @@ cols:
 - description
 - approval_state
 - v_approved_by
+- reason
 - stamped_on
 - created_on
 - updated_on
-- reason
 - message
 - request_type
 - region_description
@@ -50,10 +50,10 @@ col_order:
 - description
 - approval_state
 - v_approved_by
+- reason
 - stamped_on
 - created_on
 - updated_on
-- reason
 - message
 - region_description
 
@@ -68,10 +68,10 @@ headers:
 - Description
 - Approval State
 - Approved/Denied By
+- Reason
 - Approved/Denied On
 - Created On
 - Last Update
-- Reason
 - Last Message
 - Region
 
