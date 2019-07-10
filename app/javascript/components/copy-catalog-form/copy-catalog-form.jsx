@@ -25,7 +25,7 @@ class CopyCatalogForm extends Component {
 
   handleError = (error) => {
     const { data: { error: { message } } } = error;
-    return !!message ? message : __('There was an error in copying. Item is not valid or Ansible.');
+    return !!message ? message : __('Selected item can not be copied. Because it\'s Ansible Playbook or not valid.');
   };
 
   submitValues = (values) => {
