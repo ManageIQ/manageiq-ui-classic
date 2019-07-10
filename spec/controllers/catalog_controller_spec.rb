@@ -421,15 +421,11 @@ describe CatalogController do
 
     describe "#tags_edit" do
       before do
-        @ot = FactoryBot.create(:orchestration_template, :name => "foo")
+        @ot = FactoryBot.create(:orchestration_template)
         allow(@ot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag1",
-                                   :parent => classification)
-        @tag2 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag2",
-                                   :parent => classification)
+        classification = FactoryBot.create(:classification)
+        @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+        @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@ot).and_return([@tag1, @tag2])
         controller.instance_variable_set(:@sb,
                                          :trees       => {:ot_tree => {:active_node => "root"}},
@@ -531,10 +527,7 @@ describe CatalogController do
     describe "#set_resource_action" do
       before do
         @st = FactoryBot.create(:service_template)
-        dialog = FactoryBot.create(:dialog,
-                                    :label       => "Test Label",
-                                    :description => "Test Description",
-                                    :buttons     => "submit,reset,cancel")
+        dialog = FactoryBot.create(:dialog)
         retire_fqname    = 'ns0/cls0/inst0'
         provision_fqname = 'ns1/cls1/inst1'
         recon_fqname     = 'ns2/cls2/inst2'
@@ -566,9 +559,7 @@ describe CatalogController do
     describe "#st_set_record_vars" do
       before do
         @st = FactoryBot.create(:service_template)
-        @catalog = FactoryBot.create(:service_template_catalog,
-                                      :name        => "foo",
-                                      :description => "FOO")
+        @catalog = FactoryBot.create(:service_template_catalog)
         edit = {
           :new => {
             :name               => "New Name",
@@ -704,9 +695,9 @@ describe CatalogController do
         let(:miq_group) { FactoryBot.create(:miq_group, :miq_user_role => user_role, :entitlement => Entitlement.create!) }
 
         before do
-          @st1 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
-          @st2 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
-          @st3 = FactoryBot.create(:service_template, :type => "ServiceTemplate")
+          @st1 = FactoryBot.create(:service_template)
+          @st2 = FactoryBot.create(:service_template)
+          @st3 = FactoryBot.create(:service_template)
           @st1.tag_with('/managed/service_level/one', :ns => '*')
           @st2.tag_with('/managed/service_level/one', :ns => '*')
           @st3.tag_with('/managed/service_level/two', :ns => '*')
@@ -748,13 +739,13 @@ describe CatalogController do
     end
 
     describe "#fetch_playbook_details" do
-      let(:auth) { FactoryBot.create(:authentication, :name => "machine_cred", :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
+      let(:auth) { FactoryBot.create(:authentication, :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
       let(:repository) { FactoryBot.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
-      let(:inventory_root_group) { FactoryBot.create(:inventory_root_group, :name => 'Demo Inventory') }
+      let(:inventory_root_group) { FactoryBot.create(:inventory_root_group) }
       let(:ems) do
         FactoryBot.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryBot.create(:provider_embedded_ansible))
       end
-      let(:dialog) { FactoryBot.create(:dialog, :label => "Some Label") }
+      let(:dialog) { FactoryBot.create(:dialog) }
       let(:playbook) do
         FactoryBot.create(:embedded_playbook,
                            :configuration_script_source => repository,
@@ -799,7 +790,7 @@ describe CatalogController do
             :repository         => repository.name,
             :playbook           => playbook.name,
             :machine_credential => auth.name,
-            :dialog             => "Some Label",
+            :dialog             => dialog.label,
             :dialog_id          => dialog.id,
             :become_enabled     => "No",
             :execution_ttl      => nil,
@@ -879,11 +870,7 @@ describe CatalogController do
 
     describe "#atomic_req_submit" do
       let(:ems) { FactoryBot.create(:ems_openshift) }
-      let(:container_template) do
-        FactoryBot.create(:container_template,
-                           :ext_management_system => ems,
-                           :name                  => "Test Template")
-      end
+      let(:container_template) { FactoryBot.create(:container_template, :ext_management_system => ems) }
       let(:ns) { FactoryBot.create(:miq_ae_namespace, :name => "ns") }
       let(:cls) { FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls") }
 
@@ -943,12 +930,7 @@ describe CatalogController do
 
     describe "#fetch_ct_details" do
       let(:ems) { FactoryBot.create(:ems_openshift) }
-      let(:container_template) do
-        FactoryBot.create(:container_template,
-                           :ext_management_system => ems,
-                           :name                  => "Test Template")
-      end
-
+      let(:container_template) { FactoryBot.create(:container_template, :ext_management_system => ems) }
       let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
       let(:dialog) { FactoryBot.create(:dialog) }
 
@@ -970,14 +952,14 @@ describe CatalogController do
       let(:service_template_container_template) { ServiceTemplateContainerTemplate.create_catalog_item(catalog_item_options) }
 
       it "returns container template service template details for summary screen" do
-        options = {:provisioning => {:template_name => "Test Template", :provider_name => ems.name}}
+        options = {:provisioning => {:template_name => container_template.name, :provider_name => ems.name}}
         controller.instance_variable_set(:@record, service_template_container_template)
         ct_details = controller.send(:fetch_ct_details)
         expect(ct_details).to eq(options)
       end
 
       describe '#replace_right_cell' do
-        let(:dialog) { FactoryBot.create(:dialog, :label => 'Transform VM', :buttons => 'submit') }
+        let(:dialog) { FactoryBot.create(:dialog) }
         before do
           allow(controller).to receive(:params).and_return(:action => 'dialog_provision')
           controller.instance_variable_set(:@in_a_form, true)
@@ -1027,17 +1009,16 @@ describe CatalogController do
       it "" do
         ems = FactoryBot.create(:automation_manager_ansible_tower)
         cs = FactoryBot.create(:configuration_script,
-                                :type => 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript',
-                                :name => 'fred job template')
-        cf = FactoryBot.create(:configuration_workflow, :name => 'wilma workflow template')
+                               :type => 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript')
+        cf = FactoryBot.create(:configuration_workflow)
         ems.configuration_scripts = [cs, cf]
         controller.instance_variable_set(:@edit, :new => {})
         controller.send(:available_job_templates, ems.id)
         template_options = [["", [["<Choose a Template>", {:selected => "<Choose a Template>",
                                                            :disabled => "<Choose a Template>",
                                                            :style    => "display:none"}]]],
-                            ["Job Templates", [["fred job template", cs.id]]],
-                            ["Workflow Templates", [["wilma workflow template", cf.id]]]]
+                            ["Job Templates", [[cs.name, cs.id]]],
+                            ["Workflow Templates", [[cf.name, cf.id]]]]
         expect(assigns(:edit)[:new][:available_templates]).to eq(template_options)
       end
     end
@@ -1049,15 +1030,11 @@ describe CatalogController do
         user = FactoryBot.create(:user, :features => "catalogitem_tag")
         login_as user
 
-        @st = FactoryBot.create(:service_template, :name => "foo")
+        @st = FactoryBot.create(:service_template)
         allow(@st).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-        classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
-        @tag1 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag1",
-                                   :parent => classification)
-        @tag2 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag2",
-                                   :parent => classification)
+        classification = FactoryBot.create(:classification)
+        @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+        @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).with(@st).and_return([@tag1, @tag2])
         controller.instance_variable_set(:@sb,
                                          :trees       => {:sandt_tree => {:active_node => "root"}},
