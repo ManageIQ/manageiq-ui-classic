@@ -1312,4 +1312,62 @@ describe CatalogController do
       end
     end
   end
+
+  context "hiding columns" do
+    let(:user) { FactoryBot.create(:user) }
+
+    before do
+      Tenant.seed
+      EvmSpecHelper.local_miq_server
+    end
+
+    let!(:service_template) { FactoryBot.create(:service_template, :description => 'XXX', :tenant => Tenant.root_tenant) }
+
+    let!(:report) do
+      FactoryGirl.create(:miq_report,
+                         :name        => 'Catalog Items',
+                         :db          => 'ServiceTemplate',
+                         :title       => 'Catalog Items',
+                         :cols        => %w[name description type_display],
+                         :col_order   => %w[name description tenant.name type_display],
+                         :headers     => %w[Name Description Tenant Type],
+                         :col_options => {"tenant.name" => {:display_method => :user_super_admin?}})
+    end
+
+    it "renders show_list and does not include hidden column(hidden by display method)" do
+      allow(controller).to receive(:render)
+
+      login_as user
+
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+
+      headers = view_hash[:head].map { |x| x[:text] }.compact
+      expect(headers).to match_array(%w[Name Description Type])
+      expect(headers).not_to include('Tenant')
+
+      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
+      expect(first_row_values).to match_array([service_template.name, service_template.description, service_template.type_display])
+      expect(first_row_values).not_to include(service_template.tenant.name)
+    end
+
+    let(:user_admin) { FactoryBot.create(:user_admin) }
+
+    it "renders show_list and includes all columns" do
+      allow(controller).to receive(:render)
+
+      login_as user_admin
+
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+
+      headers = view_hash[:head].map { |x| x[:text] }.compact
+      expect(headers).to match_array(%w[Name Description Tenant Type])
+
+      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
+      expect(first_row_values).to match_array([service_template.name, service_template.description, service_template.tenant.name, service_template.type_display])
+    end
+  end
 end

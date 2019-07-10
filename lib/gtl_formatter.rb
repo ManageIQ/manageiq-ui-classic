@@ -1,5 +1,5 @@
 class GtlFormatter
-  def self.format_cols(view, row)
+  def self.format_cols(view, row, controller)
     cols = []
 
     state = {"state" => :state_format}
@@ -33,7 +33,7 @@ class GtlFormatter
     }
 
     view.col_order.each_with_index do |col, col_idx|
-      next if view.column_is_hidden?(col)
+      next if view.column_is_hidden?(col, controller)
 
       span = nil
 

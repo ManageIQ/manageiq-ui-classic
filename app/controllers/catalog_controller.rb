@@ -56,6 +56,15 @@ class CatalogController < ApplicationController
     'ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate'    => "otvap"
   }.freeze
 
+  # when methods are evaluated from this constant and return true that means: column is displayed
+  DISPLAY_GTL_METHODS = [
+    :user_super_admin?
+  ].freeze
+
+  def user_super_admin?
+    current_user.super_admin_user?
+  end
+
   def x_button
     # setting this here so it can be used in the common code
     @sb[:applies_to_class] = 'ServiceTemplate'
