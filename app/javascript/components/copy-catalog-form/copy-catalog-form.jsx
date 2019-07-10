@@ -48,6 +48,7 @@ class CopyCatalogForm extends Component {
           buttonsLabels={{
             submitLabel: __('Add'),
           }}
+          disableSubmit={['invalid']}
         />
       </Grid>
     );
