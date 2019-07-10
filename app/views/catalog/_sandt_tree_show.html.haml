@@ -35,12 +35,13 @@
               = _('Catalog')
             .col-md-9
               = h(@record.service_template_catalog ? @record.service_template_catalog.name : "<#{_('Unassigned')}>")
-        .form-group
-          %label.col-md-3.control-label
-            = _('Zone')
-          .col-md-9
-            %p.form-control-static
-              = @record.zone ? @record.zone.name : ''
+        - unless @record.composite?
+          .form-group
+            %label.col-md-3.control-label
+              = _('Zone')
+            .col-md-9
+              %p.form-control-static
+                = @record.zone ? @record.zone.name : ''
         - unless @record.prov_type == "generic_ansible_playbook"
           .form-group
             %label.col-md-3.control-label
