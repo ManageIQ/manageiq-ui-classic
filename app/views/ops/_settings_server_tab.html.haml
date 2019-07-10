@@ -205,7 +205,7 @@
         = _("SSL Verify Mode")
       .col-md-8
         = select_tag('smtp_openssl_verify_mode',
-                      options_for_select(GenericMailer.openssl_verify_modes.collect { |m| [_(m.titleize), m] }, @edit[:new][:smtp][:openssl_verify_mode]),
+                      options_for_select(GenericMailer.openssl_verify_modes, @edit[:new][:smtp][:openssl_verify_mode]),
                       :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('smtp_openssl_verify_mode', "#{url}")
@@ -214,7 +214,7 @@
         = _("Authentication")
       .col-md-8
         = select_tag('smtp_authentication',
-                      options_for_select(_(GenericMailer.authentication_modes), @edit[:new][:smtp][:authentication]),
+                      options_for_select(GenericMailer.authentication_modes, @edit[:new][:smtp][:authentication]),
                       :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('smtp_authentication', "#{url}")
@@ -269,7 +269,7 @@
         = _("Mode")
       .col-md-8
         = select_tag('webservices_mode',
-                      options_for_select([_("invoke"), _("disable")], @edit[:new][:webservices][:mode]),
+                      options_for_select([[_("invoke"), "invoke"], [_("disable"), "disable"]], @edit[:new][:webservices][:mode]),
                       :class    => "selectpicker")
     :javascript
       miqSelectPickerEvent('webservices_mode', "#{url}")
@@ -278,7 +278,7 @@
         = _("Security")
       .col-md-8
         = select_tag('webservices_security',
-                      options_for_select([_("none"), _("ws-security")], @edit[:new][:webservices][:security]),
+                      options_for_select([[_("none"), "none"], [_("ws-security"), "ws-security"]], @edit[:new][:webservices][:security]),
                       :class    => "selectpicker")
     :javascript
       miqSelectPickerEvent('webservices_security', "#{url}")
@@ -291,7 +291,7 @@
         = _("Log Level")
       .col-md-8
         = select_tag('log_level',
-                      options_for_select(%w(fatal error warn info debug), @edit[:new][:log][:level]),
+                      options_for_select([[_("fatal"), "fatal"], [_("error"), "error"], [_("warn"), "warn"], [_("info"), "info"], [_("debug"), "debug"]], @edit[:new][:log][:level]),
                       :class    => "selectpicker")
     :javascript
       miqSelectPickerEvent('log_level', "#{url}")
