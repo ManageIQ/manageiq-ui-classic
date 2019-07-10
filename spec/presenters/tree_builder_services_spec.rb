@@ -1,38 +1,47 @@
 describe TreeBuilderServices do
-  let(:builder) { TreeBuilderServices.new("x", {}) }
+  subject { TreeBuilderServices.new("x", {}, false) }
 
-  it "generates tree" do
-    User.current_user = FactoryBot.create(:user)
+  let(:root_srv) { FactoryBot.create(:service, :display => true, :retired => false) }
+  let!(:reti_srv) { FactoryBot.create(:service, :service => root_srv, :display => true, :retired => true) }
+
+  before do
+    login_as FactoryBot.create(:user)
     allow(User).to receive(:server_timezone).and_return("UTC")
-    create_deep_tree
 
-    expect(root_nodes.size).to eq(4)
-    expect(root_nodes).to match [
-      a_hash_including(:id => 'asrv'),
-      a_hash_including(:id => 'rsrv'),
-      a_hash_including(:id => 'global'),
-      a_hash_including(:id => 'my')
-    ]
+    FactoryBot.create(:service, :service => root_srv, :display => true, :retired => false)
+    FactoryBot.create(:service, :service => root_srv, :display => true, :retired => false)
   end
 
-  private
+  describe '#x_get_tree_roots' do
+    it 'returns the four root nodes' do
+      root_nodes = subject.send(:x_get_tree_roots, false, {})
 
-  def root_nodes
-    builder.send(:x_get_tree_roots, false, {})
+      expect(root_nodes).to match [
+        a_hash_including(:id => 'asrv'),
+        a_hash_including(:id => 'rsrv'),
+        a_hash_including(:id => 'global'),
+        a_hash_including(:id => 'my')
+      ]
+    end
   end
 
-  def kid_nodes(node)
-    builder.send(:x_get_tree_custom_kids, node, false, {})
+  describe '#x_get_tree_custom_kids' do
+    it 'returns the root service node for active services' do
+      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'asrv'}, false, {})
+      expect(root_services).to match [root_srv]
+    end
+
+    it 'returns the retired child service node for retired services' do
+      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'rsrv'}, false, {})
+      expect(root_services).to match [reti_srv]
+    end
   end
 
-  def create_deep_tree
-    @service      = FactoryBot.create(:service, :display => true, :retired => false)
-    @service_c1   = FactoryBot.create(:service, :service => @service, :display => true, :retired => false)
-    @service_c11  = FactoryBot.create(:service, :service => @service_c1, :display => true, :retired => false)
-    @service_c12  = FactoryBot.create(:service, :service => @service_c1, :display => true, :retired => false)
-    @service_c121 = FactoryBot.create(:service, :service => @service_c12, :display => true, :retired => false)
-    @service_c2   = FactoryBot.create(:service, :service => @service, :display => true, :retired => false)
-    # hidden
-    @service_c3   = FactoryBot.create(:service, :service => @service, :retired => true, :display => true)
+  describe '#x_get_tree_nested_services' do
+    it 'returns the ancestry kids of a service' do
+      child_nodes = subject.send(:x_get_tree_nested_services, root_srv, false)
+
+      expect(child_nodes.length).to eq(2)
+    end
   end
 end
