@@ -40,5 +40,45 @@ describe OpsController do
         controller.send(:ap_edit)
       end
     end
+
+    context 'adding a new Analysis Profile' do
+      let(:scanitemset) { FactoryBot.create(:scan_item_set) }
+
+      before do
+        new_hash = {
+          :name        => 'Name1',
+          :description => 'Description1',
+          "file"       => {:definition => {"stats" => [{}]}},
+          "category"   => {:type => 'category', :definition => {"content" => [{"target" => "vmevents"}, {"target" => "services"}]}}
+        }
+
+        edit = {
+          :scan_id => nil,
+          :key     => "ap_edit__#{scanitemset.id}",
+          :current => copy_hash(new_hash),
+          :new     => copy_hash(new_hash)
+        }
+
+        controller.instance_variable_set(:@sb, :ap_active_tab => 'category')
+        session[:edit] = edit
+        allow(controller).to receive(:assert_privileges)
+      end
+
+      it 'saves changes in `edit[:new]` when category is unchecked' do
+        controller.params = {:id => scanitemset.id, "check_services" => "null", "item_type" => "category"}
+        allow(controller).to receive(:render)
+        controller.send(:ap_form_field_changed)
+        edit = assigns(:edit)
+        expect(edit[:new]).to_not eq(edit[:current])
+      end
+
+      it 'saves changes in `edit[:new]` when category is checked' do
+        controller.params = {:id => scanitemset.id, "check_system" => "System", "item_type" => "category"}
+        allow(controller).to receive(:render)
+        controller.send(:ap_form_field_changed)
+        edit = assigns(:edit)
+        expect(edit[:new]['category'][:definition]['content']).to include("target" => "system")
+      end
+    end
   end
 end

@@ -529,9 +529,8 @@ module OpsController::Settings::AnalysisProfiles
     temp = {}
     CATEGORY_CHOICES.each_key do |checkbox_name|
       if params["check_#{checkbox_name}"]
-        if params["check_#{checkbox_name}"] != "null"
-          temp["target"] = checkbox_name
-        else
+        temp["target"] = checkbox_name
+        if params["check_#{checkbox_name}"] == "null"
           @edit[:new][item_type][:definition]["content"].delete(temp)
           temp = {}
         end
