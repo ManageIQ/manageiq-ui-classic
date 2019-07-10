@@ -7,25 +7,15 @@ class TreeController < ApplicationController
   def automate_entrypoint
     json = fetch_tree(TreeBuilderAutomateEntrypoint, :automate_entrypoint_tree, params[:id]) do |tree|
       if params[:fqname].present?
-        MiqAeInstance.get_homonymic_across_domains(current_user, params[:fqname], true, :prefix => false).each do |instance|
-          # Parse the namespace, class and instance from the fqname
-          namespace, klass, instance, _ = MiqAeEngine::MiqAePath.split(instance.fqname)
+        # Assume that the domain prefix is included in the fqname
+        open_nodes = automate_find_hierarchy(params[:fqname])
+        open_node_hierarchy(tree, open_nodes)
+        next if open_nodes.present?
 
-          begin
-            # Collect all the db records based on the parsed fqname
-            open_nodes = namespace.split('/').each_with_object([]) do |ns, items|
-              items << MiqAeNamespace.find_by!(:name => ns, :parent => items.last)
-            end
-            open_nodes << MiqAeClass.find_by!(:name => klass, :namespace_id => open_nodes.last.id)
-            open_nodes << MiqAeInstance.find_by!(:name => instance, :class_id => open_nodes.last.id)
-          rescue ActiveRecord::RecordNotFound
-            # Skip the iteration steop if one of the records is not found
-            # FIXME: we probably need foreign keys instead of this magic
-            next
-          else
-            # Set the related tree nodes to open if all the records have been found
-            open_nodes.each { |node| tree.open_node(TreeNode.new(node, {}, {}).key) }
-          end
+        # If the fqname is not included, find the homonymic ones under each domain
+        MiqAeInstance.get_homonymic_across_domains(current_user, params[:fqname], true, :prefix => false).each do |instance|
+          open_nodes = automate_find_hierarchy(instance.fqname)
+          open_node_hierarchy(tree, open_nodes)
         end
       end
     end
@@ -57,5 +47,32 @@ class TreeController < ApplicationController
     else
       tree.instance_variable_get(:@bs_tree)
     end
+  end
+
+  def automate_find_hierarchy(fqname)
+    # Parse the namespace, class and instance from the fqname
+    namespace, klass, instance, _ = MiqAeEngine::MiqAePath.split(fqname)
+
+    begin
+      # Collect all the db records based on the parsed fqname
+      open_nodes = namespace.split('/').each_with_object([]) do |ns, items|
+        items << MiqAeNamespace.find_by!(:name => ns, :parent => items.last)
+      end
+      open_nodes << MiqAeClass.find_by!(:name => klass, :namespace_id => open_nodes.last.id)
+      open_nodes << MiqAeInstance.find_by!(:name => instance, :class_id => open_nodes.last.id)
+    rescue ActiveRecord::RecordNotFound
+      # Skip the iteration steop if one of the records is not found
+      # FIXME: we probably need foreign keys instead of this magic
+      nil
+    else
+      open_nodes
+    end
+  end
+
+  # Set the hierarchical tree nodes to open
+  def open_node_hierarchy(tree, items)
+    return if items.blank?
+
+    items.each { |node| tree.open_node(TreeNode.new(node, {}, {}).key) }
   end
 end
