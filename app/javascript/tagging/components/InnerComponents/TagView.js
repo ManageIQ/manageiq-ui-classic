@@ -19,6 +19,10 @@ class TagView extends React.Component {
 
   render() {
     const assignedTags = [...this.props.assignedTags];
+    const view = (assignedTags.length > 0
+      ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.description < b.description ? -1 : 1)).map(this.generateTagCategories) }</ul>
+      : <p>{__('No Assigned Tags')}</p>
+    );
     return (
       <div id="assignments_div">
         { !this.props.hideHeader &&
@@ -29,11 +33,7 @@ class TagView extends React.Component {
           </Row>}
         <Row>
           <Col lg={12}>
-            <ul className="list-inline">
-              {assignedTags
-                .sort((a, b) => (a.description < b.description ? -1 : 1))
-                .map(this.generateTagCategories)}
-            </ul>
+            { view }
           </Col>
         </Row>
       </div>
