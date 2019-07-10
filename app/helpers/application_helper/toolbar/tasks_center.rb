@@ -53,7 +53,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       :miq_task_canceljob,
       'fa fa-ban fa-lg',
       N_('Cancel the selected task'),
-      N_('Cancel Job'),
+      N_('Cancel Task'),
       :url_parms    => "main_div",
       :send_checked => true,
       :confirm      => N_("Warning: The selected task will be cancelled. Are you sure you want to cancel the task?"),
