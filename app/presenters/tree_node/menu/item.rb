@@ -3,7 +3,7 @@ module TreeNode
     class Item < TreeNode::Menu::Node
       set_attribute(:key) { "#{@tree.node_id_prefix}__#{@object.feature}" }
 
-      set_attribute(:text, :tooltip) do
+      set_attributes(:text, :tooltip) do
         details = ::MiqProductFeature.obj_features[@object.feature].try(:[], :feature).try(:details)
         [_(details[:name]), _(details[:description]) || _(details[:name])]
       end
