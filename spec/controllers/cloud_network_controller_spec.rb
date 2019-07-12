@@ -1,8 +1,8 @@
 describe CloudNetworkController do
-  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryBot.create(:classification_tag, :name   => "tag1", :parent => classification) }
-  let(:tag2) { FactoryBot.create(:classification_tag, :name   => "tag2", :parent => classification) }
-  let(:ct) { FactoryBot.create(:cloud_network, :name => "cloud-network-01") }
+  let(:classification) { FactoryBot.create(:classification) }
+  let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
+  let(:ct) { FactoryBot.create(:cloud_network) }
   let(:network) { FactoryBot.create(:cloud_network) }
   let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
 
