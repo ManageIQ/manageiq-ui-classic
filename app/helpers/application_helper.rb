@@ -1313,4 +1313,15 @@ module ApplicationHelper
 
     provider.try(:enabled?) == false
   end
+
+  # Return a proper column for an appropriate target klass
+  def columns_for_klass(klass)
+    if klass == 'Tenant'
+      [:name, :use_config_for_attributes]
+    elsif klass.safe_constantize.column_names.include?('name')
+      [:name]
+    else
+      [:description]
+    end
+  end
 end

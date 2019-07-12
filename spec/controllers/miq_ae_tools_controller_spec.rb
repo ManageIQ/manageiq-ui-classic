@@ -3,13 +3,17 @@ describe MiqAeToolsController do
     stub_user(:features => :all)
   end
 
-  context "#form_field_changed" do
-    it "resets target id to nil, when target class is <none>" do
-      new = {
+  describe "#form_field_changed" do
+    let(:new_target) do
+      {
         :target_class => "EmsCluster",
         :target_id    => 1
       }
-      controller.instance_variable_set(:@resolve, :throw_ready => true, :new => new)
+    end
+
+    before { controller.instance_variable_set(:@resolve, :throw_ready => true, :new => new_target) }
+
+    it "resets target id to nil, when target class is <none>" do
       expect(controller).to receive(:render)
       controller.params = {:target_class => '', :id => 'new'}
       controller.send(:form_field_changed)
@@ -18,11 +22,6 @@ describe MiqAeToolsController do
     end
 
     it "resets target id to nil, when target class is Vm" do
-      new = {
-        :target_class => "EmsCluster",
-        :target_id    => 1
-      }
-      controller.instance_variable_set(:@resolve, :throw_ready => true, :new => new)
       expect(controller).to receive(:render)
       controller.params = {:target_class => 'Vm', :id => 'new'}
       controller.send(:form_field_changed)
@@ -526,6 +525,23 @@ describe MiqAeToolsController do
         expect(response.body).to eq(
           [{:message => "Error: import failed: kaboom", :level => :error}].to_json
         )
+      end
+    end
+  end
+
+  describe '#get_form_vars' do
+    before { controller.instance_variable_set(:@resolve, :new => {}) }
+
+    ['MiqGroup', 'User', 'Tenant'].each do |klass|
+      context "#{klass} class" do
+        let(:targets) { klass.safe_constantize.all.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] } }
+
+        before { controller.instance_variable_set(:@_params, :target_class => klass) }
+
+        it "gets appropriate targets" do
+          controller.send(:get_form_vars)
+          expect(controller.instance_variable_get(:@resolve)[:targets]).to eq(targets)
+        end
       end
     end
   end
