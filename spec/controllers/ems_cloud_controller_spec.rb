@@ -757,4 +757,63 @@ describe EmsCloudController do
   end
 
   it_behaves_like "relationship table screen with GTL", nested_lists, :ems_amazon
+
+  context "hiding columns" do
+    let(:user) { FactoryBot.create(:user) }
+
+    before do
+      Tenant.seed
+      EvmSpecHelper.local_miq_server
+    end
+
+    let!(:ems_cloud) { FactoryBot.create(:ems_cloud, :tenant => Tenant.root_tenant) }
+
+    let!(:report) do
+      FactoryGirl.create(:miq_report,
+                         :name        => 'Cloud Providers',
+                         :db          => 'EmsCloud',
+                         :title       => 'Cloud Providers',
+                         :cols        => %w[name emstype_description],
+                         :col_order   => %w[name emstype_description tenant.name],
+                         :headers     => %w[Name Type Tenant],
+                         :col_options => {"tenant.name" => {:display_method => :user_super_admin?}},
+                         :include     => {"tenant" => {"columns" => ['name']}})
+    end
+
+    it "renders show_list and does not include hidden column(hidden by display method)" do
+      allow(controller).to receive(:render)
+
+      login_as user
+
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+
+      headers = view_hash[:head].map { |x| x[:text] }.compact
+      expect(headers).to match_array(%w[Name Type])
+      expect(headers).not_to include('Tenant')
+
+      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
+      expect(first_row_values).to match_array([ems_cloud.name, ems_cloud.emstype_description])
+      expect(first_row_values).not_to include(ems_cloud.tenant.name)
+    end
+
+    let(:user_admin) { FactoryBot.create(:user_admin) }
+
+    it "renders show_list and includes all columns" do
+      allow(controller).to receive(:render)
+
+      login_as user_admin
+
+      expect(controller).to receive(:get_db_view).and_return(report)
+      controller.send(:report_data)
+      view_hash = controller.send(:view_to_hash, assigns(:view))
+
+      headers = view_hash[:head].map { |x| x[:text] }.compact
+      expect(headers).to match_array(%w[Name Type Tenant])
+
+      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
+      expect(first_row_values).to match_array([ems_cloud.name, ems_cloud.emstype_description, ems_cloud.tenant.name])
+    end
+  end
 end

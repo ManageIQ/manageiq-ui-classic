@@ -73,6 +73,10 @@ headers:
 - Tenant
 - Region
 
+col_options:
+  tenant.name:
+    :display_method: user_super_admin?
+
 # Condition(s) string for the SQL query
 conditions:
 

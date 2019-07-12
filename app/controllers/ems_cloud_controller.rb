@@ -12,6 +12,15 @@ class EmsCloudController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  # when methods are evaluated from this constant and return true that means: column is displayed
+  DISPLAY_GTL_METHODS = [
+    :user_super_admin?
+  ].freeze
+
+  def user_super_admin?
+    current_user.super_admin_user?
+  end
+
   def self.model
     ManageIQ::Providers::CloudManager
   end
