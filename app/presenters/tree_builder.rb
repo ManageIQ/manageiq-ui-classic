@@ -310,7 +310,7 @@ class TreeBuilder
 
   def count_only_or_objects(count_only, objects, sort_by = nil)
     if count_only
-      objects.size
+      objects.respond_to?(:order) ? objects.except(:order).size : objects.size
     elsif sort_by.kind_of?(Proc)
       objects.sort_by(&sort_by)
     elsif sort_by
