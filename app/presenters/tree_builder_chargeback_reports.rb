@@ -40,6 +40,6 @@ class TreeBuilderChargebackReports < TreeBuilder
                              .select(:id, :miq_report_id, :name, :last_run_on, :miq_task_id)
                              .order(:last_run_on => :desc)
 
-    count_only_or_objects(count_only, objects, "name")
+    count_only_or_objects(count_only, objects)
   end
 end
