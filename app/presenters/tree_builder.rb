@@ -509,6 +509,7 @@ class TreeBuilder
     "asr"  => "AssignedServerRole",
     "az"   => "AvailabilityZone",
     "azu"  => "ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate",
+    "azs"  => "ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate",
     "at"   => "ManageIQ::Providers::AnsibleTower::AutomationManager",
     "cl"   => "Classification",
     "cf"   => "ConfigurationScript",
