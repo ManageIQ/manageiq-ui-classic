@@ -49,9 +49,8 @@ class UserValidationService
 
     # Start super admin at the main db if the main db has no records yet
     # If the main db has no records the default starting view is set to "Infrastructure Provider" view - the idea here is there is no point showing another view since it would be empty.
-    return validate_user_handle_no_records if db_user.super_admin_user? &&
-                                              ::Settings.product.maindb &&
-                                              !::Settings.product.maindb.constantize.first
+    # The above is true except Embedded Ansible provider which is added by default
+    return validate_user_handle_no_records if db_user.super_admin_user? && no_records?
 
     startpage = start_url_for_user(start_url)
     unless startpage
@@ -61,6 +60,12 @@ class UserValidationService
   end
 
   private
+
+  def no_records?
+    if ::Settings.product.maindb
+      ::Settings.product.maindb.constantize.count <= ::ManageIQ::Providers::EmbeddedAnsible::AutomationManager.count
+    end
+  end
 
   def validate_user_handle_no_records
     ValidateResult.new(:pass, nil, url_for_only_path(:controller => "ems_infra", :action => 'show_list'))
