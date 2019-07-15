@@ -584,13 +584,16 @@ describe CatalogController do
         controller.instance_variable_set(:@sb, {})
       end
 
+      subject { controller.instance_variable_get(:@edit)[:new] }
+
       context 'already existing catalog bundle' do
         let(:bundle) { FactoryBot.create(:service_template) }
 
-        it "loads entry points for Catalog Bundle from the DB" do
+        it "loads initialized values for entry points of Catalog Bundle" do
           controller.send(:st_set_form_vars)
-          expect(assigns(:edit)[:new][:fqname]).to eq("")
-          expect(assigns(:edit)[:new][:retire_fqname]).to eq("")
+          expect(subject[:fqname]).to be_nil
+          expect(subject[:retire_fqname]).to be_nil
+          expect(subject[:reconfigure_fqname]).to be_nil
         end
       end
 
@@ -599,8 +602,9 @@ describe CatalogController do
 
         it "sets default entry points for Catalog Bundle" do
           controller.send(:st_set_form_vars)
-          expect(assigns(:edit)[:new][:fqname]).to include("CatalogBundleInitialization")
-          expect(assigns(:edit)[:new][:retire_fqname]).to include("Default")
+          expect(subject[:fqname]).to include("CatalogBundleInitialization")
+          expect(subject[:retire_fqname]).to include("Default")
+          expect(subject[:reconfigure_fqname]).to be_nil
         end
       end
     end
@@ -1114,6 +1118,11 @@ describe CatalogController do
       controller.send(:set_form_vars)
       expect(controller.instance_variable_get(:@edit)[:new][:tenant_ids]).to eq(record.additional_tenant_ids)
     end
+
+    it 'sets @edit[:new][:dialog_id] to nil' do
+      controller.send(:set_form_vars)
+      expect(controller.instance_variable_get(:@edit)[:new][:dialog_id]).to be_nil
+    end
   end
 
   describe '#get_form_vars' do
@@ -1159,6 +1168,77 @@ describe CatalogController do
       it 'removes Tenant id from @edit' do
         controller.send(:get_form_vars)
         expect(subject).to eq([1])
+      end
+    end
+
+    it 'calls copy_params_if_present' do
+      expect(controller).to receive(:copy_params_if_present)
+      controller.send(:get_form_vars)
+    end
+
+    context 'saving new Catalog Item' do
+      let(:params) do
+        {:name             => 'some_name',
+         :description      => 'some description',
+         :catalog_id       => '1',
+         :dialog_id        => '2',
+         :zone_id          => '3',
+         :currency         => some_currency.id,
+         :price            => '100',
+         :generic_subtype  => 'hosted_database',
+         :long_description => 'some description',
+         :fqname           => 'fqname',
+         :retire_fqname    => 'retire_fqname'}
+      end
+      let(:other_params) do
+        {:display            => '1',
+         :reconfigure_fqname => ''}
+      end
+      let(:some_currency) { ChargebackRateDetailCurrency.first }
+
+      before do
+        ChargebackRateDetailCurrency.seed
+        controller.params = params.merge(other_params)
+      end
+
+      subject { controller.instance_variable_get(:@edit)[:new] }
+
+      it 'sets @edit according to params' do
+        controller.send(:get_form_vars)
+        expect(subject).to include(params)
+        expect(subject[:display]).to be(true)
+        expect(subject[:reconfigure_fqname]).to be_nil
+        expect(subject[:code_currency]).to eq("Price / Month (in #{some_currency.code})")
+      end
+    end
+
+    context 'choosing Catalog Item Type' do
+      before { controller.params = {:st_prov_type => 'amazon'} }
+
+      it 'saves choosen Catalog Item type to @edit' do
+        controller.send(:get_form_vars)
+        expect(controller.instance_variable_get(:@edit)[:new][:st_prov_type]).to eq('amazon')
+        expect(controller.instance_variable_get(:@edit)[:st_prov_type]).to eq('amazon')
+      end
+    end
+
+    context 'Orchestration Catalog Item Type' do
+      before { controller.params = {:st_prov_type => 'generic_orchestration'} }
+
+      it 'calls get_form_vars_orchestration' do
+        expect(controller).to receive(:get_form_vars_orchestration)
+        controller.send(:get_form_vars)
+      end
+    end
+
+    context 'Ansible Tower and Container Template types' do
+      %w[generic_ansible_tower generic_container_template].each do |typ|
+        before { controller.params = {:st_prov_type => typ} }
+
+        it 'calls fetch_form_vars_ansible_or_ct' do
+          expect(controller).to receive(:fetch_form_vars_ansible_or_ct)
+          controller.send(:get_form_vars)
+        end
       end
     end
   end
