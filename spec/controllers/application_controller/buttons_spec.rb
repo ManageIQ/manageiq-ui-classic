@@ -1,7 +1,7 @@
 describe ApplicationController do
   context "#custom_buttons" do
     let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
-    let(:button)          { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+    let(:button)          { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :resource_action => resource_action) }
     let(:host)            { FactoryBot.create(:host_vmware) }
     let(:vm)              { FactoryBot.create(:vm_vmware) }
     let(:service)         { FactoryBot.create(:service) }
@@ -352,7 +352,7 @@ describe ApplicationController do
   context "#automate_button_field_changed" do
     context 'sets dialog_id' do
       let(:resource_action) { FactoryBot.create(:resource_action, :dialog_id => 1) }
-      let(:button)          { FactoryBot.create(:custom_button, :name => "My Button", :applies_to_class => "Vm", :resource_action => resource_action) }
+      let(:button)          { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :resource_action => resource_action) }
       before do
         controller.instance_variable_set(:@custom_button, button)
         allow(controller).to receive(:render).and_return(nil)
