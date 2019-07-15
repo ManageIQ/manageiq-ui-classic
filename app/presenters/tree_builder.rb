@@ -343,7 +343,7 @@ class TreeBuilder
   private :resolve_object_lambdas
 
   LEFT_TREE_CLASSES = {
-    # Cloud Intel
+    # Overview
     ## Reports
     ### Saved Reports
     :savedreports                    => "TreeBuilderReportSavedReports",

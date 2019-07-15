@@ -906,7 +906,7 @@ class ReportController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Cloud Intel")},
+        {:title => _("Overview")},
         {:title => _("Reports")},
       ],
     }

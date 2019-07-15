@@ -732,7 +732,7 @@ class DashboardController < ApplicationController
   def breadcrumbs_options
     {
       :breadcrumbs => [
-        {:title => _("Cloud Intel")},
+        {:title => _("Overview")},
         {:title => (action_name == "show" ? _("Dashboard") : _("Timelines"))},
       ],
     }

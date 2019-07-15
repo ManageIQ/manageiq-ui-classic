@@ -19,7 +19,7 @@ describe Menu::CustomLoader do
     end
 
     it 'loads a custom menu item under an existing section' do
-      # create custom item placed in an existing section 'vi' (Cloud Intel)
+      # create custom item placed in an existing section 'vi' (Overview)
       described_class.register(
         Menu::Item.new('plug3', 'Plug Item', 'miq_report', {:feature => 'miq_report', :any => true}, '/demo', :default, :vi)
       )
