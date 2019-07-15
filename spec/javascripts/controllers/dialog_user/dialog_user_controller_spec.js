@@ -40,6 +40,7 @@ describe('dialogUserController', function() {
       resourceActionId: '789',
       targetId: '987',
       targetType: 'targettype',
+      realTargetType: 'targettype',
       openUrl: false,
     });
   }));
@@ -85,7 +86,7 @@ describe('dialogUserController', function() {
         'dialogData',
         ['dialogName'],
         '/api/service_dialogs/',
-        {dialogId: '1234', resourceActionId: '789', targetId: '987', targetType: 'targettype'}
+        {dialogId: '1234', resourceActionId: '789', targetId: '987', targetType: 'targettype', realTargetType: 'targettype'}
       );
     });
   });
@@ -119,6 +120,7 @@ describe('dialogUserController', function() {
           resourceActionId: '789',
           targetId: '987',
           targetType: 'targettype',
+          realTargetType: 'targettype',
           saveable: true,
           openUrl: false,
         });
@@ -153,6 +155,7 @@ describe('dialogUserController', function() {
           resourceActionId: '789',
           targetId: '987',
           targetType: 'targettype',
+          realTargetType: 'targettype',
           saveable: true,
           openUrl: false,
         });
