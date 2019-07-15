@@ -28,7 +28,7 @@ module Menu
       end
 
       def cloud_inteligence_menu_section
-        Menu::Section.new(:vi, N_("Cloud Intel"), 'fa fa-dashboard', [
+        Menu::Section.new(:vi, N_("Overview"), 'fa fa-dashboard', [
           Menu::Item.new('dashboard',  N_('Dashboard'),  'dashboard',  {:feature => 'dashboard_view'},           '/dashboard/show'),
           Menu::Item.new('report',     N_('Reports'),    'miq_report', {:feature => 'miq_report', :any => true}, '/report/explorer'),
           # Menu::Item.new('usage',    N_('Usage'),      'usage',      {:feature => 'usage'},                    '/report/usage/'), #  / Hiding usage for now - release 5.2
