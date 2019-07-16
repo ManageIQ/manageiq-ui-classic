@@ -67,14 +67,15 @@ module Mixins
     def special_page_breadcrumb(variable)
       # breadcrumb_url = url(controller_url, notshow, variable.first[:id])
       # EMS has key instead of name
-      return unless variable
+      return if !variable || variable.count != 1
+
       if variable.first[:key]
         title = variable.first[:key]
       # FloatingIps do not have name
       elsif floating_ip_address?(variable.first)
         title = variable.first[:address]
       else
-        title = variable.first[:name] unless params[:miq_grid_checks] # do not show name if coming from GTL page
+        title = variable.first[:name]
       end
       {:title => title} if title
     end
