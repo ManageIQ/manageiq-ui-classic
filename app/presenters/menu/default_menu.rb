@@ -72,15 +72,16 @@ module Menu
         clusters_name = hybrid_name(EmsCluster, N_("Clusters"), N_("Deployment Roles"), N_("Clusters / Deployment Roles"))
 
         Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus', [
-          Menu::Item.new('ems_infra',        N_('Providers'),        'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
-          Menu::Item.new('ems_cluster',      clusters_name,          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
-          Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
-          Menu::Item.new('vm_infra',         N_('Virtual Machines'), 'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
-          Menu::Item.new('resource_pool',    N_('Resource Pools'),   'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
-          Menu::Item.new('storage',          N_('Datastores'),       'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
-          Menu::Item.new('pxe',              N_('PXE'),              'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
-          Menu::Item.new('switch',           N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
-          Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology/show')
+          Menu::Item.new('ems_infra',         N_('Providers'),         'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
+          Menu::Item.new('ems_cluster',       clusters_name,           'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
+          Menu::Item.new('host',              hosts_name,              'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
+          Menu::Item.new('vm_infra',          N_('Virtual Machines'),  'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
+          Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
+          Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
+          Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
+          Menu::Item.new('firmware_registry', N_('Firmware Registry'), 'firmware_registry',          {:feature => 'firmware_registry', :any => true}, '/firmware_registry/show_list'),
+          Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
+          Menu::Item.new('infra_topology',    N_('Topology'),          'infra_topology',             {:feature => 'infra_topology', :any => true},    '/infra_topology/show')
         ])
       end
 
