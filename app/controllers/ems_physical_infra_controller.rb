@@ -67,7 +67,7 @@ class EmsPhysicalInfraController < ApplicationController
   # +/ems_physical_infra/change_password/<id>+
   def change_password
     @record = find_record_with_rbac(model, params[:id])
-    @title = _("Change Password for Physical Infrasctructure Provider '#{@record.name}'")
+    @title = _("Change Password for Physical Infrasctructure Provider '%{provider_name}'") % {:provider_name => @record.name}
     @in_a_form = true # to show the page on all content frame
   end
 
