@@ -66,7 +66,6 @@ describe Mixins::BreadcrumbsMixin do
     allow(mixin_explorer).to receive(:x_active_tree).and_return(:active_tree)
     allow(mixin_explorer).to receive(:gtl_url).and_return("/show")
     mixin_explorer.instance_variable_set(:@sb, {})
-    allow(mixin).to receive(:params).and_return({})
 
     allow(mixin).to receive(:breadcrumbs_options).and_return(:breadcrumbs => [
                                                                {:title => _("First Layer")},
@@ -215,10 +214,9 @@ describe Mixins::BreadcrumbsMixin do
       end
     end
 
-    context "when coming from GTL page" do
+    context "more than one item is selected in GTL page" do
       before do
-        mixin.instance_variable_set(:@tagitems, [{:id => "1789", :description => "item"}])
-        allow(mixin).to receive(:params).and_return({:miq_grid_checks => "42"})
+        mixin.instance_variable_set(:@tagitems, [{:id => "1789", :description => "item"}, {:id => "1984", :description => "thing"}])
       end
 
       it "returns nil" do
