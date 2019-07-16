@@ -74,7 +74,7 @@ module Mixins
       elsif floating_ip_address?(variable.first)
         title = variable.first[:address]
       else
-        title = variable.first[:name]
+        title = variable.first[:name] unless params[:miq_grid_checks] # do not show name if coming from GTL page
       end
       {:title => title} if title
     end
