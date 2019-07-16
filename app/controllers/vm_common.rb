@@ -357,10 +357,6 @@ module VmCommon
     show_association('network_ports', _('Ports'), :network_ports, NetworkPort)
   end
 
-  def load_balancers
-    show_association('load_balancers', _('Load Balancers'), :load_balancers, LoadBalancer)
-  end
-
   def snap
     assert_privileges(params[:pressed])
     @vm = @record = identify_record(params[:id], VmOrTemplate)

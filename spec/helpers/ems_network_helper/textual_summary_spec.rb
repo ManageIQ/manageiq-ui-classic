@@ -15,7 +15,6 @@ describe EmsNetworkHelper::TextualSummary do
     security_groups
     floating_ips
     network_ports
-    load_balancers
     custom_button_events
   )
 

@@ -3051,7 +3051,6 @@ Rails.application.routes.draw do
         floating_ips
         network_routers
         network_ports
-        load_balancers
         cloud_subnets
         cloud_networks
         cloud_volumes

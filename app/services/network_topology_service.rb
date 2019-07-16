@@ -9,11 +9,6 @@ class NetworkTopologyService < TopologyService
         :floating_ips    => :writable_classification_tags,
         :cloud_tenant    => :writable_classification_tags,
         :security_groups => :writable_classification_tags,
-        :load_balancers  => %i[
-          writable_classification_tags
-          floating_ips
-          security_groups
-        ]
       ]
     ],
     :cloud_subnets      => [

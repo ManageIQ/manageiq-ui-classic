@@ -101,7 +101,6 @@ module Mixins
           hosts
           images
           instances
-          load_balancers
           middleware_deployments
           middleware_domains
           middleware_server_groups

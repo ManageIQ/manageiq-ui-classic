@@ -82,7 +82,6 @@ describe VmHelper::TextualSummary do
     security_groups
     floating_ips
     network_ports
-    load_balancers
     cloud_volumes
     custom_button_events
   ), "vm_cloud_relationships"
