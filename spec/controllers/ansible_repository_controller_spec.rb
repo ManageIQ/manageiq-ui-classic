@@ -6,7 +6,7 @@ describe AnsibleRepositoryController do
       EvmSpecHelper.assign_embedded_ansible_role
       login_as FactoryBot.create(:user_admin)
       # creating repository takes time, so we do it only once
-      @repository = FactoryBot.create(:embedded_ansible_configuration_script_source, :name => "Test Repository")
+      @repository = FactoryBot.create(:embedded_ansible_configuration_script_source)
     end
 
     describe "#show" do
@@ -41,12 +41,12 @@ describe AnsibleRepositoryController do
 
     describe "#show_association" do
       before do
-        @playbook = FactoryBot.create(:embedded_playbook, :name => 'playbook_name', :configuration_script_source => @repository)
+        @playbook = FactoryBot.create(:embedded_playbook, :configuration_script_source => @repository)
       end
 
       it "shows associated playbooks" do
         get :show, :params => {:id => @repository.id, :display => 'playbooks'}
-        expect(response.body).to include("Test Repository (All Playbooks)")
+        expect(response.body).to include("#{@repository.name} (All Playbooks)")
         expect(response.status).to eq(200)
       end
     end
