@@ -205,7 +205,7 @@
         = _("SSL Verify Mode")
       .col-md-8
         = select_tag('smtp_openssl_verify_mode',
-                      options_for_select(GenericMailer.openssl_verify_modes.collect { |m| [m.titleize, m] }, @edit[:new][:smtp][:openssl_verify_mode]),
+                      options_for_select(GenericMailer.openssl_verify_modes, @edit[:new][:smtp][:openssl_verify_mode]),
                       :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('smtp_openssl_verify_mode', "#{url}")
