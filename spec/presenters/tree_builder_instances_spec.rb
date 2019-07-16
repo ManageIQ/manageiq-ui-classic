@@ -35,6 +35,7 @@ describe TreeBuilderInstances do
   end
 
   it 'sets providers nodes correctly' do
+    allow(@instances_tree).to receive(:role_allows?).and_return(true)
     providers = @instances_tree.x_get_tree_roots(false, nil)
 
     expect(providers).to eq([@vm_cloud_with_az.ext_management_system,

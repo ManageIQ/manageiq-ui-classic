@@ -32,6 +32,7 @@ describe TreeBuilderImages do
   end
 
   it 'sets providers nodes correctly' do
+    allow(@images_tree).to receive(:role_allows?).and_return(true)
     providers = @images_tree.x_get_tree_roots(false, nil)
     expect(providers).to eq([@template_cloud_with_az.ext_management_system,
                              {:id              => "arch",
