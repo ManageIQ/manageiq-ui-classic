@@ -25,6 +25,8 @@ function createSchema() {
       ],
       label: __('Name'),
       maxLength: 40,
+      autoFocus: true,
+      validateOnMount: true,
     }];
   return { fields };
 }
