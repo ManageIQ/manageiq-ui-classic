@@ -31,7 +31,7 @@ module OpsController::Settings::Upload
         add_flash(_("%{image} \"%{name}\" uploaded") % {:image => text, :name => field[:logo].original_filename})
       end
     else
-      add_flash(_("Use the Choose file button to locate .#{type} image file"), :error)
+      add_flash(_("Use the Choose file button to locate .%{image_type} image file") % {:image_type => type}, :error)
     end
     flash_to_session
     redirect_to(:action => 'explorer')

@@ -211,7 +211,7 @@ class SecurityGroupController < ApplicationController
     td = session[:security_group][:task]
     task = MiqTask.find(td[:id])
     if MiqTask.status_ok?(task.status)
-      add_flash(_("#{td[:resource]} #{td[:action]}d"))
+      add_flash("#{td[:resource]} #{td[:action]}d")
     else
       add_flash(_("Unable to %{action} %{resource}: %{details}") % {
         :action   => td[:action],
