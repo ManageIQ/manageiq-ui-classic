@@ -47,6 +47,8 @@ class MiqAeCustomizationController < ApplicationController
         add_flash(_("Select Dialogs to import"), :info)
       rescue DialogImportValidator::ImportNonYamlError
         add_flash(_("Error: the file uploaded is not of the supported format"), :error)
+      rescue DialogImportValidator::BlankFileError
+        add_flash(_("Error: the uploaded file is blank"), :error)
       rescue DialogImportValidator::ParsedNonDialogYamlError
         add_flash(_("Error during upload: incorrect Dialog format, only service dialogs can be imported"), :error)
       rescue DialogFieldAssociationValidator::DialogFieldAssociationCircularReferenceError

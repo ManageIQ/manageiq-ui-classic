@@ -314,6 +314,20 @@ describe MiqAeCustomizationController do
         end
       end
 
+      context "when the dialog importer raises a blank error" do
+        before do
+          allow(dialog_import_service).to receive(:store_for_import)
+            .and_raise(DialogImportValidator::BlankFileError)
+        end
+
+        it "redirects with an error message" do
+          post :upload_import_file, :params => params, :xhr => true
+          expect(controller.instance_variable_get(:@flash_array))
+            .to include(:message => "Error: the uploaded file is blank",
+                        :level   => :error)
+        end
+      end
+
       context "when the dialog importer raises an invalid dialog field type error" do
         before do
           allow(dialog_import_service).to receive(:store_for_import)
