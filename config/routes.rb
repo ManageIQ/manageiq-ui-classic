@@ -3014,7 +3014,6 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
-        console
         edit_vm
         resize_vm
         resize_field_changed
@@ -3113,7 +3112,6 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
-        console
         edit_vm
         event_logs
         explorer
@@ -3206,7 +3204,6 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
-        console
         drift_all
         drift_differences
         drift_history

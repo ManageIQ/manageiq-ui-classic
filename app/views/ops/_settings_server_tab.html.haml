@@ -120,20 +120,6 @@
         miqSelectPickerEvent('repository_scanning_defaultsmartproxy', "#{url}")
   %hr
   %h3
-    = _("VMware Console Support")
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _("Use")
-      .col-md-8
-        = select_tag('console_type',
-                    options_for_select(vmware_remote_console_items(@edit[:new][:server][:remote_console_type] == 'WebMKS'),
-                    :selected => @edit[:new][:server][:remote_console_type]),
-                    :class    => "selectpicker")
-      :javascript
-        miqSelectPickerEvent('console_type', "#{url}")
-  %hr
-  %h3
     = _("NTP Servers")
   .form-horizontal
     .form-group
