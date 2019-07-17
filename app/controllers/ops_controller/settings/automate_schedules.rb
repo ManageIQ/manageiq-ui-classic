@@ -19,10 +19,7 @@ module OpsController::Settings::AutomateSchedules
 
   def fetch_target_ids
     if params[:target_class] && params[:target_class] != 'null'
-      targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class]))
-      if targets.present?
-        targets = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-      end
+      targets = targets_from_class(params[:target_class])
     end
 
     render :json => {
@@ -47,10 +44,7 @@ module OpsController::Settings::AutomateSchedules
     automate_request[:target_classes] = {}
     CustomButton.button_classes.each { |db| automate_request[:target_classes][db] = ui_lookup(:model => db) }
     automate_request[:target_classes] = Array(automate_request[:target_classes].invert).sort
-    if automate_request[:target_class]
-      targets = Rbac.filtered(automate_request[:target_class]).select(:id, :name)
-      automate_request[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-    end
+    automate_request[:targets] = targets_from_class(automate_request[:target_class]) if automate_request[:target_class]
     automate_request[:target_id]      = filter[:ui][:ui_object][:target_id] || ""
     automate_request[:ui_attrs]       = filter[:ui][:ui_attrs] || []
 
@@ -73,5 +67,10 @@ module OpsController::Settings::AutomateSchedules
                         :ui_object => {}},
        :parameters => {}}
     end
+  end
+
+  def targets_from_class(klass)
+    targets = Rbac.filtered(klass).select(:id, *columns_for_klass(klass))
+    targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
   end
 end
