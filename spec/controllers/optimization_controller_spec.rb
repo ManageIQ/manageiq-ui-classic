@@ -5,6 +5,16 @@ describe OptimizationController do
     login_as user_with_feature(%w(optimization))
   end
 
+  describe '.hardcoded_reports' do
+    before do
+      MiqReport.seed
+    end
+
+    it "finds all the reports" do
+      expect { controller.class.hardcoded_reports }.not_to raise_error
+    end
+  end
+
   describe "#show_list" do
     subject { get(:show_list) }
 
