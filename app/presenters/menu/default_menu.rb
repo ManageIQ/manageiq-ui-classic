@@ -35,6 +35,7 @@ module Menu
           Settings.product.consumption ? consumption_menu_section : nil,
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
           Menu::Item.new('chargeback', N_('Chargeback'), 'chargeback', {:feature => 'chargeback', :any => true}, '/chargeback/explorer'),
+          Menu::Item.new('optimization', N_('Optimization'), 'optimization', {:feature => 'optimization'}, '/optimization'),
         ].compact)
       end
 

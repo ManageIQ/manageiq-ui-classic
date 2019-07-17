@@ -2592,7 +2592,17 @@ Rails.application.routes.draw do
         ls_select
         ls_delete
       ) + exp_post + dialog_runner_post
-   },
+    },
+
+    :optimization => {
+      :get => %w[
+        index
+        show_list
+        show
+      ],
+      :post => %w[
+      ],
+    },
 
     :orchestration_stack      => {
       :get  => %w(
