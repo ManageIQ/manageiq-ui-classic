@@ -66,7 +66,7 @@ module VmHelper::TextualSummary
       %i[
         ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service genealogy
         cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
-        floating_ips network_ports load_balancers cloud_volumes custom_button_events
+        floating_ips network_ports cloud_volumes custom_button_events
       ]
     )
   end
@@ -403,19 +403,6 @@ module VmHelper::TextualSummary
       h[:title] = _("Show all Network Ports")
       h[:explorer] = true
       h[:link]  = url_for_only_path(:action => 'network_ports', :id => @record, :display => "network_ports")
-    end
-    h
-  end
-
-  def textual_load_balancers
-    return nil if @record.try(:load_balancers).nil?
-
-    num   = @record.number_of(:load_balancers)
-    h     = {:label => _('Load Balancers'), :icon => "ff ff-load-balancer", :value => num}
-    if num.positive? && role_allows?(:feature => "load_balancer_show_list")
-      h[:title] = _("Show all Load Balancers")
-      h[:explorer] = true
-      h[:link]  = url_for_only_path(:action => 'load_balancers', :id => @record, :display => "load_balancers")
     end
     h
   end

@@ -15,7 +15,7 @@ module EmsNetworkHelper::TextualSummary
       _("Relationships"),
       %i[
         parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups floating_ips
-        network_ports load_balancers custom_button_events
+        network_ports custom_button_events
       ]
     )
   end
@@ -82,10 +82,6 @@ module EmsNetworkHelper::TextualSummary
 
   def textual_network_ports
     textual_link(@record.network_ports, :label => _("Network Ports"))
-  end
-
-  def textual_load_balancers
-    textual_link(@record.load_balancers, :label => _("Load Balancers"))
   end
 
   def textual_cloud_networks
