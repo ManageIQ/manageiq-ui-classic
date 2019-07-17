@@ -22,6 +22,11 @@ module Spec
         end
       end
 
+      def user_with_feature(features)
+        features = EvmSpecHelper.specific_product_features(*features)
+        FactoryBot.create(:user, :features => features)
+      end
+
       def seed_session_trees(a_controller, active_tree, node = nil)
         session[:sandboxes] = {
           a_controller => {

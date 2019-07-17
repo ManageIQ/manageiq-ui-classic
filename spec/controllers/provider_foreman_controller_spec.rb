@@ -733,11 +733,6 @@ describe ProviderForemanController do
     end
   end
 
-  def user_with_feature(features)
-    features = EvmSpecHelper.specific_product_features(*features)
-    FactoryBot.create(:user, :features => features)
-  end
-
   def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
     tree_nodes = JSON.parse(tree.tree_nodes)
