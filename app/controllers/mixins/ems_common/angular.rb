@@ -141,6 +141,9 @@ module Mixins
         when 'ManageIQ::Providers::Azure::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
           [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region], uri]
+        when 'ManageIQ::Providers::AzureStack::CloudManager'
+          base_url = "#{params[:default_security_protocol] == 'non-ssl' ? 'http' : 'https'}://#{params[:default_hostname]}:#{params[:default_api_port]}"
+          [base_url, params[:azure_tenant_id], user, password, params[:subscription], :Resources, params[:api_version], { :validate => true }]
         when 'ManageIQ::Providers::Vmware::CloudManager'
           case params[:cred_type]
           when 'amqp'
@@ -359,6 +362,11 @@ module Mixins
           subscription    = @ems.subscription
           client_id       = @ems.authentication_userid.to_s
           client_key      = @ems.authentication_password.to_s
+        end
+
+        if @ems.kind_of?(ManageIQ::Providers::AzureStack::CloudManager)
+          azure_tenant_id = @ems.azure_tenant_id
+          subscription    = @ems.subscription
         end
 
         if @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
@@ -643,6 +651,12 @@ module Mixins
           ems.subscription    = params[:subscription] if params[:subscription].present?
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
           default_endpoint = {:role => :default, :hostname => uri.host, :port => uri.port, :path => uri.path, :url => params[:default_url]}
+        end
+
+        if ems.kind_of?(ManageIQ::Providers::AzureStack::CloudManager)
+          ems.azure_tenant_id = params[:azure_tenant_id]
+          ems.subscription    = params[:subscription] if params[:subscription].present?
+          default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
         end
 
         if ems.kind_of?(ManageIQ::Providers::ContainerManager)

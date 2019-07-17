@@ -20,10 +20,11 @@
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
                             "emsCommonModel.ems_controller == 'ems_container' || " +                   |
                             "emsCommonModel.emstype === 'kubevirt' || " +                              |
+                            "emsCommonModel.emstype === 'azure_stack' || " +                           |
                             "emsCommonModel.emstype == 'hawkular'"}                                    |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
-    .col-md-8{"ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra' || emsCommonModel.emstype == 'vmware_cloud'"}
+    .col-md-8{"ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra' || emsCommonModel.emstype == 'vmware_cloud' || emsCommonModel.emstype == 'azure_stack'"}
       - prefix == "amqp" ? security_protocols = @amqp_security_protocols : security_protocols = @openstack_security_protocols
       = select_tag("#{prefix}_security_protocol",
                        options_for_select([["<#{_('Choose')}>", nil]] + security_protocols, :disabled => ["<#{_('Choose')}>", nil]),
@@ -238,6 +239,7 @@
                          "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
                          "emsCommonModel.emstype == 'redfish_ph_infra'       || " + |
+                         "emsCommonModel.emstype === 'azure_stack'           || " + |
                          "emsCommonModel.ems_controller == 'ems_container'"}        |
     %label.col-md-2.control-label{"for" => "#{prefix}_api_port"}
       = _('API Port')

@@ -249,7 +249,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.prometheus_alerts_auth_status   = data.prometheus_alerts_auth_status;
       $scope.emsCommonModel.prometheus_alerts_security_protocol = data.prometheus_alerts_security_protocol;
       $scope.emsCommonModel.prometheus_alerts_tls_ca_certs  = data.prometheus_alerts_tls_ca_certs;
-      $scope.emsCommonModel.api_version                     = 'v2';
+      if (["openstack", "openstack_infra"].includes($scope.emsCommonModel.ems_controller)) {
+        $scope.emsCommonModel.api_version                   = 'v2';
+      }
       $scope.emsCommonModel.ems_controller                  = data.ems_controller;
       $scope.emsCommonModel.ems_controller === 'ems_container' ? $scope.emsCommonModel.default_api_port = '8443' : $scope.emsCommonModel.default_api_port = '';
       $scope.emsCommonModel.metrics_api_port                = '443';
@@ -373,6 +375,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       return true;
     } else if ($scope.emsCommonModel.emstype === 'kubevirt') {
       return true;
+    } else if ($scope.emsCommonModel.emstype === 'azure_stack') {
+      return !!$scope.emsCommonModel.azure_tenant_id &&
+        !!$scope.emsCommonModel.subscription &&
+        !!$scope.emsCommonModel.api_version &&
+        !!$scope.emsCommonModel.default_hostname &&
+        !!$scope.emsCommonModel.default_security_protocol &&
+        !!$scope.emsCommonModel.default_api_port &&
+        !!$scope.emsCommonModel.default_userid &&
+        !!$scope.emsCommonModel.default_password
     }
     return false;
   };

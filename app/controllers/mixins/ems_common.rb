@@ -535,6 +535,7 @@ module Mixins
       @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
       @openstack_api_versions = retrieve_openstack_api_versions
       @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
+      @azure_stack_api_versions = retrieve_azure_stack_api_versions
       @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
       if @ems.respond_to?(:description)
         @ems_region_display = @ems.description
@@ -569,6 +570,10 @@ module Mixins
 
     def retrieve_nuage_api_versions
       [['Version 3.2', 'v3_2'], ['Version 4.0', 'v4_0'], ['Version 5.0', 'v5.0']]
+    end
+
+    def retrieve_azure_stack_api_versions
+      [['2017-03-09 Profile', 'V2017_03_09'], ['2018-03-01 Profile', 'V2018_03_01']]
     end
 
     def retrieve_security_protocols
