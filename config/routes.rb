@@ -283,11 +283,13 @@ Rails.application.routes.draw do
     :catalog                  => {
       :get  => %w(
         catalog_item_form_fields
+        copy_catalog
         download_data
         explorer
         ot_edit
         ot_orchestration_managers
         ot_show
+        servicetemplates_names
         show
       ),
       :post => %w(
@@ -318,8 +320,12 @@ Rails.application.routes.draw do
         reload
         resolve
         resource_delete
+        save_copy_catalog
         service_dialog_from_ot_submit
         servicetemplate_edit
+        servicetemplate_copy
+        servicetemplate_copy_cancel
+        servicetemplate_copy_saved
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid
