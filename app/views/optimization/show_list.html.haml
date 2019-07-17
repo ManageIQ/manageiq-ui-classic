@@ -1,0 +1,8 @@
+#main_div
+  TODO list
+  = @record.try(:name)
+  - @table[1].each do |row|
+    - row = OpenStruct.new(row)
+    = row.name
+    %a{:href => row.url}
+      link

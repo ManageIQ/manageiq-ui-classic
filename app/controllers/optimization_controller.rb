@@ -9,31 +9,117 @@ class OptimizationController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.model
-    MiqReport
+    nil
+  end
+
+  def title
+    @title || _("Optimization")
+  end
+
+  def self.session_key_prefix
+    'optimization'
   end
 
   def breadcrumbs_options
     {
       :breadcrumbs => [
         {:title => _('Overview')},
-        {
-          :title => _('Optimization'),
-          :url   => url_for_only_path(:controller => 'optimization', :action => 'show_list'),
-        },
-      ],
+        bc_optimization,
+        bc_report,
+      ].compact,
     }
+  end
+
+  # show optimization when in saved reports or report results
+  def bc_optimization
+    return nil if params[:id].blank? && params[:action] == 'show_list'
+
+    {:title => _("Optimization"), :url => url_for_only_path(:action => 'show_list', :id => nil)}
+  end
+
+  # show report when in report results
+  def bc_report
+    return nil if @report.nil?
+
+    {:title => @report.name, :url => url_for_only_path(:action => 'show_list', :id => @report.id)}
   end
 
   def index
     redirect_to(:action => 'show_list')
   end
 
-  def show
-    render :text => "TODO"
+  def show_list
+    if params[:id].blank?
+      show_hardcoded_reports
+    else
+      show_saved_reports
+    end
   end
 
-  def show_list
-    render :text => "TODO"
+  def show
+    @record = find_record_with_rbac(MiqReportResult, params[:id])
+    @report = find_record_with_rbac(MiqReport, params[:report_id] || @record.miq_report_id)
+    @title = @record.name
+  end
+
+  def show_saved_reports
+    @record = find_record_with_rbac(MiqReport, params[:id])
+    @title = @record.name
+    @gtl_url = 'show_list' # breadcrumbs
+
+    @table = gtl_saved(@record)
+  end
+
+  def show_hardcoded_reports
+    @record = nil
+
+    @table = gtl_hardcoded
+  end
+
+  def gtl_hardcoded
+    columns = [
+      # :id
+      [:name,        _("Report name")],
+      [:last_run_on, _("Last Run at")],
+      [:count,       _("Report runs")],
+      [:action,      _("Action")],
+      # :url
+    ]
+
+    rows = self.class.hardcoded_reports.map do |report|
+      {
+        :id          => report.id,
+        :name        => report.name,
+        :last_run_on => report.miq_report_results.order('last_run_on DESC').first.try(:last_run_on),
+        :count       => report.miq_report_results.count,
+        :action      => nil, # reserved for JS
+        :url         => url_for_only_path(:action => 'show_list', :id => report.id),
+      }
+    end
+
+    [columns, rows]
+  end
+
+  def gtl_saved(report)
+    columns = [
+      # :id
+      # :report_id
+      [:name,   _("Report")],
+      [:userid, _("Username")],
+      # :url
+    ]
+
+    rows = report.miq_report_results.order('last_run_on DESC').map do |saved|
+      {
+        :id        => saved.id,
+        :report_id => report.id,
+        :name      => saved.name,
+        :userid    => saved.userid,
+        :url       => url_for_only_path(:action => 'show', :id => saved.id, :report_id => report.id),
+      }
+    end
+
+    [columns, rows]
   end
 
   def self.hardcoded_reports
