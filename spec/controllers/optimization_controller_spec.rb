@@ -2,7 +2,7 @@ describe OptimizationController do
   render_views
 
   before do
-    login_as user_with_feature(%w(optimization))
+    login_as user_with_feature(%w[optimization])
     EvmSpecHelper.local_miq_server
   end
 
@@ -77,7 +77,12 @@ describe OptimizationController do
   describe "#show" do
     let(:report) { FactoryBot.create(:miq_report_with_results) }
     let(:result) { report.miq_report_results.first }
-    let(:saved) { result.tap { |rr| rr.name = 'saved'; rr.save } }
+    let(:saved) do
+      result.tap do |rr|
+        rr.name = 'saved'
+        rr.save
+      end
+    end
 
     context "request" do
       subject { get(:show, :params => {:id => saved.id}) }
