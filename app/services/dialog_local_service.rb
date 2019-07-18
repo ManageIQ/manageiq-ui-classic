@@ -87,6 +87,9 @@ class DialogLocalService
     when /Vm/
       api_collection_name = "vms"
       cancel_endpoint = display_options[:cancel_endpoint] || "/vm_infra/explorer"
+    when /ContainerVolume/
+      api_collection_name = base_name.underscore.pluralize
+      cancel_endpoint = "/persistent_volume/show/#{obj.id}"
     else
       api_collection_name = base_name.underscore.pluralize
       cancel_endpoint = "/#{base_name.underscore}"
