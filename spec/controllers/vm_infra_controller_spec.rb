@@ -226,9 +226,9 @@ describe VmInfraController do
 
   it 'policy simulation has no clickable quadicons' do
     expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-      :model_name                     => 'ManageIQ::Providers::InfraManager::Vm',
+      :model_name                     => 'VmOrTemplate',
       :report_data_additional_options => {
-        :model     => 'ManageIQ::Providers::InfraManager::Vm',
+        :model     => "VmOrTemplate",
         :clickable => false
       }
     )
