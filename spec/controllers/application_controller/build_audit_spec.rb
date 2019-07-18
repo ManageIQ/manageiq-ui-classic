@@ -20,7 +20,7 @@ describe ApplicationController do
     end
 
     it "tests build_created_audit" do
-      category = FactoryBot.create(:classification, :name => 'environment', :description => 'Environment')
+      category = FactoryBot.create(:classification)
       edit = {:new => {:name => "the-name", :changing_value => "test2", :static_value => "same",
                            :hash_value => {:h1 => "first", :h2 => "second", :hash_password => "pw1"},
                            :password => "pw1"}}
@@ -34,7 +34,7 @@ describe ApplicationController do
     end
 
     it "tests build_saved_audit" do
-      category = FactoryBot.create(:classification, :name => 'environment', :description => 'Environment')
+      category = FactoryBot.create(:classification)
       edit = {:current => {:name => "the-name", :changing_value => "test",  :static_value => "same",
                            :hash_value => {:h1 => "first", :h2 => "second", :hash_password => "pw1"}},
               :new     => {:name => "the-name", :changing_value => "test2", :static_value => "same",
