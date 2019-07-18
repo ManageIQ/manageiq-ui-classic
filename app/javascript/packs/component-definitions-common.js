@@ -8,8 +8,8 @@ import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
-import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
+import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
@@ -18,6 +18,7 @@ import ImportDatastoreViaGit from '../components/automate-import-export-form/imp
 import MiqAboutModal from '../components/miq-about-modal';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
+import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromOtForm from '../components/orchestration-template/service-dialog-from-ot';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
@@ -27,7 +28,7 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import WorkersForm from '../components/workers-form/workers-form';
-import ReportDataTable from '../components/report-data-table';
+import { DataDrivenTable } from '../components/simple-table/simple-table';
 
 /**
 * Add component definitions to this file.
@@ -41,6 +42,7 @@ ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
+ManageIQ.component.addReact('DataDrivenTable', DataDrivenTable);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
