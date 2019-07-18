@@ -95,7 +95,7 @@ module OpsController::Diagnostics
       end
 
       begin
-        if params[:log_protocol].blank?
+        if params[:log_protocol].blank? || params[:log_protocol] == "<No Depot>"
           @record.log_file_depot.try(:destroy)
         else
           new_uri = "#{params[:uri_prefix]}://#{params[:uri]}"
@@ -884,7 +884,7 @@ module OpsController::Diagnostics
   end
 
   def build_supported_depots_for_select
-    depots_for_select = FileDepot.supported_depots.values.sort
+    depots_for_select = FileDepot.supported_depots.values.sort.insert(0, "<No Depot>")
     # S3 and Swift not currently supported for Log Collection
     not_supported_depots = ["AWS S3", "OpenStack Swift"]
     @supported_depots_for_select = depots_for_select - not_supported_depots
