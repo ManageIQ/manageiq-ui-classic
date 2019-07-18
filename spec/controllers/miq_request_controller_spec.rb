@@ -511,4 +511,17 @@ describe MiqRequestController do
     [{"=" => {"value" => user1.id, "field" => "MiqRequest-requester_id"}},
      {"=" => {"value" => user2.id, "field" => "MiqRequest-requester_id"}}]
   end
+
+  describe "breadcrumbs_options" do
+    let(:miq_request) do
+      FactoryBot.create(:miq_provision_request, :with_approval, :description => 'Description of request')
+    end
+
+    it "returns item's breadcrumb on action page" do
+      controller.params = {:req_id => miq_request.id} # simulate action with id (edit, copy, etc.)
+      allow(controller).to receive(:not_show_page?).and_return(true) # simulate page with item's breadcrumb
+
+      expect(controller.send(:data_for_breadcrumbs).last).to include(:title => miq_request.description)
+    end
+  end
 end

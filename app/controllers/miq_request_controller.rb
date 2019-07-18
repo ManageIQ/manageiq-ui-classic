@@ -544,6 +544,10 @@ class MiqRequestController < ApplicationController
     session[:prov_options] = @options if @options
   end
 
+  def gtl_url
+    "/show"
+  end
+
   def breadcrumbs_options
     if @layout == "miq_request_ae" || @record&.type == "AutomationRequest"
       {
@@ -559,6 +563,7 @@ class MiqRequestController < ApplicationController
           {:title => _("Services")},
           {:title => _("Requests"), :url => controller_url},
         ],
+        :record_info  => (MiqRequest.find(params[:req_id]) if params[:req_id]),
         :record_title => :description,
       }
     end
