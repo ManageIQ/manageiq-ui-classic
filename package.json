@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
-    "@data-driven-forms/pf3-component-mapper": "^1.9.9",
-    "@data-driven-forms/react-form-renderer": "^1.9.9",
+    "@data-driven-forms/pf3-component-mapper": "^1.13.3",
+    "@data-driven-forms/react-form-renderer": "^1.13.3",
     "@manageiq/react-ui-components": "~0.11.27",
     "@manageiq/ui-components": "~1.2.9",
     "@pf3/select": "~1.12.6",
