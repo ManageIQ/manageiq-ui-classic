@@ -2,7 +2,7 @@ module ReportController::SavedReports
   extend ActiveSupport::Concern
 
   def show_saved
-    @sb[:last_saved_id] = params[:id] if params[:id] && params[:id] != "report" && !params[:id].to_s.start_with?("savedreports")
+    @sb[:last_saved_id] = params[:id] if params[:id] && params[:id] != "report"
     fetch_saved_report(@sb[:last_saved_id])
     if @report.blank? # if report was nil. reset active tree back to report tree, and keep active node report to be same
       self.x_active_tree = :reports_tree
