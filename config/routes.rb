@@ -2601,6 +2601,7 @@ Rails.application.routes.draw do
         show
       ],
       :post => %w[
+        queue_report
       ],
     },
 

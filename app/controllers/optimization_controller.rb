@@ -62,6 +62,19 @@ class OptimizationController < ApplicationController
     @title = @record.name
   end
 
+  def queue_report
+    assert_privileges("miq_report_run")
+
+    report = MiqReport.for_user(current_user).find(params[:id])
+    result_id = report.queue_generate_table(:userid => session[:userid])
+
+    render :json => {
+      :report_id => report.id,
+      :result_id => result_id,
+      :flash => _("Report has been successfully queued to run"),
+    }
+  end
+
   def show_saved_reports
     @record = find_record_with_rbac(MiqReport, params[:id])
     @title = @record.name
@@ -84,6 +97,7 @@ class OptimizationController < ApplicationController
       [:count,       _("Report runs")],
       [:action,      _("Action")],
       # :url
+      # :queue_url
     ]
 
     rows = self.class.hardcoded_reports.map do |report|
@@ -94,6 +108,7 @@ class OptimizationController < ApplicationController
         :count       => report.miq_report_results.count,
         :action      => nil, # reserved for JS
         :url         => url_for_only_path(:action => 'show_list', :id => report.id),
+        :queue_url   => url_for_only_path(:action => 'queue_report', :id => report.id),
       }
     end
 
