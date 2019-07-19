@@ -1,8 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import * as resolve from 'table-resolver';
-import { API } from '../http_api';
-
 import {
   customHeaderFormattersDefinition,
   Filter,
@@ -14,6 +12,8 @@ import {
   Table,
   TABLE_SORT_DIRECTION,
 } from 'patternfly-react';
+
+import { API } from '../http_api';
 
 const makeColumn = (name, label, index) => ({
   property: name,
@@ -63,18 +63,29 @@ const parseReportRows = reportData => reportData
     ...item,
   }));
 
+const processLoadedData = (state, action) => {
+  const columns = parseReportColumns(action.data);
+  const filter = { ...state.filter };
+  if (!filter.field) {
+    filter.field = columns[0] && columns[0].name;
+  }
+
+  return {
+    ...state,
+    loading: false,
+    filter,
+    columns,
+    rows: parseReportRows(action.data),
+    total: action.data.count,
+    sortingColumns: action.sortingColumns,
+    pagination: action.pagination,
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'loadedData':
-      return {
-        ...state,
-        loading: false,
-        total: action.data.count,
-        columns: parseReportColumns(action.data),
-        rows: parseReportRows(action.data),
-        sortingColumns: action.sortingColumns,
-        pagination: action.pagination,
-      };
+      return processLoadedData(state, action);
     case 'filterSelected':
       return {
         ...state,
@@ -130,14 +141,14 @@ limit=${limit}&offset=${offset}${filterString}`).then((data) => {
 };
 
 const ReportDataTable = (props) => {
-
+  const { perPageDefault, perPageOptions } = props;
   const initState = {
     ...initialState,
     pagination: {
       page: 1,
-      perPage: props.perPageDefault,
-      perPageOptions: props.perPageOptions,
-    }
+      perPage: perPageDefault,
+      perPageOptions,
+    },
   };
 
   const [state, dispatch] = useReducer(reducer, initState);

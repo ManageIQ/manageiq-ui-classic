@@ -15,7 +15,7 @@ describe('<ReportDataTable />', () => {
     initialProps = {
       reportResultId: 123,
       perPageDefault: 20,
-      perPageOptions: [20,50,100],
+      perPageOptions: [20, 50, 100],
     };
   });
 
