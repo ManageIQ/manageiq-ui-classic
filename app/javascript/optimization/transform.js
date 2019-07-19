@@ -1,5 +1,18 @@
 import React from 'react';
 
+function queue(url) {
+  return (e) => {
+    window.miqSparkleOn();
+    http
+      .post(url, {})
+      .then(() => window.location.reload())
+      .catch(() => window.miqSparkleOff());
+
+    e.preventDefault();
+    e.stopPropagation();
+  };
+}
+
 function transformSaved({id, report_id, name, userid, url}) {
   return {
     name,
@@ -13,7 +26,7 @@ function transformReport({id, name, last_run_on, count, action, url, queue_url})
     last_run_on: last_run_on ? moment(last_run_on).format('MM/DD/YYYY') : null,
     count,
     action: (
-      <button type="button" className="btn btn-default">
+      <button type="button" onClick={queue(queue_url)} className="btn btn-default">
         {__("Queue Report")}
       </button>
     ),
