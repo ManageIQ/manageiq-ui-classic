@@ -367,6 +367,8 @@ class ReportController < ApplicationController
       @html = report_build_html_table(@report,
                                       rr.html_rows(:page     => @sb[:pages][:current],
                                                    :per_page => @sb[:pages][:perpage]).join)
+    elsif params[:type] == 'data'
+      @html = true # use rendering code path for the @html case
     end
     if %w[graph hybrid].include?(params[:type])
       @render_chart = true
@@ -849,8 +851,11 @@ class ReportController < ApplicationController
         end
       elsif @sb[:pages]
         presenter.update(:paging_div, r[:partial => 'layouts/saved_report_paging_bar', :locals => @sb[:pages]])
-        #presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
-        presenter.hide(:form_buttons_div).hide(:rpb_div_1).remove_paging
+        if @ght_type == 'data'
+          presenter.hide(:form_buttons_div).hide(:rpb_div_1).remove_paging
+        else
+          presenter.hide(:form_buttons_div).show(:rpb_div_1).remove_paging
+        end
       end
       presenter.show(:paging_div)
     else

@@ -1,2 +1,4 @@
--# #report_html_div= @html.html_safe
-= react 'ReportDataTable', {:reportResultId => @report_result_id, :perPageOptions => pp_options, :perPageDefault => @settings[:perpage][:reports]}
+- if @ght_type == 'data'
+  = react 'ReportDataTable', {:reportResultId => @report_result_id, :perPageOptions => pp_options, :perPageDefault => @settings[:perpage][:reports]}
+- else
+  #report_html_div= @html.html_safe
