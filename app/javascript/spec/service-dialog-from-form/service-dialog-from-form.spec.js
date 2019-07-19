@@ -7,14 +7,21 @@ import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
 import '../helpers/sprintf';
 
-import ServiceDialogFromOt from '../../components/orchestration-template/service-dialog-from-ot';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
+
+import ServiceDialogFromOt from '../../components/service-dialog-from-form/service-dialog-from';
+
+jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
 describe('<ServiceDialogFromOt />', () => {
   let initialProps;
 
   beforeEach(() => {
     initialProps = {
-      otId: 123,
+      templateId: 123,
+      dialogClass: 'dialogClass',
+      templateClass: 'templateClass',
+      miqRedirectBackAdress: '/go/back',
     };
   });
 
@@ -38,8 +45,14 @@ describe('<ServiceDialogFromOt />', () => {
       setTimeout(() => {
         wrapper.find('button').first().simulate('click');
         expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual({
-          action: 'orchestration_template_service_dialog',
-          resource: { label: 'Foo', ot_id: 123 },
+          action: 'template_service_dialog',
+          resource: {
+            label: 'Foo', template_id: 123, dialog_class: initialProps.dialogClass, template_class: initialProps.templateClass,
+          },
+        });
+        // after submit
+        setImmediate(() => {
+          expect(miqRedirectBack).toHaveBeenCalledWith(expect.any(String), 'success', initialProps.miqRedirectBackAdress);
         });
         done();
       }, 500);

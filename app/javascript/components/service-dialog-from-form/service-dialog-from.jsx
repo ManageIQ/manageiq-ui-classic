@@ -5,18 +5,22 @@ import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
-import serviceDialogFromOtSchema from './service-dialog-from-ot.schema';
+import serviceDialogFromOtSchema from './service-dialog-from.schema';
 
-const ServiceDialogFromOt = ({ otId }) => {
+const ServiceDialogFromOt = ({
+  templateId, dialogClass, templateClass, miqRedirectBackAdress,
+}) => {
   const onSubmit = values => API.post('/api/service_dialogs', {
-    action: 'orchestration_template_service_dialog',
+    action: 'template_service_dialog',
     resource: {
       ...values,
-      ot_id: otId,
+      template_id: templateId,
+      dialog_class: dialogClass,
+      template_class: templateClass,
     },
   }).then(() => miqRedirectBack(
     sprintf(__('Service Dialog "%s" was successfully created'), values.label),
-    'success', '/catalog/explorer',
+    'success', miqRedirectBackAdress,
   ));
 
   return (
@@ -24,7 +28,7 @@ const ServiceDialogFromOt = ({ otId }) => {
       <MiqFormRenderer
         schema={serviceDialogFromOtSchema}
         onSubmit={onSubmit}
-        onCancel={() => miqRedirectBack(__('Creation of a new Service Dialog was cancelled by the user'), 'success', '/catalog/explorer')}
+        onCancel={() => miqRedirectBack(__('Creation of a new Service Dialog was cancelled by the user'), 'success', miqRedirectBackAdress)}
         buttonsLabels={{ submitLabel: __('Save') }}
       />
     </Grid>
@@ -32,7 +36,10 @@ const ServiceDialogFromOt = ({ otId }) => {
 };
 
 ServiceDialogFromOt.propTypes = {
-  otId: PropTypes.number.isRequired,
+  templateId: PropTypes.number.isRequired,
+  dialogClass: PropTypes.string.isRequired,
+  templateClass: PropTypes.string.isRequired,
+  miqRedirectBackAdress: PropTypes.string.isRequired,
 };
 
 export default ServiceDialogFromOt;
