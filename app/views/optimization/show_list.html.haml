@@ -1,8 +1,2 @@
 #main_div
-  = @record.try(:name)
-  - @table[1].each do |row|
-    - row = OpenStruct.new(row)
-    = row.name
-    %a{:href => row.url}
-      link
-  = react('DataDrivenTable', {:columns => @table[0], :rows => @table[1]})
+  = react('DataDrivenTable', {:columns => @table[0], :rows => @table[1], :transform => 'miqOptimizationTransform'})
