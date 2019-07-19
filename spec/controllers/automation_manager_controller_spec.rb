@@ -441,9 +441,9 @@ describe AutomationManagerController do
     session[:tag_items] = [@ans_configured_system.id]
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:automation_manager_cs_filter)
-    parent = FactoryBot.create(:classification, :name => "test_category")
-    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification)
+    FactoryBot.create(:classification_tag, :parent => parent)
+    FactoryBot.create(:classification_tag, :parent => parent)
     post :tagging, :params => { :id => @ans_configured_system.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -514,7 +514,6 @@ describe AutomationManagerController do
 
     it 'can render details for a job template' do
       @record = FactoryBot.create(:ansible_configuration_script,
-                                   :name        => "ConfigScript1",
                                    :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
                                                                 'min' => nil, 'default' => nil, 'max' => nil,
                                                                 'question_name' => 'Survey', 'required' => false,
