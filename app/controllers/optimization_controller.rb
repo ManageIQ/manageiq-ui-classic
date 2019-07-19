@@ -153,4 +153,14 @@ class OptimizationController < ApplicationController
       MiqReport.find_by!(:menu_name => 'Host Memory Trends (last week)'),
     ].sort_by(&:title)
   end
+
+  def layout_uses_listnav?
+    false
+  end
+  helper_method :layout_uses_listnav?
+
+  def taskbar_in_header?
+    false
+  end
+  helper_method :taskbar_in_header?
 end
