@@ -25,13 +25,19 @@ export const DataDrivenTable = ({
   columns,
   rows,
   id,
+  transform = (r) => r,
   ...props
 }) => {
-  const generatedRows = rows.map((row, index) => (
+  if (typeof transform === 'string') {
+    transform = window[transform];
+  }
+
+  const generatedRows = rows.map(transform).map((row, index) => (
     <TableRow key={`row-${index}`}>
       {columns.map(([key, _content, props = {}], index) => <TableCell {...props} key={`${index}-${key}`}>{row[key]}</TableCell>)}
     </TableRow>
   ));
+
   return (
     <Table id={id} {...props}>
       <TableHead>
@@ -52,4 +58,5 @@ DataDrivenTable.propTypes = {
   columns: PropTypes.array.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   id: PropTypes.string,
+  transform: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
