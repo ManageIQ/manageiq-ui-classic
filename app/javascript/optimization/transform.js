@@ -1,5 +1,9 @@
 import React from 'react';
 
+function click(url) {
+  window.DoNav(url);
+}
+
 function queue(url) {
   return (e) => {
     window.miqSparkleOn();
@@ -17,6 +21,7 @@ function transformSaved({id, report_id, name, userid, url}) {
   return {
     name,
     userid,
+    $onClick: () => click(url),
   };
 }
 
@@ -30,6 +35,7 @@ function transformReport({id, name, last_run_on, count, action, url, queue_url})
         {__("Queue Report")}
       </button>
     ),
+    $onClick: () => click(url),
   };
 }
 

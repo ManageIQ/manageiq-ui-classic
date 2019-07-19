@@ -32,11 +32,23 @@ export const DataDrivenTable = ({
     transform = window[transform];
   }
 
-  const generatedRows = rows.map(transform).map((row, index) => (
-    <TableRow key={`row-${index}`}>
-      {columns.map(([key, _content, props = {}], index) => <TableCell {...props} key={`${index}-${key}`}>{row[key]}</TableCell>)}
-    </TableRow>
-  ));
+  const generatedRows = rows.map(transform).map((row, index) => {
+    const handleClick = (e) => {
+      if (! row.$onClick) {
+        return;
+      }
+
+      row.$onClick();
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    return (
+      <TableRow key={`row-${index}`} onClick={handleClick}>
+        {columns.map(([key, _content, props = {}], index) => <TableCell {...props} key={`${index}-${key}`}>{row[key]}</TableCell>)}
+      </TableRow>
+    )
+  });
 
   return (
     <Table id={id} {...props}>
