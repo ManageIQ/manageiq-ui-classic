@@ -1525,4 +1525,20 @@ describe ReportController do
       end
     end
   end
+
+  context 'saved reports' do
+    describe '#accordion_select?' do
+      subject { controller.send(:accordion_select?, param) }
+
+      context 'an accord' do
+        let(:param) { "foo_accord" }
+        it { is_expected.to be_truthy }
+      end
+
+      context 'a number' do
+        let(:param) { "1234" }
+        it { is_expected.to be_falsey }
+      end
+    end
+  end
 end
