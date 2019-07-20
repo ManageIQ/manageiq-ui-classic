@@ -150,7 +150,7 @@ describe DialogLocalService do
       let(:obj) { double(:class => ManageIQ::Providers::Vmware::InfraManager::ContainerVolume, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "container_volume", "container_volumes", "/container_volume"
+                       "container_volume", "container_volumes", "/persistent_volume/show/123"
     end
 
     context "when the object is an EmsCluster" do
