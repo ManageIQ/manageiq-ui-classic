@@ -98,6 +98,7 @@ class OptimizationController < ApplicationController
       [:action,      _("Action")],
       # :url
       # :queue_url
+      # :klass
     ]
 
     rows = self.class.hardcoded_reports.map do |report|
@@ -109,6 +110,7 @@ class OptimizationController < ApplicationController
         :action      => nil, # reserved for JS
         :url         => url_for_only_path(:action => 'show_list', :id => report.id),
         :queue_url   => url_for_only_path(:action => 'queue_report', :id => report.id),
+        :klass       => 'MiqReport',
       }
     end
 
@@ -122,6 +124,7 @@ class OptimizationController < ApplicationController
       [:name,   _("Report")],
       [:userid, _("Username")],
       # :url
+      # :klass
     ]
 
     rows = report.miq_report_results.order('last_run_on DESC').map do |saved|
@@ -131,6 +134,7 @@ class OptimizationController < ApplicationController
         :name      => saved.name,
         :userid    => saved.userid,
         :url       => url_for_only_path(:action => 'show', :id => saved.id, :report_id => report.id),
+        :klass     => 'MiqReportResult',
       }
     end
 

@@ -48,9 +48,10 @@ function transformReport({id, name, last_run_on, count, action, url, queue_url})
 }
 
 export function miqOptimizationTransform(row) {
-  if (row.report_id) { // MiqReportResult
-    return transformSaved(row);
-  } else { // MiqReport
-    return transformReport(row);
+  switch (row.klass) {
+    case 'MiqReportResult':
+      return transformSaved(row);
+    case 'MiqReport':
+      return transformReport(row);
   }
 }
