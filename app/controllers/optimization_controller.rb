@@ -79,12 +79,14 @@ class OptimizationController < ApplicationController
     @record = find_record_with_rbac(MiqReport, params[:id])
     @title = @record.name
     @gtl_url = 'show_list' # breadcrumbs
+    @center_toolbar = 'optimizations'
 
     @table = gtl_saved(@record)
   end
 
   def show_hardcoded_reports
     @record = nil
+    @center_toolbar = 'optimizations'
 
     @table = gtl_hardcoded
   end
@@ -164,7 +166,12 @@ class OptimizationController < ApplicationController
   helper_method :layout_uses_listnav?
 
   def taskbar_in_header?
-    false
+    @center_toolbar.present?
   end
   helper_method :taskbar_in_header?
+
+  def display_back_button?
+    false
+  end
+  helper_method :display_back_button?
 end
