@@ -12,7 +12,12 @@ describe OptimizationController do
     end
 
     it "finds all the reports" do
-      expect { controller.class.hardcoded_reports }.not_to raise_error
+      expect { controller.hardcoded_reports }.not_to raise_error
+
+      actual = controller.hardcoded_reports.pluck(:menu_name).sort
+      expected = controller.class.hardcoded_reports.sort
+
+      expect(actual).to eq(expected)
     end
   end
 

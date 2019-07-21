@@ -103,7 +103,7 @@ class OptimizationController < ApplicationController
       # :klass
     ]
 
-    rows = self.class.hardcoded_reports.map do |report|
+    rows = hardcoded_reports.map do |report|
       {
         :id          => report.id,
         :name        => report.name,
@@ -146,18 +146,22 @@ class OptimizationController < ApplicationController
   def self.hardcoded_reports
     [
       # 400_Operations- Virtual Machines/045_VMs_ Offline VMs with Snapshot.yaml
-      MiqReport.find_by!(:menu_name => 'Offline VMs with Snapshot'),
+      'Offline VMs with Snapshot',
       # 425_VM Sprawl - Candidates/052_VMs with Volume Free Space -= 75%.yaml
-      MiqReport.find_by!(:menu_name => 'VMs with Volume Free Space >= 75%'),
+      'VMs with Volume Free Space >= 75%',
       # 650_Performance by Asset Type - Virtual Machines/160_Top CPU Consumers weekly.yaml
-      MiqReport.find_by!(:menu_name => 'Top CPU Consumers (weekly)'),
+      'Top CPU Consumers (weekly)',
       # 650_Performance by Asset Type - Virtual Machines/170_Top Memory Consumers weekly.yaml
-      MiqReport.find_by!(:menu_name => 'Top Memory Consumers (weekly)'),
+      'Top Memory Consumers (weekly)',
       # 770_Trending - Hosts/120_Host CPU Trends last week.yaml
-      MiqReport.find_by!(:menu_name => 'Host CPU Trends (last week)'),
+      'Host CPU Trends (last week)',
       # 770_Trending - Hosts/140_Host Memory Trends last week.yaml
-      MiqReport.find_by!(:menu_name => 'Host Memory Trends (last week)'),
-    ].sort_by(&:title)
+      'Host Memory Trends (last week)',
+    ]
+  end
+
+  def hardcoded_reports
+    MiqReport.where(:menu_name => self.class.hardcoded_reports).order('name')
   end
 
   def layout_uses_listnav?
