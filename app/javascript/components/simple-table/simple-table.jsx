@@ -38,7 +38,7 @@ export const DataDrivenTable = ({
         return;
       }
 
-      row.$onClick();
+      row.$onClick(e);
       e.preventDefault();
       e.stopPropagation();
     };
