@@ -1,7 +1,3 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-
-  - if @table[1].empty?
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
-  - else
-    = react('DataDrivenTable', {:columns => @table[0], :rows => @table[1], :transform => 'miqOptimizationTransform'})
+  = react 'OptimizationList', {:columns => @table[0], :rows => @table[1]}
