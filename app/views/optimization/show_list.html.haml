@@ -1,4 +1,6 @@
 #main_div
+  = render :partial => "layouts/flash_msg"
+
   - if @table[1].empty?
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}
   - else

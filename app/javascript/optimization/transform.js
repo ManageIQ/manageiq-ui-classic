@@ -16,11 +16,7 @@ function queue(url) {
     http
       .post(url, {})
       .then((data) => {
-        miqFlashLater({
-          message: data.flash,
-          level: 'success',
-        });
-
+        window.add_flash(data.flash, 'success');
         return refresh();
       })
       .catch(() => window.miqSparkleOff());
