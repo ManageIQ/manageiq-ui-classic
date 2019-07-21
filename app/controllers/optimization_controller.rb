@@ -101,7 +101,7 @@ class OptimizationController < ApplicationController
 
     render :json => {:columns   => columns,
                      :rows      => rows,
-                     :report_id => params[:id].to_s}
+                     :report_id => params[:id]&.to_s}
   end
 
   def gtl_hardcoded

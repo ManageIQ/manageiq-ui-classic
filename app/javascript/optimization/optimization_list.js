@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DataDrivenTable } from '../components/simple-table/simple-table.jsx';
 import { miqOptimizationTransform } from '../optimization/transform.js';
+import { refresh } from './refresh.js';
 
 const empty = () => (
   <div className="alert alert-info">
@@ -14,6 +15,8 @@ const empty = () => (
 )
 
 export default function OptimizationList({columns, rows, refresh_url, ...props}) {
+  refresh.url = refresh_url;
+
   if (! columns || ! rows || ! rows.length) {
     return empty();
   }
