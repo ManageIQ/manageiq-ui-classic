@@ -71,7 +71,7 @@ class OptimizationController < ApplicationController
     render :json => {
       :report_id => report.id,
       :result_id => result_id,
-      :flash => _("Report has been successfully queued to run"),
+      :flash     => _("Report has been successfully queued to run"),
     }
   end
 

@@ -9,7 +9,15 @@ function queue(url) {
     window.miqSparkleOn();
     http
       .post(url, {})
-      .then(() => window.location.reload())
+      .then((data) => {
+        miqFlashLater({
+          message: data.flash,
+          level: 'success',
+        });
+
+        // FIXME just refresh the GTL
+        window.location.reload();
+      })
       .catch(() => window.miqSparkleOff());
 
     e.preventDefault();
