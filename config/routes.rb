@@ -2599,6 +2599,7 @@ Rails.application.routes.draw do
         index
         show_list
         show
+        json_list
       ],
       :post => %w[
         queue_report

@@ -69,8 +69,8 @@ class OptimizationController < ApplicationController
     result_id = report.queue_generate_table(:userid => session[:userid])
 
     render :json => {
-      :report_id => report.id,
-      :result_id => result_id,
+      :report_id => report.id.to_s,
+      :result_id => result_id.to_s,
       :flash     => _("Report has been successfully queued to run"),
     }
   end
@@ -91,6 +91,19 @@ class OptimizationController < ApplicationController
     @table = gtl_hardcoded
   end
 
+  def json_list
+    columns, rows = if params[:id].blank?
+                      gtl_hardcoded
+                    else
+                      @record = find_record_with_rbac(MiqReport, params[:id])
+                      gtl_saved(@record)
+                    end
+
+    render :json => {:columns   => columns,
+                     :rows      => rows,
+                     :report_id => params[:id].to_s}
+  end
+
   def gtl_hardcoded
     columns = [
       # :id
@@ -105,7 +118,7 @@ class OptimizationController < ApplicationController
 
     rows = hardcoded_reports.map do |report|
       {
-        :id          => report.id,
+        :id          => report.id.to_s,
         :name        => report.name,
         :last_run_on => report.miq_report_results.order('last_run_on DESC').first.try(:last_run_on),
         :count       => report.miq_report_results.count,
@@ -132,8 +145,8 @@ class OptimizationController < ApplicationController
 
     rows = report.miq_report_results.order('last_run_on DESC').map do |saved|
       {
-        :id          => saved.id,
-        :report_id   => report.id,
+        :id          => saved.id.to_s,
+        :report_id   => report.id.to_s,
         :name        => saved.name,
         :last_run_on => saved.last_run_on,
         :userid      => saved.userid,
