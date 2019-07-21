@@ -23,9 +23,14 @@ function queue(url) {
   };
 }
 
-function transformSaved({id, report_id, name, userid, url}) {
+function formatDate(date) {
+  return date ? moment(date).format('MM/DD/YYYY h:mm:ss a') : null;
+}
+
+function transformSaved({id, report_id, name, last_run_on, userid, url}) {
   return {
     name,
+    last_run_on: formatDate(last_run_on),
     userid,
     $onClick: () => click(url),
   };
@@ -34,7 +39,7 @@ function transformSaved({id, report_id, name, userid, url}) {
 function transformReport({id, name, last_run_on, count, action, url, queue_url}) {
   return {
     name,
-    last_run_on: last_run_on ? moment(last_run_on).format('MM/DD/YYYY') : null,
+    last_run_on: formatDate(last_run_on),
     count,
     action: (
       <button type="button" onClick={queue(queue_url)} className="btn btn-default button-queue">

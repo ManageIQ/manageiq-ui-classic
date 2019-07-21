@@ -123,20 +123,22 @@ class OptimizationController < ApplicationController
     columns = [
       # :id
       # :report_id
-      [:name,   _("Report")],
-      [:userid, _("Username")],
+      [:name,        _("Report")],
+      [:last_run_on, _("Last Run at")],
+      [:userid,      _("Username")],
       # :url
       # :klass
     ]
 
     rows = report.miq_report_results.order('last_run_on DESC').map do |saved|
       {
-        :id        => saved.id,
-        :report_id => report.id,
-        :name      => saved.name,
-        :userid    => saved.userid,
-        :url       => url_for_only_path(:action => 'show', :id => saved.id, :report_id => report.id),
-        :klass     => 'MiqReportResult',
+        :id          => saved.id,
+        :report_id   => report.id,
+        :name        => saved.name,
+        :last_run_on => saved.last_run_on,
+        :userid      => saved.userid,
+        :url         => url_for_only_path(:action => 'show', :id => saved.id, :report_id => report.id),
+        :klass       => 'MiqReportResult',
       }
     end
 
