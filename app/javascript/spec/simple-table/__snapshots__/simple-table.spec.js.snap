@@ -37,6 +37,7 @@ exports[`Simple react table should render correctly 1`] = `
       },
     ]
   }
+  transform={[Function]}
 >
   <Component
     className="table dataTable table-striped table-bordered table-hover"
@@ -73,8 +74,11 @@ exports[`Simple react table should render correctly 1`] = `
         <tbody>
           <Component
             key="row-0"
+            onClick={[Function]}
           >
-            <tr>
+            <tr
+              onClick={[Function]}
+            >
               <Component
                 key="0-column-one"
               >
@@ -98,8 +102,11 @@ exports[`Simple react table should render correctly 1`] = `
           </Component>
           <Component
             key="row-1"
+            onClick={[Function]}
           >
-            <tr>
+            <tr
+              onClick={[Function]}
+            >
               <Component
                 key="0-column-one"
               >
