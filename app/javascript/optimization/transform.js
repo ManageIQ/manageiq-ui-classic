@@ -1,4 +1,5 @@
 import React from 'react';
+import { refresh } from './refresh.js';
 
 function click(url, e) {
   // clicking on Queue should not trigger row click, stopPropagation doesn't work
@@ -20,8 +21,7 @@ function queue(url) {
           level: 'success',
         });
 
-        // FIXME just refresh the GTL
-        window.location.reload();
+        return refresh();
       })
       .catch(() => window.miqSparkleOff());
   };
