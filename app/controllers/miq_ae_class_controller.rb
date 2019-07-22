@@ -506,6 +506,7 @@ class MiqAeClassController < ApplicationController
     if playbook_style_location?(@ae_method.location)
       # these variants are implemented in Angular
       angular_form_specific_data
+      @right_cell_text = _("Editing Automate Method \"%{name}\"") % {:name => @ae_method.name}
     else
       # other variants are implemented server side
       set_method_form_vars
