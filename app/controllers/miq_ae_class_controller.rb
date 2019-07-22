@@ -501,6 +501,7 @@ class MiqAeClassController < ApplicationController
     @selectable_methods = embedded_method_regex(@ae_method.fqname)
     if @ae_method.location == "playbook"
       angular_form_specific_data
+      @right_cell_text = _("Editing Automate Method \"%{name}\"") % {:name => @ae_method.name}
     else
       set_method_form_vars
       @in_a_form = true
