@@ -8,16 +8,18 @@ import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
-import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
+import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GraphQLExplorer from '../graphql-explorer';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MiqAboutModal from '../components/miq-about-modal';
+import OptimizationList from '../optimization/optimization_list.js';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
+import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromOtForm from '../components/orchestration-template/service-dialog-from-ot';
 import ServiceForm from '../components/service-form';
 import SetServiceOwnershipForm from '../components/set-service-ownership-form';
@@ -27,7 +29,6 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import WorkersForm from '../components/workers-form/workers-form';
-import ReportDataTable from '../components/report-data-table';
 
 /**
 * Add component definitions to this file.
@@ -48,6 +49,7 @@ ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GraphQLExplorer', GraphQLExplorer);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
+ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);

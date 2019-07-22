@@ -690,11 +690,6 @@ describe AutomationManagerController do
     end
   end
 
-  def user_with_feature(features)
-    features = EvmSpecHelper.specific_product_features(*features)
-    FactoryBot.create(:user, :features => features)
-  end
-
   def find_treenode_for_provider(provider, tree_json)
     key = ems_key_for_provider(provider)
     tree = JSON.parse(tree_json)
