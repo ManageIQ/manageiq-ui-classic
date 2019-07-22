@@ -33,7 +33,7 @@
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_playbook_id.$invalid}",
                 "ng-if" => "#{ng_model}.location!=='playbook'"}
       %label.col-md-3.control-label{"for" => "#{ng_model}.ansible_template_id"}
-        = playbook_label(@edit[:new][:location])
+        = playbook_label(@ae_method.try(:location) || @edit[:new][:location])
       .col-md-9
         %select{"ng-model"    => "#{ng_model}.ansible_template",
                 "name"        => "#{ng_model}_ansible_template_id",
