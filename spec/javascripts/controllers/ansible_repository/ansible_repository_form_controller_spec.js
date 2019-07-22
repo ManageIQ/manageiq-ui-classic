@@ -6,20 +6,13 @@ describe('repositoryFormController', function() {
     scm_url: 'https://github.com/ManageIQ',
     authentication_id: null,
     scm_branch: 'master',
-    scm_clean: false,
-    scm_delete_on_update: false,
-    scm_update_on_launch: false,
   };
   var newRepository = {
     name: '',
     description: '',
-    scm_type: 'git',
     scm_url: '',
     authentication_id: null,
     scm_branch: '',
-    scm_clean: false,
-    scm_delete_on_update: false,
-    scm_update_on_launch: false,
   };
 
   beforeEach(module('ManageIQ'));
