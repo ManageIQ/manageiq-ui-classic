@@ -29,7 +29,6 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import WorkersForm from '../components/workers-form/workers-form';
-import { DataDrivenTable } from '../components/simple-table/simple-table';
 
 /**
 * Add component definitions to this file.
@@ -43,7 +42,6 @@ ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
-ManageIQ.component.addReact('DataDrivenTable', DataDrivenTable);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);
 ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);

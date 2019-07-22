@@ -28,10 +28,6 @@ export const DataDrivenTable = ({
   transform,
   ...props
 }) => {
-  if (typeof transform === 'string') {
-    transform = window[transform];
-  }
-
   const generatedRows = rows.map(transform).map((row, index) => {
     const handleClick = (e) => {
       if (! row.$onClick) {
@@ -70,7 +66,7 @@ DataDrivenTable.propTypes = {
   columns: PropTypes.array.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   id: PropTypes.string,
-  transform: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  transform: PropTypes.func,
 };
 
 DataDrivenTable.defaultProps = {
