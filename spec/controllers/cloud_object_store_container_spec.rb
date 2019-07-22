@@ -9,13 +9,9 @@ describe CloudObjectStoreContainerController do
     let!(:user) { stub_user(:features => :all) }
     before do
       allow(@container).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
-      @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
-      @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+      classification = FactoryBot.create(:classification)
+      @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@container).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudObjectStoreContainer"
       edit = {
