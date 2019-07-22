@@ -162,6 +162,10 @@ describe TreeBuilder do
 
       expect(builder.count_only_or_objects(false, 1..5, ->(i) { [i % 2, i] })).to eq([2, 4, 1, 3, 5])
     end
+
+    it 'counts collections with order' do
+      expect(builder.count_only_or_objects(true, VmOrTemplate.distinct.order("lower(vms.name)"))).to eq(0)
+    end
   end
 
   context "#open_node" do
