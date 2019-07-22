@@ -81,6 +81,7 @@
     "spice-html5-bower": "~1.7.3",
     "spin.js": "~4.0.0",
     "sprintf-js": "~1.1.1",
+    "table-resolver": "^4.1.1",
     "ui-select": "0.19.8",
     "whatwg-fetch": "~2.0.4",
     "xml_display": "~0.1.1"

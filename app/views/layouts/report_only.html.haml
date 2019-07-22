@@ -1,6 +1,7 @@
 = render :partial => 'layouts/doctype'
 %html.layout-pf.layout-pf-fixed.transitions{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
+    = csrf_meta_tag
     %title
       = "%{product}: %{title}" % {:product => Vmdb::Appliance.PRODUCT_NAME, :title => @report_title}
     = miq_favicon_link_tag

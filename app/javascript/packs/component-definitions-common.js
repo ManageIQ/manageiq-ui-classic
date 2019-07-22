@@ -27,6 +27,7 @@ import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
 import WorkersForm from '../components/workers-form/workers-form';
+import ReportDataTable from '../components/report-data-table';
 
 /**
 * Add component definitions to this file.
@@ -49,6 +50,7 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
+ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
 ManageIQ.component.addReact('ServiceDialogFromOtForm', ServiceDialogFromOtForm);
 ManageIQ.component.addReact('ServiceForm', ServiceForm);
 ManageIQ.component.addReact('SetServiceOwnershipForm', SetServiceOwnershipForm);

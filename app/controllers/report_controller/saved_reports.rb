@@ -60,6 +60,8 @@ module ReportController::SavedReports
       return
     end
 
+    # FIXME: this is similar code to `switch_ght`
+    # in the case of switching the view we are calculating the results 2x
     @html = report_first_page(rr)
     if params[:type]
       @render_chart = false
@@ -70,6 +72,8 @@ module ReportController::SavedReports
                   rr.html_rows(:page     => @sb[:pages][:current],
                                :per_page => @sb[:pages][:perpage]).join
                 )
+              elsif params[:type] == 'data'
+                true # use rendering code path for the @html case
               end
       @ght_type = params[:type]
     else

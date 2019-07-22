@@ -51,6 +51,10 @@ class ApplicationController < ActionController::Base
     def pp_choices
       PPCHOICES
     end
+
+    def pp_options
+      PPOPTIONS
+    end
   end
 
   include_concern 'AdvancedSearch'
@@ -478,6 +482,7 @@ class ApplicationController < ActionController::Base
     session[:rpt_task_id]      = nil    # Clear out report task id, using a saved report
 
     @report   = rr.report
+    @report_result_id = rr.id # Passed in app/views/layouts/_report_html to the ReportDataTable
     @report_title = rr.friendly_title
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')

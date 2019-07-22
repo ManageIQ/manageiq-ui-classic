@@ -23,7 +23,15 @@ class ApplicationHelper::Toolbar::ReportView < ApplicationHelper::Toolbar::Basic
       nil,
       :url       => "explorer",
       :url_parms => "?type=tabular",
-      :klass     => ApplicationHelper::Button::ViewGHT),
+      :klass     => ApplicationHelper::Button::ViewGHTAlways),
+    twostate(
+      :view_data,
+      'pficon pficon-filter',
+      N_('Data View'),
+      nil,
+      :url       => "explorer",
+      :url_parms => "?type=data",
+      :klass     => ApplicationHelper::Button::ViewGHTAlways),
   ])
   button_group('download_main', [
     select(
