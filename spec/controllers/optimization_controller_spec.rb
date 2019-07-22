@@ -90,6 +90,10 @@ describe OptimizationController do
     end
 
     context "request" do
+      before do
+        session[:settings] = {:perpage => {:reports => 20}}
+      end
+
       subject { get(:show, :params => {:id => saved.id}) }
 
       it "renders a page" do
