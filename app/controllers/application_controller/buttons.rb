@@ -346,8 +346,8 @@ module ApplicationController::Buttons
       # not supported for objs: cannot do wait for task for multiple tasks
       task_id = button.invoke_async(obj, 'UI')
       initiate_wait_for_task(
-        :task_id => task_id,
-        :action => :custom_button_done,
+        :task_id      => task_id,
+        :action       => :custom_button_done,
         :extra_params => { :base_cls => cls.base_class.to_s }
       )
 
