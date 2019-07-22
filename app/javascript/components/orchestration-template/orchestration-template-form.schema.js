@@ -14,6 +14,9 @@ const templateTypeOptions = [{
   label: 'Microsoft Azure',
   value: 'ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate',
 }, {
+  label: 'Microsoft AzureStack',
+  value: 'ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate',
+}, {
   label: 'VNF',
   value: 'ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate',
 }, {

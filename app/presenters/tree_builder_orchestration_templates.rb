@@ -29,6 +29,11 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
        :text => _("Azure Templates"),
        :icon => "pficon pficon-template",
        :tip  => _("Azure Templates")},
+      {:id   => 'otazs',
+       :tree => "otazs_tree",
+       :text => _("AzureStack Templates"),
+       :icon => "pficon pficon-template",
+       :tip  => _("AzureStack Templates")},
       {:id   => 'otvnf',
        :tree => "otvnf_tree",
        :text => _("VNF Templates"),
@@ -48,6 +53,7 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
       "otcfn" => ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate,
       "othot" => ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate,
       "otazu" => ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate,
+      "otazs" => ManageIQ::Providers::AzureStack::CloudManager::OrchestrationTemplate,
       "otvnf" => ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate,
       "otvap" => ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
     }
