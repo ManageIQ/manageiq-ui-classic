@@ -8,7 +8,6 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::EmbeddedAnsibleRefreshMixin
   include Mixins::ListnavMixin
   include Mixins::BreadcrumbsMixin
 
@@ -116,8 +115,18 @@ class AnsibleRepositoryController < ApplicationController
     assert_privileges("embedded_configuration_script_source_refresh")
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    objects = AnsibleRepositoryController.model.find(checked)
-    embedded_ansible_refresh(objects)
+
+    AnsibleRepositoryController.model.where(:id => checked).each do |repo|
+      begin
+        repo.sync_queue
+        add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+      rescue => ex
+        add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
+                                                                               :details => ex},
+                  :error)
+      end
+    end
+
     javascript_flash
   end
 

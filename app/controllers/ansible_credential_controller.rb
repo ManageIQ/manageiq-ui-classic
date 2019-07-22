@@ -8,7 +8,6 @@ class AnsibleCredentialController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::EmbeddedAnsibleRefreshMixin
   include Mixins::ListnavMixin
   include Mixins::BreadcrumbsMixin
 
