@@ -42,9 +42,11 @@ function transformReport({id, name, last_run_on, count, action, url, queue_url})
     last_run_on: formatDate(last_run_on),
     count,
     action: (
-      <button type="button" onClick={queue(queue_url)} className="btn btn-default button-queue">
-        {__("Queue Report")}
-      </button>
+      <div className="table-view-pf-btn">
+        <button type="button" onClick={queue(queue_url)} className="btn btn-default button-queue">
+          {__("Queue Report")}
+        </button>
+      </div>
     ),
     $onClick: (e) => click(url, e),
   };

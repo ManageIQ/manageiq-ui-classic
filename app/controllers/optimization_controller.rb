@@ -110,7 +110,7 @@ class OptimizationController < ApplicationController
       [:name,        _("Report name")],
       [:last_run_on, _("Last Run at")],
       [:count,       _("Report runs")],
-      [:action,      _("Action")],
+      [:action,      _("Action"), {:className => 'table-view-pf-actions'}],
       # :url
       # :queue_url
       # :klass
