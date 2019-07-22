@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { DataDrivenTable } from '../components/simple-table/simple-table.jsx';
@@ -15,13 +15,19 @@ const empty = () => (
 )
 
 export default function OptimizationList({columns, rows, refresh_url, ...props}) {
-  refresh.url = refresh_url;
+  const [state, set] = useState({
+    columns,
+    rows,
+  });
 
-  if (! columns || ! rows || ! rows.length) {
+  refresh.url = refresh_url;
+  refresh.set = set;
+
+  if (! state.columns || ! state.rows || ! state.rows.length) {
     return empty();
   }
 
-  return <DataDrivenTable columns={columns} rows={rows} transform={miqOptimizationTransform} />
+  return <DataDrivenTable columns={state.columns} rows={state.rows} transform={miqOptimizationTransform} />
 }
 
 OptimizationList.propTypes = {

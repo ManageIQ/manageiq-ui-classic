@@ -8,11 +8,14 @@ export function refresh() {
 
   return http.get(refresh.url)
     .then((data) => {
+      refresh.set(data);
+
       window.miqSparkleOff();
-      console.log('TODO refresh', data);
       return data;
     })
     .catch(() => window.miqSparkleOff());
 }
 
+// overriden on OptimizationList init
 refresh.url = null;
+refresh.set = console.error;
