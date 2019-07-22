@@ -90,7 +90,9 @@ module ApplicationController::Buttons
     group_create_update("update")
   end
 
-  MODEL_WITH_OPEN_URL = ["Vm"].freeze
+  # Provider, Service, User, Group, Tenant, Cloud Tenant, Generic Object
+  # TODO: test each
+  MODEL_WITH_OPEN_URL = %w[Provider Service User MiqGroup Tenant CloudTenant GenericObject Vm].freeze
 
   def automate_button_field_changed
     unless params[:target_class]
@@ -246,8 +248,16 @@ module ApplicationController::Buttons
   end
 
   def open_url_after_dialog
-    system_console = SystemConsole.find_by(:vm_id => params[:targetId])
-    url = system_console.try(:url)
+    external_url = ExternalUrl.find_by(
+      :resource_id   => params[:targetId],
+      :resource_type => params[:realTargetType],
+      :user          => User.current_user
+    )
+    # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
+    external_url ||= SystemConsole.find_by(:vm_id => params[:targetId])
+
+    url = external_url.try(:url)
+
     render :json => {:open_url => url}
   end
 
@@ -256,8 +266,15 @@ module ApplicationController::Buttons
   BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Switch, Tenant, User, Vm].freeze
 
   def custom_button_done
-    url = SystemConsole.find_by(:vm => params[:id]).try(:url)
+    external_url = ExternalUrl.find_by(
+      :resource_id   => params[:id],
+      :resource_type => params[:base_cls],
+      :user          => User.current_user
+    )
+    # FIXME: remove this fallback once the ':remote_console_url=' is removed from automate
+    external_url ||= SystemConsole.find_by(:vm_id => params[:id])
 
+    url = external_url.try(:url)
     if url.present?
       javascript_open_window(url)
     else
@@ -328,7 +345,11 @@ module ApplicationController::Buttons
     elsif button.options.present? && button.options.fetch_path(:open_url)
       # not supported for objs: cannot do wait for task for multiple tasks
       task_id = button.invoke_async(obj, 'UI')
-      initiate_wait_for_task(:task_id => task_id, :action => :custom_button_done)
+      initiate_wait_for_task(
+        :task_id      => task_id,
+        :action       => :custom_button_done,
+        :extra_params => { :base_cls => cls.base_class.to_s }
+      )
 
     else
       begin

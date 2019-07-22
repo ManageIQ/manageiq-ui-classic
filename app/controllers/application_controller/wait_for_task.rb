@@ -47,7 +47,8 @@ module ApplicationController::WaitForTask
     session[:async][:interval] ||= 1000 # Default interval to 1 second
     session[:async][:params] ||= {}
 
-    session[:async][:params] = params.deep_dup # Save the incoming parms
+    # save the incoming parms + extra_params
+    session[:async][:params] = params.deep_dup.merge(options[:extra_params] || {})
     session[:async][:params][:task_id] = task_id
 
     # override method to be called, when the task is done

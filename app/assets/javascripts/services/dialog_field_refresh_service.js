@@ -9,6 +9,7 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', function(API) 
         resource_action_id: idList.resourceActionId,
         target_id: idList.targetId,
         target_type: idList.targetType,
+        real_target_type: idList.realTargetType,
       },
     });
 
