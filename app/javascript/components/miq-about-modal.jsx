@@ -79,7 +79,7 @@ class MiqAboutModal extends React.Component {
       <AboutModal
         show={this.props.show}
         onHide={this.props.hideModal}
-        productTitle={data.product_info.name_full}
+        productTitle={`${data.product_info.name_full} ${data.server_info.release}`}
         logo={data.product_info.branding_info.logo}
         altLogo={data.product_info.name_full}
         trademarkText={data.product_info.copyright}
@@ -119,6 +119,9 @@ MiqAboutModal.propTypes = {
       branding_info: PropTypes.shape({
         logo: PropTypes.string,
       }),
+    }),
+    server_info: PropTypes.shape({
+      release: PropTypes.string,
     }),
   }),
   hideModal: PropTypes.func.isRequired,
