@@ -8,6 +8,7 @@ describe OptimizationController do
 
   describe '.hardcoded_reports' do
     before do
+      # FIXME: this should go away with #4943
       MiqReport.seed
     end
 
