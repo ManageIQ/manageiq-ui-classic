@@ -75,14 +75,15 @@ describe OpsController do
       end
     end
 
-    ['MiqGroup', 'User', 'Tenant'].each do |klass|
-      context "#{klass} class" do
-        it "fetches appropriate ids" do
-          ops.params = {:target_class => klass }
-          targets = klass.safe_constantize.all.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-          expect(ops).to receive(:render).with(:json => {:target_id => '', :targets => targets})
-          ops.fetch_target_ids
-        end
+    context 'setting targets' do
+      before do
+        allow(ops).to receive(:render)
+        ops.params = {:target_class => 'some_class'}
+      end
+
+      it 'calls targets_from_class to set appropriate targets' do
+        expect(ops).to receive(:targets_from_class).with('some_class')
+        ops.fetch_target_ids
       end
     end
   end
@@ -114,6 +115,29 @@ describe OpsController do
       automate_request = ops.fetch_automate_request_vars(schedule_new)
       expect(schedule_new.filter).to be_nil
       expect(automate_request[:object_request]).to eq ""
+    end
+
+    context 'setting targets' do
+      let(:schedule) { MiqSchedule.new(:filter => {:parameters => {}, :ui => {:ui_object => {:target_class => 'some_class'}}, :uri_parts => {}}) }
+
+      it 'calls targets_from_class to set appropriate targets' do
+        expect(ops).to receive(:targets_from_class).with('some_class')
+        ops.fetch_automate_request_vars(schedule)
+      end
+    end
+  end
+
+  describe '#targets_from_class' do
+    include OpsController::Settings::AutomateSchedules
+    let(:ops) { OpsController.new }
+
+    ['MiqGroup', 'User', 'Tenant'].each do |klass|
+      context "#{klass} class" do
+        it 'sets targets according to the target class' do
+          targets = klass.safe_constantize.all.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+          expect(ops.targets_from_class(klass)).to eq(targets)
+        end
+      end
     end
   end
 end
