@@ -25,7 +25,7 @@ export const DataDrivenTable = ({
   columns,
   rows,
   id,
-  transform = (r) => r,
+  transform,
   ...props
 }) => {
   if (typeof transform === 'string') {
@@ -71,4 +71,8 @@ DataDrivenTable.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   id: PropTypes.string,
   transform: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+};
+
+DataDrivenTable.defaultProps = {
+  transform: (row) => row,
 };
