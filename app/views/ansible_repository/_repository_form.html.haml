@@ -33,15 +33,6 @@
                             "id"          => "description",
                             'ng-disabled' => 'vm.repositoryModel.manager_resource === null',
                             'ng-model'    => "vm.repositoryModel.description"}
-    .form-group
-      %label.col-md-2.control-label
-        = _('SCM type')
-      .col-md-8
-        = select_tag('scm_type',
-                     options_for_select([[_("GIT"), "git"]], 'git'),
-                     "ng-model"   => "vm.repositoryModel.scm_type",
-                     :disabled    => true,
-                     'miq-select' => true)
     .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.urlValidation}"}
       %label.col-md-2.control-label
         = _('URL')
@@ -75,22 +66,6 @@
                             "id"          => "scm_branch",
                             'ng-disabled' => 'vm.repositoryModel.manager_resource === null',
                             'ng-model'    => "vm.repositoryModel.scm_branch"}
-    .form-group
-      %label.col-md-2.control-label
-        = _('SCM Update Options')
-      .col-md-8
-        %div
-          %label
-            = check_box_tag("clean", "1", false, 'ng-model' => "vm.repositoryModel.scm_clean", 'ng-disabled' => 'vm.repositoryModel.manager_resource === null')
-            = _('Clean')
-        %div
-          %label
-            = check_box_tag("scm_delete_on_update", "1", false, 'ng-model' => 'vm.repositoryModel.scm_delete_on_update', 'ng-disabled' => 'vm.repositoryModel.manager_resource === null')
-            = _('Delete on Update')
-        %div
-          %label
-            = check_box_tag("scm_update_on_launch", "1", false, 'ng-model' => 'vm.repositoryModel.scm_update_on_launch', 'ng-disabled' => 'vm.repositoryModel.manager_resource === null')
-            = _('Update on Launch')
     = render :partial => 'layouts/angular/generic_form_buttons'
 :javascript
   ManageIQ.angular.app.value('repositoryId', '#{@id}');
