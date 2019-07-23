@@ -60,6 +60,8 @@ class DialogLocalService
         case class_name
         when "CloudManager"
           "/ems_cloud"
+        when "NetworkManager"
+          "/ems_networks"
         when "CinderManager"
           "/ems_block_storage"
         when "SwiftManager"
