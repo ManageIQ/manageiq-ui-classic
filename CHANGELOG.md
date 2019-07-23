@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-9
+
+### Removed
+- Revert faster services PR 5366 [(#5768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5768)
+
 ## Unreleased as of Sprint 115 ending 2019-07-08
 
 ### Added
@@ -16,13 +21,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Adjust the test against the accordion name at saved reports [(#5779)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5779)
 - Fix error viewing Customize tab on Requests [(#5774)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5774)
 - Ensure replication related flash messages show task name [(#5769)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5769)
-- Revert faster services PR 5366  [(#5768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5768)
 - Fix overrided color for disabled Timelines link [(#5766)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5766)
 - Fix catalog item delete when part of catalog bundle [(#5750)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5750)
 - Do not filter records when loading Pre Provisioning screen. [(#5747)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5747)
 - Fixed issue introduced in c7536077b36b56ebbaa9fe9ec6bbcf22aab32248 [(#5743)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5743)
 
-## Hammer-8
+## Hammer-8 - Released 2019-07-02
 
 ### Fixed
 - Advanced search modal - only render once, always, hidden [(#5629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5629)
