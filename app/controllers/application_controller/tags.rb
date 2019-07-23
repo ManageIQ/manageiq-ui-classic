@@ -67,7 +67,13 @@ module ApplicationController::Tags
 
   def tag_set_vars_from_params
     if params[:tag_cat]
-      @edit[:cat] = Classification.find_by(:id => params[:tag_cat])
+      cat = Classification.find_by(:id => params[:tag_cat])
+      @edit[:cat] = {
+        :id          => cat.id,
+        :name        => cat.name,
+        :description => cat.description,
+        :entries     => cat.entries.map { |e| { :id => e.id, :description => e.description } }
+      }
       tag_edit_build_entries_pulldown
     elsif params[:tag_add]
       tad_add_assignments
@@ -90,7 +96,7 @@ module ApplicationController::Tags
   end
 
   def delete_from_assignments?(value)
-    value.parent.name == @edit[:cat].name && value.parent.single_value && value.id != params[:tag_add].to_i
+    value.parent.name == @edit[:cat][:name] && value.parent.single_value && value.id != params[:tag_add].to_i
   end
 
   def get_tag_items
@@ -223,7 +229,13 @@ module ApplicationController::Tags
     end
 
     # Set to first category, if not already set
-    @edit[:cat] ||= cats.first
+    cat = cats.first
+    @edit[:cat] ||= {
+      :id          => cat.id,
+      :name        => cat.name,
+      :description => cat.description,
+      :entries     => cat.entries.map { |e| { :id => e.id, :description => e.description } }
+    }
 
     unless @object_ids.blank?
       @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
@@ -248,13 +260,13 @@ module ApplicationController::Tags
   # Build the second pulldown containing the entries for the selected category
   def tag_edit_build_entries_pulldown
     @entries = {}                   # Create new entries hash (2nd pulldown)
-    @edit[:cat].entries.each do |e|       # Get all of the entries for the current category
-      @entries[e.description] = e.id      # Add it to the hash
+    @edit[:cat][:entries].each do |e|       # Get all of the entries for the current category
+      @entries[e[:description]] = e[:id]      # Add it to the hash
     end
 
     assignments = Classification.find(@edit.fetch_path(:new, :assignments))
     assignments.each do |a|                               # Look thru the assignments
-      if a.parent.description == @edit[:cat].description  # If they match the category
+      if a.parent.description == @edit[:cat][:description]  # If they match the category
         @entries.delete(a.description)                    # Remove them from the selection list
       end
     end
