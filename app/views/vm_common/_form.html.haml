@@ -3,6 +3,7 @@
   - url = url_for_only_path(:action => 'form_field_changed', :id => (@record.id || "new"))
 
   = render :partial => "layouts/flash_msg"
+  = react('VmEditForm', { :vmId => (@record.id.to_s || "new"), :choices => @edit[:choices], :kind => @record.class.to_s.demodulize.underscore.pluralize })
 
   %h3
     = _('Basic Information')
