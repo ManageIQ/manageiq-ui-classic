@@ -14,13 +14,9 @@ class Tagging extends React.Component {
       tagValue: selectedTagValue,
     };
 
-    // Single Tag Only
     if (this.props.options && this.props.options.onlySingleTag) {
       this.props.onSingleTagValueChange(action);
-      return;
-    }
-
-    if (this.findSelectedTag(this.props.selectedTagCategory).singleValue) {
+    } else if (this.findSelectedTag(this.props.selectedTagCategory).singleValue) {
       this.props.onTagValueChange(action, this.props.options);
     } else {
       this.props.onTagMultiValueChange(action, this.props.options);
