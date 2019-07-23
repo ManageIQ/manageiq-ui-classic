@@ -3,6 +3,7 @@
   - url = url_for_only_path(:action => 'form_field_changed', :id => (@record.id || "new"))
 
   = render :partial => "layouts/flash_msg"
+  = react('VmEditForm', { :catalogId => (@record.id.to_s || "new"), :choices => @edit[:choices]})
 
   %h3
     = _('Basic Information')
@@ -84,7 +85,7 @@
         'data-click_url' => {:url => "#{url}?button=allright"}.to_json,
         :id     => @record.id || "new"}
         %i.fa.fa-angle-double-right.fa-lg.hidden-xs.hidden-sm
-        %i.fa.fa-angle-double-right.fa-lg.fa-rotate-90.hidden-md.hidden-lg
+        %i.fa.fa-angle-double-right.fa-lg.fa-rotate-90.hidden-md.hidden-lg  
       %button.btn.btn-default.btn-block{:title => _("Move selected VMs to left"),
         "data-submit"         => 'main_div',
         "data-miq_sparkle_on" => true,
