@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-8
+## Hammer-9
+
+### Removed
+- Revert faster services PR 5366 [(#5768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5768)
+
+## Hammer-8 - Released 2019-07-02
 
 ### Fixed
 - Advanced search modal - only render once, always, hidden [(#5629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5629)
