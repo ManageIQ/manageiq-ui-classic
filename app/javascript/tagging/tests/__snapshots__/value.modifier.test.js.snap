@@ -29,10 +29,12 @@ exports[`TagCategory Component match snapshot 1`] = `
       multiValue={false}
       onTagValueChange={[MockFunction]}
       selectedOption={
-        Object {
-          "description": "Duck",
-          "id": 1,
-        }
+        Array [
+          Object {
+            "description": "Duck",
+            "id": 1,
+          },
+        ]
       }
       values={
         Array [

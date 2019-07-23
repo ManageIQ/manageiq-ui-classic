@@ -3,7 +3,7 @@ import ValueModifier from '../components/InnerComponents/ValueModifier';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-const selectedTagValue = { description: 'Duck', id: 1 };
+const selectedTagValue = [{ description: 'Duck', id: 1 }];
 const onTagValueChange = jest.fn();
 const tagValues = [
   { description: 'Duck', id: 1 },
@@ -16,7 +16,7 @@ describe('TagCategory Component', () => {
     const component = shallow(
       <ValueModifier
         onTagValueChange={onTagValueChange}
-        selectedTagValue={selectedTagValue}
+        selectedTagValues={selectedTagValue}
         multiValue={false}
         values={tagValues}
       />

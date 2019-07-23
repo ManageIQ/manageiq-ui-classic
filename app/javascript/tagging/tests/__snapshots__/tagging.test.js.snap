@@ -63,11 +63,13 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         <ValueModifier
           multiValue={false}
           onTagValueChange={[Function]}
-          selectedTagValue={
-            Object {
-              "description": "duck",
-              "id": 1,
-            }
+          selectedTagValues={
+            Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+            ]
           }
           valueLabel="Value"
           values={

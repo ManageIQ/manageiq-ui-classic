@@ -7,7 +7,7 @@ const tagValues = [
   { description: 'Asterix', id: 1 },
   { description: 'Obelix', id: 2 }
 ];
-const selectedTagValue = { description: 'Obelix', id: 2 };
+const selectedTagValues = [{ description: 'Obelix', id: 2 }];
 function onChange(x) {
   return x;
 }
@@ -17,7 +17,7 @@ test('match snapshot', () => {
     <ValueSelector
       values={tagValues}
       onTagValueChange={onChange}
-      selectedOption={selectedTagValue}
+      selectedOption={selectedTagValues}
     />
   );
   const tree = toJson(component);
@@ -29,7 +29,7 @@ test('match snapshot without multiple values', () => {
     <ValueSelector
       values={tagValues}
       onTagValueChange={onChange}
-      selectedOption={selectedTagValue}
+      selectedOption={selectedTagValues}
       multiValue={false}
     />
   );

@@ -30,14 +30,14 @@ describe('modifyAssignedTags reducer', () => {
   it('simple add new tag', () => {
     expect(modifyAssignedTags(
       [],
-      actions.replaceAssignedTagsInCategory({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+      actions.changeAssignedTags({ tagCategory: { description: 'Name', id: 1 }, tagValue: [{ description: 'Pepa', id: 11 }] }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }] }]);
   });
 
   it('add to existing tag', () => {
     expect(modifyAssignedTags(
       [{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }] }],
-      actions.replaceAssignedTagsInCategory({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+      actions.changeAssignedTags({ tagCategory: { description: 'Name', id: 1 }, tagValue: [{ description: 'Franta', id: 12 }, { description: 'Pepa', id: 11 }] }),
     )).toEqual([{ description: 'Name', id: 1, values: [{ description: 'Franta', id: 12 }, { description: 'Pepa', id: 11 }] }]);
   });
 });
@@ -61,15 +61,15 @@ describe('toggle reducer', () => {
 
   it('select tag value', () => {
     expect(toggle(
-      { tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Franta', id: 12 } },
-      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } }),
+      { tagCategory: { description: 'Name', id: 1 }, tagValue: [{ description: 'Franta', id: 12 }] },
+      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: [{ description: 'Pepa', id: 11 }] }),
     )).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Pepa', id: 11 } });
   });
 
   it('clear tag value', () => {
     expect(toggle(
-      { tagCategory: { description: 'Name', id: 1 }, tagValue: { description: 'Franta', id: 12 } },
-      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} }),
+      { tagCategory: { description: 'Name', id: 1 }, tagValue: [{ description: 'Franta', id: 12 }] },
+      actions.toggleTagValueChange({ tagCategory: { description: 'Name', id: 1 }, tagValue: [{}] }),
     )).toEqual({ tagCategory: { description: 'Name', id: 1 }, tagValue: {} });
   });
 });

@@ -10,6 +10,7 @@ exports[`match snapshot 1`] = `
   defaultValue={null}
   id="cat_tags_div"
   ignoreCase={true}
+  isMulti={false}
   name="form-field-name"
   noOptionsMessage={[Function]}
   onChange={[Function]}
@@ -47,10 +48,12 @@ exports[`match snapshot 1`] = `
     }
   }
   value={
-    Object {
-      "label": "Obelix",
-      "value": 2,
-    }
+    Array [
+      Object {
+        "label": "Obelix",
+        "value": 2,
+      },
+    ]
   }
 />
 `;
@@ -65,6 +68,7 @@ exports[`match snapshot without multiple values 1`] = `
   defaultValue={null}
   id="cat_tags_div"
   ignoreCase={true}
+  isMulti={false}
   name="form-field-name"
   noOptionsMessage={[Function]}
   onChange={[Function]}
@@ -102,10 +106,12 @@ exports[`match snapshot without multiple values 1`] = `
     }
   }
   value={
-    Object {
-      "label": "Obelix",
-      "value": 2,
-    }
+    Array [
+      Object {
+        "label": "Obelix",
+        "value": 2,
+      },
+    ]
   }
 />
 `;
