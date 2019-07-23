@@ -39,11 +39,20 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   $scope.saveClicked = function() {
     // remove existing subscriptions that have not changed before sending them up for save
-    var modified_subscriptions = $scope.pglogicalReplicationModel.subscriptions.slice();
-    modified_subscriptions.forEach(function(subscription, index, object) {
-      if (typeof subscription.id !== 'undefined' && subscription.remove !== true &&  !subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
-        object.splice(index, 1);
+    var modified_subscriptions = $scope.pglogicalReplicationModel.subscriptions.filter(function(subscription, index) {
+      if (! subscription.id) { // new
+        return true;
       }
+
+      if (subscription.remove) { // removed
+        return true;
+      }
+
+      if (subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) { // modified
+        return true;
+      }
+
+      return false;
     });
     pglogicalManageSubscriptionsButtonClicked('save', {
       'replication_type': $scope.pglogicalReplicationModel.replication_type,
