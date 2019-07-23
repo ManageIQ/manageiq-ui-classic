@@ -66,51 +66,6 @@ module Menu
       valid_sections[section_id_string]
     end
 
-    def menu_structure(placement=:default)
-      m = []
-      Menu::Manager.menu(placement) do |menu_section|
-        next unless menu_section.visible?
-
-        section = {
-          id: menu_section.id,
-          link_params: menu_section.link_params,
-          name: menu_section.name,
-          icon: menu_section.icon,
-        }
-
-        if menu_section.subsections?
-          subsections = []
-          menu_section.items.each do |menu_item|
-            next unless menu_item.visible?
-
-            subsection = {
-              leaf: menu_item.leaf?,
-              link_params: menu_item.link_params,
-              name: menu_item.name,
-              id: menu_item.id,
-            }
-
-            if !menu_item.leaf?
-              items = []
-              menu_item.items.each do |item|
-                items << {
-                  link_params: menu_item.link_params,
-                  name: menu_item.name,
-                  id: menu_item.id,
-                }
-              end
-              subsection[:items] = items
-            end
-            subsections << subsection
-          end
-          section[:items] = subsections
-        end
-
-        m << section
-      end
-      m
-    end
-
     private
 
     class InvalidMenuDefinition < Exception
