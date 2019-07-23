@@ -401,13 +401,12 @@ module Mixins
     end
 
     def render_service_dialog_form
-      return if %w[cancel save].include?(params[:button])
       @in_a_form = true
       clear_flash_msg
       presenter = rendering_objects
       update_service_dialog_partials(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter)
+      handle_bottom_cell(presenter, true)
       presenter[:right_cell_text] = @right_cell_text
 
       render :json => presenter.for_render
@@ -445,10 +444,10 @@ module Mixins
       presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     end
 
-    def handle_bottom_cell(presenter)
+    def handle_bottom_cell(presenter, hide_form_buttons = false)
       # Handle bottom cell
       if @pages || @in_a_form
-        if @pages && !@in_a_form
+        if (@pages && !@in_a_form) || hide_form_buttons
           presenter.hide(:form_buttons_div)
         elsif @in_a_form
           presenter.remove_paging.show(:form_buttons_div)
