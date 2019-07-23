@@ -1,4 +1,8 @@
 #form_div
   #basic_info_div
     = render :partial => "layouts/flash_msg"
-    = react('ServiceDialogFromOtForm', { :otId => @edit[:rec_id] })
+    = react('ServiceDialogFromForm', 
+            :templateId            => @edit[:rec_id],
+            :dialogClass           => "Dialog::OrchestrationTemplateServiceDialog",
+            :templateClass         => "OrchestrationTemplate",
+            :miqRedirectBackAdress => "/catalog/explorer")
