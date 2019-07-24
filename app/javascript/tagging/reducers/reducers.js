@@ -25,7 +25,7 @@ function deleteAssignedTag(state, actionTag) {
 function changeAssignedTags(state, actionTag) {
   const filteredState = state.filter(tag => (tag.id !== actionTag.tagCategory.id));
 
-  if (actionTag.tagValue !== null && actionTag.tagValue.length > 0) {
+  if (actionTag.tagValue && actionTag.tagValue.length > 0) {
     return [...filteredState,
       {
         description: actionTag.tagCategory.description,

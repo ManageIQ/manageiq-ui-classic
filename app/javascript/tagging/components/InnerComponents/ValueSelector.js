@@ -12,19 +12,12 @@ class ValueSelector extends React.Component {
   /**
    * Maps the selected options for the select box input.
    *
-   * @returns {id, label}[]
    */
   getActiveValues = () => {
-    const val = [];
     if (this.props.selectedOption.length > 0) {
-      for (let i = 0; i < this.props.selectedOption.length; i += 1) {
-        val.push({
-          value: this.props.selectedOption[i].id,
-          label: this.props.selectedOption[i].description,
-        });
-      }
+      return this.props.selectedOption.map(el => ({ value: el.id, label: el.description }));
     }
-    return val;
+    return [];
   };
 
   /**
@@ -38,29 +31,21 @@ class ValueSelector extends React.Component {
    * @param values {label, value}[] Currently selected values.
    */
   handleChange = (values) => {
-    // Deleting all the multi selected items one by one
+    // Deleting all the multi selected items
     if (values === null) {
-      this.props.onTagValueChange([]);
-      return;
+      return this.props.onTagValueChange([]);
     }
 
     // Multi select
     if (Array.isArray(values)) {
-      const tagArray = [];
-
-      // Remap value to tag objects
-      for (let i = 0; i < values.length; i += 1) {
-        tagArray.push({
-          description: values[i].label,
-          id: values[i].value,
-        });
-      }
-      this.props.onTagValueChange(tagArray);
-      return;
+      return this.props.onTagValueChange(values.map(el => ({
+        description: el.label,
+        id: el.value,
+      })));
     }
 
     // Single select
-    this.props.onTagValueChange([{
+    return this.props.onTagValueChange([{
       description: values.label,
       id: values.value,
     }]);

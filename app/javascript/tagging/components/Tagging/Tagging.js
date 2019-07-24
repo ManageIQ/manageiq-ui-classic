@@ -21,9 +21,8 @@ class Tagging extends React.Component {
     }
   };
 
-  onTagCategoryChange = (selectedTagCategory) => {
+  onTagCategoryChange = selectedTagCategory =>
     this.props.onTagCategoryChange(selectedTagCategory);
-  };
 
   onTagDeleteClick = (tagCategory, tagValue) => {
     this.props.onTagDeleteClick({ tagCategory, tagValue }, this.props.options);

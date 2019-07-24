@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 import {
-  deleteAssignedTag, deleteAllAssignedTags, toggleTagCategoryChange,
-  toggleTagValueChange, loadState, changeAssignedTags,
+  deleteAssignedTag,
+  deleteAllAssignedTags,
+  toggleTagCategoryChange,
+  toggleTagValueChange,
+  loadState,
+  changeAssignedTags,
 } from '../actions';
 import Tagging from '../components/Tagging/Tagging';
 import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButtons';
