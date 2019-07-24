@@ -50,7 +50,7 @@ class Tagging extends React.Component {
 
   render() {
     return (
-      <Grid>
+      <Grid fluid>
         <Row>
           <Col xs={12} md={8} lg={6}>
             <TagModifier hideHeader={this.props.options && this.props.options.hideHeaders}>

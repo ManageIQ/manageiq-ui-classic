@@ -12,7 +12,7 @@ class TaggingWithButtons extends React.Component {
 
   render() {
     return (
-      <Grid>
+      <Grid fluid>
         <Tagging
           tags={this.props.tags}
           assignedTags={this.props.assignedTags}

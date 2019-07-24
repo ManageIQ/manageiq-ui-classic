@@ -4,7 +4,7 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
 <Grid
   bsClass="container"
   componentClass="div"
-  fluid={false}
+  fluid={true}
 >
   <Row
     bsClass="row"
