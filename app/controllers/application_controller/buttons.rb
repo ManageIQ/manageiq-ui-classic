@@ -759,7 +759,9 @@ module ApplicationController::Buttons
     when 'down'   then move_cols_down
     when 'top'    then move_cols_top
     when 'bottom' then move_cols_bottom
-    else copy_params_if_set(@edit[:new], params, %i[name description display button_icon button_color])
+    else
+      @edit[:new][:display] = params[:display] == "1" if params.key?(:display)
+      copy_params_if_set(@edit[:new], params, %i[name description button_icon button_color])
     end
   end
 
