@@ -3,7 +3,9 @@ module TreeNode
     set_attribute(:key) { "#{@tree.node_id_prefix}__#{@object.identifier}" }
     set_attribute(:text) { _(@object.name) }
     set_attribute(:tooltip) { _(@object.description) || _(@object.name) }
-    set_attribute(:selected) { @tree.features.include?(@object.identifier.sub(/_accords$/, '')) }
+    set_attribute(:selected) do
+      @tree.features.include?('everything') || @tree.features.include?(@object.identifier.sub(/_accords$/, ''))
+    end
 
     set_attribute(:icon) do
       case @object.feature_type

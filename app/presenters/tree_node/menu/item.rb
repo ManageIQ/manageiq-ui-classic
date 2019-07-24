@@ -12,7 +12,7 @@ module TreeNode
         parent_feature = ::MiqProductFeature.obj_features[::MiqProductFeature.feature_parent(@object.feature)][:feature]
 
         [parent_feature.identifier, @object.feature].any? do |item|
-          @tree.features.include?(item)
+          @tree.features.include?('everything') || @tree.features.include?(item)
         end
       end
     end
