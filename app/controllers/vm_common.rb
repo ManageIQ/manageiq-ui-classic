@@ -1269,7 +1269,7 @@ module VmCommon
   end
 
   def show_old_dialog_submit_and_cancel_buttons?(params)
-    %w[vm_transform vm_transform_mass].include?(params[:pressed]) || Settings.product.old_dialog_user_ui
+    %w[vm_transform vm_transform_mass].include?(params[:pressed])
   end
 
   # get the host that this vm belongs to

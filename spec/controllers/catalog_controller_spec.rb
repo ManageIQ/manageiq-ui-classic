@@ -976,16 +976,7 @@ describe CatalogController do
           allow(controller).to receive(:render).and_return(nil)
         end
 
-        it 'should render and make form buttons visible when product setting is set to render old dialogs' do
-          ::Settings.product.old_dialog_user_ui = true
-          controller.send(:replace_right_cell, :action => "dialog_provision", :presenter => @presenter)
-          expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => true)
-          expect(@presenter[:set_visible_elements]).to include(:buttons_on => true)
-        end
-
-        it 'should not render and show form buttons when product setting is NOT set to render old dialogs' do
-          ::Settings.product.old_dialog_user_ui = false
-
+        it 'should not render and show form buttons' do
           controller.send(:replace_right_cell, :action => "dialog_provision", :presenter => @presenter)
           expect(@presenter[:set_visible_elements]).to include(:form_buttons_div => false)
         end
