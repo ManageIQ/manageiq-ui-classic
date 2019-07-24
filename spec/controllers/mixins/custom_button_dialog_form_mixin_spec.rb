@@ -11,11 +11,7 @@ class CustomButtonDialogFormMixinTestClass
   def r
     @r ||= proc do |options|
       if options[:partial] == "shared/dialogs/dialog_provision"
-        if options[:locals].present? && options[:locals][:force_old_dialog_use].to_s == "false"
-          "main_div_with_new_dialog_runner"
-        else
-          "main_div"
-        end
+        "main_div"
       else
         "form_buttons_div"
       end
@@ -40,38 +36,13 @@ describe Mixins::CustomButtonDialogFormMixin do
     end
 
     context "when dialog locals are present" do
-      context "when force_old_dialog_use is false" do
-        let(:options) { {:dialog_locals => {:force_old_dialog_use => false}} }
+      let(:options) { {:dialog_locals => {}} }
 
-        it "passes the locals through the render method" do
-          allow(presenter).to receive(:update) do |_div, render_method|
-            expect(render_method).to eq("main_div_with_new_dialog_runner")
-          end
-          mixin.set_custom_button_dialog_presenter(options)
+      it "passes the locals through the render method" do
+        allow(presenter).to receive(:update) do |_div, render_method|
+          expect(render_method).to eq("main_div")
         end
-
-        it "does not update the form buttons div and does not show it" do
-          mixin.set_custom_button_dialog_presenter(options)
-          expect(presenter).not_to have_received(:update).with(:form_buttons_div, instance_of(String)).ordered
-          expect(presenter).not_to have_received(:show).with(:form_buttons_div).ordered
-        end
-      end
-
-      context "when force_old_dialog_use is true" do
-        let(:options) { {:dialog_locals => {:force_old_dialog_use => true}} }
-
-        before do
-          mixin.set_custom_button_dialog_presenter(options)
-        end
-
-        it "updates the main div" do
-          expect(presenter).to have_received(:update).with(:main_div, "main_div").ordered
-        end
-
-        it "updates the form_buttons_div and shows it" do
-          expect(presenter).to have_received(:update).with(:form_buttons_div, "form_buttons_div").ordered
-          expect(presenter).to have_received(:show).with(:form_buttons_div).ordered
-        end
+        mixin.set_custom_button_dialog_presenter(options)
       end
     end
 
@@ -84,11 +55,6 @@ describe Mixins::CustomButtonDialogFormMixin do
 
       it "updates the main div" do
         expect(presenter).to have_received(:update).with(:main_div, "main_div").ordered
-      end
-
-      it "updates the form_buttons_div and shows it" do
-        expect(presenter).to have_received(:update).with(:form_buttons_div, "form_buttons_div").ordered
-        expect(presenter).to have_received(:show).with(:form_buttons_div).ordered
       end
     end
   end

@@ -10,12 +10,9 @@
   - real_target_type ||= @dialog_locals[:real_target_type]
   - dialog_id ||= @dialog_locals[:dialog_id]
   - resource_action_id ||= @dialog_locals[:resource_action_id]
-  - force_old_dialog_use = @dialog_locals[:force_old_dialog_use].to_s == "true"
   - open_url ||= @dialog_locals[:open_url]
 
-- force_old_dialog_use ||= true if api_submit_endpoint.nil?
-
-- if Settings.product.old_dialog_user_ui || force_old_dialog_use
+- if Settings.product.old_dialog_user_ui
   :javascript
     dialogFieldRefresh.unbindAllPreviousListeners();
 
