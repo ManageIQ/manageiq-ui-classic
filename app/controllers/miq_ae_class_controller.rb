@@ -1676,7 +1676,7 @@ class MiqAeClassController < ApplicationController
 
   def embedded_methods_add
     submit_embedded_method(URI.unescape(params[:fqname]))
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname)
+    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -1689,7 +1689,7 @@ class MiqAeClassController < ApplicationController
 
   def embedded_methods_remove
     @edit[:new][:embedded_methods].delete_at(params[:id].to_i)
-    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname)
+    @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
