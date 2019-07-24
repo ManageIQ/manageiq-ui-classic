@@ -5,7 +5,7 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import { http } from '../../http_api';
 import createSchema from './ownership-form.schema';
 
-class SetServiceOwnershipForm extends Component {
+class SetOwnershipForm extends Component {
   state = {
     initialValues: {},
   }
@@ -46,10 +46,10 @@ class SetServiceOwnershipForm extends Component {
   }
 }
 
-SetServiceOwnershipForm.propTypes = {
+SetOwnershipForm.propTypes = {
   ownershipIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   groupOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   ownerOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
 };
 
-export default SetServiceOwnershipForm;
+export default SetOwnershipForm;

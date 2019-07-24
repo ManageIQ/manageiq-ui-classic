@@ -17,7 +17,7 @@
 %h3
   = _('Changes')
 
-= react('SetServiceOwnershipForm', { :ownerOptions => user_opts, :groupOptions => groups_opts, :ownershipIds => @ownershipitems.collect(&:id).map(&:to_s) })
+= react('SetOwnershipForm', { :ownerOptions => user_opts, :groupOptions => groups_opts, :ownershipIds => @ownershipitems.collect(&:id).map(&:to_s) })
 
 %hr
 %h3
