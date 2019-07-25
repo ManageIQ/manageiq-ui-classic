@@ -53,7 +53,22 @@ class DialogLocalService
                         end
     when /ExtManagementSystem/
       api_collection_name = "providers"
-      cancel_endpoint = obj.class.name.demodulize == "CloudManager" ? "/ems_cloud" : "/ems_infra"
+      class_name = obj.class.name.demodulize
+      cancel_endpoint =
+        case class_name
+        when "CloudManager"
+          "/ems_cloud"
+        when "NetworkManager"
+          "/ems_networks"
+        when "CinderManager"
+          "/ems_block_storage"
+        when "SwiftManager"
+          "/ems_object_storage"
+        when "ContainerManager"
+          "/ems_container/#{obj.id}"
+        else
+          "/ems_infra"
+        end
     when /MiqGroup/
       api_collection_name = "groups"
       cancel_endpoint = "/ops/explorer"
