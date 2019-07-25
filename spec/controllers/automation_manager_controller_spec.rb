@@ -617,22 +617,6 @@ describe AutomationManagerController do
       expect(response.status).to eq(200)
     end
 
-    it "displays the new dialog form with no reset button" do
-      post :x_button, :params => {:pressed => 'configscript_service_dialog', :id => @cs.id}
-      expect(response.status).to eq(200)
-      expect(response.body).to include('Save Changes')
-      expect(response.body).not_to include('Reset')
-    end
-
-    it "Service Dialog is created from an Ansible Tower Job Template" do
-      controller.params = {:button => "save", :id => @cs.id}
-      allow(controller).to receive(:replace_right_cell)
-      controller.send(:configscript_service_dialog_submit)
-      expect(assigns(:flash_array).first[:message]).to include("was successfully created")
-      expect(Dialog.where(:label => @dialog_label).first).not_to be_nil
-      expect(assigns(:edit)).to be_nil
-    end
-
     it "renders tagging editor for a job template system" do
       session[:tag_items] = [@cs.id]
       session[:assigned_filters] = []

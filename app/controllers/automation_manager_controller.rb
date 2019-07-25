@@ -150,15 +150,6 @@ class AutomationManagerController < ApplicationController
     return unless @display == 'main'
   end
 
-  def configscript_service_dialog_submit
-    case params[:button]
-    when "cancel"
-      configscript_service_dialog_submit_cancel
-    when "save"
-      configscript_service_dialog_submit_save
-    end
-  end
-
   def validate_before_save?
     true
   end
@@ -428,11 +419,6 @@ class AutomationManagerController < ApplicationController
   def update_service_dialog_partials(presenter)
     presenter.update(:main_div, r[:partial => 'configscript_service_dialog',
                                   :locals  => locals_for_service_dialog])
-    locals = {:record_id  => @edit[:rec_id],
-              :action_url => "configscript_service_dialog_submit",
-              :no_reset   => true,
-              :serialize  => true}
-    presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
   end
 
   def active_tab_configured_systems?
@@ -458,38 +444,10 @@ class AutomationManagerController < ApplicationController
   def configscript_service_dialog
     assert_privileges("automation_manager_configuration_script_service_dialog")
     cs = ConfigurationScript.find_by(:id => params[:id])
-    @edit = {:new    => {:dialog_name => ""},
-             :key    => "cs_edit__#{cs.id}",
-             :rec_id => cs.id}
+    @edit = {:rec_id => cs.id}
     @in_a_form = true
     @right_cell_text = _("Adding a new Service Dialog from \"%{name}\"") % {:name => cs.name}
     render_service_dialog_form
-  end
-
-  def configscript_service_dialog_submit_cancel
-    add_flash(_("Creation of a new Service Dialog was cancelled by the user"))
-    @in_a_form = false
-    @edit = @record = nil
-    replace_right_cell
-  end
-
-  def configscript_service_dialog_submit_save
-    assert_privileges("automation_manager_configuration_script_service_dialog")
-    load_edit("cs_edit__#{params[:id]}", "replace_cell__explorer")
-    begin
-      cs = ConfigurationScript.find_by(:id => params[:id])
-      Dialog::AnsibleTowerJobTemplateDialogService.create_dialog(@edit[:new][:dialog_name], cs)
-    rescue => bang
-      add_flash(_("Error when creating Service Dialog: %{error_message}") %
-                  {:error_message => bang.message}, :error)
-      javascript_flash
-    else
-      add_flash(_("Service Dialog \"%{name}\" was successfully created") %
-                  {:name => @edit[:new][:dialog_name]}, :success)
-      @in_a_form = false
-      @edit = @record = nil
-      replace_right_cell
-    end
   end
 
   def breadcrumbs_options
