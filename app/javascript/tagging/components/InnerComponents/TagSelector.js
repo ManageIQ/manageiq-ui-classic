@@ -1,9 +1,8 @@
 import React from 'react';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 import { __ } from '../../../global-functions';
 import TaggingPropTypes from '../TaggingPropTypes';
-import customStyles from '../../../forms/select-styles';
+import Select from '../../../forms/pf-select';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {
@@ -43,25 +42,19 @@ class TagSelector extends React.Component {
 
 
   render() {
-    const val = this.props.selectedOption.id ? { value: this.props.selectedOption.id, label: this.props.selectedOption.description } : null;
+    const value = this.props.selectedOption.id ? { label: this.props.selectedOption.description, value: this.props.selectedOption.id } : null;
     return (
       <Select
-        id="tag_cat"
-        value={val}
-        breakAll
-        className="final-form-select"
-        optionClassName="selected-option final-form-select-option"
-        styles={customStyles}
-        placeholder={__('Select tag category')}
-        noOptionsMessage={() => __('No options')}
+        meta={{}}
         options={this.tagCategories}
-        onChange={this.handleChange}
-        name="form-field-name"
-        classNamePrefix="react-select"
+        input={{ onChange: this.handleChange, name: 'form-field-name', value }}
         filterOption={(option, filter) =>
           option.data.keyWord.includes(filter.toLowerCase())
         }
-        clearable={false}
+        placeholder={__('Select tag category')}
+        id="tag_cat"
+        // clearable={false}
+        simpleValue={false}
       />
     );
   }
