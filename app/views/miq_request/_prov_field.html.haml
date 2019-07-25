@@ -7,7 +7,6 @@
 - return if field_hash.blank?
 - field_id = dialog.to_s + "__" + field.to_s
 - disabled ||= false
-
 - unless [:hide, :ignore].include?(field_hash[:display])
   :javascript
     // Create from/to date JS vars to limit calendar starting from
@@ -290,7 +289,7 @@
             = field_hash[:notes]
       - elsif [:tag_ids, :vm_tags].include?(field)
         -# tree control for tags fields
-        .col-md-8
+        .col-md-10
           #all_tags_treebox.treeview-pf-hover.treeview-pf-select{:style => "color:#000; overflow: hidden;"}
           - if @edit && @edit[:req_id]
             - check = @edit[:req_id]
