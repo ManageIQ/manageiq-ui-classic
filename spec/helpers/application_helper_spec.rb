@@ -59,14 +59,14 @@ describe ApplicationHelper do
             end
             Vmdb::PermissionStores.initialize!
 
-            expect(Menu::DefaultMenu.services_menu_section.visible?).to be_truthy
-            expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_falsey
+            expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
+            expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_truthy
 
             # TODO: Fix this assert, it's bad.  We need to create the right feature
             # for this user so it's allowed using normal permissions but not with
             # the permission store.
-            allow(User).to receive_message_chain(:current_user, :role_allows?).and_return(true)
-            expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_falsey
+            allow(User).to receive_message_chain(:current_user, :role_allows_any?).and_return(true)
+            expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
           end
         ensure
           Vmdb::PermissionStores.instance = current_store
