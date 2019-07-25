@@ -20,7 +20,7 @@ module Mixins
             @refresh_partial = "layouts/flash_msg"
           else
             session[:tag_items] = records   # Set the array of tag items
-            session[:tag_db] = model_for_vm(records.first) # Remember the DB
+            session[:tag_db] = VmOrTemplate # Remember the DB
             if @explorer
               @edit ||= {}
               @edit[:explorer] = true       # Since no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
