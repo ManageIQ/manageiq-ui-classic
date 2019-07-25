@@ -517,7 +517,15 @@ module ApplicationController::Buttons
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
-      javascript_flash
+      if @switch_tab
+        render :update do |page|
+          page << javascript_prologue
+          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "document.querySelector(\"#ab_advanced_tab_tab > a\").click();"
+        end
+      else
+        javascript_flash
+      end
       return
     end
 
@@ -586,7 +594,15 @@ module ApplicationController::Buttons
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
-      javascript_flash
+      if @switch_tab
+        render :update do |page|
+          page << javascript_prologue
+          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+          page << "document.querySelector(\"#ab_advanced_tab_tab > a\").click();"
+        end
+      else
+        javascript_flash
+      end
       return
     end
 
@@ -822,8 +838,6 @@ module ApplicationController::Buttons
 
     add_flash(_("Starting Process is required"), :error) if ab_button_name(button_hash).blank?
 
-    add_flash(_("Request is required"), :error) if button_hash[:object_request].blank?
-
     if button_hash[:visibility_typ] == "role" && button_hash[:roles].blank?
       add_flash(_("At least one Role must be selected"), :error)
     end
@@ -837,6 +851,13 @@ module ApplicationController::Buttons
     end
 
     validate_playbook_button(button_hash) if button_hash[:button_type] == "ansible_playbook"
+
+    if button_hash[:object_request].blank?
+      add_flash(_("Request is required"), :error)
+      if @flash_array.length == 1
+        @switch_tab = true
+      end
+    end
 
     !flash_errors?
   end
