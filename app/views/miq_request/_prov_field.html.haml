@@ -90,7 +90,7 @@
             :vm_name, :wins_servers, :sysprep_domain,
             :sysprep_admin_password, :sysprep_product_key, :sysprep_locale_ui,
             :sysprep_locale_input, :sysprep_locale_system, :sysprep_locale_user,
-            :sysprep_machine_object_ou].include?(field)
+            :sysprep_machine_object_ou, :msg_timeout].include?(field)
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of the text field
