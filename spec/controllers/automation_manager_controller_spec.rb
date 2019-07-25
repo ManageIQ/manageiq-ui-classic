@@ -3,9 +3,9 @@ describe AutomationManagerController do
 
   let(:zone) { EvmSpecHelper.local_miq_server.zone }
   let(:tags) { ["/managed/quota_max_memory/2048"] }
-  let(:automation_provider1) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest", :url => "10.8.96.107", :zone => zone) }
-  let(:automation_provider2) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
-  let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
+  let(:automation_provider1) { FactoryBot.create(:provider_ansible_tower, :url => "10.8.96.107", :zone => zone) }
+  let(:automation_provider2) { FactoryBot.create(:provider_ansible_tower, :url => "10.8.96.108", :zone => zone) }
+  let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :url => "192.0.2.1", :zone => zone) }
 
   before do
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
@@ -32,9 +32,9 @@ describe AutomationManagerController do
       cs.tag_with(tags, :namespace => '')
     end
 
-    @ans_job_template1 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @automation_manager1.id)
-    @ans_job_template2 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript2", :manager_id => @automation_manager2.id)
-    @ans_job_template3 = FactoryBot.create(:ansible_configuration_script, :name => "ConfigScript3", :manager_id => @automation_manager1.id)
+    @ans_job_template1 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager1.id)
+    @ans_job_template2 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager2.id)
+    @ans_job_template3 = FactoryBot.create(:ansible_configuration_script, :manager_id => @automation_manager1.id)
   end
 
   it "renders index" do
@@ -58,8 +58,8 @@ describe AutomationManagerController do
 
   it "renders explorer sorted by url" do
     login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
-    FactoryBot.create(:provider_ansible_tower, :name => "ansibletest3", :url => "z_url", :zone => zone)
-    FactoryBot.create(:provider_ansible_tower, :name => "ansibletest4", :url => "a_url", :zone => zone)
+    FactoryBot.create(:provider_ansible_tower, :zone => zone)
+    FactoryBot.create(:provider_ansible_tower, :zone => zone)
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
