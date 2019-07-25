@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-9
+## Unreleased as of Sprint 116 ending 2019-07-22
+
+### Added
+- Remove Embedded Ansible repository unsused attributes [(#5848)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5848)
+- Unify the HTML5 canvas-based remote consoles under a single endpoint [(#5761)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5761)
+- Add Copy option to Catalog Item/Bundle [(#5667)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5667)
+- Add scopes for filtering Archived/Orphaned VMs based on RBAC [(#5357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5357)
+
+### Fixed
+- Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828)
+- Custom Button name is set by the factory [(#5810)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5810)
+- Reverted changes to git import form. [(#5792)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5792)
+- Set value of hash to be deleted from saved data. [(#5789)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5789)
+- Fix displaying 'Add a Provider' page on a fresh appliance [(#5783)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5783)
+- Display container Map Tag delete confirmation message [(#5727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5727)
+
+## Hammer-9 - Released 2019-07-23
 
 ### Removed
 - Revert faster services PR 5366 [(#5768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5768)
