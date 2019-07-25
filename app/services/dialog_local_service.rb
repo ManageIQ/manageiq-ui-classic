@@ -64,6 +64,8 @@ class DialogLocalService
           "/ems_block_storage"
         when "SwiftManager"
           "/ems_object_storage"
+        when "ContainerManager"
+          "/ems_container/#{obj.id}"
         else
           "/ems_infra"
         end
