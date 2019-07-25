@@ -75,12 +75,28 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
       });
     }
 
+    function clearOriginalIds(dialog) {
+      _.forEach(dialog.dialog_tabs, function(tab) {
+        _.forEach(tab.dialog_groups, function(group) {
+          _.forEach(group.dialog_fields, function(field) {
+            delete field.dialog_group_id;
+          });
+          delete group.dialog_tab_id;
+        });
+        delete tab.dialog_id;
+      });
+      delete dialog.id;
+    }
+
     translateResponderNamesToIds(dialog.content[0]);
 
     if (requestDialogAction() === 'copy') {
       // gettext left out intentionally
       // the label will be rendered to all users in all locales as it was saved
       dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+
+      // otherwise we attempt to create tabs referencing the original dialog, etc.
+      clearOriginalIds(dialog.content[0]);
     }
 
     DialogEditor.setData(dialog);
