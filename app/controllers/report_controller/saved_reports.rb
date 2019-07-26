@@ -2,7 +2,7 @@ module ReportController::SavedReports
   extend ActiveSupport::Concern
 
   def show_saved
-    @sb[:last_saved_id] = params[:id] if params[:id] && params[:id] != "report" && !params[:id].to_s.start_with?("savedreports")
+    @sb[:last_saved_id] = params[:id] if params[:id] && params[:id] != "report" && !accordion_select?(params[:id])
     fetch_saved_report(@sb[:last_saved_id])
     if @report.blank? # if report was nil. reset active tree back to report tree, and keep active node report to be same
       self.x_active_tree = :reports_tree
@@ -10,7 +10,7 @@ module ReportController::SavedReports
   end
 
   def show_saved_report
-    @sb[:last_savedreports_id] = params[:id].to_s.split('-').last if params[:id] && !params[:id].to_s.start_with?("savedreports")
+    @sb[:last_savedreports_id] = params[:id].to_s.split('-').last if params[:id] && params[:id] != 'savedreports' && !accordion_select?(params[:id])
     fetch_saved_report(@sb[:last_savedreports_id])
   end
 
@@ -137,5 +137,11 @@ module ReportController::SavedReports
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session["#{x_active_tree}_sortcol".to_sym] = @sortcol
     session["#{x_active_tree}_sortdir".to_sym] = @sortdir
+  end
+
+  private
+
+  def accordion_select?(param)
+    param.to_s.ends_with?('accord')
   end
 end
