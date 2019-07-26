@@ -213,6 +213,16 @@ describe Mixins::BreadcrumbsMixin do
         expect(mixin.special_page_breadcrumb(mixin.instance_variable_get(:@tagitems))).to eq(nil)
       end
     end
+
+    context "more than one item is selected in GTL page" do
+      before do
+        mixin.instance_variable_set(:@tagitems, [{:id => "1789", :description => "item"}, {:id => "1984", :description => "thing"}])
+      end
+
+      it "returns nil" do
+        expect(mixin.special_page_breadcrumb(mixin.instance_variable_get(:@tagitems))).to eq(nil)
+      end
+    end
   end
 
   describe "#ancestry_parents" do
