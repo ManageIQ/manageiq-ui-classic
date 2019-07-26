@@ -1,8 +1,8 @@
+---
 dist: xenial
 language: ruby
 python: '2.7'
 rvm:
-- 2.4.6
 - 2.5.3
 cache:
   bundler: true
@@ -19,11 +19,11 @@ env:
   - TEST_SUITE=spec:jest
 matrix:
   exclude:
-  - rvm: 2.4.6
+  - rvm: 2.5.3
     env: TEST_SUITE=spec:javascript
-  - rvm: 2.4.6
+  - rvm: 2.5.3
     env: TEST_SUITE=spec:compile
-  - rvm: 2.4.6
+  - rvm: 2.5.3
     env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
