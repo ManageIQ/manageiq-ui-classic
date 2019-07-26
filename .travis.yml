@@ -12,14 +12,6 @@ env:
   - TEST_SUITE=spec:javascript
   - TEST_SUITE=spec:compile
   - TEST_SUITE=spec:jest
-matrix:
-  exclude:
-  - rvm: 2.4.6
-    env: TEST_SUITE=spec:javascript
-  - rvm: 2.4.6
-    env: TEST_SUITE=spec:compile
-  - rvm: 2.4.6
-    env: TEST_SUITE=spec:jest
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
