@@ -1,8 +1,8 @@
 describe CloudObjectStoreObjectController do
-  let(:object) { FactoryBot.create(:cloud_object_store_object, :name => "cloud-object-store-container-01") }
-  let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-  let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
-  let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
+  let(:object) { FactoryBot.create(:cloud_object_store_object) }
+  let(:classification) { FactoryBot.create(:classification) }
+  let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
+  let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone
