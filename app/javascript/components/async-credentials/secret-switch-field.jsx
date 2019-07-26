@@ -1,8 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import {
+  Button,
+  FormGroup,
+  ControlLabel,
+  InputGroup,
+  FormControl,
+} from 'patternfly-react';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { PasswordContext } from './async-credentials';
 import { checkValidState } from './helper';
+import RequiredLabel from '../../forms/required-label';
 
 const SecretSwitchField = ({
   edit,
@@ -19,30 +27,46 @@ const SecretSwitchField = ({
     component: edit ? 'credentials-password-edit' : componentTypes.TEXT_FIELD,
     type: 'password',
     isDisabled,
-    validateOnMount: true,
-    validate: edit && editMode[validate],
+    validateOnMount: rest.validateOnMount,
+    validate: [validate],
     ...rest,
   };
   return (
     <PasswordContext.Consumer>
       {secretKey => (
         <Fragment>
-          {
-        edit
-          ? formOptions.renderForm([{
+          {edit && editMode && formOptions.renderForm([{
             ...secretField,
             editMode: !editMode,
-            buttonLabel: !editMode ? changeEditLabel : cancelEditLabel,
-            placeholder: !editMode ? '●●●●●●●●' : undefined,
+            buttonLabel: cancelEditLabel,
             setEditMode: () => {
-              setEditMode(!editMode); // reset edit mode
-              formOptions.change(rest.name, undefined); // reset field value in form state
+              formOptions.change(rest.name, undefined);
               if (checkValidState(formOptions, secretKey)) {
                 formOptions.change(secretKey, formOptions.getFieldState(secretKey).initial);
               }
+              setEditMode(editMode => !editMode); // reset edit mode
             },
-          }], formOptions)
-          : formOptions.renderForm([secretField], formOptions)}
+          }], formOptions) }
+          {edit && !editMode && (
+            <FormGroup>
+              <ControlLabel>
+                {rest.isRequired ? <RequiredLabel label={rest.label} /> : rest.label }
+              </ControlLabel>
+              <InputGroup>
+                <FormControl
+                  id={`${rest.name}-password-placeholder`}
+                  autoFocus
+                  placeholder="●●●●●●●●"
+                  disabled
+                  type="password"
+                />
+                <InputGroup.Button>
+                  <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
+                </InputGroup.Button>
+              </InputGroup>
+            </FormGroup>
+          )}
+          {!edit && formOptions.renderForm([secretField], formOptions)}
         </Fragment>
       )}
     </PasswordContext.Consumer>

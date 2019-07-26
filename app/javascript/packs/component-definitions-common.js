@@ -18,6 +18,7 @@ import ImportDatastoreViaGit from '../components/automate-import-export-form/imp
 import MiqAboutModal from '../components/miq-about-modal';
 import OptimizationList from '../optimization/optimization_list.js';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
+import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
@@ -51,6 +52,7 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
+ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);

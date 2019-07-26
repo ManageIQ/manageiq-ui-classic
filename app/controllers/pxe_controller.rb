@@ -194,7 +194,6 @@ class PxeController < ApplicationController
 
     # FIXME: check where @right_cell_text is set and replace that with loca variable
     presenter[:right_cell_text] = right_cell_text || @right_cell_text
-
     if !@view || @in_a_form ||
        (@pages && (@items_per_page == ONE_MILLION || @pages[:items]&.zero?))
       if @in_a_form
@@ -204,14 +203,9 @@ class PxeController < ApplicationController
 
         action_url, multi_record = case x_active_tree
                                    when :pxe_servers_tree
-                                     if x_node == 'root'
-                                       "pxe_server_create_update"
-                                     else
-                                       case x_node.split('-').first
-                                       when 'pi' then ["pxe_image_edit", true]
-                                       when 'wi' then ["pxe_wimg_edit",  true]
-                                       else "pxe_server_create_update"
-                                       end
+                                     case x_node.split('-').first
+                                     when 'pi' then ["pxe_image_edit", true]
+                                     when 'wi' then ["pxe_wimg_edit",  true]
                                      end
                                    when :iso_datastores_tree
                                      if x_node == "root"
@@ -242,6 +236,11 @@ class PxeController < ApplicationController
       presenter.remove_paging
     else
       presenter.hide(:form_buttons_div)
+    end
+
+    # disable toolbar and buttons for react add/edit pxe server form
+    if @in_a_form && nodetype == 'ps'
+      presenter.hide(:form_buttons_div, :toolbar)
     end
 
     presenter[:record_id] = determine_record_id_for_presenter

@@ -5,7 +5,7 @@ module PxeController::PxeServers
   def pxe_server_new
     assert_privileges("pxe_server_new")
     @ps = PxeServer.new
-    pxe_server_set_form_vars
+    @edit = {} # required to disable left tree
     @in_a_form = true
     replace_right_cell(:nodetype => "ps")
   end
@@ -13,83 +13,9 @@ module PxeController::PxeServers
   def pxe_server_edit
     assert_privileges("pxe_server_edit")
     @ps = @record = find_record_with_rbac(PxeServer, @_params[:id] = checked_or_params.first)
-    pxe_server_set_form_vars
+    @edit = {} # required to disable left tree
     @in_a_form = true
-    session[:changed] = false
     replace_right_cell(:nodetype => "ps")
-  end
-
-  def pxe_server_create_update
-    id = params[:id] || "new"
-    return unless load_edit("pxe_edit__#{id}")
-    pxe_server_get_form_vars
-    if params[:button] == "cancel"
-      @edit = session[:edit] = nil # clean out the saved info
-      if @ps && @ps.id
-        add_flash(_("Edit of PXE Server \"%{name}\" was cancelled by the user") % {:name => @ps.name})
-      else
-        add_flash(_("Add of new PXE Server was cancelled by the user"))
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
-    elsif %w[add save].include?(params[:button])
-      pxe = params[:id] ? find_record_with_rbac(PxeServer, params[:id]) : PxeServer.new
-      pxe_server_validate_fields
-      if @flash_array
-        javascript_flash
-        return
-      end
-
-      # only verify_depot_hash if anything has changed in depot settings
-      if @edit[:new][:uri_prefix] != @edit[:current][:uri_prefix] || @edit[:new][:uri] != @edit[:current][:uri] ||
-         @edit[:new][:log_userid] != @edit[:current][:log_userid] || @edit[:new][:log_password] != @edit[:current][:log_password]
-        pxe_server_set_record_vars(pxe)
-      end
-
-      if pxe.id
-        add_flash(_("PXE Server \"%{name}\" was saved") % {:name => @edit[:new][:name]})
-      else
-        add_flash(_("PXE Server \"%{name}\" was added") % {:name => @edit[:new][:name]})
-      end
-
-      if pxe.valid? && !flash_errors? && pxe_server_set_record_vars(pxe) && pxe.save!
-        AuditEvent.success(build_created_audit(pxe, @edit))
-        @edit = session[:edit] = nil # clean out the saved info
-
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_servers])
-      else
-        @in_a_form = true
-        pxe.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        javascript_flash
-      end
-    elsif params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-      @in_a_form = true
-      pxe_server_edit
-    end
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def pxe_server_form_field_changed
-    return unless load_edit("pxe_edit__#{params[:id]}", "replace_cell__explorer")
-    @edit[:prev_protocol] = @edit[:new][:protocol]
-    pxe_server_get_form_vars
-    @edit[:log_verify_status] = log_depot_verify_status
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("form_div", :partial => "pxe_form") if @edit[:new][:protocol] != @edit[:prev_protocol]
-      changed = (@edit[:new] != @edit[:current])
-      page << javascript_for_miq_button_visibility(changed)
-      session[:log_depot_log_verify_status] = @edit[:log_verify_status]
-      page << if @edit[:log_verify_status]
-                "miqValidateButtons('show', 'log_');"
-              else
-                "miqValidateButtons('hide', 'log_');"
-              end
-    end
   end
 
   # Refresh the power states for selected or single VMs
@@ -259,37 +185,17 @@ module PxeController::PxeServers
     end
   end
 
+  def pxe_server_async_cred_validation
+    begin
+      PxeServer.verify_depot_settings(params[:pxe])
+    rescue => bang
+      render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
+    end
+
+    render :json => {:status => 'success', :message => _('PXE Credentials successfuly validated')}
+  end
+
   private #######################
-
-  def pxe_server_validate_fields
-    if @edit[:new][:name].blank?
-      add_flash(_("Name is required"), :error)
-    end
-    if @edit[:new][:uri_prefix].blank?
-      add_flash(_("Depot Type is required"), :error)
-    end
-    if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].blank?
-      add_flash(_("URI is required"), :error)
-    end
-    if @edit[:new][:uri_prefix] == "smb" || @edit[:new][:uri_prefix] == "ftp" ||
-       @edit[:new][:uri_prefix] == "s3"
-      pxe_server_validate_creds
-    end
-  end
-
-  def pxe_server_validate_creds
-    if @edit[:new][:uri].blank?
-      add_flash(_("URI is required"), :error)
-    end
-    if @edit[:new][:log_userid].blank?
-      add_flash(_("Username is required"), :error)
-    end
-    if @edit[:new][:log_password].blank?
-      add_flash(_("Password is required"), :error)
-    elsif @edit[:new][:log_password] != @edit[:new][:log_verify]
-      add_flash(_("Password/Verify Password do not match"), :error)
-    end
-  end
 
   # Get variables from edit form
   def pxe_img_get_form_vars
@@ -346,80 +252,6 @@ module PxeController::PxeServers
     wimg.pxe_image_type = @edit[:new][:img_type].blank? ? nil : PxeImageType.find(@edit[:new][:img_type])
   end
 
-  def pxe_server_set_record_vars(pxe, mode = nil)
-    pxe.name = @edit[:new][:name]
-    pxe.access_url = @edit[:new][:access_url]
-    pxe.uri_prefix = @edit[:new][:uri_prefix]
-    pxe.uri = @edit[:new][:uri_prefix] + "://" + @edit[:new][:uri]
-    pxe.pxe_directory = @edit[:new][:pxe_directory]
-    pxe.windows_images_directory = @edit[:new][:windows_images_directory]
-    pxe.customization_directory = @edit[:new][:customization_directory]
-    pxe.pxe_menus.clear
-    @edit[:new][:pxe_menus].each do |menu|
-      pxe_menu = PxeMenu.new(:file_name => menu)
-      pxe.pxe_menus.push(pxe_menu)
-    end
-
-    creds = {}
-    creds[:default] = {:userid => @edit[:new][:log_userid], :password => @edit[:new][:log_password]} if @edit[:new][:log_userid].present?
-    pxe.update_authentication(creds, :save => (mode != :validate))
-    true
-  end
-
-  # Get variables from edit form
-  def pxe_server_get_form_vars
-    @ps = @edit[:pxe_id] ? PxeServer.find(@edit[:pxe_id]) : PxeServer.new
-    copy_params_if_set(@edit[:new], params, %i[name access_url uri pxe_directory windows_images_directory
-                                               customization_directory log_userid log_password log_verify])
-    @edit[:new][:protocol] = params[:log_protocol] if params[:log_protocol]
-    params.each do |var, val|
-      vars = var.to_s.split("_")
-      if vars[0] == "pxemenu"
-        @edit[:new][:pxe_menus][vars[1].to_i] = val
-      end
-    end
-    # @edit[:new][:pxe_menus][0] = params[:pxe_menu_0] if params[:pxe_menu_0]
-    @edit[:new][:uri_prefix] = @edit[:protocols_hash].invert[@edit[:new][:protocol]]
-    restore_password if params[:restore_password]
-  end
-
-  # Set form variables for edit
-  def pxe_server_set_form_vars
-    @edit = {}
-    @edit[:pxe_id] = @ps.id
-
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "pxe_edit__#{@ps.id || "new"}"
-    @edit[:rec_id] = @ps.id || nil
-    @edit[:new][:name] = @ps.name
-    @edit[:new][:access_url] = @ps.access_url
-    @edit[:protocols_hash] = PxeServer::SUPPORTED_DEPOTS
-    # have to create array to add <choose> on the top in the form
-    @edit[:protocols_arr] = []
-    @edit[:protocols_hash].each do |p|
-      @edit[:protocols_arr].push(p[1])
-    end
-    @edit[:new][:protocol] = @ps.uri.nil? ? nil : @edit[:protocols_hash][@ps.uri.split('://')[0]]
-    @edit[:new][:uri] = @ps.uri.nil? ? nil : @ps.uri.split('://')[1]
-    @edit[:new][:uri_prefix] = @ps.uri_prefix
-    @edit[:new][:pxe_directory] = @ps[:pxe_directory]
-    @edit[:new][:windows_images_directory] = @ps[:windows_images_directory]
-    @edit[:new][:customization_directory] = @ps[:customization_directory]
-    @edit[:new][:pxe_menus] = []
-    @ps.pxe_menus.each do |menu|
-      @edit[:new][:pxe_menus].push(menu.file_name)
-    end
-    @edit[:new][:pxe_menus].push("") if @edit[:new][:pxe_menus].empty?
-    @edit[:new][:log_userid]      = @ps.has_authentication_type?(:default) ? @ps.authentication_userid(:default).to_s : ""
-    @edit[:new][:log_password]    = @ps.has_authentication_type?(:default) ? @ps.authentication_password(:default).to_s : ""
-    @edit[:new][:log_verify]      = @ps.has_authentication_type?(:default) ? @ps.authentication_password(:default).to_s : ""
-
-    @edit[:current] = copy_hash(@edit[:new])
-    @edit[:log_verify_status] = log_depot_verify_status
-    session[:edit] = @edit
-  end
-
   # Common Schedule button handler routines
   def process_pxes(pxes, task, display_name)
     process_elements(pxes, PxeServer, task, display_name)
@@ -444,23 +276,6 @@ module PxeController::PxeServers
         @record = @wimg = WindowsImage.find(nodes[1])
         @right_cell_text = _("Windows Image \"%{name}\"") % {:name => @wimg.name}
       end
-    end
-  end
-
-  def restore_password
-    if params[:log_password]
-      @edit[:new][:log_password] = @edit[:new][:log_verify] = @ps.authentication_password(:default).to_s
-    end
-  end
-
-  def log_depot_verify_status
-    if @edit[:new][:uri_prefix] == "nfs" && @edit[:new][:uri].present?
-      true
-    elsif @edit[:new][:uri_prefix] != "nfs" && (@edit[:new][:log_password] == @edit[:new][:log_verify]) &&
-          %i[uri log_userid log_password log_verify].all? { |field| @edit[:new][field].present? }
-      true
-    else
-      false
     end
   end
 end

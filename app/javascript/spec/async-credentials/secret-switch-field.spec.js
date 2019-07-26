@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import SecretSwitchField from '../../components/async-credentials/secret-switch-field';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
@@ -22,10 +22,12 @@ describe('Secret switch field component', () => {
     changeSpy = jest.fn();
     getStateSpy = jest.fn().mockReturnValue({
       values: {},
+      initialValues: { foo: 'value-foo', bar: 'value-bar', nonAsync: 'non-async' },
     });
     initialProps = {
       FieldProvider,
       edit: false,
+      name: 'foo',
       formOptions: {
         renderForm: ([secret]) => <DummyComponent {...secret} />,
         change: changeSpy,
@@ -56,7 +58,17 @@ describe('Secret switch field component', () => {
    */
   it('should render correctly switch to editing', () => {
     const wrapper = mount(<SecretSwitchField {...initialProps} edit />);
+    expect(wrapper.find(DummyComponent)).toHaveLength(0);
     wrapper.find('button').simulate('click');
-    expect(changeSpy).toHaveBeenCalled();
+    wrapper.update();
+    expect(wrapper.find(DummyComponent)).toHaveLength(1);
+  });
+
+  it('should render correctly reset sercret field', () => {
+    const wrapper = mount(<SecretSwitchField {...initialProps} edit />);
+    wrapper.find('button').simulate('click');
+    expect(wrapper.find(DummyComponent)).toHaveLength(1);
+    wrapper.find('button').simulate('click');
+    expect(changeSpy).toHaveBeenCalledWith('foo', undefined);
   });
 });

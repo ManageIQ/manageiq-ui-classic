@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   FormGroup,
-  Col,
+  ControlLabel,
   InputGroup,
   FormControl,
   Button,
   HelpBlock,
 } from 'patternfly-react';
+
+import RequiredLabel from '../../forms/required-label';
 
 const EditSecretField = ({ FieldProvider, ...props }) => (
   <FieldProvider {...props}>
@@ -22,21 +24,28 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
       editMode,
       isDisabled,
       buttonLabel,
+      isRequired,
       ...rest
     }) => (
       <FormGroup validationState={meta.error ? 'error' : null}>
-        <Col md={2} componentClass="label" className="control-label">
-          { label }
-        </Col>
-        <Col md={10}>
-          <InputGroup>
-            <FormControl {...input} autoFocus {...rest} disabled={editMode || isDisabled} type="password" />
-            <InputGroup.Button>
-              <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
-            </InputGroup.Button>
-          </InputGroup>
-          {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
-        </Col>
+        <ControlLabel>
+          {isRequired ? <RequiredLabel label={label} /> : label }
+        </ControlLabel>
+        <InputGroup>
+          <FormControl
+            style={{ zIndex: 'initial' }}
+            {...input}
+            id={`${input.name}-input`}
+            autoFocus
+            {...rest}
+            disabled={editMode || isDisabled}
+            type="password"
+          />
+          <InputGroup.Button>
+            <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
+          </InputGroup.Button>
+        </InputGroup>
+        {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
       </FormGroup>
     )}
   </FieldProvider>

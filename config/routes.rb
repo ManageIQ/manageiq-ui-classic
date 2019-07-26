@@ -2707,8 +2707,7 @@ Rails.application.routes.draw do
         pxe_image_type_form_field_changed
         pxe_image_type_list
         pxe_img_form_field_changed
-        pxe_server_create_update
-        pxe_server_form_field_changed
+        pxe_server_async_cred_validation
         pxe_server_list
         pxe_wimg_edit
         pxe_wimg_form_field_changed
