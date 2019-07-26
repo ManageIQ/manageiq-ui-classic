@@ -42,7 +42,7 @@ describe('GitImport', function() {
           spyOn(window, 'showErrorMessage');
           spyOn(window, 'miqSparkleOff');
 
-          retrieveGitDatastoreCallback('{"message": {"message": "the message", "level": "error"}}');
+          retrieveGitDatastoreCallback({"message": {"message": "the message", "level": "error"}});
         });
 
         it('shows error messages', function() {
@@ -57,7 +57,7 @@ describe('GitImport', function() {
       describe('when there are are no "error" level messages', function() {
         beforeEach(function() {
           spyOn(GitImport, 'pollForGitTaskCompletion');
-          retrieveGitDatastoreCallback('{"message": {"message": "the message"}}');
+          retrieveGitDatastoreCallback({"message": {"message": "the message"}});
         });
 
         it('polls for task completion', function() {
@@ -88,7 +88,7 @@ describe('GitImport', function() {
         });
 
         it('sets a timeout to call itself', function() {
-          checkGitTaskCallback('{"state": "still doing stuff"}');
+          checkGitTaskCallback({"state": "still doing stuff"});
           expect(window.setTimeout).toHaveBeenCalledWith(GitImport.pollForGitTaskCompletion, 1500, 'the data');
         });
       });
@@ -99,7 +99,7 @@ describe('GitImport', function() {
         });
 
         it('calls gitTaskCompleted with the parsed data', function() {
-          checkGitTaskCallback('{"parsed": "data"}');
+          checkGitTaskCallback({"parsed": "data"});
           expect(GitImport.gitTaskCompleted).toHaveBeenCalledWith({'parsed': 'data'});
         });
       });
