@@ -836,8 +836,6 @@ module ApplicationController::Buttons
 
     add_flash(_("Button Hover Text is required"), :error) if button_hash[:description].blank?
 
-    add_flash(_("Starting Process is required"), :error) if ab_button_name(button_hash).blank?
-
     if button_hash[:visibility_typ] == "role" && button_hash[:roles].blank?
       add_flash(_("At least one Role must be selected"), :error)
     end
@@ -852,11 +850,14 @@ module ApplicationController::Buttons
 
     validate_playbook_button(button_hash) if button_hash[:button_type] == "ansible_playbook"
 
+    if ab_button_name(button_hash).blank?
+      add_flash(_("Starting Process is required"), :error)
+      @switch_tab = true if @flash_array.length == 1
+    end
+
     if button_hash[:object_request].blank?
       add_flash(_("Request is required"), :error)
-      if @flash_array.length == 1
-        @switch_tab = true
-      end
+      @switch_tab = true if @flash_array.length == 1
     end
 
     !flash_errors?
