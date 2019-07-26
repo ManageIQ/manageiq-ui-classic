@@ -1338,13 +1338,6 @@ describe ReportController do
           fetched_report.id = @rpt.id # Reports serialized into the report column don't have ids
           expect(fetched_report).to eq(@rpt)
         end
-
-        it "doesn't set the report id upon an accordion change" do
-          controller.params = {:id => "savedreports_accord"}
-          controller.instance_variable_set(:@sb, :last_savedreports_id => 123)
-          expect(controller).to receive(:fetch_saved_report).with(123)
-          controller.send(:show_saved_report)
-        end
       end
     end
   end
@@ -1529,6 +1522,22 @@ describe ReportController do
         expect(controller.session[:report_filters]).to eq(report_filters)
         expect(controller.session[:report_showtype]).to eq(report_showtype)
         expect(controller.session[:panels]).to eq(panels)
+      end
+    end
+  end
+
+  context 'saved reports' do
+    describe '#accordion_select?' do
+      subject { controller.send(:accordion_select?, param) }
+
+      context 'an accord' do
+        let(:param) { "foo_accord" }
+        it { is_expected.to be_truthy }
+      end
+
+      context 'a number' do
+        let(:param) { "1234" }
+        it { is_expected.to be_falsey }
       end
     end
   end
