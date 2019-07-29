@@ -345,6 +345,8 @@ module ApplicationController::Filter
     exp_remove_tokens(@edit[:adv_search_applied][:qs_exp])
     session[:adv_search] ||= {}
     session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
+
+    # FIXME: this should really do $('#quicksearchbox').modal('hide'); ; for now, Apply closes the modal JS side
     if @edit[:in_explorer]
       replace_right_cell
     else

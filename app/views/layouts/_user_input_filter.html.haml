@@ -103,10 +103,10 @@
                          :button => "apply"},
                         :class                 => "btn btn-primary",
                         :alt                   => t = _("Apply the current filter (Enter)"),
+                        "data-dismiss"         => "modal",
                         "data-miq_sparkle_on"  => true,
                         "data-miq_sparkle_off" => true,
                         :remote                => true,
-                        "data-dismiss"         => "modal",
                         "data-method"          => :post,
                         :id                    => "apply_button",
                         :title                 => t)
@@ -125,7 +125,12 @@
       if (miqDomElementExists('value_1')) $('#value_1').focus();
     })
     $('#quicksearchbox').off("click");
-    $('#quicksearchbox').on('click', '[data-dismiss="modal"]', function() {
+    $('#quicksearchbox').on('click', '[data-dismiss="modal"]', function(event) {
+      if (event && event.target && event.target.id == 'apply_button') {
+        // don't cancel on Apply, but still close the modal
+        return true;
+      }
+
       miqJqueryRequest("quick_search?button=cancel", {beforeSend: true});
       return true;
     });
