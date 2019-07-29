@@ -71,7 +71,7 @@ describe TreeBuilder do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", {})
       tree.instance_eval { @tree_nodes = "{}" }
       tree.reload!
-      expect(tree.tree_nodes).not_to eq("{}")
+      expect(tree.tree_nodes).not_to eq({})
     end
   end
 
@@ -88,7 +88,7 @@ describe TreeBuilder do
     end
 
     it "descendants can set their own root_options" do
-      expect(tree.tree_nodes).to match(/"text":\s*"Foo"/)
+      expect(tree.tree_nodes.to_json).to match(/"text":\s*"Foo"/)
     end
   end
 

@@ -735,8 +735,7 @@ describe ProviderForemanController do
 
   def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
-    tree_nodes = JSON.parse(tree.tree_nodes)
-    tree_nodes[0]['nodes'][0]['nodes']&.find { |c| c['key'] == key }
+    tree.tree_nodes[0][:nodes][0][:nodes]&.find { |c| c[:key] == key }
   end
 
   def ems_key_for_provider(provider)
