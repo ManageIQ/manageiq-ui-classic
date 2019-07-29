@@ -301,8 +301,6 @@
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
-          .note
-            = _("* Only a single value can be assigned from these Tag Categories")
       - elsif [:attached_ds, :iso_image_id, :placement_availability_zone,
                :placement_cluster_name, :placement_dc_name, :placement_ds_name,
                :placement_ems_name, :placement_host_name, :placement_rp_name,
