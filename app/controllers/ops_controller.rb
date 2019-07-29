@@ -26,11 +26,34 @@ class OpsController < ApplicationController
   end
 
   def self.display_methods
-    %w[service_templates]
+    %w[service_templates providers ae_namespaces]
   end
 
   def display_service_templates
-    nested_list(ServiceTemplate, :breadcrumb_title => _('Catalog Items and Bundles'), :named_scope => :with_tenant, :parent => @record)
+    nested_list(
+      ServiceTemplate,
+      :breadcrumb_title => _('Catalog Items and Bundles'),
+      :association      => :nested_service_template,
+      :parent           => @record
+    )
+  end
+
+  def display_providers
+    nested_list(
+      Providers,
+      :breadcrumb_title => _('Providers'),
+      :association      => :nested_providers,
+      :parent           => @record
+    )
+  end
+
+  def display_ae_namespaces
+    nested_list(
+      ServiceTemplate,
+      :breadcrumb_title => _('Automate Domains'),
+      :association      => :nested_ae_namespaces,
+      :parent           => @record
+    )
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
