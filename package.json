@@ -23,7 +23,7 @@
   "dependencies": {
     "@data-driven-forms/pf3-component-mapper": "^1.13.3",
     "@data-driven-forms/react-form-renderer": "^1.13.3",
-    "@manageiq/react-ui-components": "~0.11.27",
+    "@manageiq/react-ui-components": "~0.11.35",
     "@manageiq/ui-components": "~1.2.10",
     "@pf3/select": "~1.12.6",
     "@pf3/timeline": "~1.0.8",
