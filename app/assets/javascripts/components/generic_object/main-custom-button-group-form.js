@@ -68,7 +68,7 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
   };
 
   vm.resetClicked = function(angularForm) {
-    vm.customButtonGroupModel = Object.assign({}, vm.modelCopy);
+    vm.customButtonGroupModel = angular.copy(vm.modelCopy);
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
@@ -145,7 +145,8 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
 
     vm.customButtonGroupModel.set_data = {};
 
-    vm.modelCopy = Object.assign({}, vm.customButtonGroupModel);
+    vm.modelCopy = angular.copy( vm.customButtonGroupModel );
+
     vm.afterGet = true;
     miqService.sparkleOff();
   }
