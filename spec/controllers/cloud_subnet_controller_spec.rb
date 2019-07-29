@@ -5,10 +5,10 @@ describe CloudSubnetController do
   before { EvmSpecHelper.create_guid_miq_server_zone }
 
   describe "#tags_edit" do
-    let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
-    let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
-    let(:tag2) { FactoryBot.create(:classification_tag, :name => "tag2", :parent => classification) }
-    let(:ct) { FactoryBot.create(:cloud_subnet, :name => "cloud-subnet-01") }
+    let(:classification) { FactoryBot.create(:classification) }
+    let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
+    let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
+    let(:ct) { FactoryBot.create(:cloud_subnet) }
 
     before do
       stub_user(:features => :all)
