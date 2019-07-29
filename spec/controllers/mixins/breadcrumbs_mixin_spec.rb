@@ -84,7 +84,7 @@ describe Mixins::BreadcrumbsMixin do
       before do
         allow(subject).to receive(:x_node).and_return("xx-1")
         allow(TreeBuilderUtilization).to receive(:new).and_return(tree)
-        allow(tree).to receive(:bs_tree).and_return(
+        allow(tree).to receive(:tree_nodes).and_return(
           [
             {
               :key   => 'root',
@@ -95,7 +95,7 @@ describe Mixins::BreadcrumbsMixin do
               ]
 
             }
-          ].to_json
+          ]
         )
       end
 
