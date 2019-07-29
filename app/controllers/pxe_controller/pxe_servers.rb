@@ -188,7 +188,7 @@ module PxeController::PxeServers
   def pxe_server_async_cred_validation
     begin
       PxeServer.verify_depot_settings(params[:pxe])
-    rescue => bang
+    rescue StandardError => bang
       render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
     end
 
