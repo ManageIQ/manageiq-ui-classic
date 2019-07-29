@@ -984,6 +984,7 @@ function miqQsEnterEscape(e) {
   if (keycode === 13) {
     if ($('#apply_button').is(':visible')) {
       miqAjaxButton('quick_search?button=apply');
+      $('#quicksearchbox').modal('hide');
     }
   }
 
