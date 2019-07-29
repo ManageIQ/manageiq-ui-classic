@@ -1001,8 +1001,14 @@ module ApplicationController::MiqRequestMethods
     assigned_tags = assignments.map do |tag|
       {
         :description => tag.parent.description,
-        :id          => tag.parent.id,
-        :values      => assignments.select { |assignment| assignment.parent_id == tag.parent_id }.map do |assignment|
+        :id          => tag.parent.name,
+        :singleValue => tag.parent.single_value,
+        :values      => ->(arr, single_value) { single_value ? [arr.last] : arr }.call(
+          assignments.select do |assignment|
+            assignment.parent.name == tag.parent.name
+          end,
+          tag.parent.single_value
+        ).map do |assignment|
           { :description => assignment.description, :id => assignment.id }
         end
       }
