@@ -7,7 +7,7 @@ module Mixins
       @lastaction = "show_timeline"
       @timeline = @timeline_filter = true
       tl_build_timeline # Create the timeline report
-      drop_breadcrumb(:name => _("Timelines"),
+      drop_breadcrumb(:name => _("Timelines for %{table} \"%{name}\"") % {:table => ui_lookup(:table => controller_name), :name => @record.name},
                       :url  => "/#{controller_name}/show/#{@record.id}" \
                                "?refresh=n&display=timeline")
     end

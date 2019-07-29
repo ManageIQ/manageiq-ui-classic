@@ -3,6 +3,8 @@
   ManageIQ.calendar.calDateFrom = new Date(#{@tl_options.date.start});
   ManageIQ.calendar.calDateTo = new Date(#{@tl_options.date.end});
 
+%h1
+  = @title
 = render :partial => "layouts/flash_msg"
 = render :partial => "layouts/tl_options"
 = render :partial => 'layouts/tl_detail'
