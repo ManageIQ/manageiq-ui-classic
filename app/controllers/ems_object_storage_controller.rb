@@ -48,8 +48,7 @@ class EmsObjectStorageController < ApplicationController
       :breadcrumbs => [
         {:title => _("Storage")},
         {:title => _("Object Storage")},
-        {:title => _("Managers")},
-        {:url   => controller_url, :title => _("Object Storage Managers")},
+        {:title => _("Managers"), :url => controller_url},
       ],
     }
   end

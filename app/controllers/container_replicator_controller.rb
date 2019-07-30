@@ -21,8 +21,7 @@ class ContainerReplicatorController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Replicators")},
-        {:url   => controller_url, :title => _("Container Replicators")},
+        {:title => _("Replicators"), :url => controller_url},
       ],
     }
   end

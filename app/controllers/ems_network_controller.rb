@@ -47,8 +47,7 @@ class EmsNetworkController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Networks")},
-        {:title => _("Providers")},
-        {:url   => controller_url, :title => _("Network Managers")},
+        {:title => _("Providers"), :url => controller_url},
       ],
       :record_info => @ems,
     }.compact

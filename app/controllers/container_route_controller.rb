@@ -19,8 +19,7 @@ class ContainerRouteController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Routes")},
-        {:url   => controller_url, :title => _("Container Routes")},
+        {:title => _("Routes"), :url => controller_url},
       ],
     }
   end

@@ -19,8 +19,7 @@ class ContainerTemplateController < ApplicationController
       :breadcrumbs  => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Templates")},
-        {:url   => controller_url, :title => _("Container Templates")},
+        {:title => _("Templates"), :url => controller_url},
       ],
       :record_info  => (action_name == "service_dialog_from_ct" ? {:title => params["id"], :id => params["id"]} : nil),
       :record_title => :title,

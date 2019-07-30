@@ -64,8 +64,7 @@ class ConfigurationJobController < ApplicationController
       :breadcrumbs => [
         {:title => _("Automation")},
         {:title => _("Ansible Tower")},
-        {:title => _("Jobs")},
-        {:url   => controller_url, :title => _("Ansible Tower Jobs")},
+        {:title => _("Jobs"), :url => controller_url},
       ],
     }
   end

@@ -30,8 +30,7 @@ class ContainerGroupController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Pods")},
-        {:url   => controller_url, :title => _("Container Pods")},
+        {:title => _("Pods"), :url => controller_url},
       ],
     }
   end

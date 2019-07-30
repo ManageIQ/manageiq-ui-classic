@@ -330,8 +330,7 @@ class CloudSubnetController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Networks")},
-        {:title => _("Subnets")},
-        {:url   => controller_url, :title => _("Cloud Subnets")},
+        {:title => _("Subnets"), :url => controller_url},
       ],
     }
   end

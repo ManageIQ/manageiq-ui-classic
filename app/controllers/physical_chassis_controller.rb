@@ -37,8 +37,7 @@ class PhysicalChassisController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Physical Infrastructure")},
-        {:title => _("Chassis")},
-        {:url   => controller_url, :title => _("Physical Chassis")},
+        {:title => _("Chassis"), :url => controller_url},
       ],
     }
   end

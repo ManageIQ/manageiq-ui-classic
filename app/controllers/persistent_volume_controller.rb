@@ -23,8 +23,7 @@ class PersistentVolumeController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Volumes")},
-        {:url   => controller_url, :title => _("Persistent Volumes")},
+        {:title => _("Volumes"), :url => controller_url},
       ],
     }
   end

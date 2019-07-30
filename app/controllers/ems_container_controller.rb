@@ -152,8 +152,7 @@ class EmsContainerController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Providers")},
-        {:url   => controller_url, :title => _("Container Providers")},
+        {:title => _("Providers"), :url => controller_url},
       ],
       :record_info => @ems,
     }.compact

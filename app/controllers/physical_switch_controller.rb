@@ -50,8 +50,7 @@ class PhysicalSwitchController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Physical Infrastructure")},
-        {:title => _("Switches")},
-        {:url   => controller_url, :title => _("Physical Switches")},
+        {:title => _("Switches"), :url => controller_url},
       ],
     }
   end

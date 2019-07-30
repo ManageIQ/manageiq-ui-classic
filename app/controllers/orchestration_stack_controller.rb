@@ -248,8 +248,7 @@ class OrchestrationStackController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Clouds")},
-        {:title => _("Stacks")},
-        {:url   => controller_url, :title => _("Orchestration Stacks")},
+        {:title => _("Stacks"), :url => controller_url},
       ],
       :record_info => (
         unless @retireitems.nil? || @retireitems.length != 1

@@ -111,8 +111,7 @@ class ContainerDashboardController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Overview")},
-        {:url   => controller_url, :title => _("Container Dashboard")},
+        {:title => _("Overview"), :url => controller_url},
       ],
     }
   end
