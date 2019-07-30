@@ -6,7 +6,7 @@
     - unless @def_searches.blank?
       - if @panels["#{@view.db}_def_searches"].nil?
         - @panels["#{@view.db}_def_searches"] = true
-      = miq_accordion_panel(_("Filters"), true, "#{@view.db}_def_searches") do
+      = miq_accordion_panel(_("Global Filters"), true, "#{@view.db}_def_searches") do
         %ul.nav.nav-pills.nav-stacked
           - @def_searches.each do |search|
             - li_class = ""
