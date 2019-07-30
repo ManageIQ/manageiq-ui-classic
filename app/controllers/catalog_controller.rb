@@ -198,7 +198,6 @@ class CatalogController < ApplicationController
     id = session[:edit][:req_id] || "new"
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
     get_form_vars
-    changed = (@edit[:new] != @edit[:current])
     # Build Catalog Items tree unless @edit[:ae_tree_select]
     build_automate_tree(:automate_catalog) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
@@ -222,7 +221,11 @@ class CatalogController < ApplicationController
         @edit[:rec_id] = @record.try(:id)
         @tabactive = @edit[:new][:current_tab_key]
       end
+      @edit[:current] = copy_hash(@edit[:new])
     end
+
+    changed = (@edit[:new] != @edit[:current])
+
     render :update do |page|
       page << javascript_prologue
       if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
@@ -1106,7 +1109,7 @@ class CatalogController < ApplicationController
     end
   end
 
-  # common code for both st/at get_form_vars
+  # common code for both st/at set_form_vars
   def set_form_vars
     @edit[:new][:name] = @record.name
     @edit[:new][:description] = @record.description
@@ -1114,6 +1117,7 @@ class CatalogController < ApplicationController
     @edit[:new][:provision_cost] = @record.provision_cost
     @edit[:new][:display] = @record.display ? @record.display : false
     @edit[:new][:catalog_id] = @record.service_template_catalog.try(:id)
+    @edit[:new][:dialog_id] = nil # initialize
     @edit[:new][:st_prov_type] ||= @record.prov_type
     @edit[:new][:generic_subtype] = @record.generic_subtype || "custom" if @edit[:new][:st_prov_type] == 'generic'
     @edit[:new][:tenant_ids] = @record.additional_tenant_ids
@@ -1131,7 +1135,7 @@ class CatalogController < ApplicationController
     @edit[:new][:price] = @record.price
 
     # initialize fqnames
-    @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = ""
+    @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = nil # default_entry_point sets nil for non present entry points
     @record.resource_actions.each do |ra|
       @edit[:new][:dialog_id] = ra.dialog_id.to_i
       if ra.action.downcase == "provision"
@@ -1260,11 +1264,11 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    copy_params_if_set(@edit[:new], params, %i[name description provision_cost catalog_id dialog_id generic_subtype long_description zone_id])
+    copy_params_if_present(@edit[:new], params, %i[st_prov_type name description provision_cost catalog_id dialog_id generic_subtype long_description zone_id price retire_fqname reconfigure_fqname fqname])
 
-    @edit[:new][:display] = params[:display] == "1" if params[:display]
+    @edit[:new][:display] = params[:display] == "1"
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
-    @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
+    @edit[:st_prov_type] = @edit[:new][:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
     fetch_zones
     checked_tenants if params[:check] # Save checked Additional Tenants to @edit
@@ -1277,7 +1281,6 @@ class CatalogController < ApplicationController
       @edit[:new][:currency] = params[:currency].blank? ? nil : params[:currency].to_i
       @edit[:new][:code_currency] = @edit[:new][:currency] ? code_currency_label(params[:currency]) : _('Price / Month')
     end
-    @edit[:new][:price] = params[:price] if params[:price]
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_container_template].include?(@edit[:new][:st_prov_type])
