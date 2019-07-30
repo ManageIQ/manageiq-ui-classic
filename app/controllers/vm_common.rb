@@ -514,7 +514,8 @@ module VmCommon
     @rightsize = true
     @in_a_form = true
     if params[:button] == "back"
-      javascript_prologue(previous_breadcrumb_url)
+      javascript_prologue
+      javascript_redirect(previous_breadcrumb_url)
     end
     if !@explorer && params[:button] != "back"
       drop_breadcrumb(:name => _("Right Size VM '%{name}''") % {:name => @record.name}, :url => "/vm/right_size")
