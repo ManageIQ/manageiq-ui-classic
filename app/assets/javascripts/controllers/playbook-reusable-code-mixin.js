@@ -141,9 +141,11 @@ function playbookReusableCodeMixin(API, $q, miqService) {
       );
     }
 
-    allApiPromises.push(API.get('/api/zones/?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending')
+    allApiPromises.push(API.get('/api/zones/?expand=resources&attributes=id,description,visible&sort_by=description&sort_order=ascending')
       .then(function(data) {
-        vm.zones = data.resources;
+        vm.zones = data.resources.filter(function( zone ) {
+          return zone.visible === true;
+        });
         vm._zone = _.find(vm.zones, {id: vm[vm.model].zone_id});
       })
       .catch(miqService.handleFailure)
