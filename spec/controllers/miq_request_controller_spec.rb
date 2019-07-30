@@ -524,4 +524,45 @@ describe MiqRequestController do
       expect(controller.send(:data_for_breadcrumbs).last).to include(:title => miq_request.description)
     end
   end
+
+  describe "#prov_edit" do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.local_miq_server
+    end
+
+    context "when request type is clone_to_template" do
+      let(:request) do
+        FactoryBot.create(:miq_provision_request, :with_approval, :request_type => "clone_to_vm")
+      end
+
+      it "returns header including Publish" do
+        get :prov_edit, :params => {:prov_id => request.id, :prov_type => "clone_to_template"}
+
+        expect(response.body).to include("Publish")
+        expect(response.body).to_not include("Add")
+      end
+    end
+
+    context "when no request type" do
+      let(:request) do
+        FactoryBot.create(:miq_provision_request, :with_approval)
+      end
+
+      it "returns header including Edit" do
+        get :prov_edit, :params => {:req_id => request.id}
+
+        expect(response.body).to include("Edit")
+        expect(response.body).to_not include("Add")
+      end
+    end
+
+    context "when no request type" do
+      it "returns header including Add" do
+        get :prov_edit
+
+        expect(response.body).to include("Add")
+      end
+    end
+  end
 end
