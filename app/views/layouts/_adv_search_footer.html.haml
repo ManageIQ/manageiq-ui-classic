@@ -27,7 +27,7 @@
                      :class   => "btn btn-primary",
                      :alt     => t = _("Apply the current filter"),
                      :title   => t,
-                     :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'adv_search_button', :button => "apply")}');")
+                     :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'adv_search_button', :button => "apply")}');$('#advsearchModal').modal('hide');")
       - if @edit[@expkey][:selected] && @edit[@expkey][:selected][:typ] != "default" && @edit[@expkey][:selected][:id] != 0
         - if report_admin_user? || @edit[@expkey][:selected][:typ] == "user"
           - actual_filter = @edit[@expkey][:selected][:description]
