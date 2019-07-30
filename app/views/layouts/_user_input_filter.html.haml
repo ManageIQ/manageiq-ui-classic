@@ -121,9 +121,10 @@
                       :title        => t)
 :javascript
   $(function(){
-    $('#quicksearchbox').on('shown.bs.modal', function () {
-      if (miqDomElementExists('value_1')) $('#value_1').focus();
-    })
+    $('#quicksearchbox').on('shown.bs.modal', function() {
+      // autofocus, but not a select as focusing hidden select breaks pf-select
+      $('#value_1').not('select').focus();
+    });
     $('#quicksearchbox').off("click");
     $('#quicksearchbox').on('click', '[data-dismiss="modal"]', function(event) {
       if (event && event.target && event.target.id == 'apply_button') {
