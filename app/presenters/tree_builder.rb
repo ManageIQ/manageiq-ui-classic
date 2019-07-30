@@ -16,7 +16,7 @@ class TreeBuilder
     @locals_for_render  = {}
     @name               = name.to_sym # includes _tree
     @options            = tree_init_options
-    @tree_nodes         = {}.to_json
+    @tree_nodes         = []
 
     add_to_sandbox
     build_tree if build
@@ -132,23 +132,17 @@ class TreeBuilder
 
   def build_tree
     # FIXME: we have the options -- no need to reload from @sb
-    tree_nodes = x_build_tree(@tree_state.x_tree(@name))
-    active_node_set(tree_nodes)
-    set_nodes(tree_nodes)
+    @tree_nodes = x_build_tree(@tree_state.x_tree(@name))
+    active_node_set(@tree_nodes)
+    add_root_node(@tree_nodes) if respond_to?(:root_options, true)
+    # Convert the nodes to the Bootstrap Treeview format
+    @bs_tree = self.class.convert_bs_tree(@tree_nodes).to_json
+    @locals_for_render = set_locals_for_render
   end
 
-  # Set active node to root if not set.
   # Subclass this method if active node on initial load is different than root node.
   def active_node_set(tree_nodes)
     @tree_state.x_node_set(tree_nodes.first[:key], @name) unless @tree_state.x_node(@name)
-  end
-
-  def set_nodes(nodes)
-    # Add the root node even if it is not set
-    add_root_node(nodes) if respond_to?(:root_options, true)
-    @bs_tree = self.class.convert_bs_tree(nodes).to_json
-    @tree_nodes = nodes.to_json
-    @locals_for_render = set_locals_for_render
   end
 
   def add_to_sandbox

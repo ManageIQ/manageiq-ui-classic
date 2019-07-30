@@ -1,6 +1,4 @@
 class TreeBuilderConfiguredSystems < TreeBuilder
-  attr_reader :tree_nodes
-
   private
 
   def tree_init_options

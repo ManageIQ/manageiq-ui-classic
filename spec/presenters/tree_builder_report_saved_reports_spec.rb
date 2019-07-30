@@ -25,10 +25,10 @@ describe TreeBuilderReportSavedReports do
           # there is calling of x_get_tree_roots
           tree = TreeBuilderReportSavedReports.new('savedreports_tree', {})
 
-          saved_reports_in_tree = JSON.parse(tree.tree_nodes).first['nodes']
+          saved_reports_in_tree = tree.tree_nodes.first[:nodes]
 
           displayed_report_ids = saved_reports_in_tree.map do |saved_report|
-            saved_report["key"].gsub("xx-", "")
+            saved_report[:key].gsub("xx-", "")
           end
 
           # logged User1 can see report with Group1

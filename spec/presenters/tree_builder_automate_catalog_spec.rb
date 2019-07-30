@@ -5,7 +5,7 @@ describe TreeBuilderAutomateCatalog do
     subject { described_class.new(:automate_tree, sb) }
 
     let(:sb) { {:trees => {:ot_tree => {:open_nodes => []}}, :active_tree => :ot_tree} }
-    let(:domains) { JSON.parse(subject.tree_nodes).first['nodes'].collect { |h| h['text'] } }
+    let(:domains) { subject.tree_nodes.first[:nodes].collect { |h| h[:text] } }
 
     before do
       login_as FactoryBot.create(:user_with_group)

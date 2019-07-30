@@ -86,10 +86,12 @@ module Mixins
     def current_tree_path(tree, active_node, path = [])
       result = []
       result.replace(path)
-      result.push(:title => tree["text"], :key => tree["key"])
-      return result if tree["key"] == active_node
-      if tree.include?("nodes")
-        tree["nodes"].each do |node|
+      result.push(:title => tree[:text], :key => tree[:key])
+
+      return result if tree[:key] == active_node
+
+      if tree.include?(:nodes)
+        tree[:nodes].each do |node|
           value = current_tree_path(node, active_node, result)
           return value if value
         end
@@ -103,7 +105,7 @@ module Mixins
       tree = build_tree if node
 
       if tree.present?
-        JSON.parse(tree.bs_tree).each do |subtree|
+        tree.tree_nodes.each do |subtree|
           value = current_tree_path(subtree, node)
           breadcrumbs = value if value
         end

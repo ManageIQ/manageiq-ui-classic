@@ -592,8 +592,8 @@ describe AutomationManagerController do
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow(@user).to receive(:get_filters).and_return(user_filters)
-      tree_json = TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb)).tree_nodes
-      first_child = find_treenode_for_provider(automation_provider1, tree_json)
+      tree_objects = TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb)).tree_nodes
+      first_child = find_treenode_for_provider(automation_provider1, tree_objects)
       expect(first_child).to eq(nil)
     end
   end
@@ -674,10 +674,9 @@ describe AutomationManagerController do
     end
   end
 
-  def find_treenode_for_provider(provider, tree_json)
+  def find_treenode_for_provider(provider, tree)
     key = ems_key_for_provider(provider)
-    tree = JSON.parse(tree_json)
-    tree[0]['nodes']&.find { |c| c['key'] == key }
+    tree[0][:nodes]&.find { |c| c['key'] == key }
   end
 
   def ems_key_for_provider(provider)
