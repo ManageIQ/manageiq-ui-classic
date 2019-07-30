@@ -228,13 +228,18 @@ module ApplicationController::MiqRequestMethods
         @edit[:explorer] = true if @explorer
         @tabactive = @edit[:new][:current_tab_key]
       end
-      drop_breadcrumb(:name => if params[:req_id]
-                                 _("Edit %{type}") % {:type => @edit[:prov_type]}
-                               else
-                                 _("Add %{type}") % {:type => @edit[:prov_type]}
-                               end,
-                      :url  => "/vm/provision")
+
+      title = if params[:prov_type] == "clone_to_template"
+                _('Publish Virtual Machine')
+              elsif params[:req_id]
+                _("Edit %{type}") % {:type => @edit[:prov_type]}
+              else
+                _("Add %{type}") % {:type => @edit[:prov_type]}
+              end
+
+      drop_breadcrumb(:name => title, :url => "/vm/provision")
       @in_a_form = true
+
       #     render :action=>"show"
     end
   end
