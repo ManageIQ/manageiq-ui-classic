@@ -290,13 +290,6 @@
       - elsif [:tag_ids, :vm_tags].include?(field)
         -# tree control for tags fields
         .col-md-10
-          #all_tags_treebox.treeview-pf-hover.treeview-pf-select{:style => "color:#000; overflow: hidden;"}
-          - if @edit && @edit[:req_id]
-            - check = @edit[:req_id]
-          - elsif @miq_request
-            - check = @miq_request.id
-          - else
-            - check = 'new'
           = react('TaggingWrapperConnected',
             :tags    => @tags,
             :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true, :url => url_for_only_path(:action => 'prov_field_changed')})

@@ -88,18 +88,18 @@ TaggingWrapper.propTypes = {
   }),
   tags: PropTypes.shape({
     tags: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       description: PropTypes.string.isRequired,
       values: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,
     assignedTags: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       description: PropTypes.string.isRequired,
       values: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.oneOfType(PropTypes.string, PropTypes.number).isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,
