@@ -26,10 +26,7 @@ const CategoryModifier = ({
 );
 
 CategoryModifier.propTypes = {
-  tagCategories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  tagCategories: PropTypes.arrayOf(TaggingPropTypes.category).isRequired,
   selectedTagCategory: TaggingPropTypes.category,
   onTagCategoryChange: PropTypes.func.isRequired,
   categoryLabel: PropTypes.string,
