@@ -24,7 +24,8 @@ module Mixins
         breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))
 
         # Append title breadcrumb if they exist and not same as previous breadcrumb (eg "Editing name")
-        if @title && @title != breadcrumbs.compact.last.try(:[], :title) && !options[:hide_title]
+        # Also do not append when user is on show_list page, the menu title is used instead of it
+        if @title && !same_as_last_breadcrumb?(breadcrumbs, @title) && !show_list_page? && !options[:hide_title]
           breadcrumbs.push(:title => @title)
         end
       else
@@ -152,6 +153,20 @@ module Mixins
     # User is not on show page
     def not_show_page?
       (action_name == "show" && params["display"] && !%w[dashboard main].include?(params["display"])) || (action_name != "show")
+    end
+
+    # User is on show_list page
+    # A lot of pages has different header than last item in menu
+    # The last item in menu is an abbreviation of the header
+    # So, breadcrumbs should contain only the abbreviation
+    def show_list_page?
+      action_name == "show_list"
+    end
+
+    # Checks if the title is same as the last item in breadcrumbs
+    # If so, then there is no reason to append the title to breadcrumbs
+    def same_as_last_breadcrumb?(breadcrumbs, title)
+      title == breadcrumbs.compact.last.try(:[], :title)
     end
 
     # Controls on tagging screen if the tagged item is floating_ip
