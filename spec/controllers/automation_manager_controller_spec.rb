@@ -3,9 +3,9 @@ describe AutomationManagerController do
 
   let(:zone) { EvmSpecHelper.local_miq_server.zone }
   let(:tags) { ["/managed/quota_max_memory/2048"] }
-  let(:automation_provider1) { FactoryBot.create(:provider_ansible_tower, :url => "10.8.96.107", :zone => zone) }
-  let(:automation_provider2) { FactoryBot.create(:provider_ansible_tower, :url => "10.8.96.108", :zone => zone) }
-  let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :url => "192.0.2.1", :zone => zone) }
+  let(:automation_provider1) { FactoryBot.create(:provider_ansible_tower, :zone => zone) }
+  let(:automation_provider2) { FactoryBot.create(:provider_ansible_tower, :zone => zone) }
+  let(:automation_provider3) { FactoryBot.create(:provider_ansible_tower, :zone => zone) }
 
   before do
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
