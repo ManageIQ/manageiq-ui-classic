@@ -131,6 +131,13 @@ describe EmsClusterController do
       same_fields_count = 2 # same values in sample_values
       expect(controller.send(:comp_section_fields_total, view, section, @fields)).to eq(same_fields_count)
     end
+
+    it "returns row without error" do
+      controller.instance_variable_set(:@sb, :miq_temp_params => 'same')
+      controller.instance_variable_set(:@exists_mode, true)
+      row = controller.send(:comp_record_data_compressed, 1, nil, nil, true)
+      expect(row).to eq(:col2=> '<div class=""><i class="compare-diff" title="Missing"></i></div>')
+    end
   end
 
   context 'drifts' do

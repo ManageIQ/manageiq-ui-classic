@@ -1473,12 +1473,12 @@ module ApplicationController::Compare
     end
   end
 
-  def comp_record_data_compressed_existsmode(idx, _match, value_found)
+  def comp_record_data_compressed_existsmode(idx, _match, value_found, basval)
     row = {}
     text = value_found ? _("Found") : _("Missing")
     if idx.zero? # On the base?
       row.merge!(drift_add_image_col(idx, "", "cell-stripe", text)) # no icon
-    elsif val == basval # Compare this object's value to the base
+    elsif value_found == basval # Compare this object's value to the base
       row.merge!(compare_add_same_image(idx, text))
     else
       unset_same_flag
