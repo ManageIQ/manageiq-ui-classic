@@ -219,7 +219,7 @@ class InfraNetworkingController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => @host_record.switches.pluck(:id)}
+      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
@@ -235,9 +235,7 @@ class InfraNetworkingController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      hosts = @cluster_record.hosts
-      switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
+      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
@@ -253,9 +251,7 @@ class InfraNetworkingController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      hosts = Host.where(:ems_id => @provider_record.id)
-      switch_ids = hosts.collect { |host| host.switches.pluck(:id) }
-      options = {:model => "Switch", :named_scope => :shareable, :selected_ids => switch_ids.flatten.uniq}
+      options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
       @showtype        = 'main'
       @pages           = nil
