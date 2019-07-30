@@ -218,7 +218,7 @@ module OpsController::Settings::RHN
   # fields are filled-in.
   def rhn_allow_save?
     obligatory_fields = %i[customer_password customer_userid server_url repo_name]
-    obligatory_fields << :customer_org if @edit[:organizations].length > 1
+    obligatory_fields << :customer_org if @edit[:organizations].try(:length).to_i > 1
     obligatory_fields << :proxy_address if @edit[:new][:use_proxy].to_i == 1
 
     obligatory_fields.find_all do |field|
