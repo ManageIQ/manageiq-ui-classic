@@ -27,7 +27,7 @@ class CloudVolumeBackupController < ApplicationController
 
   def volume_form_choices
     assert_privileges("cloud_volume_backup_restore_to_volume")
-    volume_choices = ManageIQ::Providers::CloudManager::CloudVolume.all
+    volume_choices = CloudVolume.all
     volume_choices.each do |volume|
       {:name => volume.name, :id => volume.id}
     end
