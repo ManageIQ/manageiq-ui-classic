@@ -4,6 +4,10 @@ class TreeBuilderInfraNetworking < TreeBuilder
   has_kids_for Switch, [:x_get_tree_switch_kids]
   has_kids_for EmsFolder, [:x_get_tree_folder_kids]
 
+  def override(node, object, _pid, _options)
+    node[:selectable] = false if object.kind_of?(Lan)
+  end
+
   private
 
   def tree_init_options
