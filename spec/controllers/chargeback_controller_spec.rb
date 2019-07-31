@@ -123,7 +123,7 @@ describe ChargebackController do
 
   describe "#process_cb_rates" do
     it "delete unassigned" do
-      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      cbr = FactoryBot.create(:chargeback_rate)
 
       rates = [cbr.id]
       controller.send(:process_cb_rates, rates, "destroy")
@@ -135,7 +135,7 @@ describe ChargebackController do
     end
 
     it "delete assigned" do
-      cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage", :description => "Storage Rate")
+      cbr = FactoryBot.create(:chargeback_rate)
       host = FactoryBot.create(:host)
       cbr.assign_to_objects(host)
 
