@@ -997,7 +997,7 @@ module ApplicationController::MiqRequestMethods
       }
     end
 
-    assignments = Classification.select { |tag| vm_tags.include?(tag.id) }
+    assignments = Classification.find(vm_tags)
     assigned_tags = assignments.map do |tag|
       {
         :description => tag.parent.description,
@@ -1013,7 +1013,7 @@ module ApplicationController::MiqRequestMethods
         end
       }
     end.uniq
-
+    # assigned_tags.map! { |c| c[:values].delete_if {|v| v[:id] == params[:deleted].to_i} }
     @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => []}
   end
 
