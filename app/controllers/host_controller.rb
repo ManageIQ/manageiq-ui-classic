@@ -264,6 +264,7 @@ class HostController < ApplicationController
       @in_a_form = true
       javascript_redirect(:action => 'edit', :id => @host.id.to_s)
     when "validate"
+      binding.pry
       verify_host = find_record_with_rbac(Host, params[:validate_id] ? params[:validate_id].to_i : params[:id])
       if session[:host_items].nil?
         set_record_vars(verify_host, :validate)
@@ -410,18 +411,19 @@ class HostController < ApplicationController
                        end
 
     host_hash = {
-      :name             => host.name,
-      :hostname         => host.hostname,
-      :ipmi_address     => host.ipmi_address ? host.ipmi_address : "",
-      :custom_1         => host.custom_1 ? host.custom_1 : "",
-      :user_assigned_os => host.user_assigned_os,
-      :operating_system => !(host.operating_system.nil? || host.operating_system.product_name.nil?),
-      :mac_address      => host.mac_address ? host.mac_address : "",
-      :default_userid   => host.authentication_userid.to_s,
-      :remote_userid    => host.has_authentication_type?(:remote) ? host.authentication_userid(:remote).to_s : "",
-      :ws_userid        => host.has_authentication_type?(:ws) ? host.authentication_userid(:ws).to_s : "",
-      :ipmi_userid      => host.has_authentication_type?(:ipmi) ? host.authentication_userid(:ipmi).to_s : "",
-      :validate_id      => validate_against,
+      :name               => host.name,
+      :hostname           => host.hostname,
+      :ipmi_address       => host.ipmi_address ? host.ipmi_address : "",
+      :custom_1           => host.custom_1 ? host.custom_1 : "",
+      :user_assigned_os   => host.user_assigned_os,
+      :operating_system   => !(host.operating_system.nil? || host.operating_system.product_name.nil?),
+      :mac_address        => host.mac_address ? host.mac_address : "",
+      :default_userid     => host.authentication_userid.to_s,
+      :remote_userid      => host.has_authentication_type?(:remote) ? host.authentication_userid(:remote).to_s : "",
+      :ws_userid          => host.has_authentication_type?(:ws) ? host.authentication_userid(:ws).to_s : "",
+      :ipmi_userid        => host.has_authentication_type?(:ipmi) ? host.authentication_userid(:ipmi).to_s : "",
+      :ssh_keypair_userid => host.has_authentication_type?(:ssh_keypair) ? host.authentication_userid(:ssh_keypair).to_s : "",
+      :validate_id        => validate_against,
     }
 
     render :json => host_hash
@@ -488,6 +490,10 @@ class HostController < ApplicationController
     if params[:ipmi_userid]
       ipmi_password = params[:ipmi_password] ? params[:ipmi_password] : host.authentication_password(:ipmi)
       creds[:ipmi] = {:userid => params[:ipmi_userid], :password => ipmi_password}
+    end
+    if params[:ssh_keypair_userid]
+      ssh_keypair_password = params[:ssh_keypair_password] ? params[:ssh_keypair_password] : host.authentication_password(:ssh_keypair)
+      creds[:ssh_keypair] = {:userid => params[:ssh_keypair_userid], :password => ssh_keypair_password}
     end
     host.update_authentication(creds, :save => (mode != :validate))
     creds

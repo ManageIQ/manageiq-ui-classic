@@ -110,6 +110,8 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       return true;
     } else if ($scope.currentTab === 'ipmi' && fieldValidity('ipmi')) {
       return true;
+    } else if ($scope.currentTab === 'ssh_keypair' && fieldValidity('ssh_keypair')) {
+      return true;
     } return false;
   };
 
@@ -154,6 +156,11 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.angularForm.ipmi_userid.$dirty &&
       $scope.angularForm.ipmi_password.$dirty)) {
       return true;
+    } else if (($scope.currentTab === 'ssh_keypair') &&
+      ($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty &&
+      $scope.angularForm.ssh_keypair_userid.$dirty &&
+      $scope.angularForm.ssh_keypair_password.$dirty)) {
+      return true;
     } return false;
   };
 
@@ -172,6 +179,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.hostModel.ws_userid = data.ws_userid;
     $scope.hostModel.ipmi_userid = data.ipmi_userid;
     $scope.hostModel.validate_id = data.validate_id;
+    $scope.hostModel.ssh_keypair_userid = data.ssh_keypair_userid;
 
     if ($scope.hostModel.default_userid !== '') {
       $scope.hostModel.default_password = miqService.storedPasswordPlaceholder;
@@ -184,6 +192,9 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     }
     if ($scope.hostModel.ipmi_userid !== '') {
       $scope.hostModel.ipmi_password = miqService.storedPasswordPlaceholder;
+    }
+    if ($scope.hostModel.ssh_keypair_userid !== '') {
+      $scope.hostModel.ssh_keypair_password = miqService.storedPasswordPlaceholder;
     }
 
     $scope.afterGet = true;
