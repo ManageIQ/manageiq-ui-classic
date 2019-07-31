@@ -109,7 +109,7 @@ module ReportController::Schedules
             else
               _("The selected Schedules have been queued to run")
             end
-      add_flash(msg, :info, true)
+      add_flash(msg, :success, true)
     end
     get_node_info
     replace_right_cell

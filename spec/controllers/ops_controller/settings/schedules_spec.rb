@@ -243,4 +243,46 @@ describe OpsController do
       expect(filtered_list.first).to include(ems_infra_with_hosts.name)
     end
   end
+
+  describe "#schedule_run_now" do
+    let(:user) { FactoryBot.create(:user_admin) }
+
+    before do
+      EvmSpecHelper.local_miq_server
+      login_as(user, :stub_controller => true)
+      allow(controller).to receive(:get_node_info)
+      allow(controller).to receive(:replace_right_cell)
+
+      schedules.each { |schedule| controller.params["check_#{schedule.id}"] = "1" }
+    end
+
+    let(:schedules) { FactoryBot.create_list(:miq_schedule, amount) }
+
+    shared_examples "creates queue items" do |flash_msg|
+      it 'displays the flash message' do
+        controller.send(:schedule_run_now)
+        expect(assigns(:flash_array)).to eq([{:message => flash_msg, :level => :success}])
+      end
+
+      it 'creates queue items' do
+        controller.send(:schedule_run_now)
+        schedules.each do |schedule|
+          record = MiqQueue.find_by(:instance_id => schedule.id, :class_name => "MiqSchedule", :state => "ready")
+          expect(record.args.first).to eq("action_" + schedule.sched_action[:method])
+        end
+      end
+    end
+
+    context "single schedule" do
+      let(:amount) { 1 }
+
+      include_examples "creates queue items", "The selected Schedule has been queued to run"
+    end
+
+    context "multiple schedules" do
+      let(:amount) { 10 }
+
+      include_examples "creates queue items", "The selected Schedules have been queued to run"
+    end
+  end
 end
