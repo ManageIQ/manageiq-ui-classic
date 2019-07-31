@@ -117,16 +117,8 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
     API[method](url, saveObject)
-      // TODO remove once API supports adding/removing buttons from button set
       .then(function() {
-        $http.post('/generic_object_definition/add_custom_buttons_in_set', {
-          custom_button_set_id: vm.customButtonGroupRecordId,
-          assigned_custom_buttons: vm.customButtonGroupModel.assigned_buttons,
-        })
-          .then(function() {
-            miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
-          })
-          .catch(miqService.handleFailure);
+        miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
       })
       .catch(miqService.handleFailure);
   };
