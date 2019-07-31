@@ -67,7 +67,11 @@ class RemoveCatalogItemModal extends React.Component {
          name:         catalogItem.name,
          service_type: catalogItem.service_type, // 'atomic' or 'composite'
          services:     catalogItem.services})))
-      .then(data => this.setState({data}));
+      .then(data => this.setState({data}))
+      .then(() => this.props.dispatch({
+        type: 'FormButtons.saveable',
+        payload: true
+      }));
 
     // Buttons setup
     this.props.dispatch({
@@ -81,10 +85,6 @@ class RemoveCatalogItemModal extends React.Component {
     this.props.dispatch({
       type: "FormButtons.customLabel",
       payload: __('Delete'),
-    });
-    this.props.dispatch({
-      type: 'FormButtons.saveable',
-      payload: true
     });
   }
 
