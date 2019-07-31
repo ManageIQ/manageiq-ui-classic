@@ -24,7 +24,7 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
   end
 
   def x_get_actions_kids(object, count_only)
-    count_only_or_objects(count_only, object[:object].custom_button_sets + object[:object].custom_buttons, :name)
+    count_only_or_objects(count_only, object[:object].custom_button_sets.sort_by(&:name) + object[:object].custom_buttons)
   end
 
   def tree_init_options
