@@ -6,13 +6,6 @@
   -# Showing a specific Service
   #main_div
     = render :partial => "svcs_show", :locals => {:controller => "service"}
-    -# FIXME: remove sand-paper style hack when we resolve the div shared between
-    -# the GTL grid an details.
-    :javascript
-      setTimeout(function() {
-        var mainContent = $('#main-content');
-        mainContent.removeClass('miq-sand-paper');
-      });
 - else
   -# Showing a list of VMs
   #main_div

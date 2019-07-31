@@ -375,7 +375,6 @@ class AutomationManagerController < ApplicationController
   def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
-      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
@@ -389,12 +388,10 @@ class AutomationManagerController < ApplicationController
       partial = 'form'
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_managed_group_record?(@inventory_group_record)
-      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "inventory_group",
                                     :locals  => {:controller => controller_name}])
     elsif valid_configuration_script_record?(@configuration_script_record)
-      presenter.remove_sand
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_script",
                                     :locals  => {:controller => controller_name}])

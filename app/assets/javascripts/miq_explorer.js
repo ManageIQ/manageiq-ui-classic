@@ -151,11 +151,6 @@ ManageIQ.explorer.focus = function(data) {
   }
 };
 
-ManageIQ.explorer.removeSand = function() {
-  var mainContent = $('#main-content');
-  mainContent.removeClass('miq-sand-paper');
-};
-
 ManageIQ.explorer.removePaging = function() {
   miqGtlSetExtraClasses();
 };
@@ -328,9 +323,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     ManageIQ.explorer.lockSidebar(data.lockSidebar);
   }
 
-  if (data.removeSand) {
-    ManageIQ.explorer.removeSand();
-  }
   if (data.removePaging) {
     ManageIQ.explorer.removePaging();
   }

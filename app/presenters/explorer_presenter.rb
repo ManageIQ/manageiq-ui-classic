@@ -78,15 +78,9 @@ class ExplorerPresenter
       :show_miq_buttons     => false,
       :load_chart           => nil,
       :open_window          => nil,
-      :remove_sand          => nil,
       :remove_paging        => nil,
       :rx                   => nil,
     }.update(options)
-  end
-
-  def remove_sand
-    @options[:remove_sand] = true
-    self
   end
 
   def remove_paging
@@ -309,7 +303,6 @@ class ExplorerPresenter
     data[:lockSidebar] = !!@options[:lock_sidebar]
     data[:chartData] = @options[:load_chart]
     data[:resetChanges] = !!@options[:reset_changes]
-    data[:removeSand] = !!@options[:remove_sand]
     data[:removePaging] = !!@options[:remove_paging]
     data[:resetOneTrans] = !!@options[:reset_one_trans]
     data[:focus] = @options[:focus]
