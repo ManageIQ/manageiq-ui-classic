@@ -15,7 +15,7 @@
       %li.dropdown{"open" => "!hideDrawer"}
         %a{:class => "nav-item-iconic drawer-pf-trigger-icon", :title => "{{vm.notificationsIndicatorTooltip}}", "ng-click" => "vm.toggleNotificationsList()"}
           %span.fa.fa-bell
-          %span{"ng-class" => "{'badge badge-pf-bordered': vm.newNotifications}"}
+          %span{"ng-class" => "{'badge badge-pf-bordered': vm.newNotifications}"} 
             = ' '
       - Menu::Manager.menu(:help) do |menu_section|
         - if menu_section.visible?

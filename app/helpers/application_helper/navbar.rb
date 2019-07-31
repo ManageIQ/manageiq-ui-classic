@@ -4,6 +4,7 @@ module ApplicationHelper
       structure = []
       Menu::Manager.menu(placement) do |menu_section|
         next unless menu_section.visible?
+        
         structure << item_to_hash(menu_section)
       end
       structure
@@ -30,10 +31,11 @@ module ApplicationHelper
     def item_active?(item)
       if item.leaf?
         # FIXME: remove @layout condition when every controller sets menu_section properly
-        active = controller.menu_section_id(controller.params) || @layout.to_sym      
+        active = controller.menu_section_id(controller.params) || @layout.to_sym
         item.id.to_sym == active || item.id.to_sym == @layout.to_sym
       else
         return section_nav_class_iframe(item) if params[:action] == 'iframe'
+        
         active = controller.menu_section_id(controller.params) || @layout.to_sym
 
         if item.parent.nil?

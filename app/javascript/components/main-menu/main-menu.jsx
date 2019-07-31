@@ -6,11 +6,12 @@ import SecondLevel from './second-level';
 import ThirdLevel from './third-level';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 
+const Fallback = props => <ThirdLevel level={2} {...props} />;
+
 const getLevelComponent = level => ({
   0: props => <TopLevel level={level} {...props} />,
   1: props => <SecondLevel level={level} {...props} />,
-  2: props => <ThirdLevel level={level} {...props} />,
-})[level];
+})[level] || Fallback;
 
 export const MenuItem = ({ level, ...props }) => getLevelComponent(level)(props);
 

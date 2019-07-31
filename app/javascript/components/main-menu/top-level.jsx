@@ -25,9 +25,7 @@ const TopLevel = ({
           <span>{title}</span>
         </div>
         <ul className="list-group">
-          {
-                items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)
-              }
+          {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
         </ul>
       </div>
     </React.Fragment>

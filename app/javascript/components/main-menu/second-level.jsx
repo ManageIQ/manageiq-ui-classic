@@ -10,7 +10,7 @@ const SecondLevel = ({
   items,
   level,
 }) => (
-  <li className={`list-group-item ${items.length > 0 && 'tertiary-nav-item-pf'}`} data-target={`#menu-${id}`}>
+  <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''}`} data-target={`#menu-${id}`}>
     <a href={href}>
       <span className="list-group-item-value">{title}</span>
     </a>
