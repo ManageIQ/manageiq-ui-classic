@@ -68,7 +68,7 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
   };
 
   vm.resetClicked = function(angularForm) {
-    vm.customButtonGroupModel = angular.copy(vm.modelCopy);
+    vm.customButtonGroupModel = _.cloneDeep(vm.modelCopy);
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
@@ -145,7 +145,7 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
 
     vm.customButtonGroupModel.set_data = {};
 
-    vm.modelCopy = angular.copy( vm.customButtonGroupModel );
+    vm.modelCopy = _.cloneDeep(vm.customButtonGroupModel);
 
     vm.afterGet = true;
     miqService.sparkleOff();
@@ -157,6 +157,6 @@ function mainCustomButtonGroupFormController(API, miqService, $http) {
       return setData.applies_to_class === 'GenericObject';
     }).length;
     vm.customButtonGroupModel.group_index = currentGroupIndex + 1;
-    vm.modelCopy = angular.copy( vm.customButtonGroupModel );
+    vm.modelCopy = _.cloneDeep(vm.customButtonGroupModel);
   }
 }
