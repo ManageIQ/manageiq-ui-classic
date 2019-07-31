@@ -5,19 +5,18 @@
   #column_lists
     .col-md-5
       = _('Unassigned:')
-      %select{:name => 'unassigned_buttons',
-                "ng-model" => "vm.model.selectedUnassignedButtons",
-                "ng-options" => "item.id as item.name for item in vm.unassignedButtons",
-                :multiple => true,
-                :class    => "form-control",
-                :style    => "overflow-x: scroll;",
-                :size     => 8,
-                :id       => "available_fields"}
+      %select.form-control{:name        => 'unassigned_buttons',
+                           "ng-model"   => "vm.model.selectedUnassignedButtons",
+                           "ng-options" => "item.id as item.name for item in vm.unassignedButtons",
+                           :multiple    => true,
+                           :style       => "overflow-x: scroll;",
+                           :size        => 8,
+                           :id          => "available_fields"}
     .col-md-1{:style => "padding: 10px"}
       .spacer
       .spacer
         %button.btn.btn-default.btn-block{:title     => _("Move selected fields right"),
-                                          "ng-click" => "vm.rightButtonClicked()"  }
+                                          "ng-click" => "vm.rightButtonClicked()"}
           %i.fa.fa-angle-right.fa-lg.hidden-xs.hidden-sm
           %i.fa.fa-lg.fa-angle-right.fa-rotate-90.hidden-md.hidden-lg
         %button.btn.btn-default.btn-block{:title     => _("Move selected fields left"),
@@ -27,31 +26,30 @@
         .spacer
     .col-md-5
       = _('Selected:')
-      %select{:name => 'assigned_buttons',
-                "ng-model" => "vm.model.selectedAssignedButtons",
-                "ng-options" => "item.id as item.name for item in vm.assignedButtons",
-                :multiple => true,
-                :class    => "form-control",
-                :style    => "overflow-x: scroll;",
-                :size     => 8,
-                :id       => "selected_fields"}
+      %select.form-control{:name        => 'assigned_buttons',
+                           "ng-model"   => "vm.model.selectedAssignedButtons",
+                           "ng-options" => "item.id as item.name for item in vm.assignedButtons",
+                           :multiple    => true,
+                           :style       => "overflow-x: scroll;",
+                           :size        => 8,
+                           :id          => "selected_fields"}
     .col-md-1{:style => "padding: 10px"}
       .spacer
       .spacer
-        %button.btn.btn-default.btn-block{:title     => _("Move selected fields to top"),
+        %button.btn.btn-default.btn-block{:title       => _("Move selected fields to top"),
                                           "ng-enabled" => "vm.moveButtonsEnabled()",
-                                          "ng-click" => "vm.topButtonClicked()"}
+                                          "ng-click"   => "vm.topButtonClicked()"}
           %i.fa.fa-angle-double-up.fa-lg
         %button.btn.btn-default.btn-block{:title     => _("Move selected fields up"),
-                                          :enabled => "vm.moveButtonsEnabled()",
+                                          :enabled   => "vm.moveButtonsEnabled()",
                                           "ng-click" => "vm.upButtonClicked()"}
           %i.fa.fa-angle-up.fa-lg
-        %button.btn.btn-default.btn-block{:title     => _("Move selected fields down"),
+        %button.btn.btn-default.btn-block{:title       => _("Move selected fields down"),
                                           "ng-enabled" => "vm.moveButtonsEnabled()",
-                                          "ng-click" => "vm.downButtonClicked()"}
+                                          "ng-click"   => "vm.downButtonClicked()"}
           %i.fa.fa-angle-down.fa-lg
-        %button.btn.btn-default.btn-block{:title     => _("Move selected fields to bottom"),
+        %button.btn.btn-default.btn-block{:title       => _("Move selected fields to bottom"),
                                           "ng-enabled" => "vm.moveButtonsEnabled()",
-                                          "ng-click" => "vm.bottomButtonClicked()"}
+                                          "ng-click"   => "vm.bottomButtonClicked()"}
           %i.fa.fa-angle-double-down
         .spacer
