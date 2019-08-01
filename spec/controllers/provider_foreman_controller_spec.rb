@@ -161,7 +161,7 @@ describe ProviderForemanController do
     end
 
     it "should display the zone field" do
-      new_zone = FactoryBot.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone)
       controller.instance_variable_set(:@provider, @provider)
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
@@ -169,7 +169,7 @@ describe ProviderForemanController do
     end
 
     it "should save the zone field" do
-      new_zone = FactoryBot.create(:zone, :name => "TestZone")
+      new_zone = FactoryBot.create(:zone)
       controller.instance_variable_set(:@provider, @provider)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
@@ -484,9 +484,9 @@ describe ProviderForemanController do
     session[:tag_items] = [@configured_system.id]
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
-    parent = FactoryBot.create(:classification, :name => "test_category")
-    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification)
+    FactoryBot.create(:classification_tag, :parent => parent)
+    FactoryBot.create(:classification_tag, :parent => parent)
     post :tagging, :params => { :id => @configured_system.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -495,9 +495,9 @@ describe ProviderForemanController do
     session[:assigned_filters] = []
     allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_providers)
     allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
-    parent = FactoryBot.create(:classification, :name => "test_category")
-    FactoryBot.create(:classification_tag,      :name => "test_entry",         :parent => parent)
-    FactoryBot.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
+    parent = FactoryBot.create(:classification)
+    FactoryBot.create(:classification_tag, :parent => parent)
+    FactoryBot.create(:classification_tag, :parent => parent)
     post :tagging, :params => { :miq_grid_checks => [@configured_system.id], :id => @config_profile.id, :format => :js }
     expect(response.status).to eq(200)
   end
@@ -654,13 +654,9 @@ describe ProviderForemanController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
-      @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+      classification = FactoryBot.create(:classification)
+      @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@configured_system).and_return([@tag1, @tag2])
       session[:tag_db] = "ConfiguredSystem"
       edit = {:key        => "ConfiguredSystem_edit_tags__#{@configured_system.id}",
