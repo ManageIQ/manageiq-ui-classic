@@ -1799,31 +1799,6 @@ Rails.application.routes.draw do
         dialog_runner_post
     },
 
-    :load_balancer             => {
-      :get  => %w(
-        dialog_load
-        download_data
-        download_summary_pdf
-        index
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        button
-        quick_search
-        show
-        show_list
-        listnav_search_selected
-        tag_edit_form_field_changed
-        tagging_edit
-      ) +
-        adv_search_post +
-        save_post +
-        exp_post +
-        dialog_runner_post
-    },
-
     :flavor                   => {
       # FIXME: Change tagging_edit to POST only; We need to remove the redirects
       # in app/controllers/application_controller/tags.rb#tag that are used in
