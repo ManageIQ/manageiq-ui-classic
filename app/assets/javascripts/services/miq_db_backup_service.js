@@ -1,5 +1,5 @@
 ManageIQ.angular.app.service('miqDBBackupService', function() {
-  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba', 'AWS S3'];
+  this.knownProtocolsList = ['<No Depot>', 'Anonymous FTP', 'FTP', 'NFS', 'Samba', 'AWS S3'];
 
   this.logProtocolNotSelected = function(model) {
     return model.log_protocol === '' || model.log_protocol === undefined;
@@ -37,6 +37,7 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   };
 
   this.dbRequired = function(model, value) {
+    if (model.log_protocol === "<No Depot>") { return false; }
     return this.logProtocolSelected(model) &&
            (this.isModelValueNil(value));
   };

@@ -112,6 +112,10 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
       vm.logCollectionModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
+    if (vm.logCollectionModel.log_protocol === '') {
+      vm.logCollectionModel.log_protocol = '<No Depot>';
+    }
+
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.logCollectionModel );
 
