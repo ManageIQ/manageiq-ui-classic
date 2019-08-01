@@ -7,6 +7,12 @@
     .row
       .col-md-12
         %form.form-horizontal
+          .alert.alert-danger{'ng-if' => 'vm.DialogValidation.invalid.message'}
+            %span.pficon.pficon-error-circle-o
+            %strong
+              {{vm.DialogValidation.invalid.description}}:
+              {{vm.DialogValidation.invalid.message}}
+
           %div{"pf-form-group" => "", "pf-label" => _("Dialog's name")}
             %input#name{"ng-model" => "vm.dialog.content[0].label",
               :type => "text",
@@ -17,14 +23,17 @@
             %textarea#description{"ng-model" => "vm.dialog.content[0].description",
               :title => _("Dialog's description")}
               {{ vm.dialog.content[0].description }}
+
     %dialog-editor{'tree-options' => 'vm.treeOptions'}
+
     .pull-right
-      %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
+      %button.btn.btn-primary{"ng-click"    => "vm.saveDialogDetails()",
                               "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) || vm.saveButtonDisabled",
-                              "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
-                              :type => "button"}= _("Save")
+                              :type         => "button"}
+        = _("Save")
       %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
-                              :type => "button"}= _("Cancel")
+                              :type      => "button"}
+        = _("Cancel")
 
 :javascript
   ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
