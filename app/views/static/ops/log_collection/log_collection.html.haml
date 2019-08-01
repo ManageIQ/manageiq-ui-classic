@@ -20,7 +20,7 @@
                    "ng-model"   => "vm.logCollectionModel.log_protocol",
                    "ng-change"  => "vm.logProtocolChanged()",
                    "pf-select"  => true)
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)"}
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== '<No Depot>'"}
     .form-group{"ng-class" => "{'has-error': angularForm.depot_name.$invalid}"}
       %label.col-md-2.control-label{"for" => "depot_name"}
         = _("Depot Name")
@@ -35,7 +35,7 @@
                             "auto-focus"  => "reactiveFocus"}
         %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
           = _("Required")
-  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)"}
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel) && vm.logCollectionModel.log_protocol !== '<No Depot>'"}
     .form-group{"ng-class" => "{'has-error': angularForm.uri.$invalid}"}
       %label.col-md-2.control-label{"for" => "uri"}
         = _("URI")
