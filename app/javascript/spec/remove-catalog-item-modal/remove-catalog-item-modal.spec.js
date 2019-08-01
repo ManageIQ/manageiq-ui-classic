@@ -41,7 +41,7 @@ describe('RemoveCatalogItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1]});
+      expect(component.childAt(0).state()).toEqual({data: [apiResponse1], loaded: true});
       done();
     });
   });
@@ -54,7 +54,7 @@ describe('RemoveCatalogItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1, apiResponse2]});
+      expect(component.childAt(0).state()).toEqual({data: [apiResponse1, apiResponse2], loaded: true});
       done();
     });
   });
