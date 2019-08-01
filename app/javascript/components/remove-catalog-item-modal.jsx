@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal } from 'patternfly-react';
+import { Modal, Spinner } from 'patternfly-react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
@@ -51,7 +51,8 @@ class RemoveCatalogItemModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      loaded: false
     };
   }
 
@@ -67,7 +68,11 @@ class RemoveCatalogItemModal extends React.Component {
          name:         catalogItem.name,
          service_type: catalogItem.service_type, // 'atomic' or 'composite'
          services:     catalogItem.services})))
-      .then(data => this.setState({data}));
+      .then(data => this.setState({data: data, loaded: true}))
+      .then(() => this.props.dispatch({
+        type: 'FormButtons.saveable',
+        payload: true
+      }));
 
     // Buttons setup
     this.props.dispatch({
@@ -81,10 +86,6 @@ class RemoveCatalogItemModal extends React.Component {
     this.props.dispatch({
       type: "FormButtons.customLabel",
       payload: __('Delete'),
-    });
-    this.props.dispatch({
-      type: 'FormButtons.saveable',
-      payload: true
     });
   }
 
@@ -126,15 +127,24 @@ class RemoveCatalogItemModal extends React.Component {
       }
     };
 
+    const renderSpinner = (spinnerOn) => {
+      if (spinnerOn) {
+        return <Spinner loading size="lg" />;
+      }
+    };
+
     return (
       <Modal.Body className="warning-modal-body">
+        {renderSpinner(!this.state.loaded)}
         {usedServicesMessage(this.state.data)}
-        <div>
-           <h4>{confirmationMessage(this.state.data)}</h4>
-           {this.state.data.map(item => (
-             <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
-           ))}
-        </div>
+        {this.state.loaded &&
+          <div>
+             <h4>{confirmationMessage(this.state.data)}</h4>
+             {this.state.data.map(item => (
+               <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
+             ))}
+          </div>
+        }
       </Modal.Body>
     );
   }
