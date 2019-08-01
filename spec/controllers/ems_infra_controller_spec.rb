@@ -868,17 +868,15 @@ describe EmsInfraController do
 
   it_behaves_like "controller with custom buttons"
 
-  context "hiding columns" do
-    let(:user) { FactoryBot.create(:user) }
-
+  context "hiding tenant column for non admin user" do
     before do
       Tenant.seed
       EvmSpecHelper.local_miq_server
     end
 
-    let!(:ems_infra) { FactoryBot.create(:ems_infra, :tenant => Tenant.root_tenant) }
+    let!(:record) { FactoryBot.create(:ems_infra, :tenant => Tenant.root_tenant) }
 
-    let!(:report) do
+    let(:report) do
       FactoryGirl.create(:miq_report,
                          :name        => 'Infrastructure Providers',
                          :db          => 'EmsInfra',
@@ -890,40 +888,6 @@ describe EmsInfraController do
                          :include     => {"tenant" => {"columns" => ['name']}})
     end
 
-    it "renders show_list and does not include hidden column(hidden by display method)" do
-      allow(controller).to receive(:render)
-
-      login_as user
-
-      expect(controller).to receive(:get_db_view).and_return(report)
-      controller.send(:report_data)
-      view_hash = controller.send(:view_to_hash, assigns(:view))
-
-      headers = view_hash[:head].map { |x| x[:text] }.compact
-      expect(headers).to match_array(%w[Name Hostname])
-      expect(headers).not_to include('Tenant')
-
-      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
-      expect(first_row_values).to match_array([ems_infra.name, ems_infra.hostname])
-      expect(first_row_values).not_to include(ems_infra.tenant.name)
-    end
-
-    let(:user_admin) { FactoryBot.create(:user_admin) }
-
-    it "renders show_list and includes all columns" do
-      allow(controller).to receive(:render)
-
-      login_as user_admin
-
-      expect(controller).to receive(:get_db_view).and_return(report)
-      controller.send(:report_data)
-      view_hash = controller.send(:view_to_hash, assigns(:view))
-
-      headers = view_hash[:head].map { |x| x[:text] }.compact
-      expect(headers).to match_array(%w[Name Hostname Tenant])
-
-      first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
-      expect(first_row_values).to match_array([ems_infra.name, ems_infra.hostname, ems_infra.tenant.name])
-    end
+    include_examples 'hiding tenant column for non admin user', :name => "Name", :hostname => "Hostname"
   end
 end
