@@ -1,5 +1,3 @@
-/* globals move */
-
 ManageIQ.angular.app.component('assignButtons', {
   bindings: {
     assignedButtons: '<',
@@ -14,8 +12,6 @@ ManageIQ.angular.app.component('assignButtons', {
   templateUrl: '/static/generic_object/assign-buttons.html.haml',
 });
 
-
-// move comes from app/javascript/helpers/move.js
 function assignButtonsController() {
   var vm = this;
 
@@ -25,7 +21,7 @@ function assignButtonsController() {
   };
 
   vm.leftButtonClicked = function() {
-    var ret = move.between({
+    var ret = ManageIQ.move.between({
       from: [].concat(vm.assignedButtons),
       to: [].concat(vm.unassignedButtons),
       selected: vm.model.selectedAssignedButtons,
@@ -35,7 +31,7 @@ function assignButtonsController() {
   };
 
   vm.rightButtonClicked = function() {
-    var ret = move.between({
+    var ret = ManageIQ.move.between({
       from: [].concat(vm.unassignedButtons),
       to: [].concat(vm.assignedButtons),
       selected: vm.model.selectedUnassignedButtons,
@@ -55,9 +51,9 @@ function assignButtonsController() {
     };
   }
 
-  vm.topButtonClicked = wrap(move.top);
-  vm.bottomButtonClicked = wrap(move.bottom);
+  vm.topButtonClicked = wrap(ManageIQ.move.top);
+  vm.bottomButtonClicked = wrap(ManageIQ.move.bottom);
 
-  vm.upButtonClicked = wrap(move.up);
-  vm.downButtonClicked = wrap(move.down);
+  vm.upButtonClicked = wrap(ManageIQ.move.up);
+  vm.downButtonClicked = wrap(ManageIQ.move.down);
 }

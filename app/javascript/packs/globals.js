@@ -57,5 +57,3 @@ require('codemirror/mode/xml/xml.js');
 require('codemirror/mode/yaml/yaml.js');
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/eclipse.css');
-import * as move from '../helpers/move.js';
-window.move = move;
