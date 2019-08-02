@@ -1962,6 +1962,7 @@ Rails.application.routes.draw do
 
     :generic_object_definition => {
       :get => %w(
+        custom_buttons_in_set
         download_data
         download_summary_pdf
         edit

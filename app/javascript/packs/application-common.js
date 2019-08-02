@@ -61,3 +61,6 @@ window.Spinner = Spinner;
 
 // Overview > Optimization
 miqOptimizationInit();
+
+import * as move from '../helpers/move.js';
+ManageIQ.move = move;

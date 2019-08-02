@@ -16,7 +16,7 @@ ManageIQ.angular.app.directive('formChanged', function() {
 
       var compare = function(original, copy, key) {
         // add missing keys in copy from original so recursion works
-        if (_.isObject(copy) && _.isObject(original)) {
+        if (_.isObject(copy) && _.isObject(original) && !_.isArray(copy) && !_.isArray(original)) {
           _.difference(Object.keys(original), Object.keys(copy)).forEach(function(k) {
             copy[k] = undefined;
           });

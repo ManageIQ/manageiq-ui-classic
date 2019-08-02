@@ -106,6 +106,7 @@ class GenericObjectDefinitionController < ApplicationController
     assert_privileges('ab_group_edit')
     @custom_button_group = CustomButtonSet.find(params[:id])
     @right_cell_text = _("Edit Custom Button Group '%{name}'") % {:name => @custom_button_group.name}
+    @generic_object_definition = find_record_with_rbac(GenericObjectDefinition, @custom_button_group.set_data[:applies_to_id])
     render_form(@right_cell_text, 'custom_button_group_form')
   end
 
@@ -146,6 +147,20 @@ class GenericObjectDefinitionController < ApplicationController
     custom_button_set.set_data[:button_order] ||= []
     custom_button_set.set_data[:button_order].push(CustomButton.last.id)
     custom_button_set.save!
+  end
+
+  def custom_buttons_in_set
+    assigned_buttons = if params[:custom_button_set_id].present?
+                         button_set = find_record_with_rbac(CustomButtonSet, params[:custom_button_set_id])
+                         button_set.custom_buttons
+                       else
+                         []
+                       end
+    generic_object_definition = find_record_with_rbac(GenericObjectDefinition, params[:generic_object_definition_id])
+    unassigned_buttons = generic_object_definition.custom_buttons
+    assigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
+    unassigned_buttons.map! { |button| {:name => button.name, :id => button.id} }
+    render :json => {:assigned_buttons => assigned_buttons, :unassigned_buttons => unassigned_buttons}
   end
 
   private

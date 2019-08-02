@@ -9,9 +9,9 @@ ManageIQ.angular.app.component('mainCustomButtonGroupForm', {
   templateUrl: '/static/generic_object/main_custom_button_group_form.html.haml',
 });
 
-mainCustomButtonGroupFormController.$inject = ['API', 'miqService'];
+mainCustomButtonGroupFormController.$inject = ['API', 'miqService', '$http'];
 
-function mainCustomButtonGroupFormController(API, miqService) {
+function mainCustomButtonGroupFormController(API, miqService, $http) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -26,20 +26,35 @@ function mainCustomButtonGroupFormController(API, miqService) {
       button_icon: '',
       button_color: '#4d5258',
       set_data: {},
+      assigned_buttons: [],
+      unassigned_buttons: [],
     };
 
-    if (vm.customButtonGroupRecordId) {
-      vm.newRecord = false;
-      miqService.sparkleOn();
-      API.get('/api/custom_button_sets/' + vm.customButtonGroupRecordId)
-        .then(getCustomButtonGroupFormData)
-        .catch(miqService.handleFailure);
-    } else {
-      vm.newRecord = true;
+    $http.get('/generic_object_definition/custom_buttons_in_set/?custom_button_set_id=' + vm.customButtonGroupRecordId + '&generic_object_definition_id=' + vm.genericObjectDefnRecordId)
+      .then(function(response) {
+        Object.assign(vm.customButtonGroupModel, response.data);
+        if (vm.customButtonGroupRecordId) {
+          vm.newRecord = false;
+          miqService.sparkleOn();
+          API.get('/api/custom_button_sets/' + vm.customButtonGroupRecordId)
+            .then(getCustomButtonGroupFormData)
+            .catch(miqService.handleFailure);
+        } else {
+          vm.newRecord = true;
 
-      API.get('/api/custom_button_sets?expand=resources&attributes=set_data')
-        .then(getCustomButtonSetGroupIndex)
-        .catch(miqService.handleFailure);
+          API.get('/api/custom_button_sets?expand=resources&attributes=set_data')
+            .then(getCustomButtonSetGroupIndex)
+            .catch(miqService.handleFailure);
+        }
+      })
+      .catch(miqService.handleFailure);
+  };
+
+  vm.updateButtons = function(assignedButtons, unassignedButtons) {
+    vm.customButtonGroupModel.assigned_buttons = assignedButtons;
+
+    if (unassignedButtons) {
+      vm.customButtonGroupModel.unassigned_buttons = unassignedButtons;
     }
   };
 
@@ -53,7 +68,7 @@ function mainCustomButtonGroupFormController(API, miqService) {
   };
 
   vm.resetClicked = function(angularForm) {
-    vm.customButtonGroupModel = Object.assign({}, vm.modelCopy);
+    vm.customButtonGroupModel = _.cloneDeep(vm.modelCopy);
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
@@ -71,11 +86,19 @@ function mainCustomButtonGroupFormController(API, miqService) {
     vm.saveWithAPI('post', '/api/custom_button_sets/', vm.prepSaveObject(), saveMsg);
   };
 
+  vm.buttonOrder = function() {
+    var orderedButtons = [];
+    vm.customButtonGroupModel.assigned_buttons.forEach(function(button) {
+      orderedButtons.push(button.id);
+    });
+    return orderedButtons;
+  };
+
   vm.prepSaveObject = function() {
     vm.customButtonGroupModel.set_data = {
       button_icon: vm.customButtonGroupModel.button_icon,
       button_color: vm.customButtonGroupModel.button_color,
-      button_order: vm.customButtonGroupModel.button_order,
+      button_order: vm.buttonOrder(),
       display: vm.customButtonGroupModel.display,
       applies_to_class: 'GenericObjectDefinition',
       applies_to_id: parseInt(vm.genericObjectDefnRecordId, 10),
@@ -94,7 +117,9 @@ function mainCustomButtonGroupFormController(API, miqService) {
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
     miqService.sparkleOn();
     API[method](url, saveObject)
-      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
+      .then(function() {
+        miqService.redirectBack(saveMsg, 'success', vm.redirectUrl);
+      })
       .catch(miqService.handleFailure);
   };
 
@@ -112,7 +137,8 @@ function mainCustomButtonGroupFormController(API, miqService) {
 
     vm.customButtonGroupModel.set_data = {};
 
-    vm.modelCopy = Object.assign({}, vm.customButtonGroupModel);
+    vm.modelCopy = _.cloneDeep(vm.customButtonGroupModel);
+
     vm.afterGet = true;
     miqService.sparkleOff();
   }
@@ -123,6 +149,6 @@ function mainCustomButtonGroupFormController(API, miqService) {
       return setData.applies_to_class === 'GenericObject';
     }).length;
     vm.customButtonGroupModel.group_index = currentGroupIndex + 1;
-    vm.modelCopy = angular.copy( vm.customButtonGroupModel );
+    vm.modelCopy = _.cloneDeep(vm.customButtonGroupModel);
   }
 }
