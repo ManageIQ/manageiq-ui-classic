@@ -12,6 +12,7 @@ class FirmwareRegistryController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   menu_section :firmware_registry
+  toolbar :firmware_registry
 
   def self.display_methods
     %w[firmware_binaries]
