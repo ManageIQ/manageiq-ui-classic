@@ -1068,14 +1068,13 @@ module OpsController::OpsRbac
       move_cols_up   if params[:button] == "up"
       move_cols_down if params[:button] == "down"
     else
-      @edit[:new][:ldap_groups_user] = params[:ldap_groups_user]  if params[:ldap_groups_user]
-      @edit[:new][:description]      = params[:description]       if params[:description]
+      copy_params_if_present(@edit[:new], params, %i[ldap_groups_user description user user_id])
 
       if params[:group_role]
         if valid_role?(new_role_id = params[:group_role].to_i)
           @edit[:new][:role] = new_role_id
         else
-          raise "Invalid group selected."
+          raise "Invalid role selected."
         end
       end
 
@@ -1088,8 +1087,6 @@ module OpsController::OpsRbac
       end
 
       @edit[:new][:lookup]           = (params[:lookup] == "1")   if params[:lookup]
-      @edit[:new][:user]             = params[:user]              if params[:user]
-      @edit[:new][:user_id]          = params[:user_id]           if params[:user_id]
       @edit[:new][:user_pwd]         = params[:password]          if params[:password]
     end
 
