@@ -8,4 +8,7 @@
                       "miq-form"     => true}
   %custom-button-group-form{"model"        => "vm.customButtonGroupModel",
                             "angular-form" => "angularForm"}
+  %assign-buttons{"assigned-buttons"   => 'vm.customButtonGroupModel.assigned_buttons',
+                  "unassigned-buttons" => 'vm.customButtonGroupModel.unassigned_buttons',
+                  "update-buttons"     => 'vm.updateButtons'}
   = render :partial => "layouts/angular/generic_form_buttons"

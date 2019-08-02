@@ -52,6 +52,8 @@ if (!window.ManageIQ) {
       x: null, // mouse X coordinate for popup menu
       y: null, // mouse Y coordinate for popup menu
     },
+    move: { //methods to move elements between Arrays or in an Array
+    },
     noCollapseEvent: false, // enable/disable events fired after collapsing an accordion
     observe: { // keeping track of data-miq_observe requests
       processing: false, // is a request currently being processed?
