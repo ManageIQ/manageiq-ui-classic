@@ -8,12 +8,29 @@ import {
   Paginator,
   PAGINATION_VIEW,
   sortableHeaderCellFormatter,
-  tableCellFormatter,
   Table,
   TABLE_SORT_DIRECTION,
+  TableCell,
 } from 'patternfly-react';
 
 import { API } from '../http_api';
+
+const cellFormatter = value => (
+  <TableCell className={value.style_class}>
+    {value.value}
+  </TableCell>
+);
+
+cellFormatter.propTypes = {
+  value: PropTypes.shape({
+    value: PropTypes.node,
+    style_class: PropTypes.string,
+  }),
+};
+
+cellFormatter.defaultProps = {
+  value: null,
+};
 
 const makeColumn = (name, label, index) => ({
   property: name,
@@ -30,7 +47,7 @@ const makeColumn = (name, label, index) => ({
     props: {
       index: 1,
     },
-    formatters: [tableCellFormatter],
+    formatters: [cellFormatter],
   },
 });
 
@@ -126,6 +143,7 @@ const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, f
     : '';
 
   API.get(`/api/results/${reportResultId}?\
+expand_value_format=true&\
 hash_attribute=result_set&\
 sort_by=${sortBy}&sort_order=${sortDirection}&\
 limit=${limit}&offset=${offset}${filterString}`).then((data) => {

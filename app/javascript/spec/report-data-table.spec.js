@@ -29,6 +29,7 @@ describe('<ReportDataTable />', () => {
     const limit = 20;
     const offset = 0;
     const url = `/api/results/${initialProps.reportResultId}?\
+expand_value_format=true&\
 hash_attribute=result_set&\
 sort_by=${sortBy}&sort_order=${sortDirection}&\
 limit=${limit}&offset=${offset}`;
