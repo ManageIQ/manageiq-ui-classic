@@ -280,6 +280,26 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
+  $scope.useridPrivileged = function() {
+    // disabled outside the default tab
+    if ($scope.currentTab !== 'default') {
+      return false;
+    }
+
+    // disabled for container providers
+    if ($scope.emsCommonModel.ems_controller == 'ems_container') {
+      return false;
+    }
+
+    // disabled for specific types
+    var blacklist = [
+      'azure_stack',
+      'gce',
+      'kubevirt',
+    ];
+    return ! blacklist.includes($scope.emsCommonModel.emstype);
+  }
+
   $scope.hideDisabledTabs = function() {
     if ($scope.emsCommonModel.alerts_selection === 'disabled') {
       angular.element('#alerts_tab').hide();

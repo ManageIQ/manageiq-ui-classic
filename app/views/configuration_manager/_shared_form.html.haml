@@ -82,6 +82,7 @@
                       'model-copy'                     => 'vm.modelCopy',
                       'prefix'                         => '{{vm.prefix}}',
                       'user-required'                  => true,
+                      'user-privileged'                => true,
                       'password-required'              => true,
                       'enable-valid-button'            => 'vm.canValidateBasicInfo()',
                       'validate'                       => 'vm.validateClicked',
@@ -90,4 +91,3 @@
                       'new-record'                     => 'vm.newRecord',
                       'check-authentication'           => true}
     = render :partial => "layouts/angular/generic_form_buttons"
-    %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
