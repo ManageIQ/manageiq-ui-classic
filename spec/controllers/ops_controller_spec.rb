@@ -514,4 +514,20 @@ describe OpsController do
       expect { controller.rbac_tenant_manage_quotas }.to raise_error(MiqException::RbacPrivilegeException)
     end
   end
+
+  describe '#textual_group_list' do
+    subject { controller.send(:textual_group_list) }
+
+    it 'displays Properties in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:properties))
+    end
+
+    it 'displays Relationships in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:relationships))
+    end
+
+    it 'displays Smart Management in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:smart_management))
+    end
+  end
 end
