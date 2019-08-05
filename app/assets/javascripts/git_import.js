@@ -10,13 +10,12 @@ var GitImport = {
       clearMessages();
 
       $.post('retrieve_git_datastore', $('#retrieve-git-datastore-form').serialize(), function(data) {
-        var parsedData = JSON.parse(data);
-        var messages = parsedData.message;
+        var messages = data.message;
         if (messages && messages.level === 'error') {
           showErrorMessage(messages.message);
           miqSparkleOff();
         } else {
-          GitImport.pollForGitTaskCompletion(parsedData);
+          GitImport.pollForGitTaskCompletion(data);
         }
       });
     });
@@ -24,11 +23,10 @@ var GitImport = {
 
   pollForGitTaskCompletion: function(gitData) {
     $.get('check_git_task', gitData, function(data) {
-      var parsedData = JSON.parse(data);
-      if (parsedData.state) {
+      if (data.state) {
         setTimeout(GitImport.pollForGitTaskCompletion, GitImport.TASK_POLL_TIMEOUT, gitData);
       } else {
-        GitImport.gitTaskCompleted(parsedData);
+        GitImport.gitTaskCompleted(data);
       }
     });
   },
