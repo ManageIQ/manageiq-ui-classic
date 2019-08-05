@@ -1,361 +1,364 @@
-- url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
-- observe_with_interval = {:interval => '.5', :url => url}.to_json
-- observe = {:url => url}.to_json
-#action_options_div
-  - case @edit[:new][:action_type]
-  - when "email"
-    %h3
-      = _('E-mail Settings')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _('From E-mail Address')
-          %br
-          = _('(leave blank for default)')
-        .col-md-8
-          = text_field_tag("from",
-            @edit[:new][:options][:from],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-          = _("(Default: %{email_from})") % {:email_from => h(::Settings.smtp.from)}
-      .form-group
-        %label.control-label.col-md-2
-          = _('To E-mail Address')
-        .col-md-8
-          = text_field_tag("to",
-            @edit[:new][:options][:to],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-  - when "set_custom_attribute"
-    %h3
-      = _('Custom Attribute Settings')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _('Attribute Name')
-        .col-md-8
-          = text_field_tag("attribute",
-            @edit[:new][:options][:attribute],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-      .form-group
-        %label.control-label.col-md-2
-          = _('Value to Set')
-        .col-md-8
-          = text_field_tag("value",
-            @edit[:new][:options][:value],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-  - when "tag"
-    %h3
-      = _('Applied Tag')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _('Tag to Apply')
-        .col-md-8
-          %span#tag_selected
-            - options = {"" => [["<#{_('Choose')}>", nil]]}.merge(@tags_select)
-            = select_tag("tag", grouped_options_for_select(options, @selected_tag.try(:id)),
-              :class             => 'selectpicker',
-              'data-live-search' => true)
-            :javascript
-              miqInitSelectPicker();
-              miqSelectPickerEvent('tag', '#{url}');
-  - when "create_snapshot"
-    %h3
-      = _("Snapshot Settings")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Snapshot Name")
-        .col-md-8
-          = text_field_tag("snapshot_name",
-            @edit[:new][:options][:name],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-  - when "delete_snapshots_by_age"
-    %h3
-      = _("Snapshot Age Settings")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Delete if Older than")
-        .col-md-8
-          = select_tag('snapshot_age',
-            options_for_select([["<#{_('Choose')}>", nil]] + MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
-            @edit[:new][:options][:age]),
-            :class             => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('snapshot_age', '#{url}')
-  - when "reconfigure_memory"
-    %h3
-      = _("Reconfigure Memory")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Memory Size")
-        .col-md-8
-          = text_field_tag("memory_value",
-            @edit[:new][:options][:value],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-          = _('(Enter the value between 4 - 65636 MB)')
-  - when "reconfigure_cpus"
-    %h3
-      = _("Reconfigure CPU")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Number of CPU's")
-        .col-md-8
-          = select_tag('cpu_value',
-            options_for_select(%w(1 2 4),
-            @edit[:new][:options][:value]),
-            :style             => "width:50px",
-            :class             => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('cpu_value', '#{url}')
-  - when "custom_automation"
-    %h3
-      = _("Custom Automation")
-    .form-horizontal
-      .form-group
-        .col-md-8
-          = render(:partial => "layouts/ae_resolve_options",
-            :locals         => {:resolve => @edit,
-            :form_action                 => "miq_action",
-            :field_changed_url           => "action_field_changed"})
-  - when "evaluate_alerts"
-    %h3= _("Select Alerts to be Evaluated")
-    #formtest.form
-      .col-md-5
-        = _('Available Alerts:')
-        %span#choices_chosen_div
-          = select_tag('choices_chosen[]', options_for_select(@edit[:choices].sort),
-            :multiple => true,
-            :class    => "form-control",
-            :style    => "overflow-x: scroll;",
-            :size     => 8,
-            :id       => "choices_chosen")
-
-      .col-md-1{:style => "padding: 10px"}
-        .spacer
-        .spacer
-        - [[_("Move selected Alerts into this Action"),   'choices_chosen_div', 'move_right',    'fa-angle-right'],
-           [_("Remove selected Alerts from this Action"), 'members_chosen_div', 'move_left',     'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
-          %button.btn.btn-default.btn-block{:title                 => title,
-                                            :remote                => true,
-                                            "data-submit"          => chosen_div,
-                                            "data-method"          => :post,
-                                            "data-miq_sparkle_on"  => true,
-                                            "data-miq_sparkle_off" => true,
-                                            "data-click_url"       => {:url => url_for_only_path(:action => 'action_edit',
-                                                                                                 :button => action,
-                                                                                                 :id     => @action.id || 'new')}.to_json}
-            %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
-            %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
-        .spacer
-          
-      .col-md-5
-        = _(' Selected Alerts:')
-        %span#members_chosen_div
-          = select_tag('members_chosen[]',
-            options_for_select(@edit[:new][:alerts].sort),
-            :multiple => true,
-            :class    => "form-control",
-            :style    => "overflow-x: scroll;",
-            :size     => 8,
-            :id       => "members_chosen")
-
-  - when "snmp_trap"
-    %h3
-      = _("SNMP Trap Settings")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = title_for_host
-        .col-md-8
-          = text_field_tag("host",
-            @edit[:new][:options][:host],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-      .form-group
-        %label.control-label.col-md-2
-          = _("Version")
-        .col-md-8
-          = select_tag('snmp_version',
-            options_for_select(%w(v1 v2),
-            @edit[:new][:options][:snmp_version]),
-            :style                 => "width:50px",
-            :class                 => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('snmp_version', '#{url}', {beforeSend: true, complete: true})
-      - trap_text = @edit[:new][:options][:snmp_version] == "v1" || @edit[:new][:options][:snmp_version].nil? ? _("Trap Number") : _("Trap Object ID")
-      .form-group
-        %label.control-label.col-md-2
-          = trap_text
-        .col-md-8
-          = text_field_tag("trap_id",
-            @edit[:new][:options][:trap_id],
-            :maxlength         => ViewHelper::MAX_DESC_LEN,
-            :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
-    %h3
-      = _("Variables")
-    %table.table
-      %thead
-        %tr
-          %th
-            = _('Object ID')
-          %th
-            = _('Type')
-          %th
-            = _('Value')
-      - 10.times do |i|
-        - f = "oid__#{i + 1}"
-        - t = "var_type__#{i + 1}"
-        - v = "value__#{i + 1}"
-        %tr
-          %td
-            = text_field_tag("#{f}",
-              @edit[:new][:options][:variables][i][:oid],
-              :maxlength         => ViewHelper::MAX_NAME_LEN,
-              :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
-          %td
-            = select_tag("#{t}",
-              options_for_select(["<#{_('None')}>"] + @edit[:snmp_var_types].sort,
-              @edit[:new][:options][:variables][i][:var_type]),
-              :style             => "width:100px",
-              :class             => "selectpicker")
-            :javascript
-              miqInitSelectPicker();
-              miqSelectPickerEvent('#{t}', '#{url}')
-          - if @edit[:new][:options][:variables][i][:var_type] == "Null" || @edit[:new][:options][:variables][i][:var_type] == "<#{_('None')}>"
-            - val_disabled = true
-          - else
-            - val_disabled = false
-          %td
-            = text_field_tag(v,
-              @edit[:new][:options][:variables][i][:value],
-              :maxlength         => ViewHelper::MAX_NAME_LEN,
-              :disabled          => val_disabled,
-              :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
-  - when "assign_scan_profile"
-    %h3
-      = _("Analysis Profiles")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Analysis Profiles")
-        .col-md-8
-          = select_tag('analysis_profile',
-          options_for_select([["<#{_('Choose')}>", nil]] + @edit[:new][:scan_profiles],
-          @edit[:new][:options][:scan_item_set_name]),
-          :style             => "width:150px",
-          :class             => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('analysis_profile', '#{url}')
-  - when "inherit_parent_tags"
-    %h3
-      = _("Inherit Tags Settings")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Parent Type")
-        .col-md-8
-          = select_tag('parent_type',
-            options_for_select(@edit[:tag_parent_types],
-            @edit[:new][:options][:parent_type]),
-            :class => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('parent_type', '#{url}')
-      .form-group
-        %label.control-label.col-md-2
-          = _("Categories")
-        .col-md-8
-          %table.table.table-borderless
-            - @edit[:cats].each_slice(3) do |cats|
-              %tr
-                - cats.each do |cat|
-                  - checked = !@edit[:new][:options][:cats].nil? && @edit[:new][:options][:cats].include?(cat.first)
-                  %td{:align => "left", :valign => "top", :nowrap => 1}
-                    = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
-                    = h(cat.last)
-  - when "remove_tags"
-    %h3
-      = _("Remove Tags Settings")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Categories")
-        .col-md-8
-          %table.table.table-borderless
-            - @edit[:cats].each_slice(3) do |cats|
-              %tr
-                - cats.each do |cat|
-                  - checked = !@edit[:new][:options][:cats].nil? && @edit[:new][:options][:cats].include?(cat.first)
-                  %td{:align => "left", :valign => "top", :nowrap => 1}
-                    = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
-                    = h(cat.last)
-  - when "run_ansible_playbook"
-    %h3
-      = _("Run an Ansible Playbook")
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _("Playbook Catalog Item")
-        .col-md-8
-          = select_tag('service_template_id',
-          options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
-          @edit[:new][:options][:service_template_id]),
-          "style"            => "width:150px",
-          "data-live-search" => "true",
-          "class"            => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('service_template_id', '#{url}')
-      .form-group
-        %label.control-label.col-md-2
-          = _("Inventory")
-        .col-md-8
-          = radio_button_tag('inventory', "localhost", true,
-            "title"            => _('Run on localhost'),
-            "checked"          => @edit[:new][:inventory_type] == "localhost",
-            "data-miq_observe" => observe)
-          = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
-          %br
-          = radio_button_tag('inventory', "event_target", false,
-            "title"            => _('Run on the target of the Policy Event'),
-            "checked"          => @edit[:new][:inventory_type] == "event_target",
-            "data-miq_observe" => observe)
-          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
-          %br
-          = radio_button_tag('inventory', "manual", false,
-            "title" => _('Enter a comma separated list of IP or DNS names'),
-            "checked" => @edit[:new][:inventory_type] == "manual",
-            "data-miq_observe" => observe)
-          = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
-          #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
-            .form-group
-              .col-md-8
-                = text_field_tag("hosts",
-                  @edit[:new][:options][:hosts],
-                  :maxlength         => ViewHelper::MAX_DESC_LEN,
-                  :class             => "form-control",
-                  "data-miq_observe" => observe_with_interval)
-                = _('Enter a comma separated list of IP or DNS names')
+-# - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
+-# - observe_with_interval = {:interval => '.5', :url => url}.to_json
+-# - observe = {:url => url}.to_json
+-#
+-# #action_options_div
+-#   -# = react('ActionEditForm', { :actionTypes => MiqAction::TYPES.map { |k, v| {:description => _(v), :id => k} }.sort_by { |action| action[:id] } })
+-#
+-#   - case @edit[:new][:action_type]
+-#   - when "email"
+-#     %h3
+-#       = _('E-mail Settings')
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _('From E-mail Address')
+-#           %br
+-#           = _('(leave blank for default)')
+-#         .col-md-8
+-#           = text_field_tag("from",
+-#             @edit[:new][:options][:from],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#           = _("(Default: %{email_from})") % {:email_from => h(::Settings.smtp.from)}
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _('To E-mail Address')
+-#         .col-md-8
+-#           = text_field_tag("to",
+-#             @edit[:new][:options][:to],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#   - when "set_custom_attribute"
+-#     %h3
+-#       = _('Custom Attribute Settings')
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _('Attribute Name')
+-#         .col-md-8
+-#           = text_field_tag("attribute",
+-#             @edit[:new][:options][:attribute],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _('Value to Set')
+-#         .col-md-8
+-#           = text_field_tag("value",
+-#             @edit[:new][:options][:value],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#   - when "tag"
+-#     %h3
+-#       = _('Applied Tag')
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _('Tag to Apply')
+-#         .col-md-8
+-#           %span#tag_selected
+-#             - options = {"" => [["<#{_('Choose')}>", nil]]}.merge(@tags_select)
+-#             = select_tag("tag", grouped_options_for_select(options, @selected_tag.try(:id)),
+-#               :class             => 'selectpicker',
+-#               'data-live-search' => true)
+-#             :javascript
+-#               miqInitSelectPicker();
+-#               miqSelectPickerEvent('tag', '#{url}');
+-#   - when "create_snapshot"
+-#     %h3
+-#       = _("Snapshot Settings")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Snapshot Name")
+-#         .col-md-8
+-#           = text_field_tag("snapshot_name",
+-#             @edit[:new][:options][:name],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#   - when "delete_snapshots_by_age"
+-#     %h3
+-#       = _("Snapshot Age Settings")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Delete if Older than")
+-#         .col-md-8
+-#           = select_tag('snapshot_age',
+-#             options_for_select([["<#{_('Choose')}>", nil]] + MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
+-#             @edit[:new][:options][:age]),
+-#             :class             => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('snapshot_age', '#{url}')
+-#   - when "reconfigure_memory"
+-#     %h3
+-#       = _("Reconfigure Memory")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Memory Size")
+-#         .col-md-8
+-#           = text_field_tag("memory_value",
+-#             @edit[:new][:options][:value],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#           = _('(Enter the value between 4 - 65636 MB)')
+-#   - when "reconfigure_cpus"
+-#     %h3
+-#       = _("Reconfigure CPU")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Number of CPU's")
+-#         .col-md-8
+-#           = select_tag('cpu_value',
+-#             options_for_select(%w(1 2 4),
+-#             @edit[:new][:options][:value]),
+-#             :style             => "width:50px",
+-#             :class             => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('cpu_value', '#{url}')
+-#   - when "custom_automation"
+-#     %h3
+-#       = _("Custom Automation")
+-#     .form-horizontal
+-#       .form-group
+-#         .col-md-8
+-#           = render(:partial => "layouts/ae_resolve_options",
+-#             :locals         => {:resolve => @edit,
+-#             :form_action                 => "miq_action",
+-#             :field_changed_url           => "action_field_changed"})
+-#   - when "evaluate_alerts"
+-#     %h3= _("Select Alerts to be Evaluated")
+-#     #formtest.form
+-#       .col-md-5
+-#         = _('Available Alerts:')
+-#         %span#choices_chosen_div
+-#           = select_tag('choices_chosen[]', options_for_select(@edit[:choices].sort),
+-#             :multiple => true,
+-#             :class    => "form-control",
+-#             :style    => "overflow-x: scroll;",
+-#             :size     => 8,
+-#             :id       => "choices_chosen")
+-#
+-#       .col-md-1{:style => "padding: 10px"}
+-#         .spacer
+-#         .spacer
+-#         - [[_("Move selected Alerts into this Action"),   'choices_chosen_div', 'move_right',    'fa-angle-right'],
+-#            [_("Remove selected Alerts from this Action"), 'members_chosen_div', 'move_left',     'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
+-#           %button.btn.btn-default.btn-block{:title                 => title,
+-#                                             :remote                => true,
+-#                                             "data-submit"          => chosen_div,
+-#                                             "data-method"          => :post,
+-#                                             "data-miq_sparkle_on"  => true,
+-#                                             "data-miq_sparkle_off" => true,
+-#                                             "data-click_url"       => {:url => url_for_only_path(:action => 'action_edit',
+-#                                                                                                  :button => action,
+-#                                                                                                  :id     => @action.id || 'new')}.to_json}
+-#             %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+-#             %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+-#         .spacer
+-#
+-#       .col-md-5
+-#         = _(' Selected Alerts:')
+-#         %span#members_chosen_div
+-#           = select_tag('members_chosen[]',
+-#             options_for_select(@edit[:new][:alerts].sort),
+-#             :multiple => true,
+-#             :class    => "form-control",
+-#             :style    => "overflow-x: scroll;",
+-#             :size     => 8,
+-#             :id       => "members_chosen")
+-#
+-#   - when "snmp_trap"
+-#     %h3
+-#       = _("SNMP Trap Settings")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = title_for_host
+-#         .col-md-8
+-#           = text_field_tag("host",
+-#             @edit[:new][:options][:host],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Version")
+-#         .col-md-8
+-#           = select_tag('snmp_version',
+-#             options_for_select(%w(v1 v2),
+-#             @edit[:new][:options][:snmp_version]),
+-#             :style                 => "width:50px",
+-#             :class                 => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('snmp_version', '#{url}', {beforeSend: true, complete: true})
+-#       - trap_text = @edit[:new][:options][:snmp_version] == "v1" || @edit[:new][:options][:snmp_version].nil? ? _("Trap Number") : _("Trap Object ID")
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = trap_text
+-#         .col-md-8
+-#           = text_field_tag("trap_id",
+-#             @edit[:new][:options][:trap_id],
+-#             :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#             :class             => "form-control",
+-#             "data-miq_observe" => observe_with_interval)
+-#     %h3
+-#       = _("Variables")
+-#     %table.table
+-#       %thead
+-#         %tr
+-#           %th
+-#             = _('Object ID')
+-#           %th
+-#             = _('Type')
+-#           %th
+-#             = _('Value')
+-#       - 10.times do |i|
+-#         - f = "oid__#{i + 1}"
+-#         - t = "var_type__#{i + 1}"
+-#         - v = "value__#{i + 1}"
+-#         %tr
+-#           %td
+-#             = text_field_tag("#{f}",
+-#               @edit[:new][:options][:variables][i][:oid],
+-#               :maxlength         => ViewHelper::MAX_NAME_LEN,
+-#               :class             => "form-control",
+-#               "data-miq_observe" => observe_with_interval)
+-#           %td
+-#             = select_tag("#{t}",
+-#               options_for_select(["<#{_('None')}>"] + @edit[:snmp_var_types].sort,
+-#               @edit[:new][:options][:variables][i][:var_type]),
+-#               :style             => "width:100px",
+-#               :class             => "selectpicker")
+-#             :javascript
+-#               miqInitSelectPicker();
+-#               miqSelectPickerEvent('#{t}', '#{url}')
+-#           - if @edit[:new][:options][:variables][i][:var_type] == "Null" || @edit[:new][:options][:variables][i][:var_type] == "<#{_('None')}>"
+-#             - val_disabled = true
+-#           - else
+-#             - val_disabled = false
+-#           %td
+-#             = text_field_tag(v,
+-#               @edit[:new][:options][:variables][i][:value],
+-#               :maxlength         => ViewHelper::MAX_NAME_LEN,
+-#               :disabled          => val_disabled,
+-#               :class             => "form-control",
+-#               "data-miq_observe" => observe_with_interval)
+-#   - when "assign_scan_profile"
+-#     %h3
+-#       = _("Analysis Profiles")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Analysis Profiles")
+-#         .col-md-8
+-#           = select_tag('analysis_profile',
+-#           options_for_select([["<#{_('Choose')}>", nil]] + @edit[:new][:scan_profiles],
+-#           @edit[:new][:options][:scan_item_set_name]),
+-#           :style             => "width:150px",
+-#           :class             => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('analysis_profile', '#{url}')
+-#   - when "inherit_parent_tags"
+-#     %h3
+-#       = _("Inherit Tags Settings")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Parent Type")
+-#         .col-md-8
+-#           = select_tag('parent_type',
+-#             options_for_select(@edit[:tag_parent_types],
+-#             @edit[:new][:options][:parent_type]),
+-#             :class => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('parent_type', '#{url}')
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Categories")
+-#         .col-md-8
+-#           %table.table.table-borderless
+-#             - @edit[:cats].each_slice(3) do |cats|
+-#               %tr
+-#                 - cats.each do |cat|
+-#                   - checked = !@edit[:new][:options][:cats].nil? && @edit[:new][:options][:cats].include?(cat.first)
+-#                   %td{:align => "left", :valign => "top", :nowrap => 1}
+-#                     = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
+-#                     = h(cat.last)
+-#   - when "remove_tags"
+-#     %h3
+-#       = _("Remove Tags Settings")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Categories")
+-#         .col-md-8
+-#           %table.table.table-borderless
+-#             - @edit[:cats].each_slice(3) do |cats|
+-#               %tr
+-#                 - cats.each do |cat|
+-#                   - checked = !@edit[:new][:options][:cats].nil? && @edit[:new][:options][:cats].include?(cat.first)
+-#                   %td{:align => "left", :valign => "top", :nowrap => 1}
+-#                     = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
+-#                     = h(cat.last)
+-#   - when "run_ansible_playbook"
+-#     %h3
+-#       = _("Run an Ansible Playbook")
+-#     .form-horizontal
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Playbook Catalog Item")
+-#         .col-md-8
+-#           = select_tag('service_template_id',
+-#           options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
+-#           @edit[:new][:options][:service_template_id]),
+-#           "style"            => "width:150px",
+-#           "data-live-search" => "true",
+-#           "class"            => "selectpicker")
+-#           :javascript
+-#             miqInitSelectPicker();
+-#             miqSelectPickerEvent('service_template_id', '#{url}')
+-#       .form-group
+-#         %label.control-label.col-md-2
+-#           = _("Inventory")
+-#         .col-md-8
+-#           = radio_button_tag('inventory', "localhost", true,
+-#             "title"            => _('Run on localhost'),
+-#             "checked"          => @edit[:new][:inventory_type] == "localhost",
+-#             "data-miq_observe" => observe)
+-#           = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
+-#           %br
+-#           = radio_button_tag('inventory', "event_target", false,
+-#             "title"            => _('Run on the target of the Policy Event'),
+-#             "checked"          => @edit[:new][:inventory_type] == "event_target",
+-#             "data-miq_observe" => observe)
+-#           = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
+-#           %br
+-#           = radio_button_tag('inventory', "manual", false,
+-#             "title" => _('Enter a comma separated list of IP or DNS names'),
+-#             "checked" => @edit[:new][:inventory_type] == "manual",
+-#             "data-miq_observe" => observe)
+-#           = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
+-#           #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
+-#             .form-group
+-#               .col-md-8
+-#                 = text_field_tag("hosts",
+-#                   @edit[:new][:options][:hosts],
+-#                   :maxlength         => ViewHelper::MAX_DESC_LEN,
+-#                   :class             => "form-control",
+-#                   "data-miq_observe" => observe_with_interval)
+-#                 = _('Enter a comma separated list of IP or DNS names')

@@ -270,7 +270,7 @@ module MiqPolicyController::MiqActions
     action_build_snmp_variables if @action.action_type == "snmp_trap"
 
     # Build arrays for inherit/remove_tags action types
-    @edit[:tag_parent_types] =  [["<#{_('Choose')}>", nil],
+    @edit[:tag_parent_types] =  [
                                  [_("Cluster / Deployment Role"), "ems_cluster"],
                                  [_("Host"), "host"],
                                  [_("Datastore"), "storage"],

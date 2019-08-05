@@ -4,6 +4,7 @@ import '@manageiq/react-ui-components/dist/tagging.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
 import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 
+import ActionEditForm from '../components/action-edit-form/action-edit-form';
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
@@ -37,6 +38,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
+ManageIQ.component.addReact('ActionEditForm', ActionEditForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);

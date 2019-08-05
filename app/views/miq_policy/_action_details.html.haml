@@ -2,41 +2,25 @@
   - if @action
     #action_info_div
       = render :partial => "layouts/flash_msg"
-      %h3
-        = _('Basic Information')
-      .form-horizontal
-        - if @edit
-          -# Don't show description unless in edit mode
-          - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
-          .form-group
-            %label.col-md-2.control-label
-              = _('Description')
-            .col-md-8
-              - if @edit
-                = text_field_tag("description",
-                  @edit[:new][:description],
-                  :maxlength         => ViewHelper::MAX_DESC_LEN,
-                  :class             => "form-control",
-                  "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-                = javascript_tag(javascript_focus('description'))
-              - else
-                %p.form-control-static
-                  = h(@action.description)
-        .form-group
-          %label.col-md-2.control-label
-            = _('Action Type')
-          .col-md-8
-            - if @edit
-              = select_tag('miq_action_type',
-                options_for_select([["<#{_('Choose')}>", nil]] + MiqAction::TYPES.map { |k, v| [_(v), k] }.sort, @edit[:new][:action_type]),
-                :class => "selectpicker")
-              :javascript
-                miqInitSelectPicker();
-                miqSelectPickerEvent('miq_action_type', '#{url}', {beforeSend: true, complete: true})
-            - else
-              %p.form-control-static
-                = h(@action.action_type == "default" ? _('Default') : _(MiqAction::TYPES[@action.action_type]))
-      %hr
+      -# %h3
+      -#   = _('Basic Information')
+      -# .form-horizontal
+      - if @edit
+        -# Don't show description unless in edit mode
+        - binding.pry
+        - submit_url = url_for_only_path(:action => 'action_edit', :id => (@action.id || 'new'), :button => "save")
+        - cancel_url = url_for_only_path(:action => 'action_edit', :id => (@action.id || 'new'), :button => "cancel")
+        = react('ActionEditForm', { :actionTypes => MiqAction::TYPES.map { |k, v| {:description => _(v), :id => k} }.sort_by { |action| action[:id] },
+          :scanProfiles => ScanItemSet.order(:name).pluck(:name, :id).map { |label, val| {:value => val.to_s, :label => label} },
+          :alerts => MiqAlert.order(:description).pluck(:description, :id).map { |label, val| {:key => val.to_s, :label => label} },
+          :categories => MiqAction.inheritable_cats.pluck(:description, :id).map { |label, val| {:value => val.to_s, :label => label} },
+          :selectedCategories => Category.select { |cat| @action&.options&.dig(:cats).include?(cat.name) }.map { |cat| cat.id.to_s },
+          :parentTypes => @edit[:tag_parent_types].map { |label, val| {:value => val.to_s, :label => label} },
+          :playbooks => ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id).map { |label, val| {:value => val.to_s, :label => label} },
+          :snmpVersions => %w(v1 v2),
+          :submitUrl => submit_url,
+          :cancelUrl => cancel_url})
+
       - if @edit
         = render :partial => "action_options"
       - else
