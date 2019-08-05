@@ -266,7 +266,7 @@ module ApplicationController::CiProcessing
     when "ems_cluster"
       EmsCluster
     when "storage"
-      Storage
+      %w[all_vms vms].include?(params[:display]) ? VmOrTemplate : Storage
     else
       VmOrTemplate
     end
