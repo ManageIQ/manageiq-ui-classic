@@ -13,8 +13,8 @@ class SetOwnershipForm extends Component {
   };
 
   componentDidMount() {
-    const { ownershipIds } = this.props;
-    this.loadInitialData(ownershipIds);
+    const { ownershipItems } = this.props;
+    this.loadInitialData(ownershipItems);
   }
 
   /**
@@ -36,15 +36,35 @@ class SetOwnershipForm extends Component {
     return [...ret, ...data];
   };
 
-  loadInitialData = (ownershipIds) => {
+  /**
+   * The ownershipItems can be 'vms', 'services' and 'templates'.
+   * Vms and Services have the user & group id in resources object.
+   * Templates have the user & group id in the base object.
+   */
+  getInitialValues = ownershipItems => new Promise((resolve) => {
+    if (ownershipItems.length > 1) {
+      resolve({ group: 'dont-change', user: 'dont-change' });
+    } else {
+      const item = ownershipItems[0];
+      if (item.kind !== 'templates') {
+        API.get(`/api/${item.kind}/${item.id}?expand=resources&attributes=evm_owner_id,miq_group_id`)
+          .then(results => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+      } else {
+        API.get(`/api/${item.kind}/${item.id}?attributes=evm_owner_id,miq_group_id`)
+          .then(results => resolve({ group: results.miq_group_id, user: results.evm_owner_id }));
+      }
+    }
+  });
+
+  loadInitialData = (ownershipItems) => {
     Promise.all([
       API.get('/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending'),
       API.get('/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending'),
-      http.post(`/${ManageIQ.controller}/ownership_form_fields`, { object_ids: ownershipIds }),
+      this.getInitialValues(ownershipItems),
     ]).then(([userOptions, groupOptions, initialValues]) => {
       // Checking if the group is tenant group or not
       new Promise((resolve) => {
-        if (ownershipIds.length > 1) {
+        if (ownershipItems.length > 1) {
           resolve('');
         } else {
           API.get(`/api/tenant_groups/${initialValues.group}`, { skipErrors: true })
@@ -52,8 +72,8 @@ class SetOwnershipForm extends Component {
             .catch(() => resolve(''));
         }
       }).then(tenantGroupId => this.setState({
-        userOptions: this.addOptions(ownershipIds, 'user', userOptions.resources.map(user => [user.name, user.id])),
-        groupOptions: this.addOptions(ownershipIds, 'group', groupOptions.resources.map(group => [group.description, group.id]), tenantGroupId),
+        userOptions: this.addOptions(ownershipItems, 'user', userOptions.resources.map(user => [user.name, user.id])),
+        groupOptions: this.addOptions(ownershipItems, 'group', groupOptions.resources.map(group => [group.description, group.id]), tenantGroupId),
         initialValues,
       }));
     });
@@ -65,7 +85,7 @@ class SetOwnershipForm extends Component {
   });
 
   render() {
-    const { ownershipIds } = this.props;
+    const { ownershipItems } = this.props;
     const { initialValues, userOptions, groupOptions } = this.state;
     const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel`;
     const submitUrl = `/${ManageIQ.controller}/ownership_update/?button=save`;
@@ -75,7 +95,7 @@ class SetOwnershipForm extends Component {
         <MiqFormRenderer
           initialValues={initialValues}
           schema={createSchema(userOptions, groupOptions)}
-          onSubmit={values => this.handleSubmit(values, ownershipIds, submitUrl)}
+          onSubmit={values => this.handleSubmit(values, Array.from(ownershipItems, item => item.id), submitUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           onCancel={() => miqAjaxButton(cancelUrl)}
           canReset
@@ -86,7 +106,7 @@ class SetOwnershipForm extends Component {
 }
 
 SetOwnershipForm.propTypes = {
-  ownershipIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ownershipItems: PropTypes.arrayOf(PropTypes.exact({ id: PropTypes.string, kind: PropTypes.string })).isRequired,
 };
 
 export default SetOwnershipForm;
