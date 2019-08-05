@@ -128,7 +128,6 @@ module Mixins
           case params[:button]
           when "cancel" then ownership_handle_cancel_button
           when "save" then ownership_handle_save_button
-          when "reset" then ownership_handle_reset_button
           end
         end
 
@@ -168,20 +167,6 @@ module Mixins
           else
             session[:flash_msgs] = @flash_array
             javascript_redirect(previous_breadcrumb_url)
-          end
-        end
-
-        def ownership_handle_reset_button
-          @in_a_form = true
-          if @edit[:explorer]
-            ownership
-            add_flash(_("All changes have been reset"), :warning)
-            request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
-          else
-            javascript_redirect(:action        => 'ownership',
-                                :flash_msg     => _("All changes have been reset"),
-                                :flash_warning => true,
-                                :escape        => true)
           end
         end
 
