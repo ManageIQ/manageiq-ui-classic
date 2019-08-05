@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Row, ButtonGroup, Button } from 'patternfly-react';
-import { ButtonToolbar } from 'react-bootstrap';
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 
@@ -26,7 +25,7 @@ class TaggingWithButtons extends React.Component {
           options={this.props.options}
         />
         <Row className="pull-right">
-          <ButtonToolbar>
+          <div role="toolbar" className="btn-toolbar">
             <ButtonGroup>
               <Button
                 onClick={() => this.props.saveButton.onClick(this.props.assignedTags)}
@@ -58,7 +57,7 @@ class TaggingWithButtons extends React.Component {
                 {this.props.cancelButton.description}
               </Button>
             </ButtonGroup>
-          </ButtonToolbar>
+          </div>
         </Row>
       </Grid>
     );
