@@ -79,6 +79,7 @@
                 %col.fixed-col
                 %col.fixed-col
                 %col.fixed-col
+                %col.fixed-col
                 %col.grow-col
               %thead
                 %tr
@@ -88,6 +89,8 @@
                     = _("Action")
                   %th
                     = _("User")
+                  %th
+                    = _("Offending %{type}" % {:type => "{{$parent.$parent.item.hostType}}"})
                   %th
                     = _("Note")
               %tbody
@@ -107,6 +110,11 @@
                              "tooltip-placement" => "top",
                              "tooltip-popup-delay" => "1000"}
                       {{state.username}}
+                  %td
+                    .no-wrap{"uib-tooltip" => "{{}}",
+                             "tooltip-placement" => "top",
+                             "tooltip-popup-delay" => "1000"}
+                      {{$parent.$parent.item.hostName}}
                   %td
                     .no-wrap{"uib-tooltip" => "{{state.comment}}",
                              "tooltip-placement" => "top",
