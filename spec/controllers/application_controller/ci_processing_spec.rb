@@ -11,7 +11,6 @@ describe ApplicationController do
     let(:vm1) { FactoryBot.create(:vm_redhat) }
     let(:vm2) { FactoryBot.create(:vm_microsoft) }
     let(:vm3) { FactoryBot.create(:vm_vmware) }
-    let(:controller_name) { VmOrTemplate }
 
     context 'record does not support the action' do
       it 'processes the operation' do
@@ -29,6 +28,23 @@ describe ApplicationController do
           'scan',
           "Smartstate Analysis",
           process_proc)
+      end
+    end
+
+    context 'operations on Managed VMs of a Datastore' do
+      before do
+        controller.instance_variable_set(:@_params, :display => 'all_vms', :miq_grid_checks => vm1.id.to_s)
+        request.parameters['controller'] = 'storage'
+        allow(controller).to receive(:find_records_with_rbac).and_call_original
+        allow(controller).to receive(:render)
+      end
+
+      %w[refresh_ems scan collect_running_processes start stop suspend reset reboot_guest shutdown_guest].each do |action|
+        it 'calls find_records_with_rbac with proper record class to set selected records' do
+          expect(controller).to receive(:find_records_with_rbac).with(VmOrTemplate, [vm1.id])
+          operation = controller.send(:vm_button_action)
+          controller.send(:generic_button_operation, action, 'some_name', operation)
+        end
       end
     end
   end
@@ -868,7 +884,7 @@ describe HostController do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    it "when the vm_or_template supports scan,  returns false" do
+    it "when the vm_or_template supports scan, returns false" do
       vm1 =  FactoryBot.create(:vm_microsoft)
       vm2 =  FactoryBot.create(:vm_vmware)
       controller.params = {:miq_grid_checks => "#{vm1.id}, #{vm2.id}"}
@@ -880,7 +896,7 @@ describe HostController do
         include("Smartstate Analysis action does not apply to selected items")
     end
 
-    it "when the vm_or_template supports scan,  returns true" do
+    it "when the vm_or_template supports scan, returns true" do
       vm = FactoryBot.create(:vm_vmware,
                               :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                               :storage               => FactoryBot.create(:storage))
