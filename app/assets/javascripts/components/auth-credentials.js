@@ -7,6 +7,7 @@ ManageIQ.angular.app.component('authCredentials', {
     prefix: '@',
     formLabels: '<?',
     userRequired: '<?',
+    userPrivileged: '<?',
     passwordRequired: '<?',
     hideUser: '<?',
     hidePassword: '<?',
