@@ -90,7 +90,7 @@
                   %th
                     = _("User")
                   %th
-                    = _("Offending %{type}" % {:type => "{{$parent.$parent.item.hostType}}"})
+                    = _("Offending %{type}" % {:type => "{{$parent.$parent.item.hostType.split('::').pop()}}"})
                   %th
                     = _("Note")
               %tbody
