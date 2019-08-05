@@ -157,45 +157,17 @@ module Mixins
         end
 
         def ownership_handle_save_button
-          opts = {}
-
-          unless params[:user] == 'dont-change'
-            opts[:owner] = if params[:user].blank? # to clear previously set user
-                             nil
-                           elsif params[:user] != @user
-                             User.find(params[:user])
-                           end
-          end
-
-          unless params[:group] == 'dont-change'
-            opts[:group] = if params[:group].blank? # to clear previously set group
-                             nil
-                           elsif params[:group] != @group
-                             MiqGroup.find(params[:group])
-                           end
-          end
-
           klass = get_class_from_controller_param(request.parameters[:controller])
-          param_ids = params[:objectIds].map(&:to_i)
-          raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
+          object_types = object_types_for_flash_message(klass, params[:objectIds])
 
-          result = klass.set_ownership(param_ids, opts)
-          if result
-            object_types = object_types_for_flash_message(klass, params[:objectIds])
-
-            flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
-            add_flash(flash)
-            if @sb[:explorer]
-              @sb[:action] = nil
-              replace_right_cell
-            else
-              session[:flash_msgs] = @flash_array
-              javascript_redirect(previous_breadcrumb_url)
-            end
+          flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
+          add_flash(flash)
+          if @sb[:explorer]
+            @sb[:action] = nil
+            replace_right_cell
           else
-            result["missing_ids"]&.each { |msg| add_flash(msg, :error) }
-            result["error_updating"]&.each { |msg| add_flash(msg, :error) }
-            javascript_flash
+            session[:flash_msgs] = @flash_array
+            javascript_redirect(previous_breadcrumb_url)
           end
         end
 

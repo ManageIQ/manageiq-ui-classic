@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { groupBy } from 'lodash';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
-import { http, API } from '../../http_api';
+import { API } from '../../http_api';
 import createSchema from './ownership-form.schema';
+import handleFailure from '../../helpers/handle-failure';
 
 class SetOwnershipForm extends Component {
   state = {
@@ -79,13 +81,20 @@ class SetOwnershipForm extends Component {
     });
   };
 
-  handleSubmit = (values, objectIds, url) => miqAjaxButton(url, {
-    objectIds,
-    ...values,
-  });
+  handleSubmit = (values, submitUrl) => {
+    const { ownershipItems } = this.props;
+    const kinds = groupBy(ownershipItems, item => item.kind);
+
+    return Promise.all(Object.keys(kinds).map(key =>
+      API.post(`/api/${key}`, {
+        action: 'set_ownership',
+        resources: kinds[key].map(item => ({ id: item.id, owner: { id: values.user }, group: { id: values.group } })),
+      })))
+      .then(() => miqAjaxButton(submitUrl, { objectIds: Array.from(ownershipItems, item => item.id) }))
+      .catch(handleFailure);
+  };
 
   render() {
-    const { ownershipItems } = this.props;
     const { initialValues, userOptions, groupOptions } = this.state;
     const cancelUrl = `/${ManageIQ.controller}/ownership_update/?button=cancel`;
     const submitUrl = `/${ManageIQ.controller}/ownership_update/?button=save`;
@@ -95,7 +104,7 @@ class SetOwnershipForm extends Component {
         <MiqFormRenderer
           initialValues={initialValues}
           schema={createSchema(userOptions, groupOptions)}
-          onSubmit={values => this.handleSubmit(values, Array.from(ownershipItems, item => item.id), submitUrl)}
+          onSubmit={values => this.handleSubmit(values, submitUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           onCancel={() => miqAjaxButton(cancelUrl)}
           canReset
