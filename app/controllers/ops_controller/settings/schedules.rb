@@ -36,7 +36,7 @@ module OpsController::Settings::Schedules
     assert_privileges("schedule_edit")
     case params[:button]
     when "cancel"
-      @schedule = MiqSchedule.find(params[:id])
+      @schedule = MiqSchedule.find_by(:id => params[:id])
       if !@schedule || @schedule.id.blank?
         add_flash(_("Add of new Schedule was cancelled by the user"))
       else
