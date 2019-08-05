@@ -5,6 +5,26 @@ import { Spinner } from 'patternfly-react';
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
 import { http } from '../http_api';
 
+const params = (type = 'default', state, tag = {}) => ({
+  provision: {
+    id: "new",
+    ids_checked: [state.tagging.appState.assignedTags.map(t => t.values.map(val => val.id)).flat(), tag.tagValue.id].flat(),
+    tree_typ: 'tags'
+  },
+  default: {
+    id: state.tagging.appState.affectedItems[0] || "new",
+    cat: tag.tagCategory.id,
+    val: tag.tagValue.id,
+    check: 1,
+    tree_typ: 'tags'
+  }
+})[type]
+
+const onDelete = (type = 'default', params = [], deleted_element) => ({
+  provision: {...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) },
+  default: params,
+})[type]
+
 class TaggingWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +42,7 @@ class TaggingWrapper extends React.Component {
   render() {
     if (!this.props.isLoaded) return <Spinner loading size="lg" />;
     const { urls, options, tagging } = this.props;
-    return (options && options.hideButtons && <TaggingConnected options={{...options}}/> || <TaggingWithButtonsConnected
+    return (options && options.hideButtons && <TaggingConnected options={{...options, params, onDelete }}/> || <TaggingWithButtonsConnected
       saveButton={{
           // FIXME: jQuery is necessary here as it communicates with the old world
           // don't replace $.post with http.post
@@ -53,7 +73,7 @@ class TaggingWrapper extends React.Component {
         description: __('Reset'),
         }
       }
-      options={{...options}}
+      options={{...options, params, onDelete }}
     />);
   }
 }
@@ -65,21 +85,21 @@ TaggingWrapper.propTypes = {
   urls: PropTypes.shape({
     cancel_url: PropTypes.string.isRequired,
     save_url: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   tags: PropTypes.shape({
     tags: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       description: PropTypes.string.isRequired,
       values: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,
     assignedTags: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       description: PropTypes.string.isRequired,
       values: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,

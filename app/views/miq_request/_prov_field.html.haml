@@ -7,7 +7,6 @@
 - return if field_hash.blank?
 - field_id = dialog.to_s + "__" + field.to_s
 - disabled ||= false
-
 - unless [:hide, :ignore].include?(field_hash[:display])
   :javascript
     // Create from/to date JS vars to limit calendar starting from
@@ -290,26 +289,13 @@
             = field_hash[:notes]
       - elsif [:tag_ids, :vm_tags].include?(field)
         -# tree control for tags fields
-        .col-md-8
-          #all_tags_treebox.treeview-pf-hover.treeview-pf-select{:style => "color:#000; overflow: hidden;"}
-          - if @edit && @edit[:req_id]
-            - check = @edit[:req_id]
-          - elsif @miq_request
-            - check = @miq_request.id
-          - else
-            - check = 'new'
-          = render(:partial => "layouts/tree",
-                   :locals => {:tree_id       => "all_tags_treebox",
-                               :tree_name     => "all_tags_tree",
-                               :bs_tree       => @all_tags_tree,
-                               :oncheck       => "miqOnCheckProvTags",
-                               :check_url     => "/miq_request/prov_field_changed/#{check}",
-                               :checkboxes    => true})
+        .col-md-10
+          = react('TaggingWrapperConnected',
+            :tags    => @tags,
+            :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true, :url => url_for_only_path(:action => 'prov_field_changed')})
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
-          .note
-            = _("* Only a single value can be assigned from these Tag Categories")
       - elsif [:attached_ds, :iso_image_id, :placement_availability_zone,
                :placement_cluster_name, :placement_dc_name, :placement_ds_name,
                :placement_ems_name, :placement_host_name, :placement_rp_name,
