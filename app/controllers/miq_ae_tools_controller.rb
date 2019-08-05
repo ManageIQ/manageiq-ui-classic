@@ -122,7 +122,7 @@ class MiqAeToolsController < ApplicationController
     add_flash(_("Datastore import was cancelled or is finished"), :info)
 
     respond_to do |format|
-      format.js { render :json => @flash_array.to_json, :status => 200 }
+      format.json { render :json => @flash_array.to_json, :status => 200 }
     end
   end
 
@@ -136,7 +136,7 @@ class MiqAeToolsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js { render :json => @flash_array.to_json, :status => 200 }
+      format.json { render :json => @flash_array.to_json, :status => 200 }
     end
   end
 
@@ -177,7 +177,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     end
 
     respond_to do |format|
-      format.js { render :json => @flash_array.to_json, :status => 200 }
+      format.json { render :json => @flash_array.to_json, :status => 200 }
     end
   end
 
@@ -232,7 +232,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     end
 
     respond_to do |format|
-      format.js { render :json => response_json.to_json, :status => 200 }
+      format.json { render :json => response_json.to_json, :status => 200 }
     end
   end
 
@@ -266,7 +266,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
            end
 
     respond_to do |format|
-      format.js { render :json => json.to_json, :status => 200 }
+      format.json { render :json => json.to_json, :status => 200 }
     end
   end
 

@@ -154,7 +154,7 @@ var Automate = {
       postData = postData.concat(serialized);
 
       $.post('import_automate_datastore', postData, function(data) {
-        var flashMessage = JSON.parse(data)[0];
+        var flashMessage = data[0];
         if (flashMessage.level === 'error') {
           showErrorMessage(flashMessage.message);
         } else {
@@ -196,7 +196,7 @@ var Automate = {
       $('.domain-tree').empty();
 
       $.post('cancel_import', $('#import-form').serialize(), function(data) {
-        var flashMessage = JSON.parse(data)[0];
+        var flashMessage = data[0];
         showSuccessMessage(flashMessage.message);
 
         $('.import-or-export').show();
