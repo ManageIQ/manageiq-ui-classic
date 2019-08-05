@@ -21,7 +21,7 @@ const params = (type = 'default', state, tag = {}) => ({
 })[type]
 
 const onDelete = (type = 'default', params = [], deleted_element) => ({
-  provision: {...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element), deleted: deleted_element },
+  provision: {...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) },
   default: params,
 })[type]
 

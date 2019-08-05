@@ -1013,7 +1013,6 @@ module ApplicationController::MiqRequestMethods
         end
       }
     end.uniq
-    # assigned_tags.map! { |c| c[:values].delete_if {|v| v[:id] == params[:deleted].to_i} }
     @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => []}
   end
 

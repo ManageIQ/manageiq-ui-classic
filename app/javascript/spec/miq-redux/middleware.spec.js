@@ -48,7 +48,7 @@ it('calls post for UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE action', () => 
   const action = { type: 'UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE', meta: { url: 'url/bla', params: params }, tag: {tagCategory: {id: 1}, tagValue: { id:2 }}}
   taggingMiddleware(store)(next)(action);
   expect(next.mock.calls).toEqual( [[{"meta": {"url": "url/bla", "params": params}, "tag": {"tagCategory": {"id": 1}, "tagValue": {"id": 2}}, "type": "UI-COMPONENTS_TAGGING_TOGGLE_TAG_VALUE_CHANGE"}]]);
-  expect(spy).toHaveBeenCalledWith("url/bla", {"cat": 1, "check": 1, "id": [], "tree_typ": "tags", "val": 2});
+  expect(spy).toHaveBeenCalledWith({"contentType": "application/json", "data": "{\"id\":[],\"cat\":1,\"val\":2,\"check\":1,\"tree_typ\":\"tags\"}", "url": "url/bla"});
 });
 
 
@@ -68,5 +68,5 @@ it('calls post for UI-COMPONENTS_TAGGING_DELETE_ASSIGNED_TAG action', () => {
   const action = { type: 'UI-COMPONENTS_TAGGING_DELETE_ASSIGNED_TAG', meta: { url: 'url/bla', params: params, onDelete: onDelete, type: 'default' }, tag: {tagCategory: {id: 1}, tagValue: { id:2 }}};
   taggingMiddleware(store)(next)(action);
   expect(next.mock.calls).toEqual( [[{"meta": {"url": "url/bla", params: params, onDelete: onDelete, type: 'default'}, "tag": {"tagCategory": {"id": 1}, "tagValue": {"id": 2}}, "type": 'UI-COMPONENTS_TAGGING_DELETE_ASSIGNED_TAG'}]]);
-  expect(spy).toHaveBeenCalledWith("url/bla", {"cat": 1, "check": 0, "id": [], "tree_typ": "tags", "val": 2});
+  expect(spy).toHaveBeenCalledWith({"contentType": "application/json", "data": "{\"id\":[],\"cat\":1,\"val\":2,\"check\":0,\"tree_typ\":\"tags\"}", "url": "url/bla"});
 });
