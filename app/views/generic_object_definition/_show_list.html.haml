@@ -1,15 +1,16 @@
-- if @root_node
-  = render :partial => 'generic_object_definition/list'
-- if @god_node
-  = render :partial => 'generic_object_definition/show_god'
-- if @actions_node
-  = render :partial => 'generic_object_definition/show_actions'
-- if @custom_button_group_node
-  = render :partial => 'generic_object_definition/show_custom_button_group'
-- if @custom_button_node
-  = render :partial => 'generic_object_definition/show_custom_button'
+#main_div
+  - if @root_node
+    = render :partial => 'generic_object_definition/list'
+  - if @god_node
+    = render :partial => 'generic_object_definition/show_god'
+  - if @actions_node
+    = render :partial => 'generic_object_definition/show_actions'
+  - if @custom_button_group_node
+    = render :partial => 'generic_object_definition/show_custom_button_group'
+  - if @custom_button_node
+    = render :partial => 'generic_object_definition/show_custom_button'
 
-%generic-object-definition-toolbar#generic_object_definition_show_list_form{'entity' => _('Generic Object Class'), 'redirect-url' => "/generic_object_definition"}
+  %generic-object-definition-toolbar#generic_object_definition_show_list_form{'entity' => _('Generic Object Class'), 'redirect-url' => "/generic_object_definition"}
 
 :javascript
   miq_bootstrap('#generic_object_definition_show_list_form');
