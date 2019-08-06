@@ -755,12 +755,18 @@ module OpsController::OpsRbac
     end
 
     @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i) if rec_type == "user"
-    session[:changed] = changed = (@edit[:new] != @edit[:current])
-    bad = false
-    if rec_type == "group"
-      bad = (@edit[:new][:role].blank? || @edit[:new][:group_tenant].blank?)
-    end
-    bad = @edit[:new][:name].blank? if rec_type == 'role'
+
+    bad = case rec_type
+          when 'group'
+            @edit[:new].values_at(:role, :group_tenant, :description).any?(&:blank?)
+          when 'role'
+            @edit[:new][:name].blank?
+          else
+            false
+          end
+
+    # We need to consider also bad variable, for proper response of Add button
+    session[:changed] = changed = @edit[:new] != @edit[:current] && !bad
 
     render :update do |page|
       page << javascript_prologue
@@ -791,7 +797,7 @@ module OpsController::OpsRbac
         # don't do anything to lookup box when checkboxes on the right side are checked
         page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]
       end
-      page << javascript_for_miq_button_visibility(changed && !bad)
+      page << javascript_for_miq_button_visibility(changed)
     end
   end
 
@@ -1195,7 +1201,7 @@ module OpsController::OpsRbac
                        end
 
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
-    @edit[:current][:deleted_belongsto_filters] = @deleted_belongsto_filters
+    @edit[:current][:deleted_belongsto_filters] = @deleted_belongsto_filters if @deleted_belongsto_filters
     @edit[:new][:belongsto].except!(*@deleted_belongsto_filters)
   end
 
