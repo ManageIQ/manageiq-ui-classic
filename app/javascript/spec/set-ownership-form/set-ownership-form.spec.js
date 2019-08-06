@@ -16,10 +16,8 @@ describe('Set ownership form component', () => {
   beforeEach(() => {
     initialProps = {
       ownershipItems: [{ id: '123456', kind: 'vms' }],
-      groupOptions: [{ label: 'Foo', value: '1' }, { label: 'Bar', value: '2' }],
-      ownerOptions: [{ label: 'Baz', value: '3' }, { label: 'Quxx', value: '4' }],
     };
-    global.ManageIQ.controller = 'service';
+    global.ManageIQ.controller = 'vms';
   });
 
   afterEach(() => {
@@ -30,6 +28,9 @@ describe('Set ownership form component', () => {
   });
 
   it('should correctly map group and owner options ', () => {
+    const groupOptions = [{ label: 'Foo', value: '1' }, { label: 'Bar', value: '2' }];
+    const ownerOptions = [{ label: 'Baz', value: '3' }, { label: 'Qux', value: '4' }];
+
     const expectedResult = [
       expect.objectContaining({
         options: [{
@@ -37,7 +38,7 @@ describe('Set ownership form component', () => {
           label: 'Baz',
         }, {
           value: '4',
-          label: 'Quxx',
+          label: 'Qux',
         }],
       }),
       expect.objectContaining({
@@ -50,55 +51,47 @@ describe('Set ownership form component', () => {
         }],
       }),
     ];
-    const { fields } = createSchema(initialProps.ownerOptions, initialProps.groupOptions);
+    const { fields } = createSchema(ownerOptions, groupOptions);
     expect(fields).toEqual(expectedResult);
   });
 
   it('should request initialForm values after mount', (done) => {
     fetchMock
       .getOnce('/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
-        { evm_owner_id: '1', miq_group_id: '2' })
+        { evm_owner_id: 'a', miq_group_id: 'z2' })
       .getOnce('/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
-        { resources: [{ name: 'f', id: 'a' }] })
+        { resources: [{ name: 'f', id: 'a' }, { name: 's', id: 'z' }] })
       .getOnce('/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
-        { resources: [{ description: 's', id: 'z' }] })
-      .getOnce('/api/tenant_groups/2', {});
+        { resources: [{ description: 'f2', id: 'a2' }, { description: 's2', id: 'z2' }] })
+      .getOnce('/api/tenant_groups/z2', {});
 
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
     setImmediate(() => {
-      setImmediate(() => {
-        setImmediate(() => {
-          expect(wrapper.contains(<SetOwnershipForm {...initialProps} />)).toBeTruthy();
-          done();
-        });
-      });
+      expect(wrapper.contains(<SetOwnershipForm {...initialProps} />)).toBeTruthy();
+      done();
     });
   });
 
   it('should send correct data on save', (done) => {
     fetchMock
       .getOnce('/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
-        { evm_owner_id: '1', miq_group_id: '2' })
+        { evm_owner_id: 'a', miq_group_id: 'z2' })
       .getOnce('/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending',
-        { resources: [{ name: 'f', id: 'a' }] })
+        { resources: [{ name: 'f', id: 'a' }, { name: 's', id: 'z' }] })
       .getOnce('/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending',
-        { resources: [{ description: 's', id: 'z' }] })
-      .getOnce('/api/tenant_groups/2', {})
+        { resources: [{ description: 'f2', id: 'a2' }, { description: 's2', id: 'z2' }] })
+      .getOnce('/api/tenant_groups/z2', {})
       .postOnce('/api/vms', {});
 
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    const instance = wrapper.instance();
     setImmediate(() => {
+      const Form = wrapper.find(FormRenderer).childAt(0);
+      Form.instance().form.change('user', 'z');
+      wrapper.update();
+      wrapper.find('button').first().simulate('click');
       setImmediate(() => {
-        setImmediate(() => {
-          instance.handleSubmit({ user: 1, group: 1 }, '/vms/ownership_update/?button=save');
-          setImmediate(() => {
-            setImmediate(() => {
-              expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=save', { objectIds: ['123456'] });
-              done();
-            });
-          });
-        });
+        expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=save', { objectIds: ['123456'] });
+        done();
       });
     });
   });
@@ -106,7 +99,7 @@ describe('Set ownership form component', () => {
   it('should send correct data on cancel', () => {
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
     wrapper.find('button').last().simulate('click');
-    expect(submitSpy).toHaveBeenCalledWith('/service/ownership_update/?button=cancel');
+    expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel');
   });
 
   it('should reset formValues and add flash messages on reset click', () => {
