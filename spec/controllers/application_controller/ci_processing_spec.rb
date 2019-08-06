@@ -31,6 +31,40 @@ describe ApplicationController do
       end
     end
 
+    context 'operations on nested list of items of a Cluster' do
+      before do
+        controller.instance_variable_set(:@_params, params)
+        request.parameters['controller'] = 'ems_cluster'
+        allow(controller).to receive(:find_records_with_rbac).and_call_original
+        allow(controller).to receive(:render)
+      end
+
+      subject { controller.send(:vm_button_action) }
+
+      context 'operations on VMs' do
+        let(:params) { {:display => 'all_vms', :miq_grid_checks => vm1.id.to_s} }
+
+        %w[refresh_ems scan collect_running_processes start stop suspend reset reboot_guest shutdown_guest].each do |action|
+          it 'calls find_records_with_rbac with proper record class to set selected records' do
+            expect(controller).to receive(:find_records_with_rbac).with(VmOrTemplate, [vm1.id])
+            controller.send(:generic_button_operation, action, 'some_name', subject)
+          end
+        end
+      end
+
+      context 'operations on Templates' do
+        let(:template) { FactoryBot.create(:miq_template) }
+        let(:params) { {:pressed => 'miq_template_refresh', :miq_grid_checks => template.id.to_s} }
+
+        %w[refresh_ems scan].each do |action|
+          it 'calls find_records_with_rbac with proper record class to set selected records' do
+            expect(controller).to receive(:find_records_with_rbac).with(VmOrTemplate, [template.id])
+            controller.send(:generic_button_operation, action, 'some_name', subject)
+          end
+        end
+      end
+    end
+
     context 'operations on Managed VMs of a Datastore' do
       before do
         controller.instance_variable_set(:@_params, :display => 'all_vms', :miq_grid_checks => vm1.id.to_s)
