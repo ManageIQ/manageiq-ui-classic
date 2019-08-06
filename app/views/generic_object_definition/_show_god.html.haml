@@ -1,22 +1,21 @@
-#main_div
-  - if %w(generic_objects).include?(@display)
-    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
-  - else
-    = render :partial => 'layouts/textual_groups_generic'
+- if %w(generic_objects).include?(@display)
+  = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+- else
+  = render :partial => 'layouts/textual_groups_generic'
 
-    - if @record.picture
-      %hr
-        %h3
-          = _('Custom Image')
-        .form-horizontal
-          .form-group
-            .col-md-9
-              %img{:src => "#{@record.picture.url_path}", :style => "width:100px; height:100px;"}
+  - if @record.picture
+    %hr
+      %h3
+        = _('Custom Image')
+      .form-horizontal
+        .form-group
+          .col-md-9
+            %img{:src => "#{@record.picture.url_path}", :style => "width:100px; height:100px;"}
 
-  %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
-                                                                         'entity'       => _('Generic Object Class'),
-                                                                         'entity-name'  => @record.name,
-                                                                         'redirect-url' => "/generic_object_definition",}
+%generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
+                                                                       'entity'       => _('Generic Object Class'),
+                                                                       'entity-name'  => @record.name,
+                                                                       'redirect-url' => "/generic_object_definition",}
 :javascript
   miq_bootstrap('#generic_object_definition_show_form');
   $('#searchbox').hide();

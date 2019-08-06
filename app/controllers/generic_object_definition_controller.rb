@@ -242,35 +242,35 @@ class GenericObjectDefinitionController < ApplicationController
   def process_root_node(presenter)
     root_node_info
     process_show_list
-    presenter.replace(:main_div, r[:partial => 'list'])
+    presenter.update(:main_div, r[:partial => 'list'])
     presenter.show(:paging_div)
     [build_toolbar("gtl_view_tb"), build_toolbar("generic_object_definitions_center_tb")]
   end
 
   def process_god_node(presenter, node)
     god_node_info(node)
-    presenter.replace(:main_div, r[:partial => 'show_god'])
+    presenter.update(:main_div, r[:partial => 'show_god'])
     presenter.hide(:paging_div)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_center_tb")]
   end
 
   def process_actions_node(presenter, node)
     actions_node_info(node)
-    presenter.replace(:main_div, r[:partial => 'show_actions'])
+    presenter.update(:main_div, r[:partial => 'show_actions'])
     presenter.hide(:paging_div)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_actions_node_center_tb")]
   end
 
   def process_custom_button_group_node(presenter, node)
     custom_button_group_node_info(node)
-    presenter.replace(:main_div, r[:partial => 'show_custom_button_group'])
+    presenter.update(:main_div, r[:partial => 'show_custom_button_group'])
     presenter.hide(:paging_div)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_group_center_tb")]
   end
 
   def process_custom_button_node(presenter, node)
     custom_button_node_info(node)
-    presenter.replace(:main_div, r[:partial => 'show_custom_button'])
+    presenter.update(:main_div, r[:partial => 'show_custom_button'])
     presenter.hide(:paging_div)
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_button_center_tb")]
   end

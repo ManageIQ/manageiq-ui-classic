@@ -1,37 +1,36 @@
-#main_div
-  = render :partial => "layouts/flash_msg"
-  - if @record && @record.kind_of?(CustomButton)
-    -# don't need basic info box for Unassigned button group
-    %h3
-      = _('Basic Information')
-    .form-horizontal.static
-      .form-group
-        %label.control-label.col-md-2
-          = _('Text')
-        .col-md-8
-          = @record.name.split('|').first
-          - display = @record.options.key?(:display) ? @record.options[:display] : true
-          &nbsp;
-          .checkbox-inline
-            %label{:style => "font-weight: normal"}
-              = check_box_tag(display, true, display, :disabled => true)
-              = _('Display on Button')
+= render :partial => "layouts/flash_msg"
+- if @record && @record.kind_of?(CustomButton)
+  -# don't need basic info box for Unassigned button group
+  %h3
+    = _('Basic Information')
+  .form-horizontal.static
+    .form-group
+      %label.control-label.col-md-2
+        = _('Text')
+      .col-md-8
+        = @record.name.split('|').first
+        - display = @record.options.key?(:display) ? @record.options[:display] : true
+        &nbsp;
+        .checkbox-inline
+          %label{:style => "font-weight: normal"}
+            = check_box_tag(display, true, display, :disabled => true)
+            = _('Display on Button')
 
-      .form-group
-        %label.control-label.col-md-2
-          = _('Hover Text')
-        .col-md-8
-          = @record.description
-      .form-group
-        %label.control-label.col-md-2
-          = _('Image')
-        .col-md-8
-          %span{:class => @record.options[:button_icon], :style => @record.options.key?(:button_color) ? "color: #{@record.options[:button_color]};" : nil}
+    .form-group
+      %label.control-label.col-md-2
+        = _('Hover Text')
+      .col-md-8
+        = @record.description
+    .form-group
+      %label.control-label.col-md-2
+        = _('Image')
+      .col-md-8
+        %span{:class => @record.options[:button_icon], :style => @record.options.key?(:button_color) ? "color: #{@record.options[:button_color]};" : nil}
 
-    %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
-                                                                           'entity'       => _('Custom Button'),
-                                                                           'entity-name'  => @record.name,
-                                                                           'redirect-url' => "/generic_object_definition",}
+  %generic-object-definition-toolbar#generic_object_definition_show_form{'record-id'    => @record.id,
+                                                                         'entity'       => _('Custom Button'),
+                                                                         'entity-name'  => @record.name,
+                                                                         'redirect-url' => "/generic_object_definition",}
 :javascript
   miq_bootstrap('#generic_object_definition_show_form');
   $('#searchbox').hide();
