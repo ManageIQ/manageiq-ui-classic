@@ -4,7 +4,6 @@ module ApplicationHelper
       structure = []
       Menu::Manager.menu(placement) do |menu_section|
         next unless menu_section.visible?
-
         structure << item_to_hash(menu_section)
       end
       structure
@@ -16,6 +15,7 @@ module ApplicationHelper
         :title       => item.name,
         :iconClass   => item.icon,
         :href        => item.link_params[:href],
+        :type        => item.type,
         :preventHref => !item.href,
         :visible     => item.visible?,
         :active      => item_active?(item),

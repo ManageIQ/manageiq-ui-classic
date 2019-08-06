@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from './main-menu';
 import { menuProps } from './recursive-props';
+import { getHrefByType } from './helpers';
 
 const SecondLevel = ({
   id,
@@ -9,9 +10,17 @@ const SecondLevel = ({
   href,
   items,
   level,
+  type,
 }) => (
   <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''}`} data-target={`#menu-${id}`}>
-    <a href={href}>
+    <a
+      href={getHrefByType(type, href, id)}
+      onMouseDown={() => {
+        window.miqCheckForChanges();
+        return type === 'modal' && sendDataWithRx({ type: 'showAboutModal' });
+      }}
+      target={type === 'new_window' ? '_blank' : '_self'}
+    >
       <span className="list-group-item-value">{title}</span>
     </a>
     <div className="nav-pf-tertiary-nav">

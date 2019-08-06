@@ -18,6 +18,7 @@ describe('Main menu test', () => {
       preventHref: true,
       visible: true,
       active: true,
+      type: 'default',
       items: [{
         id: 'dashboard',
         title: 'Dashboard',
@@ -26,6 +27,7 @@ describe('Main menu test', () => {
         preventHref: false,
         visible: true,
         active: true,
+        type: 'modal',
         items: [],
       }, {
         id: 'chargeback',
@@ -35,6 +37,7 @@ describe('Main menu test', () => {
         preventHref: false,
         visible: true,
         active: false,
+        type: 'big_iframe',
         items: [],
       }],
     }, {
@@ -45,6 +48,7 @@ describe('Main menu test', () => {
       preventHref: true,
       visible: true,
       active: false,
+      type: 'new_window',
       items: [{
         id: 'clo',
         title: 'Clouds',
@@ -53,6 +57,7 @@ describe('Main menu test', () => {
         preventHref: true,
         visible: true,
         active: false,
+        type: 'new_window',
         items: [{
           id: 'ems_cloud',
           title: 'Providers',
@@ -61,6 +66,7 @@ describe('Main menu test', () => {
           preventHref: false,
           visible: true,
           active: true,
+          type: 'new_window',
           items: [],
         }, {
           id: 'availability_zone',
@@ -70,6 +76,7 @@ describe('Main menu test', () => {
           preventHref: false,
           visible: true,
           active: false,
+          type: 'default',
           items: [],
         }, {
           id: 'host_aggregate',
@@ -79,6 +86,7 @@ describe('Main menu test', () => {
           preventHref: false,
           visible: false,
           active: false,
+          type: 'new_window',
           items: [],
         }],
       }],

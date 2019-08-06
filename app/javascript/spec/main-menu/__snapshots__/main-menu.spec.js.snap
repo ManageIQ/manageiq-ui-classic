@@ -18,6 +18,7 @@ exports[`Main menu test should render correctly 1`] = `
             "items": Array [],
             "preventHref": false,
             "title": "Dashboard",
+            "type": "modal",
             "visible": true,
           },
           Object {
@@ -28,11 +29,13 @@ exports[`Main menu test should render correctly 1`] = `
             "items": Array [],
             "preventHref": false,
             "title": "Chargeback",
+            "type": "big_iframe",
             "visible": true,
           },
         ],
         "preventHref": true,
         "title": "Cloud Intel",
+        "type": "default",
         "visible": true,
       },
       Object {
@@ -55,6 +58,7 @@ exports[`Main menu test should render correctly 1`] = `
                 "items": Array [],
                 "preventHref": false,
                 "title": "Providers",
+                "type": "new_window",
                 "visible": true,
               },
               Object {
@@ -65,6 +69,7 @@ exports[`Main menu test should render correctly 1`] = `
                 "items": Array [],
                 "preventHref": false,
                 "title": "Availability Zones",
+                "type": "default",
                 "visible": true,
               },
               Object {
@@ -75,16 +80,19 @@ exports[`Main menu test should render correctly 1`] = `
                 "items": Array [],
                 "preventHref": false,
                 "title": "Host Aggregates",
+                "type": "new_window",
                 "visible": false,
               },
             ],
             "preventHref": true,
             "title": "Clouds",
+            "type": "new_window",
             "visible": true,
           },
         ],
         "preventHref": true,
         "title": "Compute",
+        "type": "new_window",
         "visible": true,
       },
     ]
@@ -121,6 +129,7 @@ exports[`Main menu test should render correctly 1`] = `
                   "items": Array [],
                   "preventHref": false,
                   "title": "Dashboard",
+                  "type": "modal",
                   "visible": true,
                 },
                 Object {
@@ -131,6 +140,7 @@ exports[`Main menu test should render correctly 1`] = `
                   "items": Array [],
                   "preventHref": false,
                   "title": "Chargeback",
+                  "type": "big_iframe",
                   "visible": true,
                 },
               ]
@@ -139,6 +149,7 @@ exports[`Main menu test should render correctly 1`] = `
             level={0}
             preventHref={true}
             title="Cloud Intel"
+            type="default"
             visible={true}
           >
             <TopLevel
@@ -156,6 +167,7 @@ exports[`Main menu test should render correctly 1`] = `
                     "items": Array [],
                     "preventHref": false,
                     "title": "Dashboard",
+                    "type": "modal",
                     "visible": true,
                   },
                   Object {
@@ -166,6 +178,7 @@ exports[`Main menu test should render correctly 1`] = `
                     "items": Array [],
                     "preventHref": false,
                     "title": "Chargeback",
+                    "type": "big_iframe",
                     "visible": true,
                   },
                 ]
@@ -173,6 +186,7 @@ exports[`Main menu test should render correctly 1`] = `
               level={0}
               preventHref={true}
               title="Cloud Intel"
+              type="default"
               visible={true}
             >
               <li
@@ -181,6 +195,8 @@ exports[`Main menu test should render correctly 1`] = `
               >
                 <a
                   href="/dashboard/maintab/?tab=vi"
+                  onMouseDown={[Function]}
+                  target="_self"
                 >
                   <span
                     className="fa fa-dashboard"
@@ -219,6 +235,7 @@ exports[`Main menu test should render correctly 1`] = `
                       level={1}
                       preventHref={false}
                       title="Dashboard"
+                      type="modal"
                       visible={true}
                     >
                       <SecondLevel
@@ -230,6 +247,7 @@ exports[`Main menu test should render correctly 1`] = `
                         level={1}
                         preventHref={false}
                         title="Dashboard"
+                        type="modal"
                         visible={true}
                       >
                         <li
@@ -237,7 +255,9 @@ exports[`Main menu test should render correctly 1`] = `
                           data-target="#menu-dashboard"
                         >
                           <a
-                            href="/dashboard/show"
+                            href="javascript:void(0);"
+                            onMouseDown={[Function]}
+                            target="_self"
                           >
                             <span
                               className="list-group-item-value"
@@ -273,6 +293,7 @@ exports[`Main menu test should render correctly 1`] = `
                       level={1}
                       preventHref={false}
                       title="Chargeback"
+                      type="big_iframe"
                       visible={true}
                     >
                       <SecondLevel
@@ -284,6 +305,7 @@ exports[`Main menu test should render correctly 1`] = `
                         level={1}
                         preventHref={false}
                         title="Chargeback"
+                        type="big_iframe"
                         visible={true}
                       >
                         <li
@@ -291,7 +313,9 @@ exports[`Main menu test should render correctly 1`] = `
                           data-target="#menu-chargeback"
                         >
                           <a
-                            href="/chargeback/explorer"
+                            href="/dashboard/iframe?id=chargeback"
+                            onMouseDown={[Function]}
+                            target="_self"
                           >
                             <span
                               className="list-group-item-value"
@@ -343,6 +367,7 @@ exports[`Main menu test should render correctly 1`] = `
                       "items": Array [],
                       "preventHref": false,
                       "title": "Providers",
+                      "type": "new_window",
                       "visible": true,
                     },
                     Object {
@@ -353,6 +378,7 @@ exports[`Main menu test should render correctly 1`] = `
                       "items": Array [],
                       "preventHref": false,
                       "title": "Availability Zones",
+                      "type": "default",
                       "visible": true,
                     },
                     Object {
@@ -363,11 +389,13 @@ exports[`Main menu test should render correctly 1`] = `
                       "items": Array [],
                       "preventHref": false,
                       "title": "Host Aggregates",
+                      "type": "new_window",
                       "visible": false,
                     },
                   ],
                   "preventHref": true,
                   "title": "Clouds",
+                  "type": "new_window",
                   "visible": true,
                 },
               ]
@@ -376,6 +404,7 @@ exports[`Main menu test should render correctly 1`] = `
             level={0}
             preventHref={true}
             title="Compute"
+            type="new_window"
             visible={true}
           >
             <TopLevel
@@ -399,6 +428,7 @@ exports[`Main menu test should render correctly 1`] = `
                         "items": Array [],
                         "preventHref": false,
                         "title": "Providers",
+                        "type": "new_window",
                         "visible": true,
                       },
                       Object {
@@ -409,6 +439,7 @@ exports[`Main menu test should render correctly 1`] = `
                         "items": Array [],
                         "preventHref": false,
                         "title": "Availability Zones",
+                        "type": "default",
                         "visible": true,
                       },
                       Object {
@@ -419,11 +450,13 @@ exports[`Main menu test should render correctly 1`] = `
                         "items": Array [],
                         "preventHref": false,
                         "title": "Host Aggregates",
+                        "type": "new_window",
                         "visible": false,
                       },
                     ],
                     "preventHref": true,
                     "title": "Clouds",
+                    "type": "new_window",
                     "visible": true,
                   },
                 ]
@@ -431,6 +464,7 @@ exports[`Main menu test should render correctly 1`] = `
               level={0}
               preventHref={true}
               title="Compute"
+              type="new_window"
               visible={true}
             >
               <li
@@ -439,6 +473,8 @@ exports[`Main menu test should render correctly 1`] = `
               >
                 <a
                   href="/dashboard/maintab/?tab=compute"
+                  onMouseDown={[Function]}
+                  target="_blank"
                 >
                   <span
                     className="pficon pficon-cpu"
@@ -482,6 +518,7 @@ exports[`Main menu test should render correctly 1`] = `
                             "items": Array [],
                             "preventHref": false,
                             "title": "Providers",
+                            "type": "new_window",
                             "visible": true,
                           },
                           Object {
@@ -492,6 +529,7 @@ exports[`Main menu test should render correctly 1`] = `
                             "items": Array [],
                             "preventHref": false,
                             "title": "Availability Zones",
+                            "type": "default",
                             "visible": true,
                           },
                           Object {
@@ -502,6 +540,7 @@ exports[`Main menu test should render correctly 1`] = `
                             "items": Array [],
                             "preventHref": false,
                             "title": "Host Aggregates",
+                            "type": "new_window",
                             "visible": false,
                           },
                         ]
@@ -510,6 +549,7 @@ exports[`Main menu test should render correctly 1`] = `
                       level={1}
                       preventHref={true}
                       title="Clouds"
+                      type="new_window"
                       visible={true}
                     >
                       <SecondLevel
@@ -527,6 +567,7 @@ exports[`Main menu test should render correctly 1`] = `
                               "items": Array [],
                               "preventHref": false,
                               "title": "Providers",
+                              "type": "new_window",
                               "visible": true,
                             },
                             Object {
@@ -537,6 +578,7 @@ exports[`Main menu test should render correctly 1`] = `
                               "items": Array [],
                               "preventHref": false,
                               "title": "Availability Zones",
+                              "type": "default",
                               "visible": true,
                             },
                             Object {
@@ -547,6 +589,7 @@ exports[`Main menu test should render correctly 1`] = `
                               "items": Array [],
                               "preventHref": false,
                               "title": "Host Aggregates",
+                              "type": "new_window",
                               "visible": false,
                             },
                           ]
@@ -554,6 +597,7 @@ exports[`Main menu test should render correctly 1`] = `
                         level={1}
                         preventHref={true}
                         title="Clouds"
+                        type="new_window"
                         visible={true}
                       >
                         <li
@@ -562,6 +606,8 @@ exports[`Main menu test should render correctly 1`] = `
                         >
                           <a
                             href="/dashboard/maintab/?tab=clo"
+                            onMouseDown={[Function]}
+                            target="_blank"
                           >
                             <span
                               className="list-group-item-value"
@@ -596,6 +642,7 @@ exports[`Main menu test should render correctly 1`] = `
                                 level={2}
                                 preventHref={false}
                                 title="Providers"
+                                type="new_window"
                                 visible={true}
                               >
                                 <ThirdLevel
@@ -607,6 +654,7 @@ exports[`Main menu test should render correctly 1`] = `
                                   level={2}
                                   preventHref={false}
                                   title="Providers"
+                                  type="new_window"
                                   visible={true}
                                 >
                                   <li
@@ -615,6 +663,8 @@ exports[`Main menu test should render correctly 1`] = `
                                   >
                                     <a
                                       href="/ems_cloud/show_list"
+                                      onMouseDown={[Function]}
+                                      target="_blank"
                                     >
                                       <span
                                         className="list-group-item-value"
@@ -635,6 +685,7 @@ exports[`Main menu test should render correctly 1`] = `
                                 level={2}
                                 preventHref={false}
                                 title="Availability Zones"
+                                type="default"
                                 visible={true}
                               >
                                 <ThirdLevel
@@ -646,6 +697,7 @@ exports[`Main menu test should render correctly 1`] = `
                                   level={2}
                                   preventHref={false}
                                   title="Availability Zones"
+                                  type="default"
                                   visible={true}
                                 >
                                   <li
@@ -654,6 +706,8 @@ exports[`Main menu test should render correctly 1`] = `
                                   >
                                     <a
                                       href="/availability_zone/show_list"
+                                      onMouseDown={[Function]}
+                                      target="_self"
                                     >
                                       <span
                                         className="list-group-item-value"
@@ -674,6 +728,7 @@ exports[`Main menu test should render correctly 1`] = `
                                 level={2}
                                 preventHref={false}
                                 title="Host Aggregates"
+                                type="new_window"
                                 visible={false}
                               >
                                 <ThirdLevel
@@ -685,6 +740,7 @@ exports[`Main menu test should render correctly 1`] = `
                                   level={2}
                                   preventHref={false}
                                   title="Host Aggregates"
+                                  type="new_window"
                                   visible={false}
                                 />
                               </Component>
