@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk Beta1
+## Unreleased as of Sprint 117 - 2019-08-05
+
+### Fixed
+- Changed model name when showing list of Tower Templates. [(#5925)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5925)
+- Remove Load Balancer button from Network Topology page [(#5918)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5918)
+- Show value of Locked/Reset fields when value is false or not set. [(#5900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5900)
+- Filter out Maintenance zone from the drop down [(#5899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5899)
+- Added missing argument in function definition [(#5898)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5898)
+- Store the nodes as objects in the TreeBuilder instead of JSON [(#5889)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5889)
+- Fixed issues with 'Back' button on right size screen [(#5878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5878)
+- Fix Embedded Ansible Respository refresh [(#5849)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5849)
+- Generalized check for accordion in params when selecting (saved)reports [(#5837)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5837)
+- Add '<No Depot>' option to Collect Logs form [(#5834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5834)
+- Make editing schedule with EVM Group/Tenant type work [(#5826)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5826)
+- Make Add button respond properly on changes while adding Catalog Item [(#5472)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5472)
+- GOD's button group can have buttons assign/unassign during create/edit [(#4913)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4913) 
+
+## Ivanchuk Beta1 - Released 2019-07-29
 
 ### Added
 - Remove Embedded Ansible repository unsused attributes [(#5848)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5848)
