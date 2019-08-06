@@ -108,7 +108,11 @@ ManageIQ.explorer.updatePartials = function(data) {
       if (!miqDomElementExists(element)) {
         console.error('updatePartials: #' + element + ' does not exist in the DOM');
       }
-
+      /**
+       * Remove all children and unmount any React component that were mounted to any partial children
+       */
+      $('#' + element).empty();
+      ManageIQ.component.cleanVirtualDom();
       $('#' + element).html(content);
     });
   }
