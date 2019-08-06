@@ -176,6 +176,7 @@ module ReportController::Schedules
                                          end
       end
       page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
+      page << "$('#miq_date_1').datepicker('update');"
 
       changed = (@edit[:new] != @edit[:current])
       if changed != session[:changed]
