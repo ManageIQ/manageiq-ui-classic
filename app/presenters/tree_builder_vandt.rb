@@ -1,9 +1,10 @@
 class TreeBuilderVandt < TreeBuilder
   include TreeBuilderArchived
 
+  private
+
   def tree_init_options
     {
-      :lazy           => true,
       :allow_reselect => true
     }
   end
@@ -21,22 +22,5 @@ class TreeBuilderVandt < TreeBuilder
     root_nodes = count_only_or_objects(count_only, x_get_tree_arch_orph_nodes("VMs and Templates"))
 
     objects + root_nodes
-  end
-
-  def x_get_child_nodes(id)
-    model, _, prefix = self.class.extract_node_model_and_id(id)
-    model == "Hash" ? super : find_child_recursive(x_get_tree_roots(false, {}), id)
-  end
-
-  private
-
-  def find_child_recursive(nodes, id)
-    nodes.each do |t|
-      return t[:nodes] if t[:key] == id
-
-      found = find_child_recursive(t[:nodes], id) if t[:nodes]
-      return found unless found.nil?
-    end
-    nil
   end
 end
