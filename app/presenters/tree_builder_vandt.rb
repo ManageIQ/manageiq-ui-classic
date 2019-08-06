@@ -55,6 +55,7 @@ class TreeBuilderVandt < TreeBuilder
 
   def hidden_child_folder?(_object, children)
     return false unless children.length == 1
+
     child = children.keys.first
     child.kind_of?(EmsFolder) && child.hidden?
   end
@@ -96,6 +97,7 @@ class TreeBuilderVandt < TreeBuilder
       has_sub_sub_folders = prune_folders_via_folders(children, allowed_folder_ids)
 
       next(true) unless object.kind_of?(EmsFolder)
+
       keep_folder = has_sub_sub_folders || allowed_folder_ids.include?(object.id)
       has_sub_folders = true if keep_folder
       keep_folder
