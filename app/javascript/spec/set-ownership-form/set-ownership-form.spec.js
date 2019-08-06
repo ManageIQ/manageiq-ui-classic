@@ -16,8 +16,8 @@ describe('Set ownership form component', () => {
   beforeEach(() => {
     initialProps = {
       ownershipItems: [{ id: '123456', kind: 'vms' }],
-      groupOptions: [['Foo', '1'], ['Bar', '2']],
-      ownerOptions: [['Baz', '3'], ['Quxx', '4']],
+      groupOptions: [{ label: 'Foo', value: '1' }, { label: 'Bar', value: '2' }],
+      ownerOptions: [{ label: 'Baz', value: '3' }, { label: 'Quxx', value: '4' }],
     };
     global.ManageIQ.controller = 'service';
   });

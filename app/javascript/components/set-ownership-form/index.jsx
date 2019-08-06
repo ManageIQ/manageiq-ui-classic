@@ -31,9 +31,13 @@ class SetOwnershipForm extends Component {
   addOptions = (ownershipIds, type, data, tenantGroupId = '') => {
     const ret = [];
     if (ownershipIds.length > 1) {
-      ret.push([__('Don\'t change'), 'dont-change']);
+      ret.push({ label: __('Don\'t change'), value: 'dont-change' });
     }
-    ret.push([type === 'user' ? __('No Owner') : __('No User Group'), ownershipIds.length === 1 ? tenantGroupId : '']);
+
+    ret.push({
+      label: (type === 'user' ? __('No Owner') : __('No User Group')),
+      id: (ownershipIds.length === 1 ? tenantGroupId : ''),
+    });
 
     return [...ret, ...data];
   };
@@ -76,8 +80,10 @@ class SetOwnershipForm extends Component {
         }
       }).then((tenantGroupId) => {
         this.setState({
-          userOptions: this.addOptions(ownershipItems, 'user', userOptions.resources.map(user => [user.name, user.id])),
-          groupOptions: this.addOptions(ownershipItems, 'group', groupOptions.resources.map(group => [group.description, group.id]), tenantGroupId),
+          userOptions: this.addOptions(ownershipItems, 'user',
+            userOptions.resources.map(user => ({ label: user.name, value: user.id }))),
+          groupOptions: this.addOptions(ownershipItems, 'group',
+            groupOptions.resources.map(group => ({ label: group.description, value: group.id })), tenantGroupId),
           initialValues,
         });
         miqSparkleOff();

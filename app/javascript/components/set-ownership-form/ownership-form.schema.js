@@ -6,19 +6,13 @@ const createSchema = (ownerOptions, groupOptions) => ({
     name: 'user',
     id: 'user_name',
     label: __('Select an Owner:'),
-    options: ownerOptions.map(([label, value]) => ({
-      label,
-      value,
-    })),
+    options: ownerOptions,
   }, {
     component: componentTypes.SELECT_COMPONENT,
     name: 'group',
     id: 'group_name',
     label: __('Select a Group:'),
-    options: groupOptions.map(([label, value]) => ({
-      label,
-      value,
-    })),
+    options: groupOptions,
   }],
 });
 
