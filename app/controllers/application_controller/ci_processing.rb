@@ -282,7 +282,7 @@ module ApplicationController::CiProcessing
     when "ems_storage"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     when "ems_cluster"
-      EmsCluster
+      %w[all_vms vms].include?(params[:display]) || params[:pressed].starts_with?('miq_template') ? VmOrTemplate : EmsCluster
     when "storage"
       Storage
     else
