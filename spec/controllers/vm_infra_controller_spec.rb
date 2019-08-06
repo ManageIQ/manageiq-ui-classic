@@ -408,16 +408,6 @@ describe VmInfraController do
 
   context 'Mixins::Actions::VmActions::Ownership' do
     let(:vm) { FactoryBot.create(:vm_vmware) }
-
-    it 'handles dont-change vs nil' do
-      expect(VmOrTemplate).to receive(:set_ownership).with([vm.id], {:group => nil})
-      post :ownership_update, :params => {
-        :user => "dont-change",
-        :group => "",
-        :objectIds => [vm.id],
-        :button => 'save',
-      }
-    end
   end
 
   context 'transform VM dialog' do
