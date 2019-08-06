@@ -198,10 +198,10 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_build_obj_tree
     return nil if alert_profile_get_assign_to_objects_empty?
     if @assign[:new][:assign_to] == "ems_folder"
-      instantiate_tree("TreeBuilderBelongsToVat", :vat_tree,
+      instantiate_tree("TreeBuilderEmsFolders", :ems_folders_tree,
                        @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
     elsif @assign[:new][:assign_to] == "resource_pool"
-      instantiate_tree("TreeBuilderBelongsToHac", :hac_tree,
+      instantiate_tree("TreeBuilderResourcePools", :resource_pools_tree,
                        @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
     else
       instantiate_tree("TreeBuilderAlertProfileObj", :object_tree, @assign[:new][:objects])
