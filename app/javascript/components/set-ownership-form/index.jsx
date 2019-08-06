@@ -59,6 +59,7 @@ class SetOwnershipForm extends Component {
   });
 
   loadInitialData = (ownershipItems) => {
+    miqSparkleOn();
     Promise.all([
       API.get('/api/users?expand=resources&attributes=id,name&sort_by=name&sort_order=ascending'),
       API.get('/api/groups?expand=resources&attributes=id,description&sort_by=description&sort_order=ascending'),
@@ -73,11 +74,14 @@ class SetOwnershipForm extends Component {
             .then(response => resolve(response.id))
             .catch(() => resolve(''));
         }
-      }).then(tenantGroupId => this.setState({
-        userOptions: this.addOptions(ownershipItems, 'user', userOptions.resources.map(user => [user.name, user.id])),
-        groupOptions: this.addOptions(ownershipItems, 'group', groupOptions.resources.map(group => [group.description, group.id]), tenantGroupId),
-        initialValues,
-      }));
+      }).then((tenantGroupId) => {
+        this.setState({
+          userOptions: this.addOptions(ownershipItems, 'user', userOptions.resources.map(user => [user.name, user.id])),
+          groupOptions: this.addOptions(ownershipItems, 'group', groupOptions.resources.map(group => [group.description, group.id]), tenantGroupId),
+          initialValues,
+        });
+        miqSparkleOff();
+      });
     });
   };
 

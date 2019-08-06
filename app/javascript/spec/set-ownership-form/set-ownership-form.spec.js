@@ -5,6 +5,7 @@ import FormRenderer from '@data-driven-forms/react-form-renderer';
 import SetOwnershipForm from '../../components/set-ownership-form';
 import createSchema from '../../components/set-ownership-form/ownership-form.schema';
 import '../helpers/miqAjaxButton';
+import '../helpers/miqSparkle';
 import '../helpers/addFlash';
 
 describe('Set ownership form component', () => {
