@@ -1,26 +1,25 @@
-#main_div
-  = render :partial => "layouts/flash_msg"
-  - if @record.custom_button_sets.present?
-    %hr
-      %h3
-        = _('Button Groups')
-      %table.table.table-bordered.table-hover.table-striped
-        %thead
-          %th.table-view-pf-select
-          %th
-            = _('Text')
-          %th
-            = _('Hover Text')
-        %tbody
-          - @record.custom_button_sets.sort_by{ |group | group.name }.each do |obj|
-            %tr
-              %td.table-view-pf-select
-                %i{:class => obj.set_data[:button_icon], :style => obj.set_data.key?(:button_color) ? "color: #{obj.set_data[:button_color]};" : nil}
-              %td
-                = obj[:name]
-              %td
-                = obj[:description]
-  - if @record.custom_buttons.present?
-    = render :partial => 'table_button' , :locals => {:buttons =>  @record.custom_buttons.sort_by{ |button| button.name.downcase }}
+= render :partial => "layouts/flash_msg"
+- if @record.custom_button_sets.present?
+  %hr
+    %h3
+      = _('Button Groups')
+    %table.table.table-bordered.table-hover.table-striped
+      %thead
+        %th.table-view-pf-select
+        %th
+          = _('Text')
+        %th
+          = _('Hover Text')
+      %tbody
+        - @record.custom_button_sets.sort_by{ |group | group.name }.each do |obj|
+          %tr
+            %td.table-view-pf-select
+              %i{:class => obj.set_data[:button_icon], :style => obj.set_data.key?(:button_color) ? "color: #{obj.set_data[:button_color]};" : nil}
+            %td
+              = obj[:name]
+            %td
+              = obj[:description]
+- if @record.custom_buttons.present?
+  = render :partial => 'table_button' , :locals => {:buttons =>  @record.custom_buttons.sort_by{ |button| button.name.downcase }}
 :javascript
   $('#searchbox').hide();
