@@ -266,8 +266,8 @@ module ApplicationController::Explorer
     tagging_edit_tags_save_and_replace_right_cell
   end
 
-  def x_build_node_id(object, options = {})
-    TreeNode.new(object, nil, options).key
+  def x_build_node_id(object)
+    TreeNode.new(object, nil, {}).key
   end
 
   # FIXME: move partly to Tree once Trees are made from TreeBuilder
