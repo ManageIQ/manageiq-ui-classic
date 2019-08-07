@@ -13,9 +13,7 @@ module Mixins
             return
           end
           @userid = @password = @verify = @client_id = @client_key = @azure_tenant_id = @subscription = ''
-          if session[:type] == "hosts"
-            @discover_type = Host.host_discovery_types
-          elsif session[:type] == "ems"
+          if session[:type] == "ems"
             discover_type(request.parameters[:controller])
           else
             @discover_type = ExtManagementSystem.ems_infra_discovery_types

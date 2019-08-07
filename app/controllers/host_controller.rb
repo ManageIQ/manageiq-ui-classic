@@ -125,53 +125,6 @@ class HostController < ApplicationController
     redirect_to(:action => 'show_list')
   end
 
-  def new
-    assert_privileges("host_new")
-    @host = Host.new
-    @in_a_form = true
-    drop_breadcrumb(:name => _("Add New Host"), :url => "/host/new")
-  end
-
-  def create
-    assert_privileges("host_new")
-    case params[:button]
-    when "cancel"
-      javascript_redirect(:action    => 'show_list',
-                          :flash_msg => _("Add of new Host / Node was cancelled by the user"))
-    when "add"
-      @host = Host.new
-      old_host_attributes = @host.attributes.clone
-      set_record_vars(@host, :validate)                        # Set the record variables, but don't save
-      @host.vmm_vendor = "unknown"
-      if valid_record? && @host.save
-        set_record_vars(@host)                                 # Save the authentication records for this host
-        AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, params[:button] == "add"))
-        message = _("Host / Node \"%{name}\" was added") % {:name => @host.name}
-        javascript_redirect(:action => 'show_list', :flash_msg => message)
-      else
-        @in_a_form = true
-        @errors.each { |msg| add_flash(msg, :error) }
-        @host.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        drop_breadcrumb(:name => _("Add New Host"), :url => "/host/new")
-        javascript_flash
-      end
-    when "validate"
-      verify_host = Host.new
-      set_record_vars(verify_host, :validate)
-      @in_a_form = true
-      begin
-        verify_host.verify_credentials(params[:type])
-      rescue => bang
-        add_flash(bang.to_s, :error)
-      else
-        add_flash(_("Credential validation was successful"))
-      end
-      javascript_flash
-    end
-  end
-
   def edit
     assert_privileges("host_edit")
     if session[:host_items].nil?
@@ -182,11 +135,7 @@ class HostController < ApplicationController
       @title = _("Info/Settings")
     else # if editing credentials for multi host
       @title = _("Credentials/Settings")
-      @host = if params[:selected_host]
-                find_record_with_rbac(Host, params[:selected_host])
-              else
-                Host.new
-              end
+      @host = find_record_with_rbac(Host, params[:selected_host])
       @changed = true
       @showlinks = true
       @in_a_form = true
@@ -324,7 +273,6 @@ class HostController < ApplicationController
       case params[:pressed]
       when 'common_drift' then drift_analysis
       when 'custom_button' then custom_buttons
-      when 'new' then redirect_to(:action => "new")
       when 'host_analyze_check_compliance' then analyze_check_compliance_hosts
       when 'host_check_compliance' then check_compliance_hosts
       when 'host_cloud_service_scheduling_toggle' then toggleservicescheduling
