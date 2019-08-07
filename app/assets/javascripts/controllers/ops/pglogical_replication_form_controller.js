@@ -40,10 +40,20 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   $scope.saveClicked = function() {
     // remove existing subscriptions that have not changed before sending them up for save
-    $scope.pglogicalReplicationModel.subscriptions.forEach(function(subscription, index, object) {
-      if (typeof subscription.id !== 'undefined' && subscription["remove"] !== true &&  !subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) {
-        object.splice(index, 1);
+    var modified_subscriptions = $scope.pglogicalReplicationModel.subscriptions.filter(function(subscription, index) {
+      if (! subscription.id) { // new
+        return true;
       }
+
+      if (subscription.remove) { // removed
+        return true;
+      }
+
+      if (subscriptionChanged(subscription, $scope.modelCopy.subscriptions[index])) { // modified
+        return true;
+      }
+
+      return false;
     });
     var updated_exclusion_list = "";
     if ($scope.pglogicalReplicationModel.replication_type == "remote" && !angular.equals($scope.pglogicalReplicationModel.exclusion_list, $scope.modelCopy.exclusion_list) ) {
@@ -51,7 +61,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     }
     pglogicalManageSubscriptionsButtonClicked('save', {
       'replication_type': $scope.pglogicalReplicationModel.replication_type,
-      'subscriptions' : $scope.pglogicalReplicationModel.subscriptions,
+      'subscriptions': modified_subscriptions,
       'exclusion_list' : updated_exclusion_list
     });
   };

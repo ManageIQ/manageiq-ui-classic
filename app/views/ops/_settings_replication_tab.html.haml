@@ -149,14 +149,15 @@
             %td
               {{subscription.status}}
             %td{:class => "action-cell", "ng-show" => "showCancelDelete($index)"}
-              %button.btn.btn-default.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}= _('Cancel Delete')
+              %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}
+                = _('Cancel Delete')
 
-            %td{:class => "action-cell","ng-show" => "!showCancelDelete($index) && !pglogicalReplicationModel.updateEnabled || (pglogicalReplicationModel.updateEnabled && $index !== pglogicalReplicationModel.s_index)"}
-              %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-disabled" => "addInProgress()",  "ng-click" => "enableSubscriptionUpdate($index)"}= _('Update')
-
-            %td{"ng-show" => "!showCancelDelete($index) && !pglogicalReplicationModel.updateEnabled || (pglogicalReplicationModel.updateEnabled && $index !== pglogicalReplicationModel.s_index)"}
+            %td{:class => "action-cell","ng-show" => "!showCancelDelete($index) && (!pglogicalReplicationModel.updateEnabled || (pglogicalReplicationModel.updateEnabled && $index !== pglogicalReplicationModel.s_index))"}
+              %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-disabled" => "addInProgress()",  "ng-click" => "enableSubscriptionUpdate($index)"}
+                = _('Update')
+            %td{"ng-show" => "!pglogicalReplicationModel.updateEnabled || (pglogicalReplicationModel.updateEnabled && $index !== pglogicalReplicationModel.s_index)"}
               .dropdown.pull-right.dropdown-kebab-pf
-                %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", "aria-haspopup" => "true"}
+                %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", "aria-haspopup" => "true", "ng-disabled" => "showCancelDelete($index)"}
                   %span.fa.fa-ellipsis-v
                 %ul.dropdown-menu.dropdown-menu-right.3
                   %li
@@ -169,9 +170,9 @@
             %td{:class => "action-cell", "ng-show" => "!showCancelDelete($index) && pglogicalReplicationModel.updateEnabled && $index === pglogicalReplicationModel.s_index"}
               %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-disabled" => "!subscriptionValid()", "ng-click" => "addSubscription($index)"}= _('Accept')
 
-            %td{"ng-show" => "!showCancelDelete($index) && pglogicalReplicationModel.updateEnabled && $index === pglogicalReplicationModel.s_index"}
+            %td{"ng-show" => "pglogicalReplicationModel.updateEnabled && $index === pglogicalReplicationModel.s_index"}
               .dropdown.pull-right.dropdown-kebab-pf
-                %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", "aria-haspopup" => "true"}
+                %button.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", "aria-haspopup" => "true", "ng-disabled" => "showCancelDelete($index)"}
                   %span.fa.fa-ellipsis-v
                 %ul.dropdown-menu.dropdown-menu-right.3
                   %li
