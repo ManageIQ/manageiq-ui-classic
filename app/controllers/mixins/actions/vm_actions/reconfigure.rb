@@ -233,8 +233,8 @@ module Mixins
         def get_iso_options(vm)
           iso_options = []
 
-          datastore_ids = vm.storages.pluck(:id)
-          # determine available iso files for the datastaores
+          datastore_ids = vm.host.storages.pluck(:id)
+          # determine available iso files for the datastores
           Rbac.filtered(StorageFile.where("storage_id IN (?) and ext_name = 'iso'", datastore_ids)).each do |sf|
             iso_options << [sf.name, sf.name + ',' + sf.storage_id.to_s]
           end
