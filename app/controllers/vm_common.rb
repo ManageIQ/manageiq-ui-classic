@@ -921,44 +921,6 @@ module VmCommon
 
   private
 
-  # Check for parent nodes missing from vandt tree and return them if any
-  def open_parent_nodes(record)
-    add_nodes = nil
-    existing_node = nil # Init var
-
-    parents = if record.orphaned? || record.archived?
-                [{:type => "x", :id => (record.orphaned ? "orph" : "arch")}]
-              elsif x_active_tree == :instances_tree
-                record.kind_of?(ManageIQ::Providers::CloudManager::Vm) && record.availability_zone ? [record.availability_zone] : [record.ext_management_system]
-              else
-                record.parent_blue_folders(:exclude_non_display_folders => true)
-              end
-
-    # Go up thru the parents and find the highest level unopened, mark all as opened along the way
-    unless parents.empty? || # Skip if no parents or parent already open
-           x_tree[:open_nodes].include?(x_build_node_id(parents.last))
-      parents.reverse_each do |p|
-        p_node = x_build_node_id(p)
-        unless x_tree[:open_nodes].include?(p_node)
-          x_tree[:open_nodes].push(p_node)
-          existing_node = p_node
-        end
-      end
-    end
-
-    # Start at the EMS if record has an EMS and it's not opened yet
-    if record.ext_management_system
-      ems_node = x_build_node_id(record.ext_management_system)
-      unless x_tree[:open_nodes].include?(ems_node)
-        x_tree[:open_nodes].push(ems_node)
-        existing_node = ems_node
-      end
-    end
-
-    add_nodes = {:key => existing_node, :nodes => tree_add_child_nodes(existing_node)} if existing_node
-    add_nodes
-  end
-
   # if node is VM or Template is true - select parent node in explorer tree but show info of Vm/Template
   def resolve_node_info(id)
     nodetype, id = id.split("-")
@@ -1157,21 +1119,10 @@ module VmCommon
     end
     h_tb = build_toolbar("x_history_tb") unless @in_a_form
 
-    unless x_active_tree == :vandt_tree || x_active_tree == :instances_tree
-      # Clicked on right cell record, open the tree enough to show the node, if not already showing
-      if params[:action] == "x_show" &&
-         @record && # Showing a record
-         !@in_a_form && # Not in a form
-         x_active_tree.to_s !~ /_filter_tree$/ # Not in a filter tree; FIXME: create some property on trees for this
-        add_nodes = TreeBuilder.convert_bs_tree(open_parent_nodes(@record)).first # Open the parent nodes of selected record, if not open
-      end
-    end
-
     # Build presenter to render the JS command for the tree update
     presenter ||= ExplorerPresenter.new(
       :active_tree => x_active_tree,
-      :add_nodes   => add_nodes,         # Update the tree with any new nodes
-      :delete_node => @delete_node,      # Remove a new node from the tree
+      :delete_node => @delete_node # Remove a new node from the tree
     )
 
     presenter.show(:default_left_cell).hide(:custom_left_cell)
