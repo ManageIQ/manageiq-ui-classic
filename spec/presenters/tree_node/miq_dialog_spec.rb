@@ -1,5 +1,5 @@
 describe TreeNode::MiqDialog do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_dialog) }
 
   include_examples 'TreeNode::Node#key prefix', 'odg-'

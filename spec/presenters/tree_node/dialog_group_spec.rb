@@ -1,5 +1,5 @@
 describe TreeNode::DialogGroup do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:dialog_group) }
 
   include_examples 'TreeNode::Node#key prefix', '-'

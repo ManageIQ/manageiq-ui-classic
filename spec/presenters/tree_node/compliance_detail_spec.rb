@@ -1,5 +1,5 @@
 describe TreeNode::ComplianceDetail do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:compliance_detail, :miq_policy_result => result) }
   let(:result) { true }
 

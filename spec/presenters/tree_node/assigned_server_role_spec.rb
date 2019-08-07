@@ -2,7 +2,7 @@ describe TreeNode::AssignedServerRole do
   include_context 'server roles'
   let(:object) { assigned_server_role }
   let(:tree) { double }
-  subject { described_class.new(object, nil, {}, tree) }
+  subject { described_class.new(object, nil, tree) }
 
   before { allow(tree).to receive(:root) }
 

@@ -1,5 +1,5 @@
 describe TreeNode::ExtManagementSystem do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   describe 'ManageIQ::Providers::Redhat::InfraManager' do
     let(:object) { FactoryBot.create(:ems_redhat) }

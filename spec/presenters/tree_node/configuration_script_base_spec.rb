@@ -1,5 +1,5 @@
 describe TreeNode::ConfigurationScriptBase do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:ansible_configuration_script) }
 
   include_examples 'TreeNode::Node#key prefix', 'cf-'

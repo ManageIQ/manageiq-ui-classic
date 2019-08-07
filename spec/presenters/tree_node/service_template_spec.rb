@@ -1,5 +1,5 @@
 describe TreeNode::ServiceTemplate do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:tenant) { FactoryBot.create(:tenant) }
   %i(
     service_template

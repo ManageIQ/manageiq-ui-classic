@@ -9,16 +9,14 @@ describe TreeNode do
     klass.new
   end
   let(:parent_id) { dup }
-  let(:options) { {} }
   let(:tree) { double }
-  subject { TreeNode.new(object, parent_id, options, tree) }
+  subject { TreeNode.new(object, parent_id, tree) }
 
   describe '.new' do
     shared_examples 'instance variables' do
       it 'sets instance variables' do
         expect(subject.instance_variable_get(:@object)).to eq(object)
         expect(subject.instance_variable_get(:@parent_id)).to eq(parent_id)
-        expect(subject.instance_variable_get(:@options)).to eq(options)
         expect(subject.instance_variable_get(:@tree)).to eq(tree)
       end
     end

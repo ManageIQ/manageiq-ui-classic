@@ -1,5 +1,5 @@
 describe TreeNode::VmOrTemplate do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   # FIXME: make this dynamic somehow by using VmOrTemplate.descendants
   # Template classes

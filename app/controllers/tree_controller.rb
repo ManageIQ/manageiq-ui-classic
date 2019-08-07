@@ -73,6 +73,6 @@ class TreeController < ApplicationController
   def open_node_hierarchy(tree, items)
     return if items.blank?
 
-    items.each { |node| tree.open_node(TreeNode.new(node, {}, {}).key) }
+    items.each { |node| tree.open_node(TreeNode.new(node).key) }
   end
 end

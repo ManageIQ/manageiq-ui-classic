@@ -1,5 +1,5 @@
 describe TreeNode::CustomizationTemplate do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   %i(
     customization_template

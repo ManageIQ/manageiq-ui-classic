@@ -1,5 +1,5 @@
 describe TreeNode::Host do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   %i(
     host

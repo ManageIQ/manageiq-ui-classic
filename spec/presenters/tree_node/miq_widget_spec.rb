@@ -1,5 +1,5 @@
 describe TreeNode::MiqWidget do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_widget) }
 
   include_examples 'TreeNode::Node#key prefix', '-'

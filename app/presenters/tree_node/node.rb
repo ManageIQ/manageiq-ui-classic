@@ -2,10 +2,9 @@ module TreeNode
   class Node
     attr_reader :tree
 
-    def initialize(object, parent_id, options, tree)
+    def initialize(object, parent_id, tree)
       @object = object
       @parent_id = parent_id
-      @options = options
       @tree = tree
     end
 
@@ -69,7 +68,7 @@ module TreeNode
         base_class = "ManageIQ::Providers::AnsibleTower::AutomationManager" if @object.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager)
         prefix = TreeBuilder.get_prefix_for_model(base_class)
         cid = @object.id
-        "#{@options[:full_ids] && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
+        "#{@tree.try(:options).try(:[], :full_ids) && @parent_id.present? ? "#{@parent_id}_" : ''}#{prefix}-#{cid}"
       end
     end
 
@@ -116,7 +115,7 @@ module TreeNode
 
           if result.nil?
             if block_given?
-              args = [@object, @options, @parent_id].take(block.arity.abs)
+              args = [@object, @parent_id].take(block.arity.abs)
               result = instance_exec(*args, &block)
             else
               result = value

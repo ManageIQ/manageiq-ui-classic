@@ -1,5 +1,5 @@
 describe TreeNode::MiqSchedule do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) do
     EvmSpecHelper.local_miq_server
     FactoryBot.create(:miq_schedule)

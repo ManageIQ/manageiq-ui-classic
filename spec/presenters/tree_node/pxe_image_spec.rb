@@ -1,5 +1,5 @@
 describe TreeNode::PxeImage do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   %i(
     pxe_image
