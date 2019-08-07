@@ -8,7 +8,7 @@ module ServiceHelper::TextualSummary
   # Groups
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[name description guid])
+    TextualGroup.new(_("Properties"), %i[name description id guid])
   end
 
   def textual_group_provisioning_results
@@ -100,6 +100,10 @@ module ServiceHelper::TextualSummary
   end
 
   # Items
+
+  def textual_id
+    {:label => _("Service ID"), :value => @record.id}
+  end
 
   def textual_guid
     {:label => _("Management Engine GUID"), :value => @record.guid}

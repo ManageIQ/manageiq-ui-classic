@@ -110,7 +110,7 @@ describe ServiceHelper::TextualSummary do
     allow(self).to receive(:textual_miq_custom_attributes).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(name description guid)
+  include_examples "textual_group", "Properties", %i(name description id guid)
 
   include_examples "textual_group", "Results", %i(status start_time finish_time elapsed_time owner), "provisioning_results"
 
