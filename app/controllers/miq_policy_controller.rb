@@ -438,30 +438,6 @@ class MiqPolicyController < ApplicationController
     end
   end
 
-  # Check for parent nodes missing from vandt tree and return them if any
-  def open_parent_nodes
-    existing_node = nil
-    nodes = params[:id].split('_')
-    nodes.pop
-    parents = nodes.collect { |node| {:id => node.split('xx-').last} }
-
-    # Go up thru the parents and find the highest level unopened, mark all as opened along the way
-    unless parents.empty? || # Skip if no parents or parent already open
-           x_tree[:open_nodes].include?(x_build_node_id(parents.last))
-      parents.reverse_each do |p|
-        p_node = x_build_node_id(p)
-        # some of the folder nodes are not autoloaded
-        # that's why they already exist in open_nodes
-        x_tree[:open_nodes].push(p_node) unless x_tree[:open_nodes].include?(p_node)
-        existing_node = p_node
-      end
-    end
-
-    add_nodes = tree_add_child_nodes(existing_node) if existing_node # Build the new nodes hash
-    self.x_node = params[:id]
-    add_nodes
-  end
-
   # replace_trees can be an array of tree symbols to be replaced
   def replace_right_cell(options = {})
     nodetype, replace_trees, presenter = options.values_at(:nodetype, :replace_trees, :presenter)
