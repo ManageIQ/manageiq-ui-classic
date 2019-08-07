@@ -57,7 +57,7 @@ class TreeBuilderTenants < TreeBuilder
     count_only_or_objects(count_only, object.children, 'name')
   end
 
-  def override(node, object, _pid, _options)
+  def override(node, object)
     node[:select] = @additional_tenants.try(:include?, object)
     node[:checkable] = @selectable
   end

@@ -2,7 +2,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   has_kids_for Compliance, [:x_get_compliance_kids]
   has_kids_for ComplianceDetail, %i[x_get_compliance_detail_kids parents]
 
-  def override(node, _object, _pid, _options)
+  def override(node, _object)
     node[:selectable] = false
   end
 

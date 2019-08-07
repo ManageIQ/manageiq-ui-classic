@@ -7,7 +7,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
       blue?(object.parent)
   end
 
-  def override(node, object, _pid, _options)
+  def override(node, object)
     node[:selectable] = false
     node[:checkable] = @edit.present? || @assign_to.present?
 

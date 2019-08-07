@@ -7,7 +7,7 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
     x_get_tree_miq_servers
   end
 
-  def override(node, _object, _pid, _options)
+  def override(node, _object)
     if @sb[:diag_selected_id] && node[:key] == "svr-#{@sb[:diag_selected_id]}"
       node[:highlighted] = true
     end
