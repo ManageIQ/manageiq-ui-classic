@@ -906,11 +906,11 @@ module OpsController::OpsRbac
       cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
       tags = cats.map do |cat|
         {
-          :id          => cat.id,
+          :id          => cat.id.to_s,
           :description => cat.description,
           :singleValue => false,
           :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
-            { :id => entry.id, :description => entry.description }
+            { :id => entry.id.to_s, :description => entry.description }
           end
         }
       end
@@ -919,8 +919,8 @@ module OpsController::OpsRbac
       assigned_tags = Tag.where(:name => filters.flatten).map do |tag|
         {
           :description => tag.category.description,
-          :id          => tag.category.id,
-          :values      => [{:id => tag.classification.id, :description => tag.classification.description}]
+          :id          => tag.category.id.to_s,
+          :values      => [{:id => tag.classification.id.to_s, :description => tag.classification.description}]
         }
       end
 
@@ -935,7 +935,7 @@ module OpsController::OpsRbac
 
       assigned_tags.uniq! { |tag| tag[:id] }
       group_id = @group&.id
-      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [group_id]}
+      @tags = {:tags => tags, :assignedTags => assigned_tags, :affectedItems => [group_id.to_s]}
       @button_urls = {
         :save_url   => url_for_only_path(:action => "rbac_group_edit", :id => group_id, :button => "save"),
         :cancel_url => url_for_only_path(:action => "rbac_group_edit", :id => group_id, :button => "cancel")
