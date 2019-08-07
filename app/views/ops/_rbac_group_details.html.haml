@@ -69,9 +69,11 @@
             %i.ff.ff-user-role{params}
             = link_to(@group.miq_user_role.name, "#", params)
         - else
+          - disabled_item = ["<Choose a Role>", nil]
+          - selected_item = @edit[:new][:role] || disabled_item
           = select_tag('group_role',
-              options_for_select(@edit[:roles].sort, @edit[:new][:role]),
-              :class  => "selectpicker")
+                       options_for_select(@edit[:roles], :selected => selected_item, :disabled => disabled_item),
+                       :class => "selectpicker")
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent("group_role", "#{combo_url}")
