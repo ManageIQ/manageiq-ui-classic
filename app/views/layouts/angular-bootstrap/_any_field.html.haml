@@ -5,13 +5,10 @@
 - input_emsg ||= ''
 - input_id   ||= [prefix, input_name].select(&:present?).join("_")
 
-- input_desc = _(input_desc) if input_desc.present?
-- input_emsg = _(input_emsg) if input_emsg.present?
-
 %div
   .form-group{"ng-class" => "{'has-error': angularForm.#{input_id}.$invalid}"}                                    |
     %label.col-md-2.control-label{"for" => input_id}
-      = _(input_desc)
+      = input_desc
     .col-md-4
       %input.form-control{"type"                    => input_type,
                           "id"                      => input_id,
@@ -24,4 +21,4 @@
                           "prefix"                  => prefix,
                           "reset-validation-status" => "#{prefix}_auth_status"}
       %span.help-block{"ng-show" => "angularForm.#{input_id}.$error.url"}
-        = _(input_emsg)
+        = input_emsg
