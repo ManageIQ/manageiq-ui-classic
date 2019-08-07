@@ -5,7 +5,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
   has_kids_for ExtManagementSystem, [:x_get_provider_kids]
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 
-  def override(node, object, _pid, _options)
+  def override(node, object)
     node[:select] = if @assign_to
                       @selected_nodes&.include?("ResourcePool_#{object[:id]}")
                     else
