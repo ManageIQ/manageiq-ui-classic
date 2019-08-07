@@ -74,6 +74,7 @@ module ReportController::Reports
       begin
         raise StandardError, _("Default Report \"%{name}\" cannot be deleted") % {:name => rpt.name} if rpt.rpt_type == "Default"
         rpt_name = rpt.name
+        menu_repname_update(rpt_name, nil)
         audit = {:event => "report_record_delete", :message => "[#{rpt_name}] Record deleted", :target_id => rpt.id, :target_class => "MiqReport", :userid => session[:userid]}
         rpt.destroy
       rescue => bang
@@ -187,6 +188,9 @@ module ReportController::Reports
   end
 
   def menu_repname_update(old_name, new_name)
+    # @param old_name [String] old name for the report
+    # @param new_name [String, Nil] new name for the report. nil if it was deleted
+
     all_roles = MiqGroup.non_tenant_groups_in_my_region
     all_roles.each do |role|
       rec = MiqGroup.find_by(:description => role.name)
@@ -196,13 +200,17 @@ module ReportController::Reports
         lvl1[1].each_with_index do |lvl2, j|
           lvl2[1].each_with_index do |rep, k|
             if rep == old_name
-              menu[i][1][j][1][k] = new_name
+              if new_name.nil?
+                menu[i][1][j][1].delete_at(k)
+              else
+                menu[i][1][j][1][k] = new_name
+              end
             end
           end
         end
       end
       rec.settings[:report_menus] = menu
-      rec.save
+      rec.save!
     end
   end
 
