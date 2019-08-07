@@ -409,12 +409,10 @@
       return;
     }
 
-    angular.element(mainContent).removeClass('miq-sand-paper');
     angular.element(mainContent).removeClass('miq-list-content');
     angular.element(pagination).css('display', 'none');
 
     if (viewType === 'grid' || viewType === 'tile') {
-      angular.element(mainContent).addClass('miq-sand-paper');
       angular.element(pagination).css('display', 'block');
     } else if (viewType === 'list') {
       angular.element(mainContent).addClass('miq-list-content');

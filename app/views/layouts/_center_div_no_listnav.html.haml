@@ -8,7 +8,7 @@
         .row.toolbar-pf#toolbar
           .col-sm-12
             = render :partial => "layouts/angular/toolbar"
-      .row#main-content.miq-layout-center_div_no_listnav{:class => miq_layout_center_div_no_listnav_class }
+      .row#main-content.miq-layout-center_div_no_listnav{:class => @lastaction == "show_dashboard" || @layout == "monitor_alerts_overview" ? 'miq-body' : ''}
         .col-md-12
         - if layout_uses_tabs?
           .col-md-12
