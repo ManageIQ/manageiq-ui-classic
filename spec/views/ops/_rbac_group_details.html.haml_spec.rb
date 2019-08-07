@@ -82,5 +82,14 @@ describe 'ops/_rbac_group_details.html.haml' do
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up External Authentication Groups')
     end
+
+    context 'choosing Role from the drop down while adding Group' do
+      before { view.instance_variable_set(:@edit, :ldap_groups_by_user => [], :new => {}, :roles => {'<Choose a Role>' => nil}, :projects_tenants => []) }
+
+      it 'disables Choose a Role option' do
+        render :partial => 'ops/rbac_group_details'
+        expect(rendered).to include('<option selected="selected" disabled="disabled" value="">&lt;Choose a Role&gt;</option>')
+      end
+    end
   end
 end
