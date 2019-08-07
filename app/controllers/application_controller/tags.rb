@@ -181,7 +181,7 @@ module ApplicationController::Tags
       }
     end
 
-    assigned_tags = assignments.uniq.map do |tag|
+    assigned_tags = assignments.uniq(&:parent_id).map do |tag|
       {
         :description => tag.parent.description,
         :id          => tag.parent.id,
