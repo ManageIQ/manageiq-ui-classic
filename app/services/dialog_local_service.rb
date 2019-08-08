@@ -59,7 +59,7 @@ class DialogLocalService
         when "CloudManager"
           "/ems_cloud"
         when "NetworkManager"
-          "/ems_networks"
+          "/ems_network"
         when "CinderManager"
           "/ems_block_storage"
         when "SwiftManager"

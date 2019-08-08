@@ -80,7 +80,7 @@ describe DialogLocalService do
       let(:obj) { double(:class => ManageIQ::Providers::Amazon::NetworkManager, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
-                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_networks"
+                       "ext_management_system", "ExtManagementSystem", "providers", "/ems_network"
     end
 
     context "when the object is a private CloudNetwork" do
