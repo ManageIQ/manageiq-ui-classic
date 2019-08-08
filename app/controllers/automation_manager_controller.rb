@@ -440,7 +440,7 @@ class AutomationManagerController < ApplicationController
 
   def configscript_service_dialog
     assert_privileges("automation_manager_configuration_script_service_dialog")
-    cs = ConfigurationScript.find_by(:id => params[:id])
+    cs = ConfigurationScript.find_by(:id => params[:id] || params[:miq_grid_checks])
     @edit = {:rec_id => cs.id}
     @in_a_form = true
     @right_cell_text = _("Adding a new Service Dialog from \"%{name}\"") % {:name => cs.name}
