@@ -5,7 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk Beta1
+## Ivanchuk-Beta2
+
+### Added
+- Remove delimiter for Request ID [(#5872)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5872)
+- Add title for clone_to_template edit action [(#5893)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5893)
+- Add formatting to report data filter display. [(#5928)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5928)
+
+### Fixed
+- Fix custom button group `Display on Button` option [(#5857)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5857)
+- Select the features tree items when 'everything' is allowed [(#5858)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5858)
+- Do not build the regex for embedded method when there's no fqname [(#5866)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5866)
+- Dialog copy - remove ids pointing to the original dialog [(#5856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5856)
+- Fixed container provider custom button dialog redirect. [(#5869)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5869)
+- Allow returning back to the previous controller, after clicking on Back button and to cancel policy sim properly [(#5839)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5839)
+- Fix resizer blocking paginator elements [(#5874)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5874)
+- Removed gettext changing value for Analysis Profiles [(#5859)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5859)
+- Fix Policy breadcrumbs when coming from GTL page [(#5814)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5814)
+- Generalized check for accordion in params when selecting (saved)reports [(#5837)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5837)
+- user_input_filter - don't send Cancel on Apply [(#5875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5875)
+- Added missing argument in function definition [(#5898)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5898)
+- Show value of Locked/Reset fields when value is false or not set. [(#5900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5900)
+- Filter out Maintenance zone from the drop down [(#5899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5899)
+- Fixed issues with 'Back' button on right size screen [(#5878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5878)
+- Make Add button respond properly on changes while adding Catalog Item [(#5472)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5472)
+- Fixed Error in Restore Cloud Volume Backup [(#5830)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5830)
+- Make the check against Satellite organization safe to fix RHSM issues [(#5908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5908)
+- Make editing schedule with EVM Group/Tenant type work [(#5826)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5826)
+- Propagate parent model into GTLs on InfraNetwork switches [(#5902)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5902)
+- Filters header renamed to Global Filters [(#5905)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5905)
+- user_input_filter: Don't autofocus selects [(#5906)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5906)
+- Clear modal after Applying advanced search [(#5909)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5909)
+- views: remove unneeded compliances join [(#5919)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5919)
+- Fix button sets order in tree [(#5914)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5914)
+- Catalog item removal modal: disable delete button if API data incomplete [(#5915)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5915)
+- Add '<No Depot>' option to Collect Logs form [(#5834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5834)
+- Remove Load Balancer button from Network Topology page [(#5918)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5918)
+- Changed model name when showing list of Tower Templates. [(#5925)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5925)
+- Circling back and removing compliance join for all [(#5926)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5926)
+- Fix display of Container Project Compliance Policies [(#5927)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5927)
+- GOD's button group can have buttons assign/unassign during create/edit [(#4913)](https://github.com/ManageIQ/manageiq-ui-classic/pull/4913)
+- Automate import - use format.json, not format.js when doing render :json [(#5881)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5881)
+- Report results: fix toolbar button display when in "filter". [(#5930)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5930)
+- Provider edit - move message about a username near the field, fix everything [(#5207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5207)
+- Get proper record class while performing operations on Managed VMs of a chosen Datastore [(#5867)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5867)
+- Fix error when canceling addition of new schedule [(#5932)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5932)
+- Update datepicker when start date changed [(#5920)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5920)
+
+## Ivanchuk Beta1 - Released 2019-07-29
 
 ### Added
 - Remove Embedded Ansible repository unsused attributes [(#5848)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5848)
