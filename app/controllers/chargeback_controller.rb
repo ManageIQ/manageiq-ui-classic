@@ -484,11 +484,6 @@ class ChargebackController < ApplicationController
     TreeBuilderChargebackRates.new("cb_rates_tree", @sb)
   end
 
-  # Build a Catalog Items explorer tree
-  def cb_assignments_build_tree
-    TreeBuilderChargebackAssignments.new("cb_assignments_tree", @sb)
-  end
-
   # Common Schedule button handler routines
   def process_cb_rates(rates, task)
     process_elements(rates, ChargebackRate, task)
