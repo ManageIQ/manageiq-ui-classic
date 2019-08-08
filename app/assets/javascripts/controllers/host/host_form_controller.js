@@ -24,7 +24,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.formId = hostFormId;
     $scope.validateClicked = miqService.validateWithAjax;
     $scope.formFieldsUrl = $attrs.formFieldsUrl;
-    $scope.createUrl = $attrs.createUrl;
     $scope.updateUrl = $attrs.updateUrl;
     $scope.model = 'hostModel';
     ManageIQ.angular.scope = $scope;
@@ -64,18 +63,10 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.currentTab = id;
   };
 
-  $scope.addClicked = function() {
-    miqService.sparkleOn();
-    var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, true);
-  };
-
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url;
-    if (hostFormId === 'new') {
-      url = $scope.createUrl + 'new?button=cancel';
-    } else if (hostFormId.split(',').length === 1) {
+    if (hostFormId.split(',').length === 1) {
       url = $scope.updateUrl + hostFormId + '?button=cancel';
     } else if (hostFormId.split(',').length > 1) {
       url = $scope.updateUrl + '?button=cancel';

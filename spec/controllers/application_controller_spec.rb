@@ -70,13 +70,13 @@ describe ApplicationController do
 
   describe "#assert_privileges" do
     before do
-      EvmSpecHelper.seed_specific_product_features("host_new", "host_edit", "perf_reload")
-      feature = MiqProductFeature.find_all_by_identifier(["host_new"])
+      EvmSpecHelper.seed_specific_product_features("host_compare", "host_edit", "perf_reload")
+      feature = MiqProductFeature.find_all_by_identifier(["host_compare"])
       login_as FactoryBot.create(:user, :features => feature)
     end
 
     it "should not raise an error for feature that user has access to" do
-      expect { controller.send(:assert_privileges, "host_new") }.not_to raise_error
+      expect { controller.send(:assert_privileges, "host_compare") }.not_to raise_error
     end
 
     it "should raise an error for feature that user does not have access to" do

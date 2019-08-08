@@ -5,7 +5,6 @@
                  "ng-controller"   => "hostFormController",
                  'ng-cloak'        => '',
                  "form-fields-url" => "/#{controller_name}/host_form_fields/",
-                 "create-url"      => "/#{controller_name}/create/",
                  "update-url"      => "/#{controller_name}/update/",
                  "novalidate"      => true}
     = render :partial => "layouts/flash_msg"
@@ -40,6 +39,7 @@
                                     "checkchange" => ""}
                 %span.help-block{"ng-show" => "angularForm.hostname.$error.miqrequired"}
                   = _("Required")
+
             .form-group{"ng-class" => "{'has-error': angularForm.user_assigned_os.$invalid}", "ng-hide" => "hostModel.operating_system"}
               %label.col-md-2.control-label
                 = _("Host platform")
@@ -104,5 +104,5 @@
               = render :partial => 'layouts/gtl'
 
 :javascript
-  ManageIQ.angular.app.value('hostFormId', '#{(@host.id || (session[:host_items] && session[:host_items].join(","))) || "new"}');
+  ManageIQ.angular.app.value('hostFormId', '#{(@host.id || (session[:host_items] && session[:host_items].join(",")))}');
   miq_bootstrap('#form_div');

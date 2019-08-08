@@ -135,7 +135,11 @@ class HostController < ApplicationController
       @title = _("Info/Settings")
     else # if editing credentials for multi host
       @title = _("Credentials/Settings")
-      @host = find_record_with_rbac(Host, params[:selected_host])
+      @host = if params[:selected_host]
+                find_record_with_rbac(Host, params[:selected_host])
+              else
+                Host.new
+              end
       @changed = true
       @showlinks = true
       @in_a_form = true
