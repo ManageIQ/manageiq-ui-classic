@@ -314,14 +314,6 @@ module MiqPolicyController::AlertProfiles
     @right_cell_div = "alert_profile_folders"
   end
 
-  def alert_profile_get_all
-    @alert_profiles = MiqAlertSet.all.sort_by { |as| as.description.downcase }
-    set_search_text
-    @alert_profiles = apply_search_filter(@search_text, @alert_profiles) if @search_text.present?
-    @right_cell_text = _("All Alert Profiles")
-    @right_cell_div = "alert_profile_list"
-  end
-
   # Get information for an alert profile
   def alert_profile_get_info(alert_profile)
     @record = @alert_profile = alert_profile
