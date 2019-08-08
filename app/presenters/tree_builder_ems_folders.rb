@@ -1,7 +1,7 @@
 class TreeBuilderEmsFolders < TreeBuilderAlertProfileAssign
   ANCESTRY_TYPE = EmsFolder
 
-  def override(node, object, _pid, _options)
+  def override(node, object)
     node[:selectable] = false
     if object.kind_of?(EmsFolder) && blue?(object)
       node[:icon] = "pficon pficon-folder-close-blue"

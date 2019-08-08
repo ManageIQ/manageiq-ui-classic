@@ -1,7 +1,7 @@
 class TreeBuilderResourcePools < TreeBuilderAlertProfileAssign
   ANCESTRY_TYPE = ResourcePool
 
-  def override(node, object, _pid, _options)
+  def override(node, object)
     node[:selectable] = false
     node[:checkable] = true
     node[:hideCheckbox] = true unless object.kind_of?(ResourcePool)
