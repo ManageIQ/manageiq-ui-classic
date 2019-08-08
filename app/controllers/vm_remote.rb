@@ -22,20 +22,7 @@ module VmRemote
   end
 
   def launch_vmrc_console
-    @vm = @record = identify_record(params[:id], VmOrTemplate)
-    host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
-    options = {
-      :host        => host,
-      :vmid        => @record.ems_ref,
-      :ticket      => j(params[:ticket]),
-      :api_version => @record.ext_management_system.api_version.to_s,
-      :os          => browser_info(:os),
-      :name        => @record.name,
-      :vmrc_uri    => build_vmrc_uri(host, @record.ems_ref, params[:ticket])
-    }
-    render :template => "vm_common/console_vmrc",
-           :layout   => false,
-           :locals   => options
+    render :template => "vm_common/console_vmrc", :layout => false, :locals => params.slice(:remote_url)
   end
 
   def launch_html5_console
@@ -98,25 +85,13 @@ module VmRemote
     else
       url = if miq_task.task_results[:remote_url]
               miq_task.task_results[:remote_url]
-            else
-              console_action = %w[html5].include?(console_type) ? 'launch_html5_console' : 'launch_vmrc_console'
+            elsif console_type == 'html5'
               url_for_only_path(:controller => controller_name,
-                                :action     => console_action,
+                                :action     => 'launch_html5_console',
                                 :id         => j(params[:id]),
                                 :params     => miq_task.task_results)
             end
       javascript_open_window(url)
     end
-  end
-
-  def build_vmrc_uri(host, vmid, ticket)
-    uri = URI::Generic.build(:scheme   => "vmrc",
-                             :userinfo => "clone:#{ticket}",
-                             :host     => host,
-                             :port     => 443,
-                             :path     => "/",
-                             :query    => "moid=#{vmid}").to_s
-    # VMRC doesn't like brackets around IPv6 addresses
-    uri.sub(/(.*)\[/, '\1').sub(/(.*)\]/, '\1')
   end
 end
