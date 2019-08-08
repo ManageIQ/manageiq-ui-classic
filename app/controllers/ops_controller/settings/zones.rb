@@ -83,8 +83,11 @@ module OpsController::Settings::Zones
   # AJAX driven routine to check for changes in ANY field on the user form
   def zone_field_changed
     return unless load_edit("zone_edit__#{params[:id]}", "replace_cell__explorer")
+
     zone_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
+    bad = @edit[:new][:name].blank? || @edit[:new][:description].blank? # need to check if required fields (Name and Description) are filled in
+    session[:changed] = @changed = @edit[:new] != @edit[:current] && !bad
+
     render :update do |page|
       page << javascript_prologue
       if @refresh_div
@@ -95,12 +98,7 @@ module OpsController::Settings::Zones
       # checking to see if password/verify pwd fields either both have value or are both blank
       password_fields_changed = !(@edit[:new][:password].blank? ^ @edit[:new][:verify].blank?)
 
-      if @changed != session[:changed]
-        session[:changed] = @changed
-        page << javascript_for_miq_button_visibility(@changed && password_fields_changed)
-      else
-        page << javascript_for_miq_button_visibility(password_fields_changed)
-      end
+      page << javascript_for_miq_button_visibility(@changed && password_fields_changed)
     end
   end
 

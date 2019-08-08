@@ -806,6 +806,8 @@ module OpsController::Settings::Common
       field = "ntp_server_#{field_num}"
       next unless params.key?(field)
       @edit[:new][:ntp][field] = params[field]
+      # remove unnecessary key from @edit[:new][:ntp] if there is no change
+      @edit[:new][:ntp].except!(*field) if params[field] == @edit[:new][:ntp][:server][field_num - 1]
     end
   end
 
