@@ -8,7 +8,7 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
   end
 
   def override(node, _object, _pid, _options)
-    if @sb[:diag_selected_id] && node[:key] == "svr-#{@sb[:diag_selected_id]}"
+    if @sb[:diag_selected_id] && node[:key] == "#{self.class.get_prefix_for_model(@sb[:diag_selected_model]) || 'svr'}-#{@sb[:diag_selected_id]}"
       node[:highlighted] = true
     end
   end
