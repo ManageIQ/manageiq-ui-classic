@@ -47,7 +47,7 @@ class TreeBuilderTenants < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(_count_only, _options)
+  def x_get_tree_roots(_count_only)
     if ApplicationHelper.role_allows?(:feature => 'rbac_tenant_view')
       Tenant.with_current_tenant
     end

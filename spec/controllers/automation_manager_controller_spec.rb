@@ -266,7 +266,7 @@ describe AutomationManagerController do
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", {})
-    objects = tree_builder.send(:x_get_tree_roots, false, {})
+    objects = tree_builder.send(:x_get_tree_roots, false)
     expected_objects = [automation_manager1, automation_manager2, automation_manager3]
     expect(objects).to match_array(expected_objects)
   end
@@ -283,7 +283,7 @@ describe AutomationManagerController do
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     TreeBuilderAutomationManagerConfigurationScripts.new(:configuration_scripts_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", {})
-    objects = tree_builder.send(:x_get_tree_roots, false, {})
+    objects = tree_builder.send(:x_get_tree_roots, false)
     expect(objects).to include(@automation_manager1)
     expect(objects).to include(@automation_manager2)
   end

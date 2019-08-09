@@ -30,7 +30,7 @@ class TreeBuilderClusters < TreeBuilder
     end
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     nodes = @root[:clusters].map do |node|
       { :id         => node[:id].to_s,
         :text       => node[:name],

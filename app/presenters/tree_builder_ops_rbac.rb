@@ -20,7 +20,7 @@ class TreeBuilderOpsRbac < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(_count_only, _options)
+  def x_get_tree_roots(_count_only)
     objects = []
     if ApplicationHelper.role_allows?(:feature => "rbac_user_view", :any => true)
       objects.push(:id => "u", :text => _("Users"), :icon => "pficon pficon-user", :tip => _("Users"))

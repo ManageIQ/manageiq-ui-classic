@@ -22,7 +22,7 @@ class TreeBuilderStorageAdapters < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     kids = count_only ? 0 : []
     unless @root.hardware.storage_adapters.empty?
       kids = count_only_or_objects(count_only, @root.hardware.storage_adapters)

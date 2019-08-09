@@ -18,7 +18,7 @@ class TreeBuilderVmsFilter < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects =
       [
         {:id => "global", :text => _("Global Filters"), :icon => "pficon pficon-folder-close", :tip => _("Global Shared Filters"), :selectable => false},

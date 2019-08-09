@@ -24,7 +24,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     nodes = @data.miq_servers.select(&:is_a_proxy?).sort_by { |s| [s.name, s.id] }
     count_only_or_objects(count_only, nodes)
   end

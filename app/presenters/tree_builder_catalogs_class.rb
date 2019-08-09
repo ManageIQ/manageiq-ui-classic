@@ -9,7 +9,7 @@ class TreeBuilderCatalogsClass < TreeBuilder
     super(id) || ServiceTemplateCatalog.new
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     count_only_or_objects_filtered(count_only, ServiceTemplateCatalog.all, "name")
   end
 end

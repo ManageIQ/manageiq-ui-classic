@@ -18,7 +18,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(_count_only, _options)
+  def x_get_tree_roots(_count_only)
     buttons = CustomButton.button_classes.map do |klass|
       name = target_class_name(klass)
 

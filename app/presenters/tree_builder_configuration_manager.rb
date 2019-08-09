@@ -16,7 +16,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = []
     objects.push(:id            => "fr",
                  :tree          => "fr_tree",

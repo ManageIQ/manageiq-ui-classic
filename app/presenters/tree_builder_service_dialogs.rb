@@ -11,7 +11,7 @@ class TreeBuilderServiceDialogs < TreeBuilderAeCustomization
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = Rbac.filtered(Dialog.all).sort_by { |a| a.label.downcase }
     count_only_or_objects(count_only, objects)
   end

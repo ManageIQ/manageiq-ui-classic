@@ -32,7 +32,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     obj = if @assign_to.blank? || @assign_to == "enterprise"
             []
           elsif @cat_tree
