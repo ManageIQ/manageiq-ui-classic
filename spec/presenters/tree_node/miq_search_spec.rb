@@ -1,5 +1,5 @@
 describe TreeNode::MiqSearch do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_search) }
 
   include_examples 'TreeNode::Node#key prefix', 'ms-'

@@ -1,6 +1,6 @@
 describe TreeNode::MiqAeNamespace do
   before { login_as FactoryBot.create(:user_with_group) }
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   let(:object) do
     domain = FactoryBot.create(:miq_ae_domain)

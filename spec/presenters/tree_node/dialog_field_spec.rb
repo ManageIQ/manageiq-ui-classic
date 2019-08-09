@@ -1,5 +1,5 @@
 describe TreeNode::DialogField do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:dialog_field) }
 
   include_examples 'TreeNode::Node#key prefix', '-'

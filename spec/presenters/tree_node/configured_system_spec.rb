@@ -1,5 +1,5 @@
 describe TreeNode::ConfiguredSystem do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   %i(
     configured_system

@@ -1,5 +1,5 @@
 describe TreeNode::GuestDevice do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:guest_device, :controller_type => 'foo') }
 
   include_examples 'TreeNode::Node#key prefix', 'gd-'

@@ -1,6 +1,6 @@
 describe TreeNode::EmsFolder do
   let(:tree) { nil }
-  subject { described_class.new(object, nil, {}, tree) }
+  subject { described_class.new(object, nil, tree) }
 
   %i(
     ems_folder

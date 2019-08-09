@@ -1,5 +1,5 @@
 describe TreeNode::MiqAeClass do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) do
     ns = FactoryBot.create(:miq_ae_namespace)
     FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)

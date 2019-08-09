@@ -1,5 +1,5 @@
 describe TreeNode::MiqRegion do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_region, :description => 'Elbonia') }
 
   include_examples 'TreeNode::Node#key prefix', 'mr-'

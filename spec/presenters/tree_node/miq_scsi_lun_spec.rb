@@ -1,5 +1,5 @@
 describe TreeNode::MiqScsiLun do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_scsi_lun, :canonical_name => 'foo') }
 
   include_examples 'TreeNode::Node#key prefix', 'sl-'

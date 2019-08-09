@@ -1,8 +1,7 @@
 describe TreeNode::CustomButtonSet do
   let(:tree) { TreeBuilderCatalogItems.new(:sandt_tree, {}, false) }
-  subject { described_class.new(object, nil, options, tree) }
+  subject { described_class.new(object, nil, tree) }
   let(:object) { FactoryBot.create(:custom_button_set, :description => "custom button set description") }
-  let(:options) { {} }
 
   include_examples 'TreeNode::Node#key prefix', 'cbg-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'

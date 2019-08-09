@@ -1,5 +1,5 @@
 describe TreeNode::Classification do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   shared_examples 'TreeNode::Classification' do
     include_examples 'TreeNode::Node#key prefix', 'cl-'

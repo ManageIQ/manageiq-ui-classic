@@ -1,5 +1,5 @@
 describe TreeNode::OrchestrationTemplate do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   {
     :orchestration_template_amazon              => %w(ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate cfn),

@@ -1,5 +1,5 @@
 describe TreeNode::AvailabilityZone do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
 
   %i(
     availability_zone_amazon

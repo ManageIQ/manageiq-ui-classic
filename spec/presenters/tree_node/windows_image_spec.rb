@@ -1,5 +1,5 @@
 describe TreeNode::WindowsImage do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:windows_image) }
 
   include_examples 'TreeNode::Node#key prefix', 'wi-'

@@ -1,5 +1,5 @@
 describe TreeNode::ServiceTemplateCatalog do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) do
     tenant = FactoryBot.create(:tenant)
     FactoryBot.create(:service_template_catalog, :name => 'foo', :tenant => tenant)

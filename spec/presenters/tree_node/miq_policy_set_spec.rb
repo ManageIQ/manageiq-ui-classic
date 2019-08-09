@@ -1,5 +1,5 @@
 describe TreeNode::MiqPolicySet do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_policy_set, :name => 'Just a set') }
 
   include_examples 'TreeNode::Node#key prefix', 'pp-'

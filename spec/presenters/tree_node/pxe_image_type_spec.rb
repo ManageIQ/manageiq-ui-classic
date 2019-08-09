@@ -1,5 +1,5 @@
 describe TreeNode::PxeImageType do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:pxe_image_type) }
 
   include_examples 'TreeNode::Node#key prefix', 'pit-'

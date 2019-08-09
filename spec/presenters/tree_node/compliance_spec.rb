@@ -1,5 +1,5 @@
 describe TreeNode::Compliance do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:compliance, :compliant => compliant) }
   let(:compliant) { true }
 

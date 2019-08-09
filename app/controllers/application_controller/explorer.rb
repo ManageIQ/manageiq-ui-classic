@@ -267,7 +267,7 @@ module ApplicationController::Explorer
   end
 
   def x_build_node_id(object)
-    TreeNode.new(object, nil, {}).key
+    TreeNode.new(object).key
   end
 
   # FIXME: move partly to Tree once Trees are made from TreeBuilder

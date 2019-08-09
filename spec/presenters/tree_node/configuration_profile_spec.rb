@@ -1,5 +1,5 @@
 describe TreeNode::ConfigurationProfile do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:configuration_profile_foreman) }
 
   include_examples 'TreeNode::Node#key prefix', 'cp-'

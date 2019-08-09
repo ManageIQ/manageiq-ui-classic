@@ -1,5 +1,5 @@
 describe TreeNode::PhysicalServer do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:physical_server) }
 
   include_examples 'TreeNode::Node#key prefix', 'phys-'

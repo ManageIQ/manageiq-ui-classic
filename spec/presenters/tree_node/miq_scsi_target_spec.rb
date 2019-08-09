@@ -1,5 +1,5 @@
 describe TreeNode::MiqScsiTarget do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:miq_scsi_target) }
 
   include_examples 'TreeNode::Node#key prefix', 'sg-'

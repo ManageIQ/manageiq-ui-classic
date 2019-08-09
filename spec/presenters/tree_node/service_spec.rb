@@ -1,5 +1,5 @@
 describe TreeNode::Service do
-  subject { described_class.new(object, nil, {}, nil) }
+  subject { described_class.new(object, nil, nil) }
   let(:object) { FactoryBot.create(:service) }
 
   include_examples 'TreeNode::Node#key prefix', 's-'
