@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudsCenter < ApplicationHelper::T
           :klass => ApplicationHelper::Button::AuthKeyPairCloudCreate),
         separator,
         button(
-          :key_pair_ownership,
+          :auth_key_pair_ownership,
           'pficon pficon-user fa-lg',
           N_('Set Ownership for the selected items'),
           N_('Set Ownership'),

@@ -211,7 +211,7 @@ class AuthKeyPairCloudController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships), %i(tags)]
+    [%i(properties relationships lifecycle), %i(tags)]
   end
   helper_method :textual_group_list
 
