@@ -284,10 +284,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.3.tgz#dfa0c92efe44a1d1a7974fb49ffeb40ef2da5a27"
   integrity sha512-zVgvPwGK7c1aVdUVc9Qv7SqepOGRDrqCw7KZPSZziWGxSlbII3gmvGLPzLX4d0n0BMbamBacUrN22zOMyFFEkQ==
 
-"@manageiq/react-ui-components@~0.11.27":
-  version "0.11.33"
-  resolved "https://registry.yarnpkg.com/@manageiq/react-ui-components/-/react-ui-components-0.11.33.tgz#5e06119578f872ca3351f429bd8f92ead70089e8"
-  integrity sha512-8ke8c5cS/vshJC2B+Gav/FzjbJJlprn1eqqUGvUWEpbqQEDQmD1+ip/a3wGTuDlDPHrWX3EJSwKW1AXXmcMnbw==
+"@manageiq/react-ui-components@~0.11.37":
+  version "0.11.37"
+  resolved "https://registry.yarnpkg.com/@manageiq/react-ui-components/-/react-ui-components-0.11.37.tgz#67a115f454f28c68801c46462c2afffdf1cf6388"
+  integrity sha512-C98dgbH2yAqEbASooZCyHAe/EzDAZYCoQ0446AIpi+bSuKZYwTFvgmbZ0hbzgfP8Jk4zfZqsPcIVj8LeoPGYKg==
   dependencies:
     "@patternfly/patternfly" "^2.6.0"
     "@patternfly/react-core" "^1.11.1"
