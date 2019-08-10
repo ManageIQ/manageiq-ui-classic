@@ -25,13 +25,13 @@ describe TreeBuilderDatastores do
       expect(locals[:check_url]).to eq("/ops/cu_collection_field_changed/")
     end
     it 'sets Datastore node correctly' do
-      parent = @datastores_tree.send(:x_get_tree_roots, false, nil)
+      parent = @datastores_tree.send(:x_get_tree_roots, false)
       expect(parent.first[:text]).to eq("<strong>Datastore</strong> [#{@datastore.first[:location]}]")
       expect(parent.first[:tip]).to eq("Datastore [#{@datastore.first[:location]}]")
       expect(parent.first[:icon]).to eq('fa fa-database')
     end
     it 'sets Host node correctly' do
-      parent = @datastores_tree.send(:x_get_tree_roots, false, nil)
+      parent = @datastores_tree.send(:x_get_tree_roots, false)
       kids = @datastores_tree.send(:x_get_tree_hash_kids, parent.first, false)
       expect(kids.first[:text]).to eq(@host[:name])
       expect(kids.first[:tip]).to eq(@host[:name])

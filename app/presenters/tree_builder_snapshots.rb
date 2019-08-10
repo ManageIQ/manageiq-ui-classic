@@ -37,7 +37,7 @@ class TreeBuilderSnapshots < TreeBuilder
     @tree_state.x_node_set(node[:key], @name)
   end
 
-  def x_get_tree_roots(count_only = false, _options = {})
+  def x_get_tree_roots(count_only)
     root_kid = @record.snapshots.present? ? @record.snapshots.find_all { |x| x.parent_id.nil? } : []
     open_node("sn-#{root_kid.first.id}") if root_kid.present?
     count_only_or_objects(count_only, root_kid)

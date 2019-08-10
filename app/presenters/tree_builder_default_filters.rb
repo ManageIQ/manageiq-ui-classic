@@ -43,7 +43,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     roots = @data.keys.map do |folder|
       {:id           => folder,
        :text         => folder,

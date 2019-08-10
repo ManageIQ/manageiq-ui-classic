@@ -6,7 +6,7 @@ class TreeBuilderAlertProfileAssign < TreeBuilder
     super(name, sandbox, build)
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     roots = ExtManagementSystem.assignable.each_with_object({}) do |ems, nodes|
       subtree = ems.children.flat_map(&:folders).each_with_object({}) do |folder, obj|
         obj.merge!(folder.subtree_arranged(:of_type => self.class::ANCESTRY_TYPE))

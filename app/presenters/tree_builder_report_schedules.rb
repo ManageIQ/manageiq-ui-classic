@@ -14,7 +14,7 @@ class TreeBuilderReportSchedules < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = if User.current_user.current_group.miq_user_role.name.split('-').last == 'super_administrator'
                 # Super admins see all report schedules
                 MiqSchedule.where(:resource_type => 'MiqReport')

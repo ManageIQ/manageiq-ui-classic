@@ -110,7 +110,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
      :selectable => false}
   end
 
-  def x_get_tree_roots(count_only = false, _options = nil)
+  def x_get_tree_roots(count_only)
     count_only_or_objects(count_only, vm_nodes(@root[:results]))
   end
 

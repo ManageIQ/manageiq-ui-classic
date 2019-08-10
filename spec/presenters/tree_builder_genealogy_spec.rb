@@ -52,8 +52,8 @@ describe TreeBuilderGenealogy do
 
   describe '#x_get_tree_roots' do
     it 'returns tree roots correctly' do
-      expect(subject.send(:x_get_tree_roots, false, {})).to include(vm_with_kid, vm_without_kid)
-      expect(subject.send(:x_get_tree_roots, true, {})).to eq(2)
+      expect(subject.send(:x_get_tree_roots, false)).to include(vm_with_kid, vm_without_kid)
+      expect(subject.send(:x_get_tree_roots, true)).to eq(2)
     end
   end
 

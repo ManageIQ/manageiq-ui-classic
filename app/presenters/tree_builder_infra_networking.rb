@@ -21,7 +21,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = Rbac.filtered(ManageIQ::Providers::Vmware::InfraManager.order("lower(name)"))
     count_only_or_objects(count_only, objects)
   end

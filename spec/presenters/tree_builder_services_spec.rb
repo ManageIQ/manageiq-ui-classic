@@ -14,7 +14,7 @@ describe TreeBuilderServices do
 
   describe '#x_get_tree_roots' do
     it 'returns the four root nodes' do
-      root_nodes = subject.send(:x_get_tree_roots, false, {})
+      root_nodes = subject.send(:x_get_tree_roots, false)
 
       expect(root_nodes).to match [
         a_hash_including(:id => 'asrv'),

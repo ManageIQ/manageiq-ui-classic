@@ -16,7 +16,7 @@ class TreeBuilderOpsVmdb < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     objects = Rbac.filtered(VmdbDatabase.my_database.try(:evm_tables).to_a).to_a
     count_only_or_objects(count_only, objects, "name")
   end

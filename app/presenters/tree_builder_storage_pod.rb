@@ -13,7 +13,7 @@ class TreeBuilderStoragePod < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     items = EmsFolder.where(:type => 'StorageCluster')
     if count_only
       items.size

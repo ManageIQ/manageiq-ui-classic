@@ -18,7 +18,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   private
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     top_nodes = Menu::Manager.items.select do |section|
       Vmdb::PermissionStores.instance.can?(section.id) && !section.kind_of?(Menu::Item)
     end

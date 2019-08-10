@@ -25,7 +25,7 @@ describe TreeBuilderServiceCatalog do
   end
 
   it "#x_get_tree_roots" do
-    roots = @tree.send(:x_get_tree_roots, false, {})
+    roots = @tree.send(:x_get_tree_roots, false)
     expect(roots.first.name).to eq(@catalog.name)
   end
 

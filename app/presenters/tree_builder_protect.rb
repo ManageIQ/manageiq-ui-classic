@@ -17,7 +17,7 @@ class TreeBuilderProtect < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only)
     nodes = MiqPolicySet.all.sort_by { |profile| profile.description.downcase }.map do |profile|
       { :id         => "policy_profile_#{profile.id}",
         :text       => profile.description,

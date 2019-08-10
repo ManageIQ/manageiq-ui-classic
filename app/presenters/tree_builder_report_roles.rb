@@ -19,7 +19,7 @@ class TreeBuilderReportRoles < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only, _options)
+  def x_get_tree_roots(count_only)
     user  = User.current_user
     roles = user.super_admin_user? ? MiqGroup.non_tenant_groups_in_my_region : [user.current_group]
     count_only_or_objects(count_only, roles, 'name')
