@@ -2,8 +2,8 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Lan, [:x_get_tree_lan_kids]
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
-  def override(node, _object)
-    node[:selectable] = false # if node[:image].nil? || !node[:image].include?('svg/currentstate-')
+  def override(node, object)
+    node[:selectable] = false unless object.kind_of?(Vm)
   end
 
   def initialize(name, sandbox, build = true, **params)
