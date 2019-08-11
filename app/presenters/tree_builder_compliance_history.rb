@@ -63,7 +63,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
     count_only_or_objects(count_only, kids)
   end
 
-  def x_get_tree_custom_kids(_parent, count_only, _options)
+  def x_get_tree_custom_kids(_parent, count_only)
     count_only ? 0 : []
   end
 end

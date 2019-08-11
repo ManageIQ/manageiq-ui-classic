@@ -51,7 +51,7 @@ class TreeBuilderUtilization < TreeBuilder
     end
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     nodes = object[:id].split('_')
     id = nodes.last.split('-').last
     if object_ems?(nodes, object)

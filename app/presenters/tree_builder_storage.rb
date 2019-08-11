@@ -21,7 +21,7 @@ class TreeBuilderStorage < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     objects = MiqSearch.where(:db => "Storage").filters_by_type(object[:id])
     count_only_or_objects(count_only, objects, 'description')
   end

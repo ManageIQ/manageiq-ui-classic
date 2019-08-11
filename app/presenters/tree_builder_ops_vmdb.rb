@@ -22,7 +22,7 @@ class TreeBuilderOpsVmdb < TreeBuilder
   end
 
   # Handle custom tree nodes (object is a Hash)
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     vmdb_table_id = object[:id].split("|").last.split('-').last
     vmdb_indexes  = VmdbIndex.includes(:vmdb_table).where(:vmdb_tables => {:type => 'VmdbTableEvm', :id => vmdb_table_id})
     count_only_or_objects(count_only, vmdb_indexes, "name")

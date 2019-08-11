@@ -63,7 +63,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
     count_only_or_objects_filtered(count_only, configured_systems, "hostname")
   end
 
-  def x_get_tree_custom_kids(object_hash, count_only, _options)
+  def x_get_tree_custom_kids(object_hash, count_only)
     objects =
       case object_hash[:id]
       when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager

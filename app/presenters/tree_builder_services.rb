@@ -35,7 +35,7 @@ class TreeBuilderServices < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     case object[:id]
     when 'my', 'global'
       # Get My Filters and Global Filters
