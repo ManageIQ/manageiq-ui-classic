@@ -28,7 +28,7 @@
       :javascript
         miqInitNotifications();
 
-  %body{:onload => 'miqOnLoad();', 'data-controller' => controller_name, :class => ::Settings.server.custom_login_logo ? 'whitelabel' : ''}
+  %body{:onload => 'miqOnLoad();', 'data-controller' => controller_name}
     = render :partial => "layouts/header"
     = render :partial => "layouts/content"
     = render :partial => 'layouts/footer'
