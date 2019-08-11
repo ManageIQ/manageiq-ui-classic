@@ -44,7 +44,7 @@ class TreeBuilder
     # Save node as open
     open_node(id)
 
-    x_get_tree_objects(object, @tree_state.x_tree(@name), false, parents).map do |o|
+    x_get_tree_objects(object, false, parents).map do |o|
       x_build_node_tree(o, id, @tree_state.x_tree(@name))
     end
   end
@@ -192,7 +192,7 @@ class TreeBuilder
   # :full_ids               # stack parent id on top of each node id
   # :lazy                   # set if tree is lazy
   def x_build_tree(options)
-    nodes = x_get_tree_objects(nil, options, false, []).map do |child|
+    nodes = x_get_tree_objects(nil, false, []).map do |child|
       # already a node? FIXME: make a class for node
       if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
         child
@@ -224,7 +224,7 @@ class TreeBuilder
     end
   end
 
-  def x_get_tree_objects(parent, _options, count_only, parents)
+  def x_get_tree_objects(parent, count_only, parents)
     children_or_count = parent.nil? ? x_get_tree_roots(count_only) : x_get_tree_kids(parent, count_only, parents)
     children_or_count || (count_only ? 0 : [])
   end
@@ -256,12 +256,12 @@ class TreeBuilder
                       @tree_state.x_tree(@name)[:active_node] == node[:key]
     if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
-      kids = (ancestry_kids || x_get_tree_objects(object, options, false, parents)).map do |o|
+      kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
         x_build_node(o, node[:key], options)
       end
       node[:nodes] = kids unless kids.empty?
     else
-      if x_get_tree_objects(object, options, true, parents) > 0
+      if x_get_tree_objects(object, true, parents) > 0
         node[:lazyLoad] = true # set child flag if children exist
       end
     end

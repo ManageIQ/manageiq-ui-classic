@@ -44,7 +44,7 @@ describe TreeBuilderNetwork do
 
     it 'returns nothing as GuestDevice child' do
       parent = @network_tree.send(:x_get_tree_roots, false).first.guest_devices.first
-      number_of_kids = @network_tree.send(:x_get_tree_objects, parent, {}, true, nil)
+      number_of_kids = @network_tree.send(:x_get_tree_objects, parent, true, nil)
       expect(number_of_kids).to eq(0)
     end
   end

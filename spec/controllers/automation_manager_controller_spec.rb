@@ -274,7 +274,7 @@ describe AutomationManagerController do
   it "constructs the ansible tower inventory tree node" do
     TreeBuilderAutomationManagerProviders.new(:automation_manager_providers_tree, controller.instance_variable_get(:@sb))
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", {})
-    objects = tree_builder.send(:x_get_tree_objects, @inventory_group, nil, false, nil)
+    objects = tree_builder.send(:x_get_tree_objects, @inventory_group, false, nil)
     expected_objects = [@ans_configured_system, @ans_configured_system2a]
     expect(objects).to match_array(expected_objects)
   end
