@@ -8,10 +8,14 @@ class TreeBuilderStorageAdapters < TreeBuilder
     super(name, sandbox, build)
   end
 
+  def override(node, _object)
+    node[:selectable] = false
+  end
+
   private
 
   def tree_init_options
-    {:full_ids => true, :lazy => true, :onclick => "miqOnClickHostNet"}
+    {:full_ids => true, :lazy => true}
   end
 
   def root_options
