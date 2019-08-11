@@ -7,12 +7,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   end
 
   def initialize(name, sandbox, build = true, **params)
-    sandbox[:ch_root] = TreeBuilder.build_node_id(params[:root]) if params[:root]
     @root = params[:root]
-    unless @root
-      model, id = TreeBuilder.extract_node_model_and_id(sandbox[:ch_root])
-      @root = model.constantize.find_by(:id => id)
-    end
     super(name, sandbox, build)
   end
 
