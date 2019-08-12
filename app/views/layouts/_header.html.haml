@@ -1,4 +1,4 @@
-= react 'MiqAboutModal'
+= react 'MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : ''
 %nav.navbar.navbar-pf-vertical#notification-app{'ng-controller' => "headerController as vm"}
   .navbar-header
     %button{:type => "button", :class => "navbar-toggle"}

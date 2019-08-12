@@ -77,6 +77,7 @@ class MiqAboutModal extends React.Component {
 
     return (
       <AboutModal
+        dialogClassName={this.props.dialogClassName}
         show={this.props.show}
         onHide={this.props.hideModal}
         productTitle={`${data.product_info.name_full} ${data.server_info.release}`}
@@ -111,6 +112,7 @@ class MiqAboutModal extends React.Component {
 }
 
 MiqAboutModal.propTypes = {
+  dialogClassName: PropTypes.string,
   show: PropTypes.bool,
   data: PropTypes.shape({
     product_info: PropTypes.shape({
@@ -129,6 +131,7 @@ MiqAboutModal.propTypes = {
 };
 
 MiqAboutModal.defaultProps = {
+  dialogClassName: undefined,
   show: false,
   data: undefined,
 };
