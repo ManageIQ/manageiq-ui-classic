@@ -431,7 +431,6 @@ class MiqPolicyController < ApplicationController
     when :action_tree
       action_get_all
     when :alert_profile_tree
-      #     alert_profile_get_all
       alert_profile_get_all_folders
     when :alert_tree
       alert_get_all

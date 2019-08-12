@@ -751,11 +751,6 @@ class CatalogController < ApplicationController
     TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :ansible_playbook => ansible_playbook_type?, :catalog_bundle => catalog_bundle)
   end
 
-  # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
-  def catalog_bundle?
-    @edit.present? && @edit[:key].starts_with?('st_edit')
-  end
-
   def svc_catalog_provision_finish_submit_endpoint
     role_allows?(:feature => "miq_request_show_list", :any => true) ? "/miq_request/show_list" : "/catalog/explorer"
   end

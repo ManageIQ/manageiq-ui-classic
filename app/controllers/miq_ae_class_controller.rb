@@ -2279,17 +2279,6 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  # Get variables from edit form
-  def get_ns_form_vars
-    @ae_ns = @edit[:typ].constantize.find_by(:id => @edit[:ae_ns_id])
-    @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
-    %i[ns_name ns_description].each do |field|
-      next unless params[field]
-      @edit[:new][field] = params[field].presence
-    end
-    @in_a_form = true
-  end
-
   def get_instances_form_vars_for(prefix = nil)
     instance_column_names.each do |key|
       @edit[:new][:ae_inst][key] = params["#{prefix}inst_#{key}"].presence if params["#{prefix}inst_#{key}"]
