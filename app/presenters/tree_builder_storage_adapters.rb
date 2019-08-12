@@ -3,8 +3,7 @@ class TreeBuilderStorageAdapters < TreeBuilder
   has_kids_for MiqScsiTarget, [:x_get_tree_target_kids]
 
   def initialize(name, sandbox, build = true, **params)
-    sandbox[:sa_root] = params[:root] if params[:root]
-    @root = sandbox[:sa_root]
+    @root = params[:root]
     super(name, sandbox, build)
   end
 
