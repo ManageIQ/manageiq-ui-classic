@@ -190,22 +190,7 @@ function miqOnClickSnapshots(id) {
 function miqOnClickHostNet(id) {
   var ids = id.split('|')[0].split('_'); // Break apart the node ids
   var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
-  switch (nid[0]) {
-    case 'v':
-      DoNav('/vm/show/' + encodeURIComponent(nid[1]));
-      break;
-    case 'h':
-      DoNav('/host/show/' + encodeURIComponent(nid[1]));
-      break;
-    case 'c':
-      DoNav('/ems_cluster/show/' + encodeURIComponent(nid[1]));
-      break;
-    case 'rp':
-      DoNav('/resource_pool/show/' + encodeURIComponent(nid[1]));
-      break;
-    default:
-      break;
-  }
+  DoNav('/vm/show/' + encodeURIComponent(nid[1]));
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
