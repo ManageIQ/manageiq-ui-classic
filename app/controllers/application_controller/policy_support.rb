@@ -74,6 +74,9 @@ module ApplicationController::PolicySupport
 
   # Perform policy simulation for a set of objects
   def policy_sim(records = [])
+    # prevent adv_search_build on policy_sim screens
+    @in_a_form = true
+
     if request.xml_http_request? # Ajax request means in explorer
       @explorer = true
       @edit ||= {}
