@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-10
+
+### Fixed
+- Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828) 
+- Dialog copy - remove ids pointing to the original dialog [(#5856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5856)
+- user_input_filter - don't send Cancel on Apply [(#5875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5875)
+
 ## Ivanchuk-Beta2
 
 ### Added
@@ -16,14 +23,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix custom button group `Display on Button` option [(#5857)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5857)
 - Select the features tree items when 'everything' is allowed [(#5858)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5858)
 - Do not build the regex for embedded method when there's no fqname [(#5866)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5866)
-- Dialog copy - remove ids pointing to the original dialog [(#5856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5856)
 - Fixed container provider custom button dialog redirect. [(#5869)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5869)
 - Allow returning back to the previous controller, after clicking on Back button and to cancel policy sim properly [(#5839)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5839)
 - Fix resizer blocking paginator elements [(#5874)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5874)
 - Removed gettext changing value for Analysis Profiles [(#5859)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5859)
 - Fix Policy breadcrumbs when coming from GTL page [(#5814)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5814)
 - Generalized check for accordion in params when selecting (saved)reports [(#5837)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5837)
-- user_input_filter - don't send Cancel on Apply [(#5875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5875)
 - Added missing argument in function definition [(#5898)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5898)
 - Show value of Locked/Reset fields when value is false or not set. [(#5900)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5900)
 - Filter out Maintenance zone from the drop down [(#5899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5899)
@@ -117,7 +122,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Cluster textual summary: add translatable label [(#5114)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5114)
 
 ### Fixed
-- Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828)
 - Custom Button name is set by the factory [(#5810)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5810)
 - Reverted changes to git import form. [(#5792)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5792)
 - Set value of hash to be deleted from saved data. [(#5789)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5789)
