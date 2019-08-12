@@ -281,7 +281,7 @@ class TreeBuilder
   end
 
   # Handle custom tree nodes (object is a Hash)
-  def x_get_tree_custom_kids(_object, count_only, _options)
+  def x_get_tree_custom_kids(_object, count_only)
     count_only ? 0 : []
   end
 

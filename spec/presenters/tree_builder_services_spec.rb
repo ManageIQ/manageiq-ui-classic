@@ -27,12 +27,12 @@ describe TreeBuilderServices do
 
   describe '#x_get_tree_custom_kids' do
     it 'returns the root service node for active services' do
-      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'asrv'}, false, {})
+      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'asrv'}, false)
       expect(root_services).to match [root_srv]
     end
 
     it 'returns the retired child service node for retired services' do
-      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'rsrv'}, false, {})
+      root_services = subject.send(:x_get_tree_custom_kids, {:id => 'rsrv'}, false)
       expect(root_services).to match [reti_srv]
     end
   end

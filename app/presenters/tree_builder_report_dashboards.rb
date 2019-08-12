@@ -24,7 +24,7 @@ class TreeBuilderReportDashboards < TreeBuilder
     count_only_or_objects(count_only, objects)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     objects = []
     if object[:id].split('-').first == "g"
       objects = Rbac.filtered(MiqGroup.non_tenant_groups)

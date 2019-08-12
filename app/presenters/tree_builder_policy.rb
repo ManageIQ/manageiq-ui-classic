@@ -61,7 +61,7 @@ class TreeBuilderPolicy < TreeBuilder
   end
 
   # level 2 & 3...
-  def x_get_tree_custom_kids(parent, count_only, _options)
+  def x_get_tree_custom_kids(parent, count_only)
     # level 2 - host, vm, etc. under compliance/control
     if %w[compliance control].include?(parent[:id])
       mode = parent[:id]

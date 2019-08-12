@@ -25,7 +25,7 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   end
 
   # Handle custom tree nodes (object is a Hash)
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     # build node showing any button groups or buttons under selected CatalogItem
     @resolve ||= {}
     st = ServiceTemplate.find_by(:id => object[:id])

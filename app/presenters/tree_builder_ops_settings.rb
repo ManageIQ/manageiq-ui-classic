@@ -28,7 +28,7 @@ class TreeBuilderOpsSettings < TreeBuilderOps
   end
 
   # Handle custom tree nodes (object is a Hash)
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     case object[:id]
     when "msc"
       objects = MiqSchedule.where("(prod_default != 'system' or prod_default is null) AND adhoc is null")

@@ -33,7 +33,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
     buttons.sort_by { |button| button[:text] }
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     nodes = object[:id].split('_')
     objects = CustomButtonSet.find_all_by_class_name(nodes[1])
     # add as first element of array

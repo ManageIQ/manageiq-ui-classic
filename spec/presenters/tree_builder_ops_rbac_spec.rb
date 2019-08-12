@@ -56,7 +56,7 @@ describe TreeBuilderOpsRbac do
 
     def x_get_tree_custom_kids_for_and_expect_objects(type_of_model, expected_objects)
       tree_builder = TreeBuilderOpsRbac.new("rbac_tree", {})
-      objects = tree_builder.send(:x_get_tree_custom_kids, {:id => type_of_model}, false, {})
+      objects = tree_builder.send(:x_get_tree_custom_kids, {:id => type_of_model}, false)
       expect(objects).to match_array(expected_objects)
     end
 

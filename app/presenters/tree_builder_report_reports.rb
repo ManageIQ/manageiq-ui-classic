@@ -39,7 +39,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
     end
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     nodes = object[:full_id] ? object[:full_id].split('-') : object[:id].to_s.split('-')
     parent_id = nodes[-2].split('_').first.to_i
     node_id = nodes.last.to_i

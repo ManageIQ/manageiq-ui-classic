@@ -5,7 +5,7 @@ class TreeBuilderConfiguredSystems < TreeBuilder
     {:lazy => true, :allow_reselect => true}
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     count_only_or_objects(count_only, x_get_search_results(object))
   end
 

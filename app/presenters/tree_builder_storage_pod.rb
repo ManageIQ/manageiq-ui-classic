@@ -31,7 +31,7 @@ class TreeBuilderStoragePod < TreeBuilder
     end
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     objects = EmsFolder.find_by(:id => object[:id])&.storages
     count_only_or_objects(count_only, objects || [], "name")
   end

@@ -37,7 +37,7 @@ class TreeBuilderOpsRbac < TreeBuilder
     objects
   end
 
-  def x_get_tree_custom_kids(object_hash, count_only, _options)
+  def x_get_tree_custom_kids(object_hash, count_only)
     objects =
       case object_hash[:id]
       when "u"  then Rbac.filtered(User.in_my_region)

@@ -25,7 +25,7 @@ describe TreeBuilderReportDashboards do
     it "is listing only user's groups, logged is self service user" do
       allow_any_instance_of(MiqGroup).to receive_messages(:self_service? => true)
       tree_builder = TreeBuilderReportDashboards.new("rbac_tree", {})
-      objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "g"}, false, :type => :db)
+      objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "g"}, false)
       expect(objects).to match_array([group])
     end
   end

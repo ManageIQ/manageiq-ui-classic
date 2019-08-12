@@ -48,7 +48,7 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
     count_only_or_objects(count_only, nodes)
   end
 
-  def x_get_tree_custom_kids(object, count_only, _options)
+  def x_get_tree_custom_kids(object, count_only)
     classes = {
       "otcfn" => ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate,
       "othot" => ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate,

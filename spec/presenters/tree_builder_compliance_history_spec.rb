@@ -48,7 +48,7 @@ describe TreeBuilderComplianceHistory do
                         :icon       => "fa fa-ban",
                         :tip        => nil)
       expect(kid).to be_a_kind_of(Hash)
-      expect(@ch_tree.send(:x_get_tree_custom_kids, kid, true, {})).to eq(0)
+      expect(@ch_tree.send(:x_get_tree_custom_kids, kid, true)).to eq(0)
     end
     it 'returns Policy with multiple Conditions' do
       grandparents = @ch_tree.send(:x_get_tree_roots, false)

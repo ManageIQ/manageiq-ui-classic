@@ -41,7 +41,7 @@ describe TreeBuilderReportSavedReports do
           report_result = MiqReportResult.first
 
           tree = TreeBuilderReportSavedReports.new('savedreports_tree', {})
-          tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => @rpt.id.to_s}, false, {})
+          tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => @rpt.id.to_s}, false)
 
           expect(tree_report_results).to include(report_result)
         end
