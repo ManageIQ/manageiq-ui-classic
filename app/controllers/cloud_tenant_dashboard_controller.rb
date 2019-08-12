@@ -32,19 +32,19 @@ class CloudTenantDashboardController < ApplicationController
   private
 
   def collect_data
-    CloudTenantDashboardService.new(@tenant, self, EmsCloud).all_data
+    CloudTenantDashboardService.new(@tenant, self, CloudTenant).all_data
   end
 
   def recent_instances
-    CloudTenantDashboardService.new(@tenant, self, EmsCloud).recent_instances_data
+    CloudTenantDashboardService.new(@tenant, self, CloudTenant).recent_instances_data
   end
 
   def recent_images
-    CloudTenantDashboardService.new(@tenant, self, EmsCloud).recent_images_data
+    CloudTenantDashboardService.new(@tenant, self, CloudTenant).recent_images_data
   end
 
   def aggregate_status
-    CloudTenantDashboardService.new(@tenant, self, EmsCloud).aggregate_status_data
+    CloudTenantDashboardService.new(@tenant, self, CloudTenant).aggregate_status_data
   end
 
   def get_session_data
