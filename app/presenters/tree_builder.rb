@@ -105,16 +105,12 @@ class TreeBuilder
     stack = nodes.dup
     while stack.any?
       node = stack.pop
-      stack += node[:children] if node.key?(:children)
       stack += node[:nodes] if node.key?(:nodes)
-      node[:text] = node.delete(:title) if node.key?(:title)
-      node[:nodes] = node.delete(:children) if node.key?(:children)
       node[:lazyLoad] = node.delete(:isLazy) if node.key?(:isLazy)
       node[:state] = {}
       node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
       node[:state][:checked] = node.delete(:select) if node.key?(:select)
       node[:state][:selected] = node.delete(:highlighted) if node.key?(:highlighted)
-      node[:selectable] = !node.delete(:cfmeNoClick) if node.key?(:cfmeNoClick)
       node[:class] = ''
       node[:class] = node.delete(:addClass) if node.key?(:addClass) && !node[:addClass].nil?
       node[:class] = node[:class].split(' ').push('no-cursor').join(' ') if node[:selectable] == false
