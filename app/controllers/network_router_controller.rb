@@ -401,8 +401,8 @@ class NetworkRouterController < ApplicationController
     end
 
     options[:cloud_network_id].gsub!(/number:/, '') if options[:cloud_network_id]
-    if params[:cloud_tenant_id]
-      options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id])
+    if params.fetch_path(:cloud_tenant, :id)
+      options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params.fetch_path(:cloud_tenant, :id))
     end
     options
   end

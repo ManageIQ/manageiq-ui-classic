@@ -125,7 +125,8 @@ describe NetworkRouterController do
             :name            => 'test',
             :admin_state_up  => 'true',
             :ems_id          => @ems.id.to_s,
-            :cloud_subnet_id => ''
+            :cloud_subnet_id => '',
+            :cloud_tenant    => cloud_tenant
           }]
         }
       end
