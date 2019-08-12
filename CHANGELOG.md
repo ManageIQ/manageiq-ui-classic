@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-9
+## Hammer-10
+
+### Fixed
+- Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828) 
+- Dialog copy - remove ids pointing to the original dialog [(#5856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5856)
+- user_input_filter - don't send Cancel on Apply [(#5875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5875)
+
+## Hammer-9 - Released 2019-07-23
 
 ### Removed
 - Revert faster services PR 5366 [(#5768)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5768)
