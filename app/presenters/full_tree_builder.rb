@@ -31,7 +31,7 @@ class FullTreeBuilder < TreeBuilder
   # @return [Hash] the UI data as a nested Hash structure
   def convert_to_ui_tree(rel_tree, parent_ui_tree_id = nil)
     ui_tree = rel_tree.collect do |object, nodes|
-      ui_node = x_build_single_node(object, parent_ui_tree_id, options)
+      ui_node = x_build_single_node(object, parent_ui_tree_id)
 
       if nodes.present?
         ui_node[:nodes] = convert_to_ui_tree(nodes, ui_node[:key])

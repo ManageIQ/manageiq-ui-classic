@@ -237,7 +237,7 @@ class TreeBuilder
     parents = pid.to_s.split('_')
 
     object, ancestry_kids = object_from_ancestry(object)
-    node = x_build_single_node(object, pid, options)
+    node = x_build_single_node(object, pid)
 
     # Process the node's children
     load_children = if object.kind_of?(Struct)
@@ -268,7 +268,7 @@ class TreeBuilder
     node
   end
 
-  def x_build_single_node(object, pid, _options)
+  def x_build_single_node(object, pid)
     # FIXME: to_h is for backwards compatibility with hash-trees, it needs to be removed in the future
     node = TreeNode.new(object, pid, self).to_h
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
