@@ -15,11 +15,10 @@ class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSyste
 
   def configured_systems
     {
-      :id            => "csa",
-      :text          => t = _("Ansible Tower Configured Systems"),
-      :icon          => "pficon pficon-folder-close",
-      :tip           => t,
-      :load_children => true
+      :id   => "csa",
+      :text => t = _("Ansible Tower Configured Systems"),
+      :icon => "pficon pficon-folder-close",
+      :tip  => t
     }
   end
 end
