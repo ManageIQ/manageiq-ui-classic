@@ -493,7 +493,7 @@ module ApplicationController::MiqRequestMethods
         end
         @sb[:vm_os] = VmOrTemplate.find(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
-        build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
+        build_tags_for_provisioning(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
       if @edit[:new][:current_tab_key] == :environment
@@ -506,7 +506,7 @@ module ApplicationController::MiqRequestMethods
         build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
       elsif @edit[:new][:current_tab_key] == :purpose
-        build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
+        build_tags_for_provisioning(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       elsif @edit[:new][:current_tab_key] == :environment
         build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
       elsif @edit[:new][:current_tab_key] == :customize
@@ -518,7 +518,7 @@ module ApplicationController::MiqRequestMethods
   def build_dialog_page_miq_provision_configured_system_workflow
     case @edit[:new][:current_tab_key]
     when :purpose
-      build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
+      build_tags_for_provisioning(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
     when :service
       build_configured_system_grid(@edit[:wf].get_field(:src_configured_system_ids, :service)[:values], @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
     end
@@ -988,7 +988,7 @@ module ApplicationController::MiqRequestMethods
     nil
   end
 
-  def build_tags_tree(wf, vm_tags, edit_mode)
+  def build_tags_for_provisioning(wf, vm_tags, edit_mode)
     # for some reason @tags is set in wf, and it is changed by map bellow which causes bugs
     wf.instance_variable_set(:@tags, nil)
     tags = wf.allowed_tags.map do |cat|
