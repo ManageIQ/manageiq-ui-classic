@@ -14,6 +14,15 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudsCenter < ApplicationHelper::T
           :klass => ApplicationHelper::Button::AuthKeyPairCloudCreate),
         separator,
         button(
+          :auth_key_pair_ownership,
+          'pficon pficon-user fa-lg',
+          N_('Set Ownership for the selected items'),
+          N_('Set Ownership'),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
+        button(
           :auth_key_pair_cloud_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected Key Pairs from Inventory'),

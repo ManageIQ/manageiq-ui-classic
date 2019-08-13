@@ -28,4 +28,19 @@ module AuthKeyPairCloudHelper::TextualSummary
     end
     h
   end
+
+  def textual_group_lifecycle
+    TextualGroup.new(
+      _("Lifecycle"),
+      %i[owner group]
+    )
+  end
+
+  def textual_owner
+    @record.evm_owner.try(:name)
+  end
+
+  def textual_group
+    {:label => _("Group"), :value => @record.miq_group.try(:description)}
+  end
 end

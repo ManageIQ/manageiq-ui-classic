@@ -72,6 +72,8 @@ module Mixins
             VmOrTemplate
           when "miq_template"
             MiqTemplate
+          when "auth_key_pair_cloud"
+            ManageIQ::Providers::CloudManager::AuthKeyPair
           end
         end
 
