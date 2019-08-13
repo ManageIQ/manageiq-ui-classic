@@ -45,7 +45,7 @@ class TreeBuilder
     open_node(id)
 
     x_get_tree_objects(object, false, parents).map do |o|
-      x_build_node_tree(o, id, @tree_state.x_tree(@name))
+      x_build_node_tree(o, id)
     end
   end
 
@@ -191,13 +191,13 @@ class TreeBuilder
   # :open_nodes             # Tree node ids of currently open nodes
   # :full_ids               # stack parent id on top of each node id
   # :lazy                   # set if tree is lazy
-  def x_build_tree(options)
+  def x_build_tree(_options)
     nodes = x_get_tree_objects(nil, false, []).map do |child|
       # already a node? FIXME: make a class for node
       if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
         child
       else
-        x_build_node_tree(child, nil, options)
+        x_build_node_tree(child, nil)
       end
     end
     return nodes unless respond_to?(:root_options, true)
@@ -274,8 +274,8 @@ class TreeBuilder
     node
   end
 
-  # Called with object, tree node parent id, tree options
-  def x_build_node_tree(object, pid, _options)
+  # Called with object, tree node parent id
+  def x_build_node_tree(object, pid)
     x_build_node(object, pid)
   end
 
