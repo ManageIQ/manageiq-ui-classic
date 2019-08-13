@@ -131,8 +131,7 @@ class TreeBuilder
   private
 
   def build_tree
-    # FIXME: we have the options -- no need to reload from @sb
-    @tree_nodes = x_build_tree(@tree_state.x_tree(@name))
+    @tree_nodes = x_build_tree
     active_node_set(@tree_nodes)
     add_root_node(@tree_nodes) if respond_to?(:root_options, true)
     # Convert the nodes to the Bootstrap Treeview format
@@ -187,11 +186,7 @@ class TreeBuilder
   end
 
   # Build an explorer tree, from scratch
-  # Options:
-  # :open_nodes             # Tree node ids of currently open nodes
-  # :full_ids               # stack parent id on top of each node id
-  # :lazy                   # set if tree is lazy
-  def x_build_tree(_options)
+  def x_build_tree
     nodes = x_get_tree_objects(nil, false, []).map do |child|
       # already a node? FIXME: make a class for node
       if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
