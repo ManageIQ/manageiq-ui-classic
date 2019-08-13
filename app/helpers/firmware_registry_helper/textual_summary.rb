@@ -2,7 +2,7 @@ module FirmwareRegistryHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[name last_refresh_on last_refresh_error created updated])
+    TextualGroup.new(_("Properties"), %i[name url last_refresh_on last_refresh_error created updated])
   end
 
   def textual_group_relationships
@@ -35,5 +35,9 @@ module FirmwareRegistryHelper::TextualSummary
 
   def firmware_binaries
     @record.firmware_binaries.order('name, version DESC').collect { |b| [textual_link(b), b.version, b.description[0..30]] }
+  end
+
+  def textual_url
+    @record&.endpoint&.url
   end
 end
