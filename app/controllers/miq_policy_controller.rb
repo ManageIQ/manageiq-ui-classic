@@ -413,7 +413,6 @@ class MiqPolicyController < ApplicationController
     end
     @show_adv_search = (@nodetype == "xx"   && !@folders) ||
                        (@nodetype == "root" && !%i[alert_profile_tree condition_tree policy_tree].include?(x_active_tree))
-    x_history_add_item(:id => treenodeid, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
 

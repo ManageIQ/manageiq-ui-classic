@@ -196,14 +196,6 @@ class InfraNetworkingController < ApplicationController
               end
 
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
-
-    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
-      x_history_add_item(:id     => x_node,
-                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
-                         :text   => @right_cell_text)
-    else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
-    end
     options
   end
 

@@ -232,14 +232,6 @@ module ApplicationController::Explorer
     end
   end
 
-  # Add an item to the tree history array
-  def x_history_add_item(options)
-    x_tree_history.delete_if do |item|
-      !%i[id action button display item].find { |key| item[key] != options[key] }
-    end
-    x_tree_history.unshift(options).slice!(11..-1)
-  end
-
   # Set form vars for tag editor
   def x_tags_set_form_vars
     @edit = {}

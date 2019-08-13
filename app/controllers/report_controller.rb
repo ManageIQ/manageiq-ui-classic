@@ -530,7 +530,6 @@ class ReportController < ApplicationController
     when "msc"  then determine_msc_node_info(nodeid)
     end
 
-    x_history_add_item(:id => treenodeid, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
 

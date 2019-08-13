@@ -255,7 +255,6 @@ class MiqAeCustomizationController < ApplicationController
 
     node_info = get_specific_node_info(node)
 
-    x_history_add_item(:id => node, :text => @right_cell_text)
     node_info
   end
 

@@ -180,7 +180,6 @@ class MiqAeClassController < ApplicationController
       @sb[:active_tab] = "namespaces"
       set_right_cell_text(x_node)
     end
-    x_history_add_item(:id => x_node, :text => @right_cell_text)
   end
 
   def domain_version_message(domain)
@@ -2650,7 +2649,6 @@ class MiqAeClassController < ApplicationController
       }
     ])
 
-    # needed?
     presenter.show(:toolbar)
 
     render :json => presenter.for_render
