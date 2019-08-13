@@ -16,11 +16,8 @@
       .form-group
         - if @edit[@expkey].history.idx > 0
           - t = _('Undo the last change')
-          %button.btn.btn-default{"data-miq_sparkle_on" => true,
-          "data-method" => :post,
-          :onclick      => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'undo')}');",
-          :remote       => true,
-          :title        => t}
+          %button.btn.btn-default{:onclick      => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'undo')}');",
+                                  :title        => t}
             %i.fa.fa-reply
         - else
           %button.btn.btn-default.disabled
@@ -28,11 +25,8 @@
 
         - if @edit[@expkey].history.idx < @edit[@expkey].history.array.length - 1
           - t = _('Re-apply the previous change')
-          %button.btn.btn-default{"data-miq_sparkle_on" => true,
-          :onclick      => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'redo')}');",
-          :remote       => true,
-          "data-method" => :post,
-          :title        => t}
+          %button.btn.btn-default{:onclick      => "miqAjax('#{url_for_only_path(:action => 'exp_button', :pressed => 'redo')}');",
+                                  :title        => t}
             %i.fa.fa-mail-forward
         - else
           %button.btn.btn-default.disabled
