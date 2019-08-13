@@ -152,6 +152,27 @@ describe Mixins::BreadcrumbsMixin do
           )
         end
       end
+
+      context "not_tree set" do
+        let(:breadcrumbs_options) do
+          {
+            :breadcrumbs => [
+              {:title => _("First Layer")},
+              {:title => _("Second Layer")},
+            ],
+            :not_tree    => true
+          }
+        end
+
+        it "creates breadcrumbs with no tree section" do
+          expect(subject.data_for_breadcrumbs).to eq(
+            [
+              {:title => "First Layer"},
+              {:title => "Second Layer"},
+            ]
+          )
+        end
+      end
     end
   end
 

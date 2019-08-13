@@ -365,4 +365,32 @@ describe MiqPolicyController do
       expect(policy.conditions).to eq([])
     end
   end
+
+  describe "breadcrumbs" do
+    before { EvmSpecHelper.local_miq_server }
+
+    it "shows 'explorer' on explorer screen" do
+      get :explorer
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Explorer")
+    end
+
+    it "shows 'simulation' on rsop screen" do
+      get :rsop
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Simulation")
+    end
+
+    it "shows 'import / export' on export screen" do
+      get :export
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Import / Export")
+    end
+
+    it "shows 'log' on log screen" do
+      get :log
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[1]).to eq("Log")
+    end
+  end
 end
