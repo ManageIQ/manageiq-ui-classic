@@ -26,6 +26,27 @@ module OpsController::Settings::Schedules
     end
   end
 
+  def schedule_run_now
+    schedules = find_records_with_rbac(MiqSchedule, checked_or_params)
+    schedules.each do |schedule|
+      MiqSchedule.queue_scheduled_work(schedule.id, nil, Time.now.utc.to_i, nil)
+      audit = {
+        :event        => "queue_scheduled_work",
+        :message      => "Schedule [#{schedule.name}] queued to run from the UI by user #{current_user.name}",
+        :target_id    => schedule.id,
+        :target_class => "MiqSchedule",
+        :userid       => current_user.userid
+      }
+      AuditEvent.success(audit)
+    end
+    unless flash_errors?
+      msg = n_("The selected Schedule has been queued to run", "The selected Schedules have been queued to run", schedules.length)
+      add_flash(msg, :success, true)
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => x_node)
+  end
+
   def schedule_add
     assert_privileges("schedule_add")
     @_params[:typ] = "new"

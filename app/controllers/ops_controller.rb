@@ -80,6 +80,7 @@ class OpsController < ApplicationController
     'schedule_delete'           => :schedule_delete,
     'schedule_enable'           => :schedule_enable,
     'schedule_disable'          => :schedule_disable,
+    'schedule_run_now'          => :schedule_run_now
   }.freeze
 
   def collect_current_logs
