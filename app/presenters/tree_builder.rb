@@ -231,9 +231,8 @@ class TreeBuilder
 
   # @param object the current node object (or an ancestry tree hash)
   # @param pid [String|Nil] parent id root nodes are nil
-  # @param options [Hash] tree options
   # @returns [Hash] display hash for this node and all children
-  def x_build_node(object, pid, options)
+  def x_build_node(object, pid)
     parents = pid.to_s.split('_')
 
     object, ancestry_kids = object_from_ancestry(object)
@@ -257,7 +256,7 @@ class TreeBuilder
     if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
-        x_build_node(o, node[:key], options)
+        x_build_node(o, node[:key])
       end
       node[:nodes] = kids unless kids.empty?
     else
@@ -276,8 +275,8 @@ class TreeBuilder
   end
 
   # Called with object, tree node parent id, tree options
-  def x_build_node_tree(object, pid, options)
-    x_build_node(object, pid, options)
+  def x_build_node_tree(object, pid, _options)
+    x_build_node(object, pid)
   end
 
   # Handle custom tree nodes (object is a Hash)
