@@ -1,17 +1,9 @@
 class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
-  def blue?(object)
-    return false if object.parent.blank?
-    object.parent.name == 'vm' &&
-      object.parent.parent.present? &&
-      object.parent.parent.kind_of?(Datacenter) ||
-      blue?(object.parent)
-  end
-
   def override(node, object)
     node[:selectable] = false
     node[:checkable] = @edit.present? || @assign_to.present?
 
-    if object.kind_of?(EmsFolder) && blue?(object)
+    if object.kind_of?(EmsFolder) && object.vm_folder?
       node[:icon] = "pficon pficon-folder-close-blue"
     else
       node[:hideCheckbox] = true
