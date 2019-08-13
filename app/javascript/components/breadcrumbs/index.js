@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Breadcrumb } from 'patternfly-react';
 import { unescape } from 'lodash';
 
+import { onClickTree, onClick } from './on-click-functions';
+
 const parsedText = text => unescape(text).replace(/<[/]{0,1}strong>/g, '');
 
 class Breadcrumbs extends Component {
@@ -10,14 +12,14 @@ class Breadcrumbs extends Component {
     const {
       items, controllerName,
     } = this.props;
-    return items.filter((item, index) => index !== (items.length - 1)).map((item, index) => {
+    return items.filter((_item, index) => index !== (items.length - 1)).map((item, index) => {
       const text = parsedText(item.title);
       if ((item.url || item.key) && !item.action) {
         if (item.key) {
           return (
             <Breadcrumb.Item
               key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
-              onClick={() => sendDataWithRx({ breadcrumbSelect: { path: `/${controllerName}/tree_select`, key: item.key } })}
+              onClick={() => onClickTree(controllerName, item)}
             >
               {text}
             </Breadcrumb.Item>
@@ -27,6 +29,7 @@ class Breadcrumbs extends Component {
           <Breadcrumb.Item
             key={item.url || index}
             href={item.url}
+            onClick={e => onClick(e, item.url)}
           >
             {text}
           </Breadcrumb.Item>
@@ -38,7 +41,7 @@ class Breadcrumbs extends Component {
 
   render() {
     const {
-      items, title, controllerName, ...rest
+      items, title, controllerName, ...rest // eslint-disable-line no-unused-vars
     } = this.props;
 
     return (
