@@ -45,7 +45,7 @@ class TreeBuilder
     open_node(id)
 
     x_get_tree_objects(object, false, parents).map do |o|
-      x_build_node_tree(o, id, @tree_state.x_tree(@name))
+      x_build_node_tree(o, id)
     end
   end
 
@@ -131,8 +131,7 @@ class TreeBuilder
   private
 
   def build_tree
-    # FIXME: we have the options -- no need to reload from @sb
-    @tree_nodes = x_build_tree(@tree_state.x_tree(@name))
+    @tree_nodes = x_build_tree
     active_node_set(@tree_nodes)
     add_root_node(@tree_nodes) if respond_to?(:root_options, true)
     # Convert the nodes to the Bootstrap Treeview format
@@ -187,17 +186,13 @@ class TreeBuilder
   end
 
   # Build an explorer tree, from scratch
-  # Options:
-  # :open_nodes             # Tree node ids of currently open nodes
-  # :full_ids               # stack parent id on top of each node id
-  # :lazy                   # set if tree is lazy
-  def x_build_tree(options)
+  def x_build_tree
     nodes = x_get_tree_objects(nil, false, []).map do |child|
       # already a node? FIXME: make a class for node
       if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
         child
       else
-        x_build_node_tree(child, nil, options)
+        x_build_node_tree(child, nil)
       end
     end
     return nodes unless respond_to?(:root_options, true)
@@ -231,9 +226,8 @@ class TreeBuilder
 
   # @param object the current node object (or an ancestry tree hash)
   # @param pid [String|Nil] parent id root nodes are nil
-  # @param options [Hash] tree options
   # @returns [Hash] display hash for this node and all children
-  def x_build_node(object, pid, options)
+  def x_build_node(object, pid)
     parents = pid.to_s.split('_')
 
     object, ancestry_kids = object_from_ancestry(object)
@@ -257,7 +251,7 @@ class TreeBuilder
     if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
-        x_build_node(o, node[:key], options)
+        x_build_node(o, node[:key])
       end
       node[:nodes] = kids unless kids.empty?
     else
@@ -275,9 +269,9 @@ class TreeBuilder
     node
   end
 
-  # Called with object, tree node parent id, tree options
-  def x_build_node_tree(object, pid, options)
-    x_build_node(object, pid, options)
+  # Called with object, tree node parent id
+  def x_build_node_tree(object, pid)
+    x_build_node(object, pid)
   end
 
   # Handle custom tree nodes (object is a Hash)
