@@ -425,12 +425,11 @@ class StorageController < ApplicationController
 
   def rebuild_toolbars(record_showing, presenter)
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
-    h_tb = build_toolbar('x_history_tb')
     v_tb = build_toolbar('x_gtl_view_tb') unless record_showing || (x_active_tree == :storage_pod_tree && x_node == 'root') || @in_a_form
     cb_tb = build_toolbar(custom_toolbar_explorer)
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
-    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb, :custom => cb_tb)
+    presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
     presenter[:record_id] = @record.try(:id)
 
     # Hide/show searchbox depending on if a list is showing

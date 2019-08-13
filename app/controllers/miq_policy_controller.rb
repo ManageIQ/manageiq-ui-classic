@@ -458,7 +458,6 @@ class MiqPolicyController < ApplicationController
     end
 
     c_tb = build_toolbar(center_toolbar_filename)
-    h_tb = build_toolbar('x_history_tb')
 
     # Build a presenter to render the JS
     presenter ||= ExplorerPresenter.new(
@@ -634,7 +633,7 @@ class MiqPolicyController < ApplicationController
     end
     presenter[:right_cell_text] = @right_cell_text = right_cell_text
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb)
+    presenter.reload_toolbars(:center => c_tb)
 
     if ((@edit && @edit[:new]) || @assign) && params[:action] != "x_search_by_name"
       locals = {

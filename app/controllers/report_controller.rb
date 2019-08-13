@@ -665,7 +665,6 @@ class ReportController < ApplicationController
     partial = options[:partial] ? options[:partial] : set_partial_name
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename)
-      h_tb = build_toolbar("x_history_tb") unless x_active_tree == :export_tree
       v_tb = build_toolbar("report_view_tb") if @report && %i[reports_tree savedreports_tree].include?(x_active_tree)
     end
 
@@ -862,7 +861,7 @@ class ReportController < ApplicationController
     end
     presenter.set_visibility(!@in_a_form, :toolbar)
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb)
 
     presenter[:record_id] = (locals && locals[:record_id]) || determine_record_id_for_presenter
 

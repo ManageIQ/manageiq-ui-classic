@@ -424,7 +424,6 @@ class ServiceController < ApplicationController
       end
       c_tb = build_toolbar(center_toolbar_filename)
     end
-    h_tb = build_toolbar("x_history_tb") unless @in_a_form
 
     presenter = ExplorerPresenter.new(
       :active_tree     => x_active_tree,
@@ -473,9 +472,9 @@ class ServiceController < ApplicationController
     # Clear the JS gtl_list_grid var if changing to a type other than list
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb, :custom => cb_tb)
 
-    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.blank?, :toolbar)
+    presenter.set_visibility(c_tb.present? || v_tb.blank?, :toolbar)
 
     presenter[:record_id] = determine_record_id_for_presenter
 

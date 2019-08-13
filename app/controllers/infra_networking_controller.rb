@@ -511,13 +511,11 @@ class InfraNetworkingController < ApplicationController
              end
     end
 
-    h_tb = build_toolbar("x_history_tb") unless @in_a_form
-
     cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(@nodetype == 'sw' ? :single : :list))
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb, :custom => cb_tb)
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb, :custom => cb_tb)
 
-    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
+    presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
 
     presenter[:record_id] = @record.try(:id)
 

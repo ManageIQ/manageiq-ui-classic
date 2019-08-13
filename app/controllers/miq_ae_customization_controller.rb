@@ -311,11 +311,10 @@ class MiqAeCustomizationController < ApplicationController
   def rebuild_toolbars(presenter)
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename) if center_toolbar_filename
-      h_tb = build_toolbar("x_history_tb") if x_active_tree != :dialogs_tree
     end
 
-    presenter.set_visibility(h_tb.present? || c_tb.present?, :toolbar)
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb)
+    presenter.set_visibility(c_tb.present?, :toolbar)
+    presenter.reload_toolbars(:center => c_tb)
   end
 
   def render_proc
