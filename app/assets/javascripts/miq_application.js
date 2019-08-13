@@ -21,9 +21,9 @@ function miqOnLoad() {
   miqBuildCalendar();
 
   // Init the toolbars
-  if (typeof miqInitToolbars === 'function') {
-    miqInitToolbars();
-  }
+  // if (typeof miqInitToolbars === 'function') {
+  //   miqInitToolbars();
+  // }
 
   // Initialize the dashboard widget pulldown
   if (miqDomElementExists('widget_select_div')) {
@@ -1318,155 +1318,17 @@ function miqAccordionSwap(_collapse, expand) {
 
 // This function is called in miqOnLoad
 function miqInitToolbars() {
-  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
-  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
-  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
-  ).off('click');
-  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
-  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
-  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
-  ).click(function() {
-    miqToolbarOnClick.bind(this)();
-    return false;
-  });
-}
-
-// Function to run transactions when toolbar button is clicked
-function miqToolbarOnClick(_e) {
-  var tb_url;
-  var button = $(this);
-  var popup = false;
-
-  // If it's a dropdown, collapse the parent container
-  var parent = button.parents('div.btn-group.dropdown.open');
-  parent.removeClass('open');
-  parent.children('button.dropdown-toggle').attr('aria-expanded', 'false');
-
-  if (button.hasClass('disabled') || button.parent().hasClass('disabled')) {
-    return;
-  }
-
-  if (button.parents('#dashboard_dropdown').length > 0) {
-    return;
-  }
-
-  if (button.data('confirm-tb') && !button.data('popup')) {
-    if (!confirm(button.data('confirm-tb'))) {
-      return;
-    }
-  }
-
-  if (button.data('popup')) {
-    if (!button.data('confirm-tb') || confirm(button.data('confirm-tb'))) {
-      // popup windows are only supported for urls starting with '/' (non-ajax)
-      popup = true;
-    }
-  }
-
-  if (button.data('url')) {
-    // See if a url is defined
-    if (button.data('url').indexOf('/') === 0) {
-      // If url starts with / it is non-ajax
-      tb_url = '/' + ManageIQ.controller + button.data('url');
-      if (ManageIQ.record.recordId !== null) {
-        // remove last '/' if exist
-        tb_url = tb_url.replace(/\/$/, '');
-        tb_url += '/' + ManageIQ.record.recordId;
-      }
-      if (button.data('url_parms')) {
-        tb_url += button.data('url_parms');
-      }
-      if (popup) {
-        window.open(tb_url);
-      } else {
-        DoNav(encodeURI(tb_url));
-      }
-      return;
-    }
-
-    // An ajax url was defined
-    tb_url = '/' + ManageIQ.controller + '/' + button.data('url');
-    if (button.data('url').indexOf('x_history') !== 0) {
-      // If not an explorer history button
-      if (ManageIQ.record.recordId !== null) {
-        tb_url += '/' + ManageIQ.record.recordId;
-      }
-    }
-  } else if (button.data('function')) {
-    // support data-function and data-function-data
-    var fn = new Function('return ' + button.data('function')); // eval - returns a function returning the right function
-    fn().call(button, button.data('functionData'));
-    return false;
-  } else {
-    // No url specified, run standard button ajax transaction
-    if (typeof button.data('explorer') !== 'undefined' && button.data('explorer')) {
-      // Use x_button method for explorer ajax
-      tb_url = '/' + ManageIQ.controller + '/x_button';
-    } else {
-      tb_url = '/' + ManageIQ.controller + '/button';
-    }
-    if (ManageIQ.record.recordId !== null) {
-      tb_url += '/' + ManageIQ.record.recordId;
-    }
-    tb_url += '?pressed=';
-    if (typeof button.data('pressed') === 'undefined' && button.data('click')) {
-      tb_url += button.data('click').split('__').pop();
-    } else {
-      tb_url += button.data('pressed');
-    }
-  }
-
-  if (button.data('prompt')) {
-    tb_url = miqSupportCasePrompt(tb_url);
-    if (!tb_url) {
-      return false;
-    }
-  }
-
-  // put url_parms into params var, if defined
-  var paramstring = getParams(button.data('url_parms'), !!button.data('send_checked'));
-
-  // TODO:
-  // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
-  // Checking for Report download button to allow controller method to turn off spinner
-  // Need to design this feature into the toolbar button support at a later time.
-  var no_complete = _.includes([
-    'perf_reload',
-    'vm_perf_reload',
-    'download_choice__render_report_csv',
-    'download_choice__render_report_pdf',
-    'download_choice__render_report_txt',
-    'custom_button_vmdb_choice__ab_button_simulate',
-    'catalogitem_button_vmdb_choice__ab_button_simulate',
-  ], button.attr('name')) || button.attr('name').match(/_console$/);
-
-  var options = {
-    beforeSend: true,
-    complete: !no_complete,
-    data: paramstring,
-  };
-
-  return miqJqueryRequest(tb_url, options);
-
-  function getParams(urlParms, sendChecked) {
-    var params = [];
-
-    if (urlParms && (urlParms[0] === '?')) {
-      params.push( urlParms.slice(1) );
-    }
-
-    // FIXME - don't depend on length
-    // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
-    if (sendChecked && ManageIQ.gridChecks.length) {
-      params.push('miq_grid_checks=' + ManageIQ.gridChecks.join(','));
-    }
-
-    if (urlParms && urlParms.match('_div$')) {
-      params.push(miqSerializeForm(urlParms));
-    }
-
-    return _.filter(params).join('&') || undefined;
-  }
+  //  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
+  //  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
+  //  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
+  //  ).off('click');
+  //  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
+  //  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
+  //  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
+  //  ).click(function() {
+  //    miqToolbarOnClick.bind(this)();
+  //    return false;
+  //  });
 }
 
 function miqSupportCasePrompt(tb_url) {

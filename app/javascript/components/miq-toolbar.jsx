@@ -1,0 +1,476 @@
+import React, { useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
+
+import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import  '@manageiq/react-ui-components/dist/toolbar.css';
+
+// Function to run transactions when toolbar button is clicked
+const onClick = button => {
+
+  console.log('onClick', button);
+
+  // ToolbarController.prototype.onViewClick = function(item, $event) {
+  if (button.url.indexOf('/') === 0) {
+    var delimiter = (button.url === '/') ? '' : '/';
+    var tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
+  
+    location.replace('/' + ManageIQ.controller + button.url + tail + button.url_parms);
+
+    return;
+  }
+ 
+  var tb_url;
+  //var button = $(this);
+  var popup = false;
+
+  // // If it's a dropdown, collapse the parent container
+  // var parent = button.parents('div.btn-group.dropdown.open');
+  // parent.removeClass('open');
+  // parent.children('button.dropdown-toggle').attr('aria-expanded', 'false');
+
+  // if (button.hasClass('disabled') || button.parent().hasClass('disabled')) {
+  //   return;
+  // }
+
+  // // FIXME: watafa?
+  // https://github.com/ManageIQ/manageiq-ui-classic/commit/a9215473980f50fed1159ef94c14cd0ec5685624
+  // if (button.parents('#dashboard_dropdown').length > 0) {
+  //   return;
+  // }
+
+  if (button.confirm && !button.popup) {
+    if (!confirm(button.confirm)) {
+      return;
+    }
+  }
+
+  if (button.popup) {
+    if (!button.confirm || confirm(button.confirm)) {
+      // popup windows are only supported for urls starting with '/' (non-ajax)
+      popup = true;
+    }
+  }
+
+  if (button.url) {
+    // See if a url is defined
+    if (button.url.indexOf('/') === 0) {
+      // If url starts with / it is non-ajax
+      tb_url = '/' + ManageIQ.controller + button.url;
+      if (ManageIQ.record.recordId !== null) {
+        // remove last '/' if exist
+        tb_url = tb_url.replace(/\/$/, '');
+        tb_url += '/' + ManageIQ.record.recordId;
+      }
+      if (button.url_parms) {
+        tb_url += button.url_parms;
+      }
+      if (popup) {
+        window.open(tb_url);
+      } else {
+        DoNav(encodeURI(tb_url));
+      }
+      return;
+    }
+
+    // An ajax url was defined
+    tb_url = '/' + ManageIQ.controller + '/' + button.url;
+    if (button.url.indexOf('x_history') !== 0) {
+      // If not an explorer history button
+      if (ManageIQ.record.recordId !== null) {
+        tb_url += '/' + ManageIQ.record.recordId;
+      }
+    }
+  } else if (button.function) {
+    // support 'function' and 'function-data'
+    var fn = new Function('return ' + button.function); // eval - returns a function returning the right function
+    fn().call(button, button['function-data']);
+    return false;
+  } else {
+    // No url specified, run standard button ajax transaction
+    if (typeof button.explorer !== 'undefined' && button.explorer) {
+      // Use x_button method for explorer ajax
+      tb_url = '/' + ManageIQ.controller + '/x_button';
+    } else {
+      tb_url = '/' + ManageIQ.controller + '/button';
+    }
+    if (ManageIQ.record.recordId !== null) {
+      tb_url += '/' + ManageIQ.record.recordId;
+    }
+    tb_url += '?pressed=';
+    if (typeof button.pressed === 'undefined' && button.id) {
+      tb_url += button.id.split('__').pop();
+    } else {
+      tb_url += button.pressed;
+    }
+  }
+
+  if (button.prompt) {
+    tb_url = miqSupportCasePrompt(tb_url);
+    if (!tb_url) {
+      return false;
+    }
+  }
+
+  // put url_parms into params var, if defined
+  var paramstring = getParams(button.url_parms, !!button.send_checked);
+
+  // TODO:
+  // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
+  // Checking for Report download button to allow controller method to turn off spinner
+  // Need to design this feature into the toolbar button support at a later time.
+  var no_complete = _.includes([
+    'perf_reload',
+    'vm_perf_reload',
+    'download_choice__render_report_csv',
+    'download_choice__render_report_pdf',
+    'download_choice__render_report_txt',
+    'custom_button_vmdb_choice__ab_button_simulate',
+    'catalogitem_button_vmdb_choice__ab_button_simulate',
+  ], button.attr('name')) || button.attr('name').match(/_console$/);
+
+  var options = {
+    beforeSend: true,
+    complete: !no_complete,
+    data: paramstring,
+  };
+
+  return miqJqueryRequest(tb_url, options);
+
+  function getParams(urlParms, sendChecked) {
+    var params = [];
+
+    if (urlParms && (urlParms[0] === '?')) {
+      params.push( urlParms.slice(1) );
+    }
+
+    // FIXME - don't depend on length
+    // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
+    if (sendChecked && ManageIQ.gridChecks.length) {
+      params.push('miq_grid_checks=' + ManageIQ.gridChecks.join(','));
+    }
+
+    if (urlParms && urlParms.match('_div$')) {
+      params.push(miqSerializeForm(urlParms));
+    }
+
+    return _.filter(params).join('&') || undefined;
+  }
+}
+
+// const isButton = item => item.type === 'button';
+// const isButtonTwoState = item => item.type === 'buttonTwoState' && item.id.indexOf('view') === -1;
+// 
+//   /**
+//    * Public method for changing view over data.
+//    * @param {Object} item clicked view object
+//    * @param {Object} $event angular synthetic mouse event
+//    * @returns {undefined}
+//    */
+ 
+// /**
+// * Private method for subscribing to rxSubject.
+// * For success functuon @see ToolbarController#onRowSelect()
+// * @returns {undefined}
+// */
+// const subscribeToSubject = () => {
+//   listenToRx(
+//     event => {
+//       if (event.eventType === 'updateToolbarCount') {
+//         // TODO
+//         // this.MiQToolbarSettingsService.setCount(event.countSelected);
+//       } else if (event.rowSelect) {
+//         onRowSelect(event.rowSelect);
+//       } else if (event.redrawToolbar) {
+//         // TODO
+//         // this.onUpdateToolbar(event.redrawToolbar);
+//       } else if (event.update) {
+//         // TODO
+//         // this.onUpdateItem(event);
+//       } else if (typeof event.setCount !== 'undefined') {
+//         onSetCount(event.setCount);
+//       }
+// 
+//       // // sync changes
+//       // if (!this.$scope.$$phase) {
+//       //   this.$scope.$digest();
+//       // }
+//     },
+//     err => { console.error('Angular RxJs Error: ', err); },
+//     () => { console.debug('Angular RxJs subject completed, no more events to catch.'); }
+//   );
+// }
+// 
+// /**
+// * Private method for setting rootPoint of MiQEndpointsService.
+// * @param {Object} MiQEndpointsService service responsible for endpoits.
+// * @returns {undefined}
+// */
+// const initEndpoints = MiQEndpointsService => {
+//   var urlPrefix = '/' + location.pathname.split('/')[1];
+//   // TODO
+//   // MiQEndpointsService.rootPoint = urlPrefix;
+// }
+// 
+// /**
+// * Constructor of angular's miqToolbarController.
+// * @param {Object} MiQToolbarSettingsService toolbarSettings service from ui-components.
+// * @param {Object} MiQEndpointsService endpoits service from ui-components.
+// * @param {Object} $scope service for managing $scope (for apply and digest reasons).
+// * @param {Object} $location service for managing browser's location.
+// * this contructor will assign all params to `this`, it will init endpoits, set if toolbar is used on list page.
+// * @returns {undefined}
+// */
+// // var ToolbarController = function(MiQToolbarSettingsService, MiQEndpointsService, $scope, $location) {
+// //   this.MiQToolbarSettingsService = MiQToolbarSettingsService;
+// //   this.MiQEndpointsService = MiQEndpointsService;
+// //   this.$scope = $scope;
+// //   this.$location = $location;
+// //   initEndpoints(this.MiQEndpointsService);
+// //   this.isList = location.pathname.includes('show_list');
+// // };
+// 
+// /**
+// * Public method which is executed after row in gtl is selected.
+// * @param {Object} data selected row
+// * @returns {undefined}
+// */
+// const onRowSelect = data => {
+//   // TODO
+//   // this.MiQToolbarSettingsService.checkboxClicked(data.checked);
+//   console.log('onRowSelect', data);
+// };
+// 
+// /**
+// * Public method for setting up url of data views, based on last path param (e.g. /show_list).
+// * @returns {undefined}
+// */
+// const defaultViewUrl = () => {
+//   this.dataViews.forEach(function(item) {
+//     if (item.url === '') {
+//       var lastSlash = location.pathname.lastIndexOf('/');
+//       item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash) : '';
+//     }
+//   });
+// };
+// 
+// // /**
+// // * Method which will retrieves toolbar settings from server.
+// // * @see MiQToolbarSettingsService#getSettings for more info.
+// // * Settings is called with this.isList and $location search object with value of `type`.
+// // * No need to worry about multiple search params and no complicated function for parsing is needed.
+// // * @param {function} getData callbalc for retireving toolbar data
+// // * @returns {undefined}
+// // */
+// // ToolbarController.prototype.fetchData = function(getData) {
+// //   return this.MiQToolbarSettingsService
+// //     .getSettings(getData)
+// //     .then(function(toolbarItems) {
+// //       this.toolbarItems = toolbarItems.items;
+// //       this.dataViews = toolbarItems.dataViews;
+// //     }.bind(this));
+// // };
+// 
+// const onSetCount = count => {
+//   // TODO
+//   console.log('onSetCount', count);
+//   // this.MiQToolbarSettingsService.setCount(count);
+//   // if (!this.$scope.$$phase) {
+//   //   this.$scope.$digest();
+//   // }
+// };
+// 
+// // TODO
+// // ToolbarController.prototype.setClickHandler = function() {
+// //   _.chain(this.toolbarItems)
+// //     .flatten()
+// //     .map(function(item) {
+// //       return (item && item.hasOwnProperty('items')) ? item.items : item;
+// //     })
+// //     .flatten()
+// //     .filter(function(item) {
+// //       return item.type &&
+// //         (isButton(item) || isButtonTwoState(item));
+// //     })
+// //     .each(function(item) {
+// //       item.eventFunction = function($event) {
+// //         // clicking on disabled or hidden things shouldn't do anything
+// //         if (item.hidden === true || item.enabled === false) {
+// //           return;
+// //         }
+// // 
+// //         sendDataWithRx({toolbarEvent: 'itemClicked'});
+// //         Promise.resolve(miqToolbarOnClick.bind($event.delegateTarget)($event)).then(function(data) {
+// //           sendDataWithRx({type: 'TOOLBAR_CLICK_FINISH', payload: data});
+// //         });
+// //       };
+// //     })
+// //     .value();
+// // };
+// 
+// const initObject = toolbarString => {
+//   subscribeToSubject();
+//   updateToolbar(JSON.parse(toolbarString));
+// };
+// 
+// // ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
+// //   this.updateToolbar(toolbarObject);
+// // };
+// 
+// // const onUpdateItem = updateData => {
+// //   var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
+// //   if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
+// //     toolbarItem[updateData.type] = updateData.value;
+// //   }
+// // };
+// 
+// const updateToolbar = toolbarObject => {
+//     // TODO: re-render toolbar
+//   var toolbarItems = generateToolbarObject(toolbarObject);
+//   // this.toolbarItems = toolbarItems.items;
+//   // this.dataViews = toolbarItems.dataViews;
+//   defaultViewUrl();
+//   setClickHandler();
+//   showOrHide();
+// };
+// 
+// const anyToolbarVisible = () => {
+//   if (!this.toolbarItems || !this.toolbarItems.length) {
+//     return false;
+//   }
+// 
+//   var nonEmpty = this.toolbarItems.filter(function(ary) {
+//     if (!ary || !ary.length) {
+//       return false;
+//     }
+// 
+//     return _.some(ary, function(item) {
+//       return !item.hidden;
+//     });
+//   });
+// 
+//   return !!nonEmpty.length;
+// };
+// 
+// const showOrHide = () => {
+//   if (this.anyToolbarVisible()) {
+//     $('#toolbar').show();
+//   } else {
+//     $('#toolbar').hide();
+//   }
+// };
+// 
+// //  ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
+// //   miqHttpInject(angular.module('ManageIQ.toolbar'))
+// //     .controller('miqToolbarController', ToolbarController);
+// // })();
+// /* MiQToolbarSettingsService -- utility functions in ../ui-components/src/toolbar/services/toolbarSettingsService.ts */
+// /* MiQEndpointsService -- in ui-components/src/common/services/enpointsService.spec.ts: ??? */
+
+const onRowSelect = (isChecked, dispatch) => {
+  console.log('onRowSelect', isChecked);
+  dispatch({type: isChecked ? 'INCREMENT' : 'DECREMENT'});
+  //this.updateByCount();
+}
+
+const subscribeToSubject = (dispatch) =>
+   listenToRx(
+     event => {
+       if (event.eventType === 'updateToolbarCount') {
+         dispatch({type: 'SET', count: event.countSelected});
+       } else if (event.rowSelect) {
+         onRowSelect(event.rowSelect.checked, dispatch);
+       } else if (event.redrawToolbar) {
+         dispatch({type: 'TOOLBARS', toolbars: event.redrawToolbar});
+       } else if (event.update) {
+         // TODO: puvodne pravdepodobne pro QE
+         // this.onUpdateItem(event);
+         console.log('Toolbar onUpdateItem called.', event);
+       } else if (typeof event.setCount !== 'undefined') {
+         dispatch({type: 'SET', count: event.setCount});
+       }
+     },
+     err => { console.error('Toolbar RxJs Error: ', err); },
+     () => { console.debug('Toolbar RxJs subject completed, no more events to catch.'); }
+   );
+
+const separateItems = toolbarItems => {
+  let separatedArray = [];
+  toolbarItems.forEach(items => {
+    let arrayIndex = separatedArray.push([]);
+    items.forEach(item => {
+      if (item.type !== 'separator') {
+        separatedArray[arrayIndex - 1].push(item);
+      } else {
+        arrayIndex = separatedArray.push([]);
+      }
+    });
+  });
+  return separatedArray;
+}
+
+const filterViews = toolbarItems => toolbarItems
+  .flat()
+  .filter(i => i && i.id && i.id.indexOf('view_') === 0);
+
+const toolbarReducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return {
+        ...state,
+        count: state.count + 1,
+      }
+    case 'DECREMENT':
+      return {
+        ...state,
+        count: state.count - 1,
+      }
+    case 'SET':
+      return {
+        ...state,
+        count: action.count,
+      }
+    case 'TOOLBARS':
+      return {
+        ...state,
+        toolbars: action.toolbars,
+      }
+  }
+}
+
+const initState = {
+  count: 0,
+  toolbars: [],
+};
+
+const MiqToolbar = (props) => {
+  const { toolbars } = props;
+  const [state, dispatch] = useReducer(toolbarReducer, initState);
+
+  useEffect(() => {
+    // Initiall toolbars are given in props.
+    // Later can be changed by an RxJs event.
+    dispatch({type: 'TOOLBARS', toolbars});
+
+    const subscription = subscribeToSubject(dispatch)
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // this.MiQToolbarSettingsService = MiQToolbarSettingsService;
+  // this.MiQEndpointsService = MiQEndpointsService;
+  // this.$scope = $scope;
+  // this.$location = $location;
+ 
+  // initEndpoints(this.MiQEndpointsService);
+  // this.isList = location.pathname.includes('show_list');
+
+  const groups = separateItems(state.toolbars.filter(item => !!item));
+  const views = filterViews(groups);
+
+  return <Toolbar groups={groups} views={views} onClick={onClick} />
+}
+
+MiqToolbar.propTypes = {
+  toolbars: PropTypes.arrayOf(PropTypes.any).isRequired
+}
+
+export default MiqToolbar;
