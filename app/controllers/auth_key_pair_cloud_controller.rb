@@ -9,6 +9,8 @@ class AuthKeyPairCloudController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::CheckedIdMixin
+  include Mixins::Actions::VmActions::Ownership
 
   def self.display_methods
     %w[instances]
@@ -37,6 +39,10 @@ class AuthKeyPairCloudController < ApplicationController
       false
     when 'auth_key_pair_cloud_new'
       javascript_redirect(:action => 'new')
+      true
+    when 'auth_key_pair_ownership'
+      @ownershipitems = find_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, checked_or_params)
+      javascript_redirect(:action => 'ownership', :rec_ids => @ownershipitems.map(&:id))
       true
     end
   end
@@ -206,7 +212,7 @@ class AuthKeyPairCloudController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties relationships], %i[tags]]
+    [%i[properties relationships lifecycle], %i[tags]]
   end
   helper_method :textual_group_list
 

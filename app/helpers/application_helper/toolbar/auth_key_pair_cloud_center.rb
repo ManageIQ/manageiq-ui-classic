@@ -13,6 +13,12 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudCenter < ApplicationHelper::To
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: The selected Key Pair and ALL of its components will be permanently removed!")),
+       button(
+          :auth_key_pair_ownership,
+          'pficon pficon-user fa-lg',
+          N_('Set Ownership for the selected items'),
+          N_('Set Ownership'),
+          :klass => ApplicationHelper::Button::SetOwnership),
         button(
           :auth_key_pair_cloud_download,
           'pficon pficon-save fa-lg',
