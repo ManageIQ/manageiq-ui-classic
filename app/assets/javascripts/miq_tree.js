@@ -190,7 +190,7 @@ function miqOnClickSnapshots(id) {
 function miqOnClickHostNet(id) {
   var ids = id.split('|')[0].split('_'); // Break apart the node ids
   var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
-  DoNav('/vm/show/' + encodeURIComponent(nid[1]));
+  DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
