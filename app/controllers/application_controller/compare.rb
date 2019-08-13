@@ -239,6 +239,12 @@ module ApplicationController::Compare
     render_pdf(rpt)
   end
 
+  # Cancel Compare and return to the previous screen; for non-explorer screens
+  def compare_cancel
+    javascript_prologue
+    redirect_to(previous_breadcrumb_url)
+  end
+
   # Create an MIQ_Report object from a compare object
   def create_compare_report(csv = false)
     create_compare_or_drift_report(:compare, csv)

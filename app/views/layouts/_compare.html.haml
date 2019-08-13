@@ -18,6 +18,14 @@
             - (@cols.length - 1).times do |i|
               %td
                 = row["col#{i + 1}".to_sym].to_s.html_safe
+- unless @explorer
+  #buttons{:align => 'right'}
+    = link_to(_('Cancel'),
+              {:action => 'compare_cancel'},
+               :class  => 'btn btn-default',
+               :alt    => t = _('Cancel'),
+               :title  => t,
+               :method => :post)
 
     :javascript
       $('.table-treegrid').treegrid({
