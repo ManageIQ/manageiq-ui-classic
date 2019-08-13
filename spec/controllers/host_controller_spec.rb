@@ -145,48 +145,6 @@ describe HostController do
     end
   end
 
-  describe "#create" do
-    it "can create a host with custom id and no host name" do
-      stub_user(:features => :all)
-      controller.instance_variable_set(:@breadcrumbs, [])
-
-      controller.instance_variable_set(
-        :@_params,
-        :button   => "add",
-        :id       => "new",
-        :name     => 'foobar',
-        :hostname => nil,
-        :custom_1 => 'bar'
-      )
-
-      expect_any_instance_of(Host).to receive(:save).and_call_original
-      expect(controller).to receive(:render)
-      controller.send(:create)
-      expect(response.status).to eq(200)
-    end
-
-    it "doesn't crash when trying to validate a new host" do
-      stub_user(:features => :all)
-      controller.instance_variable_set(:@breadcrumbs, [])
-      controller.new
-
-      controller.instance_variable_set(
-        :@_params,
-        :button           => "validate",
-        :type             => "default",
-        :id               => "new",
-        :name             => 'foobar',
-        :hostname         => '127.0.0.1',
-        :default_userid   => "abc",
-        :default_password => "def",
-        :user_assigned_os => "linux_generic"
-      )
-      expect(controller).to receive(:render)
-      controller.send(:create)
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe "#set_record_vars" do
     it "strips leading/trailing whitespace from hostname/ipaddress when adding infra host" do
       stub_user(:features => :all)
@@ -426,19 +384,6 @@ describe HostController do
       expect(controller.send(:set_credentials, mocked_host, :validate)).to include(:default => default_creds,
                                                                                    :ws      => ws_creds,
                                                                                    :ipmi    => ipmi_creds)
-    end
-  end
-
-  describe "#render pages" do
-    render_views
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
-    it "renders a new page with ng-required condition set to false for password" do
-      get :new
-      expect(response.status).to eq(200)
-      expect(response.body).to include("name='default_password' ng-disabled='!vm.showVerify(&#39;default_userid&#39;)' ng-model='$parent.hostModel.default_password' ng-required='false'")
     end
   end
 

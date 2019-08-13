@@ -29,7 +29,6 @@ describe('hostFormController', function() {
       $controller = _$controller_('hostFormController', {
         $scope: $scope,
         $attrs: {'formFieldsUrl': '/host/host_form_fields/',
-                 'createUrl': '/host/create/',
                  'updateUrl': '/host/update/'},
         hostFormId: 'new',
         miqService: miqService
@@ -42,35 +41,6 @@ describe('hostFormController', function() {
     });
 
     describe('initialization', function() {
-      describe('when the hostFormId is new', function() {
-        it('sets the name to blank', function () {
-          expect($scope.hostModel.name).toEqual('');
-        });
-        it('sets the hostname to blank', function () {
-          expect($scope.hostModel.hostname).toEqual('');
-        });
-
-        it('sets the custom identifier to blank', function() {
-          expect($scope.hostModel.user_assigned_os).toEqual('');
-        });
-
-        it('sets the custom identifier to blank', function() {
-          expect($scope.hostModel.custom_1).toEqual('');
-        });
-
-        it('sets the MAC address to blank', function() {
-          expect($scope.hostModel.mac_address).toEqual('');
-        });
-
-        it('sets the IPMI Address to blank', function() {
-          expect($scope.hostModel.ipmi_address).toEqual('');
-        });
-
-        it('sets the validate id to null', function() {
-          expect($scope.hostModel.validate_id).toEqual(null);
-        });
-      });
-
       describe('when the hostFormId is an Id', function() {
         var hostFormResponse = {
           name: 'aaa',
@@ -91,7 +61,6 @@ describe('hostFormController', function() {
 
             $controller = _$controller_('hostFormController', {$scope: $scope,
                                                                $attrs: {'formFieldsUrl': '/host/host_form_fields/',
-                                                                        'createUrl': '/host/create/',
                                                                         'updateUrl': '/host/update/'},
                                                                hostFormId: '12345'});
             $httpBackend.flush();
@@ -172,27 +141,6 @@ describe('hostFormController', function() {
 
     it('turns the spinner on once', function() {
       expect(miqService.sparkleOn.calls.count()).toBe(1);
-    });
-
-    it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/host/update/new?button=save', true);
-    });
-  });
-
-  describe('#addClicked', function() {
-    beforeEach(function() {
-      $scope.angularForm = {
-        $setPristine: function (value){}
-      };
-      $scope.addClicked();
-    });
-
-    it('turns the spinner on via the miqService', function() {
-      expect(miqService.sparkleOn).toHaveBeenCalled();
-    });
-
-    it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('create/new?button=add', true);
     });
   });
 

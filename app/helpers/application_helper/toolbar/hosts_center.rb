@@ -72,22 +72,7 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :confirm      => N_("Provide selected items?"),
           :onwhen       => "1+",
           :klass        => ApplicationHelper::Button::HostIntrospectProvide),
-        button(
-          :host_discover,
-          'fa fa-search fa-lg',
-          t = N_('Discover items'),
-          t,
-          :url       => "/discover",
-          :url_parms => "?discover_type=hosts",
-          :klass     => ApplicationHelper::Button::ButtonNewDiscover),
         separator,
-        button(
-          :host_new,
-          'pficon pficon-add-circle-o fa-lg',
-          t = N_('Add a New item'),
-          t,
-          :url   => "/new",
-          :klass => ApplicationHelper::Button::ButtonNewDiscover),
         button(
           :host_edit,
           'pficon pficon-edit fa-lg',
