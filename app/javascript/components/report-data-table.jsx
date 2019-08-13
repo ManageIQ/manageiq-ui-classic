@@ -222,7 +222,12 @@ const ReportDataTable = (props) => {
 
   const filterKeyPress = (keyEvent) => {
     if (keyEvent.key === 'Enter') {
-      fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination, state.filter);
+      // navigate to page 1 when searching
+      const newPagination = {
+        ...state.pagination,
+        page: 1,
+      };
+      fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, state.filter);
       keyEvent.stopPropagation();
       keyEvent.preventDefault();
     }
