@@ -1,23 +1,10 @@
-- if @ownershipitems.length > 1
-  - user_opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No Owner')}>"]]
-- else
-  - user_opts =  [["<#{_('No Owner')}>", '']]
-- user_opts += ownership_user_options.sort
-
-- if @ownershipitems.length > 1
-  - groups_opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']]
-  - user_group = ''
-- else
-  - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
-  - groups_opts =  [["<#{_('No User Group')}>", user_group]]
-- groups_opts += @groups.sort
-
 = render :partial => "layouts/flash_msg"
 
 %h3
   = _('Changes')
+-# Possible values for item kind are: vms, templates, services
+= react('SetOwnershipForm', { :ownershipItems => @ownershipitems.map {|item| {:id => item.id.to_s, :kind => item.class.to_s.demodulize.underscore.pluralize} }})
 
-= react('SetServiceOwnershipForm', { :ownerOptions => user_opts, :groupOptions => groups_opts, :ownershipIds => @ownershipitems.collect(&:id).map(&:to_s) })
 
 %hr
 %h3
