@@ -221,7 +221,7 @@ class MiqRequestController < ApplicationController
 
   def prov_load_tab
     if @options && @options[:current_tab_key] == :purpose # Need to build again for purpose tab
-      build_tags_tree(@options[:wf], @options[:vm_tags], false)
+      build_tags_for_provisioning(@options[:wf], @options[:vm_tags], false)
     end
     # need to build host list view, to display on show screen
     @options[:host_sortdir] = "ASC"
