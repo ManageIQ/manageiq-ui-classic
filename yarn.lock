@@ -9063,28 +9063,6 @@ patternfly-bootstrap-treeview@~2.1.0, patternfly-bootstrap-treeview@~2.1.7:
     bootstrap "3.4.x"
     jquery ">= 2.1.x"
 
-patternfly-react@2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.10.1.tgz#eb1cfd0e32a4b956d8ac238ec12415db9b63625a"
-  integrity sha512-IeK3NKk8DAyMXi4qTP+TQlMFNRzlasd1JZw7qRrZsYeElKjZHHs785h6u3upUTn0gcrENDtSku9x8kL3idnQ4w==
-  dependencies:
-    bootstrap-slider-without-jquery "^10.0.0"
-    breakjs "^1.0.0"
-    classnames "^2.2.5"
-    css-element-queries "^1.0.1"
-    patternfly "^3.51.0"
-    react-bootstrap "^0.32.1"
-    react-bootstrap-switch "^15.5.3"
-    react-bootstrap-typeahead "^3.1.3"
-    react-c3js "^0.1.20"
-    react-click-outside "^3.0.1"
-    react-fontawesome "^1.6.1"
-    reactabular-table "^8.14.0"
-    recompose "^0.26.0"
-  optionalDependencies:
-    sortabular "^1.5.1"
-    table-resolver "^3.2.0"
-
 patternfly-react@^2.30.0:
   version "2.36.6"
   resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.36.6.tgz#78d7d85339cc2142599880b71d57b73beac5d646"
@@ -9113,7 +9091,35 @@ patternfly-react@^2.30.0:
     sortabular "^1.5.1"
     table-resolver "^3.2.0"
 
-patternfly@^3.51.0, patternfly@^3.58.0, patternfly@~3.59.1:
+patternfly-react@~2.36.8:
+  version "2.36.8"
+  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.36.8.tgz#ea83fb37ff1a838771d1c6cc4508a55e76e50559"
+  integrity sha512-CyHAKwi0WVQKF33cQA5QLxWPLSkn56VEcKEE4gLkey1SVaLD5rx+hdjtJf+WHFCDyNwt0IPOGAAZqmGAGlfF0g==
+  dependencies:
+    bootstrap-slider-without-jquery "^10.0.0"
+    breakjs "^1.0.0"
+    classnames "^2.2.5"
+    css-element-queries "^1.0.1"
+    lodash "^4.17.11"
+    patternfly "^3.58.0"
+    react-bootstrap "^0.32.1"
+    react-bootstrap-switch "^15.5.3"
+    react-bootstrap-typeahead "^3.4.1"
+    react-c3js "^0.1.20"
+    react-click-outside "^3.0.1"
+    react-collapse "^4.0.3"
+    react-debounce-input "^3.2.0"
+    react-ellipsis-with-tooltip "^1.0.8"
+    react-fontawesome "^1.6.1"
+    react-motion "^0.5.2"
+    reactabular-table "^8.14.0"
+    recompose "^0.26.0"
+    uuid "^3.3.2"
+  optionalDependencies:
+    sortabular "^1.5.1"
+    table-resolver "^3.2.0"
+
+patternfly@^3.58.0, patternfly@~3.59.1:
   version "3.59.3"
   resolved "https://registry.yarnpkg.com/patternfly/-/patternfly-3.59.3.tgz#e76a95fcdeb22763c1d7cd5836cb043ec7c5a782"
   integrity sha512-gStdjLCS9k6NmI2xCXa1IBK0s8p5l5dqMEh/zLEUwA+qdV6z6qwSxHe8QT3AjLyEy27qMSzmtUXxvkO1c8jENw==
@@ -10115,7 +10121,7 @@ react-bootstrap-switch@^15.5.3:
   resolved "https://registry.yarnpkg.com/react-bootstrap-switch/-/react-bootstrap-switch-15.5.3.tgz#97287791d4ec0d1892d142542e7e5248002b1251"
   integrity sha1-lyh3kdTsDRiS0UJULn5SSAArElE=
 
-react-bootstrap-typeahead@^3.1.3, react-bootstrap-typeahead@^3.4.1:
+react-bootstrap-typeahead@^3.4.1:
   version "3.4.6"
   resolved "https://registry.yarnpkg.com/react-bootstrap-typeahead/-/react-bootstrap-typeahead-3.4.6.tgz#8b8adf0c941a7fcea06d6577af66dd4afa204e5b"
   integrity sha512-4oLosgG1CpPrPWljb755YigymybnghfWL9pRpaU+5uXs+GH3/f/gRMFh/GNLV2egd8iAZgy3MFhyUIKe6WZs2Q==
@@ -10341,7 +10347,7 @@ react-select@^2.1.2, react-select@^2.4.2:
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
 
-react-test-renderer@^16.0.0-0, react-test-renderer@^16.2.0:
+react-test-renderer@^16.0.0-0, react-test-renderer@~16.8.0:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.8.6.tgz#188d8029b8c39c786f998aa3efd3ffe7642d5ba1"
   integrity sha512-H2srzU5IWYT6cZXof6AhUcx/wEyJddQ8l7cLM/F7gDXYyPr4oq+vCIxJYXVGhId1J706sqziAjuOEjyNkfgoEw==
