@@ -16,7 +16,7 @@ import {
 import { API } from '../http_api';
 
 const cellFormatter = value => (
-  <TableCell className={value.style_class}>
+  <TableCell style={{ cursor: 'default' }} className={value.style_class}>
     {value.value}
   </TableCell>
 );
