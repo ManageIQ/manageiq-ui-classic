@@ -970,7 +970,7 @@ class ChargebackController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Overview")},
-        {:title => _("Chargebacks")},
+        {:title => _("Chargeback")},
       ],
     }
   end
