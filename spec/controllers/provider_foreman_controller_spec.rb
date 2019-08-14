@@ -294,7 +294,7 @@ describe ProviderForemanController do
 
   it "builds foreman child tree" do
     tree_builder = TreeBuilderConfigurationManager.new("root", controller.instance_variable_get(:@sb))
-    objects = tree_builder.send(:x_get_tree_custom_kids, {:id => "fr"}, false)
+    objects = tree_builder.send(:x_get_tree_roots, false)
     expected_objects = [@config_mgr, @config_mgr2]
     expect(objects).to match_array(expected_objects)
   end
@@ -731,7 +731,7 @@ describe ProviderForemanController do
 
   def find_treenode_for_foreman_provider(tree, provider)
     key = ems_key_for_provider(provider)
-    tree.tree_nodes[0][:nodes][0][:nodes]&.find { |c| c[:key] == key }
+    tree.tree_nodes[0][:nodes]&.find { |c| c[:key] == key }
   end
 
   def ems_key_for_provider(provider)
