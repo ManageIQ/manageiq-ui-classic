@@ -1303,7 +1303,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
+      ) +
+               compare_get,
       :post => %w(
         new
         button
@@ -1330,6 +1331,7 @@ Rails.application.routes.draw do
         open_admin_ui_done
       ) +
                adv_search_post +
+               compare_post +
                dialog_runner_post +
                discover_get_post +
                exp_post +
@@ -2868,7 +2870,8 @@ Rails.application.routes.draw do
         vm_ram_files
         vm_misc_files
         x_show
-      ),
+      ) +
+               compare_get,
       :post => %w(
         accordion_select
         button
@@ -2901,6 +2904,7 @@ Rails.application.routes.draw do
         x_show
       ) +
                adv_search_post +
+               compare_post +
                dialog_runner_post +
                exp_post +
                save_post +
