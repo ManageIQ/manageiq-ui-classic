@@ -948,25 +948,25 @@ module VmCommon
                     end
     model, title =  case x_active_tree.to_s
                     when "images_filter_tree"
-                      ["ManageIQ::Providers::CloudManager::Template", _("Images")]
+                      ["ManageIQ::Providers::CloudManager::Template", _('All Images')]
                     when "images_tree"
-                      ["ManageIQ::Providers::CloudManager::Template", _("Images by Provider")]
+                      ["ManageIQ::Providers::CloudManager::Template", _('All Images by Provider')]
                     when "instances_filter_tree"
-                      ["ManageIQ::Providers::CloudManager::Vm", _("Instances")]
+                      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances')]
                     when "instances_tree"
-                      ["ManageIQ::Providers::CloudManager::Vm", _("Instances by Provider")]
+                      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances by Provider')]
                     when "vandt_tree"
-                      ["VmOrTemplate", _("VMs & Templates")]
+                      ["VmOrTemplate", _('All VMs & Templates')]
                     when "vms_instances_filter_tree"
-                      ["Vm", _("VMs & Instances")]
+                      ["Vm", _('All VMs & Instances')]
                     when "templates_images_filter_tree"
-                      ["MiqTemplate", _("Templates & Images")]
+                      ["MiqTemplate", _('All Templates & Images')]
                     when "templates_filter_tree"
-                      ["ManageIQ::Providers::InfraManager::Template", _("Templates")]
+                      ["ManageIQ::Providers::InfraManager::Template", _('All Templates')]
                     when "vms_filter_tree"
-                      ["ManageIQ::Providers::InfraManager::Vm", _("VMs")]
+                      ["ManageIQ::Providers::InfraManager::Vm", _('All VMs')]
                     else
-                      [nil, nil]
+                      [nil, _('All VMs & Templates')]
                     end
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Vm", "MiqTemplate" # VM or Template record, show the record
@@ -997,13 +997,7 @@ module VmCommon
           options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
         end
         process_show_list(options) if show_list # Get all VMs & Templates
-        # :model=>ui_lookup(:models=>"VmOrTemplate"))
-        # TODO: Change ui_lookup/dictionary to handle VmOrTemplate, returning VMs And Templates
-        @right_cell_text = if title
-                             _("All %{title}") % {:title => title}
-                           else
-                             _("All VMs & Templates")
-                           end
+        @right_cell_text = title
       elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
         if x_active_tree == :vandt_tree
           klass = ManageIQ::Providers::InfraManager::VmOrTemplate
