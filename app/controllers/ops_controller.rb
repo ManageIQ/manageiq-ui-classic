@@ -802,8 +802,7 @@ class OpsController < ApplicationController
     i = 0
     @edit[:new].each_key do |k|
       if @edit[:new][k] != @edit[:current][k]
-        if k.to_s.ends_with?("password2", "verify") # do nothing
-        elsif k.to_s.ends_with?("password", "_pwd") # Asterisk out password fields
+        if k.to_s.ends_with?("password", "_pwd") # Asterisk out password fields
           msg = "%{message} %{key}:[*] to [*]" % {:message => msg, :key => k.to_s}
         else
           msg += ", " if i.positive?
