@@ -9,4 +9,7 @@
   - elsif x_node.split('-').length == 2 && @view
     = render :partial => 'layouts/x_gtl'
   - else
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Report from the menus on the left.")}
+    - if @flash_array
+      = render :partial => 'layouts/flash_msg'
+    - else
+      = render :partial => 'layouts/info_msg', :locals => {:message => _("Choose a Report from the menus on the left.")}
