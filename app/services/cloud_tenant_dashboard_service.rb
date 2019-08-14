@@ -55,11 +55,11 @@ class CloudTenantDashboardService < DashboardService
   end
 
   def recent_images_data
-    recent_resources(MiqTemplate, _('Recent Images'), _('Images'))
+    recent_resources(MiqTemplate, _('Recent Images'), _('Images'), @record.miq_templates)
   end
 
   def recent_instances_data
-    recent_resources(ManageIQ::Providers::CloudManager::Vm, _('Recent Instances'), _('Instances'))
+    recent_resources(ManageIQ::Providers::CloudManager::Vm, _('Recent Instances'), _('Instances'), @record.vms)
   end
 
   def aggregate_status_data
@@ -75,8 +75,8 @@ class CloudTenantDashboardService < DashboardService
     }
   end
 
-  def recent_resources(model, title, label)
-    all_resources = recent_records(model)
+  def recent_resources(model, title, label, relation)
+    all_resources = recent_records(model, relation)
     config = {
       :title => title,
       :label => label
@@ -100,14 +100,13 @@ class CloudTenantDashboardService < DashboardService
     }.compact
   end
 
-  def recent_records(model)
+  def recent_records(model, relation)
     db_table     = model.arel_table
     to_char_args = [db_table[:created_on], Arel::Nodes::SqlLiteral.new("'YYYY-MM-DD'")]
     group_by_sql = Arel::Nodes::NamedFunction.new("to_char", to_char_args)
 
-    model.where(:ems_id => @record.ext_management_system.id)
-         .where(db_table[:created_on].gt(30.days.ago.utc))
-         .group(group_by_sql.to_sql)
-         .count
+    relation.where(db_table[:created_on].gt(30.days.ago.utc))
+            .group(group_by_sql.to_sql)
+            .count
   end
 end
