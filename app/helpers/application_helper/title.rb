@@ -90,6 +90,10 @@ module ApplicationHelper
         _("Virtual Machines")
       when "vm_or_template"
         _("Workloads")
+      when "all_tasks"
+        _("All Tasks")
+      when "my_tasks"
+        _("My Tasks")
 
       # Specific titles for groups of layouts
       when /^miq_ae_/
