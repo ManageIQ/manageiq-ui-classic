@@ -55,51 +55,6 @@ describe VmInfraController do
         expect(Rbac.filtered(EmsFolder, :match_via_descendants => "VmOrTemplate", :user => user)).to eq([ems_folder])
       end
     end
-
-    context '#x_history_add_item' do
-      def make_item(i)
-        {
-          :id      => "#{i}_id",
-          :action  => "#{i}_action",
-          :button  => "#{i}_button",
-          :display => "#{i}_display",
-          :item    => "#{i}_item",
-        }
-      end
-
-      before do
-        sb = {
-          :active_tree => 'foo_tree',
-          :history     => {
-            'foo_tree' => (1..11).collect { |i| make_item(i) }
-          }
-        }
-        controller.instance_variable_set(:@sb, sb)
-      end
-
-      it 'adds new item into the history' do
-        controller.send(:x_history_add_item, make_item(12))
-
-        expect(assigns(:sb)[:history]['foo_tree'].first[:id]).to eq('12_id')
-
-        expect(assigns(:sb)[:history]['foo_tree'].find do |item|
-          item[:id] == '11_id'
-        end).to be_nil
-      end
-
-      it 'it removes duplicate items from the history' do
-        item = make_item(1).update(:foo => 'bar')
-
-        controller.send(:x_history_add_item, item)
-
-        items = assigns(:sb)[:history]['foo_tree'].find_all do |item|
-          item[:id] == '1_id'
-        end
-
-        expect(items.length).to eq(1)
-        expect(items[0][:foo]).to eq('bar')
-      end
-    end
   end
 end
 
