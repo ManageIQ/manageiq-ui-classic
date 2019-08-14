@@ -1181,7 +1181,6 @@ Rails.application.routes.draw do
         timeline_data
         login_retry
         reset_widgets
-        resize_layout
         tl_generate
         tree_select
         wait_for_task

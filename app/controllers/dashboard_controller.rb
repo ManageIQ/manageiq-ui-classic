@@ -107,16 +107,6 @@ class DashboardController < ApplicationController
     head :ok
   end
 
-  def resize_layout
-    if params[:sidebar] && params[:context] && params[:context].present?
-      session[:sidebar] ||= {}
-      session[:sidebar][params[:context]] ||= 2
-      sidebar = params[:sidebar].to_i
-      session[:sidebar][params[:context]] = sidebar if [0, 2, 3, 4, 5].include?(sidebar)
-    end
-    head :ok # No response required
-  end
-
   # Redirect to remembered last item clicked under this menu section.
   def redirect_to_remembered(section_id)
     return false unless session[:tab_url].key?(section_id)

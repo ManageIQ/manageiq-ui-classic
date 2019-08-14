@@ -47,28 +47,6 @@
   }
 }
 
-/// resizer styling (used in explorer type screens)
-
-.resizer {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 0;
-  z-index: 600;
-}
-
-.resizer-box {
-  bottom: 100px;
-  left: -18px;
-  position: absolute;
-  width: 38px;
-}
-
-.resizer .btn {
-  border-color: #d0d0d0;
-}
-
 iframe,
 .iframe {
   height: 100%;
