@@ -4,7 +4,7 @@ class TreeBuilderOpsVmdb < TreeBuilder
   private
 
   def tree_init_options
-    {:open_all => false, :lazy => true}
+    {:lazy => true}
   end
 
   def root_options
@@ -29,20 +29,16 @@ class TreeBuilderOpsVmdb < TreeBuilder
   end
 
   def x_get_tree_vmdb_table_kids(object, count_only)
-    if count_only
-      1 # each table has any index
-    else
-      # load this node expanded on autoload
-      open_node("xx-#{object.id}")
-      [
-        {
-          :id            => object.id.to_s,
-          :text          => _("Indexes"),
-          :icon          => "pficon pficon-folder-close",
-          :tip           => _("Indexes"),
-          :load_children => true
-        }
-      ]
-    end
+    return 1 if count_only # each table has one indexes subdir
+
+    [
+      {
+        :id     => object.id.to_s,
+        :text   => _("Indexes"),
+        :icon   => "pficon pficon-folder-close",
+        :tip    => _("Indexes"),
+        :expand => true # load this node expanded with its children
+      }
+    ]
   end
 end
