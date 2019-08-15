@@ -49,7 +49,7 @@ class EmsBlockStorageController < ApplicationController
       :breadcrumbs => [
         {:title => _("Storage")},
         {:title => _("Block Storage")},
-        {:url   => controller_url, :title => _("Network Managers")},
+        {:url   => controller_url, :title => _("Managers")},
       ],
     }
   end
