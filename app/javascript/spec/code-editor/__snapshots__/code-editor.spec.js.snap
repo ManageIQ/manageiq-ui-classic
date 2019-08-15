@@ -6,6 +6,7 @@ exports[`CodeEditor component should render correctly 1`] = `
     className="miq-codemirror "
     editorDidMount={[Function]}
     onBeforeChange={[Function]}
+    onChange={[Function]}
     options={
       Object {
         "autoCloseBrackets": true,
@@ -67,6 +68,7 @@ exports[`CodeEditor component should render mode switches 1`] = `
     className="miq-codemirror "
     editorDidMount={[Function]}
     onBeforeChange={[Function]}
+    onChange={[Function]}
     options={
       Object {
         "autoCloseBrackets": true,
