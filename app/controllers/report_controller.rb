@@ -150,7 +150,6 @@ class ReportController < ApplicationController
     @right_cell_text ||= _("All Reports")
     @sb[:rep_tree_build_time] = Time.now.utc
     @sb[:active_tab] = "report_info"
-    @right_cell_text.gsub!(/'/, "&apos;") # Need to escape single quote in title to load in right cell
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     # show form buttons after upload is pressed
     render :layout => "application"
