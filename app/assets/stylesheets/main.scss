@@ -41,6 +41,7 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 @import "dual_list";
 @import "codemirror_editor";
 @import "dynamic_prefix_form_input";
+@import "report-data-table";
 
 .login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
   height: 38px;

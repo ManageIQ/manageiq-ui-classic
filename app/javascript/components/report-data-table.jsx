@@ -288,10 +288,11 @@ const ReportDataTable = (props) => {
         ...state.pagination,
         page: 1,
       };
-      // The currently edited filter becomes the only one active filter.
-      const activeFilters = [{
-        ...state.filter,
-      }];
+      const activeFilters = state.filter.string !== ''
+        // The currently edited filter becomes the only one active filter.
+        ? [{ ...state.filter }]
+        // Empty string means no filter.
+        : [];
       fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, activeFilters);
       keyEvent.stopPropagation();
       keyEvent.preventDefault();
@@ -302,7 +303,7 @@ const ReportDataTable = (props) => {
 
   return (
     <React.Fragment>
-      <div className="row toolbar-pf table-view-pf-toolbar">
+      <div className="row toolbar-pf table-view-pf-toolbar report-toolbar">
         <form className="col-xs-12 col-md-6">
           <Form.InputGroup>
             <Filter.TypeSelector
@@ -319,10 +320,10 @@ const ReportDataTable = (props) => {
             />
           </Form.InputGroup>
         </form>
-        <div className="col-xs-12 toolbar-pf-results">
-          {state.activeFilters && state.activeFilters.length > 0
-            && renderActiveFilters()}
-        </div>
+        {state.activeFilters && state.activeFilters.length > 0 && (
+          <div className="col-xs-12 toolbar-pf-results">
+            {renderActiveFilters()}
+          </div>)}
       </div>
       {state.total > 0 && (
         <React.Fragment>
@@ -357,8 +358,8 @@ const ReportDataTable = (props) => {
           />
         </React.Fragment>)}
       {state.total === 0 && (
-        <EmptyState>
-          <EmptyState.Title>{ __('No records found.') }</EmptyState.Title>
+        <EmptyState className="report-empty-state">
+          <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
         </EmptyState>)}
     </React.Fragment>
   );
