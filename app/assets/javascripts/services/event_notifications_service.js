@@ -1,4 +1,4 @@
-angular.module('miq.notifications').service('eventNotifications', ['$timeout', '$window', '$httpParamSerializerJQLike', 'API', function($timeout, $window, $httpParamSerializerJQLike, API) {
+angular.module('ManageIQ').service('eventNotifications', ['$timeout', '$window', '$httpParamSerializerJQLike', 'API', function($timeout, $window, $httpParamSerializerJQLike, API) {
   if (!ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {

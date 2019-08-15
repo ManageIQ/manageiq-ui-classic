@@ -2,7 +2,7 @@ describe('eventNotifications', function() {
   var testService;
   var $scope;
 
-  beforeEach(module('miq.notifications'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function(eventNotifications, _$rootScope_) {
     testService = eventNotifications;

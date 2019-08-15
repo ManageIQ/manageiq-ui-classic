@@ -1,4 +1,4 @@
-angular.module('miq.notifications').controller('headerController', ['$scope', 'eventNotifications', '$timeout', function($scope, eventNotifications, $timeout) {
+angular.module('ManageIQ').controller('headerController', ['$scope', 'eventNotifications', '$timeout', function($scope, eventNotifications, $timeout) {
   var vm = this;
 
   var cookieId = 'miq-notification-drawer';
