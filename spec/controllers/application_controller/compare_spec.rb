@@ -1,5 +1,5 @@
 describe ApplicationController do
-  context "#drift_history" do
+  describe "#drift_history" do
     it "resets @display to main" do
       vm = FactoryBot.create(:vm_vmware)
       controller.instance_variable_set(:@display, "vms")
@@ -11,6 +11,18 @@ describe ApplicationController do
       expect(controller).to receive(:render)
       controller.send(:drift_history)
       expect(assigns(:display)).to eq("main")
+    end
+  end
+
+  describe '#compare_cancel' do
+    let(:prev_breadcrumb) { {:name => "some name", :url => "some url"} }
+
+    before { controller.instance_variable_set(:@breadcrumbs, [{}, prev_breadcrumb, {}]) }
+
+    it 'calls javascript_prologue and redirect_to' do
+      expect(controller).to receive(:javascript_prologue)
+      expect(controller).to receive(:redirect_to).with(prev_breadcrumb[:url])
+      controller.send(:compare_cancel)
     end
   end
 end
