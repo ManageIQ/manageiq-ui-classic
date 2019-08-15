@@ -434,10 +434,10 @@ class ReportController < ApplicationController
     nodes = x_node.split('-')
     show_saved_report
     @record = MiqReportResult.for_user(current_user).find(nodes.last)
-    @right_cell_text = _("Saved Report \"%{name} - %{timestamp}\"") % {
-      :name      => @record.name,
+    @right_cell_text = ('<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' % {
+      :name      => ERB::Util.html_escape(@record.name),
       :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
-    }
+    }).html_safe
     @right_cell_div  = "savedreports_list"
   end
 
