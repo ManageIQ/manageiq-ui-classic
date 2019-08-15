@@ -10,11 +10,12 @@ module Mixins
       options[:record_info] ||= (@record || {})
       options[:record_title] ||= :name
       options[:show_header] ||= false
+      options[:not_tree] ||= false
       breadcrumbs = options[:breadcrumbs] || []
 
       # Different methods for controller with explorers and for non-explorers controllers
 
-      if !features?
+      if !features? || options[:not_tree]
         # Append breadcrumb from @record item (eg "Openstack") when on some action page (not show, display)
         breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title])) if not_show_page?
 
