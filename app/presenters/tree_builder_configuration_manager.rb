@@ -17,14 +17,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only)
-    objects = []
-    objects.push(:id            => "fr",
-                 :tree          => "fr_tree",
-                 :text          => _("%{name} Providers") % {:name => ui_lookup(:ui_title => 'foreman')},
-                 :icon          => "pficon pficon-folder-close",
-                 :tip           => _("%{name} Providers") % {:name => ui_lookup(:ui_title => 'foreman')},
-                 :load_children => true)
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects_filtered(count_only, ManageIQ::Providers::Foreman::ConfigurationManager, "name", :match_via_descendants => ConfiguredSystem)
   end
 
   def node_by_tree_id(id)
@@ -61,13 +54,5 @@ class TreeBuilderConfigurationManager < TreeBuilder
     configured_systems = ConfiguredSystem.where(:configuration_profile_id => object[:id],
                                                 :manager_id               => object[:manager_id])
     count_only_or_objects_filtered(count_only, configured_systems, "hostname")
-  end
-
-  def x_get_tree_custom_kids(object_hash, count_only)
-    objects =
-      case object_hash[:id]
-      when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager
-      end
-    count_only_or_objects_filtered(count_only, objects, "name", :match_via_descendants => ConfiguredSystem)
   end
 end
