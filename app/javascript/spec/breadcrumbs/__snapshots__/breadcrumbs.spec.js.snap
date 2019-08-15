@@ -55,6 +55,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
           active={false}
           href="/providers"
           key="/providers"
+          onClick={[Function]}
         >
           <li
             className=""
@@ -62,6 +63,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
             <SafeAnchor
               componentClass="a"
               href="/providers"
+              onClick={[Function]}
             >
               <a
                 href="/providers"
