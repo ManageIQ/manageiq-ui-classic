@@ -1,5 +1,3 @@
-/* global miqHttpInject */
-
 angular.module( 'patternfly.charts' ).controller('heatmapContainerController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
   var vm = this;
   vm.id = 'heatmap_' + providerId;

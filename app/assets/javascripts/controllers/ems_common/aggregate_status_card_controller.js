@@ -1,5 +1,3 @@
-/* global miqHttpInject */
-
 angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', ['$scope', '$http', 'miqService', function($scope, $http, miqService) {
   var vm = this;
 

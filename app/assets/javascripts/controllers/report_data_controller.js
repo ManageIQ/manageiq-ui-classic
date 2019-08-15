@@ -548,6 +548,6 @@
     '$timeout',
     '$window',
   ];
-  window.miqHttpInject(angular.module('ManageIQ'))
-    .controller(CONTROLLER_NAME, ReportDataController);
+
+  angular.module('ManageIQ').controller(CONTROLLER_NAME, ReportDataController);
 })();

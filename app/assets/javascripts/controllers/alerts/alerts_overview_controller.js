@@ -1,4 +1,4 @@
-/* global miqHttpInject, miqSparkleOn, miqSparkleOff */
+/* global miqSparkleOn, miqSparkleOff */
 
 angular.module('ManageIQ').controller('alertsOverviewController',
   ['$window', 'alertsCenterService', '$interval',
