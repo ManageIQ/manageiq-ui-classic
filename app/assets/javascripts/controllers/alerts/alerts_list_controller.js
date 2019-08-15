@@ -1,6 +1,6 @@
 /* global miqHttpInject, miqSparkleOn, miqSparkleOff */
 
-angular.module('alertsCenter').controller('alertsListController',
+angular.module('ManageIQ').controller('alertsListController',
   ['$window', 'alertsCenterService', '$interval',
     function($window, alertsCenterService, $interval) {
       var vm = this;

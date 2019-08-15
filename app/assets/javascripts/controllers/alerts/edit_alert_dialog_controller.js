@@ -1,4 +1,4 @@
-angular.module('alertsCenter')
+angular.module('ManageIQ')
   .controller('EditAlertDialogController', ['editData',
     function(editData) {
       var vm = this;
