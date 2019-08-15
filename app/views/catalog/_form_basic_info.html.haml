@@ -228,4 +228,5 @@
                           :title                 => _("Remove this Retirement Entry Point")) do
                   %i.pficon.pficon-close
             %span.input-group-addon{:style => "visibility:hidden"}
-    = render(:partial => "tenants_tree_show")
+    - if role_allows?(:feature => 'rbac_tenant_view')
+      = render(:partial => "tenants_tree_show")

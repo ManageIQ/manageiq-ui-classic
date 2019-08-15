@@ -65,7 +65,8 @@
                   'ng-options'       => 'catalog as catalog.name for catalog in vm.catalogs',
                   "data-live-search" => "true",
                   'miq-select'        => true}
-      = render(:partial => "tenants_tree_show", :locals => {:angular => true})
+      - if role_allows?(:feature => 'rbac_tenant_view')
+        = render(:partial => "tenants_tree_show", :locals => {:angular => true})
 
       .form-group
         %label.col-md-2.control-label{"for" => "zone_id"}
