@@ -26,7 +26,9 @@ class OptimizationController < ApplicationController
         {:title => _('Overview')},
         bc_optimization,
         bc_report,
+        {:title => @title},
       ].compact,
+      :no_magic => true,
     }
   end
 
