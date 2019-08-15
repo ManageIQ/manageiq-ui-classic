@@ -1135,9 +1135,16 @@ class MiqPolicyController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Control")},
-        action_name == "rsop" ? {:title => _("Simulation")} : {:title => _("Explorer")},
+        menu_breadcrumb,
       ].compact,
+      :not_tree    => %w[rsop export log].include?(action_name)
     }
+  end
+
+  def menu_breadcrumb
+    return nil if %w[export log].include?(action_name)
+
+    {:title => action_name == 'rsop' ? _('Simulation') : _('Explorer')}
   end
 
   def build_tree
