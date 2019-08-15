@@ -273,7 +273,7 @@ class PxeController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => _("Networking")},
+        {:title => _("PXE")},
       ],
     }
   end
