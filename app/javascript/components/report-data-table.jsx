@@ -359,6 +359,7 @@ const ReportDataTable = (props) => {
         </React.Fragment>)}
       {state.total === 0 && (
         <EmptyState className="report-empty-state">
+          <EmptyState.Icon type="fa" name="search" />
           <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
         </EmptyState>)}
     </React.Fragment>
