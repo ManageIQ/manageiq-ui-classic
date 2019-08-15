@@ -545,4 +545,27 @@ describe MiqAeToolsController do
       end
     end
   end
+
+  describe "breadcrumbs" do
+    it "shows 'simulation' on resolve screen" do
+      get :resolve
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[2]).to eq("Simulation")
+      expect(controller.data_for_breadcrumbs.pluck(:title)[3]).to eq(nil) # no additional title
+    end
+
+    it "shows 'import / export' on import_export screen" do
+      get :import_export
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[2]).to eq("Import / Export")
+      expect(controller.data_for_breadcrumbs.pluck(:title)[3]).to eq(nil) # no additional title
+    end
+
+    it "shows 'log' on log screen" do
+      get :log
+
+      expect(controller.data_for_breadcrumbs.pluck(:title)[2]).to eq("Log")
+      expect(controller.data_for_breadcrumbs.pluck(:title)[3]).to eq(nil) # no additional title
+    end
+  end
 end

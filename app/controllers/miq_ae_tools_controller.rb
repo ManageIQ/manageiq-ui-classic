@@ -463,8 +463,9 @@ Methods updated/added: %{method_stats}") % stat_options)
       :breadcrumbs => [
         {:title => _("Automation")},
         {:title => _("Automate")},
-        action_name == "resolve" ? {:title => _("Automate")} : nil,
-      ].compact
+        action_name == "resolve" ? {:title => _("Simulation")} : nil,
+      ].compact,
+      :hide_title  => action_name == "resolve",
     }
   end
 
