@@ -11,6 +11,7 @@ module Mixins
       options[:record_title] ||= :name
       options[:show_header] ||= false
       options[:not_tree] ||= false
+      options[:hide_title] ||= false
       breadcrumbs = options[:breadcrumbs] || []
 
       # Different methods for controller with explorers and for non-explorers controllers
@@ -23,7 +24,7 @@ module Mixins
         breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))
 
         # Append title breadcrumb if they exist and not same as previous breadcrumb (eg "Editing name")
-        if @title && @title != breadcrumbs.compact.last.try(:[], :title)
+        if @title && @title != breadcrumbs.compact.last.try(:[], :title) && !options[:hide_title]
           breadcrumbs.push(:title => @title)
         end
       else

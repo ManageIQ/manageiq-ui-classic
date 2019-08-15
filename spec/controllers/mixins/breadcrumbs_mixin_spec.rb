@@ -202,8 +202,24 @@ describe Mixins::BreadcrumbsMixin do
           }
         end
 
-        it "creates breadcrumbs" do
+        before do
+          subject.instance_variable_set(:@title, "Title")
           allow(subject).to receive(:gtl_url).and_return("/show")
+        end
+
+        it "creates breadcrumbs" do
+          expect(subject.data_for_breadcrumbs).to eq(
+            [
+              {:title => "First Layer"},
+              {:title => "Second Layer"},
+              {:title => "record_info_title", :url => "/breadcrumbs_test/show/1234"},
+              {:title => "Title"}
+            ]
+          )
+        end
+
+        it "creates breadcrumbs with :hide_title set" do
+          breadcrumbs_options[:hide_title] = true
 
           expect(subject.data_for_breadcrumbs).to eq(
             [
