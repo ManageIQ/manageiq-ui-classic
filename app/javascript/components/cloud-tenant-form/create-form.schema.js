@@ -17,6 +17,7 @@ function createSchema(renderEmsChoices, emsChoices) {
     fields = [{
       component: 'select-field',
       name: 'ems_id',
+      menuPlacement: 'bottom',
       label: __('Cloud Provider/Parent Cloud Tenant'),
       placeholder: `<${__('Choose')}>`,
       validateOnMount: true,
