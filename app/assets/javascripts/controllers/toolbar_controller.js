@@ -209,6 +209,6 @@
   };
 
   ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
-  miqHttpInject(angular.module('ManageIQ.toolbar'))
+  miqHttpInject(angular.module('ManageIQ'))
     .controller('miqToolbarController', ToolbarController);
 })();
