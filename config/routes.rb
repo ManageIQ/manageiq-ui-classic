@@ -148,6 +148,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         ems_form_choices
         download_private_key
+        ownership
       ) +
         compare_get,
       :post => %w(
@@ -156,6 +157,8 @@ Rails.application.routes.draw do
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
+        ownership_form_fields
+        ownership_update
         protect
         quick_search
         sections_field_changed
