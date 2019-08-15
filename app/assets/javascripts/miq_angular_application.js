@@ -6,7 +6,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.api',
   'miq.card',
   'miq.compat',
-  'miq.helpers',
   'miq.util',
   'miqStaticAssets',
   'miqStaticAssets.common',
