@@ -5,7 +5,6 @@
 //= require ./gettextCatalog
 //= require ./miq_api
 //= require ./miq_angular_application
-//= require_tree ./angular_modules/
 //= require_tree ./controllers/
 //= require_tree ./directives/
 //= require_tree ./components/
