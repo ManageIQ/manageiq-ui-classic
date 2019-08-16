@@ -5,6 +5,7 @@ class UtilizationController < ApplicationController
   menu_section(:vi)
 
   include OptimizeHelper
+  include Mixins::BreadcrumbsMixin
 
   def index
     @explorer = true
@@ -224,6 +225,7 @@ class UtilizationController < ApplicationController
     presenter.set_visibility(@sb[:active_tab] == 'report', :toolbar)
 
     presenter.update(:main_div, r[:partial => 'utilization_tabs'])
+    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
     presenter[:right_cell_text] = @right_cell_text
     presenter[:build_calendar] = {
       :date_from => @sb[:options][:sdate],
@@ -242,5 +244,14 @@ class UtilizationController < ApplicationController
     @sb[:summary][:memory]&.each { |r| a.push("section" => _("Memory"), "item" => r[0], "value" => r[1]) }
     @sb[:summary][:storage]&.each { |r| a.push("section" => _("Disk"), "item" => r[0], "value" => r[1]) }
     a
+  end
+
+  def breadcrumbs_options
+    {
+      :breadcrumbs => [
+        {:title => _("Overview")},
+        {:title => _("Utilization")},
+      ],
+    }
   end
 end
