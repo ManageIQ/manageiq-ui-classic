@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import * as resolve from 'table-resolver';
 import {
   customHeaderFormattersDefinition,
+  EmptyState,
   Filter,
+  Form,
   FormControl,
   Paginator,
   PAGINATION_VIEW,
@@ -51,10 +53,10 @@ const makeColumn = (name, label, index) => ({
   },
 });
 
-const makeFilterColumn = (name, label, _index) => ({
+const makeFilterColumn = (name, title, _index) => ({
   id: name,
-  title: label,
-  placeholder: sprintf(__('Filter by %s'), label),
+  title: title,
+  placeholder: sprintf(__('Filter by %s'), title),
   filterType: 'text',
 });
 
@@ -71,7 +73,7 @@ const sortColumnAndDirection = (sortingColumns) => {
 const parseReportColumns = reportData => reportData
   .report.col_order.map((item, index) => ({
     name: item,
-    label: reportData.report.headers[index],
+    title: reportData.report.headers[index],
   }));
 
 const parseReportRows = reportData => reportData
@@ -80,43 +82,48 @@ const parseReportRows = reportData => reportData
     ...item,
   }));
 
-const processLoadedData = (state, action) => {
+const reduceLoadedData = (state, action) => {
   const columns = parseReportColumns(action.data);
+
+  // Setting the initial filter field to the first one, if not yet set.
   const filter = { ...state.filter };
-  if (!filter.field) {
-    filter.field = columns[0] && columns[0].name;
+  if (!filter.field && columns[0]) {
+    filter.field = columns[0].name;
+    filter.title = columns[0].title;
   }
 
   return {
     ...state,
     loading: false,
-    filter,
     columns,
     rows: parseReportRows(action.data),
     total: action.data.count,
     sortingColumns: action.sortingColumns,
     pagination: action.pagination,
+    activeFilters: action.activeFilters,
+    filter
   };
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'loadedData':
-      return processLoadedData(state, action);
-    case 'filterSelected':
+    case 'dataLoaded':
+      return reduceLoadedData(state, action);
+    case 'filterTypeSelected':
       return {
         ...state,
         filter: {
           string: state.filter && state.filter.string,
           field: action.field,
+          title: action.title,
         },
       };
     case 'filterTextUpdate':
       return {
         ...state,
         filter: {
+          ...state.filter,
           string: action.string,
-          field: state.filter && state.filter.field,
         },
       };
     default:
@@ -131,15 +138,22 @@ const initialState = {
   total: 0,
 };
 
-const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, filter = {}) => {
+const filterToString = filter => (
+  filter && filter.field && filter.string
+    ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
+    : ''
+);
+
+const fetchReportPage = (dispatch, reportResultId, sortingColumns, pagination, activeFilters = null) => {
   const { sortBy, sortDirection } = sortColumnAndDirection(sortingColumns);
   const limit = pagination.perPage;
   const offset = pagination.perPage * (pagination.page - 1);
 
   miqSparkleOn();
 
-  const filterString = (filter && filter.field && filter.string)
-    ? `&filter_column=${filter.field}&filter_string=${encodeURIComponent(filter.string)}`
+  // for now, just one active filter
+  const filterString = activeFilters && activeFilters[0]
+    ? filterToString(activeFilters[0])
     : '';
 
   API.get(`/api/results/${reportResultId}?\
@@ -148,10 +162,11 @@ hash_attribute=result_set&\
 sort_by=${sortBy}&sort_order=${sortDirection}&\
 limit=${limit}&offset=${offset}${filterString}`).then((data) => {
     dispatch({
-      type: 'loadedData',
+      type: 'dataLoaded',
       data,
       sortingColumns,
       pagination,
+      activeFilters,
     });
 
     miqSparkleOff();
@@ -173,8 +188,48 @@ const ReportDataTable = (props) => {
 
   useEffect(() => fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination), []);
 
-  const columns = state.columns.map((item, index) => makeColumn(item.name, item.label, index));
-  const filterColumns = state.columns.map((item, index) => makeFilterColumn(item.name, item.label, index));
+  const columns = state.columns.map((item, index) => makeColumn(item.name, item.title, index));
+  const filterColumns = state.columns.map((item, index) => makeFilterColumn(item.name, item.title, index));
+
+  // When clearing the filters, we just empty the activeFilters and
+  // keep the current filter setting.
+  const fetchNoFilters = () =>
+    fetchReportPage(
+      dispatch,
+      props.reportResultId,
+      state.sortingColumns,
+      state.pagination,
+      null,
+    );
+
+  // Until the API is available for multi-field filtereing there's only one filter,
+  // so removing a single filter removes all of them.
+  const renderActiveFilters = () => (
+    <React.Fragment>
+      <Filter.ActiveLabel>{__('Active Filters:')}</Filter.ActiveLabel>
+      <Filter.List>
+        {state.activeFilters.map(item => (
+          <Filter.Item
+            key={item.field}
+            onRemove={fetchNoFilters}
+            filterData={item}
+          >
+            {`${item.title}: ${item.string}`}
+          </Filter.Item>
+        ))}
+      </Filter.List>
+      <a
+        href="#"
+        onClick={(e) => {
+          fetchNoFilters();
+          e.preventDefault();
+        }}
+      >
+        {__('Clear All Filters')}
+      </a>
+    </React.Fragment>
+  );
+
 
   const setPage = page => fetchReportPage(
     dispatch,
@@ -184,20 +239,25 @@ const ReportDataTable = (props) => {
       ...state.pagination,
       page,
     },
-    state.filter,
+    state.activeFilters,
   );
 
-  const perPageSelect = (perPage, _e) => {
-    const newPagination = {
+  const perPageSelect = (perPage, _e) => fetchReportPage(
+    dispatch,
+    props.reportResultId,
+    state.sortingColumns,
+    {
       ...state.pagination,
-      perPage,
-      page: 1,
-    };
-    fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, state.filter);
-  };
+      perPage, // When setting new page size,
+      page: 1, // go to page 1.
+    },
+    state.activeFilters,
+  );
 
-  const onSort = (e, column, sortDirection) => {
-    const newSortingColumns = {
+  const onSort = (e, column, sortDirection) => fetchReportPage(
+    dispatch,
+    props.reportResultId,
+    {
       [column.property]: {
         direction:
           sortDirection === TABLE_SORT_DIRECTION.ASC
@@ -205,14 +265,15 @@ const ReportDataTable = (props) => {
             : TABLE_SORT_DIRECTION.ASC,
         position: 0,
       },
-    };
-
-    fetchReportPage(dispatch, props.reportResultId, newSortingColumns, state.pagination, state.filter);
-  };
+    },
+    state.pagination,
+    state.activeFilters,
+  );
 
   const filterTypeSelected = field => dispatch({
-    type: 'filterSelected',
+    type: 'filterTypeSelected',
     field: field && field.id,
+    title: field && field.title,
   });
 
   const filterTextUpdate = event => dispatch({
@@ -222,12 +283,17 @@ const ReportDataTable = (props) => {
 
   const filterKeyPress = (keyEvent) => {
     if (keyEvent.key === 'Enter') {
-      // navigate to page 1 when searching
+      // Navigate to page 1 when searching.
       const newPagination = {
         ...state.pagination,
         page: 1,
       };
-      fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, state.filter);
+      const activeFilters = state.filter.string !== ''
+        // The currently edited filter becomes the only one active filter.
+        ? [{ ...state.filter }]
+        // Empty string means no filter.
+        : [];
+      fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, newPagination, activeFilters);
       keyEvent.stopPropagation();
       keyEvent.preventDefault();
     }
@@ -237,55 +303,65 @@ const ReportDataTable = (props) => {
 
   return (
     <React.Fragment>
-      <div className="row toolbar-pf table-view-pf-toolbar">
-        <form className="toolbar-pf-actions">
-          <div className="form-group toolbar-pf-filter">
-            <Filter>
-              <Filter.TypeSelector
-                filterTypes={filterColumns}
-                currentFilterType={filterColumn}
-                onFilterTypeSelected={filterTypeSelected}
-              />
-              <FormControl
-                type="text"
-                value={state.filter && state.filter.text}
-                placeholder={__('search text')}
-                onChange={filterTextUpdate}
-                onKeyPress={filterKeyPress}
-              />
-            </Filter>
-          </div>
+      <div className="row toolbar-pf table-view-pf-toolbar report-toolbar">
+        <form className="col-xs-12 col-md-6">
+          <Form.InputGroup>
+            <Filter.TypeSelector
+              filterTypes={filterColumns}
+              currentFilterType={filterColumn}
+              onFilterTypeSelected={filterTypeSelected}
+            />
+            <FormControl
+              type="text"
+              value={state.filter && state.filter.text}
+              placeholder={__('search text')}
+              onChange={filterTextUpdate}
+              onKeyPress={filterKeyPress}
+            />
+          </Form.InputGroup>
         </form>
+        {state.activeFilters && state.activeFilters.length > 0 && (
+          <div className="col-xs-12 toolbar-pf-results">
+            {renderActiveFilters()}
+          </div>)}
       </div>
-      <Table.PfProvider
-        striped
-        bordered
-        hover
-        dataTable
-        columns={columns}
-        components={{
-          header: {
-            // enables our custom header formatters extensions to reactabular
-            cell: cellProps => customHeaderFormattersDefinition({
-              cellProps,
-              columns,
-              sortingColumns: state.sortingColumns,
-              rows: state.rows,
-              onSort,
-            }),
-          },
-        }}
-      >
-        <Table.Header headerRows={resolve.headerRows({ columns })} />
-        <Table.Body rows={state.rows} rowKey="id" />
-      </Table.PfProvider>
-      <Paginator
-        viewType={PAGINATION_VIEW.TABLE}
-        pagination={state.pagination}
-        itemCount={state.total}
-        onPageSet={setPage}
-        onPerPageSelect={perPageSelect}
-      />
+      {state.total > 0 && (
+        <React.Fragment>
+          <Table.PfProvider
+            striped
+            bordered
+            hover
+            dataTable
+            columns={columns}
+            components={{
+              header: {
+                // Enables pf-react's custom header formatters extensions to reactabular.
+                cell: cellProps => customHeaderFormattersDefinition({
+                  cellProps,
+                  columns,
+                  sortingColumns: state.sortingColumns,
+                  rows: state.rows,
+                  onSort,
+                }),
+              },
+            }}
+          >
+            <Table.Header headerRows={resolve.headerRows({ columns })} />
+            <Table.Body rows={state.rows} rowKey="id" />
+          </Table.PfProvider>
+          <Paginator
+            viewType={PAGINATION_VIEW.TABLE}
+            pagination={state.pagination}
+            itemCount={state.total}
+            onPageSet={setPage}
+            onPerPageSelect={perPageSelect}
+          />
+        </React.Fragment>)}
+      {state.total === 0 && (
+        <EmptyState className="report-empty-state">
+          <EmptyState.Icon type="fa" name="search" />
+          <EmptyState.Title>{ __('No records found') }</EmptyState.Title>
+        </EmptyState>)}
     </React.Fragment>
   );
 };
