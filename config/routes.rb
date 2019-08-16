@@ -1684,7 +1684,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         create
@@ -1692,6 +1693,7 @@ Rails.application.routes.draw do
         form_field_changed
         listnav_search_selected
         quick_search
+        sections_field_changed
         show
         show_list
         tag_edit_form_field_changed
@@ -1700,6 +1702,7 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
+        compare_post +
         save_post +
         exp_post +
         dialog_runner_post
