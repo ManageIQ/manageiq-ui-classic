@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import {
@@ -22,14 +22,21 @@ const getMode = mode => ({
 })[mode] || mode;
 
 const CodeEditor = ({
-  onBeforeChange,
   mode,
   modes,
   hasError,
+  onChange,
   ...props
 }) => {
   const [codeMode, setCodeMode] = useState(mode);
-
+  const [value, setValue] = useState();
+  const [editor, setEditor] = useState();
+  useEffect(() => {
+    setValue(props.value);
+    if (editor) {
+      editor.refresh();
+    }
+  }, [editor]);
   return (
     <div>
       {modes.length > 0 && (
@@ -52,12 +59,17 @@ const CodeEditor = ({
           gutters: ['CodeMirror-lint-markers'],
         }}
         style={{ height: 'auto' }}
-        onBeforeChange={(editor, ...rest) => {
-          editor.refresh();
-          onBeforeChange(editor, ...rest);
+        onBeforeChange={(editor, _data, value) => {
+          setValue(value);
         }}
-        editorDidMount={editor => editor.refresh()}
+        onChange={(editor, _data, value) => {
+          onChange(editor, _data, value);
+        }}
+        editorDidMount={(editor) => {
+          setEditor(editor);
+        }}
         {...props}
+        value={value}
       />
     </div>
   );
@@ -66,7 +78,7 @@ const CodeEditor = ({
 CodeEditor.propTypes = {
   mode: PropTypes.oneOf(['json', 'yaml']),
   modes: PropTypes.arrayOf(PropTypes.string),
-  onBeforeChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 CodeEditor.defaultProps = {
@@ -92,7 +104,7 @@ export const DataDrivenFormCodeEditor = ({
           {isRequired ? <RequiredLabel label={label} /> : label }
         </ControlLabel>
         <CodeEditor
-          onBeforeChange={(_editor, _data, value) => onChange(value)}
+          onChange={(_editor, _data, value) => onChange(value)}
           value={value}
           hasError={!!error}
           {...props}

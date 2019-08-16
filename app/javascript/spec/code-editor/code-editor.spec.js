@@ -9,7 +9,7 @@ describe('CodeEditor component', () => {
   let initialProps;
   beforeEach(() => {
     initialProps = {
-      onBeforeChange: jest.fn(),
+      onChange: jest.fn(),
     };
   });
 
@@ -24,10 +24,10 @@ describe('CodeEditor component', () => {
   });
 
   it('should mount and assign correct props to data driven variant', () => {
-    const onBeforeChange = jest.fn();
-    const wrapper = mount(<DataDrivenFormCodeEditor {...initialProps} FieldProvider={FieldProviderComponent} onBeforeChange={onBeforeChange} />);
-    wrapper.find(CodeEditor).props().onBeforeChange('foo');
-    expect(onBeforeChange).toHaveBeenCalledTimes(1);
-    expect(onBeforeChange).toHaveBeenCalledWith('foo');
+    const onChange = jest.fn();
+    const wrapper = mount(<DataDrivenFormCodeEditor {...initialProps} FieldProvider={FieldProviderComponent} onChange={onChange} />);
+    wrapper.find(CodeEditor).props().onChange('foo');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith('foo');
   });
 });

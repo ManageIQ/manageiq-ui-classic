@@ -41,7 +41,7 @@ describe('OrcherstrationTemplate form', () => {
        * Code component is not standard input element
        * Two first parameters are codemirror element and data
        */
-      wrapper.find(CodeEditor).props().onBeforeChange(null, null, 'Some random content');
+      wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
       wrapper.update();
       wrapper.find('button.btn.btn-primary').simulate('click');
       expect(fetchMock.lastCall()).toBeTruthy();
@@ -123,7 +123,7 @@ describe('OrcherstrationTemplate form', () => {
          * Code component is not standard input element
          * Two first parameters are codemirror element and data
          */
-        wrapper.find(CodeEditor).props().onBeforeChange(null, null, 'updated content');
+        wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
         wrapper.update();
         wrapper.find('button.btn.btn-primary').simulate('click');
         /**
