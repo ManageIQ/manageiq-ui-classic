@@ -2794,7 +2794,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
+      ) +
+        compare_get,
       :post => %w(
         button
         listnav_search_selected
@@ -2808,6 +2809,7 @@ Rails.application.routes.draw do
         quick_search
       ) +
                adv_search_post +
+               compare_post +
                exp_post +
                save_post
     },
