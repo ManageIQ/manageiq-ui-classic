@@ -260,6 +260,15 @@ describe CloudNetworkController do
         controller.send(:button)
       end
     end
+
+    context 'comparing Instances displayed in a nested list of Cloud Network' do
+      let(:params) { {:pressed => 'instance_compare'} }
+
+      it 'calls comparemiq method for comparing Instances' do
+        expect(controller).to receive(:comparemiq)
+        controller.send(:button)
+      end
+    end
   end
 
   describe "#delete_networks" do
