@@ -34,4 +34,12 @@ describe UtilizationController do
       end
     end
   end
+
+  describe "breadcrumbs" do
+    it "display breadcrumbs" do
+      get :index
+
+      expect(controller.data_for_breadcrumbs).to eq([{:title=>"Overview"}, {:title=>"Utilization"}])
+    end
+  end
 end
