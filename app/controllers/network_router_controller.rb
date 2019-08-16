@@ -27,6 +27,8 @@ class NetworkRouterController < ApplicationController
       return tag("CloudSubnet")
     when "custom_button"
       custom_buttons
+    when 'instance_compare'
+      comparemiq
     when "instance_tag"
       return tag("VmOrTemplate")
     when "network_router_add_interface"
