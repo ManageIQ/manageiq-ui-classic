@@ -891,8 +891,6 @@ module ApplicationController::CiProcessing
       "image"
     elsif pressed.starts_with?("instance_")
       "instance"
-    elsif pressed.starts_with?("vm_")
-      "vm"
     elsif pressed.starts_with?("miq_template_")
       "miq_template"
     elsif pressed.starts_with?("orchestration_stack_")

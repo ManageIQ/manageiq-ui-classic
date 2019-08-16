@@ -77,14 +77,26 @@ class StorageController < ApplicationController
                                      "guest_",
                                      "host_")
 
-      scanhosts if params[:pressed] == "host_scan"
-      analyze_check_compliance_hosts if params[:pressed] == "host_analyze_check_compliance"
-      check_compliance_hosts if params[:pressed] == "host_check_compliance"
-      refreshhosts if params[:pressed] == "host_refresh"
-      tag(Host) if params[:pressed] == "host_tag"
-      assign_policies(Host) if params[:pressed] == "host_protect"
-      edit_record if params[:pressed] == "host_edit"
-      deletehosts if params[:pressed] == "host_delete"
+      case params[:pressed]
+      when 'host_analyze_check_compliance'
+        analyze_check_compliance_hosts
+      when 'host_check_compliance'
+        check_compliance_hosts
+      when 'host_compare'
+        comparemiq
+      when 'host_delete'
+        deletehosts
+      when 'host_edit'
+        edit_record
+      when 'host_protect'
+        assign_policies(Host)
+      when 'host_refresh'
+        refreshhosts
+      when 'host_scan'
+        scanhosts
+      when 'host_tag'
+        tag(Host)
+      end
 
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       # Handle Host power buttons
@@ -93,7 +105,7 @@ class StorageController < ApplicationController
       else
         process_vm_buttons(pfx)
         return if ["host_tag", "#{pfx}_policy_sim", "host_scan", "host_refresh", "host_protect",
-                   "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_protect", "#{pfx}_retire",
+                   'host_compare', "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_protect", "#{pfx}_retire",
                    "#{pfx}_ownership", "#{pfx}_right_size", "#{pfx}_reconfigure"].include?(params[:pressed]) &&
                   @flash_array.nil? # Tag screen is showing, so return
 
@@ -126,7 +138,7 @@ class StorageController < ApplicationController
     elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
     else
-      javascript_flash
+      javascript_flash unless performed?
     end
   end
 
