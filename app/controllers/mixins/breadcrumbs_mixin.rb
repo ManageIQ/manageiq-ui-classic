@@ -12,10 +12,7 @@ module Mixins
       options[:show_header] ||= false
       options[:not_tree] ||= false
       options[:hide_title] ||= false
-      options[:no_magic] ||= false
       breadcrumbs = options[:breadcrumbs] || []
-
-      return breadcrumbs.compact if options[:no_magic]
 
       # Different methods for controller with explorers and for non-explorers controllers
 

@@ -27,10 +27,14 @@ class OptimizationController < ApplicationController
         bc_optimization,
         bc_report,
         {:title => @title},
-      ].compact,
-      :no_magic => true,
+      ],
     }
   end
+
+  def data_for_breadcrumbs
+    breadcrumbs_options[:breadcrumbs].compact
+  end
+  helper_method :data_for_breadcrumbs
 
   # show optimization when in saved reports or report results
   def bc_optimization
