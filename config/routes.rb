@@ -539,7 +539,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
-      ),
+      ) +
+        compare_get,
       :post => %w(
         attach_volume
         detach_volume
@@ -552,13 +553,19 @@ Rails.application.routes.draw do
         form_field_changed
         listnav_search_selected
         quick_search
+        sections_field_changed
         show
         show_list
         tagging_edit
         tag_edit_form_field_changed
         update
         wait_for_task
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ) +
+        adv_search_post +
+        compare_post +
+        dialog_runner_post +
+        exp_post +
+        save_post
     },
 
     :cloud_volume_snapshot    => {
