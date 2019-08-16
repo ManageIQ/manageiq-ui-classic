@@ -31,7 +31,12 @@ class ServiceController < ApplicationController
     display_options = {}
     ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
     display_options[:display] = @display
-    display_options[:display_id] = params[:id]
+    display_options[:display_id] = if params[:miq_grid_checks]
+                                     params[:id]
+                                   else
+                                     # Determine related service ID for selected GO
+                                     @breadcrumbs.last[:url][/\/\d*\?/][1..-2]
+                                   end
     custom_buttons(ids, display_options)
   end
 
