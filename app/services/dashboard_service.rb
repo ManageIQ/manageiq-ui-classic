@@ -54,4 +54,25 @@ class DashboardService
       end
     end
   end
+
+  def format_data(resource, attributes, attr_icon, attr_url, attr_hsh)
+    attr_data = []
+    attributes.each do |attr|
+      attr_data.push(
+        :id        => "#{attr_hsh[attr]}_#{@record_id}",
+        :iconClass => attr_icon[attr],
+        :title     => attr_hsh[attr],
+        :count     => @record.send(attr).count,
+        :href      => get_url(resource, @record_id, attr_url[attr])
+      )
+    end
+    attr_data
+  end
+
+  def status_data
+    {
+      :iconImage => get_icon(@record),
+      :largeIcon => true,
+    }
+  end
 end
