@@ -219,5 +219,23 @@ describe SecurityGroupController do
         controller.send(:button)
       end
     end
+
+    context 'comparing Instances displayed thru Security Group summary' do
+      let(:params) { {:pressed => 'instance_compare'} }
+
+      it 'calls comparemiq to compare Instances' do
+        expect(controller).to receive(:comparemiq)
+        controller.send(:button)
+      end
+    end
+
+    context 'creating Security Group' do
+      let(:params) { {:pressed => 'security_group_new'} }
+
+      it 'redirect to action new' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'new')
+        controller.send(:button)
+      end
+    end
   end
 end

@@ -26,6 +26,8 @@ class SecurityGroupController < ApplicationController
     case params[:pressed]
     when "instance_tag"
       return tag("VmOrTemplate")
+    when 'instance_compare'
+      comparemiq
     when "network_port_tag"
       return tag("NetworkPort")
     when "security_group_tag"
@@ -34,12 +36,12 @@ class SecurityGroupController < ApplicationController
       delete_security_groups
     when "security_group_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id(params))
+    when 'security_group_new'
+      javascript_redirect(:action => "new")
     when "custom_button"
       custom_buttons
     else
-      if params[:pressed] == "security_group_new"
-        javascript_redirect(:action => "new")
-      elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
+      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
       else
         render_flash
