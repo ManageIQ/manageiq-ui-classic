@@ -607,11 +607,7 @@ class CatalogController < ApplicationController
         ra, st, svc_catalog_provision_finish_submit_endpoint
       )
       @in_a_form = true
-      if Settings.product.old_dialog_user_ui
-        dialog_initialize(ra, options)
-      else
-        replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
-      end
+      replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
       # if catalog item has no dialog and provision button was pressed from list view
       add_flash(_("No Ordering Dialog is available"), :warning)
@@ -1925,19 +1921,6 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.hide(:form_buttons_div, :paging_div).remove_paging
-        if Settings.product.old_dialog_user_ui
-          presenter.show(:form_buttons_div, :buttons_on)
-          presenter.update(
-            :form_buttons_div,
-            r[
-              :partial => "layouts/x_dialog_buttons",
-              :locals  => {
-                :action_url => "dialog_form_button_pressed",
-                :record_id  => @edit[:rec_id]
-              }
-            ]
-          )
-        end
       else
         # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record
         presenter.hide(:buttons_on, :form_buttons_div).show(:toolbar).hide(:paging_div)

@@ -1,4 +1,3 @@
-- wf = @edit[:wf] if @edit && @edit[:wf]
 = render :partial => "layouts/flash_msg"
 - if @dialog_locals
   - api_submit_endpoint ||= @dialog_locals[:api_submit_endpoint]
@@ -10,48 +9,17 @@
   - real_target_type ||= @dialog_locals[:real_target_type]
   - dialog_id ||= @dialog_locals[:dialog_id]
   - resource_action_id ||= @dialog_locals[:resource_action_id]
-  - force_old_dialog_use = @dialog_locals[:force_old_dialog_use].to_s == "true"
   - open_url ||= @dialog_locals[:open_url]
 
-- force_old_dialog_use ||= true if api_submit_endpoint.nil?
 
-- if Settings.product.old_dialog_user_ui || force_old_dialog_use
-  :javascript
-    dialogFieldRefresh.unbindAllPreviousListeners();
-
-  .row
-    .col-md-12.col-lg-12
-      #dialog_tabs
-        - auto_refreshable_field_indicies = build_auto_refreshable_field_indicies(wf)
-
-        %ul.nav.nav-tabs
-          - wf.dialog.dialog_tabs.each do |tab|
-            = miq_tab_header(tab.id) do
-              = tab.label
-        .tab-content
-          - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
-            = miq_tab_content(tab.id) do
-              - locals = {:wf                              => wf,
-                          :tab                             => tab,
-                          :tab_index                       => tab_index,
-                          :auto_refreshable_field_indicies => auto_refreshable_field_indicies}
-              = render :partial => "shared/dialogs/dialog_tab", :locals => locals
-    - if @edit && !@edit[:explorer] && @record.respond_to?(:buttons)
-      = render :partial => "layouts/x_dialog_buttons",
-               :locals  => {:action_url => 'dialog_form_button_pressed',
-                            :record_id  => @edit[:rec_id]}
-  :javascript
-    miq_tabs_init('#dialog_tabs')
-
-- else
-  = render :partial => "shared/dialogs/dialog_user",
-    :locals => {:dialog_id              => dialog_id,
-                :resource_action_id     => resource_action_id,
-                :target_id              => target_id,
-                :target_type            => target_type,
-                :real_target_type       => real_target_type,
-                :finish_submit_endpoint => finish_submit_endpoint,
-                :api_submit_endpoint    => api_submit_endpoint,
-                :api_action             => api_action,
-                :cancel_endpoint        => cancel_endpoint,
-                :open_url               => open_url}
+= render :partial => "shared/dialogs/dialog_user",
+  :locals => {:dialog_id              => dialog_id,
+              :resource_action_id     => resource_action_id,
+              :target_id              => target_id,
+              :target_type            => target_type,
+              :real_target_type       => real_target_type,
+              :finish_submit_endpoint => finish_submit_endpoint,
+              :api_submit_endpoint    => api_submit_endpoint,
+              :api_action             => api_action,
+              :cancel_endpoint        => cancel_endpoint,
+              :open_url               => open_url}
