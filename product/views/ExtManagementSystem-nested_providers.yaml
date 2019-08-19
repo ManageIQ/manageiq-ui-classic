@@ -30,6 +30,7 @@ include:
 # Order of columns (from all tables)
 col_order:
 - name
+- tenant.name
 
 # Column titles, in order
 headers:
