@@ -332,7 +332,7 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def create_related_custom_buttons(record, item)
-    item.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
+    item.custom_buttons.select{ |cb| cb.parent.present? }.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
   def record_to_service_buttons(record)
