@@ -431,11 +431,13 @@ class MiqAeCustomizationController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs  => [
         {:title => _("Automation")},
         {:title => _("Automate")},
         {:title => _("Customization")},
       ],
+      :disable_tree => action_name == 'editor',
+      :to_explorer  => 'explorer',
     }
   end
 end

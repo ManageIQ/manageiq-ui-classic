@@ -292,12 +292,14 @@ class GenericObjectDefinitionController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs  => [
         {:title => _("Automation")},
         {:title => _("Automate")},
         {:title => _("Generic Objects")},
       ],
-      :record_info => @generic_object_definition,
+      :record_info  => @generic_object_definition,
+      :disable_tree => %w[new edit].include?(action_name),
+      :to_explorer  => 'show_list',
     }
   end
 

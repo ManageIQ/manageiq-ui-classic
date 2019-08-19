@@ -14,3 +14,12 @@ export const onClick = (e) => {
     e.preventDefault();
   }
 };
+
+export const onClickToExplorer = (e, controllerName, explorerLink) => {
+  if (window.miqCheckForChanges()) {
+    miqSparkleOn();
+    window.location.assign(`/${controllerName}/${explorerLink}`);
+  } else {
+    e.preventDefault();
+  }
+};

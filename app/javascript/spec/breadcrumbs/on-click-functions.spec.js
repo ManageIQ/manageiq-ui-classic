@@ -1,6 +1,7 @@
-import { onClickTree, onClick } from '../../components/breadcrumbs/on-click-functions';
+import { onClickTree, onClick, onClickToExplorer } from '../../components/breadcrumbs/on-click-functions';
 
 import '../helpers/miqAjax';
+import '../helpers/miqSparkle';
 
 describe('Breadcrumbs onClick functions', () => {
   let preventDefaultMock;
@@ -60,6 +61,26 @@ describe('Breadcrumbs onClick functions', () => {
 
       expect(spyMiqAjax).toHaveBeenCalledWith(`/pxe/tree_select?id=${item.key}&text=${item.title}`, null, { beforeSend: true });
       expect(preventDefaultMock).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onClickToExplorer', () => {
+    it('calls prevent default', () => {
+      window.miqCheckForChanges = () => false;
+
+      onClickToExplorer(event, 'pxe', 'explorer');
+
+      expect(preventDefaultMock).toHaveBeenCalled();
+    });
+
+    it('calls location assign', () => {
+      window.miqCheckForChanges = () => true;
+      window.location.assign = jest.fn();
+
+      onClickToExplorer(event, 'pxe', 'explorer');
+
+      expect(preventDefaultMock).not.toHaveBeenCalled();
+      expect(window.location.assign).toHaveBeenCalledWith('/pxe/explorer');
     });
   });
 });
