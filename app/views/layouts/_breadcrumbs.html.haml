@@ -1,1 +1,1 @@
-= react('Breadcrumbs', { :items => (data_for_breadcrumbs if respond_to?(:data_for_breadcrumbs)), :controllerName => controller_name, :title => @title })
+= react('Breadcrumbs', { :items => try(:data_for_breadcrumbs), :controllerName => controller_name, :title => @title, :tree => x_active_tree, :node => x_node })

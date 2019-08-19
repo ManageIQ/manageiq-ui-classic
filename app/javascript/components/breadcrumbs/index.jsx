@@ -12,11 +12,18 @@ class Breadcrumbs extends Component {
   }
 
   componentDidMount() {
+    const { tree, node } = this.props;
+
     this.subscription = window.listenToRx((event) => {
       if (event.treeNodeHierarchy) {
         this.setState({ nodes: event.treeNodeHierarchy });
       }
     });
+
+    setTimeout(() => sendDataWithRx({
+      requestNodeHierarchy: node,
+      tree,
+    }));
   }
 
   componentWillUnmount() {
@@ -84,12 +91,16 @@ Breadcrumbs.propTypes = {
   )),
   title: PropTypes.string,
   controllerName: PropTypes.string,
+  tree: PropTypes.string,
+  node: PropTypes.string,
 };
 
 Breadcrumbs.defaultProps = {
   items: undefined,
   title: undefined,
   controllerName: undefined,
+  tree: undefined,
+  node: undefined,
 };
 
 export default Breadcrumbs;

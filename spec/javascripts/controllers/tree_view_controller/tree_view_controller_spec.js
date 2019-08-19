@@ -13,4 +13,14 @@ describe('treeViewController', function() {
     });
     vm.data = angular.copy(initialData);
   }));
+
+  it('Should find node path', function() {
+    var expectedPath = '[0].nodes[0]';
+    var messagePayload = {
+      tree: 'rbac_tree',
+      key: 'xx-u',
+    };
+    vm.findNodePath(vm.data[messagePayload.tree][0], messagePayload.key, '[0]');
+    expect(vm.nodePath).toBe(expectedPath);
+  });
 });

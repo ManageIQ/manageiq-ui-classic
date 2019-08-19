@@ -30,10 +30,10 @@ module Mixins
         breadcrumbs.push(:title => accord_title, :key => "#{accord_name}_accord", :action => "accordion_select") if accord_title
 
         # Append breadcrumbs created from the tree (eg "All policies > Red Hat policies > Policy 1")
-        breadcrumbs_from_tree = build_breadcrumbs_from_tree
-        breadcrumbs.concat(breadcrumbs_from_tree)
+        # breadcrumbs_from_tree = build_breadcrumbs_from_tree
+        # breadcrumbs.concat(breadcrumbs_from_tree)
 
-        if (options[:include_record] || breadcrumbs_from_tree.blank?) && options[:record_info].present? && options[:record_info][options[:record_title]] &&
+        if (options[:include_record]) && options[:record_info].present? && options[:record_info][options[:record_title]] &&
            !(@tagitems || @politems || @ownershipitems || @retireitems)
           # Append breadcrumb created from record_info if included or if result from tree was empty (eg filters page)
 

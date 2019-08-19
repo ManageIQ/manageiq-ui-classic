@@ -20,6 +20,10 @@
       if (payload.breadcrumbSelect) {
         vm.nodeSelect({key: payload.breadcrumbSelect.key}, payload.breadcrumbSelect.path);
       }
+
+      if (payload.requestNodeHierarchy) {
+        vm.propagateNode(payload.tree, payload.requestNodeHierarchy);
+      }
     });
 
     vm.initData = function(tree, selected) {
@@ -43,6 +47,37 @@
     vm.nodeSelect = function(node, path) {
       var url = path + '?id=' + encodeURIComponent(node.key.split('__')[0]);
       miqJqueryRequest(url, {beforeSend: true});
+    };
+
+    vm.propagateNode = function(tree, key) {
+      var path = vm.findNodePath(vm.data[tree], key);
+      if (path) {
+        sendDataWithRx({treeNodeHierarchy: path});
+      }
+    };
+
+    vm.findNodePath = function(nodes, key, path) {
+      if (path === undefined) {
+        path = [];
+      }
+
+      for (var i = 0; i < nodes.length; i++) {
+        var result = path.concat({
+          key: nodes[i].key,
+          title: nodes[i].text,
+        });
+
+        if (nodes[i].key === key) {
+          return result;
+        }
+
+        if (nodes[i].nodes) {
+          result = vm.findNodePath(nodes[i].nodes, key, result);
+          if (result) {
+            return result;
+          }
+        }
+      }
     };
   };
 
