@@ -109,7 +109,7 @@ module GtlHelper
     javascript_tag(<<EOJ)
       ManageIQ.gtl.loading = true;
       sendDataWithRx({unsubscribe: 'reportDataController'});
-      miq_bootstrap('#miq-gtl-view', 'ManageIQ.report_data');
+      miq_bootstrap('#miq-gtl-view');
       sendDataWithRx({initController: {
         name: 'reportDataController',
         data: {

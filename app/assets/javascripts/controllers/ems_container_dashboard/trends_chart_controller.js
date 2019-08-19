@@ -1,4 +1,3 @@
-/* global miqHttpInject */
 angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
   vm.id = 'trendsChart_' + providerId;

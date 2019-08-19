@@ -1,7 +1,5 @@
 /* global miqJqueryRequest */
 (function() {
-  var CONTROLLER_NAME = 'treeViewController';
-
   var TreeViewController = function($http, $scope) {
     var vm = this;
     vm.$http = $http;
@@ -111,5 +109,6 @@
   };
 
   TreeViewController.$inject = ['$http', '$scope'];
-  window.miqHttpInject(angular.module('ManageIQ.treeView')).controller(CONTROLLER_NAME, TreeViewController);
+
+  angular.module('ManageIQ').controller('treeViewController', TreeViewController);
 })();

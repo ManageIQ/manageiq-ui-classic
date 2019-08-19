@@ -1,7 +1,5 @@
 /* global miqJqueryRequest, miqPassFields */
 (function() {
-  var CONTROLLER_NAME = 'aeInlineMethodSelectionController';
-
   var AeInlineMethodSelectionController = function($http, $uibModal) {
     var vm = this;
     vm.$http = $http;
@@ -59,5 +57,6 @@
   };
 
   AeInlineMethodSelectionController.$inject = ['$http', '$uibModal'];
-  window.miqHttpInject(angular.module('ManageIQ.automateSelector')).controller(CONTROLLER_NAME, AeInlineMethodSelectionController);
+
+  angular.module('ManageIQ').controller('aeInlineMethodSelectionController', AeInlineMethodSelectionController);
 })();

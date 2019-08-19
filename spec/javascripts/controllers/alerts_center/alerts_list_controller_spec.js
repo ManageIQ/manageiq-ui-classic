@@ -3,7 +3,7 @@ describe('alertsListController', function() {
   var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, iconsResponse,
     alertsResponse;
 
-  beforeEach(module('alertsCenter'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(function() {
     var $window = {location: { pathname: '/alerts_overview/show' }};

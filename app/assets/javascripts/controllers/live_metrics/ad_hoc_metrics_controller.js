@@ -1,4 +1,3 @@
-/* global miqHttpInject */
 ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '$timeout', 'miqService',
   'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
   function($http, $window, $timeout, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {

@@ -17,5 +17,5 @@
                        'persist'   => 'key',
                        'lazy-load' => "(vm.lazyLoad(node, '#{tree.name}', '/#{request.parameters[:controller]}/tree_autoload'))"}
   :javascript
-    miq_bootstrap('#accordion', 'ManageIQ.treeView');
+    miq_bootstrap('#accordion');
     $('#accordion').on('show.bs.collapse', miqAccordSelect);

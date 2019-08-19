@@ -4,7 +4,7 @@ describe('alertsCenterService', function() {
     alertsResponse;
   var deferred;
 
-  beforeEach(module('alertsCenter'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function(_$timeout_, _alertsCenterService_, _API_, _$http_, _$q_, _$rootScope_) {
     testService = _alertsCenterService_;

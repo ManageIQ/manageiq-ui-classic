@@ -1,4 +1,3 @@
-/* global miqHttpInject */
 angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
   var vm = this;
   vm.id = 'recentPodsLineChart_' + providerId;
