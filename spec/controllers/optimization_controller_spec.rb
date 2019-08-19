@@ -117,6 +117,29 @@ describe OptimizationController do
                                                                      report.name,
                                                                      saved.name])
       end
+
+      context "even if report.name and saved.name match" do
+        let(:saved) do
+          result.tap do |rr|
+            rr.name = report.name
+            rr.save
+          end
+        end
+
+        it "sets breadcrumbs right" do
+          expect(controller.data_for_breadcrumbs.pluck(:title)).to eq(['Overview',
+                                                                       'Optimization',
+                                                                       report.name,
+                                                                       saved.name])
+        end
+
+        it "links to both parents" do
+          expect(controller.data_for_breadcrumbs.pluck(:url)).to eq([nil,
+                                                                     '/optimization/show_list',
+                                                                     "/optimization/show_list/#{report.id}",
+                                                                     nil])
+        end
+      end
     end
   end
 end
