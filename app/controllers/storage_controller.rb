@@ -17,10 +17,6 @@ class StorageController < ApplicationController
     %w[all_vms hosts all_miq_templates registered_vms unregistered_vms custom_button_events]
   end
 
-  def self.custom_display_method
-    %w[all_miq_templates]
-  end
-
   def display_all_miq_templates
     nested_list(MiqTemplate, :parent => @record, :association => "all_miq_templates")
   end

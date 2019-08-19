@@ -428,7 +428,7 @@ class ApplicationHelper::ToolbarChooser
         return "template_clouds_center_tb"
       elsif @display == "instances"
         return "vm_clouds_center_tb"
-      elsif @display == "miq_templates"
+      elsif @display == "miq_templates" || @display == "all_miq_templates"
         return "template_infras_center_tb"
       elsif performance_layouts.include?(@layout) && @display == "performance"
         return "#{@explorer ? "x_" : ""}vm_performance_tb"
