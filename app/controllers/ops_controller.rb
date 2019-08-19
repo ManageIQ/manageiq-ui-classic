@@ -45,7 +45,8 @@ class OpsController < ApplicationController
       :breadcrumb_title => _('Providers'),
       :association      => :nested_providers,
       :parent           => @record,
-      :no_checkboxes    => true
+      :no_checkboxes    => true,
+      :clickable        => false,
     )
   end
 
@@ -55,7 +56,8 @@ class OpsController < ApplicationController
       :breadcrumb_title => _('Automate Domains'),
       :association      => :nested_ae_namespaces,
       :parent           => @record,
-      :no_checkboxes    => true
+      :no_checkboxes    => true,
+      :clickable        => false,
     )
   end
 
