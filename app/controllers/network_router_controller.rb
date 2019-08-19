@@ -42,6 +42,8 @@ class NetworkRouterController < ApplicationController
       javascript_redirect(:action => "remove_interface_select", :id => checked_item_id)
     when "network_router_tag"
       return tag("NetworkRouter")
+    when "floating_ip_tag"
+      return tag("FloatingIp")
     else
       render_flash
     end

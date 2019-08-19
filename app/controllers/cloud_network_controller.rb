@@ -41,6 +41,8 @@ class CloudNetworkController < ApplicationController
       return tag("VmOrTemplate")
     when "network_router_tag"
       return tag("NetworkRouter")
+    when "floating_ip_tag"
+      return tag("FloatingIp")
     end
   end
 
