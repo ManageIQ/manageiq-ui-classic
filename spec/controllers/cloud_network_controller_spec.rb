@@ -250,6 +250,16 @@ describe CloudNetworkController do
         controller.send(:button)
       end
     end
+
+    context 'tagging floating ips from a list of floating ips, accessed from the details page of a network' do
+      let(:params) { {:pressed => "floating_ip_tag"} }
+
+      it 'calls tag method for tagging floating ips' do
+        expect(controller).to receive(:tag).with("FloatingIp")
+
+        controller.send(:button)
+      end
+    end
   end
 
   describe "#delete_networks" do
