@@ -91,8 +91,8 @@ module ApplicationController::Buttons
   end
 
   # Provider, Service, User, Group, Tenant, Cloud Tenant, Generic Object
-  # TODO: test each
-  MODEL_WITH_OPEN_URL = %w[Provider Service User MiqGroup Tenant CloudTenant GenericObject Vm].freeze
+  # we need a "Provider" so adding an "ExtManagementSystem" to the list.
+  MODEL_WITH_OPEN_URL = %w[ExtManagementSystem Service User MiqGroup Tenant CloudTenant GenericObject Vm].freeze
 
   def automate_button_field_changed
     unless params[:target_class]

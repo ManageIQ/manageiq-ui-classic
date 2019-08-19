@@ -2839,6 +2839,7 @@ Rails.application.routes.draw do
         x_history
         x_show
         ownership_form_fields
+        wait_for_task
       ) +
                dialog_runner_post +
                adv_search_post +
@@ -3067,7 +3068,6 @@ Rails.application.routes.draw do
         ownership_update
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-        wait_for_task
         ownership_form_fields
       ) +
                adv_search_post +
