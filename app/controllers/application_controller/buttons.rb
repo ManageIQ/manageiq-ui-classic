@@ -227,6 +227,7 @@ module ApplicationController::Buttons
       return
     end
     custom_button_set = CustomButtonSet.find(params[:id])
+    service_template = ServiceTemplate.find { |template| template.custom_button_sets.include?(custom_button_set) }
     description = custom_button_set.description
     audit = {:event => "custom_button_set_record_delete", :message => "[#{custom_button_set.description}] Record deleted", :target_id => custom_button_set.id, :target_class => "CustomButtonSet", :userid => session[:userid]}
 
@@ -238,6 +239,7 @@ module ApplicationController::Buttons
       add_flash(_("Button Group \"%{name}\": Delete successful") % {:name => description})
       id = x_node.split('_')
       id.pop
+      id.pop if x_active_tree == :sandt_tree && service_template.custom_button_sets.empty? && service_template.direct_custom_buttons.empty? # if CustomButtonSet/CustomButton was last one skip Action button that no longer exists
       self.x_node = id.join("_")
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
