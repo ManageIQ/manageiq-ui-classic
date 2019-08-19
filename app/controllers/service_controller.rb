@@ -30,7 +30,8 @@ class ServiceController < ApplicationController
     display_options = {}
     ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
     display_options[:display] = @display
-    display_options[:display_id] = params[:id]
+    display_options[:record_id] = @sb['trees']['svcs_tree']['active_node'].split('-').last
+    display_options[:display_id] = params[:id] if @lastaction == 'generic_object'
     custom_buttons(ids, display_options)
   end
 

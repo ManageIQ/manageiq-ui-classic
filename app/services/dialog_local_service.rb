@@ -46,8 +46,9 @@ class DialogLocalService
       cancel_endpoint = display_options[:cancel_endpoint] || "/vm_or_template/explorer"
     when /GenericObject/
       api_collection_name = "generic_objects"
-      cancel_endpoint = if !display_options.empty? && display_options[:display_id]
-                          "/service/show/#{display_options[:display_id]}?display=generic_objects"
+      cancel_endpoint = if !display_options.empty? && display_options[:record_id]
+                          god_url = "/service/show/#{display_options[:record_id]}?display=generic_objects"
+                          display_options[:display_id] ? "#{god_url}&generic_object_id=#{display_options[:display_id]}" : god_url
                         else
                           "/service/explorer"
                         end
