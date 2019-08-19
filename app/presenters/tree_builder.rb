@@ -229,14 +229,6 @@ class TreeBuilder
     object, ancestry_kids = object_from_ancestry(object)
     node = x_build_single_node(object, pid)
 
-    # Process the node's children
-    load_children = if object.kind_of?(Struct)
-                      # Load children for Sections, don't for other Menu Structs.
-                      object.kind_of?(Menu::Section)
-                    else
-                      object[:load_children]
-                    end
-
     # A node should be also expanded in three cases:
     # - it has been already expanded in a previous session
     # - the open_all setting is present in the tree_init_options
@@ -244,7 +236,7 @@ class TreeBuilder
     node[:expand] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
                       !!@options[:open_all]                                              ||
                       @tree_state.x_tree(@name)[:active_node] == node[:key]
-    if ancestry_kids || load_children || node[:expand] || !@options[:lazy]
+    if ancestry_kids || node[:expand] || !@options[:lazy]
 
       kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
         x_build_node(o, node[:key])
