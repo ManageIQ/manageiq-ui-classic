@@ -24,7 +24,7 @@
                                 :align       => "left"}= _('Add Method')
       .clearfix
     :javascript
-      miq_bootstrap('#automate-inline-method-select', 'ManageIQ.automateSelector');
+      miq_bootstrap('#automate-inline-method-select');
     - if !@edit[:new][:embedded_methods].nil? && !@edit[:new][:embedded_methods].empty?
       %table.table.table-striped.table-hover.table-condensed.table-bordered
         %thead

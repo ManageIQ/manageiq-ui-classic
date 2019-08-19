@@ -1,5 +1,5 @@
 describe('reportDataController', function() {
-  beforeEach(module('ManageIQ.report_data'));
+  beforeEach(module('ManageIQ'));
 
   var $controller, $httpBackend, $scope;
 

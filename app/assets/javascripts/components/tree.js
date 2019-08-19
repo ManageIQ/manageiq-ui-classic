@@ -1,4 +1,4 @@
-angular.module('miq.helpers').component('miqTree', {
+angular.module('ManageIQ').component('miqTree', {
   bindings: {
     name: '@',
     options: '<',

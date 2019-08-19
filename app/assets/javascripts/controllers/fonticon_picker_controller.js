@@ -1,7 +1,4 @@
-/* global add_flash */
 (function() {
-  var CONTROLLER_NAME = 'fonticonPickerController';
-
   var FonticonPickerController = function($element) {
     var vm = this;
     // This is an ugly hack to be able to use this component in a non-angular context with miq-observe
@@ -14,5 +11,6 @@
   };
 
   FonticonPickerController.$inject = ['$element'];
-  window.miqHttpInject(angular.module('ManageIQ.fonticonPicker')).controller(CONTROLLER_NAME, FonticonPickerController);
+
+  angular.module('ManageIQ').controller('fonticonPickerController', FonticonPickerController);
 })();

@@ -1,5 +1,3 @@
-/* global miqHttpInject */
-
 ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
   function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
 

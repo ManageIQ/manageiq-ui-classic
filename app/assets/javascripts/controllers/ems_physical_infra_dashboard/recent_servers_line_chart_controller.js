@@ -1,4 +1,3 @@
-/* global miqHttpInject */
 angular.module( 'patternfly.charts' ).component('recentServersLineChart', {
   bindings: {
     providerId: '@?',

@@ -1,4 +1,4 @@
-angular.module('miq.helpers')
+angular.module('ManageIQ')
   .component('miqSanitize', {
     bindings: {
       value: '@',

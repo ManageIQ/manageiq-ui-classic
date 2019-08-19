@@ -3,7 +3,7 @@ describe('alertsOverviewController', function() {
   var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, alertsResponse,
     iconsResponse;
 
-  beforeEach(module('alertsCenter'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function(_$rootScope_, _$controller_, _alertsCenterService_) {
     $scope = _$rootScope_.$new();

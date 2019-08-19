@@ -1,5 +1,5 @@
 describe('toolbarController', function() {
-  beforeEach(module('ManageIQ.toolbar'));
+  beforeEach(module('ManageIQ'));
 
   var middleware_toolbar_list = getJSONFixture('toolbar_middleware_server_list.json');
   var middleware_toolbar_detail = getJSONFixture('toolbar_middleware_server_detail.json');

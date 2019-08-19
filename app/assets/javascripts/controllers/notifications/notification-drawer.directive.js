@@ -1,4 +1,4 @@
-angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window', '$timeout', function($window, $timeout) {
+angular.module('ManageIQ').directive('miqNotificationDrawer', ['$window', '$timeout', function($window, $timeout) {
   'use strict';
   return {
     restrict: 'A',
