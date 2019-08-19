@@ -7,7 +7,7 @@ class TreeBuilderServices < TreeBuilder
     {:lazy => true}
   end
 
-  def root_node(id, text, tip)
+  def services_root(id, text, tip)
     {
       :id   => id,
       :text => text,
@@ -16,21 +16,17 @@ class TreeBuilderServices < TreeBuilder
     }
   end
 
-  def services_root(id, name, tip)
-    root_node(id, name, tip).update(:load_children => true)
-  end
-
   def filter_root(id, name, tip)
-    root_node(id, name, tip).update(:selectable => false)
+    services_root(id, name, tip).update(:selectable => false)
   end
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only)
     objects = [
-      services_root('asrv', _('Active Services'),  _('Active Services')),
+      services_root('asrv', _('Active Services'), _('Active Services')),
       services_root('rsrv', _('Retired Services'), _('Retired Services')),
-      filter_root('global', _('Global Filters'),   _('Global Shared Filters')),
-      filter_root('my',     _('My Filters'),       _('My Personal Filters'))
+      filter_root('global', _('Global Filters'), _('Global Shared Filters')),
+      filter_root('my', _('My Filters'), _('My Personal Filters'))
     ]
     count_only_or_objects(count_only, objects)
   end
