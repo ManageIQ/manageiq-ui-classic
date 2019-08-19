@@ -36,7 +36,7 @@ describe('Breadcrumbs component', () => {
 
     wrapper.find('a').first().simulate('click');
 
-    expect(clickFunctions.onClickTree).toHaveBeenCalledWith(initialProps.controllerName, initialProps.items[0]);
+    expect(clickFunctions.onClickTree).toHaveBeenCalledWith(expect.any(Object), initialProps.controllerName, initialProps.items[0]);
   });
 
   it('clicked on breadcrumb', () => {

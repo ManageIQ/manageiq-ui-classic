@@ -19,7 +19,7 @@ class Breadcrumbs extends Component {
           return (
             <Breadcrumb.Item
               key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
-              onClick={() => onClickTree(controllerName, item)}
+              onClick={e => onClickTree(e, controllerName, item)}
             >
               {text}
             </Breadcrumb.Item>
