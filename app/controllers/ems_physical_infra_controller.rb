@@ -89,8 +89,7 @@ class EmsPhysicalInfraController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Physical Infrastructure")},
-        {:title => _("Providers")},
-        {:url   => controller_url, :title => _("Physical Infrastructure Providers")},
+        {:title => _("Providers"), :url => controller_url},
       ],
       :record_info => @ems,
     }.compact

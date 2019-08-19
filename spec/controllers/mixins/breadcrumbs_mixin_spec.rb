@@ -230,6 +230,52 @@ describe Mixins::BreadcrumbsMixin do
           )
         end
       end
+
+      it "not contain header on show_list page" do
+        allow(subject).to receive(:action_name).and_return("show_list")
+        subject.instance_variable_set(:@title, "Do not show me")
+
+        expect(subject.data_for_breadcrumbs).to eq(
+          [
+            {:title=>"First Layer"},
+            {:title=>"Second Layer"}
+          ]
+        )
+      end
+
+      it "contain header on not show_list page" do
+        allow(subject).to receive(:action_name).and_return("edot")
+        subject.instance_variable_set(:@title, "Do show me")
+
+        expect(subject.data_for_breadcrumbs).to eq(
+          [
+            {:title=>"First Layer"},
+            {:title=>"Second Layer"},
+            {:title=>"Do show me"}
+          ]
+        )
+      end
+    end
+
+    describe "#same_as_last_breadcrumb?" do
+      let(:breadcrumbs) do
+        [
+          {:title=>"controller"},
+          {:title=>"header"}
+        ]
+      end
+
+      it "returns true if header is same as last breadcrumb" do
+        expect(subject.send(:same_as_last_breadcrumb?, breadcrumbs, "header")).to eq(true)
+      end
+
+      it "returns false if header is not same as last breadcrumb" do
+        expect(subject.send(:same_as_last_breadcrumb?, breadcrumbs, "different header")).to eq(false)
+      end
+
+      it "returns false if header is same as last breadcrumb but it in the breadcrumbs on different place" do
+        expect(subject.send(:same_as_last_breadcrumb?, breadcrumbs, "controller")).to eq(false)
+      end
     end
 
     describe "#special_page_breadcrumb" do

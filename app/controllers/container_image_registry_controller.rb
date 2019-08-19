@@ -21,8 +21,7 @@ class ContainerImageRegistryController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Image Registries")},
-        {:url   => controller_url, :title => _("Container Image Registries")},
+        {:title => _("Image Registries"), :url => controller_url},
       ],
     }
   end

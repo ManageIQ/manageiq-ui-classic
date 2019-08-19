@@ -80,8 +80,7 @@ class CloudVolumeSnapshotController < ApplicationController
       :breadcrumbs => [
         {:title => _("Storage")},
         {:title => _("Block Storage")},
-        {:title => _("Volume Snapshots")},
-        {:url   => controller_url, :title => _("Cloud Volume Snapshots")},
+        {:title => _("Volume Snapshots"), :url => controller_url},
       ],
     }
   end

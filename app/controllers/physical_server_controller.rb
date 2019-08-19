@@ -138,8 +138,7 @@ class PhysicalServerController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Physical Infrastructure")},
-        {:title => _("Servers")},
-        {:url   => controller_url, :title => _("Physical Servers")},
+        {:title => _("Servers"), :url => controller_url},
       ],
     }
   end

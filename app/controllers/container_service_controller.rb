@@ -21,8 +21,7 @@ class ContainerServiceController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Services")},
-        {:url   => controller_url, :title => _("Container Services")},
+        {:title => _("Services"), :url => controller_url},
       ],
     }
   end

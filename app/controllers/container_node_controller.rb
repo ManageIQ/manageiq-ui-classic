@@ -49,8 +49,7 @@ class ContainerNodeController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Nodes")},
-        {:url   => controller_url, :title => _("Container Nodes")},
+        {:title => _("Nodes"), :url => controller_url},
       ],
     }
   end

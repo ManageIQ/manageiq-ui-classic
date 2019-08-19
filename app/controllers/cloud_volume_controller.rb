@@ -620,8 +620,7 @@ class CloudVolumeController < ApplicationController
       :breadcrumbs => [
         {:title => _("Storage")},
         {:title => _("Block Storage")},
-        {:title => _("Volumes")},
-        {:url   => controller_url, :title => _("Cloud Volumes")},
+        {:title => _("Volumes"), :url => controller_url},
       ],
       :record_info => @volume,
     }.compact

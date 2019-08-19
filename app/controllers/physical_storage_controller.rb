@@ -41,8 +41,7 @@ class PhysicalStorageController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Physical Infrastructure")},
-        {:title => _("Storages")},
-        {:url   => controller_url, :title => _("Physical Storages")},
+        {:title => _("Storages"), :url => controller_url},
       ],
     }
   end

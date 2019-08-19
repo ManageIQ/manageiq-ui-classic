@@ -50,8 +50,7 @@ class ContainerImageController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Containers")},
-        {:title => _("Images")},
-        {:url   => controller_url, :title => _("Container Images")},
+        {:title => _("Images"), :url => controller_url},
       ],
     }
   end

@@ -123,8 +123,7 @@ class EmsCloudController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Clouds")},
-        {:title => _("Providers")},
-        {:url   => controller_url, :title => _("Cloud Providers")},
+        {:title => _("Providers"), :url => controller_url},
       ],
       :record_info => @ems,
     }.compact

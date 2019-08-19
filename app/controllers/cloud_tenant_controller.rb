@@ -257,8 +257,7 @@ class CloudTenantController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Clouds")},
-        {:title => _("Tenants")},
-        {:url   => controller_url, :title => _("Cloud Tenants")},
+        {:title => _("Tenants"), :url => controller_url},
       ],
       :record_info => @tenant,
     }.compact

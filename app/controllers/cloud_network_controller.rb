@@ -265,8 +265,7 @@ class CloudNetworkController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Networks")},
-        {:title => _("Networks")},
-        {:url   => controller_url, :title => _("Cloud Networks")},
+        {:title => _("Networks"), :url => controller_url},
       ],
       :record_info => @network,
     }
