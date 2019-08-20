@@ -1718,6 +1718,10 @@ var fontIconChar = _.memoize(function(klass) {
 });
 
 function redirectLogin(msg) {
+  if (ManageIQ.logoutInProgress) {
+    return; // prevent double redirect after pressing the Logout button
+  }
+
   add_flash(msg, 'warning');
   window.document.location.href = '/dashboard/login?timeout=true';
 }

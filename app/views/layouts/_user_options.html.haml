@@ -46,7 +46,7 @@
                   = _(menu_item.name)
       %li.divider
       %li
-        %a{:href => "/dashboard/logout", :onclick => 'return miqCheckForChanges()', :title => _("Click to Logout")}
+        %a{:href => "/dashboard/logout", :onclick => 'ManageIQ.logoutInProgress = true; return miqCheckForChanges()', :title => _("Click to Logout")}
           = _('Logout')
 
 - else
