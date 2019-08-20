@@ -8,6 +8,10 @@ module Mixins
       c.helper_method(:data_for_breadcrumbs)
     end
 
+    def add_to_breadcrumbs(breadcrumb)
+      @tail_breadcrumb = breadcrumb
+    end
+
     # Main method which creates all breadcrumbs and returns them (to view page which will parse them into breadcrumbs nav)
     def data_for_breadcrumbs
       options = breadcrumbs_options || {}
@@ -55,6 +59,7 @@ module Mixins
           breadcrumbs.push(:title => title_for_breadcrumbs) if action_breadcrumb?
         end
       end
+      breadcrumbs << @tail_breadcrumb
       breadcrumbs.compact
     end
 
