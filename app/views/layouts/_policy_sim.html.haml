@@ -3,7 +3,7 @@
   - unless @explorer
     %h1#explorer_title
       %span#explorer_title_text
-        = @right_cell_text
+        = safe_right_cell_text
   #flash_msg_div
     = render :partial => "layouts/flash_msg"
 

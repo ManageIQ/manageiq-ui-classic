@@ -1,5 +1,9 @@
 module Mixins
   module BreadcrumbsMixin
+    def title_for_breadcrumbs
+      ActiveSupport::SafeBuffer === @right_cell_text ? @title_for_breadcrumbs : @right_cell_text
+    end
+
     def self.included(c)
       c.helper_method(:data_for_breadcrumbs)
     end
@@ -44,11 +48,11 @@ module Mixins
           breadcrumbs.concat(ancestry_parents(options[:ancestry], options[:record_info], options[:record_title])) if options[:ancestry]
 
           breadcrumbs.push(:title => options[:record_info][options[:record_title]], :key => x_node_right_cell)
-          breadcrumbs.push(:title => @right_cell_text) if options[:show_header] && @right_cell_text
+          breadcrumbs.push(:title => title_for_breadcrumbs) if options[:show_header] && @right_cell_text
         else
           # Append breadcrumb from the title of right cell
           breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems)) unless options[:hide_special_item]
-          breadcrumbs.push(:title => @right_cell_text) if action_breadcrumb?
+          breadcrumbs.push(:title => title_for_breadcrumbs) if action_breadcrumb?
         end
       end
       breadcrumbs.compact

@@ -1324,4 +1324,9 @@ module ApplicationHelper
       [:description]
     end
   end
+
+  def safe_right_cell_text
+    return '' if @right_cell_text.nil?
+    ActiveSupport::SafeBuffer === @right_cell_text ? raw(@right_cell_text) : @right_cell_text
+  end
 end

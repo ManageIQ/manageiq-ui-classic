@@ -59,7 +59,7 @@
       - if @right_cell_text
         %h1#explorer_title
           %span#explorer_title_text
-            = URI.unescape(@right_cell_text)
+            = safe_right_cell_text
       - else
         %h1
           = @title

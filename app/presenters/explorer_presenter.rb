@@ -236,6 +236,10 @@ class ExplorerPresenter
     data
   end
 
+  def escape_if_unsafe(string)
+    ActiveSupport::SafeBuffer === string ? string : ERB::Util.html_escape(string)
+  end
+
   def for_render_default
     data = {:explorer => 'replace_right_cell', :scrollTop => true}
 
@@ -280,7 +284,7 @@ class ExplorerPresenter
     data[:ajaxUrl] = ajax_action_url(@options[:ajax_action]) if @options[:ajax_action]
     data[:clearGtlListGrid] = !!@options[:clear_gtl_list_grid]
     data[:setVisibility] = @options[:set_visible_elements]
-    data[:rightCellText] = ERB::Util.html_escape(@options[:right_cell_text]) if @options[:right_cell_text]
+    data[:rightCellText] = escape_if_unsafe(@options[:right_cell_text]) if @options[:right_cell_text]
     data[:providerPaused] = @options[:provider_paused] if @options.key?(:provider_paused)
 
     data[:reloadToolbars] = @options[:reload_toolbars].collect do |_div_name, toolbar|

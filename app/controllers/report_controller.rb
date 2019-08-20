@@ -150,7 +150,6 @@ class ReportController < ApplicationController
     @right_cell_text ||= _("All Reports")
     @sb[:rep_tree_build_time] = Time.now.utc
     @sb[:active_tab] = "report_info"
-    @right_cell_text.gsub!(/'/, "&apos;") # Need to escape single quote in title to load in right cell
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     # show form buttons after upload is pressed
     render :layout => "application"
@@ -435,11 +434,16 @@ class ReportController < ApplicationController
     nodes = x_node.split('-')
     show_saved_report
     @record = MiqReportResult.for_user(current_user).find(nodes.last)
-    @right_cell_text = _("Saved Report \"%{name} - %{timestamp}\"") % {
-      :name      => @record.name,
+    title_format_args ={
+      :name      => ERB::Util.html_escape(@record.name),
       :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
     }
-    @right_cell_div  = "savedreports_list"
+    @title_for_breadcrumbs = _("Saved Report \"%{name} - %{timestamp}\"") % title_format_args
+    @right_cell_text = (
+      '<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' %
+      title_format_args
+    ).html_safe
+    @right_cell_div = "savedreports_list"
   end
 
   def export_get_node_info
