@@ -16,6 +16,10 @@ module Mixins
     # Save actions buttons
     PROHIBITED_PARAMS_BUTTONS = %w[cancel save add].freeze
 
+    def add_to_breadcrumbs(breadcrumb)
+      @tail_breadcrumb = breadcrumb
+    end
+
     # Main method which creates all breadcrumbs and returns them (to view page which will parse them into breadcrumbs nav)
     def data_for_breadcrumbs(controller_options = {})
       options = breadcrumbs_options || {}
@@ -97,6 +101,7 @@ module Mixins
           breadcrumbs.push(:title => extra_title) if action_breadcrumb? && extra_title && title != extra_title
         end
       end
+      breadcrumbs << @tail_breadcrumb
       breadcrumbs.compact
     end
 
