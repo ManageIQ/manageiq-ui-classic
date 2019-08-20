@@ -896,6 +896,16 @@ class OpsController < ApplicationController
     }
   end
 
+  def nested_list(model, options = {})
+    super # (from GenericShowMixin)
+    add_to_breadcrumbs(:title => options[:breadcrumb_title])
+
+    ex = ExplorerPresenter.main_div.update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
+    ex.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
+
+    render :json => ex.for_render
+  end
+
   menu_section :set
 
   has_custom_buttons

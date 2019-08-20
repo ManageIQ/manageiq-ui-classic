@@ -197,6 +197,7 @@ module OpsHelper::TextualSummary
     if cat_items_num.positive?
       cat_items[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'service_templates')
       cat_items[:title] = _('View the list of relevant Catalog Items and Bundles')
+      cat_items[:explorer] = true
     end
 
     cat_items
@@ -211,6 +212,7 @@ module OpsHelper::TextualSummary
     if aedomains_num.positive?
       aedomains[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'ae_namespaces')
       aedomains[:title] = _('View the list of relevant Automate Domains')
+      aedomains[:explorer] = true
     end
 
     aedomains
@@ -225,6 +227,7 @@ module OpsHelper::TextualSummary
     if providers_num.positive?
       providers[:link] = url_for_only_path(:action => 'show', :id => @record.id, :display => 'providers')
       providers[:title] = _('View the list of relevant Providers')
+      providers[:explorer] = true
     end
 
     providers
