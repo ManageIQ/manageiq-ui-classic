@@ -34,27 +34,6 @@ class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :ems_cloud_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume selected Cloud Providers'),
-          t,
-          :confirm      => N_("Resume these Cloud Providers?"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
-          :ems_cloud_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause selected Cloud Providers'),
-          t,
-          :confirm      => N_("Warning: While these providers are paused no data will be collected from them. " \
-                              "This may cause gaps in inventory, metrics and events!"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
           :ems_cloud_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove selected Cloud Providers from Inventory'),
