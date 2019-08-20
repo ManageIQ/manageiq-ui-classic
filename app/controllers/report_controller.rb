@@ -423,7 +423,6 @@ class ReportController < ApplicationController
 
   def determine_xx_node_info
     case x_active_tree
-    when :savedreports_tree then saved_reports_get_node_info
     when :db_tree           then db_get_node_info
     when :reports_tree      then reports_get_node_info
     when :widgets_tree      then widget_get_node_info
@@ -531,6 +530,7 @@ class ReportController < ApplicationController
     when "root" then determine_root_node_info
     when "g"    then determine_g_node_info(nodeid)
     when "xx"   then determine_xx_node_info
+    when "rep"  then saved_reports_get_node_info
     when "rr"   then determine_rr_node_info
     when "msc"  then determine_msc_node_info(nodeid)
     end
