@@ -24,7 +24,7 @@ class ExplorerPresenter
   #   init_accords                     -- initialize accordion autoresize
   #   ajax_action                      -- Hash of options for AJAX action to fire
   #   clear_gtl_list_grid              -- Clear ManageIQ.grids.gtl_list_grid
-  #   right_cell_text
+  #   right_cell_text                  -- Page title (content of the title area)
   #
   #   :record_id    sets ManageIQ.record.recordId     -- record being displayed or edited
   #   :parent_id    sets ManageIQ.record.parentId     -- it's parent
@@ -221,6 +221,7 @@ class ExplorerPresenter
 
   def for_render_main_div
     data = check_spinner(:explorer => 'replace_main_div')
+    data[:rightCellText] = escape_if_unsafe(@options[:right_cell_text]) if @options[:right_cell_text]
     data[:updatePartials] = @options[:update_partials]
     data
   end

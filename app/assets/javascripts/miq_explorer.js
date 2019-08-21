@@ -72,6 +72,7 @@ ManageIQ.explorer.processButtons = function(data) {
 };
 
 ManageIQ.explorer.processReplaceMainDiv = function(data) {
+  ManageIQ.explorer.updateRightCellText(data);
   ManageIQ.explorer.updatePartials(data);
 };
 
@@ -153,6 +154,13 @@ ManageIQ.explorer.focus = function(data) {
 
 ManageIQ.explorer.removePaging = function() {
   miqGtlSetExtraClasses();
+};
+
+ManageIQ.explorer.updateRightCellText = function(data) {
+  if (_.isString(data.rightCellText)) {
+    $('h1#explorer_title > span#explorer_title_text')
+      .html(data.rightCellText);
+  }
 };
 
 ManageIQ.explorer.processReplaceRightCell = function(data) {
@@ -252,11 +260,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   }
 
   ManageIQ.explorer.scrollTop(data);
-
-  if (_.isString(data.rightCellText)) {
-    $('h1#explorer_title > span#explorer_title_text')
-      .html(data.rightCellText);
-  }
+  ManageIQ.explorer.updateRightCellText(data);
 
   if (data.providerPaused === true) {
     $('#providerPaused').show();
