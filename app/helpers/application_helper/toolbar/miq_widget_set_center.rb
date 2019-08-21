@@ -16,7 +16,8 @@ class ApplicationHelper::Toolbar::MiqWidgetSetCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           N_('Select a single Dashboard to copy'),
           N_('Copy Selected Dashboard'),
-          :send_checked => true
+          :send_checked => true,
+          :klass        => ApplicationHelper::Button::MiqWidgetSetCopy
         ),
         button(
           :db_delete,
