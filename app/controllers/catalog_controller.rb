@@ -1257,7 +1257,7 @@ class CatalogController < ApplicationController
   def get_form_vars
     copy_params_if_present(@edit[:new], params, %i[st_prov_type name description provision_cost catalog_id dialog_id generic_subtype long_description zone_id price retire_fqname reconfigure_fqname fqname])
 
-    @edit[:new][:display] = params[:display] == "1"
+    @edit[:new][:display] = params[:display] == "1" if params[:display] # @edit[:new][:display] should't be changed if params[:display] is not set
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
