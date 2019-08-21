@@ -316,7 +316,6 @@ class ApplicationHelper::ToolbarBuilder
         toolbar.button_group("custom_buttons_", buttons)
       end
     end
-    toolbar
   end
 
   def button_class_name(model)
