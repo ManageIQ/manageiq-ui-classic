@@ -257,6 +257,7 @@ module ReportController::Dashboards
   end
 
   def db_get_node_info
+    model, _, _ = TreeBuilder.extract_node_model_and_id(x_node)
     @sb[:nodes] = x_node.split('-')
     if @sb[:nodes].length == 1
       @default_ws = MiqWidgetSet.where_unique_on("default").where(:read_only => true).first
@@ -298,8 +299,7 @@ module ReportController::Dashboards
           @widgetsets.push(ws)
         end
       end
-    elsif (@sb[:nodes].length == 4 && @sb[:nodes][1] == "g_g") ||
-          (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")
+    elsif model == "MiqWidgetSet" || (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")
       # default dashboard nodes is selected or one under a specific group is selected
       # g = MiqGroup.find(@sb[:nodes][2])
       @record = @dashboard = MiqWidgetSet.find(@sb[:nodes].last)
