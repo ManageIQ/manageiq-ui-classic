@@ -153,6 +153,42 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
     end
+
+    context "for Service with ServiceTemplate" do
+      let(:service_template) { FactoryBot.create(:service_template) }
+      let!(:service)         { FactoryBot.create(:service, :service_template => service_template) }
+      before do
+        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
+        login_as user
+        @button = FactoryBot.create(:custom_button, :applies_to_class => "ServiceTemplate", :applies_to_id => service_template.id, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
+      end
+
+      it "#custom_button_add_related_buttons returns CustomButton without CustomButtonSet that applies to ServiceTemplate" do
+        toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
+        toolbar_builder.custom_button_add_related_buttons(service.class, service, toolbar)
+        buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
+        expect(buttons_in_toolbar.length).to eq(1)
+        expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{@button[:id]}")
+      end
+    end
+
+    context "for GenericObject with GenericObjectDefinition" do
+      let(:generic_object_definition) { FactoryBot.create(:generic_object_definition) }
+      before do
+        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
+        login_as user
+        @button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :applies_to_id => generic_object_definition.id, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
+        @goi = generic_object_definition.create_object(:name => "Test Load Balancer2")
+      end
+
+      it "#custom_button_add_related_buttons returns CustomButton without CustomButtonSet that applies to GenericObjectDefinition" do
+        toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
+        toolbar_builder.custom_button_add_related_buttons(@goi.class, @goi, toolbar)
+        buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
+        expect(buttons_in_toolbar.length).to eq(1)
+        expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{@button[:id]}")
+      end
+    end
   end
 
   describe "#twostate_button_selected" do
