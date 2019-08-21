@@ -527,6 +527,7 @@ class ReportController < ApplicationController
     when "xx"   then determine_xx_node_info
     when "rep"  then saved_reports_get_node_info
     when "rr"   then determine_rr_node_info
+    when "ws"   then determine_xx_node_info
     when "msc"  then determine_msc_node_info(nodeid)
     end
 

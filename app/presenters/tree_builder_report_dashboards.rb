@@ -16,12 +16,12 @@ class TreeBuilderReportDashboards < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots
-    objects = []
-    default_ws = MiqWidgetSet.find_by(:name => 'default', :read_only => true)
-    text = "#{default_ws.description} (#{default_ws.name})"
-    objects.push(:id => default_ws.id.to_s, :text => text, :icon => 'fa fa-tachometer', :tip => text)
-    objects.push(:id => 'g', :text => _('All Groups'), :icon => 'pficon pficon-folder-close', :tip => _('All Groups'))
-    count_only_or_objects(false, objects)
+    [
+      MiqWidgetSet.default_dashboard,
+      {
+        :id => 'g', :text => _('All Groups'), :icon => 'pficon pficon-folder-close', :tip => _('All Groups')
+      }
+    ]
   end
 
   def x_get_tree_custom_kids(object, count_only)
