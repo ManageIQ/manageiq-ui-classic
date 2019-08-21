@@ -897,10 +897,18 @@ class OpsController < ApplicationController
   end
 
   def nested_list(model, options = {})
+    # Setup the instance variables for GTL.
     super # (from GenericShowMixin)
-    add_to_breadcrumbs(:title => options[:breadcrumb_title])
 
-    ex = ExplorerPresenter.main_div.update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
+    # Update title and the content area (DOM ID 'ops_tabs')
+    title =  _("%{name} (All %{title})") % {
+      :name => @record.name,
+      :title => options[:breadcrumb_title]
+    }
+    ex = ExplorerPresenter.main_div(:right_cell_text => title).update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
+
+    # Also update breadcrumbs.
+    add_to_breadcrumbs(:title => options[:breadcrumb_title])
     ex.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => ex.for_render
