@@ -503,7 +503,6 @@ class ProviderForemanController < ApplicationController
         {:title => _("Management")},
       ],
       :record_title => :hostname,
-      :show_header  => @sb[:action],
     }
   end
 

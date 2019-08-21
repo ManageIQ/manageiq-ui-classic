@@ -48,22 +48,6 @@ describe Mixins::BreadcrumbsMixin do
       end
     end
 
-    describe "#accord_name" do
-      context 'when features contains the tree' do
-        it "returns name" do
-          expect(subject.accord_name).to eq(:utilization)
-        end
-      end
-
-      context 'when features do not contains the tree' do
-        before { allow(subject).to receive(:x_active_accord).and_return(:not_tree) }
-
-        it "returns nil" do
-          expect(subject.accord_name).to be(nil)
-        end
-      end
-    end
-
     describe "#accord_title" do
       context 'when features contains the tree' do
         it "returns title" do
@@ -81,44 +65,50 @@ describe Mixins::BreadcrumbsMixin do
     end
 
     context 'build tree' do
-      before do
-        allow(subject).to receive(:x_node).and_return("xx-1")
-        allow(TreeBuilderUtilization).to receive(:new).and_return(tree)
-        allow(tree).to receive(:tree_nodes).and_return(
-          [
-            {
-              :key   => 'root',
-              :text  => 'Root Node',
-              :nodes => [
-                {:key => 'xx-1', :text => 'Item 1'},
-                {:key => 'xx-2', :text => 'Item 2'}
-              ]
+      let(:tree_nodes) do
+        [
+          {
+            :key   => 'root',
+            :text  => 'Root Node',
+            :nodes => [
+              {:key => 'xx-1', :text => 'Item 1'},
+              {:key => 'xx-2', :text => 'Item 2'}
+            ]
 
-            }
-          ]
-        )
+          }
+        ]
       end
 
-      describe "#build_breadcrumbs_from_tree" do
-        it "returns breadcrumbs" do
-          expect(subject.build_breadcrumbs_from_tree).to eq(
-            [
-              {:title => "Root Node", :key => "root"},
-              {:title => "Item 1", :key => "xx-1"}
-            ]
-          )
+      before do
+        allow(subject).to receive(:x_node).and_return("xx-1")
+        allow(subject).to receive(:x_node_right_cell).and_return("xx-1")
+        allow(TreeBuilderUtilization).to receive(:new).and_return(tree)
+        allow(tree).to receive(:tree_nodes).and_return(tree_nodes)
+      end
+
+      describe "#build_breadcrumb_from_tree" do
+        let(:tree) { TreeBuilderUtilization.new(:utilization_tree, {}, false) }
+
+        before do
+          allow(tree).to receive(:tree_nodes).and_return(tree_nodes)
+        end
+
+        it "returns last item as a breadcrumb" do
+          subject.instance_variable_set(:@trees, [tree])
+
+          expect(subject.build_breadcrumb_from_tree).to eq(:key => "xx-1", :title => "Item 1")
         end
       end
 
       describe "#data_for_breadcrumbs" do
+        before { subject.instance_variable_set(:@x_node_text, :utilization_tree => "Item 1") }
         it "creates breadcrumbs" do
           expect(subject.data_for_breadcrumbs).to eq(
             [
               {:title => "First Layer"},
               {:title => "Second Layer"},
-              {:title => "Utilization", :key => "utilization_accord", :action => "accordion_select"},
-              {:title => "Root Node", :key => "root"},
-              {:title => "Item 1", :key => "xx-1"}
+              {:title => "Utilization", :key => "root"},
+              {:key => "xx-1", :title => "Item 1"},
             ]
           )
         end
@@ -327,6 +317,36 @@ describe Mixins::BreadcrumbsMixin do
           expect(subject.special_page_breadcrumb(tagitems)).to eq(nil)
         end
       end
+    end
+  end
+
+  describe "session" do
+    describe '#x_node_text_from_session' do
+      it "Gets variables correctly" do
+        allow(subject).to receive(:session).and_return(:x_node_text => {:utilization_tree => "Item 1"})
+        subject.send(:x_node_text_from_session)
+
+        expect(subject.instance_variable_get(:@x_node_text)).to eq(:utilization_tree => "Item 1")
+      end
+    end
+
+    describe '#x_node_text_save_to_session' do
+      it "Sets variables correctly" do
+        allow(subject).to receive(:session).and_return({})
+        subject.instance_variable_set(:@x_node_text, :utilization_tree => "Item 1")
+        subject.send(:x_node_text_save_to_session)
+
+        expect(subject.session[:x_node_text]).to eq(:utilization_tree => "Item 1")
+      end
+    end
+  end
+
+  describe "#x_node_text" do
+    before { allow(subject).to receive(:x_active_tree).and_return(:utilization_tree) }
+    it "sets text to @x_node_text" do
+      subject.send(:x_node_text=, "VM UTIL 1")
+
+      expect(subject.instance_variable_get(:@x_node_text)).to eq(:utilization_tree => "VM UTIL 1")
     end
   end
 end
