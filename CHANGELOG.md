@@ -5,14 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-10
+Unreleased as of Sprint 118 - 2019-08-19
+
+### Added
+- Add Set Ownership to Key Pairs [(#5973)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5973)
+- Add Set Ownership to Auth Key Pairs [(#5967)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5967)
+- Change service-ownership-form to pull data from the API [(#5863)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5863)
+
+### Fixed
+- Fixed API endpoint for GO object custom button dialogs. [(#6052)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6052)
+- Fix automate/simulation breadcrumbs [(#6033)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6033)
+- Use react-codemirror onChange event instead of onBeforeChange. [(#6030)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6030)
+- Make select in new cloud tenant always headed to bottom [(#6018)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6018)
+- Fix breadcrumbs in control section [(#6004)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6004)
+- Removed `Tenant` column from list view. [(#5996)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5996)
+- Fixed correct setting of record to get counts of relationships [(#5995)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5995)
+- Switch the clickability between networks and storage trees [(#5990)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5990)
+- Build the selected node key from the session stored model in RBS 🌳🐞 [(#5974)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5974)
+- Add the configuration toolbar button on Ansible/Templates screen [(#5968)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5968)
+- Do not remember tab when downloading report from list view. [(#5964)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5964)
+- Remove Host Discover and Add buttons [(#5963)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5963)
+- Fixed call that build list of Storages to build Host file drop down [(#5952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5952)
+- Remove report names from group settings hash when reports are deleted [(#5950)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5950)
+- Disable <Choose a Role> option to prevent error while adding Group [(#5933)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5933)
+- Do not append title to breadcrumbs on show_list pages [(#5904)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5904)
+- Switch to Advanced tab when only error is "Request is required" [(#5873)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5873)
+- Drop legacy dialog user [(#5864)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5864)
+
+## Hammer-10 - Released 2019-08-15
 
 ### Fixed
 - Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828) 
 - Dialog copy - remove ids pointing to the original dialog [(#5856)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5856)
 - user_input_filter - don't send Cancel on Apply [(#5875)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5875)
 
-## Ivanchuk-Beta2
+## Ivanchuk-Beta2 - Released 2019-08-14
 
 ### Added
 - Remove delimiter for Request ID [(#5872)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5872)
