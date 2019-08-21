@@ -251,7 +251,6 @@ class VmCloudController < ApplicationController
         {:title => _("Instances")},
       ],
       :include_record => true,
-      :show_header    => @sb[:action],
     }
   end
 

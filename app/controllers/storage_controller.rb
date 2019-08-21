@@ -497,7 +497,6 @@ class StorageController < ApplicationController
         {:title => _("Infrastructure")},
         {:title => _("Datastores"), :url => File.join(controller_url, 'explorer')},
       ],
-      :include_record => true,
     }
   end
 
