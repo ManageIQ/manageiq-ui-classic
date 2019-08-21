@@ -39,11 +39,11 @@ describe('Breadcrumbs onClick functions', () => {
       window.miqCheckForChanges = () => true;
       jest.spyOn(window, 'sendDataWithRx');
 
-      onClickTree('pxe', { key: 'xx-11' });
+      onClickTree('pxe', { key: 'xx-11', title: 'My PXE Thing' });
 
       expect(window.sendDataWithRx).toHaveBeenCalledWith({
         breadcrumbSelect: {
-          key: 'xx-11',
+          item: { key: 'xx-11', title: 'My PXE Thing' },
           path: '/pxe/tree_select',
         },
       });
