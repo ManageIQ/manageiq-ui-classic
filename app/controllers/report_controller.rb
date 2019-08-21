@@ -431,18 +431,7 @@ class ReportController < ApplicationController
   end
 
   def determine_rr_node_info
-    nodes = x_node.split('-')
-    show_saved_report
-    @record = MiqReportResult.for_user(current_user).find(nodes.last)
-    title_format_args ={
-      :name      => ERB::Util.html_escape(@record.name),
-      :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
-    }
-    @title_for_breadcrumbs = _("Saved Report \"%{name} - %{timestamp}\"") % title_format_args
-    @right_cell_text = (
-      '<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' %
-      title_format_args
-    ).html_safe
+    show_saved_report(determine_report_result_id('savedreports'))
     @right_cell_div = "savedreports_list"
   end
 
@@ -504,10 +493,12 @@ class ReportController < ApplicationController
       end
       get_all_reps(nodes[4])
 
-    elsif nodes.length == 6
-      @sb[:last_saved_id] = x_node
+    elsif nodes.length == 6 # Report result selected.
       @sb[:miq_report_id] = nil
-      show_saved
+      report = show_saved_report(determine_report_result_id('report'))
+      if report.blank?
+        self.x_active_tree = :reports_tree
+      end
     end
 
     @right_cell_div ||= "report_list"
