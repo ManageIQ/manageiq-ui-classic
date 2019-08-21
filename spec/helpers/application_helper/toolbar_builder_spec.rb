@@ -154,39 +154,35 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it_behaves_like "with custom buttons"
     end
 
-    context "for Service with ServiceTemplate" do
-      let(:service_template) { FactoryBot.create(:service_template) }
-      let!(:service)         { FactoryBot.create(:service, :service_template => service_template) }
-      before do
-        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
-        login_as user
-        @button = FactoryBot.create(:custom_button, :applies_to_class => "ServiceTemplate", :applies_to_id => service_template.id, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
-      end
+    [[:service_template, :service], [:generic_object_definition, :generic_object]].each do |template, instance|
+      context "for #{instance.to_s.camelize} with #{template.to_s.camelize}" do
+        before do
+          allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
+          login_as user
+        end
+        let(:definition_object) { FactoryBot.create(template) }
+        let(:object) { FactoryBot.create(instance, "#{template}_id".to_sym => definition_object.id) }
+        let!(:button) do
+          FactoryBot.create(:custom_button,
+                            :applies_to_class => definition_object.class,
+                            :applies_to_id    => definition_object.id,
+                            :visibility       => {:roles => ["_ALL_"]},
+                            :options          => {:button_icon => 'fa fa-star'})
+        end
+        let!(:unassigned_button) do
+          FactoryBot.create(:custom_button,
+                            :applies_to_class => object.class,
+                            :visibility       => {:roles => ["_ALL_"]},
+                            :options          => {:button_icon => 'fa fa-star'})
+        end
 
-      it "#custom_button_add_related_buttons returns CustomButton without CustomButtonSet that applies to ServiceTemplate" do
-        toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
-        toolbar_builder.custom_button_add_related_buttons(service.class, service, toolbar)
-        buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
-        expect(buttons_in_toolbar.length).to eq(1)
-        expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{@button[:id]}")
-      end
-    end
-
-    context "for GenericObject with GenericObjectDefinition" do
-      let(:generic_object_definition) { FactoryBot.create(:generic_object_definition) }
-      before do
-        allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
-        login_as user
-        @button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :applies_to_id => generic_object_definition.id, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
-        @goi = generic_object_definition.create_object(:name => "Test Load Balancer2")
-      end
-
-      it "#custom_button_add_related_buttons returns CustomButton without CustomButtonSet that applies to GenericObjectDefinition" do
-        toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
-        toolbar_builder.custom_button_add_related_buttons(@goi.class, @goi, toolbar)
-        buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
-        expect(buttons_in_toolbar.length).to eq(1)
-        expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{@button[:id]}")
+        it "#custom_button_add_related_buttons returns only CustomButton without CustomButtonSet that applies to #{template.to_s.camelize}" do
+          toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
+          toolbar_builder.custom_button_add_related_buttons(object.class, object, toolbar)
+          buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
+          expect(buttons_in_toolbar.length).to eq(1)
+          expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{button[:id]}")
+        end
       end
     end
   end
