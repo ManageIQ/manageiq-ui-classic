@@ -33,23 +33,6 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
           t,
           :full_path => "<%= edit_ems_cloud_path(@ems) %>"),
         button(
-          :ems_cloud_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume this Cloud Provider'),
-          t,
-          :confirm   => N_("Resume this Cloud Provider?"),
-          :enabled   => proc { !@record.enabled? },
-          :url_parms => "main_div"),
-        button(
-          :ems_cloud_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause this Cloud Provider'),
-          t,
-          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
-                         "This may cause gaps in inventory, metrics and events!"),
-          :enabled   => proc { @record.enabled? },
-          :url_parms => "main_div"),
-        button(
           :ems_cloud_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Cloud Provider from Inventory'),

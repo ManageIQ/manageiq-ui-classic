@@ -40,27 +40,6 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           :onwhen       => "1"
         ),
         button(
-          :automation_manager_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume selected Automation Manager Providers'),
-          t,
-          :confirm      => N_("Resume these Automation Manager Providers?"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
-          :automation_manager_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause selected Automation Manager Providers'),
-          t,
-          :confirm      => N_("Warning: While these providers are paused no data will be collected from them. " \
-                              "This may cause gaps in inventory, metrics and events!"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
           :automation_manager_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected items from Inventory'),

@@ -32,23 +32,6 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
           t = N_('Edit this Infrastructure Provider'),
           t),
         button(
-          :ems_infra_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume this Infrastructure Provider'),
-          t,
-          :confirm   => N_("Resume this Infrastructure Provider?"),
-          :enabled   => proc { !@record.enabled? },
-          :url_parms => "main_div"),
-        button(
-          :ems_infra_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause this Infrastructure Provider'),
-          t,
-          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
-                         "This may cause gaps in inventory, metrics and events!"),
-          :enabled   => proc { @record.enabled? },
-          :url_parms => "main_div"),
-        button(
           :ems_infra_scale,
           'pficon pficon-edit fa-lg',
           t = N_('Scale this Infrastructure Provider'),

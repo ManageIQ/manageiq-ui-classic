@@ -42,27 +42,6 @@ class ApplicationHelper::Toolbar::EmsInfrasCenter < ApplicationHelper::Toolbar::
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :ems_infra_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume selected Infrastructure Providers'),
-          t,
-          :confirm      => N_("Resume these Infrastructure Providers?"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
-          :ems_infra_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause selected Infrastructure Providers'),
-          t,
-          :confirm      => N_("Warning: While these providers are paused no data will be collected from them. " \
-                              "This may cause gaps in inventory, metrics and events!"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
           :ems_infra_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove selected Infrastructure Providers from Inventory'),

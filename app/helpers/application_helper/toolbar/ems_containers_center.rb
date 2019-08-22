@@ -46,27 +46,6 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :ems_container_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume selected Containers Providers'),
-          t,
-          :confirm      => N_("Resume these Containers Providers?"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
-          :ems_container_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause selected Containers Providers'),
-          t,
-          :confirm      => N_("Warning: While these providers are paused no data will be collected from them. " \
-                              "This may cause gaps in inventory, metrics and events!"),
-          :enabled      => false,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :onwhen       => "1+"),
-        button(
           :ems_container_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove selected Containers Providers from Inventory'),
