@@ -1,2 +1,10 @@
 :ui:
   :custom_menu:
+docs:
+  :ansible_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#adding-an-ansible-tower-provider
+  :cloud_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#cloud_providers
+  :configuration_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#configuration_management_providers
+  :container_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#containers-providers
+  :infra_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#infrastructure_providers
+  :network_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#network_providers
+  :physical_infra_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#infrastructure_providers

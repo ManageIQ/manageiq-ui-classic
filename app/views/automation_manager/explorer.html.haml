@@ -23,4 +23,4 @@
     - else
       = render :partial => 'layouts/empty',
                :locals => {:add_message => _("Add a new Ansible Tower Provider"),
-                           :documentation => 'http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#adding-an-ansible-tower-provider'}
+                           :documentation => ::Settings.docs.ansible_provider}
