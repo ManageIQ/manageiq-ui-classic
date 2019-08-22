@@ -17,6 +17,23 @@ module ReportController::SavedReports
     @sb[session_var_name]
   end
 
+  def self.saved_report_title(rr)
+    title_format_args = {
+      :name      => ERB::Util.html_escape(rr.name),
+      :timestamp => format_timezone(rr.created_on, Time.zone, "gt")
+    }
+
+    [
+      # @right_cell_text
+      (
+        '<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' %
+        title_format_args
+      ).html_safe,
+      # @title_for_breadcrumbs
+      _("Saved Report \"%{name} - %{timestamp}\"") % title_format_args,
+    ]
+  end
+
   def show_saved_report(id)
     rr = MiqReportResult.for_user(current_user).find(id)
     if rr.nil? # Saved report no longer exists
@@ -25,15 +42,7 @@ module ReportController::SavedReports
     end
     @record = rr
 
-    title_format_args = {
-      :name      => ERB::Util.html_escape(@record.name),
-      :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
-    }
-    @title_for_breadcrumbs = _("Saved Report \"%{name} - %{timestamp}\"") % title_format_args
-    @right_cell_text = (
-      '<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' %
-      title_format_args
-    ).html_safe
+    @right_cell_text, @title_for_breadcrumbs = ReportController::SavedReports.saved_report_title(@record)
 
     unless report_admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
       add_flash(_("Report is not authorized for the logged in user"), :error)
