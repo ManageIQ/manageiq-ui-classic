@@ -11,6 +11,12 @@ describe Mixins::Actions::VmActions::Reconfigure do
     context 'populate list of Host files' do
       let(:controller) { VmInfraController.new }
 
+      it "gets empty list when VM's has no host" do
+        @vm.host = nil
+        storage_list = controller.send(:get_iso_options, @vm)
+        expect(storage_list.count).to be(0)
+      end
+
       it "gets list of VM's host storages that have iso files" do
         @host.storages << @datastore
         storage_list = controller.send(:get_iso_options, @vm)

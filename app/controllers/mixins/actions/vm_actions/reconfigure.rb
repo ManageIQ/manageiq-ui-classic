@@ -232,6 +232,7 @@ module Mixins
 
         def get_iso_options(vm)
           iso_options = []
+          return iso_options unless vm&.host&.storages
 
           datastore_ids = vm.host.storages.pluck(:id)
           # determine available iso files for the datastores
