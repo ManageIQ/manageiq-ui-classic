@@ -23,23 +23,6 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < Applicati
           t,
           :url => "edit"),
         button(
-          :provider_foreman_resume,
-          'pficon pficon-trend-up fa-lg',
-          t = N_('Resume this Configuration Management Provider'),
-          t,
-          :confirm   => N_("Resume this Configuration Management Provider?"),
-          :enabled   => proc { !@record.enabled? },
-          :url_parms => "main_div"),
-        button(
-          :provider_foreman_pause,
-          'pficon pficon-trend-down fa-lg',
-          t = N_('Pause this Configuration Management Provider'),
-          t,
-          :confirm   => N_("Warning: While this provider is paused no data will be collected from it. " \
-                         "This may cause gaps in inventory, metrics and events!"),
-          :enabled   => proc { @record.enabled? },
-          :url_parms => "main_div"),
-        button(
           :provider_foreman_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
