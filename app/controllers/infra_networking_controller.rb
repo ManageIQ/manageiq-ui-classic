@@ -359,17 +359,11 @@ class InfraNetworkingController < ApplicationController
         :item_name => @item.name,
         :action    => action_type(@sb[:action], 1)
       }
-      x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
     else
       header = _("\"%{action}\" for Switch \"%{name}\"") % {
         :name   => name,
         :action => action_type(@sb[:action], 2)
       }
-      if @display && @display != "main"
-        x_history_add_item(:id => x_node, :text => header, :display => @display)
-      elsif @sb[:action] != "drift_history"
-        x_history_add_item(:id => x_node, :text => header, :action => @sb[:action])
-      end
     end
     action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
