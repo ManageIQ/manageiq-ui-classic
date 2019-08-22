@@ -19,12 +19,14 @@
               {{ vm.dialog.content[0].description }}
     %dialog-editor{'tree-options' => 'vm.treeOptions'}
     .pull-right
-      %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
-                              "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) || vm.saveButtonDisabled",
-                              "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
-                              :type => "button"}= _("Save")
-      %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
-                              :type => "button"}= _("Cancel")
+      %miq-button{'disabled-title' => "{{vm.DialogValidation.invalid.message}}",
+                  'enabled'        => 'vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content) && ! vm.saveButtonDisabled',
+                  'name'           => _("Save"),
+                  'on-click'       => "vm.saveDialogDetails()",
+                  'primary'        => 'true'}
+      %miq-button{'name'     => _("Cancel"),
+                  'enabled'  => 'true',
+                  'on-click' => "vm.dismissChanges()"}
 
 :javascript
   ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
