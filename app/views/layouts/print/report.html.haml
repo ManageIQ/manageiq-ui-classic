@@ -4,6 +4,6 @@
       - @report.headers.each_with_index do |header, i|
         - unless @report.column_is_hidden?(@report.col_order[i])
           %th
-            = h(header)
+            = h(_(header))
   %tbody
     = @data.html_safe
