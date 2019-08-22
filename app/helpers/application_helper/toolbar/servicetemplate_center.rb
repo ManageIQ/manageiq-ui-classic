@@ -21,6 +21,12 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
           :klass => ApplicationHelper::Button::CatalogItemButtonNew,
         ),
         button(
+          :ab_group_reorder,
+          'pficon pficon-edit fa-lg',
+          t = N_('Reorder Custom Buttons and Groups'),
+          t,
+          :klass => ApplicationHelper::Button::CatalogItemButtonReorder),
+        button(
           :catalogitem_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Item'),
