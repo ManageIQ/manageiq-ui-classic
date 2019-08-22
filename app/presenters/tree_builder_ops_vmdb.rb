@@ -22,23 +22,8 @@ class TreeBuilderOpsVmdb < TreeBuilder
   end
 
   # Handle custom tree nodes (object is a Hash)
-  def x_get_tree_custom_kids(object, count_only)
-    vmdb_table_id = object[:id].split("|").last.split('-').last
-    vmdb_indexes  = VmdbIndex.includes(:vmdb_table).where(:vmdb_tables => {:type => 'VmdbTableEvm', :id => vmdb_table_id})
-    count_only_or_objects(count_only, vmdb_indexes, "name")
-  end
-
   def x_get_tree_vmdb_table_kids(object, count_only)
-    return 1 if count_only # each table has one indexes subdir
-
-    [
-      {
-        :id     => object.id.to_s,
-        :text   => _("Indexes"),
-        :icon   => "pficon pficon-folder-close",
-        :tip    => _("Indexes"),
-        :expand => true # load this node expanded with its children
-      }
-    ]
+    vmdb_indexes = VmdbIndex.includes(:vmdb_table).where(:vmdb_tables => {:type => 'VmdbTableEvm', :id => object.id})
+    count_only_or_objects(count_only, vmdb_indexes, "name")
   end
 end

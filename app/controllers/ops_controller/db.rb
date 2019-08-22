@@ -108,16 +108,9 @@ module OpsController::Db
       @tab_text = _("Tables")
     elsif @sb[:active_tab] == "db_indexes" || params[:action] == "x_show" # if table is selected
       nodes = x_node.split('-')
-      if nodes.first == "xx"
-        tb = VmdbTableEvm.find(nodes.last)
-        @indexes = get_indexes(tb)
-        @right_cell_text = _("Indexes for VMDB Table \"%{name}\"") % {:name => tb.name}
-        @tab_text = "%{table_name} Indexes" % {:table_name => tb.name}
-      else
-        @vmdb_index = VmdbIndex.find(nodes.last)
-        @right_cell_text = _("VMDB Index \"%{name}\"") % {:name => @vmdb_index.name}
-        @tab_text = @vmdb_index.name
-      end
+      @vmdb_index = VmdbIndex.find(nodes.last)
+      @right_cell_text = _("VMDB Index \"%{name}\"") % {:name => @vmdb_index.name}
+      @tab_text = @vmdb_index.name
     elsif @sb[:active_tab] == "db_utilization"
       @record = VmdbTable.find(x_node.split('-').last)
       perf_gen_init_options # Initialize perf chart options, charts will be generated async
@@ -132,11 +125,6 @@ module OpsController::Db
       @right_cell_text = _("VMDB Table \"%{name}\"") % {:name => @table.name}
       @tab_text = @table.name
     end
-  end
-
-  def get_indexes(tb)
-    return [] unless tb.kind_of?(VmdbTableEvm)
-    tb.vmdb_indexes.sort_by(&:name)
   end
 
   def db_refresh
