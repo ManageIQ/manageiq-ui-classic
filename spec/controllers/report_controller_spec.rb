@@ -1326,10 +1326,10 @@ describe ReportController do
           controller.params = {:id => report_result_id,
                                :controller => "report",
                                :action => "explorer"}
-          controller.instance_variable_set(:@sb, :last_savedreports_id => nil)
+          controller.instance_variable_set(:@sb, {})
           controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
           allow(controller).to receive(:get_all_reps)
-          controller.send(:show_saved_report)
+          controller.send(:show_saved_report, report_result_id)
 
           fetched_report_result_id = controller.instance_variable_get(:@report_result_id)
           expect(fetched_report_result_id).to eq(@rpt.miq_report_results.first.id)
