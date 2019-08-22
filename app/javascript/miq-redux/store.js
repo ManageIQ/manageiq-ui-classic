@@ -3,15 +3,13 @@ import createReducer from './reducer';
 import createMiddlewares from './middleware';
 import { history } from '../miq-component/react-history.js';
 
-const initialState = {};
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const initializeStore = () => {
+const initializeStore = (initialState = {}, useHistory = true) => {
   const store = createStore(
-    createReducer({ history }),
+    createReducer(useHistory ? { history } : {}),
     initialState,
-    composeEnhancers(applyMiddleware(...createMiddlewares(history))),
+    composeEnhancers(applyMiddleware(...createMiddlewares(useHistory && history))),
   );
 
   /**
@@ -31,7 +29,7 @@ const initializeStore = () => {
      * replace current reducer with new function containing all new reducers
      * must be connected to router again
      */
-    store.replaceReducer(createReducer({ asyncReducers: store.asyncReducers, history }));
+    store.replaceReducer(createReducer({ asyncReducers: store.asyncReducers, history: useHistory ? history : null }));
     return store;
   };
   return store;

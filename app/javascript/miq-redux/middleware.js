@@ -18,8 +18,8 @@ export const taggingMiddleware = store => next => action => {
 }
 
 export default history => [
-  routerMiddleware(history),
-  taggingMiddleware,
+  history && routerMiddleware(history),
+  taggingMiddleware,  // FIXME: this should be added by tagging code, not globally
   thunk,
   promiseMiddleware(),
-];
+].filter(truthy => truthy);

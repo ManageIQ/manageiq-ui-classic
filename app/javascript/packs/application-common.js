@@ -32,6 +32,7 @@ ManageIQ.component = {
 };
 
 const store = initializeStore();
+const ephemeralStore = initializeStore({}, false);
 
 ManageIQ.redux = {
   store,
@@ -40,6 +41,11 @@ ManageIQ.redux = {
   ...createReduxRoutingActions(store),
   formButtonsActions: createFormButtonsActions(store),
   formButtonsActionTypes: { ...formButtonsActionTypes },
+  ephemeral: {
+    addReducer: ephemeralStore.injectReducers,
+    dispatch: ephemeralStore.dispatch,
+    store: ephemeralStore,
+  },
 };
 
 ManageIQ.angular.rxSubject = rxSubject;
