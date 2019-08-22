@@ -171,7 +171,6 @@ class GenericObjectDefinitionController < ApplicationController
     when 'root' then :root
     when 'god'  then :god
     when 'cbg'  then :button_group
-    when 'xx'   then :actions
     when 'cb'   then :button
     else        raise 'Invalid node type.'
     end
@@ -181,7 +180,6 @@ class GenericObjectDefinitionController < ApplicationController
     case node_type(node)
     when :root         then root_node_info
     when :god          then god_node_info(node)
-    when :actions      then actions_node_info(node)
     when :button_group then custom_button_group_node_info(node)
     when :button       then custom_button_node_info(node)
     end
@@ -198,14 +196,6 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition'
     @record = GenericObjectDefinition.find(node.split('-').last)
     @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
-    @gtl_type = nil
-  end
-
-  def actions_node_info(node)
-    @actions_node = true
-    @center_toolbar = 'generic_object_definition_actions_node'
-    @record = GenericObjectDefinition.find(node.split('-').last)
-    @right_cell_text = _("Actions for %{model}") % {:model => _("Generic Object Class")}
     @gtl_type = nil
   end
 
@@ -254,13 +244,6 @@ class GenericObjectDefinitionController < ApplicationController
     [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_center_tb")]
   end
 
-  def process_actions_node(presenter, node)
-    actions_node_info(node)
-    presenter.update(:main_div, r[:partial => 'show_actions'])
-    presenter.hide(:paging_div)
-    [build_toolbar("x_summary_view_tb"), build_toolbar("generic_object_definition_actions_node_center_tb")]
-  end
-
   def process_custom_button_group_node(presenter, node)
     custom_button_group_node_info(node)
     presenter.update(:main_div, r[:partial => 'show_custom_button_group'])
@@ -284,7 +267,6 @@ class GenericObjectDefinitionController < ApplicationController
     v_tb, c_tb = case node_type(node)
                  when :root         then process_root_node(presenter)
                  when :god          then process_god_node(presenter, node)
-                 when :actions      then process_actions_node(presenter, node)
                  when :button_group then process_custom_button_group_node(presenter, node)
                  when :button       then process_custom_button_node(presenter, node)
                  end
