@@ -1,28 +1,39 @@
 module ReportController::SavedReports
   extend ActiveSupport::Concern
 
-  def show_saved
-    @sb[:last_saved_id] = params[:id] if params[:id] && params[:id] != "report" && !accordion_select?(params[:id])
-    fetch_saved_report(@sb[:last_saved_id])
-    if @report.blank? # if report was nil. reset active tree back to report tree, and keep active node report to be same
-      self.x_active_tree = :reports_tree
+  # We need to remember last displayed report result id.
+  # So that when switching between accordions, we know what to display.
+  # We remember separately for saved reports and for reports based on 'location'.
+  def determine_report_result_id(location)
+    session_var_name = "#{location}_saved_id"
+
+    unless params[:id].blank? ||
+           params[:id] == location ||
+           accordion_select?(params[:id])
+
+      @sb[session_var_name] = params[:id].to_s.split('-').last
     end
+
+    @sb[session_var_name]
   end
 
-  def show_saved_report
-    @sb[:last_savedreports_id] = params[:id].to_s.split('-').last if params[:id] && params[:id] != 'savedreports' && !accordion_select?(params[:id])
-    fetch_saved_report(@sb[:last_savedreports_id])
-  end
-
-  def fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find(id.split('-').last)
+  def show_saved_report(id)
+    rr = MiqReportResult.for_user(current_user).find(id)
     if rr.nil? # Saved report no longer exists
       @report = nil
       return
     end
+    @record = rr
 
-    @right_cell_text ||= _("Saved Report \"%{name}\"") %
-                         {:name => "#{rr.name} - #{format_timezone(rr.created_on, Time.zone, "gt")}"}
+    title_format_args = {
+      :name      => ERB::Util.html_escape(@record.name),
+      :timestamp => format_timezone(@record.created_on, Time.zone, "gt")
+    }
+    @title_for_breadcrumbs = _("Saved Report \"%{name} - %{timestamp}\"") % title_format_args
+    @right_cell_text = (
+      '<h1>%{name}</h1><h4>%{timestamp}</h4><div style="margin-top: 20px"/>' %
+      title_format_args
+    ).html_safe
 
     unless report_admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
       add_flash(_("Report is not authorized for the logged in user"), :error)
@@ -83,6 +94,8 @@ module ReportController::SavedReports
 
     @report.extras ||= {}
     @report.extras[:to_html] ||= @html
+
+    @report
   end
 
   # Delete all selected or single displayed report(s)
