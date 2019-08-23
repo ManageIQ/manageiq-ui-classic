@@ -5,7 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk-Beta2
+## Ivanchuk RC1
+
+### Added
+- Add Set Ownership to Key Pairs [(#5973)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5973)
+
+### Fixed
+- Fixed call that build list of Storages to build Host file drop down [(#5952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5952)
+- Remove report names from group settings hash when reports are deleted [(#5950)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5950)
+- Switch to Advanced tab when only error is "Request is required" [(#5873)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5873)
+- Disable <Choose a Role> option to prevent error while adding Group [(#5933)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5933)
+- Do not remember tab when downloading report from list view. [(#5964)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5964)
+- Build the selected node key from the session stored model in RBS [(#5974)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5974)
+- Make select in new cloud tenant always headed to bottom [(#6018)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6018)
+- Fix breadcrumbs in control section [(#6004)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6004)
+- Removed `Tenant` column from list view. [(#5996)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5996)
+- Fixed correct setting of record to get counts of relationships [(#5995)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5995)
+- Fixed API endpoint for GO object custom button dialogs. [(#6052)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6052)
+- Call miqCheckForChanges in breadcrumbs [(#6003)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6003)
+
+## Ivanchuk-Beta2 - Released 2019-08-14
 
 ### Added
 - Remove delimiter for Request ID [(#5872)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5872)
