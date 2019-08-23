@@ -1,4 +1,5 @@
 class TreeBuilderServices < TreeBuilder
+  include TreeBuilderFiltersMixin
   has_kids_for Service, [:x_get_tree_nested_services]
 
   private
@@ -16,19 +17,13 @@ class TreeBuilderServices < TreeBuilder
     }
   end
 
-  def filter_root(id, name, tip)
-    services_root(id, name, tip).update(:selectable => false)
-  end
-
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only)
     objects = [
       services_root('asrv', _('Active Services'), _('Active Services')),
       services_root('rsrv', _('Retired Services'), _('Retired Services')),
-      filter_root('global', _('Global Filters'), _('Global Shared Filters')),
-      filter_root('my', _('My Filters'), _('My Personal Filters'))
     ]
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(count_only, objects + FILTERS.values)
   end
 
   def x_get_tree_custom_kids(object, count_only)

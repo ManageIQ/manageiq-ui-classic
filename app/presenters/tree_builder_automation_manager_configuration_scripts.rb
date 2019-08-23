@@ -1,4 +1,5 @@
 class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
+  include TreeBuilderFiltersMixin
   has_kids_for ManageIQ::Providers::AnsibleTower::AutomationManager, [:x_get_tree_cmat_kids]
 
   private
@@ -23,17 +24,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
       objects.push(temp)
     end
 
-    objects.push(:id         => "global",
-                 :text       => _("Global Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :tip        => _("Global Shared Filters"),
-                 :selectable => false)
-    objects.push(:id         => "my",
-                 :text       => _("My Filters"),
-                 :icon       => "pficon pficon-folder-close",
-                 :tip        => _("My Personal Filters"),
-                 :selectable => false)
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(count_only, objects + FILTERS.values)
   end
 
   def x_get_tree_cmat_kids(object, count_only)
