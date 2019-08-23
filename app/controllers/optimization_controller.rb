@@ -65,7 +65,7 @@ class OptimizationController < ApplicationController
   def show
     @record = find_record_with_rbac(MiqReportResult, params[:id])
     @report = find_record_with_rbac(MiqReport, params[:report_id] || @record.miq_report_id)
-    @title = @record.name
+    @right_cell_text, @title = ReportController::SavedReports.saved_report_title(@record)
   end
 
   def queue_report

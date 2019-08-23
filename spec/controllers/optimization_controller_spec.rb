@@ -108,14 +108,14 @@ describe OptimizationController do
       end
 
       it "uses saved report name for title" do
-        expect(controller.title).to eq(saved.name)
+        expect(controller.title).to match(/Saved Report.*saved/)
       end
 
       it "sets breadcrumbs right" do
-        expect(controller.data_for_breadcrumbs.pluck(:title)).to eq(['Overview',
-                                                                     'Optimization',
-                                                                     report.name,
-                                                                     saved.name])
+        expect(controller.data_for_breadcrumbs.pluck(:title)).to match(['Overview',
+                                                                        'Optimization',
+                                                                        report.name,
+                                                                        a_string_matching(/Saved Report.*saved/)])
       end
 
       context "even if report.name and saved.name match" do
@@ -127,10 +127,10 @@ describe OptimizationController do
         end
 
         it "sets breadcrumbs right" do
-          expect(controller.data_for_breadcrumbs.pluck(:title)).to eq(['Overview',
-                                                                       'Optimization',
-                                                                       report.name,
-                                                                       saved.name])
+          expect(controller.data_for_breadcrumbs.pluck(:title)).to match(['Overview',
+                                                                          'Optimization',
+                                                                          report.name,
+                                                                          a_string_matching(/Saved Report/)])
         end
 
         it "links to both parents" do
