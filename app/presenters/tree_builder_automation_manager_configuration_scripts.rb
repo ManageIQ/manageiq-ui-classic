@@ -33,7 +33,6 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only)
-    objects = MiqSearch.where(:db => "ConfigurationScript").filters_by_type(object[:id])
-    count_only_or_objects(count_only, objects, 'description')
+    count_only_or_filter_kids("ConfigurationScript", object, count_only)
   end
 end

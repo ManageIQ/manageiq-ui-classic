@@ -19,4 +19,14 @@ module TreeBuilderFiltersMixin
     'global' => GLOBAL_FILTERS,
     'my'     => MY_FILTERS
   }.freeze
+
+  private
+
+  def count_only_or_filter_kids(klass, object, count_only)
+    # Do not try to load filters with invalid types
+    return unless FILTERS.key?(object.try(:[], :id))
+
+    objects = MiqSearch.where(:db => klass).filters_by_type(object[:id])
+    count_only_or_objects(count_only, objects, 'description')
+  end
 end

@@ -29,8 +29,7 @@ class TreeBuilderServices < TreeBuilder
   def x_get_tree_custom_kids(object, count_only)
     case object[:id]
     when 'my', 'global'
-      # Get My Filters and Global Filters
-      count_only_or_objects(count_only, x_get_search_results(object))
+      count_only_or_filter_kids("Service", object, count_only)
     when 'asrv', 'rsrv'
       retired = object[:id] != 'asrv'
       # Cache the tree data to speed up child (count) retrieval
@@ -72,23 +71,5 @@ class TreeBuilderServices < TreeBuilder
       hash.find { |_, value| found = deep_find(value, key) }
       found
     end
-  end
-
-  def x_get_search_results(object)
-    case object[:id]
-    when "global" # Global filters
-      x_get_global_filter_search_results
-    when "my"     # My filters
-      x_get_my_filter_search_results
-    end
-  end
-
-  def x_get_global_filter_search_results
-    MiqSearch.where(:db => "Service").visible_to_all.sort_by { |a| a.description.downcase }
-  end
-
-  def x_get_my_filter_search_results
-    MiqSearch.where(:db => "Service", :search_type => "user", :search_key => User.current_user.userid)
-             .sort_by { |a| a.description.downcase }
   end
 end
