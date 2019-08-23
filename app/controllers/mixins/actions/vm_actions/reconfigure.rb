@@ -406,7 +406,7 @@ module Mixins
              params[params_key].each do |_key, p|
                p.transform_values! { |v| eval_if_bool_string(v) }
              end
-             options[options_key] = params[params_key].values
+             options[options_key] = params[params_key].values.map(&:to_unsafe_h)
            end
 
           if params[:id] && params[:id] != 'new'
