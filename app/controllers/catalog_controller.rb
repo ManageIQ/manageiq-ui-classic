@@ -1668,8 +1668,7 @@ class CatalogController < ApplicationController
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # saving this so it can be used while adding buttons/groups in buttons editor
     @sb[:applies_to_id] = id
-    tree_nodes = treenodeid.split('_')
-    if tree_nodes.length >= 3 && tree_nodes[2].split('-').first == "xx"
+    if %w[cb cbg].include?(@nodetype)
       # buttons folder or nodes under that were clicked
       build_resolve_screen
       buttons_get_node_info(treenodeid)

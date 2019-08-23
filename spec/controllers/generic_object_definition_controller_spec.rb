@@ -118,13 +118,6 @@ describe GenericObjectDefinitionController do
       expect(gtl_type).to eq(nil)
     end
 
-    it "renders the toolbar for actions node with no gtl icons" do
-      allow(controller).to receive(:x_node).and_return("xx-#{@generic_obj_defn.id}")
-      controller.send(:show_list)
-      gtl_type = controller.instance_variable_get(:@gtl_type)
-      expect(gtl_type).to eq(nil)
-    end
-
     it "renders the toolbar for custom_button_group node with no gtl icons" do
       custom_button_set = FactoryBot.create(:custom_button_set, :description => "custom button set description")
       allow(controller).to receive(:x_node).and_return("cbg-#{custom_button_set.id}")

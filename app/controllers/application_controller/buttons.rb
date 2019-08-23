@@ -1118,36 +1118,9 @@ module ApplicationController::Buttons
     @sb[:applies_to_class] = "ServiceTemplate"
     @sb[:applies_to_id] = nodetype[2].split('-').last
 
-    if nodetype.length == 3 && nodetype[2].split('-').first == "xx" # Buttons node selected
-      record = ServiceTemplate.find(nodetype[2].split('-').last)
-      # saving id of catalogitem to use it in view to build id for right cell
-      @sb[:rec_id] = record.id
-      @right_cell_text = _("Buttons for \"%{record}\"") % {:record => record.name.split("|").first}
+    if nodetype.length == 3 && nodetype[2].split('-').first == "cbg" # buttons group selected
       @sb[:applies_to_class] = "ServiceTemplate"
-      @sb[:button_groups] = []
-      items = record.custom_button_sets + record.custom_buttons
-
-      # sort them using button_order saved in CatalogItems options
-      if record.options && record.options[:button_order]
-        record.options[:button_order].each do |item_id|
-          items.each do |g|
-            rec_id = "#{g.kind_of?(CustomButton) ? 'cb' : 'cbg'}-#{g.id}"
-            next if item_id != rec_id
-            group = {
-              :id           => g.id,
-              :name         => g.name,
-              :description  => g.description,
-              :button_icon  => g.kind_of?(CustomButton) ? g.options[:button_icon] : g.set_data[:button_icon],
-              :button_color => g.kind_of?(CustomButton) ? g.options[:button_color] : g.set_data[:button_color],
-              :typ          => g.kind_of?(CustomButton) ? "CustomButton" : "CustomButtonSet",
-            }
-            @sb[:button_groups].push(group) unless @sb[:button_groups].include?(group)
-          end
-        end
-      end
-    elsif nodetype.length == 4 && nodetype[3].split('-').first == "cbg" # buttons group selected
-      @sb[:applies_to_class] = "ServiceTemplate"
-      @record = CustomButtonSet.find(nodetype[3].split('-').last)
+      @record = CustomButtonSet.find(nodetype[2].split('-').last)
       # saving id of catalogitem to use it in view to build id for right cell
       @sb[:rec_id] = @record.id
       @right_cell_text = _("Button Group \"%{name}\"") % {:name => @record.name.split("|").first}
@@ -1166,8 +1139,8 @@ module ApplicationController::Buttons
           @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
         end
       end
-    elsif nodetype.length >= 4 && (nodetype[3].split('-').first == "cb" || nodetype[4].split('-').first == "cb") # button selected
-      id = nodetype[3].split('-').first == "cb" ? nodetype[3].split('-').last : nodetype[4].split('-').last
+    elsif nodetype.length >= 3 && (nodetype[2].split('-').first == "cb" || nodetype[3].split('-').first == "cb") # button selected
+      id = nodetype[2].split('-').first == "cb" ? nodetype[2].split('-').last : nodetype[3].split('-').last
       @record = @custom_button = CustomButton.find(id)
       build_resolve_screen
       @resolve[:new][:attrs] = []

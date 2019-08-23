@@ -187,9 +187,7 @@ class ApplicationHelper::ToolbarChooser
         "servicetemplate_center_tb"
       elsif @sb[:buttons_node]
         nodes = x_node.split('_')
-        if nodes.length == 3 && nodes[2].split('-').first == "xx"
-          return "catalogitem_button_set_center_tb"
-        elsif nodes.length == 4 && nodes[3].split('-').first == "cbg"
+        if nodes.length == 4 && nodes[3].split('-').first == "cbg"
           return "catalogitem_buttons_center_tb"
         else
           return "catalogitem_button_center_tb"
