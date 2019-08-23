@@ -1232,6 +1232,18 @@ describe CatalogController do
         end
       end
     end
+
+    context 'adding a Resource while adding/editing Catalog Bundle' do
+      before do
+        controller.params = {:resource_id => '123'}
+        controller.instance_variable_set(:@edit, :new => {:display => true, :tenant_ids => []})
+      end
+
+      it 'remains @edit[:new][:display] to be set to true' do
+        controller.send(:get_form_vars)
+        expect(controller.instance_variable_get(:@edit)[:new][:display]).to be(true)
+      end
+    end
   end
 
   describe '#identify_catalog' do
