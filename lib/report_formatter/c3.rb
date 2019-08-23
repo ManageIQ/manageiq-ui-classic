@@ -26,13 +26,13 @@ module ReportFormatter
 
       if chart_is_2d?
         mri.chart[:data][:columns] << [series_id, *data.map { |a| a[:value] }]
-        mri.chart[:data][:names][series_id] = slice_legend(label, limit)
+        mri.chart[:data][:names][series_id] = slice_legend(_(label), limit)
         mri.chart[:miq][:name_table][series_id] = label
       else
         data.each_with_index do |a, index|
           id = index.to_s
           mri.chart[:data][:columns].push([id, a[:value]])
-          mri.chart[:data][:names][id] = slice_legend(a[:tooltip], limit)
+          mri.chart[:data][:names][id] = slice_legend(_(a[:tooltip]), limit)
           mri.chart[:miq][:name_table][id] = a[:tooltip]
         end
       end
