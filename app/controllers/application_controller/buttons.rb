@@ -58,7 +58,7 @@ module ApplicationController::Buttons
       @in_a_form = true
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
-      replace_right_cell(:nodetype => "group_reorder")
+      replace_right_cell(:nodetype => "group_reorder", :action => "group_reorder")
     end
   end
 
