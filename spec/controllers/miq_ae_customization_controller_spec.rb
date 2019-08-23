@@ -540,4 +540,22 @@ describe MiqAeCustomizationController do
       controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs))
     end
   end
+
+  describe "#editor" do
+    let(:dialog) { FactoryBot.create(:dialog) }
+
+    it "sets title correctly when adding" do
+      controller.send(:editor)
+
+      expect(controller.instance_variable_get(:@title)).to include("Add a new Dialog")
+    end
+
+    it "sets title correctly when editing" do
+      controller.params = {:id => dialog.id}
+      controller.send(:editor)
+
+      expect(controller.instance_variable_get(:@title)).to include("Editing")
+      expect(controller.instance_variable_get(:@title)).to include(dialog.name)
+    end
+  end
 end

@@ -139,6 +139,7 @@ class MiqAeCustomizationController < ApplicationController
               else
                 Dialog.new
               end
+    @title = @record.id ? _("Editing %{name} Service Dialog") % {:name => @record.name} : _("Add a new Dialog")
   end
 
   def tree_select
