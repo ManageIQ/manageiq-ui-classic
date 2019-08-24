@@ -278,7 +278,8 @@ module ApplicationController::Explorer
     kls = modelname.constantize
     return treenodeid if kls == Hash
 
-    unless kls.where(:id => rec_id).exists?
+    # FIXME: temporary hack to skip the refresh for deleted nodes if it's a VirtualFolder
+    unless kls == VirtualFolder || kls.where(:id => rec_id).exists?
       @replace_trees = [@sb[:active_accord]] # refresh trees
       self.x_node = "root"
       unless @report_deleted

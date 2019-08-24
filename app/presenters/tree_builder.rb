@@ -503,6 +503,7 @@ class TreeBuilder
     "u"    => "User",
     "v"    => "Vm",
     "vap"  => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate",
+    "vf"   => "VirtualFolder",
     "vnf"  => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
     "wi"   => "WindowsImage",
     "xx"   => "Hash", # For custom (non-CI) nodes, specific to each tree

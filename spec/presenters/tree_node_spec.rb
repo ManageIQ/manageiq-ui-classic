@@ -22,8 +22,8 @@ describe TreeNode do
     end
 
     TreeNode.constants.each do |type|
-      # We never instantiate MiqAeNode and Node in our codebase
-      next if %i[MiqAeNode Node Menu Root REXML].include?(type)
+      # We never instantiate some nodes in our codebase
+      next if %i[Menu MiqAeNode Node REXML Root VirtualFolder].include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }
