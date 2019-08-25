@@ -21,7 +21,7 @@ module TreeNode
       [icon, image]
     end
 
-    set_attribute(:klass) { @object.domain? && @object.enabled? ? nil : 'striketrough' }
+    set_attribute(:klass) { @object.domain? && !@object.enabled? ? 'opacity' : nil }
 
     def text
       title = super
