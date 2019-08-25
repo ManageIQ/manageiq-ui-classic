@@ -87,7 +87,7 @@ module TreeNode
         :iconColor      => color,
         :expand         => expand,
         :hideCheckbox   => hide_checkbox,
-        :addClass       => klass,
+        :class          => klass,
         :selectable     => selectable,
         :select         => selected,
         :checkable      => checkable ? nil : false,

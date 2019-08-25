@@ -36,19 +36,16 @@ describe TreeBuilder do
                                'icon'       => "pficon pficon-cpu",
                                'state'      => { 'expanded' => true },
                                'text'       => "Compute",
-                               'selectable' => true,
-                               'class'      => ''},
+                               'selectable' => true},
                               {'key'        => "xx-Storage",
                                'tooltip'    => "Storage",
                                'icon'       => "fa fa-hdd-o",
                                'state'      => { 'expanded' => true },
                                'selectable' => true,
-                               'text'       => "Storage",
-                               'class'      => ''}],
+                               'text'       => "Storage"}],
                 'state'   => { 'expanded' => true },
                 'text'    => "Rates",
                 'tooltip' => "Rates",
-                'class'   => '',
                 'icon'    => 'pficon pficon-folder-close'}]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)

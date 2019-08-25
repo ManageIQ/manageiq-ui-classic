@@ -941,7 +941,6 @@ describe MiqAeClassController do
             :selectable => true,
             :lazyLoad   => true,
             :state      => {:expanded => false},
-            :class      => "",
           }
         ]
       }
