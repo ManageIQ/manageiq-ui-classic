@@ -2,8 +2,6 @@ module TreeNode
   class MiqAeDomain < MiqAeNode
     include MiqAeClassHelper
 
-    set_attribute(:image) { @object.try(:decorate).try(:fileicon) }
-
     def text
       title = super
       editable_domain = editable_domain?(@object)

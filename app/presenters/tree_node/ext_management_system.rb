@@ -1,7 +1,5 @@
 module TreeNode
   class ExtManagementSystem < Node
-    set_attribute(:image) { @object.decorate.fileicon }
-
     set_attribute(:tooltip) do
       # # TODO: This should really leverage .base_model on an EMS
       prefix_model = case @object
