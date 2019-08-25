@@ -106,7 +106,6 @@ class TreeBuilder
     while stack.any?
       node = stack.pop
       stack += node[:nodes] if node.key?(:nodes)
-      node[:lazyLoad] = node.delete(:isLazy) if node.key?(:isLazy)
       node[:state] ||= {}
       node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
       node[:state][:checked] = node.delete(:select) if node.key?(:select)
