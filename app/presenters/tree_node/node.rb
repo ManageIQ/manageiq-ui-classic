@@ -57,7 +57,7 @@ module TreeNode
     end
 
     def key
-      if @object.id.nil?
+      if @object.try(:id).nil?
         # FIXME: this makes problems in tests
         # to handle "Unassigned groups" node in automate buttons tree
         "-#{@object.name.split('|').last}"
