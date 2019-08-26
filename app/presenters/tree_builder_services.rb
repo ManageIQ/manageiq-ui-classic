@@ -1,4 +1,5 @@
 class TreeBuilderServices < TreeBuilder
+  include TreeBuilderFiltersMixin
   has_kids_for Service, [:x_get_tree_nested_services]
 
   private
@@ -16,26 +17,19 @@ class TreeBuilderServices < TreeBuilder
     }
   end
 
-  def filter_root(id, name, tip)
-    services_root(id, name, tip).update(:selectable => false)
-  end
-
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only)
     objects = [
       services_root('asrv', _('Active Services'), _('Active Services')),
       services_root('rsrv', _('Retired Services'), _('Retired Services')),
-      filter_root('global', _('Global Filters'), _('Global Shared Filters')),
-      filter_root('my', _('My Filters'), _('My Personal Filters'))
     ]
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(count_only, objects + FILTERS.values)
   end
 
   def x_get_tree_custom_kids(object, count_only)
     case object[:id]
     when 'my', 'global'
-      # Get My Filters and Global Filters
-      count_only_or_objects(count_only, x_get_search_results(object))
+      count_only_or_filter_kids("Service", object, count_only)
     when 'asrv', 'rsrv'
       retired = object[:id] != 'asrv'
       # Cache the tree data to speed up child (count) retrieval
@@ -77,23 +71,5 @@ class TreeBuilderServices < TreeBuilder
       hash.find { |_, value| found = deep_find(value, key) }
       found
     end
-  end
-
-  def x_get_search_results(object)
-    case object[:id]
-    when "global" # Global filters
-      x_get_global_filter_search_results
-    when "my"     # My filters
-      x_get_my_filter_search_results
-    end
-  end
-
-  def x_get_global_filter_search_results
-    MiqSearch.where(:db => "Service").visible_to_all.sort_by { |a| a.description.downcase }
-  end
-
-  def x_get_my_filter_search_results
-    MiqSearch.where(:db => "Service", :search_type => "user", :search_key => User.current_user.userid)
-             .sort_by { |a| a.description.downcase }
   end
 end

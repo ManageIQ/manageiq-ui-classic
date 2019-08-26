@@ -1,4 +1,6 @@
 class TreeBuilderVmsFilter < TreeBuilder
+  include TreeBuilderFiltersMixin
+
   def initialize(*args)
     @root_class ||= 'ManageIQ::Providers::InfraManager::Vm'
     super(*args)
@@ -19,16 +21,10 @@ class TreeBuilderVmsFilter < TreeBuilder
   end
 
   def x_get_tree_roots(count_only)
-    objects =
-      [
-        {:id => "global", :text => _("Global Filters"), :icon => "pficon pficon-folder-close", :tip => _("Global Shared Filters"), :selectable => false},
-        {:id => "my",     :text => _("My Filters"),     :icon => "pficon pficon-folder-close", :tip => _("My Personal Filters"),   :selectable => false}
-      ]
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(count_only, FILTERS.values)
   end
 
   def x_get_tree_custom_kids(object, count_only)
-    objects = MiqSearch.where(:db => @root_class).filters_by_type(object[:id])
-    count_only_or_objects(count_only, objects, 'description')
+    count_only_or_filter_kids(@root_class, object, count_only)
   end
 end
