@@ -28,7 +28,7 @@ describe TreeBuilderReportSavedReports do
           saved_reports_in_tree = tree.tree_nodes.first[:nodes]
 
           displayed_report_ids = saved_reports_in_tree.map do |saved_report|
-            saved_report[:key].gsub("xx-", "")
+            saved_report[:key].gsub("rep-", "")
           end
 
           # logged User1 can see report with Group1
@@ -36,12 +36,12 @@ describe TreeBuilderReportSavedReports do
         end
       end
 
-      describe "#x_get_tree_custom_kids" do
+      describe "#x_get_tree_r_kids" do
         it "is allowed to see report results created under Group1 for User2(with current group Group2)" do
           report_result = MiqReportResult.first
 
           tree = TreeBuilderReportSavedReports.new('savedreports_tree', {})
-          tree_report_results = tree.send(:x_get_tree_custom_kids, {:id => @rpt.id.to_s}, false)
+          tree_report_results = tree.send(:x_get_tree_r_kids, @rpt, false)
 
           expect(tree_report_results).to include(report_result)
         end
