@@ -4,7 +4,7 @@ class TreeBuilderOpsRbac < TreeBuilder
   private
 
   def tree_init_options
-    {:open_all => false, :lazy => true}
+    {:open_all => false}
   end
 
   def root_options
