@@ -66,4 +66,20 @@ describe ApplicationController do
       end
     end
   end
+
+  describe '#policy_sim' do
+    let(:vm) { FactoryBot.create(:vm_infra) }
+
+    before do
+      allow(controller).to receive(:drop_breadcrumb)
+      allow(controller).to receive(:session).and_return(:tag_db => VmOrTemplate, :tag_items => [vm])
+      allow(controller).to receive(:vm_or_instance).and_return('vm_infra')
+      controller.params = {:action => 'policy_sim', :continue => true, :controller => 'vm'}
+    end
+
+    it 'sets session[:edit] when going back to policy simulation, in non-explorer screen' do
+      controller.send(:policy_sim)
+      expect(controller.session).to include(:edit => {:pol_items => [vm]})
+    end
+  end
 end
