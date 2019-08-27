@@ -416,6 +416,20 @@ describe OpsController do
 
         expect(controller.instance_variable_get(:@deleted_belongsto_filters)).to match_array(outdated_belongs_to_filters.map { |x| MiqFilter.belongsto2path_human(x) })
       end
+
+      context 'no outdated belongs to filters' do
+        before do
+          allow(controller).to receive(:rbac_group_right_tree)
+          controller.instance_variable_set(:@record, FactoryBot.create(:miq_group))
+        end
+
+        subject { controller.instance_variable_get(:@edit) }
+
+        it 'sets @edit[:current] properly according to the outdated belongs to filters' do
+          controller.send(:rbac_group_set_form_vars)
+          expect(subject[:current]).to eq(subject[:new])
+        end
+      end
     end
 
     it "saves the filters when use_filter_expression is false" do
@@ -663,6 +677,8 @@ describe OpsController do
 
   describe '#rbac_field_changed' do
     let(:getvars) { "rbac_#{rec_type}_get_form_vars".to_sym }
+    let(:edit) { {:new => {}} }
+    let(:params) { {:id => "new"} }
 
     before do
       allow(controller).to receive(:load_edit).and_return(true)
@@ -671,14 +687,14 @@ describe OpsController do
 
       controller.params = params
       controller.instance_variable_set(:@edit, edit)
+      stub_user(:features => :all)
     end
 
     subject { controller.instance_variable_get(:@edit)[:new][:group] }
 
-    context 'editing/adding a new user' do
+    context 'adding a new user' do
       let(:rec_type) { "user" }
-      let(:params) { {:name => "new_user", :id => "new", :chosen_group => "12,34"} }
-      let(:edit) { {:new => {:name => nil, :group => []}} }
+      let(:params) { {:id => "new", :chosen_group => "12,34"} }
 
       it 'sets list of selected groups' do
         controller.send(:rbac_field_changed, rec_type)
@@ -686,21 +702,38 @@ describe OpsController do
       end
     end
 
-    context 'editing/adding a new group' do
+    context 'adding a new group' do
       let(:rec_type) { "group" }
-      let(:params) { {:description => "new_group", :id => "new"} }
-      let(:edit) { {:new => {:description => nil}} }
 
       it 'does not set list of selected groups' do
         controller.send(:rbac_field_changed, rec_type)
         expect(subject).to be_nil
       end
+
+      context 'session[:changed]' do
+        let(:tenant) { FactoryBot.create(:tenant) }
+        let(:params) { {:id => "new", :group_tenant => tenant.id.to_s} }
+        let(:edit) { {:new => {:role => 1}} }
+
+        it 'sets session[:changed] to false while filling in role and tenant' do
+          controller.send(:rbac_field_changed, rec_type)
+          expect(controller.session[:changed]).to be(false)
+        end
+
+        context 'filling in all the required info' do
+          let(:edit) { {:new => {:role => 1, :description => 'new_group'}} }
+
+          it 'sets session[:changed] to true' do
+            controller.send(:rbac_field_changed, rec_type)
+            expect(controller.session[:changed]).to be(true)
+          end
+        end
+      end
     end
 
-    context 'editing/adding a new role' do
+    context 'adding a new role' do
       let(:rec_type) { "role" }
-      let(:params) { {:description => "new_role", :id => "new"} }
-      let(:edit) { {:new => {:description => nil, :features => []}} }
+      let(:edit) { {:new => {:features => []}} }
 
       it 'does not set list of selected groups' do
         controller.send(:rbac_field_changed, rec_type)
