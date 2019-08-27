@@ -8,6 +8,7 @@ class TreeBuilderEmsFolders < TreeBuilderAlertProfileAssign
     else
       node[:hideCheckbox] = true
     end
-    node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
+    node[:state] ||= {}
+    node[:state][:checked] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
   end
 end

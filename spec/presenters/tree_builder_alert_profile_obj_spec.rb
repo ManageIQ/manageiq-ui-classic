@@ -55,15 +55,15 @@ describe TreeBuilderAlertProfileObj do
       it 'sets node1' do
         subject.send(:override, node, tag1a)
         expect(node[:hideCheckbox]).to be_falsey
-        expect(node[:select]).to be_truthy
+        expect(node[:state][:checked]).to be_truthy
       end
       it 'sets node2' do
         subject.send(:override, node, tag2a)
-        expect(node[:select]).to be_truthy
+        expect(node[:state][:checked]).to be_truthy
       end
       it 'sets node3' do
         subject.send(:override, node, tag3a)
-        expect(node[:select]).to be_falsey
+        expect(node[:state][:checked]).to be_falsey
       end
     end
 

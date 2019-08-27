@@ -6,7 +6,8 @@ class TreeBuilderBelongsToHac < TreeBuilder
   has_kids_for ResourcePool, [:x_get_resource_pool_kids]
 
   def override(node, object)
-    node[:select] = @selected_nodes&.include?("#{object.class.name}_#{object[:id]}")
+    node[:state] ||= {}
+    node[:state][:checked] = @selected_nodes&.include?("#{object.class.name}_#{object[:id]}")
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
     node[:selectable] = false
     node[:checkable] = @edit.present?
