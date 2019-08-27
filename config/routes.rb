@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   )
 
   compare_post = %w(
+    compare_cancel
     compare_choose_base
     compare_compress
     compare_miq
