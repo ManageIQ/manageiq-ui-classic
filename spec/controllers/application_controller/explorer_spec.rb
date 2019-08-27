@@ -119,8 +119,7 @@ describe ReportController do
                    :icon       => 'fa fa-file-text-o',
                    :tooltip    => widget.name,
                    :state      => {:expanded => false},
-                   :selectable => true,
-                   :class      => ""}]
+                   :selectable => true}]
       expect(nodes).to eq(expected)
     end
   end

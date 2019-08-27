@@ -58,16 +58,14 @@ describe TreeBuilderServersByRole do
                                   'text'           => "<strong>Server: smartproxy [#{@assigned_server_role1.id}]</strong> (primary, available, PID=)",
                                   'state'          => { 'expanded' => true },
                                   'selectable'     => true,
-                                  'class'          => 'red', },
+                                  'class'          => 'red'},
                                  {'key'            => "asr-#{@assigned_server_role2.id}",
                                   'icon'           => 'pficon pficon-on',
                                   'iconBackground' => '#3F9C35',
                                   'text'           => "<strong>Server: smartproxy [#{@assigned_server_role2.id}]</strong> (secondary, active, PID=)",
                                   'state'          => { 'expanded' => true },
-                                  'selectable'     => true,
-                                  'class'          => ''}],
-                'state'      => { 'expanded' => true, "selected" => true},
-                'class'      => '' }]
+                                  'selectable'     => true}],
+                'state'      => { 'expanded' => true, "selected" => true}}]
       expect(JSON.parse(@server_tree.locals_for_render[:bs_tree])).to eq(nodes)
     end
   end
