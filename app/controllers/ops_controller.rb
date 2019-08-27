@@ -259,7 +259,7 @@ class OpsController < ApplicationController
   private ############################
 
   def features
-    [
+    features = [
       {
         :role  => "ops_settings",
         :name  => :settings,
@@ -275,13 +275,12 @@ class OpsController < ApplicationController
         :role  => "ops_diagnostics",
         :name  => :diagnostics,
         :title => _("Diagnostics")
-      },
-      {
-        :role  => "ops_db",
-        :name  => :vmdb,
-        :title => _("Database")
       }
-    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
+    ]
+
+    features.push(:role => "ops_db", :name => :vmdb, :title => _("Database")) if ::Settings.ui.display_ops_database
+
+    features.map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
   def set_active_elements(feature, _x_node_to_set = nil)
