@@ -317,8 +317,7 @@ describe OpsController do
         array_including(
           instance_of(TreeBuilderOpsSettings),
           instance_of(TreeBuilderOpsDiagnostics),
-          instance_of(TreeBuilderOpsRbac),
-          instance_of(TreeBuilderOpsVmdb),
+          instance_of(TreeBuilderOpsRbac)
         )
       )
       controller.send(:replace_explorer_trees, replace_trees, presenter)
