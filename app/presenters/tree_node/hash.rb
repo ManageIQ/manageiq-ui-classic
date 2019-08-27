@@ -12,7 +12,7 @@ module TreeNode
 
     set_attribute(:hide_checkbox) { @object.key?(:hideCheckbox) && @object[:hideCheckbox] ? true : nil }
 
-    set_attribute(:selected) { @object.key?(:select) && @object[:select] ? true : nil }
+    set_attribute(:selected) { @object.key?(:checked) && @object[:checked] ? true : nil }
 
     set_attribute(:klass) { @object.key?(:addClass) ? @object[:addClass] : nil }
 

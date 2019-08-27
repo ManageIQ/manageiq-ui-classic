@@ -76,7 +76,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
                    :icon       => 'fa fa-filter',
                    :tip        => kid[:description],
                    :selectable => false,
-                   :select     => kid[:search_key] != "_hidden_"}
+                   :checked    => kid[:search_key] != "_hidden_"}
                 end
               end
     end

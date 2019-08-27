@@ -102,7 +102,7 @@ describe TreeBuilderSmartproxyAffinity do
           expect(kids[i][:text]).to eq(kid.name)
           expect(kids[i][:id]).to eq("#{parent[:id]}_#{kid.id}")
           expect(kids[i][:nodes]).to eq([])
-          expect(kids[i][:select]).to eq(parent[:parent].send("vm_scan_#{parent[:smartproxy_kind]}_affinity").collect(&:id).include?(kid.id))
+          expect(kids[i][:checked]).to eq(parent[:parent].send("vm_scan_#{parent[:smartproxy_kind]}_affinity").collect(&:id).include?(kid.id))
         end
       end
     end

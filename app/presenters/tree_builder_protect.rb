@@ -23,7 +23,7 @@ class TreeBuilderProtect < TreeBuilder
         :text       => profile.description,
         :icon       => profile.active? ? "fa fa-shield" : "fa fa-inactive fa-shield",
         :tip        => profile.description,
-        :select     => @data[:new][profile.id] == @data[:pol_items].length,
+        :checked    => @data[:new][profile.id] == @data[:pol_items].length,
         :nodes      => profile.members,
         :selectable => false}
     end

@@ -74,7 +74,7 @@ describe TreeBuilderSections do
                             :text       => "Properties",
                             :tip        => "Properties",
                             :image      => false,
-                            :select     => true,
+                            :checked    => true,
                             :selectable => false,
                             :nodes      => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
     end
@@ -87,7 +87,7 @@ describe TreeBuilderSections do
                            :tip        => "Filesystem",
                            :image      => false,
                            :selectable => false,
-                           :select     => true,
+                           :checked    => true,
                            :nodes      => []}])
     end
   end

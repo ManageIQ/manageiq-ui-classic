@@ -46,7 +46,7 @@ describe TreeBuilderProtect do
         expect(roots[i][:icon]).to eq(root.active? ? "fa fa-shield" : "fa fa-inactive fa-shield")
         expect(roots[i][:text]).to eq(root.description)
         expect(roots[i][:nodes]).to eq(root.members)
-        expect(roots[i][:select]).to eq(@edit[:new].keys.include?(root.id))
+        expect(roots[i][:checked]).to eq(@edit[:new].key?(root.id))
       end
       expect(roots.size).to eq(3)
     end
