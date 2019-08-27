@@ -17,7 +17,7 @@ module TreeNode
     end
 
     def image
-      nil
+      @object.try(:decorate).try(:fileicon)
     end
 
     def icon
