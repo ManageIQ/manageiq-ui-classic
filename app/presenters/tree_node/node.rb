@@ -82,6 +82,7 @@ module TreeNode
         :key            => key,
         :text           => escape(text),
         :tooltip        => escape(tooltip),
+        :image          => image ? ActionController::Base.helpers.image_path(image) : nil,
         :icon           => icon,
         :iconBackground => icon_background,
         :iconColor      => color,
@@ -92,14 +93,6 @@ module TreeNode
         :select         => selected,
         :checkable      => checkable ? nil : false,
       }
-
-      node[:image] = if !image
-                       nil
-                     elsif image.start_with?("/")
-                       image
-                     elsif image =~ %r{^[a-zA-Z0-9]+/}
-                       ActionController::Base.helpers.image_path(image)
-                     end
 
       node.delete_if { |_, v| v.nil? }
     end
