@@ -10,7 +10,10 @@ class TreeBuilderUtilization < TreeBuilder
   end
 
   def override(node, _object)
-    node[:selectable] = node[:key].split('-')[1].split('_')[0] != 'folder'
+    if node[:key].split('-')[1].split('_')[0] == 'folder'
+      node[:selectable] = false
+      node[:class] = append_no_cursor(node[:class])
+    end
   end
 
   def root_options

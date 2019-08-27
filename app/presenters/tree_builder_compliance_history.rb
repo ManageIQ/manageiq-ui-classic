@@ -4,6 +4,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
 
   def override(node, _object)
     node[:selectable] = false
+    node[:class] = append_no_cursor(node[:class])
   end
 
   def initialize(name, sandbox, build = true, **params)

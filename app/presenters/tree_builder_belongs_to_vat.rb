@@ -1,6 +1,7 @@
 class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
   def override(node, object)
     node[:selectable] = false
+    node[:class] = append_no_cursor(node[:class])
     node[:checkable] = @edit.present? || @assign_to.present?
 
     if object.kind_of?(EmsFolder) && object.vm_folder?

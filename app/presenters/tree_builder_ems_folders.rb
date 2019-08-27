@@ -3,6 +3,7 @@ class TreeBuilderEmsFolders < TreeBuilderAlertProfileAssign
 
   def override(node, object)
     node[:selectable] = false
+    node[:class] = append_no_cursor(node[:class])
     if object.kind_of?(EmsFolder) && object.vm_folder?
       node[:icon] = "pficon pficon-folder-close-blue"
     else

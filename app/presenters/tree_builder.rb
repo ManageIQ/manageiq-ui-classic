@@ -108,7 +108,6 @@ class TreeBuilder
       stack += node[:nodes] if node.key?(:nodes)
       node[:state] ||= {}
       node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
-      node[:class] = (node[:class] || '').split(' ').push('no-cursor').join(' ') if node[:selectable] == false
     end
     nodes
   end
@@ -120,6 +119,14 @@ class TreeBuilder
   end
 
   private
+
+  # Temporary method to append the no-cursor class to an already existing CSS class
+  # list. It is intended to be used in the override methods in order to get rid of
+  # the TreeBuilder.convert_bs_tree method. Eventually it should be removed after
+  # all the code from the override methods are moved into the TreeNode as a DSL.
+  def append_no_cursor(klass)
+    (klass || '').split(' ').push('no-cursor').join(' ')
+  end
 
   def build_tree
     @tree_nodes = x_build_tree
