@@ -471,7 +471,7 @@ class CatalogController < ApplicationController
     params[:id] = x_build_node_id(@record)  # Get the tree node id
     add_flash(msg, err == true ? :error : nil)
     respond_to do |format|
-      format.js { replace_right_cell }
+      format.js { replace_right_cell(:replace_trees => trees_to_replace(%i[sandt svccat stcat])) }
       format.html do # HTML, send error screen
         explorer
       end
