@@ -9,7 +9,8 @@ class TreeBuilderServersByRole < TreeBuilderDiagnostics
 
   def override(node, _object)
     if @sb[:diag_selected_id] && node[:key] == "role-#{@sb[:diag_selected_id]}"
-      node[:highlighted] = true
+      node[:state] ||= {}
+      node[:state][:selected] = true
     end
   end
 
