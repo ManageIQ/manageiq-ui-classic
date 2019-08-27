@@ -437,6 +437,30 @@ describe ApplicationController do
     end
   end
 
+  describe "#flash_errors?" do
+    it "returns true when errors are present in flash_array" do
+      controller.instance_variable_set(:@flash_array, [:message => "Error message", :level => :error])
+      expect(controller.send(:flash_errors?)).to be_truthy
+    end
+
+    it "returns false when there no errors are present in flash_array" do
+      controller.instance_variable_set(:@flash_array, [:message => "Foo message"])
+      expect(controller.send(:flash_errors?)).to be_falsey
+    end
+  end
+
+  describe "#flash_warnings?" do
+    it "returns true when errors are present in flash_array" do
+      controller.instance_variable_set(:@flash_array, [:message => "Warning message", :level => :warning])
+      expect(controller.send(:flash_warnings?)).to be_truthy
+    end
+
+    it "returns false when no warnings are present in flash_array" do
+      controller.instance_variable_set(:@flash_array, [:message => "Foo message"])
+      expect(controller.send(:flash_warnings?)).to be_falsey
+    end
+  end
+
   context "private methods" do
     describe "#process_params_model_view" do
       it "with options[:model_name]" do

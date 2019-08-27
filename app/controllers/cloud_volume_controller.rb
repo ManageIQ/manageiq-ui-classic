@@ -359,7 +359,7 @@ class CloudVolumeController < ApplicationController
       show_list
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_volume"
-      @single_delete = true unless flash_errors?
+      @single_delete = true unless flash_errors? || flash_warnings?
     else
       drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
       flash_to_session
