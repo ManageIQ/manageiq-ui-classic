@@ -36,7 +36,7 @@ module TreeNode
       true
     end
 
-    def selected
+    def checked
       nil
     end
 
@@ -89,7 +89,7 @@ module TreeNode
         :hideCheckbox   => hide_checkbox,
         :class          => klass,
         :selectable     => selectable,
-        :select         => selected,
+        :select         => checked,
         :checkable      => checkable ? nil : false,
       }
 
