@@ -108,7 +108,6 @@ class TreeBuilder
       stack += node[:nodes] if node.key?(:nodes)
       node[:state] ||= {}
       node[:state][:expanded] = node.delete(:expand) if node.key?(:expand)
-      node[:state][:checked] = node.delete(:select) if node.key?(:select)
       node[:class] = (node[:class] || '').split(' ').push('no-cursor').join(' ') if node[:selectable] == false
     end
     nodes

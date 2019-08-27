@@ -89,7 +89,9 @@ module TreeNode
         :hideCheckbox   => hide_checkbox,
         :class          => klass,
         :selectable     => selectable,
-        :select         => checked,
+        :state          => {
+          :checked => checked
+        }.compact,
         :checkable      => checkable ? nil : false,
       }
 
