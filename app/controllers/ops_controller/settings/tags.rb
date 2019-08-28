@@ -287,16 +287,8 @@ module OpsController::Settings::Tags
   def category_get_form_vars
     @category = @edit[:category]
     copy_params_if_present(@edit[:new], params, %i[name description example_text])
-    #   if params[:show] == "1"
-    #     @edit[:new][:show] = true
-    #   elsif params[:show] == "null"
-    #     @edit[:new][:show] = false
-    #   end
     @edit[:new][:show] = (params[:show] == 'true') if params[:show]
     @edit[:new][:perf_by_tag] = (params[:perf_by_tag] == "true") if params[:perf_by_tag]
-    #   if !@edit[:new][:name].blank? && !Classification.find_by_name(@edit[:new][:name]) && params[:button] != "add" && params[:single_value]
-    #     @edit[:new][:single_value] = (params[:single_value] == "1")
-    #   end
     @edit[:new][:single_value] = (params[:single_value] == "true") if params[:single_value]
   end
 
