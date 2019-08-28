@@ -68,7 +68,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :icon       => "pficon pficon-folder-close",
       :text       => _(root_details[:name]),
       :tooltip    => _(root_details[:description]) || _(root_details[:name]),
-      :expand     => true,
       :selectable => false,
       :checkable  => @editable
     }

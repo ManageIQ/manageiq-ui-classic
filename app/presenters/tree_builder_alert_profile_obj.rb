@@ -26,8 +26,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       :tooltip      => "",
       :icon         => "pficon pficon-folder-open",
       :hideCheckbox => true,
-      :selectable   => false,
-      :expand       => true
+      :selectable   => false
     }
   end
 

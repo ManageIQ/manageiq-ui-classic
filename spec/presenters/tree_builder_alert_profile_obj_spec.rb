@@ -75,7 +75,6 @@ describe TreeBuilderAlertProfileObj do
         expect(res[:icon]).to eq("pficon pficon-folder-open")
         expect(res[:hideCheckbox]).to be_truthy
         expect(res[:selectable]).to be_falsey
-        expect(res[:expand]).to be_truthy
       end
     end
 
