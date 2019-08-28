@@ -9,11 +9,11 @@ ManageIQ.angular.app.component('retirementForm', {
     vm.$onInit = function() {
       if (vm.objectIds.length === 1) {
         miqService.sparkleOn();
-        vm.saveable = miqService.saveable;
         $http.get('/' + ManageIQ.controller + '/retirement_info/' + vm.objectIds[0])
           .then(getRetirementInfoFormData)
           .catch(miqService.handleFailure);
       }
+      vm.saveable = miqService.saveable;
     };
 
     vm.select_options = [
