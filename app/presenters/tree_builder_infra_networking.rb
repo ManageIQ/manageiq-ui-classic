@@ -5,7 +5,10 @@ class TreeBuilderInfraNetworking < TreeBuilder
   has_kids_for EmsFolder, [:x_get_tree_folder_kids]
 
   def override(node, object)
-    node[:selectable] = false if object.kind_of?(Lan)
+    if object.kind_of?(Lan)
+      node[:selectable] = false
+      node[:class] = append_no_cursor(node[:class])
+    end
   end
 
   private

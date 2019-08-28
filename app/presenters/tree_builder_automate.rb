@@ -13,7 +13,10 @@ class TreeBuilderAutomate < TreeBuilder
   end
 
   def override(node, object)
-    node[:selectable] = false if object.kind_of?(MiqAeNamespace) && object.domain?
+    if object.kind_of?(MiqAeNamespace) && object.domain?
+      node[:selectable] = false
+      node[:class] = append_no_cursor(node[:class])
+    end
   end
 
   def x_get_tree_class_kids(object, count_only)

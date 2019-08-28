@@ -11,6 +11,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
 
   def override(node, _object)
     node[:selectable] = false
+    node[:class] = append_no_cursor(node[:class])
   end
 
   def tree_init_options

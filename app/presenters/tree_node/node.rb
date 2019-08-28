@@ -87,7 +87,7 @@ module TreeNode
         :iconColor      => color,
         :expand         => expand,
         :hideCheckbox   => hide_checkbox,
-        :class          => klass,
+        :class          => [selectable ? nil : 'no-cursor'].push(klass).compact.join(' ').presence, # add no-cursor if not selectable
         :selectable     => selectable,
         :state          => {
           :checked => checked
