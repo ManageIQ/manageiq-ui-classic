@@ -8,7 +8,7 @@ describe TreeNode::MiqRegion do
 
   describe '#expand' do
     it 'returns with true' do
-      expect(subject.expand).to be_truthy
+      expect(subject.expanded).to be_truthy
     end
   end
 end
