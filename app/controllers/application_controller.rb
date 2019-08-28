@@ -922,9 +922,18 @@ class ApplicationController < ActionController::Base
   end
 
   def flash_errors?
-    Array(@flash_array).any? { |f| f[:level] == :error }
+    flash_error_or_warning(:error)
   end
   helper_method(:flash_errors?)
+
+  def flash_warnings?
+    flash_error_or_warning(:warning)
+  end
+  helper_method(:flash_warnings?)
+
+  def flash_error_or_warning(type)
+    Array(@flash_array).any? { |f| f[:level] == type }
+  end
 
   # Handle the breadcrumb array by either adding, or resetting to, the passed in breadcrumb
   # if replace = true, only add this bc if it was already there
