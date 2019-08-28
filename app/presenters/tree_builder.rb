@@ -106,8 +106,6 @@ class TreeBuilder
     while stack.any?
       node = stack.pop
       stack += node[:nodes] if node.key?(:nodes)
-      node[:state] ||= {}
-      node[:state][:expanded] = node.delete(:expanded) if node.key?(:expanded)
     end
     nodes
   end
