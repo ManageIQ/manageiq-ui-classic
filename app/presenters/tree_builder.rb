@@ -193,8 +193,10 @@ class TreeBuilder
         x_build_node_tree(child, nil)
       end
     end
+
     return nodes unless respond_to?(:root_options, true)
-    [{:key => 'root', :nodes => nodes, :expanded => true}]
+
+    [{:key => 'root', :nodes => nodes, :state => {:expanded => true}}]
   end
 
   # determine if this is an ancestry node, and return the approperiate object
@@ -235,11 +237,12 @@ class TreeBuilder
     # - it has been already expanded in a previous session
     # - the open_all setting is present in the tree_init_options
     # - the node is set as active_node in the tree state
-    node[:expanded] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
-                        !!@options[:open_all]                                              ||
-                        @tree_state.x_tree(@name)[:active_node] == node[:key]
-    if ancestry_kids || node[:expanded] || !@options[:lazy]
+    node[:state] ||= {}
+    node[:state][:expanded] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
+                                !!@options[:open_all]                                              ||
+                                @tree_state.x_tree(@name)[:active_node] == node[:key]
 
+    if ancestry_kids || node[:state][:expanded] || !@options[:lazy]
       kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
         x_build_node(o, node[:key])
       end
