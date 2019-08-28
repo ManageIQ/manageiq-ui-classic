@@ -144,13 +144,9 @@ module OpsController::Settings::Zones
   # Get variables from zone edit form
   def zone_get_form_vars
     @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
-    @edit[:new][:proxy_server_ip] = params[:proxy_server_ip] if params[:proxy_server_ip]
+
+    copy_params_if_present(@edit[:new], params, %i[name description proxy_server_ip userid password verify])
     @edit[:new][:concurrent_vm_scans] = params[:max_scans].to_i if params[:max_scans]
-    @edit[:new][:userid] = params[:userid] if params[:userid]
-    @edit[:new][:password] = params[:password] if params[:password]
-    @edit[:new][:verify] = params[:verify] if params[:verify]
 
     settings_get_form_vars_sync_ntp
     set_verify_status
