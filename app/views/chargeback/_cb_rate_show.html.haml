@@ -5,8 +5,6 @@
   .form-group
     %label.col-md-2.control-label
       = _('Description')
-      %br
-      = _('(Column Name in Report)')
     .col-md-8
       %p.form-control-static
         = h(@record.description)
@@ -16,7 +14,10 @@
   %thead
     %tr
       %th{:rowspan => "2"}= _('Group')
-      %th{:rowspan => "2"}= _('Description')
+      %th{:rowspan => "2"}
+        = _('Description')
+        %br
+        = _('(Column Name in Report)')
       - if breakdown_present
         %th{:rowspan => '2'}= _('Sub Metric')
 
