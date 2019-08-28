@@ -700,6 +700,18 @@ describe OpsController do
         controller.send(:rbac_field_changed, rec_type)
         expect(subject.count).to eq(2)
       end
+
+      context 'deleting name and/or password from the form while adding user' do
+        let(:params) { {:name => '', :id => 'new', :password => '', :verify => ''} }
+        let(:edit) { {:new => {:name => 'new_user', :password => 'passw', :verify => 'passw'}, :current => edit_curr } }
+        let(:edit_curr) { {:name => nil, :group => [], :password => nil, :verify => nil} }
+
+        it 'sets @edit[:new] and changed variable properly' do
+          controller.send(:rbac_field_changed, rec_type)
+          expect(controller.instance_variable_get(:@edit)[:new]).to eq(edit_curr)
+          expect(session[:changed]).to be(false)
+        end
+      end
     end
 
     context 'adding a new group' do

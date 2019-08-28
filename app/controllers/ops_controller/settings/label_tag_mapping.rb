@@ -169,9 +169,7 @@ module OpsController::Settings::LabelTagMapping
   # Get variables from label_tag_mapping edit form
   def lt_map_get_form_vars
     @lt_map = @edit[:lt_map]
-    @edit[:new][:entity] = params[:entity] if params[:entity]
-    @edit[:new][:label_name] = params[:label_name] if params[:label_name]
-    @edit[:new][:category] = params[:category] if params[:category]
+    copy_params_if_present(@edit[:new], params, %i[entity label_name category])
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
