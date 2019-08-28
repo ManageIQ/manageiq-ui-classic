@@ -8,7 +8,8 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
     else
       node[:hideCheckbox] = true
     end
-    node[:select] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
+    node[:state] ||= {}
+    node[:state][:checked] = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)

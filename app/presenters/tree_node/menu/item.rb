@@ -8,7 +8,7 @@ module TreeNode
         [_(details[:name]), _(details[:description]) || _(details[:name])]
       end
 
-      set_attribute(:selected) do
+      set_attribute(:checked) do
         parent_feature = ::MiqProductFeature.obj_features[::MiqProductFeature.feature_parent(@object.feature)][:feature]
 
         [parent_feature.identifier, @object.feature].any? do |item|

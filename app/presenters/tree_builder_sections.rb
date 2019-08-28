@@ -31,7 +31,7 @@ class TreeBuilderSections < TreeBuilder
                    :text       => section[:group] == "Categories" ? _("%{current_tenant} Tags") % {:current_tenant => @current_tenant} : _(section[:group]),
                    :tip        => _(section[:group]),
                    :image      => false,
-                   :select     => true,
+                   :checked    => true,
                    :selectable => false,
                    :nodes      => [section])
       else
@@ -40,13 +40,13 @@ class TreeBuilderSections < TreeBuilder
     end
     nodes.each do |node|
       checked = node[:nodes].count { |kid| @data.include[kid[:name]][:checked] } # number of checked kids
-      node[:select] = if checked.zero?
-                        false
-                      elsif checked < node[:nodes].size
-                        'undefined'
-                      else
-                        true
-                      end
+      node[:checked] = if checked.zero?
+                         false
+                       elsif checked < node[:nodes].size
+                         'undefined'
+                       else
+                         true
+                       end
     end
     count_only_or_objects(count_only, nodes)
   end
@@ -57,7 +57,7 @@ class TreeBuilderSections < TreeBuilder
        :text       => _(kid[:header]),
        :tip        => _(kid[:header]),
        :image      => false,
-       :select     => @data.include[kid[:name]][:checked],
+       :checked    => @data.include[kid[:name]][:checked],
        :selectable => false,
        :nodes      => []}
     end

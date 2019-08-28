@@ -5,6 +5,7 @@ class TreeBuilderResourcePools < TreeBuilderAlertProfileAssign
     node[:selectable] = false
     node[:checkable] = true
     node[:hideCheckbox] = true unless object.kind_of?(ResourcePool)
-    node[:select] = @selected_nodes&.include?("ResourcePool_#{object[:id]}")
+    node[:state] ||= {}
+    node[:state][:checked] = @selected_nodes&.include?("ResourcePool_#{object[:id]}")
   end
 end

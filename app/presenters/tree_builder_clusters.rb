@@ -36,7 +36,7 @@ class TreeBuilderClusters < TreeBuilder
         :text       => node[:name],
         :icon       => 'pficon pficon-cluster',
         :tip        => node[:name],
-        :select     => node[:capture],
+        :checked    => node[:capture],
         :nodes      => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
         :selectable => false}
     end
@@ -45,7 +45,7 @@ class TreeBuilderClusters < TreeBuilder
               :text       => _("Non-clustered Hosts"),
               :icon       => 'pficon pficon-container-node',
               :tip        => _("Non-clustered Hosts"),
-              :select     => non_cluster_selected,
+              :checked    => non_cluster_selected,
               :nodes      => @root[:non_cl_hosts],
               :selectable => false}
       nodes.push(node)
@@ -63,7 +63,7 @@ class TreeBuilderClusters < TreeBuilder
        :text       => node[:name],
        :tip        => _("Host: %{name}") % {:name => node[:name]},
        :icon       => 'pficon pficon-container-node',
-       :select     => node.kind_of?(Hash) ? node[:capture] : !value,
+       :checked    => node.kind_of?(Hash) ? node[:capture] : !value,
        :selectable => false,
        :nodes      => []}
     end

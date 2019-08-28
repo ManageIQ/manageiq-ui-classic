@@ -38,7 +38,7 @@ class TreeBuilderDatastores < TreeBuilder
         :text       => text,
         :icon       => 'fa fa-database',
         :tip        => "#{node[:name]} [#{node[:location]}]",
-        :select     => node[:capture] == true,
+        :checked    => node[:capture] == true,
         :selectable => false,
         :nodes      => children }
     end

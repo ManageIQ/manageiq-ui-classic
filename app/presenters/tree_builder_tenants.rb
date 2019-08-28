@@ -58,7 +58,8 @@ class TreeBuilderTenants < TreeBuilder
   end
 
   def override(node, object)
-    node[:select] = @additional_tenants.try(:include?, object)
+    node[:state] ||= {}
+    node[:state][:checked] = @additional_tenants.try(:include?, object)
     node[:checkable] = @selectable
   end
 end

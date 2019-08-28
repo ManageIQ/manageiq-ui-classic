@@ -48,7 +48,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
       {:id              => "#{parent[:id]}_#{kid.id}",
        :icon            => parent[:icon],
        :text            => kid.name,
-       :select          => affinities.include?(kid.id),
+       :checked         => affinities.include?(kid.id),
        :selectable      => false,
        :nodes           => [],
        :smartproxy_kind => parent[:smartproxy_kind]}

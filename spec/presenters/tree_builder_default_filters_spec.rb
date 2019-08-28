@@ -95,14 +95,14 @@ describe TreeBuilderDefaultFilters do
               grandkids = @default_filters_tree.send(:x_get_tree_hash_kids, kid, false)
               grandkids.each_with_index do |grandkid, index|
                 expect(grandkid[:icon]).to eq('fa fa-filter')
-                expect(grandkid[:select]).to eq(offsprings[kid[:text]][index][:search_key] != "_hidden_")
+                expect(grandkid[:checked]).to eq(offsprings[kid[:text]][index][:search_key] != "_hidden_")
               end
             end
           else
             kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
             kids.each_with_index do |kid, index|
               expect(kid[:icon]).to eq('fa fa-filter')
-              expect(kid[:select]).to eq(offsprings[index][:search_key] != "_hidden_")
+              expect(kid[:checked]).to eq(offsprings[index][:search_key] != "_hidden_")
             end
           end
         end

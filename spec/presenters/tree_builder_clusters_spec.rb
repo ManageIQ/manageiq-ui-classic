@@ -41,7 +41,7 @@ describe TreeBuilderClusters do
                                         :text       => "Name",
                                         :icon       => 'pficon pficon-cluster',
                                         :tip        => "Name",
-                                        :select     => 'unsure',
+                                        :checked    => 'unsure',
                                         :selectable => false,
                                         :nodes      => @ho_enabled + @ho_disabled)
       # non-cluster-node
@@ -49,7 +49,7 @@ describe TreeBuilderClusters do
                                        :text       => "Non-clustered Hosts",
                                        :icon       => 'pficon pficon-container-node',
                                        :tip        => "Non-clustered Hosts",
-                                       :select     => true,
+                                       :checked    => true,
                                        :selectable => false,
                                        :nodes      => @non_cluster_hosts)
     end
@@ -61,7 +61,7 @@ describe TreeBuilderClusters do
                                        :text       => "Non Cluster Host",
                                        :tip        => "Host: Non Cluster Host",
                                        :icon       => 'pficon pficon-container-node',
-                                       :select     => true,
+                                       :checked    => true,
                                        :selectable => false,
                                        :nodes      => []}])
     end
@@ -74,7 +74,7 @@ describe TreeBuilderClusters do
          :text       => node[:name],
          :tip        => "Host: %{name}" % {:name => node[:name]},
          :icon       => 'pficon pficon-container-node',
-         :select     => true,
+         :checked    => true,
          :selectable => false,
          :nodes      => []}
       end
@@ -83,7 +83,7 @@ describe TreeBuilderClusters do
          :text       => node[:name],
          :tip        => "Host: %{name}" % {:name => node[:name]},
          :icon       => 'pficon pficon-container-node',
-         :select     => false,
+         :checked    => false,
          :selectable => false,
          :nodes      => []}
       end
