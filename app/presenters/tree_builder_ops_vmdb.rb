@@ -33,11 +33,11 @@ class TreeBuilderOpsVmdb < TreeBuilder
 
     [
       {
-        :id     => object.id.to_s,
-        :text   => _("Indexes"),
-        :icon   => "pficon pficon-folder-close",
-        :tip    => _("Indexes"),
-        :expand => true # load this node expanded with its children
+        :id       => object.id.to_s,
+        :text     => _("Indexes"),
+        :icon     => "pficon pficon-folder-close",
+        :tip      => _("Indexes"),
+        :expanded => true # load this node expanded with its children
       }
     ]
   end

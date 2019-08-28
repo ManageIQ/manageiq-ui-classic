@@ -48,7 +48,7 @@ module TreeNode
       true
     end
 
-    def expand
+    def expanded
       false
     end
 
@@ -86,7 +86,7 @@ module TreeNode
         :icon           => icon,
         :iconBackground => icon_background,
         :iconColor      => color,
-        :expand         => expand,
+        :expanded       => expanded,
         :hideCheckbox   => hide_checkbox,
         :class          => [selectable ? nil : 'no-cursor'].push(klass).compact.join(' ').presence, # add no-cursor if not selectable
         :selectable     => selectable,

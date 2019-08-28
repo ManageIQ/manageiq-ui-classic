@@ -1,6 +1,6 @@
 module TreeNode
   class MiqServer < Node
-    set_attribute(:expand, true)
+    set_attribute(:expanded, true)
 
     set_attributes(:text, :tooltip) do
       if ::MiqServer.my_server.id == @object.id

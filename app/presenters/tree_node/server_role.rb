@@ -1,6 +1,6 @@
 module TreeNode
   class ServerRole < Node
-    set_attribute(:expand, true)
+    set_attribute(:expanded, true)
 
     set_attributes(:text, :tooltip) do
       status = "stopped"

@@ -20,7 +20,7 @@ module TreeNode
 
     set_attribute(:tooltip) { @object[:tip] }
 
-    set_attribute(:expand) { @object[:expand] }
+    set_attribute(:expanded) { @object[:expanded] }
 
     set_attribute(:key) do
       if @object[:id] == "-Unassigned"
