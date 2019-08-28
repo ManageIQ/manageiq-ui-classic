@@ -24,7 +24,6 @@
 //= require ./miq_grid
 //= require ./miq_list_grid
 //= require ./miq_toolbar
-//= require ./resizable_sidebar
 //= require ./miq_c3
 //= require ./miq_explorer
 //= require ./miq_timeline

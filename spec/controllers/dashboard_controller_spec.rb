@@ -323,52 +323,6 @@ describe DashboardController do
     end
   end
 
-  describe '#resize_layout' do
-    before do
-      controller.params[:sidebar] = sidebar
-      controller.params[:context] = context
-      expect(controller).to receive(:head).with(:ok)
-      controller.send(:resize_layout)
-    end
-
-    context 'controller is not nil' do
-      let(:context) { 'sample_controller' }
-
-      context 'invalid sidebar value' do
-        let(:sidebar) { 'not a number' }
-
-        it 'sets width to 0 units' do
-          expect(session[:sidebar][context]).to eq(0)
-        end
-      end
-
-      context 'valid sidebar value' do
-        let(:sidebar) { '3' }
-
-        it 'sets width to 3 units' do
-          expect(session[:sidebar][context]).to eq(3)
-        end
-      end
-
-      context 'no sidebar value' do
-        let(:sidebar) { nil }
-
-        it 'does not change the configuration' do
-          expect(session[:sidebar]).to be nil
-        end
-      end
-    end
-
-    context 'controller is nil' do
-      let(:sidebar) { nil }
-      let(:context) { nil }
-
-      it 'does not change the configuration' do
-        expect(session[:sidebar]).to be nil
-      end
-    end
-  end
-
   describe "#maintab" do
     before do
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)

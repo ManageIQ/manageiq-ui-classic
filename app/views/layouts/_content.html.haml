@@ -1,25 +1,19 @@
 - if big_iframe
   = render :partial => "layouts/vertical_navbar"
-  .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.resizable-sidebar.max-height{:style => "overflow: hidden !important"}
+  .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
     .row.max-height
       = yield
 - elsif inner_layout_present?
-  - session[:sidebar] ||= {}
-  - sidewidth = simulate? ? 5 : session[:sidebar][params[:controller]] ||= 3
-  - maindiv = 12 - sidewidth
-  - sidebar = sidewidth == 0 ? 'hidden-md hidden-lg col-md-0' : "col-md-#{sidewidth} col-md-pull-#{maindiv}"
-
   = render :partial => "layouts/vertical_navbar"
-
-  .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.resizable-sidebar.max-height{:style => "overflow: hidden !important"}
+  .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
     #breadcrumbs
       = render :partial => "layouts/breadcrumbs"
     .row.toolbar-pf#toolbar.miq-toolbar-menu
       .col-sm-12
         = render :partial => "layouts/angular/toolbar"
     .row.max-height
-      #right_div.resizable.max-height{:class => "col-md-#{maindiv} col-md-push-#{sidewidth}"}
-        #main-content.row.miq-layout-content
+      .max-height{:class => simulate? ? 'col-sm-7 col-md-8 col-sm-push-5 col-md-push-4' : 'col-sm-8 col-md-9 col-sm-push-4 col-md-push-3'}
+        #main-content.row.miq-layout-center_div_with_listnav
           .col-md-12
             .row
               .col-md-7#explorer
@@ -51,21 +45,18 @@
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
 
-        - unless simulate?
-          .resizer.hidden-xs
-            .resizer-box
-              .btn-group
-                .btn.btn-default.resize-left
-                  %span.fa.fa-angle-left
-                .btn.btn-default.resize-right{:class => sidewidth == 5 ? 'disabled' : ''}
-                  %span.fa.fa-angle-right
+      - if simulate?
+        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-5.col-md-4.col-sm-pull-7.col-md-pull-8
+          #default_left_cell
+            = yield :left
+      - else
+        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9
+          #default_left_cell
+            - if @accords && @trees
+              = render :partial => "layouts/listnav"
+            = yield :left
+          #custom_left_cell
 
-      #left_div.resizable.sidebar-pf.sidebar-pf-left.max-height.scrollable{:class => sidebar}
-        #default_left_cell
-          - if @accords && @trees
-            = render :partial => "layouts/listnav"
-          = yield :left
-        #custom_left_cell
 - elsif layout_full_center
   = render :partial => "layouts/vertical_navbar"
   = render :partial => layout_full_center
