@@ -45,7 +45,7 @@ class TreeBuilder
     open_node(id)
 
     x_get_tree_objects(object, false, parents).map do |o|
-      x_build_node_tree(o, id)
+      x_build_node(o, id)
     end
   end
 
@@ -174,7 +174,7 @@ class TreeBuilder
       if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
         child
       else
-        x_build_node_tree(child, nil)
+        x_build_node(child, nil)
       end
     end
 
@@ -244,11 +244,6 @@ class TreeBuilder
     node = TreeNode.new(object, pid, self).to_h
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
     node
-  end
-
-  # Called with object, tree node parent id
-  def x_build_node_tree(object, pid)
-    x_build_node(object, pid)
   end
 
   # Handle custom tree nodes (object is a Hash)
