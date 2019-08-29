@@ -506,7 +506,7 @@ class ChargebackController < ApplicationController
 
     # Select the currency of the first chargeback_rate_detail. All the chargeback_rate_details have the same currency
     @edit[:new][:currency] = rate_details[0].detail_currency.id
-    @edit[:new][:code_currency] = rate_details[0].detail_currency.code
+    @edit[:new][:code_currency] = "#{rate_details[0].detail_currency.symbol} [#{rate_details[0].detail_currency.full_name}]"
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
@@ -560,7 +560,8 @@ class ChargebackController < ApplicationController
     @edit[:new][:description] = params[:description] if params[:description]
     if params[:currency]
       @edit[:new][:currency] = params[:currency].to_i
-      @edit[:new][:code_currency] = ChargebackRateDetailCurrency.find(params[:currency]).code
+      rate_detail_currency = ChargebackRateDetailCurrency.find(params[:currency])
+      @edit[:new][:code_currency] = "#{rate_detail_currency.symbol} [#{rate_detail_currency.full_name}]"
     end
     @edit[:new][:details].each_with_index do |detail, detail_index|
       %i[per_time per_unit sub_metric].each do |measure|
