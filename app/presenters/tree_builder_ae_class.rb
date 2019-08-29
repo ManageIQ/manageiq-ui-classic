@@ -16,8 +16,8 @@ class TreeBuilderAeClass < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, User.current_tenant.visible_domains)
+  def x_get_tree_roots
+    count_only_or_objects(false, User.current_tenant.visible_domains)
   end
 
   def x_get_tree_class_kids(object, count_only)

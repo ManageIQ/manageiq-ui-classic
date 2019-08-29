@@ -23,8 +23,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
   end
 
   # Get root node and all children report folders. (will call get_tree_custom_kids to get report details)
-  def x_get_tree_roots(count_only)
-    return @rpt_menu.size if count_only
+  def x_get_tree_roots
     @rpt_menu.each_with_index.each_with_object({}) do |(r, node_id), a|
       open_node("xx-#{node_id}")
 

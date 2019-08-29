@@ -16,8 +16,8 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
-    count_only_or_objects_filtered(count_only, ManageIQ::Providers::AnsibleTower::AutomationManager, "name")
+  def x_get_tree_roots
+    count_only_or_objects_filtered(false, ManageIQ::Providers::AnsibleTower::AutomationManager, "name")
   end
 
   def x_get_tree_cmat_kids(object, count_only)

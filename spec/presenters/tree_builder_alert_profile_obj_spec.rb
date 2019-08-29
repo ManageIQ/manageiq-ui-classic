@@ -80,7 +80,7 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#x_get_tree_roots' do
       it 'sets first level nodes correctly' do
-        s = subject.send(:x_get_tree_roots, false)
+        s = subject.send(:x_get_tree_roots)
         expect(s).to eq([tag1a, tag2a, tag3a].sort_by { |o| (o.name.presence || o.description).downcase })
       end
     end
@@ -89,7 +89,7 @@ describe TreeBuilderAlertProfileObj do
       it 'returns all ExtManagementSystems except the Embedded Ansible when @assign_to=ext_management_system' do
         subject.instance_variable_set(:@cat_tree, nil)
         subject.instance_variable_set(:@assign_to, "ext_management_system")
-        expect(subject.send(:x_get_tree_roots, false)).to eq(ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
+        expect(subject.send(:x_get_tree_roots)).to eq(ExtManagementSystem.where.not(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager"))
       end
     end
   end
@@ -106,7 +106,7 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#x_get_tree_roots' do
       it 'sets first level nodes correctly' do
-        s = subject.send(:x_get_tree_roots, false)
+        s = subject.send(:x_get_tree_roots)
         expect(s).to eq(Tenant.all.sort_by { |o| (o.name.presence || o.description).downcase })
       end
     end

@@ -294,7 +294,7 @@ describe ProviderForemanController do
 
   it "builds foreman child tree" do
     tree_builder = TreeBuilderConfigurationManager.new("root", controller.instance_variable_get(:@sb))
-    objects = tree_builder.send(:x_get_tree_roots, false)
+    objects = tree_builder.send(:x_get_tree_roots)
     expected_objects = [@config_mgr, @config_mgr2]
     expect(objects).to match_array(expected_objects)
   end

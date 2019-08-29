@@ -14,22 +14,16 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
-    items = PxeImageType.all
-    if count_only
-      # add +1 for customization spec folder thats used to show system templates
-      items.size + 1
-    else
-      objects = []
-      objects.push(:id   => "xx-system",
-                   :text => _("Examples (read only)"),
-                   :icon => "pficon pficon-folder-close",
-                   :tip  => _("Examples (read only)"))
-      PxeImageType.all.sort.each do |item, _idx|
-        objects.push(:id => "xx-#{item.id}", :text => item.name, :icon => "pficon pficon-folder-close", :tip => item.name)
-      end
-      objects
+  def x_get_tree_roots
+    objects = []
+    objects.push(:id   => "xx-system",
+                 :text => _("Examples (read only)"),
+                 :icon => "pficon pficon-folder-close",
+                 :tip  => _("Examples (read only)"))
+    PxeImageType.all.sort.each do |item, _idx|
+      objects.push(:id => "xx-#{item.id}", :text => item.name, :icon => "pficon pficon-folder-close", :tip => item.name)
     end
+    objects
   end
 
   def get_pxe_image_id(nodes)

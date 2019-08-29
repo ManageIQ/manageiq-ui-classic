@@ -14,7 +14,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     {:full_ids => true}
   end
 
-  def x_get_tree_roots(_count_only)
+  def x_get_tree_roots
     xml_children(MiqXml.load(@root).root)
   end
 

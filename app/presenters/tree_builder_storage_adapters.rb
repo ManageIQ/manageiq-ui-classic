@@ -26,13 +26,8 @@ class TreeBuilderStorageAdapters < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    kids = count_only ? 0 : []
-    unless @root.hardware.storage_adapters.empty?
-      kids = count_only_or_objects(count_only, @root.hardware.storage_adapters)
-    end
-    kids.reverse unless count_only
-    kids
+  def x_get_tree_roots
+    @root.hardware.storage_adapters.empty? ? [] : @root.hardware.storage_adapters.reverse
   end
 
   def x_get_tree_guest_device_kids(parent, count_only = false)

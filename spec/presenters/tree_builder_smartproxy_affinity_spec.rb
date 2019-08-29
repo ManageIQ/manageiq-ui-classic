@@ -51,7 +51,7 @@ describe TreeBuilderSmartproxyAffinity do
       expect(locals[:three_checks]).to eq(true)
     end
     it 'sets roots correctly' do
-      roots = @smartproxy_affinity_tree.send(:x_get_tree_roots, false)
+      roots = @smartproxy_affinity_tree.send(:x_get_tree_roots)
       expect(roots).to eq([@svr1, @svr2])
     end
     it 'sets MiqServer kids correctly' do

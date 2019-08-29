@@ -40,7 +40,7 @@ describe TreeBuilderPolicySimulationResults do
     end
 
     it 'sets vm nodes correctly' do
-      vms = @rsop_tree.send(:x_get_tree_roots, false)
+      vms = @rsop_tree.send(:x_get_tree_roots)
       original_vms = @data[:results].sort_by { |a| a[:name].downcase }
       vms.each_with_index do |vm, i|
         expect(vm[:text]).to eq("<strong>VM:</strong> #{original_vms[i][:name]}")
@@ -50,7 +50,7 @@ describe TreeBuilderPolicySimulationResults do
     end
 
     it 'sets profile nodes correctly' do
-      vms = @rsop_tree.send(:x_get_tree_roots, false)
+      vms = @rsop_tree.send(:x_get_tree_roots)
       original_vms = @data[:results].sort_by { |a| a[:name].downcase }
       profiles_one = @rsop_tree.send(:x_get_tree_hash_kids, vms.first, false)
       profiles_two = @rsop_tree.send(:x_get_tree_hash_kids, vms.last, false)
@@ -60,7 +60,7 @@ describe TreeBuilderPolicySimulationResults do
     end
 
     it 'sets policy nodes correctly' do
-      vms = @rsop_tree.send(:x_get_tree_roots, false)
+      vms = @rsop_tree.send(:x_get_tree_roots)
       original_vms = @data[:results].sort_by { |a| a[:name].downcase }
       profiles = @rsop_tree.send(:x_get_tree_hash_kids, vms.first, false)
       policies = @rsop_tree.send(:x_get_tree_hash_kids, profiles.first, false)
@@ -69,7 +69,7 @@ describe TreeBuilderPolicySimulationResults do
     end
 
     it 'sets condition and action nodes correctly' do
-      vms = @rsop_tree.send(:x_get_tree_roots, false)
+      vms = @rsop_tree.send(:x_get_tree_roots)
       original_vms = @data[:results].sort_by { |a| a[:name].downcase }
       profiles = @rsop_tree.send(:x_get_tree_hash_kids, vms.first, false)
       policies = @rsop_tree.send(:x_get_tree_hash_kids, profiles.first, false)

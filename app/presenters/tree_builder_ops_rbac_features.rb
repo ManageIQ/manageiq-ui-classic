@@ -18,7 +18,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   private
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     top_nodes = Menu::Manager.items.select do |section|
       Vmdb::PermissionStores.instance.can?(section.id) && !section.kind_of?(Menu::Item)
     end
@@ -28,7 +28,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
         MiqProductFeature.obj_features[additional_feature][:feature]
     end
 
-    count_only_or_objects(count_only, top_nodes.compact)
+    count_only_or_objects(false, top_nodes.compact)
   end
 
   def x_get_tree_section_kids(parent, count_only = false)

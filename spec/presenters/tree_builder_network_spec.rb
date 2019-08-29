@@ -25,25 +25,25 @@ describe TreeBuilderNetwork do
     end
 
     it 'returns Switch as root child' do
-      kid = @network_tree.send(:x_get_tree_roots, false)
+      kid = @network_tree.send(:x_get_tree_roots)
       expect(kid.first).to be_a_kind_of(Switch)
     end
 
     it 'returns GuestDevice and Lan as Switch children' do
-      parent = @network_tree.send(:x_get_tree_roots, false).first
+      parent = @network_tree.send(:x_get_tree_roots).first
       kids = @network_tree.send(:x_get_tree_switch_kids, parent, false)
       expect(kids[0]).to be_a_kind_of(GuestDevice)
       expect(kids[1]).to be_a_kind_of(Lan)
     end
 
     it 'returns Vm as Lan child' do
-      parent = @network_tree.send(:x_get_tree_roots, false).first.lans.first
+      parent = @network_tree.send(:x_get_tree_roots).first.lans.first
       kid = @network_tree.send(:x_get_tree_lan_kids, parent, false)
       expect(kid.first).to be_a_kind_of(Vm)
     end
 
     it 'returns nothing as GuestDevice child' do
-      parent = @network_tree.send(:x_get_tree_roots, false).first.guest_devices.first
+      parent = @network_tree.send(:x_get_tree_roots).first.guest_devices.first
       number_of_kids = @network_tree.send(:x_get_tree_objects, parent, true, nil)
       expect(number_of_kids).to eq(0)
     end

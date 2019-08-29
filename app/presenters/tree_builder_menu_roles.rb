@@ -36,7 +36,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   # parents to children. Therefore we include the children with the parent.
   # The :data key was chosen to avoid future conflicts with the :nodes key.
   #
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     branches = menus.map do |i|
       grandkids = i.last.kind_of?(Array) ? i.last : []
 
@@ -49,7 +49,7 @@ class TreeBuilderMenuRoles < TreeBuilder
       }
     end
 
-    count_only_or_objects(count_only, branches)
+    count_only_or_objects(false, branches)
   end
 
   # Referenced by has_kids_for, builds nodes from branch kids and grandkids

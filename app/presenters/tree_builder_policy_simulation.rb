@@ -40,7 +40,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
     end
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     nodes = if @data.present?
               reject_na_nodes(@data).map do |node|
                 {:id         => node['id'],
@@ -53,7 +53,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
             else
               [{:id => nil, :text => _("Items out of scope"), :icon => 'fa fa-ban', :selectable => false}]
             end
-    count_only_or_objects(count_only, nodes)
+    count_only_or_objects(false, nodes)
   end
 
   def node_out_of_scope?(node)

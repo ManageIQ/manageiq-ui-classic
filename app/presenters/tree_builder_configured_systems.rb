@@ -12,9 +12,9 @@ class TreeBuilderConfiguredSystems < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     objects = []
     objects.push(configured_systems)
-    count_only_or_objects(count_only, objects + FILTERS.values)
+    count_only_or_objects(false, objects + FILTERS.values)
   end
 end

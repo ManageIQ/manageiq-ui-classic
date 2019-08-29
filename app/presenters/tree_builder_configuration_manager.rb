@@ -16,8 +16,8 @@ class TreeBuilderConfigurationManager < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
-    count_only_or_objects_filtered(count_only, ManageIQ::Providers::Foreman::ConfigurationManager, "name", :match_via_descendants => ConfiguredSystem)
+  def x_get_tree_roots
+    count_only_or_objects_filtered(false, ManageIQ::Providers::Foreman::ConfigurationManager, "name", :match_via_descendants => ConfiguredSystem)
   end
 
   def node_by_tree_id(id)

@@ -12,7 +12,7 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     nodes = [
       {:id   => 'otcfn',
        :tree => "otcfn_tree",
@@ -45,7 +45,7 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
        :icon => "pficon pficon-template",
        :tip  => _("vApp Templates")}
     ]
-    count_only_or_objects(count_only, nodes)
+    count_only_or_objects(false, nodes)
   end
 
   def x_get_tree_custom_kids(object, count_only)

@@ -14,7 +14,7 @@ class TreeBuilderAlert < TreeBuilder
   end
 
   # level 1 - alerts
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, MiqAlert.all, :description)
+  def x_get_tree_roots
+    count_only_or_objects(false, MiqAlert.all, :description)
   end
 end

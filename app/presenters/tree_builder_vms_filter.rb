@@ -20,8 +20,8 @@ class TreeBuilderVmsFilter < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, FILTERS.values)
+  def x_get_tree_roots
+    count_only_or_objects(false, FILTERS.values)
   end
 
   def x_get_tree_custom_kids(object, count_only)

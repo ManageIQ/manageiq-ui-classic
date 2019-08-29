@@ -6,9 +6,8 @@ class TreeBuilderChargeback < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     rate_types = ChargebackRate::VALID_CB_RATE_TYPES
-    return rate_types.length if count_only
 
     rate_types.map do |type|
       {

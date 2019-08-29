@@ -30,7 +30,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     obj = if @assign_to.blank? || @assign_to == "enterprise"
             []
           elsif @cat_tree
@@ -40,6 +40,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
           else
             @assign_to.camelize.constantize.all
           end
-    count_only_or_objects(count_only, obj.sort_by { |o| (o.name.presence || o.description).downcase })
+    count_only_or_objects(false, obj.sort_by { |o| (o.name.presence || o.description).downcase })
   end
 end

@@ -12,7 +12,7 @@ class TreeBuilderAeCustomization < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, nil)
+  def x_get_tree_roots
+    count_only_or_objects(false, nil)
   end
 end

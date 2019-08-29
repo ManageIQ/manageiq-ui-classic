@@ -34,14 +34,14 @@ describe TreeBuilderSnapshots do
     end
 
     it 'returns Snapshot as kids of root' do
-      snapshot_nodes = tree.send(:x_get_tree_roots, false)
+      snapshot_nodes = tree.send(:x_get_tree_roots)
       snapshot_nodes.each do |snapshot_node|
         expect(snapshot_node).to be_a_kind_of(Snapshot)
       end
     end
 
     it 'returns Snapshot as kids of Snapshot' do
-      snapshot_parent = tree.send(:x_get_tree_roots, false).first
+      snapshot_parent = tree.send(:x_get_tree_roots).first
       snapshot_nodes = tree.send(:x_get_tree_snapshot_kids, snapshot_parent, false)
       snapshot_nodes.each do |snapshot_node|
         expect(snapshot_node).to be_a_kind_of(Snapshot)

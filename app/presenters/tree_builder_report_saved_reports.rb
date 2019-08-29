@@ -13,7 +13,7 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(_count_only)
+  def x_get_tree_roots
     u = User.current_user
     user_groups = u.report_admin_user? ? nil : u.miq_groups
     having_report_results(user_groups).sort

@@ -20,7 +20,7 @@ class TreeBuilderAlertProfile < TreeBuilder
   end
 
   # level 1 - * alert profiles
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     objects = alert_profile_kinds.map do |db|
       # Set alert profile folder nodes to open so we pre-load all children
       open_node("xx-#{db}")
@@ -28,7 +28,7 @@ class TreeBuilderAlertProfile < TreeBuilder
       {:id => db, :text => text, :tip => text, :icon => db.constantize.decorate.fonticon}
     end
 
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(false, objects)
   end
 
   # level 2 - alert profiles

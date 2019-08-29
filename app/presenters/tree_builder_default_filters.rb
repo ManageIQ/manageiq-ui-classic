@@ -43,7 +43,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     roots = @data.keys.map do |folder|
       {:id           => folder,
        :text         => folder,
@@ -52,7 +52,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
        :selectable   => false,
        :hideCheckbox => true}
     end
-    count_only_or_objects(count_only, roots)
+    count_only_or_objects(false, roots)
   end
 
   def x_get_tree_hash_kids(parent, count_only)
