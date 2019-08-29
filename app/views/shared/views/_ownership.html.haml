@@ -8,7 +8,7 @@
   - groups_opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No User Group')}>", '']]
   - user_group = ''
 - else
-  - user_group = MiqGroup.find_by(:id => @group).tenant_group? ? @group : ''
+  - user_group = MiqGroup.find_by(:id => @group)&.tenant_group? ? @group : ''
   - groups_opts =  [["<#{_('No User Group')}>", user_group]]
 - groups_opts += @groups.sort
 
