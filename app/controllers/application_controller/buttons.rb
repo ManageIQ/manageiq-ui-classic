@@ -539,11 +539,11 @@ module ApplicationController::Buttons
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
     nodes = x_node.split('_')
-    if nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+    if nodes[0].split('-')[1] != "ub" && nodes.length >= 2
       # if group is not unassigned group, add uri as a last member  of the group
-      if x_active_tree == :ab_tree || nodes.length > 3
+      if x_active_tree == :ab_tree || nodes.length > 2
         # find custombutton set in ab_tree or when adding button under a group
-        group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
+        group_id = nodes[2].split('-').last
         @aset = CustomButtonSet.find(group_id)
       end
     end
@@ -552,7 +552,7 @@ module ApplicationController::Buttons
       add_flash(_("Custom Button \"%{name}\" was added") % {:name => @edit[:new][:description]})
       @edit = session[:edit] = nil
       au = CustomButton.find(@custom_button.id)
-      if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+      if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 2
         # if group is not unassigned group, add uri as a last member  of the group
         @aset.set_data[:button_order] ||= []
         @aset.set_data[:button_order].push(au.id)
@@ -561,7 +561,7 @@ module ApplicationController::Buttons
       if x_active_tree == :sandt_tree
         # push new button at the end of button_order array
         st = ServiceTemplate.find(@sb[:applies_to_id])
-        st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
+        st.custom_buttons.push(au) if nodes.length >= 2 && nodes[1].split('-').first != "cbg"
         st.options[:button_order] ||= []
         st.options[:button_order].push("cb-#{au.id}")
         st.save
@@ -670,6 +670,7 @@ module ApplicationController::Buttons
 
     @edit[:current] = copy_hash(@edit[:new])
     @sb[:button_groups] = nil
+    @sb[:buttons] = nil
     session[:edit] = @edit
   end
 
@@ -1116,7 +1117,7 @@ module ApplicationController::Buttons
     @sb[:buttons] = nil
     @sb[:buttons_node] = true
     @sb[:applies_to_class] = "ServiceTemplate"
-    @sb[:applies_to_id] = nodetype[2].split('-').last
+    @sb[:applies_to_id] = nodetype[1].split('-').last
 
     if nodetype.length == 3 && nodetype[2].split('-').first == "cbg" # buttons group selected
       @sb[:applies_to_class] = "ServiceTemplate"
