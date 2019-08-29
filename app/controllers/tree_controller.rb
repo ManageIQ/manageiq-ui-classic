@@ -43,7 +43,7 @@ class TreeController < ApplicationController
     tree.reload!
 
     if node_id
-      TreeBuilder.convert_bs_tree(tree.x_get_child_nodes(node_id)).to_json
+      tree.x_get_child_nodes(node_id).to_json
     else
       tree.instance_variable_get(:@bs_tree)
     end

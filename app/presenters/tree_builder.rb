@@ -98,18 +98,6 @@ class TreeBuilder
     open_nodes.push(id) unless open_nodes.include?(id)
   end
 
-  # FIXME: temporary conversion, needs to be moved into the generation
-  def self.convert_bs_tree(nodes)
-    return [] if nodes.nil?
-    nodes = [nodes] if nodes.kind_of?(Hash)
-    stack = nodes.dup
-    while stack.any?
-      node = stack.pop
-      stack += node[:nodes] if node.key?(:nodes)
-    end
-    nodes
-  end
-
   # Add child nodes to a tree below node 'id'
   def self.tree_add_child_nodes(sandbox:, klass_name:, name:, id:)
     tree = klass_name.constantize.new(name, sandbox, false)
@@ -119,9 +107,8 @@ class TreeBuilder
   private
 
   # Temporary method to append the no-cursor class to an already existing CSS class
-  # list. It is intended to be used in the override methods in order to get rid of
-  # the TreeBuilder.convert_bs_tree method. Eventually it should be removed after
-  # all the code from the override methods are moved into the TreeNode as a DSL.
+  # list. Eventually it should be removed after all the code from the override methods
+  # is moved into the TreeNode as a DSL.
   def append_no_cursor(klass)
     (klass || '').split(' ').push('no-cursor').join(' ')
   end
@@ -130,8 +117,7 @@ class TreeBuilder
     @tree_nodes = x_build_tree
     active_node_set(@tree_nodes)
     add_root_node(@tree_nodes) if respond_to?(:root_options, true)
-    # Convert the nodes to the Bootstrap Treeview format
-    @bs_tree = self.class.convert_bs_tree(@tree_nodes).to_json
+    @bs_tree = @tree_nodes.to_json
     @locals_for_render = set_locals_for_render
   end
 
