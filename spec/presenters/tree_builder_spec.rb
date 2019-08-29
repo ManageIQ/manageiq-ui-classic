@@ -43,10 +43,11 @@ describe TreeBuilder do
                                'state'      => { 'expanded' => true },
                                'selectable' => true,
                                'text'       => "Storage"}],
-                'state'   => { 'expanded' => true },
-                'text'    => "Rates",
-                'tooltip' => "Rates",
-                'icon'    => 'pficon pficon-folder-close'}]
+                'state'      => { 'expanded' => true },
+                'text'       => "Rates",
+                'tooltip'    => "Rates",
+                'selectable' => true,
+                'icon'       => 'pficon pficon-folder-close'}]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)
     end

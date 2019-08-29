@@ -23,7 +23,7 @@ describe TreeNode do
 
     TreeNode.constants.each do |type|
       # We never instantiate MiqAeNode and Node in our codebase
-      next if %i[MiqAeNode Node Menu REXML].include?(type)
+      next if %i[MiqAeNode Node Menu Root REXML].include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }
