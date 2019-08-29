@@ -3,15 +3,11 @@ describe CloudVolumeController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @volume = FactoryBot.create(:cloud_volume, :name => "cloud-volume-01")
+      @volume = FactoryBot.create(:cloud_volume)
       allow(@volume).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
-      classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
-      @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
-      @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+      classification = FactoryBot.create(:classification)
+      @tag1 = FactoryBot.create(:classification_tag, :parent => classification)
+      @tag2 = FactoryBot.create(:classification_tag, :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@volume).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudVolume"
       edit = {
@@ -53,9 +49,7 @@ describe CloudVolumeController do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryBot.create(:ems_openstack)
-      @volume = FactoryBot.create(:cloud_volume_openstack,
-                                   :name                  => "cloud-volume-01",
-                                   :ext_management_system => @ems)
+      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
       @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
@@ -139,9 +133,7 @@ describe CloudVolumeController do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryBot.create(:ems_openstack)
-      @volume = FactoryBot.create(:cloud_volume_openstack,
-                                   :name                  => "cloud-volume-01",
-                                   :ext_management_system => @ems)
+      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
       @backup = FactoryBot.create(:cloud_volume_backup)
     end
 
@@ -181,9 +173,7 @@ describe CloudVolumeController do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryBot.create(:ems_openstack)
-      @volume = FactoryBot.create(:cloud_volume_openstack,
-                                   :name                  => "cloud-volume-01",
-                                   :ext_management_system => @ems)
+      @volume = FactoryBot.create(:cloud_volume_openstack, :ext_management_system => @ems)
       @snapshot = FactoryBot.create(:cloud_volume_snapshot)
     end
 
