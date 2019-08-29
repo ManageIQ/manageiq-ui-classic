@@ -271,7 +271,9 @@ class GenericObjectDefinitionController < ApplicationController
                  when :button       then process_custom_button_node(presenter, node)
                  end
 
-    presenter.reload_toolbars(:center => c_tb, :view => v_tb)
+    h_tb = build_toolbar("x_history_tb")
+
+    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
     presenter.set_visibility(true, :toolbar)
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 

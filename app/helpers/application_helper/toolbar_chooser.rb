@@ -8,6 +8,14 @@ class ApplicationHelper::ToolbarChooser
     @explorer ? center_toolbar_filename_explorer : center_toolbar_filename_classic
   end
 
+  def history_toolbar_filename
+    if x_active_tree == :dialogs_tree || %w[chargeback miq_ae_tools miq_capacity_utilization miq_policy_rsop ops].include?(@layout)
+      nil
+    else
+      'x_history_tb'
+    end
+  end
+
   def x_view_toolbar_filename
     if x_gtl_view_tb_render?
       'x_gtl_view_tb'

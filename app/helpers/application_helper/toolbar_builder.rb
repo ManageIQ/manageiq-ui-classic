@@ -24,7 +24,7 @@ class ApplicationHelper::ToolbarBuilder
 
   delegate :request, :current_user, :to => :@view_context
   delegate :role_allows?, :model_for_vm, :rbac_common_feature_for_buttons, :to => :@view_context
-  delegate :x_node, :x_active_tree, :to => :@view_context
+  delegate :x_tree_history, :x_node, :x_active_tree, :to => :@view_context
   delegate :settings, :is_browser?, :is_browser_os?, :to => :@view_context
 
   def initialize(view_context, view_binding, instance_data)
