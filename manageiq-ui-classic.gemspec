@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "rails", ">= 5.0.0.1", "< 5.2"
+  s.add_dependency "rails", ">= 5.0.0.1", "< 5.3"
 
   s.add_dependency "coffee-rails"
   s.add_dependency "font-fabulous", "~> 1.0.5"
