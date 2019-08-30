@@ -1713,9 +1713,12 @@ class MiqAeClassController < ApplicationController
 
   def refresh_git_domain
     if params[:button] == "save"
-      git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
-
-      add_flash(_("Successfully refreshed!"), :info)
+      begin
+        git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
+        add_flash(_("Successfully refreshed!"), :info)
+      rescue MiqException::Error => err
+        add_flash(err.message, :error)
+      end
     else
       add_flash(_("Git based refresh canceled"), :info)
     end
