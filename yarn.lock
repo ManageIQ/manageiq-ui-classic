@@ -161,18 +161,18 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@data-driven-forms/pf3-component-mapper@^1.13.3":
-  version "1.13.5"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf3-component-mapper/-/pf3-component-mapper-1.13.5.tgz#5242ea6601b5e5feeaa79e036459b33aeeb8b871"
-  integrity sha512-S+yPRSZjlTue/bNdTWWI4iuLTNUhiGBCyr0lGknWmWgHgoi3knrhFJ79st9iTs9p44CMYofTOXxvZ8knETOFAQ==
+"@data-driven-forms/pf3-component-mapper@^1.15.6":
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/pf3-component-mapper/-/pf3-component-mapper-1.15.6.tgz#874f08f9c896b0ce131fcb824b4da3b4b2baff0a"
+  integrity sha512-6TB/BnVueKDDR41vOzGCDF7SRO00ABZRYriDRtRZFAkR+ODouMvNs9HxFA9nJ6X7kFpq1gRcIgbVy8/cHFV1/g==
   dependencies:
     react-day-picker "^7.2.4"
     react-select "^2.1.2"
 
-"@data-driven-forms/react-form-renderer@^1.13.3":
-  version "1.13.5"
-  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-1.13.5.tgz#668026801baf6fb98ef2d83d5d9bb2c9ac76de82"
-  integrity sha512-NHC/hnXCnpvUTimBHfKuF4BSiNSVi7EuFudNPwjKcyX264gIuRXn7c2ah/lEujhMN3/4dIkUp43WJx39SY3DFQ==
+"@data-driven-forms/react-form-renderer@^1.15.6":
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/@data-driven-forms/react-form-renderer/-/react-form-renderer-1.15.6.tgz#b545bd24b9c7e3274c437c6ee7baade503497ab8"
+  integrity sha512-9fIz0XkGy92UJNMMyZRPlXb+gp1Kmcfw3TPkk4tMDjtKNUVHXSFDZiEZ7Nh5El5bCjuj4C9tAK3Mh9NVTkdetg==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.1.0"
     final-form "^4.12.0"
