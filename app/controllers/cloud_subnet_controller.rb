@@ -282,25 +282,15 @@ class CloudSubnetController < ApplicationController
     params[:network_protocol] ||= "ipv4"
     params[:dhcp_enabled] ||= false
     options = {}
-    options[:name] = params[:name] if params[:name]
-    options[:ems_id] = params[:ems_id] if params[:ems_id]
-    options[:cidr] = params[:cidr] if params[:cidr]
+    copy_params_if_present(options, params, %i[name ems_id cidr network_id availability_zone_id ipv6_router_advertisement_mode ipv6_address_mode network_group_id parent_cloud_subnet_id])
     # Provider to automatically assign gateway address unless provided
     if params[:gateway]
       options[:gateway_ip] = params[:gateway].presence
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params.fetch_path(:cloud_tenant, :id)
-    options[:network_id] = params[:network_id] if params[:network_id]
     options[:enable_dhcp] = params[:dhcp_enabled]
     # TODO: Add dns_nameservers, allocation_pools, host_routes
-    options[:availability_zone_id] = params[:availability_zone_id] if params[:availability_zone_id]
-    if params[:ipv6_router_advertisement_mode]
-      options[:ipv6_router_advertisement_mode] = params[:ipv6_router_advertisement_mode]
-    end
-    options[:ipv6_address_mode] = params[:ipv6_address_mode] if params[:ipv6_address_mode]
-    options[:network_group_id] = params[:network_group_id] if params[:network_group_id]
-    options[:parent_cloud_subnet_id] = params[:parent_cloud_subnet_id] if params[:parent_cloud_subnet_id]
     options[:allocation_pools] = parse_allocation_pools(params[:allocation_pools]) if params[:allocation_pools].present?
     options[:dns_nameservers] = parse_dns_nameservers(params[:dns_nameservers]) if params[:dns_nameservers].present?
     options[:host_routes] = parse_host_routes(params[:host_routes]) if params[:host_routes].present?
