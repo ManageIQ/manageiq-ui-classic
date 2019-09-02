@@ -47,9 +47,9 @@ class TreeBuilderGenealogy < TreeBuilder
     }.merge(vm_icon_image(object))
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     kids = @root.parent.present? ? [@root] : @root.children
-    count_only_or_objects(count_only, kids, :name)
+    count_only_or_objects(false, kids, :name)
   end
 
   def x_get_vm_or_template_kids(parent, count_only)

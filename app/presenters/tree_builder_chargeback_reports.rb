@@ -13,25 +13,21 @@ class TreeBuilderChargebackReports < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     items = MiqReportResult.with_saved_chargeback_reports
                            .select_distinct_results
                            .group("miq_report_results.miq_report_id, miq_reports.name, miq_report_results.id, \
                                    miq_reports.id")
-    if count_only
-      items.length
-    else
-      objects = []
-      items.each_with_index do |item, idx|
-        objects.push(
-          :id   => "#{item.miq_report_id}-#{idx}",
-          :text => item.miq_report.name,
-          :icon => "fa fa-file-text-o",
-          :tip  => item.name
-        )
-      end
-      objects
+    objects = []
+    items.each_with_index do |item, idx|
+      objects.push(
+        :id   => "#{item.miq_report_id}-#{idx}",
+        :text => item.miq_report.name,
+        :icon => "fa fa-file-text-o",
+        :tip  => item.name
+      )
     end
+    objects
   end
 
   # Handle custom tree nodes (object is a Hash)

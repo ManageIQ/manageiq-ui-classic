@@ -70,7 +70,7 @@ describe TreeBuilderDefaultFilters do
     end
 
     it 'returns folders as root kids' do
-      kids = @default_filters_tree.send(:x_get_tree_roots, false)
+      kids = @default_filters_tree.send(:x_get_tree_roots)
       kids.each do |kid|
         expect(kid[:icon]).to eq('pficon pficon-folder-close')
         expect(kid[:hideCheckbox]).to eq(true)
@@ -80,7 +80,7 @@ describe TreeBuilderDefaultFilters do
 
     it 'returns filter or folder as folder kids' do
       data = @default_filters_tree.send(:prepare_data, @filters)
-      grandparents = @default_filters_tree.send(:x_get_tree_roots, false)
+      grandparents = @default_filters_tree.send(:x_get_tree_roots)
       grandparents.each do |grandparent|
         parents = @default_filters_tree.send(:x_get_tree_hash_kids, grandparent, false)
         parents.each do |parent|

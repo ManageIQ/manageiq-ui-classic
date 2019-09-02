@@ -63,7 +63,7 @@ describe TreeBuilderPolicySimulation do
     end
 
     it 'sets Policy Profile node correctly' do
-      node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
+      node = @policy_simulation_tree.send(:x_get_tree_roots).first
       expect(node[:text]).to eq("<strong>Policy Profile:</strong> #{@data.first['description']}")
       expect(node[:icon]).to eq("pficon pficon-ok")
       expect(node[:tip]).to eq(@data.first['description'])
@@ -71,7 +71,7 @@ describe TreeBuilderPolicySimulation do
     end
 
     it 'sets Policy nodes correctly' do
-      node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
+      node = @policy_simulation_tree.send(:x_get_tree_roots).first
       kids = @policy_simulation_tree.send(:x_get_tree_hash_kids, node, false)
       expect(kids.first[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].first['description']}")
       expect(kids.first[:icon]).to eq('fa fa-ban')
@@ -84,7 +84,7 @@ describe TreeBuilderPolicySimulation do
     end
 
     it 'sets Condition nodes correctly' do
-      root = @policy_simulation_tree.send(:x_get_tree_roots, false).first
+      root = @policy_simulation_tree.send(:x_get_tree_roots).first
       parent_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).first
       kid_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_one, false).first
       parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).last
@@ -98,7 +98,7 @@ describe TreeBuilderPolicySimulation do
     end
 
     it 'sets Condition nodes correctly' do
-      root = @policy_simulation_tree.send(:x_get_tree_roots, false).first
+      root = @policy_simulation_tree.send(:x_get_tree_roots).first
       grand_parent_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).first
       parent_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, grand_parent_one, false).first
       grand_parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).last
@@ -127,7 +127,7 @@ describe TreeBuilderPolicySimulation do
                                                                 :options   => @policy_options)
     end
     it 'sets Policy Profile node correctly if no data found' do
-      node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
+      node = @policy_simulation_tree.send(:x_get_tree_roots).first
       expect(node[:text]).to eq("Items out of scope")
       expect(node[:icon]).to eq("fa fa-ban")
       expect(node[:selectable]).to eq(false)

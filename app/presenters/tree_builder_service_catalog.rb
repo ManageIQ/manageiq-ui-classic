@@ -14,7 +14,7 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     includes = {:tenant => {}, :service_templates => {}}
     objects = Rbac.filtered(ServiceTemplateCatalog, :include_for_find => includes).sort_by { |o| o.name.downcase }
     filtered_objects = []
@@ -23,7 +23,7 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
       items = Rbac.filtered(object.service_templates, :named_scope => %i[displayed public_service_templates])
       filtered_objects.push(object) unless items.empty?
     end
-    count_only_or_objects(count_only, filtered_objects, 'name')
+    count_only_or_objects(false, filtered_objects, 'name')
   end
 
   def x_get_tree_stc_kids(object, count_only)

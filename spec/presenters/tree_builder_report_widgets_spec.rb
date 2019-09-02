@@ -6,7 +6,7 @@ describe TreeBuilderReportWidgets do
   end
 
   it "#x_get_tree_roots (private)" do
-    expect(subject.send(:x_get_tree_roots, false)).to match_array([
+    expect(subject.send(:x_get_tree_roots)).to match_array([
                                                                     {:id => "r",  :text => "Reports",   :icon => "pficon pficon-folder-close", :tip => "Reports"},
                                                                     {:id => "c",  :text => "Charts",    :icon => "pficon pficon-folder-close", :tip => "Charts"},
                                                                     {:id => "m",  :text => "Menus",     :icon => "pficon pficon-folder-close", :tip => "Menus"}

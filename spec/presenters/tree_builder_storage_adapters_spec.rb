@@ -26,12 +26,12 @@ describe TreeBuilderStorageAdapters do
     end
 
     it 'returns MiqScsiTarget as children of root' do
-      kids = @sa_tree.send(:x_get_tree_roots, false)
+      kids = @sa_tree.send(:x_get_tree_roots)
       expect(kids.first).to be_a_kind_of(MiqScsiTarget)
     end
 
     it 'returns MiqScsiLun as MiqScsiTarget children' do
-      parent = @sa_tree.send(:x_get_tree_roots, false).first
+      parent = @sa_tree.send(:x_get_tree_roots).first
       kids = @sa_tree.send(:x_get_tree_target_kids, parent, false)
       number_of_kids = @sa_tree.send(:x_get_tree_target_kids, parent, true)
       expect(kids.first).to be_a_kind_of(MiqScsiLun)
@@ -39,7 +39,7 @@ describe TreeBuilderStorageAdapters do
     end
 
     it 'returns nothing as MiqScsiLun children' do
-      root = @sa_tree.send(:x_get_tree_roots, false).first
+      root = @sa_tree.send(:x_get_tree_roots).first
       parent = @sa_tree.send(:x_get_tree_target_kids, root, false).first
       number_of_kids = @sa_tree.send(:x_get_tree_objects, parent, true, nil)
       kids = @sa_tree.send(:x_get_tree_objects, parent, false, nil)

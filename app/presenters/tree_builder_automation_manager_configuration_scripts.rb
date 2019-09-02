@@ -16,7 +16,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     objects = []
     templates = Rbac.filtered(ManageIQ::Providers::AnsibleTower::AutomationManager.order("lower(name)"), :match_via_descendants => ConfigurationScript)
 
@@ -24,7 +24,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
       objects.push(temp)
     end
 
-    count_only_or_objects(count_only, objects + FILTERS.values)
+    count_only_or_objects(false, objects + FILTERS.values)
   end
 
   def x_get_tree_cmat_kids(object, count_only)

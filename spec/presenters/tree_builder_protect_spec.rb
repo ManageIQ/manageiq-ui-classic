@@ -40,7 +40,7 @@ describe TreeBuilderProtect do
     end
 
     it 'sets roots correctly' do
-      roots = @protect_tree.send(:x_get_tree_roots, false)
+      roots = @protect_tree.send(:x_get_tree_roots)
       @roots.each_with_index do |root, i|
         expect(roots[i][:id]).to eq("policy_profile_#{root.id}")
         expect(roots[i][:icon]).to eq(root.active? ? "fa fa-shield" : "fa fa-inactive fa-shield")
@@ -52,7 +52,7 @@ describe TreeBuilderProtect do
     end
 
     it 'sets Policy ' do
-      roots = @protect_tree.send(:x_get_tree_roots, false)
+      roots = @protect_tree.send(:x_get_tree_roots)
       kids = @protect_tree.send(:x_get_tree_hash_kids, roots[0], false)
       expect(kids[0][:id]).to eq("policy_#{@kids[0].id}")
       expect(kids[0][:text]).to eq("<strong>#{ui_lookup(:model => @kids[0].towhat)} #{@kids[0].mode.capitalize}:</strong> #{@kids[0].description}".html_safe)

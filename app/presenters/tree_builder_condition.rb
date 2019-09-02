@@ -19,7 +19,7 @@ class TreeBuilderCondition < TreeBuilder
   end
 
   # level 1 - host / vm
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     text_i18n = {:Host                => _("Host Conditions"),
                  :Vm                  => _("VM and Instance Conditions"),
                  :ContainerReplicator => _("Replicator Conditions"),
@@ -41,7 +41,7 @@ class TreeBuilderCondition < TreeBuilder
         :tip  => text
       }
     end
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects(false, objects)
   end
 
   # level 2 - conditions

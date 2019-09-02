@@ -69,7 +69,7 @@ describe TreeBuilderSections do
       expect(locals[:three_checks]).to eq(true)
     end
     it 'sets roots correctly' do
-      roots = @sections_tree.send(:x_get_tree_roots, false)
+      roots = @sections_tree.send(:x_get_tree_roots)
       expect(roots).to eq([{:id         => "group_Properties",
                             :text       => "Properties",
                             :tip        => "Properties",
@@ -80,7 +80,7 @@ describe TreeBuilderSections do
     end
 
     it 'sets children correctly' do
-      root = @sections_tree.send(:x_get_tree_roots, false).first
+      root = @sections_tree.send(:x_get_tree_roots).first
       kids = @sections_tree.send(:x_get_tree_hash_kids, root, false)
       expect(kids).to eq([{:id         => "group_Properties:_model_",
                            :text       => "Filesystem",

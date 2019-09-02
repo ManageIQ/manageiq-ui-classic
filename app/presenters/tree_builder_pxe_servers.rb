@@ -15,8 +15,8 @@ class TreeBuilderPxeServers < TreeBuilder
   end
 
   # Get root nodes count/array for explorer tree
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, PxeServer.all, "name")
+  def x_get_tree_roots
+    count_only_or_objects(false, PxeServer.all, "name")
   end
 
   def x_get_tree_pxe_server_kids(object, count_only)

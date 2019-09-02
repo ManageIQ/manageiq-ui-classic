@@ -18,8 +18,8 @@ class TreeBuilderComplianceHistory < TreeBuilder
     {:full_ids => true}
   end
 
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, @root.compliances.order("timestamp DESC").limit(10))
+  def x_get_tree_roots
+    count_only_or_objects(false, @root.compliances.order("timestamp DESC").limit(10))
   end
 
   def x_get_compliance_kids(parent, count_only)

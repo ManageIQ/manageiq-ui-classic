@@ -25,13 +25,13 @@ describe TreeBuilderComplianceHistory do
       expect(tree_options[:lazy]).not_to be_truthy
     end
     it 'returns Compliance as root kids' do
-      kids = @ch_tree.send(:x_get_tree_roots, false)
+      kids = @ch_tree.send(:x_get_tree_roots)
       kids.each do |kid|
         expect(kid).to be_a_kind_of(Compliance)
       end
     end
     it 'returns correctly ComplianceDetail nodes' do
-      parent = @ch_tree.send(:x_get_tree_roots, false).find { |x| x.compliance_details.present? }
+      parent = @ch_tree.send(:x_get_tree_roots).find { |x| x.compliance_details.present? }
       kids = @ch_tree.send(:x_get_compliance_kids, parent, false)
       expect(@ch_tree.send(:x_get_compliance_kids, parent, true)).to eq(2)
       kids.each do |kid|
@@ -39,7 +39,7 @@ describe TreeBuilderComplianceHistory do
       end
     end
     it 'returns empty node' do
-      parents = @ch_tree.send(:x_get_tree_roots, false)
+      parents = @ch_tree.send(:x_get_tree_roots)
       parent = parents.find { |x| x.compliance_details == [] }
       kid = @ch_tree.send(:x_get_compliance_kids, parent, false).first
       expect(kid).to eq(:id         => "#{parent.id}-nopol",
@@ -51,7 +51,7 @@ describe TreeBuilderComplianceHistory do
       expect(@ch_tree.send(:x_get_tree_custom_kids, kid, true)).to eq(0)
     end
     it 'returns Policy with multiple Conditions' do
-      grandparents = @ch_tree.send(:x_get_tree_roots, false)
+      grandparents = @ch_tree.send(:x_get_tree_roots)
       grandparent = grandparents.find { |x| x.compliance_details.present? }
       grandparent_id = "cm-#{grandparent.id}"
       parents = @ch_tree.send(:x_get_compliance_kids, grandparent, false)

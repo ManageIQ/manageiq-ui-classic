@@ -40,7 +40,7 @@ describe TreeBuilderRolesByServer do
     end
 
     it 'returns server nodes as root kids' do
-      server_nodes = @server_tree.send(:x_get_tree_roots, false)
+      server_nodes = @server_tree.send(:x_get_tree_roots)
       expect(server_nodes).to eq([@miq_server])
     end
 

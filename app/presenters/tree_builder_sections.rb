@@ -21,7 +21,7 @@ class TreeBuilderSections < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     nodes = []
     group = nil
     @data.master_list.each_slice(3) do |section, _records, _fields|
@@ -48,7 +48,7 @@ class TreeBuilderSections < TreeBuilder
                          true
                        end
     end
-    count_only_or_objects(count_only, nodes)
+    count_only_or_objects(false, nodes)
   end
 
   def x_get_tree_hash_kids(parent, count_only)

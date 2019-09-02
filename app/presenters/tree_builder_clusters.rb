@@ -30,7 +30,7 @@ class TreeBuilderClusters < TreeBuilder
     end
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     nodes = @root[:clusters].map do |node|
       { :id         => node[:id].to_s,
         :text       => node[:name],
@@ -50,7 +50,7 @@ class TreeBuilderClusters < TreeBuilder
               :selectable => false}
       nodes.push(node)
     end
-    count_only_or_objects(count_only, nodes)
+    count_only_or_objects(false, nodes)
   end
 
   def x_get_tree_hash_kids(parent, count_only)

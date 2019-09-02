@@ -12,8 +12,8 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, GenericObjectDefinition.all, :name)
+  def x_get_tree_roots
+    count_only_or_objects(false, GenericObjectDefinition.all, :name)
   end
 
   def x_get_god_kids(object, count_only)

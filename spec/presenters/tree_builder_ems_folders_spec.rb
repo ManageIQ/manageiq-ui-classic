@@ -20,7 +20,7 @@ describe TreeBuilderEmsFolders do
   describe '#x_get_tree_roots' do
     context 'no ems folders with a single provider' do
       it 'returns with a no roots' do
-        expect(subject.send(:x_get_tree_roots, false).length).to eq(0)
+        expect(subject.send(:x_get_tree_roots).length).to eq(0)
       end
     end
 
@@ -36,7 +36,7 @@ describe TreeBuilderEmsFolders do
       end
 
       it 'returns with a single root' do
-        expect(subject.send(:x_get_tree_roots, false).length).to eq(1)
+        expect(subject.send(:x_get_tree_roots).length).to eq(1)
       end
     end
   end

@@ -34,8 +34,8 @@ class TreeBuilderBelongsToHac < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    count_only_or_objects(count_only, ExtManagementSystem.assignable)
+  def x_get_tree_roots
+    count_only_or_objects(false, ExtManagementSystem.assignable)
   end
 
   def x_get_provider_kids(parent, count_only)

@@ -18,7 +18,7 @@ class TreeBuilderDatastores < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
+  def x_get_tree_roots
     nodes = @root.map do |node|
       children = []
       if @data[node[:id]].hosts.present?
@@ -42,7 +42,7 @@ class TreeBuilderDatastores < TreeBuilder
         :selectable => false,
         :nodes      => children }
     end
-    count_only_or_objects(count_only, nodes)
+    count_only_or_objects(false, nodes)
   end
 
   def x_get_tree_hash_kids(parent, count_only)

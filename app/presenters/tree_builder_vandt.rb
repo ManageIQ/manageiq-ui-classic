@@ -16,11 +16,9 @@ class TreeBuilderVandt < TreeBuilder
     }
   end
 
-  def x_get_tree_roots(count_only)
-    roots = count_only_or_objects_filtered(count_only, EmsInfra, "name", :match_via_descendants => VmOrTemplate)
-    arch_orph = count_only_or_objects(count_only, x_get_tree_arch_orph_nodes("VMs and Templates"))
-
-    return roots + arch_orph if count_only
+  def x_get_tree_roots
+    roots = count_only_or_objects_filtered(false, EmsInfra, "name", :match_via_descendants => VmOrTemplate)
+    arch_orph = count_only_or_objects(false, x_get_tree_arch_orph_nodes("VMs and Templates"))
 
     roots.each_with_object({}) do |ems, nodes|
       nodes.merge!(relationship_tree(ems))

@@ -36,7 +36,7 @@ describe TreeBuilderClusters do
     end
 
     it 'set cluster nodes correctly' do
-      cluster_nodes = @cluster_tree.send(:x_get_tree_roots, false)
+      cluster_nodes = @cluster_tree.send(:x_get_tree_roots)
       expect(cluster_nodes.first).to eq(:id         => "1",
                                         :text       => "Name",
                                         :icon       => 'pficon pficon-cluster',
@@ -55,7 +55,7 @@ describe TreeBuilderClusters do
     end
 
     it 'sets non-cluster host nodes correctly' do
-      cluster_nodes = @cluster_tree.send(:x_get_tree_roots, false)
+      cluster_nodes = @cluster_tree.send(:x_get_tree_roots)
       non_cluster_host = @cluster_tree.send(:x_get_tree_hash_kids, cluster_nodes.last, false)
       expect(non_cluster_host).to eq([{:id         => "NonCluster_2",
                                        :text       => "Non Cluster Host",
@@ -67,7 +67,7 @@ describe TreeBuilderClusters do
     end
 
     it 'sets cluster hosts nodes correctly' do
-      cluster_nodes = @cluster_tree.send(:x_get_tree_roots, false)
+      cluster_nodes = @cluster_tree.send(:x_get_tree_roots)
       cluster_hosts = @cluster_tree.send(:x_get_tree_hash_kids, cluster_nodes.first, false)
       cluster_hosts_expected = @ho_enabled.map do |node|
         {:id         => "#{cluster_nodes.first[:id]}_#{node[:id]}",

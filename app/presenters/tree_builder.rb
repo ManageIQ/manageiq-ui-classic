@@ -204,7 +204,7 @@ class TreeBuilder
   end
 
   def x_get_tree_objects(parent, count_only, parents)
-    children_or_count = parent.nil? ? x_get_tree_roots(count_only) : x_get_tree_kids(parent, count_only, parents)
+    children_or_count = parent.nil? ? x_get_tree_roots : x_get_tree_kids(parent, count_only, parents)
     children_or_count || (count_only ? 0 : [])
   end
 

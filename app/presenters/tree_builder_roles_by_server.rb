@@ -3,7 +3,7 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
 
   private
 
-  def x_get_tree_roots(_count_only)
+  def x_get_tree_roots
     x_get_tree_miq_servers
   end
 
