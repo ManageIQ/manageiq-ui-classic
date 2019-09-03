@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk RC1
+## Hammer-11
+
+### Fixed
+- Automate method editing bugz [(#5843)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5843)
+- Fixed API endpoint for GO object custom button dialogs. [(#6052)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6052)
+
+## Ivanchuk RC1 - Released 2019-08-27
 
 ### Added
 - Add Set Ownership to Key Pairs [(#5973)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5973)
