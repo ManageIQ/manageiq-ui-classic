@@ -2081,6 +2081,7 @@ Rails.application.routes.draw do
         explorer
         method_form_fields
         namespace
+        show
       ),
       :post => %w(
         add_update_method

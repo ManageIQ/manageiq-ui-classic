@@ -324,8 +324,17 @@ module ApplicationHelper
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
       else
-        controller = "vm_cloud" if controller == "template_cloud"
-        controller = "vm_infra" if controller == "template_infra"
+        controller = case controller
+                     when 'template_cloud'
+                       'vm_cloud'
+                     when 'template_infra'
+                       'vm_infra'
+                     when 'miq_ae_domain'
+                       'miq_ae_class'
+                     else
+                       controller
+                     end
+
         return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
     else

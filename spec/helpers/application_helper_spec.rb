@@ -1,9 +1,7 @@
 describe ApplicationHelper do
-  before do
-    login_as FactoryBot.create(:user, :features => "none")
-  end
+  before { login_as FactoryBot.create(:user, :features => "none") }
 
-  context "build_toolbar" do
+  describe "#build_toolbar" do
     it 'should substitute dynamic function values' do
       req        = ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
       menu_info  = helper.build_toolbar 'storages_center_tb'
@@ -38,6 +36,7 @@ describe ApplicationHelper do
 
   describe "#role_allows?" do
     let(:features) { MiqProductFeature.find_all_by_identifier("everything") }
+
     before do
       EvmSpecHelper.seed_specific_product_features("miq_report", "service")
       @user = login_as FactoryBot.create(:user, :features => features)
@@ -150,9 +149,7 @@ describe ApplicationHelper do
     end
 
     context "when formatting flash message for VM or Templates class" do
-      before do
-        @klass = VmOrTemplate
-      end
+      before { @klass = VmOrTemplate }
 
       it "with one Instance" do
         record_ids = [@record_1.id]
@@ -201,9 +198,7 @@ describe ApplicationHelper do
     end
 
     context "when formatting flash message for Non VM or Templates class" do
-      before do
-        @klass = Service
-      end
+      before { @klass = Service }
 
       it "with one Service" do
         record_ids = [@record_1.id]
@@ -224,9 +219,7 @@ describe ApplicationHelper do
     end
 
     context "when with @vm" do
-      before do
-        @vm = FactoryBot.create(:vm_vmware)
-      end
+      before { @vm = FactoryBot.create(:vm_vmware) }
 
       ["Account", "User", "Group", "Patch", "GuestApplication"].each do |d|
         it "and db = #{d}" do
@@ -309,9 +302,7 @@ describe ApplicationHelper do
     end
 
     context "when with ConditionSet" do
-      before do
-        @db = "ConditionSet"
-      end
+      before { @db = "ConditionSet" }
 
       it "and @explorer" do
         @explorer = true
@@ -493,6 +484,7 @@ describe ApplicationHelper do
 
   describe "#field_to_col" do
     subject { helper.field_to_col(field) }
+
     context "when field likes 'Vm.hardware.disks-size'" do
       let(:field) { "Vm.hardware.disks-size" }
       it { is_expected.to eq("disks.size") }
@@ -514,7 +506,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#is_browser?" do
+  describe "#is_browser?" do
     it "when browser's name is in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :name).and_return('safari')
@@ -528,7 +520,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#is_browser_os?" do
+  describe "#is_browser_os?" do
     it "when browser's OS is in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :os).and_return('windows')
@@ -542,7 +534,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#browser_info" do
+  describe "#browser_info" do
     it "preserves the case" do
       type = :a_type
       allow_any_instance_of(ActionController::TestSession)
@@ -602,6 +594,7 @@ describe ApplicationHelper do
 
   describe "#javascript_for_miq_button_visibility" do
     subject { helper.javascript_for_miq_button_visibility(display) }
+
     context "when display == true" do
       let(:display) { true }
       it { is_expected.to eq("miqButtons('show');") }
@@ -613,7 +606,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#javascript_reload_toolbars" do
+  describe "#javascript_reload_toolbars" do
     subject { helper.javascript_reload_toolbars }
 
     it "returns javascript to reload toolbar" do
@@ -622,7 +615,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#set_edit_timer_from_schedule" do
+  describe "#set_edit_timer_from_schedule" do
     before do
       @edit = {:tz => 'Eastern Time (US & Canada)', :new => {}}
       @interval = '3'
@@ -634,7 +627,7 @@ describe ApplicationHelper do
       @schedule = double(:run_at => @run_at)
     end
 
-    describe "when schedule.run_at == nil" do
+    context "when schedule.run_at == nil" do
       it "sets defaults" do
         schedule = double(:run_at => nil)
         helper.set_edit_timer_from_schedule schedule
@@ -646,7 +639,7 @@ describe ApplicationHelper do
       end
     end
 
-    describe "when schedule.run_at != nil" do
+    context "when schedule.run_at != nil" do
       it "sets values as monthly" do
         @run_at[:interval][:unit] = 'monthly'
         helper.set_edit_timer_from_schedule @schedule
@@ -701,7 +694,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#perf_parent?" do
+  describe "#perf_parent?" do
     it "when model == 'VmOrTemplate' and typ == 'realtime'" do
       @perf_options = {:model => 'VmOrTemplate', :typ => 'realtime'}
       expect(helper.perf_parent?).to be_falsey
@@ -728,7 +721,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#model_report_type" do
+  describe "#model_report_type" do
     it "when model == nil" do
       expect(helper.model_report_type(nil)).to be_falsey
     end
@@ -780,7 +773,7 @@ describe ApplicationHelper do
       expect(@sb[:trees][:svcs_tree][:active_node]).to eq('')
     end
 
-    context "#x_node" do
+    describe "#x_node" do
       it "without tree param" do
         @sb[:trees][:svcs_tree] = {:active_node => 'root'}
         expect(helper.x_node).to eq('root')
@@ -801,7 +794,7 @@ describe ApplicationHelper do
       end
     end
 
-    context "#x_tree" do
+    describe "#x_tree" do
       it "without tree param" do
         @sb[:trees][:vm_filter_tree] = {:tree => :vm_filter_tree}
 
@@ -833,7 +826,7 @@ describe ApplicationHelper do
       expect(helper.x_active_tree).to eq(:vm_filter_tree)
     end
 
-    context "#x_tree_init" do
+    describe "#x_tree_init" do
       it "does not replace existing trees" do
         helper.x_tree_init(:svcs_tree, :xxx, "XXX")
 
@@ -871,7 +864,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#title_for_cluster_record" do
+  describe "#title_for_cluster_record" do
     before do
       @ems1 = FactoryBot.create(:ems_vmware)
       @ems2 = FactoryBot.create(:ems_openstack_infra)
@@ -892,7 +885,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#title_for_host_record" do
+  describe "#title_for_host_record" do
     it "returns 'Host' for non-openstack host" do
       host = FactoryBot.create(:host_vmware, :ext_management_system => FactoryBot.create(:ems_vmware))
 
@@ -906,7 +899,7 @@ describe ApplicationHelper do
     end
   end
 
-  context "#tree_with_advanced_search?" do
+  describe "#tree_with_advanced_search?" do
     it 'should return true for explorer trees with advanced search' do
       controller.instance_variable_set(:@sb,
                                        :active_tree => :vms_instances_filter_tree,
@@ -1026,9 +1019,7 @@ describe ApplicationHelper do
   end
 
   describe "#display_adv_search?" do
-    before do
-      controller.instance_variable_set(:@layout, layout)
-    end
+    before { controller.instance_variable_set(:@layout, layout) }
 
     subject { helper.display_adv_search? }
 
@@ -1062,6 +1053,7 @@ describe ApplicationHelper do
 
     context 'active tab' do
       let(:active) { true }
+
       it 'renders an active accordion' do
         expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" class=\"panel-collapse collapse in\"><div class=\"panel-body\">content</div></div></div>")
       end
@@ -1069,6 +1061,7 @@ describe ApplicationHelper do
 
     context 'inactive tab' do
       let(:active) { false }
+
       it 'renders an active accordion' do
         expect(subject).to eq("<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\"><a data-parent=\"#accordion\" data-toggle=\"collapse\" class=\"collapsed\" href=\"#identifier\">title</a></h4></div><div id=\"identifier\" class=\"panel-collapse collapse \"><div class=\"panel-body\">content</div></div></div>")
       end
@@ -1296,6 +1289,19 @@ describe ApplicationHelper do
 
       it "false if provider paused" do
         expect(subject).to be_falsey
+      end
+    end
+  end
+
+  describe '#view_to_url' do
+    before { allow(helper).to receive(:url_for_only_path).and_call_original }
+
+    context 'displaying Automate Domain through Tenant summary' do
+      let(:view) { MiqReport.new(:db => 'MiqAeDomain') }
+
+      it 'sets controller to miq_ae_class and returns proper url' do
+        expect(helper).to receive(:url_for_only_path).with(:controller => 'miq_ae_class', :action => 'show', :id => nil)
+        helper.view_to_url(view)
       end
     end
   end
