@@ -116,7 +116,6 @@ class TreeBuilder
   def build_tree
     @tree_nodes = x_build_tree
     active_node_set(@tree_nodes)
-    add_root_node(@tree_nodes) if respond_to?(:root_options, true)
     @bs_tree = @tree_nodes.to_json
     @locals_for_render = set_locals_for_render
   end
@@ -134,15 +133,6 @@ class TreeBuilder
         :open_nodes => []
       )
     )
-  end
-
-  def add_root_node(nodes)
-    root = nodes.first.merge!(%i[text tooltip].each_with_object(root_options) { |key, hsh| hsh[key] = ERB::Util.html_escape(hsh[key]) })
-    if root[:image]
-      root[:image] = ActionController::Base.helpers.image_path(root[:image])
-    else
-      root[:icon] ||= 'pficon pficon-folder-close' # Fall back to the folder fonticon
-    end
   end
 
   def group_id
@@ -180,7 +170,7 @@ class TreeBuilder
 
     return nodes unless respond_to?(:root_options, true)
 
-    [{:key => 'root', :nodes => nodes, :state => {:expanded => true}}]
+    [TreeNode::Root.new(root_options, nil, self).to_h.merge(:nodes => nodes)]
   end
 
   # determine if this is an ancestry node, and return the approperiate object
