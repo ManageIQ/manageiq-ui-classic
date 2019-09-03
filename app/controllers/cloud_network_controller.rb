@@ -223,17 +223,12 @@ class CloudNetworkController < ApplicationController
     # Admin_state_Up is true by default
     params[:enabled] = false unless params[:enabled]
 
-    options[:name] = params[:name] if params[:name]
-    options[:ems_id] = params[:ems_id] if params[:ems_id]
+    copy_params_if_present(options, params, %i[name ems_id qos_policy_id provider_network_type provider_physical_network provider_segmentation_id])
     options[:admin_state_up] = switch_to_bol(params[:enabled])
     options[:shared] = switch_to_bol(params[:shared])
     options[:external_facing] = switch_to_bol(params[:external_facing])
     # TODO: uncomment once form contains this field
     # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
-    options[:qos_policy_id] = params[:qos_policy_id] if params[:qos_policy_id]
-    options[:provider_network_type] = params[:provider_network_type] if params[:provider_network_type].present?
-    options[:provider_physical_network] = params[:provider_physical_network] if params[:provider_physical_network]
-    options[:provider_segmentation_id] = params[:provider_segmentation_id] if params[:provider_segmentation_id]
     cloud_tenant = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params[:cloud_tenant][:id]
     options[:tenant_id] = cloud_tenant.ems_ref
     options

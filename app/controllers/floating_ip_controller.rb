@@ -186,10 +186,8 @@ class FloatingIpController < ApplicationController
 
   def form_params
     options = {}
+    copy_params_if_present(options, params, %i[address cloud_network_id cloud_tenant_id])
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
-    options[:address] = params[:address] if params[:address]
-    options[:cloud_network_id] = params[:cloud_network_id] if params[:cloud_network_id]
-    options[:cloud_tenant_id] = params[:cloud_tenant_id] if params[:cloud_tenant_id]
     if params[:network_port] && params[:network_port][:ems_ref]
       options[:network_port_ems_ref] = params[:network_port][:ems_ref]
     end
