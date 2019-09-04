@@ -663,9 +663,8 @@ module ApplicationController::MiqRequestMethods
     id = params[:ou_id].gsub(/_-_/, ",") if params[:ou_id]
     @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id # ou selected in a tree
 
+    copy_params_if_present(@edit[:new], params, %i[start_hour start_min])
     @edit[:new][:start_date]    = params[:miq_date_1] if params[:miq_date_1]
-    @edit[:new][:start_hour]    = params[:start_hour] if params[:start_hour]
-    @edit[:new][:start_min]     = params[:start_min] if params[:start_min]
     @edit[:new][:schedule_time] = Time.zone.parse("#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}")
 
     params.each do |key, _value|

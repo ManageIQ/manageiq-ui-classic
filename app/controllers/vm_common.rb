@@ -1589,9 +1589,7 @@ module VmCommon
   # Get variables from edit form
   def get_form_vars
     @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
-    @edit[:new][:custom_1] = params[:custom_1] if params[:custom_1]
-    @edit[:new][:description] = params[:description] if params[:description]
-    @edit[:new][:name] = params[:name] if params[:name]
+    copy_params_if_present(@edit[:new], params, %i[custom_1 description name])
     @edit[:new][:parent] = params[:chosen_parent].to_i if params[:chosen_parent]
     # if coming from explorer
     get_vm_child_selection if %w[allright left right].include?(params[:button])
