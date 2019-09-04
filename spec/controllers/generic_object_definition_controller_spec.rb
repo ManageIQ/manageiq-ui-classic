@@ -119,7 +119,7 @@ describe GenericObjectDefinitionController do
     end
 
     it "renders the toolbar for custom_button_group node with no gtl icons" do
-      custom_button_set = FactoryBot.create(:custom_button_set, :description => "custom button set description")
+      custom_button_set = FactoryBot.create(:custom_button_set)
       allow(controller).to receive(:x_node).and_return("cbg-#{custom_button_set.id}")
       controller.send(:show_list)
       gtl_type = controller.instance_variable_get(:@gtl_type)
@@ -127,7 +127,7 @@ describe GenericObjectDefinitionController do
     end
 
     it "renders the toolbar for custom_button node with no gtl icons" do
-      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition", :name => "Some Name")
+      custom_button = FactoryBot.create(:custom_button, :applies_to_class => "GenericObjectDefinition")
       allow(controller).to receive(:x_node).and_return("cb-#{custom_button.id}")
       controller.send(:show_list)
       gtl_type = controller.instance_variable_get(:@gtl_type)
@@ -148,7 +148,6 @@ describe GenericObjectDefinitionController do
     it "does not display toolbar and paging div when custom button is edited" do
       custom_button = FactoryBot.create(:custom_button,
                                          :applies_to_class => "GenericObjectDefinition",
-                                         :name             => "Default",
                                          :options          => {
                                            'button_icon'  => 'ff ff-view-expanded',
                                            'button_color' => '#4727ff',
