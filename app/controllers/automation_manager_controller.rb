@@ -232,7 +232,7 @@ class AutomationManagerController < ApplicationController
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
     when "ConfigurationScript", "ConfigurationWorkflow"
-      configuration_scripts_list(id, model == "ConfigurationScript" ? "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript" : model)
+      configuration_scripts_list(id, model == "ConfigurationScript" ? "ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript" : model)
     when "MiqSearch"
       miq_search_node
     else
@@ -341,7 +341,7 @@ class AutomationManagerController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+      options = {:model      => "ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript",
                  :gtl_dbname => "automation_manager_configuration_scripts"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Templates")
