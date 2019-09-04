@@ -63,7 +63,7 @@
           = _("Type")
 
         = select_tag('target_class',
-                     options_for_select([["<None>", nil]] + resolve[:target_classes].invert.to_a,
+                     options_for_select([["<#{_('None')}>", nil]] + resolve[:target_classes].invert.to_a,
                      resolve[:new][:target_class]),
                      "data-miq_sparkle_on"  => true,
                      "data-miq_sparkle_off" => true,
@@ -77,7 +77,7 @@
             = _("Selection")
 
           = select_tag('target_id',
-                       options_for_select([["<Choose>", nil]] + resolve[:targets],
+                       options_for_select([["<#{_('Choose')}>", nil]] + resolve[:targets],
                                           resolve[:new][:target_id]),
                        "data-miq_sparkle_on"  => true,
                        "data-miq_sparkle_off" => true,
