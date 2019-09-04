@@ -1253,6 +1253,7 @@ module ApplicationController::Performance
     return if @perf_options[:index].nil?             # Don't show html for graph setting or if multiple charts are showing
     report = rpt.class == Array ? rpt.first : rpt    # Get the first or only report
     report = perf_remove_report_cols(report, charts) # Remove cols that are not in the current chart
+    report.headers.map! { |header| _(header) }       # Translate report headers
     report.to_html                                   # Create html from the chart report
   end
 
