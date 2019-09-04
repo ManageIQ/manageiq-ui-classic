@@ -27,6 +27,11 @@ function createSchema() {
       maxLength: 40,
       autoFocus: true,
       validateOnMount: true,
+    },
+    {
+      component: componentTypes.CHECKBOX,
+      name: 'copy_tags',
+      label: __('Copy Tags'),
     }];
   return { fields };
 }
