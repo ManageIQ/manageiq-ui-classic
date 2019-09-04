@@ -1680,7 +1680,16 @@ class ApplicationController < ActionController::Base
               request.headers['X-Angular-Request'].present?
 
     return if controller_name == 'dashboard' && %(iframe maintab cockpit_redirect).include?(action_name)
-    return if %(download_data download_summary_pdf).include?(action_name)
+    return if %w[
+      compare_to_csv
+      compare_to_pdf
+      compare_to_txt
+      drift_to_csv
+      drift_to_pdf
+      drift_to_txt
+      download_data
+      download_summary_pdf
+    ].include?(action_name)
 
     remember_tab
   end
