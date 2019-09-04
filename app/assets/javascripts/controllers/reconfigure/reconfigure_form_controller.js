@@ -210,6 +210,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.updateNetworkAdaptersAddRemove = function() {
+    vm.reconfigureModel.vmEditNetworkAdapters = [];
     vm.reconfigureModel.vmAddNetworkAdapters = [];
     vm.reconfigureModel.vmRemoveNetworkAdapters = [];
     angular.forEach(vm.reconfigureModel.vmNetworkAdapters, function(networkAdapter) {
@@ -222,13 +223,23 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
           }
         );
       }
-      if (networkAdapter.add_remove === 'remove') {
+      else if (networkAdapter.add_remove === 'remove') {
         vm.reconfigureModel.vmRemoveNetworkAdapters.push({network: networkAdapter});
+      }
+      else if (networkAdapter.add_remove === 'edit') {
+        vm.reconfigureModel.vmEditNetworkAdapters.push(
+          {
+            network: networkAdapter.vlan,
+            name: networkAdapter.name,
+            cloud_network: networkAdapter.network,
+          }
+        );
       }
     });
     vm.setEnableAddNetworkAdapterButton();
     vm.cb_networkAdapters = vm.reconfigureModel.vmAddNetworkAdapters.length > 0  ||
-                            vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0;
+                            vm.reconfigureModel.vmRemoveNetworkAdapters.length > 0 ||
+                            vm.reconfigureModel.vmEditNetworkAdapters.length > 0;
   };
 
   vm.resetAddValues = function() {
@@ -246,6 +257,17 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     if (!vm.reconfigureModel.vLan_requested && !vm.isVmwareCloud()) {
       return false;
     } else if (!vm.reconfigureModel.name && vm.isVmwareCloud()) {
+      return false;
+    } else if (vm.reconfigureModel.vmNetworkAdapters.length > 4) {
+      return false;
+    }
+    return true;
+  };
+
+  vm.validateEditSelectedNetwork = function(networkAdapter) {
+    if (! networkAdapter.vLan_edit_requested && ! vm.isVmwareCloud()) {
+      return false;
+    } else if (! vm.reconfigureModel.name && vm.isVmwareCloud()) {
       return false;
     } else if (vm.reconfigureModel.vmNetworkAdapters.length > 4) {
       return false;
@@ -271,6 +293,31 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.updateNetworkAdaptersAddRemove();
   };
 
+  vm.editExistingNetworkAdapter = function(thisNetworkAdapter) {
+    thisNetworkAdapter.vLan_edit_requested = null;
+    thisNetworkAdapter.add_remove = 'update';
+    thisNetworkAdapter.originalVLan = thisNetworkAdapter.vlan;
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.cancelChangeExistingNetworkAdapter = function(thisNetworkAdapter) {
+    thisNetworkAdapter.vLan_edit_requested = null;
+    thisNetworkAdapter.vlan = thisNetworkAdapter.originalVLan;
+    thisNetworkAdapter.add_remove = '';
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.confirmEditSelectedNetworkAdapter = function(networkAdapter) {
+    networkAdapter.originalVLan = networkAdapter.vlan;
+    networkAdapter.vlan = networkAdapter.vLan_edit_requested;
+    networkAdapter.add_remove = 'edit';
+    vm.updateNetworkAdaptersAddRemove();
+  };
+
+  vm.checkEditNetworkAdapter = function() {
+    return _.some(vm.reconfigureModel.vmNetworkAdapters, ['add_remove', 'update'] );
+  };
+
   vm.enableAddNetworkAdapter = function() {
     vm.reconfigureModel.nicsEnabled = true;
     vm.reconfigureModel.enableAddNetworkAdapterButton = false;
@@ -293,7 +340,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
   };
 
   vm.cancelAddRemoveNetworkAdapter = function(vmNetworkAdapter) {
-    if (vmNetworkAdapter.add_remove === 'remove') {
+    if (vmNetworkAdapter.add_remove === 'remove' || vmNetworkAdapter.add_remove === 'edit' ) {
       vmNetworkAdapter.add_remove = '';
     } else if (vmNetworkAdapter.add_remove === 'add') {
       var index = vm.reconfigureModel.vmNetworkAdapters.indexOf(vmNetworkAdapter);
@@ -396,6 +443,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         vmResizeDisks: vm.reconfigureModel.vmResizeDisks,
         vmAddNetworkAdapters: vm.reconfigureModel.vmAddNetworkAdapters,
         vmRemoveNetworkAdapters: vm.reconfigureModel.vmRemoveNetworkAdapters,
+        vmEditNetworkAdapters:  vm.reconfigureModel.vmEditNetworkAdapters,
         vmConnectCDRoms: vm.reconfigureModel.vmConnectCDRoms,
         vmDisconnectCDRoms: vm.reconfigureModel.vmDisconnectCDRoms,
       });

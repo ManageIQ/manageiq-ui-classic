@@ -400,6 +400,7 @@ module Mixins
            %i[vmRemoveDisks disk_remove],
            %i[vmAddNetworkAdapters network_adapter_add],
            %i[vmRemoveNetworkAdapters network_adapter_remove],
+           %i[vmEditNetworkAdapters network_adapter_edit],
            %i[vmConnectCDRoms cdrom_connect],
            %i[vmDisconnectCDRoms cdrom_disconnect]].each do |params_key, options_key|
              next if params[params_key].blank?

@@ -324,15 +324,30 @@
             "ng-class"  => "{'danger': networkAdapter.add_remove == 'remove', 'active': networkAdapter.add_remove == 'add'}"}
           %td
             {{networkAdapter.name}}
-          %td{"ng-if" => "!vm.isVmwareCloud()"}
+          %td{"ng-if" => "!vm.isVmwareCloud() && networkAdapter.add_remove == 'update'"}
+            - default_option = [("{{networkAdapter.vlan}}"),'']
+            = select_tag('vLan',
+                       options_for_select([default_option] + @vlan_options, default_option),
+                       "ng-model"                    => "networkAdapter.vLan_edit_requested",
+                       "ng-change"                   => "",
+                       "data-width"                  => "auto",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
+          %td{"ng-if" => "!vm.isVmwareCloud() && networkAdapter.add_remove != 'update'"}
             {{networkAdapter.vlan}}
           %td{"ng-if" => "vm.isVmwareCloud()"}
             {{networkAdapter.network || "#{_('None')}"}}
           %td.narrow
             {{networkAdapter.mac}}
           %td.action-cell
-            %button.btn.btn-default.btn-block.btn-sm{:type         => "button",
-                                                     :style        => "visibility:hidden"}= _('Intentionally left empty')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "!vm.isVmwareCloud() && networkAdapter.add_remove == ''",
+                                                              "ng-disabled" => "vm.checkEditNetworkAdapter()",
+                                                              "ng-click" => "vm.editExistingNetworkAdapter(networkAdapter)"}= _('Edit')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "networkAdapter.add_remove == 'update'",
+                                                              "ng-disabled" => "!vm.validateEditSelectedNetwork(networkAdapter)",
+                                                              "ng-click" => "vm.confirmEditSelectedNetworkAdapter(networkAdapter)"}= _('Confirm Edit')
           %td.action-cell
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                               "ng-if"    => "networkAdapter.add_remove == ''",
@@ -344,6 +359,9 @@
             %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                               "ng-if"    => "networkAdapter.add_remove == 'add'",
                                                               "ng-click" => "vm.cancelAddRemoveNetworkAdapter(networkAdapter)"}= _('Cancel Add')
+            %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                              "ng-if"    => "networkAdapter.add_remove == 'update' || networkAdapter.add_remove == 'edit'",
+                                                              "ng-click" => "vm.cancelChangeExistingNetworkAdapter(networkAdapter)"}= _('Cancel Edit')
         %tr{"ng-if"       => "vm.reconfigureModel.showDropDownNetwork",
             "ng-form"     => "rowForm"}
           %td{"ng-if" => "!vm.isVmwareCloud()"}
