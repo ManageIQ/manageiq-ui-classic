@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-10
+## Hammer-11
+
+### Fixed
+- Automate method editing bugz [(#5843)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5843)
+- Fixed API endpoint for GO object custom button dialogs. [(#6052)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6052)
+
+## Hammer-10 - Released 2019-08-15
 
 ### Fixed
 - Added determine_api_endpoints for ContainerVolume [(#5828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5828) 
