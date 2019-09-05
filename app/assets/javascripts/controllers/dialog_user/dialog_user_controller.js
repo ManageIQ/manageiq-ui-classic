@@ -21,7 +21,7 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
-          const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(replace => replace.name === field.name) : false;
+          const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(function (replace) { return replace.name === field.name }) : false;
           if (replaceField) {
             field.default_value = replaceField.value;
           }

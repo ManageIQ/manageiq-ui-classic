@@ -1,5 +1,5 @@
 #main_div
-- if @new_dialog
-  = render :partial => "shared/dialogs/dialog_provision", :locals => @opts
-- else
-  = render :partial => "prov_edit"
+  - if @new_dialog
+    = render :partial => "shared/dialogs/dialog_provision", :locals => @opts
+  - else
+    = render :partial => "prov_edit"
