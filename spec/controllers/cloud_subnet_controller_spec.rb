@@ -235,6 +235,28 @@ describe CloudSubnetController do
     end
   end
 
+  describe '#button' do
+    before { controller.params = params }
+
+    context 'comparing Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_compare'} }
+
+      it 'calls comparemiq to compare Instances' do
+        expect(controller).to receive(:comparemiq)
+        controller.send(:button)
+      end
+    end
+
+    context 'adding new Cloud Subnet' do
+      let(:params) { {:pressed => 'cloud_subnet_new'} }
+
+      it 'redirects to action new' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'new')
+        controller.send(:button)
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :cloud_subnet_openstack
 
   include_examples :shared_examples_for_cloud_subnet_controller, %w(openstack azure google amazon)

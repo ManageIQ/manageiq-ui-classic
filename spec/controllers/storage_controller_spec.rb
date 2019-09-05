@@ -6,9 +6,12 @@ describe StorageController do
     2.times { st.all_miq_templates << FactoryBot.create(:miq_template) }
     st
   end
+
   before { stub_user(:features => :all) }
 
-  context "#button" do
+  describe "#button" do
+    before { allow(controller).to receive(:performed?) }
+
     it "when VM Right Size Recommendations is pressed" do
       controller.params = {:pressed => "vm_right_size"}
       expect(controller).to receive(:vm_right_size)
@@ -67,6 +70,13 @@ describe StorageController do
       expect(controller).to receive(:render)
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    it 'calls comparemiq for comparing Hosts' do
+      controller.params = {:pressed => "host_compare"}
+      expect(controller).to receive(:comparemiq)
+      controller.send(:button)
+      expect(controller.instance_variable_get(:@flash_array)).to be_nil
     end
 
     {"host_standby"  => "Enter Standby Mode",
@@ -284,7 +294,7 @@ describe StorageController do
       end
     end
 
-    context "#tree_select" do
+    describe "#tree_select" do
       before do
         storage
         storage_cluster
@@ -340,7 +350,7 @@ describe StorageController do
     end
   end
 
-  context "#tags_edit" do
+  describe "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
