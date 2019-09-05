@@ -98,6 +98,8 @@ module ApplicationController::PolicySupport
         @refresh_partial = "layouts/policy_sim"
         replace_right_cell(:refresh_breadcrumbs => false)
       end
+    else
+      session[:edit] = @edit
     end
   end
 

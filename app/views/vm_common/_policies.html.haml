@@ -12,3 +12,12 @@
 
   = _('* Items in <font color="red"><i>red italics</i></font> do not change the outcome of the scope or expression.').html_safe
 
+- unless @explorer
+  #buttons{:align => 'right'}
+    -# Go back to policy simulation screen
+    = link_to(_('Back'),
+              {:action => 'policy_sim', :continue => true, :controller => 'vm'},
+               :class  => 'btn btn-default',
+               :alt    => t = _('Back'),
+               :title  => t,
+               :method => :post)
