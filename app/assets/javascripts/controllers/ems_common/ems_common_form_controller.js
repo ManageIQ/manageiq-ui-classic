@@ -739,6 +739,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.updateAuthStatus = function(updatedValue) {
     $scope.angularForm[$scope.currentTab + '_auth_status'].$setViewValue(updatedValue);
+    $scope.angularForm.$valid = updatedValue;
+    $scope.angularForm.$invalid = !updatedValue;
   };
 
   $scope.updateHostname = function(value) {
