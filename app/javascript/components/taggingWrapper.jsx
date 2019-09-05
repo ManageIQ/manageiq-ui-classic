@@ -103,7 +103,7 @@ TaggingWrapper.propTypes = {
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,
-    affectedItems: PropTypes.arrayOf(PropTypes.number),
+    affectedItems: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
 
