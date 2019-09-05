@@ -176,15 +176,14 @@ class MiqTaskController < ApplicationController
   # Gather any changed options
   def tasks_change_options
     @edit = session[:edit]
+    copy_params_if_present(@edit[:opts], params, %i[user_choice state_choice])
     @edit[:opts][:zone] = params[:chosen_zone] if params[:chosen_zone]
-    @edit[:opts][:user_choice] = params[:user_choice] if params[:user_choice]
     @edit[:opts][:time_period] = params[:time_period].to_i if params[:time_period]
     @edit[:opts][:queued] = params[:queued] == "1" ? params[:queued] : nil if params[:queued]
     @edit[:opts][:ok] = params[:ok] == "1" ? params[:ok] : nil if params[:ok]
     @edit[:opts][:error] = params[:error] == "1" ? params[:error] : nil if params[:error]
     @edit[:opts][:warn] = params[:warn] == "1" ? params[:warn] : nil if params[:warn]
     @edit[:opts][:running] = params[:running] == "1" ? params[:running] : nil if params[:running]
-    @edit[:opts][:state_choice] = params[:state_choice] if params[:state_choice]
 
     render :update do |page|
       page << javascript_prologue

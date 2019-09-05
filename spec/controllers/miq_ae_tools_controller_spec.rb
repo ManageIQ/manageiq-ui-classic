@@ -17,7 +17,7 @@ describe MiqAeToolsController do
       expect(controller).to receive(:render)
       controller.params = {:target_class => '', :id => 'new'}
       controller.send(:form_field_changed)
-      expect(assigns(:resolve)[:new][:target_class]).to eq('')
+      expect(assigns(:resolve)[:new][:target_class]).to be_nil
       expect(assigns(:resolve)[:new][:target_id]).to eq(nil)
     end
 

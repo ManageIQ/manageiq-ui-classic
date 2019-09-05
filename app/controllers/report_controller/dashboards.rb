@@ -323,8 +323,8 @@ module ReportController::Dashboards
       db_move_cols_up if params[:button] == "up"
       db_move_cols_down if params[:button] == "down"
     else
-      @edit[:new][:name] = params[:name] if params[:name]
-      @edit[:new][:description] = params[:description] if params[:description]
+      copy_params_if_present(@edit[:new], params, %i[name description])
+
       if params[:locked]
         @edit[:new][:locked] = params[:locked].to_i == 1
       end

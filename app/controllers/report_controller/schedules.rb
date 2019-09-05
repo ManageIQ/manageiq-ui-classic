@@ -356,8 +356,7 @@ module ReportController::Schedules
   # Get variables from edit form
   def schedule_get_form_vars
     @schedule = @edit[:sched_id] ? MiqSchedule.find(@edit[:sched_id]) : MiqSchedule.new(:userid => session[:userid])
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
+    copy_params_if_present(@edit[:new], params, %i[name description])
     @edit[:new][:enabled] = (params[:enabled] == "1") if params[:enabled]
     @edit[:new][:filter] = params[:filter_typ] if params[:filter_typ]
     @edit[:new][:subfilter] = params[:subfilter_typ] if params[:subfilter_typ]

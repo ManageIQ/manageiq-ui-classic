@@ -90,7 +90,7 @@ module MiqPolicyController::Alerts
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
     @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
-    @edit[:new][:description] = params[:description].presence if params[:description]
+    copy_params_if_present(@edit[:new], params, %i[description event_name])
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
     @edit[:new][:severity] = params[:miq_alert_severity] if params.key?(:miq_alert_severity)
     if params[:exp_event]
@@ -98,7 +98,6 @@ module MiqPolicyController::Alerts
       @edit[:new][:repeat_time] = alert_default_repeat_time
     end
     @edit[:new][:repeat_time] = params[:repeat_time].to_i if params[:repeat_time]
-    @edit[:new][:event_name] = params[:event_name] if params[:event_name]
 
     if params[:miq_alert_db]
       @edit[:new][:db] = params[:miq_alert_db]
@@ -127,31 +126,35 @@ module MiqPolicyController::Alerts
       @edit[:new][:repeat_time] = alert_default_repeat_time if apply_default_repeat_time?
     end
 
+    copy_params_if_present(@edit[:new][:expression][:options], params, %i[freq_threshold
+                                                                          perf_column
+                                                                          value_threshold
+                                                                          trend_direction
+                                                                          trend_steepness
+                                                                          event_log_message_filter_value
+                                                                          event_log_name
+                                                                          event_log_level
+                                                                          event_log_event_id
+                                                                          event_log_source
+                                                                          debug_trace
+                                                                          value_mw_greater_than
+                                                                          value_mw_less_than
+                                                                          value_mw_garbage_collector
+                                                                          value_mw_threshold])
     @edit[:new][:expression][:options][:event_types] = [params[:event_types]].reject(&:blank?) if params[:event_types]
     @edit[:new][:expression][:options][:time_threshold] = params[:time_threshold].to_i if params[:time_threshold]
     @edit[:new][:expression][:options][:hourly_time_threshold] = params[:hourly_time_threshold].to_i if params[:hourly_time_threshold]
-    @edit[:new][:expression][:options][:freq_threshold] = params[:freq_threshold] if params[:freq_threshold]
     if params[:perf_column]
-      @edit[:new][:expression][:options][:perf_column] = params[:perf_column]
       @edit[:perf_column_unit] = alert_get_perf_column_unit(@edit[:perf_column_options][@edit[:new][:expression][:options][:perf_column]])
     end
     @edit[:new][:expression][:options][:operator] = params[:select_operator] if params[:select_operator]
-    @edit[:new][:expression][:options][:value_threshold] = params[:value_threshold] if params[:value_threshold]
     if params[:trend_direction]
-      @edit[:new][:expression][:options][:trend_direction] = params[:trend_direction]
       @edit[:new][:expression][:options].delete(:trend_steepness) unless params[:trend_direction].ends_with?("more_than")
       @edit[:perf_column_unit] = alert_get_perf_column_unit(@edit[:perf_column_options][@edit[:new][:expression][:options][:perf_column]])
     end
-    @edit[:new][:expression][:options][:trend_steepness] = params[:trend_steepness] if params[:trend_steepness]
     @edit[:new][:expression][:options][:rt_time_threshold] = params[:rt_time_threshold].to_i if params[:rt_time_threshold]
     @edit[:new][:expression][:options][:event_log_message_filter_type] = params[:select_event_log_message_filter_type] if params[:select_event_log_message_filter_type]
-    @edit[:new][:expression][:options][:event_log_message_filter_value] = params[:event_log_message_filter_value] if params[:event_log_message_filter_value]
-    @edit[:new][:expression][:options][:event_log_name] = params[:event_log_name] if params[:event_log_name]
-    @edit[:new][:expression][:options][:event_log_level] = params[:event_log_level] if params[:event_log_level]
-    @edit[:new][:expression][:options][:event_log_event_id] = params[:event_log_event_id] if params[:event_log_event_id]
-    @edit[:new][:expression][:options][:event_log_source] = params[:event_log_source] if params[:event_log_source]
     @edit[:new][:expression][:options][:hdw_attr] = params[:select_hdw_attr] if params[:select_hdw_attr]
-    @edit[:new][:expression][:options][:debug_trace] = params[:debug_trace] if params[:debug_trace]
 
     # Handle VMware Alarm parms
     if params.key?(:select_ems_id)
@@ -174,18 +177,6 @@ module MiqPolicyController::Alerts
       end
     end
 
-    if params[:value_mw_greater_than]
-      @edit[:new][:expression][:options][:value_mw_greater_than] = params[:value_mw_greater_than]
-    end
-    if params[:value_mw_less_than]
-      @edit[:new][:expression][:options][:value_mw_less_than] = params[:value_mw_less_than]
-    end
-    if params[:value_mw_garbage_collector]
-      @edit[:new][:expression][:options][:value_mw_garbage_collector] = params[:value_mw_garbage_collector]
-    end
-    if params[:value_mw_threshold]
-      @edit[:new][:expression][:options][:value_mw_threshold] = params[:value_mw_threshold]
-    end
     if params[:select_mw_operator]
       @edit[:new][:expression][:options][:mw_operator] = params[:select_mw_operator]
     end

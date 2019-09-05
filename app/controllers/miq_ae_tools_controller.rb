@@ -422,20 +422,16 @@ Methods updated/added: %{method_stats}") % stat_options)
     if params[:readonly]
       @resolve[:new][:readonly] = (params[:readonly] != "1")
     end
-    @resolve[:new][:instance_name] = params[:instance_name] if params.key?(:instance_name)
-    @resolve[:new][:other_name] = params[:other_name] if params.key?(:other_name)
-    @resolve[:new][:object_message] = params[:object_message] if params.key?(:object_message)
-    @resolve[:new][:object_request] = params[:object_request] if params.key?(:object_request)
+
+    copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
+
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
       @resolve[:new][:attrs][i][0] = params[f] if params[f.to_sym]
       @resolve[:new][:attrs][i][1] = params[v] if params[v.to_sym]
     end
-    @resolve[:new][:target_class] = params[:target_class] if params[:target_class]
-    #   @resolve[:new][:target_attr_name] = params[:target_attr_name] if params.has_key?(:target_attr_name)
     if params.key?(:target_class)
-      @resolve[:new][:target_class] = params[:target_class]
       targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class])) if params[:target_class].present?
       unless targets.nil?
         @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
@@ -443,9 +439,7 @@ Methods updated/added: %{method_stats}") % stat_options)
       end
     end
     @resolve[:new][:target_id] = nil if params[:target_class] == ""
-    @resolve[:new][:target_id] = params[:target_id] if params.key?(:target_id)
-    @resolve[:button_text] = params[:button_text] if params.key?(:button_text)
-    @resolve[:button_number] = params[:button_number] if params.key?(:button_number)
+    copy_params_if_present(@resolve, params, %i[button_text button_number])
     @resolve[:throw_ready] = ready_to_throw
   end
 

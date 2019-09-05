@@ -127,8 +127,7 @@ module PxeController::PxeImageTypes
   # Get variables from edit form
   def pxe_image_type_get_form_vars
     @pxe_image_type = @edit[:pxe_id] ? PxeImageType.find(@edit[:pxe_id]) : PxeImageType.new
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:provision_type] = params[:provision_type] if params[:provision_type]
+    copy_params_if_present(@edit[:new], params, %i[name provision_type])
   end
 
   # Set form variables for edit
