@@ -1692,7 +1692,6 @@ class CatalogController < ApplicationController
         get_node_info_handle_leaf_node(id)
       end
     end
-    x_history_add_item(:id => treenodeid, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
 

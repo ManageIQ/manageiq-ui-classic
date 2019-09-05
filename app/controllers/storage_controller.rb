@@ -307,14 +307,6 @@ class StorageController < ApplicationController
     when :storage_pod_tree then storage_pod_get_node_info(node)
     end
     set_right_cell_text
-
-    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
-      x_history_add_item(:id     => x_node,
-                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
-                         :text   => @right_cell_text)
-    else
-      x_history_add_item(:id => node, :text => @right_cell_text) # Add to history pulldown array
-    end
   end
 
   def leaf_record

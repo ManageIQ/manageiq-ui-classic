@@ -106,7 +106,6 @@ class PxeController < ApplicationController
     when :pxe_image_types_tree         then pxe_image_type_get_node_info(node)
     when :iso_datastores_tree          then iso_datastore_get_node_info(node)
     end
-    x_history_add_item(:id => node, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
 

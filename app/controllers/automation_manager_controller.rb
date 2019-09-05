@@ -234,14 +234,6 @@ class AutomationManagerController < ApplicationController
     @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text} if @search_text.present? && %w[ConfiguredSystem ConfigurationScript].exclude?(model)
     # Edit right cell text if using filter
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && filtering? && @edit && @edit[:adv_search_applied]
-
-    if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
-      x_history_add_item(:id     => x_node,
-                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
-                         :text   => @right_cell_text)
-    else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
-    end
     {:view => @view, :pages => @pages}
   end
 

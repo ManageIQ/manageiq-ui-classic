@@ -196,14 +196,6 @@ class InfraNetworkingController < ApplicationController
               end
 
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
-
-    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
-      x_history_add_item(:id     => x_node,
-                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
-                         :text   => @right_cell_text)
-    else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
-    end
     options
   end
 
@@ -367,17 +359,11 @@ class InfraNetworkingController < ApplicationController
         :item_name => @item.name,
         :action    => action_type(@sb[:action], 1)
       }
-      x_history_add_item(:id => x_node, :text => header, :action => @sb[:action], :item => @item.id)
     else
       header = _("\"%{action}\" for Switch \"%{name}\"") % {
         :name   => name,
         :action => action_type(@sb[:action], 2)
       }
-      if @display && @display != "main"
-        x_history_add_item(:id => x_node, :text => header, :display => @display)
-      elsif @sb[:action] != "drift_history"
-        x_history_add_item(:id => x_node, :text => header, :action => @sb[:action])
-      end
     end
     action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header

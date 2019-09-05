@@ -1051,14 +1051,6 @@ module VmCommon
                              end
     end
 
-    if @edit&.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
-      x_history_add_item(:id     => x_node,
-                         :qs_exp => @edit[:adv_search_applied][:qs_exp],
-                         :text   => @right_cell_text)
-    else
-      x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
-    end
-
     # After adding to history, add name filter suffix if showing a list
     unless %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
       if @search_text.present?
@@ -1457,10 +1449,6 @@ module VmCommon
     when "performance"
       partial = "layouts/performance"
       header = _("Capacity & Utilization data for %{vm_or_template} \"%{name}\"") % {:vm_or_template => ui_lookup(:table => table), :name => name}
-      x_history_add_item(:id      => x_node_right_cell,
-                         :text    => header,
-                         :button  => params[:pressed],
-                         :display => params[:display])
       action = nil
     when "policy_sim"
       action = nil
@@ -1501,9 +1489,6 @@ module VmCommon
     when "timeline"
       partial = "layouts/tl_show"
       header = _("Timelines for %{virtual_machine} \"%{name}\"") % {:virtual_machine => ui_lookup(:table => table), :name => name}
-      x_history_add_item(:id     => x_node_right_cell,
-                         :text   => header,
-                         :button => params[:pressed])
       action = nil
     else
       # now take care of links on summary screen
@@ -1523,25 +1508,12 @@ module VmCommon
           :item_name      => @item.kind_of?(ScanHistory) ? @item.started_on.to_s : @item.name,
           :action         => action_type(@sb[:action], 1)
         }
-        x_history_add_item(:id     => x_node_right_cell,
-                           :text   => header,
-                           :action => @sb[:action],
-                           :item   => @item.id)
       else
         header = _("\"%{action}\" for %{vm_or_template} \"%{name}\"") % {
           :vm_or_template => ui_lookup(:table => table),
           :name           => name,
           :action         => action_type(@sb[:action], 2)
         }
-        if @display && @display != "main"
-          x_history_add_item(:id      => x_node_right_cell,
-                             :text    => header,
-                             :display => @display)
-        elsif @sb[:action] != "drift_history"
-          x_history_add_item(:id     => x_node_right_cell,
-                             :text   => header,
-                             :action => @sb[:action])
-        end
       end
       action = nil
     end
