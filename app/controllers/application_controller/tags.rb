@@ -172,11 +172,11 @@ module ApplicationController::Tags
 
     @tags = cats.map do |cat|
       {
-        :id          => cat.id,
+        :id          => cat.id.to_s,
         :description => cat.description,
         :singleValue => cat.single_value,
         :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
-          { :id => entry.id, :description => entry.description }
+          { :id => entry.id.to_s, :description => entry.description }
         end
       }
     end
@@ -184,13 +184,13 @@ module ApplicationController::Tags
     assigned_tags = assignments.uniq(&:parent_id).map do |tag|
       {
         :description => tag.parent.description,
-        :id          => tag.parent.id,
+        :id          => tag.parent.id.to_s,
         :values      => assignments.select { |assignment| assignment.parent_id == tag.parent_id }.map do |assignment|
-          { :description => assignment.description, :id => assignment.id }
+          { :description => assignment.description, :id => assignment.id.to_s }
         end
       }
     end
-    @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map(&:id)}
+    @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map { |i| i.id.to_s } }
     @button_urls = {
       :save_url   => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'save'),
       :cancel_url => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'cancel')

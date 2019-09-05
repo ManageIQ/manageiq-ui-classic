@@ -17,7 +17,7 @@ const params = (type = 'default', state, tag = {}) => ({
   }
 })[type]
 
-const onDelete = (x, y, z) => ({...y, check: 0});
+const onDelete = (x, y, z) => (() => ({...y, check: 0}));
 
 it('passes the intercepted action to next', () => {
 

@@ -21,8 +21,8 @@ const params = (type = 'default', state, tag = {}) => ({
 })[type]
 
 const onDelete = (type = 'default', params = [], deleted_element) => ({
-  provision: {...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) },
-  default: params,
+  provision: () => ({...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) }),
+  default: ()   => params,
 })[type]
 
 class TaggingWrapper extends React.Component {
@@ -103,7 +103,7 @@ TaggingWrapper.propTypes = {
         description: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     })).isRequired,
-    affectedItems: PropTypes.arrayOf(PropTypes.number),
+    affectedItems: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
 
