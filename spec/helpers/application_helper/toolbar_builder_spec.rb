@@ -153,6 +153,38 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it_behaves_like "no custom buttons"
       it_behaves_like "with custom buttons"
     end
+
+    [[:service_template, :service], [:generic_object_definition, :generic_object]].each do |template, instance|
+      context "for #{instance.to_s.camelize} with #{template.to_s.camelize}" do
+        before do
+          allow(MiqServer).to receive(:my_server) { FactoryBot.create(:miq_server) }
+          login_as user
+        end
+        let(:definition_object) { FactoryBot.create(template) }
+        let(:object) { FactoryBot.create(instance, "#{template}_id".to_sym => definition_object.id) }
+        let!(:button) do
+          FactoryBot.create(:custom_button,
+                            :applies_to_class => definition_object.class,
+                            :applies_to_id    => definition_object.id,
+                            :visibility       => {:roles => ["_ALL_"]},
+                            :options          => {:button_icon => 'fa fa-star'})
+        end
+        let!(:unassigned_button) do
+          FactoryBot.create(:custom_button,
+                            :applies_to_class => object.class,
+                            :visibility       => {:roles => ["_ALL_"]},
+                            :options          => {:button_icon => 'fa fa-star'})
+        end
+
+        it "#custom_button_add_related_buttons returns only CustomButton without CustomButtonSet that applies to #{template.to_s.camelize}" do
+          toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
+          toolbar_builder.custom_button_add_related_buttons(object.class, object, toolbar)
+          buttons_in_toolbar = toolbar.definition["custom_buttons_"].buttons
+          expect(buttons_in_toolbar.length).to eq(1)
+          expect(buttons_in_toolbar.first[:id]).to eq("custom__custom_#{button[:id]}")
+        end
+      end
+    end
   end
 
   describe "#twostate_button_selected" do
