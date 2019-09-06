@@ -121,12 +121,11 @@ class ApplicationHelper::ToolbarBuilder
       :icon         => input[:icon],
       :name         => button[:id],
       :onwhen       => input[:onwhen],
-      :pressed      => input[:pressed],
       :send_checked => input[:send_checked],
     )
 
-    button[:enabled] = input[:enabled]
-    %i[title text confirm enabled].each do |key|
+    button[:enabled] = input.key(:enabled) ? !!input[:enabled] : true
+    %i[title text confirm].each do |key|
       if input[key].present?
         button[key] = button.localized(key, input[key])
       end
