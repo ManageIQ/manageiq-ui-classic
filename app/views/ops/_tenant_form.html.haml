@@ -2,4 +2,7 @@
 
 = render :partial => "layouts/flash_msg"
 
-= react('OpsTenantForm', { :recordId => @tenant.id, :ancestry => @tenant_parent, :redirectUrl => "/#{controller_name}/explorer", :divisible => params[:tenant_type] == "tenant", })
+= react('OpsTenantForm', :recordId => @tenant.id,
+                         :ancestry => @tenant_parent,
+                         :redirectUrl => "/#{controller_name}/explorer",
+                         :divisible => params[:tenant_type] == "tenant")

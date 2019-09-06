@@ -33,7 +33,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should mount form without initialValues', (done) => {
-    fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry`, {
+    fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible`, {
       name: 'foo',
     });
     const wrapper = mount(<OpsTenantForm {...initialProps} />);
@@ -48,7 +48,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should mount and set initialValues', (done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
     });
     const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
@@ -65,16 +65,16 @@ describe('OpstTenantForm', () => {
   });
 
   it('should correctly check unique name', (done) => {
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=1&filter[]=name=&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
       resources: [],
     });
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=1&filter[]=name=foo&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [{
         id: 12345,
         name: 'foo',
       }],
     });
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=1&filter[]=name=unique&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=unique&expand=resources', {
       resources: [{
         id: 12345,
         name: 'foo',
@@ -106,13 +106,13 @@ describe('OpstTenantForm', () => {
   });
 
   it('should render configuration which and change name isDisabled property', (done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
       ancestry: null,
       use_config_for_attributes: true,
     });
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=null&filter[]=name=foo&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
@@ -132,13 +132,13 @@ describe('OpstTenantForm', () => {
   });
 
   it('should call addFlash when reseting edit form', (done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
       ancestry: null,
       use_config_for_attributes: true,
     });
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=null&filter[]=name=foo&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
@@ -156,7 +156,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should call miqRedirectBack when canceling form', (done) => {
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=null&filter[]=name=&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
       resources: [],
     });
     const wrapper = mount(<OpsTenantForm {...initialProps} />);
@@ -166,7 +166,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should correctly add new entity.', (done) => {
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=undefined&filter[]=name=foo&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     fetchMock.postOnce('/api/tenants', {});
@@ -191,13 +191,14 @@ describe('OpstTenantForm', () => {
   });
 
   it('should correctly edit existing entity.', (done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
       ancestry: null,
       use_config_for_attributes: true,
+      divisible: false,
     });
-    fetchMock.getOnce('/api/tenants?filter[]=ancestry=null&filter[]=name=foo&expand=resources', {
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
     fetchMock.putOnce('/api/tenants/123', {});

@@ -3,7 +3,7 @@ import debouncePromise from '../../helpers/promise-debounce';
 import { API } from '../../http_api';
 
 export const asyncValidator = (value = '', ancestry, itemId) =>
-  API.get(`/api/tenants?filter[]=ancestry=${ancestry}&filter[]=name=${value}&expand=resources`)
+  API.get(`/api/tenants?filter[]=name=${value}&expand=resources`)
     .then((json) => {
       if (json.resources.find(({ id, name }) => name === value && id !== itemId)) {
         return __('Name has already been taken');

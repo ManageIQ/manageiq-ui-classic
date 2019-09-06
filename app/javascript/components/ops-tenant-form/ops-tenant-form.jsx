@@ -14,16 +14,21 @@ const OpsTenantForm = ({
   ancestry,
 }) => {
   const [initialValues, setInitialValues] = useState({});
-  const [isFetching, setFetching] = useState(!!recordId);
-  const entity = divisible ? __('Tenant') : __('Project');
+  const [isLoading, setLoading] = useState(!!recordId);
+  const entity = divisible || initialValues.divisible ? __('Tenant') : __('Project');
   useEffect(() => {
     if (recordId) {
       miqSparkleOn();
-      API.get(`/api/tenants/${recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry`)
+      API.get(`/api/tenants/${recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible`)
         .then(setInitialValues)
         .then(() => {
           miqSparkleOff();
-          setFetching(false);
+          setLoading(false);
+        })
+        .catch((error) => {
+          miqSparkleOff();
+          setLoading(false);
+          throw (error);
         });
     }
   }, []);
@@ -32,10 +37,16 @@ const OpsTenantForm = ({
     ? miqRedirectBack(sprintf(__('Creation of new %s was canceled by the user.'), entity), 'warning', redirectUrl)
     : miqRedirectBack(sprintf(__('Edit of %s "%s" was canceled by the user.'), entity, initialValues.name), 'warning', redirectUrl));
 
-  const save = (values, method, url, message) => API[method](url, values, { skipErrors: [400] })
-    .then(() => http.post('/ops/invalidate_miq_product_feature_caches', {}))
-    .then(() => miqRedirectBack(message, 'success', redirectUrl))
-    .catch(handleFailure);
+  const save = (values, method, url, message) => {
+    miqSparkleOn();
+    return API[method](url, values, { skipErrors: [400] })
+      .then(() => http.post('/ops/invalidate_miq_product_feature_caches', {}))
+      .then(() => miqRedirectBack(message, 'success', redirectUrl))
+      .catch((...args) => {
+        miqSparkleOff();
+        return handleFailure(...args);
+      });
+  };
 
   const handleSubmit = ({
     href: _href,
@@ -45,7 +56,7 @@ const OpsTenantForm = ({
   }) => {
     if (recordId) {
       return save(
-        { ...values, divisible },
+        { ...values, divisible: initialValues.divisible },
         'put',
         `/api/tenants/${recordId}`,
         sprintf(__('%s "%s" has been successfully saved.'), entity, values.name),
@@ -60,7 +71,7 @@ const OpsTenantForm = ({
     );
   };
 
-  if (isFetching) {
+  if (isLoading) {
     return null;
   }
 
