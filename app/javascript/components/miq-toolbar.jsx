@@ -2,26 +2,21 @@ import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
-import  '@manageiq/react-ui-components/dist/toolbar.css';
+import '@manageiq/react-ui-components/dist/toolbar.css';
 
-// Function to run transactions when toolbar button is clicked
-const onClick = button => {
+// Toolbar button onClick handler for all toolbar buttons.
+const onClick = (button) => {
+  console.log('Toolbar onClick handler. Button: ', button);
+  if (button.url && (button.url.indexOf('/') === 0)) {
+    const delimiter = (button.url === '/') ? '' : '/';
+    const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
 
-  console.log('onClick', button);
-
-  // ToolbarController.prototype.onViewClick = function(item, $event) {
-  if (button.url.indexOf('/') === 0) {
-    var delimiter = (button.url === '/') ? '' : '/';
-    var tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
-  
     location.replace('/' + ManageIQ.controller + button.url + tail + button.url_parms);
 
     return;
   }
- 
-  var tb_url;
-  //var button = $(this);
-  var popup = false;
+
+  let buttonUrl;
 
   // // If it's a dropdown, collapse the parent container
   // var parent = button.parents('div.btn-group.dropdown.open');
@@ -38,87 +33,75 @@ const onClick = button => {
   //   return;
   // }
 
-  if (button.confirm && !button.popup) {
-    if (!confirm(button.confirm)) {
-      return;
-    }
+  if (button.confirm && !confirm(button.confirm)) {
+    // No handling unless confirmed.
+    return;
   }
 
-  if (button.popup) {
-    if (!button.confirm || confirm(button.confirm)) {
-      // popup windows are only supported for urls starting with '/' (non-ajax)
-      popup = true;
-    }
-  }
-
-  if (button.url) {
-    // See if a url is defined
+  if (button.url) { // A few buttons have an url.
     if (button.url.indexOf('/') === 0) {
-      // If url starts with / it is non-ajax
-      tb_url = '/' + ManageIQ.controller + button.url;
+      // If url starts with '/' it is non-ajax
+      buttonUrl = '/' + ManageIQ.controller + button.url;
+
       if (ManageIQ.record.recordId !== null) {
-        // remove last '/' if exist
-        tb_url = tb_url.replace(/\/$/, '');
-        tb_url += '/' + ManageIQ.record.recordId;
+        // Remove last '/' if exist. Add recordId.
+        buttonUrl = buttonUrl.replace(/\/$/, '') + '/' + ManageIQ.record.recordId;
       }
+
       if (button.url_parms) {
-        tb_url += button.url_parms;
+        buttonUrl += button.url_parms;
       }
-      if (popup) {
-        window.open(tb_url);
+
+      // popup windows are only supported for urls starting with '/' (non-ajax)
+      if (button.popup) {
+        console.log('open URL: ', buttonUrl);
+        window.open(buttonUrl);
       } else {
-        DoNav(encodeURI(tb_url));
+        console.log('DoNav URL: ', buttonUrl);
+        DoNav(encodeURI(buttonUrl));
       }
       return;
     }
 
-    // An ajax url was defined
-    tb_url = '/' + ManageIQ.controller + '/' + button.url;
+    // An ajax url was defined (url w/o '/')
+    buttonUrl = '/' + ManageIQ.controller + '/' + button.url;
     if (button.url.indexOf('x_history') !== 0) {
       // If not an explorer history button
       if (ManageIQ.record.recordId !== null) {
-        tb_url += '/' + ManageIQ.record.recordId;
+        buttonUrl += '/' + ManageIQ.record.recordId;
       }
     }
-  } else if (button.function) {
-    // support 'function' and 'function-data'
-    var fn = new Function('return ' + button.function); // eval - returns a function returning the right function
+  } else if (button.function) { // Client-side buttons use 'function' and 'function-data'.
+    // eval - returns a function returning the right function
+    const fn = new Function('return ' + button.function);
     fn().call(button, button['function-data']);
-    return false;
-  } else {
-    // No url specified, run standard button ajax transaction
-    if (typeof button.explorer !== 'undefined' && button.explorer) {
-      // Use x_button method for explorer ajax
-      tb_url = '/' + ManageIQ.controller + '/x_button';
-    } else {
-      tb_url = '/' + ManageIQ.controller + '/button';
-    }
-    if (ManageIQ.record.recordId !== null) {
-      tb_url += '/' + ManageIQ.record.recordId;
-    }
-    tb_url += '?pressed=';
-    if (typeof button.pressed === 'undefined' && button.id) {
-      tb_url += button.id.split('__').pop();
-    } else {
-      tb_url += button.pressed;
-    }
+    return;
+  } else { // Most of (classic) buttons.
+    // If no url was specified, run standard button ajax transaction.
+    // Use x_button method for explorer ajax.
+    // Add recordId if defined.
+    // Pass button id as 'pressed'.
+
+    buttonUrl = `/${ManageIQ.controller}/${button.explorer ? 'x_button' : 'button'}`
+      + (ManageIQ.record.recordId !== null ? `/${ManageIQ.record.recordId}` : '')
+      + `?pressed=${button.id.split('__').pop()}`;
   }
 
   if (button.prompt) {
-    tb_url = miqSupportCasePrompt(tb_url);
-    if (!tb_url) {
-      return false;
+    buttonUrl = miqSupportCasePrompt(buttonUrl); // FIXME: can we call this here?
+    if (!buttonUrl) {
+      return;
     }
   }
 
   // put url_parms into params var, if defined
-  var paramstring = getParams(button.url_parms, !!button.send_checked);
+  const paramstring = getParams(button.url_parms, !!button.send_checked);
 
   // TODO:
   // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
   // Checking for Report download button to allow controller method to turn off spinner
   // Need to design this feature into the toolbar button support at a later time.
-  var no_complete = _.includes([
+  const keepSpinner = _.includes([
     'perf_reload',
     'vm_perf_reload',
     'download_choice__render_report_csv',
@@ -126,27 +109,28 @@ const onClick = button => {
     'download_choice__render_report_txt',
     'custom_button_vmdb_choice__ab_button_simulate',
     'catalogitem_button_vmdb_choice__ab_button_simulate',
-  ], button.attr('name')) || button.attr('name').match(/_console$/);
+  ], button.name) || button.name.match(/_console$/);
 
-  var options = {
+  const options = {
     beforeSend: true,
-    complete: !no_complete,
+    complete: !keepSpinner,
     data: paramstring,
   };
 
-  return miqJqueryRequest(tb_url, options);
+  console.log('miqJqueryRequest URL: ', buttonUrl);
+  miqJqueryRequest(buttonUrl, options);
 
   function getParams(urlParms, sendChecked) {
-    var params = [];
+    const params = [];
 
     if (urlParms && (urlParms[0] === '?')) {
-      params.push( urlParms.slice(1) );
+      params.push(urlParms.slice(1));
     }
 
     // FIXME - don't depend on length
     // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
     if (sendChecked && ManageIQ.gridChecks.length) {
-      params.push('miq_grid_checks=' + ManageIQ.gridChecks.join(','));
+      params.push(`miq_grid_checks=${ManageIQ.gridChecks.join(',')}`);
     }
 
     if (urlParms && urlParms.match('_div$')) {
@@ -155,7 +139,7 @@ const onClick = button => {
 
     return _.filter(params).join('&') || undefined;
   }
-}
+};
 
 // const isButton = item => item.type === 'button';
 // const isButtonTwoState = item => item.type === 'buttonTwoState' && item.id.indexOf('view') === -1;
@@ -368,36 +352,36 @@ const onClick = button => {
 
 const onRowSelect = (isChecked, dispatch) => {
   console.log('onRowSelect', isChecked);
-  dispatch({type: isChecked ? 'INCREMENT' : 'DECREMENT'});
-  //this.updateByCount();
-}
+  dispatch({ type: isChecked ? 'INCREMENT' : 'DECREMENT' });
+};
 
-const subscribeToSubject = (dispatch) =>
-   listenToRx(
-     event => {
-       if (event.eventType === 'updateToolbarCount') {
-         dispatch({type: 'SET', count: event.countSelected});
-       } else if (event.rowSelect) {
-         onRowSelect(event.rowSelect.checked, dispatch);
-       } else if (event.redrawToolbar) {
-         dispatch({type: 'TOOLBARS', toolbars: event.redrawToolbar});
-       } else if (event.update) {
-         // TODO: puvodne pravdepodobne pro QE
-         // this.onUpdateItem(event);
-         console.log('Toolbar onUpdateItem called.', event);
-       } else if (typeof event.setCount !== 'undefined') {
-         dispatch({type: 'SET', count: event.setCount});
-       }
-     },
-     err => { console.error('Toolbar RxJs Error: ', err); },
-     () => { console.debug('Toolbar RxJs subject completed, no more events to catch.'); }
-   );
+const subscribeToSubject = dispatch => (
+  listenToRx(
+    (event) => {
+      if (event.eventType === 'updateToolbarCount') {
+        dispatch({ type: 'SET', count: event.countSelected });
+      } else if (event.rowSelect) {
+        onRowSelect(event.rowSelect.checked, dispatch);
+      } else if (event.redrawToolbar) {
+        dispatch({ type: 'TOOLBARS', toolbars: event.redrawToolbar });
+      } else if (event.update) {
+        // TODO: puvodne pravdepodobne pro QE
+        // this.onUpdateItem(event);
+        console.log('Toolbar onUpdateItem called.', event);
+      } else if (typeof event.setCount !== 'undefined') {
+        dispatch({ type: 'SET', count: event.setCount });
+      }
+    },
+    err => console.error('Toolbar RxJs Error: ', err),
+    () => console.debug('Toolbar RxJs subject completed, no more events to catch.'),
+  )
+);
 
-const separateItems = toolbarItems => {
-  let separatedArray = [];
-  toolbarItems.forEach(items => {
+const separateItems = (toolbarItems) => {
+  const separatedArray = [];
+  toolbarItems.forEach((items) => {
     let arrayIndex = separatedArray.push([]);
-    items.forEach(item => {
+    items.forEach((item) => {
       if (item.type !== 'separator') {
         separatedArray[arrayIndex - 1].push(item);
       } else {
@@ -406,7 +390,7 @@ const separateItems = toolbarItems => {
     });
   });
   return separatedArray;
-}
+};
 
 const filterViews = toolbarItems => toolbarItems
   .flat()
@@ -418,24 +402,26 @@ const toolbarReducer = (state, action) => {
       return {
         ...state,
         count: state.count + 1,
-      }
+      };
     case 'DECREMENT':
       return {
         ...state,
         count: state.count - 1,
-      }
+      };
     case 'SET':
       return {
         ...state,
         count: action.count,
-      }
+      };
     case 'TOOLBARS':
       return {
         ...state,
         toolbars: action.toolbars,
-      }
+      };
+    default:
+      return state;
   }
-}
+};
 
 const initState = {
   count: 0,
@@ -449,9 +435,9 @@ const MiqToolbar = (props) => {
   useEffect(() => {
     // Initiall toolbars are given in props.
     // Later can be changed by an RxJs event.
-    dispatch({type: 'TOOLBARS', toolbars});
+    dispatch({ type: 'TOOLBARS', toolbars });
 
-    const subscription = subscribeToSubject(dispatch)
+    const subscription = subscribeToSubject(dispatch);
     return () => subscription.unsubscribe();
   }, []);
 
@@ -459,18 +445,17 @@ const MiqToolbar = (props) => {
   // this.MiQEndpointsService = MiQEndpointsService;
   // this.$scope = $scope;
   // this.$location = $location;
- 
   // initEndpoints(this.MiQEndpointsService);
   // this.isList = location.pathname.includes('show_list');
 
   const groups = separateItems(state.toolbars.filter(item => !!item));
   const views = filterViews(groups);
 
-  return <Toolbar groups={groups} views={views} onClick={onClick} />
-}
+  return <Toolbar count={state.count} groups={groups} views={views} onClick={onClick} />;
+};
 
 MiqToolbar.propTypes = {
-  toolbars: PropTypes.arrayOf(PropTypes.any).isRequired
-}
+  toolbars: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default MiqToolbar;
