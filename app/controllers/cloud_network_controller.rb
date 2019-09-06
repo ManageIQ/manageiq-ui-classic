@@ -214,8 +214,6 @@ class CloudNetworkController < ApplicationController
       options[:external_facing] = switch_to_bol(params[:external_facing])
     end
 
-    # TODO: uncomment once form contains this field
-    # options[:port_security_enabled] = switch_to_bol(params[:port_security_enabled]) unless @network.port_security_enabled == switch_to_bol(params[:port_security_enabled])
     options[:qos_policy_id] = params[:qos_policy_id] unless @network.qos_policy_id == params[:qos_policy_id]
     options
   end
@@ -229,8 +227,6 @@ class CloudNetworkController < ApplicationController
     options[:admin_state_up] = switch_to_bol(params[:enabled])
     options[:shared] = switch_to_bol(params[:shared])
     options[:external_facing] = switch_to_bol(params[:external_facing])
-    # TODO: uncomment once form contains this field
-    # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
     cloud_tenant = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params[:cloud_tenant][:id]
     options[:tenant_id] = cloud_tenant.ems_ref
     options
