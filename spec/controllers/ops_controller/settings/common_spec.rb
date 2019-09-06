@@ -47,10 +47,8 @@ describe OpsController do
         @edit = session[:edit]
       end
 
-      context "#smartproxy_affinity_field_changed" do
-        before do
-          expect(controller).to receive(:render)
-        end
+      describe "#smartproxy_affinity_field_changed" do
+        before { expect(controller).to receive(:render) }
 
         it "should select a host when checked" do
           controller.params = {:id => "xx-#{@svr1.id}__host_#{@host2.id}", :check => '1'}
@@ -115,7 +113,7 @@ describe OpsController do
         end
       end
 
-      context "#smartproxy_affinity_update" do
+      describe "#smartproxy_affinity_update" do
         it "updates the SmartProxy host affinities" do
           @svr1.vm_scan_host_affinity = []
           @svr2.vm_scan_host_affinity = []
@@ -138,8 +136,9 @@ describe OpsController do
       end
     end
 
-    context "#settings_update" do
+    describe "#settings_update" do
       let(:orgs) { [1] }
+
       before do
         session[:edit] = {
           :key           => "settings_rhn_edit__rhn_edit",
@@ -178,7 +177,7 @@ describe OpsController do
       end
     end
 
-    context "#settings_get_form_vars" do
+    describe "#settings_get_form_vars" do
       before do
         miq_server = FactoryBot.create(:miq_server)
         current = ::Settings.to_hash
@@ -207,6 +206,21 @@ describe OpsController do
                              :authentication_mode => 'ldap'}
         controller.send(:settings_get_form_vars)
         expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
+      end
+    end
+
+    describe '#settings_get_form_vars_sync_ntp' do
+      before do
+        controller.params = {'ntp_server_2' => '1'}
+        controller.instance_variable_set(:@edit, :current => {:ntp => {:server => ['0', '1', '2']}},
+                                                 :new     => {:ntp => {:server => ['0', '1', '2'], 'ntp_server_2' => ''}})
+      end
+
+      subject { controller.instance_variable_get(:@edit) }
+
+      it 'removes unnecessary key from @edit[:new][:ntp]' do
+        controller.send(:settings_get_form_vars_sync_ntp)
+        expect(subject[:new]).to eq(subject[:current])
       end
     end
 
