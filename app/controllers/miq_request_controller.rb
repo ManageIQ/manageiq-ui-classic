@@ -292,11 +292,7 @@ class MiqRequestController < ApplicationController
   # The returned value needs to be equal to the first argument to Menu::Section.new(...)
   #   Example:  Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [ ... --> ":clo"
   def menu_section_id(parms)
-    case parms[:typ]
-    when 'ae'      then :automate
-    when 'service' then :svc
-    when 'host'    then :inf
-    end
+    parms[:typ] == 'ae' ? :automate : :svc
   end
 
   private
@@ -353,11 +349,7 @@ class MiqRequestController < ApplicationController
   end
 
   def model_request_type_from_layout
-    case @layout
-    when "miq_request_ae"   then :Automate
-    when "miq_request_host" then :Infrastructure
-    else                         :Service
-    end
+    @layout == "miq_request_ae" ? :Automate : :Service
   end
 
   def request_types_hash
@@ -463,7 +455,7 @@ class MiqRequestController < ApplicationController
   def rbac_feature_id(feature_id)
     # set this to be used to identify which Requests subtab was clicked
     @request_tab = params[:typ] || session[:request_tab] if @request_tab.nil?
-    return feature_id unless %w[ae host].include?(@request_tab)
+    return feature_id if session[:request_tab] != "ae"
 
     "#{@request_tab}_#{feature_id}"
   end
