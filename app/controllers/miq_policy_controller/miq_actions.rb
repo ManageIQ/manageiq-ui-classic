@@ -85,19 +85,15 @@ module MiqPolicyController::MiqActions
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
-    @edit[:new][:description] = params[:description].presence if params[:description]
-    @edit[:new][:options][:from] = params[:from].presence if params[:from]
-    @edit[:new][:options][:to] = params[:to].presence if params[:to]
+    copy_param_if_present(@edit[:new], params, %i[description])
+    copy_params_if_present(@edit[:new][:options], params, %i[from to parent_type attribute value hosts])
     @edit[:new][:options][:name] = params[:snapshot_name].presence if params[:snapshot_name]
     @edit[:new][:options][:age] = params[:snapshot_age].to_i if params.key?(:snapshot_age)
-    @edit[:new][:options][:parent_type] = params[:parent_type].presence if params[:parent_type]
     if params[:cpu_value]
       @edit[:new][:options][:value] = params[:cpu_value]
     elsif params[:memory_value]
       @edit[:new][:options][:value] = params[:memory_value]
     end
-    @edit[:new][:options][:attribute] = params[:attribute] if params[:attribute]
-    @edit[:new][:options][:value] = params[:value] if params[:value]
     @edit[:new][:options][:ae_message] = params[:object_message] if params.key?(:object_message)
     @edit[:new][:options][:ae_request] = params[:object_request] if params[:object_request]
     params.each do |var, val|
@@ -127,7 +123,6 @@ module MiqPolicyController::MiqActions
       update_playbook_variables(params)
     end
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
-    @edit[:new][:options][:hosts] = params[:hosts] if params[:hosts]
 
     # Note that the params[:tag] here is intentionally singular
     @edit[:new][:options][:tags] = params[:tag].present? ? [Classification.find(params[:tag]).tag.name] : nil if params[:tag]

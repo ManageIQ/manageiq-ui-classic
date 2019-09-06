@@ -146,10 +146,8 @@ module PxeController::PxeCustomizationTemplates
   # Get variables from edit form
   def template_get_form_vars
     @ct = @edit[:ct_id] ? CustomizationTemplate.find(@edit[:ct_id]) : CustomizationTemplate.new
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
+    copy_params_if_present(@edit[:new], params, %i[name description typ])
     @edit[:new][:img_type] = params[:img_typ] if params[:img_typ]
-    @edit[:new][:typ] = params[:typ] if params[:typ]
     @edit[:new][:script] = params[:script_data] if params[:script_data]
     @edit[:new][:script] = @edit[:new][:script] + "..." if !params[:name] && !params[:description] && !params[:img_typ] && !params[:script_data] && !params[:typ]
   end

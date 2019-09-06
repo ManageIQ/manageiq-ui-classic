@@ -478,13 +478,11 @@ module ReportController::Reports::Editor
   end
 
   def gfv_report_fields
-    @edit[:new][:pdf_page_size] = params[:pdf_page_size] if params[:pdf_page_size]
+    copy_params_if_present(@edit[:new], params, %i[pdf_page_size name title])
     if params[:chosen_queue_timeout]
       @edit[:new][:queue_timeout] = params[:chosen_queue_timeout].blank? ? nil : params[:chosen_queue_timeout].to_i
     end
     @edit[:new][:row_limit] = params[:row_limit].presence || ""
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:title] = params[:title] if params[:title]
   end
 
   def gfv_move_cols_buttons

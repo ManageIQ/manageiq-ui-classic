@@ -477,8 +477,7 @@ module ReportController::Menus
   end
 
   def menu_get_form_vars
-    @edit[:form_vars][:selected_reports] = params[:selected_reports] if params[:selected_reports]
-    @edit[:form_vars][:available_reports] = params[:available_reports] if params[:available_reports]
+    copy_params_if_present(@edit[:form_vars], params, %i[selected_reports available_reports])
     @edit[:temp_arr] = []
     id = session[:node_selected].split('__')
     selected = id[1].split(':')
