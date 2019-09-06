@@ -145,7 +145,7 @@ module Mixins
             ems.http_proxy_uri,
             true,
             uri,
-            :assume_role => params[:service_account].presence,
+            :assume_role => params[:default_service_account].presence,
           ]
         when 'ManageIQ::Providers::Azure::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
@@ -808,7 +808,7 @@ module Mixins
           creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
         end
         if ems.supports?(:assume_role)
-          (creds[:default] ||= {})[:service_account] = params[:service_account]
+          (creds[:default] ||= {})[:service_account] = params[:default_service_account]
         end
         if (ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ||
             ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) ||

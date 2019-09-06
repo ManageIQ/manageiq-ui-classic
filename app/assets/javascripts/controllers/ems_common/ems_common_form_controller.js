@@ -43,6 +43,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ssh_keypair_userid: '',
       ssh_keypair_password: '',
       service_account: '',
+      default_service_account: '',
       emstype_vm: false,
       ems_common: true,
       azure_tenant_id: '',
@@ -158,6 +159,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.ssh_keypair_userid              = data.ssh_keypair_userid;
 
       $scope.emsCommonModel.service_account                 = data.service_account;
+      $scope.emsCommonModel.default_service_account         = data.service_account;
       $scope.emsCommonModel.azure_tenant_id                 = data.azure_tenant_id;
       $scope.emsCommonModel.keystone_v3_domain_id           = data.keystone_v3_domain_id;
       $scope.emsCommonModel.subscription                    = data.subscription;
@@ -637,6 +639,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         default_userid:            $scope.emsCommonModel.default_userid,
         default_password:          default_password,
         default_url:               $scope.emsCommonModel.default_url,
+        default_service_account:   $scope.emsCommonModel.default_service_account,
         realm:                     $scope.emsCommonModel.realm,
         azure_tenant_id:           $scope.emsCommonModel.azure_tenant_id,
         subscription:              $scope.emsCommonModel.subscription,
@@ -739,8 +742,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.updateAuthStatus = function(updatedValue) {
     $scope.angularForm[$scope.currentTab + '_auth_status'].$setViewValue(updatedValue);
-    $scope.angularForm.$valid = updatedValue;
-    $scope.angularForm.$invalid = !updatedValue;
   };
 
   $scope.updateHostname = function(value) {

@@ -222,10 +222,10 @@ describe Mixins::EmsCommon::Angular do
       before do
         @ems_cloud_controller = EmsCloudController.new
         @params = {
-          :default_userid   => "abc",
-          :default_password => "abc",
-          :default_url      => "http://abc.test/mypath",
-          :service_account  => "test_arn",
+          :default_userid          => "abc",
+          :default_password        => "abc",
+          :default_url             => "http://abc.test/mypath",
+          :default_service_account => "test_arn",
         }
         @ems = FactoryBot.create(:ems_amazon)
         allow(@ems).to receive(:to_s).and_return('ManageIQ::Providers::Amazon::CloudManager')
