@@ -75,7 +75,6 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             :url       => "provision",
             :url_parms => "main_div",
             :enabled   => true,
-            :onwhen    => "0+",
             :klass     => ApplicationHelper::Button::ConfiguredSystemProvision
           )
         ]
