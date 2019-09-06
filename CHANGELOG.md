@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Ivanchuk-1
+
+### Fixed
+- Removed Pause & Resume Provider buttons from UI. [(#6067)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6067)
+- Fixed to set saveable state regardless of number of items selected. [(#6113)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6113)
+
 ## Hammer-11
 
 ### Fixed
