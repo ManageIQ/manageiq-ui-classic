@@ -756,17 +756,7 @@ module OpsController::OpsRbac
 
     @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i) if rec_type == "user"
 
-    bad = case rec_type
-          when 'group'
-            @edit[:new].values_at(:role, :group_tenant, :description).any?(&:blank?)
-          when 'role'
-            @edit[:new][:name].blank?
-          else
-            false
-          end
-
-    # We need to consider also bad variable, for proper response of Add button
-    session[:changed] = changed = @edit[:new] != @edit[:current] && !bad
+    session[:changed] = changed = @edit[:new] != @edit[:current]
 
     render :update do |page|
       page << javascript_prologue
@@ -775,7 +765,6 @@ module OpsController::OpsRbac
           page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
-        bad = false
       else
         # only do following for user (adding/editing a user)
         if x_node.split("-").first == "u" || x_node == "xx-u"

@@ -727,13 +727,13 @@ describe OpsController do
         let(:params) { {:id => "new", :group_tenant => tenant.id.to_s} }
         let(:edit) { {:new => {:role => 1}} }
 
-        it 'sets session[:changed] to false while filling in role and tenant' do
+        it 'sets session[:changed] to true while filling in role and tenant' do
           controller.send(:rbac_field_changed, rec_type)
-          expect(controller.session[:changed]).to be(false)
+          expect(controller.session[:changed]).to be(true)
         end
 
-        context 'filling in all the required info' do
-          let(:edit) { {:new => {:role => 1, :description => 'new_group'}} }
+        context 'filling in description' do
+          let(:edit) { {:new => {:description => 'new_group'}} }
 
           it 'sets session[:changed] to true' do
             controller.send(:rbac_field_changed, rec_type)
