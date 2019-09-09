@@ -1,5 +1,6 @@
 import React from 'react';
 
+import '@manageiq/react-ui-components/dist/tagging.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
 import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 
