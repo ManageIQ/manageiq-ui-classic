@@ -8,7 +8,7 @@
 - if @sb[:active_tab] == "settings_rhn"
 
   %h3
-    Red Hat Software Updates
+    = _("Red Hat Software Updates")
   - if @customer.registered
     = render :partial => 'ops/rhn/info_subscribed'
   - else
