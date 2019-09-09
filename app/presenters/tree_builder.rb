@@ -284,6 +284,10 @@ class TreeBuilder
     :export                          => "TreeBuilderReportExport",
     ## Timelines (TODO)
 
+    ## Utilization
+    ### Utilization
+    :utilization                     => "TreeBuilderUtilization",
+
     ## Chargeback
     ### Reports
     :cb_reports                      => "TreeBuilderChargebackReports",
@@ -359,11 +363,6 @@ class TreeBuilder
     ### Configured Systems
     :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
-    # Automation
-    ## Automate
-    ### Generic Objects
-    :generic_object_definition       => "TreeBuilderConfigurationManager",
-
     # Control
     ## Explorer
     ### Policy Profiles
@@ -403,11 +402,8 @@ class TreeBuilder
     :ab                              => "TreeBuilderButtons",
     #### Import/Export
     :dialog_import_export            => "TreeBuilderAeCustomization",
-
-    # Optimize
-    ## Utilization
-    ### Utilization (TODO)
-    :utilization                     => "TreeBuilderUtilization",
+    ### Generic Objects
+    :generic_object_definition       => "TreeBuilderGenericObjectDefinition",
 
     # OPS (Configuration)
     ## Settings
