@@ -806,4 +806,23 @@ describe OpsController do
       end
     end
   end
+
+  describe '#rbac_edit_save_or_add' do
+    context 'adding new Group' do
+      before do
+        allow(controller).to receive(:load_edit).and_return(true)
+        allow(controller).to receive(:render_flash)
+        controller.instance_variable_set(:@edit, :new => {:description           => 'Description',
+                                                          :filters               => {},
+                                                          :filter_expression     => {'???' => '???'},
+                                                          :use_filter_expression => false})
+        controller.params = {:button => 'add'}
+      end
+
+      it 'sets @flash_array properly if user forgot to choose a Role for a Group' do
+        controller.send(:rbac_edit_save_or_add, 'group')
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'A Role must be assigned to this Group', :level => :error}])
+      end
+    end
+  end
 end
