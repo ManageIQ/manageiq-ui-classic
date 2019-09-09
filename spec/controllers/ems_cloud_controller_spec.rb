@@ -83,7 +83,8 @@ describe EmsCloudController do
           'ap-southeast-1',
           nil,
           true,
-          instance_of(URI::Generic)
+          instance_of(URI::Generic),
+          :assume_role => nil,
         ]),
         User.current_user.userid,
         zone.name
@@ -276,6 +277,7 @@ describe EmsCloudController do
       expect(mocked_ems).to receive(:supports_authentication?).with(:amqp).and_return(true)
       expect(mocked_ems).to receive(:supports_authentication?).with(:oauth)
       expect(mocked_ems).to receive(:supports_authentication?).with(:auth_key)
+      expect(mocked_ems).to receive(:supports?).with(:assume_role).and_return(false)
       expect(controller.send(:build_credentials, mocked_ems, :validate)).to eq(:default => default_creds.merge!(:save => false), :amqp => amqp_creds.merge!(:save => false))
     end
 
@@ -287,6 +289,7 @@ describe EmsCloudController do
       expect(mocked_ems).to receive(:supports_authentication?).with(:amqp).and_return(true)
       expect(mocked_ems).to receive(:supports_authentication?).with(:oauth)
       expect(mocked_ems).to receive(:supports_authentication?).with(:auth_key)
+      expect(mocked_ems).to receive(:supports?).with(:assume_role).and_return(false)
       expect(controller.send(:build_credentials, mocked_ems, :validate)).to eq(:default => default_creds.merge!(:save => false), :amqp => amqp_creds.merge!(:save => false))
     end
   end

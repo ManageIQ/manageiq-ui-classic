@@ -137,7 +137,16 @@ module Mixins
           end
         when 'ManageIQ::Providers::Amazon::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
-          [user, password, :EC2, params[:provider_region], ems.http_proxy_uri, true, uri]
+          [
+            user,
+            password,
+            :EC2,
+            params[:provider_region],
+            ems.http_proxy_uri,
+            true,
+            uri,
+            {:assume_role => params[:default_assume_role].presence},
+          ]
         when 'ManageIQ::Providers::Azure::CloudManager'
           uri = URI.parse(WEBrick::HTTPUtils.escape(params[:default_url]))
           [user, password, params[:azure_tenant_id], params[:subscription], ems.http_proxy_uri, params[:provider_region], uri]
@@ -357,6 +366,10 @@ module Mixins
           host_default_vnc_port_end = @ems.host_default_vnc_port_end.to_s
         end
 
+        if @ems.supports?(:assume_role)
+          assume_role = @ems.authentication_service_account
+        end
+
         if @ems.kind_of?(ManageIQ::Providers::Azure::CloudManager)
           azure_tenant_id = @ems.azure_tenant_id
           subscription    = @ems.subscription
@@ -418,7 +431,8 @@ module Mixins
                            :non_default_current_tab         => @ems.emstype == "gce" ? "service_account" : nil,
                            :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
                            :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : "",
-                           :default_url                     => @ems.endpoints.first.url}
+                           :default_url                     => @ems.endpoints.first.url,
+                           :assume_role                     => assume_role}
         end
 
         if controller_name == "ems_infra"
@@ -793,6 +807,9 @@ module Mixins
            ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
           smartstate_docker_password = params[:smartstate_docker_password] ? params[:smartstate_docker_password] : ems.authentication_password(:smartstate_docker)
           creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
+        end
+        if ems.supports?(:assume_role)
+          (creds[:default] ||= {})[:service_account] = params[:default_assume_role]
         end
         if (ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ||
             ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) ||
