@@ -99,7 +99,8 @@ describe('emsCommonFormController', function() {
       openstack_infra_providers_exist: false,
       provider_region: "ap-southeast-2",
       default_userid: "default_user",
-      default_url: "http://host.test/abc"
+      default_url: "http://host.test/abc",
+      assume_role: 'arn:123',
     };
 
     beforeEach(inject(function(_$controller_) {
@@ -157,6 +158,10 @@ describe('emsCommonFormController', function() {
       expect($scope.emsCommonModel.default_url).toEqual("http://host.test/abc");
     });
 
+    it('sets default_assume_role', function() {
+      expect($scope.emsCommonModel.default_assume_role).toEqual("arn:123");
+    });
+
     it('sets the current tab to default', function() {
       expect($scope.currentTab).toEqual('default');
     });
@@ -164,7 +169,7 @@ describe('emsCommonFormController', function() {
     it('initializes $scope.postValidationModel with credential objects for only those providers that support validation', function () {
       $scope.postValidationModelRegistry('default');
       expect($scope.postValidationModel).toEqual(jasmine.objectContaining({
-        default: jasmine.objectContaining({provider_region: 'ap-southeast-2'}),
+        default: jasmine.objectContaining({provider_region: 'ap-southeast-2', default_assume_role: 'arn:123'}),
         console: jasmine.objectContaining({console_userid: undefined}),
         amqp: {},
         metrics: {},
