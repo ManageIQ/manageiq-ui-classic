@@ -251,6 +251,7 @@ class VmCloudController < ApplicationController
         {:title => _("Instances")},
       ],
       :include_record => true,
+      :x_node         => x_node_right_cell
     }
   end
 

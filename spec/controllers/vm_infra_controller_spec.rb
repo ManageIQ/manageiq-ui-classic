@@ -7,7 +7,6 @@ describe VmInfraController do
     stub_user(:features => :all)
 
     allow(controller).to receive(:protect_build_tree).and_return(nil)
-    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name", :locals_for_render => {}))
 
     MiqRegion.seed
@@ -377,6 +376,14 @@ describe VmInfraController do
     post :x_button, :params => {:pressed => 'vm_migrate', :id => vm_vmware_migrateable.id}
     expect(response).to render_template('layouts/_x_edit_buttons')
     expect(response.status).to eq(200)
+  end
+
+  it "show item name in breadcrumbs when migrating" do
+    vm_vmware_migrateable = FactoryBot.create(:vm_vmware, :ems_id => 1, :storage_id => 1)
+    allow(controller).to receive(:x_node).and_return("v-#{vm_vmware_migrateable.id}")
+
+    post :x_button, :params => {:pressed => 'vm_migrate', :id => vm_vmware_migrateable.id}
+    expect(response.body).to include(vm_vmware_migrateable.name)
   end
 
   it 'can Publish selected VM' do

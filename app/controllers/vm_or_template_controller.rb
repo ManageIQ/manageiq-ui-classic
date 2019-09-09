@@ -64,6 +64,7 @@ class VmOrTemplateController < ApplicationController
         {:title => _("Workloads")},
       ],
       :include_record => true,
+      :x_node         => x_node_right_cell
     }
   end
 
