@@ -325,6 +325,11 @@ describe EmsInfraController do
         expect(ApplicationHelper::Toolbar::TimelineCenter).to receive(:definition).and_call_original
         subject
       end
+
+      it "contains timelines title" do
+        subject
+        expect(response.body).to include("Timelines for #{ui_lookup(:table => controller.controller_name)} &quot;#{@ems.name}&quot;")
+      end
     end
 
     context "render listnav partial" do
