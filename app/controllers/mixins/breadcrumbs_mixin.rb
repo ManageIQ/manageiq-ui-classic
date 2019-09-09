@@ -34,6 +34,8 @@ module Mixins
           breadcrumbs.push(:title => @title)
         end
       else
+        options[:x_node] ||= x_node
+
         self.x_node_text = params[:text] if action_name == "tree_select" # get text of the active node
 
         # Append breadcrumb from title of the accordion (eg "Policies")
@@ -41,20 +43,20 @@ module Mixins
 
         # On special page (tagitems, politems, etc.)
         if @tagitems || @politems || @ownershipitems || @retireitems
-          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems, true)) unless options[:hide_special_item]
+          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems, true, options[:x_node])) unless options[:hide_special_item]
           breadcrumbs.push(:title => @right_cell_text)
         else
           # Ancestry parents breadcrumbs (only in services)
           breadcrumbs.concat(ancestry_parents(options[:ancestry], options[:record_info], options[:record_title])) if options[:ancestry]
 
           # Try to prepare TreeNode on every item outside the root
-          if x_node != 'root'
+          if options[:x_node] != 'root'
             if options[:include_record] && options[:record_info].present?
               # Include items (for trees, which does not have final nodes: VMs etc.)
               node = TreeNode.new(options[:record_info])
             else
               # Try to create treenode from the x_node
-              model, model_id, _ = TreeBuilder.extract_node_model_and_id(x_node) if x_node
+              model, model_id, _ = TreeBuilder.extract_node_model_and_id(options[:x_node]) if options[:x_node]
               record = model.try(:constantize).try(:find, model_id)
 
               node = TreeNode.new(record) if record
@@ -67,15 +69,14 @@ module Mixins
           #          2. TreeNode.text
           #          3. Item from tree (if it's built)
           #          4. Fallbacks (sent text, title of the record, title_for_breadcrumbs)
-
-          key = node ? node.key : x_node
-          title = if x_node == 'root'   # After switching accordion, there is no way how to get root text
+          key = node ? node.key : options[:x_node]
+          title = if options[:x_node] == 'root' # After switching accordion, there is no way how to get root text
                     title_for_breadcrumbs
-                  elsif node            # Use node's text and key
+                  elsif node                    # Use node's text and key
                     node.text
-                  elsif @trees.present? # Select a node when coming from different page (the tree is built)
+                  elsif @trees.present?         # Select a node when coming from different page (the tree is built)
                     build_breadcrumb_from_tree.try(:[], :title)
-                  else                  # Last clicked tree node label
+                  else                          # Last clicked tree node label
                     @x_node_text.try(:[], x_active_tree)
                   end
 
@@ -104,7 +105,7 @@ module Mixins
 
     # TODO: Replace breadcrumb_url with url to right controller (database parameter to controller)
     # and add :url => breadcrumb_url parameter to return hash
-    def special_page_breadcrumb(variable, explorer = false)
+    def special_page_breadcrumb(variable, explorer = false, x_node = nil)
       # breadcrumb_url = url(controller_url, notshow, variable.first[:id])
       # EMS has key instead of name
       return if !variable || variable.count != 1

@@ -81,6 +81,7 @@ class VmInfraController < ApplicationController
         {:title => _("Virtual Machines")},
       ],
       :include_record => true,
+      :x_node         => x_node_right_cell
     }
   end
 
