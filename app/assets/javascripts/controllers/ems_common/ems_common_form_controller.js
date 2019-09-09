@@ -76,6 +76,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       kubevirt_password: '',
       kubevirt_password_exists: false,
       default_url: '',
+      default_assume_role: '',
     };
 
     $scope.emsOptionsModel = {
@@ -158,6 +159,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.ssh_keypair_userid              = data.ssh_keypair_userid;
 
       $scope.emsCommonModel.service_account                 = data.service_account;
+      $scope.emsCommonModel.default_assume_role             = data.assume_role;
       $scope.emsCommonModel.azure_tenant_id                 = data.azure_tenant_id;
       $scope.emsCommonModel.keystone_v3_domain_id           = data.keystone_v3_domain_id;
       $scope.emsCommonModel.subscription                    = data.subscription;
@@ -637,6 +639,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         default_userid:            $scope.emsCommonModel.default_userid,
         default_password:          default_password,
         default_url:               $scope.emsCommonModel.default_url,
+        default_assume_role:       $scope.emsCommonModel.default_assume_role,
         realm:                     $scope.emsCommonModel.realm,
         azure_tenant_id:           $scope.emsCommonModel.azure_tenant_id,
         subscription:              $scope.emsCommonModel.subscription,
