@@ -18,6 +18,7 @@ class CopyCatalogForm extends Component {
       schema: createSchema(),
       initialValues: {
         name: 'Copy of ' + this.props.originName,
+        copy_tags: false
       },
       isLoaded: true,
     }));
@@ -29,7 +30,7 @@ class CopyCatalogForm extends Component {
   };
 
   submitValues = (values) => {
-    http.post('/catalog/save_copy_catalog', { id: this.props.catalogId, name: values.name }, { skipErrors: [400] })
+    http.post('/catalog/save_copy_catalog', { id: this.props.catalogId, name: values.name, copy_tags: values.copy_tags }, { skipErrors: [400] })
       .then(() => miqAjaxButton('/catalog/servicetemplate_copy_saved'))
       .catch((error) => add_flash(this.handleError(error), 'error'));
   };

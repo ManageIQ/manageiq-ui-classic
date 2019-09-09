@@ -114,7 +114,7 @@ class CatalogController < ApplicationController
     record = find_record_with_rbac(ServiceTemplate, params[:id])
     message = nil
     if record.present?
-      saved = record.template_copy(params[:name])
+      saved = record.template_copy(params[:name], :copy_tags => params[:copy_tags])
     else
       saved = false
       message = _("Record not found.")
