@@ -28,7 +28,14 @@
       = h(field.values.detect { |k, _v| k == wf.value(field.name) }.try(:last) || wf.value(field.name))
 
     - when "DialogFieldDropDownList"
-      = h(field.value || "<None>")
+      - val = h(field.value)
+      - if val.present?
+        - if field.multiselect?
+          = val.split(',').map { |v| {v => field.values.to_h[v]} }
+        - else
+          = [val, field.values.to_h[field.value]]
+      - else
+        = "<None>"
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || '' # it returns in format Clasification::id
