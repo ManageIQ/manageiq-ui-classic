@@ -15,7 +15,7 @@ module EmsStorageHelper::TextualSummary
                        parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
                        cloud_object_store_containers custom_button_events
       ]
-    relationships.push(:cloud_volume_types) if @record.type.include?("ManageIQ::Providers::StorageManager::CinderManager")
+    relationships.push(:cloud_volume_types) if @record.kind_of?(ManageIQ::Providers::StorageManager::CinderManager)
     TextualGroup.new(_("Relationships"), relationships)
   end
 
