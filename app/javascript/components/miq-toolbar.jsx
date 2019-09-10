@@ -4,6 +4,24 @@ import PropTypes from 'prop-types';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 import '@manageiq/react-ui-components/dist/toolbar.css';
 
+/* global miqJqueryRequest, miqSerializeForm */
+/* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
+
+/* eslint no-alert: "off" */
+const miqSupportCasePrompt = (tbUrl) => {
+  const supportCase = prompt(__('Enter Support Case:'), '');
+  if (supportCase === null) {
+    return false;
+  }
+
+  if (supportCase.trim() === '') {
+    alert(__('Support Case must be provided to collect logs'));
+    return false;
+  }
+
+  return `${tbUrl}&support_case=${encodeURIComponent(supportCase)}`;
+};
+
 // Toolbar button onClick handler for all toolbar buttons.
 const onClick = (button) => {
   console.log('Toolbar onClick handler. Button: ', button);
@@ -11,7 +29,7 @@ const onClick = (button) => {
     const delimiter = (button.url === '/') ? '' : '/';
     const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
 
-    location.replace('/' + ManageIQ.controller + button.url + tail + button.url_parms);
+    window.location.replace(['/', ManageIQ.controller, button.url, tail, button.url_parms].join(''));
 
     return;
   }
@@ -33,7 +51,7 @@ const onClick = (button) => {
   //   return;
   // }
 
-  if (button.confirm && !confirm(button.confirm)) {
+  if (button.confirm && !window.confirm(button.confirm)) {
     // No handling unless confirmed.
     return;
   }
@@ -41,11 +59,11 @@ const onClick = (button) => {
   if (button.url) { // A few buttons have an url.
     if (button.url.indexOf('/') === 0) {
       // If url starts with '/' it is non-ajax
-      buttonUrl = '/' + ManageIQ.controller + button.url;
+      buttonUrl = ['/', ManageIQ.controller, button.url].join('');
 
       if (ManageIQ.record.recordId !== null) {
         // Remove last '/' if exist. Add recordId.
-        buttonUrl = buttonUrl.replace(/\/$/, '') + '/' + ManageIQ.record.recordId;
+        buttonUrl = [buttonUrl.replace(/\/$/, ''), ManageIQ.record.recordId].join('/');
       }
 
       if (button.url_parms) {
@@ -64,15 +82,16 @@ const onClick = (button) => {
     }
 
     // An ajax url was defined (url w/o '/')
-    buttonUrl = '/' + ManageIQ.controller + '/' + button.url;
+    buttonUrl = `/${ManageIQ.controller}/${button.url}`;
     if (button.url.indexOf('x_history') !== 0) {
       // If not an explorer history button
       if (ManageIQ.record.recordId !== null) {
-        buttonUrl += '/' + ManageIQ.record.recordId;
+        buttonUrl += `/${ManageIQ.record.recordId}`;
       }
     }
-  } else if (button.function) { // Client-side buttons use 'function' and 'function-data'.
-    // eval - returns a function returning the right function
+  } else if (button.function) {
+    // Client-side buttons use 'function' and 'function-data'.
+    // eval - returns a function returning the right function.
     const fn = new Function('return ' + button.function);
     fn().call(button, button['function-data']);
     return;
@@ -82,13 +101,14 @@ const onClick = (button) => {
     // Add recordId if defined.
     // Pass button id as 'pressed'.
 
-    buttonUrl = `/${ManageIQ.controller}/${button.explorer ? 'x_button' : 'button'}`
-      + (ManageIQ.record.recordId !== null ? `/${ManageIQ.record.recordId}` : '')
-      + `?pressed=${button.id.split('__').pop()}`;
+    buttonUrl = [
+      `/${ManageIQ.controller}/${button.explorer ? 'x_button' : 'button'}`,
+      ManageIQ.record.recordId !== null ? `/${ManageIQ.record.recordId}` : '',
+      `?pressed=${button.id.split('__').pop()}`].join('');
   }
 
   if (button.prompt) {
-    buttonUrl = miqSupportCasePrompt(buttonUrl); // FIXME: can we call this here?
+    buttonUrl = miqSupportCasePrompt(buttonUrl);
     if (!buttonUrl) {
       return;
     }
@@ -143,14 +163,14 @@ const onClick = (button) => {
 
 // const isButton = item => item.type === 'button';
 // const isButtonTwoState = item => item.type === 'buttonTwoState' && item.id.indexOf('view') === -1;
-// 
+//
 //   /**
 //    * Public method for changing view over data.
 //    * @param {Object} item clicked view object
 //    * @param {Object} $event angular synthetic mouse event
 //    * @returns {undefined}
 //    */
- 
+
 // /**
 // * Private method for subscribing to rxSubject.
 // * For success functuon @see ToolbarController#onRowSelect()
@@ -173,7 +193,7 @@ const onClick = (button) => {
 //       } else if (typeof event.setCount !== 'undefined') {
 //         onSetCount(event.setCount);
 //       }
-// 
+//
 //       // // sync changes
 //       // if (!this.$scope.$$phase) {
 //       //   this.$scope.$digest();
@@ -183,7 +203,7 @@ const onClick = (button) => {
 //     () => { console.debug('Angular RxJs subject completed, no more events to catch.'); }
 //   );
 // }
-// 
+//
 // /**
 // * Private method for setting rootPoint of MiQEndpointsService.
 // * @param {Object} MiQEndpointsService service responsible for endpoits.
@@ -194,7 +214,7 @@ const onClick = (button) => {
 //   // TODO
 //   // MiQEndpointsService.rootPoint = urlPrefix;
 // }
-// 
+//
 // /**
 // * Constructor of angular's miqToolbarController.
 // * @param {Object} MiQToolbarSettingsService toolbarSettings service from ui-components.
@@ -212,7 +232,7 @@ const onClick = (button) => {
 // //   initEndpoints(this.MiQEndpointsService);
 // //   this.isList = location.pathname.includes('show_list');
 // // };
-// 
+//
 // /**
 // * Public method which is executed after row in gtl is selected.
 // * @param {Object} data selected row
@@ -223,7 +243,7 @@ const onClick = (button) => {
 //   // this.MiQToolbarSettingsService.checkboxClicked(data.checked);
 //   console.log('onRowSelect', data);
 // };
-// 
+//
 // /**
 // * Public method for setting up url of data views, based on last path param (e.g. /show_list).
 // * @returns {undefined}
@@ -236,7 +256,7 @@ const onClick = (button) => {
 //     }
 //   });
 // };
-// 
+//
 // // /**
 // // * Method which will retrieves toolbar settings from server.
 // // * @see MiQToolbarSettingsService#getSettings for more info.
@@ -253,7 +273,7 @@ const onClick = (button) => {
 // //       this.dataViews = toolbarItems.dataViews;
 // //     }.bind(this));
 // // };
-// 
+//
 // const onSetCount = count => {
 //   // TODO
 //   console.log('onSetCount', count);
@@ -262,7 +282,7 @@ const onClick = (button) => {
 //   //   this.$scope.$digest();
 //   // }
 // };
-// 
+//
 // // TODO
 // // ToolbarController.prototype.setClickHandler = function() {
 // //   _.chain(this.toolbarItems)
@@ -281,7 +301,7 @@ const onClick = (button) => {
 // //         if (item.hidden === true || item.enabled === false) {
 // //           return;
 // //         }
-// // 
+// //
 // //         sendDataWithRx({toolbarEvent: 'itemClicked'});
 // //         Promise.resolve(miqToolbarOnClick.bind($event.delegateTarget)($event)).then(function(data) {
 // //           sendDataWithRx({type: 'TOOLBAR_CLICK_FINISH', payload: data});
@@ -290,23 +310,23 @@ const onClick = (button) => {
 // //     })
 // //     .value();
 // // };
-// 
+//
 // const initObject = toolbarString => {
 //   subscribeToSubject();
 //   updateToolbar(JSON.parse(toolbarString));
 // };
-// 
+//
 // // ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
 // //   this.updateToolbar(toolbarObject);
 // // };
-// 
+//
 // // const onUpdateItem = updateData => {
 // //   var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
 // //   if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
 // //     toolbarItem[updateData.type] = updateData.value;
 // //   }
 // // };
-// 
+//
 // const updateToolbar = toolbarObject => {
 //     // TODO: re-render toolbar
 //   var toolbarItems = generateToolbarObject(toolbarObject);
@@ -316,25 +336,25 @@ const onClick = (button) => {
 //   setClickHandler();
 //   showOrHide();
 // };
-// 
+//
 // const anyToolbarVisible = () => {
 //   if (!this.toolbarItems || !this.toolbarItems.length) {
 //     return false;
 //   }
-// 
+//
 //   var nonEmpty = this.toolbarItems.filter(function(ary) {
 //     if (!ary || !ary.length) {
 //       return false;
 //     }
-// 
+//
 //     return _.some(ary, function(item) {
 //       return !item.hidden;
 //     });
 //   });
-// 
+//
 //   return !!nonEmpty.length;
 // };
-// 
+//
 // const showOrHide = () => {
 //   if (this.anyToolbarVisible()) {
 //     $('#toolbar').show();
@@ -342,7 +362,7 @@ const onClick = (button) => {
 //     $('#toolbar').hide();
 //   }
 // };
-// 
+//
 // //  ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
 // //   miqHttpInject(angular.module('ManageIQ.toolbar'))
 // //     .controller('miqToolbarController', ToolbarController);

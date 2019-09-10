@@ -20,11 +20,6 @@ function miqOnLoad() {
 
   miqBuildCalendar();
 
-  // Init the toolbars
-  // if (typeof miqInitToolbars === 'function') {
-  //   miqInitToolbars();
-  // }
-
   // Initialize the dashboard widget pulldown
   if (miqDomElementExists('widget_select_div')) {
     miqInitWidgetPulldown();
@@ -1314,34 +1309,6 @@ function miqAccordionSwap(_collapse, expand) {
   ManageIQ.noCollapseEvent = true;
   $(expand).parent().find('.panel-heading a').trigger('click');
   ManageIQ.noCollapseEvent = false;
-}
-
-// This function is called in miqOnLoad
-function miqInitToolbars() {
-  //  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
-  //  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
-  //  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
-  //  ).off('click');
-  //  $('#toolbar:not(.miq-toolbar-menu) button:not(.dropdown-toggle), ' +
-  //  '#toolbar:not(.miq-toolbar-menu) ul.dropdown-menu > li > a, ' +
-  //  '#toolbar:not(.miq-toolbar-menu) .toolbar-pf-view-selector > ul.list-inline > li > a'
-  //  ).click(function() {
-  //    miqToolbarOnClick.bind(this)();
-  //    return false;
-  //  });
-}
-
-function miqSupportCasePrompt(tb_url) {
-  var supportCase = prompt(__('Enter Support Case:'), '');
-  if (supportCase === null) {
-    return false;
-  } else if (supportCase.trim() === '') {
-    alert(__('Support Case must be provided to collect logs'));
-    return false;
-  }
-
-  var url = tb_url + '&support_case=' + encodeURIComponent(supportCase);
-  return url;
 }
 
 // Handle chart context menu clicks
