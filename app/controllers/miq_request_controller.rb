@@ -461,8 +461,11 @@ class MiqRequestController < ApplicationController
   end
 
   def rbac_feature_id(feature_id)
-    return feature_id unless %w[ae host].include?(session[:request_tab])
-    "#{session[:request_tab]}_#{feature_id}"
+    # set this to be used to identify which Requests subtab was clicked
+    @request_tab = params[:typ] || session[:request_tab] if @request_tab.nil?
+    return feature_id unless %w[ae host].include?(@request_tab)
+
+    "#{@request_tab}_#{feature_id}"
   end
 
   # Delete all selected or single displayed action(s)
