@@ -3,5 +3,5 @@ describe TreeNode::IsoImage do
   let(:object) { FactoryBot.create(:iso_image) }
 
   include_examples 'TreeNode::Node#key prefix', 'isi-'
-  include_examples 'TreeNode::Node#icon', 'ff ff-network-card'
+  include_examples 'TreeNode::Node#icon', 'ff ff-file-iso-o'
 end
