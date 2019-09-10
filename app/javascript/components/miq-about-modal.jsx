@@ -96,7 +96,13 @@ class MiqAboutModal extends React.Component {
           <AboutModal.VersionItem label={__('Browser Version')} versionText={browser.version.toString()} />
           <AboutModal.VersionItem label={__('Browser OS')} versionText={browser.OS} />
           <br />
-          <a style={{ color: 'white' }} onClick={() => this.setState({ expand: !this.state.expand })} href="javascript:void(0);">
+          <a
+            style={{ color: 'white' }}
+            onClick={(event) => {
+              this.setState({ expand: !this.state.expand });
+              event.preventDefault();
+            }}
+          >
             <strong>
               <i className={this.state.expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
               Plugins
