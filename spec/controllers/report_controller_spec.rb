@@ -680,36 +680,6 @@ describe ReportController do
           expect(edit[:pivot_cols][name]).to eq(%i(avg total))
         end
       end
-
-      context "handle timeline field changes" do
-        before do
-          col = "Vm-created_on"
-          controller.params = {:chosen_tl => col}
-          controller.send(:gfv_timeline) # This will set the @edit timeline unit hash keys
-        end
-
-        it "sets timeline col" do
-          col = "Vm-boot_time"
-          controller.params = {:chosen_tl => col}
-          controller.send(:gfv_timeline)
-          expect(assigns(:edit)[:new][:tl_field]).to eq(col)
-        end
-
-        it "clears timeline col" do
-          controller.params = {:chosen_tl => ReportHelper::NOTHING_STRING}
-          controller.send(:gfv_timeline)
-          edit = assigns(:edit)
-          expect(edit[:new][:tl_field]).to eq(ReportHelper::NOTHING_STRING)
-        end
-
-        it "sets event to position at" do
-          pos = "First"
-          controller.params = {:chosen_position => pos}
-          controller.send(:gfv_timeline)
-          expect(assigns(:edit)[:new][:tl_position]).to eq(pos)
-          expect(assigns(:tl_changed)).to be_truthy
-        end
-      end
     end
   end
 
