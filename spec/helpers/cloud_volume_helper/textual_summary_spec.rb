@@ -10,5 +10,5 @@ describe CloudVolumeHelper::TextualSummary do
     attachments
     custom_button_events
   )
-  include_examples "textual_group", "Properties", %i(name size bootable description status)
+  include_examples "textual_group", "Properties", %i(name size bootable description status multiattach)
 end
