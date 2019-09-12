@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import FlavorForm from '../../components/flavor-form/flavor-form';
@@ -8,7 +7,7 @@ import '../helpers/mockAsyncRequest';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/miqFlashLater';
-import { wrap } from 'module';
+import { mount, shallow } from '../helpers/mountForm';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
@@ -44,7 +43,7 @@ describe('Flavor form component', () => {
     fetchMock
       .mock('/flavor/ems_list', emsList)
       .mock('/flavor/cloud_tenants', cloudTenants);
-    const wrapper = shallow(<FlavorForm />);
+    const wrapper = shallow(<FlavorForm />).dive();
     setImmediate(() => {
       wrapper.update();
       expect(toJson(wrapper)).toMatchSnapshot();
@@ -82,16 +81,16 @@ describe('Flavor form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().initialValues).toEqual({
+      expect(wrapper.children().state().initialValues).toEqual({
         ems_id: 1,
         is_public: true,
         rxtx_factor: '1.0',
       });
-      expect(wrapper.state().emsList).toEqual([
+      expect(wrapper.children().state().emsList).toEqual([
         { name: 'name1', id: 1 },
         { name: 'name2', id: 2 },
       ]);
-      expect(wrapper.state().cloudTenants).toEqual([
+      expect(wrapper.children().state().cloudTenants).toEqual([
         { label: 'name3', value: 3 },
         { label: 'name4', value: 4 },
       ]);
@@ -106,7 +105,7 @@ describe('Flavor form component', () => {
       .mock('/flavor/cloud_tenants', cloudTenants);
 
     const wrapper = mount(<FlavorForm />);
-    const spy = jest.spyOn(wrapper.instance(), 'submitValues');
+    const spy = jest.spyOn(wrapper.children().instance(), 'submitValues');
 
     setImmediate(() => {
       wrapper.update();
@@ -123,9 +122,9 @@ describe('Flavor form component', () => {
       .mock('/flavor/cloud_tenants', cloudTenants);
 
     const wrapper = mount(<FlavorForm />);
-    wrapper.instance().submitValues = jest.fn();
+    wrapper.children().instance().submitValues = jest.fn();
 
-    const spySubmit = jest.spyOn(wrapper.instance(), 'submitValues');
+    const spySubmit = jest.spyOn(wrapper.children().instance(), 'submitValues');
 
     setImmediate(() => {
       wrapper.update();
@@ -169,7 +168,7 @@ describe('Flavor form component', () => {
 
   it('nonError sends right message', () => {
     const wrapper = mount(<FlavorForm />);
-    wrapper.instance().nonError('Flavor1');
+    wrapper.children().instance().nonError('Flavor1');
     expect(miqRedirectBack).toHaveBeenCalledWith(
       __('Add of Flavor "Flavor1" was successfully initialized.'),
       'success',
@@ -179,7 +178,7 @@ describe('Flavor form component', () => {
 
   it('onError sends right message', () => {
     const wrapper = mount(<FlavorForm />);
-    wrapper.instance().onError({
+    wrapper.children().instance().onError({
       results: [
         {
           message: 'Name too short!',
@@ -203,8 +202,8 @@ describe('Flavor form component', () => {
         }],
       };
       const wrapper = mount(<FlavorForm />);
-      const spyOnError = jest.spyOn(wrapper.instance(), 'onError');
-      wrapper.instance().getBack(response, 'Flavor1');
+      const spyOnError = jest.spyOn(wrapper.children().instance(), 'onError');
+      wrapper.children().instance().getBack(response, 'Flavor1');
       expect(spyOnError).toHaveBeenCalledWith(response, 'Flavor1');
     });
 
@@ -216,8 +215,8 @@ describe('Flavor form component', () => {
         }],
       };
       const wrapper = mount(<FlavorForm />);
-      const spyNonError = jest.spyOn(wrapper.instance(), 'nonError');
-      wrapper.instance().getBack(response, 'Flavor1');
+      const spyNonError = jest.spyOn(wrapper.children().instance(), 'nonError');
+      wrapper.children().instance().getBack(response, 'Flavor1');
       expect(spyNonError).toHaveBeenCalledWith('Flavor1');
     });
   });
@@ -230,18 +229,18 @@ describe('Flavor form component', () => {
     fetchMock
       .getOnce('flavor/cloud_tenants', cloudTenants);
     const wrapper = mount(<FlavorForm />);
-    const spyGetBack = jest.spyOn(wrapper.instance(), 'getBack');
+    const spyGetBack = jest.spyOn(wrapper.children().instance(), 'getBack');
     const values = {
       name: 'Some name',
       ems_id: '1',
     };
-    wrapper.instance().setState({
+    wrapper.children().instance().setState({
       is_public: true,
       emsList: [
         { id: 1, name: 'EmsName' },
       ],
     });
-    wrapper.instance().submitValues(values).then(() => {
+    wrapper.children().instance().submitValues(values).then(() => {
       expect(spyGetBack).toHaveBeenCalled();
       done();
     });

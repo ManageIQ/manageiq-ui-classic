@@ -6,13 +6,12 @@ exports[`Flavor form component should render form 1`] = `
   componentClass="div"
   fluid={true}
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Add",
       }
     }
-    className="form-react"
     initialValues={
       Object {
         "ems_id": 1,

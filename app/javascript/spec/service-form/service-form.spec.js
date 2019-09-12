@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import FormRender from '@data-driven-forms/react-form-renderer';
 import ServiceForm from '../../components/service-form';
+import { mount } from '../helpers/mountForm';
 
 require('../helpers/addFlash.js');
 require('../helpers/miqSparkle.js');
@@ -38,7 +38,7 @@ describe('Service form component', () => {
     expect(fetchMock.lastUrl()).toEqual('/service/service_form_fields/3');
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().initialValues).toEqual({ foo: 'bar' });
+      expect(wrapper.children().state().initialValues).toEqual({ foo: 'bar' });
       done();
     });
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import CopyDashboardForm from '../../components/copy-dashboard-form/copy-dashboard-form';
 
@@ -7,6 +6,7 @@ import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import * as handleFailure from '../../helpers/handle-failure';
+import { mount } from '../helpers/mountForm';
 
 describe('Copy Dashboard form', () => {
   let initialProps;
@@ -118,7 +118,7 @@ describe('Copy Dashboard form', () => {
 
     setTimeout(() => {
       wrapper.update();
-      const { form } = wrapper.find(MiqFormRenderer).children().children().instance();
+      const { form } = wrapper.find(MiqFormRenderer).children().children().children().instance();
       expect(fetchMock.calls()).toHaveLength(3);
 
       form.batch(() => {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
 import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
 import '../helpers/sprintf';
+import { mount } from '../helpers/mountForm';
 
 import CodeEditor from '../../components/code-editor';
 import OrcherstrationTemplateForm from '../../components/orchestration-template/orcherstration-template-form';

@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import FormRenderer from '@data-driven-forms/react-form-renderer';
 import SetOwnershipForm from '../../components/set-ownership-form';
@@ -7,6 +6,7 @@ import createSchema from '../../components/set-ownership-form/ownership-form.sch
 import '../helpers/miqAjaxButton';
 import '../helpers/miqSparkle';
 import '../helpers/addFlash';
+import { mount } from '../helpers/mountForm';
 
 describe('Set ownership form component', () => {
   let initialProps;

@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
 import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
 import '../helpers/sprintf';
+import { mount } from '../helpers/mountForm';
 
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 

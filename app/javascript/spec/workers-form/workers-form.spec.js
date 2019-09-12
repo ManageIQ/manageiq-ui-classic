@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import WorkersForm from '../../components/workers-form/workers-form';
 
@@ -8,6 +7,7 @@ import '../helpers/addFlash';
 import '../helpers/sprintf';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import Dualgroup from '../../components/dual-group';
+import { mount } from '../helpers/mountForm';
 
 describe('Workers form', () => {
   let initialProps;
@@ -153,7 +153,8 @@ describe('Workers form', () => {
       expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
       expect(fetchMock.called(baseUrl)).toBe(true);
       expect(fetchMock.calls()).toHaveLength(1);
-      const { form } = wrapper.find(MiqFormRenderer).children().children().instance();
+      const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+        .instance();
       expect(form.getState().values).toEqual(expectedValues);
       done();
     });
@@ -169,7 +170,8 @@ describe('Workers form', () => {
 
     setImmediate(() => {
       wrapper.update();
-      const { form } = wrapper.find(MiqFormRenderer).children().children().instance();
+      const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+        .instance();
       expect(fetchMock.calls()).toHaveLength(1);
 
       form.change('smart_proxy_worker.count', 1);

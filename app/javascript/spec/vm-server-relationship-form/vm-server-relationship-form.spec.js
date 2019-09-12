@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import VmServerRelationShipForm from '../../components/vm-server-relationship-form';
 import '../helpers/miqAjaxButton';
+import { mount } from '../helpers/mountForm';
 
 describe('Vm server relationship form component', () => {
   const miqAjaxButtonSpy = jest.spyOn(window, 'miqAjaxButton');
@@ -52,7 +52,7 @@ describe('Vm server relationship form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().initialValues).toEqual({
+      expect(wrapper.children().state().initialValues).toEqual({
         serverId: undefined,
       });
       done();
@@ -67,7 +67,7 @@ describe('Vm server relationship form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().initialValues).toEqual({
+      expect(wrapper.children().state().initialValues).toEqual({
         serverId: '/api/servers/13',
       });
       done();
@@ -77,7 +77,7 @@ describe('Vm server relationship form component', () => {
   it('should not submit values when form is not valid', (done) => {
     fetchMock.getOnce('/api/servers?expand=resources&sort_by=name&sort_order=desc', servers);
     const wrapper = mount(<VmServerRelationShipForm {...props} />);
-    const spy = jest.spyOn(wrapper.instance(), 'onSubmit');
+    const spy = jest.spyOn(wrapper.children().instance(), 'onSubmit');
 
     setImmediate(() => {
       wrapper.update();
@@ -97,7 +97,7 @@ describe('Vm server relationship form component', () => {
     const values = {
       serverId: '/api/servers/16',
     };
-    wrapper.instance().onSubmit(values).then(() => {
+    wrapper.children().instance().onSubmit(values).then(() => {
       expect(miqAjaxButtonSpy).toHaveBeenCalledWith('/vm_or_template/evm_relationship_update/10?button=save');
       expect(fetchMock.called('/api/vms/10',
         {
