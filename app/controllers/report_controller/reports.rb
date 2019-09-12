@@ -49,11 +49,11 @@ module ReportController::Reports
         @edit[:tl_xml]            = nil
       end
       if !rpt.graph.nil? && rpt.graph[:type].present? # If graph present
-        @edit[:chart_data] = nil
-      else
         # FIXME: UNTESTED!!!
         rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
         @edit[:chart_data] = rpt.chart
+      else
+        @edit[:chart_data] = nil
       end
     end
     miq_task.destroy
