@@ -268,7 +268,7 @@ module PxeController::IsoDatastores
     else
       @right_cell_div = "iso_datastore_details"
       nodes = treenodeid.split("-")
-      if (nodes[0] == "isd" && nodes.length == 2) || (["isd_xx"].include?(nodes[1]) && nodes.length == 3)
+      if nodes[0] == "isd" && nodes.length == 2
         # on iso_datastore node OR folder node is selected
         @record = @isd = IsoDatastore.find(nodes.last)
         @right_cell_text = _("ISO Datastore \"%{name}\"") % {:name => @isd.name}
