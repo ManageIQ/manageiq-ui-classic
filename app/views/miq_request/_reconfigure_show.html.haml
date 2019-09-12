@@ -60,6 +60,13 @@
         .col-md-8
           = h(@options[:network_adapter_remove].size)
           &nbsp;
+    - if @options[:network_adapter_edit]
+      .form-group
+        %label.control-label.col-md-2
+          = _("Edit Network Adapters")
+        .col-md-8
+          = h(@options[:network_adapter_edit].size)
+          &nbsp;
     - if @options[:instance_type]
       .form-group
         %label.control-label.col-md-2
