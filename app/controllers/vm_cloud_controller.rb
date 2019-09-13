@@ -18,6 +18,7 @@ class VmCloudController < ApplicationController
     @volume_choices = {}
     @record = @vm = find_record_with_rbac(VmCloud, params[:id])
     @vm.cloud_tenant.cloud_volumes.where(:status => 'available').each { |v| @volume_choices[v.name] = v.id }
+    @vm.cloud_tenant.cloud_volumes.where(:status => 'in-use', :multi_attachment => true).each { |v| @volume_choices[v.name] = v.id }
 
     @in_a_form = true
     drop_breadcrumb(

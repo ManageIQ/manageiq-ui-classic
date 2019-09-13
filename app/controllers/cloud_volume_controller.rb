@@ -22,7 +22,12 @@ class CloudVolumeController < ApplicationController
       delete_volumes
       return false
     when 'cloud_volume_attach'
-      javascript_redirect(:action => 'attach', :id => checked_item_id)
+      volume = find_record_with_rbac(CloudVolume, checked_item_id)
+      if  volume.status != "available" && !(volume.status == "in-use" && volume.multi_attachment)
+        render_flash(_("Cloud Volume \"%{volume_name}\" is not available to be attached to any Instances") % {:volume_name => volume.name}, :error)
+      else
+        javascript_redirect(:action => 'attach', :id => checked_item_id)
+      end
     when 'cloud_volume_detach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
       if volume.attachments.empty?
@@ -575,7 +580,6 @@ class CloudVolumeController < ApplicationController
     options = {}
     cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
     options[:volume_type] = params[:volume_type] if params[:volume_type]
-    options[:multiattach] = params[:multiattach] if params[:multiattach]
     cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
     options[:cloud_tenant] = cloud_tenant
     options[:ems] = cloud_tenant.ext_management_system
