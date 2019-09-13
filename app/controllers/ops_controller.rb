@@ -45,8 +45,7 @@ class OpsController < ApplicationController
       :breadcrumb_title => _('Providers'),
       :association      => :nested_providers,
       :parent           => @record,
-      :no_checkboxes    => true,
-      :clickable        => false
+      :no_checkboxes    => true
     )
   end
 

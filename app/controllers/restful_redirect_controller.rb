@@ -5,7 +5,19 @@ class RestfulRedirectController < ApplicationController
     case params[:model]
     when 'ExtManagementSystem'
       record = ExtManagementSystem.find_by(:id => params[:id])
-      record ? redirect_to(polymorphic_path(record)) : handle_missing_record
+      if record
+        if %w[ManageIQ::Providers::ConfigurationManager].include?(record.type) || record.type.starts_with?('ManageIQ::Providers::Foreman')
+          redirect_to(:controller => 'provider_foreman', :action => 'show', :id => params[:id])
+        elsif %w[ManageIQ::Providers::AnsibleTower::AutomationManager].include?(record.type)
+          redirect_to(:controller => 'automation_manager', :action => 'show', :id => params[:id])
+        elsif %w[ManageIQ::Providers::EmbeddedAnsible::AutomationManager].include?(record.type)
+          redirect_to(:controller => 'ansible_playbook', :action => 'show_list')
+        else
+          redirect_to(polymorphic_path(record))
+        end
+      else
+        handle_missing_record
+      end
     when 'ServiceTemplateTransformationPlanRequest'
       req = ServiceTemplateTransformationPlanRequest.select(:source_id).find(params[:id])
       req ? redirect_to(:controller => 'migration', :action => 'index', :anchor => "plan/#{req.source_id}") : handle_missing_record
@@ -15,7 +27,12 @@ class RestfulRedirectController < ApplicationController
       record = VmOrTemplate.select(:id, :type).find(params[:id])
       record ? handle_vm_redirect(record) : handle_missing_record
     else
-      handle_missing_record
+      if params[:model].starts_with?('ExtManagementSystem')
+        params[:model], params[:id] = params[:model].split('/')
+        index
+      else
+        handle_missing_record
+      end
     end
   end
 

@@ -1304,5 +1304,14 @@ describe ApplicationHelper do
         helper.view_to_url(view)
       end
     end
+
+    context 'displaying Provider through Tenant summary' do
+      let(:view) { MiqReport.new(:db => 'ExtManagementSystem') }
+
+      it 'sets controller to restful_redirect and returns proper url' do
+        expect(helper).to receive(:url_for_only_path).with(:controller => 'restful_redirect', :model => 'ExtManagementSystem')
+        helper.view_to_url(view)
+      end
+    end
   end
 end

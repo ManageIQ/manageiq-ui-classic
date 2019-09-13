@@ -335,6 +335,8 @@ module ApplicationHelper
                        controller
                      end
 
+        return url_for_only_path(:controller => 'restful_redirect', :model => 'ExtManagementSystem') if controller == 'ext_management_system'
+
         return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
     else

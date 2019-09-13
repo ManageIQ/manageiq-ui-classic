@@ -101,6 +101,19 @@ class ProviderForemanController < ApplicationController
     end
   end
 
+  # Display provider through Tenant's textual summary
+  def show
+    @explorer = true
+    @lastaction = "explorer"
+
+    build_accordions_and_trees
+
+    params[:action] = 'tree-select'
+    provider_node(params[:id], ExtManagementSystem.find_by(:id => params[:id]).type)
+
+    render :layout => "application"
+  end
+
   def x_show
     tree_record unless unassigned_configuration_profile?(params[:id])
 
