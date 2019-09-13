@@ -1399,7 +1399,7 @@ module ReportController::Reports::Editor
       tag = nf.first.split(':')
       if nf.first.include?("Managed :")
         entry = MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval]).find { |a| a.last == nf.last }
-        nf[0] = entry ? entry.first : "#{tag} (Category not found)"
+        nf[0] = entry ? entry.first : "#{tag.last.strip} (Category not found)"
       end
     end
 
