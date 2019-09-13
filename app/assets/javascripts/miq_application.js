@@ -56,12 +56,6 @@ function miqPrepRightCellForm(tree) {
   miqDimDiv(tree + '_div', true);
 }
 
-// Initialize the widget pulldown on the dashboard
-function miqInitWidgetPulldown() {
-  $('#dashboard_dropdown button:not(.dropdown-toggle), #toolbar ul.dropdown-menu > li > a').off('click');
-  $('#dashboard_dropdown button:not(.dropdown-toggle), #toolbar ul.dropdown-menu > li > a').on('click', miqWidgetToolbarClick);
-}
-
 function miqCalendarDateConversion(server_offset) {
   return moment().utcOffset(Number(server_offset) / 60).toDate();
 }
@@ -1309,20 +1303,6 @@ function miqAccordionSwap(_collapse, expand) {
   ManageIQ.noCollapseEvent = true;
   $(expand).parent().find('.panel-heading a').trigger('click');
   ManageIQ.noCollapseEvent = false;
-}
-
-// Handle chart context menu clicks
-function miqWidgetToolbarClick(_e) {
-  var itemId = $(this).data('click');
-  if (itemId === 'reset') {
-    if (confirm(__("Are you sure you want to reset this Dashboard's Widgets to the defaults?"))) {
-      miqAjax('/dashboard/reset_widgets');
-    }
-  } else if (itemId === 'add_widget') {
-    return;
-  } else {
-    miqJqueryRequest('/dashboard/widget_add?widget=' + itemId, {beforeSend: true});
-  }
 }
 
 function miqInitAccordions() {

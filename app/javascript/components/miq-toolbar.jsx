@@ -2,7 +2,9 @@ import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
-import '@manageiq/react-ui-components/dist/toolbar.css';
+
+import DashboardToolbar from './dashboard_toolbar';
+import TopologyToolbar from './topology_toolbar';
 
 /* global miqJqueryRequest, miqSerializeForm */
 /* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
@@ -92,7 +94,8 @@ const onClick = (button) => {
   } else if (button.function) {
     // Client-side buttons use 'function' and 'function-data'.
     // eval - returns a function returning the right function.
-    const fn = new Function('return ' + button.function);
+    /* eslint no-new-func: "off" */
+    const fn = new Function(`return ${button.function}`);
     fn().call(button, button['function-data']);
     return;
   } else { // Most of (classic) buttons.
@@ -448,7 +451,34 @@ const initState = {
   toolbars: [],
 };
 
+/* Wrapper class for generic toolbars and special toolbars. */
 const MiqToolbar = (props) => {
+  const { toolbars } = props;
+
+  if (!toolbars || (toolbars.length === 0)) {
+    return null;
+  }
+
+  if (toolbars[0][0].name === 'custom') {
+    const toolbarType = toolbars[0][0].args.partial;
+    const toolbarProps = toolbars[0][0].args.props;
+    switch (toolbarType) {
+      case 'dashboard/dropdownbar':
+        console.log('toolbarProps: ', toolbarProps);
+        return <DashboardToolbar {...toolbarProps} />;
+      case 'shared/topology_header_toolbar':
+        return <TopologyToolbar />;
+      default:
+        return null;
+    }
+  }
+
+  return <MiqGenericToolbar {...props} />;
+};
+
+/* Generic toolbar class for toolbars optionally connected to GTL grids
+ * reacting to changes in number of selected items. */
+const MiqGenericToolbar = (props) => {
   const { toolbars } = props;
   const [state, dispatch] = useReducer(toolbarReducer, initState);
 
@@ -461,17 +491,16 @@ const MiqToolbar = (props) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // this.MiQToolbarSettingsService = MiQToolbarSettingsService;
-  // this.MiQEndpointsService = MiQEndpointsService;
-  // this.$scope = $scope;
-  // this.$location = $location;
-  // initEndpoints(this.MiQEndpointsService);
-  // this.isList = location.pathname.includes('show_list');
-
   const groups = separateItems(state.toolbars.filter(item => !!item));
   const views = filterViews(groups);
+  console.log('groups: ', groups);
+  console.log('views:', views);
 
   return <Toolbar count={state.count} groups={groups} views={views} onClick={onClick} />;
+};
+
+MiqGenericToolbar.propTypes = {
+  toolbars: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 MiqToolbar.propTypes = {
