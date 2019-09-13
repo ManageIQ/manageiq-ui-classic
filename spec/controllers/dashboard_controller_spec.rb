@@ -36,13 +36,13 @@ describe DashboardController do
     it "remembers group" do
       group1 = user_with_role.current_group
       group2 = FactoryBot.create(:miq_group)
-      user_with_role.update_attributes(:miq_groups => [group1, group2])
+      user_with_role.update(:miq_groups => [group1, group2])
 
       skip_data_checks
       post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => 'dummy' }
       expect_successful_login(user_with_role)
 
-      user_with_role.update_attributes(:current_group => group2)
+      user_with_role.update(:current_group => group2)
 
       controller.instance_variable_set(:@current_user, nil) # force the controller to lookup the user record again
       get :index
@@ -56,7 +56,7 @@ describe DashboardController do
 
       # no longer has access to this group
       group2 = FactoryBot.create(:miq_group)
-      user_with_role.update_attributes(:current_group => group2, :miq_groups => [group2])
+      user_with_role.update(:current_group => group2, :miq_groups => [group2])
 
       controller.instance_variable_set(:@current_user, nil) # force the controller to lookup the user record again
       get :index
@@ -515,7 +515,7 @@ describe DashboardController do
         controller.params = {'uib-tab' => ws2.id.to_s}
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@current_user, user)
-        group.update_attributes(:settings => { :dashboard_order => [ws1.id.to_s, ws2.id.to_s] })
+        group.update(:settings => { :dashboard_order => [ws1.id.to_s, ws2.id.to_s] })
       end
 
       it 'sets id of selected tab properly' do

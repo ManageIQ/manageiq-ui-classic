@@ -144,7 +144,7 @@ class ConfigurationController < ApplicationController
 
         if current_user
           user_settings = merge_settings(current_user.settings, @settings)
-          current_user.update_attributes(:settings => user_settings)
+          current_user.update(:settings => user_settings)
 
           set_user_time_zone
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
@@ -159,7 +159,7 @@ class ConfigurationController < ApplicationController
         prune_old_settings(@settings)
         if current_user
           settings = merge_settings(current_user.settings, @settings)
-          current_user.update_attributes(:settings => settings)
+          current_user.update(:settings => settings)
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
         else
           add_flash(_("User Interface settings saved for this session"))

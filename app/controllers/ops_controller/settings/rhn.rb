@@ -106,7 +106,7 @@ module OpsController::Settings::RHN
     db          = MiqDatabase.first
     credentials = rhn_credentials_from_edit
 
-    db.update_attributes(
+    db.update(
       credentials.slice(
         :registration_type,
         :registration_server,

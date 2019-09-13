@@ -550,7 +550,7 @@ module ApplicationController::Filter
     end
 
     def miq_search_set_details(search, type, name_given_by_user, userid = nil)
-      search.update_attributes(
+      search.update(
         :search_key  => userid,
         :name        => "#{type == :global ? 'global' : "user_#{userid}"}_#{name_given_by_user}",
         :search_type => type

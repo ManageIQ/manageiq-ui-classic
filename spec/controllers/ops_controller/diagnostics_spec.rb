@@ -103,7 +103,7 @@ describe OpsController do
 
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       file_depot = FileDepotNfs.create(:name => "abc", :uri => "nfs://abc")
-      @miq_server.update_attributes(:log_file_depot_id => file_depot.id)
+      @miq_server.update(:log_file_depot_id => file_depot.id)
 
       session[:sandboxes] = {"ops" => {:active_tree        => :diagnostics_tree,
                                        :selected_typ       => "miq_server",
@@ -173,7 +173,7 @@ describe OpsController do
         :diag_selected_id => @miq_server.id,
         :active_tab       => "diagnostics_roles_servers"
       }
-      @miq_server.update_attributes(:status => "stopped")
+      @miq_server.update(:status => "stopped")
       allow(controller).to receive(:build_server_tree)
       controller.instance_variable_set(:@sb, sb_hash)
 

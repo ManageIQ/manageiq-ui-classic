@@ -24,7 +24,7 @@ class WidgetImportService
 
     log_widget_import_message(new_or_existing_widget)
 
-    new_or_existing_widget.update_attributes(widget)
+    new_or_existing_widget.update(widget)
     new_or_existing_widget.update(:miq_schedule => build_miq_schedule(schedule_from_widget.merge("widget_id" => new_or_existing_widget.id))) if schedule_from_widget
     new_or_existing_widget
   end
@@ -82,7 +82,7 @@ class WidgetImportService
     end
 
     if new_or_existing_report.new_record?
-      new_or_existing_report.update_attributes(report_attributes)
+      new_or_existing_report.update(report_attributes)
       $log.info("Created a new MiqReport [#{name}] for MiqWidget import")
     else
       $log.info("Not importing existing MiqReport [#{name}]")
@@ -99,7 +99,7 @@ class WidgetImportService
       :name          => schedule_contents["name"],
       :resource_type => schedule_contents["resource_type"]
     ).first_or_initialize
-    new_or_existing_schedule.update_attributes(schedule_contents) if new_or_existing_schedule.new_record?
+    new_or_existing_schedule.update(schedule_contents) if new_or_existing_schedule.new_record?
 
     if new_or_existing_schedule
       filter = MiqExpression.new("=" => {"field" => "MiqWidget-id", "value" => new_widget_id})

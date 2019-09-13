@@ -587,7 +587,7 @@ class DashboardController < ApplicationController
   def change_group
     # Get the user and new group and set current_group in the user record
     db_user = current_user
-    db_user.update_attributes(:current_group => MiqGroup.find_by(:id => params[:to_group]))
+    db_user.update(:current_group => MiqGroup.find_by(:id => params[:to_group]))
 
     # Rebuild the session
     session_reset

@@ -306,7 +306,7 @@ module ApplicationController::Filter
         user_settings[:default_search] ||= {}
         user_settings[:default_search][cols_key] ||= {}
         user_settings[:default_search][cols_key] = settings(:default_search, cols_key)
-        current_user.update_attributes(:settings => user_settings)
+        current_user.update(:settings => user_settings)
       end
     end
     build_listnav_search_list(@view.db) if @flash_array.blank?

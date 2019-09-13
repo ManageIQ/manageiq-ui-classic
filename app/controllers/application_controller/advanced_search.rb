@@ -108,7 +108,7 @@ module ApplicationController::AdvancedSearch
         if id.to_i == def_search.to_i
           user_settings = current_user.settings || {}
           user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
-          current_user.update_attributes(:settings => user_settings)
+          current_user.update(:settings => user_settings)
           @edit[:adv_search_applied] = nil # clearing up applied search results
         end
       end
