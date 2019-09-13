@@ -16,7 +16,7 @@
     - unless field_hash[:values].blank?
       .form-group
         %label.col-md-2.control-label
-          = field_hash[:description]
+          = _(field_hash[:description])
           - if @edit && field_hash[:required] && field_hash[:display] == :edit
             *
         .col-md-8
@@ -39,14 +39,14 @@
           - else
             -# Just show the field value
             -# Description is in the second, last, array element
-            = options[field].last
+            = _(options[field].last)
           -# Display notes if available
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
-            = field_hash[:notes]
+            = _(field_hash[:notes])
   - else
     .form-group
       %label.col-md-2.control-label{:valign => "top"}
-        = field_hash[:description]
+        = _(field_hash[:description])
         - len =  field_hash[:max_length] ? field_hash[:max_length] : ViewHelper::MAX_NAME_LEN
         - if field_hash[:help]
           %a{:id               => "popover-#{field_hash.object_id}",
@@ -123,7 +123,7 @@
               = options[field]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
         .col-md-2
           - if field == :owner_email
             - fh = wf.get_field(:owner_load_ldap, dialog)
@@ -157,13 +157,13 @@
             = "#{options[field]}_(%s)_#{options[:vm_suffix]}" % _("VM Number")
           -# Display notes if available
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:vm_memory].include?(field)
         -# text field or a Pull down for vm memory, depending upon existence of :values hash
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !field_hash[:values] && !@edit[:stamp_typ]
             -# Allow editing of the text field
-            = text_field_tag(field_id, options[field].kind_of?(Array) ? options[field].last : options[field],
+            = text_field_tag(field_id, options[field].kind_of?(Array) ? _(options[field].last) : options[field],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           - elsif @edit && field_hash[:display] == :edit && field_hash[:values] && !@edit[:stamp_typ]
@@ -187,10 +187,10 @@
               miqSelectPickerEvent("#{field_id}", "#{url}")
           - else
             -# Just show the field value
-            = options[field].kind_of?(Array) ? options[field].last : options[field]
+            = options[field].kind_of?(Array) ? _(options[field].last) : options[field]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:customization_template_script, :sysprep_upload_text].include?(field)
         -# text Area field to display uploaded file contents
         .col-md-8
@@ -228,11 +228,11 @@
               miqSelectPickerEvent("#{field_id}", "#{url}")
           - else
             -# Just show the field value
-            = options[field].last
+            = _(options[field].last)
             -# Description is in the second, last, array element
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:instance_type, :guest_access_key_pair, :security_groups, :monitoring, :vm_tag_1,
                :vm_tag_2, :vm_tag_3, :vm_tag_4, :vm_tag_5, :vm_tag_6, :vm_tag_7, :vm_tag_8,
                :vm_tag_9, :vm_tag_10, :provision_type, :network_adapters, :retirement,
@@ -283,10 +283,10 @@
                   %br
             - else
               -# Description is in the second, last, array element
-              = options[field].last
+              = _(options[field].last)
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:tag_ids, :vm_tags].include?(field)
         -# tree control for tags fields
         .col-md-10
@@ -295,7 +295,7 @@
             :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true, :url => url_for_only_path(:action => 'prov_field_changed')})
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:attached_ds, :iso_image_id, :placement_availability_zone,
                :placement_cluster_name, :placement_dc_name, :placement_ds_name,
                :placement_ems_name, :placement_host_name, :placement_rp_name,
@@ -366,10 +366,10 @@
               = options[:attached_ds_names].to_miq_a.join(",")
             - elsif options[field]
               -# Description is in the second, last, array element
-              = options[field].last
+              = _(options[field].last)
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:pxe_server_id, :number_of_vms, :number_of_cpus, :number_of_sockets, :cores_per_socket, :snapshot, :sysprep_enabled, :sysprep_timezone].include?(field)
         -# ### Pull Down for fields that dont need <None> in the list
         .col-md-8
@@ -401,12 +401,12 @@
             -# Just show the field value
             -# Description is in the second, last, if it is an array element, or possible single value from the API
             - if options[field].kind_of?(Array)
-              = options[field].last
+              = _(options[field].last)
             - else
               = options[field]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:linked_clone, :placement_auto, :stateless, :sysprep_auto_logon, :sysprep_change_sid, :seal_template,
                :sysprep_delete_accounts, :sysprep_spec_override, :vm_auto_start, :vm_dynamic_memory, :is_preemptible].include?(field)
         -# ### Checkbox fields
@@ -427,7 +427,7 @@
                             :disabled => true)
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:addr_mode, :disk_format, :sysprep_identification, :schedule_type, :cloud_network_selection_method].include?(field)
         -# Radio Button fields
         .col-md-8
@@ -446,7 +446,7 @@
             = options[field][1]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
-            = field_hash[:notes]
+            = _(field_hash[:notes])
       - elsif [:schedule_time].include?(field)
         .col-md-10
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]

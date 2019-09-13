@@ -9,7 +9,7 @@
       %ul.nav.nav-tabs
         - wf.provisioning_tab_list.each do |dialog|
           = miq_tab_header(dialog[:name], tabname) do
-            = dialog[:description]
+            = _(dialog[:description])
 
       .tab-content
         - current_tab = @edit && @edit[:new] ? @edit[:new][:current_tab_key] : @options[:current_tab_key]
