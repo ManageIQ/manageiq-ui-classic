@@ -160,9 +160,6 @@ module ReportController::Reports::Editor
       page << javascript_for_miq_button_visibility_changed(@changed)
       if @formatting_changed # Reload the screen if the formatting pulldowns need to be reset
         page.replace_html("formatting_div", :partial => "form_formatting")
-      elsif @tl_repaint
-        # page << "tl.paint();"
-        page << javascript_hide("notification")
       end
     end
   end
@@ -1296,14 +1293,6 @@ module ReportController::Reports::Editor
     @edit[expkey][:expression] = {"???" => "???"} # Set as new exp element
     # Build display filter expression
     @edit[:new][:display_filter] = @edit[expkey][:expression] if @edit[:new][:display_filter].nil? # Copy to new exp
-
-    # Get timeline fields
-    @edit[:new][:tl_field]    = ReportHelper::NOTHING_STRING
-    @edit[:new][:tl_position] = "Last"
-    if @rpt.timeline.kind_of?(Hash) # Timeline has any data
-      @edit[:new][:tl_field]    = @rpt.timeline[:field]    if @rpt.timeline[:field].present?
-      @edit[:new][:tl_position] = @rpt.timeline[:position] if @rpt.timeline[:position].present?
-    end
 
     # Get the pdf page size, if present
     @edit[:new][:pdf_page_size] = if @rpt.rpt_options.kind_of?(Hash) && @rpt.rpt_options[:pdf]
