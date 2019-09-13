@@ -453,8 +453,7 @@ class ApplicationHelper::ToolbarBuilder
           build_button(bgi, group_index)
         end
       when ApplicationHelper::Toolbar::Custom
-        rendered_html = group.render(@view_context).tr('\'', '"')
-        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
+        group[:args][:props] = group.evaluate(@view_context)
         @toolbar << group
       end
     end
