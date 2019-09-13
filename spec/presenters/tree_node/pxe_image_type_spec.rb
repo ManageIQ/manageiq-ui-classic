@@ -3,5 +3,5 @@ describe TreeNode::PxeImageType do
   let(:object) { FactoryBot.create(:pxe_image_type) }
 
   include_examples 'TreeNode::Node#key prefix', 'pit-'
-  include_examples 'TreeNode::Node#icon', 'ff ff-network-card'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-image'
 end
