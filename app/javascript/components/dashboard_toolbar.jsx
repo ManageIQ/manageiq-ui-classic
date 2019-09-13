@@ -1,8 +1,6 @@
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, DropdownButton, MenuItem } from 'patternfly-react';
-
-// app/views/dashboard/_widgets_menu.html.haml
+import { Dropdown, MenuItem } from 'patternfly-react';
 
 const resetButton = () => (
   <button
@@ -24,7 +22,7 @@ const resetClick = () => {
 }
 
 const addMenu = (items, locked) => {
-  const [ title, cls ] = locked 
+  const [ title, cls ] = locked
     ? [__("Cannot add a Widget, this Dashboard has been locked by the Administrator"), 'disabled']
     : [__("Add a widget"), ''];
 
@@ -48,13 +46,13 @@ const addMenu = (items, locked) => {
 };
 
 const renderDisabled = () => (
-  <div className='btn-group.dropdown'>
+  <div className="btn-group.dropdown">
     <button
-      className='disabled btn btn-default dropdown-toggle'
-      title={__('No Widgets available to add')}
+      className="disabled btn btn-default dropdown-toggle"
+      title={__("No Widgets available to add")}
     >
-      <i className='fa fa-reply fa-lg' />
-      <span className='caret' />
+      <i className="fa fa-reply fa-lg" />
+      <span className="caret" />
     </button>
   </div>
 );
