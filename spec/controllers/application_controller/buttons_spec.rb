@@ -38,7 +38,7 @@ describe ApplicationController do
     end
 
     it "Host button with a subclass, not base_class in applies_to_class" do
-      button.update_attributes(:applies_to_class => host.class.name)
+      button.update(:applies_to_class => host.class.name)
       controller.params = {:id => host.id, :button_id => button.id}
       expect { controller.send(:custom_buttons) }.to raise_error(ArgumentError)
     end
@@ -46,7 +46,7 @@ describe ApplicationController do
     context "with a button with open_url" do
       before do
         resource_action.update_attribute(:dialog_id, nil)
-        button.update_attributes(:options => {:open_url => true})
+        button.update(:options => {:open_url => true})
         expect(controller).to receive(:render)
       end
 

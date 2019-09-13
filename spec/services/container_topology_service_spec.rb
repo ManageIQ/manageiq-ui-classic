@@ -37,7 +37,7 @@ describe ContainerTopologyService do
                                 :uid_ems               => "abcd9a08-7b13-11e5-8546-129aa6621999",
                                 :ext_management_system => ems_rhev,
                                 :hardware              => hardware)
-      vm_rhev.update_attributes(:host => host, :raw_power_state => "up")
+      vm_rhev.update(:host => host, :raw_power_state => "up")
 
       allow(container_topology_service).to receive(:retrieve_providers).and_return([ems_kube])
       container_topology_service.instance_variable_set(:@entity, ems_kube)
@@ -138,7 +138,7 @@ describe ContainerTopologyService do
 
     it "topology contains the expected structure when vm is off" do
       # vm and host test cross provider correlation to infra provider
-      vm_rhev.update_attributes(:raw_power_state => "down")
+      vm_rhev.update(:raw_power_state => "down")
       allow(container_topology_service).to receive(:retrieve_providers).and_return([ems_kube])
       container_topology_service.instance_variable_set(:@entity, ems_kube)
       container_group = ContainerGroup.create(:ext_management_system => ems_kube, :container_node => container_node,

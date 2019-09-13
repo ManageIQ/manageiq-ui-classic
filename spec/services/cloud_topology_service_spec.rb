@@ -86,7 +86,7 @@ describe CloudTopologyService do
 
     it "topology contains the expected structure when vm is off" do
       # vm and host test cross provider correlation to infra provider
-      @vm.update_attributes(:raw_power_state => "SHUTOFF")
+      @vm.update(:raw_power_state => "SHUTOFF")
       allow(cloud_topology_service).to receive(:retrieve_providers).and_return([ems])
       cloud_topology_service.instance_variable_set(:@entity, ems)
 

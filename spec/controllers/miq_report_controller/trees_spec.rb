@@ -28,7 +28,7 @@ describe ReportController do
 
         report = FactoryBot.create(:miq_report_with_results)
         task = FactoryBot.create(:miq_task)
-        task.update_attributes(:state => "Finished")
+        task.update(:state => "Finished")
         task.reload
 
         report_result = FactoryBot.build(:miq_report_result,

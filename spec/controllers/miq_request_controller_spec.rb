@@ -492,7 +492,7 @@ describe MiqRequestController do
     end
 
     it "returns label when requester no longer exists" do
-      @request.update_attributes(:requester => nil)
+      @request.update(:requester => nil)
       label = controller.send(:requester_label, @request)
       expect(label).to eq("#{@approver.name} (no longer exists)")
     end

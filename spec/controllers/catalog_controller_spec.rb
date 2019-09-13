@@ -214,7 +214,7 @@ describe CatalogController do
                                 :ext_management_system => FactoryBot.create(:ems_vmware),
                                 :storage               => FactoryBot.create(:storage))
         @miq_request = FactoryBot.create(:miq_provision_request, :requester => admin_user, :src_vm_id => vm.id)
-        service_template_with_root_tenant.update_attributes(:prov_type => 'vmware')
+        service_template_with_root_tenant.update(:prov_type => 'vmware')
         service_template_with_root_tenant.add_resource(@miq_request)
         service_template_with_root_tenant.save
       end

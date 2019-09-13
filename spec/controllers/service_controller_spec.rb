@@ -105,7 +105,7 @@ describe ServiceController do
       end
 
       it 'sets x_node to return to Retired Services' do
-        service.update_attributes(:retired => true)
+        service.update(:retired => true)
         controller.send(:service_delete)
         expect(controller.x_node).to eq("xx-rsrv")
       end

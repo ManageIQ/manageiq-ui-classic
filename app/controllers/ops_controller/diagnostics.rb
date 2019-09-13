@@ -102,7 +102,7 @@ module OpsController::Diagnostics
           build_supported_depots_for_select
           type    = FileDepot.depot_description_to_class(params[:log_protocol])
           depot   = @record.log_file_depot.instance_of?(type) ? @record.log_file_depot : @record.build_log_file_depot(:type => type.to_s)
-          depot.update_attributes(:uri => new_uri, :name => params[:depot_name])
+          depot.update(:uri => new_uri, :name => params[:depot_name])
           creds = set_credentials
           depot.update_authentication(creds) if type.try(:requires_credentials?)
           @record.save!

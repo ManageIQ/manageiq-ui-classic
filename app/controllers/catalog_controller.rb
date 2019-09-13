@@ -1042,7 +1042,7 @@ class CatalogController < ApplicationController
       if @edit[:new][action[:edit_key]].blank?
         st.resource_actions.where(:action => action[:name]).first.try(:destroy)
       else
-        ra.update_attributes(:dialog => d, :fqname => @edit[:new][action[:edit_key]])
+        ra.update(:dialog => d, :fqname => @edit[:new][action[:edit_key]])
       end
     end
   end
