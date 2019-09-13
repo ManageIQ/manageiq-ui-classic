@@ -16,6 +16,6 @@ module ReportHelper::Editor
 
   def refresh_chargeback_filter_tab
     @edit[:cb_users] = Rbac::Filterer.filtered(User.in_my_region).each_with_object({}) { |u, h| h[u.userid] = u.name }
-    @edit[:cb_tenant] = Rbac::Filterer.filtered(Tenant).each_with_object({}) { |t, h| h[t.id] = t.name }
+    @edit[:cb_tenant] = Rbac::Filterer.filtered(Tenant.in_my_region).each_with_object({}) { |t, h| h[t.id] = t.name }
   end
 end
