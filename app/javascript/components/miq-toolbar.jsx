@@ -452,34 +452,30 @@ const initState = {
 };
 
 /* Wrapper class for generic toolbars and special toolbars. */
-const MiqToolbar = (props) => {
-  const { toolbars } = props;
-
+const MiqToolbar = ({ toolbars }) => {
   if (!toolbars || (toolbars.length === 0)) {
     return null;
   }
 
-  if (toolbars[0][0].name === 'custom') {
-    const toolbarType = toolbars[0][0].args.partial;
-    const toolbarProps = toolbars[0][0].args.props;
-    switch (toolbarType) {
-      case 'dashboard/dropdownbar':
-        console.log('toolbarProps: ', toolbarProps);
-        return <DashboardToolbar {...toolbarProps} />;
-      case 'shared/topology_header_toolbar':
+  const { custom, name, props } = toolbars[0][0];
+  console.log('MiqToolbar: ', custom, name, props);
+  if (custom) {
+    switch (name) {
+      case 'dashboard':
+        return <DashboardToolbar {...props} />;
+      case 'topology':
         return <TopologyToolbar />;
       default:
         return null;
     }
   }
 
-  return <MiqGenericToolbar {...props} />;
+  return <MiqGenericToolbar toolbars={toolbars} />;
 };
 
 /* Generic toolbar class for toolbars optionally connected to GTL grids
  * reacting to changes in number of selected items. */
-const MiqGenericToolbar = (props) => {
-  const { toolbars } = props;
+const MiqGenericToolbar = ({ toolbars }) => {
   const [state, dispatch] = useReducer(toolbarReducer, initState);
 
   useEffect(() => {
@@ -493,8 +489,6 @@ const MiqGenericToolbar = (props) => {
 
   const groups = separateItems(state.toolbars.filter(item => !!item));
   const views = filterViews(groups);
-  console.log('groups: ', groups);
-  console.log('views:', views);
 
   return <Toolbar count={state.count} groups={groups} views={views} onClick={onClick} />;
 };

@@ -3,10 +3,6 @@ class ApplicationHelper::ToolbarBuilder
   include RestfulControllerMixin
   include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
-  def call(toolbar_name)
-    build_toolbar(toolbar_name)
-  end
-
   # Loads the toolbar sent in parameter `toolbar_name`, and builds the buttons
   # in the toolbar, unless the group of buttons is meant to be skipped.
   #
@@ -453,8 +449,7 @@ class ApplicationHelper::ToolbarBuilder
           build_button(bgi, group_index)
         end
       when ApplicationHelper::Toolbar::Custom
-        group[:args][:props] = group.evaluate(@view_context)
-        @toolbar << group
+        @toolbar << { :custom => true, :name => group.name, :props => group.evaluate(@view_context) }
       end
     end
 
