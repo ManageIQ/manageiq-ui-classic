@@ -140,76 +140,6 @@
           - else
             %th= _('Actions')
         %tbody
-          %tr{"ng-if"       => "vm.reconfigureModel.addEnabled",
-              "ng-form"     => "rowForm"}
-            %td
-            %td
-              - options = @reconfigitems.first.try(:disk_types) || %w(thick thin)
-              - default_option = @reconfigitems.first.try(:disk_default_type) || 'thin'
-              = select_tag('hdType',
-                           options_for_select(options, :selected => default_option),
-                           "ng-model"                    => "vm.reconfigureModel.hdType",
-                           "ng-change"                   => "",
-                           "data-width"                  => "auto",
-                           "required"                    => "",
-                           "selectpicker-for-select-tag" => "")
-            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
-              = select_tag('hdMode',
-                            options_for_select(%w(persistent nonpersistent)),
-                            "ng-model"                    => "vm.reconfigureModel.hdMode",
-                            "ng-change"                   => "vm.hdModeChanged()",
-                            "data-width"                  => "auto",
-                            "required"                    => "",
-                            "selectpicker-for-select-tag" => "",
-                            "width"                       => "10")
-            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
-              - options = @reconfigitems.first.try(:scsi_controller_types) || {}
-              = select_tag('Controller',
-                           options_for_select(options),
-                           "ng-model"                    => "vm.reconfigureModel.new_controller_type",
-                           "data-width"                  => "auto",
-                           "required"                    => "",
-                           "selectpicker-for-select-tag" => "")
-            %td
-              %input.form-control{"type"        => "text",
-                                  "id"          => "dvcSize",
-                                  "name"        => "dvcSize",
-                                  "ng-model"    => "vm.reconfigureModel.hdSize",
-                                  "required"    => "",
-                                  "ng-pattern"  => "hdpattern",
-                                  "placeholder" => _("Enter New Size"),
-                                  "ng-change"   => "vm.hdChanged()"}
-              %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
-                = _(" Valid numeric disk size required ")
-            %td
-              = select_tag('hdUnit',
-                       options_for_select(%w(MB GB)),
-                       "ng-model"                    => "vm.reconfigureModel.hdUnit",
-                       "ng-change"                   => "vm.hdUnitChanged()",
-                       "data-width"                  => "auto",
-                       "required"                    => "",
-                       "selectpicker-for-select-tag" => "")
-            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
-              %input{"bs-switch" => "",
-                     :data       => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-                     "type"      => "checkbox",
-                     "name"      => "vm.cb_dependent",
-                     "ng-model"  => "vm.reconfigureModel.cb_dependent"}
-            %td{"ng-hide" => "vm.isVmwareCloud()"}
-            %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
-              %input{"bs-switch" => "",
-                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-                     "type"          => "checkbox",
-                     "name"          => "vm.cb_bootable",
-                     "ng-model"      => "vm.reconfigureModel.cb_bootable"}
-            %td.action-cell
-              %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                                "ng-click" => "vm.addDisk()",
-                                                                "ng-disabled" => "rowForm.dvcSize.$invalid"}= _(' Add ')
-            - if supports_reconfigure_disksize?
-              %td.action-cell
-                %button.btn.btn-default.btn-block.btn-sm{:type => "button",
-                                                                  "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
           %tr{"ng-form" => "trForm", "ng-repeat" => "disk in vm.reconfigureModel.vmdisks", "ng-class" => "{'danger': disk.add_remove == 'remove', 'active': disk.add_remove == 'add'}"}
             %td
               {{disk.hdFilename}}
@@ -229,7 +159,6 @@
                                   "required"    => "",
                                   "ng-pattern"  => "hdpattern",
                                   "placeholder" => _("Enter Size"),
-                                  "ng-change"   => "vm.hdChanged()",
                                   "validate-multiple" => "1",
                                   :miqmin             => "{{ (disk.orgHdUnit === 'GB') ? (1024 * disk.orgHdSize + 1) : (1 * disk.orgHdSize + 1) }}",
                                   :miqmax             => "2097152",
@@ -242,7 +171,7 @@
               = select_tag('hdUnit',
                        options_for_select(%w(MB GB)),
                        "ng-model"                    => "disk.hdUnit",
-                       "ng-change"                   => "vm.resizeDiskUnitChanged(disk, trForm)",
+                       "ng-change"                   => "vm.resizeDiskUnitChanged(disk)",
                        "data-width"                  => "auto",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
@@ -297,6 +226,79 @@
               %button.btn.btn-default.btn-block.btn-sm{:type      => "button",
                                             "ng-if"    => "disk.add_remove == 'resize'",
                                             "ng-click" => "vm.cancelAddRemoveDisk(disk)"}= _('Cancel Resize')
+          %tr{"ng-if"       => "vm.reconfigureModel.addEnabled",
+              "ng-form"     => "rowForm"}
+            %td
+            %td
+              - options = @reconfigitems.first.try(:disk_types) || %w(thick thin)
+              - default_option = @reconfigitems.first.try(:disk_default_type) || 'thin'
+              = select_tag('hdType',
+                           options_for_select(options, :selected => default_option),
+                           "ng-model"                    => "vm.reconfigureModel.hdType",
+                           "ng-change"                   => "",
+                           "data-width"                  => "auto",
+                           "required"                    => "",
+                           "selectpicker-for-select-tag" => "")
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
+              = select_tag('hdMode',
+                            options_for_select(%w(persistent nonpersistent)),
+                            "ng-model"                    => "vm.reconfigureModel.hdMode",
+                            "ng-change"                   => "vm.hdModeChanged()",
+                            "data-width"                  => "auto",
+                            "required"                    => "",
+                            "selectpicker-for-select-tag" => "",
+                            "width"                       => "10")
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
+              - options = @reconfigitems.first.try(:scsi_controller_types) || {}
+              = select_tag('Controller',
+                           options_for_select(options),
+                           "ng-model"                    => "vm.reconfigureModel.new_controller_type",
+                           "data-width"                  => "auto",
+                           "required"                    => "",
+                           "selectpicker-for-select-tag" => "")
+            %td
+              %input.form-control{"type"        => "text",
+                                  "id"          => "dvcSize",
+                                  "name"        => "dvcSize",
+                                  "ng-model"    => "vm.reconfigureModel.hdSize",
+                                  "required"    => "",
+                                  "ng-pattern"  => "hdpattern",
+                                  "placeholder" => _("Enter New Size"),
+                                  "validate-multiple" => "1",
+                                  :miqmin             => "1",
+                                  :miqmax             => "2097152",
+                                  :memtype            => "{{vm.reconfigureModel.hdUnit}}"}
+              %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
+                = _("Disk size between 1 MB and 2TB required")
+            %td
+              = select_tag('hdUnit',
+                       options_for_select(%w(MB GB)),
+                       "ng-model"                    => "vm.reconfigureModel.hdUnit",
+                       "ng-change"                   => "vm.resizeDiskUnitChanged(vm.reconfigureModel)",
+                       "data-width"                  => "auto",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
+            %td{"ng-if" => "vm.vm_vendor == 'vmware' && vm.vm_type.includes('InfraManager')"}
+              %input{"bs-switch" => "",
+                     :data       => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                     "type"      => "checkbox",
+                     "name"      => "vm.cb_dependent",
+                     "ng-model"  => "vm.reconfigureModel.cb_dependent"}
+            %td{"ng-hide" => "vm.isVmwareCloud()"}
+            %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
+              %input{"bs-switch" => "",
+                     :data           => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                     "type"          => "checkbox",
+                     "name"          => "vm.cb_bootable",
+                     "ng-model"      => "vm.reconfigureModel.cb_bootable"}
+            %td.action-cell
+              %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                                "ng-click" => "vm.addDisk()",
+                                                                "ng-disabled" => "rowForm.dvcSize.$invalid"}= _(' Add ')
+            - if supports_reconfigure_disksize?
+              %td.action-cell
+                %button.btn.btn-default.btn-block.btn-sm{:type => "button",
+                                                                  "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
   - if supports_reconfigure_network_adapters?
     %hr
     %div
