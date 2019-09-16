@@ -28,7 +28,7 @@ const addMenu = (items, locked) => {
 
   return (
     <Dropdown id="dropdown-custom-2">
-      <Dropdown.Toggle title={<span className="fa fa-plus fa-lg" />}/>
+      <Dropdown.Toggle componentClass={props => <button {...props} title={title} />} title={<span className="fa fa-plus fa-lg" />}/>
       <Dropdown.Menu className='scrollable-menu'>
         { items.map(item =>
             item.type === 'separator'
@@ -51,7 +51,7 @@ const renderDisabled = () => (
       className="disabled btn btn-default dropdown-toggle"
       title={__("No Widgets available to add")}
     >
-      <i className="fa fa-reply fa-lg" />
+      <i className="fa fa-plus fa-lg" />
       <span className="caret" />
     </button>
   </div>
