@@ -526,7 +526,6 @@ class ServiceController < ApplicationController
         {:title => _("Services")},
         {:title => _("My services")},
       ],
-      :show_header => @sb[:action],
       :record_info => @service,
       :ancestry    => Service,
     }

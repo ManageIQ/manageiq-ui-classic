@@ -1132,11 +1132,12 @@ class MiqPolicyController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs  => [
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,
-      :not_tree    => %w[rsop export log].include?(action_name)
+      :not_tree     => %w[rsop export log].include?(action_name),
+      :record_title => :description,
     }
   end
 

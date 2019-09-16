@@ -441,13 +441,11 @@ class AutomationManagerController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs  => [
+      :breadcrumbs => [
         {:title => _("Automation")},
         {:title => _("Ansible Tower")},
         {:title => _("Explorer")},
       ],
-      :record_title => :hostname,
-      :show_header  => true,
     }
   end
 end
