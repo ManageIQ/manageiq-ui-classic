@@ -38,16 +38,6 @@ module ReportController::Reports
       rr = miq_task.miq_report_result
       @html = report_build_html_table(rr.report, rr.html_rows(:page => 1, :per_page => 100).join)
 
-      if rpt.timeline # If timeline present
-        @timeline                 = true
-        rpt.extras[:browser_name] = browser_info(:name)
-        # flag to force formatter to build timeline in xml for preview screen
-        rpt.extras[:tl_preview] = true
-        @edit[:tl_xml]            = rpt.to_timeline
-        @edit[:tl_position]       = format_timezone(rpt.extras[:tl_position], Time.zone, "tl")
-      else
-        @edit[:tl_xml]            = nil
-      end
       if !rpt.graph.nil? && rpt.graph[:type].present? # If graph present
         # FIXME: UNTESTED!!!
         rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
@@ -106,27 +96,6 @@ module ReportController::Reports
     render Charting.render_format => Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
   end
 
-  def sample_timeline
-    @events_data = []
-    time = Time.zone.now
-    @events_data.push(tl_event(format_timezone(time, "UTC", nil), "Now", "red"))
-    @events_data.push(tl_event(format_timezone(time - 5.seconds, "UTC", nil), "5 Seconds Ago"))
-    @events_data.push(tl_event(format_timezone(time - 1.minute, "UTC", nil), "1 Minute Ago"))
-    @events_data.push(tl_event(format_timezone(time - 5.minutes, "UTC", nil), "5 Minutes Ago"))
-    @events_data.push(tl_event(format_timezone(time - 1.hour, "UTC", nil), "1 Hour Ago"))
-    @events_data.push(tl_event(format_timezone(time - 1.day, "UTC", nil), "Yesterday"))
-    @events_data.push(tl_event(format_timezone(time - 1.week, "UTC", nil), "Last Week"))
-    @events_data.push(tl_event(format_timezone(time - 1.month, "UTC", nil), "Last Month"))
-    @events_data.push(tl_event(format_timezone(time - 3.months, "UTC", nil), "3 Months Ago"))
-    @events_data.push(tl_event(format_timezone(time - 1.year, "UTC", nil), "Last Year"))
-    [{:data => [@events_data]}].to_json
-  end
-
-  def preview_timeline
-    render :xml => session[:edit][:tl_xml]
-    session[:edit][:tl_xml] = nil
-  end
-
   # generate preview chart when editing report
   def preview_chart
     render Charting.render_format => session[:edit][:chart_data]
@@ -179,13 +148,6 @@ module ReportController::Reports
   end
 
   private
-
-  def tl_event(tl_time, tl_text, tl_color = nil)
-    {"start"       => tl_time,
-     "title"       => tl_text,
-     "description" => tl_text,
-     "color"       => tl_color}
-  end
 
   def menu_repname_update(old_name, new_name)
     # @param old_name [String] old name for the report
