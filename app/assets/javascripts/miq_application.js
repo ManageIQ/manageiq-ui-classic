@@ -304,6 +304,13 @@ function miqCheckForChanges() {
              !miqDomElementExists('ignore_form_changes')) {
     return confirm(__('Abandon changes?'));
   }
+
+  var taggingStore = ManageIQ.redux.store.getState().tagging;
+
+  if (taggingStore && !_.isEqual(taggingStore.appState.assignedTags, taggingStore.initialState.assignedTags)) {
+    return confirm(__('Abandon changes?'));
+  }
+
   // use default browser reaction for onclick
   return true;
 }

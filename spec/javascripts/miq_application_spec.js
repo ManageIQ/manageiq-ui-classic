@@ -465,4 +465,55 @@ describe('miq_application.js', function() {
       });
     });
   });
+
+  describe('miqCheckForChanges', () => {
+    let tmpManageIQ;
+
+    beforeEach(() => {
+      tmpManageIQ = ManageIQ.redux.store.getState;
+    });
+
+    afterEach(() => {
+      ManageIQ.redux.store.getState = tmpManageIQ;
+    });
+
+    it('returns true by default', () => {
+      expect(miqCheckForChanges()).toEqual(true);
+    });
+
+    it('returns true if no changes in tagging', () => {
+      ManageIQ.redux.store.getState = () => ({
+        tagging: {
+          appState: {
+            assignedTags: [],
+          },
+          initialState: {
+            assignedTags: [],
+          },
+        },
+      });
+
+      expect(miqCheckForChanges()).toEqual(true);
+    });
+
+    it('returns value from confirm if there are changes in tagging', () => {
+      spyOn(window, 'confirm').and.returnValues(true, false);
+
+      ManageIQ.redux.store.getState = () => ({
+        tagging: {
+          appState: {
+            assignedTags: [{id: '1011531', description: 'description', values: [{id: '108', description: '2GB'}]}],
+          },
+          initialState: {
+            assignedTags: [],
+          },
+        },
+      });
+
+      expect(window.confirm).not.toHaveBeenCalled();
+      expect(miqCheckForChanges()).toEqual(true);
+      expect(window.confirm).toHaveBeenCalled();
+      expect(miqCheckForChanges()).toEqual(false);
+    });
+  });
 });
