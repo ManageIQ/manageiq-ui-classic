@@ -339,7 +339,7 @@ describe ReportController do
     end
   end
 
-  tabs = {:formatting => 2, :filter => 3, :summary => 4, :charts => 5, :timeline => 6, :preview => 7,
+  tabs = {:formatting => 2, :filter => 3, :summary => 4, :charts => 5, :preview => 7,
           :consolidation => 8, :styling => 9}
   chargeback_tabs = %i(formatting filter preview)
 
@@ -403,7 +403,7 @@ describe ReportController do
       controller.instance_variable_set(:@edit, :new => {:model => Vm})
 
       controller.send(:build_tabs)
-      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_8 Consolidation), %w(edit_2 Formatting), %w(edit_9 Styling), %w(edit_3 Filter), %w(edit_4 Summary), %w(edit_5 Charts), %w(edit_6 Timeline), %w(edit_7 Preview)])
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_8 Consolidation), %w(edit_2 Formatting), %w(edit_9 Styling), %w(edit_3 Filter), %w(edit_4 Summary), %w(edit_5 Charts), %w(edit_7 Preview)])
     end
   end
 

@@ -155,17 +155,11 @@ module ReportController::Reports::Editor
       page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
       page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
       page.replace("chart_sample_div", :partial => "form_chart_sample") if @refresh_div == "chart_div"
-      page.replace("tl_sample_div", :partial => "form_tl_sample") if @refresh_div == "tl_settings_div"
       page.replace_html("calc_#{@calc_div}_div", :text => @calc_val) if @calc_div
       page << "miqSparkle(false);"
       page << javascript_for_miq_button_visibility_changed(@changed)
-      if @tl_changed # Reload the screen if the timeline data was changed
-        page.replace_html("tl_sample_div", :partial => "form_tl_sample") if @tl_field != ReportHelper::NOTHING_STRING
-      elsif @formatting_changed # Reload the screen if the formatting pulldowns need to be reset
+      if @formatting_changed # Reload the screen if the formatting pulldowns need to be reset
         page.replace_html("formatting_div", :partial => "form_formatting")
-      elsif @tl_repaint
-        # page << "tl.paint();"
-        page << javascript_hide("notification")
       end
     end
   end
@@ -262,22 +256,6 @@ module ReportController::Reports::Editor
       else
         @edit[:new][:chart_column] = options[0][1] unless options.detect { |_, v| v == @edit[:new][:chart_column] }
       end
-
-    when "6"  # Timeline
-      @tl_fields = []
-      @edit[:new][:fields].each do |field|
-        if MiqExpression.parse_field_or_tag(field[1])&.datetime?
-          @tl_fields.push(field)
-        end
-      end
-      @tl_field = @edit[:new][:tl_field]
-      @position_time = if @edit[:new][:tl_position] == "Last"
-                         format_timezone(Time.now, "UTC", nil)
-                       else
-                         format_timezone(Time.now - 1.year, "UTC", nil)
-                       end
-      @timeline = true if @tl_field != ReportHelper::NOTHING_STRING
-      @tl_json = sample_timeline
     end
 
     @in_a_form = true
@@ -335,7 +313,6 @@ module ReportController::Reports::Editor
     'edit_9' => N_('Styling'),
     'edit_4' => N_('Summary'),
     'edit_5' => N_('Charts'),
-    'edit_6' => N_('Timeline'),
   }.freeze
 
   def build_tabs
@@ -344,7 +321,7 @@ module ReportController::Reports::Editor
                   elsif Chargeback.db_is_chargeback?(@edit[:new][:model].to_s)
                     %w[edit_1 edit_2 edit_3 edit_7]
                   else
-                    %w[edit_1 edit_8 edit_2 edit_9 edit_3 edit_4 edit_5 edit_6 edit_7]
+                    %w[edit_1 edit_8 edit_2 edit_9 edit_3 edit_4 edit_5 edit_7]
                   end
 
     @tabs = TAB_TITLES.slice(*tab_indexes).transform_values! { |value| _(value) }.to_a
@@ -364,7 +341,6 @@ module ReportController::Reports::Editor
     gfv_charts                    # Charting fields
     gfv_pivots                    # Consolidation fields
     gfv_sort                      # Summary fields
-    gfv_timeline                  # Timeline fields
 
     # Check for key prefixes (params starting with certain keys)
     params.each do |key, value|
@@ -795,22 +771,6 @@ module ReportController::Reports::Editor
     #     end
   end
 
-  def gfv_timeline
-    if params[:chosen_tl] && params[:chosen_tl] != @edit[:new][:tl_field]
-      if @edit[:new][:tl_field] == ReportHelper::NOTHING_STRING || params[:chosen_tl] == ReportHelper::NOTHING_STRING
-        @refresh_div = "tl_settings_div"
-        @refresh_partial = "form_tl_settings"
-        @tl_changed = true
-      else
-        @tl_repaint = true
-      end
-      @edit[:new][:tl_field] = params[:chosen_tl]
-    elsif params[:chosen_position] && params[:chosen_position] != @edit[:new][:tl_position]
-      @tl_changed = true
-      @edit[:new][:tl_position] = params[:chosen_position]
-    end
-  end
-
   def cashed_reporting_available_fields
     @reporting_available_fields ||= {}
     @reporting_available_fields[@edit[:new][:model]] ||= MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval])
@@ -1024,15 +984,6 @@ module ReportController::Reports::Editor
     if @edit[:new][:time_profile]
       time_profile = TimeProfile.find(@edit[:new][:time_profile])
       rpt.tz = time_profile.tz
-    end
-
-    # Set the timeline field
-    if @edit[:new][:tl_field] == ReportHelper::NOTHING_STRING
-      rpt.timeline = nil
-    else
-      rpt.timeline = {}
-      rpt.timeline[:field] = @edit[:new][:tl_field]
-      rpt.timeline[:position] = @edit[:new][:tl_position]
     end
 
     # Set the line break group field
@@ -1342,14 +1293,6 @@ module ReportController::Reports::Editor
     @edit[expkey][:expression] = {"???" => "???"} # Set as new exp element
     # Build display filter expression
     @edit[:new][:display_filter] = @edit[expkey][:expression] if @edit[:new][:display_filter].nil? # Copy to new exp
-
-    # Get timeline fields
-    @edit[:new][:tl_field]    = ReportHelper::NOTHING_STRING
-    @edit[:new][:tl_position] = "Last"
-    if @rpt.timeline.kind_of?(Hash) # Timeline has any data
-      @edit[:new][:tl_field]    = @rpt.timeline[:field]    if @rpt.timeline[:field].present?
-      @edit[:new][:tl_position] = @rpt.timeline[:position] if @rpt.timeline[:position].present?
-    end
 
     # Get the pdf page size, if present
     @edit[:new][:pdf_page_size] = if @rpt.rpt_options.kind_of?(Hash) && @rpt.rpt_options[:pdf]
@@ -1746,10 +1689,6 @@ module ReportController::Reports::Editor
       elsif @edit[:new][:sortby1].blank? || @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING
         add_flash(_('Charts tab is not available unless a sort field has been selected'), :error)
         active_tab = 'edit_4'
-      end
-    when '6'
-      if @edit[:new][:fields].empty? || !@edit[:new][:fields].detect { |field| MiqExpression.parse_field_or_tag(field[1])&.datetime? }
-        add_flash(_('Timeline tab is not available unless at least 1 time field has been selected'), :error)
       end
     when '7'
       if @edit[:new][:model] == ApplicationController::TREND_MODEL
