@@ -1,5 +1,7 @@
 global.window = global;
 window.$ = window.jQuery = require('jquery');
+window._ = require('lodash');
+
 require('patternfly-bootstrap-treeview');
 require('../../../assets/javascripts/miq_application.js');
 require('../../../assets/javascripts/miq_flash.js');
