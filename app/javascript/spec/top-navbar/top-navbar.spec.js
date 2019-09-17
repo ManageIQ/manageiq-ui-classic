@@ -1,0 +1,230 @@
+import React from 'react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import RightSection from '../../components/top-navbar/right-section';
+import Help from '../../components/top-navbar/help';
+import Notifications from '../../components/top-navbar/notifications';
+import CustomLogo from '../../components/top-navbar/custom-logo';
+import UserOptions from '../../components/top-navbar/user-options';
+import '../helpers/sprintf';
+import '../helpers/sendDataWithRx';
+import '../helpers/miqCheckForChanges';
+import '../helpers/miqSparkle';
+import '../helpers/miqToggleUserOptions';
+
+
+describe('Top navbar tests', () => {
+  let customLogo;
+  let currentUser;
+  let helpMenu;
+  let opsExplorerAllowed;
+  let applianceName;
+  let miqGroups;
+  let currentGroup;
+  let userMenu;
+  let storeUnread;
+  let storeNoUnread;
+  const mockStore = configureStore();
+  const sendDataWithRxSpy = jest.spyOn(window, 'sendDataWithRx');
+  const miqCheckForChangesSpy = jest.spyOn(window, 'miqCheckForChanges');
+  const miqSparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
+  const miqToggleUserOptionsSpy = jest.spyOn(window, 'miqToggleUserOptions');
+
+
+  beforeEach(() => {
+    storeUnread = mockStore({
+      notificationReducer: {
+        unreadCount: 8,
+      },
+    });
+    storeNoUnread = mockStore({
+      notificationReducer: {
+        unreadCount: 0,
+      },
+    });
+    customLogo = true;
+    currentUser = {
+      name: 'Administrator',
+      userid: 'admin',
+    };
+    helpMenu = [
+      {
+        id: 'help',
+        name: 'Help',
+        type: 'default',
+        items: [
+          {
+            id: 'documentation',
+            name: 'Documentation',
+            type: 'default',
+            items: [],
+            visible: true,
+            link_params: {
+              href: '/support/index?support_tab=about',
+            },
+          },
+          {
+            id: 'about',
+            name: 'About',
+            type: 'modal',
+            items: [],
+            visible: true,
+            link_params: {
+              href: 'javascript:void(0);',
+            },
+          },
+        ],
+        visible: true,
+        link_params: {
+          href: '/dashboard/maintab/?tab=help',
+        },
+      },
+    ];
+    opsExplorerAllowed = true;
+    applianceName = 'EVM';
+    miqGroups = [
+      {
+        id: 10000000000002,
+        description: 'EvmGroup-super_administrator',
+      },
+      {
+        id: 10000000000003,
+        description: 'EvmGroup-dev',
+      },
+    ];
+    currentGroup = {
+      id: 10000000000002,
+      description: 'EvmGroup-super_administrator',
+    };
+    userMenu = [
+      {
+        id: 'set',
+        name: 'User Settings',
+        href: null,
+        items: [
+          {
+            id: 'configuration',
+            name: 'My Settings',
+            href: '/configuration/index',
+            items: [],
+            visible: true,
+          },
+          {
+            id: 'my_tasks',
+            name: 'Tasks',
+            href: '/miq_task/index?jobs_tab=tasks',
+            items: [],
+            visible: true,
+          },
+        ],
+        visible: true,
+      },
+    ];
+  });
+
+  afterEach(() => {
+    sendDataWithRxSpy.mockReset();
+    miqCheckForChangesSpy.mockReset();
+  });
+
+  it('should render correctly', () => {
+    const wrapper = mount(
+      <Provider store={storeUnread}>
+        <RightSection
+          customLogo={customLogo}
+          currentUser={currentUser}
+          helpMenu={helpMenu}
+          opsExplorerAllowed={opsExplorerAllowed}
+          applianceName={applianceName}
+          miqGroups={miqGroups}
+          currentGroup={currentGroup}
+          userMenu={userMenu}
+        />
+      </Provider>,
+    );
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should call sendDataWithRx after click on help menu item with type "modal"', () => {
+    const wrapper = mount(
+      <Help helpMenu={helpMenu} />,
+    );
+    wrapper.find('a#help-menu-about').simulate('click');
+    expect(sendDataWithRxSpy).toHaveBeenCalledWith({ type: 'showAboutModal' });
+  });
+
+  it('should call miqCheckForChanges after click on help menu item with type "default"', () => {
+    const wrapper = mount(
+      <Help helpMenu={helpMenu} />,
+    );
+    wrapper.find('a#help-menu-documentation').simulate('click');
+    expect(miqCheckForChangesSpy).toHaveBeenCalled();
+  });
+
+  it('should call sendDataWithRx after click on notiffication button', () => {
+    const wrapper = mount(
+      <Provider store={storeUnread}>
+        <Notifications />
+      </Provider>,
+    );
+    wrapper.find('a#notifications-btn').simulate('click');
+    expect(sendDataWithRxSpy).toHaveBeenCalledWith({ type: 'toggleNotificationsList' });
+  });
+
+  it('should not render custom logo when disabled', () => {
+    const wrapper = mount(
+      <CustomLogo customLogo={false} />,
+    );
+    expect(wrapper.find('li.dropdown.brand-white-label')).toHaveLength(1);
+  });
+
+  it('should not render badge when no unread notifications', () => {
+    const wrapper = mount(
+      <Provider store={storeNoUnread}>
+        <Notifications />
+      </Provider>,
+    );
+    expect(wrapper.find('span.badge.badge-pf-bordered').text()).toEqual('');
+  });
+
+  it('should render correctly in case of no current group', () => {
+    const wrapper = mount(
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={null} userMenu={userMenu} />,
+    );
+    expect(wrapper.find('a#current-group')).toHaveLength(0);
+  });
+
+  it('should call miqSparkleOn after click on inactive group', () => {
+    const wrapper = mount(
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />,
+    );
+    wrapper.find('a#EvmGroup-dev').simulate('click');
+    expect(miqSparkleOnSpy).toHaveBeenCalled();
+    expect(miqToggleUserOptionsSpy).toHaveBeenCalled();
+  });
+
+  it('should render disabled item in case of one group', () => {
+    const wrapper = mount(
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={[miqGroups[0]]} currentGroup={null} userMenu={userMenu} />,
+    );
+    expect(wrapper.find('a#single-group-item')).toHaveLength(1);
+  });
+
+  it('should call miqCheckForChanges after click on user menu item', () => {
+    const wrapper = mount(
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />,
+    );
+    wrapper.find('a#user-menu-tasks').simulate('click');
+    expect(miqCheckForChangesSpy).toHaveBeenCalled();
+  });
+
+  it('should call miqCheckForChanges before logout', () => {
+    const wrapper = mount(
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />,
+    );
+    wrapper.find('a#logout-btn').simulate('click');
+    expect(miqCheckForChangesSpy).toHaveBeenCalled();
+  });
+});
