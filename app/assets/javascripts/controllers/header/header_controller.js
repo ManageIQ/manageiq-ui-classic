@@ -7,6 +7,12 @@ angular.module('ManageIQ').controller('headerController', ['$scope', 'eventNotif
   eventNotifications.setDrawerShown(vm.notificationsDrawerShown);
   updateTooltip();
 
+  listenToRx(function(data) {
+    if(data.type && data.type === 'toggleNotificationsList') {
+      vm.toggleNotificationsList()
+    }
+  })
+
   vm.toggleNotificationsList = function() {
     vm.notificationsDrawerShown = !vm.notificationsDrawerShown;
     sessionStorage.setItem(cookieId + '-shown', vm.notificationsDrawerShown);
@@ -47,6 +53,7 @@ angular.module('ManageIQ').controller('headerController', ['$scope', 'eventNotif
 
     vm.notificationsIndicatorTooltip = miqFormatNotification(__('%{count} unread notifications'),
       {count: notificationCount});
+      ManageIQ.redux.store.dispatch({ type: '@@notifications/setUnreadCount', payload: notificationCount.text });
   }
 
   eventNotifications.registerObserverCallback(refresh);
