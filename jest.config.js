@@ -13,6 +13,9 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest',
     '.(ts|tsx)': 'ts-jest'
   },
+  moduleNameMapper: {
+    '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
+  },
   moduleFileExtensions: [
     'ts',
     'tsx',
