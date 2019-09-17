@@ -10,26 +10,7 @@
     %a.navbar-brand{:href => '/dashboard/start_url', :title => _("Go to my start page")}
       %img.navbar-brand-name{:src => ::Settings.server.custom_brand ? '/upload/custom_brand.png' : image_path("layout/brand.svg"), :alt => "ManageIQ"}
   %nav.collapse.navbar-collapse
-    %ul.nav.navbar-nav.navbar-right.navbar-iconic
-      %li{:class => "dropdown brand-white-label #{::Settings.server.custom_logo ? "whitelabeled" : ""}"}
-      %li.dropdown{"open" => "!hideDrawer"}
-        %a{:class => "nav-item-iconic drawer-pf-trigger-icon", :title => "{{vm.notificationsIndicatorTooltip}}", "ng-click" => "vm.toggleNotificationsList()"}
-          %span.fa.fa-bell
-          %span{"ng-class" => "{'badge badge-pf-bordered': vm.newNotifications}"} 
-            = ' '
-      - Menu::Manager.menu(:help) do |menu_section|
-        - if menu_section.visible?
-          %li.dropdown
-            %a#help-menu.dropdown-toggle.nav-item-iconic{"data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
-              %span.pficon.pficon-help{:title => _("Help")}
-            %ul.dropdown-menu{"aria-labelledby" => "help-menu"}
-              - menu_section.items.each do |menu_item|
-                - if menu_item.visible?
-                  %li
-                    %a{menu_item.link_params}
-                      = _(menu_item.name)
-
-      = render :partial => "layouts/user_options"
+    = render :partial => "layouts/right_section"
   = render :partial => "layouts/notifications_drawer"
   = render :partial => "layouts/toast_list"
 
