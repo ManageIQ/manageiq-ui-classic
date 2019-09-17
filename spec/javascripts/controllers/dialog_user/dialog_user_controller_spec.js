@@ -42,6 +42,7 @@ describe('dialogUserController', function() {
       targetType: 'targettype',
       realTargetType: 'targettype',
       openUrl: false,
+      dialogReplaceData: null,
     });
   }));
 
@@ -123,6 +124,7 @@ describe('dialogUserController', function() {
           realTargetType: 'targettype',
           saveable: true,
           openUrl: false,
+          dialogReplaceData: null,
         });
 
         $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
@@ -158,6 +160,7 @@ describe('dialogUserController', function() {
           realTargetType: 'targettype',
           saveable: true,
           openUrl: false,
+          dialogReplaceData: null,
         });
 
         $controller.setDialogData({data: {field1: 'field1'}, validations: { isValid : true}});
