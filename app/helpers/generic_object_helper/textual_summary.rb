@@ -1,5 +1,6 @@
 module GenericObjectHelper::TextualSummary
   include TextualMixins::TextualName
+  include TextualMixins::TextualGroupTags
 
   def textual_group_go_properties
     TextualGroup.new(_("Properties"), %i[definition created updated])
