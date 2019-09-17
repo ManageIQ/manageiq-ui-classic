@@ -2031,7 +2031,6 @@ class CatalogController < ApplicationController
         {:title => _("Services")},
         {:title => _("Catalogs")},
       ],
-      :hide_special_item => true,
     }
   end
 
