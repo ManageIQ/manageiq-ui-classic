@@ -68,7 +68,7 @@ class EmsDashboardService < DashboardService
         :title     => attr_hsh[attr],
         :count     => @ems.send(attr).count,
         :href      => get_url(resource, @ems_id, attr_url[attr]),
-      )
+      ) unless @ems.send(attr).nil?
     end
     attr_data
   end
