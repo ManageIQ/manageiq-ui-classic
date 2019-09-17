@@ -77,7 +77,8 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Create a new snapshot for this VM'),
           t,
           :onwhen => "1",
-          :klass  => ApplicationHelper::Button::VmSnapshotAdd),
+          :klass  => ApplicationHelper::Button::VmSnapshotAdd
+        ),
       ]
     ),
   ])
