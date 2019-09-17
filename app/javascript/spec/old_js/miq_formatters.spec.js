@@ -560,7 +560,6 @@ describe('ManageIQ.charts.formatters', () => {
       expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('2015');
     });
   });
-
   describe('.datetime_range', () => {
     it('Date Range (M/D/Y - M/D/Y)', () => {
       var options = {

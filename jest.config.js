@@ -1,4 +1,6 @@
 // jest.config.js
+const resolveModule = (name) => `<rootDir>/node_modules/${name}`;
+
 module.exports = {
   verbose: true,
   globals: {
