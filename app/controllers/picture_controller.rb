@@ -4,20 +4,12 @@ class PictureController < ApplicationController
 
   def show # GET /pictures/:basename
     id, extension = params[:basename].split('.')
-    picture = Picture.find_by_id(id)
-    if picture && picture.extension == extension
-      render_picture_content(picture)
-    else
-      head :not_found
-    end
-  end
 
-  private
+    picture = Picture.where(:extension => extension).find_by(:id => id)
+    return head(:not_found) unless picture
 
-  def render_picture_content(picture)
-    response.headers['Cache-Control'] = "public"
-    response.headers['Content-Type'] = "image/#{picture.extension}"
-    response.headers['Content-Disposition'] = "inline"
-    render :body => picture.content
+    fresh_when(:etag => picture.md5, :public => true)
+
+    send_data(picture.content, :type => "image/#{extension}", :disposition => 'inline') if stale?
   end
 end
