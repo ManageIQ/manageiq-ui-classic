@@ -13,15 +13,13 @@ class TaggingWithButtons extends React.Component {
     return (
       <Grid fluid>
         <Tagging
+          selectedTagCategory={this.props.selectedTagCategory}
           tags={this.props.tags}
           assignedTags={this.props.assignedTags}
+          onTagDeleteClick={this.props.onTagDeleteClick}
+          onTagCategoryChange={this.props.onTagCategoryChange}
           onTagValueChange={this.props.onTagValueChange}
           onSingleTagValueChange={this.props.onSingleTagValueChange}
-          onTagMultiValueChange={this.props.onTagMultiValueChange}
-          onTagCategoryChange={this.props.onTagCategoryChange}
-          onTagDeleteClick={this.props.onTagDeleteClick}
-          selectedTagCategory={this.props.selectedTagCategory}
-          selectedTagValue={this.props.selectedTagValue}
           options={this.props.options}
         />
         <Row className="pull-right">
@@ -66,14 +64,12 @@ class TaggingWithButtons extends React.Component {
 
 TaggingWithButtons.propTypes = {
   selectedTagCategory: TaggingPropTypes.category,
-  selectedTagValue: TaggingPropTypes.value,
   tags: TaggingPropTypes.tags,
   assignedTags: TaggingPropTypes.tags,
   onTagDeleteClick: PropTypes.func.isRequired,
   onTagCategoryChange: PropTypes.func.isRequired,
   onTagValueChange: PropTypes.func.isRequired,
   onSingleTagValueChange: PropTypes.func,
-  onTagMultiValueChange: PropTypes.func,
   showReset: PropTypes.bool,
   cancelButton: TaggingPropTypes.button,
   resetButton: TaggingPropTypes.button,
@@ -87,7 +83,6 @@ TaggingWithButtons.propTypes = {
 TaggingWithButtons.defaultProps = {
   showReset: true,
   onSingleTagValueChange: () => {},
-  onTagMultiValueChange: () => {},
 };
 
 export default TaggingWithButtons;
