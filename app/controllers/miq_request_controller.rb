@@ -386,7 +386,7 @@ class MiqRequestController < ApplicationController
 
     if approver?
       # list all requesters
-      [label_value_hash_with_all(requesters), 'all']
+      [label_value_hash_with_all(requesters).sort_by { |object| object[:label] }, 'all']
     elsif requesters.value?(current_user.name)
       # list just the current user
       [[{:value => current_user.id, :label => current_user.name}], current_user.id]
