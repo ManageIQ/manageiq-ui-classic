@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import '@manageiq/react-ui-components/dist/toolbar.css';
 
 import DashboardToolbar from './dashboard_toolbar';
 import TopologyToolbar from './topology_toolbar';
@@ -24,18 +25,30 @@ const miqSupportCasePrompt = (tbUrl) => {
   return `${tbUrl}&support_case=${encodeURIComponent(supportCase)}`;
 };
 
-// Toolbar button onClick handler for all toolbar buttons.
-const onClick = (button) => {
-  console.log('Toolbar onClick handler. Button: ', button);
-  if (button.url && (button.url.indexOf('/') === 0)) {
-    const delimiter = (button.url === '/') ? '' : '/';
-    const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
+const getParams = (urlParms, sendChecked) => {
+  const params = [];
 
-    window.location.replace(['/', ManageIQ.controller, button.url, tail, button.url_parms].join(''));
-
-    return;
+  if (urlParms && (urlParms[0] === '?')) {
+    params.push(urlParms.slice(1));
   }
 
+  // FIXME - don't depend on length
+  // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
+  if (sendChecked && ManageIQ.gridChecks.length) {
+    params.push(`miq_grid_checks=${ManageIQ.gridChecks.join(',')}`);
+  }
+
+  if (urlParms && urlParms.match('_div$')) {
+    params.push(miqSerializeForm(urlParms));
+  }
+
+  return _.filter(params).join('&') || undefined;
+};
+
+// Toolbar button onClick handler for all toolbar buttons.
+
+const onClick = (button) => {
+  console.log('Toolbar onClick handler. Button: ', button);
   let buttonUrl;
 
   // // If it's a dropdown, collapse the parent container
@@ -44,12 +57,6 @@ const onClick = (button) => {
   // parent.children('button.dropdown-toggle').attr('aria-expanded', 'false');
 
   // if (button.hasClass('disabled') || button.parent().hasClass('disabled')) {
-  //   return;
-  // }
-
-  // // FIXME: watafa?
-  // https://github.com/ManageIQ/manageiq-ui-classic/commit/a9215473980f50fed1159ef94c14cd0ec5685624
-  // if (button.parents('#dashboard_dropdown').length > 0) {
   //   return;
   // }
 
@@ -142,25 +149,17 @@ const onClick = (button) => {
 
   console.log('miqJqueryRequest URL: ', buttonUrl);
   miqJqueryRequest(buttonUrl, options);
+};
 
-  function getParams(urlParms, sendChecked) {
-    const params = [];
+const onViewClick = (button) => {
+  console.log('Toolbar onViewClick handler. Button: ', button);
+  if (button.url && (button.url.indexOf('/') === 0)) {
+    const delimiter = (button.url === '/') ? '' : '/';
+    const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
 
-    if (urlParms && (urlParms[0] === '?')) {
-      params.push(urlParms.slice(1));
-    }
-
-    // FIXME - don't depend on length
-    // (but then params[:miq_grid_checks] || params[:id] does the wrong thing)
-    if (sendChecked && ManageIQ.gridChecks.length) {
-      params.push(`miq_grid_checks=${ManageIQ.gridChecks.join(',')}`);
-    }
-
-    if (urlParms && urlParms.match('_div$')) {
-      params.push(miqSerializeForm(urlParms));
-    }
-
-    return _.filter(params).join('&') || undefined;
+    window.location.replace(['/', ManageIQ.controller, button.url, tail, button.url_parms].join(''));
+  } else {
+    onClick(button);
   }
 };
 
@@ -286,34 +285,6 @@ const onClick = (button) => {
 //   // }
 // };
 //
-// // TODO
-// // ToolbarController.prototype.setClickHandler = function() {
-// //   _.chain(this.toolbarItems)
-// //     .flatten()
-// //     .map(function(item) {
-// //       return (item && item.hasOwnProperty('items')) ? item.items : item;
-// //     })
-// //     .flatten()
-// //     .filter(function(item) {
-// //       return item.type &&
-// //         (isButton(item) || isButtonTwoState(item));
-// //     })
-// //     .each(function(item) {
-// //       item.eventFunction = function($event) {
-// //         // clicking on disabled or hidden things shouldn't do anything
-// //         if (item.hidden === true || item.enabled === false) {
-// //           return;
-// //         }
-// //
-// //         sendDataWithRx({toolbarEvent: 'itemClicked'});
-// //         Promise.resolve(miqToolbarOnClick.bind($event.delegateTarget)($event)).then(function(data) {
-// //           sendDataWithRx({type: 'TOOLBAR_CLICK_FINISH', payload: data});
-// //         });
-// //       };
-// //     })
-// //     .value();
-// // };
-//
 // const initObject = toolbarString => {
 //   subscribeToSubject();
 //   updateToolbar(JSON.parse(toolbarString));
@@ -330,33 +301,6 @@ const onClick = (button) => {
 // //   }
 // // };
 //
-// const updateToolbar = toolbarObject => {
-//     // TODO: re-render toolbar
-//   var toolbarItems = generateToolbarObject(toolbarObject);
-//   // this.toolbarItems = toolbarItems.items;
-//   // this.dataViews = toolbarItems.dataViews;
-//   defaultViewUrl();
-//   setClickHandler();
-//   showOrHide();
-// };
-//
-// const anyToolbarVisible = () => {
-//   if (!this.toolbarItems || !this.toolbarItems.length) {
-//     return false;
-//   }
-//
-//   var nonEmpty = this.toolbarItems.filter(function(ary) {
-//     if (!ary || !ary.length) {
-//       return false;
-//     }
-//
-//     return _.some(ary, function(item) {
-//       return !item.hidden;
-//     });
-//   });
-//
-//   return !!nonEmpty.length;
-// };
 //
 // const showOrHide = () => {
 //   if (this.anyToolbarVisible()) {
@@ -366,12 +310,6 @@ const onClick = (button) => {
 //   }
 // };
 //
-// //  ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
-// //   miqHttpInject(angular.module('ManageIQ.toolbar'))
-// //     .controller('miqToolbarController', ToolbarController);
-// // })();
-// /* MiQToolbarSettingsService -- utility functions in ../ui-components/src/toolbar/services/toolbarSettingsService.ts */
-// /* MiQEndpointsService -- in ui-components/src/common/services/enpointsService.spec.ts: ??? */
 
 const onRowSelect = (isChecked, dispatch) => {
   console.log('onRowSelect', isChecked);
@@ -458,7 +396,6 @@ const MiqToolbar = ({ toolbars }) => {
   }
 
   const { custom, name, props } = toolbars[0][0];
-  console.log('MiqToolbar: ', custom, name, props);
   if (custom) {
     switch (name) {
       case 'dashboard':
@@ -490,7 +427,15 @@ const MiqGenericToolbar = ({ toolbars }) => {
   const groups = separateItems(state.toolbars.filter(item => !!item));
   const views = filterViews(groups);
 
-  return <Toolbar count={state.count} groups={groups} views={views} onClick={onClick} />;
+  return (
+    <Toolbar
+      count={state.count}
+      groups={groups}
+      views={views}
+      onClick={onClick}
+      onViewClick={onViewClick}
+    />
+  );
 };
 
 MiqGenericToolbar.propTypes = {
