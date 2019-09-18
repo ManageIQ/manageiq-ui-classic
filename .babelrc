@@ -3,9 +3,12 @@
   "env": {
     "test": {
       "presets": [
-        "react"
+        "@babel/preset-react",
       ],
-      "plugins": ["transform-es2015-modules-commonjs", "babel-plugin-transform-class-properties"]
-    }
-  }
+      "plugins": [
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-proposal-class-properties",
+      ],
+    },
+  },
 }
