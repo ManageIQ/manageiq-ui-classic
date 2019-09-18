@@ -299,9 +299,13 @@ angular.module('ManageIQ').service('eventNotifications', ['$timeout', '$window',
     }
   };
 
-  this.showToast = function(notification, persist) {
+  var simpleShow = function(notification, persist) {
     var $this = this;
     notification.show = true;
+    // Remove the very first element of the array if it's too long
+    if (state.toastNotifications.length === 3) {
+      state.toastNotifications.shift();
+    }
     state.toastNotifications.push(notification);
     notifyObservers();
 
@@ -314,6 +318,16 @@ angular.module('ManageIQ').service('eventNotifications', ['$timeout', '$window',
           $this.removeToast(notification);
         }
       }, ManageIQ.angular.eventNotificationsData.toastDelay);
+    }
+  }.bind(this);
+
+  var throttledShow = _.throttle(simpleShow, 500);
+
+  this.showToast = function(notification, persist) {
+    if (state.toastNotifications.length < 3) {
+      simpleShow(notification, persist);
+    } else {
+      throttledShow(notification, persist);
     }
   };
 
