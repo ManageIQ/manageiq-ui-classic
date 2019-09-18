@@ -5,7 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk-1
+## Unreleased as of Sprint 120 - 2019-09-16
+
+### Added
+- Amazon - support Assume Role ARN [(#6170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6170)
+- Add option of copying tags [(#6164)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6164)
+- Reconfigure: Edit vlan for Nic [(#6148)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6148)
+- Remove history button [(#6050)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6050)
+
+### Fixed
+- Display tag  better with missing category in report editor [(#6188)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6188)
+- Display tenant only from current region [(#6187)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6187)
+- Reconfigure: Fix UI inconsistentsies add disk [(#6183)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6183)
+- Fix traceback in edit report preview [(#6182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6182)
+- Remove Timelines tab from Report editor [(#6181)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6181)
+- Added missing gettext for "Red Hat Software Updates" [(#6168)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6168)
+- Make Save button respond properly on changes in NTP Servers section while editing a Zone [(#6162)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6162)
+- Timelines title [(#6156)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6156)
+- Using class that includes both Job and Workflow templates [(#6146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6146)
+- Exclude compare and drift download actions when remembering last tab [(#6134)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6134)
+- Correctly catch & handle API errors when creating orchestration template [(#6116)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6116)
+- Add Back button to policy simulation page for non-explorer [(#6099)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6099)
+- Allow comparing Hosts and VMs/Instances displayed as a nested list [(#6044)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6044)
+
+## Ivanchuk-1 - Released 2019-09-18
 
 ### Added
 - Add Set Ownership to Key Pairs [(#5973)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5973)
