@@ -112,7 +112,7 @@ describe ReportController do
 
         MiqWidgetSet.seed
         widget_set = FactoryBot.create(:miq_widget_set, :group_id => user.current_group.id)
-        post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_-#{widget_set.id}", :format => :js, :accord => 'db' }
+        post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_ws-#{widget_set.id}", :format => :js, :accord => 'db' }
         expect(response).to render_template('report/_db_show')
       end
     end

@@ -501,6 +501,7 @@ class TreeBuilder
     "vap"  => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate",
     "vnf"  => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
     "wi"   => "WindowsImage",
+    "ws"   => "MiqWidgetSet",
     "xx"   => "Hash", # For custom (non-CI) nodes, specific to each tree
     "z"    => "Zone"
   }.freeze

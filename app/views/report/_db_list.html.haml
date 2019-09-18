@@ -51,7 +51,7 @@
                 %i.fa.fa-dashboard{:title => ws.description}
               %td
                 = "#{h(ws.description)} (#{h(ws.name)})"
-  - elsif ((@sb[:nodes].length == 4 && @sb[:nodes][1] == "g_g") || (@sb[:nodes].length == 2 && @sb[:nodes].first == "xx")) && !@in_a_form
+  - elsif @dashboard && !@in_a_form
     = render :partial => "layouts/flash_msg"
     = render :partial => "db_show", :locals => {:widget => @dashboard}
   - elsif @in_a_form
