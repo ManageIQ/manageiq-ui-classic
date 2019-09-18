@@ -2,6 +2,9 @@ module TreeNode
   class Node
     attr_reader :tree
 
+    attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :klass, :selectable, :tooltip
+    attr_writer :icon, :image
+
     def initialize(object, parent_id, tree)
       @object = object
       @parent_id = parent_id
@@ -12,48 +15,12 @@ module TreeNode
       @object.name
     end
 
-    def tooltip
-      nil
-    end
-
     def image
-      @object.try(:decorate).try(:fileicon)
+      @image || @object.try(:decorate).try(:fileicon)
     end
 
     def icon
-      @object.try(:decorate).try(:fonticon)
-    end
-
-    def icon_background
-      nil
-    end
-
-    def klass
-      nil
-    end
-
-    def selectable
-      true
-    end
-
-    def checked
-      nil
-    end
-
-    def color
-      nil
-    end
-
-    def checkable
-      true
-    end
-
-    def expanded
-      false
-    end
-
-    def hide_checkbox
-      nil
+      @icon || @object.try(:decorate).try(:fonticon)
     end
 
     def key
@@ -120,8 +87,6 @@ module TreeNode
 
           result
         end
-
-        equals_method(attribute)
       end
 
       def set_attributes(*attributes, &block)
@@ -139,16 +104,12 @@ module TreeNode
 
             result
           end
-
-          equals_method(attribute)
-        end
-      end
-
-      def equals_method(attribute)
-        define_method("#{attribute}=".to_sym) do |result|
-          instance_variable_set("@#{attribute}".to_sym, result)
         end
       end
     end
+
+    set_attribute(:selectable, true)
+    set_attribute(:checkable, true)
+    set_attribute(:expanded, false)
   end
 end
