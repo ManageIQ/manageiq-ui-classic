@@ -31,10 +31,16 @@ module ApplicationController::MiqRequestMethods
         else
           MiqTemplate.where(:id => @edit[:new][:src_vm_id].kind_of?(Array) ? @edit[:new][:src_vm_id].first : @edit[:new][:src_vm_id]).first
         end
+
+      begin
+        all_dialogs = @edit[:wf].get_all_dialogs
+      rescue Exception
+        all_dialogs = []
+      end
+
       render :update do |page|
         page << javascript_prologue
         # Going thru all dialogs to see if model has set any of the dialog display to hide/ignore
-        all_dialogs = @edit[:wf].get_all_dialogs
         all_dialogs.each do |dialog_name, dialog|
           page << "miq_tabs_show_hide('#{dialog_name}_tab', #{dialog[:display] == :show});"
         end
