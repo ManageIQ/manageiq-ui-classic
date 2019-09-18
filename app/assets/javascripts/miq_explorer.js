@@ -72,7 +72,9 @@ ManageIQ.explorer.processButtons = function(data) {
 };
 
 ManageIQ.explorer.processReplaceMainDiv = function(data) {
+  ManageIQ.explorer.updateRightCellText(data);
   ManageIQ.explorer.updatePartials(data);
+  ManageIQ.explorer.setVisibility(data);
 };
 
 ManageIQ.explorer.processFlash = function(data) {
@@ -153,6 +155,27 @@ ManageIQ.explorer.focus = function(data) {
 
 ManageIQ.explorer.removePaging = function() {
   miqGtlSetExtraClasses();
+};
+
+ManageIQ.explorer.updateRightCellText = function(data) {
+  if (_.isString(data.rightCellText)) {
+    $('h1#explorer_title > span#explorer_title_text')
+      .html(data.rightCellText);
+  }
+};
+
+ManageIQ.explorer.setVisibility = function(data) {
+  if (_.isObject(data.setVisibility)) {
+    _.forEach(data.setVisibility, function(visible, element) {
+      if ( miqDomElementExists(element) ) {
+        if ( visible ) {
+          $('#' + element).show();
+        } else {
+          $('#' + element).hide();
+        }
+      }
+    });
+  }
 };
 
 ManageIQ.explorer.processReplaceRightCell = function(data) {
@@ -239,24 +262,9 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     ManageIQ.grids.gtl_list_grid = undefined;
   }
 
-  if (_.isObject(data.setVisibility)) {
-    _.forEach(data.setVisibility, function(visible, element) {
-      if ( miqDomElementExists(element) ) {
-        if ( visible ) {
-          $('#' + element).show();
-        } else {
-          $('#' + element).hide();
-        }
-      }
-    });
-  }
-
+  ManageIQ.explorer.setVisibility(data);
   ManageIQ.explorer.scrollTop(data);
-
-  if (_.isString(data.rightCellText)) {
-    $('h1#explorer_title > span#explorer_title_text')
-      .html(data.rightCellText);
-  }
+  ManageIQ.explorer.updateRightCellText(data);
 
   if (data.providerPaused === true) {
     $('#providerPaused').show();

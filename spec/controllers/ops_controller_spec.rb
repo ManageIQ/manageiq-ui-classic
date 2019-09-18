@@ -159,7 +159,7 @@ describe OpsController do
     end
   end
 
-  context "#db_backup" do
+  describe "#db_backup" do
     it "posts db_backup action" do
       session[:settings] = {:default_search => ''}
 
@@ -182,7 +182,7 @@ describe OpsController do
     end
   end
 
-  context "#edit_changed?" do
+  describe "#edit_changed?" do
     it "should set session[:changed] as false" do
       edit = {
         :new     => {:foo => 'bar'},
@@ -287,7 +287,7 @@ describe OpsController do
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
   end
 
-  context "#explorer" do
+  describe "#explorer" do
     it "sets correct active accordion value" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:get_node_info)
@@ -305,7 +305,7 @@ describe OpsController do
     end
   end
 
-  context "#replace_explorer_trees" do
+  describe "#replace_explorer_trees" do
     it "build trees that are passed in and met other conditions" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_build_dyna_tree)
@@ -389,8 +389,8 @@ describe OpsController do
     end
   end
 
-  context '#dialog_replace_right_cell' do
-    describe 'for an User' do
+  describe '#dialog_replace_right_cell' do
+    context 'for an User' do
       before do
         user = FactoryBot.create(:user)
         allow(controller).to receive(:x_node).and_return("u-#{user.id}")
@@ -402,7 +402,7 @@ describe OpsController do
       end
     end
 
-    describe 'for a Group' do
+    context 'for a Group' do
       let(:group) { FactoryBot.create(:miq_group) }
 
       before do
@@ -417,7 +417,7 @@ describe OpsController do
     end
   end
 
-  context "#tree_selected_model" do
+  describe "#tree_selected_model" do
     it 'sets @tree_model_selected to User for user node' do
       allow(controller).to receive(:x_node).and_return('u-42')
       controller.tree_selected_model
@@ -473,7 +473,7 @@ describe OpsController do
     end
   end
 
-  context '#tree_select' do
+  describe '#tree_select' do
     it 'calls #tree_select_model' do
       controller.instance_variable_set(:@sb, {})
       controller.params[:id] = 'root'
@@ -511,6 +511,114 @@ describe OpsController do
       allow(controller).to receive(:rbac_tenant_manage_quotas_save_add)
       controller.params = {:id => tenant_alpha.id, :button => 'add'}
       expect { controller.rbac_tenant_manage_quotas }.to raise_error(MiqException::RbacPrivilegeException)
+    end
+  end
+
+  describe '#textual_group_list' do
+    subject { controller.send(:textual_group_list) }
+
+    it 'displays Properties in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:properties))
+    end
+
+    it 'displays Relationships in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:relationships))
+    end
+
+    it 'displays Smart Management in textual summary of a Tenant' do
+      expect(subject).to include(array_including(:smart_management))
+    end
+  end
+
+  context 'display methods for Tenant textual summary' do
+    let(:record) { FactoryBot.create(:tenant) }
+
+    before { controller.instance_variable_set(:@record, record) }
+
+    describe '#display_service_templates' do
+      let(:opts) do
+        {
+          :breadcrumb_title => _('Catalog Items and Bundles'),
+          :association      => :nested_service_templates,
+          :parent           => record,
+          :no_checkboxes    => true
+        }
+      end
+
+      it 'calls nested_list to display Catalog Items and Bundles' do
+        expect(controller).to receive(:nested_list).with(ServiceTemplate, opts)
+        controller.send(:display_service_templates)
+      end
+    end
+
+    describe '#display_providers' do
+      let(:opts) do
+        {
+          :breadcrumb_title => _('Providers'),
+          :association      => :nested_providers,
+          :parent           => record,
+          :no_checkboxes    => true,
+          :clickable        => false
+        }
+      end
+
+      it 'calls nested_list to display Providers' do
+        expect(controller).to receive(:nested_list).with(ExtManagementSystem, opts)
+        controller.send(:display_providers)
+      end
+    end
+
+    describe '#display_ae_namespaces' do
+      let(:opts) do
+        {
+          :breadcrumb_title => _('Automate Domains'),
+          :association      => :nested_ae_namespaces,
+          :parent           => record,
+          :no_checkboxes    => true,
+          :clickable        => false
+        }
+      end
+
+      it 'calls nested_list to display Providers' do
+        expect(controller).to receive(:nested_list).with(MiqAeDomain, opts)
+        controller.send(:display_ae_namespaces)
+      end
+    end
+  end
+
+  describe '#nested_list' do
+    let(:record) { FactoryBot.create(:tenant) }
+    let(:opts) do
+      {
+        :association      => :nested_service_templates,
+        :parent           => record,
+        :no_checkboxes    => true,
+        :breadcrumb_title => 'Catalog Items and Bundles'
+      }
+    end
+
+    before do
+      controller.instance_variable_set(:@record, record)
+      controller.instance_variable_set(:@breadcrumbs, [])
+      allow(controller).to receive(:render_to_string).and_return('')
+    end
+
+    context 'updating breadcrumbs' do
+      before { allow(controller).to receive(:render) }
+
+      it 'calls add_to_breadcrumbs and render_to_string' do
+        expect(controller).to receive(:render_to_string).with(:partial => 'layouts/gtl')
+        expect(controller).to receive(:add_to_breadcrumbs).with(:title => opts[:breadcrumb_title])
+        controller.send(:nested_list, ServiceTemplate, opts)
+      end
+    end
+
+    it 'updates right cell text' do
+      expect(controller).to receive(:render).with(:json => {:explorer       => 'replace_main_div',
+                                                            :rightCellText  => "#{record.name} (All #{opts[:breadcrumb_title]})",
+                                                            :setVisibility  => {:toolbar => false},
+                                                            :updatePartials => {'ops_tabs' => '', :breadcrumbs => ''}})
+      controller.send(:nested_list, ServiceTemplate, opts)
     end
   end
 end
