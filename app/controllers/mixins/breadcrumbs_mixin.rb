@@ -51,7 +51,7 @@ module Mixins
 
         # On special page (tagitems, politems, etc.)
         if @tagitems || @politems || @ownershipitems || @retireitems
-          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems, true, options[:x_node])) unless options[:hide_special_item]
+          breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems, true, options[:x_node]))
           breadcrumbs.push(:title => right_cell_text)
         else
           # Ancestry parents breadcrumbs (only in services)
