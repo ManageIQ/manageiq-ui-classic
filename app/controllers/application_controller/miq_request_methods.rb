@@ -28,8 +28,8 @@ module ApplicationController::MiqRequestMethods
       @record =
         if @edit[:new][:src_configured_system_ids].present?
           PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
-        elsif @edit[:new][:src_vm_id].first.present?
-          MiqTemplate.where(:id => @edit[:new][:src_vm_id].first).first
+        else
+          MiqTemplate.where(:id => @edit[:new][:src_vm_id].kind_of?(Array) ? @edit[:new][:src_vm_id].first : @edit[:new][:src_vm_id]).first
         end
       render :update do |page|
         page << javascript_prologue
