@@ -71,6 +71,14 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Reconfigure the Memory/CPU of this VM'),
           N_('Reconfigure this VM'),
           :klass => ApplicationHelper::Button::VmReconfigure),
+        button(
+          :vm_snapshot_add,
+          'pficon pficon-add-circle-o fa-lg',
+          t = N_('Create a new snapshot for this VM'),
+          t,
+          :onwhen => "1",
+          :klass  => ApplicationHelper::Button::VmSnapshotAdd
+        ),
       ]
     ),
   ])
