@@ -22,7 +22,12 @@ class CloudVolumeController < ApplicationController
       delete_volumes
       return false
     when 'cloud_volume_attach'
-      javascript_redirect(:action => 'attach', :id => checked_item_id)
+      volume = find_record_with_rbac(CloudVolume, checked_item_id)
+      if !volume.is_available?(:attach_volume) || volume.status != "available"
+        render_flash(_("Cloud Volume \"%{volume_name}\" is not available to be attached to any Instances") % {:volume_name => volume.name}, :error)
+      else
+        javascript_redirect(:action => 'attach', :id => checked_item_id)
+      end
     when 'cloud_volume_detach'
       volume = find_record_with_rbac(CloudVolume, checked_item_id)
       if volume.attachments.empty?
