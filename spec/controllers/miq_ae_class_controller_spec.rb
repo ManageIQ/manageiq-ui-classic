@@ -940,6 +940,7 @@ describe MiqAeClassController do
             :icon       => "ff ff-class",
             :selectable => true,
             :lazyLoad   => true,
+            :fqname     => cls.fqname,
             :state      => {:expanded => false},
           }
         ]

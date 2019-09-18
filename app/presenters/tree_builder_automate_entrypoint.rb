@@ -1,7 +1,6 @@
 class TreeBuilderAutomateEntrypoint < TreeBuilderAutomateCatalog
-  def override(node, object)
+  def override(node, _object)
     node.delete(:selectable)
-    node[:fqname] = object.fqname if object.try(:fqname)
   end
 
   def root_options
