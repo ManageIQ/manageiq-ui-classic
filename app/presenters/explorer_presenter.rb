@@ -223,6 +223,7 @@ class ExplorerPresenter
     data = check_spinner(:explorer => 'replace_main_div')
     data[:rightCellText] = escape_if_unsafe(@options[:right_cell_text]) if @options[:right_cell_text]
     data[:updatePartials] = @options[:update_partials]
+    data[:setVisibility] = @options[:set_visible_elements]
     data
   end
 

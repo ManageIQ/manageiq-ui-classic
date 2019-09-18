@@ -614,7 +614,10 @@ describe OpsController do
     end
 
     it 'updates right cell text' do
-      expect(controller).to receive(:render).with(:json => {:explorer => 'replace_main_div', :rightCellText => "#{record.name} (All #{opts[:breadcrumb_title]})", :updatePartials => {'ops_tabs' => '', :breadcrumbs => ''}})
+      expect(controller).to receive(:render).with(:json => {:explorer       => 'replace_main_div',
+                                                            :rightCellText  => "#{record.name} (All #{opts[:breadcrumb_title]})",
+                                                            :setVisibility  => {:toolbar => false},
+                                                            :updatePartials => {'ops_tabs' => '', :breadcrumbs => ''}})
       controller.send(:nested_list, ServiceTemplate, opts)
     end
   end
