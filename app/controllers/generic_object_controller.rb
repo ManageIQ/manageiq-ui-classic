@@ -33,7 +33,7 @@ class GenericObjectController < ApplicationController
   private
 
   def textual_group_list
-    [%i[go_properties attribute_details_list associations methods go_relationships]]
+    [%i[go_properties attribute_details_list associations methods go_relationships tags]]
   end
 
   helper_method :textual_group_list
