@@ -904,13 +904,10 @@ class OpsController < ApplicationController
       :name  => @record.name,
       :title => options[:breadcrumb_title]
     }
-    ex = ExplorerPresenter.main_div(:right_cell_text => title).update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
-
-    # TODO Hide toolbar
-    # ex.update(:toolbar, nil) # this removes div with toolbar completely; toolbar is missing later, when clicking on another Tenant in accordion
-    # ex.hide(:toolbar) # no
-    # ex.set_visibility(false, :toolbar) # this is used in many other places, but here it does not do the thing
-    rebuild_toolbars(ex) # no, no change
+    ex = ExplorerPresenter
+      .main_div(:right_cell_text => title)
+      .update('ops_tabs', render_to_string(:partial => "layouts/gtl"))
+      .set_visibility(false, :toolbar)
 
     # Also update breadcrumbs.
     add_to_breadcrumbs(:title => options[:breadcrumb_title])

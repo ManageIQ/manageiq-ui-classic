@@ -74,6 +74,7 @@ ManageIQ.explorer.processButtons = function(data) {
 ManageIQ.explorer.processReplaceMainDiv = function(data) {
   ManageIQ.explorer.updateRightCellText(data);
   ManageIQ.explorer.updatePartials(data);
+  ManageIQ.explorer.setVisibility(data);
 };
 
 ManageIQ.explorer.processFlash = function(data) {
@@ -163,6 +164,20 @@ ManageIQ.explorer.updateRightCellText = function(data) {
   }
 };
 
+ManageIQ.explorer.setVisibility = function(data) {
+  if (_.isObject(data.setVisibility)) {
+    _.forEach(data.setVisibility, function(visible, element) {
+      if ( miqDomElementExists(element) ) {
+        if ( visible ) {
+          $('#' + element).show();
+        } else {
+          $('#' + element).hide();
+        }
+      }
+    });
+  }
+};
+
 ManageIQ.explorer.processReplaceRightCell = function(data) {
   /* variables for the expression editor */
   if (_.isObject(data.expEditor)) {
@@ -247,18 +262,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     ManageIQ.grids.gtl_list_grid = undefined;
   }
 
-  if (_.isObject(data.setVisibility)) {
-    _.forEach(data.setVisibility, function(visible, element) {
-      if ( miqDomElementExists(element) ) {
-        if ( visible ) {
-          $('#' + element).show();
-        } else {
-          $('#' + element).hide();
-        }
-      }
-    });
-  }
-
+  ManageIQ.explorer.setVisibility(data);
   ManageIQ.explorer.scrollTop(data);
   ManageIQ.explorer.updateRightCellText(data);
 
