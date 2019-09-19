@@ -30,7 +30,9 @@ const addMenu = (items, locked) => {
 
   return (
     <Dropdown id="dropdown-custom-2" disabled={locked}>
-      <Dropdown.Toggle componentClass={props => <button type="button" {...props} title={title} />} title={<span className="fa fa-plus fa-lg" />} />
+      <Dropdown.Toggle title={title}>
+        <span className="fa fa-plus fa-lg" />
+      </Dropdown.Toggle>
       <Dropdown.Menu className="scrollable-menu">
         { items.map(item => (
           item.type === 'separator'
