@@ -17,13 +17,20 @@ module OpsController::Settings::Zones
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
+
       @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
-      if @edit[:new][:name] == ""
-        add_flash(_("Zone name is required"), :error)
+
+      unless @edit[:new][:name]
+        add_flash(_("Name can't be blank"), :error)
       end
-      if @edit[:new][:description] == ""
-        add_flash(_("Description is required"), :error)
+      unless @edit[:new][:description]
+        add_flash(_("Description can't be blank"), :error)
       end
+      unless @edit[:new][:password] == @edit[:new][:verify]
+        add_flash(_('Password and Verify Password fields do not match'), :error)
+      end
+
+      # This is needed for cases when more than one required field is missing or is not correct, to prevent rendering same flash messages
       if @flash_array
         javascript_flash(:spinner_off => true)
         return
@@ -84,23 +91,14 @@ module OpsController::Settings::Zones
   def zone_field_changed
     return unless load_edit("zone_edit__#{params[:id]}", "replace_cell__explorer")
     zone_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
+    session[:changed] = @changed = @edit[:new] != @edit[:current]
     render :update do |page|
       page << javascript_prologue
       if @refresh_div
         page.replace(@refresh_div, :partial => @refresh_partial,
                                    :locals  => {:type => "zones", :action_url => 'zone_field_changed'})
       end
-
-      # checking to see if password/verify pwd fields either both have value or are both blank
-      password_fields_changed = !(@edit[:new][:password].blank? ^ @edit[:new][:verify].blank?)
-
-      if @changed != session[:changed]
-        session[:changed] = @changed
-        page << javascript_for_miq_button_visibility(@changed && password_fields_changed)
-      else
-        page << javascript_for_miq_button_visibility(password_fields_changed)
-      end
+      page << javascript_for_miq_button_visibility(@changed)
     end
   end
 
