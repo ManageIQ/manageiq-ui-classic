@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Simple react table should render correctly 1`] = `
-<Component
+<DataDrivenTable
   columns={
     Array [
       Array [
@@ -39,24 +39,24 @@ exports[`Simple react table should render correctly 1`] = `
   }
   transform={[Function]}
 >
-  <Component
+  <Table
     className="table dataTable table-striped table-bordered table-hover"
   >
     <table
       className="table dataTable table-striped table-bordered table-hover"
     >
-      <Component>
+      <TableHead>
         <thead>
-          <Component>
+          <TableRow>
             <tr>
-              <Component
+              <TableHeading
                 key="column-one"
               >
                 <th>
                   First label
                 </th>
-              </Component>
-              <Component
+              </TableHeading>
+              <TableHeading
                 className="custom-className-of-cells"
                 key="column-two"
               >
@@ -65,28 +65,28 @@ exports[`Simple react table should render correctly 1`] = `
                 >
                   Second label
                 </th>
-              </Component>
+              </TableHeading>
             </tr>
-          </Component>
+          </TableRow>
         </thead>
-      </Component>
-      <Component>
+      </TableHead>
+      <TableBody>
         <tbody>
-          <Component
+          <TableRow
             key="row-0"
             onClick={[Function]}
           >
             <tr
               onClick={[Function]}
             >
-              <Component
+              <TableCell
                 key="0-column-one"
               >
                 <td>
                   Row 1 first column
                 </td>
-              </Component>
-              <Component
+              </TableCell>
+              <TableCell
                 className="custom-className-of-cells"
                 key="1-column-two"
               >
@@ -97,24 +97,24 @@ exports[`Simple react table should render correctly 1`] = `
                     Custom component for column 2 row 1
                   </span>
                 </td>
-              </Component>
+              </TableCell>
             </tr>
-          </Component>
-          <Component
+          </TableRow>
+          <TableRow
             key="row-1"
             onClick={[Function]}
           >
             <tr
               onClick={[Function]}
             >
-              <Component
+              <TableCell
                 key="0-column-one"
               >
                 <td>
                   Row 2 second column
                 </td>
-              </Component>
-              <Component
+              </TableCell>
+              <TableCell
                 className="custom-className-of-cells"
                 key="1-column-two"
               >
@@ -129,12 +129,12 @@ exports[`Simple react table should render correctly 1`] = `
                     Click me!
                   </button>
                 </td>
-              </Component>
+              </TableCell>
             </tr>
-          </Component>
+          </TableRow>
         </tbody>
-      </Component>
+      </TableBody>
     </table>
-  </Component>
-</Component>
+  </Table>
+</DataDrivenTable>
 `;

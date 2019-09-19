@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<MiqGenericToolbar /> renders ok 1`] = `
-<Component
+<MiqGenericToolbar
   toolbars={
     Array [
       Array [
@@ -96,5 +96,5 @@ exports[`<MiqGenericToolbar /> renders ok 1`] = `
       </ToolbarView>
     </div>
   </Toolbar>
-</Component>
+</MiqGenericToolbar>
 `;
