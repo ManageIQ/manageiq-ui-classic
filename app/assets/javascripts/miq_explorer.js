@@ -75,6 +75,7 @@ ManageIQ.explorer.processReplaceMainDiv = function(data) {
   ManageIQ.explorer.updateRightCellText(data);
   ManageIQ.explorer.updatePartials(data);
   ManageIQ.explorer.setVisibility(data);
+  ManageIQ.explorer.resetReduxForms();
 };
 
 ManageIQ.explorer.processFlash = function(data) {
@@ -110,7 +111,6 @@ ManageIQ.explorer.updatePartials = function(data) {
       if (!miqDomElementExists(element)) {
         console.error('updatePartials: #' + element + ' does not exist in the DOM');
       }
-
       $('#' + element).html(content);
     });
   }
@@ -119,6 +119,12 @@ ManageIQ.explorer.updatePartials = function(data) {
 ManageIQ.explorer.reloadTrees = function(data) {
   if (_.isObject(data.reloadTrees)) {
     sendDataWithRx({reloadTrees: data.reloadTrees});
+  }
+};
+
+ManageIQ.explorer.resetReduxForms = function() {
+  if (ManageIQ.redux.store) {
+    ManageIQ.redux.store.dispatch({type: '@@data-driven-forms/reset'});
   }
 };
 
@@ -340,6 +346,8 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   } else {
     miqSparkleOff();
   }
+
+  ManageIQ.explorer.resetReduxForms();
 
   return null;
 };
