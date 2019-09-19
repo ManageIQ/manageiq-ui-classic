@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Top navbar test should render correctly 1`] = `
+exports[`Top navbar tests should render correctly 1`] = `
 <Provider
   store={
     Object {

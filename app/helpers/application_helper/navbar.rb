@@ -27,33 +27,34 @@ module ApplicationHelper
 
 
     def menu_to_json(position)
-        structure = []
-        Menu::Manager.menu(position) do |menu_section|
-            next unless menu_section
-            structure << item_to_hash(menu_section)
-        end
-        structure
+      structure = []
+      Menu::Manager.menu(position) do |menu_section|
+        next unless menu_section
+
+        structure << item_to_hash(menu_section)
+      end
+      structure
     end
-    
+
     def item_to_hash(item)
-      {
-        :id             => item.id,
-        :name           => item.name,
-        :icon           => item.icon,
-        :placement      => item.placement,
-        :before         => item.try(:before),
-        :type           => item.type,
-        :href           => item.href,
-        :parent_id      => item.try(:parent_id),
-        :feature        => item.try(:feature),
-        :rbac_feature   => item.try(:rbac_feature),
-        :defaults       => item.try(:defaults),
-        :items          => item.items.to_a.map(&method(:item_to_hash)),
-        :visible        => item.visible?,
-        :link_params    => item.link_params
-      }
-    end   
-    
+      %i[
+        id
+        name
+        icon
+        placement
+        before
+        type
+        href
+        parent_id
+        feature
+        rbac_feature
+        defaults
+        link_params
+      ].each_with_object(:visible => item.visible?, :items => item.items.to_a.map(&method(:item_to_hash))) do |key, obj|
+        obj[key] = item.try(key)
+      end
+    end
+
     # FIXME: The 'active' below is an active section not an item. That is wrong.
     # What works is the "legacy" part that compares @layout to item.id.
     # This assumes that these matches -- @layout and item.id. Moving forward we
