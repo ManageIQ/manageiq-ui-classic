@@ -26,14 +26,14 @@ class UserValidationService
 
     if user[:new_password].present?
       begin
-        User.find_by_userid(user[:name]).change_password(user[:password], user[:new_password])
+        User.lookup_by_userid(user[:name]).change_password(user[:password], user[:new_password])
       rescue => bang
         return ValidateResult.new(:fail, "Error: " + bang.message)
       end
     end
 
     start_url = session[:start_url] # Hang on to the initial start URL
-    db_user = User.find_by_userid(user[:name])
+    db_user = User.lookup_by_userid(user[:name])
     session_reset
     feature = User.missing_user_features(db_user)
     if feature

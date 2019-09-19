@@ -398,7 +398,7 @@ module MiqPolicyController::MiqActions
     end
 
     if %w[inherit_parent_tags remove_tags].include?(@action.action_type)
-      @cats = Classification.find_by_names(@action.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
+      @cats = Classification.lookup_by_names(@action.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
     end
   end
 end

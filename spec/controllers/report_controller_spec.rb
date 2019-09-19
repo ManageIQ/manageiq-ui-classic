@@ -343,7 +343,7 @@ describe ReportController do
           tag_cat = "department"
           controller.params = {:cb_tag_cat => tag_cat}
           cl_rec = FactoryBot.create(:classification, :name => "test_name", :description => "Test Description")
-          expect(Classification).to receive(:find_by_name).and_return([cl_rec])
+          expect(Classification).to receive(:lookup_by_name).and_return([cl_rec])
           controller.send(:gfv_chargeback)
           expect(assigns(:edit)[:new][:cb_tag_cat]).to eq(tag_cat)
           expect(assigns(:edit)[:cb_tags]).to be_a_kind_of(Hash)

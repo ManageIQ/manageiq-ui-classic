@@ -217,7 +217,7 @@ class MiqAeClassController < ApplicationController
         self.x_node = "#{selected_node[0]}-#{record.id}"
         parents.push(record)
       else
-        ns = MiqAeNamespace.find_by_fqname(nodes[0..i].join("/"))
+        ns = MiqAeNamespace.lookup_by_fqname(nodes[0..i].join("/"))
         parents.push(ns) if ns
       end
     end

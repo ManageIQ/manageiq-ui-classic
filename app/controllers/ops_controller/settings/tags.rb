@@ -140,7 +140,7 @@ module OpsController::Settings::Tags
   def ce_new_cat
     ce_get_form_vars
     if params[:classification_name]
-      @cat = Classification.find_by_name(params["classification_name"])
+      @cat = Classification.lookup_by_name(params["classification_name"])
       ce_build_screen # Build the Classification Edit screen
       render :update do |page|
         page << javascript_prologue
@@ -236,7 +236,7 @@ module OpsController::Settings::Tags
   def ce_get_form_vars
     @edit = session[:edit]
     @cats = session[:config_cats]
-    @cat = Classification.find_by_name(session[:config_cat])
+    @cat = Classification.lookup_by_name(session[:config_cat])
     nil
   end
 
