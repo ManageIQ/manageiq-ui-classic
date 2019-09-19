@@ -135,7 +135,7 @@ class ServiceController < ApplicationController
     case params[:button]
     when "cancel"
       service = find_record_with_rbac(Service, params[:id])
-      add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.description})
+      add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.name})
       replace_right_cell
     when "save", "add"
       service = find_record_with_rbac(Service, params[:id])
