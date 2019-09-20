@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DashboardToolbar /> renders ok 1`] = `
+<DashboardToolbar
+  allowAdd={true}
+  allowReset={true}
+  items={
+    Array [
+      Object {
+        "id": 31,
+        "image": "fa fa-pie-chart fa-lg",
+        "text": "add",
+        "title": "Add this Chart Widget",
+        "type": "button",
+      },
+    ]
+  }
+  locked={false}
+>
+  <div
+    className="toolbar-pf-actions miq-toolbar-actions"
+  >
+    <div
+      className="miq-toolbar-group form-group"
+    >
+      <Uncontrolled(Dropdown)
+        disabled={false}
+        id="dropdown-custom-2"
+      >
+        <Dropdown
+          bsClass="dropdown"
+          componentClass={[Function]}
+          disabled={false}
+          id="dropdown-custom-2"
+          onToggle={[Function]}
+        >
+          <ButtonGroup
+            block={false}
+            bsClass="btn-group"
+            className="dropdown"
+            justified={false}
+            vertical={false}
+          >
+            <div
+              className="dropdown btn-group"
+            >
+              <DropdownToggle
+                bsClass="dropdown-toggle"
+                bsRole="toggle"
+                componentClass={[Function]}
+                disabled={false}
+                id="dropdown-custom-2"
+                key=".0"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                open={false}
+                title={
+                  <span
+                    className="fa fa-plus fa-lg"
+                  />
+                }
+                useAnchor={false}
+              >
+                <Button
+                  active={false}
+                  aria-expanded={false}
+                  aria-haspopup={true}
+                  block={false}
+                  bsClass="btn"
+                  bsStyle="default"
+                  className="dropdown-toggle"
+                  componentClass={[Function]}
+                  disabled={false}
+                  id="dropdown-custom-2"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  role="button"
+                  title={
+                    <span
+                      className="fa fa-plus fa-lg"
+                    />
+                  }
+                >
+                  <componentClass
+                    aria-expanded={false}
+                    aria-haspopup={true}
+                    className="dropdown-toggle btn btn-default"
+                    disabled={false}
+                    id="dropdown-custom-2"
+                    onClick={[Function]}
+                    onKeyDown={[Function]}
+                    role="button"
+                    title={
+                      <span
+                        className="fa fa-plus fa-lg"
+                      />
+                    }
+                    type="button"
+                  >
+                    <button
+                      aria-expanded={false}
+                      aria-haspopup={true}
+                      className="dropdown-toggle btn btn-default"
+                      disabled={false}
+                      id="dropdown-custom-2"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      role="button"
+                      title="Add a widget"
+                      type="button"
+                    >
+                      <span
+                        className="fa fa-plus fa-lg"
+                      />
+                       
+                      <span
+                        className="caret"
+                      />
+                    </button>
+                  </componentClass>
+                </Button>
+              </DropdownToggle>
+              <DropdownMenu
+                bsClass="dropdown-menu"
+                bsRole="menu"
+                className="scrollable-menu"
+                key=".1"
+                labelledBy="dropdown-custom-2"
+                onClose={[Function]}
+                onSelect={[Function]}
+                pullRight={false}
+              >
+                <RootCloseWrapper
+                  disabled={true}
+                  event="click"
+                  onRootClose={[Function]}
+                >
+                  <ul
+                    aria-labelledby="dropdown-custom-2"
+                    className="scrollable-menu dropdown-menu"
+                    role="menu"
+                  >
+                    <MenuItem
+                      bsClass="dropdown"
+                      disabled={false}
+                      divider={false}
+                      header={false}
+                      key=".$31"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onSelect={[Function]}
+                    >
+                      <li
+                        className=""
+                        role="presentation"
+                      >
+                        <SafeAnchor
+                          componentClass="a"
+                          onClick={[Function]}
+                          onKeyDown={[Function]}
+                          role="menuitem"
+                          tabIndex="-1"
+                        >
+                          <a
+                            href="#"
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            role="menuitem"
+                            tabIndex="-1"
+                          >
+                            <i
+                              className="fa fa-pie-chart fa-lg"
+                            />
+                             
+                            add
+                          </a>
+                        </SafeAnchor>
+                      </li>
+                    </MenuItem>
+                  </ul>
+                </RootCloseWrapper>
+              </DropdownMenu>
+            </div>
+          </ButtonGroup>
+        </Dropdown>
+      </Uncontrolled(Dropdown)>
+      <button
+        className="btn btn-default"
+        onClick={[Function]}
+        title="Reset Dashboard Widgets to the defaults"
+        type="button"
+      >
+        <i
+          className="fa fa-reply fa-lg"
+        />
+      </button>
+    </div>
+  </div>
+</DashboardToolbar>
+`;
