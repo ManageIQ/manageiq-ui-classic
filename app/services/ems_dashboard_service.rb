@@ -1,4 +1,5 @@
 class EmsDashboardService < DashboardService
+  attr_reader :ems
   include Mixins::CheckedIdMixin
 
   def initialize(ems_id, controller, klass)
@@ -60,17 +61,15 @@ class EmsDashboardService < DashboardService
   end
 
   def format_data(resource, attributes, attr_icon, attr_url, attr_hsh)
-    attr_data = []
-    attributes.each do |attr|
-      attr_data.push(
+    attributes.reject { |a| @ems.send(a).nil? }.map do |attr|
+      {
         :id        => "#{attr_hsh[attr]}_#{@ems_id}",
         :iconClass => attr_icon[attr],
         :title     => attr_hsh[attr],
         :count     => @ems.send(attr).count,
         :href      => get_url(resource, @ems_id, attr_url[attr]),
-      ) unless @ems.send(attr).nil?
+      }
     end
-    attr_data
   end
 
   def status_data
