@@ -8,8 +8,7 @@ class TreeBuilderStorageAdapters < TreeBuilder
   end
 
   def override(node, _object)
-    node[:selectable] = false
-    node[:class] = append_no_cursor(node[:class])
+    node.selectable = false
   end
 
   private

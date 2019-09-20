@@ -11,10 +11,7 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
 
   def override(node, object)
     # Only the instance items should be clickable when selecting a catalog item entry point
-    unless object.kind_of?(MiqAeInstance)
-      node[:selectable] = false
-      node[:class] = append_no_cursor(node[:class])
-    end
+    node.selectable = false unless object.kind_of?(MiqAeInstance)
   end
 
   def x_get_tree_ns_kids(object, count_only)

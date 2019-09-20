@@ -1,6 +1,6 @@
 class TreeBuilderAutomateEntrypoint < TreeBuilderAutomateCatalog
   def override(node, _object)
-    node.delete(:selectable)
+    node.selectable = nil
   end
 
   def root_options
