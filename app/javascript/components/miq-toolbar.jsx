@@ -51,15 +51,6 @@ const onClick = (button) => {
   console.log('Toolbar onClick handler. Button: ', button);
   let buttonUrl;
 
-  // // If it's a dropdown, collapse the parent container
-  // var parent = button.parents('div.btn-group.dropdown.open');
-  // parent.removeClass('open');
-  // parent.children('button.dropdown-toggle').attr('aria-expanded', 'false');
-
-  // if (button.hasClass('disabled') || button.parent().hasClass('disabled')) {
-  //   return;
-  // }
-
   if (button.confirm && !window.confirm(button.confirm)) {
     // No handling unless confirmed.
     return;
@@ -149,154 +140,6 @@ const onViewClick = (button) => {
   }
 };
 
-// const isButton = item => item.type === 'button';
-// const isButtonTwoState = item => item.type === 'buttonTwoState' && item.id.indexOf('view') === -1;
-//
-//   /**
-//    * Public method for changing view over data.
-//    * @param {Object} item clicked view object
-//    * @param {Object} $event angular synthetic mouse event
-//    * @returns {undefined}
-//    */
-
-// /**
-// * Private method for subscribing to rxSubject.
-// * For success functuon @see ToolbarController#onRowSelect()
-// * @returns {undefined}
-// */
-// const subscribeToSubject = () => {
-//   listenToRx(
-//     event => {
-//       if (event.eventType === 'updateToolbarCount') {
-//         // TODO
-//         // this.MiQToolbarSettingsService.setCount(event.countSelected);
-//       } else if (event.rowSelect) {
-//         onRowSelect(event.rowSelect);
-//       } else if (event.redrawToolbar) {
-//         // TODO
-//         // this.onUpdateToolbar(event.redrawToolbar);
-//       } else if (event.update) {
-//         // TODO
-//         // this.onUpdateItem(event);
-//       } else if (typeof event.setCount !== 'undefined') {
-//         onSetCount(event.setCount);
-//       }
-//
-//       // // sync changes
-//       // if (!this.$scope.$$phase) {
-//       //   this.$scope.$digest();
-//       // }
-//     },
-//     err => { console.error('Angular RxJs Error: ', err); },
-//     () => { console.debug('Angular RxJs subject completed, no more events to catch.'); }
-//   );
-// }
-//
-// /**
-// * Private method for setting rootPoint of MiQEndpointsService.
-// * @param {Object} MiQEndpointsService service responsible for endpoits.
-// * @returns {undefined}
-// */
-// const initEndpoints = MiQEndpointsService => {
-//   var urlPrefix = '/' + location.pathname.split('/')[1];
-//   // TODO
-//   // MiQEndpointsService.rootPoint = urlPrefix;
-// }
-//
-// /**
-// * Constructor of angular's miqToolbarController.
-// * @param {Object} MiQToolbarSettingsService toolbarSettings service from ui-components.
-// * @param {Object} MiQEndpointsService endpoits service from ui-components.
-// * @param {Object} $scope service for managing $scope (for apply and digest reasons).
-// * @param {Object} $location service for managing browser's location.
-// * this contructor will assign all params to `this`, it will init endpoits, set if toolbar is used on list page.
-// * @returns {undefined}
-// */
-// // var ToolbarController = function(MiQToolbarSettingsService, MiQEndpointsService, $scope, $location) {
-// //   this.MiQToolbarSettingsService = MiQToolbarSettingsService;
-// //   this.MiQEndpointsService = MiQEndpointsService;
-// //   this.$scope = $scope;
-// //   this.$location = $location;
-// //   initEndpoints(this.MiQEndpointsService);
-// //   this.isList = location.pathname.includes('show_list');
-// // };
-//
-// /**
-// * Public method which is executed after row in gtl is selected.
-// * @param {Object} data selected row
-// * @returns {undefined}
-// */
-// const onRowSelect = data => {
-//   // TODO
-//   // this.MiQToolbarSettingsService.checkboxClicked(data.checked);
-//   console.log('onRowSelect', data);
-// };
-//
-// /**
-// * Public method for setting up url of data views, based on last path param (e.g. /show_list).
-// * @returns {undefined}
-// */
-// const defaultViewUrl = () => {
-//   this.dataViews.forEach(function(item) {
-//     if (item.url === '') {
-//       var lastSlash = location.pathname.lastIndexOf('/');
-//       item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash) : '';
-//     }
-//   });
-// };
-//
-// // /**
-// // * Method which will retrieves toolbar settings from server.
-// // * @see MiQToolbarSettingsService#getSettings for more info.
-// // * Settings is called with this.isList and $location search object with value of `type`.
-// // * No need to worry about multiple search params and no complicated function for parsing is needed.
-// // * @param {function} getData callbalc for retireving toolbar data
-// // * @returns {undefined}
-// // */
-// // ToolbarController.prototype.fetchData = function(getData) {
-// //   return this.MiQToolbarSettingsService
-// //     .getSettings(getData)
-// //     .then(function(toolbarItems) {
-// //       this.toolbarItems = toolbarItems.items;
-// //       this.dataViews = toolbarItems.dataViews;
-// //     }.bind(this));
-// // };
-//
-// const onSetCount = count => {
-//   // TODO
-//   console.log('onSetCount', count);
-//   // this.MiQToolbarSettingsService.setCount(count);
-//   // if (!this.$scope.$$phase) {
-//   //   this.$scope.$digest();
-//   // }
-// };
-//
-// const initObject = toolbarString => {
-//   subscribeToSubject();
-//   updateToolbar(JSON.parse(toolbarString));
-// };
-//
-// // ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
-// //   this.updateToolbar(toolbarObject);
-// // };
-//
-// // const onUpdateItem = updateData => {
-// //   var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
-// //   if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
-// //     toolbarItem[updateData.type] = updateData.value;
-// //   }
-// // };
-//
-//
-// const showOrHide = () => {
-//   if (this.anyToolbarVisible()) {
-//     $('#toolbar').show();
-//   } else {
-//     $('#toolbar').hide();
-//   }
-// };
-//
-
 const onRowSelect = (isChecked, dispatch) => {
   console.log('onRowSelect', isChecked);
   dispatch({ type: isChecked ? 'INCREMENT' : 'DECREMENT' });
@@ -312,7 +155,7 @@ const subscribeToSubject = dispatch => (
       } else if (event.redrawToolbar) {
         dispatch({ type: 'TOOLBARS', toolbars: event.redrawToolbar });
       } else if (event.update) {
-        // TODO: puvodne pravdepodobne pro QE
+        // TODO: originally probably for QE
         // this.onUpdateItem(event);
         console.log('Toolbar onUpdateItem called.', event);
       } else if (typeof event.setCount !== 'undefined') {
@@ -381,6 +224,8 @@ const MiqToolbar = ({ toolbars }) => {
     return null;
   }
 
+  console.log('props: ', toolbars);
+
   const { custom, name, props } = toolbars[0][0];
   if (custom) {
     switch (name) {
@@ -398,7 +243,7 @@ const MiqToolbar = ({ toolbars }) => {
 
 /* Generic toolbar class for toolbars optionally connected to GTL grids
  * reacting to changes in number of selected items. */
-const MiqGenericToolbar = ({ toolbars }) => {
+export const MiqGenericToolbar = ({ toolbars }) => {
   const [state, dispatch] = useReducer(toolbarReducer, initState);
 
   useEffect(() => {
