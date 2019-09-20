@@ -65,11 +65,6 @@ class TreeBuilderUtilization < TreeBuilder
       rec = MiqRegion.find_by(:id => id)
       objects = rbac_filtered_sorted_objects(rec.storages, "name")
       count_only_or_objects(count_only, objects)
-    elsif object_cluster?(nodes, object)
-      rec = ExtManagementSystem.find_by(:id => id)
-      objects = rbac_filtered_sorted_objects(rec.ems_clusters, "name") +
-                rbac_filtered_sorted_objects(rec.non_clustered_hosts, "name")
-      count_only_or_objects(count_only, objects)
     end
   end
 
@@ -83,11 +78,6 @@ class TreeBuilderUtilization < TreeBuilder
       (object[:full_id] && object[:full_id].split('_')[1] == "ds")
   end
 
-  def object_cluster?(nodes, object)
-    (nodes.length > 1 && nodes[1] == "c") ||
-      (object[:full_id] && object[:full_id].split('_')[1] == "c")
-  end
-
   def rbac_filtered_sorted_objects(records, sort_by, options = {})
     Rbac.filtered(records, options).sort_by { |o| o.deep_send(sort_by).to_s.downcase }
   end
@@ -96,19 +86,7 @@ class TreeBuilderUtilization < TreeBuilder
     ems_clusters        = Rbac.filtered(object.ems_clusters)
     non_clustered_hosts = Rbac.filtered(object.non_clustered_hosts)
 
-    total = ems_clusters.count + non_clustered_hosts.count
-
-    return total if count_only
-    return [] if total == 0
-
-    [
-      {
-        :id   => "folder_c_xx-#{object.id}",
-        :text => _("Cluster / Deployment Role"),
-        :icon => "pficon pficon-folder-close",
-        :tip  => _("Cluster / Deployment Role (Click to open)")
-      }
-    ]
+    count_only_or_objects(count_only, ems_clusters + non_clustered_hosts)
   end
 
   def x_get_tree_cluster_kids(object, count_only)
