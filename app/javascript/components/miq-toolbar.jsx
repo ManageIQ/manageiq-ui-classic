@@ -127,23 +127,9 @@ const onClick = (button) => {
   // put url_parms into params var, if defined
   const paramstring = getParams(button.url_parms, !!button.send_checked);
 
-  // TODO:
-  // Checking for perf_reload button to not turn off spinning Q (will be done after charts are drawn).
-  // Checking for Report download button to allow controller method to turn off spinner
-  // Need to design this feature into the toolbar button support at a later time.
-  const keepSpinner = _.includes([
-    'perf_reload',
-    'vm_perf_reload',
-    'download_choice__render_report_csv',
-    'download_choice__render_report_pdf',
-    'download_choice__render_report_txt',
-    'custom_button_vmdb_choice__ab_button_simulate',
-    'catalogitem_button_vmdb_choice__ab_button_simulate',
-  ], button.name) || button.name.match(/_console$/);
-
   const options = {
     beforeSend: true,
-    complete: !keepSpinner,
+    complete: !button.keepSpinner,
     data: paramstring,
   };
 

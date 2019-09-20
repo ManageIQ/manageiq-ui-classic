@@ -29,9 +29,10 @@ class ApplicationHelper::Toolbar::CatalogitemButtonCenter < ApplicationHelper::T
           'fa fa-play-circle-o fa-lg',
           N_('Simulate using Button details'),
           N_('Simulate'),
-          :klass     => ApplicationHelper::Button::CatalogItemButton,
-          :url       => "resolve",
-          :url_parms => "?button=simulate"),
+          :keepSpinner => true,
+          :klass       => ApplicationHelper::Button::CatalogItemButton,
+          :url         => "resolve",
+          :url_parms   => "?button=simulate"),
       ]
     ),
   ])

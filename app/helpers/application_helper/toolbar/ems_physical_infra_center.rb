@@ -89,10 +89,11 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
           'pficon pficon-screen fa-lg',
           N_('Open a web-based console for this provider'),
           N_('Management Console'),
-          :url     => "launch_console",
-          :confirm => N_("Open management console for this provider"),
-          :klass   => ApplicationHelper::Button::PhysicalInfraConsole,
-          :options => {:feature => :console})
+          :keepSpinner => true,
+          :url         => "launch_console",
+          :confirm     => N_("Open management console for this provider"),
+          :klass       => ApplicationHelper::Button::PhysicalInfraConsole,
+          :options     => {:feature => :console})
       ]
     ),
   ])

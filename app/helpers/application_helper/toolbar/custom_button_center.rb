@@ -27,8 +27,9 @@ class ApplicationHelper::Toolbar::CustomButtonCenter < ApplicationHelper::Toolba
           'fa fa-play-circle-o fa-lg',
           N_('Simulate using Button details'),
           N_('Simulate'),
-          :url       => "resolve",
-          :url_parms => "?button=simulate"),
+          :keepSpinner => true,
+          :url         => "resolve",
+          :url_parms   => "?button=simulate"),
       ]
     ),
   ])
