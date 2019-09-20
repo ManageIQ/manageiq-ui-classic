@@ -2,7 +2,7 @@ module TreeNode
   class Node
     attr_reader :tree
 
-    attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :klass, :selectable, :tooltip
+    attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :klass, :selectable, :selected, :tooltip
     attr_writer :icon, :image
 
     def initialize(object, parent_id, tree)
@@ -45,7 +45,7 @@ module TreeNode
     end
 
     def to_h
-      node = {
+      {
         :key            => key,
         :text           => escape(text),
         :tooltip        => escape(tooltip),
@@ -60,10 +60,9 @@ module TreeNode
         :state          => {
           :checked  => checked,
           :expanded => expanded,
+          :selected => selected
         }.compact
-      }
-
-      node.delete_if { |_, v| v.nil? }
+      }.compact
     end
 
     class << self
