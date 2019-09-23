@@ -670,6 +670,7 @@ module OpsController::OpsRbac
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
+      rbac_group_set_record_description_role(record) # Set new Description, Role and Tenant for a new Group
       rbac_group_set_record_vars(record) if validated
     when :role  then
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
@@ -756,17 +757,7 @@ module OpsController::OpsRbac
 
     @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i) if rec_type == "user"
 
-    bad = case rec_type
-          when 'group'
-            @edit[:new].values_at(:role, :group_tenant, :description).any?(&:blank?)
-          when 'role'
-            @edit[:new][:name].blank?
-          else
-            false
-          end
-
-    # We need to consider also bad variable, for proper response of Add button
-    session[:changed] = changed = @edit[:new] != @edit[:current] && !bad
+    session[:changed] = changed = @edit[:new] != @edit[:current]
 
     render :update do |page|
       page << javascript_prologue
@@ -775,7 +766,6 @@ module OpsController::OpsRbac
           page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
-        bad = false
       else
         # only do following for user (adding/editing a user)
         if x_node.split("-").first == "u" || x_node == "xx-u"
@@ -1227,10 +1217,6 @@ module OpsController::OpsRbac
 
   # Set group record variables to new values
   def rbac_group_set_record_vars(group)
-    role = MiqUserRole.find(@edit[:new][:role])
-    group.description = @edit[:new][:description]
-    group.miq_user_role = role
-    group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
     if @edit[:new][:use_filter_expression]
       @edit[:new][:filters].clear
     else
@@ -1239,6 +1225,13 @@ module OpsController::OpsRbac
     end
 
     rbac_group_set_filters(group) # Go set the filters for the group
+  end
+
+  # Set group record variables such as Description, Role and Tenant to new values
+  def rbac_group_set_record_description_role(group)
+    group.description = @edit[:new][:description]
+    group.miq_user_role = MiqUserRole.find(@edit[:new][:role]) if @edit[:new][:role]
+    group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
   end
 
   # Set filters in the group record from the @edit[:new] hash values
@@ -1411,7 +1404,7 @@ module OpsController::OpsRbac
     @assigned_filters = [] if @edit[:new][:filters].empty? || @edit[:new][:use_filter_expression]
     @filter_expression = [] if @edit[:new][:filter_expression].empty? || @edit[:new][:use_filter_expression] == false
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
-      add_flash(_("A User Group must be assigned a Role"), :error)
+      add_flash(_("A Role must be assigned to this Group"), :error)
       return false
     end
     true
