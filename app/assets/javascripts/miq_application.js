@@ -324,14 +324,10 @@ function miqCheckForChanges() {
   }
 
   if (dirty && !ignore) {
-    var answer = confirm(__('Abandon changes?'));
-    if (answer && (type === 'angular')) {
-      ManageIQ.angular.scope.angularForm.$setPristine(true);
-    }
-    return answer;
+    return confirm(__('Abandon changes?'));
   }
 
-  // use default browser reaction for onclick
+  // not in a form => abandon anything
   return true;
 }
 
