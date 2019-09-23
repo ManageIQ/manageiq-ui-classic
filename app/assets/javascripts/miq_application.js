@@ -292,7 +292,7 @@ function miqCheckForChanges() {
   var dirty = false;
   var ignore = miqDomElementExists('ignore_form_changes');
 
-  if (ManageIQ.angular.scope.angularForm) {
+  if (ManageIQ.angular.form) {
     type = 'angular';
   }
 
@@ -311,7 +311,7 @@ function miqCheckForChanges() {
       break;
 
     case 'angular':
-      dirty = ManageIQ.angular.scope.angularForm.$dirty;
+      dirty = ManageIQ.angular.form.$dirty;
       break;
 
     case 'react':

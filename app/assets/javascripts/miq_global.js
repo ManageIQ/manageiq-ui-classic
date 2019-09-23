@@ -7,7 +7,7 @@ if (!window.ManageIQ) {
       app: null, // angular application
       eventNotificationsData: null, // used by the notification drawer
       rxSubject: null,  // an observable
-      scope: null,  // helper scope, pending refactor
+      form: null,  // $scope.angularForm, for miqCheckForChanges
     },
     browser: null, // browser name
     calendar: { // TODO about to be removed
