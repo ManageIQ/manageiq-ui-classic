@@ -119,6 +119,10 @@ class CloudObjectStoreContainerController < ApplicationController
 
   private
 
+  def record_class
+    params[:pressed].starts_with?('cloud_object_store_object') ? CloudObjectStoreObject : CloudObjectStoreContainer
+  end
+
   def retrieve_provider_regions
     managers = ManageIQ::Providers::CloudManager.supported_subclasses.select(&:supports_regions?)
     managers.each_with_object({}) do |manager, provider_regions|

@@ -146,6 +146,10 @@ class OrchestrationStackController < ApplicationController
 
   private
 
+  def record_class
+    params[:display] == 'instances' ? VmOrTemplate : OrchestrationStack
+  end
+
   def textual_group_list
     [%i[properties lifecycle relationships], %i[tags]]
   end

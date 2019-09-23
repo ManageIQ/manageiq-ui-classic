@@ -18,6 +18,10 @@ class MiqTemplateController < ApplicationController
 
   private
 
+  def record_class
+    MiqTemplate
+  end
+
   def get_session_data
     @title          = _("Templates")
     @layout         = session[:miq_template_type] ? session[:miq_template_type] : "miq_template"

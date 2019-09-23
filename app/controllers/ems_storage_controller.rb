@@ -73,6 +73,10 @@ class EmsStorageController < ApplicationController
 
   private
 
+  def record_class
+    params[:pressed].starts_with?('cloud_object_store_object') ? CloudObjectStoreObject : CloudObjectStoreContainer
+  end
+
   def textual_group_list
     [
       %i[properties status],
