@@ -298,9 +298,8 @@ function miqCheckForChanges() {
       }
       return answer;
     }
-  } else if (((miqDomElementExists('buttons_on') &&
-               $('#buttons_on').is(':visible')) ||
-              ManageIQ.changes !== null) &&
+  } else if (miqDomElementExists('buttons_on') &&
+             $('#buttons_on').is(':visible') &&
              !miqDomElementExists('ignore_form_changes')) {
     return confirm(__('Abandon changes?'));
   }

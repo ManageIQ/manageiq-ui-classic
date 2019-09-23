@@ -311,9 +311,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     load_c3_charts();
   }
 
-  if (data.resetChanges) {
-    ManageIQ.changes = null;
-  }
   if (data.resetOneTrans) {
     ManageIQ.oneTransition.oneTrans = 0;
   }

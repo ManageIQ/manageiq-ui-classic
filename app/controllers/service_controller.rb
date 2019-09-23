@@ -478,9 +478,6 @@ class ServiceController < ApplicationController
     presenter.set_visibility(!(@record || @in_a_form), :adv_searchbox_div)
     presenter[:clear_search_toggle] = clear_search_status
 
-    # unset variable that was set in form_field_changed to prompt for changes when leaving the screen
-    presenter.reset_changes
-
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
 
     render :json => presenter.for_render
