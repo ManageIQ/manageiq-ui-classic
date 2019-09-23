@@ -293,7 +293,7 @@ class InfraNetworkingController < ApplicationController
     end
 
     if action_type == "dialog_form_button_pressed"
-      presenter = set_custom_button_dialog_presenter
+      presenter = set_custom_button_dialog_presenter(options)
       render :json => presenter.for_render
       return
     end
