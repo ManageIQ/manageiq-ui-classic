@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import CloudTenantForm from '../../components/cloud-tenant-form/cloud-tenant-form';
+import { mount, shallow } from '../helpers/mountForm';
 
 require('../helpers/miqSparkle.js');
 require('../helpers/miqAjaxButton.js');

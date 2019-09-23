@@ -3,6 +3,8 @@ import createReducer from './reducer';
 import createMiddlewares from './middleware';
 import { history } from '../miq-component/react-history.js';
 
+import { reducer as formReducer } from './form-reducer';
+
 const initialState = {};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -17,7 +19,9 @@ const initializeStore = () => {
   /**
    * storage for all future reducers
    */
-  store.asyncReducers = {};
+  store.asyncReducers = {
+    formReducer,
+  };
 
   /**
    * @param {Object} reducers object where key is the name of reducer and value reducer function

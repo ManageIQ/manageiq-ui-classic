@@ -35,6 +35,10 @@ class TaggingWrapper extends React.Component {
     this.loadState(this.props.tags);
   }
 
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
   loadState = state => this.props.loadState(state);
   reset = () => this.props.reset();
   isLoaded = () => this.props.isLoaded();

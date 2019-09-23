@@ -31,3 +31,10 @@ document.body.createTextRange = () => ({
       right: 0,
     };
   }});
+
+// configure Redux store
+
+import initializeStore from '../app/javascript/miq-redux/store';
+
+ManageIQ.redux.store = initializeStore();
+ManageIQ.redux.store.injectReducers();

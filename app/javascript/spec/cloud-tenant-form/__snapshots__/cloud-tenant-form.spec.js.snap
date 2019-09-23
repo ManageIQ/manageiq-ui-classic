@@ -1,20 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud tenant form component should render adding form variant 1`] = `
-<div
-  className="container-fluid"
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
 >
   <h3>
     Basic Information
   </h3>
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Add",
       }
     }
     canReset={false}
-    className="form-react"
     onCancel={[Function]}
     onReset={[Function]}
     onSubmit={[Function]}
@@ -68,24 +69,25 @@ exports[`Cloud tenant form component should render adding form variant 1`] = `
       }
     }
   />
-</div>
+</Grid>
 `;
 
 exports[`Cloud tenant form component should render editing form variant 1`] = `
-<div
-  className="container-fluid"
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
 >
   <h3>
     Edit Cloud Tenant
   </h3>
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Save",
       }
     }
     canReset={true}
-    className="form-react"
     onCancel={[Function]}
     onReset={[Function]}
     onSubmit={[Function]}
@@ -108,5 +110,5 @@ exports[`Cloud tenant form component should render editing form variant 1`] = `
       }
     }
   />
-</div>
+</Grid>
 `;

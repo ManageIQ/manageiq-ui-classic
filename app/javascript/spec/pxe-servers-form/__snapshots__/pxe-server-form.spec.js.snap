@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PxeServersForm should render correctly 1`] = `
-<div
-  className="container-fluid"
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     canReset={false}
-    className="form-react"
     initialValues={Object {}}
     onCancel={[Function]}
     onSubmit={[Function]}
@@ -140,5 +141,5 @@ exports[`PxeServersForm should render correctly 1`] = `
       }
     }
   />
-</div>
+</Grid>
 `;

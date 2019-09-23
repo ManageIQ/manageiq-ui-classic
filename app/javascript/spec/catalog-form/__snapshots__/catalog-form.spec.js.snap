@@ -4,14 +4,13 @@ exports[`Catalog form component should render add variant form 1`] = `
 <div
   className="container-fluid"
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Add",
       }
     }
     canReset={false}
-    className="form-react"
     onCancel={[Function]}
     onReset={[Function]}
     onSubmit={[Function]}
@@ -85,14 +84,13 @@ exports[`Catalog form component should render edit variant form 1`] = `
 <div
   className="container-fluid"
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Save",
       }
     }
     canReset={true}
-    className="form-react"
     initialValues={
       Object {
         "description": "This is a DROGO!",

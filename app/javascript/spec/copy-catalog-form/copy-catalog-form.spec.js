@@ -1,10 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import CopyCatalogForm from '../../components/copy-catalog-form/copy-catalog-form';
 
 import '../helpers/miqAjaxButton';
 import MiqFormRenderer from '../../forms/data-driven-form';
+import { mount } from '../helpers/mountForm';
 
 describe('Copy catalog form', () => {
   let initialProps;

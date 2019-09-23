@@ -6,14 +6,13 @@ exports[`Cloud Network form component should render edit variant 1`] = `
   componentClass="div"
   fluid={true}
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Save",
       }
     }
     canReset={true}
-    className="form-react"
     initialValues={
       Object {
         "cidr": null,
@@ -310,14 +309,13 @@ exports[`Cloud Network form component should render form 1`] = `
   componentClass="div"
   fluid={true}
 >
-  <MiqFormRenderer
+  <Connect(MiqFormRenderer)
     buttonsLabels={
       Object {
         "submitLabel": "Add",
       }
     }
     canReset={false}
-    className="form-react"
     initialValues={
       Object {
         "enabled": true,

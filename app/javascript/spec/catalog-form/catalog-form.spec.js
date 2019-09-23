@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import CatalogForm from '../../components/catalog-form/catalog-form';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/addFlash';
+import { mount, shallow } from '../helpers/mountForm';
 
 describe('Catalog form component', () => {
   let submitSpyMiqSparkleOn;
@@ -58,7 +58,7 @@ describe('Catalog form component', () => {
 
   it('should render add variant form', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    const wrapper = shallow(<CatalogForm />);
+    const wrapper = shallow(<CatalogForm />).dive();
 
     setImmediate(() => {
       wrapper.update();
@@ -70,7 +70,7 @@ describe('Catalog form component', () => {
   it('should render edit variant form', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    const wrapper = shallow(<CatalogForm catalogId="1001" />);
+    const wrapper = shallow(<CatalogForm catalogId="1001" />).dive();
 
     setImmediate(() => {
       wrapper.update();
@@ -103,7 +103,7 @@ describe('Catalog form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().isLoaded).toBe(true);
+      expect(wrapper.children().state().isLoaded).toBe(true);
       expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
       done();
     });
@@ -121,12 +121,12 @@ describe('Catalog form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.state().initialValues).toEqual({
+      expect(wrapper.children().state().initialValues).toEqual({
         name: 'DROGO',
         description: 'This is a DROGO!',
         service_templates: rightValues,
       });
-      expect(wrapper.state().originalRightValues).toEqual(originalRightValues);
+      expect(wrapper.children().state().originalRightValues).toEqual(originalRightValues);
       expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
       done();
     });
@@ -138,7 +138,7 @@ describe('Catalog form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      const spy = jest.spyOn(wrapper.instance(), 'submitValues');
+      const spy = jest.spyOn(wrapper.children().instance(), 'submitValues');
       const button = wrapper.find('button').first();
       button.simulate('click');
       expect(spy).toHaveBeenCalledTimes(0);
@@ -159,7 +159,7 @@ describe('Catalog form component', () => {
         { key: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
       ],
     };
-    wrapper.instance().submitValues(values).then(() => {
+    wrapper.children().instance().submitValues(values).then(() => {
       expect(fetchMock.called(urlCreate)).toBe(true);
       expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit?button=add');
       done();
@@ -178,7 +178,7 @@ describe('Catalog form component', () => {
     fetchMock.postOnce(urlCreate, returnObject);
 
     const wrapper = mount(<CatalogForm />);
-    const spyHandleError = jest.spyOn(wrapper.instance(), 'handleError');
+    const spyHandleError = jest.spyOn(wrapper.children().instance(), 'handleError');
 
     expect(spyHandleError).not.toHaveBeenCalled();
 
@@ -190,7 +190,7 @@ describe('Catalog form component', () => {
       ],
     };
 
-    return wrapper.instance().submitValues(values).then(() => {
+    return wrapper.children().instance().submitValues(values).then(() => {
       expect(spyHandleError).toHaveBeenCalledWith(expect.objectContaining({ data: returnObject.body, status: returnObject.status }));
       done();
     });
@@ -210,9 +210,9 @@ describe('Catalog form component', () => {
     fetchMock.postOnce(apiBase, returnObject);
 
     const wrapper = mount(<CatalogForm catalogId="1001" />);
-    const spyHandleError = jest.spyOn(wrapper.instance(), 'handleError');
+    const spyHandleError = jest.spyOn(wrapper.children().instance(), 'handleError');
 
-    wrapper.instance().setState({ originalRightValues: [] });
+    wrapper.children().instance().setState({ originalRightValues: [] });
 
     expect(spyHandleError).not.toHaveBeenCalled();
 
@@ -222,7 +222,7 @@ describe('Catalog form component', () => {
       service_templates: [],
     };
 
-    return wrapper.instance().submitValues(values).then(() => {
+    return wrapper.children().instance().submitValues(values).then(() => {
       expect(spyHandleError).toHaveBeenCalledWith(expect.objectContaining({ data: returnObject.body, status: returnObject.status }));
       done();
     });
@@ -245,9 +245,9 @@ describe('Catalog form component', () => {
       ],
     };
 
-    wrapper.instance().setState({ originalRightValues });
+    wrapper.children().instance().setState({ originalRightValues });
 
-    wrapper.instance().submitValues(values).then(() => {
+    wrapper.children().instance().submitValues(values).then(() => {
       expect(fetchMock.called(apiBase)).toBe(true);
       expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(true);
       expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save');
@@ -270,9 +270,9 @@ describe('Catalog form component', () => {
       service_templates: rightValues,
     };
 
-    wrapper.instance().setState({ originalRightValues });
+    wrapper.children().instance().setState({ originalRightValues });
 
-    wrapper.instance().submitValues(values).then(() => {
+    wrapper.children().instance().submitValues(values).then(() => {
       expect(fetchMock.called(apiBase)).toBe(true);
       expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(false);
       expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save');
@@ -287,7 +287,7 @@ describe('Catalog form component', () => {
       };
       const wrapper = mount(<CatalogForm catalogId="1001" />);
 
-      expect(wrapper.instance().handleError(error)).toEqual(error.data.error.message);
+      expect(wrapper.children().instance().handleError(error)).toEqual(error.data.error.message);
     });
 
     it('should parse duplicate name error', () => {
@@ -296,7 +296,7 @@ describe('Catalog form component', () => {
       };
       const wrapper = mount(<CatalogForm catalogId="1001" />);
 
-      expect(wrapper.instance().handleError(error)).toEqual(__('Name has already been taken'));
+      expect(wrapper.children().instance().handleError(error)).toEqual(__('Name has already been taken'));
     });
   });
 });

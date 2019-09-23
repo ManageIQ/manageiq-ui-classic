@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
+import { mount } from '../helpers/mountForm';
 import OpsTenantForm from '../../components/ops-tenant-form/ops-tenant-form';
 import MiqFormRenderer from '../../forms/data-driven-form';
 

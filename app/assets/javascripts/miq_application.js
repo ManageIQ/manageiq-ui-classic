@@ -311,6 +311,12 @@ function miqCheckForChanges() {
     return confirm(__('Abandon changes?'));
   }
 
+  var formValues = ManageIQ.redux.store.getState().formReducer;
+
+  if (formValues && !formValues.pristine) {
+    return confirm(__('Abandon changes?'));
+  }
+
   // use default browser reaction for onclick
   return true;
 }

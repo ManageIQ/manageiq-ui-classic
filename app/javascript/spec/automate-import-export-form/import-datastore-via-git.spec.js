@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import ImportDatastoreViaGit from '../../components/automate-import-export-form/import-datastore-via-git';
 import '../helpers/addFlash';
+import { mount, shallow } from '../helpers/mountForm';
 
 describe('Import datastore via git component', () => {
   /**
