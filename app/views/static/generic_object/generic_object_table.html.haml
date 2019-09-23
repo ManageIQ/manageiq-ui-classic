@@ -54,5 +54,5 @@
                               "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
         %td.table-view-pf-actions
           .table-view-pf-btn
-            .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}
+            %button.btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}
               = _("Delete")
