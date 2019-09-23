@@ -380,6 +380,17 @@ class HostController < ApplicationController
 
   private
 
+  def record_class
+    case params[:display] || @display
+    when 'storages'
+      Storage
+    when 'vms', 'miq_templates'
+      VmOrTemplate
+    else
+      Host
+    end
+  end
+
   def textual_group_list
     [
       %i[properties relationships],

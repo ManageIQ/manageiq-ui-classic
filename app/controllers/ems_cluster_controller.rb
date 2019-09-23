@@ -95,6 +95,10 @@ class EmsClusterController < ApplicationController
 
   private
 
+  def record_class
+    %w[all_vms vms].include?(params[:display]) || params[:pressed].starts_with?('miq_template') ? VmOrTemplate : EmsCluster
+  end
+
   def textual_group_list
     [
       %i[relationships],

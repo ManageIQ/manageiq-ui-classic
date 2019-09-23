@@ -469,6 +469,10 @@ class StorageController < ApplicationController
 
   private
 
+  def record_class
+    %w[all_vms vms].include?(params[:display]) ? VmOrTemplate : Storage
+  end
+
   def session_reset
     if @record
       session[:edit] = @edit = nil
