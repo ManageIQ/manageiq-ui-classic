@@ -296,7 +296,7 @@ function miqCheckForChanges() {
     type = 'angular';
   }
 
-  if (ManageIQ.redux.store.getState().formReducer) {
+  if (ManageIQ.redux.store.getState().formReducer && ManageIQ.redux.store.getState().formReducer.in_a_form) {
     type = 'react';
   }
 

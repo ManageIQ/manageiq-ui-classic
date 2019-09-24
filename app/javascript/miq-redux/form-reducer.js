@@ -11,9 +11,17 @@ export const setPristine = pristine => ({
 export const reducer = (state = {}, action) => {
   switch (action.type) {
     case SET_PRISTINE:
-      return { ...state, pristine: action.payload.pristine };
+      return {
+        ...state,
+        pristine: action.payload.pristine,
+        in_a_form: true,
+      };
     case RESET:
-      return {};
+      return {
+        ...state,
+        pristine: undefined,
+        in_a_form: false,
+      };
     default:
       return state;
   }
