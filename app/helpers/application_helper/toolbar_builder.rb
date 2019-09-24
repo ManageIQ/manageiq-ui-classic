@@ -120,7 +120,7 @@ class ApplicationHelper::ToolbarBuilder
       :send_checked => input[:send_checked],
     )
 
-    button[:enabled] = input.key(:enabled) ? !!input[:enabled] : true
+    button[:enabled] = !!input[:enabled] if input.key?(:enabled)
     %i[title text confirm].each do |key|
       if input[key].present?
         button[key] = button.localized(key, input[key])
