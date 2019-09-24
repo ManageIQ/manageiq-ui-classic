@@ -37,6 +37,7 @@
           %th= _('Port')
           %th= _('Backlog')
           %th= _('Status')
+          %th= _('Region')
           %th{:colspan => 2}=_('Actions')
         %tbody
           %tr{"ng-if" => "pglogicalReplicationModel.addEnabled"}
@@ -74,6 +75,7 @@
                                   "id"          => "port",
                                   "name"        => "port",
                                   "ng-model"    => "pglogicalReplicationModel.port"}
+            %td
             %td
             %td
             %td{:class => "action-cell"}
@@ -148,6 +150,8 @@
               {{subscription.backlog}}
             %td
               {{subscription.status}}
+            %td
+              {{subscription.provider_region}}
             %td{:class => "action-cell", "ng-show" => "showCancelDelete($index)"}
               %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}
                 = _('Cancel Delete')
