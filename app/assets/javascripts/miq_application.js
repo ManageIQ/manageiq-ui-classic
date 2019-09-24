@@ -319,6 +319,7 @@ function miqCheckForChanges() {
       break;
 
     case 'tagging':
+      var taggingStore = ManageIQ.redux.store.getState().tagging;
       dirty = ! _.isEqual(taggingStore.appState.assignedTags, taggingStore.initialState.assignedTags);
       break;
   }
