@@ -11,7 +11,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
   $scope.modelCopy = angular.copy( $scope.hostAggregateModel );
   $scope.model = 'hostAggregateModel';
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.form = $scope.angularForm;
 
   if (hostAggregateFormId === 'new') {
     $scope.hostAggregateModel.name = '';

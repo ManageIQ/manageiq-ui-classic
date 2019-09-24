@@ -94,7 +94,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
     $scope.model = 'emsCommonModel';
 
-    ManageIQ.angular.scope = $scope;
+    ManageIQ.angular.form = $scope.angularForm;
 
     if (emsCommonFormId === 'new') {
       $scope.newRecord                  = true;

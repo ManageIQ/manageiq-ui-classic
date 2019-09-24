@@ -46,7 +46,7 @@ function aeMethodFormController($http, $scope, aeMethodFormId, currentRegion, mi
     vm.model = 'aeMethodModel';
     vm.inventory_mode = 'localhost';
 
-    ManageIQ.angular.scope = $scope;
+    ManageIQ.angular.form = $scope.angularForm;
 
     $http.get('/miq_ae_class/method_form_fields/' + aeMethodFormId + '?location=' + location)
       .then(getMethodFormData)
