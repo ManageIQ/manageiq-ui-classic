@@ -3,10 +3,7 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
   def override(node, object)
-    unless object.kind_of?(::VmOrTemplate)
-      node[:selectable] = false
-      node[:class] = append_no_cursor(node[:class])
-    end
+    node.selectable = false unless object.kind_of?(::VmOrTemplate)
   end
 
   def initialize(name, sandbox, build = true, **params)

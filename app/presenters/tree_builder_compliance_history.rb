@@ -3,8 +3,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   has_kids_for ComplianceDetail, %i[x_get_compliance_detail_kids parents]
 
   def override(node, _object)
-    node[:selectable] = false
-    node[:class] = append_no_cursor(node[:class])
+    node.selectable = false
   end
 
   def initialize(name, sandbox, build = true, **params)

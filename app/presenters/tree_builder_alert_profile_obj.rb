@@ -8,8 +8,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def override(node, object)
-    node[:state] ||= {}
-    node[:state][:checked] = @selected.try(:include?, object.id)
+    node.checked = @selected.try(:include?, object.id)
   end
 
   def tree_init_options

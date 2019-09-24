@@ -106,13 +106,6 @@ class TreeBuilder
 
   private
 
-  # Temporary method to append the no-cursor class to an already existing CSS class
-  # list. Eventually it should be removed after all the code from the override methods
-  # is moved into the TreeNode as a DSL.
-  def append_no_cursor(klass)
-    (klass || '').split(' ').push('no-cursor').join(' ')
-  end
-
   def build_tree
     @tree_nodes = x_build_tree
     active_node_set(@tree_nodes)
@@ -230,10 +223,10 @@ class TreeBuilder
   end
 
   def x_build_single_node(object, pid)
-    # FIXME: to_h is for backwards compatibility with hash-trees, it needs to be removed in the future
-    node = TreeNode.new(object, pid, self).to_h
+    node = TreeNode.new(object, pid, self)
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
-    node
+    # FIXME: to_h is for backwards compatibility with hash-trees, it needs to be removed in the future
+    node.to_h
   end
 
   # Handle custom tree nodes (object is a Hash)
