@@ -1,4 +1,4 @@
-angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
+angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', '$scope', function($q, providerId, $http, chartsMixin, miqService, $scope) {
   var vm = this;
   vm.id = 'trendsChart_' + providerId;
   var init = function() {

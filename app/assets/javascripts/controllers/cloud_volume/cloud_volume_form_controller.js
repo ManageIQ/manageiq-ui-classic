@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', '$scope', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q, $scope) {
   var vm = this;
 
   var init = function() {

@@ -1,4 +1,4 @@
-angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
+angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerController', ['$q', 'providerId', '$http', 'miqService', '$scope', function($q, providerId, $http, miqService, $scope) {
   var vm = this;
   var attributes = ['nodes', 'containers', 'registries', 'projects', 'pods', 'services', 'images', 'routes'];
   var attrHsh = {

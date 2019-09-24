@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
+angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', '$scope', function($q, providerId, $http, chartsMixin, miqService, $scope) {
   var vm = this;
   vm.id = 'recentPodsLineChart_' + providerId;
   vm.lineChartId = vm.id;

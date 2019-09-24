@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miqService', 'API', 'storageManagerId', function(miqService, API, storageManagerId) {
+ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miqService', 'API', 'storageManagerId', '$scope', function(miqService, API, storageManagerId, $scope) {
   var vm = this;
 
   var init = function() {

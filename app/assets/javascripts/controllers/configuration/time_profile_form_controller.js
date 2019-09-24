@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProfileFormId', 'timeProfileFormAction', 'miqService', function($http, timeProfileFormId, timeProfileFormAction, miqService) {
+ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProfileFormId', 'timeProfileFormAction', 'miqService', '$scope', function($http, timeProfileFormId, timeProfileFormAction, miqService, $scope) {
   var vm = this;
 
   var init = function() {

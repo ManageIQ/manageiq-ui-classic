@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', function($window, $q, credentialId,  miqService, API) {
+ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', '$scope', function($window, $q, credentialId,  miqService, API, $scope) {
   var vm = this;
 
   var optionsPromise = null;

@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerId, chartsMixin, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', '$scope', function($q, providerId, chartsMixin, $http, miqService, $scope) {
   var vm = this;
 
   var init = function() {

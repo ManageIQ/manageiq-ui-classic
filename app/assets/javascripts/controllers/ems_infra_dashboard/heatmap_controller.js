@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', '$scope', function($q, providerId, $http, miqService, $scope) {
   var vm = this;
   vm.id = 'heatmap_' + providerId;
   vm.data = {};

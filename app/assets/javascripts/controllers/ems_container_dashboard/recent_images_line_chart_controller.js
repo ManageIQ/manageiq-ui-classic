@@ -1,4 +1,4 @@
-angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
+angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', '$scope', function($q, providerId, $http, chartsMixin, miqService, $scope) {
   var vm = this;
   vm.id = 'recentImagesLineChart_' + providerId;
   var init = function() {
