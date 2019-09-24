@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProf
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
 
     vm.saveable = miqService.saveable;
 

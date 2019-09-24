@@ -7,7 +7,7 @@ ManageIQ.angular.app.controller('vmCloudAssociateFloatingIpFormController', ['$h
   vm.formId = vmCloudAssociateFloatingIpFormId;
   vm.modelCopy = angular.copy( vm.vmCloudModel );
 
-  ManageIQ.angular.form = $scope.angularForm;
+  ManageIQ.angular.scope = $scope;
 
   $http.get('/vm_cloud/associate_floating_ip_form_fields/' + vmCloudAssociateFloatingIpFormId)
     .then(getAssociateFloatingIpFormData)

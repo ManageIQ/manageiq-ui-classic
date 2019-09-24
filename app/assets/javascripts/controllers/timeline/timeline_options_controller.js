@@ -17,7 +17,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
       todayHighlight: true,
       orientation: 'bottom',
     };
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
     vm.availableCategories = categories;
   };
 

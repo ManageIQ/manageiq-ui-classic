@@ -33,7 +33,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     $scope.modelCopy = angular.copy( $scope.scheduleModel );
     $scope.model = 'scheduleModel';
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
 
     if (scheduleFormId === 'new') {
       $scope.newRecord                = true;

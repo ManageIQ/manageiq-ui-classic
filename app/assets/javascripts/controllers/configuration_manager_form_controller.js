@@ -12,7 +12,7 @@ ManageIQ.angular.app.controller('configurationManagerFormController', ['$http', 
   vm.validationUrl = url + '/authentication_validate/' + configurationManagerFormId + '?button=validate';
   vm.prefix = 'default';
 
-  ManageIQ.angular.form = $scope.angularForm;
+  ManageIQ.angular.scope = $scope;
 
   miqService.sparkleOn();
   if (configurationManagerFormId === 'new') {

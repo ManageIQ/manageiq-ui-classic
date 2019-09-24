@@ -61,7 +61,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     vm.inventory_mode = 'localhost';
     vm.all_catalogs = allCatalogsNames;
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
 
     if (catalogItemFormId === 'new') {
       $scope.newRecord = true;

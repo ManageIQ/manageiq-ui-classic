@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     $scope.afterGet = false;
     $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
     $scope.model = 'pglogicalReplicationModel';
     $scope.newRecord = false;
 

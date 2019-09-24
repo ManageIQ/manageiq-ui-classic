@@ -25,7 +25,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     vm.saveable = miqService.saveable;
     vm.prefix = 'log';
     vm.validateUrl = '/ops/log_depot_validate?button=validate&type=' + vm.prefix;
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
   };
 
   vm.validateClicked = function() {

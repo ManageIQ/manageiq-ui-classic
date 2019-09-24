@@ -26,7 +26,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.formFieldsUrl = $attrs.formFieldsUrl;
     $scope.updateUrl = $attrs.updateUrl;
     $scope.model = 'hostModel';
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
 
     if (hostFormId === 'new') {
       $scope.newRecord = true;

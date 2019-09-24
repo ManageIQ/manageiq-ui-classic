@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
   vm.formId = vmCloudLiveMigrateFormId;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
 
-  ManageIQ.angular.form = $scope.angularForm;
+  ManageIQ.angular.scope = $scope;
 
   if (vmCloudLiveMigrateFormId) {
     $http.get('/vm_cloud/live_migrate_form_fields/' + vmCloudLiveMigrateFormId)

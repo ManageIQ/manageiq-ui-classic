@@ -16,7 +16,7 @@ ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miq
     vm.model = 'cloudContainerModel';
     vm.newRecord = true;
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = miqService.saveable;
 
     miqService.sparkleOn();

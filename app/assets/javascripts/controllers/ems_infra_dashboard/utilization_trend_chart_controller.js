@@ -2,7 +2,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
   var vm = this;
 
   var init = function() {
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
     vm.data = {};
     vm.loadingDone = false;
 

@@ -17,7 +17,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
     vm.attributes = ['name', 'description', 'scm_url', 'authentication_id', 'scm_branch'];
     vm.model = 'repositoryModel';
 
-    ManageIQ.angular.form = $scope.angularForm;
+    ManageIQ.angular.scope = $scope;
 
     vm.saveable = miqService.saveable;
     vm.newRecord = repositoryId === 'new';
