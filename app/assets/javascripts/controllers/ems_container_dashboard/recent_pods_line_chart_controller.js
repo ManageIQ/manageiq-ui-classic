@@ -3,7 +3,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentPodsLineChartController
   vm.id = 'recentPodsLineChart_' + providerId;
   vm.lineChartId = vm.id;
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.loadingDone = false;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/container_dashboard/pod_metrics_data/' + providerId;

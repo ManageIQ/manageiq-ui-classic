@@ -31,7 +31,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
     vm.prefix = 'log';
     vm.model = 'logCollectionModel';
     vm.miqDBBackupService = miqDBBackupService;
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
 
     if (vm.recordId === 'new') {
       vm.logCollectionModel.depot_name = '';

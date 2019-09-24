@@ -2,7 +2,7 @@ angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', '
   var vm = this;
   vm.id = 'trendsChart_' + providerId;
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.loadingDone = false;
     var url = '/container_dashboard/network_metrics_data/' + providerId;
     var dataPromise = $http.get(url)

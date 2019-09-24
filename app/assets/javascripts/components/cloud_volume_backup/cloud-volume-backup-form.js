@@ -22,7 +22,7 @@ function cloudVolumeBackupFormController(miqService, $http) {
 
     vm.model = 'cloudVolumeBackupModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.saveable = function(form) {
       return form.$valid;
     };

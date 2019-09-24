@@ -4,7 +4,7 @@ angular.module( 'patternfly.charts' ).controller('heatmapContainerController', [
   vm.data = {};
 
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.timeframeLabel = __('Last 30 Days');
     vm.loadingDone = false;
     var url = '/container_dashboard/heatmaps_data/' + providerId;

@@ -19,7 +19,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     vm.newRecord = credentialId === 'new';
     vm.afterGet = false;
     vm.model = 'credentialModel';
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.saveable = miqService.saveable;
 
     vm.storedPasswordPlaceholder = miqService.storedPasswordPlaceholder;

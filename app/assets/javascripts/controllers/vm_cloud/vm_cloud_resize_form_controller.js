@@ -9,7 +9,7 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
     vm.formId = vmCloudResizeFormId;
     vm.objectId = objectId;
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
 
     vm.newRecord = vm.formId === 'new';
 

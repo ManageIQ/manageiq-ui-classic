@@ -20,7 +20,7 @@ function cloudSubnetFormController(API, miqService) {
 
     vm.formId = vm.cloudSubnetFormId;
     vm.model = 'cloudSubnetModel';
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.saveable = miqService.saveable;
 
     vm.newRecord = vm.cloudSubnetFormId === 'new';

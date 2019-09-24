@@ -15,7 +15,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.formId = cloudVolumeFormId;
     vm.model = 'cloudVolumeModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.saveable = miqService.saveable;
 
     vm.newRecord = cloudVolumeFormId === 'new';

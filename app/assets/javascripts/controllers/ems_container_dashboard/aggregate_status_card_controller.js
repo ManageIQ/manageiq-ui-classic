@@ -24,7 +24,7 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardContainerCont
   };
 
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.loadingDone = false;
     var url = '/container_dashboard/data/' + providerId;
     var promiseProviderData = $http.get(url)

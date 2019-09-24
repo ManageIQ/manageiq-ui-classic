@@ -2,7 +2,7 @@ angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartControll
   var vm = this;
   vm.id = 'recentImagesLineChart_' + providerId;
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.form = $scope.angularForm;
     vm.loadingDone = false;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/container_dashboard/image_metrics_data/' + providerId;
