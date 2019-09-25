@@ -24,4 +24,7 @@ module.exports = {
     'js',
     'jsx'
   ],
+  moduleNameMapper: {
+    "\\.(css|scss)$": "identity-obj-proxy"
+  },
 };
