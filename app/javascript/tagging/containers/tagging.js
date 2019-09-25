@@ -27,11 +27,11 @@ const mapDispatchToProps = dispatch => ({
   },
   onTagValueChange: (val, options) => {
     dispatch(toggleTagValueChange(val, options));
-    dispatch(changeAssignedTags(val));
+    dispatch(changeAssignedTags(val, options));
   },
-  onSingleTagValueChange: (val) => {
+  onSingleTagValueChange: (val, options) => {
     dispatch(deleteAllAssignedTags());
-    dispatch(changeAssignedTags(val));
+    dispatch(changeAssignedTags(val, options));
   },
   onLoadState: (state) => {
     dispatch(loadState(state));

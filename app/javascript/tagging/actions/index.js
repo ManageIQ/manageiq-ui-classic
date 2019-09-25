@@ -21,9 +21,10 @@ export const deleteAllAssignedTags = () => ({
   type: actions.DELETE_ALL_ASSIGNED_TAGS,
 });
 
-export const changeAssignedTags = tag => ({
+export const changeAssignedTags = (tag, meta) => ({
   type: actions.CHANGE_ASSIGNED_TAGS,
   tag,
+  meta,
 });
 
 export const loadState = initialState => ({
