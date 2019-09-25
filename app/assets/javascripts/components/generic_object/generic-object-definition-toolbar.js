@@ -72,7 +72,7 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
 
   function postAction() {
     var entityName = toolbar.entityName;
-    var saveMsg = sprintf(__('%s:"%s" was successfully deleted'), toolbar.entity, entityName);
+    var saveMsg = sprintf(__('%s: "%s" was successfully deleted'), toolbar.entity, entityName);
     if (toolbar.redirectUrl) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);
     } else {
