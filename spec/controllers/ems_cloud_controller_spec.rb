@@ -326,10 +326,11 @@ describe EmsCloudController do
         controller.send(:create_ems_button_validate)
       end
 
-      it "does not queue the authentication check if it is a cloud provider with a ui role" do
+      it "does queue the authentication check even if it is a cloud provider with a ui role" do
         session[:selected_roles] = ['user_interface']
 
-        expect(mocked_class).to receive(:raw_connect)
+        expect(mocked_class).not_to receive(:raw_connect)
+        expect(mocked_class).to receive(:validate_credentials_task)
         controller.send(:create_ems_button_validate)
       end
 
