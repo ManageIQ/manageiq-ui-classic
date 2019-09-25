@@ -1,4 +1,6 @@
 // jest.config.js
+const resolveModule = (name) => `<rootDir>/node_modules/${name}`;
+
 module.exports = {
   verbose: true,
   globals: {
@@ -12,6 +14,9 @@ module.exports = {
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '.(ts|tsx)': 'ts-jest'
+  },
+  moduleNameMapper: {
+    '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
   },
   moduleFileExtensions: [
     'ts',

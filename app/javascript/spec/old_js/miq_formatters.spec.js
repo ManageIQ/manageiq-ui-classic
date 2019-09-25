@@ -1,5 +1,7 @@
-describe('ManageIQ.charts.formatters', function() {
-  describe('curried/uncurried', function() {
+require('../helpers/miq_formatters_helper.js');
+
+describe('ManageIQ.charts.formatters', () => {
+  describe('curried/uncurried', () => {
     var options = {
       description: 'Number (1,234)',
       name: 'number_with_delimiter',
@@ -7,19 +9,19 @@ describe('ManageIQ.charts.formatters', function() {
       precision: 0,
     };
 
-    it('foo(val, opt)', function() {
+    it('foo(val, opt)', () => {
       var fn = ManageIQ.charts.formatters[options.name];
       expect(fn(1234, options)).toEqual('1,234');
     });
 
-    it('foo.c3(opt)(val)', function() {
+    it('foo.c3(opt)(val)', () => {
       var fn = ManageIQ.charts.formatters[options.name].c3(options);
       expect(fn(1234)).toEqual('1,234');
     });
   });
 
-  describe('.number_with_delimiter', function() {
-    it('Number (1,234)', function() {
+  describe('.number_with_delimiter', () => {
+    it('Number (1,234)', () => {
       var options = {
         description: 'Number (1,234)',
         name: 'number_with_delimiter',
@@ -31,7 +33,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(1234, options)).toEqual('1,234');
     });
 
-    it('Number (1,234.0)', function() {
+    it('Number (1,234.0)', () => {
       var options = {
         description: 'Number (1,234.0)',
         name: 'number_with_delimiter',
@@ -43,7 +45,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(1234, options)).toEqual('1,234.0');
     });
 
-    it('Number, 2 Decimals (1,234.00)', function() {
+    it('Number, 2 Decimals (1,234.00)', () => {
       var options = {
         description: 'Number, 2 Decimals (1,234.00)',
         name: 'number_with_delimiter',
@@ -55,7 +57,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(1234, options)).toEqual('1,234.00');
     });
 
-    it('Kilobytes per Second (10 KBps)', function() {
+    it('Kilobytes per Second (10 KBps)', () => {
       var options = {
         description: 'Kilobytes per Second (10 KBps)',
         name: 'number_with_delimiter',
@@ -68,7 +70,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(10, options)).toEqual('10 KBps');
     });
 
-    it('Percentage (99%)', function() {
+    it('Percentage (99%)', () => {
       var options = {
         description: 'Percentage (99%)',
         name: 'number_with_delimiter',
@@ -81,7 +83,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(99, options)).toEqual('99%');
     });
 
-    it('Percent, 1 Decimal (99.0%)', function() {
+    it('Percent, 1 Decimal (99.0%)', () => {
       var options = {
         description: 'Percent, 1 Decimal (99.0%)',
         name: 'number_with_delimiter',
@@ -94,7 +96,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(99, options)).toEqual('99.0%');
     });
 
-    it('Percent, 2 Decimals (99.00%)', function() {
+    it('Percent, 2 Decimals (99.00%)', () => {
       var options = {
         description: 'Percent, 2 Decimals (99.00%)',
         name: 'number_with_delimiter',
@@ -108,8 +110,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.currency_with_delimiter', function() {
-    it('Currency, 2 Decimals ($1,234.00)', function() {
+  describe('.currency_with_delimiter', () => {
+    it('Currency, 2 Decimals ($1,234.00)', () => {
       var options = {
         description: 'Currency, 2 Decimals ($1,234.00)',
         name: 'currency_with_delimiter',
@@ -122,8 +124,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.bytes_to_human_size', function() {
-    it('Suffixed Bytes (B, KB, MB, GB)', function() {
+  describe('.bytes_to_human_size', () => {
+    it('Suffixed Bytes (B, KB, MB, GB)', () => {
       var options = {
         description: 'Suffixed Bytes (B, KB, MB, GB)',
         name: 'bytes_to_human_size',
@@ -135,8 +137,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.bytes_to_human_size', function() {
-    it('Suffixed Bytes (B, KB, MB, GB)', function() {
+  describe('.bytes_to_human_size', () => {
+    it('Suffixed Bytes (B, KB, MB, GB)', () => {
       var options = {
         description: 'Suffixed Bytes (B, KB, MB, GB)',
         name: 'bytes_to_human_size',
@@ -148,8 +150,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.kbytes_to_human_size', function() {
-    it('Suffixed Kilobytes (KB, MB, GB)', function() {
+  describe('.kbytes_to_human_size', () => {
+    it('Suffixed Kilobytes (KB, MB, GB)', () => {
       var options = {
         description: 'Suffixed Kilobytes (KB, MB, GB)',
         name: 'kbytes_to_human_size',
@@ -161,8 +163,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.kbytes_to_human_size', function() {
-    it('Suffixed Kilobytes (KB, MB, GB)', function() {
+  describe('.kbytes_to_human_size', () => {
+    it('Suffixed Kilobytes (KB, MB, GB)', () => {
       var options = {
         description: 'Suffixed Kilobytes (KB, MB, GB)',
         name: 'kbytes_to_human_size',
@@ -174,8 +176,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.mbytes_to_human_size', function() {
-    it('Suffixed Megabytes (MB, GB)', function() {
+  describe('.mbytes_to_human_size', () => {
+    it('Suffixed Megabytes (MB, GB)', () => {
       var options = {
         description: 'Suffixed Megabytes (MB, GB)',
         name: 'mbytes_to_human_size',
@@ -187,8 +189,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.mbytes_to_human_size', function() {
-    it('Suffixed Megabytes (MB, GB)', function() {
+  describe('.mbytes_to_human_size', () => {
+    it('Suffixed Megabytes (MB, GB)', () => {
       var options = {
         description: 'Suffixed Megabytes (MB, GB)',
         name: 'mbytes_to_human_size',
@@ -200,8 +202,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.mbytes_to_human_size', function() {
-    it('Suffixed Megabytes (MB, GB)', function() {
+  describe('.mbytes_to_human_size', () => {
+    it('Suffixed Megabytes (MB, GB)', () => {
       var options = {
         description: 'Suffixed Megabytes (MB, GB)',
         name: 'mbytes_to_human_size',
@@ -213,8 +215,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.gbytes_to_human_size', function() {
-    it('Suffixed Gigabytes (GB)', function() {
+  describe('.gbytes_to_human_size', () => {
+    it('Suffixed Gigabytes (GB)', () => {
       var options = {
         description: 'Suffixed Gigabytes (GB)',
         name: 'gbytes_to_human_size',
@@ -226,8 +228,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.gbytes_to_human_size', function() {
-    it('Suffixed Gigabytes (GB)', function() {
+  describe('.gbytes_to_human_size', () => {
+    it('Suffixed Gigabytes (GB)', () => {
       var options = {
         description: 'Suffixed Gigabytes (GB)',
         name: 'gbytes_to_human_size',
@@ -239,8 +241,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.mhz_to_human_size', function() {
-    it('Megahertz (12 Mhz)', function() {
+  describe('.mhz_to_human_size', () => {
+    it('Megahertz (12 Mhz)', () => {
       var options = {
         description: 'Megahertz (12 Mhz)',
         name: 'mhz_to_human_size',
@@ -252,7 +254,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(12.1, options)).toEqual('12 MHz');
     });
 
-    it('Megahertz Avg (12.1 Mhz)', function() {
+    it('Megahertz Avg (12.1 Mhz)', () => {
       var options = {
         description: 'Megahertz Avg (12.1 Mhz)',
         name: 'mhz_to_human_size',
@@ -265,8 +267,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.boolean', function() {
-    it('Boolean (True/False)', function() {
+  describe('.boolean', () => {
+    it('Boolean (True/False)', () => {
       var options = {
         description: 'Boolean (True/False)',
         name: 'boolean',
@@ -277,7 +279,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(false, options)).toEqual('False');
     });
 
-    it('Boolean (T/F)', function() {
+    it('Boolean (T/F)', () => {
       var options = {
         description: 'Boolean (T/F)',
         name: 'boolean',
@@ -289,7 +291,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(false, options)).toEqual('F');
     });
 
-    it('Boolean (Yes/No)', function() {
+    it('Boolean (Yes/No)', () => {
       var options = {
         description: 'Boolean (Yes/No)',
         name: 'boolean',
@@ -301,7 +303,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(false, options)).toEqual('No');
     });
 
-    it('Boolean (Y/N)', function() {
+    it('Boolean (Y/N)', () => {
       var options = {
         description: 'Boolean (Y/N)',
         name: 'boolean',
@@ -313,7 +315,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(false, options)).toEqual('N');
     });
 
-    it('Boolean (Pass/Fail)', function() {
+    it('Boolean (Pass/Fail)', () => {
       var options = {
         description: 'Boolean (Pass/Fail)',
         name: 'boolean',
@@ -326,8 +328,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.datetime', function() {
-    it('Date (M/D/YYYY)', function() {
+  describe('.datetime', () => {
+    it('Date (M/D/YYYY)', () => {
       var options = {
         description: 'Date (M/D/YYYY)',
         name: 'datetime',
@@ -335,10 +337,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('03/14/2015');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('03/14/2015');
     });
 
-    it('Date (M/D/YY)', function() {
+    it('Date (M/D/YY)', () => {
       var options = {
         description: 'Date (M/D/YY)',
         name: 'datetime',
@@ -346,10 +348,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('03/14/15');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('03/14/15');
     });
 
-    it('Date (M/D)', function() {
+    it('Date (M/D)', () => {
       var options = {
         description: 'Date (M/D)',
         name: 'datetime',
@@ -357,10 +359,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('03/14');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('03/14');
     });
 
-    it('Time (HM:S Z)', function() {
+    it('Time (HM:S Z)', () => {
       var options = {
         description: 'Time (H:M:S Z) ',
         name: 'datetime',
@@ -371,7 +373,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('11:22 UTC');
     });
 
-    it('Date/Time (M/D/Y HM:S Z)', function() {
+    it('Date/Time (M/D/Y HM:S Z)', () => {
       var options = {
         description: 'Date/Time (M/D/Y H:M:S Z)',
         name: 'datetime',
@@ -382,7 +384,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('03/14/15 11:22:05 UTC');
     });
 
-    it('Date/Hour (M/D/Y H:00 Z)', function() {
+    it('Date/Hour (M/D/Y H:00 Z)', () => {
       var options = {
         description: 'Date/Hour (M/D/Y H:00 Z)',
         name: 'datetime',
@@ -393,7 +395,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('03/14/15 11:00 UTC');
     });
 
-    it('Date/Hour (M/D/Y H AM|PM Z)', function() {
+    it('Date/Hour (M/D/Y H AM|PM Z)', () => {
       var options = {
         description: 'Date/Hour (M/D/Y H AM|PM Z)',
         name: 'datetime',
@@ -404,7 +406,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('03/14/15 11 AM UTC');
     });
 
-    it('Hour (H:00 Z)', function() {
+    it('Hour (H:00 Z)', () => {
       var options = {
         description: 'Hour (H:00 Z)',
         name: 'datetime',
@@ -415,7 +417,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('11:00 UTC');
     });
 
-    it('Hour (H AM|PM Z)', function() {
+    it('Hour (H AM|PM Z)', () => {
       var options = {
         description: 'Hour (H AM|PM Z)',
         name: 'datetime',
@@ -426,7 +428,7 @@ describe('ManageIQ.charts.formatters', function() {
       expect(fn(moment.utc('2015-03-14T11:22:05Z'), options)).toEqual('11 AM UTC');
     });
 
-    it('Hour of Day (24)', function() {
+    it('Hour of Day (24)', () => {
       var options = {
         description: 'Hour of Day (24)',
         name: 'datetime',
@@ -434,10 +436,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('11');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('11');
     });
 
-    it('Day Full (Monday)', function() {
+    it('Day Full (Monday)', () => {
       var options = {
         description: 'Day Full (Monday)',
         name: 'datetime',
@@ -445,10 +447,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('Saturday');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('Saturday');
     });
 
-    it('Day Short (Mon)', function() {
+    it('Day Short (Mon)', () => {
       var options = {
         description: 'Day Short (Mon)',
         name: 'datetime',
@@ -456,10 +458,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('Sat');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('Sat');
     });
 
-    it('Day of Week (1)', function() {
+    it('Day of Week (1)', () => {
       var options = {
         description: 'Day of Week (1)',
         name: 'datetime',
@@ -467,10 +469,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('6');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('6');
     });
 
-    it('Day of Month (27)', function() {
+    it('Day of Month (27)', () => {
       var options = {
         description: 'Day of Month (27)',
         name: 'datetime',
@@ -478,10 +480,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('14');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('14');
     });
 
-    it('Month and Year (January 2011)', function() {
+    it('Month and Year (January 2011)', () => {
       var options = {
         description: 'Month and Year (January 2011)',
         name: 'datetime',
@@ -489,10 +491,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('March 2015');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('March 2015');
     });
 
-    it('Month and Year Short (Jan 11)', function() {
+    it('Month and Year Short (Jan 11)', () => {
       var options = {
         description: 'Month and Year Short (Jan 11)',
         name: 'datetime',
@@ -500,10 +502,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('Mar 15');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('Mar 15');
     });
 
-    it('Month Full (January)', function() {
+    it('Month Full (January)', () => {
       var options = {
         description: 'Month Full (January)',
         name: 'datetime',
@@ -511,10 +513,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('March');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('March');
     });
 
-    it('Month Short (Jan)', function() {
+    it('Month Short (Jan)', () => {
       var options = {
         description: 'Month Short (Jan)',
         name: 'datetime',
@@ -522,10 +524,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('Mar');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('Mar');
     });
 
-    it('Month of Year (12)', function() {
+    it('Month of Year (12)', () => {
       var options = {
         description: 'Month of Year (12)',
         name: 'datetime',
@@ -533,10 +535,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('03');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('03');
     });
 
-    it('Week of Year (52)', function() {
+    it('Week of Year (52)', () => {
       var options = {
         description: 'Week of Year (52)',
         name: 'datetime',
@@ -544,10 +546,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('11');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('11');
     });
 
-    it('Year (YYYY)', function() {
+    it('Year (YYYY)', () => {
       var options = {
         description: 'Year (YYYY)',
         name: 'datetime',
@@ -555,12 +557,11 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('2015');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('2015');
     });
   });
-
-  describe('.datetime_range', function() {
-    it('Date Range (M/D/Y - M/D/Y)', function() {
+  describe('.datetime_range', () => {
+    it('Date Range (M/D/Y - M/D/Y)', () => {
       var options = {
         description: 'Date Range (M/D/Y - M/D/Y)',
         name: 'datetime_range',
@@ -569,10 +570,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('(03/01/15 - 03/31/15)');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('(03/01/15 - 03/31/15)');
     });
 
-    it('Day Range (M/D - M/D)', function() {
+    it('Day Range (M/D - M/D)', () => {
       var options = {
         description: 'Day Range (M/D - M/D)',
         name: 'datetime_range',
@@ -581,10 +582,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('(03/08 - 03/14)');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('(03/08 - 03/14)');
     });
 
-    it('Day Range Start (M/D)', function() {
+    it('Day Range Start (M/D)', () => {
       var options = {
         description: 'Day Range Start (M/D)',
         name: 'datetime_range',
@@ -593,12 +594,12 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 05), options)).toEqual('01/01');
+      expect(fn(new Date(2015, 3 - 1, 14, 11, 22, 5), options)).toEqual('01/01');
     });
   });
 
-  describe('.set', function() {
-    it('Comma seperated list', function() {
+  describe('.set', () => {
+    it('Comma seperated list', () => {
       var options = {
         description: 'Comma seperated list',
         name: 'set',
@@ -610,8 +611,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.datetime_ordinal', function() {
-    it('Day of Month (27th)', function() {
+  describe('.datetime_ordinal', () => {
+    it('Day of Month (27th)', () => {
       var options = {
         description: 'Day of Month (27th)',
         name: 'datetime_ordinal',
@@ -619,10 +620,10 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 7 - 1, 27, 00, 00, 00), options)).toEqual('27th');
+      expect(fn(new Date(2015, 7 - 1, 27, 0, 0, 0), options)).toEqual('27th');
     });
 
-    it('Week of Year (52nd)', function() {
+    it('Week of Year (52nd)', () => {
       var options = {
         description: 'Week of Year (52nd)',
         name: 'datetime_ordinal',
@@ -630,12 +631,12 @@ describe('ManageIQ.charts.formatters', function() {
       };
       var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(new Date(2015, 12 - 1, 21, 00, 00, 00), options)).toEqual('52nd');
+      expect(fn(new Date(2015, 12 - 1, 21, 0, 0, 0), options)).toEqual('52nd');
     });
   });
 
-  describe('.elapsed_time_human', function() {
-    it('"Elapsed Time (10 Days, 0 Hours, 1 Minute, 44 Seconds)"', function() {
+  describe('.elapsed_time_human', () => {
+    it('"Elapsed Time (10 Days, 0 Hours, 1 Minute, 44 Seconds)"', () => {
       var options = {
         description: '"Elapsed Time (10 Days, 0 Hours, 1 Minute, 44 Seconds)"',
         name: 'elapsed_time_human',
@@ -646,8 +647,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.string_truncate', function() {
-    it('String Truncated to 50 Characters with Elipses (...)', function() {
+  describe('.string_truncate', () => {
+    it('String Truncated to 50 Characters with Elipses (...)', () => {
       var options = {
         description: 'String Truncated to 50 Characters with Elipses (...)',
         name: 'string_truncate',
@@ -659,8 +660,8 @@ describe('ManageIQ.charts.formatters', function() {
     });
   });
 
-  describe('.large_number_to_exponential_form', function() {
-    it('Convert Numbers Larger than 1.0e+15 to Exponential Form', function() {
+  describe('.large_number_to_exponential_form', () => {
+    it('Convert Numbers Larger than 1.0e+15 to Exponential Form', () => {
       var options = {
         description: 'Convert Numbers Larger than 1.0e+15 to Exponential Form',
         name: 'large_number_to_exponential_form',

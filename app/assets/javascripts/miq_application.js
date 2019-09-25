@@ -239,7 +239,7 @@ function miqSparkle(status) {
   }
 }
 
-function miqSparkleOn() {
+window.miqSparkleOn = function() {
   if (miqDomElementExists('advsearchModal') &&
       ($('#advsearchModal').hasClass('modal fade in'))) {
     if (miqDomElementExists('searching_spinner_center')) {
@@ -476,9 +476,9 @@ function miqResetSizeTimer() {
 }
 
 // Pass fields to server given a URL and fields in name/value pairs
-function miqPassFields(url, args) {
+window.miqPassFields = function (url, args) {
   return url + '?' + $.param(args);
-}
+};
 
 function miqChartLinkData(col, row, value, category, series, id, message) {
   // Create the context menu
@@ -1117,8 +1117,8 @@ function miqObserveRequest(url, options) {
   return deferred.promise;
 }
 
-function miqJqueryRequest(url, options) {
-  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (!options || !options.observe)) {
+window.miqJqueryRequest = function(url, options) {
+  if ((ManageIQ.observe.processing || ManageIQ.observe.queue.length) && (! options || ! options.observe)) {
     console.debug('Postponing miqJqueryRequest - waiting for the observe queue to empty first');
 
     return new Promise(function(resolve, reject) {
