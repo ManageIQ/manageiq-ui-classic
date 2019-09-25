@@ -25,6 +25,7 @@ module.exports = {
     'jsx'
   ],
   moduleNameMapper: {
-    "\\.(css|scss)$": "identity-obj-proxy"
+    "\\.(css|scss)$": "identity-obj-proxy",
+    '^react$': '<rootDir>/node_modules/react/'
   },
 };
