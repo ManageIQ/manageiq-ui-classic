@@ -49,7 +49,7 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     vm.availableIsoFiles = [];
     vm.selected_iso = ['', null];
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
 
     if (reconfigureFormId === 'new') {
       vm.newRecord = true;

@@ -8,12 +8,14 @@ ManageIQ.angular.app.component('genericObjectDefinition', {
   templateUrl: '/static/generic_object/generic_object_definition.html.haml',
 });
 
-genericObjectDefinitionFormController.$inject = ['API', 'miqService', '$q'];
+genericObjectDefinitionFormController.$inject = ['API', 'miqService', '$q', '$scope'];
 
-function genericObjectDefinitionFormController(API, miqService, $q) {
+function genericObjectDefinitionFormController(API, miqService, $q, $scope) {
   var vm = this;
 
   vm.$onInit = function() {
+    ManageIQ.angular.scope = $scope;
+
     vm.entity = __('Generic Object Class');
     vm.saveable = miqService.saveable;
     vm.afterGet = false;

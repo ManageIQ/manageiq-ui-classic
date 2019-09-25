@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miqService', 'API', 'storageManagerId', function(miqService, API, storageManagerId) {
+ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miqService', 'API', 'storageManagerId', '$scope', function(miqService, API, storageManagerId, $scope) {
   var vm = this;
 
   var init = function() {
@@ -16,7 +16,7 @@ ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miq
     vm.model = 'cloudContainerModel';
     vm.newRecord = true;
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = miqService.saveable;
 
     miqService.sparkleOn();

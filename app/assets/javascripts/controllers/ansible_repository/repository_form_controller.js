@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', '$window', function(repositoryId, miqService, API, $window) {
+ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', '$window', '$scope', function(repositoryId, miqService, API, $window, $scope) {
   var vm = this;
 
   var init = function() {
@@ -17,7 +17,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'mi
     vm.attributes = ['name', 'description', 'scm_url', 'authentication_id', 'scm_branch'];
     vm.model = 'repositoryModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
 
     vm.saveable = miqService.saveable;
     vm.newRecord = repositoryId === 'new';

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', function(miqService, url, categories) {
+ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url', 'categories', '$scope', function(miqService, url, categories, $scope) {
   var vm = this;
   var init = function() {
     vm.reportModel = {
@@ -17,7 +17,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['miqService', 'url
       todayHighlight: true,
       orientation: 'bottom',
     };
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.availableCategories = categories;
   };
 

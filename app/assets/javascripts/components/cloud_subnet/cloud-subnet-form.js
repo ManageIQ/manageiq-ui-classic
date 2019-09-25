@@ -7,9 +7,9 @@ ManageIQ.angular.app.component('cloudSubnetForm', {
   templateUrl: '/static/cloud_subnet/cloud-subnet-form.html.haml',
 });
 
-cloudSubnetFormController.$inject = ['API', 'miqService'];
+cloudSubnetFormController.$inject = ['API', 'miqService', '$scope'];
 
-function cloudSubnetFormController(API, miqService) {
+function cloudSubnetFormController(API, miqService, $scope) {
   var vm = this;
 
   this.$onInit = function() {
@@ -20,7 +20,7 @@ function cloudSubnetFormController(API, miqService) {
 
     vm.formId = vm.cloudSubnetFormId;
     vm.model = 'cloudSubnetModel';
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = miqService.saveable;
 
     vm.newRecord = vm.cloudSubnetFormId === 'new';

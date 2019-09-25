@@ -88,11 +88,6 @@ class ExplorerPresenter
     self
   end
 
-  def reset_changes
-    @options[:reset_changes] = true
-    self
-  end
-
   def reset_one_trans
     @options[:reset_one_trans] = true
     self
@@ -308,7 +303,6 @@ class ExplorerPresenter
 
     data[:lockSidebar] = !!@options[:lock_sidebar]
     data[:chartData] = @options[:load_chart]
-    data[:resetChanges] = !!@options[:reset_changes]
     data[:removePaging] = !!@options[:remove_paging]
     data[:resetOneTrans] = !!@options[:reset_one_trans]
     data[:focus] = @options[:focus]

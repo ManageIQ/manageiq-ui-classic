@@ -6,7 +6,7 @@ ManageIQ.angular.app.controller('vmCloudDetachFormController', ['$scope', 'vmClo
   vm.afterGet = false;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
 
-  ManageIQ.angular.scope = vm;
+  ManageIQ.angular.scope = $scope;
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();

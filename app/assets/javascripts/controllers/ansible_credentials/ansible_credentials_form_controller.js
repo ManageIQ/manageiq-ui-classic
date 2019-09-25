@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', function($window, $q, credentialId,  miqService, API) {
+ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', '$scope', function($window, $q, credentialId,  miqService, API, $scope) {
   var vm = this;
 
   var optionsPromise = null;
@@ -19,7 +19,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     vm.newRecord = credentialId === 'new';
     vm.afterGet = false;
     vm.model = 'credentialModel';
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = miqService.saveable;
 
     vm.storedPasswordPlaceholder = miqService.storedPasswordPlaceholder;

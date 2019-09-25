@@ -1,8 +1,8 @@
-angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
+angular.module( 'patternfly.charts' ).controller( 'recentImagesLineChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', '$scope', function($q, providerId, $http, chartsMixin, miqService, $scope) {
   var vm = this;
   vm.id = 'recentImagesLineChart_' + providerId;
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.loadingDone = false;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/container_dashboard/image_metrics_data/' + providerId;

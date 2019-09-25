@@ -288,36 +288,47 @@ function miqDimDiv(divname, status) {
 
 // Check for changes and prompt
 function miqCheckForChanges() {
-  if (ManageIQ.angular.scope) {
-    if (ManageIQ.angular.scope.angularForm !== undefined &&
-      ManageIQ.angular.scope.angularForm.$dirty &&
-      !miqDomElementExists('ignore_form_changes')) {
-      var answer = confirm(__('Abandon changes?'));
-      if (answer) {
-        ManageIQ.angular.scope.angularForm.$setPristine(true);
-      }
-      return answer;
-    }
-  } else if (((miqDomElementExists('buttons_on') &&
-               $('#buttons_on').is(':visible')) ||
-              ManageIQ.changes !== null) &&
-             !miqDomElementExists('ignore_form_changes')) {
+  var type = 'old'; // 'old' | 'angular' | 'tagging' | 'react'
+  var dirty = false;
+  var ignore = miqDomElementExists('ignore_form_changes');
+
+  if (ManageIQ.angular.scope && ManageIQ.angular.scope.angularForm) {
+    type = 'angular';
+  }
+
+  if (ManageIQ.redux.store.getState().formReducer && ManageIQ.redux.store.getState().formReducer.in_a_form) {
+    type = 'react';
+  }
+
+  // FIXME: this should not be a special case here, it should use the react reducer
+  if (ManageIQ.redux.store.getState().tagging) {
+    type = 'tagging';
+  }
+
+  switch (type) {
+    case 'old':
+      dirty = $('#buttons_on').is(':visible');
+      break;
+
+    case 'angular':
+      dirty = ManageIQ.angular.scope.angularForm.$dirty;
+      break;
+
+    case 'react':
+      dirty = ! ManageIQ.redux.store.getState().formReducer.pristine;
+      break;
+
+    case 'tagging':
+      var taggingStore = ManageIQ.redux.store.getState().tagging;
+      dirty = ! _.isEqual(taggingStore.appState.assignedTags, taggingStore.initialState.assignedTags);
+      break;
+  }
+
+  if (dirty && !ignore) {
     return confirm(__('Abandon changes?'));
   }
 
-  var taggingStore = ManageIQ.redux.store.getState().tagging;
-
-  if (taggingStore && !_.isEqual(taggingStore.appState.assignedTags, taggingStore.initialState.assignedTags)) {
-    return confirm(__('Abandon changes?'));
-  }
-
-  var formValues = ManageIQ.redux.store.getState().formReducer;
-
-  if (formValues && !formValues.pristine) {
-    return confirm(__('Abandon changes?'));
-  }
-
-  // use default browser reaction for onclick
+  // not in a form => abandon anything
   return true;
 }
 

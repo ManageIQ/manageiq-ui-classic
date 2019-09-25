@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'cloudVolumeFormOperation', 'storageManagerId', '$timeout', '$q', '$scope', function(miqService, API, cloudVolumeFormId, cloudVolumeFormOperation, storageManagerId, $timeout, $q, $scope) {
   var vm = this;
 
   var init = function() {
@@ -15,7 +15,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.formId = cloudVolumeFormId;
     vm.model = 'cloudVolumeModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = miqService.saveable;
 
     vm.newRecord = cloudVolumeFormId === 'new';

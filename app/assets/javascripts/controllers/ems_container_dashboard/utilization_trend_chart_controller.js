@@ -1,8 +1,8 @@
-angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainerController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', function($q, providerId, chartsMixin, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller('utilizationTrendChartContainerController', ['$q', 'providerId', 'chartsMixin', '$http', 'miqService', '$scope', function($q, providerId, chartsMixin, $http, miqService, $scope) {
   var vm = this;
 
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.data = {};
     vm.loadingDone = false;
 

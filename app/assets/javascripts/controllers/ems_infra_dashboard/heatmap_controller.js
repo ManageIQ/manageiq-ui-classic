@@ -1,10 +1,10 @@
-angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', function($q, providerId, $http, miqService) {
+angular.module( 'patternfly.charts' ).controller('heatmapController', ['$q', 'providerId', '$http', 'miqService', '$scope', function($q, providerId, $http, miqService, $scope) {
   var vm = this;
   vm.id = 'heatmap_' + providerId;
   vm.data = {};
 
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.timeframeLabel = __('Last 30 Days');
     var url = '/ems_infra_dashboard/cluster_metrics_data/' + providerId;
     var heatmapPromise = $http.get(url)

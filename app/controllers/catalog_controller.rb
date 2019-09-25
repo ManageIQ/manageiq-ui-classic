@@ -432,7 +432,6 @@ class CatalogController < ApplicationController
       end
       if changed != session[:changed]
         session[:changed] = changed
-        page << "ManageIQ.changes = true;"
         page << javascript_for_miq_button_visibility(changed)
       end
       page << "miqSparkle(false);"
@@ -502,7 +501,6 @@ class CatalogController < ApplicationController
       page.replace("resources_info_div", :partial => "form_resources_info")
       if changed != session[:changed]
         session[:changed] = changed
-        page << "ManageIQ.changes = true;"
         page << javascript_for_miq_button_visibility(changed)
       end
       page << "miqSparkle(false);"
@@ -1938,7 +1936,6 @@ class CatalogController < ApplicationController
     presenter[:record_id] = determine_record_id_for_presenter
     presenter[:lock_sidebar] = @edit && @edit[:current] || action == 'copy_catalog'
     presenter[:osf_node] = x_node
-    presenter.reset_changes
     presenter.reset_one_trans
 
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])

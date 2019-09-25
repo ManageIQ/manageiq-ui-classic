@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
     vm.modelCopy = angular.copy( vm.tenantQuotaModel );
     vm.model = 'tenantQuotaModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.newRecord = false;
     miqService.sparkleOn();
     $http.get('/ops/tenant_quotas_form_fields/' + tenantQuotaFormId)

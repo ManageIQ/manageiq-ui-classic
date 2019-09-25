@@ -7,9 +7,9 @@ ManageIQ.angular.app.component('cloudVolumeBackupForm', {
   },
 });
 
-cloudVolumeBackupFormController.$inject = ['miqService', '$http'];
+cloudVolumeBackupFormController.$inject = ['miqService', '$http', '$scope'];
 
-function cloudVolumeBackupFormController(miqService, $http) {
+function cloudVolumeBackupFormController(miqService, $http, $scope) {
   var vm = this;
 
   var init = function() {
@@ -22,7 +22,7 @@ function cloudVolumeBackupFormController(miqService, $http) {
 
     vm.model = 'cloudVolumeBackupModel';
 
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.saveable = function(form) {
       return form.$valid;
     };

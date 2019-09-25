@@ -1,8 +1,8 @@
-angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', function($q, providerId, $http, chartsMixin, miqService) {
+angular.module( 'patternfly.card' ).controller('trendsChartController', ['$q', 'providerId', '$http', 'chartsMixin', 'miqService', '$scope', function($q, providerId, $http, chartsMixin, miqService, $scope) {
   var vm = this;
   vm.id = 'trendsChart_' + providerId;
   var init = function() {
-    ManageIQ.angular.scope = vm;
+    ManageIQ.angular.scope = $scope;
     vm.loadingDone = false;
     var url = '/container_dashboard/network_metrics_data/' + providerId;
     var dataPromise = $http.get(url)

@@ -81,10 +81,4 @@ function tree_action() {
       window.location.href = "/generic_object_definition/show_list";
     }
   });
-};
-
-function miqCallAngular(data) {
-  ManageIQ.angular.scope.$apply(function() {
-    ManageIQ.angular.scope[data.name].apply(ManageIQ.angular.scope, data.args);
-  });
 }
