@@ -11,8 +11,9 @@ const SecondLevel = ({
   items,
   level,
   type,
+  active,
 }) => (
-  <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''}`} data-target={`#menu-${id}`}>
+  <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`}>
     <a
       href={getHrefByType(type, href, id)}
       onMouseDown={() => {
