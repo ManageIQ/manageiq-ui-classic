@@ -141,7 +141,6 @@ const onViewClick = (button) => {
 };
 
 const onRowSelect = (isChecked, dispatch) => {
-  console.log('onRowSelect', isChecked);
   dispatch({ type: isChecked ? 'INCREMENT' : 'DECREMENT' });
 };
 

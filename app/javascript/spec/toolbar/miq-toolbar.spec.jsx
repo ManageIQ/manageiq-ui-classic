@@ -1,47 +1,60 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import MiqToolbar from '../../components/miq-toolbar';
+import MiqToolbar, { MiqGenericToolbar } from '../../components/miq-toolbar';
 import DashboardToolbar from '../../components/dashboard_toolbar';
 import TopologyToolbar from '../../components/topology_toolbar';
 
 const dashboardData = [
   [
     {
-      "custom": true,
-      "name": "dashboard",
-      "props": {
-        "allowAdd":true,
-        "allowReset":true,
-        "locked":false,
-        "items":[
-            {"id":31,"type":"button","text":"add","image":"fa fa-pie-chart fa-lg","title":"Add this Chart Widget"},
+      custom: true,
+      name: 'dashboard',
+      props: {
+        allowAdd: true,
+        allowReset: true,
+        locked: false,
+        items: [
+          {
+            id: 31, type: 'button', text: 'add', image: 'fa fa-pie-chart fa-lg', title: 'Add',
+          },
         ],
-      }
-    }
-  ]
+      },
+    },
+  ],
 ];
 
-const topologyData = [[{"custom": true, "name": "topology", "props": {}}]];
+const genericData = [
+  [
+    {
+      id: 'summary_reload',
+      type: 'button',
+      icon: 'fa fa-refresh fa-lg',
+      name: 'summary_reload',
+      title: 'Refresh this page',
+    },
+  ],
+];
+
+const topologyData = [[{ custom: true, name: 'topology', props: {} }]];
 
 describe('<MiqToolbar />', () => {
-  beforeEach(() => {  
-    console.log('FOOOOOBAR');
+  beforeEach(() => {
     window.matchMedia = jest.fn();
-    console.log('FOOOOOBAR 2');
   });
 
-  it('renders DashboardToolbar', (done) => {
+  it('renders DashboardToolbar', () => {
     const t = shallow(<MiqToolbar toolbars={dashboardData} />);
     expect(t.find(DashboardToolbar)).toHaveLength(1);
   });
 
-  it('renders TopologyToolbar', (done) => {
+  it('renders TopologyToolbar', () => {
     const t = shallow(<MiqToolbar toolbars={topologyData} />);
     expect(t.find(TopologyToolbar)).toHaveLength(1);
   });
 
-//  it('renders MiqGenericToolbar', (done) => {
-//    const t = shallow(<MiqToolbar toolbars={genericData} />);
-//  });
+  it('renders MiqGenericToolbar', () => {
+    const t = shallow(<MiqToolbar toolbars={genericData} />);
+    expect(t.find(MiqGenericToolbar)).toHaveLength(1);
+  });
 });

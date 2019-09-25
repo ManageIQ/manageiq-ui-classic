@@ -1,13 +1,26 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import fetchMock from 'fetch-mock';
-import { act } from 'react-test-renderer';
+import toJson from 'enzyme-to-json';
 
-import './helpers/mockAsyncRequest';
-import './helpers/miqSparkle';
+import { MiqGenericToolbar } from '../../components/miq-toolbar';
 
-import { MiqGenericToolbar } from '../components/report-data-table';
+const genericTbProps = {
+  toolbars: [
+    [
+      {
+        id: 'summary_reload',
+        type: 'button',
+        icon: 'fa fa-refresh fa-lg',
+        name: 'summary_reload',
+        title: 'Refresh this page',
+      },
+    ],
+  ],
+};
 
 describe('<MiqGenericToolbar />', () => {
+  it('renders ok', () => {
+    const t = mount(<MiqGenericToolbar {...genericTbProps} />);
+    expect(toJson(t)).toMatchSnapshot();
   });
 });

@@ -47,18 +47,13 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
               <DropdownToggle
                 bsClass="dropdown-toggle"
                 bsRole="toggle"
-                componentClass={[Function]}
                 disabled={false}
                 id="dropdown-custom-2"
                 key=".0"
                 onClick={[Function]}
                 onKeyDown={[Function]}
                 open={false}
-                title={
-                  <span
-                    className="fa fa-plus fa-lg"
-                  />
-                }
+                title="Add a widget"
                 useAnchor={false}
               >
                 <Button
@@ -69,19 +64,14 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                   bsClass="btn"
                   bsStyle="default"
                   className="dropdown-toggle"
-                  componentClass={[Function]}
                   disabled={false}
                   id="dropdown-custom-2"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   role="button"
-                  title={
-                    <span
-                      className="fa fa-plus fa-lg"
-                    />
-                  }
+                  title="Add a widget"
                 >
-                  <componentClass
+                  <button
                     aria-expanded={false}
                     aria-haspopup={true}
                     className="dropdown-toggle btn btn-default"
@@ -90,34 +80,17 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
-                    title={
-                      <span
-                        className="fa fa-plus fa-lg"
-                      />
-                    }
+                    title="Add a widget"
                     type="button"
                   >
-                    <button
-                      aria-expanded={false}
-                      aria-haspopup={true}
-                      className="dropdown-toggle btn btn-default"
-                      disabled={false}
-                      id="dropdown-custom-2"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      role="button"
-                      title="Add a widget"
-                      type="button"
-                    >
-                      <span
-                        className="fa fa-plus fa-lg"
-                      />
-                       
-                      <span
-                        className="caret"
-                      />
-                    </button>
-                  </componentClass>
+                    <span
+                      className="fa fa-plus fa-lg"
+                    />
+                     
+                    <span
+                      className="caret"
+                    />
+                  </button>
                 </Button>
               </DropdownToggle>
               <DropdownMenu
