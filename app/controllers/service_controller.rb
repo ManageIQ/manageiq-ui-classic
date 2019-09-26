@@ -533,11 +533,20 @@ class ServiceController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Services")},
-        {:title => _("My services")},
+        {:title => _("My services"), :url => (url_for(:action => 'explorer', :controller => controller_name) if generic_objects_list?)},
       ],
-      :record_info => @service,
+      :record_info => (hide_record_info? ? {} : @service),
       :ancestry    => Service,
+      :not_tree    => generic_objects_list?,
     }
+  end
+
+  def generic_objects_list?
+    params[:display] == 'generic_objects'
+  end
+
+  def hide_record_info?
+    generic_objects_list? && !params[:generic_object_id]
   end
 
   menu_section :svc

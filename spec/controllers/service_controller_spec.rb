@@ -1,7 +1,6 @@
 describe ServiceController do
   before do
     stub_user(:features => :all)
-    allow(controller).to receive(:data_for_breadcrumbs).and_return({})
   end
 
   let(:go_definition) do
@@ -430,6 +429,50 @@ describe ServiceController do
         controller.send(:get_node_info, 'xx-rsrv')
         expect(controller.session[:edit]).to be_nil
         expect(controller.session[:adv_search]["Service"]).to be_nil
+      end
+    end
+  end
+
+  describe "breadcrumbs" do
+    context "generic_objects" do
+      before { get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'} }
+
+      it "contains url to all services" do
+        expect(controller.data_for_breadcrumbs.find { |x| x[:title] == 'My services' }[:url]).to end_with('service/explorer')
+      end
+
+      it "contains breadcrumbs with item" do
+        expect(controller.data_for_breadcrumbs.find { |x| x[:title].include?(service_with_go.name) }).to be_truthy
+      end
+    end
+
+    describe "helpers" do
+      describe "generic_objects_list?" do
+        it "returns true when user is in generic_objects section" do
+          get :show, :params => { :id => service_with_go.id, :display => 'generic_objects'}
+
+          expect(controller.send(:generic_objects_list?)).to eq(true)
+        end
+
+        it "returns true when user is not in generic_objects section" do
+          get :show, :params => { :id => service_with_go.id }
+
+          expect(controller.send(:generic_objects_list?)).to eq(false)
+        end
+      end
+
+      describe "hide_record_info?" do
+        it "returns false when user is in detail of generic_object" do
+          get :show, :params => { :id => service_with_go.id, :display => 'generic_objects', :generic_object_id => '10101'}
+
+          expect(controller.send(:hide_record_info?)).to eq(false)
+        end
+
+        it "returns true when user is not in detail of generic_object" do
+          get :show, :params => { :id => service_with_go.id, :display => 'generic_objects' }
+
+          expect(controller.send(:hide_record_info?)).to eq(true)
+        end
       end
     end
   end
