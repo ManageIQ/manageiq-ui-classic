@@ -11,7 +11,6 @@
  *= require ./container_topology
  *= require ./physical_infra_topology
  *= require ./metrics
- *= require ./service_dialogs
  *= require ./remote_console
  *= require ./piecharts
 */

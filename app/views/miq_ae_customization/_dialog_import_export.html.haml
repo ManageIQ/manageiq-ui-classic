@@ -35,17 +35,20 @@
   = form_tag('upload_import_file', :id => 'upload-service-dialogs', :remote => true) do
     .form-group
       .row
-        .col-md-4
-          = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
         .col-md-6
+          = render :partial => "shared/file_chooser", :locals => {:object_name => "upload", :method => "file"}
+        .col-md-2
           = button_tag(_("Upload"), :id => "upload_service_dialog_import", :class => "btn btn-primary", :action => "submit")
 
   %hr
   %h3
     = _('Export')
-  = form_tag('export_service_dialogs', :method => :get) do
-    = select_tag("service_dialogs[]", options_for_select(@dialog_exports), :class => "service-dialog-export", :multiple => true)
-    = button_tag(_("Export"), :class => "btn btn-primary", :type => "submit")
+  = form_tag('export_service_dialogs', :method => :get, :class => "form-horizontal") do 
+    .form-group
+      .col-md-6
+        = select_tag("service_dialogs[]", options_for_select(@dialog_exports), :class => "form-control", :multiple => true)
+      .col-md-2
+        = button_tag(_("Export"), :class => "btn btn-primary", :type => "submit")
 
 :javascript
   $(function () {
