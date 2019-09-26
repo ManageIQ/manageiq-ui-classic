@@ -63,5 +63,13 @@ describe RestfulRedirectController do
       get :index, :params => {:model => "ExtManagementSystem/#{manager.id}"}
       expect(response).to redirect_to(:controller => 'ansible_playbook', :action => 'show_list')
     end
+
+    it 'redirects to ops controller and displays flash message that it cannot redirect to the selected provider' do
+      embedded_ansible = FactoryBot.create(:provider_embedded_ansible)
+      allow(ExtManagementSystem).to receive(:find_by).and_return(embedded_ansible)
+      get :index, :params => {:model => "ExtManagementSystem/#{embedded_ansible.id}"}
+      expect(response).to redirect_to(:controller => 'ops', :action => 'explorer')
+      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => "Cannot redirect to \"#{embedded_ansible.name}\" provider.", :level => :error}])
+    end
   end
 end

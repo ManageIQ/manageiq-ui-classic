@@ -13,7 +13,12 @@ class RestfulRedirectController < ApplicationController
         elsif %w[ManageIQ::Providers::EmbeddedAnsible::AutomationManager].include?(record.type)
           redirect_to(:controller => 'ansible_playbook', :action => 'show_list')
         else
-          redirect_to(polymorphic_path(record))
+          begin
+            redirect_to(polymorphic_path(record))
+          rescue NoMethodError
+            flash_to_session(_("Cannot redirect to \"%{record}\" provider.") % {:record => record.name}, :error)
+            redirect_to(:controller => 'ops', :action => 'explorer')
+          end
         end
       else
         handle_missing_record
