@@ -30,23 +30,26 @@
 
   = render :partial => "common_new_edit"
 
-  .form-horizontal
-    .form-group{"ng-if" => "vm.securityGroupModel.ems_id", "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
-      %h3
-        = _('Placement')
-      %label.col-md-2.control-label
-        = _('Cloud Tenant')
-      .col-md-8
-        %select{:name                         => "cloud_tenant_id",
-                "ng-model"                    => "vm.securityGroupModel.cloud_tenant_id",
-                "ng-options"                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
-                "miq-select"                  => true,
-                "required"                    => "",
-                "selectpicker-for-select-tag" => ""}
-          %option{"value" => ""}
-            = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
-        = _("Required")
+
+  %div{"ng-if" => "vm.securityGroupModel.ems_id"}
+
+    %h3
+      = _('Placement')
+    .form-horizontal
+      .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+        %label.col-md-2.control-label
+          = _('Cloud Tenant')
+        .col-md-8
+          %select{:name                         => "cloud_tenant_id",
+                  "ng-model"                    => "vm.securityGroupModel.cloud_tenant_id",
+                  "ng-options"                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
+                  "miq-select"                  => true,
+                  "required"                    => "",
+                  "selectpicker-for-select-tag" => ""}
+            %option{"value" => ""}
+              = "<#{_('Choose')}>"
+          %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+          = _("Required")
 
   = render :partial => "layouts/angular/generic_form_buttons"
 
