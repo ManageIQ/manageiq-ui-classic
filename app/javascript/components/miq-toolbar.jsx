@@ -48,7 +48,6 @@ const getParams = (urlParms, sendChecked) => {
 // Toolbar button onClick handler for all toolbar buttons.
 
 const onClick = (button) => {
-  console.log('Toolbar onClick handler. Button: ', button);
   let buttonUrl;
 
   if (button.confirm && !window.confirm(button.confirm)) {
@@ -72,10 +71,8 @@ const onClick = (button) => {
 
       // popup windows are only supported for urls starting with '/' (non-ajax)
       if (button.popup) {
-        console.log('open URL: ', buttonUrl);
         window.open(buttonUrl);
       } else {
-        console.log('DoNav URL: ', buttonUrl);
         DoNav(encodeURI(buttonUrl));
       }
       return;
@@ -124,12 +121,10 @@ const onClick = (button) => {
     data: paramstring,
   };
 
-  console.log('miqJqueryRequest URL: ', buttonUrl);
   miqJqueryRequest(buttonUrl, options);
 };
 
 const onViewClick = (button) => {
-  console.log('Toolbar onViewClick handler. Button: ', button);
   if (button.url && (button.url.indexOf('/') === 0)) {
     const delimiter = (button.url === '/') ? '' : '/';
     const tail = (ManageIQ.record.recordId) ? delimiter + ManageIQ.record.recordId : '';
@@ -222,8 +217,6 @@ const MiqToolbar = ({ toolbars }) => {
   if (!toolbars || (toolbars.length === 0)) {
     return null;
   }
-
-  console.log('props: ', toolbars);
 
   const { custom, name, props } = toolbars[0][0];
   if (custom) {
