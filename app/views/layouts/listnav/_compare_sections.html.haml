@@ -26,13 +26,19 @@
       miqTreeResetState('#{j_str @sections_tree.name}');
     = render(:partial => 'shared/tree', :locals => {:tree => @sections_tree, :name => @sections_tree.name})
   .spacer
-  = link_to(_('Apply'),
-    {:action => 'sections_field_changed', :check => @lastaction},
-    "data-miq_sparkle_on"  => true,
-    "data-miq_sparkle_off" => true,
-    :remote                => true,
-    "data-method"          => :post,
-    :title                 => _('Apply sections'),
-    :class                 => "btn btn-primary pull-right",
-    :alt                   => _('Apply sections'),
-    :id                    => "sections_commit")
+  %table{:width => "100%"}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on{:style => "display:#{session[:selected_sections].empty? ? "none" : "display"};"}
+          = link_to(_('Apply'),
+            {:action => 'sections_field_changed', :check => @lastaction},
+            "data-miq_sparkle_on"  => true,
+            "data-miq_sparkle_off" => true,
+            :remote                => true,
+            "data-method"          => :post,
+            :title                 => _('Apply sections'),
+            :class                 => "btn btn-primary pull-right",
+            :alt                   => _('Apply sections'),
+            :id                    => "sections_commit")
+        #buttons_off{:style => "display:#{session[:selected_sections].empty? ? "display" : "none"};"}
+          = button_tag(_("Apply"), :class => "btn btn-primary disabled", :title => _('At least one section must be selected'))

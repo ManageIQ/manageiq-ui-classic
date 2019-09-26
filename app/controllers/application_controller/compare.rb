@@ -433,6 +433,7 @@ module ApplicationController::Compare
       set_checked_sections
       render :update do |page|
         page << javascript_prologue
+        page << javascript_for_miq_button_visibility(!session[:selected_sections].empty?)
         page << "miqSparkle(false);"
         # head :ok
       end
@@ -440,8 +441,8 @@ module ApplicationController::Compare
   end
 
   def set_checked_sections
+    session[:selected_sections] = []
     if params[:all_checked]
-      session[:selected_sections] = []
       params[:all_checked].each do |a|
         s = a.split(':')
         if s.length > 1
@@ -1194,12 +1195,14 @@ module ApplicationController::Compare
     @rows = []
     @cols = []
     @compressed = session[:miq_compressed]
+    session[:selected_sections] ||= []
 
     comp_add_header(view)
     comp_add_total(view)
 
     # Build the sections, records, and fields rows
     view.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
+      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && !session[:selected_sections].include?(section[:name])
       next unless view.include[section[:name]][:checked]
       comp_add_section(view, section, records, fields) # Go build the section row if it's checked
       if !records.nil? # If we have records, build record rows
@@ -1774,12 +1777,14 @@ module ApplicationController::Compare
     @layout = view.report.db == "VmOrTemplate" ? @sb[:compare_db].underscore : view.report.db.underscore
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
+    session[:selected_sections] ||= []
 
     drift_add_header(view)
     drift_add_total(view)
 
     # Build the sections, records, and fields rows
     view.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
+      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && !session[:selected_sections].include?(section[:name])
       if view.include[section[:name]][:checked]
         drift_add_section(view, section, records, fields) # Go build the section row if it's checked
         if !records.nil? # If we have records, build record rows
