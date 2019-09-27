@@ -4,7 +4,6 @@
  *= require ./dialog_fields
  *= require ./angular
  *= require ./notifications
- *= require ./schedule_editor
  *= require ./miq_tree
  *= require ./timeline
  *= require ./topology
