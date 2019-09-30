@@ -7,7 +7,8 @@ class ApplicationHelper::Toolbar::FirmwareRegistriesCenter < ApplicationHelper::
         'fa fa-refresh fa-lg',
         N_('Refresh this page'),
         N_('Refresh'),
-        :data => { 'function' => '() => window.location.reload()' }
+        # needs the function because reload can't be called with different this
+        :data => { 'function' => 'function() { window.location.reload(); }' }
       ),
     ]
   )
