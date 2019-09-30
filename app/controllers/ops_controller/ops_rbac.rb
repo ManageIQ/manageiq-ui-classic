@@ -860,7 +860,7 @@ module OpsController::OpsRbac
   end
 
   def rbac_tenant_get_details(id)
-    @record = @tenant = Tenant.find(id)
+    @record = @tenant = find_record_with_rbac(Tenant, id)
     get_tagdata(@tenant)
   end
 

@@ -94,6 +94,25 @@ describe OpsController do
         controller.send(:rbac_tenant_get_details, t.id)
         expect(assigns(:tenant)).to eq(t)
       end
+
+      context "user is using tag filtering" do
+        let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
+        let(:group) { FactoryBot.create(:miq_group, :tenant => other_tenant) }
+        let!(:other_tenant) { FactoryBot.create(:tenant, :parent => Tenant.root_tenant) }
+
+        before do
+          group.entitlement = Entitlement.new
+          group.entitlement.set_belongsto_filters([])
+          group.entitlement.set_managed_filters([['/managed/environment/prod']])
+          group.save!
+
+          login_as user
+        end
+
+        it "raises error when access is not granted" do
+          expect { controller.send(:rbac_tenant_get_details, other_tenant.id) }.to raise_error(ActiveRecord::RecordNotFound, "Can't access selected records")
+        end
+      end
     end
 
     describe "#rbac_tenant_delete" do
