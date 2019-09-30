@@ -227,7 +227,7 @@ module Mixins
           Rbac.filtered(Lan.where("switch_id IN (?)", switch_ids)).each do |lan|
             vlan_options << lan.name
           end
-          vlan_options
+          vlan_options.sort
         end
 
         def get_iso_options(vm)
