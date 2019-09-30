@@ -198,34 +198,25 @@ class TreeBuilder
     parents = pid.to_s.split('_')
 
     object, ancestry_kids = object_from_ancestry(object)
-    node = x_build_single_node(object, pid)
+    node = TreeNode.new(object, pid, self)
+    override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
 
     # A node should be also expanded in three cases:
     # - it has been already expanded in a previous session
     # - the open_all setting is present in the tree_init_options
     # - the node is set as active_node in the tree state
-    node[:state] ||= {}
-    node[:state][:expanded] ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) ||
-                                !!@options[:open_all]                                              ||
-                                @tree_state.x_tree(@name)[:active_node] == node[:key]
+    node.expanded ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node.key) ||
+                      !!@options[:open_all]                                            ||
+                      @tree_state.x_tree(@name)[:active_node] == node.key
 
-    if ancestry_kids || node[:state][:expanded] || !@options[:lazy]
-      kids = (ancestry_kids || x_get_tree_objects(object, false, parents)).map do |o|
-        x_build_node(o, node[:key])
+    if ancestry_kids || node.expanded || !@options[:lazy]
+      (ancestry_kids || x_get_tree_objects(object, false, parents)).each do |o|
+        node.nodes.push(x_build_node(o, node.key))
       end
-      node[:nodes] = kids unless kids.empty?
-    else
-      if x_get_tree_objects(object, true, parents) > 0
-        node[:lazyLoad] = true # set child flag if children exist
-      end
+    elsif x_get_tree_objects(object, true, parents).positive?
+      node.lazy = true # set child flag if children exist
     end
-    node
-  end
 
-  def x_build_single_node(object, pid)
-    node = TreeNode.new(object, pid, self)
-    override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
-    # FIXME: to_h is for backwards compatibility with hash-trees, it needs to be removed in the future
     node.to_h
   end
 

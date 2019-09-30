@@ -1,14 +1,14 @@
 module TreeNode
   class Node
-    attr_reader :tree
-
-    attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :klass, :selectable, :selected, :tooltip
+    attr_reader :nodes, :tree
     attr_writer :icon, :image
+    attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :lazy, :klass, :selectable, :selected, :tooltip
 
     def initialize(object, parent_id, tree)
       @object = object
       @parent_id = parent_id
       @tree = tree
+      @nodes = []
     end
 
     def text
@@ -57,6 +57,8 @@ module TreeNode
         :class          => [selectable ? nil : 'no-cursor'].push(klass).compact.join(' ').presence, # add no-cursor if not selectable
         :selectable     => selectable,
         :checkable      => checkable ? nil : false,
+        :lazyLoad       => lazy,
+        :nodes          => nodes.presence,
         :state          => {
           :checked  => checked,
           :expanded => expanded,
