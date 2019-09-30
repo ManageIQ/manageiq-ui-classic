@@ -1821,10 +1821,7 @@ class CatalogController < ApplicationController
         build_toolbar("x_gtl_view_tb") unless record_showing || @in_a_form
       end
 
-    unless @in_a_form
-      c_tb = build_toolbar(center_toolbar_filename) unless x_active_tree == :svccat_tree
-      h_tb = build_toolbar("x_history_tb")
-    end
+    c_tb = build_toolbar(center_toolbar_filename) unless x_active_tree == :svccat_tree && @in_a_form
 
     presenter ||= ExplorerPresenter.right_cell(
       :active_tree => x_active_tree,
@@ -1929,9 +1926,9 @@ class CatalogController < ApplicationController
     if %w[ot_add ot_edit ot_copy service_dialog_from_ot].include?(action)
       presenter.hide(:toolbar, :paging_div, :form_buttons_div)
     else
-      presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
+      presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
     end
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :view => v_tb)
+    presenter.reload_toolbars(:center => c_tb, :view => v_tb)
 
     presenter[:record_id] = determine_record_id_for_presenter
     presenter[:lock_sidebar] = @edit && @edit[:current] || action == 'copy_catalog'

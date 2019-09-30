@@ -1103,7 +1103,6 @@ module VmCommon
     elsif @sb[:action] == 'vmtree_info'
       c_tb = build_toolbar("x_vm_vmtree_center_tb")
     end
-    h_tb = build_toolbar("x_history_tb") unless @in_a_form
 
     # Build presenter to render the JS command for the tree update
     presenter ||= ExplorerPresenter.new(
@@ -1233,9 +1232,9 @@ module VmCommon
 
     presenter[:right_cell_text] = @right_cell_text
 
-    presenter.reload_toolbars(:history => h_tb, :center => c_tb, :custom => cb_tb, :view => v_tb)
+    presenter.reload_toolbars(:center => c_tb, :custom => cb_tb, :view => v_tb)
 
-    presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
+    presenter.set_visibility(c_tb.present? || v_tb.present?, :toolbar)
 
     presenter[:record_id] = @record.try(:id)
 
