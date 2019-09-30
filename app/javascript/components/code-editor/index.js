@@ -29,10 +29,8 @@ const CodeEditor = ({
   ...props
 }) => {
   const [codeMode, setCodeMode] = useState(mode);
-  const [value, setValue] = useState();
   const [editor, setEditor] = useState();
   useEffect(() => {
-    setValue(props.value);
     if (editor) {
       editor.refresh();
     }
@@ -60,7 +58,7 @@ const CodeEditor = ({
         }}
         style={{ height: 'auto' }}
         onBeforeChange={(editor, _data, value) => {
-          setValue(value);
+          onChange(editor, _data, value);
         }}
         onChange={(editor, _data, value) => {
           onChange(editor, _data, value);
@@ -69,7 +67,6 @@ const CodeEditor = ({
           setEditor(editor);
         }}
         {...props}
-        value={value}
       />
     </div>
   );
@@ -86,33 +83,33 @@ CodeEditor.defaultProps = {
   modes: [],
 };
 
+const CodeGroup = ({
+  input: { value, onChange, name },
+  meta: { error },
+  formOptions: _formOptions,
+  label,
+  isRequired,
+  ...props
+}) => (
+  <FormGroup name={name} validationState={error && 'error'}>
+    <ControlLabel>
+      {isRequired ? <RequiredLabel label={label} /> : label }
+    </ControlLabel>
+    <CodeEditor
+      onChange={(_editor, _data, value) => onChange(value)}
+      value={value}
+      hasError={!!error}
+      {...props}
+    />
+    {error && <HelpBlock>{error}</HelpBlock>}
+  </FormGroup>
+);
+
 export const DataDrivenFormCodeEditor = ({
   FieldProvider,
   ...props
 }) => (
-  <FieldProvider {...props}>
-    {({
-      input: { value, onChange, name },
-      meta: { error },
-      formOptions: _formOptions,
-      label,
-      isRequired,
-      ...props
-    }) => (
-      <FormGroup name={name} validationState={error && 'error'}>
-        <ControlLabel>
-          {isRequired ? <RequiredLabel label={label} /> : label }
-        </ControlLabel>
-        <CodeEditor
-          onChange={(_editor, _data, value) => onChange(value)}
-          value={value}
-          hasError={!!error}
-          {...props}
-        />
-        {error && <HelpBlock>{error}</HelpBlock>}
-      </FormGroup>
-    )}
-  </FieldProvider>
+  <FieldProvider {...props} component={CodeGroup} />
 );
 
 export default CodeEditor;
