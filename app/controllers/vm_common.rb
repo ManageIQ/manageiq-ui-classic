@@ -1032,7 +1032,7 @@ module VmCommon
         rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
         options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
         options[:parent] = rec
-        options[:named_scope] << :with_ems
+        options[:named_scope] << :active
 
         process_show_list(options) if show_list
         model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
