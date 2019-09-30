@@ -49,6 +49,7 @@ describe TreeBuilderOpsRbac do
     let(:user) { FactoryBot.create(:user, :miq_groups => [group, other_group]) }
     let(:other_group) { FactoryBot.create(:miq_group) }
     let(:other_user) { FactoryBot.create(:user, :miq_groups => [other_group]) }
+    let!(:other_tenant) { FactoryBot.create(:tenant, :parent => Tenant.root_tenant) }
 
     before do
       login_as user
@@ -66,6 +67,23 @@ describe TreeBuilderOpsRbac do
 
     it "is listing all groups" do
       x_get_tree_custom_kids_for_and_expect_objects("g", [user.current_group, other_group])
+    end
+
+    it "is listing user's tenant" do
+      x_get_tree_custom_kids_for_and_expect_objects("tn", [user.current_tenant])
+    end
+
+    context "user is using tag filtering" do
+      before do
+        group.entitlement = Entitlement.new
+        group.entitlement.set_belongsto_filters([])
+        group.entitlement.set_managed_filters([['/managed/environment/prod']])
+        group.save!
+      end
+
+      it "is not listing user's untagged tenant" do
+        x_get_tree_custom_kids_for_and_expect_objects("tn", [])
+      end
     end
 
     context "User with self service user" do
