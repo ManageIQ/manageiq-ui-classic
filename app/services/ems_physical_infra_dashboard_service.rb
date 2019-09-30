@@ -24,7 +24,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
       {
         :status          => single_provider,
         :attrData        => attributes_data,
-        :showTopBorder   => 'false',
+        :showTopBorder   => false,
         :aggregateClass  => 'aggregate-object-card',
         :aggregateLayout => '',
       }
@@ -32,7 +32,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
       {
         :status          => multiple_providers,
         :attrData        => attributes_data,
-        :showTopBorder   => 'true',
+        :showTopBorder   => true,
         :aggregateClass  => '',
         :aggregateLayout => 'tall',
       }
