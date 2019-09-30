@@ -12,6 +12,8 @@ const PfAggregateStatusCard = ({
     ${isAltLayout() ? ' card-pf-aggregate-status-alt' : ''}
     ${shouldShowTopBorder() ? ' card-pf-accented' : ''}`;
 
+  const notifications = data.notifications || [];
+
   const renderNormalLayout = () => (
     <div className={normalLayoutClass}>
       <h2 className="card-pf-title">
@@ -28,7 +30,7 @@ const PfAggregateStatusCard = ({
       </h2>
       <div className="card-pf-body">
         <p className="card-pf-aggregate-status-notifications">
-          { data.notifications.map(notification => (
+          { notifications.map(notification => (
             <span key={notification} className="card-pf-aggregate-status-notification">
               <a href={notification.href}>
                 { notification.iconImage && (
@@ -93,7 +95,17 @@ const PfAggregateStatusCard = ({
 PfAggregateStatusCard.propTypes = {
   layout: PropTypes.string,
   className: PropTypes.string,
-  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  data: PropTypes.shape({
+    iconImage: PropTypes.string,
+    iconClass: PropTypes.string,
+    largeIcon: PropTypes.bool,
+    notifications: PropTypes.arrayOf(PropTypes.any),
+    notification: PropTypes.shape({
+      iconImage: PropTypes.string,
+      iconClass: PropTypes.string,
+      count: PropTypes.number,
+    }),
+  }).isRequired,
   showTopBorder: PropTypes.bool.isRequired,
   altLayout: PropTypes.bool,
 };
@@ -101,6 +113,7 @@ PfAggregateStatusCard.propTypes = {
 PfAggregateStatusCard.defaultProps = {
   layout: null,
   className: null, // bylo to tam?
+  data: {},
   altLayout: false,
   showTopBorder: false, // urcite?
 };
