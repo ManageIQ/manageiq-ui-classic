@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
+
 import PfAggregateStatusCard from './pf_aggregate_status_card';
 
 const AggregateStatusCard = ({ providerId, providerType }) => {
@@ -14,6 +16,7 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
         setCardData({
           loading: false,
           status: aggStatusData.status,
+          quadicon: aggStatusData.quadicon,
           aggStatus: aggStatusData.attrData,
           showTopBorder: aggStatusData.showTopBorder,
           aggregateLayout: aggStatusData.aggregateLayout,
@@ -26,15 +29,27 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
     return <div>loading...</div>;
   }
 
+  const renderPlain = () => (
+    <PfAggregateStatusCard
+      layout={data.aggregateLayout}
+      className={data.aggregateClass}
+      data={data.status}
+      showTopBorder={data.showTopBorder}
+    />
+  );
+
+  const renderQuad = () => (
+    <div className="card-pf card-pf-aggregate-status">
+      <h2 className="card-pf-body">
+        <Quadicon data={data.quadicon} />
+      </h2>
+    </div>
+  );
+
   return (
     <div className="aggregate_status">
       <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 here">
-        <PfAggregateStatusCard
-          layout={data.aggregateLayout}
-          className={data.aggregateClass}
-          data={data.status}
-          showTopBorder={data.showTopBorder}
-        />
+        { data.quadicon ? renderQuad() : renderPlain() }
       </div>
       <div className="col-xs-12 col-sm-12 col-md-9 col-lg-10">
         <div className="row">

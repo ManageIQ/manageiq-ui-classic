@@ -30,7 +30,12 @@ class EmsInfraDashboardService < EmsDashboardService
   end
 
   def aggregate_status
+    quadicon_calc = Proc.new do |ems|
+      camelize_quadicon(quadicon_hash(ems))
+    end
+
     {
+      :quadicon => @controller.instance_exec(@ems, &quadicon_calc),
       :status   => status_data,
       :attrData => attributes_data,
     }
