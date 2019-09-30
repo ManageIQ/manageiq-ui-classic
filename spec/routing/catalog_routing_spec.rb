@@ -58,7 +58,6 @@ describe 'routes for CatalogController' do
     st_form_field_changed
     st_tags_edit
     st_upload_image
-    svc_catalog_provision
     tag_edit_form_field_changed
     tree_autoload
     tree_select

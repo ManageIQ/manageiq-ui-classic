@@ -174,13 +174,22 @@ class MiqRequestController < ApplicationController
       :options        => org_req.options.except(:requester_group),
     )
 
-    prov_set_form_vars(req) # Set vars from existing request
-    # forcing submit button to stay on for copy request, setting a key in current hash so new and current are different,
-    # couldn't set this in new hash becasue that's being set by model
-    @edit[:current][:description] = _("Copy of %{description}") % {:description => org_req.description}
-    session[:changed] = true # Turn on the submit button
-    drop_breadcrumb(:name => _("Copy of %{typ} Request") % {:typ => org_req.request_type_display})
-    @in_a_form = true
+    if req.kind_of?(ServiceTemplateProvisionRequest)
+      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => val } }.to_json
+      @new_dialog = true
+      template = find_record_with_rbac(ServiceTemplate, req.source_id)
+      resource_action = template.resource_actions.find { |r| r.action.downcase == 'provision' && r.dialog_id }
+      @opts = DialogLocalService.new.determine_dialog_locals_for_svc_catalog_provision(resource_action, template, "/miq_request/show_list")
+      @opts[:cancel_endpoint] = "/miq_request/show_list"
+    else
+      prov_set_form_vars(req) # Set vars from existing request
+      # forcing submit button to stay on for copy request, setting a key in current hash so new and current are different,
+      # couldn't set this in new hash becasue that's being set by model
+      @edit[:current][:description] = _("Copy of %{description}") % {:description => org_req.description}
+      session[:changed] = true # Turn on the submit button
+      drop_breadcrumb(:name => _("Copy of %{typ} Request") % {:typ => org_req.request_type_display})
+      @in_a_form = true
+    end
     render :action => "prov_edit"
   end
 
