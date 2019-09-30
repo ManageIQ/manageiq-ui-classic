@@ -17,9 +17,6 @@ function createSchema(maxNameLen, maxDescLen) {
       label: __('Description'),
       validateOnMount: true,
       autoFocus: true,
-      validate: [{
-        type: 'required-validator',
-      }],
     }],
   };
 }
