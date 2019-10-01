@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 121 - 2019-09-30
+
+### Added
+- Add button tag to generic object form [(#6226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6226)
+- Add abandon changes popup to tagging pages [(#6192)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6192)
+- Enable Copy feature for ServiceRequests [(#5539)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5539)
+- Add region id to subscription [(#2315)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2315)
+
+### Fixed
+- Fixed lost focus on code editor after first state update. [(#6249)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6249)
+- Remove outdated automate import/export styling [(#6247)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6247)
+- Remove outdated schedule editor styling [(#6245)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6245)
+- Angular form css cleanup [(#6243)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6243)
+- Remove custom styling from svc dialog import/export [(#6242)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6242)
+- Fixed placement alignment. [(#6238)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6238)
+- Convert Tenants details page to textual summary and add Relationships with Services Automate Domain and Providers [(#5675)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5675)
+
 ## Unreleased as of Sprint 120 - 2019-09-16
 
 ### Added
