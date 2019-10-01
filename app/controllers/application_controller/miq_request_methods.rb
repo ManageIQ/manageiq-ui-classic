@@ -823,7 +823,7 @@ module ApplicationController::MiqRequestMethods
       # FIXME: use selected_ids passed through get_view to replace all of
       # gtl_selected_records after Gaprindashvili
     end
-    @user = User.find_by_userid(@miq_request.stamped_by)
+    @user = User.lookup_by_userid(@miq_request.stamped_by)
   end
 
   # Set form variables for provision request

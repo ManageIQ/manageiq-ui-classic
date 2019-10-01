@@ -402,7 +402,7 @@ module ReportController::Schedules
       # rebuild hash to hold user's email along with name if user record was found for display, defined as hash so only email id can be sent from form to be deleted from array above
       @email_to = {}
       @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.lookup_by_email(e)
         @email_to[e] = u ? "#{u.name} (#{e})" : e
       end
     end

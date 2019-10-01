@@ -41,7 +41,7 @@ describe ApplicationController do
     end
 
     describe 'perf_gen_tag_data_after_wait' do
-      it 'calls Classification.find_by_name and other specific methods' do
+      it 'calls Classification.lookup_by_name and other specific methods' do
         task = double(:task)
         allow(task).to receive_message_chain(:miq_report_result, :report_results)
         expect(task).to receive(:destroy)
@@ -50,7 +50,7 @@ describe ApplicationController do
 
         cat = double(:cat)
         allow(cat).to receive(:description)
-        expect(Classification).to receive(:find_by_name).with('cat').and_return(cat)
+        expect(Classification).to receive(:lookup_by_name).with('cat').and_return(cat)
 
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@perf_record, FactoryBot.create(:host))

@@ -30,7 +30,7 @@ module ApplicationController::CurrentUser
 
   def current_user
     if current_userid
-      @current_user ||= User.find_by_userid(current_userid).tap do |u|
+      @current_user ||= User.lookup_by_userid(current_userid).tap do |u|
         u.current_group_id = session[:group] if session[:group]
       end
     end

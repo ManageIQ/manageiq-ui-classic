@@ -1374,7 +1374,7 @@ module ReportController::Reports::Editor
   end
 
   def entries_hash(category_name)
-    cat = Classification.find_by_name(category_name)
+    cat = Classification.lookup_by_name(category_name)
     return {} unless cat
     cat.entries.each_with_object({}) { |e, h| h[e.name] = e.description }
   end
