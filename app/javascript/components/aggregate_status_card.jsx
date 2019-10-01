@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 
 import PfAggregateStatusCard from './pf_aggregate_status_card';
+import { http } from '../http_api/';
 
 const AggregateStatusCard = ({ providerId, providerType }) => {
   const [data, setCardData] = useState({ loading: true });
@@ -12,6 +13,7 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
     const url = `/${providerType}_dashboard/aggregate_status_data/${providerId || ''}`;
     http.get(url)
       .then((response) => {
+        console.log(response.data);
         const aggStatusData = response.data.aggStatus;
         setCardData({
           loading: false,
