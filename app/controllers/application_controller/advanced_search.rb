@@ -48,7 +48,7 @@ module ApplicationController::AdvancedSearch
       add_flash(_("Search Name is required"), :error) if params[:button] == 'saveit'
       false
     else
-      s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
+      s = @edit[@expkey].build_search(@edit[:new_search_name], current_user.admin_user? || current_user.super_admin_user? ? @edit[:search_type] : nil, session[:userid])
       s.filter = MiqExpression.new(@edit[:new][@expkey]) # Set the new expression
       if s.save
         add_flash(_("%{model} search \"%{name}\" was saved") %
