@@ -445,8 +445,7 @@ describe EmsCloudController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user, :features => "none")
-      session[:settings] = {:views     => {:vm_summary_cool => "summary"},
-                            :quadicons => {}}
+      session[:settings] = {:views => {:vm_summary_cool => "summary"}}
       @ems = FactoryBot.create(:ems_amazon)
     end
 

@@ -97,7 +97,6 @@ class ApplicationController < ActionController::Base
 
   # Default UI settings
   DEFAULT_SETTINGS = {
-    :quadicons => Hash.new(true), # Show quad icons by resource type, true by default
     :views     => { # List view setting, by resource type
       :authkeypaircloud                                                       => "list",
       :availabilityzone                                                       => "list",
