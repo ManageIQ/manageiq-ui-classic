@@ -147,3 +147,72 @@ line.PhysicalServerPhysicalSwitch {
 .topology-filter-group:not(:first-child) {
   border-left: 1px solid #d1d1d1;
 }
+
+/// Physical Infra-specific styling
+
+$topology-colors: (
+  PhysicalServer:  #030303,
+  PhysicalRack:    #030303,
+  PhysicalSwitch:  #030303,
+  PhysicalChassis: #030303,
+  Valid:           #3f9c35,
+  Warning:         #ec7a08,
+  Critical:        #cc0000,
+  Unknown:         #bbb,
+);
+
+@each $filter-value, $color in $topology-colors {
+  .topology g.#{$filter-value} text.glyph{
+    fill: $color !important;
+  }
+
+  .legend kubernetes-topology-filter[filter-value="#{$filter-value}"] i{
+    color: $color;
+  }
+}
+
+.legend kubernetes-topology-filter[filter-value="Unknown,None"] i{
+  color: map-get($topology-colors, Unknown)
+}
+
+/// Container-specific styling
+
+.kube-topology line.ContainerServiceContainerGroup,
+.kube-topology line.ContainerReplicatorContainerGroup,
+.kube-topology line.ContainerServiceContainerRoute,
+.kube-topology line.ContainerGroupContainerService,
+.kube-topology line.ContainerGroupContainerReplicator {
+  stroke-linecap: round;
+  stroke-dasharray: 5.5;
+}
+
+.topology .legend {
+  /* prevents tooltip from conflicting with the nav bar */
+  margin-left: 55px;
+}
+
+.kube-topology g text.glyph {
+  font-size: 20px;
+  fill: #1186c1;
+}
+
+.kube-topology g.Container text.glyph {
+  font-size: 15px;
+}
+
+.kube-topology g.ContainerGroup text.glyph {
+  font-size: 18px;
+}
+
+.kube-topology g.Vm text.glyph,
+.kube-topology g.Host text.glyph {
+  fill: #636363;
+}
+
+.kube-topology g.ContainerNode text.glyph {
+  font-size: 25px;
+}
+
+.kube-topology g.ContainerManager text.glyph {
+  font-size: 38px;
+}
