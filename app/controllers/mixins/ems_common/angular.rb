@@ -80,19 +80,10 @@ module Mixins
         verify_ems.authentication_check(params[:cred_type], :save => false, :database => params[:metrics_database_name])
       end
 
-      def realtime_raw_connect(ems_type)
-        ems_type.raw_connect(*get_task_args(ems_type))
-        true
-      rescue => err
-        [false, err.message]
-      end
-
       def create_ems_button_validate
         @in_a_form = true
         ems_type = model.model_from_emstype(params[:emstype])
-        result, details = if %w[ems_cloud ems_infra].include?(params[:controller]) && session[:selected_roles].try(:include?, 'user_interface')
-                            realtime_raw_connect(ems_type)
-                          elsif %w[ems_cloud ems_infra].include?(params[:controller])
+        result, details = if %w[ems_cloud ems_infra].include?(params[:controller])
                             ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                           else
                             realtime_authentication_check(ems_type.new)
