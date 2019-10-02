@@ -30,7 +30,7 @@
               = javascript_tag(javascript_focus('name'))
         .form-group
           %label.col-md-4.control-label
-            = _('Access Restriction for Services, VMs, and Templates')
+            = _('Access Restriction for Catalog Items, Orchestration Stacks, Key Pairs, Services, VMs, and Templates')
           .col-md-8
             - if !@edit
               - if @role.settings.kind_of?(Hash) && @role.settings.fetch_path(:restrictions, :vms)
