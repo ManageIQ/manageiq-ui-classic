@@ -2,6 +2,11 @@
 
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
+import PropTypes from 'prop-types';
+import {
+  groupProps, recursiveUserMenuProps, userMenuProps,
+} from './recursive-props';
+
 
 const UserOptions = ({
   currentUser, applianceName, miqGroups, currentGroup, userMenu,
@@ -106,5 +111,29 @@ const UserOptions = ({
     </Dropdown.Menu>
   </Dropdown>
 );
+
+UserOptions.defaultProps = {
+  currentUser: null,
+};
+
+UserOptions.propTypes = {
+  currentUser: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    userid: PropTypes.string.isRequired,
+  }),
+  applianceName: PropTypes.string.isRequired,
+  miqGroups: PropTypes.arrayOf(
+    PropTypes.shape({
+      ...groupProps,
+    }).isRequired,
+  ).isRequired,
+  currentGroup: PropTypes.shape({
+    ...groupProps,
+  }).isRequired,
+  userMenu: PropTypes.arrayOf(PropTypes.shape({
+    ...userMenuProps,
+    items: PropTypes.arrayOf(PropTypes.shape(recursiveUserMenuProps)),
+  })).isRequired,
+};
 
 export default UserOptions;

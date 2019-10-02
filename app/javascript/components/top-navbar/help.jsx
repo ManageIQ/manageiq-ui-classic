@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
+import PropTypes from 'prop-types';
+import { helpMenuProps, recursiveHelpMenuProps } from './recursive-props';
 
 const Help = ({
   helpMenu,
@@ -56,5 +58,12 @@ const Help = ({
     </Dropdown>
     )))
 );
+
+Help.propTypes = {
+  helpMenu: PropTypes.arrayOf(PropTypes.shape({
+    ...helpMenuProps,
+    items: PropTypes.arrayOf(PropTypes.shape(recursiveHelpMenuProps)),
+  })).isRequired,
+};
 
 export default Help;

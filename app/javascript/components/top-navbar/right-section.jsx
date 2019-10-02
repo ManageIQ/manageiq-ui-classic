@@ -6,7 +6,7 @@ import Help from './help';
 import Configuration from './configuration';
 import UserOptions from './user-options';
 import {
-  helpMenuProps, recursiveHelpMenuProps, userMenuProps, recursiveUserMenuProps,
+  groupProps, helpMenuProps, recursiveHelpMenuProps, userMenuProps, recursiveUserMenuProps,
 } from './recursive-props';
 
 const RightSection = ({
@@ -24,11 +24,6 @@ const RightSection = ({
     )}
   </React.Fragment>
 );
-
-const groupProps = {
-  description: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-};
 
 RightSection.defaultProps = {
   currentUser: null,

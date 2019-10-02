@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Configuration = ({
   opsExplorerAllowed,
@@ -15,5 +16,9 @@ const Configuration = ({
     </li>
   )
 );
+
+Configuration.propTypes = {
+  opsExplorerAllowed: PropTypes.bool.isRequired,
+};
 
 export default Configuration;

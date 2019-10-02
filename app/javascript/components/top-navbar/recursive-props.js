@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types';
 
+export const groupProps = {
+  description: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+};
+
 export const helpMenuProps = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
