@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add abandon changes popup to tagging pages [(#6192)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6192)
 - Enable Copy feature for ServiceRequests [(#5539)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5539)
 - Add region id to subscription [(#2315)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2315)
+- Added Snapshot button to Configuration menu [(#6199)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6199)
+- Use standard rails methods to serve up photos [(#6200)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6200)
+- Show Smart Management box on details view [(#6196)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6196)
+- Toolbar implementation in React [(#115)](https://github.com/ManageIQ/react-ui-components/pull/115)
 
 ### Fixed
 - Fixed lost focus on code editor after first state update. [(#6249)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6249)
@@ -21,6 +25,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Remove custom styling from svc dialog import/export [(#6242)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6242)
 - Fixed placement alignment. [(#6238)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6238)
 - Convert Tenants details page to textual summary and add Relationships with Services Automate Domain and Providers [(#5675)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5675)
+- Throttle notification toast messages and display only 3 at most [(#6202)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6202)
+- Add abandon changes popup to data driven forms components [(#6184)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6184)
+- Fix miqCheckForChanges in as-vm angular forms [(#6223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6223)
+- Validate content for non-required fields [(#421)](https://github.com/ManageIQ/ui-components/pull/421)
+- [EmbeddedAnsible] Fix stdout sanitization [(#1594)](https://github.com/ManageIQ/manageiq-ui-service/pull/1594)
 
 ## Unreleased as of Sprint 120 - 2019-09-16
 
