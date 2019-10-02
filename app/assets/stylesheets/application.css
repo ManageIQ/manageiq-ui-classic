@@ -1,6 +1,7 @@
 /*
  *= require main
  *= require ./dialog_fields
+ *= require ./data_driven_forms_overrides
  *= require ./angular
  *= require ./notifications
  *= require ./miq_tree
