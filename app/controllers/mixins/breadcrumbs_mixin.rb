@@ -34,7 +34,7 @@ module Mixins
 
       if !features? || options[:not_tree]
         # Append breadcrumb from @record item (eg "Openstack") when on some action page (not show, display)
-        breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title])) if not_show_page?
+        breadcrumbs.push(build_breadcrumbs_no_explorer(options[:record_info], options[:record_title])) if not_show_page? || options[:include_record]
 
         # Append tag and policy breadcrumb if they exist
         breadcrumbs.push(special_page_breadcrumb(@tagitems || @politems || @ownershipitems || @retireitems))

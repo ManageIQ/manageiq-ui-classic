@@ -255,6 +255,36 @@ describe Mixins::BreadcrumbsMixin do
             ]
           )
         end
+
+        context ":include_record set" do
+          let(:breadcrumbs_options) do
+            {
+              :breadcrumbs    => [
+                {:title => _("First Layer")},
+                {:title => _("Second Layer")},
+              ],
+              :record_info    => {
+                :id   => 1234,
+                :name => "record_info_title"
+              },
+              :include_record => true
+            }
+          end
+
+          it "creates breadcrumbs with :include_record set" do
+            allow(subject).to receive(:action_name).and_return("show")
+            allow(subject).to receive(:params).and_return({})
+
+            expect(subject.data_for_breadcrumbs).to eq(
+              [
+                {:title => "First Layer"},
+                {:title => "Second Layer"},
+                {:title => "record_info_title", :url => "/breadcrumbs_test/show/1234"},
+                {:title => "Title"}
+              ]
+            )
+          end
+        end
       end
 
       it "not contain header on show_list page" do
