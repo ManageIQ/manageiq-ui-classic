@@ -12,7 +12,7 @@ describe EmsContainerController do
 
   describe "#show" do
     before do
-      session[:settings] = {:views => {}, :quadicons => {}}
+      session[:settings] = {:views => {}}
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user)
       @container = FactoryBot.create(:ems_kubernetes)

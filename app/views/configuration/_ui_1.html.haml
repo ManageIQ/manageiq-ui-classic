@@ -10,15 +10,7 @@
       .col-md-12.col-lg-6
         %fieldset
           %h3
-            = _('Grid/Tile Icons')
-          - allowed_quadicons.each do |key, name|
-            .form-group
-              %label.col-md-3.control-label
-                = _("Show %{title} Quadrants") % {:title => name}
-              .col-md-8
-                = check_box_tag("quadicons_#{key}", true, @edit[:new][:quadicons][key], :data => {:on_text => _('Yes'), :off_text => _('No')})
-              :javascript
-                miqInitBootstrapSwitch("quadicons_#{key}", "#{url}");
+            = _('Grid/Tile View')
           .form-group
             %label.col-md-3.control-label
               = _('Truncate Long Text')
@@ -30,7 +22,6 @@
                            :class => "selectpicker")
               :javascript
                 miqSelectPickerEvent('quad_truncate', '#{url}');
-
         %fieldset
           %h3
             = _('Start Page')
@@ -44,7 +35,6 @@
                            :class             => "selectpicker")
               :javascript
                 miqSelectPickerEvent('start_page', '#{url}');
-      .col-md-12.col-lg-6
         %fieldset
           %h3
             = _('Default Items Per Page')
@@ -61,6 +51,7 @@
                              :class => "selectpicker")
                 :javascript
                   miqSelectPickerEvent('#{item_per_page[1]}', '#{url}');
+      .col-md-12.col-lg-6
         %fieldset
           %h3
             = _('Topology Default Items in View')

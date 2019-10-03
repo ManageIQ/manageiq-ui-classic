@@ -542,11 +542,6 @@ class ConfigurationController < ApplicationController
     @edit = session[:edit]
     case @tabform
     when "ui_1" # Visual Settings tab
-      view_context.allowed_quadicons.each_key do |key|
-        param = "quadicons_#{key}".to_sym
-        @edit[:new][:quadicons][key] = params[param] == "true" if params[param]
-      end
-
       @edit[:new][:perpage][:grid] = params[:perpage_grid].to_i if params[:perpage_grid]
       @edit[:new][:perpage][:tile] = params[:perpage_tile].to_i if params[:perpage_tile]
       @edit[:new][:perpage][:list] = params[:perpage_list].to_i if params[:perpage_list]
