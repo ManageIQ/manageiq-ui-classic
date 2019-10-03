@@ -109,7 +109,7 @@ module MiqAeCustomizationController::OldDialogs
         old_dialogs_list
         img_typ = ""
         MiqDialog::DIALOG_TYPES.each do |typ|
-          img_typ = typ[0] if typ[1] == nodes[1]
+          img_typ = _(typ[0]) if typ[1] == nodes[1]
         end
         @right_cell_text = _("%{typ} Dialogs") % {:typ => img_typ}
         @right_cell_div  = "old_dialogs_list"

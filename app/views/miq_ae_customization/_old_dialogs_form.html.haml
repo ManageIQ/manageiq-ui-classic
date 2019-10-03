@@ -26,7 +26,7 @@
     .form-group
       %label.col-md-2.control-label
         = _('Type')
-        - miq_dialog_s = MiqDialog::DIALOG_TYPES.sort
+        - miq_dialog_s = MiqDialog::DIALOG_TYPES.map { |label, model| [_(label), model] }.sort
         - dialog_types = @dialog.dialog_type ? miq_dialog_s : [["<#{_('Choose')}>", nil]] + miq_dialog_s
       .col-md-8
         = select_tag('dialog_type',
