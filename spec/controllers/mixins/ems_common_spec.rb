@@ -96,6 +96,15 @@ describe EmsCloudController do
             controller.send(:button)
           end
         end
+
+        context 'removing Host from Host Aggregate' do
+          let(:pressed) { 'host_aggregate_remove_host' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'remove_host_select', :id => [aggregate.id], :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
       end
     end
   end
