@@ -22,32 +22,17 @@ class OptimizationController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs    => [
         {:title => _('Overview')},
-        bc_optimization,
-        bc_report,
-        {:title => @title},
+        {:title => _("Optimization"), :url => controller_url},
       ],
+      :record_info    => @report || @record,
+      :include_record => action_name == 'show'
     }
   end
 
-  def data_for_breadcrumbs(*)
-    breadcrumbs_options[:breadcrumbs].compact
-  end
-  helper_method :data_for_breadcrumbs
-
-  # show optimization when in saved reports or report results
-  def bc_optimization
-    return nil if params[:id].blank? && params[:action] == 'show_list'
-
-    {:title => _("Optimization"), :url => url_for_only_path(:action => 'show_list', :id => nil)}
-  end
-
-  # show report when in report results
-  def bc_report
-    return nil if @report.nil?
-
-    {:title => @report.name, :url => url_for_only_path(:action => 'show_list', :id => @report.id)}
+  def gtl_url
+    'show_list'
   end
 
   def index
@@ -84,7 +69,6 @@ class OptimizationController < ApplicationController
   def show_saved_reports
     @record = find_record_with_rbac(MiqReport, params[:id])
     @title = @record.name
-    @gtl_url = 'show_list' # breadcrumbs
     @center_toolbar = 'optimizations'
 
     @table = gtl_saved(@record)

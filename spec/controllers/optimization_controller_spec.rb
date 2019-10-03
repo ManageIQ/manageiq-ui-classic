@@ -135,7 +135,7 @@ describe OptimizationController do
 
         it "links to both parents" do
           expect(controller.data_for_breadcrumbs.pluck(:url)).to eq([nil,
-                                                                     '/optimization/show_list',
+                                                                     '/optimization',
                                                                      "/optimization/show_list/#{report.id}",
                                                                      nil])
         end
