@@ -5,3 +5,8 @@ export const getHrefByType = (type, href, id) => (
     modal: 'javascript:void(0);',
   }
 )[type] || href;
+
+export const handleUnsavedChanges = (type) => {
+  window.miqCheckForChanges();
+  return type === 'modal' && sendDataWithRx({ type: 'showAboutModal' });
+};

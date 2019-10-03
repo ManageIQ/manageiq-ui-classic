@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
-import { getHrefByType } from './helpers';
+import { getHrefByType, handleUnsavedChanges } from './helpers';
 
 const TopLevel = ({
   level,
@@ -17,10 +17,7 @@ const TopLevel = ({
   <li className={`${active ? 'active' : ''} list-group-item secondary-nav-item-pf`} data-target={`#menu-${id}`}>
     <a
       href={getHrefByType(type, href, id)}
-      onMouseDown={() => {
-        window.miqCheckForChanges();
-        return type === 'modal' && sendDataWithRx({ type: 'showAboutModal' });
-      }}
+      onMouseDown={() => handleUnsavedChanges(type)}
       target={type === 'new_window' ? '_blank' : '_self'}
     >
       <span className={iconClass} />

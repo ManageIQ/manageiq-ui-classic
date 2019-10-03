@@ -1,6 +1,6 @@
 import React from 'react';
 import { menuProps } from './recursive-props';
-import { getHrefByType } from './helpers';
+import { getHrefByType, handleUnsavedChanges } from './helpers';
 
 const ThirdLevel = ({
   id,
@@ -13,10 +13,7 @@ const ThirdLevel = ({
   <li className={`list-group-item ${active ? 'active' : ''}`} id={`menu_item_${id}`}>
     <a
       href={getHrefByType(type, href, id)}
-      onMouseDown={() => {
-        window.miqCheckForChanges();
-        return type === 'modal' && sendDataWithRx({ type: 'showAboutModal' });
-      }}
+      onMouseDown={() => handleUnsavedChanges(type)}
       target={type === 'new_window' ? '_blank' : '_self'}
     >
       <span className="list-group-item-value">{title}</span>
