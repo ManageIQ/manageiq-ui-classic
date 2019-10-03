@@ -25,7 +25,6 @@ module Mixins
           @live_migrate_items = find_records_with_rbac(VmOrTemplate.order(:name), session[:live_migrate_items])
           build_targets_hash(@live_migrate_items)
           @view = get_db_view(VmOrTemplate)
-          @view.table = ReportFormatter::Converter.records2table(@live_migrate_items, @view.cols + ['id'])
 
           render :action => "show" unless @explorer
         end
