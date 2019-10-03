@@ -12,6 +12,7 @@ module Mixins
           @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
           build_targets_hash(@evacuate_items)
           @view = get_db_view(VmOrTemplate)
+          @gtl_type = "grid"
 
           render :action => "show" unless @explorer
         end

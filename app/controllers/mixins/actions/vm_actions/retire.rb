@@ -96,6 +96,7 @@ module Mixins
           session[:cat] = nil # Clear current category
           build_targets_hash(@retireitems)
           @view = get_db_view(kls) # Instantiate the MIQ Report view object
+          @gtl_type = "grid"
           if @retireitems.length == 1 && !@retireitems[0].retires_on.nil?
             t = @retireitems[0].retires_on                                         # Single VM, set to current time
             w = @retireitems[0].retirement_warn if @retireitems[0].retirement_warn # Single VM, get retirement warn
