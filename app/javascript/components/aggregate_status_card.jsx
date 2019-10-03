@@ -13,7 +13,6 @@ const AggregateStatusCard = ({ providerId, providerType }) => {
     const url = `/${providerType}_dashboard/aggregate_status_data/${providerId || ''}`;
     http.get(url)
       .then((response) => {
-        console.log(response.data);
         const aggStatusData = response.data.aggStatus;
         setCardData({
           loading: false,
