@@ -77,8 +77,9 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
       'pficon pficon-screen fa-lg',
       N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
       N_('Web Console'),
-      :url   => "launch_cockpit",
-      :klass => ApplicationHelper::Button::CockpitConsole
+      :keepSpinner => true,
+      :url         => "launch_cockpit",
+      :klass       => ApplicationHelper::Button::CockpitConsole
     ),
   ])
 end

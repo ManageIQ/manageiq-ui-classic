@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::VmPerformance < ApplicationHelper::Toolbar::Ba
       'fa fa-repeat fa-lg',
       N_('Reload the charts from the most recent C&U data'),
       nil,
-      :klass => ApplicationHelper::Button::PerfRefresh),
+      :keepSpinner => true,
+      :klass       => ApplicationHelper::Button::PerfRefresh),
   ])
 end

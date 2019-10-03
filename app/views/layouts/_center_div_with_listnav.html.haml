@@ -7,7 +7,7 @@
       .col-sm-12
         - if @layout == "dashboard"
           = render :partial => "/layouts/tabs"
-        = render :partial => "layouts/angular/toolbar"
+        = react 'MiqToolbar', :toolbars => toolbar_from_hash
   .row.max-height
     .col-sm-8.col-md-9.col-sm-push-4.col-md-push-3.max-height
       #main-content.row.miq-layout-center_div_with_listnav

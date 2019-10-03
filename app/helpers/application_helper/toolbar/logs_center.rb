@@ -3,9 +3,7 @@ class ApplicationHelper::Toolbar::LogsCenter < ApplicationHelper::Toolbar::Basic
     button(
       :refresh_log,
       'fa fa-refresh fa-lg',
-      proc do
-        _('Refresh this page')
-      end,
+      N_('Refresh this page'),
       nil),
     button(
       :fetch_log,

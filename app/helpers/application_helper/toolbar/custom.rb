@@ -1,8 +1,6 @@
-ApplicationHelper::Toolbar::Custom = Struct.new(:name, :args) do
-  def render(view_context)
-    # FIXME: assigns? locals? view_binding? instance_data?
-    @content = view_context.render :partial => args[:partial]
+ApplicationHelper::Toolbar::Custom = Struct.new(:name, :props) do
+  def evaluate(view_context)
+    # Collect properties for the React toolbar component from controller (view_context).
+    props ? view_context.instance_eval(&props) : {}
   end
-
-  attr_reader :content
 end

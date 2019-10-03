@@ -3,8 +3,8 @@ class ApplicationHelper::Toolbar::Base
   extend SingleForwardable
   delegate %i[api_button button select twostate separator definition button_group custom_content] => :instance
 
-  def custom_content(name, args)
-    @definition[name] = ApplicationHelper::Toolbar::Custom.new(name, args)
+  def custom_content(name, props = nil)
+    @definition[name] = ApplicationHelper::Toolbar::Custom.new(name, props)
   end
 
   def button_group(name, buttons)

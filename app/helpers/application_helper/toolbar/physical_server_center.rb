@@ -75,7 +75,6 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             :url       => "provision",
             :url_parms => "main_div",
             :enabled   => true,
-            :onwhen    => "0+",
             :klass     => ApplicationHelper::Button::ConfiguredSystemProvision
           )
         ]
@@ -120,10 +119,11 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             'pficon pficon-screen fa-lg',
             N_('Open a remote console for this Physical Server'),
             N_('Physical Server Console'),
-            :url     => "console",
-            :method  => :get,
-            :enabled => true,
-            :options => {:feature => :physical_server_remote_access}
+            :keepSpinner => true,
+            :url         => "console",
+            :method      => :get,
+            :enabled     => true,
+            :options     => {:feature => :physical_server_remote_access}
           )
         ],
       ),

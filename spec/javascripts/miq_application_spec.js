@@ -10,58 +10,6 @@ describe('miq_application.js', function() {
     });
   });
 
-  describe('miqInitToolbars', function () {
-    beforeEach(function () {
-      var html  = '<div id="toolbar"><div class="btn-group"><button class="btn btn-default" id="first">Click me!</button></div><div class="btn-group"><button class="btn btn-default dropdown-toggle" id="second">Click me!</button><ul class="dropdown-menu"><li><a href="#" id="third">Click me!</a></li></ul></div></div>';
-      setFixtures(html);
-    });
-
-    it('initializes the onclick event on a regular toolbar button', function () {
-      spyOn(window, "miqToolbarOnClick");
-      miqInitToolbars();
-      $('#first').click();
-      expect(miqToolbarOnClick).toHaveBeenCalled();
-    });
-
-    it('not initializes an onclick event on a dropdown toolbar button', function () {
-      spyOn(window, "miqToolbarOnClick");
-      miqInitToolbars();
-      $('#second').click();
-      expect(miqToolbarOnClick).not.toHaveBeenCalled();
-    });
-
-    it('initializes the onclick event on a dropdown toolbar link', function () {
-      spyOn(window, "miqToolbarOnClick");
-      miqInitToolbars();
-      $('#third').click();
-      expect(miqToolbarOnClick).toHaveBeenCalled();
-    });
-  });
-
-  describe('miqToolbarOnClick', function () {
-    beforeEach(function () {
-      var html  = '<div id="toolbar"><div class="btn-group"><button class="btn btn-default dropdown-toggle" id="second">Click me!</button><ul class="dropdown-menu"><li><a id="reportButton" data-explorer="true" data-url_parms="?render_type=pdf" title="Download this report in PDF format" data-click="download_choice__render_report_pdf" name="download_choice__render_report_pdf" href="#"><i class="fa fa-file-text-o fa-lg" style="margin-right: 5px;"></i>Download as PDF</a></li><li><a id="notAReportButton" data-url="x_history?item=1" title="Go to this item" data-click="history_choice__history_1" name="history_choice__history_1" href="#"><i class="fa fa-arrow-left fa-lg" style="margin-right: 5px;"></i>All Saved Reports</a></li>';
-      setFixtures(html);
-      ManageIQ.record.recordId = null;
-    });
-
-    it('leaves miqSparkle on for Report download buttons', function () {
-      spyOn(window, "miqJqueryRequest");
-      miqInitToolbars();
-      $('#reportButton').click();
-      expect(miqJqueryRequest).toHaveBeenCalledWith('/null/x_button?pressed=render_report_pdf', { beforeSend:true,
-        complete: false,
-        data: 'render_type=pdf' });
-    });
-
-    it('turns miqSparkle off for non-Report buttons', function () {
-      spyOn(window, "miqJqueryRequest");
-      miqInitToolbars();
-      $('#notAReportButton').click();
-      expect(miqJqueryRequest).toHaveBeenCalledWith('/null/x_history?item=1', { beforeSend:true, complete: true, data: undefined });
-    });
-  });
-
   describe('miqShowAE_Tree', function () {
     it('uses url with the current controller', function() {
       ManageIQ.controller = 'catalog';

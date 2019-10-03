@@ -5,6 +5,6 @@ module ToolbarHelper
   def toolbar_from_hash
     calculate_toolbars.collect do |_div_id, toolbar_name|
       toolbar_name ? build_toolbar(toolbar_name) : nil
-    end
+    end.compact
   end
 end

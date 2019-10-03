@@ -30,7 +30,7 @@ class ApplicationHelper::Button::Basic < Hash
     self[key] = value if value
 
     case self[key]
-    when NilClass then ''
+    when NilClass then nil
     when Proc     then instance_eval(&self[key])
     else               _(self[key])
     end

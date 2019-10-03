@@ -13,15 +13,17 @@ module.exports = {
   testURL: 'http://localhost',
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
-    '.(ts|tsx)': 'ts-jest'
-  },
-  moduleNameMapper: {
-    '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
+    '.(ts|tsx)': 'ts-jest',
   },
   moduleFileExtensions: [
     'ts',
     'tsx',
     'js',
-    'jsx'
+    'jsx',
   ],
+  moduleNameMapper: {
+    "\\.(css|scss)$": 'identity-obj-proxy',
+    '^react$': '<rootDir>/node_modules/react/',
+    '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
+  },
 };

@@ -3,10 +3,6 @@ class ApplicationHelper::ToolbarBuilder
   include RestfulControllerMixin
   include ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
 
-  def call(toolbar_name)
-    build_toolbar(toolbar_name)
-  end
-
   # Loads the toolbar sent in parameter `toolbar_name`, and builds the buttons
   # in the toolbar, unless the group of buttons is meant to be skipped.
   #
@@ -121,12 +117,11 @@ class ApplicationHelper::ToolbarBuilder
       :icon         => input[:icon],
       :name         => button[:id],
       :onwhen       => input[:onwhen],
-      :pressed      => input[:pressed],
       :send_checked => input[:send_checked],
     )
 
-    button[:enabled] = input[:enabled]
-    %i[title text confirm enabled].each do |key|
+    button[:enabled] = !!input[:enabled] if input.key?(:enabled)
+    %i[title text confirm].each do |key|
       if input[key].present?
         button[key] = button.localized(key, input[key])
       end
@@ -454,9 +449,7 @@ class ApplicationHelper::ToolbarBuilder
           build_button(bgi, group_index)
         end
       when ApplicationHelper::Toolbar::Custom
-        rendered_html = group.render(@view_context).tr('\'', '"')
-        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
-        @toolbar << group
+        @toolbar << { :custom => true, :name => group.name, :props => group.evaluate(@view_context) }
       end
     end
 

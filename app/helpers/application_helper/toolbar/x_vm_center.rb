@@ -267,23 +267,26 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-screen fa-lg',
           N_('Open a web-based HTML5 console for this VM'),
           N_('VM Console'),
-          :url   => "html5_console",
-          :klass => ApplicationHelper::Button::VmHtml5Console),
+          :keepSpinner => true,
+          :url         => "html5_console",
+          :klass       => ApplicationHelper::Button::VmHtml5Console),
         button(
           :vm_vmrc_console,
           'pficon pficon-screen fa-lg',
           N_('Open a VMRC console for this VM.  This requires that VMRC is installed and pre-configured to work in your browser.'),
           N_('VMRC Console'),
-          :url     => "vmrc_console",
-          :confirm => N_("Opening a VMRC console requires that VMRC is installed and pre-configured to work in your browser. Are you sure?"),
+          :keepSpinner => true,
+          :url         => "vmrc_console",
+          :confirm     => N_("Opening a VMRC console requires that VMRC is installed and pre-configured to work in your browser. Are you sure?"),
           :klass   => ApplicationHelper::Button::VmVmrcConsole),
         button(
           :cockpit_console,
           'pficon pficon-screen fa-lg',
           N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
           N_('Web Console'),
-          :url   => "launch_cockpit",
-          :klass => ApplicationHelper::Button::CockpitConsole
+          :keepSpinner => true,
+          :url         => "launch_cockpit",
+          :klass       => ApplicationHelper::Button::CockpitConsole
         ),
       ]
     ),
