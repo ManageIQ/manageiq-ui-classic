@@ -87,6 +87,15 @@ describe EmsCloudController do
             controller.send(:button)
           end
         end
+
+        context 'adding Host to Host Aggregate' do
+          let(:pressed) { 'host_aggregate_add_host' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'add_host_select', :id => [aggregate.id], :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
       end
     end
   end
