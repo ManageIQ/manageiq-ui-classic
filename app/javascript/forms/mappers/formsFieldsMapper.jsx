@@ -1,5 +1,6 @@
 import React from 'react';
-import { formFieldsMapper } from '@data-driven-forms/pf3-component-mapper';
+import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { formFieldsMapper, components } from '@data-driven-forms/pf3-component-mapper';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import DualGroup from '../../components/dual-group';
@@ -19,6 +20,7 @@ const fieldsMapper = {
   hr: () => <hr />,
   'secret-switch-field': SecretSwitchField,
   'validate-credentials': AsyncCredentials,
+  [componentTypes.SELECT]: props => <components.SelectField classNamePrefix="miq-ddf-select" {...props} />,
 };
 
 export default fieldsMapper;
