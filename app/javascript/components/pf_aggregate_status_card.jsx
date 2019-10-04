@@ -114,10 +114,10 @@ PfAggregateStatusCard.propTypes = {
 
 PfAggregateStatusCard.defaultProps = {
   layout: null,
-  className: null, // bylo to tam?
+  className: null,
   data: {},
   altLayout: false,
-  showTopBorder: false, // urcite?
+  showTopBorder: false,
 };
 
 export default PfAggregateStatusCard;
