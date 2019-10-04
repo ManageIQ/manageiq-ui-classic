@@ -26,7 +26,7 @@ module ApplicationController::Explorer
   end
 
   def x_history
-    self.x_node = data_for_breadcrumbs[data_for_breadcrumbs.length - 2][:key]
+    self.x_node = x_tree[:active_node]
     params[:id] = parse_nodetype_and_id(x_node).last
     params[:id].nil? && 'root'.eql?(params[:id]) ? show : tree_select
   end
