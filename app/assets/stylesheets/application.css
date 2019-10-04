@@ -10,4 +10,5 @@
  *= require ./metrics
  *= require ./remote_console
  *= require ./piecharts
+ *= require ./aggregate_status_card
 */

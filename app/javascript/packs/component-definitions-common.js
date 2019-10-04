@@ -1,10 +1,12 @@
 import React from 'react';
 
 import '@manageiq/react-ui-components/dist/tagging.css';
+import '@manageiq/react-ui-components/dist/quadicon.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
 import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
+import AggregateStatusCard from '../components/aggregate_status_card';
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
@@ -24,6 +26,7 @@ import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
+import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
@@ -42,6 +45,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 * ManageIQ.component.addReact('ComponentName', props => <ComponentName {...props} />);
 */
 
+ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
@@ -62,6 +66,7 @@ ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
+ManageIQ.component.addReact('Quadicon', Quadicon);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);

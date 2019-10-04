@@ -1329,4 +1329,8 @@ module ApplicationHelper
     return '' if @right_cell_text.nil?
     ActiveSupport::SafeBuffer === @right_cell_text ? raw(@right_cell_text) : @right_cell_text
   end
+
+  def camelize_quadicon(quad)
+    quad.keys.each_with_object({}) { |k, h| h[k.to_s.camelcase(:lower)] = quad[k] }
+  end
 end

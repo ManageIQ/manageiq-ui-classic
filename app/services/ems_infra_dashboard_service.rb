@@ -31,6 +31,7 @@ class EmsInfraDashboardService < EmsDashboardService
 
   def aggregate_status
     {
+      :quadicon => @controller.instance_exec(@ems, &EmsInfraDashboardService.quadicon_calc),
       :status   => status_data,
       :attrData => attributes_data,
     }
