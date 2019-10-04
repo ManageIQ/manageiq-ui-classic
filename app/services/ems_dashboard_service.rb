@@ -83,4 +83,8 @@ class EmsDashboardService < DashboardService
   def get_url(resource, ems_id, attr_url)
     "/#{resource}/#{ems_id}?display=#{attr_url}"
   end
+
+  def self.quadicon_calc
+    @quadicon_calc ||= proc { |ems| camelize_quadicon(quadicon_hash(ems)) }
+  end
 end

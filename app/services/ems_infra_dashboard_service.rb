@@ -29,10 +29,6 @@ class EmsInfraDashboardService < EmsDashboardService
     }.compact
   end
 
-  def self.quadicon_calc
-    @quadicon_calc ||= proc { |ems| camelize_quadicon(quadicon_hash(ems)) }
-  end
-
   def aggregate_status
     {
       :quadicon => @controller.instance_exec(@ems, &EmsInfraDashboardService.quadicon_calc),
