@@ -130,6 +130,8 @@ module.exports = {
   resolve: {
     alias: {
       'react': resolveModule('react'), // only ever use one react version
+      'redux': resolveModule('redux'), // only ever use one redux version
+      'react-redux': resolveModule('react-redux'), // only ever use one react-redux version
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
       'moment': resolveModule('moment'), // fix moment-strftime peerDependency issue
       'angular': resolveModule('angular'), // fix for "Tried to load angular more than once"
