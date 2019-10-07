@@ -158,11 +158,7 @@ class HostAggregateController < ApplicationController
   def delete_host_aggregates
     assert_privileges("host_aggregate_delete")
 
-    host_aggregates = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "host_aggregate")
-                        find_checked_items
-                      else
-                        [params[:id]]
-                      end
+    host_aggregates = checked_or_params
 
     if host_aggregates.empty?
       add_flash(_("No Host Aggregates were selected for deletion."), :error)
@@ -183,14 +179,12 @@ class HostAggregateController < ApplicationController
 
     # refresh the list if applicable
     if @lastaction == "show_list"
-      show_list
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "host_aggregate"
       @single_delete = true unless flash_errors?
-      if @flash_array.nil?
-        add_flash(_("The selected Host Aggregate was deleted"))
-      end
     end
+    flash_to_session
+    redirect_to(:action => 'show_list')
   end
 
   def add_host_select

@@ -105,6 +105,15 @@ describe EmsCloudController do
             controller.send(:button)
           end
         end
+
+        context 'deleting Host Aggregate' do
+          let(:pressed) { 'host_aggregate_delete' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'delete_host_aggregates', :id => nil, :miq_grid_checks => aggregate.id.to_s, :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
       end
     end
   end

@@ -243,6 +243,7 @@ Rails.application.routes.draw do
     :host_aggregate           => {
       :get  => %w(
         add_host_select
+        delete_host_aggregates
         download_data
         download_summary_pdf
         edit
@@ -261,6 +262,7 @@ Rails.application.routes.draw do
         add_host
         add_host_select
         button
+        delete_host_aggregates
         listnav_search_selected
         create
         protect
