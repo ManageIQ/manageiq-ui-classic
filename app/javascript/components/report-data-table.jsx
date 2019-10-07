@@ -186,7 +186,9 @@ const ReportDataTable = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initState);
 
-  useEffect(() => fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination), []);
+  useEffect(() => {
+    fetchReportPage(dispatch, props.reportResultId, state.sortingColumns, state.pagination);
+  }, []);
 
   const columns = state.columns.map((item, index) => makeColumn(item.name, item.title, index));
   const filterColumns = state.columns.map((item, index) => makeFilterColumn(item.name, item.title, index));

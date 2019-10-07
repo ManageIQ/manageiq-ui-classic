@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import fetchMock from 'fetch-mock';
 import WorkersForm from '../../components/workers-form/workers-form';
 
@@ -112,18 +113,19 @@ describe('Workers form', () => {
     spyAddFlash.mockRestore();
   });
 
-  it('should render correctly', (done) => {
+  it('should render correctly', async(done) => {
     fetchMock
       .getOnce(baseUrl, settingsData);
 
-    const wrapper = mount(<WorkersForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-      expect(wrapper.find(Dualgroup)).toHaveLength(6);
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<WorkersForm {...initialProps} />);
     });
+
+    wrapper.update();
+    expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
+    expect(wrapper.find(Dualgroup)).toHaveLength(6);
+    done();
   });
 
   it('should render error when loading is broken', (done) => {
@@ -141,62 +143,65 @@ describe('Workers form', () => {
     });
   });
 
-  it('should request data after mount and set to state', (done) => {
+  it('should request data after mount and set to state', async(done) => {
     fetchMock
       .getOnce(baseUrl, settingsData);
 
-    const wrapper = mount(<WorkersForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
-      expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
-      expect(fetchMock.called(baseUrl)).toBe(true);
-      expect(fetchMock.calls()).toHaveLength(1);
-      const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-        .instance();
-      expect(form.getState().values).toEqual(expectedValues);
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<WorkersForm {...initialProps} />);
     });
+
+    wrapper.update();
+    expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
+    expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
+    expect(fetchMock.called(baseUrl)).toBe(true);
+    expect(fetchMock.calls()).toHaveLength(1);
+    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+      .instance();
+    expect(form.getState().values).toEqual(expectedValues);
+    done();
   });
 
-  it('should send data in the patch format, show message and set initialValues', (done) => {
+  it('should send data in the patch format, show message and set initialValues', async(done) => {
     fetchMock
       .getOnce(baseUrl, settingsData);
     fetchMock
       .patchOnce(baseUrl, settingsData);
 
-    const wrapper = mount(<WorkersForm {...initialProps} />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<WorkersForm {...initialProps} />);
+    });
+    wrapper.update();
+    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+      .instance();
+    expect(fetchMock.calls()).toHaveLength(1);
 
-    setImmediate(() => {
-      wrapper.update();
-      const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-        .instance();
-      expect(fetchMock.calls()).toHaveLength(1);
+    form.change('smart_proxy_worker.count', 1);
 
-      form.change('smart_proxy_worker.count', 1);
-
-      form.submit().then(() => {
-        expect(fetchMock.calls()).toHaveLength(2);
-        expect(fetchMock.lastCall()[1].body).toEqual(JSON.stringify({
-          workers: {
-            worker_base: {
-              queue_worker_base: {
-                smart_proxy_worker: {
-                  count: 1,
-                },
-              },
+    wrapper.update();
+    await act(async() => {
+      wrapper.find('button').first().simulate('click');
+    });
+    expect(fetchMock.calls()).toHaveLength(2);
+    expect(fetchMock.lastCall()[1].body).toEqual(JSON.stringify({
+      workers: {
+        worker_base: {
+          queue_worker_base: {
+            smart_proxy_worker: {
+              count: 1,
             },
           },
-        }));
-        expect(form.getState().initialValues).toEqual(
-          { ...expectedValues, smart_proxy_worker: { ...expectedValues.smart_proxy_worker, count: 1 } },
-        );
-        expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
-        expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(2);
-        expect(spyAddFlash).toHaveBeenCalledWith(`Configuration settings saved for ${initialProps.product} Server "${initialProps.server.name} [${initialProps.server.id}]" in Zone "${initialProps.zone}"`, 'success');
-        done();
-      });
-    });
+        },
+      },
+    }));
+    expect(form.getState().initialValues).toEqual(
+      { ...expectedValues, smart_proxy_worker: { ...expectedValues.smart_proxy_worker, count: 1 } },
+    );
+    expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
+    expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(2);
+    expect(spyAddFlash).toHaveBeenCalledWith(`Configuration settings saved for ${initialProps.product} Server "${initialProps.server.name} [${initialProps.server.id}]" in Zone "${initialProps.zone}"`, 'success');
+    done();
   });
 });

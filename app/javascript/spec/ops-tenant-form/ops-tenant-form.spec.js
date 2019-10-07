@@ -1,8 +1,10 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import fetchMock from 'fetch-mock';
 import { mount } from '../helpers/mountForm';
 import OpsTenantForm from '../../components/ops-tenant-form/ops-tenant-form';
 import MiqFormRenderer from '../../forms/data-driven-form';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import '../helpers/miqSparkle';
 import '../helpers/addFlash';
@@ -32,39 +34,43 @@ describe('OpstTenantForm', () => {
     flashLaterSpy.mockReset();
   });
 
-  it('should mount form without initialValues', (done) => {
+  it('should mount form without initialValues', async(done) => {
     fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible`, {
       name: 'foo',
     });
-    const wrapper = mount(<OpsTenantForm {...initialProps} />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({});
-      expect(fetchMock.calls().length).toEqual(0);
-      expect(sparkleOnSpy).not.toHaveBeenCalled();
-      expect(sparkleOffSpy).not.toHaveBeenCalled();
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} />);
     });
+
+    wrapper.update();
+    expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({});
+    expect(fetchMock.calls().length).toEqual(0);
+    expect(sparkleOnSpy).not.toHaveBeenCalled();
+    expect(sparkleOffSpy).not.toHaveBeenCalled();
+    done();
   });
 
-  it('should mount and set initialValues', (done) => {
+  it('should mount and set initialValues', async(done) => {
     fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
     });
-    const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({
-        name: 'foo',
-      });
-      expect(fetchMock.calls()).toHaveLength(1);
-      expect(sparkleOnSpy).toHaveBeenCalled();
-      expect(sparkleOffSpy).toHaveBeenCalled();
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
     });
+
+    wrapper.update();
+    expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({
+      name: 'foo',
+    });
+    expect(fetchMock.calls()).toHaveLength(1);
+    expect(sparkleOnSpy).toHaveBeenCalled();
+    expect(sparkleOffSpy).toHaveBeenCalled();
+    done();
   });
 
-  it('should correctly check unique name', (done) => {
+  it('should correctly check unique name', async(done) => {
     fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
       resources: [],
     });
@@ -80,32 +86,30 @@ describe('OpstTenantForm', () => {
         name: 'foo',
       }],
     });
-    const wrapper = mount(<OpsTenantForm {...initialProps} ancestry={1} />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} ancestry={1} />);
+    });
     /**
      * first empty validation
      */
-    setTimeout(() => {
-      wrapper.update();
+    setTimeout(async() => {
       wrapper.find('input').first().simulate('change', { target: { value: 'foo' } });
       wrapper.update();
       /**
        * second validation with taken value
        */
       setTimeout(() => {
-        wrapper.update();
-        wrapper.update();
         expect(wrapper.find('.form-group').first().instance().className).toEqual('form-group has-error');
         wrapper.find('input').first().simulate('change', { target: { value: 'unique' } });
         wrapper.update();
-        setTimeout(() => {
-          expect(wrapper.find('.form-group').first().instance().className).toEqual('form-group');
-          done();
-        }, 500);
+        expect(wrapper.find('.form-group').first().instance().className).toEqual('form-group');
+        done();
       }, 500);
     }, 500);
   });
 
-  it('should render configuration which and change name isDisabled property', (done) => {
+  it('should render configuration which and change name isDisabled property', async(done) => {
     fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
@@ -115,57 +119,59 @@ describe('OpstTenantForm', () => {
     fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
-    const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    /**
-     * mount
-     */
-    setTimeout(() => {
-      wrapper.update();
-      const pfSwitch = wrapper.find('.pf3-switch');
-      expect(wrapper.find('input').first().props().disabled).toEqual(true);
-      expect(pfSwitch).toHaveLength(1);
-      pfSwitch.find('input').simulate('change', { target: { checked: false } });
-      wrapper.update();
-      expect(wrapper.find('input').first().props().disabled).toEqual(false);
-      done();
-    }, 500);
-  });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
+    });
 
-  it('should call addFlash when reseting edit form', (done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
-      name: 'foo',
-      description: 'bar',
-      ancestry: null,
-      use_config_for_attributes: true,
-    });
-    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
-      resources: [],
-    });
-    const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
-    /**
-     * mount
-     */
-    setTimeout(() => {
-      wrapper.update();
-      wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
-      wrapper.update();
-      wrapper.find('button').at(1).simulate('click');
-      expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warning');
-      done();
-    }, 500);
-  });
-
-  it('should call miqRedirectBack when canceling form', (done) => {
-    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
-      resources: [],
-    });
-    const wrapper = mount(<OpsTenantForm {...initialProps} />);
-    wrapper.find('button').last().simulate('click');
-    expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'warning', message: 'Creation of new Project was canceled by the user.' });
+    wrapper.update();
+    const pfSwitch = wrapper.find('.pf3-switch');
+    expect(wrapper.find('input').first().props().disabled).toEqual(true);
+    expect(pfSwitch).toHaveLength(1);
+    pfSwitch.find('input').simulate('change', { target: { checked: false } });
+    wrapper.update();
+    expect(wrapper.find('input').first().props().disabled).toEqual(false);
     done();
   });
 
-  it('should correctly add new entity.', (done) => {
+  it('should call addFlash when reseting edit form', async(done) => {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
+      name: 'foo',
+      description: 'bar',
+      ancestry: null,
+      use_config_for_attributes: true,
+    });
+    fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
+      resources: [],
+    });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
+    });
+
+    wrapper.update();
+    wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
+    wrapper.update();
+    wrapper.find('button').at(1).simulate('click');
+    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warning');
+    done();
+  });
+
+  it('should call miqRedirectBack when canceling form', async(done) => {
+    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
+      resources: [],
+    });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} />);
+    });
+
+    wrapper.find('button').last().simulate('click');
+    expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Project was canceled by the user.', 'warning', '/foo/bar');
+    done();
+  });
+
+  it('should correctly add new entity.', async(done) => {
     fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
       resources: [],
     });
@@ -174,23 +180,25 @@ describe('OpstTenantForm', () => {
     const wrapper = mount(<OpsTenantForm {...initialProps} />);
     wrapper.find('input').at(0).simulate('change', { target: { value: 'foo' } });
     wrapper.find('input').at(1).simulate('change', { target: { value: 'bar' } });
+
     wrapper.update();
-    setTimeout(() => {
-      wrapper.find('button').first().simulate('click');
-      setTimeout(() => {
-        expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
-          name: 'foo',
-          description: 'bar',
-          divisible: false,
-          parent: { id: null },
-        });
-        expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'success', message: 'Project "foo" has been successfully added.' });
-        done();
-      }, 500);
+
+    setTimeout(async() => {
+      await act(async() => {
+        wrapper.find('button').first().simulate('click');
+      });
+      expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
+        name: 'foo',
+        description: 'bar',
+        divisible: false,
+        parent: { id: null },
+      });
+      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully added.', 'success', '/foo/bar');
+      done();
     }, 500);
   });
 
-  it('should correctly edit existing entity.', (done) => {
+  it('should correctly edit existing entity.', async(done) => {
     fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
@@ -203,25 +211,29 @@ describe('OpstTenantForm', () => {
     });
     fetchMock.putOnce('/api/tenants/123', {});
     fetchMock.postOnce('/ops/invalidate_miq_product_feature_caches', {});
-    const wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OpsTenantForm {...initialProps} recordId={123} />);
+    });
+
     wrapper.update();
-    setTimeout(() => {
-      wrapper.update();
+
+    await act(async() => {
       wrapper.find('input').at(1).simulate('change', { target: { value: 'desc' } });
-      wrapper.update();
-      setTimeout(() => {
+    });
+    wrapper.update();
+    setTimeout(async() => {
+      await act(async() => {
         wrapper.find('button').first().simulate('click');
-        setTimeout(() => {
-          expect(JSON.parse(fetchMock.calls()[2][1].body)).toEqual({
-            name: 'foo',
-            description: 'desc',
-            divisible: false,
-            use_config_for_attributes: true,
-          });
-          expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'success', message: 'Project "foo" has been successfully saved.' });
-          done();
-        }, 500);
-      }, 500);
+      });
+      expect(JSON.parse(fetchMock.calls()[2][1].body)).toEqual({
+        name: 'foo',
+        description: 'desc',
+        divisible: false,
+        use_config_for_attributes: true,
+      });
+      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully saved.', 'success', '/foo/bar');
+      done();
     }, 500);
   });
 });

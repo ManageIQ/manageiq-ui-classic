@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import fetchMock from 'fetch-mock';
 import FormRenderer from '@data-driven-forms/react-form-renderer';
 import SetOwnershipForm from '../../components/set-ownership-form';
@@ -55,7 +56,7 @@ describe('Set ownership form component', () => {
     expect(fields).toEqual(expectedResult);
   });
 
-  it('should request initialForm values after mount', (done) => {
+  it('should request initialForm values after mount', async(done) => {
     fetchMock
       .getOnce('/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
         { evm_owner_id: 'a', miq_group_id: 'z2' })
@@ -65,14 +66,16 @@ describe('Set ownership form component', () => {
         { resources: [{ description: 'f2', id: 'a2' }, { description: 's2', id: 'z2' }] })
       .getOnce('/api/tenant_groups/z2', {});
 
-    const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    setImmediate(() => {
-      expect(wrapper.contains(<SetOwnershipForm {...initialProps} />)).toBeTruthy();
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<SetOwnershipForm {...initialProps} />);
     });
+
+    expect(wrapper.contains(<SetOwnershipForm {...initialProps} />)).toBeTruthy();
+    done();
   });
 
-  it('should send correct data on save', (done) => {
+  it('should send correct data on save', async(done) => {
     fetchMock
       .getOnce('/api/vms/123456?expand=resources&attributes=evm_owner_id,miq_group_id',
         { evm_owner_id: 'a', miq_group_id: 'z2' })
@@ -83,17 +86,18 @@ describe('Set ownership form component', () => {
       .getOnce('/api/tenant_groups/z2', {})
       .postOnce('/api/vms', {});
 
-    const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    setImmediate(() => {
-      const Form = wrapper.find(FormRenderer).childAt(0);
-      Form.instance().form.change('user', 'z');
-      wrapper.update();
-      wrapper.find('button').first().simulate('click');
-      setImmediate(() => {
-        expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=save', { objectIds: ['123456'] });
-        done();
-      });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<SetOwnershipForm {...initialProps} />);
     });
+    const Form = wrapper.find(FormRenderer).childAt(0);
+    Form.instance().form.change('user', 'z');
+    wrapper.update();
+    await act(async() => {
+      wrapper.find('button').first().simulate('click');
+    });
+    expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=save', { objectIds: ['123456'] });
+    done();
   });
 
   it('should send correct data on cancel', () => {

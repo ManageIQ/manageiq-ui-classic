@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { HelpBlock, InputGroup } from 'patternfly-react';
@@ -107,11 +108,13 @@ describe('DataDrivenInputWithPrefix', () => {
     const onChange = jest.fn();
     const wrapper = mount(<DataDrivenInputWithPrefix {...initialProps} input={{ onChange, value: '' }} />);
     /**
-     * select corret option from list
+     * select correct option from list
      */
-    wrapper.find(rawComponents.Select).children().instance().onChange({
-      label: 'Quxx',
-      value: 'https://',
+    act(() => {
+      wrapper.find(rawComponents.Select).children().instance().onChange({
+        label: 'Quxx',
+        value: 'https://',
+      });
     });
     expect(onChange).toHaveBeenCalledWith('https://');
     wrapper.update();
