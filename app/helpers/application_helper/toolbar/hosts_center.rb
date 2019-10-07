@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
   button_group('host_vmdb', [
     select(
       :host_vmdb_choice,
-      'fa fa-cog fa-lg',
+      '',
       t = N_('Configuration'),
       t,
       :items => [
@@ -98,7 +98,7 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
   button_group('host_policy', [
     select(
       :host_policy_choice,
-      'fa fa-shield fa-lg',
+      '',
       t = N_('Policy'),
       t,
       :enabled => false,
@@ -148,7 +148,7 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
   button_group('host_operations', [
     select(
       :host_power_choice,
-      'fa fa-power-off fa-lg',
+      '',
       N_('Power Operations'),
       N_('Power'),
       :enabled => false,
