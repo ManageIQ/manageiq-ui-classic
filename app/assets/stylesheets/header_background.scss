@@ -3,7 +3,7 @@
 /* Header background image */
 
 .navbar-pf-vertical {
-  background: image-url($img-bg-navbar);
+  /* background image attribute can be set in /public/custom.css */
   background-repeat: no-repeat;
   background-position: 100% 0;
   background-color: $navbar-pf-alt-bg-color;
