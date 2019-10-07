@@ -111,6 +111,6 @@ module TreeNode
 
     set_attribute(:selectable, true)
     set_attribute(:checkable, true)
-    set_attribute(:expanded, false)
+    set_attribute(:expanded) { @tree.try(:expand_node?, key) || false }
   end
 end

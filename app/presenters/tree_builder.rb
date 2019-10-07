@@ -215,8 +215,6 @@ class TreeBuilder
     node = TreeNode.new(object, pid, self)
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
 
-    node.expanded ||= expand_node?(node.key)
-
     if ancestry_kids || node.expanded || !@options[:lazy]
       (ancestry_kids || x_get_tree_objects(object, false, parents)).each do |o|
         node.nodes.push(x_build_node(o, node.key))
