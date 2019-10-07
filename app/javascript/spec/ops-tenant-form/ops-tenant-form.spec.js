@@ -4,6 +4,7 @@ import fetchMock from 'fetch-mock';
 import { mount } from '../helpers/mountForm';
 import OpsTenantForm from '../../components/ops-tenant-form/ops-tenant-form';
 import MiqFormRenderer from '../../forms/data-driven-form';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import '../helpers/miqSparkle';
 import '../helpers/addFlash';
@@ -166,7 +167,7 @@ describe('OpstTenantForm', () => {
     });
 
     wrapper.find('button').last().simulate('click');
-    expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'warning', message: 'Creation of new Project was canceled by the user.' });
+    expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Project was canceled by the user.', 'warning', '/foo/bar');
     done();
   });
 
@@ -192,7 +193,7 @@ describe('OpstTenantForm', () => {
         divisible: false,
         parent: { id: null },
       });
-      expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'success', message: 'Project "foo" has been successfully added.' });
+      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully added.', 'success', '/foo/bar');
       done();
     }, 500);
   });
@@ -231,7 +232,7 @@ describe('OpstTenantForm', () => {
         divisible: false,
         use_config_for_attributes: true,
       });
-      expect(flashLaterSpy).toHaveBeenCalledWith({ level: 'success', message: 'Project "foo" has been successfully saved.' });
+      expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully saved.', 'success', '/foo/bar');
       done();
     }, 500);
   });

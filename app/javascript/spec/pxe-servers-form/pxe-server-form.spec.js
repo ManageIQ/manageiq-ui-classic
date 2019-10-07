@@ -10,6 +10,7 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import PxeServersForm from '../../components/pxe-servers-form/pxe-server-form';
 import { mount } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 describe('PxeServersForm', () => {
   let initialProps;
@@ -95,7 +96,6 @@ describe('PxeServersForm', () => {
   });
 
   it('should sucesfully call cancel add server action', async(done) => {
-    const flashSpy = jest.spyOn(window, 'miqFlashLater');
     fetchMock
       .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
 
@@ -105,12 +105,11 @@ describe('PxeServersForm', () => {
     });
 
     wrapper.find('button').last().simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Add of new PXE Server was cancelled by the user' });
+    expect(miqRedirectBack).toHaveBeenCalledWith('Add of new PXE Server was cancelled by the user', 'success', '/pxe/explorer');
     done();
   });
 
   it('should sucesfully call cancel edit server action', async(done) => {
-    const flashSpy = jest.spyOn(window, 'miqFlashLater');
     fetchMock.getOnce('/api/pxe_servers/123?attributes=access_url,authentications,customization_directory,name,pxe_directory,pxe_menus,uri,windows_images_directory', { // eslint-disable-line max-len
       pxe_menus: [{ file_name: 'bar' }],
       authentications: [],
@@ -125,7 +124,7 @@ describe('PxeServersForm', () => {
 
     wrapper.update();
     wrapper.find('button').last().simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Edit of PXE Server foo was cancelled by the user' });
+    expect(miqRedirectBack).toHaveBeenCalledWith('Edit of PXE Server foo was cancelled by the user', 'success', '/pxe/explorer');
     done();
   });
 });

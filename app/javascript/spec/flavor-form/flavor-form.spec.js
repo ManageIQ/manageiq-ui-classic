@@ -10,8 +10,6 @@ import '../helpers/miqAjaxButton';
 import '../helpers/miqFlashLater';
 import { mount } from '../helpers/mountForm';
 
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-
 describe('Flavor form component', () => {
   let submitSpyMiqSparkleOn;
   let submitSpyMiqSparkleOff;

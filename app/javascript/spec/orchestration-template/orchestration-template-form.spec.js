@@ -10,13 +10,13 @@ import { mount } from '../helpers/mountForm';
 
 import CodeEditor from '../../components/code-editor';
 import OrcherstrationTemplateForm from '../../components/orchestration-template/orcherstration-template-form';
+import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 describe('OrcherstrationTemplate form', () => {
   let initialProps;
   const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
   const sparkleOffSpy = jest.spyOn(window, 'miqSparkleOff');
   const addFlashSpy = jest.spyOn(window, 'add_flash');
-  const flashLaterSpy = jest.spyOn(window, 'miqFlashLater');
 
   beforeEach(() => {
     initialProps = {
@@ -60,10 +60,11 @@ describe('OrcherstrationTemplate form', () => {
     const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
     wrapper.update();
     wrapper.find('button').last().simulate('click');
-    expect(flashLaterSpy).toHaveBeenCalledWith({
-      level: 'success',
-      message: 'Creation of a new Orchestration Template was cancelled by the user',
-    });
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Creation of a new Orchestration Template was cancelled by the user',
+      'success',
+      '/catalog/explorer',
+    );
   });
 
   it('should render edit variant', async(done) => {
