@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
@@ -36,36 +37,38 @@ describe('Async credentials component', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should call async validation function on button click and set valid state to true', (done) => {
+  it('should call async validation function on button click and set valid state to true', async(done) => {
     const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
     const change = jest.fn();
     const wrapper = mount(<AsyncCredentials {...initialProps} formOptions={{ ...initialProps.formOptions, change }} asyncValidate={asyncValidate} />);
-    wrapper.find('button').simulate('click');
-    setImmediate(() => {
-      expect(asyncValidate).toHaveBeenCalledWith({
-        foo: 'value-foo',
-        bar: 'value-bar',
-        nonAsync: 'non-async',
-      }, ['foo', 'bar']);
-      expect(change).toHaveBeenCalledWith('async-wrapper', true);
-      done();
+
+    await act(async() => {
+      wrapper.find('button').simulate('click');
     });
+    expect(asyncValidate).toHaveBeenCalledWith({
+      foo: 'value-foo',
+      bar: 'value-bar',
+      nonAsync: 'non-async',
+    }, ['foo', 'bar']);
+    expect(change).toHaveBeenCalledWith('async-wrapper', true);
+    done();
   });
 
-  it('should call async validation function on button click and set valid state to false', (done) => {
+  it('should call async validation function on button click and set valid state to false', async(done) => {
     const asyncValidate = jest.fn().mockReturnValue(new Promise((_resolve, reject) => reject('Validation failed'))); // eslint-disable-line prefer-promise-reject-errors
     const change = jest.fn();
     const wrapper = mount(<AsyncCredentials {...initialProps} formOptions={{ ...initialProps.formOptions, change }} asyncValidate={asyncValidate} />);
-    wrapper.find('button').simulate('click');
-    setImmediate(() => {
-      expect(asyncValidate).toHaveBeenCalledWith({
-        foo: 'value-foo',
-        bar: 'value-bar',
-        nonAsync: 'non-async',
-      }, ['foo', 'bar']);
-      expect(change).toHaveBeenCalledWith('async-wrapper', false);
-      done();
+
+    await act(async() => {
+      wrapper.find('button').simulate('click');
     });
+    expect(asyncValidate).toHaveBeenCalledWith({
+      foo: 'value-foo',
+      bar: 'value-bar',
+      nonAsync: 'non-async',
+    }, ['foo', 'bar']);
+    expect(change).toHaveBeenCalledWith('async-wrapper', false);
+    done();
   });
 
   it('should correctly set invalid state after input change', () => {
