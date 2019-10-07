@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { shallowToJson } from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
@@ -26,13 +27,16 @@ describe('PxeServersForm', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should render correctly in edit variant', (done) => {
+  it('should render correctly in edit variant', async(done) => {
     fetchMock.getOnce('/api/pxe_servers/123?attributes=access_url,authentications,customization_directory,name,pxe_directory,pxe_menus,uri,windows_images_directory', { // eslint-disable-line max-len
       pxe_menus: [{ file_name: 'bar' }],
       authentications: [{ userid: 'Pepa', foo: 'bar' }],
     }).getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
 
-    const wrapper = mount(<PxeServersForm {...initialProps} id="123" />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<PxeServersForm {...initialProps} id="123" />);
+    });
     /**
      * Should not render form until initial values are received
      */
@@ -40,14 +44,12 @@ describe('PxeServersForm', () => {
     /**
      * wait for name async validation and state updates
      */
-    setTimeout(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-      done();
-    }, 500);
+    wrapper.update();
+    expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
+    done();
   });
 
-  it('should sucesfully call add action while editing', (done) => {
+  it('should sucesfully call add action while editing', async(done) => {
     fetchMock
       .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] })
       .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27my%20name%27', { resources: [] })
@@ -55,7 +57,7 @@ describe('PxeServersForm', () => {
 
     const wrapper = mount(<PxeServersForm {...initialProps} />);
     const { form } = wrapper.find(MiqFormRenderer).children().children().children()
-.instance();
+      .instance();
     /**
      * pause validation so we dont need async mocks
      */
@@ -66,41 +68,48 @@ describe('PxeServersForm', () => {
      * unpause validation before final submit
      */
     form.resumeValidation();
-    wrapper.update();
+
     /**
      * wait for name async validation
      */
-    setTimeout(() => {
-      wrapper.find('button').first().simulate('click');
+    setTimeout(async() => {
+      await act(async() => {
+        wrapper.update();
+      });
+
       /**
        * wait for submit response
        */
-      setImmediate(() => {
-        const [_url, payload] = fetchMock.lastCall();
-        expect(JSON.parse(payload.body)).toEqual({
-          name: 'my name',
-          uri: 'nfs://foo/bar',
-          authentication: {},
-        });
-        done();
+      await act(async() => {
+        wrapper.find('button').first().simulate('click');
       });
-    }, 500);
-  });
 
-  it('should sucesfully call cancel add server action', (done) => {
-    const flashSpy = jest.spyOn(window, 'miqFlashLater');
-    fetchMock
-      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
-
-    const wrapper = mount(<PxeServersForm {...initialProps} />);
-    setTimeout(() => {
-      wrapper.find('button').last().simulate('click');
-      expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Add of new PXE Server was cancelled by the user' });
+      const [_url, payload] = fetchMock.lastCall();
+      expect(JSON.parse(payload.body)).toEqual({
+        name: 'my name',
+        uri: 'nfs://foo/bar',
+        authentication: {},
+      });
       done();
     }, 500);
   });
 
-  it('should sucesfully call cancel edit server action', (done) => {
+  it('should sucesfully call cancel add server action', async(done) => {
+    const flashSpy = jest.spyOn(window, 'miqFlashLater');
+    fetchMock
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
+
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<PxeServersForm {...initialProps} />);
+    });
+
+    wrapper.find('button').last().simulate('click');
+    expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Add of new PXE Server was cancelled by the user' });
+    done();
+  });
+
+  it('should sucesfully call cancel edit server action', async(done) => {
     const flashSpy = jest.spyOn(window, 'miqFlashLater');
     fetchMock.getOnce('/api/pxe_servers/123?attributes=access_url,authentications,customization_directory,name,pxe_directory,pxe_menus,uri,windows_images_directory', { // eslint-disable-line max-len
       pxe_menus: [{ file_name: 'bar' }],
@@ -109,12 +118,14 @@ describe('PxeServersForm', () => {
     }).getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] })
       .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27foo%27', { resources: [] });
 
-    const wrapper = mount(<PxeServersForm {...initialProps} id="123" />);
-    setTimeout(() => {
-      wrapper.update();
-      wrapper.find('button').last().simulate('click');
-      expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Edit of PXE Server foo was cancelled by the user' });
-      done();
-    }, 500);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<PxeServersForm {...initialProps} id="123" />);
+    });
+
+    wrapper.update();
+    wrapper.find('button').last().simulate('click');
+    expect(flashSpy).toHaveBeenCalledWith({ level: 'success', message: 'Edit of PXE Server foo was cancelled by the user' });
+    done();
   });
 });
