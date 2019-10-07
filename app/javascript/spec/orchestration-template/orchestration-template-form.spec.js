@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import fetchMock from 'fetch-mock';
 
 import '../helpers/addFlash';
@@ -30,118 +31,99 @@ describe('OrcherstrationTemplate form', () => {
     addFlashSpy.mockRestore();
   });
 
-  it('should call submit function', (done) => {
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
+  it('should call submit function', async(done) => {
     fetchMock.postOnce('/api/orchestration_templates', {});
-    setTimeout(() => {
-      wrapper.update();
-      wrapper.find('input#name').simulate('change', { target: { value: 'foo' } });
-      /**
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
+    });
+    wrapper.update();
+    wrapper.find('input#name').simulate('change', { target: { value: 'foo' } });
+    /**
        * manually change content value
        * Code component is not standard input element
        * Two first parameters are codemirror element and data
        */
-      wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
-      wrapper.update();
-      wrapper.find('button.btn.btn-primary').simulate('click');
-      expect(fetchMock.lastCall()).toBeTruthy();
-      expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
-        name: 'foo',
-        content: 'Some random content',
-      }));
-      expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-      done();
-    });
+    wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
+    wrapper.update();
+    wrapper.find('button.btn.btn-primary').simulate('click');
+    expect(fetchMock.lastCall()).toBeTruthy();
+    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
+      name: 'foo',
+      content: 'Some random content',
+    }));
+    expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+    done();
   });
 
   it('should call miqFlashLater on cancel action', () => {
     const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
-    setTimeout(() => {
-      wrapper.update();
-      wrapper.find('button').last().simulate('click');
-      expect(flashLaterSpy).toHaveBeenCalledWith({
-        level: 'success',
-        message: 'Creation of a new Orchestration Template was cancelled by the user',
-      });
+    wrapper.update();
+    wrapper.find('button').last().simulate('click');
+    expect(flashLaterSpy).toHaveBeenCalledWith({
+      level: 'success',
+      message: 'Creation of a new Orchestration Template was cancelled by the user',
     });
   });
 
-  it('should render edit variant', (done) => {
+  it('should render edit variant', async(done) => {
     fetchMock.patchOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',
       content: 'content',
     });
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} />);
-    /**
-     * async load
-     */
-    setImmediate(() => {
-      /**
-       * state update
-       */
-      setImmediate(() => {
-        wrapper.update();
-        wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
-        wrapper.update();
-        wrapper.find('button.btn.btn-primary').simulate('click');
-        /**
-         * after patch request
-         */
-        setImmediate(() => {
-          expect(fetchMock.lastCall()).toBeTruthy();
-          expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
-            name: 'bar',
-            content: 'content',
-          }));
-          expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-          done();
-        });
-      });
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} />);
     });
+    wrapper.update();
+    wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
+    wrapper.update();
+    await act(async() => {
+      wrapper.find('button.btn.btn-primary').simulate('click');
+    });
+
+    expect(fetchMock.lastCall()).toBeTruthy();
+    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
+      name: 'bar',
+      content: 'content',
+    }));
+    expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+    done();
   });
 
-  it('should render copy variant', (done) => {
+  it('should render copy variant', async(done) => {
     fetchMock.postOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',
       content: 'content',
     });
-    const wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<OrcherstrationTemplateForm {...initialProps} otId={123} copy />);
+    });
+    wrapper.update();
+    wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
     /**
-     * async load
-     */
-    setImmediate(() => {
-      /**
-       * state update
-       */
-      setImmediate(() => {
-        wrapper.update();
-        wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
-        /**
          * manually change content value
          * Code component is not standard input element
          * Two first parameters are codemirror element and data
          */
-        wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
-        wrapper.update();
-        wrapper.find('button.btn.btn-primary').simulate('click');
-        /**
-         * after copy request
-         */
-        setImmediate(() => {
-          expect(fetchMock.lastCall()).toBeTruthy();
-          expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
-            action: 'copy',
-            resource: {
-              name: 'bar',
-              content: 'updated content',
-            },
-          }));
-          expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-          done();
-        });
-      });
+    wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
+    wrapper.update();
+    await act(async() => {
+      wrapper.find('button.btn.btn-primary').simulate('click');
     });
+
+    expect(fetchMock.lastCall()).toBeTruthy();
+    expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
+      action: 'copy',
+      resource: {
+        name: 'bar',
+        content: 'updated content',
+      },
+    }));
+    expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
+    done();
   });
 });
