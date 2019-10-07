@@ -1,13 +1,14 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { shallow } from 'enzyme';
 import FlavorForm from '../../components/flavor-form/flavor-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import '../helpers/mockAsyncRequest';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/miqFlashLater';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
@@ -43,7 +44,7 @@ describe('Flavor form component', () => {
     fetchMock
       .mock('/flavor/ems_list', emsList)
       .mock('/flavor/cloud_tenants', cloudTenants);
-    const wrapper = shallow(<FlavorForm />).dive();
+    const wrapper = shallow(<FlavorForm />);
     setImmediate(() => {
       wrapper.update();
       expect(toJson(wrapper)).toMatchSnapshot();

@@ -1,8 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Import datastore via git component should render correctly 1`] = `
-<div>
-  <MiqFormRenderer
+<div
+  style={
+    Object {
+      "paddingBottom": 16,
+    }
+  }
+>
+  <Connect(MiqFormRenderer)
     disableSubmit={
       Array [
         "pristine",

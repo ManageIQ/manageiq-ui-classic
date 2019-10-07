@@ -1,13 +1,14 @@
 import React from 'react';
 import { shallowToJson } from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { shallow } from 'enzyme';
 
-import '../helpers/miqSparkle';
 import '../helpers/miqFlashLater';
 import '../helpers/sprintf';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import PxeServersForm from '../../components/pxe-servers-form/pxe-server-form';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
+import '../helpers/miqSparkle';
 
 describe('PxeServersForm', () => {
   let initialProps;
@@ -21,7 +22,7 @@ describe('PxeServersForm', () => {
   });
 
   it('should render correctly', () => {
-    const wrapper = shallow(<PxeServersForm {...initialProps} />).dive();
+    const wrapper = shallow(<PxeServersForm {...initialProps} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -53,7 +54,8 @@ describe('PxeServersForm', () => {
       .postOnce('/api/pxe_servers', {});
 
     const wrapper = mount(<PxeServersForm {...initialProps} />);
-    const { form } = wrapper.find(MiqFormRenderer).children().children().children().instance();
+    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+.instance();
     /**
      * pause validation so we dont need async mocks
      */
