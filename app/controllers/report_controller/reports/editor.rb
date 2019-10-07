@@ -759,7 +759,7 @@ module ReportController::Reports::Editor
         sort, suffix = @edit[:new][:sortby1].split("__")
         @edit[:new][:col_options][sort1][:break_label] =
           @edit[:new][:field_order].collect { |f| f.first if f.last == sort }.compact.join.strip +
-          (suffix ? " (%{suffixes})" % {:suffixes => MiqReport.date_time_break_suffixes.collect { |s| s.first if s.last == suffix }.compact.join} : "") +
+          (suffix ? " (%{suffixes})" % {:suffixes => MiqReport.date_time_break_suffixes.collect { |s| _(s.first) if s.last == suffix }.compact.join} : "") +
           ": "
       end
     end
