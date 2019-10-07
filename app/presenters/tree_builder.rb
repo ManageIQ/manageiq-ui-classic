@@ -94,8 +94,15 @@ class TreeBuilder
   end
 
   def open_node(id)
-    open_nodes = @tree_state.x_tree(@name)[:open_nodes]
-    open_nodes.push(id) unless open_nodes.include?(id)
+    opened_nodes.push(id) unless opened_nodes.include?(id)
+  end
+
+  def expand_node?(key)
+    # A based on the tree state, a node should be expanded in three cases:
+    # - the open_all setting is present
+    # - it has been already expanded
+    # - the node is set as active_node
+    !!@options[:open_all] || opened_nodes.include?(key) || @tree_state.x_tree(@name)[:active_node] == key
   end
 
   # Add child nodes to a tree below node 'id'
@@ -111,6 +118,13 @@ class TreeBuilder
     active_node_set(@tree_nodes)
     @bs_tree = @tree_nodes.to_json
     @locals_for_render = set_locals_for_render
+  end
+
+  def opened_nodes
+    # If the open_nodes is not set, Array(nil) will always return a different object, therefore,
+    # for stateless trees it has a performance drawback of creating a new array after each time
+    # this method is called. By memoizing the first result, only a single array gets allocated.
+    @opened_nodes ||= Array(@tree_state.x_tree(@name)[:open_nodes])
   end
 
   # Subclass this method if active node on initial load is different than root node.
@@ -201,13 +215,7 @@ class TreeBuilder
     node = TreeNode.new(object, pid, self)
     override(node, object) if self.class.method_defined?(:override) || self.class.private_method_defined?(:override)
 
-    # A node should be also expanded in three cases:
-    # - it has been already expanded in a previous session
-    # - the open_all setting is present in the tree_init_options
-    # - the node is set as active_node in the tree state
-    node.expanded ||= Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node.key) ||
-                      !!@options[:open_all]                                            ||
-                      @tree_state.x_tree(@name)[:active_node] == node.key
+    node.expanded ||= expand_node?(node.key)
 
     if ancestry_kids || node.expanded || !@options[:lazy]
       (ancestry_kids || x_get_tree_objects(object, false, parents)).each do |o|
