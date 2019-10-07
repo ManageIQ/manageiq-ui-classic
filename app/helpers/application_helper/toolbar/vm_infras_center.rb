@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
   button_group('vm_vmdb', [
     select(
       :vm_vmdb_choice,
-      'fa fa-cog fa-lg',
+      '',
       N_('Configuration'),
       :enabled => false,
       :onwhen  => "1+",
@@ -110,7 +110,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
   button_group('vm_policy', [
     select(
       :vm_policy_choice,
-      'fa fa-shield fa-lg',
+      '',
       N_('Policy'),
       :enabled => false,
       :onwhen  => "1+",
@@ -159,7 +159,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
   button_group('vm_lifecycle', [
     select(
       :vm_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      '',
       N_('Lifecycle'),
       :items => [
         button(
@@ -226,7 +226,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
   button_group('vm_operations', [
     select(
       :vm_power_choice,
-      'fa fa-power-off fa-lg',
+      '',
       N_('Power Operations'),
       N_('Power'),
       :enabled => false,

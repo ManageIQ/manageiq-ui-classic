@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
   button_group('container_node_monitoring', [
     select(
       :container_node_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      '',
       t = N_('Monitoring'),
       t,
       :items => [
@@ -48,7 +48,7 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
   button_group('container_node_policy', [
     select(
       :container_node_policy_choice,
-      'fa fa-shield fa-lg',
+      '',
       t = N_('Policy'),
       t,
       :items => [
