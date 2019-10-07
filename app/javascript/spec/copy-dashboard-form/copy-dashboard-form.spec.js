@@ -1,5 +1,6 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
+import { act } from 'react-dom/test-utils';
 import CopyDashboardForm from '../../components/copy-dashboard-form/copy-dashboard-form';
 
 import '../helpers/miqSparkle';
@@ -52,61 +53,62 @@ describe('Copy Dashboard form', () => {
     spyMiqAjaxButton.mockRestore();
   });
 
-  it('should render correctly and set initialValue', (done) => {
+  it('should render correctly and set initialValue', async(done) => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
-
-    const wrapper = mount(<CopyDashboardForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-      expect(wrapper.find('input[name="name"]').instance().value).toEqual('Clint');
-      expect(wrapper.find('input[name="description"]').instance().value).toEqual('good dashboard');
-      expect(wrapper.find('input[name="group_id"]').instance().value).toEqual('12');
-      expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(1);
-      expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(1);
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<CopyDashboardForm {...initialProps} />);
     });
+
+    wrapper.update();
+    expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
+    expect(wrapper.find('input[name="name"]').instance().value).toEqual('Clint');
+    expect(wrapper.find('input[name="description"]').instance().value).toEqual('good dashboard');
+    expect(wrapper.find('input[name="group_id"]').instance().value).toEqual('12');
+    expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(1);
+    expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(1);
+    done();
   });
 
-  it('should handle error', (done) => {
+  it('should handle error', async(done) => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, 400)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
 
     handleFailure.default = jest.fn();
-
-    const wrapper = mount(<CopyDashboardForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(handleFailure.default).toHaveBeenCalled();
-      done();
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<CopyDashboardForm {...initialProps} />);
     });
+
+    wrapper.update();
+    expect(handleFailure.default).toHaveBeenCalled();
+    done();
   });
 
-  it('should handle cancel', (done) => {
+  it('should handle cancel', async(done) => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
+    let wrapper;
 
-    const wrapper = mount(<CopyDashboardForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      wrapper.find('button').last().simulate('click'); // click on cancel
-      expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/report/db_copy/55?button=cancel');
-      done();
+    await act(async() => {
+      wrapper = mount(<CopyDashboardForm {...initialProps} />);
     });
+
+    wrapper.update();
+    wrapper.find('button').last().simulate('click'); // click on cancel
+    expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
+    expect(spyMiqAjaxButton).toHaveBeenCalledWith('/report/db_copy/55?button=cancel');
+    done();
   });
 
-  it('should handle submit', (done) => {
+  it('should handle submit', async(done) => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
@@ -114,30 +116,36 @@ describe('Copy Dashboard form', () => {
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 0 })
       .getOnce('/report/dashboard_get/55?name=new_name', { length: 0 });
 
-    const wrapper = mount(<CopyDashboardForm {...initialProps} />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<CopyDashboardForm {...initialProps} />);
+    });
 
-    setTimeout(() => {
+    await act(async() => {
       wrapper.update();
-      const { form } = wrapper.find(MiqFormRenderer).children().children().children().instance();
-      expect(fetchMock.calls()).toHaveLength(3);
+    });
 
+    const { form } = wrapper.find(MiqFormRenderer).children().children().children()
+      .instance();
+    expect(fetchMock.calls()).toHaveLength(2);
+
+    act(() => {
       form.batch(() => {
         form.change('group_id', '888');
         form.change('name', 'new_name');
       });
-
+    });
+    setTimeout(async() => {
       wrapper.update();
-      setTimeout(() => {
-        wrapper.find('button').first().simulate('click');
-        setImmediate(() => {
-          expect(spyMiqAjaxButton).toHaveBeenCalledWith(
-            '/report/dashboard_render',
-            { group: '80s', name: 'new_name', original_name: 'original_name' },
-          );
-          expect(fetchMock.calls()).toHaveLength(5);
-          done();
-        });
-      }, 1000);
-    }, 1000);
+      wrapper.find('button').first().simulate('click');
+      setImmediate(() => {
+        expect(spyMiqAjaxButton).toHaveBeenCalledWith(
+          '/report/dashboard_render',
+          { group: '80s', name: 'new_name', original_name: 'original_name' },
+        );
+        expect(fetchMock.calls()).toHaveLength(4);
+        done();
+      });
+    }, 500);
   });
 });
