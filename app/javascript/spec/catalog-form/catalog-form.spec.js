@@ -1,11 +1,13 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { shallow } from 'enzyme';
+
 import CatalogForm from '../../components/catalog-form/catalog-form';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/addFlash';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
 
 describe('Catalog form component', () => {
   let submitSpyMiqSparkleOn;
@@ -58,7 +60,7 @@ describe('Catalog form component', () => {
 
   it('should render add variant form', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    const wrapper = shallow(<CatalogForm />).dive();
+    const wrapper = shallow(<CatalogForm />);
 
     setImmediate(() => {
       wrapper.update();
@@ -70,7 +72,7 @@ describe('Catalog form component', () => {
   it('should render edit variant form', (done) => {
     fetchMock.getOnce(urlFreeTemplates, { resources })
       .getOnce(urlTemplates, assignedResources);
-    const wrapper = shallow(<CatalogForm catalogId="1001" />).dive();
+    const wrapper = shallow(<CatalogForm catalogId="1001" />);
 
     setImmediate(() => {
       wrapper.update();

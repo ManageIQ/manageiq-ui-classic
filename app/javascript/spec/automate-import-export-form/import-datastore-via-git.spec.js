@@ -1,16 +1,14 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { shallow } from 'enzyme';
+
 import ImportDatastoreViaGit from '../../components/automate-import-export-form/import-datastore-via-git';
 import '../helpers/addFlash';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
 
 describe('Import datastore via git component', () => {
-  /**
-   * Shallow rendering is broken for some reason on newer version of jest
-   * mount snapshoting works but has thousands of lines
-   */
-  it.skip('should render correctly', () => {
+  it('should render correctly', () => {
     const wrapper = shallow(<ImportDatastoreViaGit />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

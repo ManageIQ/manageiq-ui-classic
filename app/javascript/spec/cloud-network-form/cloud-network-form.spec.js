@@ -5,7 +5,8 @@ import CloudNetworkForm from '../../components/cloud-network-form/cloud-network-
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import * as networkModule from '../../helpers/network-providers';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
+import {shallow } from 'enzyme';
 
 jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
 
@@ -67,7 +68,7 @@ describe('Cloud Network form component', () => {
   });
 
   it('should render form', (done) => {
-    const wrapper = shallow(<CloudNetworkForm />).dive();
+    const wrapper = shallow(<CloudNetworkForm />);
 
     setImmediate(() => {
       wrapper.update();
@@ -79,7 +80,7 @@ describe('Cloud Network form component', () => {
 
   it('should render edit variant', (done) => {
     fetchMock.getOnce('/api/cloud_networks/1?attributes=cloud_tenant.id,cloud_tenant.name,ext_management_system.name', networkMock);
-    const wrapper = shallow(<CloudNetworkForm cloudNetworkId="1" />).dive();
+    const wrapper = shallow(<CloudNetworkForm cloudNetworkId="1" />);
 
     setImmediate(() => {
       wrapper.update();

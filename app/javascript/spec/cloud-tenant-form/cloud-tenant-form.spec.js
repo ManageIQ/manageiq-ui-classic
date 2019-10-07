@@ -1,8 +1,9 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { shallow } from 'enzyme';
 import CloudTenantForm from '../../components/cloud-tenant-form/cloud-tenant-form';
-import { mount, shallow } from '../helpers/mountForm';
+import { mount } from '../helpers/mountForm';
 
 require('../helpers/miqSparkle.js');
 require('../helpers/miqAjaxButton.js');
@@ -27,14 +28,14 @@ describe('Cloud tenant form component', () => {
   });
 
   it('should render adding form variant', () => {
-    const wrapper = shallow(<CloudTenantForm emsChoices={emsChoices} />).dive();
+    const wrapper = shallow(<CloudTenantForm emsChoices={emsChoices} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('should render editing form variant', () => {
     fetchMock
       .getOnce('/cloud_tenant/cloud_tenant_form_fields/1', { name: 'foo' });
-    const wrapper = shallow(<CloudTenantForm cloudTenantFormId={1} />).dive();
+    const wrapper = shallow(<CloudTenantForm cloudTenantFormId={1} />);
     expect(fetchMock._calls[0]).toHaveLength(2);
     expect(fetchMock._calls[0][0]).toEqual('/cloud_tenant/cloud_tenant_form_fields/1');
     expect(toJson(wrapper)).toMatchSnapshot();
