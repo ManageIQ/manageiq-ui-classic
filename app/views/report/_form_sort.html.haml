@@ -19,7 +19,7 @@
           miqInitSelectPicker();
           miqSelectPickerEvent('chosen_sort1', '#{url}', {beforeSend: true, complete: true});
         - unless MiqReport.get_col_break_suffixes(@sortby1.split("__").first).empty?
-          - opts = [["<#{_('Original Value')}>", nil]] + MiqReport.get_col_break_suffixes(@sortby1.split("__").first)
+          - opts = [["<#{_('Original Value')}>", nil]] + MiqReport.get_col_break_suffixes(@sortby1.split("__").first).map { |x, y| [_(x), y] }
           = select_tag('sort1_suffix',
             options_for_select(opts, @sortby1.split("__")[1]),
             :multiple              => false,
@@ -94,7 +94,7 @@
             miqInitSelectPicker();
             miqSelectPickerEvent('chosen_sort2', '#{url}', {beforeSend: true, complete: true});
           - unless MiqReport.get_col_break_suffixes(@sortby2.split("__").first).empty?
-            - opts = [["<#{_('Original Value')}>", nil]] + MiqReport.get_col_break_suffixes(@sortby2.split("__").first)
+            - opts = [["<#{_('Original Value')}>", nil]] + MiqReport.get_col_break_suffixes(@sortby2.split("__").first).map { |x, y| [_(x), y] }
             = select_tag('sort2_suffix',
               options_for_select(opts, @sortby2.split("__")[1]),
               :multiple              => false,
