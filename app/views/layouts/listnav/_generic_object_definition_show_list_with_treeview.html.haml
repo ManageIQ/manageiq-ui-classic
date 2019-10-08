@@ -1,5 +1,5 @@
 - return if @display == 'generic_objects' || @display == 'main'
-= miq_accordion_panel(_("Generic Object Classes"), true, "god") do
+= miq_accordion_panel(_("Generic Object Definitions"), true, "god") do
   :javascript
     ManageIQ.tree.data['#{@tree.name}'] = #{@tree.locals_for_render[:bs_tree]};
   %tree_div{'ng-controller' => 'treeViewController as vm'}

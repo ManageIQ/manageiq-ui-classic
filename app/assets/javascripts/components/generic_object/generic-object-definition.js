@@ -16,7 +16,7 @@ function genericObjectDefinitionFormController(API, miqService, $q, $scope) {
   vm.$onInit = function() {
     ManageIQ.angular.scope = $scope;
 
-    vm.entity = __('Generic Object Class');
+    vm.entity = __('Generic Object Definition');
     vm.saveable = miqService.saveable;
     vm.afterGet = false;
 

@@ -7,7 +7,7 @@ class TreeBuilderGenericObjectDefinition < TreeBuilder
 
   def root_options
     {
-      :text    => t = _('All Generic Object Classes'),
+      :text    => t = _('All Generic Object Definitions'),
       :tooltip => t
     }
   end
