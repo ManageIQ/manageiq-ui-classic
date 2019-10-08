@@ -935,42 +935,126 @@ module VmCommon
   end
   public :resolve_node_info
 
+  # returning [model, title]
+  def tree_name_to_model_and_title(tree_name)
+    case tree_name
+    when "images_filter_tree"
+      ["ManageIQ::Providers::CloudManager::Template", _('All Images')]
+    when "images_tree"
+      ["ManageIQ::Providers::CloudManager::Template", _('All Images by Provider')]
+    when "instances_filter_tree"
+      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances')]
+    when "instances_tree"
+      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances by Provider')]
+    when "vandt_tree"
+      ["VmOrTemplate", _('All VMs & Templates')]
+    when "vms_instances_filter_tree"
+      ["Vm", _('All VMs & Instances')]
+    when "templates_images_filter_tree"
+      ["MiqTemplate", _('All Templates & Images')]
+    when "templates_filter_tree"
+      ["ManageIQ::Providers::InfraManager::Template", _('All Templates')]
+    when "vms_filter_tree"
+      ["ManageIQ::Providers::InfraManager::Vm", _('All VMs')]
+    else
+      [nil, _('All VMs & Templates')]
+    end
+  end
+
+  def scopes_for_role
+    named_scope = []
+    named_scope << :not_orphaned unless role_allows?(:feature => 'vm_show_list_orphaned')
+    named_scope << :not_archived unless role_allows?(:feature => 'vm_show_list_archived')
+    named_scope << :not_retired unless role_allows?(:feature => 'vm_show_list_retired')
+    named_scope
+  end
+
+  def list_child_vms(model, node_id, title, show_list)
+    options = {
+      :model       => model,
+      :named_scope => scopes_for_role,
+    }
+    options[:named_scope] << :without_volume_templates if model == "ManageIQ::Providers::CloudManager::Template"
+
+    if x_node == "root"
+      if x_active_tree == :vandt_tree
+        klass = ManageIQ::Providers::InfraManager::VmOrTemplate
+        options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
+      end
+      process_show_list(options) if show_list # Get all VMs & Templates
+      @right_cell_text = title
+    elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
+      if x_active_tree == :vandt_tree
+        klass = ManageIQ::Providers::InfraManager::VmOrTemplate
+        options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
+
+      end
+      if node_id == "orph"
+        options[:named_scope] << :orphaned
+        process_show_list(options) if show_list
+        @right_cell_text = if model
+                             _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
+                           else
+                             _("Orphaned VMs & Templates")
+                           end
+      elsif node_id == "arch"
+        options[:named_scope] << :archived
+        process_show_list(options) if show_list
+        @right_cell_text = if model
+                             _("Archived %{models}") % {:models => ui_lookup(:models => model)}
+                           else
+                             _("Archived VMs & Templates")
+                           end
+      end
+    elsif TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
+      process_show_list(options) if show_list # Get all VMs & Templates
+      @right_cell_text = if model
+                           _("All %{models}") % {:models => ui_lookup(:models => model)}
+                         else
+                           _("All VMs & Templates")
+                         end
+    else
+      rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(node_id)
+      options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
+      options[:parent] = rec
+      options[:named_scope] << :active
+
+      process_show_list(options) if show_list
+      model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
+      @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
+        :object_types               => model ? ui_lookup(:models => model) : _("VMs & Templates"),
+        :datastore_or_provider      => model_name,
+        :provider_or_datastore_name => rec.name
+      }
+    end
+    # Add adv search filter to header
+    @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
+
+    # save model being displayed for custom buttons
+    @tree_selected_model = model.present? && model.constantize
+
+    options # is this used anywhere?
+  end
+
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid, show_list = true)
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
-    @nodetype, id = if treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't'
-                      @sb[@sb[:active_accord]] = treenodeid
-                      parse_nodetype_and_id(treenodeid)
-                    else
-                      @sb[@sb[:active_accord]] = nil
-                      parse_nodetype_and_id(valid_active_node(treenodeid))
-                    end
-    model, title =  case x_active_tree.to_s
-                    when "images_filter_tree"
-                      ["ManageIQ::Providers::CloudManager::Template", _('All Images')]
-                    when "images_tree"
-                      ["ManageIQ::Providers::CloudManager::Template", _('All Images by Provider')]
-                    when "instances_filter_tree"
-                      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances')]
-                    when "instances_tree"
-                      ["ManageIQ::Providers::CloudManager::Vm", _('All Instances by Provider')]
-                    when "vandt_tree"
-                      ["VmOrTemplate", _('All VMs & Templates')]
-                    when "vms_instances_filter_tree"
-                      ["Vm", _('All VMs & Instances')]
-                    when "templates_images_filter_tree"
-                      ["MiqTemplate", _('All Templates & Images')]
-                    when "templates_filter_tree"
-                      ["ManageIQ::Providers::InfraManager::Template", _('All Templates')]
-                    when "vms_filter_tree"
-                      ["ManageIQ::Providers::InfraManager::Vm", _('All VMs')]
-                    else
-                      [nil, _('All VMs & Templates')]
-                    end
-    case TreeBuilder.get_model_for_prefix(@nodetype)
-    when "Vm", "MiqTemplate" # VM or Template record, show the record
-      show_record(id)
+
+    @nodetype, node_id =
+      if %w[v t].include?(treenodeid.split('-')[0])
+        @sb[@sb[:active_accord]] = treenodeid
+        parse_nodetype_and_id(treenodeid)
+      else
+        @sb[@sb[:active_accord]] = nil
+        parse_nodetype_and_id(valid_active_node(treenodeid))
+      end
+
+    model, title = tree_name_to_model_and_title(x_active_tree.to_s)
+
+    if %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+      # VM or Template record, show the record
+      show_record(node_id)
       if @record.nil?
         self.x_node = "root"
         get_node_info("root")
@@ -983,81 +1067,15 @@ module VmCommon
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => model && model != "VmOrTemplate" ? model : TreeBuilder.get_model_for_prefix(@nodetype)).to_s}
       end
     else # Get list of child VMs of this node
-      options = {:model => model}
-      options[:named_scope] ||= []
-      options[:named_scope] << :not_orphaned unless role_allows?(:feature => 'vm_show_list_orphaned')
-      options[:named_scope] << :not_archived unless role_allows?(:feature => 'vm_show_list_archived')
-      options[:named_scope] << :not_retired unless role_allows?(:feature => 'vm_show_list_retired')
-      if model == "ManageIQ::Providers::CloudManager::Template"
-        options[:named_scope] << :without_volume_templates
-      end
-      if x_node == "root"
-        if x_active_tree == :vandt_tree
-          klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-          options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
-        end
-        process_show_list(options) if show_list # Get all VMs & Templates
-        @right_cell_text = title
-      elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Hash"
-        if x_active_tree == :vandt_tree
-          klass = ManageIQ::Providers::InfraManager::VmOrTemplate
-          options[:named_scope] << [:with_type, klass.vm_descendants.collect(&:name)]
+      options = list_child_vms(model, node_id, title, show_list)
 
-        end
-        if id == "orph"
-          options[:named_scope] << :orphaned
-          process_show_list(options) if show_list
-          @right_cell_text = if model
-                               _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
-                             else
-                               _("Orphaned VMs & Templates")
-                             end
-        elsif id == "arch"
-          options[:named_scope] << :archived
-          process_show_list(options) if show_list
-          @right_cell_text = if model
-                               _("Archived %{models}") % {:models => ui_lookup(:models => model)}
-                             else
-                               _("Archived VMs & Templates")
-                             end
-        end
-      elsif TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
-        process_show_list(options) if show_list # Get all VMs & Templates
-        @right_cell_text = if model
-                             _("All %{models}") % {:models => ui_lookup(:models => model)}
-                           else
-                             _("All VMs & Templates")
-                           end
-      else
-        rec = TreeBuilder.get_model_for_prefix(@nodetype).constantize.find(id)
-        options[:association] = @nodetype == 'az' ? 'vms' : 'all_vms_and_templates'
-        options[:parent] = rec
-        options[:named_scope] << :active
-
-        process_show_list(options) if show_list
-        model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
-        @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
-          :object_types               => model ? ui_lookup(:models => model) : _("VMs & Templates"),
-          :datastore_or_provider      => model_name,
-          :provider_or_datastore_name => rec.name
-        }
-      end
-      # Add adv search filter to header
-      @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
-
-      # save model being displayed for custom buttons
-      @tree_selected_model = if model.present?
-                               model.constantize
-                             end
-    end
-
-    # After adding to history, add name filter suffix if showing a list
-    unless %w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+      # After adding to history, add name filter suffix if showing a list
       if @search_text.present?
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
     end
-    options
+
+    options # is this used anywhere?
   end
 
   # Replace the right cell of the explorer
