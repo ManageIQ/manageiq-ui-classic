@@ -47,6 +47,16 @@ shared_context :shared_network_manager_context do |t|
                                                             :security_groups       => [@security_group],
                                                             :floating_ip           => @floating_ip,
                                                             :ext_management_system => @ems)
+
+    @load_balancer = FactoryBot.create(:load_balancer)
+    @load_balancer.network_ports << @network_port = FactoryBot.create("network_port_#{t}".to_sym,
+                                                                      :name                  => "eth0",
+                                                                      :mac_address           => "06:04:25:40:8e:79",
+                                                                      :device                => @load_balancer,
+                                                                      :security_groups       => [@security_group],
+                                                                      :floating_ip           => @floating_ip,
+                                                                      :ext_management_system => @ems)
+
     FactoryBot.create(:cloud_subnet_network_port,
                        :cloud_subnet => @cloud_subnet,
                        :network_port => @network_port,
