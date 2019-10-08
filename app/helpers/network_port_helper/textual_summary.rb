@@ -59,6 +59,8 @@ module NetworkPortHelper::TextualSummary
         h[:title] = _("Show Instance")
       end
       h
+    elsif device.kind_of?(LoadBalancer)
+      device.name
     else
       device
     end
