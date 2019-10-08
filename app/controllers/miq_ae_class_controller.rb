@@ -139,46 +139,49 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_node_info(node, _show_list = true)
-    id = valid_active_node(node).split('-')
-    @sb[:row_selected] = nil if params[:action] == "tree_select"
-    case id[0]
-    when "aec"
-      get_class_node_info(id)
-    when "aei"
-      get_instance_node_info(id)
-    when "aem"
-      get_method_node_info(id)
-    when "aen"
-      @record = MiqAeNamespace.find(id[1])
-      # need to set record as Domain record if it's a domain, editable_domains, enabled_domains,
-      # visible domains methods returns list of Domains, need this for toolbars to hide/disable correct records.
-      @record = MiqAeDomain.find(id[1]) if @record.domain?
-      @version_message = domain_version_message(@record) if @record.domain?
-      if @record.nil?
-        set_root_node
-      else
-        @records = []
-        # Add Namespaces under a namespace
-        details = @record.ae_namespaces
-        @records += details.sort_by { |d| [d.display_name.to_s, d.name.to_s] }
-        # Add classes under a namespace
-        details_cls = @record.ae_classes
-        unless details_cls.nil?
-          @records += details_cls.sort_by { |d| [d.display_name.to_s, d.name.to_s] }
-        end
-        @combo_xml = build_type_options
-        @dtype_combo_xml = build_dtype_options
-        @sb[:active_tab] = "details"
-        set_right_cell_text(x_node, @record)
-      end
+  def get_namespace_node_info(node_id)
+    @record = MiqAeNamespace.find(node_id)
+    # need to set record as Domain record if it's a domain, editable_domains, enabled_domains,
+    # visible domains methods returns list of Domains, need this for toolbars to hide/disable correct records.
+    @record = MiqAeDomain.find(node_id) if @record.domain?
+    @version_message = domain_version_message(@record) if @record.domain?
+    if @record.nil?
+      set_root_node
     else
-      @grid_data = User.current_tenant.visible_domains
-      add_all_domains_version_message(@grid_data)
-      @record = nil
-      @right_cell_text = _("Datastore")
-      @sb[:active_tab] = "namespaces"
-      set_right_cell_text(x_node)
+      @records = []
+      # Add Namespaces under a namespace
+      details = @record.ae_namespaces
+      @records += details.sort_by { |d| [d.display_name.to_s, d.name.to_s] }
+      # Add classes under a namespace
+      details_cls = @record.ae_classes
+      unless details_cls.nil?
+        @records += details_cls.sort_by { |d| [d.display_name.to_s, d.name.to_s] }
+      end
+      @combo_xml = build_type_options
+      @dtype_combo_xml = build_dtype_options
+      @sb[:active_tab] = "details"
+      set_right_cell_text(x_node, @record)
+    end
+  end
+
+  def get_root_node_info
+    @grid_data = User.current_tenant.visible_domains
+    add_all_domains_version_message(@grid_data)
+    @record = nil
+    @right_cell_text = _("Datastore")
+    @sb[:active_tab] = "namespaces"
+    set_right_cell_text(x_node)
+  end
+
+  def get_node_info(node, _show_list = true)
+    node_type, node_id = valid_active_node(node).split('-')
+    @sb[:row_selected] = nil if params[:action] == "tree_select"
+    case node_type
+    when 'aec' then get_class_node_info(node_id)
+    when 'aei' then get_instance_node_info(node_id)
+    when 'aem' then get_method_node_info(node_id)
+    when 'aen' then get_namespace_node_info(node_id)
+    else            get_root_node_info
     end
   end
 
@@ -2666,9 +2669,9 @@ class MiqAeClassController < ApplicationController
     @git_based_domain_import_service ||= GitBasedDomainImportService.new
   end
 
-  def get_instance_node_info(id)
+  def get_instance_node_info(node_id)
     begin
-      @record = MiqAeInstance.find(id[1])
+      @record = MiqAeInstance.find(node_id)
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return
@@ -2680,9 +2683,9 @@ class MiqAeClassController < ApplicationController
     set_right_cell_text(x_node, @record)
   end
 
-  def get_method_node_info(id)
+  def get_method_node_info(node_id)
     begin
-      @record = @ae_method = MiqAeMethod.find(id[1])
+      @record = @ae_method = MiqAeMethod.find(node_id)
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return
@@ -2727,10 +2730,10 @@ class MiqAeClassController < ApplicationController
     details
   end
 
-  def get_class_node_info(id)
+  def get_class_node_info(node_id)
     @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed]
     begin
-      @record = @ae_class = MiqAeClass.find(id[1])
+      @record = @ae_class = MiqAeClass.find(node_id)
     rescue ActiveRecord::RecordNotFound
       set_root_node
       return

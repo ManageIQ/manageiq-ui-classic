@@ -320,7 +320,7 @@ describe MiqAeClassController do
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => id.join("-")}})
-          controller.send(:get_instance_node_info, id)
+          controller.send(:get_instance_node_info, miq_ae_instance.id)
           expect(assigns(:record).name).to eq(miq_ae_instance.name)
           expect(assigns(:domain_overrides).count).to eq(2)
           expect(assigns(:right_cell_text)).to include("Automate Instance [#{miq_ae_instance.display_name}")
@@ -352,7 +352,7 @@ describe MiqAeClassController do
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => id.join("-")}})
-          controller.send(:get_class_node_info, id)
+          controller.send(:get_class_node_info, miq_ae_class.id)
           expect(assigns(:record).name).to eq(miq_ae_class.name)
           expect(assigns(:domain_overrides).count).to eq(2)
           expect(assigns(:right_cell_text)).to include(miq_ae_class.display_name)
@@ -386,7 +386,7 @@ describe MiqAeClassController do
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => id.join("-")}})
-          controller.send(:get_method_node_info, id)
+          controller.send(:get_method_node_info, miq_ae_method.id)
           expect(assigns(:record).name).to eq(miq_ae_method.name)
           expect(assigns(:domain_overrides).count).to eq(2)
           expect(assigns(:right_cell_text)).to include("Automate Method [#{miq_ae_method.display_name}")
