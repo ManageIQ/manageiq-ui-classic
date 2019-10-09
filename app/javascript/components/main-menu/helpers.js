@@ -1,14 +1,19 @@
-export const getHrefByType = (type, href, id) => (
-  {
-    big_iframe: `/dashboard/iframe?id=${id}`,
-    // eslint-disable-next-line no-script-url
-    modal: '#',
+export const getHrefByType = (type, href, id) => {
+  switch (type) {
+    case 'big_iframe':
+      return `/dashboard/iframe?id=${id}`;
+    case 'modal':
+      return undefined;
+    default:
+      return href;
   }
-)[type] || href;
+};
 
 export const getTargetByType = type => (type === 'new_window' ? '_blank' : '_self');
 
 export const handleUnsavedChanges = (e, type) => {
-  window.miqCheckForChanges();
-  return type === 'modal' && sendDataWithRx({ type: 'showAboutModal' });
+  if (type === 'modal') {
+    return sendDataWithRx({ type: 'showAboutModal' });
+  }
+  return window.miqCheckForChanges();
 };
