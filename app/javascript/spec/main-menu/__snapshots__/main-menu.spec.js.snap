@@ -191,7 +191,7 @@ exports[`Main menu test should render correctly 1`] = `
             >
               <li
                 className="active list-group-item secondary-nav-item-pf"
-                data-target="#menu-vi"
+                data-target="menu-vi"
               >
                 <a
                   href="/dashboard/maintab/?tab=vi"
@@ -252,10 +252,9 @@ exports[`Main menu test should render correctly 1`] = `
                       >
                         <li
                           className="list-group-item  active"
-                          data-target="#menu-dashboard"
+                          data-target="menu-dashboard"
                         >
                           <a
-                            href="#"
                             onMouseDown={[Function]}
                             target="_self"
                           >
@@ -310,7 +309,7 @@ exports[`Main menu test should render correctly 1`] = `
                       >
                         <li
                           className="list-group-item  "
-                          data-target="#menu-chargeback"
+                          data-target="menu-chargeback"
                         >
                           <a
                             href="/dashboard/iframe?id=chargeback"
@@ -469,7 +468,7 @@ exports[`Main menu test should render correctly 1`] = `
             >
               <li
                 className=" list-group-item secondary-nav-item-pf"
-                data-target="#menu-compute"
+                data-target="menu-compute"
               >
                 <a
                   href="/dashboard/maintab/?tab=compute"
@@ -602,7 +601,7 @@ exports[`Main menu test should render correctly 1`] = `
                       >
                         <li
                           className="list-group-item tertiary-nav-item-pf "
-                          data-target="#menu-clo"
+                          data-target="menu-clo"
                         >
                           <a
                             href="/dashboard/maintab/?tab=clo"
