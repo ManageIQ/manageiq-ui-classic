@@ -1207,6 +1207,7 @@ module ApplicationController::Compare
     @grid_cols_json = @cols.to_json.to_s.html_safe
 
     @lastaction = "compare_miq"
+    @explorer = true if request.xml_http_request? && explorer_controller?
   end
 
   def compare_build_record_rows(view, section, records, fields)
