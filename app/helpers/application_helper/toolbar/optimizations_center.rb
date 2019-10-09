@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::OptimizationsCenter < ApplicationHelper::Toolb
       nil,
       :data  => {'function'      => 'sendDataWithRx',
                  'function-data' => {'controller' => 'OptimizationController',
-                                     'action'     => 'refresh'}.to_json},
+                                     'action'     => 'refresh'}},
       :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
   ])
 end

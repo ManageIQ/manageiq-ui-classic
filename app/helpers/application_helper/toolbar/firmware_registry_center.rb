@@ -43,7 +43,7 @@ class ApplicationHelper::Toolbar::FirmwareRegistryCenter < ApplicationHelper::To
                 :controller => 'toolbarActions',
                 :payload    => {:entity => 'firmware_registries'},
                 :type       => 'delete'
-              }.to_json
+              }
             },
             :confirm => N_('Remove this Firmware Registry from Inventory?')
           )

@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::NetworkRoutersCenter < ApplicationHelper::Tool
                     :multiple => _('Network Routers')
                   }
                 }
-              }.to_json
+              }
             }
           )
         ]
