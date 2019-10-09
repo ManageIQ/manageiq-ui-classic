@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::AnsiblePlaybookCenter < ApplicationHelper::Too
   button_group('ansible_playbooks_policy', [
                  select(
                    :ansible_playbooks_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :items => [

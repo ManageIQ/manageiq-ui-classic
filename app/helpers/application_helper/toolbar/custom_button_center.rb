@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CustomButtonCenter < ApplicationHelper::Toolba
   button_group('custom_button_vmdb', [
     select(
       :custom_button_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
   button_group('instance_vmdb', [
     select(
       :instance_vmdb_choice,
-      '',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -121,7 +121,7 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
   button_group('instance_policy', [
     select(
       :instance_policy_choice,
-      '',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -153,7 +153,7 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
   button_group('instance_lifecycle', [
     select(
       :instance_lifecycle_choice,
-      '',
+      nil,
       t = N_('Lifecycle'),
       t,
       :items => [
@@ -193,7 +193,7 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
   button_group('instance_monitoring', [
     select(
       :instance_monitoring_choice,
-      '',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [

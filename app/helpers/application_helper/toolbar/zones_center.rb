@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ZonesCenter < ApplicationHelper::Toolbar::Basi
   button_group('scan_vmdb', [
     select(
       :zone_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

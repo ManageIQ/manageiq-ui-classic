@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ResourcePoolCenter < ApplicationHelper::Toolba
   button_group('resource_pool_vmdb', [
     select(
       :resource_pool_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -19,7 +19,7 @@ class ApplicationHelper::Toolbar::ResourcePoolCenter < ApplicationHelper::Toolba
   button_group('resource_pool_policy', [
     select(
       :resource_pool_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

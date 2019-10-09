@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudsCenter < ApplicationHelper::T
   button_group('auth_key_pair_cloud_vmdb', [
     select(
       :auth_key_pair_cloud_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -38,7 +38,7 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudsCenter < ApplicationHelper::T
   button_group('auth_key_pair_cloud_policy', [
     select(
       :auth_key_pair_cloud_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

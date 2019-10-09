@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
   button_group('storage_vmdb', [
     select(
       :storage_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
   button_group('storage_policy', [
     select(
       :storage_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -44,7 +44,7 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
   button_group('storage_monitoring', [
     select(
       :storage_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [

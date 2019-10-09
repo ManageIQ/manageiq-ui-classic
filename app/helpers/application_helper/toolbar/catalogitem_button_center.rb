@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CatalogitemButtonCenter < ApplicationHelper::T
   button_group('catalogitem_button_vmdb', [
     select(
       :catalogitem_button_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

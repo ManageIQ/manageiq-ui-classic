@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
   button_group('instance_vmdb', [
     select(
       :instance_vmdb_choice,
-      '',
+      nil,
       N_('Configuration'),
       :enabled => false,
       :onwhen  => "1+",
@@ -82,7 +82,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
   button_group('instance_policy', [
     select(
       :instance_policy_choice,
-      '',
+      nil,
       N_('Policy'),
       :enabled => false,
       :onwhen  => "1+",
@@ -131,7 +131,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
   button_group('instance_lifecycle', [
     select(
       :instance_lifecycle_choice,
-      '',
+      nil,
       N_('Lifecycle'),
       :items => [
         button(
@@ -184,7 +184,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
   button_group('instance_operations', [
     select(
       :instance_power_choice,
-      '',
+      nil,
       N_('Power Operations'),
       N_('Power'),
       :enabled => false,

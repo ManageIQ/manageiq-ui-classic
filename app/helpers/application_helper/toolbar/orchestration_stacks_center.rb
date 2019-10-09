@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::OrchestrationStacksCenter < ApplicationHelper:
   button_group('orchestration_stack_vmdb', [
     select(
       :orchestration_stack_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -22,7 +22,7 @@ class ApplicationHelper::Toolbar::OrchestrationStacksCenter < ApplicationHelper:
   button_group('orchestration_stack_policy', [
     select(
       :orchestration_stack_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,
@@ -43,7 +43,7 @@ class ApplicationHelper::Toolbar::OrchestrationStacksCenter < ApplicationHelper:
   button_group('orchestration_stack_lifecycle', [
     select(
       :orchestration_stack_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :enabled => false,

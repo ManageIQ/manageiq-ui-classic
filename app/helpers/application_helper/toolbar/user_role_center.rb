@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::UserRoleCenter < ApplicationHelper::Toolbar::B
   button_group('rbac_role_vmdb', [
     select(
       :rbac_role_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

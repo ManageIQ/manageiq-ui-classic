@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudVolumeSnapshotCenter < ApplicationHelper:
   button_group('cloud_volume_snapshot_vmdb', [
                  select(
                    :cloud_volume_snapshot_vmdb_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::CloudVolumeSnapshotCenter < ApplicationHelper:
   button_group('cloud_volume_snapshot_policy', [
                  select(
                    :cloud_volume_snapshot_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :items => [

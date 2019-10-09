@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::PersistentVolumesCenter < ApplicationHelper::T
   button_group('persistent_volume_policy', [
     select(
       :persistent_volume_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
   button_group('catalogitem_vmdb', [
     select(
       :catalogitem_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -63,7 +63,7 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
   button_group('catalogitem_policy', [
     select(
       :catalogitem_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

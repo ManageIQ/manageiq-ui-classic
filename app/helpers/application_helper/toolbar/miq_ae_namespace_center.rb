@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqAeNamespaceCenter < ApplicationHelper::Tool
   button_group('miq_ae_namespace_vmdb', [
     select(
       :miq_ae_namespace_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

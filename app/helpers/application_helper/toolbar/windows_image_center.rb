@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::WindowsImageCenter < ApplicationHelper::Toolba
   button_group('pxe_wimg_vmdb', [
     select(
       :pxe_wimg_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

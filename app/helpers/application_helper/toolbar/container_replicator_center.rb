@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorCenter < ApplicationHelper:
   button_group('container_replicator_monitoring', [
     select(
       :container_replicator_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [
@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorCenter < ApplicationHelper:
   button_group('container_replicator_policy', [
     select(
       :container_replicator_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

@@ -3,7 +3,7 @@ class ApplicationHelper::Toolbar::PhysicalRacksCenter < ApplicationHelper::Toolb
                [
                  select(
                    :physical_rack_vmdb_choice,
-                   'fa fa-cog fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [

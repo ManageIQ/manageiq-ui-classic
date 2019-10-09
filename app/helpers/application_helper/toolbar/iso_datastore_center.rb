@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::IsoDatastoreCenter < ApplicationHelper::Toolba
   button_group('iso_datastore_vmdb', [
     select(
       :iso_datastore_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

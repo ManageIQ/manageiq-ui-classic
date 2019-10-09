@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::SavedReportCenter < ApplicationHelper::Toolbar
   button_group('saved_report_vmdb', [
     select(
       :saved_report_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

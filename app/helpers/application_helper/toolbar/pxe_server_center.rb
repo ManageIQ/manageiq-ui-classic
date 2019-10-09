@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::PxeServerCenter < ApplicationHelper::Toolbar::
   button_group('pxe_server_vmdb', [
     select(
       :pxe_server_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

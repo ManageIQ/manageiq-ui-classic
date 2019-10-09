@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::Service::LifecycleMixin
     included_class.button_group('service_lifecycle', [
       included_class.select(
         :service_lifecycle_choice,
-        'fa fa-recycle fa-lg',
+        nil,
         t = N_('Lifecycle'),
         t,
         :enabled => false,

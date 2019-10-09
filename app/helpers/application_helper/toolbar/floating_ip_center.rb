@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::FloatingIpCenter < ApplicationHelper::Toolbar:
     [
       select(
         :floating_ip_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -38,7 +38,7 @@ class ApplicationHelper::Toolbar::FloatingIpCenter < ApplicationHelper::Toolbar:
     [
       select(
         :floating_ip_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         t = N_('Policy'),
         t,
         :items => [

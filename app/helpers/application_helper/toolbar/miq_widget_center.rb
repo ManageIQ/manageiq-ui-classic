@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqWidgetCenter < ApplicationHelper::Toolbar::
   button_group('widget_vmdb', [
     select(
       :widget_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::MiqWidgetCenter < ApplicationHelper::Toolbar::
         separator,
         button(
           :widget_generate_content,
-          'fa fa-cog fa-lg',
+          nil,
           t = N_('Generate Widget content now'),
           t,
           :confirm => N_("Are you sure you want initiate content generation for this Widget now?"),

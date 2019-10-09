@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
   button_group('cloud_tenant_vmdb', [
     select(
       :cloud_tenant_vmdb_choice,
-      '',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
   button_group('cloud_tenant_policy', [
     select(
       :cloud_tenant_policy_choice,
-      '',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

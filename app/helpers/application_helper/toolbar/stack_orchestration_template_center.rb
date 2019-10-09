@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::StackOrchestrationTemplateCenter < Application
   button_group('stack_orchestration_template_vmdb', [
     select(
       :stack_orchestration_template_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerImageRegistryCenter < ApplicationHelp
   button_group('container_image_registry_policy', [
     select(
       :container_image_registry_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerProjectCenter < ApplicationHelper::To
   button_group('container_project_monitoring', [
     select(
       :container_project_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::ContainerProjectCenter < ApplicationHelper::To
   button_group('container_project_policy', [
     select(
       :container_project_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

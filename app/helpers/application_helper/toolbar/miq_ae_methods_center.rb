@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqAeMethodsCenter < ApplicationHelper::Toolba
   button_group('miq_ae_method_vmdb', [
     select(
       :miq_ae_method_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       N_('Configuration'),
       :items => [
         button(

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XProviderForemanForemanConfiguredSystemCenter 
   button_group('record_summary', [
     select(
       :provider_foreman_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :enabled => true,
@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::XProviderForemanForemanConfiguredSystemCenter 
     ),
     select(
       :provider_foreman_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => true,

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqReportScheduleCenter < ApplicationHelper::T
   button_group('miq_schedule_vmdb', [
     select(
       :miq_schedule_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

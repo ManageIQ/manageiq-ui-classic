@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
     [
       select(
         :physical_server_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -203,7 +203,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
     [
       select(
         :physical_server_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         N_('Policy'),
         :enabled => true,
         :items   => [
@@ -231,7 +231,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
       ),
       select(
         :physical_server_lifecycle_choice,
-        'fa fa-recycle fa-lg',
+        nil,
         t = N_('Lifecycle'),
         t,
         :enabled => true,

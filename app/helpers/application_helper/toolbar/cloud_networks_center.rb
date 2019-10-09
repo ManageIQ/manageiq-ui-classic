@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolb
     [
       select(
         :cloud_network_vmdb_choice,
-        '',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolb
     [
       select(
         :cloud_network_policy_choice,
-        '',
+        nil,
         t = N_('Policy'),
         t,
         :enabled => false,

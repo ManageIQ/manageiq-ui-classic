@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
     [
       select(
         :network_router_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -72,7 +72,7 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
     [
       select(
         :network_router_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         t = N_('Policy'),
         t,
         :items => [

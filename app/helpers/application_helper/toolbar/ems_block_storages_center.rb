@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
   button_group('ems_storage_vmdb', [
                  select(
                    :ems_storage_vmdb_choice,
-                   'fa fa-cog fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
@@ -33,7 +33,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
   button_group('ems_storage_policy', [
                  select(
                    :ems_storage_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :enabled => false,

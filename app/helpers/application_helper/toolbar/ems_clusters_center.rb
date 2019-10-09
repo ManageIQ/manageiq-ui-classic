@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::EmsClustersCenter < ApplicationHelper::Toolbar
   button_group('ems_cluster_vmdb', [
     select(
       :ems_cluster_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :enabled => false,
@@ -44,7 +44,7 @@ class ApplicationHelper::Toolbar::EmsClustersCenter < ApplicationHelper::Toolbar
   button_group('ems_cluster_policy', [
     select(
       :ems_cluster_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

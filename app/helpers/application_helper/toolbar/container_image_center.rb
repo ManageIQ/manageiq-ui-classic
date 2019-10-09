@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerImageCenter < ApplicationHelper::Tool
   button_group('container_image_vmdb', [
     select(
       :container_image_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::ContainerImageCenter < ApplicationHelper::Tool
   button_group('container_image_policy', [
     select(
       :container_image_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

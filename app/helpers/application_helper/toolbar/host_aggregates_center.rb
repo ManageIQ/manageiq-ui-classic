@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
   button_group('host_aggregate_vmdb', [
     select(
       :host_aggregate_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
   button_group('host_aggregate_policy', [
     select(
       :host_aggregate_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

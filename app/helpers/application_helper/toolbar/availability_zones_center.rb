@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::AvailabilityZonesCenter < ApplicationHelper::T
   button_group('availability_zone_policy', [
     select(
       :availability_zone_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

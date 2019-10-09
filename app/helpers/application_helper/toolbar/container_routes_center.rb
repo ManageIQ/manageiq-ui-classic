@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerRoutesCenter < ApplicationHelper::Too
   button_group('container_route_policy', [
     select(
       :container_route_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

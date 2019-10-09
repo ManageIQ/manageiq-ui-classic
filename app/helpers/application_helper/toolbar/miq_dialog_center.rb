@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqDialogCenter < ApplicationHelper::Toolbar::
   button_group('miq_dialog_vmdb', [
     select(
       :host_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

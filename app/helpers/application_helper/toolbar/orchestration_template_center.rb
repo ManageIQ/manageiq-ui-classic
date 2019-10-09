@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::OrchestrationTemplateCenter < ApplicationHelpe
   button_group('orchestration_template_vmdb', [
     select(
       :orchestration_template_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::OrchestrationTemplateCenter < ApplicationHelpe
   button_group('orchestration_template_policy', [
     select(
       :orchestration_template_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

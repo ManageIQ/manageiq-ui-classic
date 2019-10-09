@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
   button_group('container_build_vmdb', [
     select(
       :container_build_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -22,7 +22,7 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
   button_group('container_build_policy', [
     select(
       :container_build_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

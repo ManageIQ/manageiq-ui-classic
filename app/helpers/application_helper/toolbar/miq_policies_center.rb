@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqPoliciesCenter < ApplicationHelper::Toolbar
   button_group('policy_vmdb', [
     select(
       :policy_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

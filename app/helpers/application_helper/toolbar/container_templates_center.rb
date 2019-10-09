@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerTemplatesCenter < ApplicationHelper::
   button_group('container_template_policy', [
     select(
       :container_template_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

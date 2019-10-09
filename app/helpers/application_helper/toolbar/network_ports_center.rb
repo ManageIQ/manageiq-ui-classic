@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::NetworkPortsCenter < ApplicationHelper::Toolba
   button_group('network_port_policy', [
     select(
       :network_port_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

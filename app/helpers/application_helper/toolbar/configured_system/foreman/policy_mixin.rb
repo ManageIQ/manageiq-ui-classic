@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::PolicyMixin
     included_class.button_group('provider_foreman_policy', [
       included_class.select(
         :provider_foreman_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         N_('Policy'),
         :items => [
           included_class.button(

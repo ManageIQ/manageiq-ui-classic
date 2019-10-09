@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::AvailabilityZoneCenter < ApplicationHelper::To
   button_group('availability_zone_policy', [
     select(
       :availability_zone_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -17,7 +17,7 @@ class ApplicationHelper::Toolbar::AvailabilityZoneCenter < ApplicationHelper::To
   button_group('availability_zone_monitoring', [
     select(
       :availability_zone_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [

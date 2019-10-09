@@ -17,7 +17,7 @@ class ApplicationHelper::Toolbar::FirmwareRegistryCenter < ApplicationHelper::To
     [
       select(
         :firmware_registry_config_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :enabled => true,

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::IsoImageCenter < ApplicationHelper::Toolbar::B
   button_group('iso_image_vmdb', [
     select(
       :iso_image_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

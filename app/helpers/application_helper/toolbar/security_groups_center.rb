@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::SecurityGroupsCenter < ApplicationHelper::Tool
     [
       select(
         :security_group_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -42,7 +42,7 @@ class ApplicationHelper::Toolbar::SecurityGroupsCenter < ApplicationHelper::Tool
   button_group('security_group_policy', [
     select(
       :security_group_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

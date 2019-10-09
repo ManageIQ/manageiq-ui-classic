@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
   button_group('embedded_ansible_credentials', [
     select(
       :embedded_ansible_credentials_configuration,
-      '',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -41,7 +41,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
   button_group('embedded_ansible_credentials_policy', [
                  select(
                    :embedded_ansible_credentials_policy_choice,
-                   '',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :enabled => false,

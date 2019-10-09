@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqAeDomainsCenter < ApplicationHelper::Toolba
   button_group('miq_ae_domain_vmdb', [
     select(
       :miq_ae_domain_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

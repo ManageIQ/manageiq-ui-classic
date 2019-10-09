@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerGroupsCenter < ApplicationHelper::Too
   button_group('container_group_policy', [
     select(
       :container_group_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

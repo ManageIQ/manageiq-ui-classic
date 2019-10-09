@@ -488,7 +488,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
         expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
           :id    => "generic_object_policy_choice",
-          :icon  => "fa fa-shield fa-lg",
+          :icon  => nil,
           :title => "Policy",
           :text  => "Policy",
           :items => [a_hash_including(items_hash)]
@@ -508,7 +508,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         expect(_toolbar_builder.build_toolbar(toolbar_to_build).first).to include(
           :id    => "generic_object_definition_configuration",
           :type  => :buttonSelect,
-          :icon  => "fa fa-cog fa-lg",
+          :icon  => nil,
           :title => "Configuration",
           :text  => "Configuration"
         )

@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
   button_group('ansible_repositories', [
     select(
       :ansible_repositories_configuration,
-      '',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -64,7 +64,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
   button_group('ansible_repositories_policy', [
                  select(
                    :ansible_repositories_policy_choice,
-                   '',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :enabled => false,

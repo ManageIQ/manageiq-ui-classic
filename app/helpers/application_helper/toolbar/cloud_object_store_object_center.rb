@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectCenter < ApplicationHelp
     [
       select(
         :cloud_object_store_object_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectCenter < ApplicationHelp
   button_group('cloud_object_store_object_policy', [
     select(
       :cloud_object_store_object_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
