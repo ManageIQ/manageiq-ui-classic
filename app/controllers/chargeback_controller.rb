@@ -542,7 +542,7 @@ class ChargebackController < ApplicationController
       @edit[:new][:details].push(temp)
     end
 
-    @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES
+    @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES.map { |x, y| [x, _(y)] }.to_h
 
     if params[:pressed] == 'chargeback_rates_copy'
       @rate.id = nil
