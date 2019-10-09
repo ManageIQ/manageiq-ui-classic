@@ -255,7 +255,7 @@ exports[`Main menu test should render correctly 1`] = `
                           data-target="#menu-dashboard"
                         >
                           <a
-                            href="javascript:void(0);"
+                            href="#"
                             onMouseDown={[Function]}
                             target="_self"
                           >
