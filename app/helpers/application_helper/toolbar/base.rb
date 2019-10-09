@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::Base
   end
 
   def select(id, icon, title, text, keys = {})
-    generic_button(:buttonSelect, id, icon, title, text, keys)
+    generic_button(:buttonSelect, id,'', title, text, keys)
   end
 
   def twostate(id, icon, title, text, keys = {})
