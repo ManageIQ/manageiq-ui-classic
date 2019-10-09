@@ -11,7 +11,7 @@ export const getHrefByType = (type, href, id) => {
 
 export const getTargetByType = type => (type === 'new_window' ? '_blank' : '_self');
 
-export const handleUnsavedChanges = (e, type) => {
+export const handleUnsavedChanges = (type) => {
   if (type === 'modal') {
     return sendDataWithRx({ type: 'showAboutModal' });
   }

@@ -209,7 +209,7 @@ exports[`Main menu test should render correctly 1`] = `
                 </a>
                 <div
                   className="nav-pf-secondary-nav"
-                  id="#menu-vi"
+                  id="menu-vi"
                 >
                   <div
                     className="nav-item-pf-header"
@@ -486,7 +486,7 @@ exports[`Main menu test should render correctly 1`] = `
                 </a>
                 <div
                   className="nav-pf-secondary-nav"
-                  id="#menu-compute"
+                  id="menu-compute"
                 >
                   <div
                     className="nav-item-pf-header"

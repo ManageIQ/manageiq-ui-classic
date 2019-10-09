@@ -16,7 +16,7 @@ const SecondLevel = ({
   <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`menu-${id}`}>
     <a
       href={getHrefByType(type, href, id)}
-      onMouseDown={e => handleUnsavedChanges(e, type)}
+      onMouseDown={() => handleUnsavedChanges(type)}
       target={getTargetByType(type)}
     >
       <span className="list-group-item-value">{title}</span>
