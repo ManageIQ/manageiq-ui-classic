@@ -335,7 +335,7 @@ class ChargebackController < ApplicationController
   end
 
   def cb_rpts_show_saved_report
-    @sb[:last_savedreports_id] = parse_nodetype_and_id(params[:id]).last if params[:id] && params[:id] != "reports"
+    @sb[:last_savedreports_id] = parse_nodetype_and_id(params[:id]).last if params[:id] && params[:id] != "cb_reports_accord"
     cb_rpts_fetch_saved_report(@sb[:last_savedreports_id])
     @sb[:parent_reports] = nil if @report.blank?
   end
