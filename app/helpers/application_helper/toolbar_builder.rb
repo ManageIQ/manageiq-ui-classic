@@ -112,7 +112,7 @@ class ApplicationHelper::ToolbarBuilder
   def apply_common_props(button, input)
     button.update(
       :color        => input[:color],
-      :data         => input[:data] || button.data,
+      :data         => input[:data] || (input[:klass].present? ? input[:klass].data(@record) : nil),
       :hidden       => button[:hidden] || !!input[:hidden],
       :icon         => input[:icon],
       :name         => button[:id],

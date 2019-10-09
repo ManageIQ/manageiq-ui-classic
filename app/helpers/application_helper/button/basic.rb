@@ -14,7 +14,7 @@ class ApplicationHelper::Button::Basic < Hash
     end
   end
 
-  def data
+  def self.data(_record)
     nil
   end
 
