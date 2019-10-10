@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'resourceActionId', 'targetId', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, resourceActionId, targetId) {
+ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'resourceActionId', 'targetId', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, resourceActionId, targetId, DialogData) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -46,7 +46,10 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   function submitButtonClicked() {
     miqService.sparkleOn();
 
-    var apiData = {action: 'reconfigure', resource: _.omit(vm.dialogData, 'action')};
+    var apiData = {
+      action: 'reconfigure',
+      resource: _.omit(DialogData.outputConversion(vm.dialogData), 'action'),
+    };
     var apiSubmitEndpoint = '/api/services/' + targetId;
 
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
