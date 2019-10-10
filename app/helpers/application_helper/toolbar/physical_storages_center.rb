@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
             N_('Refresh Relationships and Power States'),
             :image   => "refresh",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "refresh", "controller": "physicalStorageToolbarController"}'},
+                         'function-data' => {:type => "refresh", :controller => "physicalStorageToolbarController"}},
             :confirm => N_("Refresh relationships and power states for all items related to these Physical Storages?"),
             :options => {:feature => :refresh}
           ),
