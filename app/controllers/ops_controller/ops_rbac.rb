@@ -1079,7 +1079,6 @@ module OpsController::OpsRbac
       @edit[:new][:lookup]           = (params[:lookup] == "1")   if params[:lookup]
       @edit[:new][:user_pwd]         = params[:password]          if params[:password]
     end
-
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
         cat_name = Classification.find_by(:id => params[:cat]).name

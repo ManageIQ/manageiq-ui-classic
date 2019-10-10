@@ -8,13 +8,13 @@ import { http } from '../http_api';
 const params = (type = 'default', state, tag = {}) => ({
   provision: {
     id: "new",
-    ids_checked: [state.tagging.appState.assignedTags.map(t => t.values.map(val => val.id)).flat(), tag.tagValue.id].flat(),
+    ids_checked: [state.tagging.appState.assignedTags.map(t => t.values.map(val => val.id)).flat(), tag.tagValue.id || tag.tagValue[0].id].flat(),
     tree_typ: 'tags'
   },
   default: {
     id: state.tagging.appState.affectedItems[0] || "new",
     cat: tag.tagCategory.id,
-    val: tag.tagValue.id,
+    val: tag.tagValue.id || tag.tagValue[0].id,
     check: 1,
     tree_typ: 'tags'
   }
@@ -22,7 +22,7 @@ const params = (type = 'default', state, tag = {}) => ({
 
 const onDelete = (type = 'default', params = [], deleted_element) => ({
   provision: () => ({...params, check: 0, ids_checked: params.ids_checked.filter(element => element !== deleted_element) }),
-  default: ()   => params,
+  default: ()   => ({...params, check: "0"})
 })[type]
 
 class TaggingWrapper extends React.Component {

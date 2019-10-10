@@ -1000,7 +1000,6 @@ module ApplicationController::MiqRequestMethods
         :singleValue => cat[:single_value],
       }
     end
-
     assignments = Classification.find(vm_tags)
     assigned_tags = assignments.map do |tag|
       {
