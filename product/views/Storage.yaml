@@ -20,6 +20,7 @@ db: Storage
 # Columns to fetch from the main table
 cols:
 - name
+- ext_management_system
 - store_type
 - total_space
 - free_space
@@ -45,6 +46,7 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- ext_management_system
 - store_type
 - total_space
 - free_space
@@ -63,6 +65,7 @@ col_order:
 # Column titles, in order
 headers:
 - Name
+- Provider
 - Store Type
 - Total Space
 - Free Space
