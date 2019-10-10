@@ -14,7 +14,7 @@ const TopLevel = ({
   items,
   type,
 }) => (
-  <li className={`${active ? 'active' : ''} list-group-item secondary-nav-item-pf`} data-target={`menu-${id}`}>
+  <li className={`${active ? 'active' : ''} list-group-item secondary-nav-item-pf`} data-target={`#menu-${id}`}>
     <a
       href={getHrefByType(type, href, id)}
       onMouseDown={() => handleUnsavedChanges(type)}
