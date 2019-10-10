@@ -33,9 +33,6 @@ class NetworkRouterController < ApplicationController
       return tag("VmOrTemplate")
     when "network_router_add_interface"
       javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
-    when "network_router_delete"
-      delete_network_routers
-      javascript_redirect(previous_breadcrumb_url)
     when "network_router_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id)
     when "network_router_new"
@@ -103,36 +100,6 @@ class NetworkRouterController < ApplicationController
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
-  end
-
-  def delete_network_routers
-    assert_privileges("network_router_delete")
-
-    routers = find_records_with_rbac(NetworkRouter, checked_or_params)
-
-    routers_to_delete = []
-    routers.each do |router|
-      if router.supports?(:delete)
-        routers_to_delete.push(router)
-      else
-        add_flash(_(router.unsupported_reason(:delete)), :error)
-      end
-    end
-    process_network_routers(routers_to_delete, "destroy") unless routers_to_delete.empty?
-
-    # refresh the list if applicable
-    if @lastaction == "show_list" && @breadcrumbs.last[:url].include?(@lastaction)
-      show_list
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "network_router"
-      @single_delete = true unless flash_errors?
-      add_flash(_("The selected Router was deleted")) if @flash_array.nil?
-      flash_to_session
-    else
-      drop_breadcrumb(:name => 'dummy', :url => " ") # missing a bc to get correctly back so here's a dummy
-      flash_to_session
-      redirect_to(previous_breadcrumb_url)
-    end
   end
 
   def edit

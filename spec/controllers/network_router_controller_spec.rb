@@ -195,68 +195,6 @@ describe NetworkRouterController do
     end
   end
 
-  describe "#delete_network_routers" do
-    let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
-    let(:router) { FactoryBot.create(:network_router_openstack, :name => "router-01", :ext_management_system => ems) }
-
-    before do
-      stub_user(:features => :all)
-      setup_zone
-      controller.params = {:id => router.id}
-      controller.instance_variable_set(:@lastaction, "show")
-      controller.instance_variable_set(:@layout, "network_router")
-    end
-
-    it "it calls process_network_routers function" do
-      expect(controller).to receive(:process_network_routers).with([NetworkRouter], "destroy")
-
-      controller.send(:delete_network_routers)
-    end
-  end
-
-  describe "#delete" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @router = FactoryBot.create(:network_router_openstack,
-                                   :ext_management_system => @ems)
-      session[:network_router_lastaction] = 'show'
-    end
-
-    let(:task_options) do
-      {
-        :action => "deleting Network Router for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => @router.class.name,
-        :method_name => 'raw_delete_network_router',
-        :instance_id => @router.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => @ems.my_zone,
-        :args        => []
-      }
-    end
-
-    it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-      controller.params = {:pressed => "network_router_delete",
-                           :id      => @router.id}
-      controller.instance_variable_set(:@lastaction, "show")
-      controller.instance_variable_set(:@layout, "network_router")
-      controller.instance_variable_set(:@breadcrumbs, [{:name => "foo", :url => "network_router/show_list"}, {:name => "bar", :url => "network_router/show"}])
-      expect(controller).to receive(:render)
-      controller.send(:button)
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Network Router.",
-                                         :level   => :success)
-    end
-  end
-
   describe "#add_interface" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
