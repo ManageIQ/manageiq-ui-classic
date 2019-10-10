@@ -30,7 +30,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           :data    => {'function'      => 'sendDataWithRx',
                        'function-data' => {:type => "delete", :controller => "genericObjectDefinitionToolbarController", :entity => "Generic Object Definition"}},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonDelete,
-          :confirm => N_("Warning: This Generic Object Definition will be permanently removed!"),
+          :confirm => N_("Warning: This Generic Object Definition will be permanently removed!")
         ),
       ]
     )

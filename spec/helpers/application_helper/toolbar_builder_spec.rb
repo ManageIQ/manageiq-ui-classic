@@ -529,7 +529,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :type  => :button,
           :icon  => "pficon pficon-edit fa-lg",
           :title => "Edit selected Generic Object Definition",
-          :text  => "Edit selected Generic Object Definition",
+          :text  => "Edit selected Generic Object Definition"
         )
         expect(items[2]).to include(
           :id      => "generic_object_definition_configuration__generic_object_definition_delete",
