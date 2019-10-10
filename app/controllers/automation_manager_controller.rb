@@ -93,6 +93,18 @@ class AutomationManagerController < ApplicationController
     generic_x_show
   end
 
+  # Display provider through Tenant's textual summary
+  def show
+    @explorer = true
+    @lastaction = 'explorer'
+
+    build_accordions_and_trees
+
+    self.x_node = "at-#{params[:id]}"
+    @record = ExtManagementSystem.find_by(:id => params[:id])
+    generic_x_show
+  end
+
   def tree_record
     @record = case x_active_tree
               when :automation_manager_providers_tree then automation_manager_providers_tree_rec

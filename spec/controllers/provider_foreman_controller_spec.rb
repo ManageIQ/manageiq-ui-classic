@@ -100,9 +100,7 @@ describe ProviderForemanController do
   end
 
   context "asserts correct privileges" do
-    before do
-      login_as user_with_feature %w(configured_system_provision)
-    end
+    before { login_as user_with_feature %w[configured_system_provision] }
 
     it "should not raise an error for feature that user has access to" do
       expect { controller.send(:assert_privileges, "configured_system_provision") }.not_to raise_error
@@ -148,10 +146,8 @@ describe ProviderForemanController do
     expect(assigns(:flash_array).last[:message]).to include("Name has already been taken")
   end
 
-  context "#edit" do
-    before do
-      stub_user(:features => :all)
-    end
+  describe "#edit" do
+    before { stub_user(:features => :all) }
 
     it "renders the edit page when the configuration manager id is supplied" do
       post :edit, :params => { :id => @config_mgr.id }
@@ -205,7 +201,7 @@ describe ProviderForemanController do
     end
   end
 
-  context "#refresh" do
+  describe "#refresh" do
     before do
       stub_user(:features => :all)
       allow(controller).to receive(:x_node).and_return("root")
@@ -232,10 +228,8 @@ describe ProviderForemanController do
     end
   end
 
-  context "#delete" do
-    before do
-      stub_user(:features => :all)
-    end
+  describe "#delete" do
+    before { stub_user(:features => :all) }
 
     it "deletes the provider when the configuration manager id is supplied" do
       allow(controller).to receive(:replace_right_cell)
@@ -593,7 +587,7 @@ describe ProviderForemanController do
     end
   end
 
-  context "#build_credentials" do
+  describe "#build_credentials" do
     it "uses params[:default_password] for validation if one exists" do
       controller.params = {:default_userid   => "userid",
                            :default_password => "password2"}
@@ -611,9 +605,8 @@ describe ProviderForemanController do
   end
 
   context "when user with specific tag settings logs in" do
-    before do
-      login_as user_with_feature %w(providers_accord configured_systems_filter_accord)
-    end
+    before { login_as user_with_feature %w[providers_accord configured_systems_filter_accord] }
+
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow_any_instance_of(User).to receive(:get_filters).and_return(user_filters)
@@ -649,8 +642,9 @@ describe ProviderForemanController do
     end
   end
 
-  context "#tags_edit" do
+  describe "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
@@ -726,6 +720,21 @@ describe ProviderForemanController do
         controller.send(:get_node_info, "root")
         expect(controller.instance_variable_get(:@right_cell_text)).to eq(" (Names with \"#{search}\")")
       end
+    end
+  end
+
+  describe '#show' do
+    let!(:foreman) { FactoryBot.create(:configuration_manager) }
+
+    before { controller.params = {:id => foreman.id} }
+
+    it 'displays Satellite provider through Tenants textual summary' do
+      expect(controller).to receive(:provider_node).with(controller.params[:id], 'ManageIQ::Providers::Foreman::ConfigurationManager')
+      expect(controller).to receive(:build_accordions_and_trees)
+      expect(controller).to receive(:render).with(:layout => 'application')
+      controller.send(:show)
+      expect(controller.instance_variable_get(:@explorer)).to be(true)
+      expect(controller.params[:action]).to eq('tree-select')
     end
   end
 

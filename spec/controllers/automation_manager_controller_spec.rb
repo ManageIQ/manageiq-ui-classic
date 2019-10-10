@@ -95,9 +95,7 @@ describe AutomationManagerController do
   end
 
   context "asserts correct privileges" do
-    before do
-      login_as user_with_feature %w(automation_manager_provider_tag)
-    end
+    before { login_as user_with_feature %w[automation_manager_provider_tag] }
 
     it "should raise an error for feature that user has no access to" do
       expect { controller.send(:assert_privileges, "automation_manager_add_provider") }
@@ -126,10 +124,8 @@ describe AutomationManagerController do
     expect(assigns(:flash_array).first[:message]).to include("has already been taken")
   end
 
-  context "#edit" do
-    before do
-      stub_user(:features => :all)
-    end
+  describe "#edit" do
+    before { stub_user(:features => :all) }
 
     it "renders the edit page when the manager id is supplied" do
       post :edit, :params => { :id => @automation_manager1.id }
@@ -170,7 +166,7 @@ describe AutomationManagerController do
     end
   end
 
-  context "#refresh" do
+  describe "#refresh" do
     before do
       stub_user(:features => :all)
       allow(controller).to receive(:x_node).and_return("root")
@@ -197,10 +193,8 @@ describe AutomationManagerController do
     end
   end
 
-  context "#delete" do
-    before do
-      stub_user(:features => :all)
-    end
+  describe "#delete" do
+    before { stub_user(:features => :all) }
 
     it "deletes the provider when the manager id is supplied" do
       allow(controller).to receive(:replace_right_cell)
@@ -239,6 +233,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:current_page).and_return(1)
       controller.send(:build_accordions_and_trees)
     end
+
     it "renders right cell text for root node" do
       controller.send(:get_node_info, "root")
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
@@ -248,9 +243,7 @@ describe AutomationManagerController do
     context 'searching text' do
       let(:search) { "some_text" }
 
-      before do
-        controller.instance_variable_set(:@search_text, search)
-      end
+      before { controller.instance_variable_set(:@search_text, search) }
 
       it 'updates right cell text according to search text' do
         controller.send(:get_node_info, "root")
@@ -510,6 +503,7 @@ describe AutomationManagerController do
       login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, nil)
     end
+
     render_views
 
     it 'can render details for a job template' do
@@ -567,7 +561,7 @@ describe AutomationManagerController do
     end
   end
 
-  context "#build_credentials" do
+  describe "#build_credentials" do
     it "uses params[:default_password] for validation if one exists" do
       controller.params = {:default_userid   => "userid",
                            :default_password => "password2"}
@@ -589,6 +583,7 @@ describe AutomationManagerController do
       @user = user_with_feature %w(automation_manager_providers automation_manager_configured_system)
       login_as @user
     end
+
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow(@user).to receive(:get_filters).and_return(user_filters)
@@ -598,7 +593,7 @@ describe AutomationManagerController do
     end
   end
 
-  context "#configscript_service_dialog" do
+  describe "#configscript_service_dialog" do
     before do
       stub_user(:features => :all)
       @cs = FactoryBot.create(:ansible_configuration_script)
@@ -631,8 +626,9 @@ describe AutomationManagerController do
     end
   end
 
-  context "#tags_edit" do
+  describe "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       allow(@ans_configured_system).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
@@ -671,6 +667,19 @@ describe AutomationManagerController do
       post :tagging_edit, :params => {:button => "save", :format => :js, :id => @ans_configured_system.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
+    end
+  end
+
+  describe '#show' do
+    before { controller.params = {:id => @automation_manager1.id} }
+
+    it 'displays Automation Manager provider through Tenants textual summary' do
+      expect(controller).to receive(:build_accordions_and_trees)
+      expect(controller).to receive(:generic_x_show)
+      controller.send(:show)
+      expect(controller.instance_variable_get(:@explorer)).to be(true)
+      expect(controller.instance_variable_get(:@record)).to eq(@automation_manager1)
+      expect(controller.x_node).to eq("at-#{controller.params[:id]}")
     end
   end
 

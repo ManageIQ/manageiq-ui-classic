@@ -1,5 +1,5 @@
 describe MiqAeClassController do
-  context "#set_record_vars" do
+  describe "#set_record_vars" do
     it "Namespace remains unchanged when a class is edited" do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
@@ -16,7 +16,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#set_right_cell_text" do
+  describe "#set_right_cell_text" do
     it "check if correct namespace_path is being set" do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
@@ -33,7 +33,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#domain_lock" do
+  describe "#domain_lock" do
     it "Marks domain as locked/readonly" do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_domain_enabled)
@@ -45,7 +45,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#domain_unlock" do
+  describe "#domain_unlock" do
     it "Marks domain as unlocked/editable" do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_domain_disabled)
@@ -57,7 +57,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#domains_priority_edit" do
+  describe "#domains_priority_edit" do
     it "sets priority of domains" do
       stub_user(:features => :all)
       FactoryBot.create(:miq_ae_domain, :name => "test1", :parent => nil, :priority => 1)
@@ -82,7 +82,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#copy_objects" do
+  describe "#copy_objects" do
     it "do not replace left side explorer tree when copy form is loaded initially" do
       stub_user(:features => :all)
       d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
@@ -279,7 +279,7 @@ describe MiqAeClassController do
       allow(MiqAeDomain).to receive(:find_by_name).with("another_fqname2").and_return(miq_ae_domain2)
     end
 
-    context "#node_info" do
+    describe "#node_info" do
       it "collect namespace info" do
         stub_user(:features => :all)
         d1 = FactoryBot.create(:miq_ae_domain, :name => "domain1")
@@ -295,7 +295,7 @@ describe MiqAeClassController do
       end
     end
 
-    context "#get_instance_node_info" do
+    describe "#get_instance_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
           id = %w(aei some_id)
@@ -328,7 +328,7 @@ describe MiqAeClassController do
       end
     end
 
-    context "#get_class_node_info" do
+    describe "#get_class_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
           id = %w(aec some_id)
@@ -360,7 +360,7 @@ describe MiqAeClassController do
       end
     end
 
-    context "#get_method_node_info" do
+    describe "#get_method_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
           id = %w(aem some_id)
@@ -395,7 +395,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#delete_domain" do
+  describe "#delete_domain" do
     let(:domain1) { FactoryBot.create(:miq_ae_system_domain_enabled) }
     let(:domain2) { FactoryBot.create(:miq_ae_domain_enabled) }
     let(:domain3) { FactoryBot.create(:miq_ae_git_domain) }
@@ -423,7 +423,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#ae_class_validation" do
+  describe "#ae_class_validation" do
     before do
       stub_user(:features => :all)
       ns = FactoryBot.create(:miq_ae_namespace)
@@ -665,7 +665,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#copy_objects_edit_screen" do
+  describe "#copy_objects_edit_screen" do
     it "sets only current tenant's domains to be displayed in To Domain pull down" do
       FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
       FactoryBot.create(:miq_ae_domain, :tenant => FactoryBot.create(:tenant))
@@ -676,7 +676,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#delete_namespaces_or_classes" do
+  describe "#delete_namespaces_or_classes" do
     before do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -717,7 +717,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#update_namespace" do
+  describe "#update_namespace" do
     before do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -760,7 +760,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#deleteclasses" do
+  describe "#deleteclasses" do
     before do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -783,7 +783,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#set_field_vars" do
+  describe "#set_field_vars" do
     it "sets priority of new schema fields" do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
@@ -811,7 +811,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#fields_seq_field_changed" do
+  describe "#fields_seq_field_changed" do
     before do
       ns = FactoryBot.create(:miq_ae_namespace, :name => 'foo')
       @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
@@ -848,7 +848,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#replace_right_cell" do
+  describe "#replace_right_cell" do
     before do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
@@ -906,7 +906,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#open_parent_nodes" do
+  describe "#open_parent_nodes" do
     it "returns parent nodes hash for newly added item in tree" do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
@@ -949,7 +949,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#deleteinstances" do
+  describe "#deleteinstances" do
     before do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -984,7 +984,7 @@ describe MiqAeClassController do
     end
   end
 
-  context "#deletemethods" do
+  describe "#deletemethods" do
     before do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
@@ -1055,6 +1055,23 @@ describe MiqAeClassController do
     it 'wraps ids in parentheses and joins them with pipes' do
       allow(MiqAeMethod).to receive(:get_homonymic_across_domains).and_return([one, two, three])
       expect(controller.send(:embedded_method_regex, 'foo')).to eq("(1)|(2)|(3)")
+    end
+  end
+
+  describe '#show' do
+    let(:ae_domain) { FactoryBot.create(:miq_ae_domain) }
+
+    before do
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:id => ae_domain.id}
+    end
+
+    it 'calls build_accordions_and_trees, get_node_info and sets @explorer' do
+      expect(controller).to receive(:get_node_info).with("aen-#{ae_domain.id}")
+      expect(controller).to receive(:build_accordions_and_trees)
+      expect(controller).to receive(:render).with(:layout => 'application')
+      controller.send(:show)
+      expect(controller.instance_variable_get(:@explorer)).to be(true)
     end
   end
 end

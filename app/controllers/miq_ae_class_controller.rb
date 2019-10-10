@@ -83,6 +83,18 @@ class MiqAeClassController < ApplicationController
     render :layout => "application"
   end
 
+  # Display any Automate Domain through Tenant's textual summary
+  def show
+    @sb[:action] = nil
+    @explorer = true
+    build_accordions_and_trees
+
+    self.x_node = "aen-#{params[:id]}"
+    get_node_info(x_node)
+
+    render :layout => 'application'
+  end
+
   def set_right_cell_text(id, rec = nil)
     nodes = id.split('-')
     case nodes[0]
