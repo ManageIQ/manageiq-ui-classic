@@ -1,3 +1,7 @@
+const babelConfig = require('../.babelrc.js');
+require('@babel/register').default(babelConfig);
+require('@babel/polyfill');
+
 window.Rx = require('rxjs');
 window.$ = require('jquery');
 window.__ = (x) => x;

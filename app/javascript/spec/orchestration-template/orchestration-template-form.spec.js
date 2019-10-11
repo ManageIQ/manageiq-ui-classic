@@ -68,6 +68,7 @@ describe('OrcherstrationTemplate form', () => {
   });
 
   it('should render edit variant', async(done) => {
+    const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
     fetchMock.patchOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',
@@ -94,6 +95,7 @@ describe('OrcherstrationTemplate form', () => {
   });
 
   it('should render copy variant', async(done) => {
+    const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
     fetchMock.postOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
       name: 'foo',

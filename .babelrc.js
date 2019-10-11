@@ -4,7 +4,7 @@
 module.exports = {
   presets: [
     [
-      require('babel-preset-env'),
+      require('@babel/preset-env').default,
       {
         targets: {
           browsers: [
@@ -15,13 +15,13 @@ module.exports = {
         },
       },
     ],
-    require('babel-preset-react'),
-    require('babel-preset-es2015'),
+    require('@babel/preset-react').default,
   ],
   plugins: [
-    require('babel-plugin-transform-class-properties'),
-    require('babel-plugin-transform-export-extensions'),
-    require('babel-plugin-transform-object-rest-spread'),
-    require('babel-plugin-transform-object-assign'),
+    require('@babel/plugin-proposal-class-properties').default,
+    require('@babel/plugin-proposal-export-default-from').default,
+    require('@babel/plugin-proposal-export-namespace-from').default,
+    require('@babel/plugin-proposal-object-rest-spread').default,
+    require('@babel/plugin-transform-object-assign').default,
   ],
 };

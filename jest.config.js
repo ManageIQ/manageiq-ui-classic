@@ -9,17 +9,15 @@ module.exports = {
   },
   roots: ['app/javascript'],
   setupFiles: ['./config/jest.setup.js'],
-  testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.(jsx?|tsx?)$',
+  testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
   testURL: 'http://localhost',
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
-    '.(ts|tsx)': 'ts-jest',
   },
   moduleFileExtensions: [
-    'ts',
-    'tsx',
     'js',
     'jsx',
+    'json',
   ],
   moduleNameMapper: {
     "\\.(css|scss)$": 'identity-obj-proxy',

@@ -32,7 +32,7 @@ exports[`Dual list component is rendered correctly 1`] = `
     ]
   }
 >
-  <Component
+  <FieldProviderComponent
     component={[Function]}
     input={
       Object {
@@ -326,7 +326,7 @@ exports[`Dual list component is rendered correctly 1`] = `
         </Grid>
       </div>
     </DualList>
-  </Component>
+  </FieldProviderComponent>
 </WrappedDualList>
 `;
 
@@ -364,7 +364,7 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
     ]
   }
 >
-  <Component
+  <FieldProviderComponent
     allToLeft={true}
     allToRight={true}
     component={[Function]}
@@ -730,6 +730,6 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
         </Grid>
       </div>
     </DualList>
-  </Component>
+  </FieldProviderComponent>
 </WrappedDualList>
 `;
