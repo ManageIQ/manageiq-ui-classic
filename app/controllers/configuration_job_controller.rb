@@ -34,6 +34,9 @@ class ConfigurationJobController < ApplicationController
       configuration_job_delete
     when "configuration_job_tag"
       tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
+    when "configuration_job_reload"
+      replace_gtl_main_div
+      return
     end
     return if %w[configuration_job_tag].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
