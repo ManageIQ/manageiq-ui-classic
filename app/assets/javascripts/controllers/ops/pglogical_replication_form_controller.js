@@ -179,8 +179,13 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.port       = '';
       $scope.pglogicalReplicationModel.addEnabled = false;
     } else {
-      var original_values = $scope.modelCopy.subscriptions[idx];
       var subscription    = $scope.pglogicalReplicationModel.subscriptions[idx];
+      var original_values = subscription;
+
+      if ($scope.modelCopy.subscriptions[idx]) {
+        original_values = $scope.modelCopy.subscriptions[idx];
+      }
+
       $scope.pglogicalReplicationModel.updateEnabled = false;
       subscription.dbname   = original_values.dbname;
       subscription.host     = original_values.host;
