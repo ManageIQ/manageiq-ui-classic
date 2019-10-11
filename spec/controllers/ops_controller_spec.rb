@@ -364,8 +364,12 @@ describe OpsController do
         allow(controller).to receive(:check_privileges).and_return(true)
         allow(controller).to receive(:assert_privileges).and_return(true)
         seed_session_trees('ops', :settings_tree, 'root')
-        expect(controller).to receive(:render_to_string).with(any_args).exactly(4).times
+        expect(controller).to receive(:render_to_string).with(any_args).exactly(3).times
         post :change_tab, :params => {:tab_id => tab, :parent_tab_id => 'settings_tags'}
+      end
+
+      it "change_tab does not update breadcrumbs" do
+        expect(JSON.parse(response.body)["updatePartials"]).not_to include(:breadcrumbs)
       end
 
       it "Apply button remains disabled with flash errors" do
