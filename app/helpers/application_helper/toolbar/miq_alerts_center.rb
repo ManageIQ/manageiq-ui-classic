@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqAlertsCenter < ApplicationHelper::Toolbar::
   button_group('miq_alert_vmdb', [
     select(
       :miq_alert_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

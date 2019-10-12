@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XConfigurationScriptsCenter < ApplicationHelpe
   button_group('configuration_script_vmdb', [
     select(
       :configuration_script_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

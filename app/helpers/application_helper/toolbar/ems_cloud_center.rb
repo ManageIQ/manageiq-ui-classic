@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
       nil),
     select(
       :ems_cloud_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -45,7 +45,7 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
   button_group('ems_cloud_policy', [
     select(
       :ems_cloud_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -71,7 +71,7 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
   button_group('ems_cloud_monitoring', [
     select(
       :ems_cloud_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
   button_group('user_vmdb', [
     select(
       :user_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
   button_group('rbac_user_policy', [
     select(
       :rbac_user_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

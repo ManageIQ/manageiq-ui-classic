@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::InventoryGroupCenter < ApplicationHelper::Tool
   button_group('provider_vmdb', [
     select(
       :provider_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :enabled => true,

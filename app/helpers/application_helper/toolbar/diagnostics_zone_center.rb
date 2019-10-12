@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
   button_group('ldap_domain_vmdb', [
     select(
       :zone_configuration_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

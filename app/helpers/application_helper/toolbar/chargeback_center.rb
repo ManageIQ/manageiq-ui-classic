@@ -44,7 +44,7 @@ class ApplicationHelper::Toolbar::ChargebackCenter < ApplicationHelper::Toolbar:
   button_group('chargeback_vmdb', [
     select(
       :chargeback_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

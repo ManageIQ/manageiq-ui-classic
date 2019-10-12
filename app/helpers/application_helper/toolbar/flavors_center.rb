@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Ba
   button_group('flavor_configuration', [
     select(
       :flavor_configuration_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -31,7 +31,7 @@ class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Ba
   button_group('flavor_policy', [
     select(
       :flavor_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

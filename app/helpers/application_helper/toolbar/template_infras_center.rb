@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
   button_group('miq_template_vmdb', [
     select(
       :miq_template_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :enabled => false,
@@ -72,7 +72,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
   button_group('miq_template_policy', [
     select(
       :miq_template_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,
@@ -121,7 +121,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
   button_group('miq_template_lifecycle', [
     select(
       :miq_template_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :items => [

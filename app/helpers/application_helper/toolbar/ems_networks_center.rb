@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
   button_group('ems_network_vmdb', [
     select(
       :ems_network_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -50,7 +50,7 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
   button_group('ems_network_policy', [
     select(
       :ems_network_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

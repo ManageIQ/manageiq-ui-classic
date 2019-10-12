@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
   button_group('provider_vmdb', [
     select(
       :provider_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :enabled => true,
@@ -54,7 +54,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
   button_group('configuration_manager_policy', [
     select(
       :configuration_manager_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

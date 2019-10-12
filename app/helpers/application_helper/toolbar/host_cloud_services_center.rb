@@ -1,7 +1,7 @@
 class ApplicationHelper::Toolbar::HostCloudServicesCenter < ApplicationHelper::Toolbar::Basic
   button_group('host_cloud_services_vmdb', [select(
     :host_cloud_services_choice,
-    'fa fa-cog fa-lg',
+    nil,
     t = N_('Cloud Service Configuration'),
     t,
     :items => [

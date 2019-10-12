@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
   button_group('storage_vmdb', [
     select(
       :storage_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :enabled => false,
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
   button_group('storage_policy', [
     select(
       :storage_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

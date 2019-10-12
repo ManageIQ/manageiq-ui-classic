@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqReportsCenter < ApplicationHelper::Toolbar:
   button_group('report_vmdb', [
     select(
       :report_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

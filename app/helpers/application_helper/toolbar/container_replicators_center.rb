@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorsCenter < ApplicationHelper
   button_group('container_replicator_policy', [
     select(
       :container_replicator_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

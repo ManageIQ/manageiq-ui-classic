@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XAutomationManagerAnsibleTowerConfiguredSystem
   button_group('record_summary', [
     select(
       :automation_manager_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       N_('Policy'),
       :enabled => true,
       :items   => [

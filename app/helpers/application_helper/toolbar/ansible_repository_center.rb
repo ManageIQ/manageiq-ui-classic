@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
       :ansible_repository_reload,
       'fa fa-refresh fa-lg',
       N_('Refresh this page'),
-      N_('Refresh'),
+      N_(''),
       :url_parms    => "main_div",
       :send_checked => true,
       :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck),
@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
   button_group('ansible_repository', [
     select(
       :ansible_repository_configuration,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -48,7 +48,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
   button_group('ansible_repositories_policy', [
                  select(
                    :ansible_repositories_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :items => [

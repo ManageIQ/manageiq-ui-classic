@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::DialogsCenter < ApplicationHelper::Toolbar::Ba
   button_group('dialog_vmdb', [
     select(
       :dialog_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

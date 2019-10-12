@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::PxeImageCenter < ApplicationHelper::Toolbar::B
   button_group('pxe_image_vmdb', [
     select(
       :pxe_image_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

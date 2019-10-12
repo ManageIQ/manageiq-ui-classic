@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
   button_group('service_vmdb', [
     select(
       :service_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items  => [
@@ -39,7 +39,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
   button_group('service_policy', [
     select(
       :service_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
   button_group('service_lifecycle', [
     select(
       :service_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :items => [

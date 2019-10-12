@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
   button_group('cloud_volume_backup', [
                  select(
                    :cloud_volume_backup_choice,
-                   'fa fa-cog fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
   button_group('cloud_volume_backup_policy', [
     select(
       :cloud_volume_backup_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

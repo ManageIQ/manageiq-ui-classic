@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudVolumeTypeCenter < ApplicationHelper::Too
   button_group('cloud_volume_type_policy', [
                  select(
                    :cloud_volume_type_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :items => [

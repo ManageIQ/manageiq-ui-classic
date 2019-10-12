@@ -87,7 +87,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :klass => ApplicationHelper::Button::LogDepotEdit),
     select(
       :restart_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

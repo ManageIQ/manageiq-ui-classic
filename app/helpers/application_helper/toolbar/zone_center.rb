@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ZoneCenter < ApplicationHelper::Toolbar::Basic
   button_group('zone_vmdb', [
     select(
       :zone_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

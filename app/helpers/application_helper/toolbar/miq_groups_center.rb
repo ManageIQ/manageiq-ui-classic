@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
   button_group('rbac_group_vmdb', [
     select(
       :rbac_group_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -44,7 +44,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
   button_group('rbac_group_policy', [
     select(
       :rbac_group_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

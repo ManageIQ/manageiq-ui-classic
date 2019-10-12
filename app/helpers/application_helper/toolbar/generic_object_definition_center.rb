@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
   button_group('generic_object_definition', [
     select(
       :generic_object_definition_configuration,
-      'fa fa-cog fa-lg',
+      nil,
       N_('Configuration'),
       :items => [
         button(

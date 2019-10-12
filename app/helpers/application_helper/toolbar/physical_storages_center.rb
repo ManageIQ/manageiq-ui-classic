@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
     [
       select(
         :physical_storage_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [

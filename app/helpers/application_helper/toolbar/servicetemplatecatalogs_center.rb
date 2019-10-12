@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ServicetemplatecatalogsCenter < ApplicationHel
   button_group('st_catalog_vmdb', [
     select(
       :st_catalog_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

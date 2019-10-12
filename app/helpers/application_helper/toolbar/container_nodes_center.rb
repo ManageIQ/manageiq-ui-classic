@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ContainerNodesCenter < ApplicationHelper::Tool
   button_group('container_node_policy', [
     select(
       :container_node_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::PhysicalSwitchCenter < ApplicationHelper::Tool
     [
       select(
         :physical_switch_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :items => [

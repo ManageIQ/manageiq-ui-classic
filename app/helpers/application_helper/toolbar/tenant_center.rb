@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::TenantCenter < ApplicationHelper::Toolbar::Bas
   button_group('rbac_tenant_vmdb', [
     select(
       :rbac_tenant_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -47,7 +47,7 @@ class ApplicationHelper::Toolbar::TenantCenter < ApplicationHelper::Toolbar::Bas
   button_group('rbac_tenant_policy', [
     select(
       :rbac_tenant_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [

@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::ConfigurationJobsCenter < ApplicationHelper::T
   button_group('configuration_job_vmdb', [
     select(
       :configuration_job_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -22,7 +22,7 @@ class ApplicationHelper::Toolbar::ConfigurationJobsCenter < ApplicationHelper::T
   button_group('configuration_job_policy', [
     select(
       :configuration_job_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

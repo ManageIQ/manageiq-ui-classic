@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
   button_group('miq_action_vmdb', [
     select(
       :miq_action_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

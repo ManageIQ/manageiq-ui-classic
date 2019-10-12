@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::InfraNetworkingCenter < ApplicationHelper::Too
   button_group('infra_networking_policy', [
                                           select(
                                             :infra_networking_policy_choice,
-                                            'fa fa-shield fa-lg',
+                                            nil,
                                             t = N_('Policy'),
                                             t,
                                             :items => [

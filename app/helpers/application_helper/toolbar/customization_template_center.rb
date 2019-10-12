@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CustomizationTemplateCenter < ApplicationHelpe
   button_group('customization_template_vmdb', [
     select(
       :customization_template_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

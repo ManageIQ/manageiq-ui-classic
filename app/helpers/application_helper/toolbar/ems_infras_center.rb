@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::EmsInfrasCenter < ApplicationHelper::Toolbar::
   button_group('ems_infra_vmdb', [
     select(
       :ems_infra_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -57,7 +57,7 @@ class ApplicationHelper::Toolbar::EmsInfrasCenter < ApplicationHelper::Toolbar::
   button_group('ems_infra_policy', [
     select(
       :ems_infra_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

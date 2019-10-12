@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::MiqWidgetSetCenter < ApplicationHelper::Toolba
   button_group('db_vmdb', [
     select(
       :db_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [

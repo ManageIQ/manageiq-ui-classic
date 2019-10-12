@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
   button_group('image_vmdb', [
                  select(
                    :image_vmdb_choice,
-                   'fa fa-cog fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
   button_group('image_lifecycle', [
                  select(
                    :image_lifecycle_choice,
-                   'fa fa-recycle fa-lg',
+                   nil,
                    t = N_('Lifecycle'),
                    t,
                    :items => [
@@ -73,7 +73,7 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
   button_group('image_policy', [
                  select(
                    :image_policy_choice,
-                   'fa fa-shield fa-lg',
+                   nil,
                    t = N_('Policy'),
                    t,
                    :items => [

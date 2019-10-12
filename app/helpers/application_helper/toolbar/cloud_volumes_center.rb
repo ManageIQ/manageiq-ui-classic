@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
   button_group('cloud_volume_vmdb', [
                  select(
                    :cloud_volume_vmdb_choice,
-                   'fa fa-cog fa-lg',
+                   nil,
                    t = N_('Configuration'),
                    t,
                    :items => [
@@ -93,7 +93,7 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
   button_group('cloud_volume_policy', [
     select(
       :cloud_volume_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => "false",

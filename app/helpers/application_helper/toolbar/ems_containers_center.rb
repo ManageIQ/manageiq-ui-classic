@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
   button_group('ems_container_vmdb', [
     select(
       :ems_container_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
   button_group('ems_container_policy', [
     select(
       :ems_container_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

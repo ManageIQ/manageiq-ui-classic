@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::GenericObjectsCenter < ApplicationHelper::Tool
   button_group('generic_object_policy', [
     select(
       :generic_object_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

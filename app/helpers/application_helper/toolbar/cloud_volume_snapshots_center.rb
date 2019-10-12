@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CloudVolumeSnapshotsCenter < ApplicationHelper
   button_group('cloud_volume_snapshot_policy', [
     select(
       :cloud_volume_snapshot_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :enabled => false,

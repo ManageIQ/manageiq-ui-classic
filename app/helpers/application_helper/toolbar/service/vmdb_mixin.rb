@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::Service::VmdbMixin
     included_class.button_group('service_vmdb', [
       included_class.select(
         :service_vmdb_choice,
-        'fa fa-cog fa-lg',
+        nil,
         t = N_('Configuration'),
         t,
         :enabled => false,

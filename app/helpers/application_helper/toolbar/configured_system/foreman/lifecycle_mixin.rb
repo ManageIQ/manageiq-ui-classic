@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::LifecycleMixin
     included_class.button_group('provider_foreman_lifecycle', [
       included_class.select(
         :provider_foreman_lifecycle_choice,
-        'fa fa-recycle fa-lg',
+        nil,
         N_('Lifecycle'),
         :enabled => true,
         :items   => [

@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::Automation::PolicyMixin
     included_class.button_group('automation_manager_policy', [
       included_class.select(
         :automation_manager_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         N_('Policy'),
         :enabled => true,
         :items   => [

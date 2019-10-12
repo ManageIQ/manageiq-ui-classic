@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::Service::PolicyMixin
     included_class.button_group('service_policy', [
       included_class.select(
         :service_policy_choice,
-        'fa fa-shield fa-lg',
+        nil,
         t = N_('Policy'),
         t,
         :enabled => false,

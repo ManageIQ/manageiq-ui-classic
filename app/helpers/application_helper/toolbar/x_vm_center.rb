@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_vmdb', [
     select(
       :vm_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       t = N_('Configuration'),
       t,
       :items => [
@@ -85,7 +85,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_policy', [
     select(
       :vm_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       t = N_('Policy'),
       t,
       :items => [
@@ -119,7 +119,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_lifecycle', [
     select(
       :vm_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :items => [
@@ -163,7 +163,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_monitoring', [
     select(
       :vm_monitoring_choice,
-      'ff ff-monitoring fa-lg',
+      nil,
       t = N_('Monitoring'),
       t,
       :items => [
@@ -193,7 +193,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_operations', [
     select(
       :vm_power_choice,
-      'fa fa-power-off fa-lg',
+      nil,
       N_('VM Power Functions'),
       N_('Power'),
       :items => [
@@ -258,7 +258,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_access', [
     select(
       :vm_remote_access_choice,
-      'pficon pficon-screen fa-lg',
+      nil,
       N_('VM Remote Access'),
       N_('Access'),
       :items => [

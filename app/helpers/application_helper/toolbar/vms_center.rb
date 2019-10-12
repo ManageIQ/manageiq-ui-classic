@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_vmdb', [
     select(
       :vm_vmdb_choice,
-      'fa fa-cog fa-lg',
+      nil,
       N_('Configuration'),
       :enabled => false,
       :onwhen  => "1+",
@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_policy', [
     select(
       :vm_policy_choice,
-      'fa fa-shield fa-lg',
+      nil,
       N_('Policy'),
       :enabled => false,
       :onwhen  => "1+",
@@ -110,7 +110,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_lifecycle', [
     select(
       :vm_lifecycle_choice,
-      'fa fa-recycle fa-lg',
+      nil,
       N_('Lifecycle'),
       :items => [
         button(
