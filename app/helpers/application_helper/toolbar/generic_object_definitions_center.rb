@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionsCenter < ApplicationHe
           t = N_('Remove selected Generic Object Classes from Inventory'),
           t,
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController", "entity": "Generic Object Class"}'},
+                       'function-data' => {:type => "delete", :controller => "genericObjectDefinitionToolbarController", :entity => "Generic Object Class"}},
           :enabled                     => false,
           :onwhen                      => "1+",
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!")

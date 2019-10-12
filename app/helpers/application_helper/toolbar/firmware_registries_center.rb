@@ -45,7 +45,7 @@ class ApplicationHelper::Toolbar::FirmwareRegistriesCenter < ApplicationHelper::
                 :controller     => 'provider_dialogs',
                 :modal_title    => N_('Add a new Firmware Registry'),
                 :component_name => 'FirmwareRegistryForm',
-              }.to_json,
+              },
             }
           ),
           api_button(

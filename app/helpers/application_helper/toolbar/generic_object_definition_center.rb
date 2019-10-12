@@ -28,11 +28,12 @@ class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHel
           'pficon pficon-delete fa-lg',
           N_('Remove this Generic Object Classes from Inventory'),
           :data    => {'function'      => 'sendDataWithRx',
-                       'function-data' => '{"type": "delete", "controller": "genericObjectDefinitionToolbarController", "entity": "Generic Object Class"}'},
+                       'function-data' => {:type => "delete", :controller => "genericObjectDefinitionToolbarController", :entity => "Generic Object Class"}},
           :klass   => ApplicationHelper::Button::GenericObjectDefinitionButtonDelete,
           :confirm => N_("Warning: This Generic Object Class will be permanently removed!"),
         ),
       ]
     )
+
   ])
 end

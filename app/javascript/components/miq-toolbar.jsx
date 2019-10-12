@@ -86,12 +86,12 @@ const onClick = (button) => {
         buttonUrl += `/${ManageIQ.record.recordId}`;
       }
     }
-  } else if (button.function) {
+  } else if (button.data.function) {
     // Client-side buttons use 'function' and 'function-data'.
     // eval - returns a function returning the right function.
     /* eslint no-new-func: "off" */
-    const fn = new Function(`return ${button.function}`);
-    fn().call(button, button['function-data']);
+    const fn = new Function(`return ${button.data.function}`);
+    fn().call(button, button.data['function-data']);
     return;
   } else { // Most of (classic) buttons.
     // If no url was specified, run standard button ajax transaction.

@@ -49,7 +49,7 @@ class ApplicationHelper::Toolbar::ServicetemplateCenter < ApplicationHelper::Too
           :data => {'function'      => 'sendDataWithRx',
                     'function-data' => {:controller     => 'provider_dialogs',
                                         :modal_title    => N_('Delete Catalog Item'),
-                                        :component_name => 'RemoveCatalogItemModal'}.to_json}
+                                        :component_name => 'RemoveCatalogItemModal'}}
         ),
         separator,
         button(

@@ -21,7 +21,7 @@ class ApplicationHelper::Toolbar::Base
           'entity' => keys[:api][:entity].pluralize,
           'action' => keys[:api][:action]
         }
-      }.to_json
+      }
     }
     generic_button(:button, id, icon, title, text, keys)
   end

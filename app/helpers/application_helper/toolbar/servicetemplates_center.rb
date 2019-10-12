@@ -46,7 +46,8 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           :data         => {'function'      => 'sendDataWithRx',
                             'function-data' => {:controller     => 'provider_dialogs',
                                                 :modal_title    => N_('Delete Catalog Items'),
-                                                :component_name => 'RemoveCatalogItemModal'}.to_json}),
+                                                :component_name => 'RemoveCatalogItemModal'}}
+        ),
         separator,
         button(
           :catalogitem_ownership,
