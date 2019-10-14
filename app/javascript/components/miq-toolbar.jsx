@@ -86,7 +86,7 @@ const onClick = (button) => {
         buttonUrl += `/${ManageIQ.record.recordId}`;
       }
     }
-  } else if (button.data.function) {
+  } else if (button.data && button.data.function) {
     // Client-side buttons use 'function' and 'function-data'.
     // eval - returns a function returning the right function.
     /* eslint no-new-func: "off" */
