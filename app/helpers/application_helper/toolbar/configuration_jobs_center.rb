@@ -1,4 +1,15 @@
 class ApplicationHelper::Toolbar::ConfigurationJobsCenter < ApplicationHelper::Toolbar::Basic
+  button_group('configuration_job_reloading', [
+    button(
+      :configuration_job_reload,
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
+      N_('Refresh'),
+      :url_parms    => "main_div",
+      :send_checked => true,
+      :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
+    ),
+  ])
   button_group('configuration_job_vmdb', [
     select(
       :configuration_job_vmdb_choice,
