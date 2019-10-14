@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::PhysicalSwitchesCenter < ApplicationHelper::To
     [
       select(
         :physical_switches_power_choice,
-        'fa fa-power-off fa-lg',
+        nil,
         N_('Power Functions'),
         N_('Power'),
         :items => [

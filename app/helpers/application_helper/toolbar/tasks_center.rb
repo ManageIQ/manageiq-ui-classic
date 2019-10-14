@@ -4,7 +4,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       :miq_task_reload,
       'fa fa-refresh fa-lg',
       N_('Refresh this page'),
-      N_('Refresh'),
+      nil,
       :url_parms    => "main_div",
       :send_checked => true),
   ])
@@ -53,7 +53,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       :miq_task_canceljob,
       'fa fa-ban fa-lg',
       N_('Cancel the selected task'),
-      N_('Cancel Task'),
+      nil,
       :url_parms    => "main_div",
       :send_checked => true,
       :confirm      => N_("Warning: The selected task will be cancelled. Are you sure you want to cancel the task?"),

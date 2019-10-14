@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
     [
       select(
         :physical_server_power_choice,
-        'fa fa-power-off fa-lg',
+        nil,
         N_('Power Operations'),
         N_('Power'),
         :items => [
