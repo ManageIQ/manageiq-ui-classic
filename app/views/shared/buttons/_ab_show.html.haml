@@ -92,7 +92,7 @@
     %label.control-label.col-md-2
       = _('Type')
     .col-md-8
-      = @resolve[:new][:target_class]
+      = ui_lookup(:model =>@resolve[:new][:target_class])
   - if @resolve[:new][:target_class] && !@resolve[:new][:target_class].blank?
     .form-group
       %label.control-label.col-md-2
