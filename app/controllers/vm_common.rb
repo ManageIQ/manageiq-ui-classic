@@ -87,7 +87,7 @@ module VmCommon
   end
 
   def show_timeline
-    db = get_rec_cls
+    db = record_class
     @display = "timeline"
     session[:tl_record_id] = params[:id] if params[:id]
     @record = find_record_with_rbac(db, session[:tl_record_id])

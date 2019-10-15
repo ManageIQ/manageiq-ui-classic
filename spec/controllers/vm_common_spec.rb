@@ -408,6 +408,17 @@ describe VmOrTemplateController do
     end
   end
 
+  describe '#show_timeline' do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before { controller.params = {:id => vm.id} }
+
+    it 'gets proper record class and sets @record' do
+      controller.send(:show_timeline)
+      expect(controller.instance_variable_get(:@record)).to eq(vm)
+    end
+  end
+
   include_examples '#download_summary_pdf', :vm_cloud
   include_examples '#download_summary_pdf', :vm_infra
 end
