@@ -91,7 +91,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
   button_group('image_lifecycle', [
     select(
       :image_lifecycle_choice,
-      'pficon pficon-add-circle-o fa-lg',
+      nil,
       t = N_('Lifecycle'),
       t,
       :items => [

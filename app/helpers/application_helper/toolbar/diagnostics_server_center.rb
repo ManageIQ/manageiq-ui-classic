@@ -59,7 +59,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
   button_group('ldap_domain_vmdb', [
     select(
       :server_collect_logs_choice,
-      'fa fa-filter fa-lg',
+      nil,
       N_('Collect Logs'),
       N_('Collect'),
       :items => [

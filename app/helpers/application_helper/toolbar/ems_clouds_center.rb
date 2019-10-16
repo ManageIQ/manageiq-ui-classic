@@ -89,7 +89,7 @@ class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::
   button_group('ems_cloud_authentication', [
     select(
       :ems_cloud_authentication_choice,
-      'fa fa-lock fa-lg',
+      nil,
       t = N_('Authentication'),
       t,
       :enabled => false,

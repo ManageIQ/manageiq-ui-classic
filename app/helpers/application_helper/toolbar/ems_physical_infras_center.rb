@@ -95,7 +95,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
   button_group('ems_physical_infra_authentication', [
     select(
       :ems_physical_infra_authentication_choice,
-      'fa fa-lock fa-lg',
+      nil,
       t = N_('Authentication'),
       t,
       :enabled => false,

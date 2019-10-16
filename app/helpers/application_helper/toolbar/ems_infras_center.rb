@@ -97,7 +97,7 @@ class ApplicationHelper::Toolbar::EmsInfrasCenter < ApplicationHelper::Toolbar::
   button_group('ems_infra_authentication', [
     select(
       :ems_infra_authentication_choice,
-      'fa fa-lock fa-lg',
+      nil,
       t = N_('Authentication'),
       t,
       :enabled => false,

@@ -3,7 +3,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
     included_class.button_group('instance_operations', [
       included_class.select(
         :instance_power_choice,
-        'fa fa-power-off fa-lg',
+        nil,
         N_('Instance Power Functions'),
         N_('Power'),
         :items => [
@@ -103,7 +103,7 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
     included_class.button_group('vm_access', [
       included_class.select(
         :vm_remote_access_choice,
-        'pficon pficon-screen fa-lg',
+        nil,
         N_('VM Remote Access'),
         N_('Access'),
         :items => [
