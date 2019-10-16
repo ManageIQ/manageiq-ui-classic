@@ -214,6 +214,32 @@ const initState = {
 
 /* Wrapper class for generic toolbars and special toolbars. */
 const MiqToolbar = ({ toolbars }) => {
+  const [state, dispatch] = useReducer(toolbarReducer, initState);
+
+  useEffect(() => {
+    // Initiall toolbars are given in props.
+    // Later can be changed by an RxJs event.
+    dispatch({ type: 'TOOLBARS', toolbars });
+
+    const subscription = subscribeToSubject(dispatch);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const renderGenericToolbar = () => {
+    const groups = separateItems(state.toolbars.filter(item => !!item));
+    const views = filterViews(groups);
+
+    return (
+      <Toolbar
+        count={state.count}
+        groups={groups}
+        views={views}
+        onClick={onClick}
+        onViewClick={onViewClick}
+      />
+    );
+  };
+
   if (!toolbars || (toolbars.length === 0)) {
     return null;
   }
@@ -230,39 +256,7 @@ const MiqToolbar = ({ toolbars }) => {
     }
   }
 
-  return <MiqGenericToolbar toolbars={toolbars} />;
-};
-
-/* Generic toolbar class for toolbars optionally connected to GTL grids
- * reacting to changes in number of selected items. */
-export const MiqGenericToolbar = ({ toolbars }) => {
-  const [state, dispatch] = useReducer(toolbarReducer, initState);
-
-  useEffect(() => {
-    // Initiall toolbars are given in props.
-    // Later can be changed by an RxJs event.
-    dispatch({ type: 'TOOLBARS', toolbars });
-
-    const subscription = subscribeToSubject(dispatch);
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const groups = separateItems(state.toolbars.filter(item => !!item));
-  const views = filterViews(groups);
-
-  return (
-    <Toolbar
-      count={state.count}
-      groups={groups}
-      views={views}
-      onClick={onClick}
-      onViewClick={onViewClick}
-    />
-  );
-};
-
-MiqGenericToolbar.propTypes = {
-  toolbars: PropTypes.arrayOf(PropTypes.any).isRequired,
+  return renderGenericToolbar();
 };
 
 MiqToolbar.propTypes = {
