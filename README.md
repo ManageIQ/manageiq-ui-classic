@@ -9,7 +9,6 @@
 [![Scrutinizer](https://scrutinizer-ci.com/g/ManageIQ/manageiq-ui-classic/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ManageIQ/manageiq-ui-classic/?branch=master)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq/ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Translate](https://img.shields.io/badge/translate-zanata-blue.svg)](https://translate.zanata.org/zanata/project/view/manageiq-ui-classic)
 
 ManageIQ UI Classic is the UI that has been split out of the main [manageiq repo](https://github.com/ManageIQ/manageiq).
 
