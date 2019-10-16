@@ -7,6 +7,7 @@ import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
+import AutomateClassForm from '../components/automate-class-form/automate-class-form';
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
@@ -46,6 +47,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 */
 
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
+ManageIQ.component.addReact('AutomateClassForm', AutomateClassForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
