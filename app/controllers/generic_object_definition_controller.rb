@@ -188,14 +188,14 @@ class GenericObjectDefinitionController < ApplicationController
   def root_node_info
     @root_node = true
     @center_toolbar = 'generic_object_definitions'
-    @right_cell_text = _("All %{models}") % {:models => _("Generic Object Classes")}
+    @right_cell_text = _("All %{models}") % {:models => _("Generic Object Definitions")}
   end
 
   def god_node_info(node)
     @god_node = true
     @center_toolbar = 'generic_object_definition'
     @record = GenericObjectDefinition.find(node.split('-').last)
-    @right_cell_text = _("Generic Object Class %{record_name}") % {:record_name => @record.name}
+    @right_cell_text = _("Generic Object Definition %{record_name}") % {:record_name => @record.name}
     @gtl_type = nil
   end
 
@@ -306,7 +306,7 @@ class GenericObjectDefinitionController < ApplicationController
       {
         :role  => "god_accord",
         :name  => :god,
-        :title => _("Generic Object Classes"),
+        :title => _("Generic Object Definitions"),
       },
     ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end

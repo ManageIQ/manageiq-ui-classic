@@ -519,8 +519,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         expect(items[0]).to include(
           :id      => "generic_object_definition_configuration__generic_object_definition_new",
           :type    => :button,
-          :title   => "Add a new Generic Object Class",
-          :text    => "Add a new Generic Object Class",
+          :title   => "Add a new Generic Object Definition",
+          :text    => "Add a new Generic Object Definition",
           :onwhen  => nil,
           :enabled => true,
         )
@@ -528,15 +528,15 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :id    => "generic_object_definition_configuration__generic_object_definition_edit",
           :type  => :button,
           :icon  => "pficon pficon-edit fa-lg",
-          :title => "Edit selected Generic Object Class",
-          :text  => "Edit selected Generic Object Class",
+          :title => "Edit selected Generic Object Definition",
+          :text  => "Edit selected Generic Object Definition"
         )
         expect(items[2]).to include(
           :id      => "generic_object_definition_configuration__generic_object_definition_delete",
           :type    => :button,
           :icon    => "pficon pficon-delete fa-lg",
-          :title   => "Remove selected Generic Object Classes from Inventory",
-          :text    => "Remove selected Generic Object Classes from Inventory",
+          :title   => "Remove selected Generic Object Definitions from Inventory",
+          :text    => "Remove selected Generic Object Definitions from Inventory",
           :onwhen  => "1+",
           :enabled => false,
         )
