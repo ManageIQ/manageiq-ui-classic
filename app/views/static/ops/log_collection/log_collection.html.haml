@@ -31,7 +31,7 @@
                             "name"         => "depot_name",
                             "ng-model"     => "vm.logCollectionModel.depot_name",
                             "ng-readonly"  => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
-                            "ng-readonly"  => "vm.logCollectionModel.log_protocol == 'File Depot Support'",
+                            "ng-readonly"  => "vm.logCollectionModel.log_protocol == 'Support'",
                             "checkchange"  => "",
                             "auto-focus"   => "reactiveFocus"}
         %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
@@ -50,11 +50,26 @@
                                         "name"        => "uri",
                                         "ng-model"    => "vm.logCollectionModel.uri",
                                         "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
-                                        "ng-readonly"  => "vm.logCollectionModel.log_protocol == 'File Depot Support'",
+                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Support'",
                                         "checkchange" => ""}
         %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
           = _("Required")
         %input{"type" => "hidden", "name" => "uri_prefix", "ng-value" => "vm.logCollectionModel.uri_prefix"}
+
+  %div{"ng-show" => "vm.miqDBBackupService.logProtocolSelected(vm.logCollectionModel)"}
+    .form-group{"ng-class" => "{'has-error': angularForm.support_case.$invalid}"}
+      %label.col-md-2.control-label{"for" => "support_case"}
+        = _("Support Case")
+      .col-md-8
+        %input.form-control{"type"         => "text",
+                            "id"           => "support_case",
+                            "ng-required"  => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.support_case)",
+                            "name"         => "support_case",
+                            "ng-model"     => "vm.logCollectionModel.support_case",
+                            "checkchange"  => "",
+                            "auto-focus"   => "reactiveFocus"}
+        %span.help-block{"ng-show" => "angularForm.support_case.$invalid"}
+          = _("Required")
 
   %auth-credentials{'ng-if'               => 'vm.miqDBBackupService.credsProtocol(vm.logCollectionModel)',
                     'form-model'          => 'vm.logCollectionModel',

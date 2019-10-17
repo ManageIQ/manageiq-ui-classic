@@ -21,6 +21,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
       depot_name: '',
       uri: '',
       uri_prefix: '',
+      support_case: '',
       log_protocol: '',
       log_userid: '',
       log_password: '',
@@ -37,6 +38,7 @@ function logCollectionFormController($http, $scope, miqService, miqDBBackupServi
       vm.logCollectionModel.depot_name = '';
       vm.logCollectionModel.uri = '';
       vm.logCollectionModel.uri_prefix = '';
+      vm.logCollectionModel.support_case = '';
       vm.logCollectionModel.log_userid = '';
       vm.logCollectionModel.log_password = '';
       vm.logCollectionModel.log_protocol = '';
