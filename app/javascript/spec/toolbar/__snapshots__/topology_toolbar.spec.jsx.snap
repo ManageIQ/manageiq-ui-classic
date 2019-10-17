@@ -34,7 +34,6 @@ exports[`<TopologyToolbar /> renders ok 1`] = `
           <i
             className="fa fa-refresh fa-lg"
           />
-          Refresh
         </button>
       </div>
       <form
