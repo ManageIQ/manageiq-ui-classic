@@ -1,7 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
-import MiqToolbar, { MiqGenericToolbar } from '../../components/miq-toolbar';
+import MiqToolbar from '../../components/miq-toolbar';
+import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 import DashboardToolbar from '../../components/dashboard_toolbar';
 import TopologyToolbar from '../../components/topology_toolbar';
 
@@ -53,8 +55,13 @@ describe('<MiqToolbar />', () => {
     expect(t.find(TopologyToolbar)).toHaveLength(1);
   });
 
-  it('renders MiqGenericToolbar', () => {
+  it('renders Toolbar', () => {
     const t = shallow(<MiqToolbar toolbars={genericData} />);
-    expect(t.find(MiqGenericToolbar)).toHaveLength(1);
+    expect(t.find(Toolbar)).toHaveLength(1);
+  });
+
+  it('renders ok for generic case', () => {
+    const t = mount(<MiqToolbar toolbars={genericData} />);
+    expect(toJson(t)).toMatchSnapshot();
   });
 });
