@@ -253,10 +253,10 @@ module Mixins
         when "host_provide"                     then providehosts
         # Host Aggregates
         when 'host_aggregate_new'               then javascript_redirect(:action => 'new')
-        when 'host_aggregate_edit'              then javascript_redirect(:action => 'edit', :id => checked_item_id)
-        when 'host_aggregate_delete'            then delete_host_aggregates
-        when 'host_aggregate_add_host'          then javascript_redirect(:action => 'add_host_select', :id => checked_item_id)
-        when 'host_aggregate_remove_host'       then javascript_redirect(:action => 'remove_host_select', :id => checked_item_id)
+        when 'host_aggregate_edit'              then javascript_redirect(:action => 'edit', :id => checked_or_params, :controller => 'host_aggregate')
+        when 'host_aggregate_delete'            then javascript_redirect(:action => 'delete_host_aggregates', :id => params[:id], :miq_grid_checks => params[:miq_grid_checks], :controller => 'host_aggregate')
+        when 'host_aggregate_add_host'          then javascript_redirect(:action => 'add_host_select', :id => checked_or_params, :controller => 'host_aggregate')
+        when 'host_aggregate_remove_host'       then javascript_redirect(:action => 'remove_host_select', :id => checked_or_params, :controller => 'host_aggregate')
         when 'host_aggregate_tag'               then tag(HostAggregate)
         # Storages
         when "storage_delete"                   then deletestorages
@@ -302,8 +302,8 @@ module Mixins
                      "#{pfx}_evacuate"].include?(params[:pressed]) &&
                     @flash_array.nil?
 
-          unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                  "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
+          unless ["host_edit", 'host_aggregate_edit', 'host_aggregate_add_host', 'host_aggregate_remove_host', 'host_aggregate_delete', "#{pfx}_edit", "#{pfx}_miq_request_new",
+                  "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
             @refresh_div = "main_div"
             @refresh_partial = "layouts/gtl"
             show                                                        # Handle EMS buttons
@@ -408,10 +408,6 @@ module Mixins
 
       if single_delete_test
         single_delete_redirect
-      elsif params[:pressed] == "host_aggregate_edit"
-        javascript_redirect :controller => "host_aggregate",
-                            :action     => "edit",
-                            :id         => find_record_with_rbac(HostAggregate, checked_or_params)
       elsif params[:pressed] == "cloud_tenant_edit"
         javascript_redirect :controller => "cloud_tenant",
                             :action     => "edit",
@@ -460,7 +456,7 @@ module Mixins
       elsif params[:pressed].ends_with?("_edit") ||
             ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
             params[:pressed] == 'vm_rename' && @flash_array.nil?
-        render_or_redirect_partial(pfx)
+        render_or_redirect_partial(pfx) unless performed?
       else
         if @refresh_div == "main_div" && @lastaction == "show_list"
           replace_gtl_main_div

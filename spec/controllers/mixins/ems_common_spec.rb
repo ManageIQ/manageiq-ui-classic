@@ -1,6 +1,6 @@
 describe EmsCloudController do
   context "::EmsCommon" do
-    context "#new" do
+    describe "#new" do
       before do
         stub_user(:features => :all)
         allow(controller).to receive(:drop_breadcrumb)
@@ -19,7 +19,7 @@ describe EmsCloudController do
       end
     end
 
-    context "#button" do
+    describe "#button" do
       before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
@@ -29,8 +29,8 @@ describe EmsCloudController do
         allow(controller).to receive(:role_allows?).and_return(true)
         ems = FactoryBot.create(:ems_vmware)
         vm = FactoryBot.create(:vm_vmware,
-                                :ext_management_system => ems,
-                                :storage               => FactoryBot.create(:storage))
+                               :ext_management_system => ems,
+                               :storage               => FactoryBot.create(:storage))
         post :button, :params => { :pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
         expect(response.status).to eq 200
         expect(response.body).to include('vm/retire')
@@ -49,8 +49,8 @@ describe EmsCloudController do
         allow(controller).to receive(:role_allows?).and_return(true)
         ems = FactoryBot.create(:ems_vmware)
         vm = FactoryBot.create(:vm_vmware,
-                                :ext_management_system => ems,
-                                :storage               => FactoryBot.create(:storage))
+                               :ext_management_system => ems,
+                               :storage               => FactoryBot.create(:storage))
         post :button, :params => { :pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
         expect(response.status).to eq 200
         expect(response.body).to include('ems_cloud/tagging_edit')
@@ -60,7 +60,7 @@ describe EmsCloudController do
         allow(controller).to receive(:role_allows?).and_return(true)
         ems = FactoryBot.create(:ems_amazon)
         vm = FactoryBot.create(:vm_amazon,
-                                :ext_management_system => ems)
+                               :ext_management_system => ems)
         post :button, :params => { :pressed => "image_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'images' }
         expect(response.status).to eq 200
         expect(response.body).to include('ems_cloud/tagging_edit')
@@ -69,6 +69,51 @@ describe EmsCloudController do
       it "when Delete Button is pressed for CloudObjectStoreContainer" do
         expect(controller).to receive(:process_cloud_object_storage_buttons)
         post :button, :params => { :pressed => "cloud_object_store_container_delete" }
+      end
+
+      context 'actions on Host Aggregates displayed through Cloud Provider' do
+        let(:aggregate) { FactoryBot.create(:host_aggregate) }
+
+        before do
+          allow(controller).to receive(:performed?).and_return(true)
+          controller.params = {:pressed => pressed, :miq_grid_checks => aggregate.id.to_s}
+        end
+
+        context 'editing Host Aggregate' do
+          let(:pressed) { 'host_aggregate_edit' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => [aggregate.id], :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
+
+        context 'adding Host to Host Aggregate' do
+          let(:pressed) { 'host_aggregate_add_host' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'add_host_select', :id => [aggregate.id], :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
+
+        context 'removing Host from Host Aggregate' do
+          let(:pressed) { 'host_aggregate_remove_host' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'remove_host_select', :id => [aggregate.id], :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
+
+        context 'deleting Host Aggregate' do
+          let(:pressed) { 'host_aggregate_delete' }
+
+          it 'calls javascript_redirect to redirect to host_aggregate controller' do
+            expect(controller).to receive(:javascript_redirect).with(:action => 'delete_host_aggregates', :id => nil, :miq_grid_checks => aggregate.id.to_s, :controller => 'host_aggregate')
+            controller.send(:button)
+          end
+        end
       end
     end
   end
@@ -102,7 +147,8 @@ describe EmsContainerController do
   context "::EmsCommon" do
     context "adding new provider without hawkular endpoint" do
       def test_creating(emstype)
-        raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
+        raise ArgumentError, "Unsupported type [#{emstype}]" unless %w[kubernetes openshift].include?(emstype)
+
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
         controller.params = {:name             => 'NimiCule',
                              :default_userid   => '_',
@@ -307,7 +353,7 @@ describe EmsContainerController do
 end
 
 describe EmsInfraController do
-  context "#show_link" do
+  describe "#show_link" do
     let(:ems) { FactoryBot.create(:ems_infra) }
     it "sets relative url" do
       controller.instance_variable_set(:@table_name, "ems_infra")
@@ -320,7 +366,7 @@ end
 
 describe EmsNetworkController do
   context "::EmsCommon" do
-    context "#button" do
+    describe "#button" do
       before do
         stub_user(:features => :all)
         EvmSpecHelper.create_guid_miq_server_zone
