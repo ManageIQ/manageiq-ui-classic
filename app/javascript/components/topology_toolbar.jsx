@@ -25,7 +25,6 @@ const TopologyToolbar = () => (
       <div className="form-group">
         <button type="button" className="btn btn-default" title={__('Refresh this page')} onClick={refreshClick}>
           <i className="fa fa-refresh fa-lg" />
-          {__('Refresh')}
         </button>
       </div>
       <form
