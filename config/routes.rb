@@ -2093,7 +2093,6 @@ Rails.application.routes.draw do
         create
         create_instance
         create_method
-        create_namespace
         domains_priority_edit
         embedded_methods_add
         embedded_methods_remove
@@ -2121,7 +2120,6 @@ Rails.application.routes.draw do
         update_fields
         update_instance
         update_method
-        update_namespace
         validate_method_data
         x_button
         x_history

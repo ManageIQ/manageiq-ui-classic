@@ -23,12 +23,6 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#create_namespace" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/create_namespace")).to route_to("miq_ae_class#create_namespace")
-    end
-  end
-
   describe "#explorer" do
     it "routes with GET" do
       expect(get("/miq_ae_class/explorer")).to route_to("miq_ae_class#explorer")
@@ -156,12 +150,6 @@ describe MiqAeClassController do
   describe "#update_method" do
     it "routes with POST" do
       expect(post("/miq_ae_class/update_method")).to route_to("miq_ae_class#update_method")
-    end
-  end
-
-  describe "#update_namespace" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/update_namespace")).to route_to("miq_ae_class#update_namespace")
     end
   end
 
