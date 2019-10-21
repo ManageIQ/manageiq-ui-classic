@@ -6,6 +6,7 @@ import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-compon
 import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
+import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
@@ -24,9 +25,9 @@ import MiqAboutModal from '../components/miq-about-modal';
 import MiqToolbar from '../components/miq-toolbar';
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
+import NamespaceForm from '../components/namespace-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
-import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
 import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
@@ -64,6 +65,7 @@ ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('MiqToolbar', MiqToolbar);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
+ManageIQ.component.addReact('NamespaceForm', NamespaceForm);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('Quadicon', Quadicon);

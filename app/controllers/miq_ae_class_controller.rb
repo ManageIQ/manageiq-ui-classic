@@ -1137,26 +1137,6 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def update_namespace
-    assert_privileges("miq_ae_namespace_edit")
-    return unless load_edit("aens_edit__#{params[:id]}", "replace_cell__explorer")
-    ae_ns = find_record_with_rbac(MiqAeNamespace, params[:id])
-    old_namespace_attributes = ae_ns.attributes.clone
-    namespace_set_record_vars(ae_ns) # Set the record variables, but don't save
-    begin
-      ae_ns.save!
-    rescue => bang
-      add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
-      javascript_flash(:spinner_off => true)
-    else
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
-      AuditEvent.success(build_saved_audit_hash_angular(old_namespace_attributes, ae_ns, false))
-      @sb[:action] = session[:edit] = nil # clean out the saved info
-      @in_a_form = false
-      replace_right_cell(:replace_trees => [:ae])
-    end
-  end
-
   def add_update_method_cancel
     if params[:id] && params[:id] != "new"
       method = find_record_with_rbac(MiqAeMethod, params[:id])
@@ -1356,28 +1336,6 @@ class MiqAeClassController < ApplicationController
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
       add_active_node_to_open_nodes
       replace_right_cell(:replace_trees => [:ae])
-    end
-  end
-
-  def create_namespace
-    assert_privileges("miq_ae_namespace_new")
-    return unless load_edit("aens_edit__new", "replace_cell__explorer")
-    add_ae_ns = if @edit[:typ] == "MiqAeDomain"
-                  current_tenant.ae_domains.new
-                else
-                  MiqAeNamespace.new(:parent_id => x_node.split('-')[1])
-                end
-    namespace_set_record_vars(add_ae_ns) # Set the record variables, but don't save
-    if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
-      @in_a_form = false
-      add_active_node_to_open_nodes
-      replace_right_cell(:replace_trees => [:ae])
-    else
-      add_ae_ns.errors.each do |field, msg|
-        add_flash("#{field.to_s.capitalize} #{msg}", :error)
-      end
-      javascript_flash(:spinner_off => true)
     end
   end
 

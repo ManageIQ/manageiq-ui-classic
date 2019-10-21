@@ -717,49 +717,6 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#update_namespace" do
-    before do
-      stub_user(:features => :all)
-      domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
-      @namespace = FactoryBot.create(:miq_ae_namespace,
-                                      :name        => "foo_namespace",
-                                      :description => "foo_description",
-                                      :parent      => domain)
-      session[:edit] = {
-        :ae_ns_id => @namespace.id,
-        :typ      => "MiqAeNamespace",
-        :key      => "aens_edit__#{@namespace.id}",
-        :rec_id   => @namespace.id,
-        :new      => {
-          :ns_name        => "test1",
-          :ns_description => "desc",
-          :enabled        => true
-        },
-        :current  => {
-          :ns_name        => "test",
-          :ns_description => "desc",
-          :enabled        => true
-        }
-      }
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {},
-                                       :active_tree => :ae_tree)
-      allow(controller).to receive(:replace_right_cell)
-      controller.x_node = "aen-#{@namespace.id}"
-      allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
-    end
-
-    it "Should use description in flash message when editing a namespace" do
-      controller.params = {:button      => "save",
-                           :name        => 'name',
-                           :description => 'desc',
-                           :id          => @namespace.id}
-      controller.send(:update_namespace)
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
-    end
-  end
-
   describe "#deleteclasses" do
     before do
       stub_user(:features => :all)
