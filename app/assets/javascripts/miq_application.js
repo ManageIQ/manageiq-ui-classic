@@ -970,6 +970,10 @@ function miqShowAE_Tree(typ) {
 // Toggle the user options div in the page header (:onclick from layouts/user_options)
 function miqChangeGroup(id) {
   miqSparkleOn();
+
+  // prevent login redirect once current requests fail after the group gets changed
+  ManageIQ.logoutInProgress = true;
+
   miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}));
 }
 
@@ -1543,7 +1547,7 @@ var fontIconChar = _.memoize(function(klass) {
 
 function redirectLogin(msg) {
   if (ManageIQ.logoutInProgress) {
-    return; // prevent double redirect after pressing the Logout button
+    return; // prevent double redirect after pressing the Logout button or when changing group
   }
 
   add_flash(msg, 'warning');
