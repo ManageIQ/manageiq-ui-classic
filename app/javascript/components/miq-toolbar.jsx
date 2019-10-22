@@ -180,6 +180,8 @@ const filterViews = toolbarItems => toolbarItems
   .flat()
   .filter(i => i && i.id && i.id.indexOf('view_') === 0);
 
+const sanitizeToolbars = arr => arr ? arr.filter(Boolean) : [];
+
 const toolbarReducer = (state, action) => {
   switch (action.type) {
     case 'INCREMENT':
@@ -200,7 +202,7 @@ const toolbarReducer = (state, action) => {
     case 'TOOLBARS':
       return {
         ...state,
-        toolbars: action.toolbars,
+        toolbars: sanitizeToolbars(action.toolbars),
       };
     default:
       return state;
@@ -213,8 +215,8 @@ const initState = {
 };
 
 /* Wrapper class for generic toolbars and special toolbars. */
-const MiqToolbar = ({ toolbars }) => {
-  const [state, dispatch] = useReducer(toolbarReducer, initState);
+const MiqToolbar = ({ toolbars: initToolbars }) => {
+  const [state, dispatch] = useReducer(toolbarReducer, {...initState, toolbars: sanitizeToolbars(initToolbars)});
 
   useEffect(() => {
     // Initiall toolbars are given in props.
@@ -225,13 +227,15 @@ const MiqToolbar = ({ toolbars }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const {count, toolbars} = state;
+
   const renderGenericToolbar = () => {
-    const groups = separateItems(state.toolbars.filter(item => !!item));
+    const groups = separateItems(toolbars.filter(item => !!item));
     const views = filterViews(groups);
 
     return (
       <Toolbar
-        count={state.count}
+        count={count}
         groups={groups}
         views={views}
         onClick={onClick}
@@ -240,7 +244,7 @@ const MiqToolbar = ({ toolbars }) => {
     );
   };
 
-  if (!toolbars || (toolbars.length === 0)) {
+  if (toolbars.length === 0) {
     return null;
   }
 
