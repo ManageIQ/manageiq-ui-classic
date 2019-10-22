@@ -180,6 +180,11 @@ const filterViews = toolbarItems => toolbarItems
   .flat()
   .filter(i => i && i.id && i.id.indexOf('view_') === 0);
 
+const filterNonViews = toolbars => toolbars
+  .map(toolbar =>
+    toolbar.filter(i => i && i.id && i.id.indexOf('view_') !== 0)
+  );
+
 const sanitizeToolbars = arr => arr ? arr.filter(Boolean) : [];
 
 const toolbarReducer = (state, action) => {
@@ -230,8 +235,9 @@ const MiqToolbar = ({ toolbars: initToolbars }) => {
   const {count, toolbars} = state;
 
   const renderGenericToolbar = () => {
-    const groups = separateItems(toolbars.filter(item => !!item));
-    const views = filterViews(groups);
+    const all = separateItems(toolbars.filter(item => !!item));
+    const views = filterViews(all);
+    const groups = filterNonViews(all);
 
     return (
       <Toolbar
