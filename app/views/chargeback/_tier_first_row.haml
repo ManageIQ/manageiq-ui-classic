@@ -16,7 +16,7 @@
           = r[:sub_metric_human]
   %td{:rowspan => n.to_s}
     = select_tag("per_time_#{i}",
-      options_for_select(ChargebackRateDetail::PER_TIME_TYPES.invert, @edit[:new][:details][i.to_i][:per_time]),
+      options_for_select(ChargebackRateDetail::PER_TIME_TYPES.map { |x, y| [x, _(y)] }.to_h.invert, @edit[:new][:details][i.to_i][:per_time]),
       "data-miq_observe" => {:url => url}.to_json)
   - measure = @edit[:new][:details][i.to_i][:detail_measure]
   - if measure.nil?
