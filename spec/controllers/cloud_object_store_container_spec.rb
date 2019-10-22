@@ -5,7 +5,7 @@ describe CloudObjectStoreContainerController do
     allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
   end
 
-  context "#tags_edit" do
+  describe "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
     before do
       allow(@container).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
@@ -135,10 +135,8 @@ describe CloudObjectStoreContainerController do
     end
   end
 
-  describe "create object store container" do
-    before do
-      stub_user(:features => :all)
-    end
+  context "create object store container" do
+    before { stub_user(:features => :all) }
 
     shared_examples "queue create container task" do
       let(:task_options) do
