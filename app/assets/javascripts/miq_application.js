@@ -696,16 +696,6 @@ function miqEnterPressed(e) {
   return (keycode === 13);
 }
 
-function storeUserFeatures() {
-  delete window.localStorage.userFeatures;
-  return window.http.get('/api?attributes=identity')
-    .then(function(data) {
-      window.localStorage.userFeatures = JSON.stringify(data.identity.miq_groups.find(function(group) {
-        return data.identity.group === group.description;
-      }).product_features);
-    });
-}
-
 // Send login authentication via ajax
 function miqAjaxAuth(url) {
   miqEnableLoginFields(false);
@@ -979,7 +969,7 @@ function miqShowAE_Tree(typ) {
 
 // Toggle the user options div in the page header
 function miqToggleUserOptions(id) {
-  miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}), { done: storeUserFeatures });
+  miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}));
 }
 
 // Check for enter/escape on quick search box
