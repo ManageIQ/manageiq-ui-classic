@@ -967,8 +967,9 @@ function miqShowAE_Tree(typ) {
   return true;
 }
 
-// Toggle the user options div in the page header
-function miqToggleUserOptions(id) {
+// Toggle the user options div in the page header (:onclick from layouts/user_options)
+function miqChangeGroup(id) {
+  miqSparkleOn();
   miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}));
 }
 
