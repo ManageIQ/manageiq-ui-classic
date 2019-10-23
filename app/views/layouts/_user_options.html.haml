@@ -30,7 +30,7 @@
                   %li
                     %a{:title   => _("Change to this Group"),
                       :href     => "#",
-                      :onclick  => "miqSparkle(true); miqToggleUserOptions(#{group.id})"}
+                      :onclick  => "miqChangeGroup('#{j_str group.id}')"}
                       = group.description
       - else
         %li.disabled
