@@ -25,34 +25,10 @@ module ApplicationController::Explorer
     end
   end
 
-  # Historical tree item selected
   def x_history
-    @hist = x_tree_history[params[:item].to_i] # Set instance var so we know hist button was pressed
-    # remove id that is used in replace_right_cell method in vm_common
-    @sb[@sb[:active_accord]] = nil if @sb.fetch_path(@sb[:active_accord]) && @sb[@sb[:active_accord]] != @hist[:id]
-    if @hist[:button] # Button press from show screen
-      self.x_node = @hist[:id]
-      params[:id] = parse_nodetype_and_id(x_node).last
-      params[:x_show] = @hist[:item]
-      params[:pressed] = @hist[:button] # Look like we came in with this action
-      params[:display] = @hist[:display]
-      x_button
-    elsif @hist[:display] # Display link from show screen
-      self.x_node = @hist[:id]
-      params[:id] = parse_nodetype_and_id(x_node).last
-      params[:display] = @hist[:display]
-      show
-    elsif @hist[:action] # Action link from show screen
-      self.x_node = @hist[:id]
-      params[:id] = parse_nodetype_and_id(x_node).last
-      params[:x_show] = @hist[:item]
-      params[:action] = @hist[:action] # Look like we came in with this action
-      session[:view] = @hist[:view] if @hist[:view]
-      send(@hist[:action])
-    else # Normal explorer tree/link click
-      params[:id] = @hist[:id]
-      tree_select
-    end
+    self.x_node = x_tree[:active_node]
+    params[:id] = parse_nodetype_and_id(x_node).last
+    params[:id].nil? && 'root'.eql?(params[:id]) ? show : tree_select
   end
 
   # FIXME: the code below has to be converted into proper actions called though

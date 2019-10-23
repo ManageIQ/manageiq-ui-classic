@@ -288,7 +288,6 @@ class MiqAeClassController < ApplicationController
     get_node_info(x_node) if !@in_a_form && !@angular_form && @button != "reset"
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
-    h_tb = build_toolbar("x_history_tb")
 
     presenter = ExplorerPresenter.new(
       :active_tree     => x_active_tree,
@@ -348,7 +347,6 @@ class MiqAeClassController < ApplicationController
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
     # Rebuild the toolbars
-    presenter.reload_toolbars(:history => h_tb)
     if c_tb.present?
       presenter.show(:toolbar)
       presenter.reload_toolbars(:center => c_tb)
@@ -2645,8 +2643,6 @@ class MiqAeClassController < ApplicationController
     @git_repo_id = git_repo.id
     @right_cell_text = _("Refreshing branch/tag for Git-based Domain")
 
-    h_tb = build_toolbar("x_history_tb")
-
     presenter = ExplorerPresenter.new(
       :active_tree     => x_active_tree,
       :right_cell_text => @right_cell_text,
@@ -2671,7 +2667,6 @@ class MiqAeClassController < ApplicationController
       }
     ])
 
-    presenter.reload_toolbars(:history => h_tb)
     presenter.show(:toolbar)
 
     render :json => presenter.for_render

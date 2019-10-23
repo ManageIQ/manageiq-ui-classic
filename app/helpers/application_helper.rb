@@ -672,8 +672,6 @@ module ApplicationHelper
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no center toolbar to be shown
   delegate :center_toolbar_filename, :to => :_toolbar_chooser
 
-  delegate :history_toolbar_filename, :to => :_toolbar_chooser
-
   delegate :x_view_toolbar_filename, :to => :_toolbar_chooser
 
   delegate :view_toolbar_filename, :to => :_toolbar_chooser
@@ -708,9 +706,7 @@ module ApplicationHelper
   #
   def calculate_toolbars
     toolbars = {}
-    if inner_layout_present? # x_taskbar branch
-      toolbars['history_tb'] = history_toolbar_filename
-    elsif display_back_button? # taskbar branch
+    if display_back_button? # taskbar branch
       toolbars['summary_center_tb'] = controller.restful? ? "summary_center_restful_tb" : "summary_center_tb"
     end
 

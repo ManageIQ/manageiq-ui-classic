@@ -121,12 +121,10 @@ class PxeController < ApplicationController
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
-    h_tb = build_toolbar('x_history_tb')
 
     reload_trees_by_presenter(presenter, trees)
 
     # Rebuild the toolbars
-    presenter.reload_toolbars(:history => h_tb)
     case x_active_tree
     when :pxe_servers_tree
       presenter.update(:main_div, r[:partial => "pxe_server_list"])
