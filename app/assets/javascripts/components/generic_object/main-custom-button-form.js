@@ -209,7 +209,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     }
     // set uri_attributes to default for non-Ansible button
     if (vm.customButtonModel.button_type == "default") {
-      vm.customButtonModel.uri_attributes = {"request": "", service_template: null, hosts: null};
+      vm.customButtonModel.uri_attributes = {"request": vm.customButtonModel.request, service_template: null, hosts: null};
     };
 
     vm.customButtonModel.visibility = {
