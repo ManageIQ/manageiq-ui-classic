@@ -127,6 +127,7 @@ class ApplicationHelper::ToolbarBuilder
       end
     end
     button[:url_parms] = update_url_parms(safer_eval(input[:url_parms])) if input[:url_parms].present?
+    button[:keepSpinner] = input[:keepSpinner] if input.key?(:keepSpinner)
 
     if input[:popup] # special behavior: button opens window_url in a new window
       button[:popup] = true
