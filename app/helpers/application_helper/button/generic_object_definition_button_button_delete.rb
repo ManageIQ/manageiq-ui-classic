@@ -1,9 +1,5 @@
-class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete < ApplicationHelper::Button::Basic
   needs :@record
-
-  def disabled?
-    !@record.custom_buttons.count.zero?
-  end
 
   def data(_data)
     {
@@ -12,10 +8,10 @@ class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete 
         :type       => 'delete',
         :controller => 'toolbarActions',
         :payload    => {
-          :entity       => "custom_button_sets",
+          :entity       => "custom_buttons",
           :redirect_url => "/generic_object_definition/",
           :name         => @record.name,
-          :labels       => { :single => _("Button Group") }
+          :labels       => { :single => _("Button") }
         }
       }
     }

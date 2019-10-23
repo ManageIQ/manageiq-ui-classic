@@ -46,10 +46,6 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
       });
     } else if (toolbar.action === 'delete' && currentRecordId) {
       deleteWithAPI('/api/generic_object_definitions/', currentRecordId);
-    } else if (toolbar.action === 'delete_custom_button_set' && currentRecordId) {
-      deleteWithAPI('/api/custom_button_sets/', currentRecordId);
-    } else if (toolbar.action === 'delete_custom_button' && currentRecordId) {
-      deleteWithAPI('/api/custom_buttons/', currentRecordId);
     }
   }
 
@@ -70,8 +66,8 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
       .catch(miqService.handleFailure);
   }
 
-  function postAction() {
-    var entityName = toolbar.entityName;
+  function postAction(response) {
+    var entityName = response.name;
     var saveMsg = sprintf(__('%s: "%s" was successfully deleted'), toolbar.entity, entityName);
     if (toolbar.redirectUrl) {
       miqService.redirectBack(saveMsg, 'success', toolbar.redirectUrl);

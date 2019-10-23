@@ -23,12 +23,17 @@ export function generateMessages(results) {
   }, { false: 0, true: 0 });
 }
 
-export function APIDelete(entity, resources, labels) {
+export function APIDelete(entity, resources, labels = { single: '', multiple: '' }, redirectUrl, name) {
   API.post(`/api/${entity}`, {
     action: 'delete',
     resources,
   }).then((data) => {
-    showMessage(generateMessages(data.results), labels);
+    if (redirectUrl) {
+      miqFlashLater({ message: sprintf(__('%s: "%s" was successfully deleted'), labels.single, name) });
+      window.location.href = redirectUrl;
+    } else {
+      showMessage(generateMessages(data.results), labels);
+    };
     return data;
   });
 }
@@ -41,6 +46,6 @@ export function onDelete(data, resources) {
   if (data.customAction) {
     customActionDelete(data, resources);
   } else {
-    APIDelete(data.entity, resources, data.labels);
+    APIDelete(data.entity, resources, data.labels, data.redirect_url, data.name);
   }
 }

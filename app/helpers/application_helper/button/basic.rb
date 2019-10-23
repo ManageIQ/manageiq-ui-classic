@@ -14,6 +14,10 @@ class ApplicationHelper::Button::Basic < Hash
     end
   end
 
+  def data(data)
+    data
+  end
+
   def role_allows_feature?
     # for select buttons RBAC is checked only for nested buttons
     return true if self[:type] == :buttonSelect
