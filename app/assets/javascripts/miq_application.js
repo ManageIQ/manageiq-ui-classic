@@ -683,16 +683,6 @@ function miqEnterPressed(e) {
   return (keycode === 13);
 }
 
-function storeUserFeatures() {
-  delete window.localStorage.userFeatures;
-  return window.http.get('/api?attributes=identity')
-    .then(function(data) {
-      window.localStorage.userFeatures = JSON.stringify(data.identity.miq_groups.find(function(group) {
-        return data.identity.group === group.description;
-      }).product_features);
-    });
-}
-
 // Send login authentication via ajax
 function miqAjaxAuth(url) {
   miqEnableLoginFields(false);
@@ -964,9 +954,14 @@ function miqShowAE_Tree(typ) {
   return true;
 }
 
-// Toggle the user options div in the page header
-function miqToggleUserOptions(id) {
-  miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}), { done: storeUserFeatures });
+// Toggle the user options div in the page header (:onclick from layouts/user_options)
+function miqChangeGroup(id) {
+  miqSparkleOn();
+
+  // prevent login redirect once current requests fail after the group gets changed
+  ManageIQ.logoutInProgress = true;
+
+  miqJqueryRequest(miqPassFields('/dashboard/change_group', {to_group: id}));
 }
 
 // Check for enter/escape on quick search box
@@ -1718,7 +1713,7 @@ var fontIconChar = _.memoize(function(klass) {
 
 function redirectLogin(msg) {
   if (ManageIQ.logoutInProgress) {
-    return; // prevent double redirect after pressing the Logout button
+    return; // prevent double redirect after pressing the Logout button or when changing group
   }
 
   add_flash(msg, 'warning');
