@@ -59,7 +59,7 @@
           %label.col-md-2.control-label
             = _("Password")
           .col-md-8
-            %span.input-group
+            %span.input-group{:style => "width: 100%"}
               = password_field_tag("password",
                                    @edit[:new][:userid].blank? ? "" : stored_password_placeholder,
                                    :maxlength         => 50,
