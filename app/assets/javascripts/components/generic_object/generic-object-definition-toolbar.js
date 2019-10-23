@@ -46,10 +46,6 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
       });
     } else if (toolbar.action === 'delete' && currentRecordId) {
       deleteWithAPI('/api/generic_object_definitions/', currentRecordId);
-    } else if (toolbar.action === 'delete_custom_button_set' && currentRecordId) {
-      deleteWithAPI('/api/custom_button_sets/', currentRecordId);
-    } else if (toolbar.action === 'delete_custom_button' && currentRecordId) {
-      deleteWithAPI('/api/custom_buttons/', currentRecordId);
     }
   }
 
