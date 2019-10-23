@@ -14,8 +14,8 @@ class ApplicationHelper::Button::Basic < Hash
     end
   end
 
-  def self.data(_record)
-    nil
+  def data(data)
+    data
   end
 
   def role_allows_feature?
