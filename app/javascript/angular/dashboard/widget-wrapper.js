@@ -11,7 +11,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
     widgetNextRun: '@',
   },
   controllerAs: 'vm',
-  controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
+  controller: ['$http', 'miqService', '$sce', 'API', function($http, miqService, $sce, API) {
     const vm = this;
 
     const widgetTypeUrl = {
@@ -26,16 +26,37 @@ ManageIQ.angular.app.component('widgetWrapper', {
     vm.$onInit = function() {
       vm.divId = `w_${vm.widgetId}`;
       vm.innerDivId = `dd_w${vm.widgetId}_box`;
-
       if (vm.widgetBlank === 'false') {
-        $http.get(vm.widgetUrl())
+        vm.refreshWidgetHTML();
+      };
+    };
+
+    vm.refreshWidgetHTML = function() {
+      return $http.get(vm.widgetUrl())
+        .then((response) => {
+          vm.widgetModel = response.data;
+          // if there's html make it passable
+          if (vm.widgetModel.content) {
+            vm.widgetModel.content = $sce.trustAsHtml(vm.widgetModel.content);
+          }
+          miqSparkleOff();
+          deferred.resolve();
+        })
+        .catch((e) => {
+          vm.error = true;
+          miqService.handleFailure(e);
+          deferred.reject();
+        });
+    };
+
+    vm.refresh  = function() {
+      if (vm.widgetBlank === 'false') {
+        $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
           .then((response) => {
-            vm.widgetModel = response.data;
-            // if there's html make it passable
-            if (vm.widgetModel.content) {
-              vm.widgetModel.content = $sce.trustAsHtml(vm.widgetModel.content);
-            }
-            deferred.resolve();
+            debugger;
+            miqSparkleOn();
+            API.wait_for_task(response.data.task)
+              .then(vm.refreshWidgetHTML())
           })
           .catch((e) => {
             vm.error = true;
@@ -59,7 +80,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
         <div class="card-pf-body">
           <div class="card-pf-heading-kebab">
             <dropdown-menu widget-id="{{vm.widgetId}}"
-                           buttons-data="{{vm.widgetButtons}}"></dropdown-menu>
+                           buttons-data="{{vm.widgetButtons}}"
+                           refresh-function="vm.refresh"></dropdown-menu>
             <h2 class="card-pf-title sortable-handle ui-sortable-handle"
                 style="cursor:move">
               {{vm.widgetTitle}}

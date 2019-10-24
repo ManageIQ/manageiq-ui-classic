@@ -360,6 +360,13 @@ class DashboardController < ApplicationController
     end
   end
 
+  def widget_refresh
+    assert_privileges("widget_generate_content")
+    w = MiqWidget.find(params[:widget])
+    w.queue_generate_content
+    render :json => {:task => MiqTask.last.id.to_s}, :status => 200
+  end
+
   # A widget has been dropped
   def widget_dd_done
     if params[:col1] || params[:col2] || params[:col3]

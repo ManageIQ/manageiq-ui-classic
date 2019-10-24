@@ -78,11 +78,18 @@ class WidgetPresenter
                    :title      => _("Zoom in on this chart"),
                    :name       => _("Zoom in"),
                    :href       => '/dashboard/widget_zoom?widget=' + @widget.id.to_s,
-                   :fonticon   => 'fa  fa-plus fa-fw',
+                   :fonticon   => 'fa fa-plus fa-fw',
                    :dataRemote => true,
                    :sparkleOn  => true,
                    :dataMethod => 'post')
     end
+    buttons.push(:id        => "w_#{@widget.id}_refresh",
+                 :title     => _("Refresh this Widget"),
+                 :name      => _("Refresh"),
+                 :fonticon  => 'fa fa-refresh fa-fw',
+                 :href      => 'javascript:;',
+                 :refresh   => true,
+                 :sparkleOn => true)
     buttons.to_json
   end
 
