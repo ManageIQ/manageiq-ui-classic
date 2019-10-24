@@ -114,7 +114,7 @@ exports[`Main menu test should render correctly 1`] = `
           className="list-group"
           id="maintab"
         >
-          <Component
+          <MenuItem
             active={true}
             href="/dashboard/maintab/?tab=vi"
             iconClass="fa fa-dashboard"
@@ -190,12 +190,12 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className="active list-group-item secondary-nav-item-pf"
+                className="active menu-list-group-item secondary-nav-item-pf"
                 data-target="#menu-vi"
               >
                 <a
                   href="/dashboard/maintab/?tab=vi"
-                  onMouseDown={[Function]}
+                  onClick={[Function]}
                   target="_self"
                 >
                   <span
@@ -217,15 +217,16 @@ exports[`Main menu test should render correctly 1`] = `
                     <a
                       className="secondary-collapse-toggle-pf"
                       data-toggle="collapse-secondary-nav"
-                    />
-                    <span>
-                      Cloud Intel
-                    </span>
+                    >
+                      <span>
+                        Cloud Intel
+                      </span>
+                    </a>
                   </div>
                   <ul
                     className="list-group"
                   >
-                    <Component
+                    <MenuItem
                       active={true}
                       href="/dashboard/show"
                       iconClass={null}
@@ -251,11 +252,11 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="list-group-item  active"
+                          className="menu-list-group-item  active"
                           data-target="#menu-dashboard"
                         >
                           <a
-                            onMouseDown={[Function]}
+                            onClick={[Function]}
                             target="_self"
                           >
                             <span
@@ -273,16 +274,17 @@ exports[`Main menu test should render correctly 1`] = `
                               <a
                                 className="tertiary-collapse-toggle-pf"
                                 data-toggle="collapse-tertiary-nav"
-                              />
-                              <span>
-                                Dashboard
-                              </span>
+                              >
+                                <span>
+                                  Dashboard
+                                </span>
+                              </a>
                             </div>
                           </div>
                         </li>
                       </SecondLevel>
-                    </Component>
-                    <Component
+                    </MenuItem>
+                    <MenuItem
                       active={false}
                       href="/chargeback/explorer"
                       iconClass={null}
@@ -308,12 +310,12 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="list-group-item  "
+                          className="menu-list-group-item  "
                           data-target="#menu-chargeback"
                         >
                           <a
                             href="/dashboard/iframe?id=chargeback"
-                            onMouseDown={[Function]}
+                            onClick={[Function]}
                             target="_self"
                           >
                             <span
@@ -331,21 +333,22 @@ exports[`Main menu test should render correctly 1`] = `
                               <a
                                 className="tertiary-collapse-toggle-pf"
                                 data-toggle="collapse-tertiary-nav"
-                              />
-                              <span>
-                                Chargeback
-                              </span>
+                              >
+                                <span>
+                                  Chargeback
+                                </span>
+                              </a>
                             </div>
                           </div>
                         </li>
                       </SecondLevel>
-                    </Component>
+                    </MenuItem>
                   </ul>
                 </div>
               </li>
             </TopLevel>
-          </Component>
-          <Component
+          </MenuItem>
+          <MenuItem
             active={false}
             href="/dashboard/maintab/?tab=compute"
             iconClass="pficon pficon-cpu"
@@ -467,12 +470,12 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className=" list-group-item secondary-nav-item-pf"
+                className=" menu-list-group-item secondary-nav-item-pf"
                 data-target="#menu-compute"
               >
                 <a
                   href="/dashboard/maintab/?tab=compute"
-                  onMouseDown={[Function]}
+                  onClick={[Function]}
                   target="_blank"
                 >
                   <span
@@ -494,15 +497,16 @@ exports[`Main menu test should render correctly 1`] = `
                     <a
                       className="secondary-collapse-toggle-pf"
                       data-toggle="collapse-secondary-nav"
-                    />
-                    <span>
-                      Compute
-                    </span>
+                    >
+                      <span>
+                        Compute
+                      </span>
+                    </a>
                   </div>
                   <ul
                     className="list-group"
                   >
-                    <Component
+                    <MenuItem
                       active={false}
                       href="/dashboard/maintab/?tab=clo"
                       iconClass="fa fa-plus"
@@ -600,12 +604,12 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="list-group-item tertiary-nav-item-pf "
+                          className="menu-list-group-item tertiary-nav-item-pf "
                           data-target="#menu-clo"
                         >
                           <a
                             href="/dashboard/maintab/?tab=clo"
-                            onMouseDown={[Function]}
+                            onClick={[Function]}
                             target="_blank"
                           >
                             <span
@@ -623,15 +627,16 @@ exports[`Main menu test should render correctly 1`] = `
                               <a
                                 className="tertiary-collapse-toggle-pf"
                                 data-toggle="collapse-tertiary-nav"
-                              />
-                              <span>
-                                Clouds
-                              </span>
+                              >
+                                <span>
+                                  Clouds
+                                </span>
+                              </a>
                             </div>
                             <ul
                               className="list-group"
                             >
-                              <Component
+                              <MenuItem
                                 active={true}
                                 href="/ems_cloud/show_list"
                                 iconClass={null}
@@ -657,12 +662,12 @@ exports[`Main menu test should render correctly 1`] = `
                                   visible={true}
                                 >
                                   <li
-                                    className="list-group-item active"
+                                    className="menu-list-group-item active"
                                     id="menu_item_ems_cloud"
                                   >
                                     <a
                                       href="/ems_cloud/show_list"
-                                      onMouseDown={[Function]}
+                                      onClick={[Function]}
                                       target="_blank"
                                     >
                                       <span
@@ -673,8 +678,8 @@ exports[`Main menu test should render correctly 1`] = `
                                     </a>
                                   </li>
                                 </ThirdLevel>
-                              </Component>
-                              <Component
+                              </MenuItem>
+                              <MenuItem
                                 active={false}
                                 href="/availability_zone/show_list"
                                 iconClass={null}
@@ -700,12 +705,12 @@ exports[`Main menu test should render correctly 1`] = `
                                   visible={true}
                                 >
                                   <li
-                                    className="list-group-item "
+                                    className="menu-list-group-item "
                                     id="menu_item_availability_zone"
                                   >
                                     <a
                                       href="/availability_zone/show_list"
-                                      onMouseDown={[Function]}
+                                      onClick={[Function]}
                                       target="_self"
                                     >
                                       <span
@@ -716,8 +721,8 @@ exports[`Main menu test should render correctly 1`] = `
                                     </a>
                                   </li>
                                 </ThirdLevel>
-                              </Component>
-                              <Component
+                              </MenuItem>
+                              <MenuItem
                                 active={false}
                                 href="/host_aggregate/show_list"
                                 iconClass={null}
@@ -742,17 +747,17 @@ exports[`Main menu test should render correctly 1`] = `
                                   type="new_window"
                                   visible={false}
                                 />
-                              </Component>
+                              </MenuItem>
                             </ul>
                           </div>
                         </li>
                       </SecondLevel>
-                    </Component>
+                    </MenuItem>
                   </ul>
                 </div>
               </li>
             </TopLevel>
-          </Component>
+          </MenuItem>
         </ul>
       </div>
     </div>

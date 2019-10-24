@@ -107,6 +107,6 @@ describe('Main menu test', () => {
 
   it('should render active third level components properly', () => {
     const wrapper = mount(<MainMenu menu={mockNavItems} />);
-    expect(wrapper.find(ThirdLevel).find('li.list-group-item.active')).toHaveLength(1);
+    expect(wrapper.find(ThirdLevel).find('li.menu-list-group-item.active')).toHaveLength(1);
   });
 });
