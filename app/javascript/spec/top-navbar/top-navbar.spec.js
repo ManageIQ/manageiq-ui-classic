@@ -11,8 +11,7 @@ import UserOptions from '../../components/top-navbar/user-options';
 import '../helpers/sprintf';
 import '../helpers/sendDataWithRx';
 import '../helpers/miqCheckForChanges';
-import '../helpers/miqSparkle';
-import '../helpers/miqToggleUserOptions';
+import '../helpers/miqChangeGroup';
 
 
 describe('Top navbar tests', () => {
@@ -29,8 +28,7 @@ describe('Top navbar tests', () => {
   const mockStore = configureStore();
   const sendDataWithRxSpy = jest.spyOn(window, 'sendDataWithRx');
   const miqCheckForChangesSpy = jest.spyOn(window, 'miqCheckForChanges');
-  const miqSparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
-  const miqToggleUserOptionsSpy = jest.spyOn(window, 'miqToggleUserOptions');
+  const miqChangeGroupSpy = jest.spyOn(window, 'miqChangeGroup');
 
 
   beforeEach(() => {
@@ -196,13 +194,12 @@ describe('Top navbar tests', () => {
     expect(wrapper.find('a#current-group')).toHaveLength(0);
   });
 
-  it('should call miqSparkleOn after click on inactive group', () => {
+  it('should call miqChangeGroup after click on inactive group', () => {
     const wrapper = mount(
       <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />,
     );
     wrapper.find('a#EvmGroup-dev').simulate('click');
-    expect(miqSparkleOnSpy).toHaveBeenCalled();
-    expect(miqToggleUserOptionsSpy).toHaveBeenCalled();
+    expect(miqChangeGroupSpy).toHaveBeenCalled();
   });
 
   it('should render disabled item in case of one group', () => {
