@@ -8,6 +8,8 @@ import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
 import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import AggregateStatusCard from '../components/aggregate_status_card';
+import AutomateDomainForm from '../components/automate-domain-form';
+import AutomateNamespaceForm from '../components/automate-namespace-form';
 import Breadcrumbs from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
@@ -25,7 +27,6 @@ import MiqAboutModal from '../components/miq-about-modal';
 import MiqToolbar from '../components/miq-toolbar';
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
-import NamespaceForm from '../components/namespace-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
@@ -47,6 +48,8 @@ import WorkersForm from '../components/workers-form/workers-form';
 */
 
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
+ManageIQ.component.addReact('AutomateDomainForm', AutomateDomainForm);
+ManageIQ.component.addReact('AutomateNamespaceForm', AutomateNamespaceForm);
 ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
@@ -65,7 +68,6 @@ ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('MiqToolbar', MiqToolbar);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
-ManageIQ.component.addReact('NamespaceForm', NamespaceForm);
 ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplateForm);
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('Quadicon', Quadicon);

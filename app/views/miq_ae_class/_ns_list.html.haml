@@ -44,6 +44,9 @@
       });
 
   - else
-    = react('NamespaceForm', {:isDomain => @ae_ns.domain?,
-                              :namespaceId => @ae_ns.try(:id),
-                              :parentId => @ae_ns.domain? ? nil : @ae_ns.parent_id})
+    - if @ae_ns.domain?
+      = react('AutomateDomainForm', {:id => @ae_ns.try(:id)})
+    - else
+      = react('AutomateNamespaceForm', {:id => @ae_ns.try(:id),
+                                :parentId => @ae_ns.parent_id,
+                                :namespacePath => @sb[:namespace_path]})

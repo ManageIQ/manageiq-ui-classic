@@ -1,7 +1,12 @@
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 
-const schema = (isDomain, readonly) => {
+const schema = (readonly) => {
   const fields = [{
+    component: componentTypes.TEXT_FIELD,
+    name: 'namespace',
+    label: __('Fully Qualified Name'),
+    isReadOnly: true,
+  }, {
     component: componentTypes.TEXT_FIELD,
     name: 'name',
     label: __('Name:'),
@@ -12,14 +17,6 @@ const schema = (isDomain, readonly) => {
     label: __('Description:'),
     isReadOnly: readonly,
   }];
-
-  if (isDomain) {
-    fields.push({
-      component: componentTypes.SWITCH,
-      name: 'enabled',
-      label: __('Enabled:'),
-    });
-  }
 
   return { fields };
 };
