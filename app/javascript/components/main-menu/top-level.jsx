@@ -4,6 +4,8 @@ import { MenuItem } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 import { getHrefByType, getTargetByType, handleUnsavedChanges } from './helpers';
 
+console.log('top level');
+
 const TopLevel = ({
   level,
   id,
@@ -14,10 +16,15 @@ const TopLevel = ({
   items,
   type,
 }) => (
-  <li className={`${active ? 'active' : ''} list-group-item secondary-nav-item-pf`} data-target={`#menu-${id}`}>
+  <li className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf`} data-target={`#menu-${id}`}>
     <a
+      onClick={(event) => {
+        if (handleUnsavedChanges(type) === false) {
+          event.preventDefault();
+        }
+        return false;
+      }}
       href={getHrefByType(type, href, id)}
-      onMouseDown={() => handleUnsavedChanges(type)}
       target={getTargetByType(type)}
     >
       <span className={iconClass} />
@@ -27,8 +34,9 @@ const TopLevel = ({
     <React.Fragment>
       <div className="nav-pf-secondary-nav" id={`menu-${id}`}>
         <div className="nav-item-pf-header">
-          <a className="secondary-collapse-toggle-pf" data-toggle="collapse-secondary-nav" />
-          <span>{title}</span>
+          <a className="secondary-collapse-toggle-pf" data-toggle="collapse-secondary-nav" >
+            <span>{title}</span>
+          </a>
         </div>
         <ul className="list-group">
           {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}

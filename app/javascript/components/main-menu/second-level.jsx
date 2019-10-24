@@ -13,18 +13,24 @@ const SecondLevel = ({
   type,
   active,
 }) => (
-  <li className={`list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`}>
+  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`}>
     <a
       href={getHrefByType(type, href, id)}
-      onMouseDown={() => handleUnsavedChanges(type)}
+      onClick={(event) => {
+        if (handleUnsavedChanges(type) === false) {
+          event.preventDefault();
+        }
+        return false;
+      }}
       target={getTargetByType(type)}
     >
       <span className="list-group-item-value">{title}</span>
     </a>
     <div className="nav-pf-tertiary-nav">
       <div className="nav-item-pf-header">
-        <a className="tertiary-collapse-toggle-pf" data-toggle="collapse-tertiary-nav" />
-        <span>{title}</span>
+        <a className="tertiary-collapse-toggle-pf" data-toggle="collapse-tertiary-nav">
+          <span>{title}</span>
+        </a>
       </div>
       {items.length > 0 && (
       <ul className="list-group">

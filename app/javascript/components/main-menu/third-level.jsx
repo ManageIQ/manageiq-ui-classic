@@ -10,10 +10,15 @@ const ThirdLevel = ({
   visible,
   type,
 }) => (!visible ? null : (
-  <li className={`list-group-item ${active ? 'active' : ''}`} id={`menu_item_${id}`}>
+  <li className={`menu-list-group-item ${active ? 'active' : ''}`} id={`menu_item_${id}`}>
     <a
       href={getHrefByType(type, href, id)}
-      onMouseDown={() => handleUnsavedChanges(type)}
+      onClick={(event) => {
+        if (handleUnsavedChanges(type) === false) {
+          event.preventDefault();
+        }
+        return false;
+      }}
       target={getTargetByType(type)}
     >
       <span className="list-group-item-value">{title}</span>
