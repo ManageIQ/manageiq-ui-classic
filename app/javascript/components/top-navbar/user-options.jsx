@@ -68,7 +68,10 @@ const UserOptions = ({
                   id={group.description}
                   key={group.id}
                   title={__('Change to this Group')}
-                  onClick={(e) => { e.preventDefault(); miqSparkleOn(); miqToggleUserOptions(group.id); }}
+                  onClick={(e) => { 
+                    e.preventDefault(); 
+                    miqChangeGroup(group.id.toString()); 
+                  }}
                 >
                   {group.description}
                 </MenuItem>
@@ -103,7 +106,7 @@ const UserOptions = ({
       <MenuItem
         id="logout-btn"
         href="/dashboard/logout"
-        onClick={event => !miqCheckForChanges() && event.preventDefault()}
+        onClick={(e) => miqCheckForChanges() ? (ManageIQ.logoutInProgress = true) : e.preventDefault()}
         title={__('Click to Logout')}
       >
         {__('Logout')}
