@@ -92,6 +92,20 @@ describe StorageController do
         expect(flash_messages.first[:level]).to eq(:success)
       end
     end
+
+    it 'returns proper record class' do
+      expect(controller.send(:record_class)).to eq(Storage)
+    end
+
+    context 'nested list of VMs' do
+      %w[all_vms vms].each do |display|
+        before { controller.params = {:display => display} }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(VmOrTemplate)
+        end
+      end
+    end
   end
 
   context 'render_views' do
