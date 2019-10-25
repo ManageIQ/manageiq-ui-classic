@@ -40,4 +40,17 @@ describe EmsStorageController do
       expect(assigns(:ems).id).to eq(ems_storage.id)
     end
   end
+
+  describe '#button' do
+    context 'tagging Cloud Object Store Container' do
+      before do
+        controller.params = {:pressed => 'cloud_object_store_container_tag'}
+        controller.instance_variable_set(:@display, 'cloud_object_store_containers')
+      end
+
+      it 'returns proper record class' do
+        expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
+      end
+    end
+  end
 end

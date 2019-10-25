@@ -1,5 +1,5 @@
 describe EmsClusterController do
-  context "#button" do
+  describe "#button" do
     it "when VM Right Size Recommendations is pressed" do
       controller.params = {:pressed => "vm_right_size"}
       expect(controller).to receive(:vm_right_size)
@@ -58,6 +58,65 @@ describe EmsClusterController do
       expect(controller).to receive(:render)
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    context 'Smart State Analysis' do
+      let(:cluster) { FactoryBot.create(:ems_cluster) }
+      let(:vm) { FactoryBot.create(:vm_vmware) }
+
+      before do
+        EvmSpecHelper.create_guid_miq_server_zone
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:drop_breadcrumb)
+        allow(controller).to receive(:records_support_feature?).and_return(true)
+        allow(controller).to receive(:render)
+        controller.params = {:id => cluster.id.to_s, :miq_grid_checks => vm.id.to_s, :pressed => 'vm_scan' }
+      end
+
+      %w[vms all_vms].each do |display|
+        before { controller.instance_variable_set(:@display, display) }
+
+        it 'initiates SSA for selected VM successfully' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@record)).to eq(cluster)
+          expect(controller.instance_variable_get(:@view).db).to eq('Vm')
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Analysis initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
+
+      context 'nested list of Templates' do
+        let(:template) { FactoryBot.create(:miq_template) }
+
+        before { controller.instance_variable_set(:@display, 'miq_templates') }
+
+        it 'initiates SSA for selected Template successfully' do
+          controller.params = {:display => 'miq_templates', :id => cluster.id.to_s}
+          controller.send(:show)
+          controller.params = {:id => cluster.id.to_s, :miq_grid_checks => template.id.to_s, :pressed => 'miq_template_scan'}
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@record)).to eq(cluster)
+          expect(controller.instance_variable_get(:@view).db).to eq('MiqTemplate')
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Analysis initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
+
+      context 'list of Clusters' do
+        before do
+          login_as FactoryBot.create(:user)
+          controller.instance_variable_set(:@display, nil)
+          controller.instance_variable_set(:@lastaction, 'show_list')
+          controller.params = {:miq_grid_checks => cluster.id.to_s, :pressed => 'ems_cluster_scan'}
+        end
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(EmsCluster)
+        end
+
+        it 'initiates SSA for Cluster' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Cluster / Deployment Role: scan successfully initiated', :level => :success}])
+        end
+      end
     end
   end
 
