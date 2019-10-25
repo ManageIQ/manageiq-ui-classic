@@ -39,7 +39,7 @@ module EmsClusterHelper::TextualSummary
   end
 
   def textual_group_openstack_status
-    return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::EmsCluster)
+    return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Cluster)
     ret = textual_generate_openstack_status
 
     ret.blank? ? nil : TextualMultilink.new(_("OpenStack Status"), :items => ret)
@@ -167,7 +167,7 @@ module EmsClusterHelper::TextualSummary
   end
 
   def textual_total_miq_templates
-    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::EmsCluster)
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Cluster)
 
     num = @record.total_miq_templates
     h = {:label => _("All Templates"), :icon => "pficon pficon-virtual-machine", :value => num}
@@ -179,7 +179,7 @@ module EmsClusterHelper::TextualSummary
   end
 
   def textual_rps_size
-    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::EmsCluster)
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Cluster)
 
     textual_link(@record.resource_pools,
                  :as   => ResourcePool,

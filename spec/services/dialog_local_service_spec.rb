@@ -188,7 +188,7 @@ describe DialogLocalService do
     end
 
     context "when the object is an EmsCluster" do
-      let(:obj) { double(:class => ManageIQ::Providers::Openstack::InfraManager::EmsCluster, :id => 123) }
+      let(:obj) { double(:class => ManageIQ::Providers::Openstack::InfraManager::Cluster, :id => 123) }
 
       include_examples "DialogLocalService#determine_dialog_locals_for_custom_button return value",
                        "ems_cluster", "EmsCluster", "clusters", "/ems_cluster"
