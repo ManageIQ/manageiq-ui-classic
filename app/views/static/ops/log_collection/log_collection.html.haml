@@ -30,7 +30,7 @@
                             "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
                             "name"        => "depot_name",
                             "ng-model"    => "vm.logCollectionModel.depot_name",
-                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
+                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'File Depot Support'",
                             "checkchange" => "",
                             "auto-focus"  => "reactiveFocus"}
         %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
@@ -48,7 +48,7 @@
                                         "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
                                         "name"        => "uri",
                                         "ng-model"    => "vm.logCollectionModel.uri",
-                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
+                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'File Depot Support'",
                                         "checkchange" => ""}
         %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
           = _("Required")
@@ -65,4 +65,3 @@
                     'new-record'          => 'vm.newRecord'}
 
   = render :partial => "layouts/angular/generic_form_buttons"
-
