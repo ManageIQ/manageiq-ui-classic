@@ -18,18 +18,29 @@ module ExpAtomHelper
     [N_("Registry"), "regkey"]
   ].freeze
 
-  def self.expression_types_for(model, expkey, edit_expkey)
+  def self.expression_types_for_secondary_filter(edit_expkey)
+    opts = []
+    unless edit_expkey[:exp_available_fields].empty?
+      opts.push([_('Field'), 'field'])
+    end
+
+    unless edit_expkey.tags_for_display_filters.empty?
+      opts.push([_('Tag'), 'tag'])
+    end
+
+    opts
+  end
+
+  def self.expression_types_for_primary_filter(model, expkey, edit_expkey)
     expression_types = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     opts = []
-    unless model == "_display_filter_"
-      # Not valid for secondary display filter
-      unless MiqExpression.miq_adv_search_lists(model, :exp_available_counts).empty?
-        expression_types -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
-      end
 
-      if MiqExpression.miq_adv_search_lists(model, :exp_available_finds).empty?
-        expression_types -= [[_(EXP_FIND_TYPE[0]), EXP_FIND_TYPE[1]]]
-      end
+    if MiqExpression.miq_adv_search_lists(model, :exp_available_finds).empty?
+      expression_types -= [[_(EXP_FIND_TYPE[0]), EXP_FIND_TYPE[1]]]
+    end
+
+    if MiqExpression.miq_adv_search_lists(model, :exp_available_counts).empty?
+      expression_types -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
     end
 
     case model
@@ -37,14 +48,6 @@ module ExpAtomHelper
       opts += expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     when 'AuditEvent'
       opts += [[_('Field'), 'field']]
-    when '_display_filter_'
-      unless edit_expkey[:exp_available_fields].empty?
-        opts.push([_('Field'), 'field'])
-      end
-
-      unless edit_expkey.tags_for_display_filters.empty?
-        opts.push([_('Tag'), 'tag'])
-      end
     when 'MiqGroup'
       if expkey == :filter_expression
         opts = [[_('Tag'), 'tags']]
