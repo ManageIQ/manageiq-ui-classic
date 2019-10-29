@@ -27,6 +27,7 @@ module ExpAtomHelper
 
   def self.expression_types_for_primary_filter(model, only_tag = false)
     return [[_('Tag'), 'tags']] if only_tag
+    return [[_('Field'), 'field']] if model == 'AuditEvent'
 
     expression_types = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     opts = []
@@ -42,8 +43,6 @@ module ExpAtomHelper
     opts += case model
             when 'Vm'
               expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-            when 'AuditEvent'
-              [[_('Field'), 'field']]
             else
               expression_types
             end
