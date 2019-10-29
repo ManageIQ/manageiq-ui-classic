@@ -39,15 +39,14 @@ module ExpAtomHelper
       expression_types -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
     end
 
-    case model
-    when 'Vm'
-      opts += expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-    when 'AuditEvent'
-      opts += [[_('Field'), 'field']]
-    else
-      opts += expression_types
-    end
-
+    opts += case model
+            when 'Vm'
+              expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
+            when 'AuditEvent'
+              [[_('Field'), 'field']]
+            else
+              expression_types
+            end
     opts
   end
 end
