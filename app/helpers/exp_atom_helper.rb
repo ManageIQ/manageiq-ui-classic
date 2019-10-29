@@ -20,14 +20,8 @@ module ExpAtomHelper
 
   def self.expression_types_for_secondary_filter(edit_expkey)
     opts = []
-    unless edit_expkey[:exp_available_fields].empty?
-      opts.push([_('Field'), 'field'])
-    end
-
-    unless edit_expkey.tags_for_display_filters.empty?
-      opts.push([_('Tag'), 'tag'])
-    end
-
+    opts.push([_('Field'), 'field']) if edit_expkey[:exp_available_fields].present?
+    opts.push([_('Tag'), 'tag']) if edit_expkey.tags_for_display_filters.present?
     opts
   end
 
