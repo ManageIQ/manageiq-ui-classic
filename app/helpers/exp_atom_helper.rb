@@ -23,11 +23,11 @@ module ExpAtomHelper
     opts = []
     unless model == "_display_filter_"
       # Not valid for secondary display filter
-      unless MiqExpression.miq_adv_search_lists(model, :exp_available_counts).length > 0
+      unless MiqExpression.miq_adv_search_lists(model, :exp_available_counts).empty?
         expression_types -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
       end
 
-      unless MiqExpression.miq_adv_search_lists(model, :exp_available_finds).length > 0
+      if MiqExpression.miq_adv_search_lists(model, :exp_available_finds).empty?
         expression_types -= [[_(EXP_FIND_TYPE[0]), EXP_FIND_TYPE[1]]]
       end
     end
