@@ -620,7 +620,7 @@ module ApplicationController::CiProcessing
     if controller == "vm_infra"
       return vm_infra_untestable_actions.exclude?(action)
     end
-    if controller == "ems_cluster"
+    if controller == "ems_cluster" || @display == 'ems_clusters'
       return ems_cluster_untestable_actions.exclude?(action)
     end
     true

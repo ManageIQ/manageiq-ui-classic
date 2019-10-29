@@ -784,6 +784,27 @@ describe ApplicationController do
       expect(groups.count).to eq(MiqGroup.non_tenant_groups.count)
     end
   end
+
+  describe '#testable_action' do
+    before { controller.params = {:controller => 'vm_infra'} }
+
+    %w[reboot_guest reset shutdown_guest start stop suspend].each do |op|
+      it "returns true for #{op} operation on a VM" do
+        expect(controller.send(:testable_action, op)).to be(true)
+      end
+    end
+
+    context 'Clusters displayed from dashboard of a Provider' do
+      before do
+        controller.params = {:controller => 'ems_infra'}
+        controller.instance_variable_set(:@display, 'ems_clusters')
+      end
+
+      it 'returns false for SmartState Analysis and Clusters' do
+        expect(controller.send(:testable_action, 'scan')).to be(false)
+      end
+    end
+  end
 end
 
 describe HostController do
@@ -830,7 +851,7 @@ describe HostController do
                                             :url  => "/host/guest_applications/#{@host.id}"}])
     end
 
-    it "plularizes breadcrumb name" do
+    it "pluralizes breadcrumb name" do
       expect(controller.send(:breadcrumb_name, nil)).to eq("Hosts")
     end
   end
@@ -1068,20 +1089,6 @@ describe EmsCloudController do
         expect(controller).to receive(:delete_flavors).and_call_original
         expect_any_instance_of(Flavor).to receive(:delete_flavor_queue)
         post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => flavor.id}
-      end
-    end
-  end
-end
-
-describe VmInfraController do
-  describe '#testable_action' do
-    before { controller.params = {:controller => 'vm_infra'} }
-
-    context 'power operations and vm infra controller' do
-      %w(reboot_guest reset shutdown_guest start stop suspend).each do |op|
-        it "returns true for #{op} operation on a VM" do
-          expect(controller.send(:testable_action, op)).to be(true)
-        end
       end
     end
   end
