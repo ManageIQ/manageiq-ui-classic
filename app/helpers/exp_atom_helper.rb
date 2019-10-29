@@ -25,7 +25,9 @@ module ExpAtomHelper
     opts
   end
 
-  def self.expression_types_for_primary_filter(model, expkey)
+  def self.expression_types_for_primary_filter(model, only_tag = false)
+    return [[_('Tag'), 'tags']] if only_tag
+
     expression_types = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     opts = []
 
@@ -42,12 +44,6 @@ module ExpAtomHelper
       opts += expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     when 'AuditEvent'
       opts += [[_('Field'), 'field']]
-    when 'MiqGroup'
-      if expkey == :filter_expression
-        opts = [[_('Tag'), 'tags']]
-      else
-        opts += expression_types
-      end
     else
       opts += expression_types
     end
