@@ -30,7 +30,6 @@ module ExpAtomHelper
     return [[_('Field'), 'field']] if model == 'AuditEvent'
 
     expression_types = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-    opts = []
 
     if MiqExpression.miq_adv_search_lists(model, :exp_available_finds).empty?
       expression_types -= [[_(EXP_FIND_TYPE[0]), EXP_FIND_TYPE[1]]]
@@ -40,12 +39,7 @@ module ExpAtomHelper
       expression_types -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
     end
 
-    opts += case model
-            when 'Vm'
-              expression_types + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-            else
-              expression_types
-            end
-    opts
+    expression_types += VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] } if model == 'Vm'
+    expression_types
   end
 end
