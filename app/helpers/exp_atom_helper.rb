@@ -25,7 +25,7 @@ module ExpAtomHelper
     opts
   end
 
-  def self.expression_types_for_primary_filter(model, expkey, edit_expkey)
+  def self.expression_types_for_primary_filter(model, expkey)
     expression_types = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     opts = []
 
@@ -45,7 +45,6 @@ module ExpAtomHelper
     when 'MiqGroup'
       if expkey == :filter_expression
         opts = [[_('Tag'), 'tags']]
-        edit_expkey[:exp_typ] = 'tags'
       else
         opts += expression_types
       end

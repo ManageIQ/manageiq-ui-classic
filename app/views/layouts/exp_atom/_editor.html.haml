@@ -24,9 +24,10 @@
           - if exp_model == "_display_filter_"
             - opts += ExpAtomHelper.expression_types_for_secondary_filter(@edit[@expkey])
           - else
-            - opts += ExpAtomHelper.expression_types_for_primary_filter(exp_model, @expkey, @edit[@expkey])
+            - opts += ExpAtomHelper.expression_types_for_primary_filter(exp_model, @expkey)
 
-          - if @edit[@expkey][:exp_typ] == 'tags'
+          - if exp_model == "MiqGroup"
+            - @edit[@expkey][:exp_typ] = 'tags'
             = _('Tag')
           - else
             = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),
