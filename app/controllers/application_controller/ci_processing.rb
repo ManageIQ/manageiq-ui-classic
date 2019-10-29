@@ -676,7 +676,7 @@ module ApplicationController::CiProcessing
                           :flash_msg  => @flash_array[0][:message])
       return
     end
-    if @lastaction == "show_list"
+    if %w[show_list storage_list storage_pod_list].include?(@lastaction)
       show_list unless @explorer
       @refresh_partial = "layouts/gtl"
       return
