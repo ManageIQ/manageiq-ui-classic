@@ -7,7 +7,7 @@
 - opts = ["<#{_('Choose')}>"]
 - if exp_model == "_display_filter_"
   -# Use list in @edit for reporting display filter
-  - opts += @edit[@expkey][:exp_available_fields]
+  - opts += ExpAtomHelper.display_filter_details_for(MiqExpression::Field, @edit[:new][:field_order])
 - else
   - extra_opts = {}
   - extra_opts[:include_id_columns] = true if @edit.fetch(:expression_method, false)
