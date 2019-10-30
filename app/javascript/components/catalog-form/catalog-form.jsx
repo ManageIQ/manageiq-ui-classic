@@ -68,7 +68,7 @@ class CatalogForm extends Component {
       }, {
         skipErrors: [400],
       })
-        .then(() => miqAjaxButton('/catalog/st_catalog_edit?button=add'))
+        .then(() => miqAjaxButton('/catalog/st_catalog_edit?button=add', { name: values.name }))
         .catch(error => add_flash(this.handleError(error), 'error'));
     }
 
@@ -104,7 +104,7 @@ class CatalogForm extends Component {
     }
 
     return Promise.all(promises)
-      .then(([{ id }]) => miqAjaxButton(`/catalog/st_catalog_edit/${id}?button=save`))
+      .then(([{ id }]) => miqAjaxButton(`/catalog/st_catalog_edit/${id}?button=save`, { name: values.name }))
       .catch(error => add_flash(this.handleError(error), 'error'));
   };
 
