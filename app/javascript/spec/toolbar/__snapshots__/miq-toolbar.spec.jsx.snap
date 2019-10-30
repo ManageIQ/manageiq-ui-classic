@@ -53,7 +53,7 @@ exports[`<MiqToolbar /> renders ok for generic case 1`] = `
         key="0"
         onClick={[Function]}
       >
-        <span
+        <div
           className="miq-toolbar-group form-group"
         >
           <ToolbarButton
@@ -84,7 +84,7 @@ exports[`<MiqToolbar /> renders ok for generic case 1`] = `
               />
             </button>
           </ToolbarButton>
-        </span>
+        </div>
       </ToolbarGroup>
       <ToolbarView
         onClick={[Function]}
