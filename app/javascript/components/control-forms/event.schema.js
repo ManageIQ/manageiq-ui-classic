@@ -4,4 +4,3 @@ export const createSchema = () => ({
   fields: [
   ],
 });
-

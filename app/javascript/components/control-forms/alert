@@ -1,0 +1,42 @@
+= Info (miq_policy/alert_details)
+Description	description	TEXT_FIELD
+Active	enabled	CHECKBOX
+Severity	miq_alert_severity	SELECT	controller.class::SEVERITIES
+Based On	miq_alert_db	SELECT	@edit[:dbs]
+What to Evaluate	exp_name	SELECT	@edit[:expression_types] = MiqAlert.expression_types(miq_alert_db)
+# if miq_alert_db IN ( EmsCluster, Storage, Host, PhysicalServer, ExtManagementSystem, MiqServer, Vm ) (not ContainerNode or ContainerProject)
+Driving Event	exp_event	SELECT	@edit[:events] + _hourly_timer_
+# end
+Notification Frequency	repeat_time	SELECT	@sb[:alert][:repeat_times | :repeat_times_dwh | :hourly_repeat_times]
+
+# switch exp_name (layouts/exp_editor or miq_policy/alert_builtin_exp)
+# case "nothing"
+(empty)
+# case "event_log_threshold"
+= Event Log Threshold Parameters
+# case "event_threshold"
+= Event Threshold Parameters
+# case "reconfigured_hardware_value"
+= Hardware Reconfigured Parameters
+# case "operating_range_exceptions"
+= Normal Operating Range Parameters
+# case "realtime_performance"
+= Real Time Performance Parameters
+# case "changed_vm_value"
+= VM Value changed Parameters
+# case "ems_alarm"
+= VMware Alarm Parameters
+# case nil (not "nothing", this is custom expression)
+= Expression (expression editor)
+# end
+### TODO ^ those are only for miq_alert_db=Vm
+### there are more for other types
+(all but Expression handled by alert_builtin_exp partial, data from MiqAlert.expression_types, ultimately MiqAlert.automate_expressions)
+
+= E-mail (layouts/edit_email)
+
+= SNMP Trap (miq_policy/alert_snmp)
+
+= Timeline Event (miq_policy/alert_evm_event)
+
+= Management Event (miq_policy/alert_mgmt_event)
