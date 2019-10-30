@@ -106,7 +106,13 @@ const UserOptions = ({
       <MenuItem
         id="logout-btn"
         href="/dashboard/logout"
-        onClick={(e) => miqCheckForChanges() ? (ManageIQ.logoutInProgress = true) : e.preventDefault()}
+        onClick={(e) => {
+          if (miqCheckForChanges()) {
+            ManageIQ.logoutInProgress = true;
+          }else{
+            e.preventDefault()
+          }
+        }}
         title={__('Click to Logout')}
       >
         {__('Logout')}
