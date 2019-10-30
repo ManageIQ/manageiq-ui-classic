@@ -233,9 +233,6 @@ module ReportController::Reports::Editor
       cols = @edit[:new][:field_order]
       @edit[:display_filter][:exp_available_fields] = display_filter_details_for(MiqExpression::Field, cols)
 
-      cols = @edit[:new][:fields]
-      @edit[:display_filter][:exp_available_tags] = display_filter_details_for(MiqExpression::Tag, cols)
-
       @edit[:display_filter][:exp_model] = "_display_filter_" # Set model for display filter
 
       @expkey = :record_filter # Start with Record Filter showing

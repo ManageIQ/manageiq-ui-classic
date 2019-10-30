@@ -18,10 +18,14 @@ module ExpAtomHelper
     [N_("Registry"), "regkey"]
   ].freeze
 
-  def self.expression_types_for_secondary_filter(edit_expkey)
+  def self.display_filter_details_for(target_class, cols)
+    cols ? cols.select { |_, column| target_class.parse(column).try(:plural?) } : []
+  end
+
+  def self.expression_types_for_secondary_filter(edit_expkey, columns)
     opts = []
     opts.push([_('Field'), 'field']) if edit_expkey[:exp_available_fields].present?
-    opts.push([_('Tag'), 'tag']) if edit_expkey.exp_available_tags.present?
+    opts.push([_('Tag'), 'tag']) if display_filter_details_for(MiqExpression::Tag, columns).present?
     opts
   end
 
