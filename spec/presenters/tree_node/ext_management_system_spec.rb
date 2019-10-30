@@ -36,7 +36,7 @@ describe TreeNode::ExtManagementSystem do
     :ems_amazon_network               => {},
     :ems_google_network               => {},
     :ems_nuage_network                => {},
-    :ems_openstack_network            => { :suppress_callback => true },
+    :ems_openstack_network            => { :suppress_callback => ManageIQ::Providers::Openstack::NetworkManager },
     :ems_vmware_cloud_network         => {},
     :ems_cinder                       => {},
     :ems_swift                        => {},
@@ -50,9 +50,9 @@ describe TreeNode::ExtManagementSystem do
     # :ems_storage                       => {}
   }.each do |factory, spec|
     context(factory.to_s) do
-      let(:object) { FactoryBot.create(factory) }
+      before(:all) { spec[:suppress_callback].skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
 
-      before(:each) { object.class.skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
+      let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', spec.fetch(:key_prefix, 'e-')
       include_examples 'TreeNode::Node#tooltip prefix', spec.fetch(:tip_prefix, 'Provider')
