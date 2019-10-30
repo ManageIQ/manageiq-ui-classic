@@ -26,6 +26,7 @@ const TopLevel = ({
       }}
       href={getHrefByType(type, href, id)}
       target={getTargetByType(type)}
+      className="top-level"
     >
       <span className={iconClass} />
       <span className="list-group-item-value">{title}</span>
@@ -34,7 +35,7 @@ const TopLevel = ({
     <React.Fragment>
       <div className="nav-pf-secondary-nav" id={`menu-${id}`}>
         <div className="nav-item-pf-header">
-          <a className="secondary-collapse-toggle-pf" data-toggle="collapse-secondary-nav" >
+          <a className="secondary-collapse-toggle-pf top-level" data-toggle="collapse-secondary-nav" >
             <span>{title}</span>
           </a>
         </div>

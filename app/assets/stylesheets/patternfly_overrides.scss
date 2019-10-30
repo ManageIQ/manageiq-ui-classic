@@ -1087,6 +1087,9 @@ table.c3-tooltip td {
     padding: 0;
     margin-bottom: -1px;
     position: relative;
+    &:first-child {
+      border-top: none;
+    }
     a {
       background-color: transparent;
       color: #d1d1d1;
@@ -1278,6 +1281,24 @@ table.c3-tooltip td {
         span {
           font-weight: 600;    
         }
+      }
+    }
+  }
+
+  &.collapsed {
+    .menu-list-group-item, .menu-list-group-item.active {
+      >a.top-level {
+        >.list-group-item-value {
+          display: none;
+        }
+        padding: 17px 0 17px 25px;
+        width: 75px;
+        &::after {
+          right: 10px;
+        }
+      }
+      >a.top-level:hover {
+        width: calc(75px + 1px);
       }
     }
   }
