@@ -45,7 +45,7 @@ module ApplicationController::Filter
     end
 
     def drop_cache
-      @available_adv_searches = @available_tags = nil
+      @available_adv_searches = @tags_for_display_filters = nil
     end
 
     def exp_available_cfields # fields on exp_model for check_all, check_any, and check_count operation
@@ -57,10 +57,7 @@ module ApplicationController::Filter
     end
 
     def tags_for_display_filters
-      @available_tags ||= MiqExpression.model_details(exp_model, :typ  => 'tag',
-                                                      :include_model   => true,
-                                                      :include_my_tags => use_mytags,
-                                                      :userid          => User.current_user.userid)
+      @tags_for_display_filters ||= MiqExpression.model_details(exp_model, :typ => 'tag', :include_model => true, :include_my_tags => use_mytags, :userid => User.current_user.userid)
     end
 
     def available_adv_searches
