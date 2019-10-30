@@ -49,11 +49,10 @@ describe TreeNode::ExtManagementSystem do
     # :ems_network                       => {},
     # :ems_storage                       => {}
   }.each do |factory, spec|
-    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
-    context(klass) do
-      before(:all) { klass.constantize.skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
-
+    context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
+
+      before(:each) { object.class.skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
 
       include_examples 'TreeNode::Node#key prefix', spec.fetch(:key_prefix, 'e-')
       include_examples 'TreeNode::Node#tooltip prefix', spec.fetch(:tip_prefix, 'Provider')

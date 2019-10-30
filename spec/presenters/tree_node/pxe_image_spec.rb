@@ -6,8 +6,7 @@ describe TreeNode::PxeImage do
     pxe_image_ipxe
     pxe_image_pxelinux
   ).each do |factory|
-    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
-    context(klass) do
+    context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'pi-'
