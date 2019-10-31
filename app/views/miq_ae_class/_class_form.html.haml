@@ -1,7 +1,8 @@
-= react('AutomateClassForm', { :disable_submit => false })
+= react('AutomateClassForm', { :namespacePath => @sb[:namespace_path], :maxNameLen => ViewHelper::MAX_NAME_LEN, :initialValues => @edit[:new] })
 
 -# - url = url_for_only_path(:action => 'form_field_changed', :id => (@ae_class.id || 'new'))
   - obs = {:interval => '.5', :url => url}.to_json
+  
   %h3
     = _('Properties')
   .form-horizontal
