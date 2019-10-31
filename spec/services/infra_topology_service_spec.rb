@@ -48,14 +48,14 @@ describe InfraTopologyService do
                                             :display_kind => "Openstack",
                                             :model        => ems.class.name,
                                             :key          => "InfraManager" + ems.id.to_s},
-        "EmsCluster" + @cluster.id.to_s => {:name         => @cluster.name,
-                                            :kind         => "EmsCluster",
+        "Cluster" + @cluster.id.to_s    => {:name         => @cluster.name,
+                                            :kind         => "Cluster",
                                             :miq_id       => @cluster.id,
                                             :status       => "Unknown",
-                                            :display_kind => "EmsCluster",
+                                            :display_kind => "Cluster",
                                             :provider     => ems.name,
                                             :model        => @cluster.class.name,
-                                            :key          => "EmsCluster" + @cluster.id.to_s},
+                                            :key          => "Cluster" + @cluster.id.to_s},
         "Host" + @host.id.to_s          => {:name         => @host.name,
                                             :kind         => "Host",
                                             :miq_id       => @host.id,
@@ -68,8 +68,8 @@ describe InfraTopologyService do
 
       expect(subject[:relations].size).to eq(2)
       expect(subject[:relations]).to include(
-        {:source => "InfraManager" + ems.id.to_s, :target => "EmsCluster" + @cluster.id.to_s},
-        {:source => "EmsCluster" + @cluster.id.to_s, :target => "Host" + @host.id.to_s},
+        {:source => "InfraManager" + ems.id.to_s, :target => "Cluster" + @cluster.id.to_s},
+        {:source => "Cluster" + @cluster.id.to_s, :target => "Host" + @host.id.to_s},
       )
     end
   end
