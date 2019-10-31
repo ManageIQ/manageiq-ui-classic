@@ -3,51 +3,57 @@ module ApplicationController::ReportDownloads
 
   # Send the current report in text format
   def render_txt
-    @report = report_for_rendering
-    filename = filename_timestamp(@report.title)
+    report = report_for_rendering
+    filename = filename_timestamp(report.title)
     disable_client_cache
-    send_data(@report.to_text,
-              :filename => "#{filename}.txt")
+    send_data(report.to_text, :filename => "#{filename}.txt")
   end
 
   # Send the current report in csv format
   def render_csv
-    @report = report_for_rendering
+    report = report_for_rendering
     filename = filename_timestamp(@report.title)
     disable_client_cache
-    send_data(@report.to_csv,
-              :filename => "#{filename}.csv")
+    send_data(report.to_csv, :filename => "#{filename}.csv")
+  end
+
+  def render_pdf_internal(report)
+    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+    result = report.build_create_results(:userid => userid)
+
+    # Use result from paging, if present
+    result ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
+    # Use report_result_id in session, if present
+    result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
+
+    disable_client_cache
+
+    @options = { # used by the layouts/print
+      :page_layout => 'landscape',
+      :page_size   => report.page_size || 'a4',
+      :run_date    => format_timezone(report.report_run_time, result.user_timezone, "gtl"),
+      :title       => result.name
+    }
+
+    render(
+      :template => '/layouts/print/report',
+      :layout   => '/layouts/print',
+      :locals   => {
+        :report => report,
+        :data   => result.html_rows.join
+      }
+    )
   end
 
   # Send the current report in pdf format
-  def render_pdf(report = nil)
-    @report = report || report_for_rendering
-    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-    @result = @report.build_create_results(:userid => userid)
-
-    # Use @result frorm paging, if present
-    @result ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
-    # Use report_result_id in session, if present
-    @result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
-
-    disable_client_cache
-
-    @options = {
-      :page_layout => 'landscape',
-      :page_size   => @report.page_size || 'a4',
-      :run_date    => format_timezone(@report.report_run_time, @result.user_timezone, "gtl"),
-      :title       => @result.name
-    }
-
-    @data = @result.html_rows.join
-
-    render :template => '/layouts/print/report', :layout => '/layouts/print'
+  def render_pdf
+    render_pdf_internal(report_for_rendering)
   end
 
   # Show the current widget report in pdf format
   def widget_to_pdf
     session[:report_result_id] = params[:rr_id]
-    render_pdf
+    render_pdf_internal(report_from_report_results(params[:rr_id]))
   end
 
   # Render report in csv/txt/pdf format asynchronously
@@ -150,18 +156,25 @@ module ApplicationController::ReportDownloads
 
   # Send the current report in pdf format
   def download_pdf(view)
-    render_pdf(view)
+    render_pdf_internal(view)
+  end
+
+  def report_from_task_id(task_id)
+    MiqTask.find(task_id).task_results
+  end
+
+  def report_from_report_results(report_result_id)
+    rr = MiqReportResult.for_user(current_user).find(session[:report_result_id])
+    report = rr.report_results
+    report.report_run_time = rr.last_run_on
+    report
   end
 
   def report_for_rendering
     if session[:rpt_task_id]
-      miq_task = MiqTask.find(session[:rpt_task_id])
-      miq_task.task_results
+      report_from_task_id(session[:rpt_task_id])
     elsif session[:report_result_id]
-      rr = MiqReportResult.for_user(current_user).find(session[:report_result_id])
-      report = rr.report_results
-      report.report_run_time = rr.last_run_on
-      report
+      report_from_report_results(session[:report_result_id])
     end
   end
 

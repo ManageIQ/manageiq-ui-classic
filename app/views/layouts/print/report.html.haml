@@ -1,9 +1,9 @@
 %table.table.table-striped.table-bordered.breakable
   %thead
     %tr
-      - @report.headers.each_with_index do |header, i|
-        - unless @report.column_is_hidden?(@report.col_order[i])
+      - report.headers.each_with_index do |header, i|
+        - unless report.column_is_hidden?(report.col_order[i])
           %th
             = h(_(header))
   %tbody
-    = @data.html_safe
+    = data.html_safe
