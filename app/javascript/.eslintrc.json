@@ -20,10 +20,20 @@
     "func-names": 0,
     "implicit-arrow-linebreak": "off",
     "import/prefer-default-export": "off",
+    "indent": [ "error", 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": 1
+    }],
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
     "max-len": ["error", {
       "code": 150,
       "ignoreComments": true
     }],
+    "no-extra-boolean-cast": "off",
+    "no-shadow": "off",
     "no-underscore-dangle": "off",
     "no-unused-vars": ["error", {
       "args": "after-used",
@@ -32,11 +42,17 @@
       "caughtErrors": "all",
       "caughtErrorsIgnorePattern": "^_"
     }],
-    "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-use-before-define": ["error", {
+      "functions": false,
+      "classes": false
+    }],
+    "quotes": [ "warn", "single", {
+      "avoidEscape": true,
+      "allowTemplateLiterals": true
+    }],
     "react/jsx-filename-extension": "off",
     "react/destructuring-assignment": [1, "always"],
-    "space-before-function-paren": [2, "never"],
-    "no-extra-boolean-cast": "off",
-    "no-shadow": "off"
+    "semi": [2, "always"],
+    "space-before-function-paren": [2, "never"]
   }
 }
