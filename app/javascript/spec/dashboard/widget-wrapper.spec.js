@@ -1,4 +1,5 @@
 import { module, inject } from './mocks';
+require('../helpers/API.js');
 
 require('../helpers/getJSONFixtures.js');
 
@@ -8,7 +9,10 @@ describe('widget-wrapper', () => {
   let $compile;
   const widgetTypes = ['chart', 'menu', 'report'];
 
-  beforeEach(module('ManageIQ'));
+  beforeEach(() => {
+    module('ManageIQ');
+    angular.mock.module('miq.api');
+  });
 
   beforeEach(inject((_$compile_, $rootScope, $http) => {
     $scope = $rootScope;
@@ -20,11 +24,17 @@ describe('widget-wrapper', () => {
         content: '<div></div>',
         minimized: false,
         shortcuts: [],
+        blank: "false",
       },
       status: 200,
       statusText: 'OK',
     };
     spyOn($http, 'get').and.callFake(() => Promise.resolve(response));
+    spyOn(window.vanillaJsAPI, 'post').and.returnValue(Promise.resolve({
+      results: [
+        { success: true, message: 'some' },
+      ],
+    }));
   }));
 
   widgetTypes.forEach((widget) => {
