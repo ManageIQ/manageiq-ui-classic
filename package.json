@@ -99,6 +99,7 @@
     "@babel/register": "~7.6.0",
     "angular-mocks": "~1.6.9",
     "autoprefixer": "~6.7.7",
+    "babel-eslint": "~8.1.0",
     "babel-jest": "~24.9.0",
     "babel-loader": "~8.0.6",
     "compression-webpack-plugin": "~1.1.11",
