@@ -1,10 +1,8 @@
 %div{:id => "ww_#{presenter.widget.id}"}
   - last_run, next_run = last_next_run(presenter.widget)
-  - widget_blank = presenter.widget.content_type == 'menu' ? false : presenter.widget.contents_for_user(current_user).blank?
   %widget-wrapper{"widget-id"       => presenter.widget.id,
                   "widget-type"     => presenter.widget.content_type,
                   "widget-buttons"  => presenter.widget_buttons,
-                  "widget-blank"    => widget_blank,
                   "widget-last-run" => last_run,
                   "widget-next-run" => next_run,
                   "widget-title"    => presenter.widget.title}

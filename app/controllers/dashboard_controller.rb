@@ -147,8 +147,9 @@ class DashboardController < ApplicationController
 
   def widget_chart_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
-    datum = widget.contents_for_user(current_user).contents
-    content = nil
+    blank = widget.contents_for_user(current_user).blank?
+    datum = blank ? nil : widget.contents_for_user(current_user).contents
+    content = ""
     if datum.blank?
       state = 'no_data'
     elsif Charting.data_ok?(datum)
@@ -157,8 +158,10 @@ class DashboardController < ApplicationController
     else
       state = 'invalid'
     end
+    binding.pry
     render :json => {:content   => content,
                      :minimized => widget_minimized?(params[:id]),
+                     :blank     => blank.to_s,
                      :state     => state}
   end
 
@@ -170,7 +173,8 @@ class DashboardController < ApplicationController
                   {:description => shortcut.description, :href => shortcut.miq_shortcut.url}
                 end
     render :json => {:shortcuts => shortcuts,
-                     :minimized => widget_minimized?(params[:id])}
+                     :minimized => widget_minimized?(params[:id]),
+                     :blank     => "false"}
   end
 
   def widget_minimized?(id)
@@ -180,8 +184,12 @@ class DashboardController < ApplicationController
 
   def widget_report_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
+    blank = widget.contents_for_user(current_user).blank?
+    content = blank ? '' : widget.contents_for_user(current_user).contents
+    binding.pry
     render :json => {
-      :content   => widget.contents_for_user(current_user).contents,
+      :blank     => blank.to_s,
+      :content   => content,
       :minimized => widget_minimized?(params[:id])
     }
   end

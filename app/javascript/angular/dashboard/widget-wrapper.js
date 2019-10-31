@@ -5,7 +5,6 @@ ManageIQ.angular.app.component('widgetWrapper', {
     widgetId: '@',
     widgetType: '@',
     widgetButtons: '@',
-    widgetBlank: '@',
     widgetTitle: '@',
     widgetLastRun: '@',
     widgetNextRun: '@',
@@ -26,12 +25,10 @@ ManageIQ.angular.app.component('widgetWrapper', {
     vm.$onInit = function() {
       vm.divId = `w_${vm.widgetId}`;
       vm.innerDivId = `dd_w${vm.widgetId}_box`;
-      if (vm.widgetBlank === 'false') {
-        vm.refreshWidgetHTML();
-      };
+      vm.refreshWidgetHTML(false);
     };
 
-    vm.refreshWidgetHTML = function() {
+    vm.refreshWidgetHTML = function(refreshed) {
       return $http.get(vm.widgetUrl())
         .then((response) => {
           vm.widgetModel = response.data;
@@ -39,7 +36,10 @@ ManageIQ.angular.app.component('widgetWrapper', {
           if (vm.widgetModel.content) {
             vm.widgetModel.content = $sce.trustAsHtml(vm.widgetModel.content);
           }
-          miqSparkleOff();
+          if (refreshed) {
+            miqSparkleOff();
+            add_flash(sprintf(__('Dashboard "%s" was refreshed', vm.widgetTitle)), 'success');
+          }
           deferred.resolve();
         })
         .catch((e) => {
@@ -49,21 +49,18 @@ ManageIQ.angular.app.component('widgetWrapper', {
         });
     };
 
-    vm.refresh  = function() {
-      if (vm.widgetBlank === 'false') {
-        $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
-          .then((response) => {
-            debugger;
-            miqSparkleOn();
-            API.wait_for_task(response.data.task)
-              .then(vm.refreshWidgetHTML())
-          })
-          .catch((e) => {
-            vm.error = true;
-            miqService.handleFailure(e);
-            deferred.reject();
-          });
-      }
+    vm.refresh = function() {
+      $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
+        .then((response) => {
+          miqSparkleOn();
+          API.wait_for_task(response.data.task)
+            .then(vm.refreshWidgetHTML(true));
+        })
+        .catch((e) => {
+          vm.error = true;
+          miqService.handleFailure(e);
+          deferred.reject();
+        });
     };
 
     vm.widgetUrl = function() {
@@ -90,11 +87,11 @@ ManageIQ.angular.app.component('widgetWrapper', {
         </div>
         <widget-error ng-if="vm.error === true"></widget-error>
         <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == 'false' && !vm.error"></widget-spinner>
-        <div ng-if="vm.widgetBlank === 'true' || vm.widgetModel"
+        <div ng-if="vm.widgetModel.blank === 'true' || vm.widgetModel"
              ng-attr-id="{{vm.innerDivId}}"
              ng-class="{ hidden: vm.widgetModel.minimized, mc:true }">
-          <widget-empty ng-if="vm.widgetBlank === 'true'"></widget-empty>
-          <div ng-if="vm.widgetBlank === 'false'"
+          <widget-empty ng-if="vm.widgetModel.blank === 'true'"></widget-empty>
+          <div ng-if="vm.widgetModel.blank === 'false'"
                ng-switch on="vm.widgetType">
             <widget-menu ng-switch-when="menu"
                          widget-id="{{vm.widgetId}}"
