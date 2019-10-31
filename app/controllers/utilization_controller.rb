@@ -74,16 +74,7 @@ class UtilizationController < ApplicationController
     report.table = ReportFormatter::Converter.hashes2table(summ_hashes, :only => report.cols)
     filename = report.title
     disable_client_cache
-    case params[:typ]
-    when "txt"
-      send_data(report.to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(report.to_csv,
-                :filename => "#{filename}.csv")
-    when "pdf"
-      render_pdf(report)
-    end
+    download_file(params[:typ], report, filename)
   end
 
   def tree_select
