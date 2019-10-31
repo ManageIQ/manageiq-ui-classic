@@ -56,22 +56,18 @@ module ApplicationController::ReportDownloads
     render_pdf_internal(report_from_report_results(params[:rr_id]))
   end
 
-  # Render report in csv/txt/pdf format asynchronously
-  def render_report_data
-    render_type = RENDER_TYPES[params[:render_type]]
-    assert_privileges("render_report_#{render_type}")
-    unless params[:task_id] # First time thru, kick off the report generate task
-      if render_type
-        @sb[:render_type] = render_type
-        rr = MiqReportResult.for_user(current_user).find(session[:report_result_id]) # Get report task id from the session
-        task_id = rr.async_generate_result(@sb[:render_type], :userid     => session[:userid],
-                                                              :session_id => request.session_options[:id])
-        initiate_wait_for_task(:task_id => task_id)
-      end
-      return
+  def render_report_data_init(render_type)
+    if render_type
+      @sb[:render_type] = render_type
+      rr = MiqReportResult.for_user(current_user).find(session[:report_result_id]) # Get report task id from the session
+      task_id = rr.async_generate_result(@sb[:render_type], :userid     => session[:userid],
+                                                            :session_id => request.session_options[:id])
+      initiate_wait_for_task(:task_id => task_id)
     end
+  end
 
-    miq_task = MiqTask.find(params[:task_id])
+  def render_report_data_continue(task_id)
+    miq_task = MiqTask.find(task_id)
     if !miq_task.results_ready?
       add_flash(_("Report generation returned: Status [%{status}] Message [%{message}]") % {:status => miq_task.status, :message => miq_task.message}, :error)
       javascript_flash(:spinner_off => true)
@@ -86,6 +82,20 @@ module ApplicationController::ReportDownloads
           page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
         end
       end
+    end
+  end
+
+  # Render report in csv/txt/pdf format asynchronously
+  def render_report_data
+    render_type = RENDER_TYPES[params[:render_type]]
+    assert_privileges("render_report_#{render_type}")
+
+    if params[:task_id]
+      # We are waiting for a task to finish.
+      render_report_data_continue(params[:task_id])
+    else
+      # First time thru, kick off the report generate task.
+      render_report_data_init(render_type)
     end
   end
   alias_method :render_report_txt, :render_report_data
