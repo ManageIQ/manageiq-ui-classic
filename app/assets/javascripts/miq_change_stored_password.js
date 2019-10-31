@@ -12,6 +12,8 @@ function changeStoredPassword(pfx, url) {
   $('#' + prefix + 'verify').removeAttr('disabled');
   $('#' + prefix + 'password').val('');
   $('#' + prefix + 'verify').val('');
+  $('#' + prefix + 'password').attr('placeholder', '');
+  $('#' + prefix + 'verify').attr('placeholder', '');
   miqJqueryRequest(url + '?' + prefix + 'password' + '=' + '&' + prefix + 'verify' + '=');
   $('#' + prefix + 'password').focus();
 }
@@ -27,7 +29,9 @@ function cancelPasswordChange(pfx, url) {
   $('#' + prefix + 'verify_group').css('display', 'none');
   $('#' + prefix + 'password').attr('disabled', 'disabled');
   $('#' + prefix + 'verify').attr('disabled', 'disabled');
-  $('#' + prefix + 'password').val(storedPasswordPlaceholder);
-  $('#' + prefix + 'verify').val(storedPasswordPlaceholder);
+  $('#' + prefix + 'password').attr('placeholder', storedPasswordPlaceholder);
+  $('#' + prefix + 'verify').attr('placeholder', storedPasswordPlaceholder);
+  $('#' + prefix + 'password').val('');
+  $('#' + prefix + 'verify').val('');
   miqJqueryRequest(url + '?' + prefix + 'password' + '=' + '&' + prefix + 'verify' + '=' + '&restore_password=true');
 }
