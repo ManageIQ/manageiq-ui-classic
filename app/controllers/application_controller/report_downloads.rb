@@ -104,30 +104,39 @@ module ApplicationController::ReportDownloads
 
   # Send rendered report data
   def send_report_data
-    if @sb[:render_rr_id]
-      disable_client_cache
-      @result = MiqReportResult.find(@sb[:render_rr_id])
-      @report = @result.report
-      @data = @result.get_generated_result(@sb[:render_type])
-      # We need the last_run_on time from the original result
-      last_run_on = MiqReportResult.select(:last_run_on).find(session[:report_result_id]).last_run_on
-      @result.destroy
+    return unless @sb[:render_rr_id]
 
-      if @sb[:render_type] == :pdf
-        @options = {
-          :page_layout => 'landscape',
-          :page_size   => @report.page_size || 'a4',
-          :run_date    => format_timezone(last_run_on, @result.user_timezone, "gtl"),
-          :title       => @result.name
+    disable_client_cache
+    result = MiqReportResult.find(@sb[:render_rr_id])
+    report = result.report
+
+    ## THIS IS STRANGE
+    # We need the last_run_on time from the original result
+    last_run_on = MiqReportResult.select(:last_run_on).find(session[:report_result_id]).last_run_on
+
+    if @sb[:render_type] == :pdf
+      @options = { # needed by the /layouts/print
+        :page_layout => 'landscape',
+        :page_size   => report.page_size || 'a4',
+        :run_date    => format_timezone(last_run_on, result.user_timezone, "gtl"),
+        :title       => result.name
+      }
+      render(
+        :template => '/layouts/print/report',
+        :layout   => '/layouts/print',
+        :locals   => {
+          :report => report,
+          :data   => result.html_rows.join
         }
-        render :template => '/layouts/print/report', :layout => '/layouts/print'
-      else
-        filename = filename_timestamp(@result.report.title, 'export_filename')
-        send_data(@data,
-                  :filename => "#{filename}.#{@sb[:render_type]}",
-                  :type     => "application/#{@sb[:render_type]}")
-      end
+      )
+    else
+      filename = filename_timestamp(result.report.title, 'export_filename')
+      send_data(result.get_generated_result(@sb[:render_type]),
+                :filename => "#{filename}.#{@sb[:render_type]}",
+                :type     => "application/#{@sb[:render_type]}")
     end
+
+    result.destroy
   end
 
   # Download currently displayed view
