@@ -141,21 +141,17 @@ module ApplicationController::ReportDownloads
 
   # Download currently displayed view
   def download_data
-    @view = session[:view].dup if session[:view] # Copy session view, if it exists
+    view = session[:view].dup if session[:view] # Copy session view, if it exists
     options = session[:paged_view_search_options].merge(:page => nil, :per_page => nil) # Get all pages
-    @view.table, _attrs = @view.paged_view_search(options) # Get the records
+    view.table, _attrs = view.paged_view_search(options) # Get the records
 
-    @view.title = _(@view.title.pluralize)
-    @view.headers.map! { |header| _(header) }
+    view.title = _(view.title.pluralize)
+    view.headers.map! { |header| _(header) }
 
-    @filename = filename_timestamp(@view.title)
     case params[:download_type]
-    when "pdf"
-      download_pdf(@view)
-    when "text"
-      download_txt(@view)
-    when "csv"
-      download_csv(@view)
+    when 'pdf'  then download_pdf(view)
+    when 'text' then download_txt(view, filename_timestamp(view.title))
+    when 'csv'  then download_csv(view, filename_timestamp(view.title))
     end
   end
 
@@ -163,18 +159,18 @@ module ApplicationController::ReportDownloads
 
   RENDER_TYPES = {'txt' => :txt, 'csv' => :csv, 'pdf' => :pdf}.freeze
 
-  def download_txt(view)
+  def download_txt(view, filename)
     disable_client_cache
-    send_data(view.to_text, :filename => "#{@filename}.txt")
+    send_data(view.to_text, :filename => "#{filename}.txt")
   end
 
-  def download_csv(view)
+  def download_csv(view, filename)
     disable_client_cache
-    send_data(view.to_csv, :filename => "#{@filename}.csv")
+    send_data(view.to_csv, :filename => "#{filename}.csv")
   end
 
   # Send the current report in pdf format
-  def download_pdf(view)
+  def download_pdf(view, filename)
     render_pdf_internal(view)
   end
 
