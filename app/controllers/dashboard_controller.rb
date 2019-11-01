@@ -151,7 +151,7 @@ class DashboardController < ApplicationController
       state = 'invalid'
     end
     render :json => {:content   => content,
-                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id]),
+                     :minimized => widget_minimized?(params[:id]),
                      :state     => state}
   end
 
@@ -163,7 +163,7 @@ class DashboardController < ApplicationController
                   {:description => shortcut.description, :href => shortcut.miq_shortcut.url}
                 end
     render :json => {:shortcuts => shortcuts,
-                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+                     :minimized => widget_minimized?(params[:id])}
   end
 
   def widget_minimized?(id)
