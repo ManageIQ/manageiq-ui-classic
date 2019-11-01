@@ -30,7 +30,7 @@
                             "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.depot_name)",
                             "name"        => "depot_name",
                             "ng-model"    => "vm.logCollectionModel.depot_name",
-                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Drobox'",
+                            "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
                             "checkchange" => "",
                             "auto-focus"  => "reactiveFocus"}
         %span.help-block{"ng-show" => "angularForm.depot_name.$invalid"}
@@ -48,7 +48,7 @@
                                         "ng-required" => "vm.miqDBBackupService.dbRequired(vm.logCollectionModel, vm.logCollectionModel.uri)",
                                         "name"        => "uri",
                                         "ng-model"    => "vm.logCollectionModel.uri",
-                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Drobox'",
+                                        "ng-readonly" => "vm.logCollectionModel.log_protocol == 'Red Hat Support' || vm.logCollectionModel.log_protocol == 'Red Hat Dropbox'",
                                         "checkchange" => ""}
         %span.help-block{"ng-show" => "angularForm.uri.$invalid"}
           = _("Required")
