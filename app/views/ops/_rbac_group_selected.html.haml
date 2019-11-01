@@ -1,7 +1,6 @@
 #group_selected
-  - if @edit[:new][:group].present? && @edit[:new][:group] != 'null'
-    - selected_group_ids = @edit[:new][:group].split(',').delete_if(&:blank?)
-    - selected_groups = Rbac.filtered(MiqGroup.find(selected_group_ids)).map(&:description)
+  - if @edit[:new][:group].present?
+    - selected_groups = Rbac.filtered(MiqGroup.find(@edit[:new][:group])).map(&:description).sort
     - selected_groups.each do |g|
       %i.ff.ff-group
       = g
