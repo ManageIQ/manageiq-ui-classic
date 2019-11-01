@@ -86,7 +86,7 @@ module ReportController::Menus
       @edit[:temp_new] = []
       if @edit[:tree_arr].blank?
         # if all subfolders were deleted
-        @edit[:temp_new].push(@edit[:temp_arr][0], "")
+        @edit[:temp_new].push(@edit[:temp_arr][0], [])
       else
         @edit[:tree_arr].each do |el|
           old_folder = @edit[:tree_hash].key(el)
