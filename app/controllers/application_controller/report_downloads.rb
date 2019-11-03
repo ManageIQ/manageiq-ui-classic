@@ -170,7 +170,7 @@ module ApplicationController::ReportDownloads
   end
 
   # Send the current report in pdf format
-  def download_pdf(view, filename)
+  def download_pdf(view)
     render_pdf_internal(view)
   end
 
@@ -179,7 +179,7 @@ module ApplicationController::ReportDownloads
   end
 
   def report_from_report_results(report_result_id)
-    rr = MiqReportResult.for_user(current_user).find(session[:report_result_id])
+    rr = MiqReportResult.for_user(current_user).find(report_result_id)
     report = rr.report_results
     report.report_run_time = rr.last_run_on
     report
