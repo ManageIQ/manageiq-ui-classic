@@ -174,10 +174,6 @@ module ReportController::Reports::Editor
     end
   end
 
-  def display_filter_details_for(target_class, cols)
-    cols ? cols.select { |_, column| target_class.parse(column).try(:plural?) } : []
-  end
-
   private
 
   def build_edit_screen
@@ -229,13 +225,6 @@ module ReportController::Reports::Editor
       @edit[@expkey].history.reset(@edit[:display_filter][:expression]) if @edit[:display_filter].history.array.nil?
 
       @edit[:display_filter][:exp_table] = exp_build_table(@edit[:display_filter][:expression])
-
-      cols = @edit[:new][:field_order]
-      @edit[:display_filter][:exp_available_fields] = display_filter_details_for(MiqExpression::Field, cols)
-
-      cols = @edit[:new][:fields]
-      @edit[:display_filter][:exp_available_tags] = display_filter_details_for(MiqExpression::Tag, cols)
-
       @edit[:display_filter][:exp_model] = "_display_filter_" # Set model for display filter
 
       @expkey = :record_filter # Start with Record Filter showing

@@ -10,15 +10,6 @@
   - url = url_for_only_path(:action => 'exp_changed')
   -# Grab the model for this expression
   - exp_model = @edit[@expkey][:exp_model]
-
-  -# Get all of the expression types, then remove the count and/or find based ones if model has none
-  - unless exp_model == "_display_filter_"
-    -# Not valid for secondary display filter
-    - exptypes = ExpAtomHelper::EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-    - unless MiqExpression.miq_adv_search_lists(exp_model, :exp_available_counts).length > 0
-      - exptypes -= [[_(ExpAtomHelper::EXP_COUNT_TYPE[0]), ExpAtomHelper::EXP_COUNT_TYPE[1]]]
-    - unless MiqExpression.miq_adv_search_lists(exp_model, :exp_available_finds).length > 0
-      - exptypes -= [[_(ExpAtomHelper::EXP_FIND_TYPE[0]), ExpAtomHelper::EXP_FIND_TYPE[1]]]
   #exp_atom_editor_div
     .panel.panel-default
       .panel-heading
@@ -30,26 +21,13 @@
             = _('Not')
         - else
           - opts = ["<#{_('Choose')}>"]
-          - case exp_model
-          - when 'Vm'
-            - opts += exptypes + ExpAtomHelper::VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
-          - when 'AuditEvent'
-            - opts += [[_('Field'), 'field']]
-          - when '_display_filter_'
-            - unless @edit[@expkey][:exp_available_fields].empty?
-              - opts.push([_('Field'), 'field'])
-            - unless @edit[@expkey].tags_for_display_filters.empty?
-              - opts.push([_('Tag'), 'tag'])
-          - when 'MiqGroup'
-            - if @expkey == :filter_expression
-              - opts = [[_('Tag'), 'tags']]
-              - @edit[@expkey][:exp_typ] = 'tags'
-            - else
-              - opts += exptypes
+          - if exp_model == "_display_filter_"
+            - opts += ExpAtomHelper.expression_types_for_secondary_filter(@edit[:new][:field_order], @edit[:new][:fields])
           - else
-            - opts += exptypes
+            - opts += ExpAtomHelper.expression_types_for_primary_filter(exp_model, only_tag = @expkey == :filter_expression )
 
-          - if @edit[@expkey][:exp_typ] == 'tags'
+          - if only_tag && exp_model == "MiqGroup"
+            - @edit[@expkey][:exp_typ] = 'tags'
             = _('Tag')
           - else
             = select_tag('chosen_typ', options_for_select(opts, @edit[@expkey][:exp_typ]),

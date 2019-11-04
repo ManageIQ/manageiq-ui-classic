@@ -23,7 +23,7 @@
                                              :exp_key       => 'record_filter'}
   %hr
   .form-horizontal
-    - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
+    - if ExpAtomHelper.expression_types_for_secondary_filter(@edit[:new][:field_order], @edit[:new][:fields]).present?
       -# Expression editor for the display filter
       %h3= _('Secondary (Display) Filter - Filters the rows based on child table fields')
       .form-group

@@ -5,7 +5,10 @@
     exp_model       Model in use for this expression
 
 - opts = ["<#{_('Choose')}>"]
-- opts += @edit[@expkey].tags_for_display_filters
+- if exp_model == "_display_filter_"
+  - opts += ExpAtomHelper.display_filter_details_for(MiqExpression::Tag, @edit[:new][:fields])
+- else
+  - opts += @edit[@expkey].tags_for_display_filters
 
 .spacer
 
