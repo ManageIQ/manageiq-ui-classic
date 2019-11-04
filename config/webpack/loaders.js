@@ -6,6 +6,7 @@ const babelrc = require('../../.babelrc.js');
 let babelOptions = merge(babelrc, {
   babelrc: false,
   compact: false,
+  cacheDirectory: env.BABEL_CACHE_DIR || true, // defaults to node_modules/.cache/babel-loader
 });
 
 // set WEBPACK_VERBOSE=1 to get more warnings
