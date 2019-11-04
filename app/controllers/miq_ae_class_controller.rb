@@ -229,7 +229,7 @@ class MiqAeClassController < ApplicationController
       if i == nodes.length - 1
         selected_node = x_node.split("-")
         parents.push(record.ae_class) if %w[aei aem].include?(selected_node[0])
-        self.x_node = "#{selected_node[0]}-#{record.id}"
+        self.x_node = TreeBuilder.build_node_id(record)
         parents.push(record)
       else
         ns = MiqAeNamespace.lookup_by_fqname(nodes[0..i].join("/"))
