@@ -3,7 +3,7 @@ describe('dialogFieldRefreshService', function() {
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(dialogFieldRefreshService, _API_) {
+  beforeEach(inject(function(dialogFieldRefreshService, _API_, DialogData) {
     testDialogFieldRefreshService = dialogFieldRefreshService;
     API = _API_;
 
@@ -16,6 +16,10 @@ describe('dialogFieldRefreshService', function() {
     spyOn(API, 'post').and.callFake(function() {
       return {then: function(response) { response(responseResult); }};
     });
+
+    DialogData.data = {
+      fields: {},
+    };
   }));
 
   describe('#refreshField', function() {
