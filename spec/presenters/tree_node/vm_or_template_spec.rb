@@ -17,8 +17,7 @@ describe TreeNode::VmOrTemplate do
     template_vmware
     template_xen
   ).each do |factory|
-    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
-    context(klass) do
+    context(factory.to_s) do
       let(:object) { FactoryBot.create(factory, :name => "template", :template => true) }
 
       include_examples 'TreeNode::Node#key prefix', 't-'
@@ -48,8 +47,7 @@ describe TreeNode::VmOrTemplate do
     vm_vmware
     vm_xen
   ).each do |factory|
-    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
-    context(klass) do
+    context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'v-'

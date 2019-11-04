@@ -6,8 +6,7 @@ describe TreeNode::ConfiguredSystem do
     configured_system_foreman
     configured_system_ansible_tower
   ).each do |factory|
-    klass = FactoryBot.factory_by_name(factory).instance_variable_get(:@class_name)
-    context(klass) do
+    context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'cs-'
