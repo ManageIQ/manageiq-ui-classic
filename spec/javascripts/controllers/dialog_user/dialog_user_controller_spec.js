@@ -7,7 +7,8 @@ describe('dialogUserController', function() {
                              _API_,
                              _dialogFieldRefreshService_,
                              _dialogUserSubmitErrorHandlerService_,
-                             _miqService_) {
+                             _miqService_,
+                             DialogData) {
     API = _API_;
     dialogFieldRefreshService = _dialogFieldRefreshService_;
     dialogUserSubmitErrorHandlerService = _dialogUserSubmitErrorHandlerService_;
@@ -44,6 +45,10 @@ describe('dialogUserController', function() {
       openUrl: false,
       dialogReplaceData: null,
     });
+
+    DialogData.data = {
+      fields: {},
+    };
   }));
 
   describe('$onInit', function() {
