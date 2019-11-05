@@ -161,7 +161,7 @@ describe('Catalog form component', () => {
     };
     wrapper.instance().submitValues(values).then(() => {
       expect(fetchMock.called(urlCreate)).toBe(true);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit?button=add');
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit?button=add', { name: 'Some name' });
       done();
     });
   });
@@ -250,7 +250,7 @@ describe('Catalog form component', () => {
     wrapper.instance().submitValues(values).then(() => {
       expect(fetchMock.called(apiBase)).toBe(true);
       expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(true);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save');
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save', { name: 'Some name' });
       done();
     });
   });
@@ -275,7 +275,7 @@ describe('Catalog form component', () => {
     wrapper.instance().submitValues(values).then(() => {
       expect(fetchMock.called(apiBase)).toBe(true);
       expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(false);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save');
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save', { name: 'Some name' });
       done();
     });
   });
