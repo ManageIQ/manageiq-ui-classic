@@ -15,7 +15,8 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::Automation::PolicyMixin
             :url          => "tagging",
             :url_parms    => "main_div",
             :send_checked => true,
-            :enabled      => true
+            :enabled      => true,
+            :onwhen       => "1+"
           ),
         ]
       ),
