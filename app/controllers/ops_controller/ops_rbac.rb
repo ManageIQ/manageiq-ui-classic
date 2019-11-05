@@ -1372,6 +1372,7 @@ module OpsController::OpsRbac
   def populate_role_features(role)
     role.miq_product_features =
       MiqProductFeature.find_all_by_identifier(rbac_compact_features(@edit[:new][:features]))
+    User.current_user.reload
   end
 
   # Validate some of the role fields
