@@ -631,7 +631,7 @@ class CatalogController < ApplicationController
       @in_a_form = false
       replace_right_cell
     when "save", "add"
-      add_flash(_("Catalog was saved"))
+      add_flash(_("Catalog \"%{name}\" was saved") % {:name => params[:name]})
       @changed = session[:changed] = false
       @in_a_form = false
       @edit = session[:edit] = nil
