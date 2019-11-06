@@ -130,9 +130,8 @@
                 %option{"value" => ""}
                   = "<#{_('Choose')}>"
 
-    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_inventory!==undefined",
-                "ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}",
-                "ng-if" => "#{ng_model}.location==='playbook'"}
+    .form-group{"ng-if" =>"#{ng_model}.location==='playbook'",
+                "ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}"}
       %label.col-md-3.control-label
         = _("Hosts")
       .col-md-9
