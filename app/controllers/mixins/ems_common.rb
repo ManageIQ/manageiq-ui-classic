@@ -400,8 +400,8 @@ module Mixins
         custom_buttons if params[:pressed] == "custom_button"
 
         return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-        return if ["#{table_name}_tag", "#{table_name}_protect", "#{table_name}_timeline"].include?(params[:pressed]) &&
-                  @flash_array.nil? # Tag screen showing, so return
+        return if ["#{table_name}_tag", "#{display_s}_tag", "#{table_name}_protect", "#{display_s}_protect", "#{table_name}_timeline"].include?(params[:pressed]) &&
+                  @flash_array.nil? # Screen for Edit Tags or Manage Policies action showing, so return
 
         check_if_button_is_implemented
       end
@@ -487,7 +487,7 @@ module Mixins
       assert_privileges("#{model.name.underscore}_check_compliance")
       ids = find_records_with_rbac(model, checked_or_params).ids
       process_check_compliance(model, ids)
-      show_list
+      @lastaction == 'show_list' ? show_list : show
       ids.count
     end
 
