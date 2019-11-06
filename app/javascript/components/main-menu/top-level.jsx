@@ -44,7 +44,7 @@ const TopLevel = ({
       </React.Fragment>
     </li>
   ) : (
-    <li className="menu-list-group-item" id={`menu_item_${id}`}>
+    <li className={`${active ? 'active' : ''} menu-list-group-item`} id={`menu_item_${id}`}>
       <a
         onClick={(event) => {
           if (handleUnsavedChanges(type) === false) {
