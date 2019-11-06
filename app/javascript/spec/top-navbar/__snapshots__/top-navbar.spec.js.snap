@@ -183,140 +183,137 @@ exports[`Top navbar tests should render correctly 1`] = `
         ]
       }
     >
-      <Uncontrolled(Dropdown)
+      <ForwardRef
         componentClass={[Function]}
         id="help-dd"
         key="help"
       >
-        <Dropdown
-          bsClass="dropdown"
+        <Uncontrolled(Dropdown)
           componentClass={[Function]}
           id="help-dd"
-          onToggle={[Function]}
+          innerRef={null}
         >
-          <componentClass
-            className="dropdown"
+          <Dropdown
+            bsClass="dropdown"
+            componentClass={[Function]}
+            id="help-dd"
+            onToggle={[Function]}
           >
-            <li
+            <componentClass
               className="dropdown"
             >
-              <DropdownToggle
-                bsClass="dropdown-toggle"
-                bsRole="toggle"
-                componentClass={[Function]}
-                id="help-dd"
-                key=".0"
-                noCaret={true}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                useAnchor={false}
+              <li
+                className="dropdown"
               >
-                <Button
-                  active={false}
-                  aria-expanded={false}
-                  aria-haspopup={true}
-                  block={false}
-                  bsClass="btn"
-                  bsStyle="default"
-                  className="dropdown-toggle"
+                <DropdownToggle
+                  bsClass="dropdown-toggle"
+                  bsRole="toggle"
                   componentClass={[Function]}
-                  disabled={false}
                   id="help-dd"
+                  key=".0"
+                  noCaret={true}
                   onClick={[Function]}
                   onKeyDown={[Function]}
-                  role="button"
+                  open={false}
+                  useAnchor={false}
                 >
-                  <componentClass
+                  <Button
+                    active={false}
                     aria-expanded={false}
                     aria-haspopup={true}
-                    className="dropdown-toggle btn btn-default"
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="dropdown-toggle"
+                    componentClass={[Function]}
                     disabled={false}
                     id="help-dd"
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
-                    type="button"
                   >
-                    <a
+                    <componentClass
                       aria-expanded={false}
                       aria-haspopup={true}
-                      className="dropdown-toggle nav-item-iconic"
-                      data-toggle="dropdown"
+                      className="dropdown-toggle btn btn-default"
                       disabled={false}
-                      id="help-menu"
+                      id="help-dd"
                       onClick={[Function]}
                       onKeyDown={[Function]}
                       role="button"
                       type="button"
                     >
-                      <Icon
-                        name="help"
-                        title="Help"
-                        type="pf"
+                      <a
+                        aria-expanded={false}
+                        aria-haspopup={true}
+                        className="dropdown-toggle nav-item-iconic"
+                        data-toggle="dropdown"
+                        disabled={false}
+                        id="help-menu"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        role="button"
+                        type="button"
                       >
-                        <PatternflyIcon
-                          className=""
+                        <Icon
                           name="help"
                           title="Help"
+                          type="pf"
                         >
-                          <span
-                            aria-hidden="true"
-                            className="pficon pficon-help"
+                          <PatternflyIcon
+                            className=""
+                            name="help"
                             title="Help"
-                          />
-                        </PatternflyIcon>
-                      </Icon>
-                    </a>
-                  </componentClass>
-                </Button>
-              </DropdownToggle>
-              <DropdownMenu
-                aria-labelledby="help-menu"
-                bsClass="dropdown-menu"
-                bsRole="menu"
-                key=".1"
-                labelledBy="help-dd"
-                onClose={[Function]}
-                onSelect={[Function]}
-                pullRight={false}
-              >
-                <RootCloseWrapper
-                  disabled={true}
-                  event="click"
-                  onRootClose={[Function]}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="pficon pficon-help"
+                              title="Help"
+                            />
+                          </PatternflyIcon>
+                        </Icon>
+                      </a>
+                    </componentClass>
+                  </Button>
+                </DropdownToggle>
+                <DropdownMenu
+                  aria-labelledby="help-menu"
+                  bsClass="dropdown-menu"
+                  bsRole="menu"
+                  key=".1"
+                  labelledBy="help-dd"
+                  onClose={[Function]}
+                  onSelect={[Function]}
+                  pullRight={false}
                 >
-                  <ul
-                    aria-labelledby="help-dd"
-                    className="dropdown-menu"
-                    role="menu"
+                  <RootCloseWrapper
+                    disabled={true}
+                    event="click"
+                    onRootClose={[Function]}
                   >
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={false}
-                      header={false}
-                      href="/support/index?support_tab=about"
-                      id="help-menu-documentation"
-                      key=".$documentation"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
+                    <ul
+                      aria-labelledby="help-dd"
+                      className="dropdown-menu"
+                      role="menu"
                     >
-                      <li
-                        className=""
-                        role="presentation"
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        href="/support/index?support_tab=about"
+                        id="help-menu-documentation"
+                        key=".$documentation"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          href="/support/index?support_tab=about"
-                          id="help-menu-documentation"
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
+                          <SafeAnchor
+                            componentClass="a"
                             href="/support/index?support_tab=about"
                             id="help-menu-documentation"
                             onClick={[Function]}
@@ -324,37 +321,37 @@ exports[`Top navbar tests should render correctly 1`] = `
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            Documentation
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={false}
-                      header={false}
-                      href="javascript:void(0);"
-                      id="help-menu-about"
-                      key=".$about"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
-                    >
-                      <li
-                        className=""
-                        role="presentation"
+                            <a
+                              href="/support/index?support_tab=about"
+                              id="help-menu-documentation"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              Documentation
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        href="javascript:void(0);"
+                        id="help-menu-about"
+                        key=".$about"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          href="javascript:void(0);"
-                          id="help-menu-about"
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
+                          <SafeAnchor
+                            componentClass="a"
                             href="javascript:void(0);"
                             id="help-menu-about"
                             onClick={[Function]}
@@ -362,18 +359,27 @@ exports[`Top navbar tests should render correctly 1`] = `
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            About
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                  </ul>
-                </RootCloseWrapper>
-              </DropdownMenu>
-            </li>
-          </componentClass>
-        </Dropdown>
-      </Uncontrolled(Dropdown)>
+                            <a
+                              href="javascript:void(0);"
+                              id="help-menu-about"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              About
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </RootCloseWrapper>
+                </DropdownMenu>
+              </li>
+            </componentClass>
+          </Dropdown>
+        </Uncontrolled(Dropdown)>
+      </ForwardRef>
     </Help>
     <Configuration
       opsExplorerAllowed={true}
@@ -445,64 +451,57 @@ exports[`Top navbar tests should render correctly 1`] = `
         ]
       }
     >
-      <Uncontrolled(Dropdown)
+      <ForwardRef
         componentClass={[Function]}
         id="dropdownMenu2"
       >
-        <Dropdown
-          bsClass="dropdown"
+        <Uncontrolled(Dropdown)
           componentClass={[Function]}
           id="dropdownMenu2"
-          onToggle={[Function]}
+          innerRef={null}
         >
-          <componentClass
-            className="dropdown"
+          <Dropdown
+            bsClass="dropdown"
+            componentClass={[Function]}
+            id="dropdownMenu2"
+            onToggle={[Function]}
           >
-            <li
+            <componentClass
               className="dropdown"
             >
-              <DropdownToggle
-                bsClass="dropdown-toggle"
-                bsRole="toggle"
-                componentClass={[Function]}
-                id="dropdownMenu2"
-                key=".0"
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                useAnchor={false}
+              <li
+                className="dropdown"
               >
-                <Button
-                  active={false}
-                  aria-expanded={false}
-                  aria-haspopup={true}
-                  block={false}
-                  bsClass="btn"
-                  bsStyle="default"
-                  className="dropdown-toggle"
+                <DropdownToggle
+                  bsClass="dropdown-toggle"
+                  bsRole="toggle"
                   componentClass={[Function]}
-                  disabled={false}
                   id="dropdownMenu2"
+                  key=".0"
                   onClick={[Function]}
                   onKeyDown={[Function]}
-                  role="button"
+                  open={false}
+                  useAnchor={false}
                 >
-                  <componentClass
+                  <Button
+                    active={false}
                     aria-expanded={false}
                     aria-haspopup={true}
-                    className="dropdown-toggle btn btn-default"
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="dropdown-toggle"
+                    componentClass={[Function]}
                     disabled={false}
                     id="dropdownMenu2"
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
-                    type="button"
                   >
-                    <a
+                    <componentClass
                       aria-expanded={false}
-                      aria-haspopup="true"
-                      className="dropdown-toggle nav-item-iconic"
-                      data-toggle="dropdown"
+                      aria-haspopup={true}
+                      className="dropdown-toggle btn btn-default"
                       disabled={false}
                       id="dropdownMenu2"
                       onClick={[Function]}
@@ -510,166 +509,169 @@ exports[`Top navbar tests should render correctly 1`] = `
                       role="button"
                       type="button"
                     >
-                      <Icon
-                        name="user"
-                        type="pf"
+                      <a
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-item-iconic"
+                        data-toggle="dropdown"
+                        disabled={false}
+                        id="dropdownMenu2"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        role="button"
+                        type="button"
                       >
-                        <PatternflyIcon
-                          className=""
+                        <Icon
                           name="user"
+                          type="pf"
                         >
-                          <span
-                            aria-hidden="true"
-                            className="pficon pficon-user"
-                          />
-                        </PatternflyIcon>
-                      </Icon>
-                      <p
-                        className="navbar__user-name"
-                        data-userid="admin"
-                        id="username_display"
-                      >
-                        Administrator | EVM
-                      </p>
-                       
-                      <span
-                        className="caret"
-                      />
-                    </a>
-                  </componentClass>
-                </Button>
-              </DropdownToggle>
-              <DropdownMenu
-                bsClass="dropdown-menu"
-                bsRole="menu"
-                key=".1"
-                labelledBy="dropdownMenu2"
-                onClose={[Function]}
-                onSelect={[Function]}
-                pullRight={false}
-              >
-                <RootCloseWrapper
-                  disabled={true}
-                  event="click"
-                  onRootClose={[Function]}
+                          <PatternflyIcon
+                            className=""
+                            name="user"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="pficon pficon-user"
+                            />
+                          </PatternflyIcon>
+                        </Icon>
+                        <p
+                          className="navbar__user-name"
+                          data-userid="admin"
+                          id="username_display"
+                        >
+                          Administrator | EVM
+                        </p>
+                         
+                        <span
+                          className="caret"
+                        />
+                      </a>
+                    </componentClass>
+                  </Button>
+                </DropdownToggle>
+                <DropdownMenu
+                  bsClass="dropdown-menu"
+                  bsRole="menu"
+                  key=".1"
+                  labelledBy="dropdownMenu2"
+                  onClose={[Function]}
+                  onSelect={[Function]}
+                  pullRight={false}
                 >
-                  <ul
-                    aria-labelledby="dropdownMenu2"
-                    className="dropdown-menu"
-                    role="menu"
+                  <RootCloseWrapper
+                    disabled={true}
+                    event="click"
+                    onRootClose={[Function]}
                   >
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={true}
-                      divider={false}
-                      header={false}
-                      key=".0"
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
+                    <ul
+                      aria-labelledby="dropdownMenu2"
+                      className="dropdown-menu"
+                      role="menu"
                     >
-                      <li
-                        className="disabled"
-                        role="presentation"
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={true}
+                        divider={false}
+                        header={false}
+                        key=".0"
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className="disabled"
+                          role="presentation"
                         >
-                          <a
-                            href="#"
+                          <SafeAnchor
+                            componentClass="a"
                             onClick={[Function]}
                             onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            Server: EVM
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                    <li
-                      className="dropdown-submenu pull-left"
-                      id="droptownMenuGroup"
-                      key=".1"
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
-                    >
-                      <DropdownToggle
-                        bsClass="dropdown-toggle"
-                        bsRole="toggle"
-                        componentClass={[Function]}
-                        noCaret={true}
-                        open={false}
-                        useAnchor={true}
+                            <a
+                              href="#"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              Server: EVM
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                      <li
+                        className="dropdown-submenu pull-left"
+                        id="droptownMenuGroup"
+                        key=".1"
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          aria-expanded={false}
-                          aria-haspopup={true}
-                          className="dropdown-toggle"
+                        <DropdownToggle
+                          bsClass="dropdown-toggle"
+                          bsRole="toggle"
                           componentClass={[Function]}
-                          role="button"
+                          noCaret={true}
+                          open={false}
+                          useAnchor={true}
                         >
-                          <componentClass
+                          <SafeAnchor
                             aria-expanded={false}
                             aria-haspopup={true}
                             className="dropdown-toggle"
-                            href="#"
-                            onClick={[Function]}
-                            onKeyDown={[Function]}
+                            componentClass={[Function]}
                             role="button"
                           >
-                            <a
+                            <componentClass
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              className="dropdown-toggle"
                               href="#"
-                            >
-                              Change Group
-                            </a>
-                          </componentClass>
-                        </SafeAnchor>
-                      </DropdownToggle>
-                      <DropdownMenu
-                        bsClass="dropdown-menu"
-                        bsRole="menu"
-                        className="scrollable-menu"
-                        pullRight={false}
-                      >
-                        <RootCloseWrapper
-                          disabled={true}
-                          event="click"
-                          onRootClose={[Function]}
-                        >
-                          <ul
-                            className="scrollable-menu dropdown-menu"
-                            role="menu"
-                          >
-                            <MenuItem
-                              bsClass="dropdown"
-                              disabled={true}
-                              divider={false}
-                              header={false}
-                              id="current-group"
-                              key=".$10000000000002"
+                              onClick={[Function]}
                               onKeyDown={[Function]}
-                              onSelect={null}
-                              title="Currently Selected Group"
+                              role="button"
                             >
-                              <li
-                                className="disabled"
-                                role="presentation"
+                              <a
+                                href="#"
                               >
-                                <SafeAnchor
-                                  componentClass="a"
-                                  id="current-group"
-                                  onClick={[Function]}
-                                  onKeyDown={[Function]}
-                                  role="menuitem"
-                                  tabIndex="-1"
-                                  title="Currently Selected Group"
+                                Change Group
+                              </a>
+                            </componentClass>
+                          </SafeAnchor>
+                        </DropdownToggle>
+                        <DropdownMenu
+                          bsClass="dropdown-menu"
+                          bsRole="menu"
+                          className="scrollable-menu"
+                          pullRight={false}
+                        >
+                          <RootCloseWrapper
+                            disabled={true}
+                            event="click"
+                            onRootClose={[Function]}
+                          >
+                            <ul
+                              className="scrollable-menu dropdown-menu"
+                              role="menu"
+                            >
+                              <MenuItem
+                                bsClass="dropdown"
+                                disabled={true}
+                                divider={false}
+                                header={false}
+                                id="current-group"
+                                key=".$10000000000002"
+                                onKeyDown={[Function]}
+                                onSelect={null}
+                                title="Currently Selected Group"
+                              >
+                                <li
+                                  className="disabled"
+                                  role="presentation"
                                 >
-                                  <a
-                                    href="#"
+                                  <SafeAnchor
+                                    componentClass="a"
                                     id="current-group"
                                     onClick={[Function]}
                                     onKeyDown={[Function]}
@@ -677,38 +679,38 @@ exports[`Top navbar tests should render correctly 1`] = `
                                     tabIndex="-1"
                                     title="Currently Selected Group"
                                   >
-                                    EvmGroup-super_administrator (Current Group)
-                                  </a>
-                                </SafeAnchor>
-                              </li>
-                            </MenuItem>
-                            <MenuItem
-                              bsClass="dropdown"
-                              disabled={false}
-                              divider={false}
-                              header={false}
-                              id="EvmGroup-dev"
-                              key=".$10000000000003"
-                              onClick={[Function]}
-                              onKeyDown={[Function]}
-                              onSelect={null}
-                              title="Change to this Group"
-                            >
-                              <li
-                                className=""
-                                role="presentation"
+                                    <a
+                                      href="#"
+                                      id="current-group"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      role="menuitem"
+                                      tabIndex="-1"
+                                      title="Currently Selected Group"
+                                    >
+                                      EvmGroup-super_administrator (Current Group)
+                                    </a>
+                                  </SafeAnchor>
+                                </li>
+                              </MenuItem>
+                              <MenuItem
+                                bsClass="dropdown"
+                                disabled={false}
+                                divider={false}
+                                header={false}
+                                id="EvmGroup-dev"
+                                key=".$10000000000003"
+                                onClick={[Function]}
+                                onKeyDown={[Function]}
+                                onSelect={null}
+                                title="Change to this Group"
                               >
-                                <SafeAnchor
-                                  componentClass="a"
-                                  id="EvmGroup-dev"
-                                  onClick={[Function]}
-                                  onKeyDown={[Function]}
-                                  role="menuitem"
-                                  tabIndex="-1"
-                                  title="Change to this Group"
+                                <li
+                                  className=""
+                                  role="presentation"
                                 >
-                                  <a
-                                    href="#"
+                                  <SafeAnchor
+                                    componentClass="a"
                                     id="EvmGroup-dev"
                                     onClick={[Function]}
                                     onKeyDown={[Function]}
@@ -716,139 +718,139 @@ exports[`Top navbar tests should render correctly 1`] = `
                                     tabIndex="-1"
                                     title="Change to this Group"
                                   >
-                                    EvmGroup-dev
-                                  </a>
-                                </SafeAnchor>
-                              </li>
-                            </MenuItem>
-                          </ul>
-                        </RootCloseWrapper>
-                      </DropdownMenu>
-                    </li>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={true}
-                      header={false}
-                    >
-                      <li
-                        className="divider"
-                        role="separator"
-                      />
-                    </MenuItem>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={false}
-                      header={false}
-                      href="/configuration/index"
-                      id="user-menu-my settings"
-                      key="configuration"
-                      onClick={[Function]}
-                    >
-                      <li
-                        className=""
-                        role="presentation"
+                                    <a
+                                      href="#"
+                                      id="EvmGroup-dev"
+                                      onClick={[Function]}
+                                      onKeyDown={[Function]}
+                                      role="menuitem"
+                                      tabIndex="-1"
+                                      title="Change to this Group"
+                                    >
+                                      EvmGroup-dev
+                                    </a>
+                                  </SafeAnchor>
+                                </li>
+                              </MenuItem>
+                            </ul>
+                          </RootCloseWrapper>
+                        </DropdownMenu>
+                      </li>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={true}
+                        header={false}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          href="/configuration/index"
-                          id="user-menu-my settings"
-                          onClick={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className="divider"
+                          role="separator"
+                        />
+                      </MenuItem>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        href="/configuration/index"
+                        id="user-menu-my settings"
+                        key="configuration"
+                        onClick={[Function]}
+                      >
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
+                          <SafeAnchor
+                            componentClass="a"
                             href="/configuration/index"
                             id="user-menu-my settings"
                             onClick={[Function]}
-                            onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            My Settings
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={false}
-                      header={false}
-                      href="/miq_task/index?jobs_tab=tasks"
-                      id="user-menu-tasks"
-                      key="my_tasks"
-                      onClick={[Function]}
-                    >
-                      <li
-                        className=""
-                        role="presentation"
+                            <a
+                              href="/configuration/index"
+                              id="user-menu-my settings"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              My Settings
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        href="/miq_task/index?jobs_tab=tasks"
+                        id="user-menu-tasks"
+                        key="my_tasks"
+                        onClick={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          href="/miq_task/index?jobs_tab=tasks"
-                          id="user-menu-tasks"
-                          onClick={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
+                          <SafeAnchor
+                            componentClass="a"
                             href="/miq_task/index?jobs_tab=tasks"
                             id="user-menu-tasks"
                             onClick={[Function]}
-                            onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            Tasks
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={true}
-                      header={false}
-                      key=".3"
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
-                    >
-                      <li
-                        className="divider"
+                            <a
+                              href="/miq_task/index?jobs_tab=tasks"
+                              id="user-menu-tasks"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              Tasks
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={true}
+                        header={false}
+                        key=".3"
                         onKeyDown={[Function]}
-                        role="separator"
-                      />
-                    </MenuItem>
-                    <MenuItem
-                      bsClass="dropdown"
-                      disabled={false}
-                      divider={false}
-                      header={false}
-                      href="/dashboard/logout"
-                      id="logout-btn"
-                      key=".4"
-                      onClick={[Function]}
-                      onKeyDown={[Function]}
-                      onSelect={[Function]}
-                      title="Click to Logout"
-                    >
-                      <li
-                        className=""
-                        role="presentation"
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          href="/dashboard/logout"
-                          id="logout-btn"
-                          onClick={[Function]}
+                        <li
+                          className="divider"
                           onKeyDown={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
-                          title="Click to Logout"
+                          role="separator"
+                        />
+                      </MenuItem>
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        href="/dashboard/logout"
+                        id="logout-btn"
+                        key=".4"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
+                        title="Click to Logout"
+                      >
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
+                          <SafeAnchor
+                            componentClass="a"
                             href="/dashboard/logout"
                             id="logout-btn"
                             onClick={[Function]}
@@ -857,18 +859,28 @@ exports[`Top navbar tests should render correctly 1`] = `
                             tabIndex="-1"
                             title="Click to Logout"
                           >
-                            Logout
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                  </ul>
-                </RootCloseWrapper>
-              </DropdownMenu>
-            </li>
-          </componentClass>
-        </Dropdown>
-      </Uncontrolled(Dropdown)>
+                            <a
+                              href="/dashboard/logout"
+                              id="logout-btn"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                              title="Click to Logout"
+                            >
+                              Logout
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </RootCloseWrapper>
+                </DropdownMenu>
+              </li>
+            </componentClass>
+          </Dropdown>
+        </Uncontrolled(Dropdown)>
+      </ForwardRef>
     </UserOptions>
   </RightSection>
 </Provider>
