@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from './main-menu';
 import { menuProps } from './recursive-props';
-import { getHrefByType, getTargetByType, handleUnsavedChanges } from './helpers';
+import {
+  getHrefByType, getIdByCategory, getTargetByType, handleUnsavedChanges,
+} from './helpers';
 
 const SecondLevel = ({
   id,
@@ -13,7 +15,7 @@ const SecondLevel = ({
   type,
   active,
 }) => (
-  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`} id={`menu_item_${id}`}>
+  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`} id={getIdByCategory(items.length > 0, id)}>
     <a
       href={getHrefByType(type, href, id)}
       onClick={(event) => {
@@ -33,9 +35,9 @@ const SecondLevel = ({
         </a>
       </div>
       {items.length > 0 && (
-      <ul className="list-group">
-        {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
-      </ul>
+        <ul className="list-group">
+          {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
+        </ul>
       )}
     </div>
   </li>
