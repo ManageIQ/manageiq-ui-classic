@@ -224,6 +224,19 @@ class EmsInfraController < ApplicationController
 
   private
 
+  def record_class
+    case params[:pressed]
+    when /^ems_cluster/
+      EmsCluster
+    when /^orchestration_stack/
+      OrchestrationStack
+    when /^storage/
+      Storage
+    else
+      VmOrTemplate
+    end
+  end
+
   ############################
   # Special EmsCloud link builder for restful routes
   def show_link(ems, options = {})

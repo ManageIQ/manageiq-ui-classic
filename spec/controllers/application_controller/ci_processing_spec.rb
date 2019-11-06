@@ -148,480 +148,431 @@ describe ApplicationController do
   end
 
   context "Delete object store container" do
+    let(:container1) { FactoryBot.create(:cloud_object_store_container) }
+    let(:container2) { FactoryBot.create(:cloud_object_store_container) }
+
     before do
       allow(controller).to receive(:assert_rbac).and_return(nil)
       allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
-    end
-
-    let :container1 do
-      FactoryBot.create(:cloud_object_store_container)
-    end
-
-    let :container2 do
-      FactoryBot.create(:cloud_object_store_container)
+      controller.params[:pressed] = "cloud_object_store_container_delete"
     end
 
     context "from list view" do
-      before do
-        controller.params[:pressed] = "cloud_object_store_container_delete"
-        request.parameters["controller"] = "ems_storage"
-        controller.instance_variable_set(:@display, "cloud_object_store_containers")
-      end
+      describe EmsStorageController do
+        before { controller.instance_variable_set(:@display, "cloud_object_store_containers") }
 
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
-      end
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
+        end
 
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreContainer,
-          'delete'
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-      end
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreContainer,
+            'delete'
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+        end
 
-      it "invokes process_objects" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        expect(controller).to receive(:process_objects).with(
-          [container1.id, container2.id],
-          'cloud_object_store_container_delete',
-          'Delete'
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
-      end
+        it "invokes process_objects" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          expect(controller).to receive(:process_objects).with(
+            [container1.id, container2.id],
+            'cloud_object_store_container_delete',
+            'Delete'
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
+        end
 
-      it "invokes process_tasks on container class" do
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container1.id, container2.id],
-          :task   => 'cloud_object_store_container_delete',
-          :userid => anything
-        )
-        controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_delete',
-                        'delete')
-      end
+        it "invokes process_tasks on container class" do
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id, container2.id],
+            :task   => 'cloud_object_store_container_delete',
+            :userid => anything
+          )
+          controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_delete',
+                          'delete')
+        end
 
-      it "invokes process_tasks overall (when selected)" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container1.id, container2.id],
-          :task   => 'cloud_object_store_container_delete',
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-      end
+        it "invokes process_tasks overall (when selected)" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id, container2.id],
+            :task   => 'cloud_object_store_container_delete',
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+        end
 
-      it "raises an error when nothing selected" do
-        controller.params[:miq_grid_checks] = ''
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
-      end
+        it "raises an error when nothing selected" do
+          controller.params[:miq_grid_checks] = ''
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
+        end
 
-      it "flash - task not supported" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Delete does not apply to at least one of the selected items"
-        )
+        it "flash - task not supported" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete does not apply to at least one of the selected items"
+          )
+        end
       end
     end
 
     context "from details view" do
-      before do
-        allow(controller).to receive(:show_list).and_return(nil)
-        controller.params[:pressed] = "cloud_object_store_container_delete"
-        request.parameters["controller"] = "cloud_object_store_container"
-      end
+      describe CloudObjectStoreContainerController do
+        before { allow(controller).to receive(:show_list).and_return(nil) }
 
-      let :container do
-        FactoryBot.create(:cloud_object_store_container)
-      end
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
+        end
 
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
-      end
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreContainer,
+            'delete'
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+        end
 
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreContainer,
-          'delete'
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-      end
+        it "invokes process_objects" do
+          controller.params[:id] = container1.id
+          expect(controller).to receive(:process_objects).with(
+            [container1.id],
+            'cloud_object_store_container_delete',
+            'Delete'
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
+        end
 
-      it "invokes process_objects" do
-        controller.params[:id] = container.id
-        expect(controller).to receive(:process_objects).with(
-          [container.id],
-          'cloud_object_store_container_delete',
-          'Delete'
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'delete')
-      end
+        it "invokes process_tasks on container class" do
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id],
+            :task   => 'cloud_object_store_container_delete',
+            :userid => anything
+          )
+          controller.send(:process_objects, [container1.id], 'cloud_object_store_container_delete', 'delete')
+        end
 
-      it "invokes process_tasks on container class" do
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container.id],
-          :task   => 'cloud_object_store_container_delete',
-          :userid => anything
-        )
-        controller.send(:process_objects, [container.id], 'cloud_object_store_container_delete', 'delete')
-      end
+        it "invokes process_tasks overall" do
+          controller.params[:id] = container1.id
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id],
+            :task   => 'cloud_object_store_container_delete',
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+        end
 
-      it "invokes process_tasks overall" do
-        controller.params[:id] = container.id
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container.id],
-          :task   => 'cloud_object_store_container_delete',
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-      end
+        it "flash - container no longer exists" do
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
+        end
 
-      it "flash - container no longer exists" do
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete") }.to raise_error("Can't access records without an id")
-      end
-
-      it "flash - task not supported" do
-        controller.params[:id] = container.id
-        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Delete does not apply to this item"
-        )
+        it "flash - task not supported" do
+          controller.params[:id] = container1.id
+          allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete does not apply to this item"
+          )
+        end
       end
     end
   end
 
   context "Delete object store object" do
+    let(:object1) { FactoryBot.create(:cloud_object_store_object) }
+    let(:object2) { FactoryBot.create(:cloud_object_store_object) }
+
     before do
       allow(controller).to receive(:assert_rbac).and_return(nil)
       allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
-    end
-
-    let :object1 do
-      FactoryBot.create(:cloud_object_store_object)
-    end
-
-    let :object2 do
-      FactoryBot.create(:cloud_object_store_object)
-    end
-
-    context "from list view" do
-      before do
-        controller.params[:pressed] = "cloud_object_store_object_delete"
-        request.parameters["controller"] = "cloud_object_store_container"
-        controller.instance_variable_set(:@display, "cloud_object_store_objects")
-      end
-
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreObject)
-      end
-
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreObject,
-          "delete"
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      end
-
-      it "invokes process_objects" do
-        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
-        expect(controller).to receive(:process_objects).with(
-          [object1.id, object2.id],
-          "cloud_object_store_object_delete",
-          "Delete"
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
-      end
-
-      it "invokes process_tasks on container class" do
-        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
-        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
-          :ids    => [object1.id, object2.id],
-          :task   => "cloud_object_store_object_delete",
-          :userid => anything
-        )
-        controller.send(:process_objects, [object1.id, object2.id], "cloud_object_store_object_delete", "delete")
-      end
-
-      it "invokes process_tasks overall (when selected)" do
-        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
-        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
-          :ids    => [object1.id, object2.id],
-          :task   => "cloud_object_store_object_delete",
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      end
-
-      it "does not invoke process_tasks overall when nothing selected" do
-        controller.params[:miq_grid_checks] = ""
-        expect(CloudObjectStoreObject).not_to receive(:process_tasks)
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
-      end
-
-      it "flash - nothing selected" do
-        controller.params[:miq_grid_checks] = ""
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
-      end
-
-      it "flash - task not supported" do
-        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
-        allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Delete does not apply to at least one of the selected items"
-        )
-      end
-    end
-
-    context "from details view" do
-      before do
-        allow(controller).to receive(:show_list).and_return(nil)
-        controller.params[:pressed] = "cloud_object_store_object_delete"
-        request.parameters["controller"] = "cloud_object_store_object"
-      end
-
-      let :object do
-        FactoryBot.create(:cloud_object_store_object)
-      end
-
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreObject)
-      end
-
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreObject,
-          "delete"
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      end
-
-      it "invokes process_objects" do
-        controller.params[:id] = object.id.to_s
-        expect(controller).to receive(:process_objects).with(
-          [object.id],
-          "cloud_object_store_object_delete",
-          "Delete"
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
-      end
-
-      it "invokes process_tasks on object class" do
-        controller.params[:id] = object.id.to_s
-        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
-          :ids    => [object.id.to_s],
-          :task   => "cloud_object_store_object_delete",
-          :userid => anything
-        )
-        controller.send(:process_objects, [object.id.to_s], "cloud_object_store_object_delete", "delete")
-      end
-
-      it "invokes process_tasks overall" do
-        controller.params[:id] = object.id.to_s
-        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
-          :ids    => [object.id],
-          :task   => "cloud_object_store_object_delete",
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      end
-
-      it "flash - container no longer exists" do
-        object.destroy
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
-      end
-
-      it "flash - task not supported" do
-        controller.params[:id] = object.id.to_s
-        allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Delete does not apply to this item"
-        )
-      end
-    end
-  end
-
-  context "Delete object store object" do
-    let :object1 do
-      FactoryBot.create(:cloud_object_store_object)
-    end
-
-    before do
-      allow(controller).to receive(:assert_rbac).and_return(nil)
       controller.params[:pressed] = "cloud_object_store_object_delete"
-      controller.params[:miq_grid_checks] = object1.id.to_s
-      request.parameters["controller"] = "cloud_object_store_container"
-      controller.instance_variable_set(:@display, "cloud_object_store_objects")
     end
 
-    it "invokes delete for a selected CloudObjectStoreObject" do
-      allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
-      controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      expect(assigns(:flash_array).first[:message]).to include(
-        "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
-      )
+    context "from list view" do
+      describe CloudObjectStoreContainerController do
+        before { controller.instance_variable_set(:@display, "cloud_object_store_objects") }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreObject)
+        end
+
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreObject,
+            "delete"
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        end
+
+        it "invokes process_objects" do
+          controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+          expect(controller).to receive(:process_objects).with(
+            [object1.id, object2.id],
+            "cloud_object_store_object_delete",
+            "Delete"
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
+        end
+
+        it "invokes process_tasks on container class" do
+          controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+          expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+            :ids    => [object1.id, object2.id],
+            :task   => "cloud_object_store_object_delete",
+            :userid => anything
+          )
+          controller.send(:process_objects, [object1.id, object2.id], "cloud_object_store_object_delete", "delete")
+        end
+
+        it "invokes process_tasks overall (when selected)" do
+          controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+          expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+            :ids    => [object1.id, object2.id],
+            :task   => "cloud_object_store_object_delete",
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        end
+
+        it "invokes delete for a selected CloudObjectStoreObject" do
+          controller.params[:miq_grid_checks] = object1.id.to_s
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
+          )
+        end
+
+        it "does not invoke process_tasks overall when nothing selected" do
+          controller.params[:miq_grid_checks] = ""
+          expect(CloudObjectStoreObject).not_to receive(:process_tasks)
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
+        end
+
+        it "flash - nothing selected" do
+          controller.params[:miq_grid_checks] = ""
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
+        end
+
+        it "flash - task not supported" do
+          controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+          allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete does not apply to at least one of the selected items"
+          )
+        end
+
+        it "flash - task not supported for one selected item" do
+          controller.params[:miq_grid_checks] = object1.id.to_s
+          allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete does not apply to this item"
+          )
+        end
+      end
     end
 
-    it "flash - task not supported" do
-      allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
-      controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
-      expect(assigns(:flash_array).first[:message]).to include(
-        "Delete does not apply to this item"
-      )
+    context "from details view" do
+      describe CloudObjectStoreObjectController do
+        before { allow(controller).to receive(:show_list).and_return(nil) }
+
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreObject)
+        end
+
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreObject,
+            "delete"
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        end
+
+        it "invokes process_objects" do
+          controller.params[:id] = object1.id.to_s
+          expect(controller).to receive(:process_objects).with(
+            [object1.id],
+            "cloud_object_store_object_delete",
+            "Delete"
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
+        end
+
+        it "invokes process_tasks on object class" do
+          controller.params[:id] = object1.id.to_s
+          expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+            :ids    => [object1.id.to_s],
+            :task   => "cloud_object_store_object_delete",
+            :userid => anything
+          )
+          controller.send(:process_objects, [object1.id.to_s], "cloud_object_store_object_delete", "delete")
+        end
+
+        it "invokes process_tasks overall" do
+          controller.params[:id] = object1.id.to_s
+          expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+            :ids    => [object1.id],
+            :task   => "cloud_object_store_object_delete",
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        end
+
+        it "flash - container no longer exists" do
+          object1.destroy
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete") }.to raise_error("Can't access records without an id")
+        end
+
+        it "flash - task not supported" do
+          controller.params[:id] = object1.id.to_s
+          allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Delete does not apply to this item"
+          )
+        end
+      end
     end
   end
 
   context "Clear object store container" do
+    let(:container1) { FactoryBot.create(:cloud_object_store_container) }
+    let(:container2) { FactoryBot.create(:cloud_object_store_container) }
+
     before do
       allow(controller).to receive(:assert_rbac).and_return(nil)
       allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
-    end
-
-    let :container1 do
-      FactoryBot.create(:cloud_object_store_container)
-    end
-
-    let :container2 do
-      FactoryBot.create(:cloud_object_store_container)
+      controller.params[:pressed] = "cloud_object_store_container_clear"
     end
 
     context "from list view" do
-      before do
-        controller.params[:pressed] = "cloud_object_store_container_clear"
-        request.parameters["controller"] = "ems_storage"
-        controller.instance_variable_set(:@display, "cloud_object_store_containers")
-      end
+      describe EmsStorageController do
+        before { controller.instance_variable_set(:@display, "cloud_object_store_containers") }
 
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
-      end
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
+        end
 
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreContainer,
-          'clear'
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-      end
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreContainer,
+            'clear'
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        end
 
-      it "invokes process_objects" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        expect(controller).to receive(:process_objects).with(
-          [container1.id, container2.id],
-          'cloud_object_store_container_clear',
-          'Clear'
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
-      end
+        it "invokes process_objects" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          expect(controller).to receive(:process_objects).with(
+            [container1.id, container2.id],
+            'cloud_object_store_container_clear',
+            'Clear'
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
+        end
 
-      it "invokes process_tasks on container class" do
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container1.id, container2.id],
-          :task   => 'cloud_object_store_container_clear',
-          :userid => anything
-        )
-        controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_clear',
-                        'clear')
-      end
+        it "invokes process_tasks on container class" do
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id, container2.id],
+            :task   => 'cloud_object_store_container_clear',
+            :userid => anything
+          )
+          controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_clear',
+                          'clear')
+        end
 
-      it "invokes process_tasks overall (when selected)" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container1.id, container2.id],
-          :task   => 'cloud_object_store_container_clear',
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-      end
+        it "invokes process_tasks overall (when selected)" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id, container2.id],
+            :task   => 'cloud_object_store_container_clear',
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        end
 
-      it "does not invoke process_tasks overall when nothing selected" do
-        controller.params[:miq_grid_checks] = ''
-        expect(CloudObjectStoreContainer).not_to receive(:process_tasks)
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
-      end
+        it "does not invoke process_tasks overall when nothing selected" do
+          controller.params[:miq_grid_checks] = ''
+          expect(CloudObjectStoreContainer).not_to receive(:process_tasks)
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
+        end
 
-      it "flash - nothing selected" do
-        controller.params[:miq_grid_checks] = ''
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
-      end
+        it "flash - nothing selected" do
+          controller.params[:miq_grid_checks] = ''
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
+        end
 
-      it "flash - task not supported" do
-        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
-        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Clear does not apply to at least one of the selected items"
-        )
+        it "flash - task not supported" do
+          controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+          allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Clear does not apply to at least one of the selected items"
+          )
+        end
       end
     end
 
     context "from details view" do
-      before do
-        allow(controller).to receive(:show_list).and_return(nil)
-        controller.params[:pressed] = "cloud_object_store_container_clear"
-        request.parameters["controller"] = "cloud_object_store_container"
-      end
+      describe CloudObjectStoreContainerController do
+        before { allow(controller).to receive(:show_list).and_return(nil) }
 
-      let :container do
-        FactoryBot.create(:cloud_object_store_container)
-      end
+        it 'returns proper record class' do
+          expect(controller.send(:record_class)).to eq(CloudObjectStoreContainer)
+        end
 
-      it "get_rec_cls" do
-        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
-      end
+        it "invokes cloud_object_store_button_operation" do
+          expect(controller).to receive(:cloud_object_store_button_operation).with(
+            CloudObjectStoreContainer,
+            'clear'
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        end
 
-      it "invokes cloud_object_store_button_operation" do
-        expect(controller).to receive(:cloud_object_store_button_operation).with(
-          CloudObjectStoreContainer,
-          'clear'
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-      end
+        it "invokes process_objects" do
+          controller.params[:id] = container1.id
+          expect(controller).to receive(:process_objects).with(
+            [container1.id],
+            'cloud_object_store_container_clear',
+            'Clear'
+          )
+          controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
+        end
 
-      it "invokes process_objects" do
-        controller.params[:id] = container.id
-        expect(controller).to receive(:process_objects).with(
-          [container.id],
-          'cloud_object_store_container_clear',
-          'Clear'
-        )
-        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
-      end
+        it "invokes process_tasks on container class" do
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id],
+            :task   => 'cloud_object_store_container_clear',
+            :userid => anything
+          )
+          controller.send(:process_objects, [container1.id], 'cloud_object_store_container_clear', 'clear')
+        end
 
-      it "invokes process_tasks on container class" do
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container.id],
-          :task   => 'cloud_object_store_container_clear',
-          :userid => anything
-        )
-        controller.send(:process_objects, [container.id], 'cloud_object_store_container_clear', 'clear')
-      end
+        it "invokes process_tasks overall" do
+          controller.params[:id] = container1.id
+          expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+            :ids    => [container1.id],
+            :task   => 'cloud_object_store_container_clear',
+            :userid => anything
+          )
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        end
 
-      it "invokes process_tasks overall" do
-        controller.params[:id] = container.id
-        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
-          :ids    => [container.id],
-          :task   => 'cloud_object_store_container_clear',
-          :userid => anything
-        )
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-      end
+        it "flash - container no longer exists" do
+          expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
+        end
 
-      it "flash - container no longer exists" do
-        expect { controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear") }.to raise_error("Can't access records without an id")
-      end
-
-      it "flash - task not supported" do
-        controller.params[:id] = container.id
-        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
-        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
-        expect(assigns(:flash_array).first[:message]).to include(
-          "Clear does not apply to this item"
-        )
+        it "flash - task not supported" do
+          controller.params[:id] = container1.id
+          allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+          controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+          expect(assigns(:flash_array).first[:message]).to include(
+            "Clear does not apply to this item"
+          )
+        end
       end
     end
   end
@@ -672,28 +623,31 @@ describe ApplicationController do
   end
 
   context "Verify the reconfigurable flag for VMs" do
+    let(:vm) { FactoryBot.create(:vm_vmware) }
+
+    before { controller.params = {:id => vm.id} }
+
+    subject { controller.send(:get_record, "vm") }
+
     it "Reconfigure VM action should be allowed only for a VM marked as reconfigurable" do
-      vm = FactoryBot.create(:vm_vmware)
-      controller.params = {:id => vm.id}
-      record = controller.send(:get_record, "vm")
-      action = :vm_reconfigure
       expect(controller).to receive(:render)
-      controller.send(action)
-      unless record.reconfigurable?
+      controller.send(:vm_reconfigure)
+      unless subject.reconfigurable?
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include("does not apply")
       end
     end
-    it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
-      vm = FactoryBot.create(:vm_microsoft)
-      controller.params = {:id => vm.id}
-      record = controller.send(:get_record, "vm")
-      action = :vm_reconfigure
-      expect(controller).to receive(:render)
-      controller.send(action)
-      unless record.reconfigurable?
-        expect(controller.send(:flash_errors?)).to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("does not apply")
+
+    context 'Microsoft provider' do
+      let(:vm) { FactoryBot.create(:vm_microsoft) }
+
+      it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
+        expect(controller).to receive(:render)
+        controller.send(:vm_reconfigure)
+        unless subject.reconfigurable?
+          expect(controller.send(:flash_errors?)).to be_truthy
+          expect(assigns(:flash_array).first[:message]).to include("does not apply")
+        end
       end
     end
   end
@@ -703,6 +657,7 @@ describe ApplicationController do
 
     context "when a single is vm selected" do
       let(:supports_reconfigure_disks) { true }
+
       before do
         allow(vm).to receive(:supports_reconfigure_disks?).and_return(supports_reconfigure_disks)
         controller.instance_variable_set(:@reconfigitems, [vm])
@@ -713,8 +668,10 @@ describe ApplicationController do
           expect(controller.send(:supports_reconfigure_disks?)).to be_truthy
         end
       end
+
       context "when vm does not supports reconfiguring disks" do
         let(:supports_reconfigure_disks) { false }
+
         it "disables reconfigure disks" do
           expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
         end
@@ -723,6 +680,7 @@ describe ApplicationController do
 
     context "when multiple vms selected" do
       let(:vm1) { FactoryBot.create(:vm_redhat) }
+
       it "disables reconfigure disks" do
         controller.instance_variable_set(:@reconfigitems, [vm, vm1])
         expect(controller.send(:supports_reconfigure_disks?)).to be_falsey
@@ -754,14 +712,14 @@ describe ApplicationController do
   end
 
   describe "#process_elements" do
+    let(:pxe) { FactoryBot.create(:pxe_server) }
+
     it "shows passed in display name in flash message" do
-      pxe = FactoryBot.create(:pxe_server)
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue', 'Refresh Relationships')
       expect(assigns(:flash_array).first[:message]).to include("Refresh Relationships successfully initiated")
     end
 
     it "shows task name in flash message when display name is not passed in" do
-      pxe = FactoryBot.create(:pxe_server)
       controller.send(:process_elements, [pxe.id], PxeServer, 'synchronize_advertised_images_queue')
       expect(assigns(:flash_array).first[:message])
         .to include("synchronize_advertised_images_queue successfully initiated")
@@ -783,11 +741,12 @@ describe ApplicationController do
   end
 
   describe "#get_record" do
+    let(:host) { FactoryBot.create(:host) }
+
+    before { controller.params = {:id => host.id} }
+
     it "use passed in db to set class for identify_record call" do
-      host = FactoryBot.create(:host)
-      controller.params = {:id => host.id}
-      record = controller.send(:get_record, "host")
-      expect(record).to be_a_kind_of(Host)
+      expect(controller.send(:get_record, "host")).to be_a_kind_of(Host)
     end
   end
 
@@ -877,14 +836,15 @@ describe HostController do
   end
 
   describe "#process_objects" do
-    it "returns array of object ids " do
-      vm1 = FactoryBot.create(:vm_vmware)
-      vm2 = FactoryBot.create(:vm_vmware)
-      vm3 = FactoryBot.create(:vm_vmware)
-      vms = [vm1.id, vm2.id, vm3.id]
-      controller.send(:process_objects, vms, 'refresh_ems', 'Refresh Provider')
-      flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include "Refresh Provider initiated for #{vms.length} VMs"
+    let(:vm1) { FactoryBot.create(:vm_vmware) }
+    let(:vm2) { FactoryBot.create(:vm_vmware) }
+    let(:vm3) { FactoryBot.create(:vm_vmware) }
+
+    before { controller.params = {:display => 'vms'} }
+
+    it "returns array of object ids" do
+      controller.send(:process_objects, [vm1.id, vm2.id, vm3.id], 'refresh_ems', 'Refresh Provider')
+      expect(controller.instance_variable_get(:@flash_array).first[:message]).to include "Refresh Provider initiated for 3 VMs"
     end
   end
 
@@ -921,7 +881,7 @@ describe HostController do
     it "when the vm_or_template supports scan, returns false" do
       vm1 =  FactoryBot.create(:vm_microsoft)
       vm2 =  FactoryBot.create(:vm_vmware)
-      controller.params = {:miq_grid_checks => "#{vm1.id}, #{vm2.id}"}
+      controller.params = {:miq_grid_checks => "#{vm1.id}, #{vm2.id}", :display => 'vms'}
       controller.send(:generic_button_operation,
                       'scan',
                       "Smartstate Analysis",
@@ -934,7 +894,7 @@ describe HostController do
       vm = FactoryBot.create(:vm_vmware,
                               :ext_management_system => FactoryBot.create(:ems_openstack_infra),
                               :storage               => FactoryBot.create(:storage))
-      controller.params = {:miq_grid_checks => vm.id.to_s}
+      controller.params = {:miq_grid_checks => vm.id.to_s, :display => 'vms'}
       process_proc = controller.send(:vm_button_action)
       expect(process_proc).to receive(:call)
       controller.send(:generic_button_operation,
@@ -958,7 +918,7 @@ describe ServiceController do
       allow(user).to receive(:role_allows?).and_return(true)
     end
 
-    it "should continue to retire a service and does not render flash message 'xxx does not apply xxx' " do
+    it "should continue to retire a service and does not render flash message 'xxx does not apply xxx'" do
       service = FactoryBot.create(:service)
       template = FactoryBot.create(:template,
                                     :ext_management_system => FactoryBot.create(:ems_openstack_infra),
@@ -1094,6 +1054,7 @@ end
 describe EmsCloudController do
   describe "#delete_flavor" do
     let!(:flavor) { FactoryBot.create(:flavor) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       stub_user(:features => :all)
@@ -1114,9 +1075,7 @@ end
 
 describe VmInfraController do
   describe '#testable_action' do
-    before do
-      controller.params = {:controller => 'vm_infra'}
-    end
+    before { controller.params = {:controller => 'vm_infra'} }
 
     context 'power operations and vm infra controller' do
       %w(reboot_guest reset shutdown_guest start stop suspend).each do |op|
