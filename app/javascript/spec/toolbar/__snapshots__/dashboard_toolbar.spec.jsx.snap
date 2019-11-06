@@ -23,140 +23,146 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
     <div
       className="miq-toolbar-group form-group"
     >
-      <Uncontrolled(Dropdown)
+      <ForwardRef
         disabled={false}
         id="dropdown-custom-2"
       >
-        <Dropdown
-          bsClass="dropdown"
-          componentClass={[Function]}
+        <Uncontrolled(Dropdown)
           disabled={false}
           id="dropdown-custom-2"
-          onToggle={[Function]}
+          innerRef={null}
         >
-          <ButtonGroup
-            block={false}
-            bsClass="btn-group"
-            className="dropdown"
-            justified={false}
-            vertical={false}
+          <Dropdown
+            bsClass="dropdown"
+            componentClass={[Function]}
+            disabled={false}
+            id="dropdown-custom-2"
+            onToggle={[Function]}
           >
-            <div
-              className="dropdown btn-group"
+            <ButtonGroup
+              block={false}
+              bsClass="btn-group"
+              className="dropdown"
+              justified={false}
+              vertical={false}
             >
-              <DropdownToggle
-                bsClass="dropdown-toggle"
-                bsRole="toggle"
-                disabled={false}
-                id="dropdown-custom-2"
-                key=".0"
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                title="Add a widget"
-                useAnchor={false}
+              <div
+                className="dropdown btn-group"
               >
-                <Button
-                  active={false}
-                  aria-expanded={false}
-                  aria-haspopup={true}
-                  block={false}
-                  bsClass="btn"
-                  bsStyle="default"
-                  className="dropdown-toggle"
+                <DropdownToggle
+                  bsClass="dropdown-toggle"
+                  bsRole="toggle"
                   disabled={false}
                   id="dropdown-custom-2"
+                  key=".0"
                   onClick={[Function]}
                   onKeyDown={[Function]}
-                  role="button"
+                  open={false}
                   title="Add a widget"
+                  useAnchor={false}
                 >
-                  <button
+                  <Button
+                    active={false}
                     aria-expanded={false}
                     aria-haspopup={true}
-                    className="dropdown-toggle btn btn-default"
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    className="dropdown-toggle"
                     disabled={false}
                     id="dropdown-custom-2"
                     onClick={[Function]}
                     onKeyDown={[Function]}
                     role="button"
                     title="Add a widget"
-                    type="button"
                   >
-                    <span
-                      className="fa fa-plus fa-lg"
-                    />
-                     
-                    <span
-                      className="caret"
-                    />
-                  </button>
-                </Button>
-              </DropdownToggle>
-              <DropdownMenu
-                bsClass="dropdown-menu"
-                bsRole="menu"
-                className="scrollable-menu"
-                key=".1"
-                labelledBy="dropdown-custom-2"
-                onClose={[Function]}
-                onSelect={[Function]}
-                pullRight={false}
-              >
-                <RootCloseWrapper
-                  disabled={true}
-                  event="click"
-                  onRootClose={[Function]}
-                >
-                  <ul
-                    aria-labelledby="dropdown-custom-2"
-                    className="scrollable-menu dropdown-menu"
-                    role="menu"
-                  >
-                    <MenuItem
-                      bsClass="dropdown"
+                    <button
+                      aria-expanded={false}
+                      aria-haspopup={true}
+                      className="dropdown-toggle btn btn-default"
                       disabled={false}
-                      divider={false}
-                      header={false}
-                      key=".$31"
+                      id="dropdown-custom-2"
                       onClick={[Function]}
                       onKeyDown={[Function]}
-                      onSelect={[Function]}
+                      role="button"
+                      title="Add a widget"
+                      type="button"
                     >
-                      <li
-                        className=""
-                        role="presentation"
+                      <span
+                        className="fa fa-plus fa-lg"
+                      />
+                       
+                      <span
+                        className="caret"
+                      />
+                    </button>
+                  </Button>
+                </DropdownToggle>
+                <DropdownMenu
+                  bsClass="dropdown-menu"
+                  bsRole="menu"
+                  className="scrollable-menu"
+                  key=".1"
+                  labelledBy="dropdown-custom-2"
+                  onClose={[Function]}
+                  onSelect={[Function]}
+                  pullRight={false}
+                >
+                  <RootCloseWrapper
+                    disabled={true}
+                    event="click"
+                    onRootClose={[Function]}
+                  >
+                    <ul
+                      aria-labelledby="dropdown-custom-2"
+                      className="scrollable-menu dropdown-menu"
+                      role="menu"
+                    >
+                      <MenuItem
+                        bsClass="dropdown"
+                        disabled={false}
+                        divider={false}
+                        header={false}
+                        key=".$31"
+                        onClick={[Function]}
+                        onKeyDown={[Function]}
+                        onSelect={[Function]}
                       >
-                        <SafeAnchor
-                          componentClass="a"
-                          onClick={[Function]}
-                          onKeyDown={[Function]}
-                          role="menuitem"
-                          tabIndex="-1"
+                        <li
+                          className=""
+                          role="presentation"
                         >
-                          <a
-                            href="#"
+                          <SafeAnchor
+                            componentClass="a"
                             onClick={[Function]}
                             onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
                           >
-                            <i
-                              className="fa fa-pie-chart fa-lg"
-                            />
-                             
-                            add
-                          </a>
-                        </SafeAnchor>
-                      </li>
-                    </MenuItem>
-                  </ul>
-                </RootCloseWrapper>
-              </DropdownMenu>
-            </div>
-          </ButtonGroup>
-        </Dropdown>
-      </Uncontrolled(Dropdown)>
+                            <a
+                              href="#"
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              role="menuitem"
+                              tabIndex="-1"
+                            >
+                              <i
+                                className="fa fa-pie-chart fa-lg"
+                              />
+                               
+                              add
+                            </a>
+                          </SafeAnchor>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </RootCloseWrapper>
+                </DropdownMenu>
+              </div>
+            </ButtonGroup>
+          </Dropdown>
+        </Uncontrolled(Dropdown)>
+      </ForwardRef>
       <button
         className="btn btn-default"
         onClick={[Function]}
