@@ -20,7 +20,7 @@ const TopLevel = ({
 
   if (isSection) {
     return (
-      <li className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf`} data-target={`#menu-${id}`} id={getSectionId(id)}>
+      <li className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf`} id={getSectionId(id)}>
         <a
           onClick={(event) => {
             if (handleUnsavedChanges(type) === false) {
@@ -52,7 +52,7 @@ const TopLevel = ({
   }
 
   return (
-    <li className={`${active ? 'active' : ''} menu-list-group-item`} id={getItemId()}>
+    <li className={`${active ? 'active' : ''} menu-list-group-item`} id={getItemId(id)}>
       <a
         onClick={(event) => {
           if (handleUnsavedChanges(type) === false) {
