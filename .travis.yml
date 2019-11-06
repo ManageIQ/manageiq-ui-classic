@@ -2,7 +2,7 @@ dist: xenial
 language: ruby
 python: '2.7'
 rvm:
-- 2.5.3
+- 2.5.5
 cache:
   bundler: true
   yarn: true
