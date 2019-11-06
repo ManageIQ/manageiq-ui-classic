@@ -13,7 +13,7 @@ const SecondLevel = ({
   type,
   active,
 }) => (
-  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`}>
+  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} data-target={`#menu-${id}`} id={`menu_item_${id}`}>
     <a
       href={getHrefByType(type, href, id)}
       onClick={(event) => {
