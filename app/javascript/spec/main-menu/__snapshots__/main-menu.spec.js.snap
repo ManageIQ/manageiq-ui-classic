@@ -1,0 +1,768 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main menu test should render correctly 1`] = `
+<MainMenu
+  menu={
+    Array [
+      Object {
+        "active": true,
+        "href": "/dashboard/maintab/?tab=vi",
+        "iconClass": "fa fa-dashboard",
+        "id": "vi",
+        "items": Array [
+          Object {
+            "active": true,
+            "href": "/dashboard/show",
+            "iconClass": null,
+            "id": "dashboard",
+            "items": Array [],
+            "preventHref": false,
+            "title": "Dashboard",
+            "type": "modal",
+            "visible": true,
+          },
+          Object {
+            "active": false,
+            "href": "/chargeback/explorer",
+            "iconClass": null,
+            "id": "chargeback",
+            "items": Array [],
+            "preventHref": false,
+            "title": "Chargeback",
+            "type": "big_iframe",
+            "visible": true,
+          },
+        ],
+        "preventHref": true,
+        "title": "Cloud Intel",
+        "type": "default",
+        "visible": true,
+      },
+      Object {
+        "active": false,
+        "href": "/dashboard/maintab/?tab=compute",
+        "iconClass": "pficon pficon-cpu",
+        "id": "compute",
+        "items": Array [
+          Object {
+            "active": false,
+            "href": "/dashboard/maintab/?tab=clo",
+            "iconClass": "fa fa-plus",
+            "id": "clo",
+            "items": Array [
+              Object {
+                "active": true,
+                "href": "/ems_cloud/show_list",
+                "iconClass": null,
+                "id": "ems_cloud",
+                "items": Array [],
+                "preventHref": false,
+                "title": "Providers",
+                "type": "new_window",
+                "visible": true,
+              },
+              Object {
+                "active": false,
+                "href": "/availability_zone/show_list",
+                "iconClass": null,
+                "id": "availability_zone",
+                "items": Array [],
+                "preventHref": false,
+                "title": "Availability Zones",
+                "type": "default",
+                "visible": true,
+              },
+              Object {
+                "active": false,
+                "href": "/host_aggregate/show_list",
+                "iconClass": null,
+                "id": "host_aggregate",
+                "items": Array [],
+                "preventHref": false,
+                "title": "Host Aggregates",
+                "type": "new_window",
+                "visible": false,
+              },
+            ],
+            "preventHref": true,
+            "title": "Clouds",
+            "type": "new_window",
+            "visible": true,
+          },
+        ],
+        "preventHref": true,
+        "title": "Compute",
+        "type": "new_window",
+        "visible": true,
+      },
+    ]
+  }
+>
+  <Grid
+    bsClass="container"
+    className="top-navbar"
+    componentClass="div"
+    fluid={false}
+  >
+    <div
+      className="top-navbar container"
+    >
+      <div
+        className="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus"
+      >
+        <ul
+          className="list-group"
+          id="maintab"
+        >
+          <MenuItem
+            active={true}
+            href="/dashboard/maintab/?tab=vi"
+            iconClass="fa fa-dashboard"
+            id="vi"
+            items={
+              Array [
+                Object {
+                  "active": true,
+                  "href": "/dashboard/show",
+                  "iconClass": null,
+                  "id": "dashboard",
+                  "items": Array [],
+                  "preventHref": false,
+                  "title": "Dashboard",
+                  "type": "modal",
+                  "visible": true,
+                },
+                Object {
+                  "active": false,
+                  "href": "/chargeback/explorer",
+                  "iconClass": null,
+                  "id": "chargeback",
+                  "items": Array [],
+                  "preventHref": false,
+                  "title": "Chargeback",
+                  "type": "big_iframe",
+                  "visible": true,
+                },
+              ]
+            }
+            key="vi"
+            level={0}
+            preventHref={true}
+            title="Cloud Intel"
+            type="default"
+            visible={true}
+          >
+            <TopLevel
+              active={true}
+              href="/dashboard/maintab/?tab=vi"
+              iconClass="fa fa-dashboard"
+              id="vi"
+              items={
+                Array [
+                  Object {
+                    "active": true,
+                    "href": "/dashboard/show",
+                    "iconClass": null,
+                    "id": "dashboard",
+                    "items": Array [],
+                    "preventHref": false,
+                    "title": "Dashboard",
+                    "type": "modal",
+                    "visible": true,
+                  },
+                  Object {
+                    "active": false,
+                    "href": "/chargeback/explorer",
+                    "iconClass": null,
+                    "id": "chargeback",
+                    "items": Array [],
+                    "preventHref": false,
+                    "title": "Chargeback",
+                    "type": "big_iframe",
+                    "visible": true,
+                  },
+                ]
+              }
+              level={0}
+              preventHref={true}
+              title="Cloud Intel"
+              type="default"
+              visible={true}
+            >
+              <li
+                className="active menu-list-group-item secondary-nav-item-pf"
+                id="menu_section_vi"
+              >
+                <a
+                  className="top-level"
+                  href="/dashboard/maintab/?tab=vi"
+                  onClick={[Function]}
+                  target="_self"
+                >
+                  <span
+                    className="fa fa-dashboard"
+                  />
+                  <span
+                    className="list-group-item-value"
+                  >
+                    Cloud Intel
+                  </span>
+                </a>
+                <div
+                  className="nav-pf-secondary-nav"
+                  id="menu-vi"
+                >
+                  <div
+                    className="nav-item-pf-header"
+                  >
+                    <a
+                      className="secondary-collapse-toggle-pf top-level"
+                      data-toggle="collapse-secondary-nav"
+                    >
+                      <span>
+                        Cloud Intel
+                      </span>
+                    </a>
+                  </div>
+                  <ul
+                    className="list-group"
+                  >
+                    <MenuItem
+                      active={true}
+                      href="/dashboard/show"
+                      iconClass={null}
+                      id="dashboard"
+                      items={Array []}
+                      key="dashboard"
+                      level={1}
+                      preventHref={false}
+                      title="Dashboard"
+                      type="modal"
+                      visible={true}
+                    >
+                      <SecondLevel
+                        active={true}
+                        href="/dashboard/show"
+                        iconClass={null}
+                        id="dashboard"
+                        items={Array []}
+                        level={1}
+                        preventHref={false}
+                        title="Dashboard"
+                        type="modal"
+                        visible={true}
+                      >
+                        <li
+                          className="menu-list-group-item  active"
+                          id="menu_item_dashboard"
+                        >
+                          <a
+                            onClick={[Function]}
+                            target="_self"
+                          >
+                            <span
+                              className="list-group-item-value"
+                            >
+                              Dashboard
+                            </span>
+                          </a>
+                          <div
+                            className="nav-pf-tertiary-nav"
+                          >
+                            <div
+                              className="nav-item-pf-header"
+                            >
+                              <a
+                                className="tertiary-collapse-toggle-pf"
+                                data-toggle="collapse-tertiary-nav"
+                              >
+                                <span>
+                                  Dashboard
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                      </SecondLevel>
+                    </MenuItem>
+                    <MenuItem
+                      active={false}
+                      href="/chargeback/explorer"
+                      iconClass={null}
+                      id="chargeback"
+                      items={Array []}
+                      key="chargeback"
+                      level={1}
+                      preventHref={false}
+                      title="Chargeback"
+                      type="big_iframe"
+                      visible={true}
+                    >
+                      <SecondLevel
+                        active={false}
+                        href="/chargeback/explorer"
+                        iconClass={null}
+                        id="chargeback"
+                        items={Array []}
+                        level={1}
+                        preventHref={false}
+                        title="Chargeback"
+                        type="big_iframe"
+                        visible={true}
+                      >
+                        <li
+                          className="menu-list-group-item  "
+                          id="menu_item_chargeback"
+                        >
+                          <a
+                            href="/dashboard/iframe?id=chargeback"
+                            onClick={[Function]}
+                            target="_self"
+                          >
+                            <span
+                              className="list-group-item-value"
+                            >
+                              Chargeback
+                            </span>
+                          </a>
+                          <div
+                            className="nav-pf-tertiary-nav"
+                          >
+                            <div
+                              className="nav-item-pf-header"
+                            >
+                              <a
+                                className="tertiary-collapse-toggle-pf"
+                                data-toggle="collapse-tertiary-nav"
+                              >
+                                <span>
+                                  Chargeback
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </li>
+                      </SecondLevel>
+                    </MenuItem>
+                  </ul>
+                </div>
+              </li>
+            </TopLevel>
+          </MenuItem>
+          <MenuItem
+            active={false}
+            href="/dashboard/maintab/?tab=compute"
+            iconClass="pficon pficon-cpu"
+            id="compute"
+            items={
+              Array [
+                Object {
+                  "active": false,
+                  "href": "/dashboard/maintab/?tab=clo",
+                  "iconClass": "fa fa-plus",
+                  "id": "clo",
+                  "items": Array [
+                    Object {
+                      "active": true,
+                      "href": "/ems_cloud/show_list",
+                      "iconClass": null,
+                      "id": "ems_cloud",
+                      "items": Array [],
+                      "preventHref": false,
+                      "title": "Providers",
+                      "type": "new_window",
+                      "visible": true,
+                    },
+                    Object {
+                      "active": false,
+                      "href": "/availability_zone/show_list",
+                      "iconClass": null,
+                      "id": "availability_zone",
+                      "items": Array [],
+                      "preventHref": false,
+                      "title": "Availability Zones",
+                      "type": "default",
+                      "visible": true,
+                    },
+                    Object {
+                      "active": false,
+                      "href": "/host_aggregate/show_list",
+                      "iconClass": null,
+                      "id": "host_aggregate",
+                      "items": Array [],
+                      "preventHref": false,
+                      "title": "Host Aggregates",
+                      "type": "new_window",
+                      "visible": false,
+                    },
+                  ],
+                  "preventHref": true,
+                  "title": "Clouds",
+                  "type": "new_window",
+                  "visible": true,
+                },
+              ]
+            }
+            key="compute"
+            level={0}
+            preventHref={true}
+            title="Compute"
+            type="new_window"
+            visible={true}
+          >
+            <TopLevel
+              active={false}
+              href="/dashboard/maintab/?tab=compute"
+              iconClass="pficon pficon-cpu"
+              id="compute"
+              items={
+                Array [
+                  Object {
+                    "active": false,
+                    "href": "/dashboard/maintab/?tab=clo",
+                    "iconClass": "fa fa-plus",
+                    "id": "clo",
+                    "items": Array [
+                      Object {
+                        "active": true,
+                        "href": "/ems_cloud/show_list",
+                        "iconClass": null,
+                        "id": "ems_cloud",
+                        "items": Array [],
+                        "preventHref": false,
+                        "title": "Providers",
+                        "type": "new_window",
+                        "visible": true,
+                      },
+                      Object {
+                        "active": false,
+                        "href": "/availability_zone/show_list",
+                        "iconClass": null,
+                        "id": "availability_zone",
+                        "items": Array [],
+                        "preventHref": false,
+                        "title": "Availability Zones",
+                        "type": "default",
+                        "visible": true,
+                      },
+                      Object {
+                        "active": false,
+                        "href": "/host_aggregate/show_list",
+                        "iconClass": null,
+                        "id": "host_aggregate",
+                        "items": Array [],
+                        "preventHref": false,
+                        "title": "Host Aggregates",
+                        "type": "new_window",
+                        "visible": false,
+                      },
+                    ],
+                    "preventHref": true,
+                    "title": "Clouds",
+                    "type": "new_window",
+                    "visible": true,
+                  },
+                ]
+              }
+              level={0}
+              preventHref={true}
+              title="Compute"
+              type="new_window"
+              visible={true}
+            >
+              <li
+                className=" menu-list-group-item secondary-nav-item-pf"
+                id="menu_section_compute"
+              >
+                <a
+                  className="top-level"
+                  href="/dashboard/maintab/?tab=compute"
+                  onClick={[Function]}
+                  target="_blank"
+                >
+                  <span
+                    className="pficon pficon-cpu"
+                  />
+                  <span
+                    className="list-group-item-value"
+                  >
+                    Compute
+                  </span>
+                </a>
+                <div
+                  className="nav-pf-secondary-nav"
+                  id="menu-compute"
+                >
+                  <div
+                    className="nav-item-pf-header"
+                  >
+                    <a
+                      className="secondary-collapse-toggle-pf top-level"
+                      data-toggle="collapse-secondary-nav"
+                    >
+                      <span>
+                        Compute
+                      </span>
+                    </a>
+                  </div>
+                  <ul
+                    className="list-group"
+                  >
+                    <MenuItem
+                      active={false}
+                      href="/dashboard/maintab/?tab=clo"
+                      iconClass="fa fa-plus"
+                      id="clo"
+                      items={
+                        Array [
+                          Object {
+                            "active": true,
+                            "href": "/ems_cloud/show_list",
+                            "iconClass": null,
+                            "id": "ems_cloud",
+                            "items": Array [],
+                            "preventHref": false,
+                            "title": "Providers",
+                            "type": "new_window",
+                            "visible": true,
+                          },
+                          Object {
+                            "active": false,
+                            "href": "/availability_zone/show_list",
+                            "iconClass": null,
+                            "id": "availability_zone",
+                            "items": Array [],
+                            "preventHref": false,
+                            "title": "Availability Zones",
+                            "type": "default",
+                            "visible": true,
+                          },
+                          Object {
+                            "active": false,
+                            "href": "/host_aggregate/show_list",
+                            "iconClass": null,
+                            "id": "host_aggregate",
+                            "items": Array [],
+                            "preventHref": false,
+                            "title": "Host Aggregates",
+                            "type": "new_window",
+                            "visible": false,
+                          },
+                        ]
+                      }
+                      key="clo"
+                      level={1}
+                      preventHref={true}
+                      title="Clouds"
+                      type="new_window"
+                      visible={true}
+                    >
+                      <SecondLevel
+                        active={false}
+                        href="/dashboard/maintab/?tab=clo"
+                        iconClass="fa fa-plus"
+                        id="clo"
+                        items={
+                          Array [
+                            Object {
+                              "active": true,
+                              "href": "/ems_cloud/show_list",
+                              "iconClass": null,
+                              "id": "ems_cloud",
+                              "items": Array [],
+                              "preventHref": false,
+                              "title": "Providers",
+                              "type": "new_window",
+                              "visible": true,
+                            },
+                            Object {
+                              "active": false,
+                              "href": "/availability_zone/show_list",
+                              "iconClass": null,
+                              "id": "availability_zone",
+                              "items": Array [],
+                              "preventHref": false,
+                              "title": "Availability Zones",
+                              "type": "default",
+                              "visible": true,
+                            },
+                            Object {
+                              "active": false,
+                              "href": "/host_aggregate/show_list",
+                              "iconClass": null,
+                              "id": "host_aggregate",
+                              "items": Array [],
+                              "preventHref": false,
+                              "title": "Host Aggregates",
+                              "type": "new_window",
+                              "visible": false,
+                            },
+                          ]
+                        }
+                        level={1}
+                        preventHref={true}
+                        title="Clouds"
+                        type="new_window"
+                        visible={true}
+                      >
+                        <li
+                          className="menu-list-group-item tertiary-nav-item-pf "
+                          id="menu_section_clo"
+                        >
+                          <a
+                            href="/dashboard/maintab/?tab=clo"
+                            onClick={[Function]}
+                            target="_blank"
+                          >
+                            <span
+                              className="list-group-item-value"
+                            >
+                              Clouds
+                            </span>
+                          </a>
+                          <div
+                            className="nav-pf-tertiary-nav"
+                          >
+                            <div
+                              className="nav-item-pf-header"
+                            >
+                              <a
+                                className="tertiary-collapse-toggle-pf"
+                                data-toggle="collapse-tertiary-nav"
+                              >
+                                <span>
+                                  Clouds
+                                </span>
+                              </a>
+                            </div>
+                            <ul
+                              className="list-group"
+                            >
+                              <MenuItem
+                                active={true}
+                                href="/ems_cloud/show_list"
+                                iconClass={null}
+                                id="ems_cloud"
+                                items={Array []}
+                                key="ems_cloud"
+                                level={2}
+                                preventHref={false}
+                                title="Providers"
+                                type="new_window"
+                                visible={true}
+                              >
+                                <ThirdLevel
+                                  active={true}
+                                  href="/ems_cloud/show_list"
+                                  iconClass={null}
+                                  id="ems_cloud"
+                                  items={Array []}
+                                  level={2}
+                                  preventHref={false}
+                                  title="Providers"
+                                  type="new_window"
+                                  visible={true}
+                                >
+                                  <li
+                                    className="menu-list-group-item active"
+                                    id="menu_item_ems_cloud"
+                                  >
+                                    <a
+                                      href="/ems_cloud/show_list"
+                                      onClick={[Function]}
+                                      target="_blank"
+                                    >
+                                      <span
+                                        className="list-group-item-value"
+                                      >
+                                        Providers
+                                      </span>
+                                    </a>
+                                  </li>
+                                </ThirdLevel>
+                              </MenuItem>
+                              <MenuItem
+                                active={false}
+                                href="/availability_zone/show_list"
+                                iconClass={null}
+                                id="availability_zone"
+                                items={Array []}
+                                key="availability_zone"
+                                level={2}
+                                preventHref={false}
+                                title="Availability Zones"
+                                type="default"
+                                visible={true}
+                              >
+                                <ThirdLevel
+                                  active={false}
+                                  href="/availability_zone/show_list"
+                                  iconClass={null}
+                                  id="availability_zone"
+                                  items={Array []}
+                                  level={2}
+                                  preventHref={false}
+                                  title="Availability Zones"
+                                  type="default"
+                                  visible={true}
+                                >
+                                  <li
+                                    className="menu-list-group-item "
+                                    id="menu_item_availability_zone"
+                                  >
+                                    <a
+                                      href="/availability_zone/show_list"
+                                      onClick={[Function]}
+                                      target="_self"
+                                    >
+                                      <span
+                                        className="list-group-item-value"
+                                      >
+                                        Availability Zones
+                                      </span>
+                                    </a>
+                                  </li>
+                                </ThirdLevel>
+                              </MenuItem>
+                              <MenuItem
+                                active={false}
+                                href="/host_aggregate/show_list"
+                                iconClass={null}
+                                id="host_aggregate"
+                                items={Array []}
+                                key="host_aggregate"
+                                level={2}
+                                preventHref={false}
+                                title="Host Aggregates"
+                                type="new_window"
+                                visible={false}
+                              >
+                                <ThirdLevel
+                                  active={false}
+                                  href="/host_aggregate/show_list"
+                                  iconClass={null}
+                                  id="host_aggregate"
+                                  items={Array []}
+                                  level={2}
+                                  preventHref={false}
+                                  title="Host Aggregates"
+                                  type="new_window"
+                                  visible={false}
+                                />
+                              </MenuItem>
+                            </ul>
+                          </div>
+                        </li>
+                      </SecondLevel>
+                    </MenuItem>
+                  </ul>
+                </div>
+              </li>
+            </TopLevel>
+          </MenuItem>
+        </ul>
+      </div>
+    </div>
+  </Grid>
+</MainMenu>
+`;

@@ -18,8 +18,22 @@ require('jquery-ui/ui/widgets/sortable');
 require('jquery-ujs');
 require('jquery.observe_field');
 require('patternfly-bootstrap-treeview');
-require('patternfly/dist/js/patternfly.min');
 require('jquery.hotkeys');
+
+// all of patternfly js except for vertical navigation (patternfly-functions-vertical-nav.js)
+// list from https://github.com/patternfly/patternfly/blob/master/Gruntfile.js#L62-L85
+require('patternfly/dist/js/patternfly-settings.js');
+require('patternfly/dist/js/patternfly-functions-base.js');
+require('patternfly/dist/js/patternfly-functions-list.js');
+require('patternfly/dist/js/patternfly-functions-sidebar.js');
+require('patternfly/dist/js/patternfly-functions-popovers.js');
+require('patternfly/dist/js/patternfly-functions-data-tables.js');
+require('patternfly/dist/js/patternfly-functions-navigation.js');
+require('patternfly/dist/js/patternfly-functions-count-chars.js');
+require('patternfly/dist/js/patternfly-functions-colors.js');
+require('patternfly/dist/js/patternfly-functions-charts.js');
+require('patternfly/dist/js/patternfly-functions-fixed-heights.js');
+require('patternfly/dist/js/patternfly-functions-tree-grid.js');
 
 window.angular = require('angular');
 require('angular-ui-bootstrap');
@@ -48,9 +62,9 @@ require('moment-duration-format')(window.moment);
 require('@pf3/timeline');
 
 window.CodeMirror = require('codemirror');
-require('codemirror/mode/css/css.js');  // not referenced directly, needed by htmlmixed
+require('codemirror/mode/css/css.js'); // not referenced directly, needed by htmlmixed
 require('codemirror/mode/htmlmixed/htmlmixed.js');
-require('codemirror/mode/javascript/javascript.js');  // not referenced directly, needed by htmlmixed
+require('codemirror/mode/javascript/javascript.js'); // not referenced directly, needed by htmlmixed
 require('codemirror/mode/ruby/ruby.js');
 require('codemirror/mode/shell/shell.js');
 require('codemirror/mode/xml/xml.js');
