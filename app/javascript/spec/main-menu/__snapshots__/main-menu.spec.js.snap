@@ -192,6 +192,7 @@ exports[`Main menu test should render correctly 1`] = `
               <li
                 className="active menu-list-group-item secondary-nav-item-pf"
                 data-target="#menu-vi"
+                id="menu_item_vi"
               >
                 <a
                   className="top-level"
@@ -255,6 +256,7 @@ exports[`Main menu test should render correctly 1`] = `
                         <li
                           className="menu-list-group-item  active"
                           data-target="#menu-dashboard"
+                          id="menu_item_dashboard"
                         >
                           <a
                             onClick={[Function]}
@@ -313,6 +315,7 @@ exports[`Main menu test should render correctly 1`] = `
                         <li
                           className="menu-list-group-item  "
                           data-target="#menu-chargeback"
+                          id="menu_item_chargeback"
                         >
                           <a
                             href="/dashboard/iframe?id=chargeback"
@@ -473,6 +476,7 @@ exports[`Main menu test should render correctly 1`] = `
               <li
                 className=" menu-list-group-item secondary-nav-item-pf"
                 data-target="#menu-compute"
+                id="menu_item_compute"
               >
                 <a
                   className="top-level"
@@ -608,6 +612,7 @@ exports[`Main menu test should render correctly 1`] = `
                         <li
                           className="menu-list-group-item tertiary-nav-item-pf "
                           data-target="#menu-clo"
+                          id="menu_item_clo"
                         >
                           <a
                             href="/dashboard/maintab/?tab=clo"
