@@ -158,7 +158,6 @@ class DashboardController < ApplicationController
     else
       state = 'invalid'
     end
-    binding.pry
     render :json => {:content   => content,
                      :minimized => widget_minimized?(params[:id]),
                      :blank     => blank.to_s,
@@ -186,7 +185,6 @@ class DashboardController < ApplicationController
     widget = find_record_with_rbac(MiqWidget, params[:id])
     blank = widget.contents_for_user(current_user).blank?
     content = blank ? '' : widget.contents_for_user(current_user).contents
-    binding.pry
     render :json => {
       :blank     => blank.to_s,
       :content   => content,
@@ -371,8 +369,8 @@ class DashboardController < ApplicationController
   def widget_refresh
     assert_privileges("widget_generate_content")
     w = MiqWidget.find(params[:widget])
-    w.queue_generate_content
-    render :json => {:task => MiqTask.last.id.to_s}, :status => 200
+    task_id = w.queue_generate_content
+    render :json => {:task => task_id}, :status => 200
   end
 
   # A widget has been dropped
