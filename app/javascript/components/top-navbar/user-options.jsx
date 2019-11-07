@@ -14,28 +14,28 @@ const UserOptions = ({
   <Dropdown
     id="dropdownMenu2"
     componentClass={
-        ({ children, ...props }) => (
-          <li
-            {...props}
-            className="dropdown"
-          >
-            {children}
-          </li>
-        )}
+      ({ children, ...props }) => (
+        <li
+          {...props}
+          className="dropdown"
+        >
+          {children}
+        </li>
+      )}
   >
     <Dropdown.Toggle
       componentClass={
-              ({ children, ...props }) => (
-                <a
-                  {...props}
-                  aria-haspopup="true"
-                  data-toggle="dropdown"
-                  className="dropdown-toggle nav-item-iconic"
-                >
-                  {children}
-                </a>
-              )
-          }
+        ({ children, ...props }) => (
+          <a
+            {...props}
+            aria-haspopup="true"
+            data-toggle="dropdown"
+            className="dropdown-toggle nav-item-iconic"
+          >
+            {children}
+          </a>
+        )
+      }
     >
       <Icon type="pf" name="user" />
       <p id="username_display" data-userid={currentUser.userid} className="navbar__user-name">{`${currentUser.name} | ${applianceName}`}</p>
@@ -48,12 +48,12 @@ const UserOptions = ({
             useAnchor
             noCaret
             componentClass={
-                  ({ children }) => (
-                    <a href="#">
-                      {children}
-                    </a>
-                  )
-              }
+              ({ children }) => (
+                <a href="#">
+                  {children}
+                </a>
+              )
+            }
           >
                 Change Group
           </Dropdown.Toggle>
@@ -68,38 +68,38 @@ const UserOptions = ({
                   id={group.description}
                   key={group.id}
                   title={__('Change to this Group')}
-                  onClick={(e) => { 
-                    e.preventDefault(); 
-                    miqChangeGroup(group.id.toString()); 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    miqChangeGroup(group.id.toString());
                   }}
                 >
                   {group.description}
                 </MenuItem>
               )))
-                }
+            }
           </Dropdown.Menu>
         </li>
       ) : (
         <MenuItem id="single-group-item" disabled>{(currentGroup || {}).description}</MenuItem>
       )
-          }
+      }
       {userMenu.map(section => (
         section.visible && (
-        <React.Fragment key={section.id}>
-          <MenuItem divider />
-          { section.items.map(item => (
-            item.visible && (
-            <MenuItem
-              id={`user-menu-${item.name.toLowerCase()}`}
-              key={item.id}
-              href={item.href}
-              onClick={event => !miqCheckForChanges() && event.preventDefault()}
-            >
-              {item.name}
-            </MenuItem>
-            )
-          ))}
-        </React.Fragment>
+          <React.Fragment key={section.id}>
+            <MenuItem divider />
+            { section.items.map(item => (
+              item.visible && (
+                <MenuItem
+                  id={`user-menu-${item.title.toLowerCase()}`}
+                  key={item.id}
+                  href={item.href}
+                  onClick={event => !miqCheckForChanges() && event.preventDefault()}
+                >
+                  {item.title}
+                </MenuItem>
+              )
+            ))}
+          </React.Fragment>
         )
       ))}
       <MenuItem divider />
@@ -109,8 +109,8 @@ const UserOptions = ({
         onClick={(e) => {
           if (miqCheckForChanges()) {
             ManageIQ.logoutInProgress = true;
-          }else{
-            e.preventDefault()
+          } else {
+            e.preventDefault();
           }
         }}
         title={__('Click to Logout')}

@@ -10,7 +10,7 @@ const TopLevel = ({
   level,
   id,
   title,
-  iconClass,
+  icon,
   href,
   active,
   items,
@@ -32,7 +32,7 @@ const TopLevel = ({
           target={getTargetByType(type)}
           className="top-level"
         >
-          <span className={iconClass} />
+          <span className={icon} />
           <span className="list-group-item-value">{title}</span>
         </a>
         <React.Fragment>
@@ -62,7 +62,7 @@ const TopLevel = ({
         }}
         href={getHrefByType(type, href, id)}
       >
-        <span className={iconClass} />
+        <span className={icon} />
         <span className="list-group-item-value">{title}</span>
       </a>
     </li>

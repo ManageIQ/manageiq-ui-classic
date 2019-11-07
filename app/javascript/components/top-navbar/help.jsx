@@ -3,6 +3,7 @@
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import PropTypes from 'prop-types';
+import { showAboutModal } from './helpers';
 import { helpMenuProps, recursiveHelpMenuProps } from './recursive-props';
 
 const Help = ({
@@ -10,52 +11,52 @@ const Help = ({
 }) => (
   helpMenu.map(section => (
     section.visible && (
-    <Dropdown
-      key={section.id}
-      id="help-dd"
-      componentClass={
+      <Dropdown
+        key={section.id}
+        id="help-dd"
+        componentClass={
+          ({ children, ...props }) => (
+            <li
+              {...props}
+              className="dropdown"
+            >
+              {children}
+            </li>
+          )
+        }
+      >
+        <Dropdown.Toggle
+          noCaret
+          componentClass={
             ({ children, ...props }) => (
-              <li
+              <a
                 {...props}
-                className="dropdown"
+                className="dropdown-toggle nav-item-iconic"
+                data-toggle="dropdown"
+                id="help-menu"
               >
                 {children}
-              </li>
+              </a>
             )
-        }
-    >
-      <Dropdown.Toggle
-        noCaret
-        componentClass={
-                ({ children, ...props }) => (
-                  <a
-                    {...props}
-                    className="dropdown-toggle nav-item-iconic"
-                    data-toggle="dropdown"
-                    id="help-menu"
-                  >
-                    {children}
-                  </a>
-                )
-            }
-      >
-        <Icon type="pf" name="help" title={__('Help')} />
-      </Dropdown.Toggle>
-      <Dropdown.Menu aria-labelledby="help-menu">
-        {section.items.map(item => (
-          item.visible && (
-          <MenuItem
-            id={`help-menu-${item.name.toLowerCase()}`}
-            key={item.id}
-            href={item.link_params.href}
-            onClick={e => (item.type === 'modal' ? sendDataWithRx({ type: 'showAboutModal' }) : !miqCheckForChanges() && e.preventDefault())}
-          >
-            {item.name}
-          </MenuItem>
-          )
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
+          }
+        >
+          <Icon type="pf" name="help" title={__('Help')} />
+        </Dropdown.Toggle>
+        <Dropdown.Menu aria-labelledby="help-menu">
+          {section.items.map(item => (
+            item.visible && (
+              <MenuItem
+                id={`help-menu-${item.title.toLowerCase()}`}
+                key={item.id}
+                href={item.type === 'modal' ? '' : item.href}
+                onClick={e => (item.type === 'modal' ? showAboutModal(e) : !miqCheckForChanges() && e.preventDefault())}
+              >
+                {item.title}
+              </MenuItem>
+            )
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     )))
 );
 
