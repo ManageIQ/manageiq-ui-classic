@@ -24,7 +24,7 @@ function queue(url) {
 }
 
 function formatDate(date) {
-  return date ? moment(date).format('MM/DD/YYYY h:mm:ss a') : null;
+  return date ? moment(date).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss z') : null;
 }
 
 function transformSaved({id, report_id, name, last_run_on, userid, url}) {
