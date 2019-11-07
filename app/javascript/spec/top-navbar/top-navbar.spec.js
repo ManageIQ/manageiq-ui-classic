@@ -50,34 +50,28 @@ describe('Top navbar tests', () => {
     helpMenu = [
       {
         id: 'help',
-        name: 'Help',
+        title: 'Help',
         type: 'default',
         items: [
           {
             id: 'documentation',
-            name: 'Documentation',
+            title: 'Documentation',
             type: 'default',
             items: [],
             visible: true,
-            link_params: {
-              href: '/support/index?support_tab=about',
-            },
+            href: '/support/index?support_tab=about',
           },
           {
             id: 'about',
-            name: 'About',
+            title: 'About',
             type: 'modal',
             items: [],
             visible: true,
-            link_params: {
-              href: 'javascript:void(0);',
-            },
+            href: 'javascript:void(0);',
           },
         ],
         visible: true,
-        link_params: {
-          href: '/dashboard/maintab/?tab=help',
-        },
+        href: '/dashboard/maintab/?tab=help',
       },
     ];
     opsExplorerAllowed = true;
@@ -99,19 +93,19 @@ describe('Top navbar tests', () => {
     userMenu = [
       {
         id: 'set',
-        name: 'User Settings',
+        title: 'User Settings',
         href: null,
         items: [
           {
             id: 'configuration',
-            name: 'My Settings',
+            title: 'My Settings',
             href: '/configuration/index',
             items: [],
             visible: true,
           },
           {
             id: 'my_tasks',
-            name: 'Tasks',
+            title: 'Tasks',
             href: '/miq_task/index?jobs_tab=tasks',
             items: [],
             visible: true,
@@ -187,13 +181,6 @@ describe('Top navbar tests', () => {
     expect(wrapper.find('span.badge.badge-pf-bordered').text()).toEqual('');
   });
 
-  it('should render correctly in case of no current group', () => {
-    const wrapper = mount(
-      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={null} userMenu={userMenu} />,
-    );
-    expect(wrapper.find('a#current-group')).toHaveLength(0);
-  });
-
   it('should call miqChangeGroup after click on inactive group', () => {
     const wrapper = mount(
       <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />,
@@ -204,7 +191,7 @@ describe('Top navbar tests', () => {
 
   it('should render disabled item in case of one group', () => {
     const wrapper = mount(
-      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={[miqGroups[0]]} currentGroup={null} userMenu={userMenu} />,
+      <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={[miqGroups[0]]} currentGroup={currentGroup} userMenu={userMenu} />,
     );
     expect(wrapper.find('a#single-group-item')).toHaveLength(1);
   });

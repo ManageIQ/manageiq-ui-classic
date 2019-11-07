@@ -16,7 +16,6 @@ exports[`Main menu test should render correctly 1`] = `
             "iconClass": null,
             "id": "dashboard",
             "items": Array [],
-            "preventHref": false,
             "title": "Dashboard",
             "type": "modal",
             "visible": true,
@@ -27,13 +26,11 @@ exports[`Main menu test should render correctly 1`] = `
             "iconClass": null,
             "id": "chargeback",
             "items": Array [],
-            "preventHref": false,
             "title": "Chargeback",
             "type": "big_iframe",
             "visible": true,
           },
         ],
-        "preventHref": true,
         "title": "Cloud Intel",
         "type": "default",
         "visible": true,
@@ -56,7 +53,6 @@ exports[`Main menu test should render correctly 1`] = `
                 "iconClass": null,
                 "id": "ems_cloud",
                 "items": Array [],
-                "preventHref": false,
                 "title": "Providers",
                 "type": "new_window",
                 "visible": true,
@@ -67,7 +63,6 @@ exports[`Main menu test should render correctly 1`] = `
                 "iconClass": null,
                 "id": "availability_zone",
                 "items": Array [],
-                "preventHref": false,
                 "title": "Availability Zones",
                 "type": "default",
                 "visible": true,
@@ -78,19 +73,16 @@ exports[`Main menu test should render correctly 1`] = `
                 "iconClass": null,
                 "id": "host_aggregate",
                 "items": Array [],
-                "preventHref": false,
                 "title": "Host Aggregates",
                 "type": "new_window",
                 "visible": false,
               },
             ],
-            "preventHref": true,
             "title": "Clouds",
             "type": "new_window",
             "visible": true,
           },
         ],
-        "preventHref": true,
         "title": "Compute",
         "type": "new_window",
         "visible": true,
@@ -127,7 +119,6 @@ exports[`Main menu test should render correctly 1`] = `
                   "iconClass": null,
                   "id": "dashboard",
                   "items": Array [],
-                  "preventHref": false,
                   "title": "Dashboard",
                   "type": "modal",
                   "visible": true,
@@ -138,7 +129,6 @@ exports[`Main menu test should render correctly 1`] = `
                   "iconClass": null,
                   "id": "chargeback",
                   "items": Array [],
-                  "preventHref": false,
                   "title": "Chargeback",
                   "type": "big_iframe",
                   "visible": true,
@@ -147,7 +137,6 @@ exports[`Main menu test should render correctly 1`] = `
             }
             key="vi"
             level={0}
-            preventHref={true}
             title="Cloud Intel"
             type="default"
             visible={true}
@@ -165,7 +154,6 @@ exports[`Main menu test should render correctly 1`] = `
                     "iconClass": null,
                     "id": "dashboard",
                     "items": Array [],
-                    "preventHref": false,
                     "title": "Dashboard",
                     "type": "modal",
                     "visible": true,
@@ -176,7 +164,6 @@ exports[`Main menu test should render correctly 1`] = `
                     "iconClass": null,
                     "id": "chargeback",
                     "items": Array [],
-                    "preventHref": false,
                     "title": "Chargeback",
                     "type": "big_iframe",
                     "visible": true,
@@ -184,7 +171,6 @@ exports[`Main menu test should render correctly 1`] = `
                 ]
               }
               level={0}
-              preventHref={true}
               title="Cloud Intel"
               type="default"
               visible={true}
@@ -199,9 +185,7 @@ exports[`Main menu test should render correctly 1`] = `
                   onClick={[Function]}
                   target="_self"
                 >
-                  <span
-                    className="fa fa-dashboard"
-                  />
+                  <span />
                   <span
                     className="list-group-item-value"
                   >
@@ -235,7 +219,6 @@ exports[`Main menu test should render correctly 1`] = `
                       items={Array []}
                       key="dashboard"
                       level={1}
-                      preventHref={false}
                       title="Dashboard"
                       type="modal"
                       visible={true}
@@ -247,7 +230,6 @@ exports[`Main menu test should render correctly 1`] = `
                         id="dashboard"
                         items={Array []}
                         level={1}
-                        preventHref={false}
                         title="Dashboard"
                         type="modal"
                         visible={true}
@@ -293,7 +275,6 @@ exports[`Main menu test should render correctly 1`] = `
                       items={Array []}
                       key="chargeback"
                       level={1}
-                      preventHref={false}
                       title="Chargeback"
                       type="big_iframe"
                       visible={true}
@@ -305,7 +286,6 @@ exports[`Main menu test should render correctly 1`] = `
                         id="chargeback"
                         items={Array []}
                         level={1}
-                        preventHref={false}
                         title="Chargeback"
                         type="big_iframe"
                         visible={true}
@@ -368,7 +348,6 @@ exports[`Main menu test should render correctly 1`] = `
                       "iconClass": null,
                       "id": "ems_cloud",
                       "items": Array [],
-                      "preventHref": false,
                       "title": "Providers",
                       "type": "new_window",
                       "visible": true,
@@ -379,7 +358,6 @@ exports[`Main menu test should render correctly 1`] = `
                       "iconClass": null,
                       "id": "availability_zone",
                       "items": Array [],
-                      "preventHref": false,
                       "title": "Availability Zones",
                       "type": "default",
                       "visible": true,
@@ -390,13 +368,11 @@ exports[`Main menu test should render correctly 1`] = `
                       "iconClass": null,
                       "id": "host_aggregate",
                       "items": Array [],
-                      "preventHref": false,
                       "title": "Host Aggregates",
                       "type": "new_window",
                       "visible": false,
                     },
                   ],
-                  "preventHref": true,
                   "title": "Clouds",
                   "type": "new_window",
                   "visible": true,
@@ -405,7 +381,6 @@ exports[`Main menu test should render correctly 1`] = `
             }
             key="compute"
             level={0}
-            preventHref={true}
             title="Compute"
             type="new_window"
             visible={true}
@@ -429,7 +404,6 @@ exports[`Main menu test should render correctly 1`] = `
                         "iconClass": null,
                         "id": "ems_cloud",
                         "items": Array [],
-                        "preventHref": false,
                         "title": "Providers",
                         "type": "new_window",
                         "visible": true,
@@ -440,7 +414,6 @@ exports[`Main menu test should render correctly 1`] = `
                         "iconClass": null,
                         "id": "availability_zone",
                         "items": Array [],
-                        "preventHref": false,
                         "title": "Availability Zones",
                         "type": "default",
                         "visible": true,
@@ -451,13 +424,11 @@ exports[`Main menu test should render correctly 1`] = `
                         "iconClass": null,
                         "id": "host_aggregate",
                         "items": Array [],
-                        "preventHref": false,
                         "title": "Host Aggregates",
                         "type": "new_window",
                         "visible": false,
                       },
                     ],
-                    "preventHref": true,
                     "title": "Clouds",
                     "type": "new_window",
                     "visible": true,
@@ -465,7 +436,6 @@ exports[`Main menu test should render correctly 1`] = `
                 ]
               }
               level={0}
-              preventHref={true}
               title="Compute"
               type="new_window"
               visible={true}
@@ -480,9 +450,7 @@ exports[`Main menu test should render correctly 1`] = `
                   onClick={[Function]}
                   target="_blank"
                 >
-                  <span
-                    className="pficon pficon-cpu"
-                  />
+                  <span />
                   <span
                     className="list-group-item-value"
                   >
@@ -521,7 +489,6 @@ exports[`Main menu test should render correctly 1`] = `
                             "iconClass": null,
                             "id": "ems_cloud",
                             "items": Array [],
-                            "preventHref": false,
                             "title": "Providers",
                             "type": "new_window",
                             "visible": true,
@@ -532,7 +499,6 @@ exports[`Main menu test should render correctly 1`] = `
                             "iconClass": null,
                             "id": "availability_zone",
                             "items": Array [],
-                            "preventHref": false,
                             "title": "Availability Zones",
                             "type": "default",
                             "visible": true,
@@ -543,7 +509,6 @@ exports[`Main menu test should render correctly 1`] = `
                             "iconClass": null,
                             "id": "host_aggregate",
                             "items": Array [],
-                            "preventHref": false,
                             "title": "Host Aggregates",
                             "type": "new_window",
                             "visible": false,
@@ -552,7 +517,6 @@ exports[`Main menu test should render correctly 1`] = `
                       }
                       key="clo"
                       level={1}
-                      preventHref={true}
                       title="Clouds"
                       type="new_window"
                       visible={true}
@@ -570,7 +534,6 @@ exports[`Main menu test should render correctly 1`] = `
                               "iconClass": null,
                               "id": "ems_cloud",
                               "items": Array [],
-                              "preventHref": false,
                               "title": "Providers",
                               "type": "new_window",
                               "visible": true,
@@ -581,7 +544,6 @@ exports[`Main menu test should render correctly 1`] = `
                               "iconClass": null,
                               "id": "availability_zone",
                               "items": Array [],
-                              "preventHref": false,
                               "title": "Availability Zones",
                               "type": "default",
                               "visible": true,
@@ -592,7 +554,6 @@ exports[`Main menu test should render correctly 1`] = `
                               "iconClass": null,
                               "id": "host_aggregate",
                               "items": Array [],
-                              "preventHref": false,
                               "title": "Host Aggregates",
                               "type": "new_window",
                               "visible": false,
@@ -600,7 +561,6 @@ exports[`Main menu test should render correctly 1`] = `
                           ]
                         }
                         level={1}
-                        preventHref={true}
                         title="Clouds"
                         type="new_window"
                         visible={true}
@@ -646,7 +606,6 @@ exports[`Main menu test should render correctly 1`] = `
                                 items={Array []}
                                 key="ems_cloud"
                                 level={2}
-                                preventHref={false}
                                 title="Providers"
                                 type="new_window"
                                 visible={true}
@@ -658,7 +617,6 @@ exports[`Main menu test should render correctly 1`] = `
                                   id="ems_cloud"
                                   items={Array []}
                                   level={2}
-                                  preventHref={false}
                                   title="Providers"
                                   type="new_window"
                                   visible={true}
@@ -689,7 +647,6 @@ exports[`Main menu test should render correctly 1`] = `
                                 items={Array []}
                                 key="availability_zone"
                                 level={2}
-                                preventHref={false}
                                 title="Availability Zones"
                                 type="default"
                                 visible={true}
@@ -701,7 +658,6 @@ exports[`Main menu test should render correctly 1`] = `
                                   id="availability_zone"
                                   items={Array []}
                                   level={2}
-                                  preventHref={false}
                                   title="Availability Zones"
                                   type="default"
                                   visible={true}
@@ -732,7 +688,6 @@ exports[`Main menu test should render correctly 1`] = `
                                 items={Array []}
                                 key="host_aggregate"
                                 level={2}
-                                preventHref={false}
                                 title="Host Aggregates"
                                 type="new_window"
                                 visible={false}
@@ -744,7 +699,6 @@ exports[`Main menu test should render correctly 1`] = `
                                   id="host_aggregate"
                                   items={Array []}
                                   level={2}
-                                  preventHref={false}
                                   title="Host Aggregates"
                                   type="new_window"
                                   visible={false}

@@ -31,33 +31,27 @@ exports[`Top navbar tests should render correctly 1`] = `
     helpMenu={
       Array [
         Object {
+          "href": "/dashboard/maintab/?tab=help",
           "id": "help",
           "items": Array [
             Object {
+              "href": "/support/index?support_tab=about",
               "id": "documentation",
               "items": Array [],
-              "link_params": Object {
-                "href": "/support/index?support_tab=about",
-              },
-              "name": "Documentation",
+              "title": "Documentation",
               "type": "default",
               "visible": true,
             },
             Object {
+              "href": "javascript:void(0);",
               "id": "about",
               "items": Array [],
-              "link_params": Object {
-                "href": "javascript:void(0);",
-              },
-              "name": "About",
+              "title": "About",
               "type": "modal",
               "visible": true,
             },
           ],
-          "link_params": Object {
-            "href": "/dashboard/maintab/?tab=help",
-          },
-          "name": "Help",
+          "title": "Help",
           "type": "default",
           "visible": true,
         },
@@ -86,18 +80,18 @@ exports[`Top navbar tests should render correctly 1`] = `
               "href": "/configuration/index",
               "id": "configuration",
               "items": Array [],
-              "name": "My Settings",
+              "title": "My Settings",
               "visible": true,
             },
             Object {
               "href": "/miq_task/index?jobs_tab=tasks",
               "id": "my_tasks",
               "items": Array [],
-              "name": "Tasks",
+              "title": "Tasks",
               "visible": true,
             },
           ],
-          "name": "User Settings",
+          "title": "User Settings",
           "visible": true,
         },
       ]
@@ -150,33 +144,27 @@ exports[`Top navbar tests should render correctly 1`] = `
       helpMenu={
         Array [
           Object {
+            "href": "/dashboard/maintab/?tab=help",
             "id": "help",
             "items": Array [
               Object {
+                "href": "/support/index?support_tab=about",
                 "id": "documentation",
                 "items": Array [],
-                "link_params": Object {
-                  "href": "/support/index?support_tab=about",
-                },
-                "name": "Documentation",
+                "title": "Documentation",
                 "type": "default",
                 "visible": true,
               },
               Object {
+                "href": "javascript:void(0);",
                 "id": "about",
                 "items": Array [],
-                "link_params": Object {
-                  "href": "javascript:void(0);",
-                },
-                "name": "About",
+                "title": "About",
                 "type": "modal",
                 "visible": true,
               },
             ],
-            "link_params": Object {
-              "href": "/dashboard/maintab/?tab=help",
-            },
-            "name": "Help",
+            "title": "Help",
             "type": "default",
             "visible": true,
           },
@@ -339,7 +327,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                         disabled={false}
                         divider={false}
                         header={false}
-                        href="javascript:void(0);"
+                        href=""
                         id="help-menu-about"
                         key=".$about"
                         onClick={[Function]}
@@ -352,7 +340,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                         >
                           <SafeAnchor
                             componentClass="a"
-                            href="javascript:void(0);"
+                            href=""
                             id="help-menu-about"
                             onClick={[Function]}
                             onKeyDown={[Function]}
@@ -360,7 +348,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                             tabIndex="-1"
                           >
                             <a
-                              href="javascript:void(0);"
+                              href="#"
                               id="help-menu-about"
                               onClick={[Function]}
                               onKeyDown={[Function]}
@@ -434,18 +422,18 @@ exports[`Top navbar tests should render correctly 1`] = `
                 "href": "/configuration/index",
                 "id": "configuration",
                 "items": Array [],
-                "name": "My Settings",
+                "title": "My Settings",
                 "visible": true,
               },
               Object {
                 "href": "/miq_task/index?jobs_tab=tasks",
                 "id": "my_tasks",
                 "items": Array [],
-                "name": "Tasks",
+                "title": "Tasks",
                 "visible": true,
               },
             ],
-            "name": "User Settings",
+            "title": "User Settings",
             "visible": true,
           },
         ]
