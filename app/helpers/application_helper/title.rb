@@ -114,9 +114,18 @@ module ApplicationHelper
         _("Repositories")
 
       else
-        # Assume layout is a table name and look up the plural version
-        ui_lookup(:tables => layout)
+        fallback_title(layout)
       end
+    end
+
+    def fallback_title(layout)
+      # Check if the item comes from menu, if so, use the name as title.
+      # This is used for custom menu items.
+      menu_item = Menu::Manager.items.find { |i| i.id == layout }
+      return _(menu_item.name) if menu_item
+
+      # Assume layout is a table name and look up the plural version
+      ui_lookup(:tables => layout)
     end
 
     def title_for_hosts
