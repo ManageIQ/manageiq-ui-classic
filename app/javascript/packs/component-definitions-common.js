@@ -2,6 +2,7 @@ import React from 'react';
 
 import '@manageiq/react-ui-components/dist/tagging.css';
 import '@manageiq/react-ui-components/dist/quadicon.css';
+import '@manageiq/react-ui-components/dist/wooden-tree.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
 import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
