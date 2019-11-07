@@ -7,12 +7,10 @@ export const groupProps = {
 
 export const helpMenuProps = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   visible: PropTypes.bool,
-  link_params: PropTypes.shape({
-    href: PropTypes.string.isRequired,
-  }),
+  href: PropTypes.string.isRequired,
 };
 
 export const recursiveHelpMenuProps = {
@@ -28,7 +26,7 @@ export const recursiveHelpMenuProps = {
 
 export const userMenuProps = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   visible: PropTypes.bool,
   href: PropTypes.string,
 };

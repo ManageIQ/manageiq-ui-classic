@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 export const menuProps = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   href: PropTypes.string.isRequired,
-  preventHref: PropTypes.bool,
   visible: PropTypes.bool,
   active: PropTypes.bool,
 };
