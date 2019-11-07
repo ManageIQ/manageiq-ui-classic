@@ -9,6 +9,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def override(node, object)
     node.checked = @selected.try(:include?, object.id)
+    node.hide_checkbox = false if object.kind_of?(Classification)
+    node.selectable = false
   end
 
   def tree_init_options
