@@ -1,8 +1,6 @@
 describe MiqRequestController do
-  context "#post_install_callback should render nothing" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-    end
+  describe "#post_install_callback should render nothing" do
+    before { EvmSpecHelper.create_guid_miq_server_zone }
 
     it "when called with a task id" do
       expect(MiqRequestTask).to receive(:post_install_callback).with("12345").once
@@ -50,9 +48,8 @@ describe MiqRequestController do
     before { login_as user }
 
     context "created_on" do
-      let(:options) do
-        { :time_period => 9 }
-      end
+      let(:options) { {:time_period => 9} }
+
       it { is_expected.to include [:created_recently, 9] }
     end
 
@@ -60,29 +57,30 @@ describe MiqRequestController do
       context "logged as an approver" do
         it { is_expected.not_to include [:with_requester, user.id] }
       end
+
       context "logged without approval privileges" do
         let(:user) { FactoryBot.create(:user, :features => "none") }
+
         it { is_expected.to include [:with_requester, user.id] }
       end
+
       context "selected 'another_user'" do
         let(:another_user) { FactoryBot.create(:user) }
-        let(:options) do
-          { :user_choice => another_user.id }
-        end
+        let(:options) { {:user_choice => another_user.id} }
+
         it { is_expected.to include [:with_requester, another_user.id] }
       end
+
       context "selected 'all'" do
-        let(:options) do
-          { :user_choice => 'all' }
-        end
+        let(:options) { {:user_choice => 'all'} }
+
         it { expect(subject.collect(&:first)).not_to include :with_requester }
       end
     end
 
     context "approval_state" do
-      let(:options) do
-        { :applied_states => %w(state_1 state_2) }
-      end
+      let(:options) { {:applied_states => %w[state_1 state_2]} }
+
       it { is_expected.to include [:with_approval_state, %w(state_1 state_2)] }
     end
 
@@ -92,25 +90,23 @@ describe MiqRequestController do
 
     context "request_type" do
       context "selected '1'" do
-        let(:options) do
-          { :type_choice => "1" }
-        end
+        let(:options) { {:type_choice => "1"} }
+
         it { is_expected.to include [:with_request_type, "1"] }
       end
+
       context "selected 'all'" do
-        let(:options) do
-          { :type_choice => "all" }
-        end
+        let(:options) { {:type_choice => "all"} }
+
         it { is_expected.not_to include [:with_request_type, "all"] }
       end
     end
 
     context "reason" do
-      %w(*starts_with *includes* ends_with*).each do |pattern|
+      %w[*starts_with *includes* ends_with*].each do |pattern|
         context "is matched to '#{pattern}'" do
-          let(:options) do
-            { :reason_text => pattern }
-          end
+          let(:options) { {:reason_text => pattern} }
+
           it { is_expected.to include [:with_reason_like, pattern] }
         end
       end
@@ -121,7 +117,7 @@ describe MiqRequestController do
     end
   end
 
-  context "#button" do
+  describe "#button" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -129,6 +125,7 @@ describe MiqRequestController do
                                                                 :approval_state => "pending_approval",
                                                                 :requester      => User.current_user)
     end
+
     it "when edit request button is pressed" do
       post :button, :params => { :pressed => "miq_request_edit", :id => @miq_request.id, :format => :js }
       expect(response.status).to eq(200)
@@ -212,21 +209,25 @@ describe MiqRequestController do
 
     context 'filters by created_on' do
       let(:scope) { [[:created_recently, 14]] }
+
       it { is_expected.to eq(2) }
     end
 
     context 'filters by requester_id' do
       let(:scope) { [[:with_requester, user1.id]] }
+
       it { is_expected.to eq(2) }
     end
 
     context 'filters by approval_state' do
-      let(:scope) { [[:with_approval_state, %w(approved pending_approval)]] }
+      let(:scope) { [[:with_approval_state, %w[approved pending_approval]]] }
+
       it { is_expected.to eq(2) }
     end
 
     context 'filters by request_type' do
-      let(:scope) { [[:with_request_type, %w(clone_to_vm clone_to_template)]] }
+      let(:scope) { [[:with_request_type, %w[clone_to_vm clone_to_template]]] }
+
       it { is_expected.to eq(2) }
     end
 
@@ -234,6 +235,7 @@ describe MiqRequestController do
       %w(*cd cd* *cde*).each do |reason|
         context "'#{reason}'" do
           let(:scope) { [[:with_reason_like, reason]] }
+
           it { is_expected.to eq(2) }
         end
       end
@@ -298,6 +300,7 @@ describe MiqRequestController do
 
     context 'angular for grid with affected VMs is properly initialized' do
       let(:additional_key) { :report_data_additional_options }
+
       it do
         expect(controller).to receive(:prov_set_show_vars).once.and_call_original
 
@@ -311,6 +314,7 @@ describe MiqRequestController do
 
     context 'angular for grid with affected VMs gets the correct VMs with XHR call' do
       let(:additional_key) { :additional_options }
+
       it do
         post :report_data, :params => payload
         expect(response.status).to eq(200)
@@ -348,6 +352,7 @@ describe MiqRequestController do
 
     context 'angular for grid with affected PhysicalServers is properly initialized' do
       let(:additional_key) { :report_data_additional_options }
+
       it do
         expect(controller).to receive(:prov_set_show_vars).once.and_call_original
 
@@ -361,6 +366,7 @@ describe MiqRequestController do
 
     context 'angular for grid with affected PhysicalServers gets the correct objects with XHR call' do
       let(:additional_key) { :additional_options }
+
       it do
         post :report_data, :params => payload.merge(:records => [server1.id])
         expect(response.status).to eq(200)
@@ -371,7 +377,7 @@ describe MiqRequestController do
     end
   end
 
-  context "#edit_button" do
+  describe "#edit_button" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -379,6 +385,7 @@ describe MiqRequestController do
                                                                 :approval_state => "pending_approval",
                                                                 :requester      => User.current_user)
     end
+
     it "when the edit button is pressed the request is displayed" do
       session[:settings] = {:display => {:quad_truncate => 'f'}}
       get :show, :params => { :id => @miq_request.id }
@@ -387,7 +394,7 @@ describe MiqRequestController do
     end
   end
 
-  context "#layout_from_tab_name" do
+  describe "#layout_from_tab_name" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -402,7 +409,7 @@ describe MiqRequestController do
     end
   end
 
-  context '#filter' do
+  describe '#filter' do
     before { stub_user(:features => :all) }
 
     it 'returns a scope for the GTL' do
@@ -413,7 +420,7 @@ describe MiqRequestController do
     end
   end
 
-  context '#miq_request_initial_options' do
+  describe '#miq_request_initial_options' do
     before { stub_user(:features => :all) }
     subject { controller.send(:miq_request_initial_options) }
 
@@ -433,7 +440,7 @@ describe MiqRequestController do
     end
   end
 
-  context '#miq_request_initial_options user choice' do
+  describe '#miq_request_initial_options user choice' do
     before do
       EvmSpecHelper.local_miq_server
       stub_settings(:server => {}, :session => {})
@@ -473,7 +480,7 @@ describe MiqRequestController do
     end
   end
 
-  context "requester_label" do
+  describe "#requester_label" do
     before do
       EvmSpecHelper.local_miq_server
       stub_settings(:server => {}, :session => {})
@@ -498,6 +505,21 @@ describe MiqRequestController do
     end
   end
 
+  describe '#retrieve_email' do
+    let(:wf) { FactoryBot.create(:miq_provision_virt_workflow) }
+
+    before do
+      allow(controller).to receive(:session).and_return(:edit => {:wf => wf})
+      controller.params = {:field => 'retrieve_ldap'}
+    end
+
+    it 'calls render method and sets @edit according to the session' do
+      expect(controller).to receive(:render).with(:update)
+      controller.send(:retrieve_email)
+      expect(controller.instance_variable_get(:@edit)).to eq(:wf => wf)
+    end
+  end
+
   private
 
   def create_user_in_other_region(userid)
@@ -512,10 +534,8 @@ describe MiqRequestController do
      {"=" => {"value" => user2.id, "field" => "MiqRequest-requester_id"}}]
   end
 
-  describe "breadcrumbs_options" do
-    let(:miq_request) do
-      FactoryBot.create(:miq_provision_request, :with_approval, :description => 'Description of request')
-    end
+  describe "#breadcrumbs_options" do
+    let(:miq_request) { FactoryBot.create(:miq_provision_request, :with_approval, :description => 'Description of request') }
 
     it "returns item's breadcrumb on action page" do
       controller.params = {:req_id => miq_request.id} # simulate action with id (edit, copy, etc.)
@@ -532,9 +552,7 @@ describe MiqRequestController do
     end
 
     context "when request type is clone_to_template" do
-      let(:request) do
-        FactoryBot.create(:miq_provision_request, :with_approval, :request_type => "clone_to_vm")
-      end
+      let(:request) { FactoryBot.create(:miq_provision_request, :with_approval, :request_type => "clone_to_vm") }
 
       it "returns header including Publish" do
         get :prov_edit, :params => {:prov_id => request.id, :prov_type => "clone_to_template"}
@@ -545,9 +563,7 @@ describe MiqRequestController do
     end
 
     context "when no request type" do
-      let(:request) do
-        FactoryBot.create(:miq_provision_request, :with_approval)
-      end
+      let(:request) { FactoryBot.create(:miq_provision_request, :with_approval) }
 
       it "returns header including Edit" do
         get :prov_edit, :params => {:req_id => request.id}
