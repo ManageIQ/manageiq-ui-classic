@@ -48,9 +48,7 @@
                        :class   => "btn btn-primary",
                        :alt     => t = _("Order this Service"),
                        :title   => t,
-                       :onclick => "miqAjaxButton('#{url_for_only_path(:action => "svc_catalog_provision",
-                                                             :id     => @record.id,
-                                                           :button => "order")}');")
+                       :onclick => "miqOrderService(#{@record.id})")
 
 :javascript
   miq_bootstrap('#long_description');
