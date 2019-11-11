@@ -83,7 +83,7 @@ const parseReportRows = reportData => reportData
   }));
 
 const reduceLoadedData = (state, action) => {
-  const columns = parseReportColumns(action.data);
+  const columns = action.data && action.data.report ? parseReportColumns(action.data) : [];
 
   // Setting the initial filter field to the first one, if not yet set.
   const filter = { ...state.filter };
