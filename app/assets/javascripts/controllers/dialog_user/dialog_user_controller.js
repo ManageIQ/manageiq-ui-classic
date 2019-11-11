@@ -2,22 +2,19 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   var vm = this;
 
   vm.$onInit = function() {
-    var apiCall = new Promise(function(resolve) {
-      var url = '/api/service_dialogs/' + dialogId +
-        '?resource_action_id=' + resourceActionId +
-        '&target_id=' + targetId +
-        '&target_type=' + targetType;
+    var url = '/api/service_dialogs/' + dialogId +
+      '?resource_action_id=' + resourceActionId +
+      '&target_id=' + targetId +
+      '&target_type=' + targetType;
 
-      resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(postprocess));
-    });
-
-    Promise.resolve(apiCall).then(miqService.refreshSelectpicker);
+    API.get(url, {expand: 'resources', attributes: 'content'})
+      .then(function (data) { vm.dialog = data.content[0] })
+      .then(postprocess)
+      .then(function () { vm.dialogLoaded = true })
+      .then(miqService.refreshSelectpicker);
   };
 
   function postprocess(dialog) {
-    vm.dialog = dialog.content[0];
-    vm.dialogLoaded = true;
-
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
