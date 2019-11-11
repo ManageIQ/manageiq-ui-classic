@@ -83,13 +83,16 @@ class WidgetPresenter
                    :sparkleOn  => true,
                    :dataMethod => 'post')
     end
-    buttons.push(:id        => "w_#{@widget.id}_refresh",
-                 :title     => _("Refresh this Widget"),
-                 :name      => _("Refresh"),
-                 :fonticon  => 'fa fa-refresh fa-fw',
-                 :href      => 'javascript:;',
-                 :refresh   => true,
-                 :sparkleOn => true)
+    if @widget.content_type != 'menu'
+      buttons.push(:id        => "w_#{@widget.id}_refresh",
+                   :title     => _("Refresh this Widget"),
+                   :name      => _("Refresh"),
+                   :fonticon  => 'fa fa-refresh fa-fw',
+                   :href      => 'javascript:;',
+                   :refresh   => true,
+                   :sparkleOn => true)
+    end
+
     buttons.to_json
   end
 
