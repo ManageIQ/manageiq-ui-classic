@@ -81,6 +81,7 @@ if (!window.ManageIQ) {
       prefillCount: 0,
       valueStyles: null,
     },
+    timezone: null, // session[:user_tz]
     toolbars: null,
     tree: {
       checkUrl: null,

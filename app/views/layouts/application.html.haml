@@ -23,6 +23,7 @@
       ManageIQ.charts.provider = "#{Charting.backend}";
       ManageIQ.browser = "#{j browser_info(:name_ui)}";
       ManageIQ.controller = "#{j controller_name}";
+      ManageIQ.timezone = '#{j ::ActiveSupport::TimeZone::MAPPING[session[:user_tz]]}';
 
     - if ::Settings.server.asynchronous_notifications
       :javascript
