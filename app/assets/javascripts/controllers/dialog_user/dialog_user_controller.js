@@ -16,6 +16,8 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   };
 
   function postprocess(replace) {
+    var promises = [];
+
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
@@ -25,6 +27,15 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
             if (replaceField) {
               field.default_value = replaceField.value;
             }
+          }
+
+          // Load tag values from the API
+          if (field.type == 'DialogFieldTagControl') {
+            promises.push(API.get('/api/categories/' + field.options.category_id + '/tags?expand=resources&attributes=categorization').then(function(response) {
+              field.values = response.resources.map(function(tag) {
+                return { id: tag.id, name: tag.name, description: tag.categorization.description };
+              });
+            }));
           }
 
           // Translate default fields in all dropdowns
@@ -38,6 +49,9 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
         });
       });
     });
+
+    // Wait for all promises to be resolved before returning
+    return Promise.all(promises);
   };
 
   function loadServiceRequest(data) {
