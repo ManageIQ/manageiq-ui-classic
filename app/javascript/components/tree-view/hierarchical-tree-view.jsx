@@ -1,3 +1,4 @@
+/* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check"]}] */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,7 +9,7 @@ import Tree, {
   ActionTypes,
 } from '@manageiq/react-ui-components/dist/wooden-tree';
 
-const convertData = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(JSON.parse(data)));
+const flatten = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(data));
 
 const HierarchicalTreeView = (props) => {
   const {
@@ -18,6 +19,7 @@ const HierarchicalTreeView = (props) => {
     oncheck,
     checkboxes,
     allow_reselect,
+    hierarchical_check,
     callBack,
   } = props;
 
@@ -37,7 +39,9 @@ const HierarchicalTreeView = (props) => {
    * the correct format and then dispatching it to the store.
    */
   useEffect(() => {
-    callBack('', ActionTypes.ADD_NODES, convertData(bs_tree));
+    const tree = JSON.parse(bs_tree);
+
+    callBack('', ActionTypes.ADD_NODES, flatten(tree));
   }, [bs_tree]);
 
   const onDataChange = (commands) => {
@@ -56,6 +60,7 @@ const HierarchicalTreeView = (props) => {
   return (
     <ReduxTree
       class="Tree"
+      nodeIcon=""
       expandIcon="fa fa-fw fa-angle-right"
       collapseIcon="fa fa-fw fa-angle-down"
       loadingIcon="fa fa-fw fa-spinner fa-pulse"
@@ -67,6 +72,7 @@ const HierarchicalTreeView = (props) => {
       showCheckbox={checkboxes}
       allowReselect={allow_reselect}
       callbacks={{ onDataChange }}
+      hierarchicalCheck={hierarchical_check}
       {...props}
     />
   );
@@ -80,6 +86,7 @@ HierarchicalTreeView.propTypes = {
   oncheck: PropTypes.string,
   check_url: PropTypes.string,
   callBack: PropTypes.func.isRequired,
+  hierarchical_check: PropTypes.bool,
 };
 
 HierarchicalTreeView.defaultProps = {
@@ -87,6 +94,7 @@ HierarchicalTreeView.defaultProps = {
   allow_reselect: false,
   oncheck: undefined,
   check_url: '',
+  hierarchical_check: true,
 };
 
 const HierarchicalTreeViewConn = connect(null, { callBack })(HierarchicalTreeView);

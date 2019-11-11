@@ -35,7 +35,8 @@
     .treeview-pf-hover.treeview-pf-select{:id => "#{name}box", :style => "overflow: hidden"}
       %miq-tree{:name => tree_name, :options => options.to_json, 'bs-tree' => bs_tree}
 - else
-  :javascript
-    miqInitTree(#{options.to_json.html_safe}, #{bs_tree.html_safe})
+  = react('HierarchicalTreeView', tree.locals_for_render.merge({})) # Merging from options in the merge
+
+// Tree: virtual machine - config - compare
 
 - session[:group_changed] = false
