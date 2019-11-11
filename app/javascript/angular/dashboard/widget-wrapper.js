@@ -38,7 +38,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
           }
           if (refreshed) {
             miqSparkleOff();
-            add_flash(sprintf(__('Dashboard "%s" was refreshed', vm.widgetTitle)), 'success');
+            add_flash(sprintf(__('Dashboard "%s" was refreshed'), vm.widgetTitle), 'success');
           }
           deferred.resolve();
         })
