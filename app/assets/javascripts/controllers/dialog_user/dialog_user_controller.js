@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'realTargetType', 'openUrl', '$http', '$window', 'dialogReplaceData', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, realTargetType, openUrl, $http, $window, dialogReplaceData, DialogData) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'realTargetType', 'openUrl', '$http', '$window', 'dialogReplaceRequestId', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, realTargetType, openUrl, $http, $window, dialogReplaceRequestId, DialogData) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -9,19 +9,25 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
     API.get(url, {expand: 'resources', attributes: 'content'})
       .then(function (data) { vm.dialog = data.content[0] })
+      .then(loadServiceRequest)
       .then(postprocess)
       .then(function () { vm.dialogLoaded = true })
       .then(miqService.refreshSelectpicker);
   };
 
-  function postprocess(dialog) {
+  function postprocess(replace) {
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
-          const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(function (replace) { return replace.name === field.name }) : false;
-          if (replaceField) {
-            field.default_value = replaceField.value;
+          // If the service request has been copied, replace the fields' default values from the original service request
+          if (dialogReplaceRequestId) {
+            var replaceField = replace.find(function (item) { return item.name === field.name });
+            if (replaceField) {
+              field.default_value = replaceField.value;
+            }
           }
+
+          // Translate default fields in all dropdowns
           if (field.type === 'DialogFieldDropDownList') {
             _.forEach(field.values, function(value) {
               if (value[0] === null) {
@@ -32,7 +38,17 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
         });
       });
     });
-  }
+  };
+
+  function loadServiceRequest(data) {
+    if (dialogReplaceRequestId) {
+      return API.get('/api/service_requests/' + dialogReplaceRequestId + '?attributes=options').then(function(data) {
+        return _.map(data.options.dialog, function (val, key) {
+          return { name: key.split('dialog_').pop(), value: val };
+        });
+      });
+    }
+  };
 
   vm.refreshField = refreshField;
   vm.setDialogData = setDialogData;

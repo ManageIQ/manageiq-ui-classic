@@ -175,7 +175,7 @@ class MiqRequestController < ApplicationController
     )
 
     if req.kind_of?(ServiceTemplateProvisionRequest)
-      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => val } }.to_json
+      @dialog_replace_request_id = org_req.id
       @new_dialog = true
       template = find_record_with_rbac(ServiceTemplate, req.source_id)
       resource_action = template.resource_actions.find { |r| r.action.downcase == 'provision' && r.dialog_id }
