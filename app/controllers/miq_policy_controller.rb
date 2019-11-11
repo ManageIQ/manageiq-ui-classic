@@ -443,18 +443,7 @@ class MiqPolicyController < ApplicationController
     replace_trees = Array(replace_trees)
     @explorer = true
 
-    # we need to be able to replace trees even if explorer has never been called on the current instance
-    @trees ||= {}
-    trees = {}
-    replace_trees.each do |name|
-      tree = @trees["#{name}_tree".to_sym]
-      tree.try(:reload!)
-
-      if tree.nil?
-        feature = features.find { |f| f.name == name }
-        trees[name] = @trees[feature.tree_name] = feature.build_tree(@sb)
-      end
-    end
+    trees = build_replaced_trees(replace_trees, %i[policy_profile policy event condition action alert_profile alert])
 
     c_tb = build_toolbar(center_toolbar_filename)
 
@@ -485,7 +474,7 @@ class MiqPolicyController < ApplicationController
         raise _("unknown tree in replace_trees: %{name}") % {name => name}
       end
     end
-    reload_trees_by_presenter(presenter, trees.values)
+    reload_trees_by_presenter(presenter, trees)
 
     if params[:action].ends_with?('_delete') &&
        !x_node.starts_with?('p') &&
@@ -1144,10 +1133,6 @@ class MiqPolicyController < ApplicationController
     return nil if %w[export log].include?(action_name)
 
     {:title => action_name == 'rsop' ? _('Simulation') : _('Explorer')}
-  end
-
-  def build_tree
-    features.find { |f| f.tree_name == x_active_tree.to_s }.build_tree(@sb.deep_dup)
   end
 
   menu_section :con
