@@ -370,7 +370,11 @@ class DashboardController < ApplicationController
     assert_privileges("widget_generate_content")
     w = MiqWidget.find(params[:widget])
     task_id = w.queue_generate_content
-    render :json => {:task => task_id}, :status => 200
+    if task_id
+      render :json => {:task => task_id}, :status => 200
+    else
+      render :json => {:message => _("There was an error during refresh.")}, :status => 400
+    end
   end
 
   # A widget has been dropped

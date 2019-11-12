@@ -53,8 +53,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
       $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
         .then((response) => {
           miqSparkleOn();
-          API.wait_for_task(response.data.task)
-            .then(vm.refreshWidgetHTML(true));
+          return API.wait_for_task(response.data.task).then(vm.refreshWidgetHTML(true));
         })
         .catch((e) => {
           vm.error = true;
