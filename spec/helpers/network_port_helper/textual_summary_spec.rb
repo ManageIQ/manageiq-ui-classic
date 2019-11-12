@@ -11,4 +11,20 @@ describe NetworkPortHelper::TextualSummary do
     security_groups
     host
   )
+
+  describe '#textual_host' do
+    let(:host) { FactoryBot.create(:host) }
+    let(:port) { FactoryBot.create(:network_port, :device_type => 'Host', :device => host) }
+
+    before do
+      instance_variable_set(:@record, port)
+      allow(self).to receive(:url_for_only_path).and_return("/host/show/#{host.id}")
+    end
+
+    it 'returns Host of selected Network Port' do
+      expect(textual_host[:icon]).to eq('pficon pficon-container-node')
+      expect(textual_host[:value]).to eq(host.name)
+      expect(textual_host[:link]).to eq("/host/show/#{host.id}")
+    end
+  end
 end
