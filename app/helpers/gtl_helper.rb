@@ -85,6 +85,28 @@ module GtlHelper
     end
   end
 
+  def render_gtl_react(options)
+    # TODO:
+    # => check escapement
+    # => add flash_div
+    # => handle empty data
+    #
+    react 'GtlView', {
+      additionalOptions: options[:report_data_additional_options],
+      modelName:         options[:model_name],
+      activeTree:        options[:active_tree],
+      gtlType:           options[:gtl_type_string],
+      parentId:          options[:display].nil? ? nil : options[:parent_id],
+      sortColIdx:        options[:sort_col],
+      sortDir:           options[:sort_dir],
+      isExplorer:        options[:explorer] === 'true',
+      records:           !options[:selected_records].nil? ? options[:selected_records] : '',
+      hideSelect:        options[:selected_records].kind_of?(Array),
+      showUrl:           gtl_show_url(options),
+      pages:             options[:pages],
+    }
+  end
+
   def render_gtl_markup(no_flash_div)
     content_tag('div', :id => 'miq-gtl-view', "ng-controller" => "reportDataController as dataCtrl") do
       capture do

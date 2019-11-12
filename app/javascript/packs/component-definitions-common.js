@@ -19,6 +19,7 @@ import FirmwareRegistryForm from '../components/firmware-registry/firmware-regis
 import FormButtonsRedux from '../forms/form-buttons-redux';
 import GenericGroupWrapper from '../react/generic_group_wrapper';
 import GraphQLExplorer from '../graphql-explorer';
+import GtlView from  '../components/gtl-view';
 import { HierarchicalTreeView } from '../components/tree-view';
 import ImportDatastoreViaGit from '../components/automate-import-export-form/import-datastore-via-git';
 import MainMenu from '../components/main-menu/main-menu';
@@ -60,6 +61,7 @@ ManageIQ.component.addReact('FormButtonsRedux', FormButtonsRedux);
 ManageIQ.component.addReact('GenericGroup', GenericGroup);
 ManageIQ.component.addReact('GenericGroupWrapper', GenericGroupWrapper);
 ManageIQ.component.addReact('GraphQLExplorer', GraphQLExplorer);
+ManageIQ.component.addReact('GtlView', GtlView);
 ManageIQ.component.addReact('HierarchicalTreeView', HierarchicalTreeView);
 ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MainMenu', MainMenu);
