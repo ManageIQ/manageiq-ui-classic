@@ -687,11 +687,6 @@ table.table.table-selectable tbody tr.selected td {
   margin-top: 2px;
 }
 
-/* Ensure .form-control-static doesn't change height when it's empty - Bootstrap fix #15699 */
-.form-control-static {
-  min-height: ($line-height-computed + $font-size-small - 20);
-}
-
 /* prevents empty dd from collapsing */
 
 .dl-horizontal > dd::after {
