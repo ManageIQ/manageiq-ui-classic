@@ -1,4 +1,7 @@
 - url = @ems.persisted? ? ems_clouds_path(@ems) : ems_clouds_path
+
+= react('CloudProviderForm')
+
 = form_for(@ems,
            :url    => url,
            :method => :post,
