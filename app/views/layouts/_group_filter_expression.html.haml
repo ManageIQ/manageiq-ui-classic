@@ -1,7 +1,7 @@
 - if @edit.nil?
   %h3
     = _('Filter Expression')
-  .form-horizontal.static
+  .form-horizontal
     - if @group && @group.entitlement && @group.entitlement.filter_expression && @group.entitlement.filter_expression.kind_of?(MiqExpression)
       = h(@group.entitlement.filter_expression.to_human)
     - else

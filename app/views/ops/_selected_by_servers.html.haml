@@ -1,6 +1,6 @@
 -# tree type is roles by server
 - if rec.class == MiqServer
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-3.control-label= _('Server')
       .col-md-9
@@ -61,7 +61,7 @@
           = h(rec["version"])
 - else
   -# record class is AssignedServerRole
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-3.control-labelimage
         %i.ff.ff-user-role.fa-5x

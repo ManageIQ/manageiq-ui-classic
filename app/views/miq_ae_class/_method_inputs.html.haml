@@ -9,7 +9,7 @@
   - else
     %h3
       = _('Main Info')
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         = format_form_group(_('Type'), location_fancy_name(@ae_method.location))
       .form-group
@@ -40,7 +40,7 @@
     - elsif @ae_method.location == 'expression'
       = @expression
     - elsif playbook_style_location?(@ae_method.location)
-      .form-horizontal.static
+      .form-horizontal
         - if @ae_method.location == 'playbook'
           .form-group
             = format_form_group(_('Repository'), @playbook_details[:repository])

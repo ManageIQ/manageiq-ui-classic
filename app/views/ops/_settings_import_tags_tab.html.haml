@@ -5,7 +5,7 @@
     %hr
     %h3
       = _("Upload %{customer_name} Tag Assignments for VMs") % {:customer_name => session[:customer_name]}
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         .col-md-8
           = form_tag({:action => "upload_csv",

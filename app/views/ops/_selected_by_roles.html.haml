@@ -1,6 +1,6 @@
 -# tree type is servers by role
 - if rec.class == ServerRole
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label= _("Role")
       .col-md-10
@@ -16,7 +16,7 @@
         %p.form-control-static= h(max == 0 ? _("unlimited") : max)
 - else
   -# record class is AssignedServerRole
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label
         %i.pficon.pficon-server

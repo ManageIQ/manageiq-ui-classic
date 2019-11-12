@@ -6,7 +6,7 @@
 
 #desc_content.desc_content
   - if session[:snap_selected].present? || @record.snapshots.count > 0
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         %label.control-label.col-sm-2
           = _('Description')

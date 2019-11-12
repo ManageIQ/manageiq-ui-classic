@@ -1,7 +1,7 @@
 = render :partial => 'layouts/flash_msg'
 - breakdown_present = @record.chargeback_rate_details.any? { |d| d.sub_metric.present? }
 %h3= _('Basic Info')
-.form-horizontal.static
+.form-horizontal
   .form-group
     %label.col-md-2.control-label
       = _('Description')

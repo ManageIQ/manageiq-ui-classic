@@ -663,20 +663,9 @@ table.table.table-selectable tbody tr.selected td {
   color: #fff;
 }
 
-/* static class form-horizontal for displaying static info with reduced row height */
-.form-horizontal.static .form-group {
-  margin-bottom: 5px;
-  min-height: 28px;
-}
+/* resize images displayed in form-group labels */
 
-/* resize png files displayed in form-groups */
-
-.form-horizontal.static .form-group img {
-  height: 20px;
-  width: 20px;
-}
-
-.form-horizontal.static .form-group .control-labelimage img {
+.control-labelimage img {
   height: 80px;
   width: 80px;
 }

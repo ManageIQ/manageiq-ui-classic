@@ -54,7 +54,7 @@
     - elsif mode == "save"
       = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'} if params[:button] != 'save'
       .modal-body
-        .form-horizontal.static
+        .form-horizontal
           .form-group
             %label.control-label.col-md-5
               = _("Search Expression")

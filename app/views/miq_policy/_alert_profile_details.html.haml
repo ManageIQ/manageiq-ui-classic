@@ -10,7 +10,7 @@
       - if @edit
         -# Show basic info box with description only in edit mode
         %h3= _('Basic Information')
-        %div{:class => "form-horizontal#{@edit ? "" : ".static"} "}
+        .form-horizontal
           .form-group
             %label.control-label.col-md-2= _("Description")
             .col-md-8
