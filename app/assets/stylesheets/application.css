@@ -17,4 +17,5 @@
  *= require ./topology
  *= require ./topology-toolbar
  *= require ./remote_console
+ *= require ./vertical_navigation
 */
