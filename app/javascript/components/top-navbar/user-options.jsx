@@ -59,7 +59,7 @@ const UserOptions = ({
           </Dropdown.Toggle>
           <Dropdown.Menu className="scrollable-menu">
             {miqGroups.sort().map(group => (
-              (currentGroup || {}).id === group.id ? (
+              (currentGroup).id === group.id ? (
                 <MenuItem id="current-group" key={group.id} disabled title={__('Currently Selected Group')}>
                   {`${group.description} (${__('Current Group')})`}
                 </MenuItem>
@@ -80,7 +80,7 @@ const UserOptions = ({
           </Dropdown.Menu>
         </li>
       ) : (
-        <MenuItem id="single-group-item" disabled>{(currentGroup || {}).description}</MenuItem>
+        <MenuItem id="single-group-item" disabled>{(currentGroup).description}</MenuItem>
       )
       }
       {userMenu.map(section => (
