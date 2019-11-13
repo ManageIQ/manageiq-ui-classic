@@ -3,7 +3,7 @@
 - when "devices"
   - devices = devices_details
   - if devices.present?
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         - devices.each do |item|
           %label.col-md-2.control-label
@@ -15,7 +15,7 @@
 - when "os_info"
   - os_info = os_info_details
   - if os_info.present?
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         - os_info.each do |item|
           %label.col-md-2.control-label
@@ -39,7 +39,7 @@
 - when "hv_info"
   - vmminfo = vmm_info_details
   - if vmminfo
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         - vmminfo.each do |item|
           %label.col-md-2.control-label

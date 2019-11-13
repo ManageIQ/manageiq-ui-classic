@@ -2,7 +2,7 @@
   - s = @widget.miq_schedule
   - tz = @timezone = s && s.run_at && s.run_at[:tz] ? s.run_at[:tz] : session[:user_tz]
   %h3= _('Basic Information')
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.control-label.col-md-2
         - if @widget.read_only
@@ -29,7 +29,7 @@
   %hr
   - unless @sb[:wtype] == "m"
     %h3= _('Status')
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         %label.control-label.col-md-2= _('Current Status')
         .col-md-10
@@ -54,7 +54,7 @@
   - when "m"
     - title = _("Menu Shortcuts")
   %h3= title
-  .form-horizontal.static
+  .form-horizontal
     - if @sb[:wtype] == "r"
       .form-group
         %label.control-label.col-md-2
@@ -121,7 +121,7 @@
   %hr
   - unless @sb[:wtype] == "m"
     %h3= _('Timer')
-    .form-horizontal.static
+    .form-horizontal
       - if s.kind_of?(MiqSchedule)
         .form-group
           %label.control-label.col-md-2= _('Run At')
@@ -142,7 +142,7 @@
               %br= _('Edit this Widget to configure a timer.')
     %hr
   %h3= _('Visibility')
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.control-label.col-md-2= _('Show')
       .col-md-10

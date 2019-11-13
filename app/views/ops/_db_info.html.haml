@@ -2,7 +2,7 @@
 - if @vmdb_index
   %h3
     #{_("Index")}: #{h(@vmdb_index.name)}
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label
         = _("Name")
@@ -14,7 +14,7 @@
   - if metrics
     %h3
       = _("Metrics")
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         %label.col-md-2.control-label
           = _("Rows")
@@ -43,7 +43,7 @@
 - elsif @table
   %h3
     #{_("Table")}: #{h(@table.name)}
-  .form-horizontal.static
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label
         = _("Name")

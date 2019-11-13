@@ -33,7 +33,7 @@
 
       - else
         %h3= _('Basic Information')
-        .form-horizontal.static
+        .form-horizontal
           .form-group
             %label.control-label.col-md-2= _('Active')
             .col-md-8
@@ -56,7 +56,7 @@
       - if @edit
         - if @edit[:typ] == "basic"
           %h3= _("Scope")
-          .form-horizontal.static
+          .form-horizontal
             .form-group
               %label.control-label.col-md-2
               .col-md-8
@@ -65,7 +65,7 @@
 
       - else
         %h3= _("Scope")
-        .form-horizontal.static
+        .form-horizontal
           .form-group
             %label.control-label.col-md-2
             .col-md-8

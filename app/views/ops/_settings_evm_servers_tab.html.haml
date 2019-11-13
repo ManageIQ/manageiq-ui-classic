@@ -1,7 +1,7 @@
 - if @sb[:active_tab] == "settings_evm_servers"
   - if @servers
     %h3= _("Basic Information")
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         %label.col-md-2.control-label
           = _("Name")
@@ -35,7 +35,7 @@
             = (@selected_zone.settings.key?(:concurrent_vm_scans) && @selected_zone.settings[:concurrent_vm_scans] > 0) ? @selected_zone.settings[:concurrent_vm_scans] : _("Unlimited")
 
     %h3= _("Relationships")
-    .form-horizontal.static
+    .form-horizontal
       .form-group
         %label.col-md-2.control-label
           = _("Servers")

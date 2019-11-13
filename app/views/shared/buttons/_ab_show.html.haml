@@ -2,7 +2,7 @@
 
 %h3
   = _('Basic Information')
-.form-horizontal.static
+.form-horizontal
   .form-group
     %label.control-label.col-md-2
       = _('Button Type')
@@ -67,7 +67,7 @@
 
 %h3
   = _('Object Details')
-.form-horizontal.static
+.form-horizontal
   .form-group
     %label.control-label.col-md-2
       = _('System/Process/')
@@ -87,7 +87,7 @@
 
 %h3
   = _('Object Attribute')
-.form-horizontal.static
+.form-horizontal
   .form-group
     %label.control-label.col-md-2
       = _('Type')
@@ -118,7 +118,7 @@
 
 %h3
   = _('Visibility Expression')
-.form-horizontal.static
+.form-horizontal
   - if @custom_button && !@custom_button.visibility_expression.nil? && @custom_button.visibility_expression.kind_of?(MiqExpression)
     = h(@custom_button.visibility_expression.to_human)
   - else
@@ -130,7 +130,7 @@
 - if @resolve[:new][:attrs].empty?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Attribute/Value Pairs found.")}
 - else
-  .form-horizontal.static
+  .form-horizontal
     - @resolve[:new][:attrs].each_with_index do |attr, i|
       .form-group
         %label.control-label.col-md-2
@@ -143,7 +143,7 @@
 
 %h3
   = _('Visibility')
-.form-horizontal.static
+.form-horizontal
   - show_to = @custom_button.visibility.nil? || (@custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] == "_ALL_") ? _("To All") : _("By Role")
   .form-group
     %label.control-label.col-md-2
