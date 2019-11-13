@@ -86,7 +86,7 @@ module NetworkPortHelper::TextualSummary
     return nil unless @record.device_type == "Host"
     {
       :icon  => "pficon pficon-container-node",
-      :value => @record.device,
+      :value => @record.device.name,
       :link  => url_for_only_path(
         :controller => "host",
         :action     => "show",
