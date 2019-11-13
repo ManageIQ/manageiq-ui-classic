@@ -299,7 +299,7 @@
               %td.action-cell
                 %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                                   "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
-  - if supports_reconfigure_network_adapters?
+  - if supports_reconfigure_network_adapters? && role_allows?(:feature => 'vm_reconfigure_networks')
     %hr
     %div
       %h3
@@ -402,7 +402,7 @@
 
   %hr
 
-  - if supports_reconfigure_cdroms?
+  - if supports_reconfigure_cdroms? && role_allows?(:feature => 'vm_reconfigure_drives')
     %div
       %h3
         = _('CD/DVD Drives')
