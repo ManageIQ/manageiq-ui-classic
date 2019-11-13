@@ -8,17 +8,20 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       '&target_type=' + targetType;
 
     API.get(url, {expand: 'resources', attributes: 'content'})
-      .then(function (data) { vm.dialog = data.content[0] })
+      .then(function (data) { vm._dialog = data.content[0] })
       .then(loadServiceRequest)
       .then(postprocess)
-      .then(function () { vm.dialogLoaded = true })
-      .then(miqService.refreshSelectpicker);
+      .then(function () {
+        vm.dialog = vm._dialog;
+        delete vm._dialog;
+        vm.dialogLoaded = true;
+      });
   };
 
   function postprocess(replace) {
     var promises = [];
 
-    _.forEach(vm.dialog.dialog_tabs, function(tab) {
+    _.forEach(vm._dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
           // If the service request has been copied, replace the fields' default values from the original service request
