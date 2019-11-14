@@ -23,7 +23,7 @@ describe ReportController do
         end
 
         it "saves unsuccessfully and returns error message" do
-          params = {:button => "save", :dashboard_id => miq_widget_set.id.to_s, :group_id => user.current_group.id.to_s, :name => miq_widget_set.name.to_s, :description => 'New description'}
+          params = {:button => "save", :dashboard_id => miq_widget_set.id.to_s, :group_id => user.current_group.id.to_s}
           post :db_copy, :params => params
 
           expect(JSON.parse(response.body)["error"]["message"]).to include("Error")
