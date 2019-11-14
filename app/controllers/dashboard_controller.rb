@@ -371,7 +371,7 @@ class DashboardController < ApplicationController
     w = MiqWidget.find(params[:widget])
     task_id = w.queue_generate_content
     if task_id
-      render :json => {:task => task_id}, :status => 200
+      render :json => {:task_id => task_id.to_s}, :status => 200
     else
       render :json => {:message => _("There was an error during refresh.")}, :status => 400
     end
