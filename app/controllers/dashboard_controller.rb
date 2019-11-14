@@ -160,7 +160,7 @@ class DashboardController < ApplicationController
     end
     render :json => {:content   => content,
                      :minimized => widget_minimized?(params[:id]),
-                     :blank     => blank.to_s,
+                     :blank     => blank,
                      :state     => state}
   end
 
@@ -173,7 +173,7 @@ class DashboardController < ApplicationController
                 end
     render :json => {:shortcuts => shortcuts,
                      :minimized => widget_minimized?(params[:id]),
-                     :blank     => "false"}
+                     :blank     => false}
   end
 
   def widget_minimized?(id)
@@ -186,7 +186,7 @@ class DashboardController < ApplicationController
     blank = widget.contents_for_user(current_user).blank?
     content = blank ? nil : widget.contents_for_user(current_user).contents
     render :json => {
-      :blank     => blank.to_s,
+      :blank     => blank,
       :content   => content,
       :minimized => widget_minimized?(params[:id])
     }

@@ -85,12 +85,12 @@ ManageIQ.angular.app.component('widgetWrapper', {
           </div>
         </div>
         <widget-error ng-if="vm.error === true"></widget-error>
-        <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == 'false' && !vm.error"></widget-spinner>
-        <div ng-if="vm.widgetModel.blank === 'true' || vm.widgetModel"
+        <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == false && !vm.error"></widget-spinner>
+        <div ng-if="vm.widgetModel"
              ng-attr-id="{{vm.innerDivId}}"
              ng-class="{ hidden: vm.widgetModel.minimized, mc:true }">
-          <widget-empty ng-if="vm.widgetModel.blank === 'true'"></widget-empty>
-          <div ng-if="vm.widgetModel.blank === 'false'"
+          <widget-empty ng-if="vm.widgetModel.blank === true"></widget-empty>
+          <div ng-if="vm.widgetModel.blank === false"
                ng-switch on="vm.widgetType">
             <widget-menu ng-switch-when="menu"
                          widget-id="{{vm.widgetId}}"
