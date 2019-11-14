@@ -92,15 +92,15 @@ exports[`Main menu test should render correctly 1`] = `
 >
   <Grid
     bsClass="container"
-    className="top-navbar"
     componentClass="div"
     fluid={false}
   >
     <div
-      className="top-navbar container"
+      className="container"
     >
       <div
-        className="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus"
+        className="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus  "
+        onMouseLeave={[Function]}
       >
         <ul
           className="list-group"
@@ -108,6 +108,7 @@ exports[`Main menu test should render correctly 1`] = `
         >
           <MenuItem
             active={true}
+            handleSetActiveIds={[Function]}
             href="/dashboard/maintab/?tab=vi"
             iconClass="fa fa-dashboard"
             id="vi"
@@ -143,6 +144,7 @@ exports[`Main menu test should render correctly 1`] = `
           >
             <TopLevel
               active={true}
+              handleSetActiveIds={[Function]}
               href="/dashboard/maintab/?tab=vi"
               iconClass="fa fa-dashboard"
               id="vi"
@@ -176,8 +178,10 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className="active menu-list-group-item secondary-nav-item-pf"
+                className="active menu-list-group-item secondary-nav-item-pf "
                 id="menu_section_vi"
+                onBlur={[Function]}
+                onMouseEnter={[Function]}
               >
                 <a
                   className="top-level"
@@ -213,6 +217,7 @@ exports[`Main menu test should render correctly 1`] = `
                   >
                     <MenuItem
                       active={true}
+                      handleSetActiveIds={[Function]}
                       href="/dashboard/show"
                       iconClass={null}
                       id="dashboard"
@@ -225,6 +230,7 @@ exports[`Main menu test should render correctly 1`] = `
                     >
                       <SecondLevel
                         active={true}
+                        handleSetActiveIds={[Function]}
                         href="/dashboard/show"
                         iconClass={null}
                         id="dashboard"
@@ -235,8 +241,10 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item  active"
+                          className="menu-list-group-item  active "
                           id="menu_item_dashboard"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
                           <a
                             onClick={[Function]}
@@ -269,6 +277,7 @@ exports[`Main menu test should render correctly 1`] = `
                     </MenuItem>
                     <MenuItem
                       active={false}
+                      handleSetActiveIds={[Function]}
                       href="/chargeback/explorer"
                       iconClass={null}
                       id="chargeback"
@@ -281,6 +290,7 @@ exports[`Main menu test should render correctly 1`] = `
                     >
                       <SecondLevel
                         active={false}
+                        handleSetActiveIds={[Function]}
                         href="/chargeback/explorer"
                         iconClass={null}
                         id="chargeback"
@@ -291,8 +301,10 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item  "
+                          className="menu-list-group-item   "
                           id="menu_item_chargeback"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
                           <a
                             href="/dashboard/iframe?id=chargeback"
@@ -331,6 +343,7 @@ exports[`Main menu test should render correctly 1`] = `
           </MenuItem>
           <MenuItem
             active={false}
+            handleSetActiveIds={[Function]}
             href="/dashboard/maintab/?tab=compute"
             iconClass="pficon pficon-cpu"
             id="compute"
@@ -387,6 +400,7 @@ exports[`Main menu test should render correctly 1`] = `
           >
             <TopLevel
               active={false}
+              handleSetActiveIds={[Function]}
               href="/dashboard/maintab/?tab=compute"
               iconClass="pficon pficon-cpu"
               id="compute"
@@ -441,8 +455,10 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className=" menu-list-group-item secondary-nav-item-pf"
+                className=" menu-list-group-item secondary-nav-item-pf "
                 id="menu_section_compute"
+                onBlur={[Function]}
+                onMouseEnter={[Function]}
               >
                 <a
                   className="top-level"
@@ -478,6 +494,7 @@ exports[`Main menu test should render correctly 1`] = `
                   >
                     <MenuItem
                       active={false}
+                      handleSetActiveIds={[Function]}
                       href="/dashboard/maintab/?tab=clo"
                       iconClass="fa fa-plus"
                       id="clo"
@@ -523,6 +540,7 @@ exports[`Main menu test should render correctly 1`] = `
                     >
                       <SecondLevel
                         active={false}
+                        handleSetActiveIds={[Function]}
                         href="/dashboard/maintab/?tab=clo"
                         iconClass="fa fa-plus"
                         id="clo"
@@ -566,8 +584,10 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item tertiary-nav-item-pf "
+                          className="menu-list-group-item tertiary-nav-item-pf  "
                           id="menu_section_clo"
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
                         >
                           <a
                             href="/dashboard/maintab/?tab=clo"
