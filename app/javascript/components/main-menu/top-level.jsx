@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem } from './main-menu';
+import { MenuItem, HoverContext } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 import {
   getHrefByType, getSectionId, handleUnsavedChanges, getItemId,
@@ -16,12 +16,18 @@ const TopLevel = ({
   active,
   items,
   type,
+  handleSetActiveIds,
 }) => {
   const isSection = items.length > 0;
 
   if (isSection) {
     return (
-      <li className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf`} id={getSectionId(id)}>
+      <li
+        className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf ${useContext(HoverContext).topLevelId === id ? 'is-hover' : ''}`}
+        id={getSectionId(id)}
+        onMouseEnter={() => handleSetActiveIds({ topLevelId: id })}
+        onBlur={() => undefined}
+      >
         <a
           onClick={(event) => {
             if (handleUnsavedChanges(type) === false) {
@@ -44,7 +50,7 @@ const TopLevel = ({
               </a>
             </div>
             <ul className="list-group">
-              {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
+              {items.map(props => <MenuItem key={props.id} level={level + 1} handleSetActiveIds={handleSetActiveIds} {...props} />)}
             </ul>
           </div>
         </React.Fragment>
