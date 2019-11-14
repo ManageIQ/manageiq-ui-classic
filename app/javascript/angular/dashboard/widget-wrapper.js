@@ -26,6 +26,11 @@ ManageIQ.angular.app.component('widgetWrapper', {
       vm.divId = `w_${vm.widgetId}`;
       vm.innerDivId = `dd_w${vm.widgetId}_box`;
       vm.refreshWidgetHTML(false);
+      vm.parsedButtons = JSON.parse(vm.widgetButtons);
+      const refreshButton = vm.parsedButtons.find(ob => ob.id.includes("refresh"));
+      if (refreshButton) {
+        refreshButton.onclick = vm.refresh;
+      };
     };
 
     vm.refreshWidgetHTML = function(refreshed) {
@@ -76,8 +81,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
         <div class="card-pf-body">
           <div class="card-pf-heading-kebab">
             <dropdown-menu widget-id="{{vm.widgetId}}"
-                           buttons-data="{{vm.widgetButtons}}"
-                           refresh-function="vm.refresh"></dropdown-menu>
+                           buttons-data="vm.parsedButtons"></dropdown-menu>
             <h2 class="card-pf-title sortable-handle ui-sortable-handle"
                 style="cursor:move">
               {{vm.widgetTitle}}

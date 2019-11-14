@@ -48,9 +48,9 @@ describe('widget-empty', () => {
     $ctrl.promise.catch(() => null).then(() => {
       $scope.$digest();
 
-        const widget = element.find('widget-empty');
-        expect(widget).toHaveLength(1);
-        done();
+      const widget = element.find('widget-empty');
+      expect(widget).toHaveLength(1);
+      done();
     });
   });
 });

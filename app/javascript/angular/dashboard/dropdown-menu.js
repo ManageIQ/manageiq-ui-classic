@@ -1,8 +1,7 @@
 ManageIQ.angular.app.component('dropdownMenu', {
   bindings: {
     widgetId: '@',
-    buttonsData: '@',
-    refreshFunction: '<',
+    buttonsData: '<',
   },
   controllerAs: 'vm',
   controller() {
@@ -10,16 +9,14 @@ ManageIQ.angular.app.component('dropdownMenu', {
 
     vm.$onInit = function() {
       vm.dropdown_id = `btn_${vm.widgetId}`;
-      vm.buttons = JSON.parse(vm.buttonsData);
+      vm.buttons = vm.buttonsData;
     };
 
     vm.click = function(button) {
-      if (button.refresh) {
-        vm.refreshFunction();
-        return false;
-      } else {
-        return true;
+      if (button.onclick) {
+        return button.onclick();
       }
+      return true;
     };
   },
   template: `
