@@ -7,109 +7,111 @@
                                "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %h3= _('Options')
-  .form-group{"ng-class" => "{'has-error': angularForm.memory.$invalid}"}
-    %label.col-md-2.control-label
-      = _('Memory')
-    .col-md-1
-      %input{"bs-switch"       => "",
-             "type"            => "checkbox",
-             "name"            => "cb_memory",
-             "ng-model"        => "vm.cb_memory",
-             "ng-change"       => "vm.cbChange()",
-             "switch-on-text"  => _("Yes"),
-             "switch-off-text" => _("No")}
-    #memory_div{"ng-if" => "vm.cb_memory"}
-      .col-md-4
-        %input.form-control{"type"              => "text",
-                            "id"                => "memory_value",
-                            "name"              => "memory",
-                            "ng-model"          => "vm.reconfigureModel.memory",
-                            "ng-change"         => "vm.cbChange()",
-                            "maxlength"         => "50",
-                            "ng-pattern"        => "/^[-+]?[0-9]+$/",
-                            "miqrequired"       => "",
-                            "checkchange"       => "",
-                            "auto-focus"        => "",
-                            "validate-multiple" => "4",
-                            :miqmin             => "#{@reconfig_limits[:min__vm_memory]}",
-                            :miqmax             => "#{@reconfig_limits[:max__vm_memory]}",
-                            :memtype            => "{{vm.reconfigureModel.memory_type}}"}
-        %span{"style"=>"color:red", "ng-show" => "angularForm.memory.$invalid"}
-          = _(" Memory value not in range or not a multiple of 4")
-        %span{"style"=>"color:red", "ng-show" => "angularForm.memory.$required"}
-          = _(" Valid memory value required")
-      .col-md-2
-        = select_tag('mem_type',
-                     options_for_select(%w(MB GB)),
-                     "ng-model"                    => "vm.reconfigureModel.memory_type",
-                     "ng-change"                   => "vm.memtypeChanged()",
-                     "maxlength"                   => "20",
-                     "required"                    => "",
-                     "selectpicker-for-select-tag" => "")
-        = (@reconfig_memory_note)
-  .form-group
-    %label.col-md-2.control-label
-      = _('Processors')
-    .col-md-1
-      %input{"bs-switch"       => "",
-         "type"            => "checkbox",
-         "name"            => "cb_cpu",
-         "ng-model"        => "vm.cb_cpu",
-         "ng-change"       => "vm.cbChange()",
-         "switch-on-text"  => _("Yes"),
-         "switch-off-text" => _("No")}
-    %br
-    #cpu_div{"ng-if" => "vm.cb_cpu", :style => "margin-left: 20px"}
-      %h3= _(' Processor Options')
-      - if @socket_options.length > 1
-        .form-group{"ng-class" => "{'has-error': angularForm.socket_count.$invalid}"}
-          %label.col-md-2.control-label
-            = _('Sockets')
-          .col-md-2
-            = select_tag('socket_count',
-                        options_for_select([["<#{_('Choose')}>", '']] + @socket_options, disabled: ["<#{_('Choose')}>", nil]),
-                        "ng-model"                    => "vm.reconfigureModel.socket_count",
-                        "ng-change"                   => "vm.processorValueChanged()",
-                        "miqrequired"                 => "",
-                        "maxlength"                   => "100",
-                        "checkchange"                 => "",
-                        "selectpicker-for-select-tag" => "")
-            - if @socket_options.length <= 1
-              @socket_options[0]
-      -  if @cores_options.length > 1
-        .form-group{"ng-class" => "{'has-error': angularForm.cores_per_socket_count.$invalid}"}
-          %label.col-md-2.control-label
-            = _('Cores Per Socket')
-          .col-md-2
-            = select_tag('cores_per_socket_count',
-                          options_for_select([["<#{_('Choose')}>", '']] + @cores_options, disabled: ["<#{_('Choose')}>", nil]),
-                          "ng-model"                    => "vm.reconfigureModel.cores_per_socket_count",
+  - if role_allows?(:feature => 'vm_reconfigure_memory')
+    .form-group{"ng-class" => "{'has-error': angularForm.memory.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Memory')
+      .col-md-1
+        %input{"bs-switch"       => "",
+               "type"            => "checkbox",
+               "name"            => "cb_memory",
+               "ng-model"        => "vm.cb_memory",
+               "ng-change"       => "vm.cbChange()",
+               "switch-on-text"  => _("Yes"),
+               "switch-off-text" => _("No")}
+      #memory_div{"ng-if" => "vm.cb_memory"}
+        .col-md-4
+          %input.form-control{"type"              => "text",
+                              "id"                => "memory_value",
+                              "name"              => "memory",
+                              "ng-model"          => "vm.reconfigureModel.memory",
+                              "ng-change"         => "vm.cbChange()",
+                              "maxlength"         => "50",
+                              "ng-pattern"        => "/^[-+]?[0-9]+$/",
+                              "miqrequired"       => "",
+                              "checkchange"       => "",
+                              "auto-focus"        => "",
+                              "validate-multiple" => "4",
+                              :miqmin             => "#{@reconfig_limits[:min__vm_memory]}",
+                              :miqmax             => "#{@reconfig_limits[:max__vm_memory]}",
+                              :memtype            => "{{vm.reconfigureModel.memory_type}}"}
+          %span{"style"=>"color:red", "ng-show" => "angularForm.memory.$invalid"}
+            = _(" Memory value not in range or not a multiple of 4")
+          %span{"style"=>"color:red", "ng-show" => "angularForm.memory.$required"}
+            = _(" Valid memory value required")
+        .col-md-2
+          = select_tag('mem_type',
+                       options_for_select(%w(MB GB)),
+                       "ng-model"                    => "vm.reconfigureModel.memory_type",
+                       "ng-change"                   => "vm.memtypeChanged()",
+                       "maxlength"                   => "20",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "")
+          = (@reconfig_memory_note)
+  - if role_allows?(:feature => 'vm_reconfigure_cpu')
+    .form-group
+      %label.col-md-2.control-label
+        = _('Processors')
+      .col-md-1
+        %input{"bs-switch"       => "",
+           "type"            => "checkbox",
+           "name"            => "cb_cpu",
+           "ng-model"        => "vm.cb_cpu",
+           "ng-change"       => "vm.cbChange()",
+           "switch-on-text"  => _("Yes"),
+           "switch-off-text" => _("No")}
+      %br
+      #cpu_div{"ng-if" => "vm.cb_cpu", :style => "margin-left: 20px"}
+        %h3= _(' Processor Options')
+        - if @socket_options.length > 1
+          .form-group{"ng-class" => "{'has-error': angularForm.socket_count.$invalid}"}
+            %label.col-md-2.control-label
+              = _('Sockets')
+            .col-md-2
+              = select_tag('socket_count',
+                          options_for_select([["<#{_('Choose')}>", '']] + @socket_options, disabled: ["<#{_('Choose')}>", nil]),
+                          "ng-model"                    => "vm.reconfigureModel.socket_count",
                           "ng-change"                   => "vm.processorValueChanged()",
-                          "ng-pattern"                  => "/^[-+]?[0-9]+$/",
                           "miqrequired"                 => "",
                           "maxlength"                   => "100",
                           "checkchange"                 => "",
                           "selectpicker-for-select-tag" => "")
-            - if @cores_options.length <= 1
-              @cores_options[0]
-            %span.help-block{"ng-if" => "angularForm.cores_per_socket_count.$dirty"}
-              =_("Note: a restart of the virtual machine might be required for the changes to apply.")
-        .form-group{"ng-class" => "{'has-error': angularForm.total_cpus.$invalid}"}
-          %label.col-sm-2.control-label
-            = _('Total Processors')
-          .col-md-2
-            %input.form-control{"type"           => "text",
-                                "id"             => "total_cpus",
-                                "name"           => "total_cpus",
-                                "ng-model"       => "vm.reconfigureModel.total_cpus",
-                                :readonly        => '',
-                                "maxlength"      => "50",
-                                "validate_total" => "",
-                                "miqmax"         => "#{@reconfig_limits[:max__total_vcpus]}",
-                                "auto-focus"     => ""}
-            %span{"style" => "color:red", "ng-show" => "angularForm.total_cpus.$invalid"}
-              = _(" Total processors value larger than the maximum allowed")
-  - if supports_reconfigure_disks?
+              - if @socket_options.length <= 1
+                @socket_options[0]
+        -  if @cores_options.length > 1
+          .form-group{"ng-class" => "{'has-error': angularForm.cores_per_socket_count.$invalid}"}
+            %label.col-md-2.control-label
+              = _('Cores Per Socket')
+            .col-md-2
+              = select_tag('cores_per_socket_count',
+                            options_for_select([["<#{_('Choose')}>", '']] + @cores_options, disabled: ["<#{_('Choose')}>", nil]),
+                            "ng-model"                    => "vm.reconfigureModel.cores_per_socket_count",
+                            "ng-change"                   => "vm.processorValueChanged()",
+                            "ng-pattern"                  => "/^[-+]?[0-9]+$/",
+                            "miqrequired"                 => "",
+                            "maxlength"                   => "100",
+                            "checkchange"                 => "",
+                            "selectpicker-for-select-tag" => "")
+              - if @cores_options.length <= 1
+                @cores_options[0]
+              %span.help-block{"ng-if" => "angularForm.cores_per_socket_count.$dirty"}
+                =_("Note: a restart of the virtual machine might be required for the changes to apply.")
+          .form-group{"ng-class" => "{'has-error': angularForm.total_cpus.$invalid}"}
+            %label.col-sm-2.control-label
+              = _('Total Processors')
+            .col-md-2
+              %input.form-control{"type"           => "text",
+                                  "id"             => "total_cpus",
+                                  "name"           => "total_cpus",
+                                  "ng-model"       => "vm.reconfigureModel.total_cpus",
+                                  :readonly        => '',
+                                  "maxlength"      => "50",
+                                  "validate_total" => "",
+                                  "miqmax"         => "#{@reconfig_limits[:max__total_vcpus]}",
+                                  "auto-focus"     => ""}
+              %span{"style" => "color:red", "ng-show" => "angularForm.total_cpus.$invalid"}
+                = _(" Total processors value larger than the maximum allowed")
+  - if supports_reconfigure_disks? && role_allows?(:feature => 'vm_reconfigure_disks')
     %hr
     %div
       %h3
