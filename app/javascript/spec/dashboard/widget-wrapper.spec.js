@@ -24,7 +24,7 @@ describe('widget-wrapper', () => {
         content: '<div></div>',
         minimized: false,
         shortcuts: [],
-        blank: "false",
+        blank: false,
       },
       status: 200,
       statusText: 'OK',
@@ -41,7 +41,7 @@ describe('widget-wrapper', () => {
     it(`renders widget-${widget} when widget-type is ${widget}`, (done) => {
       element = angular.element(`
         <form name="angularForm">
-          <widget-wrapper widget-id="42" widget-blank="false" widget-buttons="null" widget-type="${widget}"></widget-wrapper>
+          <widget-wrapper widget-id="42" widget-blank="false" widget-buttons="[]" widget-type="${widget}"></widget-wrapper>
         </form>
       `);
       element = $compile(element)($scope);

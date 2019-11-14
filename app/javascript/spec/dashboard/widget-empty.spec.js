@@ -20,9 +20,9 @@ describe('widget-empty', () => {
     $compile = _$compile_;
     const response = {
       data: {
-        content: '',
+        content: null,
         minimized: false,
-        blank: 'true',
+        blank: true,
       },
       status: 200,
       statusText: 'OK',
@@ -38,7 +38,7 @@ describe('widget-empty', () => {
   it('is rendered in widget-wrapper if blank is set to true', (done) => {
     element = angular.element(`
       <form name="angularForm">
-        <widget-wrapper widget-id="42" widget-buttons="null" widget-type="report"></widget-wrapper>
+        <widget-wrapper widget-id="42" widget-buttons="[]" widget-type="report"></widget-wrapper>
       </form>
     `);
     element = $compile(element)($scope);
