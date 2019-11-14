@@ -183,18 +183,19 @@ class TreeBuilder
 
   def set_locals_for_render
     {
-      :tree_id         => "#{@name}box",
-      :tree_name       => @name.to_s,
-      :bs_tree         => @bs_tree,
-      :checkboxes      => @options[:checkboxes],
-      :autoload        => @options[:lazy],
-      :allow_reselect  => @options[:allow_reselect],
-      :three_checks    => @options[:three_checks],
-      :onclick         => @options[:onclick],
-      :oncheck         => @options[:oncheck],
-      :click_url       => @options[:click_url],
-      :check_url       => @options[:check_url],
-      :silent_activate => @options[:silent_activate]
+      :tree_id            => "#{@name}box",
+      :tree_name          => @name.to_s,
+      :bs_tree            => @bs_tree,
+      :checkboxes         => @options[:checkboxes],
+      :autoload           => @options[:lazy],
+      :allow_reselect     => @options[:allow_reselect],
+      :three_checks       => @options[:three_checks],
+      :hierarchical_check => @options[:hierarchical_check],
+      :onclick            => @options[:onclick],
+      :oncheck            => @options[:oncheck],
+      :click_url          => @options[:click_url],
+      :check_url          => @options[:check_url],
+      :silent_activate    => @options[:silent_activate]
     }.compact
   end
 

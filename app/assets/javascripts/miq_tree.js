@@ -24,25 +24,6 @@ window.miqTreeFindNodeByKey = function(tree, key) {
   });
 }
 
-// Generic OnCheck handler for the checkboxes in tree
-function miqOnCheckGeneric(node) {
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
-  miqJqueryRequest(url);
-}
-
-function miqOnCheckTenantTree(node) {
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
-  sendDataWithRx({
-    controller: 'catalogItemFormController',
-    key: node.key,
-  })
-}
-
-// Generic OnClick handler for selecting nodes in tree
-function miqOnClickGeneric(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
-}
-
 function miqAddNodeChildren(treename, key, selected_node, children) {
   var node = miqTreeFindNodeByKey(treename, key);
   if (node.lazyLoad) {
@@ -71,14 +52,6 @@ function miqRemoveNodeChildren(treename, key) {
       miqTreeObject(treename).removeNode(child);
     });
   }
-}
-
-function miqOnClickMenuRoles(id) {
-  var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
-  miqJqueryRequest(url, {beforeSend: true,
-    complete: true,
-    no_encoding: true,
-  });
 }
 
 function miqTreeSelect(key) {
@@ -120,13 +93,6 @@ function miqExpandParentNodes(treename, selected_node) {
   }
 }
 
-function miqOnClickSelectRbacTreeNode(id) {
-  var tree = 'rbac_tree';
-  miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
-  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
-  miqTreeScrollToNode(tree, id);
-}
-
 function miqTreeScrollToNode(tree, id) {
   var node = miqTreeFindNodeByKey(tree, id);
   var parentPanelBody = node.$el.parents('div.panel-body');
@@ -147,20 +113,6 @@ function miqTreeScrollToNode(tree, id) {
   }
 }
 
-function miqOnClickAutomate(id) {
-  miqTreeExpandNode('automate_tree', id);
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
-}
-
-function miqOnClickAutomateCatalog(id) {
-  miqTreeExpandNode('automate_catalog_tree', id);
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
-}
-
-function miqOnClickIncludeDomainPrefix() {
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
-}
-
 // delete specific tree cookies
 function miqDeleteTreeCookies(tree_prefix) {
   miqTreeClearState(tree_prefix);
@@ -171,41 +123,48 @@ function miqTreeToggleExpand(treename, expand_mode) {
   expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
 }
 
-// OnClick handler for the VM Snapshot Tree
-function miqOnClickSnapshots(id) {
-  var pieces = id.split(/-/);
-  var shortId = pieces[pieces.length - 1];
-  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
+/**
+ * Function for the react tree to select checked keys.
+ * @param  {Object} tree  The tree object itself.
+ * @return {Array}        Array of keys.
+ */
+function miqGetSelectedKeys(tree) {
+  return Object.values(tree).filter(function(entry) {
+    return (entry.state && entry.state.checked);
+  }).map(function(entry) {
+    return entry.attr.key;
+  });
 }
 
-// OnClick handler for Host Network Tree
-function miqOnClickHostNet(id) {
-  var ids = id.split('|')[0].split('_'); // Break apart the node ids
-  var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
-  DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
+// Generic OnCheck handler for the checkboxes in tree
+function miqOnCheckGeneric(key, checked) {
+  miqJqueryRequest(ManageIQ.tree.checkUrl + encodeURIComponent(key) + '?check=' + (checked ? '1' : '0'));
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
-function miqOnCheckSections(node, tree_name) {
-  var selectedKeys = miqTreeObject(tree_name).getChecked().map(function(n) {
-    return n.key;
-  });
+function miqOnCheckSections(key, checked, tree) {
+  var selectedKeys = miqGetSelectedKeys(tree);
 
-  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + node.state.checked;
+  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + checked;
   miqJqueryRequest(url, {data: {all_checked: selectedKeys}});
   return true;
 }
 
-function miqOnCheckGenealogy(node, treename) {
-  var tree = miqTreeObject(treename);
-  // Map the selected nodes into an array of keys
-  var selectedKeys = tree.getChecked().map(function(item) {
-    return encodeURIComponent(item.key);
-  });
+function miqOnCheckGenealogy(key, checked, tree) {
+  var selectedKeys = getSelectedKeys(tree);
+
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
+}
+
+function miqOnCheckTenantTree(node) {
+  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
+  sendDataWithRx({
+    controller: 'catalogItemFormController',
+    key: node.key,
+  })
 }
 
 function miqCheckAll(cb, treename) {
@@ -224,6 +183,62 @@ function miqCheckAll(cb, treename) {
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&all_checked=' + selectedKeys);
+}
+
+// Generic OnClick handler for selecting nodes in tree
+function miqOnClickGeneric(id) {
+  miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
+}
+
+// Settings -> Diagnostics -> Roles By servers tab
+function miqOnClickDiagnostics(id) {
+  var typ = id.split('-')[0]; // Break apart the node ids
+  if (['svr', 'role', 'asr'].includes(typ)) {
+    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
+  }
+}
+
+// Compute -> Infra -> VMs -> Select one -> Snapshot button
+function miqOnClickSnapshots(id) {
+  var pieces = id.split(/-/);
+  var shortId = pieces[pieces.length - 1];
+  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
+}
+
+// OnClick handler for Host Network Tree
+function miqOnClickHostNet(id) {
+  var ids = id.split('|')[0].split('_'); // Break apart the node ids
+  var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
+  DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
+}
+
+function miqOnClickSelectRbacTreeNode(id) {
+  var tree = 'rbac_tree';
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
+  miqTreeScrollToNode(tree, id);
+}
+
+function miqOnClickMenuRoles(id) {
+  var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
+  miqJqueryRequest(url, {
+    beforeSend: true,
+    complete: true,
+    no_encoding: true,
+  });
+}
+
+// Automate -> Expoler -> Select a class -> Copy -> Uncheck Copy to same path -> Namespace selection uses thath tree
+function miqOnClickAutomate(id) {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
+}
+
+// Services -> Catalogs -> Catalog Items -> add a new item -> select Generic -> three entry point fields open it.
+function miqOnClickAutomateCatalog(id) {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
+}
+
+function miqOnClickIncludeDomainPrefix() {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
 
 function miqTreeExpandNode(treename, key) {
@@ -248,18 +263,6 @@ function miqTreeExpandRecursive(treeId, fullNodeId) {
       miqTreeExpandNode(treeId, currId);
     }
   });
-}
-
-// OnClick handler for Server Roles Tree
-function miqOnClickDiagnostics(id) {
-  var typ = id.split('-')[0]; // Break apart the node ids
-  switch (typ) {
-    case 'svr':
-    case 'role':
-    case 'asr':
-      miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
-      break;
-  }
 }
 
 function miqMenuChangeRow(action, elem) {
@@ -363,19 +366,17 @@ function miqSquashToggle(treeName) {
 
 function miqTreeEventSafeEval(func) {
   var whitelist = [
-    'miqOnCheckGenealogy',
+    'miqOnCheckGenealogy', // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
     'miqOnCheckGeneric',
-    'miqOnClickMenuRoles',
-    'miqOnCheckProtect',
-    'miqOnCheckSections',
-    'miqOnClickAutomate',
-    'miqOnClickAutomateCatalog',
-    'miqOnClickDiagnostics',
-    'miqOnClickGeneric',
-    'miqOnClickHostNet',
-    'miqOnClickSnapshots',
-    'miqOnClickUtilization',
-    'miqOnCheckTenantTree',
+    'miqOnCheckSections', // Compute -> Infra -> VMs -> Compare VM's
+    'miqOnCheckTenantTree', // Still angular component
+    'miqOnClickAutomate', // Automate -> Expoler -> Select a class -> Copy -> Uncheck Copy to same path -> Namespace selection uses thath tree
+    'miqOnClickAutomateCatalog', // Services -> Catalogs -> Catalog Items -> add a new item -> select Generic -> three entry point fields open it.
+    'miqOnClickDiagnostics', // Settings -> Diagnostics -> Roles By servers tab
+    'miqOnClickGeneric', // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
+    'miqOnClickHostNet', // Compute -> Infra -> Networking // Still old tree
+    'miqOnClickMenuRoles', // Settings -> Access Controll -> Roles/Edit Roles // Seems like not doing anything
+    'miqOnClickSnapshots', // Compute -> Infra -> VMs -> Select one -> Snapshot button
   ];
 
   if (whitelist.includes(func)) {
