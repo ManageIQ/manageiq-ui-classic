@@ -17,12 +17,12 @@ describe OpsController do
 
   describe '#ap_edit' do
     context 'adding a new Analysis Profile' do
-      let(:desc) { 'Description1' }
+      let(:name) { 'Name1' }
       let(:edit) do
         {:scan_id => nil,
          :key     => 'ap_edit__new',
-         :new     => {:name        => 'Name1',
-                      :description => desc,
+         :new     => {:name        => name,
+                      :description => 'Description1',
                       "file"       => {:definition => {"stats" => [{}]}}}}
       end
 
@@ -36,7 +36,7 @@ describe OpsController do
       end
 
       it 'sets the flash message for adding a new Analysis Profile properly' do
-        expect(controller).to receive(:add_flash).with("Analysis Profile \"#{desc}\" was saved")
+        expect(controller).to receive(:add_flash).with("Analysis Profile \"#{name}\" was saved")
         controller.send(:ap_edit)
       end
     end
