@@ -125,7 +125,14 @@ class DashboardController < ApplicationController
     end
 
     return if redirect_to_remembered(section.id)
-    redirect_to(section.default_redirect_url)
+
+    target_url = section.default_redirect_url
+
+    if target_url
+      redirect_to(target_url)
+    else
+      redirect_to(start_url_for_user(nil))
+    end
   end
 
   # New tab was pressed
