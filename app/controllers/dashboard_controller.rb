@@ -147,8 +147,9 @@ class DashboardController < ApplicationController
 
   def widget_chart_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
-    blank = widget.contents_for_user(current_user).blank?
-    datum = blank ? nil : widget.contents_for_user(current_user).contents
+    widget_content = widget.contents_for_user(current_user)
+    blank = widget_content.blank?
+    datum = blank ? nil : widget_content.contents
     content = nil
     if datum.blank?
       state = 'no_data'
@@ -183,8 +184,9 @@ class DashboardController < ApplicationController
 
   def widget_report_data
     widget = find_record_with_rbac(MiqWidget, params[:id])
-    blank = widget.contents_for_user(current_user).blank?
-    content = blank ? nil : widget.contents_for_user(current_user).contents
+    widget_content = widget.contents_for_user(current_user)
+    blank = widget_content.blank?
+    content = blank ? nil : widget_content.contents
     render :json => {
       :blank     => blank,
       :content   => content,
