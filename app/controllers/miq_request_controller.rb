@@ -256,8 +256,8 @@ class MiqRequestController < ApplicationController
     else
       render :update do |page|
         page << javascript_prologue
-        page.replace_html("requester_div", :partial => "shared/views/prov_dialog",
-                                           :locals  => {:wf => @edit[:wf], :dialog => :requester})
+        page.replace_html(:requester, :partial => "shared/views/prov_dialog",
+                                      :locals  => {:wf => @edit[:wf], :dialog => :requester})
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       end
     end
