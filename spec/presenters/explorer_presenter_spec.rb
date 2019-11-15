@@ -25,9 +25,9 @@ describe ExplorerPresenter do
     end
 
     context "#[:record_id]" do
-      it 'sets :record object' do
+      it 'sets :record object, ensuring string id' do
         @presenter[:record_id] = 666
-        expect(subject[:record][:recordId]).to eq(666)
+        expect(subject[:record][:recordId]).to eq("666")
       end
     end
 

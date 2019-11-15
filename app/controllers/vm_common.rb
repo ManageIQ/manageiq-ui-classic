@@ -1261,7 +1261,7 @@ module VmCommon
         partial_locals[:action_url]  = @lastaction
 
         # Set parent record id & class for JS function miqGridSort to build URL
-        presenter[:parent_id]    = @record.id.to_s
+        presenter[:parent_id]    = @record.id
         presenter[:parent_class] = params[:controller]
       end
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
