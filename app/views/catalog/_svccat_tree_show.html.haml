@@ -2,9 +2,9 @@
   = render :partial => "layouts/flash_msg"
   .form-horizontal
     .form-group
-      %label.col-md-2.control-labelimage{:rowspan => 9}
+      %label.col-md-2{:rowspan => 9}
         - if @record.picture
-          %img{:src => "#{@record.picture.url_path}?#{rand(99_999_999)}"}/
+          %img{:style => "height: 80px; width: 80px;", :src => "#{@record.picture.url_path}?#{rand(99_999_999)}"}/
         - else
           %i.fa.fa-cube.fa-4x
         %br
