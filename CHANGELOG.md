@@ -4,6 +4,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Unreleased as of Sprint 124 - 2019-11-11
+
+### Fixed
+* Allow performing SSA on Datastores in Datastore Clusters accordion [(#6298)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6298)
+* Show name in success catalog form messages [(#6352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6352)
+* Make Save button disabled after canceling User's password changes [(#6365)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6365)
+* Optimization - consistent date formats [(#6385)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6385)
+* ReportDataTable - fix error when data.report is null [(#6386)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6386)
+* Unify the service catalog order button handling on list/single views [(#6389)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6389)
+
+
+## Unreleased as of Sprint 123 - 2019-10-28
+
+### Added
+* Dropbox removed in exchange for using support tool [(#6330)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6330)
+
+### Fixed
+* Allow editing and other actions on selected Host Aggregate [(#6267)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6267)
+* Disable "Apply" button when all sections are deselected. [(#6278)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6278)
+* Display only one Back button for Policy simulation [(#6316)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6316)
+* Fix edit of GOD custom button [(#6322)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6322)
+* Fix logout on group change [(#6325)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6325)
+* Change toolbar delete buttons for Button and Button Group to use generic code [(#6230)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6230)
+
+
+## Unreleased as of Sprint 122 - 2019-10-14
+
+### Added
+* Toolbar: React rewrite and simplification. [(#5997)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5997)
+* Make Automate Domains and Providers clickable from the list displayed through Tenant's Relationships [(#6144)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6144)
+* Add Provider to List view of Infra/Hosts and Infra/Datastores [(#6283)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6283)
+* Add Refresh button to Ansible Tower Jobs page [(#6293)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6293)
+* Convert part of Infra Provider dashboard to React, add Quadicon [(#6248)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6248)
+
+
+### Fixed
+* Fix error on Cloud Provider Dashboard [(#6198)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6198)
+* Allow resetting changes while editing Zone's Password or Verify Password fields [(#6217)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6217)
+* Fix tagging for Edit Group and Provisioning screens [(#6235)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6235)
+* Provider validate - don't attempt to directly connect from the UI [(#6237)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6237)
+* Fixed low z-index on ddf select menu. [(#6264)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6264)
+* fix styling issue in header [(#6276)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6276)
+* Test against the right accor when switching to chargeback reports [(#6285)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6285)
 
 ## Unreleased as of Sprint 121 - 2019-09-30
 
