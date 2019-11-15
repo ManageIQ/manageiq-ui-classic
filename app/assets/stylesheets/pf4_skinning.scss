@@ -1,0 +1,60 @@
+.toolbar-pf .form-group {
+  border-right: 0;
+}
+
+.toolbar-pf-actions .form-group > .btn-default {
+  background-color: #fff;
+  background-image: none;
+  border-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.toolbar-pf-actions .form-group > .dropdown > .btn-default {
+  background-color: #fff;
+  background-image: none;
+  border-color: #ededed;
+  border-bottom: 1px solid #8a8d90;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+/*  &.btn-default:active:focus, 
+   .btn-default:active.focus {
+      border-bottom: 2px solid #0066CB !important;
+    }
+  &.btn-default:active:hover, 
+   .btn-default.active:hover {
+      border-bottom: 1px solid #0066CB !important;
+    }*/
+  .caret:before {
+    bottom: 0;
+    content: "";
+    left: 0;
+    line-height: 12px;
+    position: absolute;
+    text-align: center;
+    top: -1px;
+    right: 0;
+  }
+}
+
+.btn-group > .dropdown-menu,
+.dropdown > .dropdown-menu,
+.input-group-btn > .dropdown-menu {
+  margin-top: 1px;
+  border: 0;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #ededed;
+  border-color: #ededed;
+}
+
+.open .btn  {
+  border-bottom: 2px solid #0066cb !important;
+}
+
+.btn .disabled {
+  background-color: #fff !important;
+}
+

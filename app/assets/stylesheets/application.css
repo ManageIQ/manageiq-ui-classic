@@ -11,6 +11,7 @@
  *= require ./metrics
  *= require ./miq_tree
  *= require ./notifications
+ *= require ./pf4_skinning
  *= require ./piecharts
  *= require ./report-data-table
  *= require ./timeline
