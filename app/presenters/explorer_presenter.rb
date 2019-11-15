@@ -293,10 +293,11 @@ class ExplorerPresenter
       toolbar
     end
 
+    # ids are nil or string
     data[:record] = {
-      :parentId    => @options[:parent_id],
+      :parentId    => @options[:parent_id]&.to_s,
       :parentClass => @options[:parent_class],
-      :recordId    => @options[:record_id],
+      :recordId    => @options[:record_id]&.to_s,
     }
 
     if @options[:osf_node].present?
