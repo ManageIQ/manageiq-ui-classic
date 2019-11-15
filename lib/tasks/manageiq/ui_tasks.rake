@@ -171,7 +171,7 @@ namespace :webpacker do
 
     if $?.success?
       $stdout.puts "[Webpacker] Compiled digests for all packs in #{Webpacker::Configuration.entry_path}:"
-      $stdout.puts JSON.parse(File.read(Webpacker::Configuration.manifest_path))
+      $stdout.puts JSON.parse(File.read(Webpacker::Configuration.manifest_path)).pretty_inspect
     else
       $stderr.puts "[Webpacker] Compilation Failed"
       exit!
