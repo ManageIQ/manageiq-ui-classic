@@ -865,8 +865,6 @@ class ApplicationController < ActionController::Base
       # Generate html for the list icon
       item = listicon_item(view, row['id'])
       icon, icon2, image = fonticon_or_fileicon(item)
-      # FIXME: adding exceptions here is a wrong approach
-      icon = nil if params[:controller] == 'pxe'
 
       # Clickable should be false only when it's explicitly set to false
       not_clickable = if params
