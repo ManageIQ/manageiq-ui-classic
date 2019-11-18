@@ -7,6 +7,7 @@
  *= require ./dialog_fields
  *= require ./dual_list
  *= require ./dynamic_prefix_form_input
+ *= require ./expression_editor
  *= require ./graphql_explorer
  *= require ./metrics
  *= require ./miq_tree
