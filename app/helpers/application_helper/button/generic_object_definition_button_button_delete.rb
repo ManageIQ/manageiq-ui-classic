@@ -1,9 +1,5 @@
-class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonGroupDelete < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete < ApplicationHelper::Button::Basic
   needs :@record
-
-  def disabled?
-    !@record.custom_buttons.count.zero?
-  end
 
   def data(_data)
     {'function'      => 'sendDataWithRx',
