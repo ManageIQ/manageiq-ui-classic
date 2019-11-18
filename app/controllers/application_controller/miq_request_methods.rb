@@ -28,13 +28,15 @@ module ApplicationController::MiqRequestMethods
       @record =
         if @edit[:new][:src_configured_system_ids].present?
           PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
-        elsif @edit[:new][:src_vm_id].first.present?
-          MiqTemplate.where(:id => @edit[:new][:src_vm_id].first).first
+        else
+          MiqTemplate.where(:id => Array(@edit[:new][:src_vm_id]).first)
         end
+
+      all_dialogs = @edit[:wf].get_all_dialogs rescue []
+
       render :update do |page|
         page << javascript_prologue
         # Going thru all dialogs to see if model has set any of the dialog display to hide/ignore
-        all_dialogs = @edit[:wf].get_all_dialogs
         all_dialogs.each do |dialog_name, dialog|
           page << "miq_tabs_show_hide('#{dialog_name}_tab', #{dialog[:display] == :show});"
         end
