@@ -45,10 +45,12 @@ ManageIQ.angular.app.component('widgetWrapper', {
             miqSparkleOff();
             add_flash(sprintf(__('Dashboard "%s" was refreshed'), vm.widgetTitle), 'success');
           }
+          vm.error = false;
           deferred.resolve();
         })
         .catch((e) => {
           vm.error = true;
+          vm.widgetModel = null;
           miqService.handleFailure(e);
           deferred.reject();
         });
@@ -57,11 +59,12 @@ ManageIQ.angular.app.component('widgetWrapper', {
     vm.refresh = function() {
       $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
         .then((response) => {
-          miqSparkleOn();
+          vm.widgetModel = null;
           return API.wait_for_task(response.data.task_id).then(vm.refreshWidgetHTML(true));
         })
         .catch((e) => {
           vm.error = true;
+          vm.widgetModel = null;
           miqService.handleFailure(e);
           deferred.reject();
         });
@@ -89,7 +92,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
           </div>
         </div>
         <widget-error ng-if="vm.error === true"></widget-error>
-        <widget-spinner ng-if="!vm.widgetModel && vm.widgetBlank == false && !vm.error"></widget-spinner>
+        <widget-spinner ng-if="!vm.widgetModel && !vm.error"></widget-spinner>
         <div ng-if="vm.widgetModel"
              ng-attr-id="{{vm.innerDivId}}"
              ng-class="{ hidden: vm.widgetModel.minimized, mc:true }">
