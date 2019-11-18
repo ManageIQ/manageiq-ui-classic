@@ -27,7 +27,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
       vm.innerDivId = `dd_w${vm.widgetId}_box`;
       vm.refreshWidgetHTML(false);
       vm.parsedButtons = JSON.parse(vm.widgetButtons);
-      const refreshButton = vm.parsedButtons.find(ob => ob.id.includes("refresh"));
+      const refreshButton = vm.parsedButtons.find(ob => ob.refresh);
       if (refreshButton) {
         refreshButton.onclick = vm.refresh;
       };
