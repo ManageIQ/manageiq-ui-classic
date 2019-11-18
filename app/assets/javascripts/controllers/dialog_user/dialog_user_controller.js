@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http) {
+ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'openUrl', '$http', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, openUrl, $http, DialogData) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -63,14 +63,14 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   function submitButtonClicked() {
     vm.dialogData.action = apiAction;
     miqService.sparkleOn();
-    var apiData;
+
+    var apiData = DialogData.outputConversion(vm.dialogData);
     if (apiSubmitEndpoint.match(/generic_objects/)) {
-      apiData = {action: apiAction, parameters: _.omit(vm.dialogData, 'action')};
+      apiData = {action: apiAction, parameters: _.omit(apiData, 'action')};
     } else if (apiAction === 'reconfigure') {
-      apiData = {action: apiAction, resource: _.omit(vm.dialogData, 'action')};
-    } else {
-      apiData = vm.dialogData;
+      apiData = {action: apiAction, resource: _.omit(apiData, 'action')};
     }
+
     return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
       .then(function(response) {
         if (vm.openUrl === "true") {

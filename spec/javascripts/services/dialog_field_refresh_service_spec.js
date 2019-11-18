@@ -3,7 +3,7 @@ describe('dialogFieldRefreshService', function() {
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(dialogFieldRefreshService, _API_) {
+  beforeEach(inject(function(dialogFieldRefreshService, _API_, DialogData) {
     testDialogFieldRefreshService = dialogFieldRefreshService;
     API = _API_;
 
@@ -14,12 +14,16 @@ describe('dialogFieldRefreshService', function() {
     };
 
     spyOn(API, 'post').and.callFake(function() {
-      return {then: function(response) { response(responseResult); }};
+      return Promise.resolve(responseResult);
     });
+
+    DialogData.data = {
+      fields: {},
+    };
   }));
 
   describe('#refreshField', function() {
-    var data = 'the data';
+    var data = { "the field": "data1" };
     var field = 'the field';
     var url = 'url';
     var idList = {
@@ -49,7 +53,7 @@ describe('dialogFieldRefreshService', function() {
       var requestData = {
         action: 'refresh_dialog_fields',
         resource: {
-          dialog_fields: 'the data',
+          dialog_fields: data,
           fields: 'the field',
           resource_action_id: '321',
           target_id: '456',

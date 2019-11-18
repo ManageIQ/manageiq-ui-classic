@@ -12,6 +12,7 @@
 #
 src_files:
 - __spec__/helpers/i18n-test.js
+- __spec__/helpers/object.values.js
 - packs/runtime.js
 - packs/shims.js
 - packs/vendor.js
