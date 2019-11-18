@@ -375,7 +375,7 @@ class DashboardController < ApplicationController
     if task_id
       render :json => {:task_id => task_id.to_s}, :status => 200
     else
-      render :json => {:message => _("There was an error during refresh.")}, :status => 400
+      render :json => {:error => {:message => _("There was an error during refresh.")}}, :status => 400
     end
   end
 
