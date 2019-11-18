@@ -29,14 +29,10 @@ module ApplicationController::MiqRequestMethods
         if @edit[:new][:src_configured_system_ids].present?
           PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
         else
-          MiqTemplate.where(:id => @edit[:new][:src_vm_id].kind_of?(Array) ? @edit[:new][:src_vm_id].first : @edit[:new][:src_vm_id]).first
+          MiqTemplate.where(:id => Array(@edit[:new][:src_vm_id]).first)
         end
 
-      begin
-        all_dialogs = @edit[:wf].get_all_dialogs
-      rescue Exception
-        all_dialogs = []
-      end
+      all_dialogs = @edit[:wf].get_all_dialogs rescue []
 
       render :update do |page|
         page << javascript_prologue
