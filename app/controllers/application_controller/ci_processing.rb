@@ -388,6 +388,18 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
+
+    records = find_records_with_rbac(record_class, checked_or_params)
+    # Check each record if there is any compliance policy assigned to it
+    if records.any? { |record| !record.has_compliance_policies? }
+      javascript_flash(
+        :text       => _('No Compliance Policies assigned to one or more of the selected items'),
+        :severity   => :error,
+        :scroll_top => true
+      )
+      return
+    end
+
     generic_button_operation('check_compliance_queue', _('Check Compliance'), vm_button_action)
   end
   alias image_check_compliance check_compliance_vms
