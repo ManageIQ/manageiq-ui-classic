@@ -517,8 +517,9 @@ describe VmInfraController do
 
   it 'the reconfigure tab for a vm with max_cpu_cores_per_socket > 1 should display the cpu_cores_per_socket dropdown' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_2x2,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                           :ext_management_system => FactoryBot.create(:ems_infra),
+                           :host     => host_2x2,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -534,8 +535,9 @@ describe VmInfraController do
 
   it 'the reconfigure tab for a single vmware vm should display the list of disks' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_2x2,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                           :ext_management_system => FactoryBot.create(:ems_infra),
+                           :host     => host_2x2,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
@@ -551,8 +553,9 @@ describe VmInfraController do
 
   it 'the reconfigure tab displays the submit and cancel buttons' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_2x2,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
+                           :ext_management_system => FactoryBot.create(:ems_infra),
+                           :host     => host_2x2,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => "07"))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm.id}
