@@ -612,7 +612,7 @@ describe ApplicationController do
   it "Certain actions should be allowed only for a VM record" do
     feature = MiqProductFeature.find_all_by_identifier(["everything"])
     login_as FactoryBot.create(:user, :features => feature)
-    vm = FactoryBot.create(:vm_vmware)
+    vm = FactoryBot.create(:vm_vmware, :ext_management_system => FactoryBot.create(:ems_infra))
     controller.params = {:id => vm.id}
     actions = %i(vm_right_size vm_reconfigure)
     actions.each do |action|
