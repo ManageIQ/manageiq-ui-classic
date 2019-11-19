@@ -902,12 +902,16 @@ function miq_tabs_init(id, url, parms) {
         return sum + '&' + key + '=' + value;
       }, '?tab_id=' + currTabTarget);
 
-      miqObserveRequest(url + urlParams, {beforeSend: true})
-        .catch(function(err) {
-          add_flash(__('Error requesting data from server'), 'error');
-          console.log(err);
-          return Promise.reject(err);
-        });
+      if (miqCheckForChanges()) {
+        miqObserveRequest(url + urlParams, {beforeSend: true})
+          .catch(function (err) {
+            add_flash(__('Error requesting data from server'), 'error');
+            console.log(err);
+            return Promise.reject(err);
+          });
+      } else {
+        return false;
+      }
     }
   });
 
