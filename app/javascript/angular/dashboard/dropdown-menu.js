@@ -12,9 +12,9 @@ ManageIQ.angular.app.component('dropdownMenu', {
       vm.buttons = vm.buttonsData;
     };
 
-    vm.click = function(button) {
+    vm.click = function(button, event) {
       if (button.onclick) {
-        return button.onclick();
+        return button.onclick(event);
       }
       return true;
     };
@@ -36,7 +36,7 @@ ManageIQ.angular.app.component('dropdownMenu', {
              data-method="{{button.dataMethod}}"
              data-miq_sparkle_on="{{button.sparkleOn ? 'true' : 'false'}}"
              href="{{button.href}}"
-             ng-click="vm.click(button)"
+             ng-click="vm.click(button, $event)"
              id="{{button.id}}"
              ng-attr-data-remote="{{button.dataRemote}}"
              ng-attr-target="{{button.target}}"

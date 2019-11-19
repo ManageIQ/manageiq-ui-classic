@@ -88,7 +88,6 @@ class WidgetPresenter
                    :title    => _("Refresh this Widget"),
                    :name     => _("Refresh"),
                    :fonticon => 'fa fa-refresh fa-fw',
-                   :href     => 'javascript:;',
                    :refresh  => true)
     end
 

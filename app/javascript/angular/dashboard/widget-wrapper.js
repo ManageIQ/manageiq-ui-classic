@@ -56,7 +56,7 @@ ManageIQ.angular.app.component('widgetWrapper', {
         });
     };
 
-    vm.refresh = function() {
+    vm.refresh = function(event) {
       $http.post(`/dashboard/widget_refresh/?widget=${vm.widgetId}`)
         .then((response) => {
           vm.widgetModel = null;
@@ -68,6 +68,8 @@ ManageIQ.angular.app.component('widgetWrapper', {
           miqService.handleFailure(e);
           deferred.reject();
         });
+      event.preventDefault();
+      return false;
     };
 
     vm.widgetUrl = function() {
