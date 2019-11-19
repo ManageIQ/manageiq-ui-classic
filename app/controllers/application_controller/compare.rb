@@ -199,11 +199,6 @@ module ApplicationController::Compare
     end
   end
 
-  # User checked/unchecked a compare section
-  def compare_checked
-    section_checked(:compare)
-  end
-
   # Remove one of the VMs from the @compare object
   def compare_remove
     @compare = Marshal.load(session[:miq_compare])
@@ -427,9 +422,9 @@ module ApplicationController::Compare
     @keep_compare = true
     @explorer = %w[VMs Templates].include?(session[:db_title])
     if params[:check] == "drift"
-      drift_checked
+      section_checked(:drift)
     elsif params[:check] == "compare_miq"
-      compare_checked
+      section_checked(:compare)
     else
       set_checked_sections
       render :update do |page|
@@ -451,10 +446,6 @@ module ApplicationController::Compare
         end
       end
     end
-  end
-
-  def drift_checked
-    section_checked(:drift)
   end
 
   # Toggle exists/details view
