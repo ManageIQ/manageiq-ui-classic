@@ -616,15 +616,21 @@ module ApplicationController::CiProcessing
   def testable_action(action)
     controller = params[:controller]
     vm_infra_untestable_actions = %w[check_compliance_queue destroy refresh_ems vm_miq_request_new]
-    ems_cluster_untestable_actions = %w[scan]
-    if controller == "vm_infra"
-      return vm_infra_untestable_actions.exclude?(action)
-    end
-    if controller == "ems_cluster" || @display == 'ems_clusters'
-      return ems_cluster_untestable_actions.exclude?(action)
-    end
+    ems_cluster_untestable_actions = %w[check_compliance_queue scan]
+    other_untestable_actions = %w[check_compliance_queue]
 
-    true
+    return false if @display == 'ems_clusters' && action == 'scan'
+
+    case controller
+    when 'ems_cluster'
+      ems_cluster_untestable_actions.exclude?(action)
+    when 'auth_key_pair_cloud', 'availability_zone', 'cloud_network', 'cloud_tenant', 'ems_cloud', 'ems_infra', 'flavor', 'host', 'host_aggregate', 'resource_pool', 'storage', 'vm_cloud'
+      other_untestable_actions.exclude?(action)
+    when 'vm_infra'
+      vm_infra_untestable_actions.exclude?(action)
+    else
+      true
+    end
   end
 
   # Maps UI actions to queryable feature in case it is not possible
