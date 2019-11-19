@@ -18,15 +18,6 @@
             - (@cols.length - 1).times do |i|
               %td
                 = row["col#{i + 1}".to_sym].to_s.html_safe
-- unless @explorer
-  #buttons{:align => 'right'}
-    = link_to(_('Cancel'),
-              {:action => 'compare_cancel'},
-               :class  => 'btn btn-default',
-               :alt    => t = _('Cancel'),
-               :title  => t,
-               :method => :post)
-
     :javascript
       $('.table-treegrid').treegrid({
         callback: function (e) {
@@ -36,3 +27,12 @@
           miqJqueryRequest('/' + ManageIQ.controller + '/compare_set_state?rowId=' + exp_id + '&state=' + state);
         }
       });
+
+- unless @explorer
+  #buttons{:align => 'right'}
+    = link_to(_('Cancel'),
+              {:action => 'compare_cancel'},
+               :class  => 'btn btn-default',
+               :alt    => t = _('Cancel'),
+               :title  => t,
+               :method => :post)
