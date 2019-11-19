@@ -3,6 +3,7 @@
  *= require ./aggregate_status_card
  *= require ./angular
  *= require ./codemirror_editor
+ *= require ./compare_drift
  *= require ./data_driven_forms_overrides
  *= require ./dialog_fields
  *= require ./dual_list
