@@ -258,7 +258,7 @@ class ChargebackController < ApplicationController
     tier[:fixed_rate]    = 0.0
     tier[:variable_rate] = 0.0
 
-    code_currency = ChargebackRateDetailCurrency.find_by(:id => detail[:currency]).code
+    code_currency = Currency.find_by(:id => detail[:currency]).code
     add_row(detail_index, tier_index - 1, code_currency)
   end
 
@@ -560,7 +560,7 @@ class ChargebackController < ApplicationController
     @edit[:new][:description] = params[:description] if params[:description]
     if params[:currency]
       @edit[:new][:currency] = params[:currency].to_i
-      rate_detail_currency = ChargebackRateDetailCurrency.find(params[:currency])
+      rate_detail_currency = Currency.find(params[:currency])
       @edit[:new][:code_currency] = "#{rate_detail_currency.symbol} [#{rate_detail_currency.full_name}]"
     end
     @edit[:new][:details].each_with_index do |detail, detail_index|

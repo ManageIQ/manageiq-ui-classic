@@ -400,7 +400,7 @@ describe ChargebackController do
       end
 
       before do
-        [ChargebackRateDetailCurrency, ChargebackRate].each(&:seed)
+        [Currency, ChargebackRate].each(&:seed)
       end
 
       it "adds new chargeback rate using default values" do
