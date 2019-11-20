@@ -79,8 +79,8 @@ describe GitBasedDomainImportService do
 
       it "calls 'import' with the correct options" do
         allow(task).to receive(:task_results).and_return(domain)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
-        expect(domain).to receive(:update_attribute).with(:enabled, true)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(domain).to receive(:update).with(:enabled => true)
 
         subject.import(git_repo.id, ref_name, 321)
       end
@@ -93,8 +93,8 @@ describe GitBasedDomainImportService do
 
       it "calls 'import' with the correct options" do
         allow(task).to receive(:task_results).and_return(domain)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
-        expect(domain).to receive(:update_attribute).with(:enabled, true)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(domain).to receive(:update).with(:enabled => true)
         subject.import(git_repo.id, ref_name, 321)
       end
     end
@@ -107,7 +107,7 @@ describe GitBasedDomainImportService do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect { subject.import(git_repo.id, ref_name, 321) }.to raise_exception(
-          MiqException::Error, "Selected branch or tag does not contain a valid domain"
+          MiqException::Error, "MiqException::Error"
         )
       end
 
@@ -117,7 +117,7 @@ describe GitBasedDomainImportService do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect { subject.import(git_repo.id, ref_name, 321) }.to raise_exception(
-          MiqException::Error, 'Selected branch or tag contains more than one domain'
+          MiqException::Error, 'multiple domains'
         )
       end
     end
