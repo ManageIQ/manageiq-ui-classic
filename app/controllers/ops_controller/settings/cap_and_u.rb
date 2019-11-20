@@ -155,7 +155,7 @@ module OpsController::Settings::CapAndU
   def cu_collection_get_form_vars
     if params[:id]
       nodetype = params[:id].split('_')
-      node_type = if params[:tree_name] == 'cluster'
+      node_type = if params[:tree_name] == 'cluster_tree'
                     if nodetype[0] == 'xx-NonCluster'
                       nodetype.size == 2 ? ['NonCluster', nodetype[1]] : ['NonCluster']
                     else
@@ -165,9 +165,9 @@ module OpsController::Settings::CapAndU
     end
     @edit[:new][:all_clusters] = params[:all_clusters] == 'true' if params[:all_clusters]
     @edit[:new][:all_storages] = params[:all_storages] == 'true' if params[:all_storages]
-    if params[:tree_name] == 'datastore'
+    if params[:tree_name] == 'datastore_tree'
       datastore_tree_settings
-    elsif params[:tree_name] == 'cluster'
+    elsif params[:tree_name] == 'cluster_tree'
       cluster_tree_settings(node_type)
     end
   end
