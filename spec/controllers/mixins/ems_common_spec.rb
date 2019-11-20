@@ -305,6 +305,11 @@ describe EmsContainerController do
                 expect(controller).to receive(:tag).with(display_s.classify.safe_constantize)
                 controller.send(:button)
               end
+
+              it 'returns before calling check_if_button_is_implemented' do
+                expect(controller).not_to receive(:check_if_button_is_implemented)
+                controller.send(:button)
+              end
             end
 
             context "managing policies of selected #{items}" do
@@ -314,13 +319,28 @@ describe EmsContainerController do
                 expect(controller).to receive(:assign_policies).with(display_s.classify.safe_constantize)
                 controller.send(:button)
               end
+
+              it 'returns before calling check_if_button_is_implemented' do
+                expect(controller).not_to receive(:check_if_button_is_implemented)
+                controller.send(:button)
+              end
             end
 
             context "checking compliance of selected #{items}" do
               let(:press) { "#{display_s}_check_compliance" }
 
+              before do
+                allow(controller).to receive(:process_check_compliance)
+                controller.instance_variable_set(:@lastaction, 'show')
+              end
+
               it 'calls check_compliance_nested method with proper model class' do
                 expect(controller).to receive(:check_compliance_nested).with(display_s.classify.safe_constantize)
+                controller.send(:button)
+              end
+
+              it 'calls show method' do
+                expect(controller).to receive(:show)
                 controller.send(:button)
               end
             end
