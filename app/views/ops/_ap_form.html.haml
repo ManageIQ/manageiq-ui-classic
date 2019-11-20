@@ -61,4 +61,4 @@
           = miq_tab_content('event_log', @sb[:ap_active_tab]) do
             = render :partial => "ap_form_nteventlog", :locals => {:entry => entry, :edit => edit}
 :javascript
-  miq_tabs_init('#ap_tabs', '/ops/ap_set_active_tab');
+  miq_tabs_init('#ap_tabs', '/ops/ap_set_active_tab', {edit_mode: 'true'});

@@ -902,7 +902,8 @@ function miq_tabs_init(id, url, parms) {
         return sum + '&' + key + '=' + value;
       }, '?tab_id=' + currTabTarget);
 
-      if (miqCheckForChanges()) {
+      var editMode = typeof parms !== 'undefined' && parms['edit_mode'] !== 'undefined' && parms['edit_mode'] === 'true';
+      if (editMode || miqCheckForChanges()) {
         miqObserveRequest(url + urlParams, {beforeSend: true})
           .catch(function (err) {
             add_flash(__('Error requesting data from server'), 'error');
