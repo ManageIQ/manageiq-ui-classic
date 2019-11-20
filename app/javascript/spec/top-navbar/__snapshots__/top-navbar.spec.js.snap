@@ -295,6 +295,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                         onClick={[Function]}
                         onKeyDown={[Function]}
                         onSelect={[Function]}
+                        target="_current"
                       >
                         <li
                           className=""
@@ -308,6 +309,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                             onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
+                            target="_current"
                           >
                             <a
                               href="/support/index?support_tab=about"
@@ -316,6 +318,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                               onKeyDown={[Function]}
                               role="menuitem"
                               tabIndex="-1"
+                              target="_current"
                             >
                               Documentation
                             </a>
@@ -333,6 +336,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                         onClick={[Function]}
                         onKeyDown={[Function]}
                         onSelect={[Function]}
+                        target="_current"
                       >
                         <li
                           className=""
@@ -346,6 +350,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                             onKeyDown={[Function]}
                             role="menuitem"
                             tabIndex="-1"
+                            target="_current"
                           >
                             <a
                               href="#"
@@ -354,6 +359,7 @@ exports[`Top navbar tests should render correctly 1`] = `
                               onKeyDown={[Function]}
                               role="menuitem"
                               tabIndex="-1"
+                              target="_current"
                             >
                               About
                             </a>
