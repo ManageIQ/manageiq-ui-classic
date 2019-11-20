@@ -25,16 +25,12 @@ const RightSection = ({
   </React.Fragment>
 );
 
-RightSection.defaultProps = {
-  currentUser: null,
-};
-
 RightSection.propTypes = {
   customLogo: PropTypes.bool.isRequired,
   currentUser: PropTypes.shape({
     name: PropTypes.string.isRequired,
     userid: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   opsExplorerAllowed: PropTypes.bool.isRequired,
   applianceName: PropTypes.string.isRequired,
   miqGroups: PropTypes.arrayOf(

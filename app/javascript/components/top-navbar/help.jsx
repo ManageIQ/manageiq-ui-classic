@@ -1,5 +1,3 @@
-/* global miqCheckForChanges */
-
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import PropTypes from 'prop-types';
