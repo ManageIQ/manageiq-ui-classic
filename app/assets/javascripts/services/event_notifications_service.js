@@ -91,7 +91,7 @@ angular.module('ManageIQ').service('eventNotifications', ['$timeout', '$window',
           });
 
           updateUnreadCount(events);
-          const totalUnreadCount = state.groups.reduce((sum, group) => (sum + group.unreadCount), 0);
+          var totalUnreadCount = state.groups.reduce((sum, group) => (sum + group.unreadCount), 0);
           ManageIQ.redux.store.dispatch({ type: '@@notifications/setUnreadCount', payload: totalUnreadCount });
           notifyObservers();
         });
