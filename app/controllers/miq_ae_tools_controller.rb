@@ -164,10 +164,8 @@ Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options, :success)
           end
-        rescue MiqAeException::DomainNotAccessible
-          add_flash(_('Error: Selected domain is locked'), :error)
-        rescue MiqAeException::AttributeNotFound => e
-          add_flash(e.message, :error)
+        rescue MiqAeException::Error => bang
+          add_flash(_("Error: %{message}") % {:message => bang.message}, :error)
         end
       else
         add_flash(_("Error: Datastore import file upload expired"), :error)

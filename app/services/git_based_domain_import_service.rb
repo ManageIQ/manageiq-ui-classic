@@ -98,15 +98,9 @@ class GitBasedDomainImportService
     task = MiqTask.wait_for_taskid(task_id)
 
     domain = task.task_results
-    error_message = if task.message == _('multiple domains')
-                      _('Selected branch or tag contains more than one domain')
-                    elsif task.message == _('locked domain')
-                      _('Selected domain is locked')
-                    else
-                      _('Selected branch or tag does not contain a valid domain')
-                    end
-    raise MiqException::Error, error_message unless domain.kind_of?(MiqAeDomain)
-    domain.update_attribute(:enabled, true)
+    raise MiqException::Error, task.message unless domain.kind_of?(MiqAeDomain)
+
+    domain.update(:enabled => true)
   end
 
   def refresh(git_repo_id)
