@@ -206,7 +206,7 @@ describe EmsInfraController do
       p1 = FactoryBot.create(:orchestration_stack_parameter, :name => "compute-1::count", :value => 1)
       p2 = FactoryBot.create(:orchestration_stack_parameter, :name => "controller-1::count", :value => 1)
       stack_parameters = [p1, p2]
-      r1 = FactoryBot.create(:orchestration_stack_resource, :physical_resource => @host1.ems_ref_obj)
+      r1 = FactoryBot.create(:orchestration_stack_resource, :physical_resource => @host1.ems_ref)
       r2 = FactoryBot.create(:orchestration_stack_resource, :physical_resource => "1", :logical_resource => "1")
       stack_resources = [r1, r2]
       @orchestration_stack = FactoryBot.create(:orchestration_stack, :parameters => stack_parameters, :resources => stack_resources)

@@ -311,7 +311,7 @@ class EmsInfraController < ApplicationController
       end
     end
 
-    host_physical_resource_ids = hosts.map(&:ems_ref_obj)
+    host_physical_resource_ids = hosts.map(&:ems_ref)
     parent_resource_names = []
     host_physical_resource_ids.each do |pr_id|
       host_resource = resources_by_physical_resource_id[pr_id]
