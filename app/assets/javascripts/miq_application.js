@@ -907,7 +907,7 @@ function miq_tabs_init(id, url, parms) {
         miqObserveRequest(url + urlParams, {beforeSend: true})
           .catch(function (err) {
             add_flash(__('Error requesting data from server'), 'error');
-            console.log(err);
+            console.error(err);
             return Promise.reject(err);
           });
       } else {
