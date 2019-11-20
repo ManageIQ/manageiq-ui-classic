@@ -50,6 +50,7 @@ const Help = ({
                 key={item.id}
                 href={item.type === 'modal' ? '' : item.href}
                 onClick={e => (item.type === 'modal' ? showAboutModal(e) : !miqCheckForChanges() && e.preventDefault())}
+                target={item.type === 'new_window' ? '_blank' : '_current'}
               >
                 {item.title}
               </MenuItem>
