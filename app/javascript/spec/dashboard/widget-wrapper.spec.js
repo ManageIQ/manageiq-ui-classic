@@ -1,4 +1,5 @@
 import { module, inject } from './mocks';
+require('../helpers/API.js');
 
 require('../helpers/getJSONFixtures.js');
 
@@ -8,7 +9,10 @@ describe('widget-wrapper', () => {
   let $compile;
   const widgetTypes = ['chart', 'menu', 'report'];
 
-  beforeEach(module('ManageIQ'));
+  beforeEach(() => {
+    module('ManageIQ');
+    angular.mock.module('miq.api');
+  });
 
   beforeEach(inject((_$compile_, $rootScope, $http) => {
     $scope = $rootScope;
@@ -20,18 +24,24 @@ describe('widget-wrapper', () => {
         content: '<div></div>',
         minimized: false,
         shortcuts: [],
+        blank: false,
       },
       status: 200,
       statusText: 'OK',
     };
     spyOn($http, 'get').and.callFake(() => Promise.resolve(response));
+    spyOn(window.vanillaJsAPI, 'post').and.returnValue(Promise.resolve({
+      results: [
+        { success: true, message: 'some' },
+      ],
+    }));
   }));
 
   widgetTypes.forEach((widget) => {
     it(`renders widget-${widget} when widget-type is ${widget}`, (done) => {
       element = angular.element(`
         <form name="angularForm">
-          <widget-wrapper widget-id="42" widget-blank="false" widget-buttons="null" widget-type="${widget}"></widget-wrapper>
+          <widget-wrapper widget-id="42" widget-blank="false" widget-buttons="[]" widget-type="${widget}"></widget-wrapper>
         </form>
       `);
       element = $compile(element)($scope);
