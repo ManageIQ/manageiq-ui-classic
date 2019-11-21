@@ -1,56 +1,57 @@
 #compare-grid {
-  table.table-expanded,
+  .table-expanded,
   .table-compressed {
     max-width: auto !important;
     table-layout: fixed !important;
+    text-align: center;
     width: auto !important;
     word-wrap: break-word !important;
+    .treegrid-node {
+      text-align: left;
+      white-space: nowrap !important;
+      width: 270px !important;
+    }
   }
-
-  table.table-compressed thead tr th {
-    height: 150px !important;
-    text-align: center;
-    white-space: nowrap;
-    width: 26px !important;
+  .table-compressed {
+    thead tr th, tbody tr td {
+      width: 26px !important;    
+    }
+    thead tr th {
+      height: 150px !important;
+      white-space: nowrap;
+      .rotated-text {
+        transform: translate(0, 110px) rotate(270deg);
+        width: 26px;
+      }
+    }
+    tbody tr td {
+      .piechart {
+        margin-left: 5px;
+      }
+    }
   }
-
-  table.table-compressed thead tr th div.rotated-text {
-    transform: translate(0, 110px) rotate(270deg);
-    width: 26px;
-  }
-
-  table.table-expanded thead tr th {
-    height: 150px;
-    position: relative;
-  }
-
-  table.table-expanded thead tr th div.quadicon_grid {
-    bottom: 0;
-    height: 80px;
-    left: 0;
-    margin-left: auto;
-    position: absolute;
-    right: 0;
-  }
-
-  table.table-compressed thead th,
-  table.table-compressed tr td {
-    text-align: center;
-    width: 26px !important;
-  }
-
-  table.table-expanded thead th,
-  table.table-expanded tr td {
-    min-width: 175px !important;
-    text-align: center;
-    width: 175px !important;
-  }
-
-  // sets styling of first column
-  table.table-expanded tbody tr th.treegrid-node,
-  table.table-compressed tbody th.treegrid-node {
-    text-align: left;
-    white-space: nowrap !important;
-    width: 270px !important;
+  .table-expanded {
+    thead tr th, tbody tr td {
+      min-width: 175px !important;
+      width: 175px !important;
+    }
+    thead tr th {
+      height: 150px;
+      position: relative;
+      text-align: center;
+      .quadicon_grid {
+        bottom: 0;
+        height: 80px;
+        left: 0;
+        margin-left: auto;
+        position: absolute;
+        right: 0;
+      }
+    }
+    tbody tr td {
+      .piechart {
+        margin-left: 67px;
+      }
+    }
   }
 }
