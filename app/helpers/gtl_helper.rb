@@ -78,14 +78,14 @@ module GtlHelper
   # This is a pure function. All the generated markup depends only and fully on the `options`.
   # Assert about this function calls in your controller specs.
   #
-  def render_gtl(options)
+  def render_gtl_old(options)
     capture do
       concat(render_gtl_markup(options[:no_flash_div]))
       concat(render_gtl_javascripts(options))
     end
   end
 
-  def render_gtl_react(options)
+  def render_gtl(options)
     # TODO:
     # => check escapement
     # => add flash_div
@@ -100,7 +100,7 @@ module GtlHelper
       sortColIdx:        options[:sort_col],
       sortDir:           options[:sort_dir],
       isExplorer:        options[:explorer] === 'true',
-      records:           !options[:selected_records].nil? ? options[:selected_records] : '',
+      records:           !options[:selected_records].nil? ? options[:selected_records] : [],
       hideSelect:        options[:selected_records].kind_of?(Array),
       showUrl:           gtl_show_url(options),
       pages:             options[:pages],
