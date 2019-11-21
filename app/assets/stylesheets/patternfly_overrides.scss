@@ -728,19 +728,19 @@ table .label {
 
 #notification,
 #search_notification {
-  position: fixed;
+  background: image-url('layout/overlay_dark.png');
   bottom: 0;
-  z-index: 1000;
+  color: #fff;
   display: block;
+  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  background: image-url('layout/overlay_dark.png');
-  color: #fff;
+  position: fixed;
   text-align: center;
   text-shadow: #000 2px 2px 0;
-  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
+  width: 100%;
+  z-index: 1000;
 }
 
 #blocker_div {
@@ -758,11 +758,15 @@ table .label {
 }
 
 #spinner_div {
+  background: image-url('layout/overlay_dark.png');
+  border-radius: 8px;
   height: 180px;
   left: 0;
+  margin-left: -35px;
+  margin-top: -45px;
   position: absolute;
   top: 20px;
-  width: 100%;
+  width: 180px;
   z-index: 1;
 }
 
@@ -803,37 +807,6 @@ fieldset {
   position: absolute; /***  height / 2   ***/
   top: -50px;
   width: 100px;
-}
-
-#notification,
-#search_notification {
-  background: image-url('layout/overlay_dark.png');
-  bottom: 0;
-  color: #fff;
-  display: block;
-  font: normal 116% OpenSansSemibold, Arial, Helvetica, sans-serif;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  text-align: center;
-  text-shadow: #000 2px 2px 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-#blocker_div {
-  background: image-url('layout/overlay_dark.png');
-  bottom: 0;
-  color: #fff;
-  display: block;
-  height: 100%;
-  margin: 0;
-  padding: 100px 0 0 0;
-  position: fixed;
-  text-shadow: #000 2px 2px 0;
-  width: 100%;
-  z-index: 48;
 }
 
 /************ Hover Buttons ************/
@@ -878,15 +851,6 @@ fieldset {
   top: 100px;
   width: 80%;
   z-index: 1001;
-}
-
-#spinner_div {
-  background: image-url('layout/overlay_dark.png');
-  border-radius: 8px;
-  height: 180px;
-  margin-left: -35px;
-  margin-top: -45px;
-  width: 180px;
 }
 
 .sidebar-disabled, .treeview.disabled {
