@@ -278,13 +278,6 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
     $('#providerPaused').hide();
   }
 
-  if (data.reportData && _.isObject(data.reportData)) {
-    sendDataWithRx({initController: {
-      name: data.reportData.controller_name,
-      data: data.reportData.data,
-    }});
-  }
-
   if (_.isArray(data.reloadToolbars) && data.reloadToolbars.length) {
     sendDataWithRx({
       redrawToolbar: data.reloadToolbars,
