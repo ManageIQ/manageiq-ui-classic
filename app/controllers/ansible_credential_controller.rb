@@ -58,6 +58,7 @@ class AnsibleCredentialController < ApplicationController
 
   def toolbar
     return 'ansible_repositories_center' if %w[repositories].include?(@display) # for nested list screen
+
     %w[show_list].include?(@lastaction) ? 'ansible_credentials_center' : 'ansible_credential_center'
   end
 
@@ -72,12 +73,10 @@ class AnsibleCredentialController < ApplicationController
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
     ManageIQ::Providers::EmbeddedAutomationManager::Authentication.where(:id => checked).each do |auth|
-      begin
-        auth.delete_in_provider_queue
-        add_flash(_("Deletion of Credential \"%{name}\" was successfully initiated.") % {:name => auth.name})
-      rescue => ex
-        add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name => auth.name, :details => ex}, :error)
-      end
+      auth.delete_in_provider_queue
+      add_flash(_("Deletion of Credential \"%{name}\" was successfully initiated.") % {:name => auth.name})
+    rescue StandardError => ex
+      add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name => auth.name, :details => ex}, :error)
     end
     session[:flash_msgs] = @flash_array
     javascript_redirect(:action => 'show_list')
