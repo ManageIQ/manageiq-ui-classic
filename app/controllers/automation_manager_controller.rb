@@ -119,7 +119,7 @@ class AutomationManagerController < ApplicationController
     when "root"    then ManageIQ::Providers::AnsibleTower::AutomationManager
     when "at", "e" then ManageIQ::Providers::AutomationManager::InventoryRootGroup
     when "f", "cs" then ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem
-    when "xx"      then
+    when "xx"
       case nodes.second
       when "at"  then ManageIQ::Providers::AnsibleTower::AutomationManager
       when "csa" then ConfiguredSystem
@@ -270,7 +270,7 @@ class AutomationManagerController < ApplicationController
       process_show_list(options)
       record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
       @right_cell_text = _("Inventory Groups under %{record_model} Provider \"%{name}\"") %
-        {:name => provider.name, :record_model => record_model}
+                         {:name => provider.name, :record_model => record_model}
     end
   end
 
@@ -307,6 +307,7 @@ class AutomationManagerController < ApplicationController
 
   def configuration_scripts_list(id, model)
     return configuration_script_node(id) if id
+
     @show_adv_search = true
     if x_active_tree == :configuration_scripts_tree
       options = {:model      => model.to_s,
@@ -324,6 +325,7 @@ class AutomationManagerController < ApplicationController
 
   def default_node
     return unless x_node == "root"
+
     @show_adv_search = true
     if x_active_tree == :automation_manager_providers_tree
       options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager",
@@ -373,6 +375,7 @@ class AutomationManagerController < ApplicationController
   def search_text_type(node)
     return "provider" if provider_record?(node)
     return "inventory_group" if managed_group_record?(node)
+
     node
   end
 
@@ -432,9 +435,10 @@ class AutomationManagerController < ApplicationController
 
   def inventory_group_right_cell_text(_model)
     return if @sb[:active_tab] != 'configured_systems'
+
     if valid_managed_group_record?(@inventory_group_record)
       @right_cell_text = _("Configured Systems under Inventory Group \"%{name}\"") %
-        {:name => @inventory_group_record.name}
+                         {:name => @inventory_group_record.name}
     end
   end
 
