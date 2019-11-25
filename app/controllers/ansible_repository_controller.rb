@@ -71,14 +71,12 @@ class AnsibleRepositoryController < ApplicationController
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
     AnsibleRepositoryController.model.where(:id => checked).each do |repo|
-      begin
-        repo.delete_in_provider_queue
-        add_flash(_("Delete of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
-      rescue => ex
-        add_flash(_("Unable to delete Repository \"%{name}\": %{details}") % {:name    => repo.name,
-                                                                              :details => ex},
-                  :error)
-      end
+      repo.delete_in_provider_queue
+      add_flash(_("Delete of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+    rescue StandardError => ex
+      add_flash(_("Unable to delete Repository \"%{name}\": %{details}") % {:name    => repo.name,
+                                                                            :details => ex},
+                :error)
     end
     session[:flash_msgs] = @flash_array
     javascript_redirect(:action => 'show_list')
@@ -117,14 +115,12 @@ class AnsibleRepositoryController < ApplicationController
     checked[0] = params[:id] if checked.blank? && params[:id]
 
     AnsibleRepositoryController.model.where(:id => checked).each do |repo|
-      begin
-        repo.sync_queue
-        add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
-      rescue => ex
-        add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
-                                                                               :details => ex},
-                  :error)
-      end
+      repo.sync_queue
+      add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+    rescue StandardError => ex
+      add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
+                                                                             :details => ex},
+                :error)
     end
 
     javascript_flash
@@ -132,6 +128,7 @@ class AnsibleRepositoryController < ApplicationController
 
   def toolbar
     return 'ansible_playbooks_center' if %w[playbooks].include?(@display) # for nested list screen
+
     %w[show_list].include?(@lastaction) ? 'ansible_repositories_center' : 'ansible_repository_center'
   end
 
