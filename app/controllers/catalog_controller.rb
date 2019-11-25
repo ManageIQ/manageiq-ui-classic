@@ -954,11 +954,7 @@ class CatalogController < ApplicationController
     if x_active_tree == :svccat_tree
       @gtl_buttons = %w[view_list view_tile]
       @gtl_small_tiles = true
-      if role_allows?(:feature => 'svc_catalog_provision')
-        @row_button = {:label    => _("Order"),
-                       :function => "miqOrderService",
-                       :title    => _("Order this Service")} # Show a button instead of the checkbox
-      end
+      @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
       options[:gtl_dbname] = :catalog
     end
     options[:named_scope] = scope
