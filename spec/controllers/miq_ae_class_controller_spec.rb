@@ -713,7 +713,7 @@ describe MiqAeClassController do
       @namespace.reload
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_description\": Delete successful")
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
     end
   end
 
@@ -756,7 +756,7 @@ describe MiqAeClassController do
                            :id          => @namespace.id}
       controller.send(:update_namespace)
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"name\" was saved")
     end
   end
 

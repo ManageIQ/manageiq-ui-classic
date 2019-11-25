@@ -26,7 +26,7 @@ describe MiqAeCustomizationController do
         flash_messages = assigns(:flash_array)
         expect(flash_messages.first[:message]).to include("Default Dialog \"Test_Dialog1\" cannot be deleted")
         expect(controller.send(:flash_errors?)).to be_truthy
-        expect(flash_messages.last[:message]).to include("Dialog \"Test Description 2\": Delete successful")
+        expect(flash_messages.last[:message]).to include("Dialog \"Test_Dialog2\": Delete successful")
       end
 
       it "Default Dialog should not be deleted" do
