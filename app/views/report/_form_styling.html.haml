@@ -51,7 +51,6 @@
                 = select_tag("styleop_#{f_idx}_#{s_idx}",
                   options_for_select(opts, styles[s_idx].nil? ? nil : styles[s_idx][:operator]),
                   :multiple             => false,
-                  :class                => "widthed",
                   "data-miq_sparkle_on" => true,
                   "data-miq_observe"    => {:url => url}.to_json)
                 - unless styles[s_idx][:operator].nil? || styles[s_idx][:operator] == "DEFAULT" || styles[s_idx][:operator].include?("NULL") || styles[s_idx][:operator].include?("EMPTY")
@@ -60,7 +59,6 @@
                     = select_tag("styleval_#{f_idx}_#{s_idx}",
                       options_for_select(values, styles[s_idx][:value]),
                       :multiple              => false,
-                      :class                 => "widthed",
                       "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true,
                       "data-miq_observe"     => {:url => url}.to_json)
@@ -86,7 +84,6 @@
                       = select_tag("stylesuffix_#{f_idx}_#{s_idx}",
                         options_for_select(MiqExpression::FORMAT_SUB_TYPES[field_type][:units], styles[s_idx][:value_suffix]),
                         :multiple              => false,
-                        :class                 => "widthed",
                         "data-miq_sparkle_on"  => true,
                         "data-miq_sparkle_off" => true,
                         "data-miq_observe"     => {:url => url}.to_json)
