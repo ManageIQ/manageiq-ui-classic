@@ -26,6 +26,7 @@ cols:
 - display
 #- provision_cost
 - created_at
+- template_valid?
 
 # Included tables (joined, has_one, has_many) and columns
 include:
@@ -50,6 +51,7 @@ col_order:
 - service_template_catalog.name
 #- provision_cost
 - created_at
+- template_valid?
 
 # Column titles, in order
 headers:
@@ -61,6 +63,7 @@ headers:
 - Catalog
 #- Cost
 - Created On
+- Valid
 
 col_formats:
 -
