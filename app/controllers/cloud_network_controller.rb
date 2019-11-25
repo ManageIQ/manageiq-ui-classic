@@ -29,9 +29,9 @@ class CloudNetworkController < ApplicationController
       delete_networks
       javascript_redirect(previous_breadcrumb_url)
     when "cloud_network_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
+      javascript_redirect(:action => "edit", :id => checked_item_id)
     when "cloud_network_new"
-      javascript_redirect :action => "new"
+      javascript_redirect(:action => "new")
     when "cloud_subnet_tag"
       return tag("CloudSubnet")
     when "custom_button"
@@ -52,8 +52,8 @@ class CloudNetworkController < ApplicationController
     assert_privileges("cloud_network_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Cloud Network was cancelled by the user")
+      javascript_redirect(:action    => 'show_list',
+                          :flash_msg => _("Add of new Cloud Network was cancelled by the user"))
 
     when "add"
       options = form_params
@@ -92,7 +92,7 @@ class CloudNetworkController < ApplicationController
     @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
-    javascript_redirect :action => "show_list"
+    javascript_redirect(:action => "show_list")
   end
 
   def delete_networks
@@ -189,7 +189,7 @@ class CloudNetworkController < ApplicationController
 
     session[:edit] = nil
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   private
