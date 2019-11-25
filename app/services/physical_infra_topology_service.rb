@@ -3,31 +3,25 @@ class PhysicalInfraTopologyService < TopologyService
 
   # Keep it in a 'topological order' e.g: racks, chassis, servers
   @included_relations = [
-    :writable_classification_tags,
     :physical_racks    => %i[
-      writable_classification_tags
       physical_chassis
       physical_servers
     ],
     :physical_chassis  => %i[
-      writable_classification_tags
       child_physical_chassis
       physical_servers
     ],
     :physical_servers  => [
-      :writable_classification_tags,
       :physical_switches,
       :host => [
-        :writable_classification_tags,
-        :vms => :writable_classification_tags
+        :vms => nil
       ]
     ],
     :physical_switches => [
-      :writable_classification_tags
     ],
   ]
 
-  @kinds = %i[PhysicalInfraManager PhysicalRack PhysicalChassis PhysicalServer Host Vm Tag PhysicalSwitch]
+  @kinds = %i[PhysicalInfraManager PhysicalRack PhysicalChassis PhysicalServer Host Vm PhysicalSwitch]
   @filter_properties = %i[kind status]
 
   # This priority mapping controls what connections will be present in the

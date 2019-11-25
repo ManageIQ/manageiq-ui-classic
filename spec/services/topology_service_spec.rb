@@ -1,5 +1,6 @@
 describe TopologyService do
   let(:provider_class) { double }
+
   before do
     described_class.instance_variable_set(:@provider_class, provider_class)
     allow(provider_class).to receive(:all)
@@ -35,6 +36,7 @@ describe TopologyService do
 
   describe '#build_kinds' do
     let(:kinds) { %i(Host Vm) }
+
     it 'returns with hash where the keys are kinds' do
       described_class.instance_variable_set(:@kinds, kinds)
 
@@ -73,27 +75,22 @@ describe TopologyService do
 
   describe '#map_to_graph' do
     let(:provider) { FactoryBot.create(:ext_management_system) }
-    let(:tag) { FactoryBot.create(:tag) }
-    let(:vm) { FactoryBot.create(:vm, :ext_management_system => provider, :tags => [tag]) }
-    let(:graph) { {:vms => {:tags => nil}} }
+    let(:vm) { FactoryBot.create(:vm, :ext_management_system => provider) }
+    let(:graph) { {:vms => nil} }
 
-    before do
-      allow(subject).to receive(:build_entity_data) { |input| input }
-    end
+    before { allow(subject).to receive(:build_entity_data) { |input| input } }
 
     it 'calls the graph items as methods recursively' do
       expect(provider).to receive(:vms).and_return([vm])
-      expect(vm).to receive(:tags).and_return([tag])
       subject.map_to_graph([provider], graph)
     end
 
     it 'returns with the list of objects and the links between' do
       allow(provider).to receive(:vms).and_return([vm])
-      allow(vm).to receive(:tags).and_return([tag])
       output = subject.map_to_graph([provider], graph)
 
-      expect(output.first.values).to eq([provider, vm, tag])
-      expect(output.last.length).to eq(2)
+      expect(output.first.values).to eq([provider, vm])
+      expect(output.last.length).to eq(1)
     end
   end
 
@@ -102,6 +99,7 @@ describe TopologyService do
 
     context 'input is a symbol' do
       let(:input) { :sym }
+
       it 'returns with Input => nil' do
         expect(output).to have_key(input.capitalize)
         expect(output[input.capitalize]).to be_nil
@@ -132,23 +130,10 @@ describe TopologyService do
 
   describe '#entity_name' do
     let(:name) { subject.send(:entity_name, entity) }
+    let(:entity) { FactoryBot.create(:vm_vmware) }
 
-    context 'entity is not a tag' do
-      let(:entity) { FactoryBot.create(:vm_vmware) }
-
-      it 'returns with the name of the entity' do
-        expect(name).to eq(entity.name)
-      end
-    end
-
-    context 'entity is a tag' do
-      let(:parent_cls) { FactoryBot.create(:classification, :description => 'foo') }
-      let(:cls) { FactoryBot.create(:classification_tag, :parent => parent_cls, :description => 'bar') }
-      let(:entity) { cls.tag }
-
-      it 'returns with the parent and the child classification description' do
-        expect(name).to eq('foo: bar')
-      end
+    it 'returns with the name of the entity' do
+      expect(name).to eq(entity.name)
     end
   end
 end

@@ -122,7 +122,6 @@ angular.module('ManageIQ').controller('networkTopologyController', ['$scope', 't
       case 'NetworkManager':
         return { x: -20, y: -20, r: 28 };
       case 'FloatingIp':
-      case 'Tag':
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: 13 };
       case 'NetworkRouter':
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: defaultDimensions.r };

@@ -2,21 +2,17 @@ class InfraTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::InfraManager
 
   @included_relations = [
-    :writable_classification_tags,
     :ems_clusters      => [
-      :writable_classification_tags,
       :hosts => [
-        :writable_classification_tags,
-        :vms => :writable_classification_tags
+        :vms => nil
       ]
     ],
     :clusterless_hosts => [
-      :writable_classification_tags,
-      :vms => :writable_classification_tags
+      :vms => nil
     ],
   ]
 
-  @kinds = %i[InfraManager EmsCluster Host Vm Tag]
+  @kinds = %i[InfraManager EmsCluster Host Vm]
 
   def entity_type(entity)
     if entity.kind_of?(Host)
