@@ -2,24 +2,20 @@ class NetworkTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::NetworkManager
 
   @included_relations = [
-    :writable_classification_tags,
     :availability_zones => [
       :vms => [
-        :writable_classification_tags,
-        :floating_ips    => :writable_classification_tags,
-        :cloud_tenant    => :writable_classification_tags,
-        :security_groups => :writable_classification_tags,
+        :floating_ips    => nil,
+        :cloud_tenant    => nil,
+        :security_groups => nil,
       ]
     ],
     :cloud_subnets      => [
       :parent_cloud_subnet,
-      :writable_classification_tags,
       :vms,
-      :cloud_network  => :writable_classification_tags,
+      :cloud_network  => nil,
       :network_router => [
-        :writable_classification_tags,
         :cloud_network => [
-          :floating_ips => :writable_classification_tags
+          :floating_ips => nil
         ]
       ]
     ],
@@ -35,7 +31,7 @@ class NetworkTopologyService < TopologyService
     ]
   ]
 
-  @kinds = %i[NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone]
+  @kinds = %i[NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer AvailabilityZone]
 
   def entity_type(entity)
     if entity.kind_of?(CloudNetwork) || entity.kind_of?(CloudSubnet)

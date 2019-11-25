@@ -6,13 +6,6 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
       __('Status: ') + d.item.status,
     ];
 
-    if (d.item.kind === 'Tag') {
-      status = [
-        d.item.name,
-        __('Type: ') + d.item.display_kind,
-      ];
-    }
-
     if (d.item.kind === 'Host' || d.item.kind === 'Vm') {
       status.push(__('Provider: ') + d.item.provider);
     }
@@ -60,11 +53,9 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
           .style('top', mousePosition[1] + 'px');
         popup.append('h5').text('Actions on ' + data.item.display_kind);
 
-        if (data.item.kind !== 'Tag') {
-          popup.append('p').text(__('Go to summary page')).on('click', function() {
-            vm.dblclick(data);
-          });
-        }
+        popup.append('p').text(__('Go to summary page')).on('click', function() {
+          vm.dblclick(data);
+        });
 
         var canvasSize = [
           canvas.node().offsetWidth,
@@ -90,9 +81,6 @@ ManageIQ.angular.app.service('topologyService', ['$location', '$http', 'miqServi
     };
 
     vm.dblclick = function dblclick(d) {
-      if (d.item.kind === 'Tag') {
-        return false;
-      }
       $window.location.assign(topologyService.geturl(d));
     };
 

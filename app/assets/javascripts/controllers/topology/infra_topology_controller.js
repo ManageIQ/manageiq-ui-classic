@@ -125,8 +125,6 @@ angular.module('ManageIQ').controller('infraTopologyController', ['$scope', 'top
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: defaultDimensions.r };
       case 'Host':
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: defaultDimensions.r };
-      case 'Tag':
-        return { x: defaultDimensions.x, y: defaultDimensions.y, r: 13 };
       default:
         return defaultDimensions;
     }

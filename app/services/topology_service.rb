@@ -42,12 +42,7 @@ class TopologyService
   end
 
   def entity_name(entity)
-    if entity.kind_of?(Tag)
-      cls = entity.classification
-      [cls.parent, cls].map(&:description).join(': ')
-    else
-      entity.name
-    end
+    entity.name
   end
 
   # If needed, implemented this on its subclasses

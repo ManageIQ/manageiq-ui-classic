@@ -123,7 +123,6 @@ angular.module('ManageIQ').controller('cloudTopologyController', ['$scope', 'top
       case 'CloudManager':
         return { x: -20, y: -20, r: 28 };
       case 'AvailabilityZone':
-      case 'Tag':
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: 13 };
       case 'CloudTenant':
         return { x: defaultDimensions.x, y: defaultDimensions.y, r: 19 };
