@@ -108,6 +108,7 @@ class ChargebackController < ApplicationController
     when "save", "add"
       id = params[:button] == "save" ? params[:id] : "new"
       return unless load_edit("cbrate_edit__#{id}", "replace_cell__chargeback")
+
       @rate = params[:button] == "add" ? ChargebackRate.new : ChargebackRate.find(params[:id])
       if @edit[:new][:description].nil? || @edit[:new][:description] == ""
         render_flash(_("Description is required"), :error)
@@ -179,6 +180,7 @@ class ChargebackController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_rate_form_field_changed
     return unless load_edit("cbrate_edit__#{params[:id]}", "replace_cell__chargeback")
+
     cb_rate_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -226,6 +228,7 @@ class ChargebackController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_assign_field_changed
     return unless load_edit("cbassign_edit__#{x_node}", "replace_cell__chargeback")
+
     cb_assign_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -289,11 +292,12 @@ class ChargebackController < ApplicationController
       replace_right_cell
     else
       return unless load_edit("cbassign_edit__#{x_node}", "replace_cell__chargeback")
+
       cb_assign_set_record_vars
       rate_type = x_node.split('-').last
       begin
         ChargebackRate.set_assignments(rate_type, @edit[:set_assignments])
-      rescue => bang
+      rescue StandardError => bang
         render_flash(_("Error during 'Rate assignments': %{error_message}") % {:error_message => bang.message}, :error)
       else
         add_flash(_("Rate Assignments saved"))
@@ -469,6 +473,7 @@ class ChargebackController < ApplicationController
 
   def cb_rpts_get_all_reps(nodeid)
     return [] if nodeid.blank?
+
     @sb[:miq_report_id] = nodeid
     miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
     saved_reports = miq_report.miq_report_results.with_current_user_groups
@@ -617,6 +622,7 @@ class ChargebackController < ApplicationController
       assigned_rates_from_all_categories.each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
         next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+
         temp = {
           :cb_rate => ChargebackRate.find(@edit[:new][key]),
           :tag     => [Classification.find(id)],
@@ -628,6 +634,7 @@ class ChargebackController < ApplicationController
       @edit[:cb_assign][:docker_label_values_saved].each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
         next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+
         temp = {
           :cb_rate => ChargebackRate.find(@edit[:new][key]),
           :label   => [CustomAttribute.find(id)]
@@ -639,6 +646,7 @@ class ChargebackController < ApplicationController
       @edit[:cb_assign][:cis].each_key do |id|
         key = "#{@edit[:new][:cbshow_typ]}__#{id}"
         next if @edit[:new][key].nil? || @edit[:new][key] == "nil"
+
         temp = {:cb_rate => ChargebackRate.find(@edit[:new][key])}
         model = if @edit[:new][:cbshow_typ] == "enterprise"
                   MiqEnterprise
@@ -789,6 +797,7 @@ class ChargebackController < ApplicationController
     unless WHITELIST_INSTANCE_TYPE.include?(klass)
       raise ArgumentError, "Received: #{klass}, expected one of #{WHITELIST_INSTANCE_TYPE}"
     end
+
     all_of_classtype =
       if klass == "enterprise"
         MiqEnterprise.all
@@ -805,6 +814,7 @@ class ChargebackController < ApplicationController
         @edit[:cb_assign][:cis][instance.id] = "#{provider_name}/#{instance.name}"
       end
       next unless klass == "tenant" && instance.root?
+
       @edit[:cb_assign][:hierarchy][instance.id] = {}
       @edit[:cb_assign][:hierarchy][instance.id][:name] = instance.name
       @edit[:cb_assign][:hierarchy][instance.id][:subtenant] = instance.build_tenant_tree
@@ -815,6 +825,7 @@ class ChargebackController < ApplicationController
     current_assingments = cb_assign_key == :tags ? @edit[:cb_assign][cb_assign_key].try(:[], tag_category_id) : @edit[:cb_assign][cb_assign_key]
 
     return unless current_assingments
+
     current_assingments.each_key do |id|
       key = "#{@edit[:new][:cbshow_typ]}__#{id}"
       @edit[:new][key] = params[key].to_s if params[key]
@@ -903,7 +914,7 @@ class ChargebackController < ApplicationController
           locals.update(
             :action_url   => 'cb_assign_update',
             :no_cancel    => true,
-            :multi_record => true,
+            :multi_record => true
           )
         end
         presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
