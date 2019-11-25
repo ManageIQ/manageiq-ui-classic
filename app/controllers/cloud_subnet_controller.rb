@@ -228,29 +228,35 @@ class CloudSubnetController < ApplicationController
 
   def parse_allocation_pools(option)
     return [] unless option
+
     option.lines.map do |pool|
       start_addr, end_addr, extra_entry = pool.split(",")
       raise ArgumentError, _("Too few addresses in line. Proper format is start_ip_address,end_ip_address (one Allocation Pool per line)") unless end_addr
       raise ArgumentError, _("Too many addresses in line. Proper format is start_ip_address,end_ip_address (one Allocation Pool per line)") if extra_entry
+
       {"start" => start_addr.strip, "end" => end_addr.strip}
     end
   end
 
   def parse_host_routes(option)
     return [] unless option
+
     option.lines.map do |route|
       dest_addr, nexthop_addr, extra_entry = route.split(",")
       raise ArgumentError, _("Too few entries in line. Proper format is destination_cidr,nexthop (one Host Route per line)") unless nexthop_addr
       raise ArgumentError, _("Too many entries in line. Proper format is destination_cidr,nexthop (one Host Route per line)") if extra_entry
+
       {"destination" => dest_addr.strip, "nexthop" => nexthop_addr.strip}
     end
   end
 
   def parse_dns_nameservers(option)
     return [] unless option
+
     option.lines.map do |nameserver|
       one_nameserver, extra_entry = nameserver.strip.split(/\s+|,/)
       raise ArgumentError, _("One DNS Name Server per line is required.") if !one_nameserver || extra_entry
+
       one_nameserver
     end
   end
@@ -289,7 +295,7 @@ class CloudSubnetController < ApplicationController
     if params[:gateway]
       options[:gateway_ip] = params[:gateway].presence
     end
-    options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
+    options[:ip_version] = /4/.match?(params[:network_protocol]) ? 4 : 6
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant][:id]) if params.fetch_path(:cloud_tenant, :id)
     options[:enable_dhcp] = params[:dhcp_enabled]
     # TODO: Add dns_nameservers, allocation_pools, host_routes
