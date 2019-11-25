@@ -57,7 +57,7 @@ class CloudObjectStoreContainerController < ApplicationController
     assert_privileges("cloud_object_store_container_new")
     case params[:button]
     when "cancel"
-      javascript_redirect previous_breadcrumb_url
+      javascript_redirect(previous_breadcrumb_url)
     when "add"
       options = form_params_create
       ext_management_system = options.delete(:ems)
@@ -94,7 +94,7 @@ class CloudObjectStoreContainerController < ApplicationController
     end
 
     flash_to_session
-    javascript_redirect previous_breadcrumb_url
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def form_params_create
