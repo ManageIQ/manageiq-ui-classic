@@ -13,7 +13,7 @@
           - @import.each do |item|
             %tr{'data-parent' => item[:parent]}
               %td{:class => 'treegrid-node'}
-                %span{:class => "icon node-icon fa fa-fw #{item[:icon]}"}
+                %span{:class => "icon node-icon #{item[:icon]}"}
                 %strong
                   = "#{item[:type]}: "
                 = item[:title]
