@@ -35,20 +35,23 @@ require('patternfly/dist/js/patternfly-functions-charts.js');
 require('patternfly/dist/js/patternfly-functions-fixed-heights.js');
 require('patternfly/dist/js/patternfly-functions-tree-grid.js');
 
+window._ = require('lodash');
+
 window.angular = require('angular');
+require('angular-animate'); // angular-patternfly dependency
 require('angular-ui-bootstrap');
+require('angular-drag-and-drop-lists'); // angular-patternfly dependency
 require('angular-gettext');
 require('angular-sanitize');
 require('angular.validators');
 require('ng-annotate-loader!angular-ui-codemirror');
 require('angular-dragdrop'); // ngDragDrop, used by ui-components
 require('angular-ui-sortable'); // ui.sortable, used by ui-components
-require('angular-patternfly');
+require('angular-patternfly/dist/angular-patternfly'); // index overwrites lodash (with 3.10), don't use
 require('angular-bootstrap-switch');
 require('kubernetes-topology-graph');
-require('@manageiq/ui-components');
+require('@manageiq/ui-components'); // needs lodash on load
 
-window._ = require('lodash');
 window.numeral = require('numeral');
 window.sprintf = require('sprintf-js').sprintf;
 window.c3 = require('c3');
