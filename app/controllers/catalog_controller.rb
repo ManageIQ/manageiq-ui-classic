@@ -320,6 +320,7 @@ class CatalogController < ApplicationController
     kls = TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate" ? VmOrTemplate : ServiceTemplate
     @record = identify_record(id || params[:id], kls)
     @tenants_tree = build_tenants_tree if kls == ServiceTemplate # Build the tree with available tenants for the Catalog Item/Bundle
+    add_flash(_("This item is invalid"), :warning) unless @flash_array || @record.try(:template_valid?)
   end
 
   # ST clicked on in the explorer right cell
