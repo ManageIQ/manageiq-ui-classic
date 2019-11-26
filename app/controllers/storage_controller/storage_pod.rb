@@ -27,7 +27,7 @@ module StorageController::StoragePod
 
   def storage_pod_get_node_info(treenodeid)
     if treenodeid == "root"
-      @folders = EmsFolder.where(:type => "StorageCluster").sort
+      @folders = StorageCluster.all.sort
       # to check if Add customization template button should be enabled
       @right_cell_text = _("All Datastore Clusters")
       @right_cell_div  = "storage_pod_list"
