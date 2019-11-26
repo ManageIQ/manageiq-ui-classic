@@ -320,24 +320,8 @@ table.table.table-summary-screen tbody td img {
 /// ===================================================================
 
 /// ===================================================================
-/// begin quadicon styling
-/// ===================================================================
-
-miq-quadicon > .single-wrapper {
-  .fonticon > i {
-    color: #0099cc;
-  }
-}
-
-/// ===================================================================
-/// end quadicon styling
-/// ===================================================================
-
-/// ===================================================================
 /// begin report styling
 /// ===================================================================
-
-/// report column styling
 
 .miq_rpt_red_bg {
   background: #fbdbdb !important;
@@ -614,14 +598,6 @@ table.table.table-selectable tbody tr.selected td {
 #tab_div ul.list-inline li.active {
   color: $link-color !important;
   font-size: 16px;
-}
-
-.icon-green {
-  color: green;
-}
-
-.icon-red {
-  color: red;
 }
 
 /* Action cell */

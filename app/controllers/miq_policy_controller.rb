@@ -334,9 +334,9 @@ class MiqPolicyController < ApplicationController
 
   def get_status_icon(status)
     case status
-    when :update then "fa-check icon-green"
-    when :add then "fa-plus icon-green"
-    when :conflict then "fa-times icon-red"
+    when :update then "import-update"
+    when :add then "import-add"
+    when :conflict then "import-conflict"
     end
   end
 
