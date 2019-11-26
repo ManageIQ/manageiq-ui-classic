@@ -60,6 +60,7 @@ class CloudTenantController < ApplicationController
       @ems_choices[ems.name] = ems.id
       # keystone v3 allows for hierarchical tenants
       next unless ems.api_version == "v3"
+
       Rbac::Filterer.filtered(ems.cloud_tenants).each do |ems_cloud_tenant|
         tenant_choice_name = ems.name + " (" + ems_cloud_tenant.name + ")"
         tenant_choice_id = ems.id.to_s + ":" + ems_cloud_tenant.id.to_s
