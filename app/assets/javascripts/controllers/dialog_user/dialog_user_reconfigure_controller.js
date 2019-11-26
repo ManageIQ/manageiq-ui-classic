@@ -8,8 +8,6 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
 
       resolve(API.get(url).then(init));
     });
-
-    Promise.resolve(apiCall).then(miqService.refreshSelectpicker);
   };
 
   function init(data) {
