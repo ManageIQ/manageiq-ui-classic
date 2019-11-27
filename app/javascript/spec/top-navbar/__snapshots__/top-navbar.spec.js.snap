@@ -18,7 +18,7 @@ exports[`Top navbar tests should render correctly 1`] = `
     currentGroup={
       Object {
         "description": "EvmGroup-super_administrator",
-        "id": 10000000000002,
+        "id": "10000000000002",
       }
     }
     currentUser={
@@ -61,11 +61,11 @@ exports[`Top navbar tests should render correctly 1`] = `
       Array [
         Object {
           "description": "EvmGroup-super_administrator",
-          "id": 10000000000002,
+          "id": "10000000000002",
         },
         Object {
           "description": "EvmGroup-dev",
-          "id": 10000000000003,
+          "id": "10000000000003",
         },
       ]
     }
@@ -397,7 +397,7 @@ exports[`Top navbar tests should render correctly 1`] = `
       currentGroup={
         Object {
           "description": "EvmGroup-super_administrator",
-          "id": 10000000000002,
+          "id": "10000000000002",
         }
       }
       currentUser={
@@ -410,11 +410,11 @@ exports[`Top navbar tests should render correctly 1`] = `
         Array [
           Object {
             "description": "EvmGroup-super_administrator",
-            "id": 10000000000002,
+            "id": "10000000000002",
           },
           Object {
             "description": "EvmGroup-dev",
-            "id": 10000000000003,
+            "id": "10000000000003",
           },
         ]
       }

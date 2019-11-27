@@ -12,7 +12,7 @@ module ApplicationHelper
 
     def item_to_hash(item)
       {
-        :id      => item.id,
+        :id      => item.id.to_s,
         :title   => item.name,
         :icon    => item.icon,
         :href    => item.link_params[:href],

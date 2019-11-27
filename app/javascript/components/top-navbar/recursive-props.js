@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export const groupProps = {
   description: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export const helpMenuProps = {

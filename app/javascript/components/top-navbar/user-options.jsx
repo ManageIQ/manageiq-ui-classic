@@ -68,7 +68,7 @@ const UserOptions = ({
                   title={__('Change to this Group')}
                   onClick={(e) => {
                     e.preventDefault();
-                    miqChangeGroup(group.id.toString());
+                    miqChangeGroup(group.id);
                   }}
                 >
                   {group.description}

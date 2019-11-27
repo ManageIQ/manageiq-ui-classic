@@ -78,16 +78,16 @@ describe('Top navbar tests', () => {
     applianceName = 'EVM';
     miqGroups = [
       {
-        id: 10000000000002,
+        id: '10000000000002',
         description: 'EvmGroup-super_administrator',
       },
       {
-        id: 10000000000003,
+        id: '10000000000003',
         description: 'EvmGroup-dev',
       },
     ];
     currentGroup = {
-      id: 10000000000002,
+      id: '10000000000002',
       description: 'EvmGroup-super_administrator',
     };
     userMenu = [
