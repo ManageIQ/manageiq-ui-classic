@@ -743,6 +743,23 @@ class CatalogController < ApplicationController
     explorer
   end
 
+  def catalogs_for_catalog_item
+    render :json => available_catalogs.map{ |catalog| { :id => catalog[1], :name => catalog[0]} }
+  end
+
+  def dialogs_for_catalog_item
+     binding.pry
+    render :json => Dialog.all.order(:name).map{ |dialog| {:id => dialog.id, :name => dialog.name} }
+  end
+
+  def zones_for_catalog_item
+    render :json => fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }.to_json
+  end
+
+  def currencies_for_catalog_item
+    render :json => Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }.to_json
+  end
+
   private
 
   def build_tenants_tree

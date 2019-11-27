@@ -287,8 +287,11 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w(
+        catalogs_for_catalog_item
         catalog_item_form_fields
         copy_catalog
+        currencies_for_catalog_item
+        dialogs_for_catalog_item
         download_data
         explorer
         ot_edit
@@ -296,6 +299,7 @@ Rails.application.routes.draw do
         ot_show
         servicetemplates_names
         show
+        zones_for_catalog_item
       ),
       :post => %w(
         ab_group_reorder

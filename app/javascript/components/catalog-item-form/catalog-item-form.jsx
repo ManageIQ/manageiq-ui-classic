@@ -3,19 +3,40 @@ import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-item-form.schema';
+import { http } from '../../http_api';
+import handleFailure from '../../helpers/handle-failure';
 
 
 class CatalogItemForm extends Component {
   constructor(props) {
     super(props);
-   // this.state = {
-   //   isLoaded: false,
-   // };
+    this.state = {
+      isLoaded: false,
+    };
   }
 
   componentDidMount() {
-
-
+    const catalog = http.get(`/catalog/catalogs_for_catalog_item`)
+      .then((data) => {
+        this.catalogs = data;
+      });
+    const currency = http.get(`/catalog/currencies_for_catalog_item`)
+      .then((data) => {
+        this.currencies = data;
+      });
+    const zone = http.get(`/catalog/zones_for_catalog_item`)
+      .then((data) => {
+        this.zones = data;
+      });
+    const dialog = http.get(`/catalog/dialogs_for_catalog_item`)
+      .then((data) => {
+        debugger;
+        this.dialogs = data;
+      });
+    Promise.all([catalog, currency, zone, dialog])
+      .then(() => {
+        this.setState({ isLoaded: true });
+      });
   }
 
   submitValues = () => {
@@ -24,19 +45,14 @@ class CatalogItemForm extends Component {
 
   render() {
     //const { catalogItemId, type } = this.props;
-    //const { isLoaded, initialValues } = this.state;
-    const catalogs = [{id: 1, name: "CATALOG"}];
-    const dialogs = [{id: 1, name: "DIALOG"}];
-    const zones = [{id: 1, name: "ZONE"}];
-    const currencies = [{id: 1, name: "CURRENCY"}];
-
+    const { isLoaded } = this.state;
     const cancelUrl = `/TODO?button=cancel`;
-    //if (!isLoaded) return null;
+    if (!isLoaded) return null;
 
     return (
       <Grid fluid>
         <MiqFormRenderer
-          schema={createSchema(catalogs, dialogs, zones, currencies)}
+          schema={createSchema(this.catalogs, this.dialogs, this.zones, this.currencies)}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}
