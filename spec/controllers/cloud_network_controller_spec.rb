@@ -54,7 +54,7 @@ describe CloudNetworkController do
   end
 
   describe "#show" do
-    before { login_as FactoryBot.create(:user) }
+    before { login_as FactoryBot.create(:user_with_group) }
 
     render_views
 
