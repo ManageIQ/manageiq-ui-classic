@@ -4,25 +4,11 @@ import createMiddlewares from './middleware';
 import { history } from '../miq-component/react-history.js';
 
 import { reducer as formReducer } from './form-reducer';
+import { notificationReducer } from './notification-reducer';
 
 const initialState = {};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const notificationInitialState = {
-  unreadCount: 0,
-};
-
-const nPrefix = '@@notifications/';
-
-const notificationReducer = (state = notificationInitialState, action) => {
-  switch (action.type) {
-    case `${nPrefix}setUnreadCount`:
-      return { ...state, unreadCount: action.payload };
-    default:
-      return state;
-  }
-};
 
 const initializeStore = () => {
   const store = createStore(
