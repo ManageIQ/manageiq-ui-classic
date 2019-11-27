@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps } from './recursive-props';
 import {
@@ -20,7 +21,14 @@ const SecondLevel = ({
   const hasSubitems = items.length > 0;
   return (
     <li
-      className={`menu-list-group-item ${hasSubitems ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''} ${useContext(HoverContext).secondLevelId === id ? 'is-hover' : ''}`}
+      className={clsx(
+        'menu-list-group-item',
+        {
+          'tertiary-nav-item-pf': hasSubitems,
+          'is-hover': useContext(HoverContext).secondLevelId === id,
+          active,
+        },
+      )}
       id={getIdByCategory(hasSubitems, id)}
       onMouseEnter={() => (handleSetActiveIds(hasSubitems ? { secondLevelId: id } : undefined))}
       onMouseLeave={() => handleSetActiveIds({ secondLevelId: undefined })}

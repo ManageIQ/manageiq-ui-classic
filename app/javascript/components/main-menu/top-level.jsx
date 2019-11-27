@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 import {
@@ -23,7 +24,14 @@ const TopLevel = ({
   if (isSection) {
     return (
       <li
-        className={`${active ? 'active' : ''} menu-list-group-item secondary-nav-item-pf ${useContext(HoverContext).topLevelId === id ? 'is-hover' : ''}`}
+        className={clsx(
+          'menu-list-group-item',
+          'secondary-nav-item-pf',
+          {
+            'is-hover': useContext(HoverContext).topLevelId === id,
+            active,
+          },
+        )}
         id={getSectionId(id)}
         onMouseEnter={() => handleSetActiveIds({ topLevelId: id })}
         onBlur={() => undefined}

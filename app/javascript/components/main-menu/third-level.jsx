@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { menuProps } from './recursive-props';
 import { getHrefByType, handleUnsavedChanges } from './helpers';
 import getTargetByType from '../../helpers/get-target-by-type';
@@ -11,7 +12,10 @@ const ThirdLevel = ({
   visible,
   type,
 }) => (!visible ? null : (
-  <li className={`menu-list-group-item ${active ? 'active' : ''}`} id={`menu_item_${id}`}>
+  <li
+    className={`menu-list-group-item ${active ? 'active' : ''}`}
+    id={`menu_item_${id}`}
+  >
     <a
       href={getHrefByType(type, href, id)}
       onClick={(event) => {

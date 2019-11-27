@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import TopLevel from './top-level';
@@ -33,7 +34,14 @@ const MainMenu = ({ menu }) => {
     <Grid>
       <div
         onMouseLeave={() => handleSetActiveIds({ topLevelId: undefined, secondLevelId: undefined })}
-        className={`nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus ${activeIds.topLevelId ? 'hover-secondary-nav-pf' : ''} ${activeIds.secondLevelId ? 'hover-tertiary-nav-pf' : ''} ${isVerticalMenuCollapsed ? 'collapsed' : ''}`}
+        className={clsx(
+          'nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus',
+          {
+            'hover-secondary-nav-pf': activeIds.topLevelId,
+            'hover-tertiary-nav-pf': activeIds.secondLevelId,
+            collapsed: isVerticalMenuCollapsed,
+          },
+        )}
       >
         <ul className="list-group" id="maintab">
           <HoverContext.Provider value={activeIds}>
