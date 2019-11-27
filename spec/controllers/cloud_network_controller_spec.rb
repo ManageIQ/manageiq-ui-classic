@@ -226,28 +226,51 @@ describe CloudNetworkController do
       let(:params) { {:pressed => "instance_tag"} }
 
       it 'calls tag method for tagging instances' do
-        expect(controller).to receive(:tag).with("VmOrTemplate")
+        expect(controller).to receive(:tag).with(VmOrTemplate)
 
         controller.send(:button)
       end
     end
 
-    context 'tagging network routers from a list of routers, accessed from the details page of a network' do
-      let(:params) { {:pressed => "network_router_tag"} }
+    %w[cloud_network cloud_subnet floating_ip network_router].each do |item|
+      context "tagging #{item.camelize}" do
+        let(:params) { {:pressed => "#{item}_tag"} }
 
-      it 'calls tag method for tagging network routers' do
-        expect(controller).to receive(:tag).with("NetworkRouter")
+        it 'calls tag method' do
+          expect(controller).to receive(:tag).with(item.camelize.safe_constantize)
+          controller.send(:button)
+        end
+      end
+    end
 
+    %w[delete evacuate pause refresh reset resize retire scan shelve start stop suspend terminate].each do |action|
+      context "#{action} for selected Instances displayed in a nested list" do
+        let(:params) { {:pressed => "instance_#{action}"} }
+
+        it "calls #{action + 'vms'} method" do
+          allow(controller).to receive(:show)
+          allow(controller).to receive(:performed?).and_return(true)
+          expect(controller).to receive((action + 'vms').to_sym)
+          controller.send(:button)
+        end
+      end
+    end
+
+    context 'editing Instance displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_edit'} }
+
+      it 'calls edit_record method' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:edit_record)
         controller.send(:button)
       end
     end
 
-    context 'tagging floating ips from a list of floating ips, accessed from the details page of a network' do
-      let(:params) { {:pressed => "floating_ip_tag"} }
+    context 'setting Ownership for Instances in a nested list' do
+      let(:params) { {:pressed => 'instance_ownership'} }
 
-      it 'calls tag method for tagging floating ips' do
-        expect(controller).to receive(:tag).with("FloatingIp")
-
+      it 'calls set_ownership' do
+        expect(controller).to receive(:set_ownership)
         controller.send(:button)
       end
     end
@@ -258,6 +281,104 @@ describe CloudNetworkController do
       it 'calls comparemiq method for comparing Instances' do
         expect(controller).to receive(:comparemiq)
         controller.send(:button)
+      end
+    end
+
+    context 'custom buttons' do
+      let(:params) { {:pressed => 'custom_button'} }
+
+      it 'calls custom_buttons method' do
+        expect(controller).to receive(:custom_buttons)
+        controller.send(:button)
+      end
+    end
+
+    context 'managing policies for selected Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_protect'} }
+
+      it 'calls assign_policies method' do
+        expect(controller).to receive(:assign_policies).with(VmOrTemplate)
+        controller.send(:button)
+      end
+    end
+
+    context 'policy simulation for selected Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_policy_sim'} }
+
+      it 'calls polsimvms method' do
+        expect(controller).to receive(:polsimvms)
+        controller.send(:button)
+      end
+    end
+
+    context 'provisioning Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_miq_request_new'} }
+
+      it 'calls prov_redirect' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:prov_redirect)
+        controller.send(:button)
+      end
+    end
+
+    context 'retirement for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_retire_now'} }
+
+      it 'calls retirevms_now' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:retirevms_now)
+        controller.send(:button)
+      end
+    end
+
+    context 'Live Migrate of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_live_migrate'} }
+
+      it 'calls livemigratevms' do
+        expect(controller).to receive(:livemigratevms)
+        controller.send(:button)
+      end
+    end
+
+    context 'Soft Reboot of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_guest_restart'} }
+
+      it 'calls guestreboot' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:guestreboot)
+        controller.send(:button)
+      end
+    end
+
+    context 'Check Compliance of Instances displayed in a nested list' do
+      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => network.id.to_s, :controller => 'cloud_network'} }
+      let(:vm_instance) { FactoryBot.create(:vm_or_template) }
+
+      before { allow(controller).to receive(:performed?).and_return(true) }
+
+      it 'calls check_compliance_vms' do
+        allow(controller).to receive(:show)
+        expect(controller).to receive(:check_compliance_vms)
+        controller.send(:button)
+      end
+
+      context 'Instance with VM Compliance policy assigned' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          EvmSpecHelper.create_guid_miq_server_zone
+          allow(controller).to receive(:assert_privileges)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+          allow(controller).to receive(:drop_breadcrumb)
+          vm_instance.add_policy(policy)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
       end
     end
   end
