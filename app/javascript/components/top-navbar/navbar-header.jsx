@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleVerticalMenuCollapsed } from '../../miq-redux/menu-reducer';
 
 const NavbarHeader = ({
@@ -8,9 +8,23 @@ const NavbarHeader = ({
   imagePath,
 }) => {
   const dispatch = useDispatch();
+  const isVerticalMenuCollapsed = useSelector(store => store.menuReducer.isVerticalMenuCollapsed);
+
   return (
     <div className="navbar-header">
-      <button className="navbar-toggle" type="button" onClick={() => dispatch(toggleVerticalMenuCollapsed())}>
+      <button
+        className="navbar-toggle"
+        type="button"
+        onClick={() => {
+          dispatch(toggleVerticalMenuCollapsed());
+          const content = window.document.getElementsByClassName('container-pf-nav-pf-vertical-with-sub-menus')[0];
+          if (isVerticalMenuCollapsed) {
+            content.classList.remove('collapsed-nav');
+          } else {
+            content.classList.add('collapsed-nav');
+          }
+        }}
+      >
         <span className="sr-only">
           {__('Toggle navigation')}
         </span>
