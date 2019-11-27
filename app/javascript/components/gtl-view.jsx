@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import assign from 'lodash/assign';
 import find from 'lodash/find';
 
-// import { StaticGTLView } from './StaticGTLView';
 import { StaticGTLView } from '@manageiq/react-ui-components/dist/gtl';
-// import '@manageiq/react-ui-components/dist/gtl.css';
+
+import '@manageiq/react-ui-components/dist/toolbar.css';
+import '@manageiq/react-ui-components/dist/gtl.css';
 
 // ui-component / src/gtl/services/dataTableService.ts
 
@@ -92,20 +93,15 @@ const getData = (
   });
 
 // app/assets/javascripts/controllers/report_data_controller.js
-//
-// /* global add_flash camelizeQuadicon */
-// (function() {
-//   var CONTROLLER_NAME = 'reportDataController';
-//   var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
-//   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
-//   var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
-//   var USE_TREE_ID = ['automation_manager'];
-//
-//   function isAllowedParent(initObject) {
-//     return TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1 &&
-//       TREE_TABS_WITHOUT_PARENT.indexOf(initObject.activeTree) === -1;
-//   }
-//
+
+const TREES_WITHOUT_PARENT = ['pxe', 'ops'];
+const TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
+const USE_TREE_ID = ['automation_manager'];
+
+const isAllowedParent = activeTree =>
+  TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1
+    && TREE_TABS_WITHOUT_PARENT.indexOf(activeTree) === -1;
+
 //   function tileViewSelector() {
 //     return document.querySelector('miq-tile-view');
 //   }
@@ -114,26 +110,22 @@ const getData = (
 //     return document.querySelector('miq-data-table');
 //   }
 //
-//   function constructSuffixForTreeUrl(initObject, item) {
-//     var itemId = _.isString(initObject.showUrl) && initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
-//     if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
-//       itemId = item.parent_id + '_' + item.tree_id;
-//     } else if (isAllowedParent(initObject)) {
-//       itemId = (USE_TREE_ID.indexOf(ManageIQ.controller) === -1) ? '_' : '';
-//       itemId = itemId + item.tree_id;
-//     }
-//     return itemId;
-//   }
-//   /**
-//   * Private method for setting rootPoint of MiQEndpointsService.
-//   * @param {Object} MiQEndpointsService service responsible for endpoits.
-//   * @returns {undefined}
-//   */
-//
-//   function isCurrentControllerOrPolicies(splitUrl) {
-//     return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
-//   }
-//
+const constructSuffixForTreeUrl = (showUrl, activeTree, item) => {
+  let itemId = _.isString(showUrl) && showUrl.indexOf('xx-') !== -1 ? `_-${item.id}` : `-${item.id}`;
+  if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
+    itemId = `${item.parent_id}_${item.tree_id}`;
+  } else if (isAllowedParent(activeTree)) {
+    itemId = (USE_TREE_ID.indexOf(ManageIQ.controller) === -1) ? '_' : '';
+    itemId += item.tree_id;
+  }
+  return itemId;
+};
+
+const isCurrentControllerOrPolicies = (url) => {
+  const splitUrl = url.split('/');
+  return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
+};
+
 //   /**
 //   * Method for init paging component for GTL.
 //   * Default paging has 5, 10, 20, 50, 100, 1000
@@ -159,53 +151,11 @@ const getData = (
 //     };
 //   }
 //
-//
-//   /**
-//   * Constructor for GTL controller. This constructor will init params accessible via `this` property and calls
-//   * initEndpoints, subscribes to subject, and sets default paging.
-//   * @param {Object} MiQDataTableService datatable service for fetching GTL data and filtering them.
-//   * @param {Object} MiQEndpointsService service for setting basic routes.
-//   * @param {Object} $filter angular filter Service.
-//   * @param {Object} $location angular location object.
-//   * @param {Object} $scope current scope.
-//   * @param {Object} $document angular's document service.
-//   * @param {Object} $timeout angular's timeout service.
-//   * @param {Object} $window angular's window service.
-//   * @returns {undefined}
-//   */
-//   var ReportDataController = function(MiQDataTableService,
-//     MiQEndpointsService,
-//     $filter,
-//     $location,
-//     $scope,
-//     $document,
-//     $timeout,
-//     $window) {
-//     var vm = this;
-//     vm.settings = {};
-//     vm.MiQDataTableService = MiQDataTableService;
-//     vm.MiQEndpointsService = MiQEndpointsService;
-//     vm.$filter = $filter;
-//     vm.$scope = $scope;
-//     vm.$location = $location;
-//     vm.$document = $document[0];
-//     vm.$timeout = $timeout;
-//     vm.$window = $window;
-//     initEndpoints(vm.MiQEndpointsService);
 //     if (ManageIQ.qe && ManageIQ.qe.gtl && ManageIQ.qe.gtl.actionsToFunction) {
 //       vm.apiFunctions = ManageIQ.qe.gtl.actionsToFunction.bind(vm)();
 //     }
 //     subscribeToSubject.bind(vm)();
 //     vm.perPage = defaultPaging();
-//   };
-//
-//   ReportDataController.prototype.refreshData = function(data) {
-//     this.initController(_.merge(this.initObject, data));
-//   };
-//
-//   ReportDataController.prototype.setScope = function(scope) {
-//     this.initObject.additionalOptions.named_scope = [];
-//     this.refreshData({additionalOptions: {named_scope: scope}});
 //   };
 //
 //   ReportDataController.prototype.setSort = function(headerId, isAscending) {
@@ -262,14 +212,12 @@ const getData = (
 //     ManageIQ.gridChecks.push(item.long_id);
 //   };
 //
-//
 //   /**
 //   * Method which will be fired when item was selected (either trough select box or by clicking on tile).
 //   * @param {Object} item which item was selected.
 //   * @param {Boolean} isSelected true | false.
 //   * @returns {undefined}
 //   */
-//
 //
 //   ReportDataController.prototype.setLoading = function(state) {
 //     this.$window.ManageIQ.gtl.loading = state;
@@ -351,39 +299,42 @@ const getData = (
 //     };
 //     this.settings.translateTotalof = this.settings.translateTotalOf;
 //   };
-//
-//   ReportDataController.prototype.setExtraClasses = function(viewType) {
-//     var mainContent = this.$document.querySelector('#main-content');
-//     var pagination = this.$document.querySelector('#paging_div .miq-pagination');
-//
-//     if (!mainContent) {
-//       return;
-//     }
-//
-//     angular.element(mainContent).removeClass('miq-list-content');
-//     angular.element(pagination).css('display', 'none');
-//
-//     if (viewType === 'grid' || viewType === 'tile') {
-//       angular.element(pagination).css('display', 'block');
-//     } else if (viewType === 'list') {
-//       angular.element(mainContent).addClass('miq-list-content');
-//       angular.element(pagination).css('display', 'block');
-//     }
-//   };
-//
-//   window.miqGtlSetExtraClasses = function() {
-//     // need this to work even if there is no GTL instance running
-//     return ReportDataController.prototype.setExtraClasses.call({
-//       $document: document,
-//     });
-//   };
-//
-//   ReportDataController.prototype.activateNodeSilently = function(itemId) {
-//     var treeId = angular.element('.collapse.in .treeview').attr('id');
-//     if (EXPAND_TREES.indexOf(treeId) !== -1) {
-//       miqTreeExpandRecursive(treeId, itemId);
-//     }
-//   };
+
+// const setExtraClasses = (viewType) => {
+//   var mainContent = this.$document.querySelector('#main-content'); // FIXME
+//   var pagination = this.$document.querySelector('#paging_div .miq-pagination'); // FIXME
+//   
+//   if (!mainContent) {
+//     return;
+//   }
+// 
+//   angular.element(mainContent).removeClass('miq-list-content');
+//   angular.element(pagination).css('display', 'none');
+// 
+//   if (viewType === 'grid' || viewType === 'tile') {
+//     angular.element(pagination).css('display', 'block');
+//   } else if (viewType === 'list') {
+//     angular.element(mainContent).addClass('miq-list-content');
+//     angular.element(pagination).css('display', 'block');
+//   }
+// };
+
+// window.miqGtlSetExtraClasses = function() {
+//   // need this to work even if there is no GTL instance running
+//   return ReportDataController.prototype.setExtraClasses.call({
+//     $document: document,
+//   });
+// };
+
+
+const EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
+const activateNodeSilently = (itemId) => {
+  // var treeId = angular.element('.collapse.in .treeview').attr('id'); // FIXME
+  if (EXPAND_TREES.indexOf(treeId) !== -1) {
+    miqTreeExpandRecursive(treeId, itemId);
+  }
+};
+
 //
 //   ReportDataController.prototype.movePagination = function() {
 //     this.$timeout(function() {
@@ -492,13 +443,47 @@ const getData = (
 const setRowActive = (rows, item) => {
   const newRows = rows.map(row => ({
     ...row,
-    selected: (row.long_id === item.long_id),
+    selected: (row.id === item.id),
   }));
 
   window.sendDataWithRx({ rowSelect: selectedItem });
-  ManageIQ.gridChecks = [item.long_id];
+  ManageIQ.gridChecks = [item.id];
 
   return newRows;
+};
+
+
+const broadcastSelectedItem = (item) => {
+  console.log('broadcastSelectedItem:', item);
+
+  sendDataWithRx({ rowSelect: item });
+
+  if (!window.ManageIQ) {
+    return;
+  }
+
+  const { ManageIQ } = window;
+  if (item.checked) {
+    ManageIQ.gridChecks.push(item.id);
+  } else {
+    const index = ManageIQ.gridChecks.indexOf(item.id);
+    if (index !== -1) {
+      ManageIQ.gridChecks.splice(index, 1);
+    }
+  }
+};
+
+const reduceSelectedItem = (state, item, isSelected) => {
+  const selectedItem = {
+    ...item,
+    selected: isSelected,
+    checked: isSelected,
+  };
+  broadcastSelectedItem(selectedItem);
+  return {
+    ...state,
+    rows: state.rows.map(i => (i.id !== selectedItem.id ? i : selectedItem)),
+  };
 };
 
 const gtlReducer = (state, action) => {
@@ -514,16 +499,33 @@ const gtlReducer = (state, action) => {
         messages: action.messages,
       };
     case 'setActiveRow':
+      // action.item ... the row to become active
       return {
         ...state,
         rows: setRowActive(state.rows, actions.item),
       };
+    case 'setScope':
+      // action.namedScope ... new named scrop name
+      return {
+        ...state,
+        namedScope: action.namedScope,
+      };
+    case 'itemSelected':
+      // action.item       ... selected item object
+      // action.isSelected ... selection status
+      return reduceSelectedItem(state, action.item, action.isSelected);
     default:
       return state;
   }
 };
 
 const RX_IDENTITY = 'reportDataController';
+
+//   ReportDataController.prototype.setScope = function(scope) {
+//     this.initObject.additionalOptions.named_scope = [];
+//     this.refreshData({additionalOptions: {named_scope: scope}});
+//   };
+//
 
 /* eslint no-unused-vars: 'off' */
 /* eslint no-undef: 'off' */
@@ -548,7 +550,7 @@ const subscribeToSubject = dispatch =>
       // }
 
       if (event.setScope && event.setScope.name === RX_IDENTITY) {
-        this.setScope(event.data);
+        dispatch({ type: 'setScope', namedScope: event.data });
       } else if (event.type === 'gtlSetOneRowActive') {
         dispatch({ type: 'setActiveRow', item: event.item });
       }
@@ -629,6 +631,8 @@ const GtlView = ({
   const initState = {
     ...initialState,
     gtlType,
+    // namedScope is taken from props to state and then used from state
+    namedScope: additionalOptions.named_scope,
   };
 
   const [state, dispatch] = useReducer(gtlReducer, initState);
@@ -642,46 +646,27 @@ const GtlView = ({
       isExplorer,
       {}, // settings, // FIXME
       records,
-      additionalOptions,
+      {
+        ...additionalOptions,
+        named_scope: state.namedScope,
+      },
     );
 
     const subscription = subscribeToSubject(dispatch);
     return () => subscription.unsubscribe();
-  }, []);
+  }, [state.namedScope]); // fire request if namedScope is changed in state
 
   const {
     isLoading, head, rows,
     settings, // page settings
   } = state;
 
-  const onItemSelect = ({ item, isSelected }) => {
+  const onItemSelect = (item, isSelected) => {
+    console.log('onItemSelect', item, isSelected);
     if (typeof item === 'undefined') {
       return;
     }
-
-    const selectedItem = rows.find(e => e.long_id === item.long_id);
-    if (!selectedItem) {
-      return;
-    }
-
-    selectedItem.checked = isSelected;
-    selectedItem.selected = isSelected;
-
-    sendDataWithRx({ rowSelect: selectedItem });
-
-    if (!window.ManageIQ) {
-      return;
-    }
-
-    const { ManageIQ } = window;
-    if (isSelected) {
-      ManageIQ.gridChecks.push(item.long_id);
-    } else {
-      const index = ManageIQ.gridChecks.indexOf(item.long_id);
-      if (index !== -1) {
-        ManageIQ.gridChecks.splice(index, 1);
-      }
-    }
+    dispatch({ type: 'itemSelected', item, isSelected });
   };
 
   // const sortBy = {
@@ -706,7 +691,13 @@ const GtlView = ({
   //         this.perPage.text = this.settings.perpage;
   //         this.perPage.value = this.settings.perpage;
   //         this.initObject = this.initObject || {};
+  //
   //         this.initObject.showUrl = this.settings.url || this.initObject.showUrl;
+  //
+  //
+  //         // do we need this?
+  //         // if under vm/policies go to vm_infra/policies
+  //         // if under vm/<something> go to vm_cloud/<something>
   //         if (this.initObject.showUrl) {
   //           var splitUrl = this.initObject.showUrl.split('/');
   //           if (splitUrl && splitUrl[1] === 'vm') {
@@ -728,8 +719,6 @@ const GtlView = ({
   if (isLoading) {
     return <div className="spinner spinner-lg" />;
   }
-
-  // onPerPageSelect: PropTypes.func,
 
   const onPageSet = page => getData(
     dispatch,
@@ -775,62 +764,79 @@ const GtlView = ({
     }
   };
 
-  const onItemClicked = (item, event) => {
-    console.log('onItemClicked:', item, event);
-    event.stopPropagation();
-    event.preventDefault();
+  const onItemClick = (item, event) => {
+    let targetUrl = showUrl;
+
+    console.log('onRowClick:', item, event);
+    // event.stopPropagation();
+    // event.preventDefault();
+
+    // Empty showUrl disables onRowClick action. Nothing to do.
+    if (!showUrl) {
+      return false;
+    }
+
+    // // Clicks table cell outside the checkbox.  // FIXME: test/verify
+    // if ($(event.target).is('.is-checkbox-cell')) {
+    //   return false;
+    // }
+
+    // If custom_action is specified, send and RxJS message with actionType set
+    // to custom_action value.
+    if (additionalOptions && additionalOptions.custom_action) {
+      sendDataWithRx({
+        type: 'GTL_CLICKED',
+        actionType: additionalOptions.custom_action.type,
+        payload: {
+          item,
+          action: additionalOptions.custom_action,
+        },
+      });
+    }
+
+    // Handling of click-through on request/tasks/jobs (navigate to VM/Host/etc...)
+    // URL is calculated based on item, not showUrl.
+    if (item.parent_path && item.parent_id) {
+      miqSparkleOn();
+      window.DoNav(`${item.parent_path}/${item.parent_id}`);
+      return true;
+    }
+
+    // explorer case + current controller (non nested) + policies
+    if (isExplorer && isCurrentControllerOrPolicies(targetUrl)) {
+      miqSparkleOn();
+      if (_.isString(targetUrl) && targetUrl.indexOf('?id=') !== -1) {
+        activateNodeSilently(
+          constructSuffixForTreeUrl(showUrl, activeTree, item),
+        );
+      }
+
+      // Seems to be related to Foreman configured systems unassigned config. profiles.
+      // Where we need to navigate to a different URL.
+      if (item.id.indexOf('unassigned') !== -1) {
+        targetUrl = `/${ManageIQ.controller}/tree_select/?id=`;
+      }
+
+      // the setExtraClasses is probably dead now
+      // post(targetUrl + itemId).always(() => this.setExtraClasses());
+      miqAjax(targetUrl + item.id);
+      return true;
+    }
+
+    // non-explorer case + nested case
+    // targetUrl === 'true' disables clicks for tasks w/o parent_path and parent_id
+    if (targetUrl !== 'true') {
+      miqSparkleOn();
+      const lastChar = targetUrl[targetUrl.length - 1];
+      if (lastChar !== '/' && lastChar !== '=') {
+        targetUrl += '/';
+      }
+      window.DoNav(targetUrl + item.id);
+      return true;
+    }
+
+    return false;
   };
-  //
-  //     // nothing to do
-  //     if (!this.initObject.showUrl) {
-  //       return false;
-  //     }
-  //
-  //     // clicks just outside the checkbox
-  //     if ($(event.target).is('.is-checkbox-cell')) {
-  //       return false;
-  //     }
-  //
-  //     if (this.initObject.additionalOptions && this.initObject.additionalOptions.custom_action) {
-  //       sendDataWithRx({
-  //         type: 'GTL_CLICKED',
-  //         actionType: this.initObject.additionalOptions.custom_action.type,
-  //         payload: {
-  //           item: item,
-  //           action: this.initObject.additionalOptions.custom_action,
-  //         },
-  //       });
-  //       return;
-  //     }
-  //
-  //     var prefix = this.initObject.showUrl;
-  //     var splitUrl = this.initObject.showUrl.split('/');
-  //     if (item.parent_path && item.parent_id) {
-  //       miqSparkleOn();
-  //       this.$window.DoNav(item.parent_path + '/' + item.parent_id);
-  //     } else if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
-  //       miqSparkleOn();
-  //       var itemId = item.id;
-  //       if (_.isString(this.initObject.showUrl) && this.initObject.showUrl.indexOf('?id=') !== -1) {
-  //         itemId = constructSuffixForTreeUrl(this.initObject, item);
-  //         this.activateNodeSilently(itemId);
-  //       }
-  //       if (itemId.indexOf('unassigned') !== -1) {
-  //         prefix = '/' + ManageIQ.controller + '/tree_select/?id=';
-  //       }
-  //       var url = prefix + itemId;
-  //       $.post(url).always(function() {
-  //         this.setExtraClasses();
-  //       }.bind(this));
-  //     } else if (prefix !== 'true') {
-  //       miqSparkleOn();
-  //       var lastChar = prefix[prefix.length - 1];
-  //       prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
-  //       this.$window.DoNav(prefix + (item.long_id || item.id));
-  //     }
-  //
-  //     return false;
-  //   };
 
   /* FIXME: removig flash div */
   /* FIXME: missing no-record formatting/partial */
@@ -849,7 +855,7 @@ const GtlView = ({
           onPageSet={onPageSet}
           onPerPageSelect={onPerPageSelect}
           onItemSelect={onItemSelect}
-          onItemClicked={onItemClicked}
+          onItemClick={onItemClick}
           onSort={onSort}
         />
       )}

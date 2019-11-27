@@ -78,7 +78,7 @@ module GtlHelper
       parentId:          options[:display].nil? ? nil : options[:parent_id],
       sortColIdx:        options[:sort_col],
       sortDir:           options[:sort_dir],
-      isExplorer:        options[:explorer] === 'true',
+      isExplorer:        options[:explorer],
       records:           !options[:selected_records].nil? ? options[:selected_records] : [],
       hideSelect:        options[:selected_records].kind_of?(Array),
       showUrl:           gtl_show_url(options),
