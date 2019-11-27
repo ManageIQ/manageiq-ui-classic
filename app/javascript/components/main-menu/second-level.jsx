@@ -39,7 +39,7 @@ const SecondLevel = ({
       </a>
       <div className="nav-pf-tertiary-nav">
         <div className="nav-item-pf-header">
-          <a className="tertiary-collapse-toggle-pf" data-toggle="collapse-tertiary-nav">
+          <a>
             <span>{title}</span>
           </a>
         </div>
