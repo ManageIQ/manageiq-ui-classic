@@ -262,9 +262,13 @@ module ApplicationHelper
       # If we do not want to use redirect or any kind of click action
       if %w[Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex].include?(view.db) &&
          %w[ops].include?(params[:controller])
+
+        # This disables the click-through in GTL.
         return false
       end
       if %w[MiqTask].include?(view.db) && %w[miq_task].include?(params[:controller])
+
+        # This disables the click-through in GTL unless parent_path & parent_id are set on a row.
         return true
       end
       if @explorer
