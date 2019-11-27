@@ -23,6 +23,7 @@ class ContainerDashboardController < ApplicationController
 
   def data
     return data_live if params[:live] == 'true'
+
     render :json => {:data => collect_data(params[:id])}
   end
 
