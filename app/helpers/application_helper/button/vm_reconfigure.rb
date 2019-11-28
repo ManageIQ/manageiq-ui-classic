@@ -2,6 +2,6 @@ class ApplicationHelper::Button::VmReconfigure < ApplicationHelper::Button::Basi
   needs :@record
 
   def visible?
-    @record.reconfigurable?
+    role_allows?(:identifier => 'vm_reconfigure_all', :any => true) && @record.reconfigurable?
   end
 end
