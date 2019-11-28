@@ -34,6 +34,7 @@ const MainMenu = ({ menu }) => {
     <Grid>
       <div
         onMouseLeave={() => handleSetActiveIds({ topLevelId: undefined, secondLevelId: undefined })}
+        id="main-menu"
         className={clsx(
           'nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus',
           {

@@ -99,7 +99,8 @@ exports[`Main menu test should render correctly 1`] = `
       className="container"
     >
       <div
-        className="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus  "
+        className="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus"
+        id="main-menu"
         onMouseLeave={[Function]}
       >
         <ul
@@ -178,13 +179,13 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className="active menu-list-group-item secondary-nav-item-pf "
+                className="menu-list-group-item secondary-nav-item-pf active"
                 id="menu_section_vi"
                 onBlur={[Function]}
                 onMouseEnter={[Function]}
               >
                 <a
-                  className="top-level"
+                  className="top-level-item"
                   href="/dashboard/maintab/?tab=vi"
                   onClick={[Function]}
                   target="_self"
@@ -204,8 +205,7 @@ exports[`Main menu test should render correctly 1`] = `
                     className="nav-item-pf-header"
                   >
                     <a
-                      className="secondary-collapse-toggle-pf top-level"
-                      data-toggle="collapse-secondary-nav"
+                      className="top-level-item"
                     >
                       <span>
                         Cloud Intel
@@ -241,7 +241,7 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item  active "
+                          className="menu-list-group-item active"
                           id="menu_item_dashboard"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -262,10 +262,7 @@ exports[`Main menu test should render correctly 1`] = `
                             <div
                               className="nav-item-pf-header"
                             >
-                              <a
-                                className="tertiary-collapse-toggle-pf"
-                                data-toggle="collapse-tertiary-nav"
-                              >
+                              <a>
                                 <span>
                                   Dashboard
                                 </span>
@@ -301,7 +298,7 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item   "
+                          className="menu-list-group-item"
                           id="menu_item_chargeback"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -323,10 +320,7 @@ exports[`Main menu test should render correctly 1`] = `
                             <div
                               className="nav-item-pf-header"
                             >
-                              <a
-                                className="tertiary-collapse-toggle-pf"
-                                data-toggle="collapse-tertiary-nav"
-                              >
+                              <a>
                                 <span>
                                   Chargeback
                                 </span>
@@ -455,13 +449,13 @@ exports[`Main menu test should render correctly 1`] = `
               visible={true}
             >
               <li
-                className=" menu-list-group-item secondary-nav-item-pf "
+                className="menu-list-group-item secondary-nav-item-pf"
                 id="menu_section_compute"
                 onBlur={[Function]}
                 onMouseEnter={[Function]}
               >
                 <a
-                  className="top-level"
+                  className="top-level-item"
                   href="/dashboard/maintab/?tab=compute"
                   onClick={[Function]}
                   target="_blank"
@@ -481,8 +475,7 @@ exports[`Main menu test should render correctly 1`] = `
                     className="nav-item-pf-header"
                   >
                     <a
-                      className="secondary-collapse-toggle-pf top-level"
-                      data-toggle="collapse-secondary-nav"
+                      className="top-level-item"
                     >
                       <span>
                         Compute
@@ -584,7 +577,7 @@ exports[`Main menu test should render correctly 1`] = `
                         visible={true}
                       >
                         <li
-                          className="menu-list-group-item tertiary-nav-item-pf  "
+                          className="menu-list-group-item tertiary-nav-item-pf"
                           id="menu_section_clo"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -606,10 +599,7 @@ exports[`Main menu test should render correctly 1`] = `
                             <div
                               className="nav-item-pf-header"
                             >
-                              <a
-                                className="tertiary-collapse-toggle-pf"
-                                data-toggle="collapse-tertiary-nav"
-                              >
+                              <a>
                                 <span>
                                   Clouds
                                 </span>
