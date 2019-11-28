@@ -275,7 +275,7 @@ describe CatalogController do
       end
       let(:st) { FactoryBot.create(:service_template) }
       let(:symbol) { '฿' }
-      let(:currency) { FactoryBot.create(:chargeback_rate_detail_currency, :symbol => symbol) }
+      let(:currency) { FactoryBot.create(:currency, :symbol => symbol) }
 
       before do
         allow(controller).to receive(:replace_right_cell)
@@ -1185,10 +1185,10 @@ describe CatalogController do
         {:display            => '1',
          :reconfigure_fqname => ''}
       end
-      let(:some_currency) { ChargebackRateDetailCurrency.first }
+      let(:some_currency) { Currency.first }
 
       before do
-        ChargebackRateDetailCurrency.seed
+        Currency.seed
         controller.params = params.merge(other_params)
       end
 

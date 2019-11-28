@@ -929,7 +929,7 @@ class CatalogController < ApplicationController
         st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
       end
     end
-    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.currency = @edit[:new][:currency] ? Currency.find_by(:id => @edit[:new][:currency].to_i) : nil
     st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
 
     if st.save
@@ -1068,7 +1068,7 @@ class CatalogController < ApplicationController
     st.generic_subtype = @edit[:new][:generic_subtype] if @edit[:new][:st_prov_type] == 'generic'
     st.zone_id = @edit[:new][:zone_id]
     st.additional_tenants = Tenant.where(:id => @edit[:new][:tenant_ids]) # Selected Additional Tenants in the tree
-    st.currency = @edit[:new][:currency] ? ChargebackRateDetailCurrency.find_by(:id => @edit[:new][:currency].to_i) : nil
+    st.currency = @edit[:new][:currency] ? Currency.find_by(:id => @edit[:new][:currency].to_i) : nil
     st.price    = st.currency ? @edit[:new][:price] : nil if @edit[:new][:price]
   end
 
@@ -1285,7 +1285,7 @@ class CatalogController < ApplicationController
   end
 
   def code_currency_label(currency)
-    _('Price / Month (in %{currency})') % {:currency => ChargebackRateDetailCurrency.find(currency).code}
+    _('Price / Month (in %{currency})') % {:currency => Currency.find(currency).code}
   end
 
   def checked_tenants
