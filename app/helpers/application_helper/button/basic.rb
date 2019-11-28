@@ -2,6 +2,7 @@ class ApplicationHelper::Button::Basic < Hash
   include ActionView::Helpers::TextHelper
 
   delegate :role_allows?, :parse_nodetype_and_id, :to => :@view_context
+  delegate :role_allows_any?, :to => '@view_context.current_user'
 
   def initialize(view_context, view_binding, instance_data, props)
     @view_context  = view_context
