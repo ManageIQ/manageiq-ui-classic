@@ -1,5 +1,5 @@
 - url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
-- currency = ChargebackRateDetailCurrency.currencies_for_select
+- currency = Currency.currencies_for_select
 = render :partial => "layouts/flash_msg"
 #form_div
   %h3
