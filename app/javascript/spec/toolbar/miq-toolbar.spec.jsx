@@ -2,8 +2,8 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-import MiqToolbar from '../../components/miq-toolbar';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
+import MiqToolbar from '../../components/miq-toolbar';
 import DashboardToolbar from '../../components/dashboard_toolbar';
 import TopologyToolbar from '../../components/topology_toolbar';
 
@@ -58,10 +58,5 @@ describe('<MiqToolbar />', () => {
   it('renders Toolbar', () => {
     const t = shallow(<MiqToolbar toolbars={genericData} />);
     expect(t.find(Toolbar)).toHaveLength(1);
-  });
-
-  it('renders ok for generic case', () => {
-    const t = mount(<MiqToolbar toolbars={genericData} />);
-    expect(toJson(t)).toMatchSnapshot();
   });
 });
