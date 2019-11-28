@@ -108,12 +108,14 @@ describe('Main menu test', () => {
 
   it('should render active third level components properly', () => {
     const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>);
-    expect(wrapper.find(ThirdLevel).find('li.menu-list-group-item.active')).toHaveLength(1);
+    expect(wrapper.find(ThirdLevel).find('li.menu-list-group-item.active'))
+      .toHaveLength(1);
   });
 
   it('should render not collapsed vertical navbar with proper classNames', () => {
     const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>);
-    expect(wrapper.find('#main-menu').instance().className).toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus');
+    expect(wrapper.find('#main-menu').instance().className)
+      .toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus');
   });
 
   it('should render collapsed vertical navbar with proper classNames', () => {
@@ -123,6 +125,7 @@ describe('Main menu test', () => {
       },
     });
     const wrapper = mount(<Provider store={collapsedStore}><MainMenu menu={mockNavItems} /></Provider>);
-    expect(wrapper.find('#main-menu').instance().className).toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus collapsed');
+    expect(wrapper.find('#main-menu').instance().className)
+      .toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus collapsed');
   });
 });
