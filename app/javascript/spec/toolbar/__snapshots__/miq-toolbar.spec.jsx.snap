@@ -91,12 +91,8 @@ exports[`<MiqToolbar /> renders ok for generic case 1`] = `
         views={Array []}
       >
         <div
-          className="toolbar-pf-action-right"
-        >
-          <div
-            className="form-group toolbar-pf-view-selector"
-          />
-        </div>
+          className="toolbar-pf-view-selector pull-right form-group"
+        />
       </ToolbarView>
     </div>
   </Toolbar>
