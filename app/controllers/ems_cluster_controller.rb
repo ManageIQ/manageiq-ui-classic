@@ -113,16 +113,26 @@ class EmsClusterController < ApplicationController
 
   def set_config(db_record)
     @cluster_config = []
-    @cluster_config.push(:field       => "HA Enabled",
-                         :description => db_record.ha_enabled) unless db_record.ha_enabled.nil?
-    @cluster_config.push(:field       => "HA Admit Control",
-                         :description => db_record.ha_admit_control) unless db_record.ha_admit_control.nil?
-    @cluster_config.push(:field       => "DRS Enabled",
-                         :description => db_record.drs_enabled) unless db_record.drs_enabled.nil?
-    @cluster_config.push(:field       => "DRS Automation Level",
-                         :description => db_record.drs_automation_level) unless db_record.drs_automation_level.nil?
-    @cluster_config.push(:field       => "DRS Migration Threshold",
-                         :description => db_record.drs_migration_threshold) unless db_record.drs_migration_threshold.nil?
+    unless db_record.ha_enabled.nil?
+      @cluster_config.push(:field       => "HA Enabled",
+                           :description => db_record.ha_enabled)
+    end
+    unless db_record.ha_admit_control.nil?
+      @cluster_config.push(:field       => "HA Admit Control",
+                           :description => db_record.ha_admit_control)
+    end
+    unless db_record.drs_enabled.nil?
+      @cluster_config.push(:field       => "DRS Enabled",
+                           :description => db_record.drs_enabled)
+    end
+    unless db_record.drs_automation_level.nil?
+      @cluster_config.push(:field       => "DRS Automation Level",
+                           :description => db_record.drs_automation_level)
+    end
+    unless db_record.drs_migration_threshold.nil?
+      @cluster_config.push(:field       => "DRS Migration Threshold",
+                           :description => db_record.drs_migration_threshold)
+    end
   end
 
   def breadcrumbs_options
