@@ -101,6 +101,7 @@ class EmsContainerController < ApplicationController
   # TODO: move to backend
   def get_hostname_from_routes(ems, route, project)
     return nil, "Route detection not applicable for provider type" unless ems.class.respond_to?(:openshift_connect)
+
     [
       ems.connect(:service => :openshift).get_route(route, project).try(:spec).try(:host),
       nil
@@ -122,11 +123,16 @@ class EmsContainerController < ApplicationController
 
   def retrieve_alerts_selection
     return "disabled" if @ems.connection_configurations.try(:prometheus_alerts).nil?
+
     "prometheus"
   end
 
   def retrieve_virtualization_selection
     @ems.connection_configurations.try(:kubevirt).nil? ? "disabled" : "kubevirt"
+  end
+
+  def restful?
+    true
   end
 
   private
@@ -141,11 +147,6 @@ class EmsContainerController < ApplicationController
   def show_link(ems, options = {})
     ems_path(ems.id, options)
   end
-
-  def restful?
-    true
-  end
-  public :restful?
 
   def breadcrumbs_options
     {
