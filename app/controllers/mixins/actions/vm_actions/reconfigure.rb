@@ -43,9 +43,12 @@ module Mixins
           render :json => request_hash
         end
 
-        # Reconfigure selected VMs
         def reconfigurevms
-          assert_privileges(params[:pressed])
+          rbac_feature_base = params[:pressed] + '_all'
+          unless role_allows?(:feature => rbac_feature_base, :any => true)
+            raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
+          end
+
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
           # if coming in to edit from miq_request list view
@@ -378,13 +381,43 @@ module Mixins
           end
         end
 
+        # parameter to accept for vm reconfiguration based on role permissions
+        def reconfigure_param_list
+          list = []
+
+          if role_allows?(:feature => 'vm_reconfigure_disks')
+            list += [
+              %i[vmAddDisks disk_add],
+              %i[vmResizeDisks disk_resize],
+              %i[vmRemoveDisks disk_remove]
+            ]
+          end
+
+          if role_allows?(:feature => 'vm_reconfigure_networks')
+            list += [
+              %i[vmAddNetworkAdapters network_adapter_add],
+              %i[vmRemoveNetworkAdapters network_adapter_remove],
+              %i[vmEditNetworkAdapters network_adapter_edit],
+            ]
+          end
+
+          if role_allows?(:feature => 'vm_reconfigure_drives')
+            list += [
+              %i[vmConnectCDRoms cdrom_connect],
+              %i[vmDisconnectCDRoms cdrom_disconnect]
+            ]
+          end
+
+          list
+        end
+
         def reconfigure_handle_submit_button
           options = {:src_ids => params[:objectIds]}
           if params[:cb_memory] == 'true'
             options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : params[:memory].to_i * 1024
           end
 
-          if params[:cb_cpu] == 'true'
+          if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_memory')
             options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
             options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
             vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
@@ -392,15 +425,7 @@ module Mixins
             options[:number_of_cpus] = vccores * vsockets
           end
 
-          # set the disk_add and disk_remove options
-          [%i[vmAddDisks disk_add],
-           %i[vmResizeDisks disk_resize],
-           %i[vmRemoveDisks disk_remove],
-           %i[vmAddNetworkAdapters network_adapter_add],
-           %i[vmRemoveNetworkAdapters network_adapter_remove],
-           %i[vmEditNetworkAdapters network_adapter_edit],
-           %i[vmConnectCDRoms cdrom_connect],
-           %i[vmDisconnectCDRoms cdrom_disconnect]].each do |params_key, options_key|
+          reconfigure_param_list.each do |params_key, options_key|
              next if params[params_key].blank?
              params[params_key].each do |_key, p|
                p.transform_values! { |v| eval_if_bool_string(v) }
