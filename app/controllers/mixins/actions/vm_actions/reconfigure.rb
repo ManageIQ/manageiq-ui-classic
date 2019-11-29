@@ -43,14 +43,12 @@ module Mixins
           render :json => request_hash
         end
 
-        def reconfigurevms
-          rbac_feature_base = params[:pressed] + '_all'
-          unless role_allows?(:feature => rbac_feature_base, :any => true)
+        # reconfiguration for VMs only
+        def vm_reconfigure
+          unless role_allows?(:feature => 'vm_reconfigure_all', :any => true)
             raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
           end
 
-          # check to see if coming from show_list or drilled into vms from another CI
-          rec_cls = "vm"
           # if coming in to edit from miq_request list view
           recs = checked_or_params
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
@@ -84,12 +82,9 @@ module Mixins
             @refresh_partial = "vm_common/reconfigure"
           elsif
             # redirect to build the ownership screen
-            javascript_redirect(:controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
+            javascript_redirect(:controller => 'vm', :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
           end
         end
-
-        alias_method :image_reconfigure, :reconfigurevms
-        alias_method :vm_reconfigure, :reconfigurevms
 
         def get_reconfig_limits(reconfigure_ids)
           @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => reconfigure_ids)
