@@ -34,7 +34,6 @@ class EmsNetworkController < ApplicationController
   def restful?
     true
   end
-  public :restful?
 
   def model_feature_for_action(action)
     case action
