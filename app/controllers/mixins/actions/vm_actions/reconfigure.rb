@@ -87,9 +87,7 @@ module Mixins
         end
 
         alias_method :image_reconfigure, :reconfigurevms
-        alias_method :instance_reconfigure, :reconfigurevms
         alias_method :vm_reconfigure, :reconfigurevms
-        alias_method :miq_template_reconfigure, :reconfigurevms
 
         def get_reconfig_limits(reconfigure_ids)
           @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => reconfigure_ids)
