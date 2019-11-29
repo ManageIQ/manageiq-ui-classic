@@ -77,15 +77,14 @@ module Mixins
             end
             reconfigure_ids = recs.collect(&:to_i)
           end
+
           if @explorer
             reconfigure(reconfigure_ids)
             session[:changed] = true # need to enable submit button when screen loads
             @refresh_partial = "vm_common/reconfigure"
-          elsif role_allows?(:feature => "vm_reconfigure")
+          elsif
             # redirect to build the ownership screen
             javascript_redirect(:controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
-          else
-            head :ok
           end
         end
 
