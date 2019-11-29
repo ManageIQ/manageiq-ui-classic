@@ -1,5 +1,11 @@
 - @angular_form = true
 
+-# Base for reconfigure RBAC features.
+-# Either:
+-#   * 'vm_reconfigure_'    for infra VMs or
+-#   * 'image_reconfigure_' for cloud images.
+- base = controller_name == 'vm_infra' ? 'vm_reconfigure_' : 'image_reconfigure_'
+
 %form#form_div.form-horizontal{"name"          => "angularForm",
                                "ng-controller" => "reconfigureFormController as vm",
                                "miq-form"      => 'true',
@@ -7,7 +13,7 @@
                                "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %h3= _('Options')
-  - if role_allows?(:feature => 'vm_reconfigure_memory')
+  - if role_allows?(:feature => "#{base}memory")
     .form-group{"ng-class" => "{'has-error': angularForm.memory.$invalid}"}
       %label.col-md-2.control-label
         = _('Memory')
@@ -48,7 +54,7 @@
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
           = (@reconfig_memory_note)
-  - if role_allows?(:feature => 'vm_reconfigure_cpu')
+  - if role_allows?(:feature => "#{base}cpu")
     .form-group
       %label.col-md-2.control-label
         = _('Processors')
@@ -111,7 +117,7 @@
                                   "auto-focus"     => ""}
               %span{"style" => "color:red", "ng-show" => "angularForm.total_cpus.$invalid"}
                 = _(" Total processors value larger than the maximum allowed")
-  - if supports_reconfigure_disks? && role_allows?(:feature => 'vm_reconfigure_disks')
+  - if supports_reconfigure_disks? && role_allows?(:feature => "#{base}disks")
     %hr
     %div
       %h3
@@ -301,7 +307,7 @@
               %td.action-cell
                 %button.btn.btn-default.btn-block.btn-sm{:type => "button",
                                                                   "ng-click" => "vm.hideAddDisk()"}= _('Cancel Add')
-  - if supports_reconfigure_network_adapters? && role_allows?(:feature => 'vm_reconfigure_networks')
+  - if supports_reconfigure_network_adapters? && role_allows?(:feature => "#{base}networks")
     %hr
     %div
       %h3
@@ -404,7 +410,7 @@
 
   %hr
 
-  - if supports_reconfigure_cdroms? && role_allows?(:feature => 'vm_reconfigure_drives')
+  - if supports_reconfigure_cdroms? && role_allows?(:feature => "#{base}drives")
     %div
       %h3
         = _('CD/DVD Drives')
