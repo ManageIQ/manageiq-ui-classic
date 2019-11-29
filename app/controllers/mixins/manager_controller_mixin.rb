@@ -305,8 +305,7 @@ module Mixins
       record_showing = leaf_record
       presenter = rendering_objects
       get_tagdata(@record) if @record.try(:taggings)
-      update_partials(record_showing, presenter)
-      replace_search_box(presenter)
+      update_partials(record_showing, presenter) # replace_search_box is called whithin update_partials
       handle_bottom_cell(presenter)
       reload_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
