@@ -77,6 +77,7 @@ class ConfigurationController < ApplicationController
   def form_field_changed
     # ui1 edit form
     return unless load_edit("config_edit__ui1", "configuration")
+
     get_form_vars
     @assigned_filters = []
     @changed = (@edit[:new] != @edit[:current])
@@ -90,6 +91,7 @@ class ConfigurationController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the user form
   def filters_field_changed
     return unless load_edit("config_edit__ui3", "configuration")
+
     id = params[:id].split('-').last.to_i
     @edit[:new].find { |x| x[:id] == id }[:search_key] = params[:check] == '1' ? nil : '_hidden_'
     @edit[:current].each_with_index do |arr, i| # needed to compare each array element's attributes to find out if something has changed
@@ -109,6 +111,7 @@ class ConfigurationController < ApplicationController
   def view_selected
     # ui2 form
     return unless load_edit("config_edit__ui2", "configuration")
+
     @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] # Capture the new view setting
     session[:changed] = (@edit[:new] != @edit[:current])
     @changed = session[:changed]
@@ -305,6 +308,7 @@ class ConfigurationController < ApplicationController
 
   def timeprofile_field_changed
     return unless load_edit("config_edit__ui4", "configuration")
+
     timeprofile_get_form_vars
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
@@ -373,7 +377,7 @@ class ConfigurationController < ApplicationController
       @timeprofile.rollup_daily_metrics = params[:rollup_daily]
       begin
         @timeprofile.save!
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("TimeProfile \"%{name}\": Error during 'save': %{error_message}") %
                       {:name => @timeprofile.description, :error_message => bang.message}, :error)
         @in_a_form = true
