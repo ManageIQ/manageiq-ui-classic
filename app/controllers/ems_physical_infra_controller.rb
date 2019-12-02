@@ -37,12 +37,12 @@ class EmsPhysicalInfraController < ApplicationController
       :name                      => @ems.name,
       :emstype                   => @ems.emstype,
       :zone                      => zone,
-      :provider_id               => @ems.provider_id ? @ems.provider_id : "",
+      :provider_id               => @ems.provider_id || "",
       :hostname                  => @ems.hostname,
       :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
       :default_api_port          => @ems.connection_configurations.default.endpoint.port,
       :provider_region           => @ems.provider_region,
-      :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+      :default_userid            => @ems.authentication_userid || "",
       :ems_controller            => controller_name,
       :default_auth_status       => default_auth_status,
       :default_security_protocol => @ems.security_protocol || "",
@@ -71,6 +71,10 @@ class EmsPhysicalInfraController < ApplicationController
     @in_a_form = true # to show the page on all content frame
   end
 
+  def restful?
+    true
+  end
+
   private
 
   ############################
@@ -78,11 +82,6 @@ class EmsPhysicalInfraController < ApplicationController
   def show_link(ems, options = {})
     ems_path(ems.id, options)
   end
-
-  def restful?
-    true
-  end
-  public :restful?
 
   def breadcrumbs_options
     {
