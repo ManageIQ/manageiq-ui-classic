@@ -6,6 +6,7 @@ import Tree, {
   Node,
   defaultStore,
 } from '@manageiq/react-ui-components/dist/wooden-tree';
+import { http } from '../../http_api';
 import reducers, { ACTIONS } from './reducers/index';
 import { combineReducers } from '../../helpers/redux';
 
@@ -85,6 +86,35 @@ const HierarchicalTreeView = (props) => {
 
   const onDataChange = commands => commands.forEach(command => callBack(command.nodeId, command.type, command.value, namespace));
 
+  /**
+   * Lazy load function with a wrapper.
+   * The lazy load should return promise but we are preprocessing the data
+   * before passing to the component. For the indentitation to work we need to update the nodeId as
+   * well, not only the key in the array.
+   *
+   * FIXME: Remove wrapper after server returning flat trees.
+   */
+  const lazyLoad = node => new Promise((resolve, reject) => {
+    http.post(`/${ManageIQ.controller}/tree_autoload`, {
+      id: node.attr.key,
+      tree: tree_name,
+      mode: 'all',
+    }).then((result) => {
+      const data = flatten(result);
+      let subtree = {};
+      Object.keys(data).forEach((key) => {
+        if (key !== '') {
+          // Creating the node id from the parent id.
+          const nodeId = `${node.nodeId}.${key}`;
+          // Updating the children ids, so it does not point to something else.
+          const element = { ...data[key], nodeId, nodes: data[key].nodes.map(child => `${node.nodeId}.${child}`) };
+          subtree = { ...subtree, [nodeId]: element };
+        }
+      });
+      resolve(subtree);
+    }).catch(error => reject(error));
+  });
+
   return (
     <ReduxTree
       class="Tree"
@@ -100,7 +130,7 @@ const HierarchicalTreeView = (props) => {
       checkable={checkboxes}
       showCheckbox={checkboxes}
       allowReselect={allow_reselect}
-      callbacks={{ onDataChange }}
+      callbacks={{ onDataChange, lazyLoad }}
       hierarchicalCheck={hierarchical_check}
       {...props}
     />
