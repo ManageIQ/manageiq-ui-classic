@@ -407,11 +407,11 @@ module Mixins
 
         def reconfigure_handle_submit_button
           options = {:src_ids => params[:objectIds]}
-          if params[:cb_memory] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
+          if params[:cb_memory] == 'true' && role_allows?(:feature => 'vm_reconfigure_memory')
             options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : params[:memory].to_i * 1024
           end
 
-          if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_memory')
+          if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
             options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
             options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
             vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
