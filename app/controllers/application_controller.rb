@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/LineLength, Lint/EmptyWhen
+# rubocop:disable Lint/EmptyWhen
 require 'open-uri'
 
 # Need to make sure models are autoloaded
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
 
   # Default UI settings
   DEFAULT_SETTINGS = {
-    :views     => { # List view setting, by resource type
+    :views    => { # List view setting, by resource type
       :authkeypaircloud                                                       => "list",
       :availabilityzone                                                       => "list",
       :hostaggregate                                                          => "list",
@@ -180,16 +180,16 @@ class ApplicationController < ActionController::Base
       :vmortemplate                                                           => "grid",
       :vmcompare                                                              => "compressed"
     },
-    :perpage   => { # Items per page, by view setting
+    :perpage  => { # Items per page, by view setting
       :grid    => 20,
       :tile    => 20,
       :list    => 20,
       :reports => 20
     },
-    :topology  => {
+    :topology => {
       :containers_max_items => 100
     },
-    :display   => {
+    :display  => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",
       :quad_truncate => "m",
@@ -219,7 +219,7 @@ class ApplicationController < ActionController::Base
   # Convert Controller Name to Actual Model
   def self.model
     @model ||= name[0..-11].safe_constantize
-  rescue
+  rescue StandardError
     @model = nil
   end
 
@@ -300,6 +300,7 @@ class ApplicationController < ActionController::Base
     @record = identify_record(params[:id], klass)
     yield if block_given?
     return if record_no_longer_exists?(@record)
+
     get_tagdata(@record) if @record.try(:taggings)
     @display = "download_pdf"
     set_summary_pdf_data
@@ -455,7 +456,7 @@ class ApplicationController < ActionController::Base
     @explorer = true if @record.kind_of?(VmOrTemplate)
     params[:display] = "event_logs"
     if !params[:show].nil? || !params[:x_show].nil?
-      id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
       @item = @record.event_logs.find(id)
       drop_breadcrumb(:name => @record.name + " (#{bc_text})", :url => "/#{obj}/event_logs/#{@record.id}?page=#{@current_page}")
       drop_breadcrumb(:name => @item.name, :url => "/#{obj}/show/#{@record.id}?show=#{@item.id}")
@@ -481,10 +482,10 @@ class ApplicationController < ActionController::Base
     session[:report_result_id] = rr.id  # Save report result id for chart rendering
     session[:rpt_task_id]      = nil    # Clear out report task id, using a saved report
 
-    @report   = rr.report
+    @report = rr.report
     @report_result_id = rr.id # Passed in app/views/layouts/_report_html to the ReportDataTable
     @report_title = rr.friendly_title
-    @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
+    @html = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
     @render_chart = (@ght_type == 'hybrid')
     # Indicate stand alone report for views
@@ -509,9 +510,10 @@ class ApplicationController < ActionController::Base
             "schedule"
           end
 
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     if pfx == "pxe"
       return unless load_edit("#{pfx}_edit__#{id}")
+
       settings = {:username => @edit[:new][:log_userid], :password => @edit[:new][:log_password]}
       settings[:uri] = @edit[:new][:uri_prefix] + "://" + @edit[:new][:uri]
     else
@@ -528,7 +530,7 @@ class ApplicationController < ActionController::Base
         msg = _('Depot Settings successfuly validated')
         MiqSchedule.new.verify_file_depot(settings)
       end
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error during 'Validate': %{error_message}") % {:error_message => bang.message}, :error)
     else
       add_flash(msg)
@@ -579,11 +581,11 @@ class ApplicationController < ActionController::Base
       }
       add_flash(lr_messages[direction], :error)
     else
-      @edit[:new][edit_fields.to_sym].each do |af|             # Go thru all available columns
-        if params[flds.to_sym].include?(af[1].to_s)            # See if this column was selected to move
-          next if @edit[:new][sort_fields.to_sym].include?(af) # Only move if it's not there already
-          @edit[:new][sort_fields.to_sym].push(af)             # Add it to the new fields list
-        end
+      @edit[:new][edit_fields.to_sym].each do |af|           # Go thru all available columns
+        next unless params[flds.to_sym].include?(af[1].to_s) # See if this column was selected to move
+        next if @edit[:new][sort_fields.to_sym].include?(af) # Only move if it's not there already
+
+        @edit[:new][sort_fields.to_sym].push(af)             # Add it to the new fields list
       end
       # Remove selected fields
       @edit[:new][edit_fields.to_sym].delete_if { |af| params[flds.to_sym].include?(af[1].to_s) }
@@ -617,6 +619,7 @@ class ApplicationController < ActionController::Base
         Rails.application.config.filter_parameters + PASSWORD_FIELDS
       )
     return data.map { |e| filter_config(e) } if data.kind_of?(Array)
+
     data.kind_of?(Hash) ? @parameter_filter.filter(data) : data
   end
 
@@ -637,6 +640,7 @@ class ApplicationController < ActionController::Base
           #   process keys of the current and new hashes
           (new[k].keys | (current.nil? ? [] : current[k].keys)).each do |hk|
             next if current.present? && (new[k][hk] == current[k][hk])
+
             msg_arr << if password_field?(hk) # Asterisk out password fields
                          "#{hk}:[*]" + (current.nil? ? '' :  ' to [*]')
                        else
@@ -676,6 +680,7 @@ class ApplicationController < ActionController::Base
     users_in_current_groups.each do |u|
       next if u.email.blank?
       next if to_email.include?(u.email)
+
       @edit[:user_emails][u.email] = "#{u.name} (#{u.email})"
     end
   end
@@ -831,7 +836,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Add table elements
-    table = view.sub_table ? view.sub_table : view.table
+    table = view.sub_table || view.table
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
@@ -879,6 +884,7 @@ class ApplicationController < ActionController::Base
       new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
 
       next unless @row_button # Show a button in the last col
+
       new_row[:cells] << {
         :is_button => true,
         :text      => @row_button[:label],
@@ -938,6 +944,7 @@ class ApplicationController < ActionController::Base
   def drop_breadcrumb(new_bc, onlyreplace = false)
     # if the breadcrumb is in the array, remove it and all below by counting how many to pop
     return if skip_breadcrumb?
+
     remove = 0
     @breadcrumbs.each do |bc|
       if remove.positive? # already found a match,
@@ -1076,23 +1083,21 @@ class ApplicationController < ActionController::Base
     success_count = 0
     failure_count = 0
     MiqReportResult.for_user(current_user).where(:id => saved_reports).order("lower(name)").each do |rep|
-      begin
-        rep.public_send(task) if rep.respond_to?(task) # Run the task
-      rescue
-        failure_count += 1 # Push msg and error flag
+      rep.public_send(task) if rep.respond_to?(task) # Run the task
+    rescue StandardError
+      failure_count += 1 # Push msg and error flag
+    else
+      if task == "destroy"
+        AuditEvent.success(
+          :event        => "rep_record_delete",
+          :message      => "[#{rep.name}] Record deleted",
+          :target_id    => rep.id,
+          :target_class => "MiqReportResult",
+          :userid       => current_userid
+        )
+        success_count += 1
       else
-        if task == "destroy"
-          AuditEvent.success(
-            :event        => "rep_record_delete",
-            :message      => "[#{rep.name}] Record deleted",
-            :target_id    => rep.id,
-            :target_class => "MiqReportResult",
-            :userid       => current_userid
-          )
-          success_count += 1
-        else
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => rep.name, :task => task})
-        end
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => rep.name, :task => task})
       end
     end
     if success_count.positive?
@@ -1135,7 +1140,7 @@ class ApplicationController < ActionController::Base
   def get_view_calculate_gtl_type(db_sym)
     gtl_type = settings(:views, db_sym) unless %w[scanitemset miqschedule pxeserver customizationtemplate].include?(db_sym.to_s)
     gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
-    gtl_type ||= 'grid' if params[:records] && params[:records].kind_of?(Array)
+    gtl_type ||= 'grid' if params[:records]&.kind_of?(Array)
     gtl_type ||= 'list' # return a sane default
     gtl_type
   end
@@ -1180,7 +1185,7 @@ class ApplicationController < ActionController::Base
                "%#{stxt}%"
              end
 
-      id = @search_text if @search_text =~ /^\d+$/
+      id = @search_text if /^\d+$/.match?(@search_text)
       condition = [[]]
       if id
         add_to_search_condition(condition, "#{view.db_class.table_name}.id = ?", id)
@@ -1476,7 +1481,7 @@ class ApplicationController < ActionController::Base
                     :grid_hash  => @grid_hash,
                     :button_div => button_div,
                     :action_url => action_url}
-    js_options = {:sortcol      => @sortcol ? @sortcol : nil,
+    js_options = {:sortcol      => @sortcol || nil,
                   :sortdir      => @sortdir ? @sortdir[0..2] : nil,
                   :row_url      => url,
                   :row_url_ajax => ajax_url}
@@ -1562,7 +1567,7 @@ class ApplicationController < ActionController::Base
       :target_id    => rec.id,
       :target_class => rec.class.base_class.name,
       :userid       => session[:userid],
-      :message      => build_audit_msg(eh[:new], eh[:current], "[#{eh[:new][:name] ? eh[:new][:name] : rec[:name]}] Record updated")
+      :message      => build_audit_msg(eh[:new], eh[:current], "[#{eh[:new][:name] || rec[:name]}] Record updated")
     }
   end
 
@@ -1604,6 +1609,7 @@ class ApplicationController < ActionController::Base
     @redirect_controller = "miq_request"
     # non-explorer screens will perform render in their respective button method
     return if flash_errors?
+
     @in_a_form = true
     @template_klass_type = template_types_for_controller
     @org_controller = "vm" # request originated from controller
@@ -1644,10 +1650,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  alias_method :image_miq_request_new, :prov_redirect
-  alias_method :instance_miq_request_new, :prov_redirect
-  alias_method :vm_miq_request_new, :prov_redirect
-  alias_method :miq_template_miq_request_new, :prov_redirect
+  alias image_miq_request_new prov_redirect
+  alias instance_miq_request_new prov_redirect
+  alias vm_miq_request_new prov_redirect
+  alias miq_template_miq_request_new prov_redirect
 
   def template_types_for_controller
     if %w[ems_cluster ems_infra host resource_pool storage vm_infra].include?(request.parameters[:controller])
@@ -1660,14 +1666,14 @@ class ApplicationController < ActionController::Base
   def vm_clone
     prov_redirect("clone")
   end
-  alias_method :image_clone, :vm_clone
-  alias_method :instance_clone, :vm_clone
-  alias_method :miq_template_clone, :vm_clone
+  alias image_clone vm_clone
+  alias instance_clone vm_clone
+  alias miq_template_clone vm_clone
 
   def vm_migrate
     prov_redirect("migrate")
   end
-  alias_method :miq_template_migrate, :vm_migrate
+  alias miq_template_migrate vm_migrate
 
   def vm_publish
     prov_redirect("publish")
@@ -1732,7 +1738,7 @@ class ApplicationController < ActionController::Base
     @perf_options = @sb[:perf_options] || Performance::Options.new
 
     # Set @edit key default for the expression editor to use
-    @expkey = session[:expkey] ? session[:expkey] : :expression
+    @expkey = session[:expkey] || :expression
 
     # Get server hash, if it is in the session for supported controllers
     @server_options = session[:server_options] if %w[configuration support].include?(controller_name)
@@ -1840,7 +1846,7 @@ class ApplicationController < ActionController::Base
     session[:css] = @css
 
     # Save/reset session variables based on @variable presence
-    session[:imports] = @sb[:imports] ? @sb[:imports] : nil # Imported file data from 2 stage import
+    session[:imports] = @sb[:imports] || nil # Imported file data from 2 stage import
 
     # Save @edit and @view in session, if present
     if @lastaction == "show_list"                           # If show_list was the last screen presented or tree is being autoloaded save @edit
@@ -1852,9 +1858,9 @@ class ApplicationController < ActionController::Base
     session[:expkey] = @expkey
     @edit[@expkey].drop_cache if @edit && @edit[@expkey]
 
-    session[:edit] = @edit ? @edit : nil                    # Set or clear session edit hash
+    session[:edit] = @edit || nil                    # Set or clear session edit hash
 
-    session[:view] = @view ? @view : nil                    # Set or clear view in session hash
+    session[:view] = @view || nil                    # Set or clear view in session hash
     unless params[:controller] == "miq_task"                # Proxy needs data for delete all
       session[:view].table = nil if session[:view]          # Don't need to carry table data around
     end
@@ -1942,6 +1948,7 @@ class ApplicationController < ActionController::Base
     return record.description                if record.respond_to?("description") && record.description.present?
     return record.ext_management_system.name if record.respond_to?("ems_id")
     return record.title                      if record.respond_to?("title")
+
     "<Record ID #{record.id}>"
   end
 
@@ -1994,6 +2001,7 @@ class ApplicationController < ActionController::Base
   def reload_trees_by_presenter(presenter, trees)
     trees.each do |tree|
       next if tree.blank?
+
       presenter.reload_tree(tree.name, tree.locals_for_render[:bs_tree])
     end
   end
