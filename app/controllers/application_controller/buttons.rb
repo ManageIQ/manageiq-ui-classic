@@ -26,6 +26,7 @@ module ApplicationController::Buttons
       replace_right_cell(:nodetype => x_node)
     when "save"
       return unless load_edit("group_reorder", "replace_cell__explorer")
+
       # save group_index of each custombuttonset in set_data
       if x_active_tree == :sandt_tree
         button_order = []
@@ -65,6 +66,7 @@ module ApplicationController::Buttons
   def group_reorder_field_changed
     if params['selected_fields']
       return unless load_edit("group_reorder", "replace_cell__explorer")
+
       move_cols_up if params[:button] == "up"
       move_cols_down if params[:button] == "down"
       @changed = (@edit[:new] != @edit[:current])
@@ -116,7 +118,7 @@ module ApplicationController::Buttons
       @edit[:new][:open_url] = false if @edit[:new][:disabled_open_url]
       @edit[:new][:dialog_id] = nil if params[:display_for].present? && params[:display_for] != 'single'
 
-      @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.keys.include?("dialog_id")
+      @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.key?("dialog_id")
       visibility_box_edit
 
       if params[:button_type] == 'default'
@@ -201,6 +203,7 @@ module ApplicationController::Buttons
   # AJAX driven routine to check for changes in ANY field on the form
   def group_form_field_changed
     return unless load_edit("bg_edit__#{params[:id]}", "replace_cell__explorer")
+
     group_get_form_vars
     @custom_button_set = @edit[:custom_button_set_id] ? CustomButtonSet.find(@edit[:custom_button_set_id]) : CustomButtonSet.new
     @changed = (@edit[:new] != @edit[:current])
@@ -286,7 +289,7 @@ module ApplicationController::Buttons
 
   def custom_buttons_invoke(button, objs)
     if objs.length > 1 &&
-       (button.options && button.options.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
+       (button.options&.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
       button.invoke(objs, 'UI')
     else
       objs.each { |obj| button.invoke(obj, 'UI') }
@@ -296,11 +299,9 @@ module ApplicationController::Buttons
   def sync_playbook_dialog(button)
     service_template = ServiceTemplate.find_by(:name => button.uri_attributes[:service_template_name])
     dialog_id = nil
-    if service_template
-      service_template.resource_actions.each do |ra|
-        d = Dialog.where(:id => ra.dialog_id).first
-        dialog_id = d.id if d
-      end
+    service_template&.resource_actions&.each do |ra|
+      d = Dialog.where(:id => ra.dialog_id).first
+      dialog_id = d.id if d
     end
     if dialog_id && button.resource_action.dialog_id != dialog_id
       button.resource_action.dialog_id = dialog_id
@@ -456,7 +457,7 @@ module ApplicationController::Buttons
     group_set_form_vars
     @changed = session[:changed] = false
     add_flash(_("All changes have been reset"), :warning)
-    @in_a_form  = true
+    @in_a_form = true
     @lastaction = "automate_button"
     @layout     = "miq_ae_automate_button"
     replace_right_cell(:nodetype => "group_edit")
@@ -976,11 +977,9 @@ module ApplicationController::Buttons
     service_template = ServiceTemplate.find_by(:name => @custom_button.uri_attributes[:service_template_name])
     @edit[:new][:service_template_id] = service_template.try(:id)
 
-    if service_template
-      service_template.resource_actions.each do |ra|
-        d = Dialog.where(:id => ra.dialog_id).first
-        @edit[:new][:dialog_id] = d.id if d
-      end
+    service_template&.resource_actions&.each do |ra|
+      d = Dialog.where(:id => ra.dialog_id).first
+      @edit[:new][:dialog_id] = d.id if d
     end
 
     @edit[:new][:inventory_type] = if @custom_button.uri_attributes[:hosts].blank?
@@ -1007,13 +1006,13 @@ module ApplicationController::Buttons
     else
       build_resolve_screen
     end
-    if x_active_tree == :sandt_tree
-      @resolve[:target_class] = "ServiceTemplate"
-    elsif x_node.starts_with?("-ub-")
-      @resolve[:target_class] = x_node.sub(/-ub-([^_]+)(_.*)?/, '\1')
-    else
-      @resolve[:target_class] = x_node.sub(/xx-ab_([^_]+)_.*/, '\1')
-    end
+    @resolve[:target_class] = if x_active_tree == :sandt_tree
+                                "ServiceTemplate"
+                              elsif x_node.starts_with?("-ub-")
+                                x_node.sub(/-ub-([^_]+)(_.*)?/, '\1')
+                              else
+                                x_node.sub(/xx-ab_([^_]+)_.*/, '\1')
+                              end
     @record = @edit[:custom_button] = @custom_button
     @edit[:instance_names] = Array(@resolve[:instance_names])
     @edit[:new] = {}
@@ -1055,7 +1054,7 @@ module ApplicationController::Buttons
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
       :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
       :button_type    => button_type,
-      :object_message => @custom_button.uri_message || "create",
+      :object_message => @custom_button.uri_message || "create"
     )
     button_set_expression_vars(:enablement_expression, :enablement_expression_table)
     button_set_expression_vars(:visibility_expression, :visibility_expression_table)
@@ -1130,6 +1129,7 @@ module ApplicationController::Buttons
       button_order&.each do |bidx| # show assigned buttons in order they were saved
         @record.members.each do |b|
           next if bidx != b.id
+
           button = {
             :name         => b.name,
             :id           => b.id,
