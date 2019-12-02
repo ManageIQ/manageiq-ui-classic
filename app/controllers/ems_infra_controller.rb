@@ -94,6 +94,7 @@ class EmsInfraController < ApplicationController
       end
       @count_parameters.each do |p|
         next if scale_parameters[p.name].nil? || scale_parameters[p.name] == p.value
+
         return_message += _(" %{name} from %{value} to %{parameters} ") % {:name => p.name, :value => p.value, :parameters => scale_parameters[p.name]}
         scale_parameters_formatted[p.name] = scale_parameters[p.name]
       end
@@ -165,20 +166,20 @@ class EmsInfraController < ApplicationController
         if nodes_json.nil?
           add_flash(_("JSON file format is incorrect, missing 'nodes'."), :error)
         end
-      rescue => ex
+      rescue StandardError => ex
         add_flash(_("Cannot parse JSON file: %{message}") % {:message => ex}, :error)
       end
 
       if nodes_json
         begin
           @infra.workflow_service
-        rescue => ex
+        rescue StandardError => ex
           add_flash(_("Cannot connect to workflow service: %{message}") % {:message => ex}, :error)
           return
         end
         begin
           state, response = @infra.register_and_configure_nodes(nodes_json)
-        rescue => ex
+        rescue StandardError => ex
           add_flash(_("Error executing register and configure workflows: %{message}") % {:message => ex}, :error)
           return
         end
@@ -222,6 +223,10 @@ class EmsInfraController < ApplicationController
     ems_form_fields
   end
 
+  def restful?
+    true
+  end
+
   private
 
   def record_class
@@ -250,7 +255,7 @@ class EmsInfraController < ApplicationController
         add_flash(return_message)
         flash_to_session
         redirect_to(ems_infra_path(provider_id))
-      rescue => ex
+      rescue StandardError => ex
         add_flash(_("Unable to initiate scale up: %{message}") % {:message => ex}, :error)
       end
     end
@@ -264,7 +269,7 @@ class EmsInfraController < ApplicationController
         add_flash(return_message)
         flash_to_session
         redirect_to(ems_infra_path(provider_id))
-      rescue => ex
+      rescue StandardError => ex
         add_flash(_("Unable to initiate scale down: %{message}") % {:message => ex}, :error)
       end
     end
@@ -326,17 +331,12 @@ class EmsInfraController < ApplicationController
     stack_parameters
   end
 
-  def restful?
-    true
-  end
-  public :restful?
-
   def parse_json(uploaded_file)
     JSON.parse(uploaded_file.read)["nodes"]
   end
 
-  def get_infra_provider(id)
-    ManageIQ::Providers::Openstack::InfraManager.find(id)
+  def get_infra_provider(provider_id)
+    ManageIQ::Providers::Openstack::InfraManager.find(provider_id)
   end
 
   def get_hosts_to_scaledown_from_ids(host_ids)
