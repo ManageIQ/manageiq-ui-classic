@@ -117,7 +117,7 @@ module ApplicationController::CiProcessing
       else
         begin
           record.send(task.to_sym) if record.respond_to?(task) # Run the task
-        rescue => bang
+        rescue StandardError => bang
           add_flash(
             _("%{model} \"%{name}\": Error during '%{task}': %{error_msg}") %
             {
@@ -160,7 +160,7 @@ module ApplicationController::CiProcessing
 
     begin
       element.destroy
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                {:model => model_name, :name => record_name, :error_msg => bang.message}, :error)
     else
@@ -179,7 +179,7 @@ module ApplicationController::CiProcessing
   def identify_record(id, klass = self.class.model)
     begin
       record = find_record_with_rbac(klass, id)
-    rescue => @bang
+    rescue StandardError => @bang
       self.x_node = "root" if @explorer
       flash_to_session(@bang.message, :error, true)
     end
@@ -272,7 +272,7 @@ module ApplicationController::CiProcessing
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if %w[remove_snapshot revert_to_snapshot].include?(task)
     klass.process_tasks(options)
-  rescue => err
+  rescue StandardError => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
     add_flash(
@@ -318,7 +318,7 @@ module ApplicationController::CiProcessing
     options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
     kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
-  rescue => err
+  rescue StandardError => err
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
@@ -332,10 +332,10 @@ module ApplicationController::CiProcessing
     assert_privileges(params[:pressed])
     generic_button_operation('destroy', _('Delete'), vm_button_action)
   end
-  alias_method :image_delete, :deletevms
-  alias_method :instance_delete, :deletevms
-  alias_method :vm_delete, :deletevms
-  alias_method :miq_template_delete, :deletevms
+  alias image_delete deletevms
+  alias instance_delete deletevms
+  alias vm_delete deletevms
+  alias miq_template_delete deletevms
 
   # Import info for all selected or single displayed vm(s)
   def syncvms
@@ -356,20 +356,20 @@ module ApplicationController::CiProcessing
     assert_privileges(privilege)
     generic_button_operation('refresh_ems', _('Refresh Provider'), vm_button_action)
   end
-  alias_method :image_refresh, :refreshvms
-  alias_method :instance_refresh, :refreshvms
-  alias_method :vm_refresh, :refreshvms
-  alias_method :miq_template_refresh, :refreshvms
+  alias image_refresh refreshvms
+  alias instance_refresh refreshvms
+  alias vm_refresh refreshvms
+  alias miq_template_refresh refreshvms
 
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
     generic_button_operation('scan', _('Analysis'), vm_button_action)
   end
-  alias_method :image_scan, :scanvms
-  alias_method :instance_scan, :scanvms
-  alias_method :vm_scan, :scanvms
-  alias_method :miq_template_scan, :scanvms
+  alias image_scan scanvms
+  alias instance_scan scanvms
+  alias vm_scan scanvms
+  alias miq_template_scan scanvms
 
   # Immediately retire items
   def retirevms_now
@@ -382,96 +382,96 @@ module ApplicationController::CiProcessing
     }
     generic_button_operation('retire_now', _('Retirement'), vm_button_action, role_allows?(:feature => "miq_request_show_list") ? redirect : nil)
   end
-  alias_method :instance_retire_now, :retirevms_now
-  alias_method :vm_retire_now, :retirevms_now
-  alias_method :orchestration_stack_retire_now, :retirevms_now
+  alias instance_retire_now retirevms_now
+  alias vm_retire_now retirevms_now
+  alias orchestration_stack_retire_now retirevms_now
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
     generic_button_operation('check_compliance_queue', _('Check Compliance'), vm_button_action)
   end
-  alias_method :image_check_compliance, :check_compliance_vms
-  alias_method :instance_check_compliance, :check_compliance_vms
-  alias_method :vm_check_compliance, :check_compliance_vms
-  alias_method :miq_template_check_compliance, :check_compliance_vms
+  alias image_check_compliance check_compliance_vms
+  alias instance_check_compliance check_compliance_vms
+  alias vm_check_compliance check_compliance_vms
+  alias miq_template_check_compliance check_compliance_vms
 
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
     generic_button_operation('collect_running_processes', _('Collect Running Processes'), vm_button_action)
   end
-  alias_method :instance_collect_running_processes, :getprocessesvms
-  alias_method :vm_collect_running_processes, :getprocessesvms
+  alias instance_collect_running_processes getprocessesvms
+  alias vm_collect_running_processes getprocessesvms
 
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
     generic_button_operation('start', _('Start'), vm_button_action)
   end
-  alias_method :instance_start, :startvms
-  alias_method :vm_start, :startvms
+  alias instance_start startvms
+  alias vm_start startvms
 
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
     generic_button_operation('suspend', _('Suspend'), vm_button_action)
   end
-  alias_method :instance_suspend, :suspendvms
-  alias_method :vm_suspend, :suspendvms
+  alias instance_suspend suspendvms
+  alias vm_suspend suspendvms
 
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
     generic_button_operation('pause', _('Pause'), vm_button_action)
   end
-  alias_method :instance_pause, :pausevms
-  alias_method :vm_pause, :pausevms
+  alias instance_pause pausevms
+  alias vm_pause pausevms
 
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
     generic_button_operation('vm_destroy', _('Terminate'), vm_button_action)
   end
-  alias_method :instance_terminate, :terminatevms
+  alias instance_terminate terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
     generic_button_operation('stop', _('Stop'), vm_button_action)
   end
-  alias_method :instance_stop, :stopvms
-  alias_method :vm_stop, :stopvms
+  alias instance_stop stopvms
+  alias vm_stop stopvms
 
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
     generic_button_operation('shelve', _('Shelve'), vm_button_action)
   end
-  alias_method :instance_shelve, :shelvevms
-  alias_method :vm_shelve, :shelvevms
+  alias instance_shelve shelvevms
+  alias vm_shelve shelvevms
 
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
     generic_button_operation('shelve_offload', _('Shelve Offload'), vm_button_action)
   end
-  alias_method :instance_shelve_offload, :shelveoffloadvms
-  alias_method :vm_shelve_offload, :shelveoffloadvms
+  alias instance_shelve_offload shelveoffloadvms
+  alias vm_shelve_offload shelveoffloadvms
 
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
     generic_button_operation('reset', _('Reset'), vm_button_action)
   end
-  alias_method :instance_reset, :resetvms
-  alias_method :vm_reset, :resetvms
+  alias instance_reset resetvms
+  alias vm_reset resetvms
 
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
     generic_button_operation('shutdown_guest', _('Shutdown Guest'), vm_button_action)
   end
-  alias_method :vm_guest_shutdown, :guestshutdown
+  alias vm_guest_shutdown guestshutdown
 
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
@@ -484,8 +484,8 @@ module ApplicationController::CiProcessing
     assert_privileges(params[:pressed])
     generic_button_operation('reboot_guest', _('Restart Guest'), vm_button_action)
   end
-  alias_method :instance_guest_restart, :guestreboot
-  alias_method :vm_guest_restart, :guestreboot
+  alias instance_guest_restart guestreboot
+  alias vm_guest_restart guestreboot
 
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
@@ -493,7 +493,7 @@ module ApplicationController::CiProcessing
     generic_button_operation('remove_all_snapshots', _('Delete All Snapshots'), vm_button_action,
                              @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
-  alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
+  alias vm_snapshot_delete_all deleteallsnapsvms
 
   # Delete selected snapshot for vm
   def deletesnapsvms
@@ -501,7 +501,7 @@ module ApplicationController::CiProcessing
     generic_button_operation('remove_snapshot', _('Delete Snapshot'), vm_button_action,
                              @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
-  alias_method :vm_snapshot_delete, :deletesnapsvms
+  alias vm_snapshot_delete deletesnapsvms
 
   # Delete selected snapshot for vm
   def revertsnapsvms
@@ -509,7 +509,7 @@ module ApplicationController::CiProcessing
     generic_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
                              @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
-  alias_method :vm_snapshot_revert, :revertsnapsvms
+  alias vm_snapshot_revert revertsnapsvms
 
   # End of common VM button handler routines
 
@@ -531,7 +531,7 @@ module ApplicationController::CiProcessing
         cluster_name = cluster.name
         begin
           cluster.send(task.to_sym) if cluster.respond_to?(task) # Run the task
-        rescue => err
+        rescue StandardError => err
           add_flash(_("Cluster / Deployment Role \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => cluster_name,
              :task          => task,
@@ -561,7 +561,7 @@ module ApplicationController::CiProcessing
         rp_name = rp.name
         begin
           rp.send(task.to_sym) if rp.respond_to?(task) # Run the task
-        rescue => err
+        rescue StandardError => err
           add_flash(_("Resource Pool \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => rp_name,
              :task          => task,
@@ -623,6 +623,7 @@ module ApplicationController::CiProcessing
     if controller == "ems_cluster" || @display == 'ems_clusters'
       return ems_cluster_untestable_actions.exclude?(action)
     end
+
     true
   end
 
@@ -663,7 +664,7 @@ module ApplicationController::CiProcessing
     if options[:refresh_partial].present?
       show
       @refresh_partial = options[:refresh_partial]
-      return
+      nil
     end
   end
 
@@ -737,7 +738,7 @@ module ApplicationController::CiProcessing
           elsif storage.respond_to?(task) # Run the task
             storage.send(task.to_sym)
           end
-        rescue => err
+        rescue StandardError => err
           add_flash(_("Datastore \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => storage_name,
              :task          => task,
@@ -798,6 +799,7 @@ module ApplicationController::CiProcessing
     storages.each do |storage|
       next if !storage.vms_and_templates.length.positive? &&
               !storage.hosts.length.positive?
+
       storages -= [storage]
       add_flash(_("\"%{datastore_name}\": cannot be removed, has vms or hosts") %
         {:datastore_name => storage.name}, :warning)
@@ -847,16 +849,13 @@ module ApplicationController::CiProcessing
     assert_privileges('flavor_delete')
     flavors = find_records_with_rbac(Flavor, checked_or_params)
     flavors.each do |flavor|
-      begin
-        flavor.delete_flavor_queue(User.current_user.id)
-        add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
-      rescue => error
-        add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
-                                                                          :details => error.message}, :error)
-      end
+      flavor.delete_flavor_queue(User.current_user.id)
+      add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
+    rescue StandardError => error
+      add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
+                                                                        :details => error.message}, :error)
     end
   end
-
 
   # Delete all selected or single displayed RP(s)
   def deleteresourcepools
