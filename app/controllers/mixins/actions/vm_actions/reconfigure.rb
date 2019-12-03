@@ -80,7 +80,7 @@ module Mixins
             reconfigure(reconfigure_ids)
             session[:changed] = true # need to enable submit button when screen loads
             @refresh_partial = "vm_common/reconfigure"
-          elsif
+          else
             # redirect to build the ownership screen
             javascript_redirect(:controller => 'vm', :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
           end

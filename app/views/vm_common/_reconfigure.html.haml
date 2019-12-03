@@ -95,7 +95,7 @@
               - if @cores_options.length <= 1
                 @cores_options[0]
               %span.help-block{"ng-if" => "angularForm.cores_per_socket_count.$dirty"}
-                =_("Note: a restart of the virtual machine might be required for the changes to apply.")
+                = _("Note: a restart of the virtual machine might be required for the changes to apply.")
           .form-group{"ng-class" => "{'has-error': angularForm.total_cpus.$invalid}"}
             %label.col-sm-2.control-label
               = _('Total Processors')
