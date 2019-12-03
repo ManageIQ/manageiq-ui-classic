@@ -35,6 +35,7 @@ class CatalogItemForm extends Component {
       });
     Promise.all([catalog, currency, zone, dialog])
       .then(() => {
+        this.formType = "";
         this.setState({ isLoaded: true });
       });
   }
@@ -42,6 +43,11 @@ class CatalogItemForm extends Component {
   submitValues = () => {
 
   };
+
+  formTypeChanged = () => {
+    this.formType = "generic";
+    this.render();
+  }
 
   render() {
     //const { catalogItemId, type } = this.props;
@@ -52,7 +58,7 @@ class CatalogItemForm extends Component {
     return (
       <Grid fluid>
         <MiqFormRenderer
-          schema={createSchema(this.catalogs, this.dialogs, this.zones, this.currencies)}
+          schema={createSchema(this.formType, this.catalogs, this.dialogs, this.zones, this.currencies, this.formTypeChanged)}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}

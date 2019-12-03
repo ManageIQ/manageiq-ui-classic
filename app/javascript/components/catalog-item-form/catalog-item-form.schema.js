@@ -1,7 +1,19 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 
-function createSchema(catalogs, dialogs, zones, currencies) {
-  const fields = [
+function createSchema(formType, types, catalogs, dialogs, zones, currencies, formTypeChanged) {
+  const fields = [{
+    component: componentTypes.SELECT,
+    name: 'catalog_item_type',
+    label: __('Type'),
+    placeholder: `<${__('Choose')}>`,
+    isDisabled: false,
+    onChange: () => formTypeChanged(),
+    options: types.map(({ id, name }) => ({ label: name, value: id })),
+  }];
+  if (formType === "") {
+    return { fields };
+  };
+  fields.push([
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
@@ -42,36 +54,112 @@ function createSchema(catalogs, dialogs, zones, currencies) {
           message: __('Required'),
         }],
         options: dialogs.map(({ id, name }) => ({ label: name, value: id })),
-      }, {
-        component: componentTypes.SELECT,
-        name: 'zone_id',
-        label: __('Zone'),
-        placeholder: `<${__('Choose')}>`,
-        isDisabled: false,
-        validate: [{
-          type: validatorTypes.REQUIRED,
-          message: __('Required'),
-        }],
-        options: zones.map(({ id, name }) => ({ label: name, value: id })),
-      }, {
-        component: componentTypes.SELECT,
-        name: 'currency_id',
-        label: __('Currency'),
-        placeholder: `<${__('Choose')}>`,
-        isDisabled: false,
-        validate: [{
-          type: validatorTypes.REQUIRED,
-          message: __('Required'),
-        }],
-        options: currencies.map(({ id, name }) => ({ label: name, value: id })),
-      }, {
-        component: componentTypes.TEXT_FIELD,
-        name: 'price',
-        label: __('Price / Month'),
-        maxLength: 60,
       }],
+    }]);
+  if (formType === "@edit[:new][:service_type] == \"composite\"") {
+    fields.push({
+      component: componentTypes.SELECT,
+      name: 'zone_id',
+      label: __('Zone'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      validate: [{
+        type: validatorTypes.REQUIRED,
+        message: __('Required'),
+      }],
+      options: zones.map(({ id, name }) => ({ label: name, value: id })),
+    });
+  };
+  fields.push([
+    {
+      component: componentTypes.SELECT,
+      name: 'currency_id',
+      label: __('Currency'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      validate: [{
+        type: validatorTypes.REQUIRED,
+        message: __('Required'),
+      }],
+      options: currencies.map(({ id, name }) => ({ label: name, value: id })),
+    }, {
+      component: componentTypes.TEXT_FIELD,
+      name: 'price',
+      label: __('Price / Month'),
+      maxLength: 60,
+    }]);
+  if (formType === "generic") {
+    fields.push([{
+      component: componentTypes.SELECT,
+      name: 'catalog_item_subtype',
+      label: __('Subtype'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }]);
+  };
+  if (formType === "generic_orchestration") {
+    fields.push([{
+      component: componentTypes.SELECT,
+      name: 'catalog_item_orchestration_template',
+      label: __('Orchestration Template'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }]);
+  };
+  if (formType === "@edit[:new][:template_id]" || ["generic_ansible_tower", "generic_container_template"].includes(formType)) {
+    fields.push([{
+      component: componentTypes.SELECT,
+      name: 'catalog_item_provider',
+      label: __('Provider'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }]);
+  };
+  // catalog_item_provider is selected
+  if (formType === "generic_ansible_tower") {
+    fields.push([{
+      component: componentTypes.SELECT,
+      name: 'catalog_item_ansible_tower_template',
+      label: __('Ansible Tower Template'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }]);
+  };
+  // catalog_item_provider is selected
+  if (formType === "generic_container_template") {
+    fields.push([{
+      component: componentTypes.SELECT,
+      name: 'catalog_item_generic_container_template',
+      label: __('Container Template'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }]);
+  };
+  // TODO create a component
+  if (formType !== "ansible_playbook") {
+    fields.push([{
+      component: componentTypes.TEXT_FIELD,
+      name: 'description',
+      label: __('Provisioning Entry Point'),
+      maxLength: 60,
+    }, {
+      component: componentTypes.TEXT_FIELD,
+      name: 'description',
+      label: __('Reconfigure Entry Point'),
+      maxLength: 60,
+    }, {
+      component: componentTypes.TEXT_FIELD,
+      name: 'description',
+      label: __('Retirement Entry Point'),
+      maxLength: 60,
     },
-  ];
+    ]);
+  };
   return { fields };
 }
 

@@ -748,7 +748,6 @@ class CatalogController < ApplicationController
   end
 
   def dialogs_for_catalog_item
-     binding.pry
     render :json => Dialog.all.order(:name).map{ |dialog| {:id => dialog.id, :name => dialog.name} }
   end
 
@@ -757,7 +756,8 @@ class CatalogController < ApplicationController
   end
 
   def currencies_for_catalog_item
-    render :json => Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }.to_json
+    render :json => fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }.to_json
+    #render :json => Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }.to_json
   end
 
   private
