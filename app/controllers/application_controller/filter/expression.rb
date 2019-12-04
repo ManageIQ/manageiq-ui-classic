@@ -48,10 +48,12 @@ module ApplicationController::Filter
       @available_adv_searches = @tags_for_display_filters = nil
     end
 
-    def exp_available_cfields # fields on exp_model for check_all, check_any, and check_count operation
+    # fields on exp_model for check_all, check_any, and check_count operation
+    def exp_available_cfields
       MiqExpression.miq_adv_search_lists(exp_model, :exp_available_finds).each_with_object([]) do |af, res|
         next if af.last == exp_field
         next unless af.last.split('-').first == exp_field.split('-').first
+
         res.push([af.first.split(':').last, af.last])
       end
     end
@@ -74,7 +76,7 @@ module ApplicationController::Filter
     end
 
     def calendar_needed?
-      [val1, val2].compact.any? { |val| [:date, :datetime].include? val[:type] }
+      [val1, val2].compact.any? { |val| [:date, :datetime].include?(val[:type]) }
     end
 
     def render_values_to(page)
@@ -146,7 +148,8 @@ module ApplicationController::Filter
       s
     end
 
-    def select_filter(miq_search, last_loaded = false) # save the last search loaded
+    # save the last search loaded
+    def select_filter(miq_search, last_loaded = false)
       self.selected = {:id => miq_search.id, :name => miq_search.name, :description => miq_search.description,
                        :typ => miq_search.search_type}
       self.exp_last_loaded = selected if last_loaded
@@ -496,6 +499,7 @@ module ApplicationController::Filter
         if [:datetime, :date].include?(self[exp_valx][:type])
           self[exp_value].each_with_index do |v, v_idx|
             next if v.blank?
+
             self[exp_value][v_idx] = if params[chosen_key] == EXP_IS || self[exp_valx][:type] == :date
                                        v.split(' ').first if v.include?(':')
                                      else
@@ -557,7 +561,7 @@ module ApplicationController::Filter
         :regexp
       else
         typ = MiqExpression.get_col_info(self[field])[:format_sub_type]
-        if MiqExpression::FORMAT_SUB_TYPES.keys.include?(typ)
+        if MiqExpression::FORMAT_SUB_TYPES.key?(typ)
           typ
         else
           :string
@@ -565,7 +569,8 @@ module ApplicationController::Filter
       end
     end
 
-    def self.through_choices(from_choice) # Return the through_choices pulldown array for FROM datetime/date operators
+    # Return the through_choices pulldown array for FROM datetime/date operators
+    def self.through_choices(from_choice)
       tc = if ViewHelper::FROM_HOURS.include?(from_choice)
              ViewHelper::FROM_HOURS
            elsif ViewHelper::FROM_DAYS.include?(from_choice)
@@ -589,5 +594,5 @@ module ApplicationController::Filter
   end
   # TODO: expression is now manipulated with fetch_path
   # We need to extract methods using fetch_path to Expression to avoid the fetch_path call
-  ApplicationController::Filter::Expression.send(:include, MoreCoreExtensions::Shared::Nested)
+  ApplicationController::Filter::Expression.include MoreCoreExtensions::Shared::Nested
 end
