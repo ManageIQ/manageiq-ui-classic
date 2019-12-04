@@ -8,7 +8,7 @@ const NavbarHeader = ({
   imagePath,
 }) => {
   const dispatch = useDispatch();
-  const isVerticalMenuCollapsed = useSelector(store => store.menuReducer.isVerticalMenuCollapsed);
+  const isVerticalMenuCollapsed = useSelector(({ menuReducer: { isVerticalMenuCollapsed } }) => isVerticalMenuCollapsed);
 
   return (
     <div className="navbar-header">
