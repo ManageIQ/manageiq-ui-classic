@@ -1,15 +1,15 @@
 describe TreeBuilderServices do
   subject { TreeBuilderServices.new("x", {}, false) }
 
-  let(:root_srv) { FactoryBot.create(:service, :display => true, :retired => false) }
-  let!(:reti_srv) { FactoryBot.create(:service, :service => root_srv, :display => true, :retired => true) }
+  let(:root_srv) { FactoryBot.create(:service, :visible => true, :retired => false) }
+  let!(:reti_srv) { FactoryBot.create(:service, :service => root_srv, :visible => true, :retired => true) }
 
   before do
     login_as FactoryBot.create(:user)
     allow(User).to receive(:server_timezone).and_return("UTC")
 
-    FactoryBot.create(:service, :service => root_srv, :display => true, :retired => false)
-    FactoryBot.create(:service, :service => root_srv, :display => true, :retired => false)
+    FactoryBot.create(:service, :service => root_srv, :visible => true, :retired => false)
+    FactoryBot.create(:service, :service => root_srv, :visible => true, :retired => false)
   end
 
   describe '#x_get_tree_roots' do
