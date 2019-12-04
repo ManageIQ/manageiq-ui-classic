@@ -80,7 +80,7 @@ module ApplicationController::MiqRequestMethods
   def pre_prov
     if params[:button] == "cancel"
       flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
-      @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
+      @explorer = session[:edit][:explorer] || false
       @edit = session[:edit] = nil # Clear out session[:edit]
       prov_request_cancel_submit_response
     elsif params[:button] == "continue" # Template chosen, start vm provisioning
@@ -140,8 +140,8 @@ module ApplicationController::MiqRequestMethods
       set_pre_prov_vars
     end
   end
-  alias_method :instance_pre_prov, :pre_prov
-  alias_method :vm_pre_prov, :pre_prov
+  alias instance_pre_prov pre_prov
+  alias vm_pre_prov pre_prov
 
   def render_updated_templates
     report_scopes = [:eligible_for_provisioning]
@@ -187,12 +187,13 @@ module ApplicationController::MiqRequestMethods
     # when clone/migrate buttons are pressed from a sub list view,
     # these buttons are only available on Infra side
     return ManageIQ::Providers::InfraManager::Template if params[:prov_type]
+
     if request.parameters[:template_klass] == 'cloud' || request.parameters[:controller] == 'vm_cloud'
-      return ManageIQ::Providers::CloudManager::Template
+      ManageIQ::Providers::CloudManager::Template
     elsif request.parameters[:template_klass] == 'infra' || request.parameters[:controller] == 'vm_infra'
-      return ManageIQ::Providers::InfraManager::Template
+      ManageIQ::Providers::InfraManager::Template
     else
-      return MiqTemplate
+      MiqTemplate
     end
   end
 
@@ -208,9 +209,9 @@ module ApplicationController::MiqRequestMethods
           _("Provision %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]}
         end
       )
-      @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
+      @explorer = session[:edit][:explorer] || false
       @edit = session[:edit] = nil # Clear out session[:edit]
-      @breadcrumbs.pop if @breadcrumbs
+      @breadcrumbs&.pop
       prov_request_cancel_submit_response
     elsif params[:button] == "submit" # Update or create the request from the workflow with the new options
       prov_req_submit
@@ -249,6 +250,7 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_ds_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     field = %w[miq_template vm service_template].include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
     sort_grid('ds', @edit[:wf].get_field(field, :environment)[:values])
   end
@@ -256,35 +258,41 @@ module ApplicationController::MiqRequestMethods
   # get the sort column that was clicked on, else use the current one
   def sort_vm_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('vm', @edit[:wf].get_field(:src_vm_id, :service)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_host_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_configured_system_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('configured_system', @edit[:wf].get_field(:src_configured_system_ids, :service)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_pxe_img_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('pxe_img', @edit[:wf].get_field(:pxe_image_id, :service)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_iso_img_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('iso_img', @edit[:wf].get_field(:iso_image_id, :service)[:values])
   end
 
   def sort_windows_image_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
     sort_grid('windows_image', @edit[:wf].get_field(:windows_image_id, :service)[:values])
   end
 
@@ -606,17 +614,18 @@ module ApplicationController::MiqRequestMethods
   def prov_req_submit
     id = session[:edit][:req_id] || "new"
     return unless load_edit("prov_edit__#{id}", "show_list")
+
     @edit[:new][:schedule_time] = @edit[:new][:schedule_time].in_time_zone("Etc/UTC") if @edit[:new][:schedule_time]
 
     begin
       request = @edit[:wf].make_request(@edit[:req_id], @edit[:new])
-    rescue => bang
+    rescue StandardError => bang
       request = false
       add_flash(bang.message, :error)
     end
 
     if request
-      @breadcrumbs.pop if @breadcrumbs
+      @breadcrumbs&.pop
       org_controller = @edit[:org_controller]
       title = case org_controller
               when "vm"           then _("VMs")
@@ -630,7 +639,7 @@ module ApplicationController::MiqRequestMethods
                         _("%{typ} Request was re-submitted, you will be notified when your %{title} are ready")
                       end
       flash_message = flash_message % {:typ => @edit[:prov_type], :title => title}
-      @explorer = @edit[:explorer] ? @edit[:explorer] : false
+      @explorer = @edit[:explorer] || false
       @sb[:action] = @edit = session[:edit] = nil
       add_flash(flash_message)
 
@@ -671,6 +680,7 @@ module ApplicationController::MiqRequestMethods
 
     params.each do |key, _value|
       next unless key.include?("__")
+
       d, f  = key.split("__") # Parse dialog and field names from the parameter key
       field = @edit[:wf].get_field(f.to_sym, d.to_sym) # Get the field hash
       val   =
@@ -757,7 +767,7 @@ module ApplicationController::MiqRequestMethods
         end
         begin
           @edit[:wf].refresh_field_values(@edit[:new])
-        rescue => bang
+        rescue StandardError => bang
           add_flash(bang.message, :error)
           @edit[:new][f.to_sym] = val # Save value
           # No need to refresh dialog divs
@@ -837,7 +847,7 @@ module ApplicationController::MiqRequestMethods
     options                     = req.try(:get_options) || {} # Use existing request options, if passed in
     @edit[:new]                 = options unless @workflow_exists
     # request originated from controller
-    @edit[:org_controller]      = params[:org_controller] ? params[:org_controller] : "vm"
+    @edit[:org_controller]      = params[:org_controller] || "vm"
     @edit[:wf], pre_prov_values = workflow_instance_from_vars(req)
 
     if @edit[:wf]
@@ -874,7 +884,7 @@ module ApplicationController::MiqRequestMethods
       @edit[:wf].refresh_field_values(@edit[:new])
       if pre_prov_values
         @edit[:new] = @edit[:new].delete_nils
-        @edit[:new] = @edit[:new].merge(pre_prov_values.reject { |k| @edit[:new].keys.include?(k) })
+        @edit[:new] = @edit[:new].merge(pre_prov_values.reject { |k| @edit[:new].key?(k) })
       end
 
       if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow) ||
@@ -982,14 +992,14 @@ module ApplicationController::MiqRequestMethods
     end
 
     [wf_type.new(@edit[:new], current_user, options), pre_prov_values] # Return the new workflow and any pre_prov_values
-  rescue => bang
+  rescue StandardError => bang
     # only add this message if showing a list of Catalog items, show screen already handles this
     @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
     _log.log_backtrace(bang)
     nil
   end
 
-  def build_tags_for_provisioning(wf, vm_tags, edit_mode)
+  def build_tags_for_provisioning(wf, vm_tags, _edit_mode)
     # for some reason @tags is set in wf, and it is changed by map bellow which causes bugs
     wf.instance_variable_set(:@tags, nil)
     tags = wf.allowed_tags.map do |cat|
