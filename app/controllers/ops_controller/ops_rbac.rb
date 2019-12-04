@@ -755,7 +755,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
-    @edit[:new][:group] = rbac_user_get_group_ids.map(&:to_i) if rec_type == "user"
+    @edit[:new][:group] = rbac_user_get_group_ids if rec_type == "user"
 
     session[:changed] = changed = @edit[:new] != @edit[:current]
 
@@ -965,7 +965,7 @@ module OpsController::OpsRbac
     TreeBuilderOpsRbacFeatures.new("features_tree", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
-  # Set form variables for role edit
+  # Set form variables for user edit
   def rbac_user_set_form_vars
     copy = @sb[:typ] == "copy"
     # save a shadow copy of the record if record is being copied
@@ -977,7 +977,7 @@ module OpsController::OpsRbac
     # prefill form fields for edit and copy action
     @edit[:new].merge!(:name  => @user.name,
                        :email => @user.email,
-                       :group => @user.miq_groups ? @user.miq_groups.map(&:id) : nil)
+                       :group => @user.miq_groups ? @user.miq_groups.map(&:id).sort : nil)
     unless copy
       @edit[:new].merge!(:userid   => @user.userid,
                          :password => @user.password,
@@ -1017,9 +1017,9 @@ module OpsController::OpsRbac
     when 'null', nil
       []
     when String
-      @edit[:new][:group].split(',').delete_if(&:blank?).sort
+      @edit[:new][:group].split(',').delete_if(&:blank?).map(&:to_i).sort
     when Array
-      @edit[:new][:group].sort
+      @edit[:new][:group].map(&:to_i).sort
     end
   end
 
@@ -1119,7 +1119,7 @@ module OpsController::OpsRbac
     params[:tree_typ] ? params[:tree_typ] + "_tree" : nil
   end
 
-  # Set form variables for user add/edit
+  # Set form variables for group add/edit
   def rbac_group_set_form_vars
     @assigned_filters = []
     @group = @record

@@ -16,7 +16,7 @@ describe OpsController do
       expect(response.status).to eq(200)
     end
 
-    describe "rbac_edit_tags_reset" do
+    describe "#rbac_edit_tags_reset" do
       let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
       let(:another_tenant) { FactoryBot.create(:tenant) }
 
@@ -256,6 +256,7 @@ describe OpsController do
 
     describe "#tags_edit" do
       let!(:user) { stub_user(:features => :all) }
+
       before do
         @tenant = FactoryBot.create(:tenant,
                                     :name      => "OneTenant",
@@ -332,6 +333,7 @@ describe OpsController do
   describe "::MiqGroup" do
     let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
     let(:tag) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
+
     before do
       MiqUserRole.seed
       MiqGroup.seed
@@ -713,11 +715,16 @@ describe OpsController do
 
     context 'adding a new user' do
       let(:rec_type) { "user" }
-      let(:params) { {:id => "new", :chosen_group => "12,34"} }
+      let(:params) { {:id => "new", :chosen_group => "17,7"} }
 
-      it 'sets list of selected groups' do
+      it 'sets list of selected groups properly' do
         controller.send(:rbac_field_changed, rec_type)
-        expect(subject.count).to eq(2)
+        expect(subject).to eq([7, 17])
+      end
+
+      it 'sets session[:changed] to true' do
+        controller.send(:rbac_field_changed, rec_type)
+        expect(session[:changed]).to be(true)
       end
 
       context 'deleting name and/or password from the form while adding user' do
@@ -725,7 +732,7 @@ describe OpsController do
         let(:edit) { {:new => {:name => 'new_user', :password => 'passw', :verify => 'passw'}, :current => edit_curr } }
         let(:edit_curr) { {:name => nil, :group => [], :password => nil, :verify => nil} }
 
-        it 'sets @edit[:new] and changed variable properly' do
+        it 'sets @edit[:new] and session[:changed] properly' do
           controller.send(:rbac_field_changed, rec_type)
           expect(controller.instance_variable_get(:@edit)[:new]).to eq(edit_curr)
           expect(session[:changed]).to be(false)
@@ -842,6 +849,23 @@ describe OpsController do
         controller.send(:rbac_edit_save_or_add, 'group')
         expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'A Role must be assigned to this Group', :level => :error}])
       end
+    end
+  end
+
+  describe '#rbac_user_set_form_vars' do
+    let(:user) { FactoryBot.create(:user, :miq_groups => [group2, group1]) }
+    let!(:group1) { FactoryBot.create(:miq_group) }
+    let!(:group2) { FactoryBot.create(:miq_group) }
+
+    before do
+      allow(Rbac).to receive(:filtered).and_return([])
+      controller.instance_variable_set(:@record, user)
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    it 'sorts the ids of available groups of a user' do
+      controller.send(:rbac_user_set_form_vars)
+      expect(controller.instance_variable_get(:@edit)[:current][:group]).to eq([group1.id, group2.id])
     end
   end
 end
