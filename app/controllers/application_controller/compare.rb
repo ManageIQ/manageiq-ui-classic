@@ -438,12 +438,10 @@ module ApplicationController::Compare
 
   def set_checked_sections
     session[:selected_sections] = []
-    if params[:all_checked]
-      params[:all_checked].each do |a|
-        s = a.split(':')
-        if s.length > 1
-          session[:selected_sections].push(s[1])
-        end
+    params[:all_checked]&.each do |a|
+      s = a.split(':')
+      if s.length > 1
+        session[:selected_sections].push(s[1])
       end
     end
   end
@@ -549,6 +547,7 @@ module ApplicationController::Compare
     @data = []
     @compare.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
       next unless @compare.include[section[:name]][:checked] # Only grab the sections that are checked
+
       if records.present?
         records.each do |attr|
           cols = [section[:header].to_s, attr, ""] # Start the row with section and attribute names
@@ -563,6 +562,7 @@ module ApplicationController::Compare
           # Grab the other VMs values
           @compare.ids.each_with_index do |r, idx| # Go thru each of the VMs
             next if idx.zero? # Skip the base VM
+
             if @compare.results[r][section[:name]].include?(attr) # Set the report value
               rval = "Found"
               val = "Found"
@@ -632,25 +632,26 @@ module ApplicationController::Compare
         end
       end
 
-      unless csv # Don't generate % lines for csv output
-        cols = if mode == :compare
-                 ["#{section[:header]} - % Match:", "", "", "Base"] # Generate % line, first 3 cols
-               else
-                 ["#{section[:header]} - Changed:", "", ""] # Generate % line, first 3 cols
-               end
+      next if csv # Don't generate % lines for csv output
 
-        @compare.results.each do |r| # Go thru each of the VMs
-          if mode == :compare
-            next if r[0] == @compare.records[0]["id"] # Skip the base VM
-            cols.push(r[1][section[:name]][:_match_].to_s + "%") # Grab the % value for this attr for this VM
-          elsif r[1][section[:name]][:_match_] # Does it match?
-            cols.push("") # Yes, push a blank string
-          else
-            cols.push("*") # No, mark it with an *
-          end
+      cols = if mode == :compare
+               ["#{section[:header]} - % Match:", "", "", "Base"] # Generate % line, first 3 cols
+             else
+               ["#{section[:header]} - Changed:", "", ""] # Generate % line, first 3 cols
+             end
+
+      @compare.results.each do |r| # Go thru each of the VMs
+        if mode == :compare
+          next if r[0] == @compare.records[0]["id"] # Skip the base VM
+
+          cols.push(r[1][section[:name]][:_match_].to_s + "%") # Grab the % value for this attr for this VM
+        elsif r[1][section[:name]][:_match_] # Does it match?
+          cols.push("") # Yes, push a blank string
+        else
+          cols.push("*") # No, mark it with an *
         end
-        build_download_rpt(cols, csv, "all") # Add the row to the data array
       end
+      build_download_rpt(cols, csv, "all") # Add the row to the data array
     end
   end
 
@@ -754,10 +755,10 @@ module ApplicationController::Compare
       end
     end
   end
-  alias_method :image_compare, :comparemiq
-  alias_method :instance_compare, :comparemiq
-  alias_method :vm_compare, :comparemiq
-  alias_method :miq_template_compare, :comparemiq
+  alias image_compare comparemiq
+  alias instance_compare comparemiq
+  alias vm_compare comparemiq
+  alias miq_template_compare comparemiq
 
   def compare_db(kls)
     case kls
@@ -795,7 +796,7 @@ module ApplicationController::Compare
       end
     end
   end
-  alias_method :common_drift, :drift_analysis
+  alias common_drift drift_analysis
 
   def section_checked(mode)
     @compare = Marshal.load(session[:miq_compare])
@@ -1138,6 +1139,7 @@ module ApplicationController::Compare
     view.ids.each_with_index do |id, idx|
       fld = view.results.fetch_path(id, section[:name], field[:name])
       next if fld.nil?
+
       val = fld[:_value_].to_s
 
       if idx.zero? # On base object
@@ -1196,6 +1198,7 @@ module ApplicationController::Compare
     view.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
       session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && !session[:selected_sections].include?(section[:name])
       next unless view.include[section[:name]][:checked]
+
       comp_add_section(view, section, records, fields) # Go build the section row if it's checked
       if !records.nil? # If we have records, build record rows
         compare_build_record_rows(view, section, records, fields)
@@ -1323,6 +1326,7 @@ module ApplicationController::Compare
     if view.ids.length > 2
       view.ids.each_with_index do |_id, idx|
         next if idx.zero?
+
         url = "/#{controller_name}/compare_remove/#{view.records[idx].id}"
         title = _("Remove this %{title} from the comparison") % {:title => session[:db_title].singularize}
         onclick = "miqJqueryRequest('#{url}', {beforeSend: true, complete: true}); return false;"
@@ -1740,6 +1744,7 @@ module ApplicationController::Compare
     view.ids.each_with_index do |id, idx|
       fld = view.results.fetch_path(id, section[:name], field[:name])
       next if fld.nil?
+
       val = fld[:_value_]
 
       if idx.zero? # On base object
@@ -1800,6 +1805,7 @@ module ApplicationController::Compare
         next
       end
       next if fields.nil? || @exists_mode # Build field rows under records
+
       fields.each_with_index do |field, _fidx| # If we have fields, build field rows per record
         drift_add_record_field(view, section, record, field)
       end
