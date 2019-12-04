@@ -24,7 +24,6 @@ import ImportDatastoreViaGit from '../components/automate-import-export-form/imp
 import MainMenu from '../components/main-menu/main-menu';
 import MiqAboutModal from '../components/miq-about-modal';
 import MiqToolbar from '../components/miq-toolbar';
-import NavbarHeader from '../components/top-navbar/navbar-header';
 import navbar from '../components/top-navbar';
 import OptimizationList from '../optimization/optimization_list';
 import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
@@ -70,7 +69,7 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MainMenu', MainMenu);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('MiqToolbar', MiqToolbar);
-ManageIQ.component.addReact('NavbarHeader', NavbarHeader);
+ManageIQ.component.addReact('navbar.NavbarHeader', navbar.NavbarHeader);
 ManageIQ.component.addReact('navbar.Notifications', navbar.Notifications);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
