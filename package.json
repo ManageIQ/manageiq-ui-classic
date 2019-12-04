@@ -43,7 +43,6 @@
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-switch": "3.3.4",
     "classnames": "~2.2.6",
-    "clsx": "^1.0.4",
     "codemirror": "~5.47.0",
     "connected-react-router": "^4.3.0",
     "create-react-context": "~0.2.3",

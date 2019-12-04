@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import ClassNames from 'classnames';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 import {
@@ -21,16 +21,15 @@ const TopLevel = ({
 }) => {
   const hoveredTopLevelId = useContext(HoverContext).topLevelId;
   const isSection = items.length > 0;
-
   if (isSection) {
     return (
       <li
-        className={clsx(
+        className={ClassNames(
           'menu-list-group-item',
           'secondary-nav-item-pf',
           {
-            'is-hover': hoveredTopLevelId === id,
             active,
+            'is-hover': hoveredTopLevelId === id,
           },
         )}
         id={getSectionId(id)}
@@ -38,15 +37,15 @@ const TopLevel = ({
         onBlur={() => undefined}
       >
         <a
+          className="top-level-item"
+          href={getHrefByType(type, href, id)}
           onClick={(event) => {
             if (handleUnsavedChanges(type) === false) {
               event.preventDefault();
             }
             return false;
           }}
-          href={getHrefByType(type, href, id)}
           target={getTargetByType(type)}
-          className="top-level-item"
         >
           <span className={icon} />
           <span className="list-group-item-value">{title}</span>
@@ -68,15 +67,28 @@ const TopLevel = ({
   }
 
   return (
-    <li className={`${active ? 'active' : ''} menu-list-group-item`} id={getItemId(id)}>
+    <li
+      id={getItemId(id)}
+      className={ClassNames(
+        'menu-list-group-item',
+        {
+          active,
+        },
+      )
+      }
+      onMouseEnter={() => handleSetActiveIds({ topLevelId: undefined })}
+      onBlur={() => undefined}
+    >
       <a
+        className="top-level-item"
+        href={getHrefByType(type, href, id)}
         onClick={(event) => {
           if (handleUnsavedChanges(type) === false) {
             event.preventDefault();
           }
           return false;
         }}
-        href={getHrefByType(type, href, id)}
+        target={getTargetByType(type)}
       >
         <span className={icon} />
         <span className="list-group-item-value">{title}</span>
