@@ -19,6 +19,7 @@ const TopLevel = ({
   type,
   handleSetActiveIds,
 }) => {
+  const hoveredTopLevelId = useContext(HoverContext).topLevelId;
   const isSection = items.length > 0;
 
   if (isSection) {
@@ -28,7 +29,7 @@ const TopLevel = ({
           'menu-list-group-item',
           'secondary-nav-item-pf',
           {
-            'is-hover': useContext(HoverContext).topLevelId === id,
+            'is-hover': hoveredTopLevelId === id,
             active,
           },
         )}

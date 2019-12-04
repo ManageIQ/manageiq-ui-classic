@@ -18,14 +18,16 @@ const SecondLevel = ({
   active,
   handleSetActiveIds,
 }) => {
+  const hoveredSecondLevelId = useContext(HoverContext).secondLevelId;
   const hasSubitems = items.length > 0;
+  
   return (
     <li
       className={clsx(
         'menu-list-group-item',
         {
           'tertiary-nav-item-pf': hasSubitems,
-          'is-hover': useContext(HoverContext).secondLevelId === id,
+          'is-hover': hoveredSecondLevelId === id,
           active,
         },
       )}
