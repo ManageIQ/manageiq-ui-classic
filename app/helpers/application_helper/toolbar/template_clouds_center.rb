@@ -76,15 +76,6 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1"),
-        button(
-          :image_reconfigure,
-          'pficon pficon-edit fa-lg',
-          N_('Reconfigure the Memory/CPUs of selected items'),
-          N_('Reconfigure Selected items'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+"),
       ]
     ),
   ])

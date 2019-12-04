@@ -100,6 +100,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           N_('Reconfigure the Memory/CPUs of selected items'),
           N_('Reconfigure Selected items'),
+          :klass        => ApplicationHelper::Button::VmReconfigureMultiple,
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,

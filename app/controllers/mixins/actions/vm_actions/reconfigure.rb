@@ -43,11 +43,12 @@ module Mixins
           render :json => request_hash
         end
 
-        # Reconfigure selected VMs
-        def reconfigurevms
-          assert_privileges(params[:pressed])
-          # check to see if coming from show_list or drilled into vms from another CI
-          rec_cls = "vm"
+        # reconfiguration for VMs only
+        def vm_reconfigure
+          unless role_allows?(:feature => 'vm_reconfigure_all', :any => true)
+            raise MiqException::RbacPrivilegeException, _('The user is not authorized for this task or item.')
+          end
+
           # if coming in to edit from miq_request list view
           recs = checked_or_params
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
@@ -74,22 +75,16 @@ module Mixins
             end
             reconfigure_ids = recs.collect(&:to_i)
           end
+
           if @explorer
             reconfigure(reconfigure_ids)
             session[:changed] = true # need to enable submit button when screen loads
             @refresh_partial = "vm_common/reconfigure"
-          elsif role_allows?(:feature => "vm_reconfigure")
-            # redirect to build the ownership screen
-            javascript_redirect(:controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
           else
-            head :ok
+            # redirect to build the ownership screen
+            javascript_redirect(:controller => 'vm', :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false)
           end
         end
-
-        alias_method :image_reconfigure, :reconfigurevms
-        alias_method :instance_reconfigure, :reconfigurevms
-        alias_method :vm_reconfigure, :reconfigurevms
-        alias_method :miq_template_reconfigure, :reconfigurevms
 
         def get_reconfig_limits(reconfigure_ids)
           @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => reconfigure_ids)
@@ -380,13 +375,43 @@ module Mixins
           end
         end
 
+        # parameter to accept for vm reconfiguration based on role permissions
+        def reconfigure_param_list
+          list = []
+
+          if role_allows?(:feature => 'vm_reconfigure_disks')
+            list += [
+              %i[vmAddDisks disk_add],
+              %i[vmResizeDisks disk_resize],
+              %i[vmRemoveDisks disk_remove]
+            ]
+          end
+
+          if role_allows?(:feature => 'vm_reconfigure_networks')
+            list += [
+              %i[vmAddNetworkAdapters network_adapter_add],
+              %i[vmRemoveNetworkAdapters network_adapter_remove],
+              %i[vmEditNetworkAdapters network_adapter_edit],
+            ]
+          end
+
+          if role_allows?(:feature => 'vm_reconfigure_drives')
+            list += [
+              %i[vmConnectCDRoms cdrom_connect],
+              %i[vmDisconnectCDRoms cdrom_disconnect]
+            ]
+          end
+
+          list
+        end
+
         def reconfigure_handle_submit_button
           options = {:src_ids => params[:objectIds]}
-          if params[:cb_memory] == 'true'
+          if params[:cb_memory] == 'true' && role_allows?(:feature => 'vm_reconfigure_memory')
             options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : params[:memory].to_i * 1024
           end
 
-          if params[:cb_cpu] == 'true'
+          if params[:cb_cpu] == 'true' && role_allows?(:feature => 'vm_reconfigure_cpu')
             options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
             options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
             vccores = params[:cores_per_socket_count].to_i.zero? ? 1 : params[:cores_per_socket_count].to_i
@@ -394,15 +419,7 @@ module Mixins
             options[:number_of_cpus] = vccores * vsockets
           end
 
-          # set the disk_add and disk_remove options
-          [%i[vmAddDisks disk_add],
-           %i[vmResizeDisks disk_resize],
-           %i[vmRemoveDisks disk_remove],
-           %i[vmAddNetworkAdapters network_adapter_add],
-           %i[vmRemoveNetworkAdapters network_adapter_remove],
-           %i[vmEditNetworkAdapters network_adapter_edit],
-           %i[vmConnectCDRoms cdrom_connect],
-           %i[vmDisconnectCDRoms cdrom_disconnect]].each do |params_key, options_key|
+          reconfigure_param_list.each do |params_key, options_key|
              next if params[params_key].blank?
              params[params_key].each do |_key, p|
                p.transform_values! { |v| eval_if_bool_string(v) }
