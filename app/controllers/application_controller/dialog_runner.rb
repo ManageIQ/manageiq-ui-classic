@@ -30,13 +30,15 @@ module ApplicationController::DialogRunner
     case params[:button]
     when "cancel"
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
       flash = _("Service Order was cancelled by the user")
       dialog_cancel_form(flash)
     when "submit"
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
       begin
         result = @edit[:wf].submit_request
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'Provisioning': %{error_message}") % {:error_message => bang.message}, :error)
         javascript_flash(:spinner_off => true)
       else
@@ -77,6 +79,7 @@ module ApplicationController::DialogRunner
       end
     else
       return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
       add_flash(_("%{button_name} Button not yet implemented") % {:button_name => params[:button].capitalize}, :error)
       javascript_flash(:spinner_off => true)
     end
@@ -85,6 +88,7 @@ module ApplicationController::DialogRunner
   # AJAX driven routine to check for changes in ANY field on the form
   def dialog_field_changed
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
     dialog_get_form_vars
 
     head :ok
@@ -135,6 +139,7 @@ module ApplicationController::DialogRunner
 
   def dialog_reset_form
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
     @edit[:new] = copy_hash(@edit[:current])
     @record = Dialog.find(@edit[:rec_id])
     @right_cell_text = @edit[:right_cell_text]
@@ -154,7 +159,7 @@ module ApplicationController::DialogRunner
     @record = Dialog.find(ra.dialog_id.to_i)
     @edit[:rec_id] = @record.id
     @edit[:key] = "dialog_edit__#{@edit[:rec_id] || "new"}"
-    @edit[:explorer] = @explorer ? @explorer : false
+    @edit[:explorer] = @explorer || false
     @edit[:target_id] = options[:target_id]
     @edit[:target_kls] = options[:target_kls]
     @edit[:dialog_mode] = options[:dialog_mode]
