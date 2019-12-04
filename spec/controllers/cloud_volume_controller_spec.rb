@@ -77,7 +77,7 @@ describe CloudVolumeController do
       end
 
       it "queues the create cloud backup action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :backup_create, :params => { :button => "create",
           :format => :js, :id => @volume.id, :backup_name => 'backup_name' }
       end
@@ -238,7 +238,7 @@ describe CloudVolumeController do
       end
 
       it "queues the create cloud volume action form OpenStack" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :create, :params => @form_params.merge(:button => "add", :format => :js)
       end
     end
