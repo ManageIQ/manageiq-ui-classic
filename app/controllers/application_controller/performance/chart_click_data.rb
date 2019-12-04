@@ -5,6 +5,6 @@ module ApplicationController::Performance
     :chart_index,
     :cmd,
     :model,
-    :type,
+    :type
   )
 end
