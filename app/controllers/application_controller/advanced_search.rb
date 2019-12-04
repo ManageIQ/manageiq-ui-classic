@@ -100,7 +100,7 @@ module ApplicationController::AdvancedSearch
     sname = s.description
     begin
       s.destroy
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Search \"%{name}\": Error during 'delete': %{error_message}") %
         {:name => sname, :error_message => bang.message}, :error)
     else
