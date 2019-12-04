@@ -8,11 +8,13 @@
     "jest/globals": true
   },
   "globals": {
+    "add_flash": true,
     "miqAjax": true,
     "miqAjaxButton": true,
+    "miqCheckForChanges": true,
     "miqSparkleOff": true,
     "miqSparkleOn": true,
-    "add_flash": true
+    "miqToggleUserOptions": true
   },
   "extends": ["airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],

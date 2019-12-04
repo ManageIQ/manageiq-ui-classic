@@ -1,8 +1,8 @@
 module ReactjsHelper
-  def react(name, data = {}, attributes = {})
+  def react(name, data = {}, attributes = {}, element = 'div')
     uid = unique_html_id('react')
     capture do
-      concat(content_tag('div', nil, attributes.merge(:id => uid)))
+      concat(content_tag(element, nil, attributes.merge(:id => uid)))
       concat(javascript_tag("ManageIQ.component.componentFactory('#{j(name)}', '##{j(uid)}', #{data.to_json})"))
     end
   end

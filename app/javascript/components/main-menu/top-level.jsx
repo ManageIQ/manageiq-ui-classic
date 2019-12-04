@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { MenuItem } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
 import {
-  getHrefByType, getSectionId, getTargetByType, handleUnsavedChanges, getItemId,
+  getHrefByType, getSectionId, handleUnsavedChanges, getItemId,
 } from './helpers';
+import getTargetByType from '../../helpers/get-target-by-type';
 
 const TopLevel = ({
   level,
   id,
   title,
-  iconClass,
+  icon,
   href,
   active,
   items,
@@ -32,7 +33,7 @@ const TopLevel = ({
           target={getTargetByType(type)}
           className="top-level"
         >
-          <span className={iconClass} />
+          <span className={icon} />
           <span className="list-group-item-value">{title}</span>
         </a>
         <React.Fragment>
@@ -62,7 +63,7 @@ const TopLevel = ({
         }}
         href={getHrefByType(type, href, id)}
       >
-        <span className={iconClass} />
+        <span className={icon} />
         <span className="list-group-item-value">{title}</span>
       </a>
     </li>

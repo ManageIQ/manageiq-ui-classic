@@ -71,7 +71,7 @@ describe FloatingIpController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @floating_ip = FactoryBot.create(:floating_ip)
-      login_as FactoryBot.create(:user)
+      login_as FactoryBot.create(:user_with_group)
     end
 
     subject do

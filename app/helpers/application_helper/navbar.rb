@@ -12,15 +12,14 @@ module ApplicationHelper
 
     def item_to_hash(item)
       {
-        :id          => item.id,
-        :title       => item.name,
-        :iconClass   => item.icon,
-        :href        => item.link_params[:href],
-        :type        => item.type,
-        :preventHref => !item.href,
-        :visible     => item.visible?,
-        :active      => item_active?(item),
-        :items       => item.items.to_a.map(&method(:item_to_hash))
+        :id      => item.id.to_s,
+        :title   => item.name,
+        :icon    => item.icon,
+        :href    => item.link_params[:href],
+        :type    => item.type,
+        :visible => item.visible?,
+        :active  => item_active?(item),
+        :items   => item.items.to_a.map(&method(:item_to_hash))
       }
     end
 

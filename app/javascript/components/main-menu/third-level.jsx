@@ -1,6 +1,7 @@
 import React from 'react';
 import { menuProps } from './recursive-props';
-import { getHrefByType, getTargetByType, handleUnsavedChanges } from './helpers';
+import { getHrefByType, handleUnsavedChanges } from './helpers';
+import getTargetByType from '../../helpers/get-target-by-type';
 
 const ThirdLevel = ({
   id,

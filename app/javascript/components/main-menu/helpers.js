@@ -9,8 +9,6 @@ export const getHrefByType = (type, href, id) => {
   }
 };
 
-export const getTargetByType = type => (type === 'new_window' ? '_blank' : '_self');
-
 export const getItemId = id => `menu_item_${id}`;
 
 export const getSectionId = id => `menu_section_${id}`;

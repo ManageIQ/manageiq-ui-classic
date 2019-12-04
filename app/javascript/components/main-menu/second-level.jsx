@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { MenuItem } from './main-menu';
 import { menuProps } from './recursive-props';
 import {
-  getHrefByType, getIdByCategory, getTargetByType, handleUnsavedChanges,
+  getHrefByType, getIdByCategory, handleUnsavedChanges,
 } from './helpers';
+import getTargetByType from '../../helpers/get-target-by-type';
 
 const SecondLevel = ({
   id,
