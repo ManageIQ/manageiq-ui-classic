@@ -71,6 +71,19 @@ describe EmsCloudController do
         post :button, :params => { :pressed => "cloud_object_store_container_delete" }
       end
 
+      context 'Shelve offload applied on Instances displayed in a nested list' do
+        before do
+          controller.params = {:pressed => 'instance_shelve_offload'}
+          allow(controller).to receive(:performed?).and_return(true)
+          allow(controller).to receive(:show)
+        end
+
+        it 'calls shelveoffloadvms' do
+          expect(controller).to receive(:shelveoffloadvms)
+          controller.send(:button)
+        end
+      end
+
       context 'actions on Host Aggregates displayed through Cloud Provider' do
         let(:aggregate) { FactoryBot.create(:host_aggregate) }
 

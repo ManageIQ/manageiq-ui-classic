@@ -912,7 +912,7 @@ module ApplicationController::CiProcessing
     when "#{pfx}_suspend"                   then suspendvms
     when "#{pfx}_pause"                     then pausevms
     when "#{pfx}_shelve"                    then shelvevms
-    when "#{pfx}_shelveoffloadvms"          then shelveoffloadvms
+    when "#{pfx}_shelve_offload"            then shelveoffloadvms
     when "#{pfx}_reset"                     then resetvms
     when "#{pfx}_check_compliance"          then check_compliance_vms
     when "#{pfx}_reconfigure"               then reconfigurevms
