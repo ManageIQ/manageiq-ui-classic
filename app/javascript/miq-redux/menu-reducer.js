@@ -7,7 +7,7 @@ export const toggleVerticalMenuCollapsed = isVerticalMenuCollapsed => ({
   },
 });
 
-export const reducer = (state = { isVerticalMenuCollapsed: false }, action) => {
+export const menuReducer = (state = { isVerticalMenuCollapsed: false }, action) => {
   switch (action.type) {
     case TOGGLE_VERTICAL_MENU_COLLAPSED:
       return { ...state, isVerticalMenuCollapsed: !state.isVerticalMenuCollapsed };

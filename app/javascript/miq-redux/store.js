@@ -4,7 +4,7 @@ import createMiddlewares from './middleware';
 import { history } from '../miq-component/react-history.js';
 
 import { reducer as formReducer } from './form-reducer';
-import { reducer as menuReducer } from './menu-reducer';
+import { menuReducer } from './menu-reducer';
 import { notificationReducer } from './notification-reducer';
 
 const initialState = {};
