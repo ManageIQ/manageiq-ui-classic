@@ -1694,6 +1694,7 @@ Rails.application.routes.draw do
         edit
         index
         new
+        protect
         show
         show_list
         tagging_edit
@@ -1705,6 +1706,7 @@ Rails.application.routes.draw do
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
+        protect
         quick_search
         sections_field_changed
         show
