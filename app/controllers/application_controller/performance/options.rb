@@ -30,7 +30,7 @@ module ApplicationController::Performance
     :time_profile_days,
     :time_profile_tz,
     :tz,
-    :tz_daily,
+    :tz_daily
   ) do
     def update_from_params(params)
       self.typ         = params[:perf_typ]          if params[:perf_typ]
@@ -95,6 +95,7 @@ module ApplicationController::Performance
         hdate = hourly_date.to_date                                       # Start at the currently set hourly date
         6.times do                                                        # Go back up to 6 days (try each weekday)
           break if time_profile_days.include?(hdate.wday)                 # If weekday is in the profile, use it
+
           hdate -= 1.day                                                  # Drop back 1 day and try again
         end
         self.hourly_date = [hdate.month, hdate.day, hdate.year].join('/') # Set the new hourly date
@@ -106,6 +107,7 @@ module ApplicationController::Performance
     # category pulldown for tag charts
     def cats
       return unless %w[EmsCluster Host Storage AvailabilityZone HostAggregate].include?(model)
+
       self[:cats] ||=
         begin
           cats = Classification.categories.select(&:show).sort_by(&:description)
