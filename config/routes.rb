@@ -288,6 +288,7 @@ Rails.application.routes.draw do
     :catalog                  => {
       :get  => %w(
         catalogs_for_catalog_item
+        catalog_item_data
         catalog_item_form_fields
         copy_catalog
         currencies_for_catalog_item

@@ -760,6 +760,13 @@ class CatalogController < ApplicationController
     #render :json => Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }.to_json
   end
 
+  def catalog_item_data
+    catalog_item = ServiceTemplate.find_by(params[:id])
+    service_type = catalog_item.service_type
+    binding.pry
+    render :json => catalog_item
+  end
+
   private
 
   def build_tenants_tree

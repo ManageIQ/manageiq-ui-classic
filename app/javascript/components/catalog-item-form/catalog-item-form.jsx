@@ -5,6 +5,7 @@ import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-item-form.schema';
 import { http } from '../../http_api';
 import handleFailure from '../../helpers/handle-failure';
+import CatalogForm from '../catalog-form/catalog-form';
 
 
 class CatalogItemForm extends Component {
@@ -12,10 +13,12 @@ class CatalogItemForm extends Component {
     super(props);
     this.state = {
       isLoaded: false,
+      schema: null,
     };
   }
 
   componentDidMount() {
+    const { catalogItemId } = this.props;
     const catalog = http.get(`/catalog/catalogs_for_catalog_item`)
       .then((data) => {
         this.catalogs = data;
@@ -30,13 +33,23 @@ class CatalogItemForm extends Component {
       });
     const dialog = http.get(`/catalog/dialogs_for_catalog_item`)
       .then((data) => {
-        debugger;
         this.dialogs = data;
       });
+   /* const data = http.get(`/catalog/catalog_item_data/?` + catalogItemId)
+      .then((data) => {
+        this.data = data;
+      });*/
     Promise.all([catalog, currency, zone, dialog])
       .then(() => {
         this.formType = "";
-        this.setState({ isLoaded: true });
+        this.types = [{ id: 'generic', name: "Generic" },
+          { id: 'amazon', name: "Amazon" },
+          { id: 'generic_orchestration', name: "GO" },
+          { id: 'generic_ansible_tower', name: "AnsibleTower" },
+          { id: 'generic_container_template', name: "Generic Container" },
+          { id: 'catalog_bundle', name: "Catalog Bundle" },
+          { id: 'others', name: "Others" }];
+        this.setState({ isLoaded: true , schema: createSchema(this.formType, this.types, this.catalogs, this.dialogs, this.zones, this.currencies)});
       });
   }
 
@@ -44,25 +57,33 @@ class CatalogItemForm extends Component {
 
   };
 
-  formTypeChanged = () => {
-    this.formType = "generic";
-    this.render();
-  }
+  handleStateUpdate = (values) => {
+    if (!values.dirty || values.active !== "catalog_item_type") {
+      return;
+    }
+    if (values.active === "catalog_item_type") {
+      debugger;
+      this.formType = values.values.catalog_item_type;
+      console.log("this.formType: ", this.formType);
+      this.setState({ schema: createSchema(this.formType, this.types, this.catalogs, this.dialogs, this.zones, this.currencies) });
+    };
+  };
 
   render() {
     //const { catalogItemId, type } = this.props;
-    const { isLoaded } = this.state;
+    const { isLoaded, schema } = this.state;
     const cancelUrl = `/TODO?button=cancel`;
     if (!isLoaded) return null;
 
     return (
       <Grid fluid>
         <MiqFormRenderer
-          schema={createSchema(this.formType, this.catalogs, this.dialogs, this.zones, this.currencies, this.formTypeChanged)}
+          schema={schema}
           onSubmit={this.submitValues}
           onCancel={() => miqAjaxButton(cancelUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           canReset={true}
+          onStateUpdate={this.handleStateUpdate}
           buttonsLabels={{
             submitLabel: true ? __('Save') : __('Add'),
           }}
@@ -73,9 +94,11 @@ class CatalogItemForm extends Component {
 }
 
 CatalogItemForm.propTypes = {
+  catalogItemId: PropTypes.string,
 };
 
 CatalogItemForm.defaultProps = {
+  catalogItemId: undefined,
 };
 
 export default CatalogItemForm;

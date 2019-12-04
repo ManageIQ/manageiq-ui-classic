@@ -1,15 +1,19 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 
-function createSchema(formType, types, catalogs, dialogs, zones, currencies, formTypeChanged) {
-  const fields = [{
-    component: componentTypes.SELECT,
-    name: 'catalog_item_type',
-    label: __('Type'),
-    placeholder: `<${__('Choose')}>`,
-    isDisabled: false,
-    onChange: () => formTypeChanged(),
-    options: types.map(({ id, name }) => ({ label: name, value: id })),
-  }];
+function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
+  const fields = [];
+  // no catalog type for Catalog Bundle
+  if (formType !== "catalog_bundle") {
+    fields.push({
+      component: componentTypes.SELECT,
+      name: 'catalog_item_type',
+      label: __('Type'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
+    });
+  };
+  // do not show other fields if no catalog type is selected
   if (formType === "") {
     return { fields };
   };
@@ -106,9 +110,16 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies, for
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
       options: types.map(({ id, name }) => ({ label: name, value: id })),
+    }, {
+      component: componentTypes.SELECT,
+      name: 'catalog_item_provider',
+      label: __('Provider'),
+      placeholder: `<${__('Choose')}>`,
+      isDisabled: false,
+      options: types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
-  if (formType === "@edit[:new][:template_id]" || ["generic_ansible_tower", "generic_container_template"].includes(formType)) {
+  if (["generic_ansible_tower", "generic_container_template"].includes(formType)) {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_provider',
@@ -144,17 +155,17 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies, for
   if (formType !== "ansible_playbook") {
     fields.push([{
       component: componentTypes.TEXT_FIELD,
-      name: 'description',
+      name: 'provision',
       label: __('Provisioning Entry Point'),
       maxLength: 60,
     }, {
       component: componentTypes.TEXT_FIELD,
-      name: 'description',
+      name: 'reconfigure',
       label: __('Reconfigure Entry Point'),
       maxLength: 60,
     }, {
       component: componentTypes.TEXT_FIELD,
-      name: 'description',
+      name: 'retirement',
       label: __('Retirement Entry Point'),
       maxLength: 60,
     },
