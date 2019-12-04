@@ -193,7 +193,7 @@
 
   &.collapsed {
     .menu-list-group-item, .menu-list-group-item.active {
-      >a.top-level {
+      >a.top-level-item {
         >.list-group-item-value {
           display: none;
         }
@@ -203,7 +203,7 @@
           right: 10px;
         }
       }
-      >a.top-level:hover {
+      >a.top-level-item:hover {
         width: calc(75px + 1px);
       }
     }
