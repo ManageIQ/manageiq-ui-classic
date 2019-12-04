@@ -22,7 +22,7 @@ export const HoverContext = React.createContext();
 
 const MainMenu = ({ menu }) => {
   const [activeIds, setActiveIds] = useState({});
-  const isVerticalMenuCollapsed = useSelector(store => store.menuReducer.isVerticalMenuCollapsed);
+  const isVerticalMenuCollapsed = useSelector(({ menuReducer: { isVerticalMenuCollapsed } }) => isVerticalMenuCollapsed);
 
   const handleSetActiveIds = (value) => {
     if (!isEqual(activeIds, { ...activeIds, ...value })) {

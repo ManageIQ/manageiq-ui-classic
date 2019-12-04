@@ -18,10 +18,12 @@ const NavbarHeader = ({
         onClick={() => {
           dispatch(toggleVerticalMenuCollapsed());
           const content = window.document.getElementsByClassName('container-pf-nav-pf-vertical-with-sub-menus')[0];
-          if (isVerticalMenuCollapsed) {
-            content.classList.remove('collapsed-nav');
-          } else {
-            content.classList.add('collapsed-nav');
+          if (content) {
+            if (isVerticalMenuCollapsed) {
+              content.classList.remove('collapsed-nav');
+            } else {
+              content.classList.add('collapsed-nav');
+            }
           }
         }}
       >
