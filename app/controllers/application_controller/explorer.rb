@@ -4,6 +4,7 @@ module ApplicationController::Explorer
 
   def build_replaced_trees(replace_trees, valid_values)
     return [] unless replace_trees
+
     valid_values.find_all { |tree| replace_trees.include?(tree) }
                 .collect { |tree| try_build_tree(tree) }
                 .compact
@@ -35,7 +36,7 @@ module ApplicationController::Explorer
   # proper routes, this is just a small step to fix the current situation
   X_BUTTON_ALLOWED_ACTIONS = {
     # group 1
-    'check_compliance' => :s1, 'collect_running_processes' => :s1, 'delete'              => :s1,
+    'check_compliance' => :s1, 'collect_running_processes' => :s1, 'delete' => :s1,
     'snapshot_delete'  => :s1, 'snapshot_delete_all' => :s1,
     'refresh'          => :s1, 'scan'                      => :s1, 'guest_shutdown'      => :s1,
     'guest_restart'    => :s1, 'retire_now'                => :s1, 'snapshot_revert'     => :s1,
@@ -72,7 +73,7 @@ module ApplicationController::Explorer
     model, action = pressed2model_action(params[:pressed])
 
     allowed_models = %w[common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider configuration_manager_provider]
-    raise ActionController::RoutingError.new('invalid button action') unless
+    raise ActionController::RoutingError, 'invalid button action' unless
       allowed_models.include?(model)
 
     unless X_BUTTON_ALLOWED_ACTIONS.key?(action)
@@ -110,6 +111,7 @@ module ApplicationController::Explorer
       # if error rendered, do not render any further, do not record history
       # non-error rendering is done below through @refresh_partial
       return if performed?
+
       @sb[:model]  = model
       @sb[:action] = action
     elsif action == 'perf'
@@ -126,6 +128,7 @@ module ApplicationController::Explorer
     end
 
     return if performed?
+
     # no need to render anything, method will render flash message when async task is completed
 
     if @refresh_partial == "layouts/flash_msg"
@@ -188,7 +191,7 @@ module ApplicationController::Explorer
     send_action
   end
 
-  def generic_x_show(x_node_build_options = {})
+  def generic_x_show(_x_node_build_options = {})
     @explorer = true
     respond_to do |format|
       format.js do # AJAX, select the node
@@ -224,6 +227,7 @@ module ApplicationController::Explorer
   def x_edit_tags_cancel
     id = params[:id]
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
+
     add_flash(_("Tag Edit was cancelled by the user"))
     get_node_info(x_node)
     @sb[:action] = @edit = nil # clean out the saved info
@@ -243,6 +247,7 @@ module ApplicationController::Explorer
     modelname, rec_id, nodetype = TreeBuilder.extract_node_model_and_id(treenodeid)
     return treenodeid if ["root", ""].include?(nodetype) # incase node is root or doesn't have a prefix
     raise _("No Class found for explorer tree node id '%{number}'") % {:number => treenodeid} if modelname.nil?
+
     kls = modelname.constantize
     return treenodeid if kls == Hash
 
