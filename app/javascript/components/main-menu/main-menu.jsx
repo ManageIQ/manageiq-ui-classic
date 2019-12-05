@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import ClassNames from 'classnames';
@@ -8,6 +8,7 @@ import TopLevel from './top-level';
 import SecondLevel from './second-level';
 import ThirdLevel from './third-level';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
+import { adaptContentWidth } from './helpers';
 
 const Fallback = props => <ThirdLevel level={2} {...props} />;
 
@@ -23,6 +24,10 @@ export const HoverContext = React.createContext();
 const MainMenu = ({ menu }) => {
   const [activeIds, setActiveIds] = useState({});
   const isVerticalMenuCollapsed = useSelector(({ menuReducer: { isVerticalMenuCollapsed } }) => isVerticalMenuCollapsed);
+
+  useEffect(() => {
+    adaptContentWidth(isVerticalMenuCollapsed);
+  }, [isVerticalMenuCollapsed]);
 
   const handleSetActiveIds = (value) => {
     if (!isEqual(activeIds, { ...activeIds, ...value })) {

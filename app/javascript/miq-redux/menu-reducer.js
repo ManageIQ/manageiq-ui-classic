@@ -7,7 +7,9 @@ export const toggleVerticalMenuCollapsed = isVerticalMenuCollapsed => ({
   },
 });
 
-export const menuReducer = (state = { isVerticalMenuCollapsed: false }, action) => {
+export const menuReducer = (state = {
+  isVerticalMenuCollapsed: window.localStorage.getItem('patternfly-navigation-primary') === 'collapsed',
+}, action) => {
   switch (action.type) {
     case TOGGLE_VERTICAL_MENU_COLLAPSED:
       return { ...state, isVerticalMenuCollapsed: !state.isVerticalMenuCollapsed };
