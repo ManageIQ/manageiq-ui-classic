@@ -85,19 +85,6 @@
   .nav-pf-secondary-nav {
     .nav-item-pf-header {
       a {
-        ::before {
-          font-family: "FontAwesome";
-          content: '\f08d';
-          color: #0099d3;
-          margin-right: 7px;
-          opacity: 0;
-        }
-        &.collapsed {
-          ::before {
-            transform: rotate(45deg);
-            display: inline-block;
-          }
-        }
         color: #fff;
         opacity: 1;
         font-size: 16px;
@@ -206,7 +193,7 @@
 
   &.collapsed {
     .menu-list-group-item, .menu-list-group-item.active {
-      >a.top-level {
+      >a.top-level-item {
         >.list-group-item-value {
           display: none;
         }
@@ -216,25 +203,9 @@
           right: 10px;
         }
       }
-      >a.top-level:hover {
+      >a.top-level-item:hover {
         width: calc(75px + 1px);
       }
-    }
-  }
-}
-
-.secondary-collapse-toggle-pf,
-.tertiary-collapse-toggle-pf {
-  &::before {
-    content: '\f08d';
-  }
-
-  &.collapsed {
-    &::before {
-      content: '\f08d';
-      display: inline-block;
-      transform: rotate(45deg);
-      -webkit-transform: rotate(45deg);
     }
   }
 }

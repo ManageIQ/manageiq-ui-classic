@@ -1,14 +1,7 @@
-= react 'MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : ''
+= react('MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : '')
+
 %nav.navbar.navbar-pf-vertical#notification-app{'ng-controller' => "headerController as vm"}
-  .navbar-header
-    %button{:type => "button", :class => "navbar-toggle"}
-      %span.sr-only
-        = _("Toggle navigation")
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand{:href => '/dashboard/start_url', :title => _("Go to my start page")}
-      %img.navbar-brand-name{:src => ::Settings.server.custom_brand ? '/upload/custom_brand.png' : image_path("layout/brand.svg"), :alt => "ManageIQ"}
+  = render :partial => "layouts/navbar-header"
   %nav.collapse.navbar-collapse
     = render :partial => "layouts/right_section"
   = render :partial => "layouts/notifications_drawer"

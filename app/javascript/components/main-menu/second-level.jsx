@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem } from './main-menu';
+import ClassNames from 'classnames';
+import { MenuItem, HoverContext } from './main-menu';
 import { menuProps } from './recursive-props';
 import {
   getHrefByType, getIdByCategory, handleUnsavedChanges,
@@ -15,34 +16,52 @@ const SecondLevel = ({
   level,
   type,
   active,
-}) => (
-  <li className={`menu-list-group-item ${items.length > 0 ? 'tertiary-nav-item-pf' : ''} ${active ? 'active' : ''}`} id={getIdByCategory(items.length > 0, id)}>
-    <a
-      href={getHrefByType(type, href, id)}
-      onClick={(event) => {
-        if (handleUnsavedChanges(type) === false) {
-          event.preventDefault();
-        }
-        return false;
-      }}
-      target={getTargetByType(type)}
-    >
-      <span className="list-group-item-value">{title}</span>
-    </a>
-    <div className="nav-pf-tertiary-nav">
-      <div className="nav-item-pf-header">
-        <a className="tertiary-collapse-toggle-pf" data-toggle="collapse-tertiary-nav">
-          <span>{title}</span>
-        </a>
-      </div>
-      {items.length > 0 && (
-        <ul className="list-group">
-          {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
-        </ul>
+  handleSetActiveIds,
+}) => {
+  const hoveredSecondLevelId = useContext(HoverContext).secondLevelId;
+  const hasSubitems = items.length > 0;
+
+  return (
+    <li
+      className={ClassNames(
+        'menu-list-group-item',
+        {
+          'tertiary-nav-item-pf': hasSubitems,
+          'is-hover': hoveredSecondLevelId === id,
+          active,
+        },
       )}
-    </div>
-  </li>
-);
+      id={getIdByCategory(hasSubitems, id)}
+      onMouseEnter={() => (handleSetActiveIds(hasSubitems ? { secondLevelId: id } : undefined))}
+      onMouseLeave={() => handleSetActiveIds({ secondLevelId: undefined })}
+    >
+      <a
+        href={getHrefByType(type, href, id)}
+        onClick={(event) => {
+          if (handleUnsavedChanges(type) === false) {
+            event.preventDefault();
+          }
+          return false;
+        }}
+        target={getTargetByType(type)}
+      >
+        <span className="list-group-item-value">{title}</span>
+      </a>
+      <div className="nav-pf-tertiary-nav">
+        <div className="nav-item-pf-header">
+          <a>
+            <span>{title}</span>
+          </a>
+        </div>
+        {hasSubitems && (
+          <ul className="list-group">
+            {items.map(props => <MenuItem key={props.id} level={level + 1} {...props} />)}
+          </ul>
+        )}
+      </div>
+    </li>
+  );
+};
 
 SecondLevel.propTypes = {
   ...menuProps,

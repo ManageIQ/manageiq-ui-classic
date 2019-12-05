@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
 import toJson from 'enzyme-to-json';
+import configureStore from 'redux-mock-store';
 import MainMenu from '../../components/main-menu/main-menu';
 import TopLevel from '../../components/main-menu/top-level';
 import SecondLevel from '../../components/main-menu/second-level';
@@ -8,8 +10,15 @@ import ThirdLevel from '../../components/main-menu/third-level';
 
 describe('Main menu test', () => {
   let mockNavItems;
+  const mockStore = configureStore();
+  let store;
 
   beforeEach(() => {
+    store = mockStore({
+      menuReducer: {
+        isVerticalMenuCollapsed: false,
+      },
+    });
     mockNavItems = [{
       id: 'vi',
       title: 'Cloud Intel',
@@ -86,19 +95,37 @@ describe('Main menu test', () => {
   });
 
   it('should render correctly', () => {
-    const wrapper = mount(<MainMenu menu={mockNavItems} />);
+    const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>).find(MainMenu);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('should render proper level components', () => {
-    const wrapper = mount(<MainMenu menu={mockNavItems} />);
+    const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>);
     expect(wrapper.find(TopLevel)).toHaveLength(2);
     expect(wrapper.find(SecondLevel)).toHaveLength(3);
     expect(wrapper.find(ThirdLevel)).toHaveLength(3);
   });
 
   it('should render active third level components properly', () => {
-    const wrapper = mount(<MainMenu menu={mockNavItems} />);
-    expect(wrapper.find(ThirdLevel).find('li.menu-list-group-item.active')).toHaveLength(1);
+    const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>);
+    expect(wrapper.find(ThirdLevel).find('li.menu-list-group-item.active'))
+      .toHaveLength(1);
+  });
+
+  it('should render not collapsed vertical navbar with proper classNames', () => {
+    const wrapper = mount(<Provider store={store}><MainMenu menu={mockNavItems} /></Provider>);
+    expect(wrapper.find('#main-menu').instance().className)
+      .toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus');
+  });
+
+  it('should render collapsed vertical navbar with proper classNames', () => {
+    const collapsedStore = mockStore({
+      menuReducer: {
+        isVerticalMenuCollapsed: true,
+      },
+    });
+    const wrapper = mount(<Provider store={collapsedStore}><MainMenu menu={mockNavItems} /></Provider>);
+    expect(wrapper.find('#main-menu').instance().className)
+      .toEqual('nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-vertical-collapsible-menus collapsed');
   });
 });

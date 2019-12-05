@@ -69,6 +69,7 @@ ManageIQ.component.addReact('ImportDatastoreViaGit', ImportDatastoreViaGit);
 ManageIQ.component.addReact('MainMenu', MainMenu);
 ManageIQ.component.addReact('MiqAboutModal', MiqAboutModal);
 ManageIQ.component.addReact('MiqToolbar', MiqToolbar);
+ManageIQ.component.addReact('navbar.NavbarHeader', navbar.NavbarHeader);
 ManageIQ.component.addReact('navbar.Notifications', navbar.Notifications);
 ManageIQ.component.addReact('OptimizationList', OptimizationList);
 ManageIQ.component.addReact('OpsTenantForm', OpsTenantForm);
