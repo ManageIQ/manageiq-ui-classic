@@ -45,6 +45,7 @@ module ApplicationController::PolicySupport
         ppids = @edit[:new].keys + @edit[:current].keys # Get union of policy profile ids
         ppids.uniq.each do |ppid|
           next if @edit[:new][ppid] == @edit[:current][ppid] # Only process changes
+
           pp = MiqPolicySet.find(ppid) # Get the pol prof record
           if @edit[:new][ppid].zero? # Remove if new count is zero
             pp.remove_from(session[:pol_items], session[:pol_db])
@@ -205,6 +206,7 @@ module ApplicationController::PolicySupport
         category.entries.each do |entry|
           entries[entry.description] = entry.tag.name # Get the fully qual tag name
           next unless val == entry.tag.name
+
           @get_filters[entry.tag.name] = "cats_#{category.description}:#{entry.description}"
           assigned_filters.push(category.description.downcase)
           session[category.description.downcase] = [] if session[category.description.downcase].nil?
