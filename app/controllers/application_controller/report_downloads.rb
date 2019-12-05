@@ -98,9 +98,9 @@ module ApplicationController::ReportDownloads
       render_report_data_init(render_type)
     end
   end
-  alias_method :render_report_txt, :render_report_data
-  alias_method :render_report_csv, :render_report_data
-  alias_method :render_report_pdf, :render_report_data
+  alias render_report_txt render_report_data
+  alias render_report_csv render_report_data
+  alias render_report_pdf render_report_data
 
   # Send rendered report data
   def send_report_data
