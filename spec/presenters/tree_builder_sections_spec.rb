@@ -67,7 +67,7 @@ describe TreeBuilderSections do
       locals = @sections_tree.send(:set_locals_for_render)
       expect(locals[:check_url]).to eq("/#{@controller_name}/sections_field_changed/")
       expect(locals[:oncheck]).to eq("miqOnCheckSections")
-      expect(locals[:three_checks]).to eq(true)
+      expect(locals[:hierarchical_check]).to eq(true)
     end
     it 'sets roots correctly' do
       roots = @sections_tree.send(:x_get_tree_roots)

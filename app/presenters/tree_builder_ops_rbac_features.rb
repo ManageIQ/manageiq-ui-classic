@@ -55,12 +55,11 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :checkboxes         => true,
-      :three_checks       => true,
-      :post_check         => true,
-      :hierarchical_check => true,
-      :check_url          => "/ops/rbac_role_field_changed/",
-      :oncheck            => @editable ? "miqOnCheckGeneric" : ""
+      :checkboxes   => true,
+      :three_checks => true,
+      :post_check   => true,
+      :check_url    => "/ops/rbac_role_field_changed/",
+      :oncheck      => @editable ? "miqOnCheckGeneric" : nil
     }
   end
 
