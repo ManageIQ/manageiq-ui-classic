@@ -16,6 +16,10 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     super(name, sandbox, build)
   end
 
+  def override(node, _object)
+    node.checkable = false unless @editable
+  end
+
   private
 
   def x_get_tree_roots
@@ -51,11 +55,12 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def tree_init_options
     {
-      :checkboxes   => true,
-      :three_checks => true,
-      :post_check   => true,
-      :check_url    => "/ops/rbac_role_field_changed/",
-      :oncheck      => @editable ? "miqOnCheckGeneric" : false
+      :checkboxes         => true,
+      :three_checks       => true,
+      :post_check         => true,
+      :hierarchical_check => true,
+      :check_url          => "/ops/rbac_role_field_changed/",
+      :oncheck            => @editable ? "miqOnCheckGeneric" : ""
     }
   end
 
