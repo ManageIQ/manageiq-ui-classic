@@ -58,12 +58,11 @@ describe NetworkRouterController do
       login_as FactoryBot.create(:user, :features => %w(none))
     end
 
-    subject do
-      get :show, :params => {:id => @router.id}
-    end
+    subject { get :show, :params => {:id => @router.id} }
 
     context "render listnav partial" do
       render_views
+
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_network_router")
@@ -317,33 +316,27 @@ describe NetworkRouterController do
   end
 
   describe '#button' do
+    let(:router) { FactoryBot.create(:network_router) }
+
     before { controller.params = params }
 
-    context 'tagging instances from a list of instances, accessed from the details page of a network router' do
-      let(:params) { {:pressed => "instance_tag"} }
+    context 'tagging Instances in a nested list' do
+      let(:params) { {:pressed => 'instance_tag'} }
 
-      it 'calls tag method for tagging instances' do
-        expect(controller).to receive(:tag).with("VmOrTemplate")
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(VmOrTemplate)
         controller.send(:button)
       end
     end
 
-    context 'tagging cloud subnets from a list of subnets, accessed from the details page of a network router' do
-      let(:params) { {:pressed => "cloud_subnet_tag"} }
+    %w[cloud_subnet floating_ip network_router security_group].each do |item|
+      context "tagging #{item.camelize}" do
+        let(:params) { {:pressed => "#{item}_tag"} }
 
-      it 'calls tag method for tagging cloud subnets' do
-        expect(controller).to receive(:tag).with("CloudSubnet")
-        controller.send(:button)
-      end
-    end
-
-    context 'tagging floating ips from a list of floating ips, accessed from the details page of a network router' do
-      let(:params) { {:pressed => "floating_ip_tag"} }
-
-      it 'calls tag method for tagging floating ips' do
-        expect(controller).to receive(:tag).with("FloatingIp")
-
-        controller.send(:button)
+        it 'calls tag method' do
+          expect(controller).to receive(:tag).with(item.camelize.safe_constantize)
+          controller.send(:button)
+        end
       end
     end
 
@@ -352,6 +345,142 @@ describe NetworkRouterController do
 
       it 'calls comparemiq to compare Instances' do
         expect(controller).to receive(:comparemiq)
+        controller.send(:button)
+      end
+    end
+
+    context 'adding Interface to Router' do
+      let(:params) { {:pressed => 'network_router_add_interface', :id => router.id.to_s} }
+
+      it 'redirects to add_interface_select' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'add_interface_select', :id => router.id.to_s)
+        controller.send(:button)
+      end
+    end
+
+    context 'removing Interface from Router' do
+      let(:params) { {:pressed => 'network_router_remove_interface', :id => router.id.to_s} }
+
+      it 'redirects to remove_interface_select' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'remove_interface_select', :id => router.id.to_s)
+        controller.send(:button)
+      end
+    end
+
+    context 'editing Network Router' do
+      let(:params) { {:pressed => 'network_router_edit', :id => router.id.to_s} }
+
+      it 'redirects to edit method' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => router.id.to_s)
+        controller.send(:button)
+      end
+    end
+
+    context 'adding new Network Router' do
+      let(:params) { {:pressed => 'network_router_new'} }
+
+      it 'redirects to new method' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'new')
+        controller.send(:button)
+      end
+    end
+
+    context 'custom buttons' do
+      let(:params) { {:pressed => 'custom_button'} }
+
+      it 'calls custom_buttons method' do
+        expect(controller).to receive(:custom_buttons)
+        controller.send(:button)
+      end
+    end
+
+    %w[delete evacuate pause refresh reset resize retire scan shelve start stop suspend terminate].each do |action|
+      context "#{action} for selected Instances displayed in a nested list" do
+        let(:params) { {:pressed => "instance_#{action}"} }
+
+        it "calls #{action + 'vms'} method" do
+          allow(controller).to receive(:show)
+          allow(controller).to receive(:performed?).and_return(true)
+          expect(controller).to receive((action + 'vms').to_sym)
+          controller.send(:button)
+        end
+      end
+    end
+
+    context 'editing Instance displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_edit'} }
+
+      it 'calls edit_record method' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:edit_record)
+        controller.send(:button)
+      end
+    end
+
+    context 'setting Ownership for Instances in a nested list' do
+      let(:params) { {:pressed => 'instance_ownership'} }
+
+      it 'calls set_ownership' do
+        expect(controller).to receive(:set_ownership)
+        controller.send(:button)
+      end
+    end
+
+    context 'managing policies for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_protect'} }
+
+      it 'calls assign_policies method' do
+        expect(controller).to receive(:assign_policies).with(VmOrTemplate)
+        controller.send(:button)
+      end
+    end
+
+    context 'policy simulation for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_policy_sim'} }
+
+      it 'calls polsimvms method' do
+        expect(controller).to receive(:polsimvms)
+        controller.send(:button)
+      end
+    end
+
+    context 'provisioning Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_miq_request_new'} }
+
+      it 'calls prov_redirect' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:prov_redirect)
+        controller.send(:button)
+      end
+    end
+
+    context 'retirement for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_retire_now'} }
+
+      it 'calls retirevms_now' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:retirevms_now)
+        controller.send(:button)
+      end
+    end
+
+    context 'Live Migrate of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_live_migrate'} }
+
+      it 'calls livemigratevms' do
+        expect(controller).to receive(:livemigratevms)
+        controller.send(:button)
+      end
+    end
+
+    context 'Soft Reboot of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_guest_restart'} }
+
+      it 'calls guestreboot' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:guestreboot)
         controller.send(:button)
       end
     end

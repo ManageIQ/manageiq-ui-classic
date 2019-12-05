@@ -1791,6 +1791,7 @@ Rails.application.routes.draw do
         edit
         index
         new
+        protect
         remove_interface_select
         show
         show_list
@@ -1804,6 +1805,7 @@ Rails.application.routes.draw do
         create
         form_field_changed
         listnav_search_selected
+        protect
         quick_search
         remove_interface
         remove_interface_select
