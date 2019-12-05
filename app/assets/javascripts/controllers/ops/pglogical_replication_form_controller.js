@@ -149,6 +149,11 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     }
     $scope.pglogicalReplicationModel.addEnabled = false;
     $scope.pglogicalReplicationModel.updateEnabled = false;
+
+    // check if subscriptions changed
+    if (angular.equals($scope.pglogicalReplicationModel.subscriptions, $scope.modelCopy.subscriptions)) {
+      $scope.angularForm.$setPristine();
+    }
   };
 
   // delete an existing subscription
@@ -174,8 +179,13 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       $scope.pglogicalReplicationModel.port       = '';
       $scope.pglogicalReplicationModel.addEnabled = false;
     } else {
-      var original_values = $scope.modelCopy.subscriptions[idx];
       var subscription    = $scope.pglogicalReplicationModel.subscriptions[idx];
+      var original_values = subscription;
+
+      if ($scope.modelCopy.subscriptions[idx]) {
+        original_values = $scope.modelCopy.subscriptions[idx];
+      }
+
       $scope.pglogicalReplicationModel.updateEnabled = false;
       subscription.dbname   = original_values.dbname;
       subscription.host     = original_values.host;
@@ -183,6 +193,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       subscription.password = original_values.password;
       subscription.port     = original_values.port;
     }
+    $scope.angularForm.$setPristine();
   };
 
   // validate subscription, all required fields should have data
