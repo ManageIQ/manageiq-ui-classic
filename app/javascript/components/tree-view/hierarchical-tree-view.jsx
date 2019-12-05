@@ -7,8 +7,9 @@ import Tree, {
   defaultStore,
 } from '@manageiq/react-ui-components/dist/wooden-tree';
 import { http } from '../../http_api';
-import reducers, { ACTIONS } from './reducers/index';
 import { combineReducers } from '../../helpers/redux';
+import reducers, { ACTIONS } from './reducers/index';
+import './style.scss';
 
 const flatten = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(data));
 
@@ -17,12 +18,23 @@ const callBack = (nodeId, type, value, namespace) => ({
 });
 
 /**
- * Helper: Sets checkable attribute depending on hideCheckox attribute.
+ * Helper
+ * Changes class to className.
+ * Sets undefined checkbox to null.
+ * Moves the key to attr.key.
  */
-const convertCheckable = tree => tree.map((n) => {
+const convert = tree => tree.map((n) => {
   let node = { ...n };
-  if (node.hideCheckbox) {
-    node = { ...node, checkable: false };
+  if (node.class) {
+    node = { ...node, classes: node.class };
+    delete node.class;
+  }
+
+  // The server cannot send null, just undefined, this is why it is tested as a string.
+  if (node.state.checked === 'undefined') {
+    node = { ...node, state: { ...node.state, checked: null } };
+  } else if (node.state.checked === null) {
+    node = { ...node, state: { ...node.state, checked: false } };
   }
 
   if (node.key) {
@@ -31,7 +43,7 @@ const convertCheckable = tree => tree.map((n) => {
   }
 
   if (node.nodes) {
-    node = { ...node, nodes: convertCheckable(node.nodes) };
+    node = { ...node, nodes: convert(node.nodes) };
   }
 
   return node;
@@ -51,7 +63,7 @@ const HierarchicalTreeView = (props) => {
     callBack,
   } = props;
 
-  const namespace = `tree_${tree_name}`;
+  const namespace = tree_name;
   const ConnectedNode = connect((store, ownProps) => ({ ...store[namespace][ownProps.nodeId] }))(Node);
   const ReduxTree = connect(store => ({ data: { ...store[namespace] } }))(Tree);
 
@@ -78,13 +90,13 @@ const HierarchicalTreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = convertCheckable(JSON.parse(bs_tree));
+    const tree = convert(JSON.parse(bs_tree));
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
     callBack(null, ACTIONS.ADD_NODES, flatten(tree), namespace);
   }, [bs_tree]);
 
-  const onDataChange = commands => commands.forEach(command => callBack(command.nodeId, command.type, command.value, namespace));
+  const onDataChange = commands => commands.forEach(command => callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace));
 
   /**
    * Lazy load function with a wrapper.
@@ -100,7 +112,7 @@ const HierarchicalTreeView = (props) => {
       tree: tree_name,
       mode: 'all',
     }).then((result) => {
-      const data = flatten(result);
+      const data = flatten(convert(result));
       let subtree = {};
       Object.keys(data).forEach((key) => {
         if (key !== '') {
@@ -117,7 +129,6 @@ const HierarchicalTreeView = (props) => {
 
   return (
     <ReduxTree
-      class="Tree"
       nodeIcon=""
       expandIcon="fa fa-fw fa-angle-right"
       collapseIcon="fa fa-fw fa-angle-down"
