@@ -163,7 +163,7 @@ describe CloudObjectStoreContainerController do
       end
 
       it "queues the create cloud object store container action form" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :create, :params => @form_params.merge(:button => "add", :format => :js)
       end
     end
