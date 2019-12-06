@@ -115,7 +115,7 @@ describe CloudTenantController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
     end
@@ -147,7 +147,7 @@ describe CloudTenantController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, a_hash_including(queue_options))
 
       post :update, :params => { :button => "save", :format => :js, :id => tenant.id, :name => "foo" }
     end
@@ -173,7 +173,7 @@ describe CloudTenantController do
     end
 
     it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :button, :params => { :id => tenant.id, :pressed => "cloud_tenant_delete", :format => :js }
     end
