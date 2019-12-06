@@ -6,7 +6,7 @@ module ApplicationController::Tags
     assert_privileges("#{@display && @display != "main" ? @display.singularize : controller_for_common_methods}_tag") if assert
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
-    @tagging = session[:tag_db] = params[:db] ? params[:db] : db if params[:db] || db
+    @tagging = session[:tag_db] = params[:db] || db if params[:db] || db
     @tagging ||= session[:tag_db] if session[:tag_db]
     case params[:button]
     when "cancel"
@@ -34,12 +34,12 @@ module ApplicationController::Tags
     tagging_edit('ManageIQ::Providers::ConfigurationManager')
   end
 
-  alias_method :image_tag, :tagging_edit
-  alias_method :instance_tag, :tagging_edit
-  alias_method :vm_tag, :tagging_edit
-  alias_method :miq_template_tag, :tagging_edit
-  alias_method :storage_tag, :tagging_edit
-  alias_method :infra_networking_tag, :tagging_edit
+  alias image_tag tagging_edit
+  alias instance_tag tagging_edit
+  alias vm_tag tagging_edit
+  alias miq_template_tag tagging_edit
+  alias storage_tag tagging_edit
+  alias infra_networking_tag tagging_edit
 
   private ############################
 
@@ -55,11 +55,12 @@ module ApplicationController::Tags
   def tagging_edit_tags_reset
     get_tag_items if @explorer
     @object_ids = session[:tag_items]
-    @sb[:rec_id] = params[:id] ? params[:id] : session[:tag_items][0]
+    @sb[:rec_id] = params[:id] || session[:tag_items][0]
     @tagging = session[:tag_db].to_s
     if params[:button] == "reset"
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}")
+
       @object_ids = @edit[:object_ids]
     end
     @in_a_form = true
@@ -92,6 +93,7 @@ module ApplicationController::Tags
   def tagging_edit_tags_cancel
     id = params[:id]
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}")
+
     add_flash(_("Tag Edit was cancelled by the user"))
     session[:tag_items] = nil # reset tag_items in session
     @edit = nil # clean out the saved info
@@ -138,7 +140,7 @@ module ApplicationController::Tags
                                      :object_ids => @edit[:object_ids],
                                      :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments],
                                      :delete_ids => @edit[:current][:assignments] - @edit[:new][:assignments])
-  rescue => bang
+  rescue StandardError => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
     add_flash(_("Tag edits were successfully saved"))
