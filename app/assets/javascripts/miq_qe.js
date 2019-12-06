@@ -20,13 +20,29 @@ if (typeof _ !== 'undefined' && typeof _.debounce !== 'undefined') {
         delete ManageIQ.qe.debounced[debounce_index];
       }
     };
+
     // Override the newly-created fn (prepended wait + original fn)
     // We have to increase the counter before the waiting is initiated
     var debounced_func = orig_debounce.call(this, new_func, wait, options);
+
     var new_debounced_func = function() {
       ManageIQ.qe.debounced[debounce_index] = 1;
       return debounced_func.apply(this, arguments);
     };
+
+    // copy .cancel and .flush to the new debounced function
+    new_debounced_func.cancel = function() {
+      try {
+        return debounced_func.cancel();
+      } finally {
+        delete ManageIQ.qe.debounced[debounce_index];
+      }
+    }
+    new_debounced_func.flush = function() {
+      // no delete, it both calls new_func, and cancel
+      return debounced_func.flush();
+    }
+
     return new_debounced_func;
   };
 }
