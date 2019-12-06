@@ -85,7 +85,7 @@ module MiqPolicyController::MiqActions
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
-    copy_param_if_present(@edit[:new], params, %i[description])
+    copy_params_if_present(@edit[:new], params, %i[description])
     copy_params_if_present(@edit[:new][:options], params, %i[from to parent_type attribute value hosts])
     @edit[:new][:options][:name] = params[:snapshot_name].presence if params[:snapshot_name]
     @edit[:new][:options][:age] = params[:snapshot_age].to_i if params.key?(:snapshot_age)
@@ -98,7 +98,7 @@ module MiqPolicyController::MiqActions
     @edit[:new][:options][:ae_request] = params[:object_request] if params[:object_request]
     params.each do |var, val|
       vars = var.split("_")
-      if (vars[0] == "attribute" || vars[0] == "value") && val.present?
+      if vars[0] == "attribute" || vars[0] == "value"
         ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
           f = ("attribute_" + (i + 1).to_s)
           v = ("value_" + (i + 1).to_s)
@@ -299,8 +299,8 @@ module MiqPolicyController::MiqActions
   def action_set_record_vars(action)
     action.description = @edit[:new][:description]
     action.action_type = @edit[:new][:action_type]
+    @edit[:new][:options][:ae_hash] = {}
     @edit[:new][:attrs]&.each do |pair|
-      @edit[:new][:options][:ae_hash] ||= {}
       @edit[:new][:options][:ae_hash][pair[0]] = pair[1] if pair[0].present? && pair[1].present?
     end
     @edit[:new][:options].delete("ae_hash".to_sym) if @edit[:new][:options][:ae_hash].empty?

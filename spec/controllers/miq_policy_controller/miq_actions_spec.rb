@@ -109,6 +109,48 @@ describe MiqPolicyController do
       end
     end
 
+    context "#action_field_changed" do
+      before do
+        options = {:ae_hash => {"a1" => "v1", "a2" => "v2", "a3" => "v3", "a4" => "v4", "a5" => "v5"} }
+        @action = FactoryBot.create(:miq_action, :name => "Test_Action", :options => options)
+        attrs   = [["a1", "v1"], ["a2", "v2"], ["a3", "v3"], ["a4", "v4"], ["a5", "v5"]]
+        edit = {
+          :rec_id => @action.id,
+          :key    => "action_edit__#{@action.id}",
+          :new    => {:description => "foo", :options => options, :attrs => attrs}
+        }
+        edit[:current] = copy_hash(edit[:new])
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+      end
+
+      it 'replaces attr/value in `edit[:new][:attrs]` instead of adding' do
+        controller.params = {"id" => @action.id, "value_3" => "v6", "attribute_3" => "a6"}
+        allow(controller).to receive(:render)
+        controller.send(:action_field_changed)
+        edit = assigns(:edit)
+        expect(edit[:new][:attrs].count).to eq(edit[:current][:attrs].count)
+        expect(edit[:new][:attrs][2]).to eq(["a6", "v6"])
+      end
+
+      it 'deletes attr/value in `edit[:new][:attrs]` that is cleared out' do
+        controller.params = {"id" => @action.id, "value_3" => "", "attribute_3" => ""}
+        allow(controller).to receive(:render)
+        controller.send(:action_field_changed)
+        ae_hash_original = @action[:options][:ae_hash]
+        controller.send(:action_set_record_vars, @action)
+        expect(@action[:options][:ae_hash]).to_not eq(ae_hash_original)
+      end
+
+      it 'save change in `edit[:new]` when description is edited' do
+        controller.params = {"description" => "FooBar", "id" => @action.id}
+        allow(controller).to receive(:render)
+        controller.send(:action_field_changed)
+        edit = assigns(:edit)
+        expect(edit[:new][:description]).to_not eq(edit[:current][:description])
+      end
+    end
+
     describe "#action_get_info" do
       let(:cat1) { FactoryBot.create(:classification, :description => res.first) }
       let(:cat2) { FactoryBot.create(:classification, :description => res.second) }
