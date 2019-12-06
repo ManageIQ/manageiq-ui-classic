@@ -79,7 +79,7 @@ describe GitBasedDomainImportService do
 
       it "calls 'import' with the correct options" do
         allow(task).to receive(:task_results).and_return(domain)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
         expect(domain).to receive(:update_attribute).with(:enabled, true)
 
         subject.import(git_repo.id, ref_name, 321)
@@ -93,7 +93,7 @@ describe GitBasedDomainImportService do
 
       it "calls 'import' with the correct options" do
         allow(task).to receive(:task_results).and_return(domain)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
         expect(domain).to receive(:update_attribute).with(:enabled, true)
         subject.import(git_repo.id, ref_name, 321)
       end
@@ -104,7 +104,7 @@ describe GitBasedDomainImportService do
 
       it "raises an exception with a message about invalid domain" do
         allow(task).to receive(:task_results).and_return(nil)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect { subject.import(git_repo.id, ref_name, 321) }.to raise_exception(
           MiqException::Error, "Selected branch or tag does not contain a valid domain"
@@ -114,7 +114,7 @@ describe GitBasedDomainImportService do
       it "raises an exception with a message about multiple domains" do
         allow(task).to receive(:task_results).and_return(nil)
         allow(task).to receive(:message).and_return('multiple domains')
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect { subject.import(git_repo.id, ref_name, 321) }.to raise_exception(
           MiqException::Error, 'Selected branch or tag contains more than one domain'
@@ -135,7 +135,7 @@ describe GitBasedDomainImportService do
       let(:git_branches) { [double("GitBranch", :name => ref_name)] }
 
       it "calls 'queue_import' with the correct options" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.queue_import(git_repo.id, ref_name, 321)).to eq(task.id)
       end
@@ -147,7 +147,7 @@ describe GitBasedDomainImportService do
       let(:ref_type) { "tag" }
 
       it "calls 'queue_import' with the correct options" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.queue_import(git_repo.id, ref_name, 321)).to eq(task.id)
       end
@@ -179,7 +179,7 @@ describe GitBasedDomainImportService do
       end
 
       it "calls 'queue_import' with the correct options" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321)).to eq(task.id)
       end
@@ -199,7 +199,7 @@ describe GitBasedDomainImportService do
       end
 
       it "calls 'queue_import' with additional auth args using stringified keys" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321, "userid" => "bob", :verify_ssl => false)).to eq(task.id)
       end
@@ -219,7 +219,7 @@ describe GitBasedDomainImportService do
       end
 
       it "calls 'queue_import' with an encrypted password" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.queue_refresh_and_import(git_repo.url, ref_name, ref_type, 321, "userid" => "bob", :password => "secret")).to eq(task.id)
       end
@@ -236,7 +236,7 @@ describe GitBasedDomainImportService do
     end
 
     it "calls 'queue_refresh' with the correct options" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
       expect(subject.queue_refresh(git_repo.id)).to eq(task.id)
     end
@@ -258,7 +258,7 @@ describe GitBasedDomainImportService do
     context "success" do
       it "calls 'refresh' with the correct options and succeeds" do
         allow(task).to receive(:task_results).and_return(true)
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect(subject.refresh(git_repo.id)).to be_truthy
       end
@@ -268,7 +268,7 @@ describe GitBasedDomainImportService do
       let(:status) { "Failed" }
       let(:message) { "My Error Message" }
       it "calls 'refresh' with the correct options and fails" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
         expect { subject.refresh(git_repo.id) }.to raise_exception(MiqException::Error, message)
       end
@@ -289,13 +289,13 @@ describe GitBasedDomainImportService do
     end
 
     it "#destroy_domain" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
       expect(subject.destroy_domain(domain.id)).to be_truthy
     end
 
     it "#queue_destroy_domain" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options).and_return(task.id)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options)).and_return(task.id)
 
       expect(subject.queue_destroy_domain(domain.id)).to eq(task.id)
     end

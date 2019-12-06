@@ -97,9 +97,6 @@ describe SecurityGroupController do
         :class_name  => ems.class.name,
         :method_name => 'create_security_group',
         :instance_id => ems.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{:name => "test"}]
       }
     end
@@ -111,7 +108,7 @@ describe SecurityGroupController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :create, :params => { :button => "add", :format => :js, :name => 'test',
                                  :tenant_id => 'id', :ems_id => ems.id }
     end
@@ -130,9 +127,6 @@ describe SecurityGroupController do
         :class_name  => security_group.class.name,
         :method_name => 'raw_update_security_group',
         :instance_id => security_group.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{:name => "foo2", :description => "New desc"}]
       }
     end
@@ -147,9 +141,6 @@ describe SecurityGroupController do
         :class_name  => security_group.class.name,
         :method_name => 'raw_create_security_group_rule',
         :instance_id => security_group.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [security_group.ems_ref, "outbound", { :ethertype => "", :port_range_min => nil,
            :port_range_max => nil, :protocol => "tcp", :remote_group_id => nil, :remote_ip_prefix => nil }]
       }
@@ -162,8 +153,10 @@ describe SecurityGroupController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(security_group_task_options, security_group_queue_options)
-      expect(MiqTask).to receive(:generic_action_with_callback).with(firewall_rule_task_options, firewall_rule_queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback)
+        .with(security_group_task_options, hash_including(security_group_queue_options))
+      expect(MiqTask).to receive(:generic_action_with_callback)
+        .with(firewall_rule_task_options, hash_including(firewall_rule_queue_options))
       post :update, :params => { :button          => "save",
                                  :format          => :js,
                                  :id              => security_group.id,
@@ -186,15 +179,12 @@ describe SecurityGroupController do
         :class_name  => security_group.class.name,
         :method_name => 'raw_delete_security_group',
         :instance_id => security_group.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => []
       }
     end
 
     it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :button, :params => { :id => security_group.id, :pressed => "security_group_delete", :format => :js }
     end
   end

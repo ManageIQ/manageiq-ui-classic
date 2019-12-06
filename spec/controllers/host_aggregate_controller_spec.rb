@@ -34,9 +34,6 @@ describe HostAggregateController do
       {
         :class_name  => aggregate.class.name,
         :method_name => "create_aggregate",
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => ems.my_zone,
         :args        => [ems.id, {:name => "foo", :ems_id => ems.id.to_s }]
       }
     end
@@ -47,7 +44,7 @@ describe HostAggregateController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
     end
   end
@@ -64,9 +61,6 @@ describe HostAggregateController do
         :class_name  => aggregate.class.name,
         :method_name => "update_aggregate",
         :instance_id => aggregate.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => ems.my_zone,
         :args        => [{:name => "foo"}]
       }
     end
@@ -77,7 +71,7 @@ describe HostAggregateController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :update, :params => { :button => "save", :format => :js, :id => aggregate.id, :name => "foo" }
     end
   end
@@ -136,9 +130,6 @@ describe HostAggregateController do
         :class_name  => aggregate.class.name,
         :method_name => "add_host",
         :instance_id => aggregate.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => ems.my_zone,
         :args        => [host.id]
       }
     end
@@ -149,7 +140,7 @@ describe HostAggregateController do
     end
 
     it "queues the add host action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :add_host, :params => { :button => "addHost", :format => :js, :id => aggregate.id, :host_id => host.id }
     end
   end
@@ -166,9 +157,6 @@ describe HostAggregateController do
         :class_name  => aggregate.class.name,
         :method_name => "remove_host",
         :instance_id => aggregate.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => ems.my_zone,
         :args        => [host.id]
       }
     end
@@ -179,7 +167,7 @@ describe HostAggregateController do
     end
 
     it "queues the remove host action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :remove_host, :params => {
         :button  => "removeHost",
         :format  => :js,

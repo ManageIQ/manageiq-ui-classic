@@ -112,9 +112,6 @@ describe CloudNetworkController do
         :class_name  => ems.class.name,
         :method_name => 'create_cloud_network',
         :instance_id => ems.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{
           :admin_state_up        => true,
           :external_facing       => false,
@@ -135,7 +132,7 @@ describe CloudNetworkController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :create, :params => {
         :button                => 'add',
@@ -166,9 +163,6 @@ describe CloudNetworkController do
         :class_name  => network.class.name,
         :method_name => 'raw_update_cloud_network',
         :instance_id => network.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{:name => "test2", :admin_state_up => false, :shared => false, :external_facing => false}]
       }
     end
@@ -182,7 +176,7 @@ describe CloudNetworkController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :update, :params => { :button => "save", :format => :js, :id => network.id, :name => "test2" }
     end
@@ -201,9 +195,6 @@ describe CloudNetworkController do
         :class_name  => network.class.name,
         :method_name => 'raw_delete_cloud_network',
         :instance_id => network.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => []
       }
     end
@@ -217,7 +208,7 @@ describe CloudNetworkController do
     end
 
     it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       expect(controller).to receive(:render)
 
       controller.send(:button)

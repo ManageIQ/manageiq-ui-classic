@@ -108,9 +108,6 @@ describe FloatingIpController do
           :class_name  => @ems.class.name,
           :method_name => 'create_floating_ip',
           :instance_id => @ems.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => [{}]
         }
       end
@@ -121,7 +118,7 @@ describe FloatingIpController do
       end
 
       it "queues the create action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :create, :params => { :button => "add", :format => :js, :name => 'test',
                                    :tenant_id => 'id', :ems_id => @ems.id }
       end
@@ -148,9 +145,6 @@ describe FloatingIpController do
           :class_name  => @floating_ip.class.name,
           :method_name => 'raw_update_floating_ip',
           :instance_id => @floating_ip.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => [{:network_port_ems_ref => ""}]
         }
       end
@@ -161,7 +155,7 @@ describe FloatingIpController do
       end
 
       it "queues the update action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :update, :params => { :button => "save", :format => :js, :id => @floating_ip.id,
                                    :network_port => {:ems_ref => ""}}
       end
@@ -188,15 +182,12 @@ describe FloatingIpController do
           :class_name  => @floating_ip.class.name,
           :method_name => 'raw_delete_floating_ip',
           :instance_id => @floating_ip.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => []
         }
       end
 
       it "queues the delete action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :button, :params => { :id => @floating_ip.id, :pressed => "floating_ip_delete", :format => :js }
       end
     end
