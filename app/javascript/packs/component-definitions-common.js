@@ -10,6 +10,7 @@ import CloudNetworkForm from '../components/cloud-network-form/cloud-network-for
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
+import DialogEditor from '../components/dialog-editor';
 import FlavorForm from '../components/flavor-form/flavor-form';
 import FirmwareRegistryForm from '../components/firmware-registry/firmware-registry-form';
 import FormButtonsRedux from '../forms/form-buttons-redux';
@@ -54,6 +55,7 @@ ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
 ManageIQ.component.addReact('navbar.Configuration', navbar.Configuration);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
+ManageIQ.component.addReact('DialogEditor', DialogEditor);
 ManageIQ.component.addReact('navbar.CustomLogo', navbar.CustomLogo);
 ManageIQ.component.addReact('FirmwareRegistryForm', FirmwareRegistryForm);
 ManageIQ.component.addReact('FlavorForm', FlavorForm);

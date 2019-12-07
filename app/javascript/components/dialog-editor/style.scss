@@ -1,0 +1,369 @@
+@import '~patternfly/dist/css/patternfly.css';
+@import '~patternfly/dist/css/patternfly-additions.css';
+@import '~patternfly-react/dist/css/patternfly-react.css';
+
+.dialog-editor {
+  $width: 1200px;
+  display: flex;
+  align-items: flex-start;
+
+  @mixin dashed-border {
+    margin: 10px 0px 10px 0px;
+    border: 2px dashed rgba(0, 0, 0, 0.1);
+  }
+
+  @media(max-width: #{$width - 1px}) {
+    flex-direction: column;
+  }
+
+  & > * {
+    box-sizing: border-box;
+    padding: 1em;
+    width: 100%;
+  }
+
+  .dialog-toolbox {
+    @media (min-width: $width) {
+      width: calc(100% * (1 / 12));
+    }
+
+    @media (max-width: #{$width - 1px}) {
+      z-index: 20;
+      background-color: white;
+    }
+
+    position: sticky;
+    top: 0;
+    bottom: 0;
+
+    .preview-switch {
+      text-align: center;
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+
+      @media (max-width: #{$width - 1px}) {
+        display: none;
+      }
+    }
+
+    ul.toolbox {
+      width: 100%;
+      padding-left: 0;
+      list-style-type: none;
+      border: 4px dashed rgba(0, 0, 0, 0.1);
+      border-bottom: none;
+      border-right: none;
+
+      & > li.toolbox-field {
+        width: 100%;
+        text-align: center;
+        border: 4px dashed rgba(0, 0, 0, 0.1);
+        border-left: none;
+        border-top: none;
+
+        @media(max-width: #{$width - 1px}) {
+          display: inline-block;
+          width: calc(100% / 7);
+        }
+
+        .toolbox-field-inner {
+          cursor: grab;
+
+          .icon {
+            font-size: xx-large;
+          }
+        }
+
+      }
+    }
+  }
+
+  .input-wrapper, .section-wrapper, .option-wrapper {
+    display: flex;
+    align-items: stretch;
+    padding: 0px 10px 0px 10px;
+    position: relative;
+
+    &.not-visible {
+      .item, .toolbox {
+        opacity: 0.5;
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    &.drag {
+      opacity: 0.5;
+    }
+
+    & > .item {
+      @include dashed-border;
+      border-right-style: none;
+      padding: 10px 10px 10px 10px;
+      width: 100%;
+
+      &.new-section {
+        text-align: center;
+        border-right-style: dashed;
+        cursor: pointer;
+      }
+    }
+
+    & > .handle {
+      margin: 10px 0px 10px 0px;
+      background-color: rgba(0, 0, 0, 0.1);
+      width: 1em;
+      cursor: grab;
+    }
+
+    & > .toolbox {
+      @include dashed-border;
+      width: 3em;
+      border-left: none;
+      font-size: large;
+
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 0;
+
+        li {
+          display: inline;
+          cursor: pointer;
+        }
+      }
+    }
+
+    & > .horizontal-overlay {
+      // To avoid double border glitches with the borders when dragging an object, there is an offset on the overlays
+      // for compensating the border thickness. This way the upper item's bottom border is being rendered at the same
+      // position as the lower item's top border. If an item is being moved between the drop overlays of two objects,
+      // the two borders switch each other seamlessly.
+      $border-thickness: 2px;
+      position: absolute;
+      top: -$border-thickness;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -10;
+
+      & > div {
+        height: 50%;
+
+        &.over {
+          &.overlay-top {
+            border-top: $border-thickness dashed rgba(0, 0, 0, 0.4);
+          }
+          &.overlay-bottom {
+            border-bottom: $border-thickness dashed rgba(0, 0, 0, 0.4);
+          }
+        }
+      }
+    }
+  }
+
+  // This makes the input fields inaccessible in the editor
+  .input-wrapper > .item {
+    z-index: -1;
+  }
+
+  .dialog-renderer {
+    @media (min-width: $width) {
+      width: calc(100% * (7 / 12));
+    }
+
+    padding-top: 0;
+
+    &.drag-input .input-wrapper .horizontal-overlay,
+    &.drag-section .section-wrapper .horizontal-overlay {
+      z-index: auto;
+    }
+
+    .empty {
+      height: 4em;
+
+      &.over {
+        border: 2px dashed rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .form-wrapper {
+      & > .toolbox {
+        float: right;
+
+        ul {
+          list-style: none;
+          display: inline-block;
+          padding-left: 0;
+          margin-bottom: 0;
+
+          li {
+            font-size: large;
+            display: inline;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .tab-header-wrapper {
+      .drag {
+        opacity: 0.5;
+      }
+
+      .handle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.1);
+        width: 0.5em;
+        cursor: grab;
+        display: none;
+
+        &.active {
+          display: inline-block;
+        }
+      }
+
+      &:hover {
+        .handle {
+          display: inline-block;
+        }
+      }
+
+      ul.toolbox {
+        list-style: none;
+        display: inline-block;
+        padding-left: 0;
+        margin-bottom: 0;
+
+        li {
+          padding-left: 0.5em;
+          display: inline;
+          cursor: pointer;
+          color: black;
+
+          &.disabled {
+            cursor: not-allowed;
+            color: gray;
+          }
+        }
+      }
+
+      .vertical-overlay {
+        // In order to avoid having a dead spot in the drop zone between the tabs, it is necessary for the two overlays
+        // to cover each other at least by a single pixel. Of course this has to be compensated with the border width.
+        $border-thickness: 2px;
+        position: absolute;
+        top: 0;
+        right: #{-$border-thickness};
+        bottom: 0;
+        left: -1px;
+        z-index: -10;
+
+        & > div {
+          width: 50%;
+          height: 100%;
+          display: inline-block;
+
+          &.over {
+            &.overlay-left {
+              border-left: $border-thickness dashed rgba(0, 0, 0, 0.4);
+            }
+
+            &.overlay-right {
+              border-right: $border-thickness dashed rgba(0, 0, 0, 0.4);
+            }
+          }
+        }
+      }
+    }
+
+    &.drag-tab-item, &.drag-input, &.drag-section {
+      .tab-header-wrapper .vertical-overlay {
+        z-index: auto;
+      }
+    }
+
+    .spacer {
+      height: 1em;
+    }
+  }
+
+  .dialog-sidebar {
+    @media (min-width: $width) {
+      width: calc(100% * (4 / 12));
+
+      .modal-container {
+        display: none;
+      }
+    }
+
+    @media (max-width: #{$width - 1px}) {
+      .hide-small {
+        display: none;
+      }
+    }
+
+    &.drag-option .option-wrapper .horizontal-overlay {
+      z-index: auto;
+    }
+
+    .schema {
+      white-space: pre-wrap;
+    }
+
+    .properties {
+      margin: 1em;
+
+      .options {
+        .option-wrapper {
+          padding: 0;
+
+          .item, .options-header {
+            display: flex;
+            width: 90%;
+
+            .option-label, .option-value {
+              width: 50%;
+              margin-right: 20px;
+
+              .form-group {
+                margin-bottom: 0;
+              }
+            }
+
+            .option-default {
+              width: 10%;
+              text-align: center;
+            }
+
+            &.options-header {
+              padding-left: 1em;
+            }
+
+            &.new-option {
+              width: 100%;
+              text-align: center;
+              border-right-style: dashed;
+              cursor: pointer;
+              display: block;
+            }
+          }
+
+          .toolbox {
+            text-align: center;
+
+            & > span {
+              cursor: pointer;
+            }
+          }
+        }
+
+        &.drag .option-wrapper .horizontal-overlay {
+          z-index: auto;
+        }
+      }
+    }
+  }
+}
