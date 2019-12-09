@@ -518,14 +518,6 @@ table.table tbody td img {
   margin-top: 1px;
 }
 
-// Table View override for policy action options
-
-.table-borderless tbody tr td,
-.table-borderless tbody tr th,
-.table-borderless thead tr th {
-  border: none;
-}
-
 // override font-weight for dropdowns within table headers
 
 .table thead th select {
