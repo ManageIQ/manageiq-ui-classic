@@ -18,7 +18,7 @@
     .tab-content
       = miq_tab_content("details", 'default', :class => 'cm-tab') do
         = render :partial => "layouts/textual_groups_generic"
-        - child_services = @record.direct_service_children.select(&:display)
+        - child_services = @record.direct_service_children
         - unless child_services.blank?
           .row
             .col-md-12.col-lg-6
