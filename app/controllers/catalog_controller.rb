@@ -743,28 +743,16 @@ class CatalogController < ApplicationController
     explorer
   end
 
-  def catalogs_for_catalog_item
-    render :json => available_catalogs.map{ |catalog| { :id => catalog[1], :name => catalog[0]} }
-  end
-
-  def dialogs_for_catalog_item
-    render :json => Dialog.all.order(:name).map{ |dialog| {:id => dialog.id, :name => dialog.name} }
-  end
-
-  def zones_for_catalog_item
-    render :json => fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }.to_json
-  end
-
-  def currencies_for_catalog_item
-    render :json => fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }.to_json
-    #render :json => Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }.to_json
-  end
-
   def catalog_item_data
+    catalog_item_data = {}
     catalog_item = ServiceTemplate.find_by(params[:id])
     service_type = catalog_item.service_type
-    binding.pry
-    render :json => catalog_item
+    catalog_item_data[:catalogs] = available_catalogs.map{ |catalog| { :id => catalog[1], :name => catalog[0]} }
+    catalog_item_data[:dialogs] = Dialog.all.order(:name).map{ |dialog| {:id => dialog.id, :name => dialog.name} }
+    catalog_item_data[:zones] = fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }
+    catalog_item_data[:currencies] = Array(ChargebackRateDetailCurrency.currencies_for_select).map!{ |currency| {:id => currency[1], :name => currency[0]} }
+    catalog_item_data[:types] = Array(ServiceTemplate.catalog_item_types).map!{ |type| {:id => type[0], :name => type[1][:description]} }
+    render :json => catalog_item_data
   end
 
   private

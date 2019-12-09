@@ -4,9 +4,6 @@ import { Grid } from 'patternfly-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-item-form.schema';
 import { http } from '../../http_api';
-import handleFailure from '../../helpers/handle-failure';
-import CatalogForm from '../catalog-form/catalog-form';
-
 
 class CatalogItemForm extends Component {
   constructor(props) {
@@ -19,37 +16,11 @@ class CatalogItemForm extends Component {
 
   componentDidMount() {
     const { catalogItemId } = this.props;
-    const catalog = http.get(`/catalog/catalogs_for_catalog_item`)
-      .then((data) => {
-        this.catalogs = data;
-      });
-    const currency = http.get(`/catalog/currencies_for_catalog_item`)
-      .then((data) => {
-        this.currencies = data;
-      });
-    const zone = http.get(`/catalog/zones_for_catalog_item`)
-      .then((data) => {
-        this.zones = data;
-      });
-    const dialog = http.get(`/catalog/dialogs_for_catalog_item`)
-      .then((data) => {
-        this.dialogs = data;
-      });
-   /* const data = http.get(`/catalog/catalog_item_data/?` + catalogItemId)
+    http.get(`/catalog/catalog_item_data/?` + catalogItemId)
       .then((data) => {
         this.data = data;
-      });*/
-    Promise.all([catalog, currency, zone, dialog])
-      .then(() => {
         this.formType = "";
-        this.types = [{ id: 'generic', name: "Generic" },
-          { id: 'amazon', name: "Amazon" },
-          { id: 'generic_orchestration', name: "GO" },
-          { id: 'generic_ansible_tower', name: "AnsibleTower" },
-          { id: 'generic_container_template', name: "Generic Container" },
-          { id: 'catalog_bundle', name: "Catalog Bundle" },
-          { id: 'others', name: "Others" }];
-        this.setState({ isLoaded: true , schema: createSchema(this.formType, this.types, this.catalogs, this.dialogs, this.zones, this.currencies)});
+        this.setState({ isLoaded: true, schema: createSchema(this.formType, this.data) });
       });
   }
 
@@ -62,10 +33,9 @@ class CatalogItemForm extends Component {
       return;
     }
     if (values.active === "catalog_item_type") {
-      debugger;
       this.formType = values.values.catalog_item_type;
       console.log("this.formType: ", this.formType);
-      this.setState({ schema: createSchema(this.formType, this.types, this.catalogs, this.dialogs, this.zones, this.currencies) });
+      this.setState({ schema: createSchema(this.formType, this.data) });
     };
   };
 

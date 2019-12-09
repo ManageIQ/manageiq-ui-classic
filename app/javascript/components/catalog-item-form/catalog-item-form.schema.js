@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 
-function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
+function createSchema(formType, data) {
   const fields = [];
   // no catalog type for Catalog Bundle
   if (formType !== "catalog_bundle") {
@@ -10,7 +10,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Type'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     });
   };
   // do not show other fields if no catalog type is selected
@@ -46,7 +46,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
           type: validatorTypes.REQUIRED,
           message: __('Required'),
         }],
-        options: catalogs.map(({ id, name }) => ({ label: name, value: id })),
+        options: data.catalogs.map(({ id, name }) => ({ label: name, value: id })),
       }, {
         component: componentTypes.SELECT,
         name: 'dialog_id',
@@ -57,7 +57,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
           type: validatorTypes.REQUIRED,
           message: __('Required'),
         }],
-        options: dialogs.map(({ id, name }) => ({ label: name, value: id })),
+        options: data.dialogs.map(({ id, name }) => ({ label: name, value: id })),
       }],
     }]);
   if (formType === "@edit[:new][:service_type] == \"composite\"") {
@@ -71,7 +71,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
         type: validatorTypes.REQUIRED,
         message: __('Required'),
       }],
-      options: zones.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.zones.map(({ id, name }) => ({ label: name, value: id })),
     });
   };
   fields.push([
@@ -85,7 +85,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
         type: validatorTypes.REQUIRED,
         message: __('Required'),
       }],
-      options: currencies.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.currencies.map(({ id, name }) => ({ label: name, value: id })),
     }, {
       component: componentTypes.TEXT_FIELD,
       name: 'price',
@@ -99,7 +99,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Subtype'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
   if (formType === "generic_orchestration") {
@@ -109,14 +109,14 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Orchestration Template'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }, {
       component: componentTypes.SELECT,
       name: 'catalog_item_provider',
       label: __('Provider'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
   if (["generic_ansible_tower", "generic_container_template"].includes(formType)) {
@@ -126,7 +126,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Provider'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
   // catalog_item_provider is selected
@@ -137,7 +137,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Ansible Tower Template'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
   // catalog_item_provider is selected
@@ -148,7 +148,7 @@ function createSchema(formType, types, catalogs, dialogs, zones, currencies) {
       label: __('Container Template'),
       placeholder: `<${__('Choose')}>`,
       isDisabled: false,
-      options: types.map(({ id, name }) => ({ label: name, value: id })),
+      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
   // TODO create a component
