@@ -52,6 +52,7 @@
                     = h(i.path)
                   %td
                     = h(i.index)
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Smart Management'), textual_group_smart_management), @record)
 
   -# PXE Image is selected
   - if @img
@@ -61,6 +62,7 @@
       - else
         = render(:partial => "layouts/flash_msg")
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_pxe_img_basicinfo), @record)
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Smart Management'), textual_group_smart_management), @record)
 
   -# Windows Image is selected
   - if @wimg
@@ -70,3 +72,4 @@
       - else
         = render(:partial => "layouts/flash_msg")
         = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Basic Information'), textual_win_img_basicinfo), @record)
+        = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Smart Management'), textual_group_smart_management), @record)
