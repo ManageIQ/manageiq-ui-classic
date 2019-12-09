@@ -16,7 +16,7 @@ module ApplicationController::Timelines
 
     if (@tl_options.management_events? && @tl_options.management.categories.present?) ||
        (@tl_options.policy_events? && @tl_options.policy.categories.present?)
-      tl_gen_timeline_data(refresh = "n")
+      tl_gen_timeline_data('n')
       return unless @timeline
     end
 
