@@ -69,15 +69,12 @@ describe CloudVolumeSnapshotController do
           :class_name  => @snapshot.class.name,
           :instance_id => @snapshot.id,
           :method_name => 'delete_snapshot',
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => []
         }
       end
 
       it "queues the delete action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :button, :params => { :id => @snapshot.id, :pressed => "cloud_volume_snapshot_delete", :format => :js }
       end
     end

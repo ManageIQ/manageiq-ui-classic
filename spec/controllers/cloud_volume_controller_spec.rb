@@ -65,8 +65,6 @@ describe CloudVolumeController do
           :class_name  => @volume.class.name,
           :method_name => "backup_create",
           :instance_id => @volume.id,
-          :role        => "ems_operations",
-          :zone        => @ems.my_zone,
           :args        => [{:name => "backup_name"}]
         }
       end
@@ -149,8 +147,6 @@ describe CloudVolumeController do
           :class_name  => @volume.class.name,
           :method_name => "backup_restore",
           :instance_id => @volume.id,
-          :role        => "ems_operations",
-          :zone        => @ems.my_zone,
           :args        => [@backup.ems_ref]
         }
       end
@@ -161,7 +157,7 @@ describe CloudVolumeController do
       end
 
       it "queues restore from a cloud backup action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :backup_restore, :params => { :button => "restore",
           :format => :js, :id => @volume.id, :backup_id => @backup.id }
       end
@@ -189,9 +185,6 @@ describe CloudVolumeController do
           :class_name  => @volume.class.name,
           :instance_id => @volume.id,
           :method_name => 'create_volume_snapshot',
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => [{:name => "snapshot_name"}]
         }
       end
@@ -202,7 +195,7 @@ describe CloudVolumeController do
       end
 
       it "queues the create cloud snapshot action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
         post :snapshot_create, :params => { :button => "create",
           :format => :js, :id => @volume.id, :snapshot_name => 'snapshot_name' }
       end
@@ -226,8 +219,6 @@ describe CloudVolumeController do
         {
           :class_name  => "CloudVolume",
           :method_name => 'create_volume',
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
           :args        => @task_options
         }
       end

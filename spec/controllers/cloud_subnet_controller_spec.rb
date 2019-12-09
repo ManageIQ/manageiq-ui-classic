@@ -111,9 +111,6 @@ describe CloudSubnetController do
         :class_name  => ems.class.name,
         :method_name => 'create_cloud_subnet',
         :instance_id => ems.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{
           :name             => 'test',
           :ip_version       => 4,
@@ -136,7 +133,7 @@ describe CloudSubnetController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :create, :params => {
         :button           => 'add',
@@ -168,9 +165,6 @@ describe CloudSubnetController do
         :class_name  => cloud_subnet.class.name,
         :method_name => 'raw_update_cloud_subnet',
         :instance_id => cloud_subnet.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => [{
           :name             => 'test2',
           :enable_dhcp      => false,
@@ -190,7 +184,7 @@ describe CloudSubnetController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :update, :params => {
         :button           => 'save',
@@ -216,9 +210,6 @@ describe CloudSubnetController do
         :class_name  => cloud_subnet.class.name,
         :method_name => 'raw_delete_cloud_subnet',
         :instance_id => cloud_subnet.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => ems.my_zone,
         :args        => []
       }
     end
@@ -229,7 +220,7 @@ describe CloudSubnetController do
     end
 
     it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
       post :button, :params => { :id => cloud_subnet.id, :pressed => "cloud_subnet_delete", :format => :js }
     end

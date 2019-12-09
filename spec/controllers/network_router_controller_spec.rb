@@ -116,9 +116,6 @@ describe NetworkRouterController do
         :class_name  => @ems.class.name,
         :method_name => 'create_network_router',
         :instance_id => @ems.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => @ems.my_zone,
         :args        => [{
           :name            => 'test',
           :admin_state_up  => 'true',
@@ -135,7 +132,7 @@ describe NetworkRouterController do
     end
 
     it "queues the create action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :create, :params => {
         :button           => 'add',
         :controller       => 'network_router',
@@ -172,9 +169,6 @@ describe NetworkRouterController do
         :class_name  => @router.class.name,
         :method_name => 'raw_update_network_router',
         :instance_id => @router.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => 'ems_operations',
-        :zone        => @ems.my_zone,
         :args        => [{:name => "foo2", :external_gateway_info => {}}]
       }
     end
@@ -185,7 +179,7 @@ describe NetworkRouterController do
     end
 
     it "queues the update action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :update, :params => {
         :button => "save",
         :format => :js,
@@ -215,9 +209,6 @@ describe NetworkRouterController do
         :class_name  => @router.class.name,
         :method_name => "raw_add_interface",
         :instance_id => @router.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => @ems.my_zone,
         :args        => [@subnet.id]
       }
     end
@@ -274,7 +265,7 @@ describe NetworkRouterController do
 
     it "queues the add interface action" do
       stub_user(:features => :all)
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :add_interface, :params => {
         :button          => "add",
         :format          => :js,
@@ -305,9 +296,6 @@ describe NetworkRouterController do
         :class_name  => @router.class.name,
         :method_name => "raw_remove_interface",
         :instance_id => @router.id,
-        :priority    => MiqQueue::HIGH_PRIORITY,
-        :role        => "ems_operations",
-        :zone        => @ems.my_zone,
         :args        => [@subnet.id]
       }
     end
@@ -318,7 +306,7 @@ describe NetworkRouterController do
     end
 
     it "queues the remove interface action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :remove_interface, :params => {
         :button          => "remove",
         :format          => :js,
