@@ -76,6 +76,7 @@ describe SecurityGroupController do
     let(:security_group) { FactoryBot.create(:security_group_with_firewall_rules) }
 
     render_views
+
     it "render" do
       get :show, :params => {:id => security_group.id}
 
@@ -190,23 +191,27 @@ describe SecurityGroupController do
   end
 
   describe '#button' do
+    let(:security_group) { FactoryBot.create(:security_group) }
+
     before { controller.params = params }
 
     context 'tagging instances from their list, accessed from the details page of a security group' do
       let(:params) { {:pressed => "instance_tag"} }
 
       it 'calls tag method for tagging instances' do
-        expect(controller).to receive(:tag).with("VmOrTemplate")
+        expect(controller).to receive(:tag).with(VmOrTemplate)
         controller.send(:button)
       end
     end
 
-    context 'tagging network ports from their list, accessed from the details page of a security group' do
-      let(:params) { {:pressed => "network_port_tag"} }
+    %w[network_port security_group].each do |item|
+      context "tagging #{item.camelize}" do
+        let(:params) { {:pressed => "#{item}_tag"} }
 
-      it 'calls tag method for tagging network ports' do
-        expect(controller).to receive(:tag).with("NetworkPort")
-        controller.send(:button)
+        it 'calls tag method' do
+          expect(controller).to receive(:tag).with(item.camelize.safe_constantize)
+          controller.send(:button)
+        end
       end
     end
 
@@ -224,6 +229,124 @@ describe SecurityGroupController do
 
       it 'redirect to action new' do
         expect(controller).to receive(:javascript_redirect).with(:action => 'new')
+        controller.send(:button)
+      end
+    end
+
+    context 'editing Security Group' do
+      let(:params) { {:pressed => 'security_group_edit', :id => security_group.id.to_s} }
+
+      it 'redirect to action edit' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => security_group.id.to_s)
+        controller.send(:button)
+      end
+    end
+
+    context 'deleting Security Group' do
+      let(:params) { {:pressed => 'security_group_delete'} }
+
+      it 'redirect to action delete_security_groups' do
+        expect(controller).to receive(:delete_security_groups)
+        controller.send(:button)
+      end
+    end
+
+    context 'custom buttons' do
+      let(:params) { {:pressed => 'custom_button'} }
+
+      it 'calls custom_buttons method' do
+        expect(controller).to receive(:custom_buttons)
+        controller.send(:button)
+      end
+    end
+
+    %w[delete evacuate pause refresh reset resize retire scan shelve start stop suspend terminate].each do |action|
+      context "#{action} for selected Instances displayed in a nested list" do
+        let(:params) { {:pressed => "instance_#{action}"} }
+
+        it "calls #{action + 'vms'} method" do
+          allow(controller).to receive(:show)
+          allow(controller).to receive(:performed?).and_return(true)
+          expect(controller).to receive((action + 'vms').to_sym)
+          controller.send(:button)
+        end
+      end
+    end
+
+    context 'editing Instance displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_edit'} }
+
+      it 'calls edit_record method' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:edit_record)
+        controller.send(:button)
+      end
+    end
+
+    context 'setting Ownership for Instances in a nested list' do
+      let(:params) { {:pressed => 'instance_ownership'} }
+
+      it 'calls set_ownership' do
+        expect(controller).to receive(:set_ownership)
+        controller.send(:button)
+      end
+    end
+
+    context 'managing policies for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_protect'} }
+
+      it 'calls assign_policies method' do
+        expect(controller).to receive(:assign_policies).with(VmOrTemplate)
+        controller.send(:button)
+      end
+    end
+
+    context 'policy simulation for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_policy_sim'} }
+
+      it 'calls polsimvms method' do
+        expect(controller).to receive(:polsimvms)
+        controller.send(:button)
+      end
+    end
+
+    context 'provisioning Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_miq_request_new'} }
+
+      it 'calls prov_redirect' do
+        allow(controller).to receive(:render_or_redirect_partial)
+        expect(controller).to receive(:prov_redirect)
+        controller.send(:button)
+      end
+    end
+
+    context 'retirement for Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_retire_now'} }
+
+      it 'calls retirevms_now' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:retirevms_now)
+        controller.send(:button)
+      end
+    end
+
+    context 'Live Migrate of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_live_migrate'} }
+
+      it 'calls livemigratevms' do
+        expect(controller).to receive(:livemigratevms)
+        controller.send(:button)
+      end
+    end
+
+    context 'Soft Reboot of Instances displayed in a nested list' do
+      let(:params) { {:pressed => 'instance_guest_restart'} }
+
+      it 'calls guestreboot' do
+        allow(controller).to receive(:show)
+        allow(controller).to receive(:performed?).and_return(true)
+        expect(controller).to receive(:guestreboot)
         controller.send(:button)
       end
     end

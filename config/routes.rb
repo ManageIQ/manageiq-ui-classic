@@ -1624,6 +1624,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         new
+        protect
         show
         show_list
         tagging_edit
@@ -1633,8 +1634,9 @@ Rails.application.routes.draw do
         button
         create
         form_field_changed
-        quick_search
         listnav_search_selected
+        protect
+        quick_search
         sections_field_changed
         show
         show_list
