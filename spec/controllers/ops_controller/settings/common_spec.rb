@@ -10,13 +10,13 @@ describe OpsController do
       before do
         @zone = FactoryBot.create(:zone)
 
-        @storage1 = FactoryBot.create(:storage)
-        @storage2 = FactoryBot.create(:storage)
+        @ems = FactoryBot.create(:ext_management_system, :zone => @zone)
 
-        @host1 = FactoryBot.create(:host, :storages => [@storage1])
-        @host2 = FactoryBot.create(:host, :storages => [@storage2])
+        @storage1 = FactoryBot.create(:storage, :ems_id => @ems.id)
+        @storage2 = FactoryBot.create(:storage, :ems_id => @ems.id)
 
-        @ems = FactoryBot.create(:ext_management_system, :hosts => [@host1, @host2], :zone => @zone)
+        @host1 = FactoryBot.create(:host, :ems_id => @ems.id, :storages => [@storage1])
+        @host2 = FactoryBot.create(:host, :ems_id => @ems.id, :storages => [@storage2])
 
         @svr1 = FactoryBot.create(:miq_server, :zone => @zone)
         @svr2 = FactoryBot.create(:miq_server, :zone => @zone)
