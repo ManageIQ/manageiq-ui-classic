@@ -57,7 +57,7 @@ function cloudVolumeBackupFormController(miqService, $http, $scope) {
 
   function getVolumeFormDataComplete(response) {
     vm.volume_choices = response.data.volume_choices;
-    if (foundVolumes()) {
+    if (vm.volume_choices.length > 0) {
       vm.cloudVolumeBackupModel.volume = vm.volume_choices[0];
     }
     vm.modelCopy = angular.copy(vm.cloudVolumeBackupModel);
@@ -66,10 +66,6 @@ function cloudVolumeBackupFormController(miqService, $http, $scope) {
 
   function resetModel() {
     vm.cloudVolumeBackupModel = angular.copy(vm.modelCopy);
-  }
-
-  function foundVolumes() {
-    return vm.volume_choices.length > 0;
   }
 
   vm.$onInit = init;
