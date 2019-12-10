@@ -19,15 +19,19 @@ const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
+// FIXME not used now, ensure the equivalent
 const sharedPackages = [
+  'angular',
   'jquery',
   'lodash',
+  'moment',
   'patternfly-react',
   'patternfly-sass',
+  'prop-types',
   'react',
   'react-dom',
-  'prop-types',
-  'graphql', // TODO remove once this gets added in manageiq-graphql
+  'react-redux',
+  'redux',
 ];
 
 let packPaths = {};
@@ -129,14 +133,9 @@ module.exports = {
 
   resolve: {
     alias: {
-      'react': resolveModule('react'), // only ever use one react version
-      'redux': resolveModule('redux'), // only ever use one redux version
-      'react-redux': resolveModule('react-redux'), // only ever use one react-redux version
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
-      'moment': resolveModule('moment'), // fix moment-strftime peerDependency issue
-      'angular': resolveModule('angular'), // fix for "Tried to load angular more than once"
-      '@patternfly/patternfly': resolveModule('NONEXISTENT'),
-      '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
+      '@patternfly/patternfly': 'FAIL',
+      '@patternfly/patternfly-next': 'FAIL',
     },
     extensions: settings.extensions,
     modules: [],
