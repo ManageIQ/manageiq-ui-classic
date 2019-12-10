@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Ivanchuk-2
+
+### Added
+* Amazon - support Assume Role ARN [(#6170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6170)
+
+### Fixed
+* Updated translations for ivanchuk [(#6195)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6195)
+* Correctly catch & handle API errors when creating orchestration template [(#6116)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6116)
+* Set typ of tab before checking privilegies [(#6147)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6147)
+* Fix traceback in edit report preview [(#6182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6182)
+* Sort Requester dropdown by label [(#6201)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6201)
+* Display tenant only from current region [(#6187)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6187)
+* Fix loading of Network Port details screen [(#6277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6277)
+* Add button tag to generic object form [(#6226)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6226)
+* Improve volume attachment user experience [(#6189)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6189)
+* Fix spinner behavior with various buttons on the Adv Search modal [(#6100)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6100)
+* Fix logout on group change [(#6325)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6325)
+* Add missing gettext to HostController [(#5992)](https://github.com/ManageIQ/manageiq-ui-classic/pull/5992)
+* Added a nil check. [(#6133)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6133)
+* DialogUser - use DialogData.outputConversion before submit and refresh [(#6291)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6291)
+
 ## Ivanchuk-1
 
 ### Added
