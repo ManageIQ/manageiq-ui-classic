@@ -21,3 +21,6 @@ config/webpack/paths.json
 *.sw[po]
 .pnp/
 .pnp.js
+.yarn/
+.yarnrc
+.yarnrc.yml
