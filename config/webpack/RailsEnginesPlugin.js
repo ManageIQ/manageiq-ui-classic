@@ -2,6 +2,7 @@
 
 const getPaths = require("enhanced-resolve/lib/getPaths");
 const forEachBail = require("enhanced-resolve/lib/forEachBail");
+const uniq = require("lodash").uniq;
 
 module.exports = class RailsEnginesPlugin {
   constructor(source, target, engines, root) {
@@ -71,16 +72,14 @@ module.exports = class RailsEnginesPlugin {
       joinedPaths.push(targetEngineModules);
 
       // and ui-classic last
-      if (targetEngineModules !== this.root) {
-        joinedPaths.push(this.root);
-      }
+      joinedPaths.push(this.root);
 
       resolveOptions(joinedPaths, (dir) => `modules in ${dir}`);
 
       function resolveOptions(paths, fn) {
         const fs = resolver.fileSystem;
 
-        forEachBail(paths, (dir, callback) => {
+        forEachBail(uniq(paths), (dir, callback) => {
           fs.stat(resolver.join(dir, packageName), (err, stat) => {
             if (err || !stat || !stat.isDirectory()) {
               return callback();
