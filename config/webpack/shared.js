@@ -141,7 +141,7 @@ module.exports = {
     extensions: settings.extensions,
     modules: [],
     plugins: [
-      new RailsEnginesPlugin('module', 'resolve', engines, { packages: sharedPackages, root: moduleDir }),
+      new RailsEnginesPlugin('module', 'resolve', engines, moduleDir),
     ],
   },
 
