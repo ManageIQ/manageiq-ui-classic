@@ -28,7 +28,7 @@ module ApplicationController::Timelines
 
   ManagementEventsOptions = Struct.new(
     :levels,
-    :categories,
+    :categories
   ) do
     def update_from_params(params)
       self.levels = params[:tl_levels]&.map(&:to_sym) || group_levels
@@ -44,6 +44,7 @@ module ApplicationController::Timelines
 
         group_levels.each do |lvl|
           next unless group_data[lvl]
+
           strings, regexes = group_data[lvl].partition { |typ| typ.kind_of?(String) }
           if levels.include?(lvl)
             category[:include_set].push(*strings)
@@ -117,7 +118,7 @@ module ApplicationController::Timelines
     :model,
     :management,
     :policy,
-    :tl_show,
+    :tl_show
   ) do
     def initialize(*args)
       super
