@@ -10,7 +10,7 @@
       = render :partial => "layouts/breadcrumbs"
     .row.toolbar-pf#toolbar.miq-toolbar-menu
       .col-sm-12
-        = react 'MiqToolbar', :toolbars => toolbar_from_hash
+        = miq_toolbar toolbar_from_hash
     .row.max-height
       .max-height{:class => simulate? ? 'col-sm-7 col-md-8 col-sm-push-5 col-md-push-4' : 'col-sm-8 col-md-9 col-sm-push-4 col-md-push-3'}
         #main-content.row.miq-layout-center_div_with_listnav

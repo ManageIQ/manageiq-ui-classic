@@ -220,7 +220,7 @@ const initState = {
 };
 
 /* Wrapper class for generic toolbars and special toolbars. */
-const MiqToolbar = ({ toolbars: initToolbars }) => {
+const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
   const [state, dispatch] = useReducer(toolbarReducer, {...initState, toolbars: sanitizeToolbars(initToolbars)});
 
   useEffect(() => {
@@ -241,6 +241,7 @@ const MiqToolbar = ({ toolbars: initToolbars }) => {
 
     return (
       <Toolbar
+	kebabLimit={kebabLimit}
         count={count}
         groups={groups}
         views={views}
@@ -271,6 +272,7 @@ const MiqToolbar = ({ toolbars: initToolbars }) => {
 
 MiqToolbar.propTypes = {
   toolbars: PropTypes.arrayOf(PropTypes.any).isRequired,
+  kebabLimit: PropTypes.number.isRequired,
 };
 
 export default MiqToolbar;
