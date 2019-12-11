@@ -15,6 +15,13 @@ if (env.WEBPACK_VERBOSE) {
   delete babelOptions.compact;
 }
 
+const onlyMiq = (module) => {
+  const inNodeModules = module.match(/node_modules/);
+  const isMiq = module.match(/manageiq-/);
+
+  return inNodeModules && !isMiq;
+};
+
 module.exports = [
   {
     test: /\.(js|jsx)$/,
@@ -22,7 +29,8 @@ module.exports = [
       loader: 'babel-loader',
       options: babelOptions,
     }],
-    exclude: /node_modules/,
+    exclude: onlyMiq,
+    //exclude: /node_modules\/(?!manageiq-)/,
   },
 
   {
