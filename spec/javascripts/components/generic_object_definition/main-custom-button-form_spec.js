@@ -64,6 +64,7 @@ describe('main-custom-button-form', function() {
         .then( function() {
           expect(add_flash).toHaveBeenCalledWith("Name has already been taken", "error");
           expect(add_flash).toHaveBeenCalledWith("Description has already been taken", "error");
+          expect(vm.customButtonModel.resource_action.ae_attributes).toHaveAttr('service_template');
           done();
       })
         .catch(function () {
