@@ -6,7 +6,7 @@ module ApplicationController::SessionSize
     begin
       # TODO: (FB 9144) Determine how the session store handles singleton object so it does not throw errors.
       data_size = Marshal.dump(data).size
-    rescue => err
+    rescue StandardError => err
       data_size = 0
       $log.warn(format_log_message("get_data_size error: <#{err}>\n#{err.backtrace.join("\n")}"))
     end
