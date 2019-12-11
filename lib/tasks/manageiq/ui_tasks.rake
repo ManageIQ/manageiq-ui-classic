@@ -141,6 +141,17 @@ namespace :yarn do
       FileUtils.rm_rf(engine.path.join('yarn.lock'))
     end
   end
+
+  task :add_plugins do
+    # TODO use this on bin/update? or remove?
+    Dir.chdir ManageIQ::UI::Classic::Engine.root do
+      asset_engines.each do |engine|
+        next if engine.namespace == 'manageiq-ui-classic'
+        # FIXME ManageIQ/namespace may not always be true, take that from the gemfile via AssetPath?
+        system("yarn add ManageIQ/#{engine.namespace}#master")
+      end
+    end
+  end
 end
 
 # need the initializer for the rake tasks to work
