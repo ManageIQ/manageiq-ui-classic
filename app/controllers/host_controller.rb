@@ -159,7 +159,7 @@ class HostController < ApplicationController
     case params[:button]
     when "cancel"
       session[:edit] = nil # clean out the saved info
-      @breadcrumbs.pop if @breadcrumbs
+      @breadcrumbs&.pop
       if !session[:host_items].nil?
         flash_to_session(_("Edit of credentials for selected Hosts / Nodes was cancelled by the user"))
         javascript_redirect(:action => @lastaction, :display => session[:host_display])
@@ -177,14 +177,14 @@ class HostController < ApplicationController
         set_record_vars(valid_host, :validate) # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
           flash_to_session(_("Host / Node \"%{name}\" was saved") % {:name => @host.name})
-          @breadcrumbs.pop if @breadcrumbs
+          @breadcrumbs&.pop
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
           if @lastaction == 'show_list'
             javascript_redirect(:action => "show_list")
           else
             javascript_redirect(:action => "show", :id => @host.id.to_s)
           end
-          return
+          nil
         else
           @errors.each { |msg| add_flash(msg, :error) }
           @host.errors.each do |field, msg|
@@ -234,7 +234,7 @@ class HostController < ApplicationController
           page << "if (confirm('#{_('The Host SSH key has changed, do you want to accept the new key?')}')) miqAjax('#{new_url}', true);"
         end
         return
-      rescue => bang
+      rescue StandardError => bang
         add_flash(bang.to_s, :error)
       else
         add_flash(_("Credential validation was successful"))
@@ -363,11 +363,11 @@ class HostController < ApplicationController
     host_hash = {
       :name             => host.name,
       :hostname         => host.hostname,
-      :ipmi_address     => host.ipmi_address ? host.ipmi_address : "",
-      :custom_1         => host.custom_1 ? host.custom_1 : "",
+      :ipmi_address     => host.ipmi_address || "",
+      :custom_1         => host.custom_1 || "",
       :user_assigned_os => host.user_assigned_os,
       :operating_system => !(host.operating_system.nil? || host.operating_system.product_name.nil?),
-      :mac_address      => host.mac_address ? host.mac_address : "",
+      :mac_address      => host.mac_address || "",
       :default_userid   => host.authentication_userid.to_s,
       :remote_userid    => host.has_authentication_type?(:remote) ? host.authentication_userid(:remote).to_s : "",
       :ws_userid        => host.has_authentication_type?(:ws) ? host.authentication_userid(:ws).to_s : "",
@@ -436,19 +436,19 @@ class HostController < ApplicationController
   def set_credentials(host, mode)
     creds = {}
     if params[:default_userid]
-      default_password = params[:default_password] ? params[:default_password] : host.authentication_password
+      default_password = params[:default_password] || host.authentication_password
       creds[:default] = {:userid => params[:default_userid], :password => default_password}
     end
     if params[:remote_userid]
-      remote_password = params[:remote_password] ? params[:remote_password] : host.authentication_password(:remote)
+      remote_password = params[:remote_password] || host.authentication_password(:remote)
       creds[:remote] = {:userid => params[:remote_userid], :password => remote_password}
     end
     if params[:ws_userid]
-      ws_password = params[:ws_password] ? params[:ws_password] : host.authentication_password(:ws)
+      ws_password = params[:ws_password] || host.authentication_password(:ws)
       creds[:ws] = {:userid => params[:ws_userid], :password => ws_password}
     end
     if params[:ipmi_userid]
-      ipmi_password = params[:ipmi_password] ? params[:ipmi_password] : host.authentication_password(:ipmi)
+      ipmi_password = params[:ipmi_password] || host.authentication_password(:ipmi)
       creds[:ipmi] = {:userid => params[:ipmi_userid], :password => ipmi_password}
     end
     host.update_authentication(creds, :save => (mode != :validate))
