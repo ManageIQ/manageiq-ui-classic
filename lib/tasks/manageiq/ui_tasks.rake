@@ -1,6 +1,9 @@
 namespace :update do
   task :yarn do
     asset_engines.each do |engine|
+      # only yarn in overriden gems but always in the UI
+      next if engine.development_gem? && engine.namespace != 'manageiq-ui-classic'
+
       Dir.chdir engine.path do
         next unless File.file? 'package.json'
 
