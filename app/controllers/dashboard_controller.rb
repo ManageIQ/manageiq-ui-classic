@@ -69,7 +69,10 @@ class DashboardController < ApplicationController
       return head(:forbidden) unless known_redirect_host?(url.hostname)
     end
 
-    url.fragment = "access_token=#{generate_ui_api_token(current_user[:userid])}"
+    @api_user_token_service ||= Api::UserTokenService.new
+    token = @api_user_token_service.generate_token(current_user[:userid], "ui")
+
+    url.fragment = "access_token=#{token}"
     redirect_to(url.to_s)
   end
 
