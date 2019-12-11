@@ -91,7 +91,8 @@ namespace :webpack do
       :engines => asset_engines.map { |p|
                     key = p.namespace
                     value = {:root => p.path,
-                             :node_modules => File.join(p.path, 'node_modules')}
+                             :node_modules => File.join(p.path, 'node_modules'),
+                             :local => p.development_gem?}
 
                     [key, value]
                   }.to_h

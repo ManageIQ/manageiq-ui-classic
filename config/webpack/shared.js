@@ -36,8 +36,10 @@ const sharedPackages = [
 
 let packPaths = {};
 
+const resolveModule = (...name) => resolve(dirname(__filename), '../../node_modules', ...name);
+
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k].root;
+  let root = engines[k].local ? engines[k].root : resolveModule(k);
   let glob = join(root, entryPath, extensionGlob);
   packPaths[k] = sync(glob);
 });
@@ -73,8 +75,6 @@ if (env.WEBPACK_VERBOSE) {
     showHelp: false,
   }));
 }
-
-const resolveModule = (...name) => resolve(dirname(__filename), '../../node_modules', ...name);
 
 module.exports = {
   entry: {
