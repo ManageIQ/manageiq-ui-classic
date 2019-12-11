@@ -27,10 +27,7 @@ class CloudVolumeBackupController < ApplicationController
 
   def volume_form_choices
     assert_privileges("cloud_volume_backup_restore_to_volume")
-    volume_choices = CloudVolume.all
-    volume_choices.each do |volume|
-      {:name => volume.name, :id => volume.id}
-    end
+    volume_choices = CloudVolume.pluck(:id, :name).map { |cv| {:id => cv.first, :name => cv.second} }
     render :json => {:volume_choices => volume_choices}
   end
 
@@ -91,14 +88,12 @@ class CloudVolumeBackupController < ApplicationController
     assert_privileges('cloud_volume_backup_delete')
     backups = find_records_with_rbac(CloudVolumeBackup, checked_or_params)
     backups.each do |backup|
-      begin
-        backup.delete_queue(session[:userid])
-        add_flash(_("Delete of Backup \"%{name}\" was successfully initiated.") % {:name => backup.name})
-      rescue => error
-        add_flash(_("Unable to delete Backup \"%{name}\": %{details}") % {:name    => backup.name,
-                                                                          :details => error},
-                  :error)
-      end
+      backup.delete_queue(session[:userid])
+      add_flash(_("Delete of Backup \"%{name}\" was successfully initiated.") % {:name => backup.name})
+    rescue StandardError => error
+      add_flash(_("Unable to delete Backup \"%{name}\": %{details}") % {:name    => backup.name,
+                                                                        :details => error},
+                :error)
     end
     session[:flash_msgs] = @flash_array
     javascript_redirect(:action => 'show_list')
