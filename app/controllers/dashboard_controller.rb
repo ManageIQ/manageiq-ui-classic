@@ -42,6 +42,7 @@ class DashboardController < ApplicationController
 
   def current_hostname
     return URI.parse(request.env['HTTP_X_FORWARDED_FOR']).hostname if request.env['HTTP_X_FORWARDED_FOR']
+
     URI.parse(request.original_url).hostname
   end
 
@@ -49,6 +50,7 @@ class DashboardController < ApplicationController
     MiqServer.active_miq_servers.where(:has_active_cockpit_ws => true).each do |server|
       return true if hostname == server.hostname
       return true if hostname == server.ipaddress
+
       settings = MiqCockpitWsWorker.fetch_worker_settings_from_server(server)
       settings_host = URI.parse(settings[:external_url]).hostname if settings[:external_url]
       return true if hostname == settings_host
@@ -110,6 +112,7 @@ class DashboardController < ApplicationController
   # Redirect to remembered last item clicked under this menu section.
   def redirect_to_remembered(section_id)
     return false unless session[:tab_url].key?(section_id)
+
     redirect_to(session[:tab_url][section_id])
     true
   end
@@ -218,6 +221,7 @@ class DashboardController < ApplicationController
       # check this only first time when user logs in comes to dashboard show
 
       next if @sb[:dashboards]
+
       # get user dashboard version
       ws = MiqWidgetSet.where_unique_on(db.name, current_user).first
       # update user's copy if group dashboard has been updated by admin
@@ -276,6 +280,7 @@ class DashboardController < ApplicationController
     MiqWidget.available_for_user(current_user).sort_by { |a| a.content_type + a.title.downcase }.each do |w|
       @available_widgets.push(w.id) # Keep track of widgets available to this user
       next if col_widgets.include?(w.id) || !w.enabled
+
       image, tip = case w.content_type
                    when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
                    when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
@@ -737,11 +742,11 @@ class DashboardController < ApplicationController
       render :template => "dashboard/#{identity_type}",
              :layout   => false,
              :locals   => {:validation_url => validation.url}
-      return
+      nil
     when :fail
       session[:user_validation_error] = validation.flash_msg || "User validation failed"
       redirect_to(:action => 'logout')
-      return
+      nil
     end
   end
 
