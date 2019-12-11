@@ -238,6 +238,19 @@ describe OrchestrationStackController do
       it 'returns proper record class' do
         expect(controller.send(:record_class)).to eq(VmOrTemplate)
       end
+
+      context 'Shelve offload action' do
+        before do
+          controller.params = {:pressed => 'instance_shelve_offload'}
+          allow(controller).to receive(:performed?).and_return(true)
+          allow(controller).to receive(:show)
+        end
+
+        it 'calls shelveoffloadvms' do
+          expect(controller).to receive(:shelveoffloadvms)
+          controller.send(:button)
+        end
+      end
     end
   end
 end

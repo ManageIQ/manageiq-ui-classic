@@ -27,6 +27,19 @@ describe CloudTenantController do
 
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
+
+    context 'Shelve offload applied on Instances displayed in a nested list' do
+      before do
+        controller.params = {:pressed => 'instance_shelve_offload'}
+        allow(controller).to receive(:performed?).and_return(true)
+        allow(controller).to receive(:show)
+      end
+
+      it 'calls shelveoffloadvms' do
+        expect(controller).to receive(:shelveoffloadvms)
+        controller.send(:button)
+      end
+    end
   end
 
   describe "#tags_edit" do
