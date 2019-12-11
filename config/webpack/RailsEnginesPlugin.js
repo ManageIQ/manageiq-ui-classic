@@ -27,7 +27,7 @@ module.exports = class RailsEnginesPlugin {
     const rootCandidates = candidates(path, 'root');
     const moduleCandidates = candidates(path, 'node_modules');
 
-    if (moduleCandidates[0]) {
+    if (moduleCandidates[0] && (rootCandidates.length <= moduleCandidates.length)) {
       return { engine: moduleCandidates[0], inNodeModules: true };
     } else if (rootCandidates[0]) {
       return { engine: rootCandidates[0], inNodeModules: false };
@@ -56,13 +56,7 @@ module.exports = class RailsEnginesPlugin {
       }
 
       if (! inNodeModules) {
-        const obj = {
-          ...request,
-          path: targetEngineModules,
-          request: `./${request.request}`,
-        };
-
-        resolver.doResolve(target, obj, `engine ${engine.engine}`, resolveContext, callback);
+        resolveOptions([targetEngineModules, this.root], (dir) => `engine ${engine.engine}, dir ${dir}`);
         return;
       }
 
@@ -76,22 +70,32 @@ module.exports = class RailsEnginesPlugin {
       // include the engine modules dir itself
       joinedPaths.push(targetEngineModules);
 
-      const fs = resolver.fileSystem;
-      forEachBail(joinedPaths, (addr, callback) => {
-        fs.stat(resolver.join(addr, packageName), (err, stat) => {
-          if (err || !stat || !stat.isDirectory()) {
-            return callback();
-          }
+      // and ui-classic last
+      if (targetEngineModules !== this.root) {
+        joinedPaths.push(this.root);
+      }
 
-          const obj = {
-            ...request,
-            path: addr,
-            request: `./${request.request}`,
-          };
+      resolveOptions(joinedPaths, (dir) => `modules in ${dir}`);
 
-          return resolver.doResolve(target, obj, `modules in ${addr}`, resolveContext, callback);
-        });
-      }, callback);
+      function resolveOptions(paths, fn) {
+        const fs = resolver.fileSystem;
+
+        forEachBail(paths, (dir, callback) => {
+          fs.stat(resolver.join(dir, packageName), (err, stat) => {
+            if (err || !stat || !stat.isDirectory()) {
+              return callback();
+            }
+
+            const obj = {
+              ...request,
+              path: dir,
+              request: `./${request.request}`,
+            };
+
+            return resolver.doResolve(target, obj, fn(dir), resolveContext, callback);
+          });
+        }, callback);
+      }
     });
   }
 };

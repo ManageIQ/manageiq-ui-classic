@@ -38,8 +38,18 @@ let packPaths = {};
 
 const resolveModule = (...name) => resolve(dirname(__filename), '../../node_modules', ...name);
 
+let actualEngines = Object.keys(engines).reduce((acc, k) => {
+  const ui = (k === 'manageiq-ui-classic');
+  const root = (engines[k].local || ui) ? engines[k].root : resolveModule(k);
+  acc[k] = {
+    root,
+    node_modules: join(root, 'node_modules'),
+  };
+  return acc;
+}, {});
+
 Object.keys(engines).forEach(function(k) {
-  let root = engines[k].local ? engines[k].root : resolveModule(k);
+  let root = actualEngines[k].root;
   let glob = join(root, entryPath, extensionGlob);
   packPaths[k] = sync(glob);
 });
@@ -141,7 +151,7 @@ module.exports = {
     extensions: settings.extensions,
     modules: [],
     plugins: [
-      new RailsEnginesPlugin('module', 'resolve', engines, moduleDir),
+      new RailsEnginesPlugin('module', 'resolve', actualEngines, moduleDir),
     ],
   },
 
