@@ -88,6 +88,7 @@ class InfraNetworkingController < ApplicationController
     end
 
     return unless %w[download_pdf main].include?(@display)
+
     @showtype = "main"
     @center_toolbar = 'infra_networking'
   end
@@ -153,7 +154,7 @@ class InfraNetworkingController < ApplicationController
       get_node_info("root")
     else
       show_record(id)
-      model_string = ui_lookup(:model => (model ? model : @record.class).to_s)
+      model_string = ui_lookup(:model => (model || @record.class).to_s)
       @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => model_string}
     end
   end
@@ -213,8 +214,8 @@ class InfraNetworkingController < ApplicationController
     else
       options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
+      @showtype = 'main'
+      @pages = nil
       @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @host_record.name}
     end
     options
@@ -229,8 +230,8 @@ class InfraNetworkingController < ApplicationController
     else
       options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
+      @showtype = 'main'
+      @pages = nil
       @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @cluster_record.name}
     end
     options
@@ -245,8 +246,8 @@ class InfraNetworkingController < ApplicationController
     else
       options = {:model => "Switch", :named_scope => :shareable, :parent => @record}
       process_show_list(options) if @show_list
-      @showtype        = 'main'
-      @pages           = nil
+      @showtype = 'main'
+      @pages = nil
       @right_cell_text = _("Switches for %{model} \"%{name}\"") % {:model => model, :name => @provider_record.name}
     end
     options
@@ -261,6 +262,7 @@ class InfraNetworkingController < ApplicationController
 
   def default_node
     return unless x_node == "root"
+
     options = {:model => "Switch", :named_scope => :shareable}
     process_show_list(options) if @show_list
     @right_cell_text = _("All Switches")
@@ -312,7 +314,7 @@ class InfraNetworkingController < ApplicationController
     # Build presenter to render the JS command for the tree update
     presenter ||= ExplorerPresenter.new(
       :active_tree => x_active_tree,
-      :delete_node => @delete_node, # Remove a new node from the tree
+      :delete_node => @delete_node # Remove a new node from the tree
     )
 
     if record_showing
@@ -353,18 +355,18 @@ class InfraNetworkingController < ApplicationController
               else
                 @showtype.to_s
               end
-    if @showtype == "item"
-      header = _("%{action} \"%{item_name}\" for Switch \"%{name}\"") % {
-        :name      => name,
-        :item_name => @item.name,
-        :action    => action_type(@sb[:action], 1)
-      }
-    else
-      header = _("\"%{action}\" for Switch \"%{name}\"") % {
-        :name   => name,
-        :action => action_type(@sb[:action], 2)
-      }
-    end
+    header = if @showtype == "item"
+               _("%{action} \"%{item_name}\" for Switch \"%{name}\"") % {
+                 :name      => name,
+                 :item_name => @item.name,
+                 :action    => action_type(@sb[:action], 1)
+               }
+             else
+               _("\"%{action}\" for Switch \"%{name}\"") % {
+                 :name   => name,
+                 :action => action_type(@sb[:action], 2)
+               }
+             end
     action = params[:pressed] == "custom_button" ? "dialog_form_button_pressed" : nil
     return partial, action, header
   end
@@ -376,6 +378,7 @@ class InfraNetworkingController < ApplicationController
 
   def search_text_type(node)
     return "dvswitch" if dvswitch_record?(node)
+
     node
   end
 
@@ -420,8 +423,8 @@ class InfraNetworkingController < ApplicationController
     association = options[:association]
     conditions  = options[:conditions]
     clickable   = options[:clickable].nil?
-    @showtype      = "details"
-    @display       = "main"
+    @showtype = "details"
+    @display = "main"
     @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
     @showlinks     = true
 
@@ -530,6 +533,7 @@ class InfraNetworkingController < ApplicationController
 
   def render_tagging_form
     return if %w[cancel save].include?(params[:button])
+
     @in_a_form = true
     @right_cell_text = _("Edit Tags")
     clear_flash_msg
