@@ -75,6 +75,7 @@ module ApplicationController::Performance
   # Generate a chart with the top CIs for a given timestamp
   def perf_top_chart
     return if perfmenu_click?
+
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
@@ -96,6 +97,7 @@ module ApplicationController::Performance
     if request.xml_http_request? # Is this an Ajax request?
       perf_gen_top_data # Generate top data
       return unless @charts # Return if no charts got created (first time thru async rpt gen)
+
       render :update do |page|
         page << javascript_prologue
         page << 'ManageIQ.charts.chartData = ' + {"candu" => @chart_data}.to_json + ';'
@@ -283,7 +285,7 @@ module ApplicationController::Performance
     bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
       message = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
-      return [false, message]
+      [false, message]
     else
       bc = if request.parameters["controller"] == "storage"
              _("%{model} (%{tag} %{time})") %
@@ -298,7 +300,7 @@ module ApplicationController::Performance
                           :sb_controller => request.parameters["controller"],
                           :bc            => bc,
                           :escape        => false)
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -308,7 +310,7 @@ module ApplicationController::Performance
     state = chart_click_data.type == "on" ? _("running") : _("stopped")
     if data_row["assoc_ids"][chart_click_data.model.downcase.to_sym][chart_click_data.type.to_sym].blank?
       message = _("No %{model} were %{state} %{time}") % {:model => chart_click_data.model, :state => state, :time => dt}
-      return [false, message]
+      [false, message]
     else
       bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
       javascript_redirect(:controller    => chart_click_data.model.downcase.singularize,
@@ -318,7 +320,7 @@ module ApplicationController::Performance
                           :bc            => bc,
                           :no_checkboxes => true,
                           :escape        => false)
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -340,10 +342,10 @@ module ApplicationController::Performance
                 else
                   _("No events available for this %{model}") % {:model => new_opts[:model]}
                 end
-      return [false, message]
+      [false, message]
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
       change_tab("diagnostics_timelines") # Switch to the Timelines tab
-      return [true, nil]
+      [true, nil]
     else
       if @explorer
         @_params[:id] = @perf_record.id
@@ -357,7 +359,7 @@ module ApplicationController::Performance
                             :refresh    => "n",
                             :escape     => false)
       end
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -365,6 +367,7 @@ module ApplicationController::Performance
   def timeline_selected(chart_click_data, data_row, ts)
     @record = find_record_with_rbac(data_row["resource_type"].constantize, data_row["resource_id"])
     return [true, nil] unless @record
+
     controller = data_row["resource_type"].underscore
     new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
     new_opts[:model] = data_row["resource_type"]
@@ -380,10 +383,10 @@ module ApplicationController::Performance
                 else
                   _("No events available for this %{model}") % {:model => chart_click_data.model}
                 end
-      return [false, message]
+      [false, message]
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
       change_tab("diagnostics_timelines") # Switch to the Timelines tab
-      return [true, nil]
+      [true, nil]
     else
       if @explorer
         @_params[:id] = data_row["resource_id"]
@@ -402,7 +405,7 @@ module ApplicationController::Performance
                             :refresh    => "n",
                             :escape     => false)
       end
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -473,6 +476,7 @@ module ApplicationController::Performance
   def chart_selected(chart_click_data, data_row, ts)
     @record = find_record_with_rbac(data_row["resource_type"].constantize, data_row["resource_id"])
     return [true, nil] unless @record
+
     # Set the perf options in the selected controller's sandbox
     cont = data_row["resource_type"].underscore.downcase.to_sym
     session[:sandboxes][cont] ||= {}
@@ -517,14 +521,14 @@ module ApplicationController::Performance
     bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
       message = _("No %{tag} %{model}  were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
-      return [false, message]
+      [false, message]
     else
       javascript_redirect(:id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
                           :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{date_time_running_msg(chart_click_data.type, ts)})",
                           :escape      => false)
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -535,14 +539,14 @@ module ApplicationController::Performance
     top_ids = data_row["assoc_ids"][chart_click_data.model.downcase.to_sym][:on]
     if top_ids.blank?
       message = _("No %{model} were running %{time}") % {:model => chart_click_data.model, :time => date_time_running_msg(chart_click_data.type, ts)}
-      return [false, message]
+      [false, message]
     else
       javascript_redirect(:id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
                           :bc          => "#{@perf_record.name} top #{bc_model} (#{date_time_running_msg(chart_click_data.type, ts)})",
                           :escape      => false)
-      return [true, nil]
+      [true, nil]
     end
   end
 
@@ -747,7 +751,7 @@ module ApplicationController::Performance
   def perf_remove_chart_cols(chart)
     if @perf_options[:model] == "Host" && !@perf_record.owning_cluster.nil?
       chart[:columns].delete_if { |col| col.include?("reserved") }
-      chart[:trends].delete_if { |trend| trend.include?("reserved") } if chart[:trends]
+      chart[:trends]&.delete_if { |trend| trend.include?("reserved") }
     end
     if chart[:title].include?("by Type") && @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
       chart[:columns].delete_if do |col|
@@ -905,6 +909,7 @@ module ApplicationController::Performance
       else
         chart_layout.each_with_index do |chart, _idx|
           next if chart.nil?
+
           rpt = perf_get_chart_rpt("vim_perf_topday")
           rpt.tz = @perf_options[:tz]
           rpt.time_profile_id = @perf_options[:time_profile]
@@ -931,6 +936,7 @@ module ApplicationController::Performance
       else
         chart_layout.each_with_index do |chart, _idx|
           next if chart.nil?
+
           rpt = perf_get_chart_rpt("vim_perf_tophour")
           rpt.tz = @perf_options[:tz]
           rpt.time_profile_id = @perf_options[:time_profile]
@@ -984,6 +990,7 @@ module ApplicationController::Performance
     else
       chart_layouts.each_with_index do |chart, idx|
         next if chart.nil?
+
         rpt = rpts.pop # Get the next report object from the array
         @chart_data.push(gen_perf_chart(chart, rpt, idx, 'perf_top_chart'))
         @chart_reports.push(rpt)
@@ -1007,6 +1014,7 @@ module ApplicationController::Performance
     # Get start/end dates in selected timezone
     s, e = @perf_record.first_and_last_capture
     return if s.nil? # Nothing to do if no util data
+
     sdate = s.in_time_zone(@sb[:options][:tz])
     edate = e.in_time_zone(@sb[:options][:tz])
     # Eliminate partial start or end days
@@ -1251,6 +1259,7 @@ module ApplicationController::Performance
     title = rpt.title
     rpt.title = @title.gsub(/Capacity & Utilization/, "#{@perf_options[:typ]} C & U") + " - #{title}"
     return if @perf_options[:index].nil?             # Don't show html for graph setting or if multiple charts are showing
+
     report = rpt.class == Array ? rpt.first : rpt    # Get the first or only report
     report = perf_remove_report_cols(report, charts) # Remove cols that are not in the current chart
     report.headers.map! { |header| _(header) }       # Translate report headers
@@ -1265,7 +1274,7 @@ module ApplicationController::Performance
     si[:info].push(["Trend Interval", "#{format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date")} - #{format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date")}"])
     si[:info].push(["Selected Day", format_timezone(@sb[:options][:chart_date].to_time, "UTC", "date")])
     si[:info].push(["Time Profile", session[:time_profiles][@sb[:options][:time_profile]]]) if @sb[:options][:time_profile]
-    si[:info].push(["Time Zone", @sb[:options][:time_profile_tz] ? @sb[:options][:time_profile_tz] : @sb[:options][:tz]])
+    si[:info].push(["Time Zone", @sb[:options][:time_profile_tz] || @sb[:options][:tz]])
     si[:info].push(["Classification", @sb[:tags][@sb[:options][:tag]]]) if @sb[:options][:tag]
 
     if @sb[:trend_charts]
@@ -1286,6 +1295,7 @@ module ApplicationController::Performance
     total_vals = 0.0
     ts_rpt.table.data.each do |r|
       next unless r[0].downcase.include?(s)
+
       ts_rpt.col_order.each_with_index do |col, col_idx|
         next unless col.ends_with?("_percent")
 
@@ -1332,9 +1342,11 @@ module ApplicationController::Performance
       s = "storage" if s == "disk" # disk fields have 'storage' in them
       next unless c[:columns].first.include?("#{s}_")
       next unless c[:trends]
+
       c[:trends].each do |t|
         c[:columns].each do |trendcol|
           next unless trendcol.starts_with?("trend_")
+
           ss.push([Dictionary.gettext(trendcol, :type => :column, :notfound => :titleize) + ": " + t.split(":").last,
                    @sb[:trend_rpt].extras[:trend][trendcol + "|" + t.split(":").first]])
         end
