@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Unreleased as of Sprint 126 - 2019-12-09
+
+### Added
+* RBAC features added under Reconfigure VMs to control what options to be displayed on the Reconfigure VMs form [(#6469)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6469)
+
+### Fixed
+* Multiple issues fixed on action edit screen [(#6499)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6499)
+* Machine Credential: don't access options hash when null [(#6466)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6466)
+* Make Save button respond properly on changes in User's Available Groups [(#6369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6369)
+* Disable Save/Reset buttons after discarding changes for Subscription [(#6292)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6292)
+* Rewritten help and user menu structure, top-navbar component and divided it into REACT components [(#6197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6197)
+
+## Unreleased as of Sprint 125 - 2019-11-25
+
+### Added
+* Add page title for custom menu items [(#6387)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6387)
+* Allow tagging or managing policies for Replicators, Pods, Nodes, Images [(#6379)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6379)
+* Add Refresh button to individual Dashboard Widget [(#6334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6334)
+* Remove Tags from Network Topology View and others [(#6351)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6351)
+  
+### Fixed
+* Fix cancel/reset buttons' reaction to C&U collection checkboxes [(#6432)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6432)
+* Compare Treegrid fix [(#6417)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6417)
+* Call `miqCheckForChanges` before changing tabs. [(#6431)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6431)
+* Add fallback for clicking on a section w/o permissions. [(#6414)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6414)
+* Display user info after clicking on Lookup while provisioning VM [(#6391)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6391)
+* Allow create Service Dialog from Template on Ansible/Templates screen, depending on navigation steps [(#6412)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6412)
+* Service Catalog styling fix [(#6405)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6405)
+* Display name instead of [object Object] for the Host in Network Port's Relationships table [(#6403)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6403)
+* Policy: simplify handling of @trees, make in an array. [(#6398)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6398)
+* Set empty report submenus to empty arrays instead of empty strings [(#6368)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6368)
+
+
 ## Unreleased as of Sprint 124 - 2019-11-11
 
 ### Fixed
