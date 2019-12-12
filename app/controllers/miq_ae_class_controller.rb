@@ -128,7 +128,7 @@ class MiqAeClassController < ApplicationController
       txt = rec.domain? ? _('Automate Domain') : _('Automate Namespace')
       @sb[:namespace_path] = rec.fqname
     end
-    @sb[:namespace_path].gsub!(%r{\/}, " / ") if @sb[:namespace_path]
+    @sb[:namespace_path]&.gsub!(%r{\/}, " / ")
     @right_cell_text = "#{txt} #{_("\"%s\"") % get_rec_name(rec)}" unless %w[root aei aem].include?(nodes[0])
   end
 
@@ -201,6 +201,7 @@ class MiqAeClassController < ApplicationController
     version = domain.version
     available_version = domain.available_version
     return if version.nil? || available_version.nil?
+
     if version != available_version
       _("%{name} domain: Current version - %{version}, Available version - %{available_version}") %
         {:name => domain.name, :version => version, :available_version => available_version}
@@ -242,6 +243,7 @@ class MiqAeClassController < ApplicationController
   def build_and_add_nodes(parents)
     existing_node = find_existing_node(parents)
     return nil if existing_node.nil?
+
     children = tree_add_child_nodes(existing_node)
     # set x_node after building tree nodes so parent node of new nodes can be selected in the tree.
     unless params[:action] == "x_show"
@@ -293,7 +295,7 @@ class MiqAeClassController < ApplicationController
       :active_tree     => x_active_tree,
       :right_cell_text => @right_cell_text,
       :remove_nodes    => add_nodes, # remove any existing nodes before adding child nodes to avoid duplication
-      :add_nodes       => add_nodes,
+      :add_nodes       => add_nodes
     )
 
     trees = build_replaced_trees(replace_trees, %i[ae])
@@ -567,6 +569,7 @@ class MiqAeClassController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def form_instance_field_changed
     return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_instances_form_vars
     javascript_miq_button_visibility(@edit[:current] != @edit[:new])
   end
@@ -574,6 +577,7 @@ class MiqAeClassController < ApplicationController
   def update_instance
     assert_privileges("miq_ae_instance_edit")
     return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_instances_form_vars
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
@@ -599,7 +603,7 @@ class MiqAeClassController < ApplicationController
           @ae_inst.ae_values.each { |v| v.value = nil if v.value == "" }
           @ae_inst.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         @in_a_form = true
         javascript_flash
@@ -609,7 +613,7 @@ class MiqAeClassController < ApplicationController
         @in_a_form = false
         add_flash(_("Automate Instance \"%{name}\" was saved") % {:name => @ae_inst.name})
         replace_right_cell(:replace_trees => [:ae])
-        return
+        nil
       end
     when "reset"
       set_instances_form_vars
@@ -630,6 +634,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
     when "add"
       return unless load_edit("aeinst_edit__new", "replace_cell__explorer")
+
       get_instances_form_vars
       if @edit[:new][:ae_inst]["name"].blank?
         add_flash(_("Name is required"), :error)
@@ -647,7 +652,7 @@ class MiqAeClassController < ApplicationController
           add_aeinst.ae_values.each { |v| v.value = nil if v.value == "" }
           add_aeinst.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         @in_a_form = true
         render_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       else
@@ -656,7 +661,7 @@ class MiqAeClassController < ApplicationController
         @in_a_form = false
         add_active_node_to_open_nodes
         replace_right_cell(:replace_trees => [:ae])
-        return
+        nil
       end
     end
   end
@@ -796,6 +801,7 @@ class MiqAeClassController < ApplicationController
 
   def validate_method_data
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
+
     @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
     @edit[:new][:data] = params[:method_data] if params[:method_data]
     res = MiqAeMethod.validate_syntax(@edit[:new][:data])
@@ -833,6 +839,7 @@ class MiqAeClassController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
     return unless load_edit("aeclass_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_form_vars
     javascript_miq_button_visibility(@edit[:new] != @edit[:current])
   end
@@ -840,6 +847,7 @@ class MiqAeClassController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def fields_form_field_changed
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
+
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
@@ -1053,6 +1061,7 @@ class MiqAeClassController < ApplicationController
   def update
     assert_privileges("miq_ae_class_edit")
     return unless load_edit("aeclass_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
@@ -1068,7 +1077,7 @@ class MiqAeClassController < ApplicationController
         MiqAeClass.transaction do
           ae_class.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed
         @changed = true
@@ -1079,7 +1088,7 @@ class MiqAeClassController < ApplicationController
         @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
-        return
+        nil
       end
     when "reset"
       set_form_vars
@@ -1095,6 +1104,7 @@ class MiqAeClassController < ApplicationController
 
   def update_fields
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
+
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
@@ -1112,7 +1122,7 @@ class MiqAeClassController < ApplicationController
           ae_class.ae_fields.each { |fld| fld.default_value = nil if fld.default_value == "" }
           ae_class.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed = true
         javascript_flash
@@ -1122,7 +1132,7 @@ class MiqAeClassController < ApplicationController
         @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
-        return
+        nil
       end
     when "reset"
       fields_set_form_vars
@@ -1140,12 +1150,13 @@ class MiqAeClassController < ApplicationController
   def update_namespace
     assert_privileges("miq_ae_namespace_edit")
     return unless load_edit("aens_edit__#{params[:id]}", "replace_cell__explorer")
+
     ae_ns = find_record_with_rbac(MiqAeNamespace, params[:id])
     old_namespace_attributes = ae_ns.attributes.clone
     namespace_set_record_vars(ae_ns) # Set the record variables, but don't save
     begin
       ae_ns.save!
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash(:spinner_off => true)
     else
@@ -1191,7 +1202,7 @@ class MiqAeClassController < ApplicationController
       add_flash(_('Automate Method "%{name}" was saved') % {:name => method.name})
       AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
       replace_right_cell(:replace_trees => [:ae])
-      return
+      nil
     end
   end
 
@@ -1208,6 +1219,7 @@ class MiqAeClassController < ApplicationController
   def update_method
     assert_privileges("miq_ae_method_edit")
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_method_form_vars
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
@@ -1231,7 +1243,7 @@ class MiqAeClassController < ApplicationController
           ae_method.embedded_methods = @edit[:new][:embedded_methods] if @edit[:new][:location] == 'inline'
           ae_method.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed
         @changed = true
@@ -1242,7 +1254,7 @@ class MiqAeClassController < ApplicationController
         @sb[:action] = session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
-        return
+        nil
       end
     when "reset"
       set_method_form_vars
@@ -1284,6 +1296,7 @@ class MiqAeClassController < ApplicationController
   def create
     assert_privileges("miq_ae_class_new")
     return unless load_edit("aeclass_edit__new", "replace_cell__explorer")
+
     get_form_vars
     @in_a_form = true
     case params[:button]
@@ -1298,7 +1311,7 @@ class MiqAeClassController < ApplicationController
         MiqAeClass.transaction do
           add_aeclass.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'add': %{error_message}") % {:error_message => bang.message}, :error)
         @in_a_form = true
         javascript_flash
@@ -1329,6 +1342,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
     when "add"
       return unless load_edit("aemethod_edit__new", "replace_cell__explorer")
+
       get_method_form_vars
 
       # dont allow add if expression has not been added or existing one has been removed
@@ -1343,7 +1357,7 @@ class MiqAeClassController < ApplicationController
           set_field_vars(add_aemethod)
           add_aemethod.save!
         end
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during 'add': %{error_message}") % {:error_message => bang.message}, :error)
         @in_a_form = true
         javascript_flash
@@ -1362,6 +1376,7 @@ class MiqAeClassController < ApplicationController
   def create_namespace
     assert_privileges("miq_ae_namespace_new")
     return unless load_edit("aens_edit__new", "replace_cell__explorer")
+
     add_ae_ns = if @edit[:typ] == "MiqAeDomain"
                   current_tenant.ae_domains.new
                 else
@@ -1541,6 +1556,7 @@ class MiqAeClassController < ApplicationController
 
     when "save"
       return unless load_edit("fields_edit__seq", "replace_cell__explorer")
+
       ae_class = MiqAeClass.find(@edit[:ae_class_id])
       indexed_ae_fields = ae_class.ae_fields.index_by(&:name)
       @edit[:new][:fields_list].each_with_index do |f, i|
@@ -1563,7 +1579,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
 
     when "reset", nil # Reset or first time in
-      id = params[:id] ? params[:id] : @edit[:ae_class_id]
+      id = params[:id] || @edit[:ae_class_id]
       @in_a_form = true
       fields_seq_edit_screen(id)
       if params[:button] == "reset"
@@ -1575,6 +1591,7 @@ class MiqAeClassController < ApplicationController
 
   def priority_form_field_changed
     return unless load_edit(params[:id], "replace_cell__explorer")
+
     @in_a_form = true
 
     unless handle_up_down_buttons(:domain_order, _('Domains'))
@@ -1602,6 +1619,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell
     when "save"
       return unless load_edit("priority__edit", "replace_cell__explorer")
+
       domains = @edit[:new][:domain_order].reverse!.collect do |domain|
         MiqAeDomain.find_by(:name => domain.split(' (Locked)').first).id
       end
@@ -1661,6 +1679,7 @@ class MiqAeClassController < ApplicationController
 
   def form_copy_objects_field_changed
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
+
     copy_objects_get_form_vars
     build_automate_tree(:automate)
     @changed = (@edit[:new] != @edit[:current])
@@ -1687,7 +1706,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def embedded_methods_add
-    submit_embedded_method(URI.unescape(params[:fqname]))
+    submit_embedded_method(CGI.unescape(params[:fqname]))
     @selectable_methods = embedded_method_regex(MiqAeMethod.find(@edit[:ae_method_id]).fqname) if @edit[:ae_method_id]
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
@@ -1755,7 +1774,7 @@ class MiqAeClassController < ApplicationController
 
   def playbook_inputs(method)
     existing_inputs = method.inputs
-    new_inputs = params[:extra_vars] ? params[:extra_vars] : []
+    new_inputs = params[:extra_vars] || []
     inputs_to_save = []
     inputs_to_delete = []
     new_inputs.each do |i, input|
@@ -1874,7 +1893,7 @@ class MiqAeClassController < ApplicationController
         :fqname             => @edit[:fqname]
       }
       res = @edit[:typ].copy(options)
-    rescue => bang
+    rescue StandardError => bang
       render_flash(_("Error during '%{record} copy': %{error_message}") %
         {:record => ui_lookup(:model => @edit[:typ].to_s), :error_message => bang.message}, :error)
       return
@@ -2233,6 +2252,7 @@ class MiqAeClassController < ApplicationController
         field[column] = params["#{prefix}fields_#{column}_#{i}".to_sym] if params["#{prefix}fields_#{column}_#{i}".to_sym]
 
         next unless column == 'default_value'
+
         field[column] = params["#{prefix}fields_value_#{i}".to_sym] if params["#{prefix}fields_value_#{i}".to_sym]
         field[column] = params["#{prefix}fields_password_value_#{i}".to_sym] if params["#{prefix}fields_password_value_#{i}".to_sym]
       end
@@ -2390,10 +2410,11 @@ class MiqAeClassController < ApplicationController
     end
     reset_field_priority(fields)
   end
-  alias_method :set_input_vars, :set_field_vars
+  alias set_input_vars set_field_vars
 
   def parent_fields(parent)
     return [] unless parent
+
     parent.class == MiqAeClass ? parent.ae_fields : parent.inputs
   end
 
@@ -2513,9 +2534,9 @@ class MiqAeClassController < ApplicationController
       end
     end
     if last_idx - first_idx + 1 > selected_fields.length
-      return [false, first_idx, last_idx]
+      [false, first_idx, last_idx]
     else
-      return [true, first_idx, last_idx]
+      [true, first_idx, last_idx]
     end
   end
 
@@ -2647,7 +2668,7 @@ class MiqAeClassController < ApplicationController
       :active_tree     => x_active_tree,
       :right_cell_text => @right_cell_text,
       :remove_nodes    => nil,
-      :add_nodes       => nil,
+      :add_nodes       => nil
     )
 
     update_partial_div = :main_div
@@ -2713,6 +2734,7 @@ class MiqAeClassController < ApplicationController
 
   def fetch_manager_name(ansible_template_id)
     return nil if ansible_template_id.blank?
+
     ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript.find_by(:id => ansible_template_id)&.manager&.name
   end
 
@@ -2785,6 +2807,7 @@ class MiqAeClassController < ApplicationController
 
   def add_active_node_to_open_nodes
     return unless @sb.dig('trees', 'ae_tree', 'open_nodes')
+
     @sb['trees']['ae_tree']['open_nodes'].push(@sb['trees']['ae_tree']['active_node']).uniq!
   end
 
@@ -2806,7 +2829,7 @@ class MiqAeClassController < ApplicationController
       git_based_domain_import_service.destroy_domain(element.id)
       AuditEvent.success(audit)
       add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => model_name, :name => record_name})
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                {:model => model_name, :name => record_name, :error_msg => bang.message}, :error)
     end
