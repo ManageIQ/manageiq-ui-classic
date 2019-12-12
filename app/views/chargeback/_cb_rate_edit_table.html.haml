@@ -57,7 +57,7 @@
           %td{:rowspan => num_tiers}
             = select_tag("per_unit_#{detail_index}", options_for_select(measure[:measures], detail[:per_unit]), "data-miq_observe" => {:url => url}.to_json)
         = render :partial => 'cb_tier_edit_values', :locals => {:detail_index => detail_index, :url => url, :row_within_rate => 0}
-        %td.action
+        %td.action-cell
           = button_tag(_("Add"), :class => "btn btn-default", :alt => t = _("Add a new tier"), :title => t,
                                  :onclick => "miqAjaxButton('#{url_for_only_path(:action => "cb_tier_add",
                                                                        :detail_index => detail_index,
@@ -66,7 +66,7 @@
         - tier = @edit[:new][:tiers][detail_index][tier_index]
         %tr.rdetail{:id => "rate_detail_row_#{detail_index}_#{tier_index}"}
           = render :partial => 'cb_tier_edit_values', :locals => {:detail_index => detail_index, :url => url, :row_within_rate => tier_index}
-          %td.action
+          %td.action-cell
             = button_tag(_("Delete"), :class => "btn btn-default", :alt => t = _("Remove the tier"), :title => t,
                                       :onclick => "miqAjaxButton('#{url_for_only_path(:action => "cb_tier_remove",
                                                                             :index => "#{detail_index}-#{tier_index}",

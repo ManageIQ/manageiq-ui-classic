@@ -28,7 +28,7 @@
     %td{:rowspan => n.to_s}
       = select_tag("per_unit_#{i}", options_for_select(measure[:measures], r[:per_unit]), "data-miq_observe" => {:url => url}.to_json)
   = render :partial => 'cb_tier_edit_values', :locals => {:detail_index => i.to_i, :url => url, :row_within_rate => 0}
-  %td.action
+  %td.action-cell
     = button_tag(_("Add"),
                  :class   => "btn btn-default",
                  :alt     => t = _("Add a new tier"),

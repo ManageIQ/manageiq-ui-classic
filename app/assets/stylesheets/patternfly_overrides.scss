@@ -582,14 +582,14 @@ table.table.table-selectable tbody tr.selected td {
 
 /* Sets font icon styling for view buttons on Default Views screen */
 
-#tab_div ul.list-inline a {
-  color: #222222 !important;
+#tab_div ul.list-inline {
   font-size: 16px;
-}
-
-#tab_div ul.list-inline li.active {
-  color: $link-color !important;
-  font-size: 16px;
+  a {
+    color: #222222 !important;
+  }
+  li.active {
+    color: $link-color !important;
+  }
 }
 
 /* Action cell */
@@ -597,25 +597,20 @@ table.table.table-selectable tbody tr.selected td {
 .action-cell {
   position: relative;
   width: 100px;
-}
-
-.action-cell .btn {
-  border: none;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+  .btn {
+    border: none;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }
 
 /// chargeback edit view
 
 tr.rdetail > td {
   white-space: nowrap;
-}
-
-td.action > .btn.btn-default {
-  width: 50px;
 }
 
 .cards-pf .nav-tabs > li.active > a,
