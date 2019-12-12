@@ -1,5 +1,5 @@
 {
-  "name": "manageiq",
+  "name": "manageiq-ui-classic",
   "version": "1.0.0",
   "description": "ManageIQ Cloud Management Platform",
   "main": "index.js",

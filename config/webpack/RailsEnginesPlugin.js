@@ -4,11 +4,11 @@ const getPaths = require("enhanced-resolve/lib/getPaths");
 const forEachBail = require("enhanced-resolve/lib/forEachBail");
 
 module.exports = class RailsEnginesPlugin {
-  constructor(source, target, engines, { packages, root }) {
+  constructor(source, target, engines, root) {
     this.source = source;
     this.target = target;
     this.engines = engines;
-    this.shared = { packages, root };
+    this.root = root;
   }
 
   // match path to engine, even if it's under another engine's vendor (longest match)
@@ -52,10 +52,7 @@ module.exports = class RailsEnginesPlugin {
 
       if (engine.fallback) {
         console.warn(`RailsEnginesPlugin: no engine found for ${request.path} asking for ${request.request} (only a problem if you're *not* using yarn link)`);
-      }
-
-      if (this.shared.packages.includes(packageName) || engine.fallback) {
-        targetEngineModules = this.shared.root;
+        targetEngineModules = this.root;
       }
 
       if (! inNodeModules) {
