@@ -133,7 +133,7 @@
 
     .form-group{"ng-if" =>"#{ng_model}.#{prefix}_inventory!==undefined",
                 "ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}",
-                "ng-if" => "#{ng_model}.location==='playbook'"}
+                "ng-if" =>"((#{ng_model}.location==='playbook') || (#{ng_model}.location === 'ansible_job_template'))"}
       %label.col-md-3.control-label
         = _("Hosts")
       .col-md-9
@@ -328,7 +328,7 @@
             %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.$invalid"}
               = _("Required")
 
-.row{'ng-if' => "#{ng_model}.location === 'playbook' && #{ng_model}.#{prefix}_inputs"}
+.row{'ng-if' => "((#{ng_model}.location === 'playbook') || (#{ng_model}.location === 'ansible_job_template') || (#{ng_model}.location === 'ansible_workflow_template')) && #{ng_model}.#{prefix}_inputs"}
   = render :partial => "miq_ae_class/angular_inputs_form",
            :locals  => {:ng_model => "vm.aeMethodModel",
                         :prefix   => "provisioning"}
