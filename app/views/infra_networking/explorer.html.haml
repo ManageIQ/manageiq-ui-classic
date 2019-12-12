@@ -11,3 +11,6 @@
   -# Showing a list of switches
   #main_div
     = render(:partial => 'layouts/x_gtl')
+  -# Show Search box
+  :javascript
+    #{javascript_show_if_exists("adv_searchbox_div")}
