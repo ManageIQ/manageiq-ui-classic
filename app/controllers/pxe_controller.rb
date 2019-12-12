@@ -22,6 +22,7 @@ class PxeController < ApplicationController
     'pxe_server_edit'               => :pxe_server_edit,
     'pxe_server_delete'             => :pxe_server_delete,
     'pxe_server_refresh'            => :pxe_server_refresh,
+    'pxe_server_tag'                => :pxe_server_tags_edit,
     'pxe_wimg_edit'                 => :pxe_wimg_edit,
     'iso_datastore_new'             => :iso_datastore_new,
     'iso_datastore_refresh'         => :iso_datastore_refresh,
@@ -35,6 +36,14 @@ class PxeController < ApplicationController
 
   def x_button
     generic_x_button(PXE_X_BUTTON_ALLOWED_ACTIONS)
+  end
+
+  def pxe_server_tags_edit
+    tag("PxeServer")
+  end
+
+  def previous_breadcrumb_url
+    url_for_only_path(:action => @lastaction)
   end
 
   def accordion_select
