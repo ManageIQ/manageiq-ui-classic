@@ -46,17 +46,17 @@ describe('<MiqToolbar />', () => {
   });
 
   it('renders DashboardToolbar', () => {
-    const t = shallow(<MiqToolbar toolbars={dashboardData} />);
+    const t = shallow(<MiqToolbar kebabLimit={3} toolbars={dashboardData} />);
     expect(t.find(DashboardToolbar)).toHaveLength(1);
   });
 
   it('renders TopologyToolbar', () => {
-    const t = shallow(<MiqToolbar toolbars={topologyData} />);
+    const t = shallow(<MiqToolbar kebabLimit={3} toolbars={topologyData} />);
     expect(t.find(TopologyToolbar)).toHaveLength(1);
   });
 
   it('renders Toolbar', () => {
-    const t = shallow(<MiqToolbar toolbars={genericData} />);
+    const t = shallow(<MiqToolbar kebabLimit={3} toolbars={genericData} />);
     expect(t.find(Toolbar)).toHaveLength(1);
   });
 });

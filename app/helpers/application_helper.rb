@@ -1340,4 +1340,9 @@ module ApplicationHelper
   def camelize_quadicon(quad)
     quad.keys.each_with_object({}) { |k, h| h[k.to_s.camelcase(:lower)] = quad[k] }
   end
+
+  def miq_toolbar(toolbars)
+    limit = ::Settings.ui.custom_button_count || 3
+    react('MiqToolbar', :kebabLimit => limit, :toolbars => toolbars)
+  end
 end

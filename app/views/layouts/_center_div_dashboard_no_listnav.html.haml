@@ -5,7 +5,7 @@
   .row.toolbar-pf#toolbar
     .col-sm-12
       - if @widgets_menu
-        = react 'MiqToolbar', :toolbars => toolbar_from_hash
+        = miq_toolbar toolbar_from_hash
   .row#main-content.miq-body.miq-layout-center_div_dashboard_no_listnav
     .col-md-12
       .spacer
