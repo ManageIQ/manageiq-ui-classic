@@ -420,7 +420,7 @@ module ApplicationController::Compare
   # AJAX driven routine to check for changes in ANY field on the form
   def sections_field_changed
     @keep_compare = true
-    @explorer = %w[VMs Templates].include?(session[:db_title])
+    @explorer = %w[VMs Templates].include?(session[:db_title]) && @display.nil?
     if params[:check] == "drift"
       section_checked(:drift)
     elsif params[:check] == "compare_miq"

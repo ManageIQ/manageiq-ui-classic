@@ -166,6 +166,34 @@ describe EmsClusterController do
       controller.send(:sections_field_changed)
       expect(session[:selected_sections]).to eq(["_model_", "hardware"])
     end
+
+    context 'changes in Comparison Sections' do
+      before do
+        allow(controller).to receive(:render)
+        allow(controller).to receive(:session).and_return(:db_title => 'VMs')
+        controller.instance_variable_set(:@display, 'instances')
+        controller.params = {:check => 'true'}
+      end
+
+      it 'sets @explorer to false' do
+        controller.send(:sections_field_changed)
+        expect(controller.instance_variable_get(:@explorer)).to be(false)
+      end
+
+      it 'calls set_checked_sections according to the params' do
+        expect(controller).to receive(:set_checked_sections)
+        controller.send(:sections_field_changed)
+      end
+
+      context 'explorer screen' do
+        before { controller.instance_variable_set(:@display, nil) }
+
+        it 'sets @explorer to true' do
+          controller.send(:sections_field_changed)
+          expect(controller.instance_variable_get(:@explorer)).to be(true)
+        end
+      end
+    end
   end
 
   context 'drifts' do
