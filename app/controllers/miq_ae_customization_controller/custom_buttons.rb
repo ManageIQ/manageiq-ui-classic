@@ -46,6 +46,7 @@ module MiqAeCustomizationController::CustomButtons
       if uri.present?
         uri.each do |b|
           next if b.parent.present?
+
           button = {
             :name         => b.name,
             :id           => b.id,
@@ -103,6 +104,7 @@ module MiqAeCustomizationController::CustomButtons
       button_order&.each do |bidx| # show assigned buttons in order they were saved
         @record.members.each do |b|
           next if bidx != b.id
+
           button = {:name         => b.name,
                     :id           => b.id,
                     :description  => b.description,
