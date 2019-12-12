@@ -276,6 +276,9 @@ module MiqPolicyController::Policies
 
     if x_active_tree == :policy_tree
       @policy_profiles = @policy.memberof.sort_by { |pp| pp.description.downcase }
+    elsif x_active_tree == :policy_profile_tree
+      @sb[:mode] = @policy.mode
+      @sb[:nodeid] = @policy.towhat
     end
   end
 end
