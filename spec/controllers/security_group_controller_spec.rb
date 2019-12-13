@@ -350,5 +350,35 @@ describe SecurityGroupController do
         controller.send(:button)
       end
     end
+
+    context 'Check Compliance of Instances displayed in a nested list' do
+      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => security_group.id.to_s, :controller => 'security_group'} }
+      let(:vm_instance) { FactoryBot.create(:vm_or_template) }
+
+      before { allow(controller).to receive(:performed?).and_return(true) }
+
+      it 'calls check_compliance_vms' do
+        allow(controller).to receive(:show)
+        expect(controller).to receive(:check_compliance_vms)
+        controller.send(:button)
+      end
+
+      context 'Instance with VM Compliance policy assigned' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          EvmSpecHelper.create_guid_miq_server_zone
+          allow(controller).to receive(:assert_privileges)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+          allow(controller).to receive(:drop_breadcrumb)
+          vm_instance.add_policy(policy)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
+    end
   end
 end
