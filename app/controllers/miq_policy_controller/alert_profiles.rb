@@ -7,6 +7,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_cancel
     return unless alert_profile_edit_load_edit
+
     @sb[:action] = @edit = nil
     if @alert_profile && @alert_profile.id.blank?
       add_flash(_("Add of new Alert Profile was cancelled by the user"))
@@ -49,7 +50,7 @@ module MiqPolicyController::AlertProfiles
     begin
       alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
       mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
         {:params => params[:button], :message => bang.message}, :error)
     end
@@ -74,6 +75,7 @@ module MiqPolicyController::AlertProfiles
     # Load @edit/vars for other buttons
     id = params[:id] || 'new'
     return false unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
+
     alert_profile_load
     true
   end
@@ -86,9 +88,11 @@ module MiqPolicyController::AlertProfiles
       alert_profile_edit_reset
     when 'save', 'add'
       return unless alert_profile_edit_load_edit
+
       alert_profile_edit_save_add
     when 'move_right', 'move_left', 'move_allleft'
       return unless alert_profile_edit_load_edit
+
       alert_profile_edit_move
     end
   end
@@ -147,6 +151,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_field_changed
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
+
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
 
     @edit[:new][:description] = params[:description].presence if params[:description]
@@ -191,12 +196,14 @@ module MiqPolicyController::AlertProfiles
     return true if @assign[:new][:assign_to].blank?
     return true if @assign[:new][:assign_to] == "enterprise"
     return true if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat].blank?
+
     false
   end
 
   # Build the assign objects selection tree
   def alert_profile_build_obj_tree
     return nil if alert_profile_get_assign_to_objects_empty?
+
     if @assign[:new][:assign_to] == "ems_folder"
       instantiate_tree("TreeBuilderEmsFolders", :ems_folders_tree,
                        @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
