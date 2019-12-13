@@ -23,8 +23,6 @@ class CloudNetworkController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
-    when "cloud_network_tag"
-      return tag("CloudNetwork")
     when 'cloud_network_delete'
       delete_networks
       javascript_redirect(previous_breadcrumb_url)
@@ -32,19 +30,8 @@ class CloudNetworkController < ApplicationController
       javascript_redirect(:action => "edit", :id => checked_item_id)
     when "cloud_network_new"
       javascript_redirect(:action => "new")
-    when "cloud_subnet_tag"
-      return tag("CloudSubnet")
-    when "custom_button"
-      custom_buttons
-      return
-    when 'instance_compare'
-      return comparemiq
-    when "instance_tag"
-      return tag("VmOrTemplate")
-    when "network_router_tag"
-      return tag("NetworkRouter")
-    when "floating_ip_tag"
-      return tag("FloatingIp")
+    else
+      super
     end
   end
 
