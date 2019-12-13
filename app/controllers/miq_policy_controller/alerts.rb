@@ -37,7 +37,6 @@ module MiqPolicyController::Alerts
     flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") : _("Alert \"%{name}\" was added")
     add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_get_info(MiqAlert.find(alert.id))
-    alert_sync_provider(@edit[:alert_id] ? :update : :new)
     @sb[:action] = @edit = nil
     @nodetype = "al"
     @new_alert_node = "al-#{alert.id}"
@@ -78,7 +77,6 @@ module MiqPolicyController::Alerts
       alerts.push(params[:id])
     end
     @alert = MiqAlert.find(params[:id])
-    alert_sync_provider(:delete)
 
     process_alerts(alerts, "destroy") unless alerts.empty?
     @new_alert_node = self.x_node = "root"
@@ -695,16 +693,6 @@ module MiqPolicyController::Alerts
           @perf_column_unit = alert_get_perf_column_unit(eo[:values][@alert.db][@alert.expression[:options][:perf_column]])
         end
       end
-    end
-  end
-
-  def alert_sync_provider(operation)
-    if @alert.db == "MiddlewareServer"
-      MiqQueue.put(
-        :class_name  => "ManageIQ::Providers::Hawkular::MiddlewareManager",
-        :method_name => "update_alert",
-        :args        => {:operation => operation, :alert => @alert}
-      )
     end
   end
 end
