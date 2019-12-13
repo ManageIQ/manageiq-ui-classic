@@ -23,14 +23,6 @@ class NetworkRouterController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
-    when "cloud_subnet_tag"
-      return tag("CloudSubnet")
-    when "custom_button"
-      custom_buttons
-    when 'instance_compare'
-      comparemiq
-    when "instance_tag"
-      return tag("VmOrTemplate")
     when "network_router_add_interface"
       javascript_redirect(:action => "add_interface_select", :id => checked_item_id)
     when "network_router_edit"
@@ -39,12 +31,8 @@ class NetworkRouterController < ApplicationController
       javascript_redirect(:action => "new")
     when "network_router_remove_interface"
       javascript_redirect(:action => "remove_interface_select", :id => checked_item_id)
-    when "network_router_tag"
-      return tag("NetworkRouter")
-    when "floating_ip_tag"
-      return tag("FloatingIp")
     else
-      render_flash
+      super
     end
   end
 
