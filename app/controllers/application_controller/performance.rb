@@ -651,17 +651,6 @@ module ApplicationController::Performance
                             from_dt,
                             to_dt,
                             interval_type]
-      elsif %w[MiddlewareServer].any? { |e| @perf_record.kind_of?(e.constantize) }
-        rpt = perf_get_chart_rpt("vim_perf_#{interval_type}_#{@perf_record.chart_report_name}")
-        rpt.where_clause = [
-          "resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? " \
-          "and capture_interval_name = ?",
-          @perf_options[:model],
-          @perf_record.id,
-          from_dt,
-          to_dt,
-          interval_type
-        ]
       else # Doing VIM performance on a normal CI
         suffix = @perf_record.kind_of?(AvailabilityZone) || @perf_record.kind_of?(HostAggregate) ? "_cloud" : "" # Get special cloud version with 'Instances' headers
         rpt = perf_get_chart_rpt("vim_perf_#{interval_type}#{suffix}")
@@ -680,13 +669,7 @@ module ApplicationController::Performance
     when "realtime"
       _, to_dt = @perf_record.first_and_last_capture("realtime")
       from_dt = to_dt.nil? ? nil : to_dt - @perf_options[:rt_minutes]
-      suffix = if %w[MiddlewareServer]
-                  .any? { |e| @perf_record.kind_of?(e.constantize) }
-                 "_#{@perf_record.chart_report_name}"
-               else
-                 ""
-               end
-      rpt = perf_get_chart_rpt("vim_perf_realtime#{suffix}")
+      rpt = perf_get_chart_rpt("vim_perf_realtime")
       rpt.tz = @perf_options[:tz]
       rpt.extras = {}
       rpt.extras[:realtime] = true
