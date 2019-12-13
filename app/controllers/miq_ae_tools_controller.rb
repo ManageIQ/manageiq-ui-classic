@@ -104,12 +104,12 @@ class MiqAeToolsController < ApplicationController
   def automate_json
     begin
       automate_json = automate_import_json_serializer.serialize(ImportFileUpload.find(params[:import_file_upload_id]))
-    rescue => e
+    rescue StandardError => e
       add_flash(_("Error: import processing failed: %{message}") % {:message => e.message}, :error)
     end
 
     respond_to do |format|
-      if @flash_array && @flash_array.count
+      if @flash_array&.count
         format.json { render :json => @flash_array.first.to_json, :status => 500 }
       else
         format.json { render :json => automate_json }
@@ -131,7 +131,7 @@ class MiqAeToolsController < ApplicationController
       git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
 
       add_flash(_("Imported from git"), :info)
-    rescue => error
+    rescue StandardError => error
       add_flash(_("Error: import failed: %{message}") % {:message => error.message}, :error)
     end
 
@@ -225,7 +225,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
         task_id = git_based_domain_import_service.queue_refresh(git_repo_id)
         response_json = {:task_id => task_id, :git_repo_id => git_repo_id, :new_git_repo => new_git_repo}
-      rescue => err
+      rescue StandardError => err
         add_flash(_("Error during repository setup: %{error_message}") % {:error_message => err.message}, :error)
         response_json = {:message => @flash_array.first}
       end
@@ -281,7 +281,7 @@ Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
         redirect_to(:action => 'import_export')
-      rescue => bang
+      rescue StandardError => bang
         flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         redirect_to(:action => 'import_export')
       end
@@ -368,7 +368,7 @@ Methods updated/added: %{method_stats}") % stat_options)
   end
 
   def determine_missed_namespaces(namespace)
-    if namespace.match("/")
+    if namespace.match?("/")
       [namespace, determine_missed_namespaces(namespace.split("/")[0..-2].join("/"))].flatten
     else
       [namespace]
