@@ -22,6 +22,7 @@ module MiqPolicyController::Alerts
   def alert_edit_save_add
     id = params[:id] && params[:button] != "add" ? params[:id] : "new"
     return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+
     alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
     alert_set_record_vars(alert)
 
@@ -88,6 +89,7 @@ module MiqPolicyController::Alerts
 
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
+
     @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
     copy_params_if_present(@edit[:new], params, %i[description event_name])
@@ -372,11 +374,13 @@ module MiqPolicyController::Alerts
     event = @edit[:new]
     return true if event[:exp_event] == '_hourly_timer_'
     return false if event[:eval_method].nil?
+
     event[:eval_method] =~ /hourly_performance|dwh_generic/
   end
 
   def alert_get_perf_column_unit(val)
     return nil unless val
+
     e_point = val.rindex(')')
     s_point = val.rindex('(')
     res = e_point && s_point ? "#{val[s_point + 1..e_point - 1]} " : nil
@@ -425,7 +429,7 @@ module MiqPolicyController::Alerts
         end
 
       when :perf_column
-        @edit[:new][:expression][:options][:perf_column] ||= eo[:values][@edit[:new][:db]].invert.sort[0].last # Set to first column
+        @edit[:new][:expression][:options][:perf_column] ||= eo[:values][@edit[:new][:db]].invert.min.last # Set to first column
         @edit[:perf_column_options] = eo[:values][@edit[:new][:db]] # storing perf_column values in hash to use them later for lookup to show units in UI
         @edit[:perf_column_unit] = alert_get_perf_column_unit(@edit[:perf_column_options][@edit[:new][:expression][:options][:perf_column]])
       when :value_threshold
@@ -517,7 +521,7 @@ module MiqPolicyController::Alerts
     alarms = {}
     begin
       alarms = MiqAlert.ems_alarms(@edit[:new][:db], @edit[:new][:expression][:options][:ems_id])
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error during alarms: %{messages}") % {:messages => bang.message}, :error)
     end
     alarms
@@ -542,10 +546,10 @@ module MiqPolicyController::Alerts
     else
       alert.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
       alert.responds_to_events = if @edit[:new][:exp_event] == "_hourly_timer_"
-                                  @edit[:new][:exp_event]
-                                elsif @edit[:new][:exp_event]&.positive?
-                                  MiqEventDefinition.find(@edit[:new][:exp_event]).name
-                                end
+                                   @edit[:new][:exp_event]
+                                 elsif @edit[:new][:exp_event]&.positive?
+                                   MiqEventDefinition.find(@edit[:new][:exp_event]).name
+                                 end
     end
     alert.options = {}
     alert.options[:notifications] = {}
