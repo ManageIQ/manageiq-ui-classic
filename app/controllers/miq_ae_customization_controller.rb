@@ -388,7 +388,7 @@ class MiqAeCustomizationController < ApplicationController
     if nodetype == "root"
       presenter.update(:main_div, render_proc[:partial => "layouts/x_gtl"])
     else
-      @sb[:active_tab] = params[:tab_id] ? params[:tab_id] : "sample_tab"
+      @sb[:active_tab] = params[:tab_id] || "sample_tab"
       presenter.update(:main_div, render_proc[:partial => "dialog_details"])
     end
 
