@@ -190,6 +190,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.customButtonModel.attribute_names,
       vm.customButtonModel.attribute_values);
     vm.customButtonModel.resource_action.ae_attributes.request = vm.customButtonModel.request;
+    vm.customButtonModel.resource_action.ae_attributes.service_template = vm.customButtonModel.uri_attributes.service_template;
 
     vm.customButtonModel.resource_action = {
       dialog_id: vm.customButtonModel.dialog_id,
