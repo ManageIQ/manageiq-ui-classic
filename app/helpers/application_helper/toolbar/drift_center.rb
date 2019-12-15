@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "drift_all",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=all&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
+      :url_parms => "?compare_task=all&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
     twostate(
       :drift_diff,
       'ff ff-compare-different fa-lg',
@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "drift_differences",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=different&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
+      :url_parms => "?compare_task=different&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
     twostate(
       :drift_same,
       'ff ff-compare-same fa-lg',
@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "drift_same",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=same&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
+      :url_parms => "?compare_task=same&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
   ])
   button_group('compare_mode', [
     twostate(
