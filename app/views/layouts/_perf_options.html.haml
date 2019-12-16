@@ -16,7 +16,7 @@
           - if request.parameters["controller"] == "storage" && @perf_options[:cat]
             = select("perf", "typ", [[_("Hourly"), "Hourly"], [_("Daily"), "Daily"]], {:selected => @perf_options[:typ]},
                                                         :disabled => "")
-          - elsif %w(Host VmOrTemplate ContainerNode Container ContainerGroup MiddlewareServer).include?(@perf_options[:model]) && !@rt_hide
+          - elsif %w(Host VmOrTemplate ContainerNode Container ContainerGroup).include?(@perf_options[:model]) && !@rt_hide
             = select_tag("perf_typ",
                           options_for_select([[_("Hourly"), "Hourly"], [_("Daily"), "Daily"], [_("Most Recent Hour"), "realtime"]], @perf_options[:typ]),
                           "data-miq_sparkle_on" => true,

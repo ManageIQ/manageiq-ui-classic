@@ -29,10 +29,6 @@ module TermOfServiceHelper
     "MiqServer"           => {
       "miq_server" => N_("Selected Servers"),
     },
-    "MiddlewareServer"    => {
-      "enterprise"        => N_("The Enterprise"),
-      "middleware_server" => N_("Selected Middleware Servers")
-    },
     "ContainerNode"       => {
       "enterprise" => N_("The Enterprise"),
     },
