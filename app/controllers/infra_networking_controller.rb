@@ -265,7 +265,11 @@ class InfraNetworkingController < ApplicationController
 
     options = {:model => "Switch", :named_scope => :shareable}
     process_show_list(options) if @show_list
-    @right_cell_text = _("All Switches")
+    @right_cell_text = if @search_text
+                         _("All Switches (Names with \"%{search_text}\")") % {:search_text => @search_text}
+                       else
+                         _("All Switches")
+                       end
     options
   end
 

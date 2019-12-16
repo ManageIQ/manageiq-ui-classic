@@ -68,6 +68,23 @@ describe InfraNetworkingController do
         expect(ApplicationHelper::Toolbar::InfraNetworkingCenter).to receive(:definition).and_call_original.at_least(:once)
         post :tree_select, :params => { :id => nodeid }
       end
+
+      context 'right cell text' do
+        let(:text) { 'switch' }
+
+        before do
+          allow(controller).to receive(:load_or_clear_adv_search)
+          allow(controller).to receive(:render)
+          controller.instance_variable_set(:@r, {})
+          controller.instance_variable_set(:@sb, :active_tree => :infra_networking_tree)
+          controller.params = {:search_text => text, :id => 'root'}
+        end
+
+        it 'updates title of the page according to the search text' do
+          controller.send(:tree_select)
+          expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Switches (Names with \"#{text}\")")
+        end
+      end
     end
   end
 
