@@ -636,7 +636,7 @@ module ApplicationController::CiProcessing
     case controller
     when 'ems_cluster'
       ems_cluster_untestable_actions.exclude?(action)
-    when 'auth_key_pair_cloud', 'availability_zone', 'cloud_network', 'cloud_tenant', 'ems_cloud', 'ems_infra', 'flavor', 'host', 'host_aggregate', 'network_router', 'resource_pool', 'storage', 'vm_cloud'
+    when 'auth_key_pair_cloud', 'availability_zone', 'cloud_network', 'cloud_tenant', 'ems_cloud', 'ems_infra', 'flavor', 'host', 'host_aggregate', 'network_router', 'resource_pool', 'security_group', 'storage', 'vm_cloud'
       other_untestable_actions.exclude?(action)
     when 'vm_infra'
       vm_infra_untestable_actions.exclude?(action)

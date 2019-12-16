@@ -24,28 +24,14 @@ class SecurityGroupController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
-    when "instance_tag"
-      return tag("VmOrTemplate")
-    when 'instance_compare'
-      comparemiq
-    when "network_port_tag"
-      return tag("NetworkPort")
-    when "security_group_tag"
-      return tag("SecurityGroup")
     when "security_group_delete"
       delete_security_groups
     when "security_group_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id(params))
     when 'security_group_new'
       javascript_redirect(:action => "new")
-    when "custom_button"
-      custom_buttons
     else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      super
     end
   end
 
