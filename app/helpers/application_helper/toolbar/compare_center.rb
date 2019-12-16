@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "compare_miq_all",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=all"),
+      :url_parms => "?compare_task=all"),
     twostate(
       :compare_diff,
       'ff ff-compare-different fa-lg',
@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "compare_miq_differences",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=different"),
+      :url_parms => "?compare_task=different"),
     twostate(
       :compare_same,
       'ff ff-compare-same fa-lg',
@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "compare_miq_same",
-      :url_parms => "?id=\#{$vms_comp}&compare_task=same"),
+      :url_parms => "?compare_task=same"),
   ])
   button_group('compare_mode', [
     twostate(
