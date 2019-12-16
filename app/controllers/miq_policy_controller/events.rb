@@ -21,8 +21,9 @@ module MiqPolicyController::Events
     end
 
     # Reload @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("event_edit__#{id}", "replace_cell__explorer")
+
     @event = @edit[:event_id] ? MiqEventDefinition.find(@edit[:event_id]) : MiqEventDefinition.new
     policy = MiqPolicy.find(@sb[:node_ids][x_active_tree]["p"])
     @policy = policy
