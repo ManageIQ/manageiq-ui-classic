@@ -23,24 +23,14 @@ class CloudSubnetController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
-    when "cloud_subnet_tag"
-      return tag("CloudSubnet")
     when 'cloud_subnet_delete'
       delete_subnets
     when "cloud_subnet_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id)
     when "cloud_subnet_new"
       javascript_redirect(:action => "new")
-    when "custom_button"
-      custom_buttons
-    when 'instance_compare'
-      comparemiq
     else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      super
     end
   end
 
