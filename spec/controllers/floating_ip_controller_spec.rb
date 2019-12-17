@@ -1,12 +1,19 @@
 describe FloatingIpController do
   include_examples :shared_examples_for_floating_ip_controller, %w(openstack azure google amazon)
 
-  context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
+  let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
+  let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
+  let(:floating_ip) { FactoryBot.create(:floating_ip_openstack, :ext_management_system => ems) }
+
+  before do
+    login_as admin_user
+    EvmSpecHelper.create_guid_miq_server_zone
+  end
+
+  describe "#tags_edit" do
     before do
-      EvmSpecHelper.create_guid_miq_server_zone
       @ct = FactoryBot.create(:floating_ip)
-      allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      allow(@ct).to receive(:tagged_with).with(:cat => admin_user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
                                  :name   => "tag1",
@@ -31,11 +38,7 @@ describe FloatingIpController do
     end
 
     describe "#delete_floating_ips" do
-      let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
-      let!(:floating_ip) { FactoryBot.create(:floating_ip) }
       before do
-        EvmSpecHelper.create_guid_miq_server_zone
-        login_as admin_user
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:performed?)
         controller.params = {:id => floating_ip.id, :pressed => 'host_NECO'}
@@ -68,18 +71,11 @@ describe FloatingIpController do
   end
 
   describe "#show" do
-    before do
-      EvmSpecHelper.create_guid_miq_server_zone
-      @floating_ip = FactoryBot.create(:floating_ip)
-      login_as FactoryBot.create(:user_with_group)
-    end
-
-    subject do
-      get :show, :params => {:id => @floating_ip.id}
-    end
+    subject { get :show, :params => {:id => floating_ip.id} }
 
     context "render listnav partial" do
       render_views
+
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_floating_ip")
@@ -88,107 +84,117 @@ describe FloatingIpController do
   end
 
   describe "#create" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @floating_ip = FactoryBot.create(:floating_ip_openstack)
-      stub_user(:features => :all)
+    let(:task_options) do
+      {
+        :action => "creating Floating IP for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => ems.class.name,
+        :method_name => 'create_floating_ip',
+        :instance_id => ems.id,
+        :args        => [{}]
+      }
     end
 
-    context "#create" do
-      let(:task_options) do
-        {
-          :action => "creating Floating IP for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @ems.class.name,
-          :method_name => 'create_floating_ip',
-          :instance_id => @ems.id,
-          :args        => [{}]
-        }
-      end
+    it "builds create screen" do
+      post :button, :params => { :pressed => "floating_ip_new", :format => :js }
+      expect(assigns(:flash_array)).to be_nil
+    end
 
-      it "builds create screen" do
-        post :button, :params => { :pressed => "floating_ip_new", :format => :js }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
-      it "queues the create action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
-      end
+    it "queues the create action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
+      post :create, :params => { :button => "add", :format => :js, :name => 'test', :tenant_id => 'id', :ems_id => ems.id }
     end
   end
 
   describe "#edit" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
+    let(:task_options) do
+      {
+        :action => "updating Floating IP for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => floating_ip.class.name,
+        :method_name => 'raw_update_floating_ip',
+        :instance_id => floating_ip.id,
+        :args        => [{:network_port_ems_ref => ""}]
+      }
     end
 
-    context "#edit" do
-      let(:task_options) do
-        {
-          :action => "updating Floating IP for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @floating_ip.class.name,
-          :method_name => 'raw_update_floating_ip',
-          :instance_id => @floating_ip.id,
-          :args        => [{:network_port_ems_ref => ""}]
-        }
-      end
+    it "builds edit screen" do
+      post :button, :params => { :pressed => "floating_ip_edit", :format => :js, :id => floating_ip.id }
+      expect(assigns(:flash_array)).to be_nil
+    end
 
-      it "builds edit screen" do
-        post :button, :params => { :pressed => "floating_ip_edit", :format => :js, :id => @floating_ip.id }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
-      it "queues the update action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-        post :update, :params => { :button => "save", :format => :js, :id => @floating_ip.id,
-                                   :network_port => {:ems_ref => ""}}
-      end
+    it "queues the update action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
+      post :update, :params => { :button => "save", :format => :js, :id => floating_ip.id, :network_port => {:ems_ref => ""}}
     end
   end
 
   describe "#delete" do
-    before do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
-      @ems = FactoryBot.create(:ems_openstack).network_manager
-      @floating_ip = FactoryBot.create(:floating_ip_openstack, :ext_management_system => @ems)
+    let(:task_options) do
+      {
+        :action => "deleting Floating IP for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => floating_ip.class.name,
+        :method_name => 'raw_delete_floating_ip',
+        :instance_id => floating_ip.id,
+        :args        => []
+      }
     end
 
-    context "#delete" do
-      let(:task_options) do
-        {
-          :action => "deleting Floating IP for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @floating_ip.class.name,
-          :method_name => 'raw_delete_floating_ip',
-          :instance_id => @floating_ip.id,
-          :args        => []
-        }
-      end
+    it "queues the delete action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
+      post :button, :params => { :id => floating_ip.id, :pressed => "floating_ip_delete", :format => :js }
+    end
+  end
 
-      it "queues the delete action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-        post :button, :params => { :id => @floating_ip.id, :pressed => "floating_ip_delete", :format => :js }
+  describe '#button' do
+    before { controller.params = params }
+
+    context 'deleting selected Floating IP' do
+      let(:params) { {:pressed => 'floating_ip_delete'} }
+
+      it 'calls delete_floating_ips' do
+        expect(controller).to receive(:delete_floating_ips)
+        controller.send(:button)
+      end
+    end
+
+    context 'managing the port association of a Floating IP' do
+      let(:params) { {:pressed => 'floating_ip_edit', :id => floating_ip.id.to_s} }
+
+      it 'redirects to edit method' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'edit', :id => floating_ip.id.to_s)
+        controller.send(:button)
+      end
+    end
+
+    context 'adding new Floating IP' do
+      let(:params) { {:pressed => 'floating_ip_new'} }
+
+      it 'redirects to new method' do
+        expect(controller).to receive(:javascript_redirect).with(:action => 'new')
+        controller.send(:button)
+      end
+    end
+
+    context 'tagging selected Floating IPs' do
+      let(:params) { {:pressed => 'floating_ip_tag', :miq_grid_checks => floating_ip.id.to_s} }
+
+      it 'calls tag method' do
+        expect(controller).to receive(:tag).with(FloatingIp)
+        controller.send(:button)
       end
     end
   end

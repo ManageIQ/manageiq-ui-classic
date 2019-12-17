@@ -25,8 +25,6 @@ class FloatingIpController < ApplicationController
     @refresh_div = "main_div"
 
     case params[:pressed]
-    when "floating_ip_tag"
-      tag("FloatingIp")
     when 'floating_ip_delete'
       delete_floating_ips
     when "floating_ip_edit"
@@ -34,11 +32,7 @@ class FloatingIpController < ApplicationController
     when "floating_ip_new"
       javascript_redirect(:action => "new")
     else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      super
     end
   end
 
