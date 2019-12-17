@@ -17,6 +17,15 @@ module ApplicationController::ReportDownloads
     send_data(report.to_csv, :filename => "#{filename}.csv")
   end
 
+  def report_print_options(report, result)
+    {
+      :page_layout => 'landscape',
+      :page_size   => report.page_size || 'a4',
+      :run_date    => format_timezone(result.last_run_on, result.user_timezone, "gtl"),
+      :title       => result.name
+    }
+  end
+
   def render_pdf_internal(report)
     userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
     result = report.build_create_results(:userid => userid)
@@ -26,15 +35,7 @@ module ApplicationController::ReportDownloads
     # Use report_result_id in session, if present
     result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
 
-    disable_client_cache
-
-    @options = { # used by the layouts/print
-      :page_layout => 'landscape',
-      :page_size   => report.page_size || 'a4',
-      :run_date    => format_timezone(report.report_run_time, result.user_timezone, "gtl"),
-      :title       => result.name
-    }
-
+    @options = report_print_options(report, result) # used by the layouts/print
     render(
       :template => '/layouts/print/report',
       :layout   => '/layouts/print',
@@ -71,21 +72,19 @@ module ApplicationController::ReportDownloads
     if !miq_task.results_ready?
       add_flash(_("Report generation returned: Status [%{status}] Message [%{message}]") % {:status => miq_task.status, :message => miq_task.message}, :error)
       javascript_flash(:spinner_off => true)
-    else
-      @sb[:render_rr_id] = miq_task.miq_report_result.id
-      if @sb[:render_type] == :pdf
-        javascript_open_window(url_for_only_path(:action => "send_report_data"))
-      else
-        render :update do |page|
-          page << javascript_prologue
-          page << "miqSparkle(false);"
-          page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
-        end
-      end
+      return
+    end
+
+    @sb[:render_rr_id] = miq_task.miq_report_result.id
+    render :update do |page|
+      page << javascript_prologue
+      page << "miqSparkle(false);"
+      page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
     end
   end
 
-  # Render report in csv/txt/pdf format asynchronously
+  #### Render report in csv/txt/pdf format asynchronously
+  # Render report in csv/txt format asynchronously
   def render_report_data
     render_type = RENDER_TYPES[params[:render_type]]
     assert_privileges("render_report_#{render_type}")
@@ -100,7 +99,24 @@ module ApplicationController::ReportDownloads
   end
   alias render_report_txt render_report_data
   alias render_report_csv render_report_data
-  alias render_report_pdf render_report_data
+
+  def render_report_pdf
+    javascript_open_window(url_for_only_path(:action => "print_report", :id => session[:report_result_id]))
+  end
+
+  def print_report
+    result = MiqReportResult.find(params[:id])
+
+    @options = report_print_options(result.report, result) # used by the layouts/print
+    render(
+      :template => '/layouts/print/report',
+      :layout   => '/layouts/print',
+      :locals   => {
+        :report => result.report,
+        :data   => result.html_rows.join
+      }
+    )
+  end
 
   # Send rendered report data
   def send_report_data
@@ -108,33 +124,11 @@ module ApplicationController::ReportDownloads
 
     disable_client_cache
     result = MiqReportResult.find(@sb[:render_rr_id])
-    report = result.report
 
-    ## THIS IS STRANGE
-    # We need the last_run_on time from the original result
-    last_run_on = MiqReportResult.select(:last_run_on).find(session[:report_result_id]).last_run_on
-
-    if @sb[:render_type] == :pdf
-      @options = { # needed by the /layouts/print
-        :page_layout => 'landscape',
-        :page_size   => report.page_size || 'a4',
-        :run_date    => format_timezone(last_run_on, result.user_timezone, "gtl"),
-        :title       => result.name
-      }
-      render(
-        :template => '/layouts/print/report',
-        :layout   => '/layouts/print',
-        :locals   => {
-          :report => report,
-          :data   => result.html_rows.join
-        }
-      )
-    else
-      filename = filename_timestamp(result.report.title, 'export_filename')
-      send_data(result.get_generated_result(@sb[:render_type]),
-                :filename => "#{filename}.#{@sb[:render_type]}",
-                :type     => "application/#{@sb[:render_type]}")
-    end
+    filename = filename_timestamp(result.report.title, 'export_filename')
+    send_data(result.get_generated_result(@sb[:render_type]),
+              :filename => "#{filename}.#{@sb[:render_type]}",
+              :type     => "application/#{@sb[:render_type]}")
 
     result.destroy
   end
