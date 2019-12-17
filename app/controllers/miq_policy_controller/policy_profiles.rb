@@ -25,8 +25,9 @@ module MiqPolicyController::PolicyProfiles
     end
 
     # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("profile_edit__#{id}", "replace_cell__explorer")
+
     @profile = @edit[:profile_id] ? MiqPolicySet.find(@edit[:profile_id]) : MiqPolicySet.new
 
     case params[:button]
@@ -44,7 +45,7 @@ module MiqPolicyController::PolicyProfiles
         begin
           policies.each { |c| profile.remove_member(MiqPolicy.find(c)) unless mems.include?(c.id) } # Remove any policies no longer in the members list box
           mems.each_key { |m| profile.add_member(MiqPolicy.find(m)) unless current.include?(m) }    # Add any policies not in the set
-        rescue => bang
+        rescue StandardError => bang
           add_flash(_("Error during 'Policy Profile %{params}': %{messages}") %
             {:params => params[:button], :messages => bang.message}, :error)
         end
@@ -90,6 +91,7 @@ module MiqPolicyController::PolicyProfiles
 
   def profile_field_changed
     return unless load_edit("profile_edit__#{params[:id]}", "replace_cell__explorer")
+
     @profile = @edit[:profile_id] ? MiqPolicySet.find(@edit[:profile_id]) : MiqPolicySet.new
 
     @edit[:new][:description] = params[:description].presence if params[:description]
