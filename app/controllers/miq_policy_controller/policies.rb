@@ -2,8 +2,9 @@ module MiqPolicyController::Policies
   extend ActiveSupport::Concern
 
   def policy_edit_cancel
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+
     @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
     if @policy.present?
       add_flash(_("Edit of Policy \"%{name}\" was cancelled by the user") % {:name => @policy.description})
@@ -43,7 +44,7 @@ module MiqPolicyController::Policies
       policy.expression = @edit[:new][:expression]["???"] ? nil : MiqExpression.new(@edit[:new][:expression])
     when "conditions"
       mems = @edit[:new][:conditions].invert # Get the ids from the member list box
-      policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.keys.include?(c.id) } # Remove any conditions no longer in members
+      policy.conditions.collect { |pc| pc }.each { |c| policy.conditions.delete(c) unless mems.key?(c.id) } # Remove any conditions no longer in members
       mems.each_key { |m| policy.conditions.push(Condition.find(m)) unless policy.conditions.collect(&:id).include?(m) } # Add any new conditions
     end
 
@@ -93,8 +94,9 @@ module MiqPolicyController::Policies
 
   def policy_edit_load_policy
     # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
+
     @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
   end
 
@@ -159,6 +161,7 @@ module MiqPolicyController::Policies
 
   def policy_field_changed
     return unless load_edit("policy_edit__#{params[:id]}", "replace_cell__explorer")
+
     @profile = @edit[:profile]
 
     case @edit[:typ]
@@ -237,6 +240,7 @@ module MiqPolicyController::Policies
       @edit[:allevents] = {}
       MiqPolicy.all_policy_events.each do |e|
         next if excluded_event?(e)
+
         @edit[:allevents][e.etype.description] ||= []
         @edit[:allevents][e.etype.description].push([e.description, e.id.to_s])
       end
