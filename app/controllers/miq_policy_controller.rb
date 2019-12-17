@@ -52,7 +52,7 @@ class MiqPolicyController < ApplicationController
                          end
         session[:export_data] = MiqPolicy.export_to_yaml(@sb[:new][:choices_chosen], db)
         javascript_redirect(:action => 'fetch_yaml', :fname => filename, :escape => false)
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during export: %{error_message}") % {:error_message => bang.message}, :error)
         render :update do |page|
           page << javascript_prologue
@@ -136,7 +136,7 @@ class MiqPolicyController < ApplicationController
         import_file_upload = miq_policy_import_service.store_for_import(params[:upload][:file])
         @sb[:hide] = true
         redirect_options[:import_file_upload_id] = import_file_upload.id
-      rescue => err
+      rescue StandardError => err
         flash_to_session(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
         redirect_options[:action] = 'export'
       end
@@ -166,7 +166,7 @@ class MiqPolicyController < ApplicationController
     if params[:commit] == "import"
       begin
         miq_policy_import_service.import_policy(@import_file_upload_id)
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Error during upload: %{messages}") % {:messages => bang.message}, :error)
       else
         @sb[:hide] = false
@@ -364,8 +364,8 @@ class MiqPolicyController < ApplicationController
     @sortdir    =  session[sortdir_key] || 'ASC'
     set_search_text
     @_params[:search_text] = @search_text if @search_text && @_params[:search_text] # Added to pass search text to get_view method
-    @view, @pages            = get_view.call                                        # Get the records (into a view) and the paginator
-    @current_page            = @pages[:current] unless @pages.nil?                  # save the current page number
+    @view, @pages = get_view.call # Get the records (into a view) and the paginator
+    @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[sortcol_key]     = @sortcol
     session[sortdir_key]     = @sortdir
 
@@ -394,7 +394,7 @@ class MiqPolicyController < ApplicationController
     @sb[:node_ids] ||= {}
     @sb[:node_ids][x_active_tree] = node_ids
     get_root_node_info if x_node == "root" # Get node info of tree roots
-    folder_get_info(treenodeid) if treenodeid != "root"         # Get folder info for all node types
+    folder_get_info(treenodeid) if treenodeid != "root" # Get folder info for all node types
     case @nodetype
     when "pp" # Policy Profile
       profile_get_info(MiqPolicySet.find(nodeid))
@@ -566,6 +566,7 @@ class MiqPolicyController < ApplicationController
       if @edit && @edit[@expkey]
         %i[val1 val2].each do |val|
           next unless @edit[@expkey][val] # unless an expression with value 1 is showing
+
           presenter[:exp] = {}
           presenter[:exp]["#{val}_type".to_sym]  = @edit[@expkey][val][:type].to_s if @edit[@expkey][val][:type]
           presenter[:exp]["#{val}_title".to_sym] = @edit[@expkey][val][:title]     if @edit[@expkey][val][:title]
@@ -703,6 +704,7 @@ class MiqPolicyController < ApplicationController
         # Find the index of the new members array
         @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
         next if idx.nil?
+
         desc = @edit[:new][members][idx][0].slice(4..-1) # Remove (x) prefix from the chosen item
         @edit[choices][desc] = mc.to_i # Add item back into the choices hash
         @edit[:new][members].delete_at(idx) # Remove item from the array
@@ -1057,8 +1059,8 @@ class MiqPolicyController < ApplicationController
               else
                 params[:action]&.starts_with?("rsop") ? "miq_policy_rsop" : "miq_policy"
               end
-    @lastaction   = session[:miq_policy_lastaction]
-    @display      = session[:miq_policy_display]
+    @lastaction = session[:miq_policy_lastaction]
+    @display = session[:miq_policy_display]
     @current_page = session[:miq_policy_current_page]
     alert_build_pulldowns
     @server_options = session[:server_options] if session[:server_options]
