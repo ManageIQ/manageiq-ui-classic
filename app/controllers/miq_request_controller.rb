@@ -94,6 +94,7 @@ class MiqRequestController < ApplicationController
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
+
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @gtl_url = "/show"
 
@@ -124,6 +125,7 @@ class MiqRequestController < ApplicationController
       javascript_redirect(:action => @lastaction, :id => session[:edit][:request].id)
     elsif params[:button] == "submit"
       return unless load_edit("stamp_edit__#{params[:id]}", "show")
+
       stamp_request = MiqRequest.find(@edit[:request].id) # Get the current request record
       if @edit[:stamp_typ] == "approve"
         stamp_request.approve(current_user, @edit[:reason])
@@ -155,6 +157,7 @@ class MiqRequestController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def stamp_field_changed
     return unless load_edit("stamp_edit__#{params[:id]}", "show")
+
     @edit[:reason] = params[:reason] if params[:reason]
     render :update do |page|
       page << javascript_prologue
@@ -171,7 +174,7 @@ class MiqRequestController < ApplicationController
       :type           => org_req.type,
       :created_on     => org_req.created_on,
       :updated_on     => org_req.updated_on,
-      :options        => org_req.options.except(:requester_group),
+      :options        => org_req.options.except(:requester_group)
     )
 
     if req.kind_of?(ServiceTemplateProvisionRequest)
@@ -196,8 +199,9 @@ class MiqRequestController < ApplicationController
   # To handle Continue button
   def prov_continue
     if params[:button] == "continue" # Continue the request from the workflow with the new options
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("prov_edit__#{id}", "show_list")
+
       @edit[:wf].continue_request(@edit[:new])           # Continue the workflow with new field values based on options
       @edit[:wf].init_from_dialog(@edit[:new])           # Create a new provision workflow for this edit session
       @edit[:buttons] = @edit[:wf].get_buttons
@@ -212,6 +216,7 @@ class MiqRequestController < ApplicationController
       # setting active tab to first visible tab
       @edit[:wf].get_dialog_order.each do |d|
         next unless @edit[:wf].get_dialog(d)[:display] == :show
+
         @edit[:new][:current_tab_key] = d
         @tabactive = d # Use JS to update the display
         break
@@ -259,7 +264,7 @@ class MiqRequestController < ApplicationController
     begin
       method = WORKFLOW_METHOD_WHITELIST[params[:field]]
       @edit[:wf].send(method, @edit[:new]) unless method.nil?
-    rescue => bang
+    rescue StandardError => bang
       add_flash(_("Error retrieving LDAP info: %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
@@ -275,6 +280,7 @@ class MiqRequestController < ApplicationController
   def filter_choice_not_all(key)
     choice = params[key]
     return nil if choice == 'all'
+
     choice
   end
 
@@ -508,7 +514,7 @@ class MiqRequestController < ApplicationController
                :userid       => session[:userid]}
       begin
         miq_request.destroy
-      rescue => bang
+      rescue StandardError => bang
         add_flash(_("Request \"%{name}\": Error during 'destroy': %{message}") %
                       {:name    => request_name,
                        :message => bang.message},
