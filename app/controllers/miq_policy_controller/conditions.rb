@@ -4,8 +4,9 @@ module MiqPolicyController::Conditions
   def condition_edit
     case params[:button]
     when "cancel"
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("condition_edit__#{id}", "replace_cell__explorer")
+
       @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
       if @condition.try(:id)
         add_flash(_("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat]), :name => @condition.description})
@@ -30,6 +31,7 @@ module MiqPolicyController::Conditions
     # Load @edit/vars for other buttons
     id = params[:id] || "new"
     return unless load_edit("condition_edit__#{params[:button] == "add" ? "new" : id}", "replace_cell__explorer")
+
     @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
 
     case params[:button]
@@ -134,6 +136,7 @@ module MiqPolicyController::Conditions
 
   def condition_field_changed
     return unless load_edit("condition_edit__#{params[:id]}", "replace_cell__explorer")
+
     @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
 
     @edit[:new][:description] = params[:description].presence if params[:description]
