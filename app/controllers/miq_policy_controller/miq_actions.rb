@@ -27,8 +27,9 @@ module MiqPolicyController::MiqActions
     end
 
     # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("action_edit__#{id}", "replace_cell__explorer")
+
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
     case params[:button]
     when "save", "add"
@@ -83,6 +84,7 @@ module MiqPolicyController::MiqActions
 
   def action_field_changed
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
+
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
     copy_params_if_present(@edit[:new], params, %i[description])
@@ -143,6 +145,7 @@ module MiqPolicyController::MiqActions
   def build_tags_select
     Classification.categories.sort_by(&:description).each_with_object({}) do |cls, obj|
       next unless cls.show && cls.entries.any? && !cls.read_only
+
       obj[cls.description] = cls.entries.sort_by(&:description).map do |ent|
         # The third argument here allows better fuzzy search in the dropdown
         [ent.description, ent.id, 'data-tokens' => cls.description]
