@@ -29,6 +29,7 @@ const sharedPackages = [
   'patternfly-sass',
   'prop-types',
   'react',
+  'react-bootstrap',
   'react-dom',
   'react-redux',
   'redux',
