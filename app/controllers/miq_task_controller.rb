@@ -360,7 +360,7 @@ class MiqTaskController < ApplicationController
     status = (opts.compact.symbolize_keys.keys & %i[ok queued error warn running])
     if status.any?
       status_scope_mapping = { :ok => :completed_ok, :warn => :completed_warn, :error => :completed_error } # remap reserved names
-      status.map! { |s| status_scope_mapping[s] ? status_scope_mapping[s] : s }
+      status.map! { |s| status_scope_mapping[s] || s }
       scope << [:with_status_in, *status]
     else
       scope << :no_status_selected
@@ -394,7 +394,7 @@ class MiqTaskController < ApplicationController
   def get_session_data
     super
     @layout = get_layout
-    @tabform       = session[:tabform] if session[:tabform]
+    @tabform = session[:tabform] if session[:tabform]
     @tasks_options = session[:tasks_options] || ""
   end
 
