@@ -82,7 +82,7 @@ module Mixins
                             end
                   Host.discoverByIpRange(from_ip, to_ip, options)
                 end
-              rescue => err
+              rescue StandardError => err
                 add_flash(_("%{title} Discovery returned: %{error_message}") % {:title => title, :error_message => err.message}, :error)
                 render :action => 'discover'
                 return
@@ -114,7 +114,7 @@ module Mixins
             page << javascript_prologue
             if params[:from_first]
               # params[:from][:first] =~ /[a-zA-Z]/
-              if params[:from_first] =~ /[\D]/
+              if /[\D]/.match?(params[:from_first])
                 temp = params[:from_first].gsub(/[\.]/, "")
                 field_shift = true if params[:from_first] =~ /[\.]/ && params[:from_first].gsub(/[\.]/, "") =~ /[0-9]/ && temp.gsub!(/[\D]/, "").nil?
                 page << "$('#from_first').val('#{j_str(params[:from_first]).gsub(/[\D]/, "")}');"
@@ -124,7 +124,7 @@ module Mixins
                 page << javascript_focus('from_second') if params[:from_first].length == 3
               end
             elsif params[:from_second]
-              if params[:from_second] =~ /[\D]/
+              if /[\D]/.match?(params[:from_second])
                 temp = params[:from_second].gsub(/[\.]/, "")
                 field_shift = true if params[:from_second] =~ /[\.]/ && params[:from_second].gsub(/[\.]/, "") =~ /[0-9]/ && temp.gsub!(/[\D]/, "").nil?
                 page << "$('#from_second').val('#{j_str(params[:from_second].gsub(/[\D]/, ""))}');"
@@ -134,7 +134,7 @@ module Mixins
                 page << javascript_focus('from_third') if params[:from_second].length == 3
               end
             elsif params[:from_third]
-              if params[:from_third] =~ /[\D]/
+              if /[\D]/.match?(params[:from_third])
                 temp = params[:from_third].gsub(/[\.]/, "")
                 field_shift = true if params[:from_third] =~ /[\.]/ && params[:from_third].gsub(/[\.]/, "") =~ /[0-9]/ && temp.gsub!(/[\D]/, "").nil?
                 page << "$('#from_third').val('#{j_str(params[:from_third].gsub(/[\D]/, ""))}');"
