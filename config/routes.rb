@@ -3098,6 +3098,7 @@ Rails.application.routes.draw do
         right_size_print
         launch_html5_console
         launch_vmrc_console
+        launch_native_console
         perf_chart_chooser
         policies
         protect
@@ -3159,6 +3160,7 @@ Rails.application.routes.draw do
         vm_pre_prov
         vm_vdi
         html5_console
+        native_console
         wait_for_task
         win32_services
         ownership_update
@@ -3186,6 +3188,7 @@ Rails.application.routes.draw do
         explorer
         launch_html5_console
         launch_vmrc_console
+        launch_native_console
         retirement_info
         reconfigure_form_fields
         policies
@@ -3257,6 +3260,7 @@ Rails.application.routes.draw do
         vm_pre_prov
         vmrc_console
         html5_console
+        native_console
         wait_for_task
         win32_services
         x_button
