@@ -87,7 +87,7 @@ module Mixins
                 :address => floating_ip,
                 :name    => @record.name
               })
-            rescue => ex
+            rescue StandardError => ex
               add_flash(_("Unable to associate Floating IP %{address} with Instance \"%{name}\": %{details}") % {
                 :address => floating_ip,
                 :name    => @record.name,
