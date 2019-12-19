@@ -6,19 +6,17 @@ module Mixins
 
         def each_host(host_ids, task_name)
           Host.where(:id => host_ids).order('lower(name)').each do |host|
-            begin
-              yield host
-            rescue => err
-              add_flash(
-                _("Host \"%{name}\": Error during '%{task}': %{message}") %
-                {
-                  :name    => host.name,
-                  :task    => task_name,
-                  :message => err.message
-                },
-                :error
-              )
-            end
+            yield host
+          rescue StandardError => err
+            add_flash(
+              _("Host \"%{name}\": Error during '%{task}': %{message}") %
+              {
+                :name    => host.name,
+                :task    => task_name,
+                :message => err.message
+              },
+              :error
+            )
           end
         end
 
