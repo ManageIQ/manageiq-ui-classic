@@ -93,7 +93,7 @@ module Mixins
                 :address => floating_ip,
                 :name    => @record.name
               })
-            rescue => ex
+            rescue StandardError => ex
               add_flash(_("Unable to disassociate Floating IP %{address} from Instance \"%{name}\": %{details}") % {
                 :address => floating_ip,
                 :name    => @record.name,
