@@ -14,4 +14,19 @@ class ApplicationHelper::Toolbar::PxeImageCenter < ApplicationHelper::Toolbar::B
       ]
     ),
   ])
+  button_group('pxe_image_policy', [
+    select(
+      :pxe_image_policy_choice,
+      nil,
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :pxe_image_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Pxe Image'),
+          N_('Edit Tags')),
+      ]
+    ),
+  ])
 end

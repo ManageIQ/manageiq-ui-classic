@@ -18,6 +18,7 @@ class PxeController < ApplicationController
     'pxe_image_type_new'            => :pxe_image_type_new,
     'pxe_image_type_edit'           => :pxe_image_type_edit,
     'pxe_image_type_delete'         => :pxe_image_type_delete,
+    'pxe_image_tag'                 => :pxe_image_tags_edit,
     'pxe_server_new'                => :pxe_server_new,
     'pxe_server_edit'               => :pxe_server_edit,
     'pxe_server_delete'             => :pxe_server_delete,
@@ -27,6 +28,7 @@ class PxeController < ApplicationController
     'iso_datastore_new'             => :iso_datastore_new,
     'iso_datastore_refresh'         => :iso_datastore_refresh,
     'iso_datastore_delete'          => :iso_datastore_delete,
+    'windows_image_tag'             => :windows_image_tags_edit,
     'iso_image_edit'                => :iso_image_edit,
     'customization_template_new'    => :customization_template_new,
     'customization_template_delete' => :customization_template_delete,
@@ -40,6 +42,14 @@ class PxeController < ApplicationController
 
   def pxe_server_tags_edit
     tag("PxeServer")
+  end
+
+  def windows_image_tags_edit
+    tag("WindowsImage")
+  end
+
+  def pxe_image_tags_edit
+    tag("PxeImage")
   end
 
   def previous_breadcrumb_url

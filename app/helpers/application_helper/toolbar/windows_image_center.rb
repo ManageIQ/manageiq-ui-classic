@@ -14,4 +14,19 @@ class ApplicationHelper::Toolbar::WindowsImageCenter < ApplicationHelper::Toolba
       ]
     ),
   ])
+  button_group('windows_image_policy', [
+    select(
+      :windows_image_policy_choice,
+      nil,
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :windows_image_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Windows Image'),
+          N_('Edit Tags')),
+      ]
+    ),
+  ])
 end

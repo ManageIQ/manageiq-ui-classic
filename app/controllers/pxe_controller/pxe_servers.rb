@@ -268,12 +268,16 @@ module PxeController::PxeServers
       if (nodes[0] == "ps" && nodes.length == 2) || (%w[pxe_xx win_xx].include?(nodes[1]) && nodes.length == 3)
         # on pxe server node OR folder node is selected
         @record = @ps = PxeServer.find(nodes.last)
+        session[:tag_db] = "PxeServer"
+        get_tag_items
         @right_cell_text = _("PXE Server \"%{name}\"") % {:name => @ps.name}
       elsif nodes[0] == "pi"
         @record = @img = PxeImage.find(nodes.last)
+        session[:tag_db] = "PxeImage"
         @right_cell_text = _("PXE Image \"%{name}\"") % {:name => @img.name}
       elsif nodes[0] == "wi"
         @record = @wimg = WindowsImage.find(nodes[1])
+        session[:tag_db] = "WindowsImage"
         @right_cell_text = _("Windows Image \"%{name}\"") % {:name => @wimg.name}
       end
     end

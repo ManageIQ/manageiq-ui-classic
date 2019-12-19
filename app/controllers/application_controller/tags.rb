@@ -41,8 +41,6 @@ module ApplicationController::Tags
   alias storage_tag tagging_edit
   alias infra_networking_tag tagging_edit
 
-  private ############################
-
   def get_tag_items
     record_ids = find_records_with_rbac(
       @tagging.instance_of?(String) ? @tagging.safe_constantize : @tagging,
@@ -51,6 +49,8 @@ module ApplicationController::Tags
     session[:tag_items] = record_ids
     session[:assigned_filters] = assigned_filters
   end
+
+  private ############################
 
   def tagging_edit_tags_reset
     get_tag_items if @explorer
