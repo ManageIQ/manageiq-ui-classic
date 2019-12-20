@@ -269,7 +269,6 @@ module PxeController::PxeServers
         # on pxe server node OR folder node is selected
         @record = @ps = PxeServer.find(nodes.last)
         session[:tag_db] = "PxeServer"
-        get_tag_items
         @right_cell_text = _("PXE Server \"%{name}\"") % {:name => @ps.name}
       elsif nodes[0] == "pi"
         @record = @img = PxeImage.find(nodes.last)
@@ -280,6 +279,7 @@ module PxeController::PxeServers
         session[:tag_db] = "WindowsImage"
         @right_cell_text = _("Windows Image \"%{name}\"") % {:name => @wimg.name}
       end
+      get_tagdata(@record)
     end
   end
 end
