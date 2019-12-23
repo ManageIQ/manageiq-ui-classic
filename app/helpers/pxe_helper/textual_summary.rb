@@ -33,7 +33,7 @@ module PxeHelper::TextualSummary
   end
 
   def textual_group_smart_management
-   %i[tags]
+    TextualTags.new(_('Smart Management'), %i[tags])
   end
 
   def textual_group_pxe_image_menus
