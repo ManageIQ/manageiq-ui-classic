@@ -57,6 +57,11 @@ class PxeController < ApplicationController
     url_for_only_path(:action => action)
   end
 
+  def tagging_edit_tags_reset
+    @gtl_type = 'list'
+    super
+  end
+
   def accordion_select
     super(true)
   end
