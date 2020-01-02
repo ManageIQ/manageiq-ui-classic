@@ -53,7 +53,8 @@ class PxeController < ApplicationController
   end
 
   def previous_breadcrumb_url
-    url_for_only_path(:action => @lastaction)
+    action = @lastaction == "pxe_server_list" ? "explorer" : @lastaction
+    url_for_only_path(:action => action)
   end
 
   def accordion_select
