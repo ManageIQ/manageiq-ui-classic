@@ -43,24 +43,19 @@ module OpsController::Diagnostics
     @refresh_partial = "#{@sb[:active_tab]}_tab"
     worker = MiqWorker.find(checked_or_params.first)
     wtype = worker.normalized_type
-    case wtype
-    when "ems_vimbroker"
-      pm_reset_broker
+    begin
+      svr = MiqServer.find(@sb[:selected_server_id])
+      worker.restart
+    rescue => bang
+      add_flash(_("Error during 'workers restart': %{message}") % {:message => bang.message}, :error)
     else
-      begin
-        svr = MiqServer.find(@sb[:selected_server_id])
-        worker.restart
-      rescue => bang
-        add_flash(_("Error during 'workers restart': %{message}") % {:message => bang.message}, :error)
-      else
-        audit = {:event        => "restart_workers",
-                 :message      => "Worker on Server '#{svr.name}' restarted",
-                 :target_id    => svr.id,
-                 :target_class => "MiqWorker",
-                 :userid       => session[:userid]}
-        AuditEvent.success(audit)
-        add_flash(_("'%{type}' Worker restart initiated successfully") % {:type => wtype})
-      end
+      audit = {:event        => "restart_workers",
+               :message      => "Worker on Server '#{svr.name}' restarted",
+               :target_id    => svr.id,
+               :target_class => "MiqWorker",
+               :userid       => session[:userid]}
+      AuditEvent.success(audit)
+      add_flash(_("'%{type}' Worker restart initiated successfully") % {:type => wtype})
     end
     @refresh_partial = "layouts/gtl"
     pm_get_workers
@@ -471,27 +466,6 @@ module OpsController::Diagnostics
     if @edit[:new][:start_date] != "" && (@edit[:new][:end_date] == "" || @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time)
       @edit[:new][:end_date] = @edit[:new][:start_date]
     end
-  end
-
-  def pm_reset_broker
-    @lastaction = "reset_broker"
-    ems = ExtManagementSystem.all
-    ems.each do |ms|
-      begin
-        ms.reset_vim_cache_queue # Run the task
-      rescue => bang
-        add_flash(_("Error during 'Clear Connection Broker cache': %{message}") % {:message => bang.message}, :error)
-      else
-        audit = {:event        => "reset_broker",
-                 :message      => "Connection Broker cache cleared successfully",
-                 :target_id    => ms.id,
-                 :target_class => "ExtManagementSystem",
-                 :userid       => session[:userid]}
-        AuditEvent.success(audit)
-        add_flash(_("Connection Broker cache cleared successfully"))
-      end
-    end
-    pm_get_workers
   end
 
   # Collect the current logs from the selected zone or server
