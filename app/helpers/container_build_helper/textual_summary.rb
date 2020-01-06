@@ -19,6 +19,7 @@ module ContainerBuildHelper::TextualSummary
   def textual_group_build_instances
     TextualMultilabel.new(
       _("Build Instances"),
+      :wide                   => true,
       :additional_table_class => "table-fixed",
       :values                 => collect_build_pods,
       :labels                 => [
