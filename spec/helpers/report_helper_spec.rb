@@ -3,11 +3,11 @@ def create_user_with_group(user_id, group_name, role)
   FactoryBot.create(:user, :userid => user_id, :miq_groups => [group])
 end
 
-def create_and_generate_report_for_user(report_name, user_id)
+def create_and_generate_report_for_user(report_name, user)
   MiqReport.seed_report(report_name)
   @rpt = MiqReport.where(:name => report_name).last
-  @rpt.generate_table(:userid => user_id)
-  report_result = @rpt.build_create_results(:userid => user_id)
+  @rpt.generate_table(:userid => user.userid)
+  report_result = @rpt.build_create_results(:userid => user.userid, :miq_group_id => user.current_group.id)
   report_result.reload
   @rpt
 end

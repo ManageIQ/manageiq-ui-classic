@@ -1,3 +1,5 @@
+require 'helpers/report_helper_spec'
+
 describe DashboardController do
   context "POST authenticate" do
     before { EvmSpecHelper.create_guid_miq_server_zone }
@@ -526,6 +528,29 @@ describe DashboardController do
       end
     end
   end
+
+
+  describe "widget_to_pdf" do
+    before do
+      EvmSpecHelper.local_miq_server
+      stub_user(:features => :all)
+    end
+
+    it "renders the print layout" do
+      user = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
+      report = create_and_generate_report_for_user("Vendor and Guest OS", user)
+      report_result_id = report.miq_report_results.first.id
+
+      expect(controller).to receive(:report_print_options)
+        .with(report, report.miq_report_results.first)
+        .and_call_original
+
+      get :widget_to_pdf, :params => { :rr_id => report_result_id }
+
+      expect(response).to render_template('layouts/print/report')
+    end
+  end
+
 
   def skip_data_checks(url = '/')
     allow_any_instance_of(UserValidationService).to receive(:server_ready?).and_return(true)
