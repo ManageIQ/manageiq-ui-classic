@@ -94,6 +94,21 @@ describe CloudSubnetController do
         expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
       end
     end
+
+    it 'asserts privileges and calls drop_breadcrumb' do
+      expect(controller).to receive(:assert_privileges).with('cloud_subnet_new')
+      expect(controller).to receive(:assert_privileges).with('ems_network_show_list')
+      expect(controller).to receive(:assert_privileges).with('cloud_tenant_show_list')
+      expect(controller).to receive(:assert_privileges).with('cloud_network_show_list')
+      expect(controller).to receive(:drop_breadcrumb).with(:name => 'Add New Subnet', :url => '/cloud_subnet/new')
+      controller.send(:new)
+    end
+
+    it 'renders cloud_subnet/new partial for user with privileges' do
+      stub_user(:features => :all)
+      post :new, :params => { :button => "new", :format => :js }
+      expect(response.body).to include("<cloud-subnet-form cloud-subnet-form-id='new'>")
+    end
   end
 
   describe "#create" do
@@ -125,12 +140,6 @@ describe CloudSubnetController do
     end
 
     before { stub_user(:features => :all) }
-
-    it "builds create screen" do
-      post :button, :params => { :pressed => "cloud_subnet_new", :format => :js }
-
-      expect(assigns(:flash_array)).to be_nil
-    end
 
     it "queues the create action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
