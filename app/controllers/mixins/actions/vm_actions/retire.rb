@@ -42,21 +42,18 @@ module Mixins
         alias_method :orchestration_stack_retire, :retirevms
 
         def retirement_info
-          case request.parameters[:controller]
-          when "orchestration_stack"
-            assert_privileges("orchestration_stack_retire")
-            kls = OrchestrationStack
-          when "service"
-            assert_privileges("service_retire")
-            kls = Service
-          when "vm_cloud", "vm"
-            assert_privileges("instance_retire")
-            kls = Vm
-          when "vm_infra"
-            assert_privileges("vm_retire")
-            kls = Vm
-          end
-          obj = kls.find_by(:id => params[:id])
+          obj = case request.parameters[:controller]
+                when 'orchestration_stack'
+                  assert_privileges('orchestration_stack_retire')
+                  OrchestrationStack.find_by(:id => params[:id])
+                when 'service'
+                  assert_privileges('service_retire')
+                  Service.find_by(:id => params[:id])
+                when 'vm', 'vm_cloud', 'vm_infra', 'vm_or_template'
+                  obj = Vm.find_by(:id => params[:id])
+                  obj.cloud ? assert_privileges('instance_retire') : assert_privileges('vm_retire')
+                  obj
+                end
           render :json => {
             :retirement_date    => obj.retires_on,
             :retirement_warning => obj.retirement_warn
