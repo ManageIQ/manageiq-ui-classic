@@ -19,6 +19,7 @@ module ContainerBuildHelper::TextualSummary
   def textual_group_build_instances
     TextualMultilabel.new(
       _("Build Instances"),
+      :wide                   => true,
       :additional_table_class => "table-fixed",
       :values                 => collect_build_pods,
       :labels                 => [
@@ -33,7 +34,9 @@ module ContainerBuildHelper::TextualSummary
   end
 
   def collect_build_pods
-    builds = @record.container_build_pods.collect do |build_pod|
+    @record.container_build_pods
+           .order('completion_timestamp desc')
+           .collect do |build_pod|
       [
         build_pod.name,
         build_pod.phase,
@@ -46,7 +49,6 @@ module ContainerBuildHelper::TextualSummary
         parse_duration(build_pod.duration),
       ]
     end
-    builds.sort! { |a, b| Time.parse(b[7] || Time.current.to_s).to_i <=> Time.parse(a[7] || Time.current.to_s).to_i }
   end
 
   #
