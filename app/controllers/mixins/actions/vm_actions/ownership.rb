@@ -55,10 +55,10 @@ module Mixins
           end
         end
 
-        alias_method :image_ownership, :set_ownership
-        alias_method :instance_ownership, :set_ownership
-        alias_method :vm_ownership, :set_ownership
-        alias_method :miq_template_ownership, :set_ownership
+        alias image_ownership set_ownership
+        alias instance_ownership set_ownership
+        alias vm_ownership set_ownership
+        alias miq_template_ownership set_ownership
 
         def get_class_from_controller_param(controller)
           case controller
@@ -86,6 +86,7 @@ module Mixins
           @origin_ownership_items = ownership_ids
           build_ownership_info(ownership_ids)
           return if @ownershipitems.empty?
+
           build_targets_hash(@ownershipitems)
           if @sb[:explorer]
             @refresh_partial = "shared/views/ownership"
@@ -115,6 +116,7 @@ module Mixins
           @groups = {}
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
           raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_ids.map(&:to_i).to_set
+
           {:user  => @user,
            :group => @group}
         end
