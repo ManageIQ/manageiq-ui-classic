@@ -61,15 +61,6 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             :confirm => N_("Shelve Offload this Instance?"),
             :klass   => ApplicationHelper::Button::GenericFeatureButton,
             :options => {:feature => :shelve_offload}),
-          included_class.button(
-            :instance_resume,
-            nil,
-            N_('Resume this Instance'),
-            N_('Resume'),
-            :icon    => "fa fa-play fa-lg",
-            :confirm => N_("Resume this Instance?"),
-            :klass   => ApplicationHelper::Button::GenericFeatureButton,
-            :options => {:feature => :start}),
           included_class.separator,
           included_class.button(
             :instance_guest_restart,

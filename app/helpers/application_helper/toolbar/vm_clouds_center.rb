@@ -256,17 +256,6 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :confirm      => N_("Shelve Offload the selected items?"),
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :instance_resume,
-          nil,
-          N_('Resume the selected items'),
-          N_('Resume'),
-          :icon         => 'fa fa-play fa-lg',
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Resume the selected items?"),
-          :enabled      => false,
-          :onwhen       => "1+"),
         separator,
         button(
           :instance_guest_restart,
