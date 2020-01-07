@@ -9,6 +9,7 @@
  *= require ./dual_list
  *= require ./dynamic_prefix_form_input
  *= require ./graphql_explorer
+ *= require ./login
  *= require ./masthead
  *= require ./metrics
  *= require ./miq_tree
