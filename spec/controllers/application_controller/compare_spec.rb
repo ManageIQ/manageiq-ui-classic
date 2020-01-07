@@ -1,3 +1,5 @@
+require ManageIQ::UI::Classic::Engine.root.join("spec/helpers/report_helper_spec.rb")
+
 describe ApplicationController do
   describe "#drift_history" do
     it "resets @display to main" do
@@ -23,6 +25,48 @@ describe ApplicationController do
       expect(controller).to receive(:javascript_prologue)
       expect(controller).to receive(:redirect_to).with(prev_breadcrumb[:url])
       controller.send(:compare_cancel)
+    end
+  end
+
+  describe "compare_to_pdf" do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:compare) do
+      first_vm = FactoryBot.create(:vm)
+      second_vm = FactoryBot.create(:vm)
+      report = FactoryBot.create(:miq_report, :col_order => [])
+
+      FactoryBot.build(
+        :miq_compare,
+        :report  => report,
+        :options => {
+          :ids     => [first_vm.id, second_vm.id],
+          :include => {
+            :hardware            => {:fetch => false, :fetched => false, :checked => false, :group => "Properties"},
+            :_model_             => {:fetch => true,  :fetched => false, :checked => true,  :group => "Properties"},
+            :"hardware.disks"    => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
+            :"hardware.cdroms"   => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
+            :"hardware.floppies" => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
+            :"hardware.nics"     => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
+            :"hardware.volumes"  => {:fetch => false, :fetched => false, :checked => false, :key   => :name, :group   => "Properties"}
+          }
+        }
+      )
+    end
+
+    it 'builds the compare report and renders it' do
+      session[:miq_compare] = Marshal.dump(compare)
+      controller.instance_variable_set(:@sb, {:compare_db => 'Vm'})
+
+      expect(controller).to receive(:create_compare_report).and_call_original
+      expect(controller).to receive(:render_pdf_internal).and_call_original
+      expect(controller).to receive(:report_print_options).and_call_original
+      expect(controller).to receive(:render)
+
+      controller.send(:compare_to_pdf)
     end
   end
 end
