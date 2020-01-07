@@ -1180,7 +1180,8 @@ describe ReportController do
       allow(User).to receive(:server_timezone).and_return("UTC")
       sb[:rep_tree_build_time] = Time.now.utc
       MiqWidgetSet.seed
-      @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
+      user2 = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
+      @rpt = create_and_generate_report_for_user("Vendor and Guest OS", user2)
 
       expect(controller).to receive(:reload_trees_by_presenter).with(
         instance_of(ExplorerPresenter),
@@ -1261,7 +1262,7 @@ describe ReportController do
         role = MiqUserRole.find_by(:name => "EvmRole-operator")
 
         # User1 with 2 groups(Group1,Group2), current group for User2 is Group2
-        create_user_with_group('User2', "Group1", role)
+        @user2 = create_user_with_group('User2', "Group1", role)
 
         @user1 = create_user_with_group('User1', "Group2", role)
         @user1.miq_groups << MiqGroup.where(:description => "Group1")
@@ -1272,7 +1273,7 @@ describe ReportController do
         before do
           os = OperatingSystem.create(:name => "RHEL 7", :product_name => "RHEL7")
           FactoryBot.create(:vm_vmware, :operating_system => os)
-          @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User2")
+          @rpt = create_and_generate_report_for_user("Vendor and Guest OS", @user2)
         end
 
         pending "is allowed to see report created under Group1 for User 1(with current group Group2)" do
@@ -1508,6 +1509,44 @@ describe ReportController do
       context 'a number' do
         let(:param) { "1234" }
         it { is_expected.to be_falsey }
+      end
+    end
+  end
+
+  context 'displaying reports' do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+      allow(controller).to receive(:server_timezone).and_return('UTC')
+      @user2 = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
+    end
+
+    describe "#print_report" do
+      render_views
+
+      let(:report_result_id) do
+        report = create_and_generate_report_for_user("Vendor and Guest OS", @user2)
+        report.miq_report_results.first.id
+      end
+
+      it 'renders the print layout' do
+        get :print_report, params: { :id => report_result_id }
+        expect(response).to render_template('layouts/print/report')
+      end
+    end
+
+    describe "report_print_options" do
+
+      it 'returns the print options' do
+        report = create_and_generate_report_for_user("Vendor and Guest OS", @user2)
+        result = report.miq_report_results.first
+
+        expect(controller.send(:report_print_options, report, result)).to match(
+          :page_layout => 'landscape',
+          :page_size   => report.page_size || 'a4',
+          :run_date    => format_timezone(result.last_run_on, result.user_timezone, "gtl"),
+          :title       => result.name
+        )
       end
     end
   end
