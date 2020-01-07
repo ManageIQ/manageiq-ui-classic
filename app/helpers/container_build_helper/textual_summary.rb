@@ -83,10 +83,10 @@ module ContainerBuildHelper::TextualSummary
 
   def link_to_pod(container_group)
     if container_group
-      link_to(container_group.name,
-              :action     => 'show',
-              :controller => 'container_group',
-              :id         => container_group.id)
+      {:value => container_group.name,
+       :link  => url_for_only_path(:action     => 'show',
+                                   :controller => 'container_group',
+                                   :id         => container_group.id)}
     else
       _("No Pod")
     end
