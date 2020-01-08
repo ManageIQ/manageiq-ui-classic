@@ -1,0 +1,14 @@
+.login-pf body {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+
+div#saml-login {
+  padding-bottom: 8px;
+  hr {
+    display: inline-block;
+    position: relative;
+    top: 15px;
+    width: 43%;
+  }
+}

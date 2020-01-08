@@ -40,11 +40,6 @@
     margin: 0 !important;
     padding: 0 !important;
   }
-
-  .login-pf body {
-    padding-bottom: 0 !important;
-    padding-top: 0 !important;
-  }
 }
 
 iframe,
@@ -59,30 +54,6 @@ iframe,
 
 /// ===================================================================
 /// end layout styling
-/// ===================================================================
-
-/// ===================================================================
-/// begin login screen styling
-/// ===================================================================
-
-.login-pf body {
-  padding-bottom: 0 !important;
-  padding-top: 0 !important;
-}
-
-div#saml-login {
-  padding-bottom: 8px;
-}
-
-div#saml-login hr {
-  display: inline-block;
-  position: relative;
-  top: 15px;
-  width: 43%;
-}
-
-/// ===================================================================
-/// end login screen styling
 /// ===================================================================
 
 /// ===================================================================
