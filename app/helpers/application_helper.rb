@@ -813,8 +813,8 @@ module ApplicationHelper
   # Returns description of a filter, for default filter also with "(Default)"
   def search_description(search)
     if default_search?(search.name) ||
-       no_default_search?(search.id) &&
-       settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0'
+       @edit && no_default_search?(search.id) &&
+       settings_default('0', :default_search, @edit&.dig(@expkey, :exp_model).to_s.to_sym).to_s == '0'
       _("%{description} (Default)") % {:description => search.description}
     else
       _("%{description}") % {:description => search.description}
