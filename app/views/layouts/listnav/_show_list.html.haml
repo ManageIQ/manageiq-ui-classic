@@ -10,17 +10,14 @@
         %ul.nav.nav-pills.nav-stacked
           - @def_searches.each do |search|
             - li_class = ""
-            - search_name = search.description
             - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i.zero?)
               -# highlight if default is selected, or first time in
               - if @edit && @edit[:expression] && ((@edit[:expression][:selected].nil? && @edit[:selected].nil?) || (!@edit[:expression][:selected].nil? && @edit[:expression][:selected][:id] == search.id.to_i && !@edit[:custom_search]))
                 - li_class = "active"
             - elsif @edit && @edit[:expression] && ((@edit[:expression][:selected] && @edit[:expression][:selected][:id].zero? && search.id.to_i.zero?) || (@edit[:expression][:selected] && @edit[:expression][:selected][:name] == search.name && !@edit[:custom_search]))
               - li_class = "active"
-            - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i.zero? && settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0')
-              - search_name << " (#{_('Default')})"
             %li{:class => li_class}
-              = link_to(search_name.html_safe,
+              = link_to(search_description(search).html_safe,
                 {:action => 'listnav_search_selected', :id => search.id, :button => "apply"},
                 :remote       => true,
                 "data-method" => :post,
@@ -34,16 +31,13 @@
         %ul.nav.nav-pills.nav-stacked
           - @my_searches.each do |search|
             - li_class = ""
-            - search_name = search.description
             - if !@default_search.blank? && @default_search.name == search.name
               - if @edit && @edit[:expression] && ((@edit[:expression][:selected].nil? && @edit[:selected].nil?) || (!@edit[:expression][:selected].nil? && @edit[:expression][:selected][:id] == search.id.to_i && !@edit[:custom_search]))
                 - li_class = "active"
             - elsif @edit && @edit[:expression] && ((@edit[:expression][:selected].nil? && search.id.to_i.zero?) || (@edit[:expression][:selected] && @edit[:expression][:selected][:name] == search.name && !@edit[:custom_search]))
               - li_class = "active"
             %li{:class => "#{li_class}"}
-              - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i.zero? && settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0')
-                - search_name << " (#{_('Default')})"
-              = link_to(search.description.html_safe,
+              = link_to(search_description(search).html_safe,
                 {:action => 'listnav_search_selected', :id => search.id, :button => "apply"},
                 :remote       => true,
                 "data-method" => :post,

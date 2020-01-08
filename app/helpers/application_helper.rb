@@ -802,6 +802,25 @@ module ApplicationHelper
        vm].include?(@layout)
   end
 
+  def default_search?(search_name)
+    @default_search.present? && @default_search.name == search_name
+  end
+
+  def no_default_search?(search_id)
+    @default_search.blank? && search_id.to_i.zero?
+  end
+
+  # Returns description of a filter, for default filter also with "(Default)"
+  def search_description(search)
+    if default_search?(search.name) ||
+       no_default_search?(search.id) &&
+       settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0'
+      _("%{description} (Default)") % {:description => search.description}
+    else
+      _("%{description}") % {:description => search.description}
+    end
+  end
+
   # Do we show or hide the clear_search link in the list view title
   def clear_search_status
     !!(@edit&.fetch_path(:adv_search_applied, :text))
