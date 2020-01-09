@@ -31,6 +31,7 @@ module Mixins
 
         def name_changed
           return unless load_edit("vm_rename__#{params[:id]}")
+
           rename_get_form_vars
           @changed = changed = session[:changed] = @edit[:new] != @edit[:current]
           render :update do |page|
@@ -62,6 +63,7 @@ module Mixins
         # Button actions for VM's renaming screen
         def rename_vm
           return unless load_edit("vm_rename__#{params[:id]}")
+
           @explorer = true if @edit[:explorer]
           rename_get_form_vars
           case params[:button]
