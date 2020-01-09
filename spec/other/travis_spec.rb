@@ -1,5 +1,5 @@
 describe 'travis.yml' do
-  let(:travis) { YAML.safe_load(File.open(ManageIQ::UI::Classic::Engine.root.join('.travis.yml'))) }
+  let(:travis) { YAML.safe_load(File.read(ManageIQ::UI::Classic::Engine.root.join('.travis.yml'))) }
   let(:versions) { travis['rvm'] }
 
   it "matches versions and excludes for multiple ruby versions" do

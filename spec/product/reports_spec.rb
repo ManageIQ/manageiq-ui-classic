@@ -18,7 +18,7 @@ describe 'YAML reports' do
 
   shared_examples "all report type examples" do |report_yaml|
     let(:yaml)        { report_yaml }
-    let(:report_data) { YAML.load(File.open(yaml)) }
+    let(:report_data) { YAML.load(File.read(yaml)) }
 
     it 'defines headers that match col_order' do
       col_order = report_data['col_order'].length
@@ -30,7 +30,7 @@ describe 'YAML reports' do
   context "regular reports" do
     shared_examples "regular report examples" do |report_yaml|
       let(:yaml)        { report_yaml }
-      let(:report_data) { YAML.load(File.open(yaml)) }
+      let(:report_data) { YAML.load(File.read(yaml)) }
 
       it 'can be built even though without data' do
         # TODO: ApplicationController::Performance::CHARTS_REPORTS_FOLDER

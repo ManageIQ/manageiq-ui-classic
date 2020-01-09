@@ -3,13 +3,13 @@ describe ChartsLayoutService do
   let(:host_redhat) { FactoryBot.create(:host_redhat) }
   let(:vm_openstack) { FactoryBot.create(:vm_openstack) }
   let(:host_openstack_infra_chart) do
-    YAML.load(File.open(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'ManageIQ_Providers_Openstack_InfraManager_Host') + '.yaml'))
+    YAML.load(File.read(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'ManageIQ_Providers_Openstack_InfraManager_Host') + '.yaml'))
   end
   let(:host_chart) do
-    YAML.load(File.open(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'Host') + '.yaml'))
+    YAML.load(File.read(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_perf_charts', 'Host') + '.yaml'))
   end
   let(:layout_chart) do
-    YAML.load(File.open(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_util_charts') + '.yaml'))
+    YAML.load(File.read(File.join(ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER, 'daily_util_charts') + '.yaml'))
   end
 
   describe "#layout" do

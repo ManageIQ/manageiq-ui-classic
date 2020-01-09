@@ -26,7 +26,7 @@ class ChartsLayoutService
   private
 
   def build_charts
-    YAML.load(File.open(find_chart_path))
+    YAML.load(File.read(find_chart_path))
   end
 
   def find_chart_path

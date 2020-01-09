@@ -562,7 +562,7 @@ module ApplicationController::Performance
 
   # Load a chart miq_report object from YML
   def perf_get_chart_rpt(chart_rpt)
-    MiqReport.new(YAML.load(File.open("#{CHARTS_REPORTS_FOLDER}/#{chart_rpt}.yaml")))
+    MiqReport.new(YAML.load(File.read("#{CHARTS_REPORTS_FOLDER}/#{chart_rpt}.yaml")))
   end
 
   # Load a chart layout from YML

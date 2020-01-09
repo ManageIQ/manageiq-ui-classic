@@ -51,7 +51,7 @@ describe ApplicationController do
     it "use report_name when is passed" do
       report_name = "ProvisionCloudTemplates.yaml"
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", report_name).to_s
-      view = MiqReport.new(YAML.load(File.open(path_to_report)))
+      view = MiqReport.new(YAML.load(File.read(path_to_report)))
       expect(controller).to_not receive(:get_db_view)
       controller.params = {:active_tree => "instances_tree"}
       controller.params = {:model_name => "ManageIQ::Providers::CloudManager::Template"}
