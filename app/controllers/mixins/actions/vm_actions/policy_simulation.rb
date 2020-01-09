@@ -33,10 +33,10 @@ module Mixins
             end
           end
         end
-        alias_method :image_policy_sim, :polsimvms
-        alias_method :instance_policy_sim, :polsimvms
-        alias_method :vm_policy_sim, :polsimvms
-        alias_method :miq_template_policy_sim, :polsimvms
+        alias image_policy_sim polsimvms
+        alias instance_policy_sim polsimvms
+        alias vm_policy_sim polsimvms
+        alias miq_template_policy_sim polsimvms
       end
     end
   end
