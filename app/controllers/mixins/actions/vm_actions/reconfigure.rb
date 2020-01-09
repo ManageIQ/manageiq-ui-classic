@@ -420,12 +420,12 @@ module Mixins
           end
 
           reconfigure_param_list.each do |params_key, options_key|
-             next if params[params_key].blank?
-             params[params_key].each do |_key, p|
-               p.transform_values! { |v| eval_if_bool_string(v) }
-             end
-             options[options_key] = params[params_key].values.map(&:to_unsafe_h)
-           end
+            next if params[params_key].blank?
+            params[params_key].each do |_key, p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[options_key] = params[params_key].values.map(&:to_unsafe_h)
+          end
 
           if params[:id] && params[:id] != 'new'
             @request_id = params[:id]
