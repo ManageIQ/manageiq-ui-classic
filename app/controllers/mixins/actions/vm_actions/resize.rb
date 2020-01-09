@@ -82,7 +82,7 @@ module Mixins
                   :old_flavor => old_flavor_name,
                   :new_flavor => flavor.name
                 })
-              rescue => ex
+              rescue StandardError => ex
                 add_flash(_("Unable to reconfigure Instance \"%{name}\": %{details}") % {
                   :name    => @record.name,
                   :details => get_error_message_from_fog(ex.to_s)
@@ -112,12 +112,11 @@ module Mixins
           @request_id = params[:id]
           @record = find_record_with_rbac(VmOrTemplate, params[:objectId])
           flavors = []
-          unless @record.ext_management_system.nil?
-            @record.ext_management_system.flavors.each do |ems_flavor|
-              # include only flavors with root disks at least as big as the instance's current root disk.
-              if @record.flavor.nil? || ((ems_flavor != @record.flavor) && (ems_flavor.root_disk_size >= @record.flavor.root_disk_size))
-                flavors << {:name => ems_flavor.name_with_details, :id => ems_flavor.id}
-              end
+          # include only flavors with root disks at least as big as the instance's current root disk.
+          @record.ext_management_system&.flavors&.each do |ems_flavor|
+            # include only flavors with root disks at least as big as the instance's current root disk.
+            if @record.flavor.nil? || ((ems_flavor != @record.flavor) && (ems_flavor.root_disk_size >= @record.flavor.root_disk_size))
+              flavors << {:name => ems_flavor.name_with_details, :id => ems_flavor.id}
             end
           end
           resize_values = {
