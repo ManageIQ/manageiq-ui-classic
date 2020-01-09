@@ -142,6 +142,7 @@ module Mixins
             if reconfig_item
               reconfig_item.first.hardware.disks.each do |disk|
                 next if disk.device_type != 'disk'
+
                 removing = ''
                 delbacking = false
                 if disk.filename && @req.options[:disk_remove]
@@ -255,6 +256,7 @@ module Mixins
           vmdisks = []
           @reconfigureitems.first.hardware.disks.sort_by(&:filename).each do |disk|
             next if disk.device_type != 'disk'
+
             dsize, dunit = reconfigure_calculations(disk.size / (1024 * 1024))
             vmdisks << {:hdFilename  => disk.filename,
                         :hdType      => disk.disk_type,
@@ -356,11 +358,11 @@ module Mixins
         #
         # {"a" => "true", "b" => "false", "c" => "42"}.transform_values! { |v| eval_if_bool_string(v) }
         # => {"a" => true, "b" => false, "c" => "42"}
-        def eval_if_bool_string(s)
-          case s
+        def eval_if_bool_string(str)
+          case str
           when 'true'  then true
           when 'false' then false
-          else              s
+          else              str
           end
         end
 
@@ -421,6 +423,7 @@ module Mixins
 
           reconfigure_param_list.each do |params_key, options_key|
             next if params[params_key].blank?
+
             params[params_key].each do |_key, p|
               p.transform_values! { |v| eval_if_bool_string(v) }
             end
