@@ -45,11 +45,6 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        'ff ff-database-squeezed fa-lg',
                        N_('CPU/Memory Recommendations of this Image'),
                        N_('Right-Size Recommendations')),
-                     button(
-                       :image_reconfigure,
-                       'pficon pficon-edit fa-lg',
-                       N_('Reconfigure the Memory/CPU of this Image'),
-                       N_('Reconfigure this Image')),
                    ]
                  ),
                ])
