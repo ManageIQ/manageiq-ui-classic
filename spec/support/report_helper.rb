@@ -72,7 +72,7 @@ module Spec
       end
 
       def null_data_chart_with_basic_condition
-        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp = YAML.load('--- !ruby/object:MiqExpression
         exp:
           INCLUDES:
             field: Name
@@ -82,7 +82,7 @@ module Spec
       end
 
       def null_data_chart_with_complex_condition
-        exp = YAML.safe_load('--- !ruby/object:MiqExpression
+        exp = YAML.load('--- !ruby/object:MiqExpression
         exp:
           and:
           - IS:
