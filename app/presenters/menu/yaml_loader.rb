@@ -18,7 +18,7 @@ module Menu
     private
 
     def load_custom_item(file_name)
-      properties = YAML.load(File.open(file_name))
+      properties = YAML.load(File.read(file_name))
       if properties['type'] == 'section'
         @sections << create_custom_menu_section(properties)
       else
