@@ -45,12 +45,12 @@ module Mixins
           obj = case request.parameters[:controller]
                 when 'orchestration_stack'
                   assert_privileges('orchestration_stack_retire')
-                  OrchestrationStack.find_by(:id => params[:id])
+                  find_record_with_rbac(OrchestrationStack, params[:id])
                 when 'service'
                   assert_privileges('service_retire')
-                  Service.find_by(:id => params[:id])
+                  find_record_with_rbac(Service, params[:id])
                 when 'vm', 'vm_cloud', 'vm_infra', 'vm_or_template'
-                  obj = Vm.find_by(:id => params[:id])
+                  obj = find_record_with_rbac(Vm, params[:id])
                   obj.cloud ? assert_privileges('instance_retire') : assert_privileges('vm_retire')
                   obj
                 end
