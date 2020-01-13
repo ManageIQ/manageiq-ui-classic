@@ -148,11 +148,23 @@ module ApplicationController::Filter
       s
     end
 
-    # save the last search loaded
+    # Set the selected and last loaded filter
     def select_filter(miq_search, last_loaded = false)
-      self.selected = {:id => miq_search.id, :name => miq_search.name, :description => miq_search.description,
-                       :typ => miq_search.search_type}
+      self.selected = filter_info(miq_search)
       self.exp_last_loaded = selected if last_loaded
+    end
+
+    # Get the id, name, description and typ of a filter
+    def filter_info(miq_search)
+      {:id          => miq_search.id,
+       :name        => miq_search.name,
+       :description => miq_search.description,
+       :typ         => miq_search.search_type}
+    end
+
+    # Set the last loaded filter
+    def last_loaded_filter(miq_search)
+      self.exp_last_loaded = filter_info(miq_search)
     end
 
     def update_from_expression_editor(params)
