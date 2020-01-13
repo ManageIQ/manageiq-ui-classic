@@ -65,7 +65,7 @@
     "moment-strftime": "~0.5.0",
     "moment-timezone": "~0.5.21",
     "numeral": "~2.0.6",
-    "patternfly": "~3.59.1",
+    "patternfly": "~3.59.4",
     "patternfly-bootstrap-treeview": "~2.1.7",
     "patternfly-react": "~2.39.10",
     "prop-types": "^15.6.0",
