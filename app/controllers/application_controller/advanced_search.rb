@@ -331,7 +331,7 @@ module ApplicationController::AdvancedSearch
         @edit = session[:edit]
         @view = session[:view]
         @edit[:adv_search_applied] = nil
-        @edit[:expression][:exp_last_loaded] = nil
+        @edit[:expression][:exp_last_loaded] = @edit[:expression][:selected] = nil
         session[:adv_search] ||= {}                                         # Create/reuse the adv search hash
         session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
         default_search = settings(:default_search, @view.db.to_s.to_sym)
