@@ -69,6 +69,35 @@ describe ApplicationController do
       controller.send(:compare_to_pdf)
     end
   end
+
+  describe "download_data" do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    # http://lucifer.usersys.redhat.com:3000/container_build/download_data?download_type=pdf#/
+    it 'builds a report from the GTL data' do
+      user = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
+      report = create_and_generate_report_for_user("Vendor and Guest OS", user)
+
+      session[:view] = report #FactoryBot.create(:miq_report, :col_order => [])
+      session[:paged_view_search_options] = {}
+      controller.params = {:download_type => 'pdf'}
+
+      expect(controller).to receive(:render).with(
+        hash_including(
+          :template => '/layouts/print/report',
+          :layout   => '/layouts/print',
+          :locals   => hash_including(
+            :report # the report does not match due to a ".dup" call in the controller.
+          ),
+        )
+      )
+
+      controller.send(:download_data)
+    end
+  end
 end
 
 describe EmsClusterController do
