@@ -37,9 +37,9 @@ module Mixins
           end
         end
 
-        alias_method :instance_retire, :retirevms
-        alias_method :vm_retire, :retirevms
-        alias_method :orchestration_stack_retire, :retirevms
+        alias instance_retire retirevms
+        alias vm_retire retirevms
+        alias orchestration_stack_retire retirevms
 
         def retirement_info
           obj = case request.parameters[:controller]
