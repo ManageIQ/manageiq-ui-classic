@@ -27,14 +27,22 @@ module ApplicationController::ReportDownloads
   end
 
   def render_pdf_internal(report)
-    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-    result = report.build_create_results(:userid => userid)
-
     # Use result from paging, if present
+    # Set in report_first_page
     result ||= MiqReportResult.for_user(current_user).find(@sb[:pages][:rr_id]) if @sb[:pages]
-    # Use report_result_id in session, if present
+    # Use report_result_id in session, if present. (This is set in get/set_session_data.)
     result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
 
+    # This branch is used when called from e.g. compare_to_pdf
+    result ||= (
+      userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+      report.build_create_results(:userid => userid)
+    )
+
+    render_pdf_internal_rr(report, result)
+  end
+
+  def render_pdf_internal_rr(report, result)
     @options = report_print_options(report, result) # used by the layouts/print
     render(
       :template => '/layouts/print/report',
@@ -54,7 +62,8 @@ module ApplicationController::ReportDownloads
   # Show the current widget report in pdf format
   def widget_to_pdf
     session[:report_result_id] = params[:rr_id]
-    render_pdf_internal(report_from_report_results(params[:rr_id]))
+    report, rr = rrr_from_report_results(params[:rr_id])
+    render_pdf_internal_rr(report, rr)
   end
 
   def render_report_data_init(render_type)
@@ -133,7 +142,7 @@ module ApplicationController::ReportDownloads
     result.destroy
   end
 
-  # Download currently displayed view
+  # Download currently displayed view. Called from GTL screens.
   def download_data
     view = session[:view].dup if session[:view] # Copy session view, if it exists
     options = session[:paged_view_search_options].merge(:page => nil, :per_page => nil) # Get all pages
@@ -163,27 +172,30 @@ module ApplicationController::ReportDownloads
     send_data(view.to_csv, :filename => "#{filename}.csv")
   end
 
-  # Send the current report in pdf format
-  def download_pdf(view)
-    render_pdf_internal(view)
+  # Send the current report (displayed in GTL) in pdf format.
+  def download_pdf(report)
+    userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+    result = report.build_create_results(:userid => userid)
+    render_pdf_internal_rr(report, result)
   end
 
   def report_from_task_id(task_id)
     MiqTask.find(task_id).task_results
   end
 
-  def report_from_report_results(report_result_id)
+  def rrr_from_report_results(report_result_id)
     rr = MiqReportResult.for_user(current_user).find(report_result_id)
-    report = rr.report_results
-    report.report_run_time = rr.last_run_on
-    report
+    report = rr.report_results # TODO: this is strange
+    report.report_run_time = rr.last_run_on # TODO: is this line needed?
+    [report, rr]
   end
 
   def report_for_rendering
     if session[:rpt_task_id]
       report_from_task_id(session[:rpt_task_id])
     elsif session[:report_result_id]
-      report_from_report_results(session[:report_result_id])
+      report, _rr = rrr_from_report_results(session[:report_result_id])
+      report
     end
   end
 
