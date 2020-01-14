@@ -3,230 +3,74 @@
 #basic_info_div
   = hidden_div_if(@edit && @edit[:ae_tree_select] != true, :id => "ae_tree_select_div") do
     = render(:partial => 'layouts/ae_tree_select')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Name / Description')
-      .col-md-8{:style => "padding: 0px;"}
-        .col-md-4
-          = text_field_tag("name",
-                           @edit[:new][:name].to_s,
-                           :maxlength         => 40,
-                           :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        .col-md-4
-          = text_field_tag("description",
-                           @edit[:new][:description],
-                           :maxlength         => 60,
-                           :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        .col-md-3
-          = check_box_tag("display", "1", @edit[:new][:display],
-                          "data-miq_observe_checkbox" => {:url => url}.to_json)
-          = _('Display in Catalog')
-    = javascript_tag(javascript_focus('name'))
-    .form-group
-      %label.col-md-2.control-label
-        = _('Catalog')
-      .col-md-4
-        - catalog_id = @edit[:new][:catalog_id]
-        = select_tag('catalog_id',
-                     options_for_select(([["<#{_('Unassigned')}>", nil]]) + @available_catalogs, catalog_id),
-                     "data-miq_sparkle_on" => true,
-                     :class                => "selectpicker")
-        :javascript
-          miqInitSelectPicker();
-          miqSelectPickerEvent('catalog_id', '#{url}')
-    .form-group
-      %label.col-md-2.control-label
-        = _('Dialog')
-      .col-md-4
-        %p.form-control-static
-          - available_dialogs = @edit[:new][:available_dialogs].invert.to_a.sort_by { |a| a.first.downcase }
-          - options = [["<#{_('No Dialog')}>", nil]] + available_dialogs
-          = select_tag('dialog_id',
-                        options_for_select(options, @edit[:new][:dialog_id]),
-                        "data-miq_sparkle_on" => true,
-                        :class                => "selectpicker")
-          :javascript
-            miqSelectPickerEvent('dialog_id', '#{url}')
-    - unless @edit[:new][:service_type] == "composite"
-      .form-group
-        %label.col-md-2.control-label
-          = _('Zone')
-        .col-md-4
-          %p.form-control-static
-            = select_tag('zone_id',
-                          options_for_select([[_("<Choose>"), nil]] + @zones, @edit[:new][:zone_id]),
-                          "data-miq_sparkle_on" => true,
-                          :class                => "selectpicker")
-            :javascript
-              miqSelectPickerEvent('zone_id', '#{url}')
-    /Add a new selector for the currencies
-    .form-group
-      %label.col-md-2.control-label
-        = _('Select currency')
-      .col-md-4
-        %p.form-control-static
-          - currency = Array(Currency.currencies_for_select)
-          = select_tag("currency",
-            options_for_select([[_("<Choose>"), nil]] + currency, @edit[:new][:currency]),
-            "data-live-search" => "true",
-            "class"            => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("currency", "#{url}");
-
-    .form-group
-      %label.col-md-2.control-label
-        %span#price_span
-          = @edit[:new][:code_currency]
-      .col-md-8{:style => "padding: 0px;"}
-        .col-md-4
-          = text_field_tag("price",
-                           @edit[:new][:price].to_s,
-                           :maxlength         => 40,
-                           :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-
-    - if @edit[:new][:st_prov_type] == "generic"
-      .form-group
-        %label.col-md-2.control-label
-          = _('Subtype')
-        .col-md-4
-          %p.form-control-static
-            - if @record.try(:id)
-              = h(_(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@edit[:new][:generic_subtype]]))
-            - else
-              - available_subtypes = ServiceTemplate::GENERIC_ITEM_SUBTYPES.map { |k, v| [_(v), k]} .sort_by { |a| a.first.downcase }
-              = select_tag('generic_subtype',
-                            options_for_select(available_subtypes, @edit[:new][:generic_subtype]),
-                            "data-miq_sparkle_on" => true,
-                            :class                => "selectpicker")
-              :javascript
-                miqSelectPickerEvent('generic_subtype', '#{url}')
-    - if @edit[:new][:st_prov_type] == "generic_orchestration"
-      - opts = [["<#{_('Choose')}>", nil]] + @edit[:new][:available_templates]
-      .form-group
-        %label.col-md-2.control-label
-          = _('Orchestration Template')
-        .col-md-8
-          = select_tag('template_id',
-                        options_for_select(opts, @edit[:new][:template_id]),
-                        "data-miq_sparkle_on" => true,
-                        :class                => "selectpicker")
-          :javascript
-            miqSelectPickerEvent('template_id', '#{url}')
-      - if @edit[:new][:template_id]
-      - opts = [["<#{_('Choose')}>", nil]] + @edit[:new][:available_managers]
-        .form-group
-          %label.col-md-2.control-label
-            = _('Provider')
-          .col-md-8
-            = select_tag('manager_id',
-                         options_for_select(opts, @edit[:new][:manager_id]),
-                         "data-miq_sparkle_on" => true,
-                         :class               => "selectpicker")
-            :javascript
-              miqSelectPickerEvent('manager_id', '#{url}')
-    - elsif %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
-      - opts = [["<#{_('Choose')}>", nil]] + @edit[:new][:available_managers]
-      .form-group
-        %label.col-md-2.control-label
-          = _('Provider')
-        .col-md-8
-          = select_tag('manager_id',
-                       options_for_select(opts, @edit[:new][:manager_id]),
-                       "data-miq_sparkle_on" => true,
-                       :class                => "selectpicker")
-          :javascript
-            miqSelectPickerEvent('manager_id', '#{url}')
-      - if @edit[:new][:manager_id]
-        .form-group
-          %label.col-md-2.control-label
-            = @edit[:new][:st_prov_type] == "generic_ansible_tower" ? _('Ansible Tower Template') : _('Container Template')
-          .col-md-8
-            - if @edit[:new][:st_prov_type] == "generic_ansible_tower"
-              = select_tag('template_id',
-                            grouped_options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
-                            "data-miq_sparkle_on" => true,
-                            :class                => "selectpicker")
-            - else
-              = select_tag('template_id',
-                       options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
-                       "data-miq_sparkle_on" => true,
-                       :class                => "selectpicker")
-            :javascript
-              miqSelectPickerEvent('template_id', '#{url}')
-    .form-group
-      %label.col-md-2.control-label{:title => _("Provisioning Entry Point (NameSpace/Class/Instance)")}
+  = react('CatalogItemForm', {catalogItemId: @record.id.to_s})
+  .container-fluid
+    .form-group{:style => "width: 50%"}
+      %label.control-label
         = _('Provisioning Entry Point')
-      .col-md-8{:title => @edit[:new][:fqname]}
+      .input-group
+        = text_field_tag("fqname",
+                         @edit[:new][:fqname],
+                         :class   => "form-control",
+                         :onFocus => 'miqShowAE_Tree("provision");miqButtons("hide", "automate");')
+        %span.input-group-btn
+          = link_to({:action => 'ae_tree_select_discard',
+                   :typ => "provision"},
+                  :id => "fqname_div",
+                  "data-miq_sparkle_on"  => true,
+                  "data-miq_sparkle_off" => true,
+                  "data-confirm"         => _("Are you sure you want to remove this Provisioning Entry Point?"),
+                  "data-method"          => :post,
+                  :remote                => true,
+                  :style => @edit[:new][:fqname] != "" ? "" : "display:none",
+                  :class                 => "btn btn-default",
+                  :title                 => _("Remove this Provisioning Entry Point")) do
+            %i.pficon.pficon-close
+  - unless @edit[:new][:st_prov_type] == 'generic_container_template'
+    .container-fluid
+      .form-group{:style => "width: 50%"}
+        %label.control-label{:title => _("Reconfigure Entry Point (NameSpace/Class/Instance)")}
+        = _('Reconfigure Entry Point')
         .input-group
-          = text_field_tag("fqname",
-                           @edit[:new][:fqname],
-                           :class   => "form-control",
-                           :onFocus => 'miqShowAE_Tree("provision");miqButtons("hide", "automate");')
-          %span.input-group-btn
-            #fqname_div{:style => @edit[:new][:fqname] != "" ? "" : "display:none"}
-              = link_to({:action => 'ae_tree_select_discard',
-                         :typ => "provision"},
-                        "data-miq_sparkle_on"  => true,
-                        "data-miq_sparkle_off" => true,
-                        "data-confirm"         => _("Are you sure you want to remove this Provisioning Entry Point?"),
-                        "data-method"          => :post,
-                        :remote                => true,
-                        :class                 => "btn btn-default",
-                        :title                 => _("Remove this Provisioning Entry Point")) do
-                %i.pficon.pficon-close
-          %span.input-group-addon{:style => "visibility:hidden"}
-    - unless @edit[:new][:st_prov_type] == 'generic_container_template'
-      .form-group
-        %label.col-md-2.control-label{:title => _("Reconfigure Entry Point (NameSpace/Class/Instance)")}
-          = _('Reconfigure Entry Point')
-        .col-md-8{:title => @edit[:new][:reconfigure_fqname]}
-          .input-group
-            = text_field_tag("reconfigure_fqname",
+          = text_field_tag("reconfigure_fqname",
                              @edit[:new][:reconfigure_fqname],
                              :class             => "form-control",
                              :onFocus           => 'miqShowAE_Tree("reconfigure");miqButtons("hide", "automate");',
                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-            %span.input-group-btn
-              #reconfigure_fqname_div{:style => @edit[:new][:reconfigure_fqname] != "" ? "" : "display:none"}
-                = link_to({:action => 'ae_tree_select_discard',
+          %span.input-group-btn
+            = link_to({:action => 'ae_tree_select_discard',
                            :typ => "reconfigure"},
+                           :id => "reconfigure_fqname_div",
                           "data-miq_sparkle_on"  => true,
                           "data-miq_sparkle_off" => true,
                           "data-confirm"         => _("Are you sure you want to remove this Reconfigure Entry Point?"),
                           "data-method"          => :post,
                           :remote                => true,
+                          :style => @edit[:new][:reconfigure_fqname] != "" ? "" : "display:none",
                           :class                 => "btn btn-default",
                           :title                 => _("Remove this Reconfigure Entry Point")) do
-                  %i.pficon.pficon-close
-            %span.input-group-addon{:style => "visibility:hidden"}
-
-      .form-group
-        %label.col-md-2.control-label{:title => _("Retirement Entry Point (NameSpace/Class/Instance)")}
+              %i.pficon.pficon-close
+    .container-fluid
+      .form-group{:style => "width: 50%"}
+        %label.control-label{:title => _("Retirement Entry Point (NameSpace/Class/Instance)")}
           = _('Retirement Entry Point')
-        .col-md-8{:title => @edit[:new][:retire_fqname]}
           .input-group
             = text_field_tag("retire_fqname",
                              @edit[:new][:retire_fqname],
                              :class   => "form-control",
                              :onFocus => 'miqShowAE_Tree("retire");miqButtons("hide", "automate");')
             %span.input-group-btn
-              #retire_fqname_div{:style => @edit[:new][:retire_fqname] != "" ? "" : "display:none"}
-                = link_to({:action => 'ae_tree_select_discard',
+              = link_to({:action => 'ae_tree_select_discard',
                            :typ => "retire"},
+                           :id => "retire_fqname_div",
                           "data-miq_sparkle_on"  => true,
                           "data-miq_sparkle_off" => true,
                           "data-confirm"         => _("Are you sure you want to remove this Retirement Entry Point?"),
                           "data-method"          => :post,
                           :remote                => true,
+                          :style => @edit[:new][:retire_fqname] != "" ? "" : "display:none",
                           :class                 => "btn btn-default",
                           :title                 => _("Remove this Retirement Entry Point")) do
-                  %i.pficon.pficon-close
-            %span.input-group-addon{:style => "visibility:hidden"}
-    - if role_allows?(:feature => 'rbac_tenant_view')
-      = render(:partial => "tenants_tree_show")
-  = react('CatalogItemForm', {catalogItemId: @record.id.to_s})
+                %i.pficon.pficon-close
+  - if role_allows?(:feature => 'rbac_tenant_view')
+    = render(:partial => "tenants_tree_show")
