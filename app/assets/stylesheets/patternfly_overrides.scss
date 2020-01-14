@@ -151,32 +151,31 @@ body#dashboard .blank-slate-pf {
 /// begin summary screen styling
 /// ===================================================================
 
-.table-summary-screen .label {
-  color: #333;
-  cursor: default;
-  display: table-cell;
-  font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
-  min-width: 200px;
-  padding-top: 6px;
-  text-align: left;
-  white-space: normal;
-  width: 20% !important;
-}
-
-table.table-summary-screen i {
-  /* font icon styling in table view (equivalent to fa-lg) */
-  display: inline-block;
-  font-size: 1.333em;
-  line-height: 0.75em;
-  text-align: center;
-  vertical-align: -15%;
-  width: 1.25em;
-}
-
-table.table.table-summary-screen tbody td img {
-  height: 16px;
-  margin: 0 2px 0 2px;
-  width: 16px;
+.table-summary-screen {
+  .label {
+    color: #333;
+    cursor: default;
+    display: table-cell;
+    font: normal 12px OpenSansSemibold, Arial, Helvetica, sans-serif;
+    min-width: 200px;
+    padding-top: 6px;
+    text-align: left;
+    white-space: normal;
+    width: 20% !important;
+  }
+  i {
+    display: inline-block;
+    font-size: 1.333em; // equivalent to fa-lg
+    line-height: 0.75em;
+    text-align: center;
+    vertical-align: -15%;
+    width: 1.25em;
+  }
+  img {
+    height: 16px;
+    margin: 0 2px 0 2px;
+    width: 16px;
+  }
 }
 
 /// ===================================================================
@@ -487,20 +486,16 @@ table.table.table-selectable tbody tr.selected td {
   display: table;
 }
 
-/* eliminates horizontal scrollbar in some browsers */
-.bootstrap-select .dropdown-menu {
-  overflow-y: visible !important;
-}
-
-/* sets width to auto for bootstrap-select */
-.selectWidth {
-  width: auto !important;
-}
-
-/* compensates for scrollbars in browsers that cover options in very narrow dropdowns */
-
-.selectWidth .dropdown-menu ul li {
-  padding-right: 10px;
+.bootstrap-select {
+  .dropdown-menu {
+    overflow-y: visible !important; //eliminates horiz. scrollbar
+  }
+  &.selectWidth {
+    width: auto !important; 
+    .dropdown-menu ul li {
+      padding-right: 10px;  // required for narrow dropdowns
+    }
+  }
 }
 
 /* Sets font icon styling for view buttons on Default Views screen */
