@@ -1,6 +1,6 @@
 import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 
-function createSchema(formType, data) {
+function createSchema(data) {
   const fields = [];
   fields.push([
     {
@@ -45,7 +45,7 @@ function createSchema(formType, data) {
         options: data.dialogs.map(({ id, name }) => ({ label: name, value: id })),
       }],
     }]);
-  if (formType === "@edit[:new][:service_type] == \"composite\"") {
+  if (data.item.service_type === "composite") {
     fields.push({
       component: componentTypes.SELECT,
       name: 'zone_id',
@@ -77,7 +77,7 @@ function createSchema(formType, data) {
       label: __('Price / Month'),
       maxLength: 60,
     }]);
-  if (formType === "generic") {
+  if (data.item.type === "generic") {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_subtype',
@@ -87,7 +87,7 @@ function createSchema(formType, data) {
       options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
-  if (formType === "generic_orchestration") {
+  if (data.item.type === "generic_orchestration") {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_orchestration_template',
@@ -104,7 +104,7 @@ function createSchema(formType, data) {
       options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
   };
-  if (["generic_ansible_tower", "generic_container_template"].includes(formType)) {
+  if (["generic_ansible_tower", "generic_container_template"].includes(data.item.type)) {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_provider',
@@ -115,7 +115,7 @@ function createSchema(formType, data) {
     }]);
   };
   // catalog_item_provider is selected
-  if (formType === "generic_ansible_tower") {
+  if (data.item.type === "generic_ansible_tower") {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_ansible_tower_template',
@@ -126,7 +126,7 @@ function createSchema(formType, data) {
     }]);
   };
   // catalog_item_provider is selected
-  if (formType === "generic_container_template") {
+  if (data.item.type === "generic_container_template") {
     fields.push([{
       component: componentTypes.SELECT,
       name: 'catalog_item_generic_container_template',

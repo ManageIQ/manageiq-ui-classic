@@ -11,16 +11,16 @@ class CatalogItemForm extends Component {
     this.state = {
       isLoaded: false,
       schema: null,
+      item: {},
     };
   }
 
   componentDidMount() {
     const { catalogItemId } = this.props;
-    http.get(`/catalog/catalog_item_data/?` + catalogItemId)
+    http.get(`/catalog/catalog_item_data/` + catalogItemId)
       .then((data) => {
         this.data = data;
-        this.formType = "";
-        this.setState({ isLoaded: true, schema: createSchema(this.formType, this.data) });
+        this.setState({ isLoaded: true, schema: createSchema(this.data), item: data.item});
       });
   }
 
@@ -40,8 +40,7 @@ class CatalogItemForm extends Component {
   };
 
   render() {
-    //const { catalogItemId, type } = this.props;
-    const { isLoaded, schema } = this.state;
+    const { isLoaded, schema, item } = this.state;
     const cancelUrl = `/TODO?button=cancel`;
     if (!isLoaded) return null;
 

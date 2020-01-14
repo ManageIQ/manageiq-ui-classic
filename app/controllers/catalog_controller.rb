@@ -745,8 +745,14 @@ class CatalogController < ApplicationController
 
   def catalog_item_data
     catalog_item_data = {}
-    catalog_item = ServiceTemplate.find_by(params[:id])
-    service_type = catalog_item.service_type
+    catalog_item = ServiceTemplate.find_by(:id => params[:id])
+    if catalog_item.present?
+      catalog_item_data[:item] = catalog_item.as_json
+      catalog_item_data[:item][:catalog_id] = catalog_item.service_template_catalog.try(:id)
+      catalog_item_data[:item][:service_type] = catalog_item.service_type
+    end
+    catalog_item_data[:item][:dialog_id] = catalog_item.dialog_ids.first if catalog_item.dialog_ids.present?
+    catalog_item_data[:type] = params[:id] == "new" ? "" : catalog_item.prov_type
     catalog_item_data[:catalogs] = available_catalogs.map{ |catalog| { :id => catalog[1], :name => catalog[0]} }
     catalog_item_data[:dialogs] = Dialog.all.order(:name).map{ |dialog| {:id => dialog.id, :name => dialog.name} }
     catalog_item_data[:zones] = fetch_zones.map{ |zone| {:id => zone[1], :name => zone[0]} }

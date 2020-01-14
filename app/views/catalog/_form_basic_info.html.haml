@@ -229,4 +229,4 @@
             %span.input-group-addon{:style => "visibility:hidden"}
     - if role_allows?(:feature => 'rbac_tenant_view')
       = render(:partial => "tenants_tree_show")
-  = react('CatalogItemForm', {catalogItemForm: "#{@edit[:rec_id] || "new"}"})
+  = react('CatalogItemForm', {catalogItemId: @record.id.to_s})
