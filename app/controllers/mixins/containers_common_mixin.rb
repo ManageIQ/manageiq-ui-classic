@@ -139,17 +139,15 @@ module ContainersCommonMixin
 
   def process_check_compliance(model, ids)
     model.where(:id => ids).order("lower(name)").each do |entity|
-      begin
-        entity.check_compliance
-      rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
-                   {:model => ui_lookup(:model => model.to_s),
-                    :name  => entity.name,
-                    :error => bang.message},
-                  :error) # Push msg and error flag
-      else
-        add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
-      end
+      entity.check_compliance
+    rescue => bang
+      add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
+                 {:model => ui_lookup(:model => model.to_s),
+                  :name  => entity.name,
+                  :error => bang.message},
+                :error) # Push msg and error flag
+    else
+      add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
     end
     javascript_flash
   end
