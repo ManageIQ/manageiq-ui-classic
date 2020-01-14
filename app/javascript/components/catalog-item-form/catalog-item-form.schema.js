@@ -2,21 +2,6 @@ import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-re
 
 function createSchema(formType, data) {
   const fields = [];
-  // no catalog type for Catalog Bundle
-  if (formType !== "catalog_bundle") {
-    fields.push({
-      component: componentTypes.SELECT,
-      name: 'catalog_item_type',
-      label: __('Type'),
-      placeholder: `<${__('Choose')}>`,
-      isDisabled: false,
-      options: data.types.map(({ id, name }) => ({ label: name, value: id })),
-    });
-  };
-  // do not show other fields if no catalog type is selected
-  if (formType === "") {
-    return { fields };
-  };
   fields.push([
     {
       component: componentTypes.SUB_FORM,
@@ -150,26 +135,6 @@ function createSchema(formType, data) {
       isDisabled: false,
       options: data.types.map(({ id, name }) => ({ label: name, value: id })),
     }]);
-  };
-  // TODO create a component
-  if (formType !== "ansible_playbook") {
-    fields.push([{
-      component: componentTypes.TEXT_FIELD,
-      name: 'provision',
-      label: __('Provisioning Entry Point'),
-      maxLength: 60,
-    }, {
-      component: componentTypes.TEXT_FIELD,
-      name: 'reconfigure',
-      label: __('Reconfigure Entry Point'),
-      maxLength: 60,
-    }, {
-      component: componentTypes.TEXT_FIELD,
-      name: 'retirement',
-      label: __('Retirement Entry Point'),
-      maxLength: 60,
-    },
-    ]);
   };
   return { fields };
 }
