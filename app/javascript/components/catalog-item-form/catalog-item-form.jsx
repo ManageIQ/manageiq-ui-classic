@@ -53,10 +53,9 @@ class CatalogItemForm extends Component {
           onCancel={() => miqAjaxButton(cancelUrl)}
           onReset={() => add_flash(__('All changes have been reset'), 'warn')}
           canReset={true}
+          showFormControls={false}
+          initialValues={item}
           onStateUpdate={this.handleStateUpdate}
-          buttonsLabels={{
-            submitLabel: true ? __('Save') : __('Add'),
-          }}
         />
       </Grid>
     );
