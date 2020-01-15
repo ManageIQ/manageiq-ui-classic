@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Unreleased as of Sprint 127 - 2020-01-06
+
+### Added
+* Toolbar: An advanced config setting 'custom_button_count' added to limit number of visible custom button groups on screen [(#6529)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6529)
+* Automate Method editor has been changed to allow host+input params for playbooks, input params for workflows method types [(#6530)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6530)
+
+### Fixed
+* Prevent rendering User to Look Up form field twice and with same id [(#6565)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6565)
+* Display Cancel after applying changes in non-explorer Compare screen [(#6542)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6542)
+* Fixed code to pass in `service_template` in ae_attributes hash [(#6533)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6533)
+* Allow performing operations on Instances of a chosen Security Group [(#6520)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6520)
+* Allow performing operations on Instances of a chosen Network Router  [(#6498)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6498)
+* Allow performing Shelve Offload operation for Instances in a nested list [(#6491)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6491)
+* Allow performing operations on Instances of a chosen Cloud Subnet [(#6488)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6488)
+* Allow performing operations on Instances of a chosen Cloud Network [(#6458)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6458)
+* Entry Point modal styling fix [(#6511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6511)
+* Reimplement token generation for cockpit webconsole proxy [(#6522)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6522)
+* Display Search box in Infra Networking page [(#6539)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6539)
+
 ## Unreleased as of Sprint 126 - 2019-12-09
 
 ### Added
