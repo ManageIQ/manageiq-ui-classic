@@ -420,8 +420,8 @@ module Mixins
                            :ssh_keypair_auth_status         => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status,
                            :service_account_auth_status     => service_account_auth_status,
                            :non_default_current_tab         => @ems.emstype == "gce" ? "service_account" : nil,
-                           :amqp_fallback_hostname1         => amqp_fallback_hostname1 ? amqp_fallback_hostname1 : "",
-                           :amqp_fallback_hostname2         => amqp_fallback_hostname2 ? amqp_fallback_hostname2 : "",
+                           :amqp_fallback_hostname1         => amqp_fallback_hostname1 || "",
+                           :amqp_fallback_hostname2         => amqp_fallback_hostname2 || "",
                            :default_url                     => @ems.endpoints.first.url,
                            :assume_role                     => assume_role}
         end
@@ -782,21 +782,21 @@ module Mixins
       def build_credentials(ems, mode)
         creds = {}
         if params[:default_userid]
-          default_password = params[:default_password] ? params[:default_password] : ems.authentication_password
+          default_password = params[:default_password] || ems.authentication_password
           creds[:default] = {:userid => params[:default_userid], :password => default_password, :save => (mode != :validate)}
         end
         if ems.supports_authentication?(:amqp) && params[:amqp_userid]
-          amqp_password = params[:amqp_password] ? params[:amqp_password] : ems.authentication_password(:amqp)
+          amqp_password = params[:amqp_password] || ems.authentication_password(:amqp)
           creds[:amqp] = {:userid => params[:amqp_userid], :password => amqp_password, :save => (mode != :validate)}
         end
         if ems.kind_of?(ManageIQ::Providers::Vmware::InfraManager) &&
            ems.supports_authentication?(:console) && params[:console_userid]
-          console_password = params[:console_password] ? params[:console_password] : ems.authentication_password(:console)
+          console_password = params[:console_password] || ems.authentication_password(:console)
           creds[:console] = {:userid => params[:console_userid], :password => console_password, :save => (mode != :validate)} # FIXME: skateman was here
         end
         if ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager) &&
            ems.supports_authentication?(:smartstate_docker) && params[:smartstate_docker_userid]
-          smartstate_docker_password = params[:smartstate_docker_password] ? params[:smartstate_docker_password] : ems.authentication_password(:smartstate_docker)
+          smartstate_docker_password = params[:smartstate_docker_password] || ems.authentication_password(:smartstate_docker)
           creds[:smartstate_docker] = {:userid => params[:smartstate_docker_userid], :password => smartstate_docker_password, :save => true}
         end
         if ems.supports?(:assume_role)
@@ -811,12 +811,12 @@ module Mixins
         end
         if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager) &&
            ems.supports_authentication?(:metrics) && params[:metrics_userid]
-          metrics_password = params[:metrics_password] ? params[:metrics_password] : ems.authentication_password(:metrics)
+          metrics_password = params[:metrics_password] || ems.authentication_password(:metrics)
           creds[:metrics] = {:userid => params[:metrics_userid], :password => metrics_password, :save => (mode != :validate)}
         end
         if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
           creds[:kubevirt] = {
-            :auth_key => params[:kubevirt_password] ? params[:kubevirt_password] : ems.authentication_token(:kubevirt),
+            :auth_key => params[:kubevirt_password] || ems.authentication_token(:kubevirt),
             :save     => mode != :validate,
           }
         end
@@ -834,7 +834,7 @@ module Mixins
           session[:oauth_response] = nil
         end
         if ems.kind_of?(ManageIQ::Providers::ContainerManager)
-          default_key = params[:default_password] ? params[:default_password] : ems.authentication_key
+          default_key = params[:default_password] || ems.authentication_key
           if params[:metrics_selection] == "hawkular"
             creds[:hawkular] = {:auth_key => default_key, :save => (mode != :validate)}
           elsif params[:metrics_selection] == "prometheus"
@@ -844,7 +844,7 @@ module Mixins
             creds[:prometheus_alerts] = {:auth_key => default_key, :save => (mode != :validate)}
           end
           if params[:virtualization_selection] == 'kubevirt'
-            kubevirt_key = params[:kubevirt_password] ? params[:kubevirt_password] : ems.authentication_key(:kubevirt)
+            kubevirt_key = params[:kubevirt_password] || ems.authentication_key(:kubevirt)
             creds[:kubevirt] = { :auth_key => kubevirt_key, :save => (mode != :validate) }
           end
           creds[:bearer] = {:auth_key => default_key, :save => (mode != :validate)}
@@ -856,6 +856,7 @@ module Mixins
       def retrieve_event_stream_selection
         return 'amqp' if @ems.connection_configurations.amqp&.endpoint&.hostname&.present?
         return 'ceilometer' if @ems.connection_configurations.ceilometer&.endpoint&.hostname&.present?
+
         @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) || @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager) ? 'ceilometer' : 'none'
       end
 
