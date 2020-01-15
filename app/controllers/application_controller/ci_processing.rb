@@ -933,7 +933,7 @@ module ApplicationController::CiProcessing
     when "#{pfx}_shelve_offload"            then shelveoffloadvms
     when "#{pfx}_reset"                     then resetvms
     when "#{pfx}_check_compliance"          then check_compliance_vms
-    when "#{pfx}_reconfigure"               then reconfigurevms
+    when "#{pfx}_reconfigure"               then vm_reconfigure
     when "#{pfx}_resize"                    then resizevms
     when "#{pfx}_evacuate"                  then evacuatevms
     when "#{pfx}_live_migrate"              then livemigratevms
