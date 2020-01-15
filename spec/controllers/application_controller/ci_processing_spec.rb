@@ -8,6 +8,15 @@ describe ApplicationController do
     allow(controller).to receive(:role_allows?).and_return(true)
   end
 
+  describe '#process_vm_buttons' do
+    before { controller.params = {:pressed => 'vm_reconfigure'} }
+
+    it 'calls vm_reconfigure for reconfiguring VMs' do
+      expect(controller).to receive(:vm_reconfigure)
+      controller.send(:process_vm_buttons, 'vm')
+    end
+  end
+
   describe "#generic_button_operation" do
     let(:vm1) { FactoryGirl.create(:vm_redhat) }
     let(:vm2) { FactoryGirl.create(:vm_microsoft) }
