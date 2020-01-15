@@ -54,6 +54,18 @@ describe ResourcePoolController do
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
+
+    context 'reconfigure VMs' do
+      before do
+        controller.instance_variable_set(:@display, 'vms')
+        controller.params = {:pressed => 'vm_reconfigure'}
+      end
+
+      it 'calls vm_reconfigure' do
+        expect(controller).to receive(:vm_reconfigure)
+        controller.send(:button)
+      end
+    end
   end
 
   describe "#show" do
