@@ -1,6 +1,6 @@
 = react('MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : '')
 
-%nav.navbar.navbar-pf-vertical#notification-app{'ng-controller' => "headerController as vm"}
+%nav.navbar.navbar-pf-vertical#notification-app
   = render :partial => "layouts/navbar-header"
   %nav.collapse.navbar-collapse
     = render :partial => "layouts/right_section"
