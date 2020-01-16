@@ -28,4 +28,19 @@ class ApplicationHelper::Toolbar::PxeServerCenter < ApplicationHelper::Toolbar::
       ]
     ),
   ])
+  button_group('pxe_server_policy', [
+    select(
+      :pxe_server_policy_choice,
+      nil,
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :pxe_server_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Pxe Server'),
+          N_('Edit Tags')),
+      ]
+    ),
+  ])
 end

@@ -32,6 +32,10 @@ module PxeHelper::TextualSummary
     {:label => _("Last Refreshed On"), :value => @ps.last_refresh_on.to_s}
   end
 
+  def textual_group_smart_management
+    TextualTags.new(_('Smart Management'), %i[tags])
+  end
+
   def textual_group_pxe_image_menus
     %i[filename]
   end

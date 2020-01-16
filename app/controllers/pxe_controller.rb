@@ -18,14 +18,17 @@ class PxeController < ApplicationController
     'pxe_image_type_new'            => :pxe_image_type_new,
     'pxe_image_type_edit'           => :pxe_image_type_edit,
     'pxe_image_type_delete'         => :pxe_image_type_delete,
+    'pxe_image_tag'                 => :pxe_image_tags_edit,
     'pxe_server_new'                => :pxe_server_new,
     'pxe_server_edit'               => :pxe_server_edit,
     'pxe_server_delete'             => :pxe_server_delete,
     'pxe_server_refresh'            => :pxe_server_refresh,
+    'pxe_server_tag'                => :pxe_server_tags_edit,
     'pxe_wimg_edit'                 => :pxe_wimg_edit,
     'iso_datastore_new'             => :iso_datastore_new,
     'iso_datastore_refresh'         => :iso_datastore_refresh,
     'iso_datastore_delete'          => :iso_datastore_delete,
+    'windows_image_tag'             => :windows_image_tags_edit,
     'iso_image_edit'                => :iso_image_edit,
     'customization_template_new'    => :customization_template_new,
     'customization_template_delete' => :customization_template_delete,
@@ -35,6 +38,28 @@ class PxeController < ApplicationController
 
   def x_button
     generic_x_button(PXE_X_BUTTON_ALLOWED_ACTIONS)
+  end
+
+  def pxe_server_tags_edit
+    tag("PxeServer")
+  end
+
+  def windows_image_tags_edit
+    tag("WindowsImage")
+  end
+
+  def pxe_image_tags_edit
+    tag("PxeImage")
+  end
+
+  def previous_breadcrumb_url
+    action = @lastaction == "pxe_server_list" ? "explorer" : @lastaction
+    url_for_only_path(:action => action)
+  end
+
+  def tagging_edit_tags_reset
+    @gtl_type = 'list'
+    super
   end
 
   def accordion_select

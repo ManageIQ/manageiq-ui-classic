@@ -2702,6 +2702,7 @@ Rails.application.routes.draw do
     :pxe                      => {
       :get  => %w(
         explorer
+        tagging_edit
       ),
       :post => %w(
         accordion_select
@@ -2722,6 +2723,8 @@ Rails.application.routes.draw do
         pxe_wimg_edit
         pxe_wimg_form_field_changed
         reload
+        tag_edit_form_field_changed
+        tagging_edit
         template_create_update
         template_form_field_changed
         template_list
