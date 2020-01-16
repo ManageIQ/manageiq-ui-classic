@@ -19,7 +19,7 @@ const Notifications = () => {
         className="nav-item-iconic drawer-pf-trigger-icon"
         title={`${unreadCount} ${__('unread notifications')}`}
         onClick={() => {
-          dispatch({ type: '@@notifications/toggleDrawerVisibility', payload: isDrawerVisible });
+          dispatch({ type: '@@notifications/toggleDrawerVisibility' });
         }}
       >
         <Icon type="fa" name="bell" />

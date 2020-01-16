@@ -24,7 +24,7 @@ const NotificationDrawer = () => {
         <Drawer expanded={isDrawerExpanded}>
           <Drawer.Title
             title={drawerTitle}
-            onCloseClick={() => { dispatch({ type: '@@notifications/toggleDrawerVisibility', payload: isDrawerVisible }); }}
+            onCloseClick={() => { dispatch({ type: '@@notifications/toggleDrawerVisibility' }); }}
             onExpandClick={() => { setDrawerExpanded(!isDrawerExpanded); }}
           />
           {notifications && (

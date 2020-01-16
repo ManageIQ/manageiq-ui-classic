@@ -30,7 +30,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: [action.payload, ...state.toastNotifications].slice(0, 3),
       };
     case `${nPrefix}toggleDrawerVisibility`:
-      return { ...state, isDrawerVisible: !action.payload };
+      return { ...state, isDrawerVisible: !state.isDrawerVisible };
     case `${nPrefix}markNotificationRead`:
       return {
         ...state,
