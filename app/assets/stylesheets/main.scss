@@ -26,22 +26,12 @@ $login-container-bg-color:                  #000000;
 $login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
 $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
-@import "font-fabulous-sprockets";
-@import "font-fabulous";
-@import "patternfly-sprockets";
-@import "patternfly";
-@import "patternfly_overrides";
-@import "icon_customizations";
-@import "header_background"; // sets a custom background image in the header
-@import "about_modal_background"; // sets a custom background image in the 'About' modal
-@import "alerts";
-
 .login-pf #brand img { // sets size of brand.svg on login screen (upstream only)
-  height: 38px;
+  height: 38px !important;
 }
 
 .about-modal-pf .modal-footer img { // sets size of logo in 'About' modal footer
-  height: 48px;
+  height: 48px !important;
 }
 
 // styling of brand.svg in header (upstream only)
@@ -51,12 +41,22 @@ $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 }
 
 .navbar-brand img {
-  height: 20px;
+  height: 20px !important;
 }
 
 // styling of custom logo in header
 
 body.login.whitelabel {
-  background: url($img-bg-login-whitelabel);
-  background-size: 100% auto;
+  background: url($img-bg-login-whitelabel) !important;
+  background-size: 100% auto !important;
 }
+
+@import "font-fabulous-sprockets";
+@import "font-fabulous";
+@import "patternfly-sprockets";
+@import "patternfly";
+@import "patternfly_overrides";
+@import "icon_customizations";
+@import "header_background"; // sets a custom background image in the header
+@import "about_modal_background"; // sets a custom background image in the 'About' modal
+@import "alerts";
