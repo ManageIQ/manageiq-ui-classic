@@ -4,7 +4,8 @@ import {
   Button, NotificationDrawer as Drawer, Notification, MenuItem, NotificationContent, NotificationInfo, NotificationMessage, Icon,
 } from 'patternfly-react';
 import classnames from 'classnames';
-import { unreadCountText } from './helpers';
+import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
+import { maxNotifications as maxNotificationsConstant, notificationsInit } from '../../packs/notification-drawer-common';
 
 const NotificationDrawer = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,8 @@ const NotificationDrawer = () => {
   const [isPanelExpanded, setPanelExpanded] = useState(true);
   const unreadCount = useSelector(({ notificationReducer: { unreadCount } }) => unreadCount);
   const notifications = useSelector(({ notificationReducer: { notifications } }) => notifications);
-
-  console.log(notifications);
+  const totalNotificationsCount = useSelector(({ notificationReducer: { totalNotificationsCount } }) => totalNotificationsCount);
+  const maxNotifications = useSelector(({ notificationReducer: { maxNotifications } }) => maxNotifications);
 
   return (
     isDrawerVisible ? (
@@ -32,7 +33,7 @@ const NotificationDrawer = () => {
                 <Drawer.PanelHeading>
                   <Drawer.PanelTitle>
                     <a
-                      className={isPanelExpanded ? '' : 'collapsed'}
+                      className={classnames({ collapsed: !isPanelExpanded })}
                       onClick={() => { setPanelExpanded(!isPanelExpanded); }}
                     >
                       {__('Events')}
@@ -43,8 +44,12 @@ const NotificationDrawer = () => {
                 { isPanelExpanded && (
                   <Drawer.PanelCollapse>
                     <Drawer.PanelBody>
-                      {notifications.map(notification => (
-                        <Notification key={notification.id} seen={!notification.unread} type="notification">
+                      {notifications.slice(0, maxNotifications).map(notification => (
+                        <Notification
+                          key={notification.id}
+                          seen={!notification.unread}
+                          type="notification"
+                        >
                           <Drawer.Dropdown
                             id={`dropdownKebabRight ${notification.id}`}
                             pullRight
@@ -54,6 +59,7 @@ const NotificationDrawer = () => {
                               disabled={!notification.data.link}
                               eventKey="1"
                               header={false}
+                              onClick={() => viewDetails(notification)}
                             >
                               {__('View details')}
                             </MenuItem>
@@ -88,10 +94,15 @@ const NotificationDrawer = () => {
                           </Drawer.Dropdown>
                           <Icon
                             className="pull-left"
-                            name="ok"
+                            name={getNotficationStatusIconName(notification)}
                             type="pf"
+                            onClick={
+                              () => notification.unread && dispatch({
+                                type: '@@notifications/markNotificationRead',
+                                payload: notification.id,
+                              })}
                           />
-                          <NotificationContent className="">
+                          <NotificationContent>
                             <NotificationMessage
                               title={notification.message}
                               onClick={
@@ -109,6 +120,27 @@ const NotificationDrawer = () => {
                           </NotificationContent>
                         </Notification>
                       ))}
+                      { maxNotificationsConstant <= notifications.length && (
+                        <Notification key="notificationLimit" className="text-center" seen>
+                          <NotificationContent>
+                            <NotificationMessage
+                              title="title"
+                            >
+                              { maxNotifications ? __(`Showing ${maxNotifications} items out of ${totalNotificationsCount} total.`) : __(`Showing all ${notifications.length} items.`) }
+                            </NotificationMessage>
+                            <a
+                              className="btn btn-link"
+                              onClick={() => {
+                                notificationsInit(maxNotifications === undefined);
+                                dispatch({ type: '@@notifications/toggleMaxNotifications' });
+                              }
+                              }
+                            >
+                              { maxNotifications ? __('Show all (may take a while)') : __(`Show only the first ${maxNotificationsConstant}`)}
+                            </a>
+                          </NotificationContent>
+                        </Notification>)
+                      }
                     </Drawer.PanelBody>
                     <Drawer.PanelAction>
                       <Drawer.PanelActionLink
@@ -116,9 +148,6 @@ const NotificationDrawer = () => {
                         data-toggle="mark-all-read"
                       >
                         <Button
-                          active={false}
-                          block={false}
-                          bsClass="btn"
                           bsStyle="link"
                           disabled={unreadCount === 0}
                           onClick={() => dispatch({ type: '@@notifications/markAllRead' })}
@@ -131,9 +160,6 @@ const NotificationDrawer = () => {
                         data-toggle="clear-all"
                       >
                         <Button
-                          active={false}
-                          block={false}
-                          bsClass="btn"
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={() => dispatch({ type: '@@notifications/clearAll' })}
