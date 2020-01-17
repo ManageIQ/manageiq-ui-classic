@@ -34,10 +34,10 @@ module ApplicationController::ReportDownloads
     result ||= MiqReportResult.for_user(current_user).find(session[:report_result_id]) if session[:report_result_id]
 
     # This branch is used when called from e.g. compare_to_pdf
-    result ||= (
-      userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-      report.build_create_results(:userid => userid)
-    )
+    result ||= begin
+                 userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+                 report.build_create_results(:userid => userid)
+               end
 
     render_pdf_internal_rr(report, result)
   end
@@ -185,8 +185,7 @@ module ApplicationController::ReportDownloads
 
   def rrr_from_report_results(report_result_id)
     rr = MiqReportResult.for_user(current_user).find(report_result_id)
-    report = rr.report_results # TODO: this is strange
-    report.report_run_time = rr.last_run_on # TODO: is this line needed?
+    report = rr.report_results
     [report, rr]
   end
 

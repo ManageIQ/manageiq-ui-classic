@@ -1530,13 +1530,12 @@ describe ReportController do
       end
 
       it 'renders the print layout' do
-        get :print_report, params: { :id => report_result_id }
+        get :print_report, :params => {:id => report_result_id}
         expect(response).to render_template('layouts/print/report')
       end
     end
 
     describe "report_print_options" do
-
       it 'returns the print options' do
         report = create_and_generate_report_for_user("Vendor and Guest OS", @user2)
         result = report.miq_report_results.first

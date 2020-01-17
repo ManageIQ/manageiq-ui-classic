@@ -47,11 +47,11 @@ describe ApplicationController do
           :include => {
             :hardware            => {:fetch => false, :fetched => false, :checked => false, :group => "Properties"},
             :_model_             => {:fetch => true,  :fetched => false, :checked => true,  :group => "Properties"},
-            :"hardware.disks"    => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
-            :"hardware.cdroms"   => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
-            :"hardware.floppies" => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
-            :"hardware.nics"     => {:fetch => false, :fetched => false, :checked => false, :key   => "", :group   => "Properties"},
-            :"hardware.volumes"  => {:fetch => false, :fetched => false, :checked => false, :key   => :name, :group   => "Properties"}
+            :"hardware.disks"    => {:fetch => false, :fetched => false, :checked => false, :key => "", :group => "Properties"},
+            :"hardware.cdroms"   => {:fetch => false, :fetched => false, :checked => false, :key => "", :group => "Properties"},
+            :"hardware.floppies" => {:fetch => false, :fetched => false, :checked => false, :key => "", :group => "Properties"},
+            :"hardware.nics"     => {:fetch => false, :fetched => false, :checked => false, :key => "", :group => "Properties"},
+            :"hardware.volumes"  => {:fetch => false, :fetched => false, :checked => false, :key => :name, :group => "Properties"}
           }
         }
       )
@@ -59,7 +59,7 @@ describe ApplicationController do
 
     it 'builds the compare report and renders it' do
       session[:miq_compare] = Marshal.dump(compare)
-      controller.instance_variable_set(:@sb, {:compare_db => 'Vm'})
+      controller.instance_variable_set(:@sb, :compare_db => 'Vm')
 
       expect(controller).to receive(:create_compare_report).and_call_original
       expect(controller).to receive(:render_pdf_internal).and_call_original
@@ -81,7 +81,7 @@ describe ApplicationController do
       user = create_user_with_group('User2', "Group1", MiqUserRole.find_by(:name => "EvmRole-operator"))
       report = create_and_generate_report_for_user("Vendor and Guest OS", user)
 
-      session[:view] = report #FactoryBot.create(:miq_report, :col_order => [])
+      session[:view] = report
       session[:paged_view_search_options] = {}
       controller.params = {:download_type => 'pdf'}
 
@@ -91,7 +91,7 @@ describe ApplicationController do
           :layout   => '/layouts/print',
           :locals   => hash_including(
             :report # the report does not match due to a ".dup" call in the controller.
-          ),
+          )
         )
       )
 

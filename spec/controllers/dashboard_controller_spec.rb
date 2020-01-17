@@ -529,7 +529,6 @@ describe DashboardController do
     end
   end
 
-
   describe "widget_to_pdf" do
     before do
       EvmSpecHelper.local_miq_server
@@ -545,12 +544,11 @@ describe DashboardController do
         .with(report, report.miq_report_results.first)
         .and_call_original
 
-      get :widget_to_pdf, :params => { :rr_id => report_result_id }
+      get :widget_to_pdf, :params => {:rr_id => report_result_id}
 
       expect(response).to render_template('layouts/print/report')
     end
   end
-
 
   def skip_data_checks(url = '/')
     allow_any_instance_of(UserValidationService).to receive(:server_ready?).and_return(true)
