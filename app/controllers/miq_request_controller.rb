@@ -42,7 +42,7 @@ class MiqRequestController < ApplicationController
       if provision_request.kind_of?(VmCloudReconfigureRequest)
         resizevms
       else
-        reconfigurevms
+        vm_reconfigure
       end
     end
   end
