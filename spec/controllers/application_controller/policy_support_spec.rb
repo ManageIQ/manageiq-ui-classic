@@ -82,4 +82,19 @@ describe ApplicationController do
       expect(controller.session).to include(:edit => {:pol_items => [vm]})
     end
   end
+
+  describe '#protect' do
+    before do
+      allow(controller).to receive(:previous_breadcrumb_url)
+      allow(controller).to receive(:redirect_to)
+      allow(controller).to receive(:session).and_return(:edit => {})
+      controller.instance_variable_set(:@sb, {})
+      controller.params = {:button => 'cancel'}
+    end
+
+    it 'sets session[:flash_msgs] after canceling managing policies in non explorer screen' do
+      controller.send(:protect)
+      expect(controller.session[:flash_msgs]).to eq([{:message => 'Edit policy assignments was cancelled by the user', :level => :success}])
+    end
+  end
 end

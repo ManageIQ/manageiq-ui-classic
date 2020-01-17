@@ -63,6 +63,7 @@ module ApplicationController::PolicySupport
         replace_right_cell
       else
         @edit = nil                                       # Clear out the session :edit hash
+        session[:flash_msgs] = @flash_array
         redirect_to(previous_breadcrumb_url)
       end
     else                                                  # First time in,
