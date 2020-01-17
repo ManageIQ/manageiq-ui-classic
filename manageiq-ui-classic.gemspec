@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "rails", ">= 5.0.0.1", "< 5.3"
+  s.add_dependency "debride"
+
 
   s.add_dependency "coffee-rails"
   s.add_dependency "font-fabulous", "~> 1.0.5"
