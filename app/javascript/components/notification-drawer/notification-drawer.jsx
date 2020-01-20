@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, NotificationDrawer as Drawer, Notification, MenuItem, NotificationContent, NotificationInfo, NotificationMessage, Icon,
@@ -17,7 +18,7 @@ const NotificationDrawer = () => {
   const notifications = useSelector(({ notificationReducer: { notifications } }) => notifications);
   const totalNotificationsCount = useSelector(({ notificationReducer: { totalNotificationsCount } }) => totalNotificationsCount);
   const maxNotifications = useSelector(({ notificationReducer: { maxNotifications } }) => maxNotifications);
-
+  
   return (
     isDrawerVisible ? (
       <div id="miq-notifications-drawer-container">
@@ -33,6 +34,7 @@ const NotificationDrawer = () => {
                 <Drawer.PanelHeading>
                   <Drawer.PanelTitle>
                     <a
+                      id="eventsExpander"
                       className={classnames({ collapsed: !isPanelExpanded })}
                       onClick={() => { setPanelExpanded(!isPanelExpanded); }}
                     >
@@ -65,6 +67,7 @@ const NotificationDrawer = () => {
                             </MenuItem>
                             <MenuItem divider />
                             <MenuItem
+                              id={`dropdownMarkRead-${notification.id}`}
                               bsClass={classnames('dropdown', {
                                 disabled: !notification.unread,
                               })}
@@ -81,6 +84,7 @@ const NotificationDrawer = () => {
                               {__('Mark as read')}
                             </MenuItem>
                             <MenuItem
+                              id={`dropdownRemove-${notification.id}`}
                               bsClass="dropdown"
                               eventKey="3"
                               header={false}
@@ -121,7 +125,7 @@ const NotificationDrawer = () => {
                         </Notification>
                       ))}
                       { maxNotificationsConstant <= notifications.length && (
-                        <Notification key="notificationLimit" className="text-center" seen>
+                        <Notification id="notificationLimitBar" key="notificationLimit" className="text-center" seen>
                           <NotificationContent>
                             <NotificationMessage
                               title="title"
@@ -129,6 +133,7 @@ const NotificationDrawer = () => {
                               { maxNotifications ? __(`Showing ${maxNotifications} items out of ${totalNotificationsCount} total.`) : __(`Showing all ${notifications.length} items.`) }
                             </NotificationMessage>
                             <a
+                              id="toggleMaxNotifications"
                               className="btn btn-link"
                               onClick={() => {
                                 notificationsInit(maxNotifications === undefined);
@@ -148,6 +153,7 @@ const NotificationDrawer = () => {
                         data-toggle="mark-all-read"
                       >
                         <Button
+                          id="markAllReadBtn"
                           bsStyle="link"
                           disabled={unreadCount === 0}
                           onClick={() => dispatch({ type: '@@notifications/markAllRead' })}
@@ -160,6 +166,7 @@ const NotificationDrawer = () => {
                         data-toggle="clear-all"
                       >
                         <Button
+                          id="clearAllBtn"
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={() => dispatch({ type: '@@notifications/clearAll' })}

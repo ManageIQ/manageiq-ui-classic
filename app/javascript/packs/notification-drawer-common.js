@@ -1,5 +1,6 @@
 import { listenToRx } from '../miq_observable';
 import { viewDetails } from '../components/notification-drawer/helpers';
+import { API } from '../http_api';
 
 export const maxNotifications = 100;
 
