@@ -13,7 +13,6 @@ import '../helpers/sendDataWithRx';
 import '../helpers/miqCheckForChanges';
 import '../helpers/miqChangeGroup';
 
-
 describe('Top navbar tests', () => {
   let customLogo;
   let currentUser;
@@ -23,25 +22,18 @@ describe('Top navbar tests', () => {
   let miqGroups;
   let currentGroup;
   let userMenu;
-  let storeUnread;
-  let storeNoUnread;
+  const initialState = {
+    notificationReducer: {
+      unreadCount: 1,
+      isDrawerVisible: false,
+    },
+  };
   const mockStore = configureStore();
   const sendDataWithRxSpy = jest.spyOn(window, 'sendDataWithRx');
   const miqCheckForChangesSpy = jest.spyOn(window, 'miqCheckForChanges');
   const miqChangeGroupSpy = jest.spyOn(window, 'miqChangeGroup');
 
-
   beforeEach(() => {
-    storeUnread = mockStore({
-      notificationReducer: {
-        unreadCount: 8,
-      },
-    });
-    storeNoUnread = mockStore({
-      notificationReducer: {
-        unreadCount: 0,
-      },
-    });
     customLogo = true;
     currentUser = {
       name: 'Administrator',
@@ -119,11 +111,13 @@ describe('Top navbar tests', () => {
   afterEach(() => {
     sendDataWithRxSpy.mockReset();
     miqCheckForChangesSpy.mockReset();
+    miqChangeGroupSpy.mockReset();
   });
 
   it('should render correctly', () => {
+    const store = mockStore({ ...initialState });
     const wrapper = mount(
-      <Provider store={storeUnread}>
+      <Provider store={store}>
         <RightSection
           customLogo={customLogo}
           currentUser={currentUser}
@@ -155,14 +149,16 @@ describe('Top navbar tests', () => {
     expect(miqCheckForChangesSpy).toHaveBeenCalled();
   });
 
-  it('should call sendDataWithRx after click on notiffication button', () => {
+  it('should dispatch toggleDrawerVisibility after click on notiffication button', () => {
+    const store = mockStore({ ...initialState });
     const wrapper = mount(
-      <Provider store={storeUnread}>
+      <Provider store={store}>
         <Notifications />
       </Provider>,
     );
     wrapper.find('a#notifications-btn').simulate('click');
-    expect(sendDataWithRxSpy).toHaveBeenCalledWith({ type: 'toggleNotificationsList' });
+    const expectedPayload = { type: '@@notifications/toggleDrawerVisibility' };
+    expect(store.getActions()).toEqual([expectedPayload]);
   });
 
   it('should not render custom logo when disabled', () => {
@@ -173,8 +169,9 @@ describe('Top navbar tests', () => {
   });
 
   it('should not render badge when no unread notifications', () => {
+    const store = mockStore({ ...initialState, notificationReducer: { unreadCount: 0 } });
     const wrapper = mount(
-      <Provider store={storeNoUnread}>
+      <Provider store={store}>
         <Notifications />
       </Provider>,
     );
