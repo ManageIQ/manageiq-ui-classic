@@ -42,4 +42,26 @@ describe UtilizationController do
       expect(controller.data_for_breadcrumbs).to eq([{:title=>"Overview"}, {:title=>"Utilization"}])
     end
   end
+
+  describe "report_download" do
+    before do
+      stub_user(:features => :all)
+      setup_zone
+    end
+
+    it "generates the HTML report for PDF export" do
+      session[:sandboxes] = {controller.controller_name => {:title => 'test report'}}
+      expect(controller).to receive(:summ_hashes).and_return(
+        [
+          {"section" => _("Basic Info"), "item" => "neco",   "value" => "1"},
+          {"section" => _("CPU"),        "item" => "jinyho", "value" => "1"},
+          {"section" => _("Memory"),     "item" => "tady",   "value" => "2"},
+          {"section" => _("Disk"),       "item" => "bude",   "value" => "3"},
+        ]
+      )
+
+      get :report_download, :params => {:typ => 'pdf'}
+      expect(response.status).to eq(200)
+    end
+  end
 end

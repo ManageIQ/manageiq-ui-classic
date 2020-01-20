@@ -17,7 +17,7 @@ describe TreeBuilderReportSavedReports do
         @user2.miq_groups << MiqGroup.where(:description => "Group1")
 
         login_as @user2
-        @rpt = create_and_generate_report_for_user("Vendor and Guest OS", "User1")
+        @rpt = create_and_generate_report_for_user("Vendor and Guest OS", @user1)
       end
 
       describe "#x_get_tree_roots" do

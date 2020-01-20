@@ -230,8 +230,7 @@ module ApplicationController::Compare
   # Send the current compare data in PDF format
   def compare_to_pdf
     @compare = Marshal.load(session[:miq_compare])
-    rpt = create_compare_report
-    render_pdf(rpt)
+    render_pdf_internal(create_compare_report)
   end
 
   # Cancel Compare and return to the previous screen; for non-explorer screens
@@ -516,8 +515,7 @@ module ApplicationController::Compare
   # Send the current drift data in PDF format
   def drift_to_pdf
     @compare = Marshal.load(session[:miq_compare])
-    rpt = create_drift_report
-    render_pdf(rpt)
+    render_pdf_internal(create_drift_report)
   end
 
   def drift_history

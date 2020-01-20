@@ -2751,6 +2751,7 @@ Rails.application.routes.draw do
         report_only
         sample_chart
         sample_timeline
+        print_report
         send_report_data
         tree_autoload
         tree_select

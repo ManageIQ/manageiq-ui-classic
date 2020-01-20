@@ -27,14 +27,9 @@ module OptimizeHelper
 
   def download_file(typ, report, filename)
     case typ
-    when "txt"
-      send_data(report.to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(report.to_csv,
-                :filename => "#{filename}.csv")
-    when "pdf"
-      render_pdf(report)
+    when 'txt' then send_data(report.to_text, :filename => "#{filename}.txt")
+    when 'csv' then send_data(report.to_csv, :filename => "#{filename}.csv")
+    when 'pdf' then render_pdf_internal(report)
     end
   end
 end
