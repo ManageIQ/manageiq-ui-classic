@@ -13,18 +13,24 @@ describe ApplicationHelper::Button::UtilizationDownload do
     context '#disabled?' do
       it 'when report tab has no data available' do
         report.table = OpenStruct.new(:data => [])
-        expect(button.disabled?).to be_truthy
+        expect(button.disabled?).to be(true)
       end
 
-      it 'when report tab has data' do
+      it 'when report tab has data and @sb[:summary] is not set' do
         report.table = OpenStruct.new(:data => [:foo => 'bar'])
-        expect(button.disabled?).to be_falsey
+        expect(button.disabled?).to be(true)
+      end
+
+      it 'when report tab has data and @sb[:summary] is set' do
+        button.instance_variable_set(:@sb, :active_tab => "report", :trend_rpt => report, :summary => "is set")
+        report.table = OpenStruct.new(:data => [:foo => 'bar'])
+        expect(button.disabled?).to be(false)
       end
 
       it 'when on summary tab' do
         button.instance_variable_set(:@sb, :active_tab => "summary", :trend_rpt => report)
         report.table = OpenStruct.new(:data => [:foo => 'bar'])
-        expect(button.disabled?).to be_truthy
+        expect(button.disabled?).to be(true)
       end
     end
   end
