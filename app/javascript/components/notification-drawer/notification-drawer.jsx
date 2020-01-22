@@ -111,10 +111,14 @@ const NotificationDrawer = () => {
                             name={getNotficationStatusIconName(notification)}
                             type="pf"
                             onClick={
-                              () => notification.unread && dispatch({
-                                type: '@@notifications/markNotificationRead',
-                                payload: notification.id,
-                              })}
+                              () => notification.unread
+                              && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
+                                .then(() =>
+                                  dispatch({
+                                    type: '@@notifications/markNotificationRead',
+                                    payload: notification.id,
+                                  }))
+                            }
                           />
                           <NotificationContent>
                             <NotificationMessage
