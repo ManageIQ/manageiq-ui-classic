@@ -20,8 +20,10 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         unreadCount: action.payload.notifications.filter(notification => notification.unread).length,
         totalNotificationsCount: action.payload.count,
       };
+
     case `${nPrefix}setTotalNotificatonsCount`:
       return { ...state, totalNotificationsCount: action.payload };
+
     case `${nPrefix}addNotification`:
       const notifications = [action.payload, ...state.notifications].slice(0, 100);
       return {
@@ -31,8 +33,10 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         totalNotificationsCount: state.totalNotificationsCount + 1,
         toastNotifications: [action.payload, ...state.toastNotifications].slice(0, 3),
       };
+
     case `${nPrefix}toggleDrawerVisibility`:
       return { ...state, isDrawerVisible: !state.isDrawerVisible };
+
     case `${nPrefix}markNotificationRead`:
       return {
         ...state,
@@ -43,11 +47,13 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         unreadCount: state.unreadCount - 1,
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload)),
       };
+
     case `${nPrefix}removeToastNotification`:
       return {
         ...state,
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload)),
       };
+
     case `${nPrefix}markAllRead`:
       return {
         ...state,
@@ -55,6 +61,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         unreadCount: 0,
         toastNotifications: [],
       };
+
     case `${nPrefix}clearNotification`:
       return {
         ...state,
@@ -62,6 +69,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         unreadCount: action.payload.unread ? state.unreadCount - 1 : state.unreadCount,
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload.id)),
       };
+
     case `${nPrefix}clearAll`:
       return {
         ...state,
@@ -69,8 +77,10 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         unreadCount: 0,
         toastNotifications: [],
       };
+
     case `${nPrefix}toggleMaxNotifications`:
       return { ...state, maxNotifications: state.maxNotifications ? undefined : maxNotifications };
+
     default:
       return state;
   }

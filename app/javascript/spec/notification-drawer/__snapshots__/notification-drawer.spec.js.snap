@@ -783,7 +783,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                       className="drawer-pf-notification-message"
                                       title="title"
                                     >
-                                      Showing 100 items out of 0 total.
+                                      Showing 100 items out of 2 total.
                                     </span>
                                   </NotificationMessage>
                                   <a

@@ -7,6 +7,7 @@ import {
 import classnames from 'classnames';
 import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
 import { maxNotifications as maxNotificationsConstant, notificationsInit } from '../../packs/notification-drawer-common';
+import { API } from '../../http_api';
 
 const NotificationDrawer = () => {
   const dispatch = useDispatch();

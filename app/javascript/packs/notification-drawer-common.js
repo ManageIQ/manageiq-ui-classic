@@ -26,6 +26,7 @@ function addNotification(data) {
 }
 
 export function notificationsInit(useLimit) {
+  console.log('notifications init')
   const notifications = [];
   const promises = [];
   const limitFragment = useLimit ? `&limit=${maxNotifications.toString()}` : '';
@@ -46,13 +47,16 @@ export function notificationsInit(useLimit) {
           timeStamp: resource.details.created_at,
         });
       });
-      return notifications;
+      return {
+        notifications,
+        subcount: data.subcount,
+      };
     }));
   if (useLimit) {
     promises.push(API.get('/api/notifications'));
   }
-  return Promise.all(promises).then(([notifications, meta]) => {
-    ManageIQ.redux.store.dispatch({ type: '@@notifications/initNotifications', payload: { notifications, count: meta ? meta.subcount : 100 } });
+  return Promise.all(promises).then(([{ notifications, subcount }, meta]) => {
+    ManageIQ.redux.store.dispatch({ type: '@@notifications/initNotifications', payload: { notifications, count: meta ? meta.subcount : subcount } });
   });
 }
 
