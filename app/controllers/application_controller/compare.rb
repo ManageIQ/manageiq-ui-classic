@@ -72,32 +72,31 @@ module ApplicationController::Compare
     compare_all_diff_same
   end
 
+  # Make one button selected & inactive.
+  # While other buttons are unselected & active.
+  def toggle_button_pressed(active_button, inactive_buttons)
+    inactive_buttons.reduce(
+      active_button => {:enabled => false, :selected => true}
+    ) do |acc, button|
+      acc[button] = {:enabled => true, :selected => false}
+      acc
+    end
+  end
+
   def update_compare_partial(command, mode)
-    render :update do |page|
-      page << javascript_prologue
+    button_changes =
       case mode
       when 'different'
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_diff');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_diff');"
+        toggle_button_pressed("#{command}_diff", ["#{command}_all", "#{command}_same"])
       when 'same'
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+        toggle_button_pressed("#{command}_same", ["#{command}_all", "#{command}_diff"])
       else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+        toggle_button_pressed("#{command}_all", ["#{command}_same", "#{command}_diff"])
       end
+
+    render :update do |page|
+      page << javascript_prologue
+      page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})"
       page.replace_html('main_div', :partial => 'layouts/compare')
       page << 'miqSparkle(false);'
     end
