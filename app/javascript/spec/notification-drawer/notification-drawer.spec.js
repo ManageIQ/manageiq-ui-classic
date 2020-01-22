@@ -152,7 +152,7 @@ describe('Notification drawer tests', () => {
   });
 
   it('should dispatch markNotificationRead after click on notification content', async(done) => {
-    fetchMock.postOnce('/api/notifications/10000000003625', {});
+    fetchMock.post('/api/notifications/10000000003625', {});
     const store = mockStore({ ...initialState });
     const wrapper = mount(
       <Provider store={store}>
@@ -163,14 +163,15 @@ describe('Notification drawer tests', () => {
       wrapper.find('span.pull-left').first().simulate('click');
       wrapper.find('span.drawer-pf-notification-message').first().simulate('click');
     });
-    const expectedPayload = [{
-      payload: '10000000003625',
-      type: '@@notifications/markNotificationRead',
-    },
-    {
-      payload: '10000000003625',
-      type: '@@notifications/markNotificationRead',
-    }];
+    const expectedPayload = [
+      {
+        payload: '10000000003625',
+        type: '@@notifications/markNotificationRead',
+      },
+      {
+        payload: '10000000003625',
+        type: '@@notifications/markNotificationRead',
+      }];
     expect(store.getActions()).toEqual(expectedPayload);
     done();
   });

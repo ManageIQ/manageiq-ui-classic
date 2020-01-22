@@ -26,7 +26,6 @@ function addNotification(data) {
 }
 
 export function notificationsInit(useLimit) {
-  console.log('notifications init')
   const notifications = [];
   const promises = [];
   const limitFragment = useLimit ? `&limit=${maxNotifications.toString()}` : '';
