@@ -148,6 +148,8 @@ const subscribeToSubject = dispatch => (
         onRowSelect(event.rowSelect.checked, dispatch);
       } else if (event.redrawToolbar) {
         dispatch({ type: 'TOOLBARS', toolbars: event.redrawToolbar });
+      } else if (event.batchUpdate) {
+        dispatch({ type: 'CHANGES', changes: event.batchUpdate });
       } else if (event.update) {
         // TODO: originally probably for QE
         // this.onUpdateItem(event);
@@ -187,6 +189,15 @@ const filterNonViews = toolbars => toolbars
 
 const sanitizeToolbars = arr => arr ? arr.filter(Boolean) : [];
 
+const applyButtonChanges = (toolbars, changes) =>
+  toolbars.map(toolbar =>
+    toolbar.map(item => item.id in changes ? {
+        ...item,
+        ...changes[item.id]
+      } : item
+    ),
+  );
+
 const toolbarReducer = (state, action) => {
   switch (action.type) {
     case 'INCREMENT':
@@ -208,6 +219,11 @@ const toolbarReducer = (state, action) => {
       return {
         ...state,
         toolbars: sanitizeToolbars(action.toolbars),
+      };
+    case 'CHANGES':
+      return {
+        ...state,
+        toolbars: applyButtonChanges(state.toolbars, action.changes),
       };
     default:
       return state;

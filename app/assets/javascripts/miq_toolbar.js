@@ -1,5 +1,9 @@
 ManageIQ.toolbars = {};
 
+ManageIQ.toolbars.applyChanges = function(changes) {
+  sendDataWithRx({batchUpdate: changes});
+};
+
 ManageIQ.toolbars.findByDataClick = function(toolbar, attr_click) {
   return $(toolbar).find("[data-click='" + attr_click + "']");
 };
