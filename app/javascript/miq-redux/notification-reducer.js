@@ -23,10 +23,12 @@ export const notificationReducer = (state = notificationInitialState, action) =>
     case `${nPrefix}setTotalNotificatonsCount`:
       return { ...state, totalNotificationsCount: action.payload };
     case `${nPrefix}addNotification`:
+      const notifications = [action.payload, ...state.notifications].slice(0, 100);
       return {
         ...state,
-        notifications: [action.payload, ...state.notifications],
-        unreadCount: state.unreadCount + 1,
+        notifications,
+        unreadCount: notifications.filter(notification => notification.unread).length,
+        totalNotificationsCount: state.totalNotificationsCount + 1,
         toastNotifications: [action.payload, ...state.toastNotifications].slice(0, 3),
       };
     case `${nPrefix}toggleDrawerVisibility`:
@@ -68,7 +70,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: [],
       };
     case `${nPrefix}toggleMaxNotifications`:
-      return { ...state, maxNotifications: state.maxNotifications ? undefined : 100 };
+      return { ...state, maxNotifications: state.maxNotifications ? undefined : maxNotifications };
     default:
       return state;
   }

@@ -18,7 +18,7 @@ const NotificationDrawer = () => {
   const notifications = useSelector(({ notificationReducer: { notifications } }) => notifications);
   const totalNotificationsCount = useSelector(({ notificationReducer: { totalNotificationsCount } }) => totalNotificationsCount);
   const maxNotifications = useSelector(({ notificationReducer: { maxNotifications } }) => maxNotifications);
-  
+
   return (
     isDrawerVisible ? (
       <div id="miq-notifications-drawer-container">
@@ -75,10 +75,13 @@ const NotificationDrawer = () => {
                               eventKey="2"
                               header={false}
                               onClick={
-                                () => notification.unread && dispatch({
-                                  type: '@@notifications/markNotificationRead',
-                                  payload: notification.id,
-                                })
+                                () => notification.unread
+                                && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
+                                  .then(() =>
+                                    dispatch({
+                                      type: '@@notifications/markNotificationRead',
+                                      payload: notification.id,
+                                    }))
                               }
                             >
                               {__('Mark as read')}
@@ -88,10 +91,16 @@ const NotificationDrawer = () => {
                               bsClass="dropdown"
                               eventKey="3"
                               header={false}
-                              onClick={() => dispatch({
-                                type: '@@notifications/clearNotification',
-                                payload: notification,
-                              })}
+                              onClick={
+                                () => API.delete(`/api/notifications/${notification.id}`)
+                                  .then(() => {
+                                    dispatch({
+                                      type: '@@notifications/clearNotification',
+                                      payload: notification,
+                                    });
+                                    notificationsInit(maxNotifications !== undefined);
+                                  })
+                              }
                             >
                               {__('Remove')}
                             </MenuItem>
@@ -110,10 +119,14 @@ const NotificationDrawer = () => {
                             <NotificationMessage
                               title={notification.message}
                               onClick={
-                                () => notification.unread && dispatch({
-                                  type: '@@notifications/markNotificationRead',
-                                  payload: notification.id,
-                                })}
+                                () => notification.unread
+                                && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
+                                  .then(() =>
+                                    dispatch({
+                                      type: '@@notifications/markNotificationRead',
+                                      payload: notification.id,
+                                    }))
+                              }
                             >
                               {notification.message}
                             </NotificationMessage>
@@ -124,7 +137,7 @@ const NotificationDrawer = () => {
                           </NotificationContent>
                         </Notification>
                       ))}
-                      { maxNotificationsConstant <= notifications.length && (
+                      { maxNotificationsConstant < totalNotificationsCount && (
                         <Notification id="notificationLimitBar" key="notificationLimit" className="text-center" seen>
                           <NotificationContent>
                             <NotificationMessage
@@ -136,7 +149,7 @@ const NotificationDrawer = () => {
                               id="toggleMaxNotifications"
                               className="btn btn-link"
                               onClick={() => {
-                                notificationsInit(maxNotifications === undefined);
+                                notificationsInit(!maxNotifications);
                                 dispatch({ type: '@@notifications/toggleMaxNotifications' });
                               }
                               }
@@ -156,7 +169,14 @@ const NotificationDrawer = () => {
                           id="markAllReadBtn"
                           bsStyle="link"
                           disabled={unreadCount === 0}
-                          onClick={() => dispatch({ type: '@@notifications/markAllRead' })}
+                          onClick={
+                            () => {
+                              const resources = notifications.map(notification => ({ id: notification.id }));
+                              API.post('/api/notifications/', { action: 'mark_as_seen', resources })
+                                .then(() =>
+                                  dispatch({ type: '@@notifications/markAllRead' }));
+                            }
+                          }
                         >
                           {__('Mark All Read')}
                         </Button>
@@ -169,7 +189,13 @@ const NotificationDrawer = () => {
                           id="clearAllBtn"
                           bsStyle="link"
                           disabled={notifications.length === 0}
-                          onClick={() => dispatch({ type: '@@notifications/clearAll' })}
+                          onClick={
+                            () => {
+                              const resources = notifications.map(notification => ({ id: notification.id }));
+                              API.post('/api/notifications/', { action: 'delete', resources })
+                                .then(() => notificationsInit(Boolean(maxNotifications)));
+                            }
+                          }
                         >
                           {__('Clear All')}
                         </Button>
