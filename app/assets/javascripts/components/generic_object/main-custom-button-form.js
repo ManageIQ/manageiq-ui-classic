@@ -207,7 +207,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       }), 'name');
     }
     // set uri_attributes to default for non-Ansible button
-    if (vm.customButtonModel.button_type == "default") {
+    if (vm.customButtonModel.button_type === "default") {
       vm.customButtonModel.uri_attributes = {"request": vm.customButtonModel.request, service_template: null, hosts: null};
     };
 
@@ -278,10 +278,12 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     }
 
     delete vm.customButtonModel.resource_action.ae_attributes.request;
-    vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
-      vm.customButtonModel.resource_action.ae_attributes,
-      vm.customButtonModel.attribute_names,
-      vm.customButtonModel.attribute_values);
+    delete vm.customButtonModel.resource_action.ae_attributes.service_template;
+    delete vm.customButtonModel.resource_action.ae_attributes.hosts;
+
+    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.noOfAttributeValueRows = vm.customButtonModel.attribute_names.length;
 
     if (!vm.customButtonModel.uri_attributes.hosts || vm.customButtonModel.uri_attributes.hosts === "localhost") {
       vm.inventory = "localhost";
@@ -299,27 +301,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.customButtonModel.attribute_values = [];
     }
 
-    vm.customButtonModel.noOfAttributeValueRows = assignObjectToKeyValueArrays(
-      vm.customButtonModel.resource_action.ae_attributes,
-      vm.customButtonModel.attribute_names,
-      vm.customButtonModel.attribute_values);
+    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.noOfAttributeValueRows = vm.customButtonModel.attribute_names.length;
 
     vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
-  }
-
-  function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
-    if (_.size(obj) === 0) {
-      keyArray.push('');
-    } else {
-      _.forEach(obj, function(value, key) {
-        if (valueArray) {
-          keyArray.push(key);
-          valueArray.push(value);
-        } else {
-          keyArray.push(value);
-        }
-      });
-    }
-    return _.size(keyArray);
   }
 }
