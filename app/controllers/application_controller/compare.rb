@@ -429,22 +429,14 @@ module ApplicationController::Compare
     session[:miq_exists_mode] = !session[:miq_exists_mode]
     @exists_mode = session[:miq_exists_mode]
     drift_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
+
+    button_changes = 
       if @exists_mode
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'driftmode_details');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'driftmode_details');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'driftmode_exists');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'driftmode_exists');"
+        toggle_button_pressed('driftmode_exists', %w(driftmode_details))
       else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'driftmode_details');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'driftmode_details');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'driftmode_exists');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'driftmode_exists');"
+        toggle_button_pressed('driftmode_details', %w(driftmode_exists))
       end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    render_compare_and_button_changes(button_changes)
   end
 
   # Toggle drift compressed/expanded view
@@ -453,22 +445,14 @@ module ApplicationController::Compare
     session[:miq_compressed] = !session[:miq_compressed]
     @compressed = session[:miq_compressed]
     drift_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
+
+    button_changes = 
       if @compressed
-        page << "ManageIQ.toolbars.enableItem('#view_tb', 'drift_expanded');"
-        page << "ManageIQ.toolbars.unmarkItem('#view_tb', 'drift_expanded');"
-        page << "ManageIQ.toolbars.disableItem('#view_tb', 'drift_compressed');"
-        page << "ManageIQ.toolbars.markItem('#view_tb', 'drift_compressed');"
+        toggle_button_pressed('drift_compressed', %w(drift_expanded))
       else
-        page << "ManageIQ.toolbars.disableItem('#view_tb', 'drift_expanded');"
-        page << "ManageIQ.toolbars.markItem('#view_tb', 'drift_expanded');"
-        page << "ManageIQ.toolbars.enableItem('#view_tb', 'drift_compressed');"
-        page << "ManageIQ.toolbars.unmarkItem('#view_tb', 'drift_compressed');"
+        toggle_button_pressed('drift_expanded', %w(drift_compressed))
       end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    render_compare_and_button_changes(button_changes)
   end
 
   # Send the current drift data in text format
