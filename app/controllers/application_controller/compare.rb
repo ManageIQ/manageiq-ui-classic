@@ -75,9 +75,9 @@ module ApplicationController::Compare
   # Make one button selected & inactive.
   # While other buttons are unselected & active.
   def toggle_button_pressed(active_button, inactive_buttons)
-    inactive_buttons.reduce(
+    inactive_buttons.each_with_object(
       active_button => {:enabled => false, :selected => true}
-    ) do |acc, button|
+    ) do |button, acc|
       acc[button] = {:enabled => true, :selected => false}
       acc
     end
@@ -137,9 +137,9 @@ module ApplicationController::Compare
 
     button_changes =
       if @compressed
-        toggle_button_pressed('compare_compressed', %w(compare_expanded))
+        toggle_button_pressed('compare_compressed', %w[compare_expanded])
       else
-        toggle_button_pressed('compare_expanded', %w(compare_compressed))
+        toggle_button_pressed('compare_expanded', %w[compare_compressed])
       end
     render_compare_and_button_changes(button_changes)
   end
@@ -154,9 +154,9 @@ module ApplicationController::Compare
 
     button_changes =
       if @exists_mode
-        toggle_button_pressed('comparemode_exists', %w(comparemode_details))
+        toggle_button_pressed('comparemode_exists', %w[comparemode_details])
       else
-        toggle_button_pressed('comparemode_details', %w(comparemode_exists))
+        toggle_button_pressed('comparemode_details', %w[comparemode_exists])
       end
     render_compare_and_button_changes(button_changes)
   end
@@ -430,11 +430,11 @@ module ApplicationController::Compare
     @exists_mode = session[:miq_exists_mode]
     drift_to_json(@compare)
 
-    button_changes = 
+    button_changes =
       if @exists_mode
-        toggle_button_pressed('driftmode_exists', %w(driftmode_details))
+        toggle_button_pressed('driftmode_exists', %w[driftmode_details])
       else
-        toggle_button_pressed('driftmode_details', %w(driftmode_exists))
+        toggle_button_pressed('driftmode_details', %w[driftmode_exists])
       end
     render_compare_and_button_changes(button_changes)
   end
@@ -446,11 +446,11 @@ module ApplicationController::Compare
     @compressed = session[:miq_compressed]
     drift_to_json(@compare)
 
-    button_changes = 
+    button_changes =
       if @compressed
-        toggle_button_pressed('drift_compressed', %w(drift_expanded))
+        toggle_button_pressed('drift_compressed', %w[drift_expanded])
       else
-        toggle_button_pressed('drift_expanded', %w(drift_compressed))
+        toggle_button_pressed('drift_expanded', %w[drift_compressed])
       end
     render_compare_and_button_changes(button_changes)
   end
