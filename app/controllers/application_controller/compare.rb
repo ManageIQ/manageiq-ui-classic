@@ -93,13 +93,7 @@ module ApplicationController::Compare
       else
         toggle_button_pressed("#{command}_all", ["#{command}_same", "#{command}_diff"])
       end
-
-    render :update do |page|
-      page << javascript_prologue
-      page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})"
-      page.replace_html('main_div', :partial => 'layouts/compare')
-      page << 'miqSparkle(false);'
-    end
+    render_compare_and_button_changes(button_changes)
   end
 
   def compare_all_diff_same
@@ -140,22 +134,14 @@ module ApplicationController::Compare
     session[:miq_compressed] = !session[:miq_compressed]
     @compressed = session[:miq_compressed]
     compare_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
+
+    button_changes =
       if @compressed
-        page << "ManageIQ.toolbars.enableItem('#view_tb', 'compare_expanded');"
-        page << "ManageIQ.toolbars.unmarkItem('#view_tb', 'compare_expanded');"
-        page << "ManageIQ.toolbars.disableItem('#view_tb', 'compare_compressed');"
-        page << "ManageIQ.toolbars.markItem('#view_tb', 'compare_compressed');"
+        toggle_button_pressed('compare_compressed', %w(compare_expanded))
       else
-        page << "ManageIQ.toolbars.disableItem('#view_tb', 'compare_expanded');"
-        page << "ManageIQ.toolbars.markItem('#view_tb', 'compare_expanded');"
-        page << "ManageIQ.toolbars.enableItem('#view_tb', 'compare_compressed');"
-        page << "ManageIQ.toolbars.unmarkItem('#view_tb', 'compare_compressed');"
+        toggle_button_pressed('compare_expanded', %w(compare_compressed))
       end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    render_compare_and_button_changes(button_changes)
   end
 
   # Toggle exists/details view
@@ -165,22 +151,14 @@ module ApplicationController::Compare
     session[:miq_exists_mode] = !session[:miq_exists_mode]
     @exists_mode = session[:miq_exists_mode]
     compare_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
+
+    button_changes =
       if @exists_mode
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'comparemode_details');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'comparemode_details');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'comparemode_exists');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'comparemode_exists');"
+        toggle_button_pressed('comparemode_exists', %w(comparemode_details))
       else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'comparemode_details');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'comparemode_details');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'comparemode_exists');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'comparemode_exists');"
+        toggle_button_pressed('comparemode_details', %w(comparemode_exists))
       end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    render_compare_and_button_changes(button_changes)
   end
 
   def compare_set_state
@@ -536,6 +514,15 @@ module ApplicationController::Compare
   end
 
   private
+
+  def render_compare_and_button_changes(button_changes)
+    render :update do |page|
+      page << javascript_prologue
+      page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})"
+      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
+      page << "miqSparkle(false);"
+    end
+  end
 
   def prepare_data_for_compare_or_drift_report(mode, csv)
     sb_key = mode == :compare ? :miq_temp_params : :miq_drift_params
