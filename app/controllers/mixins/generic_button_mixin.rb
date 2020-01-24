@@ -12,7 +12,7 @@ module Mixins
       return [:finished, pfx] if vm_button_redirected?(pfx, pressed)
 
       unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-              "#{pfx}_migrate", "#{pfx}_publish"].include?(pressed)
+              "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename'].include?(pressed)
         @refresh_div = "main_div"
         @refresh_partial = "layouts/gtl"
         show # Handle VMs buttons
@@ -79,8 +79,9 @@ module Mixins
         return
       end
 
-      if params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                  "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+      if params[:pressed].ends_with?("_edit") ||
+         ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
+         params[:pressed] == 'vm_rename' && @flash_array.nil?
         render_or_redirect_partial(pfx)
       elsif @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
