@@ -73,7 +73,7 @@ module OpsController::Settings::Upload
       rescue => bang
         add_flash(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
       else
-        imp.errors.each_value { |msg| add_flash(msg, :error) }
+        imp.errors.each { |_field, msg| add_flash(msg, :error) }
         add_flash(_("Import validation complete: %{good_record}, %{bad_record}") % {
           :good_record => n_("%{num} good record", "%{num} good records", imp.stats[:good]) % {:num => imp.stats[:good]},
           :bad_record  => n_("%{num} bad record", "%{num} bad records", imp.stats[:bad]) % {:num => imp.stats[:bad]}
