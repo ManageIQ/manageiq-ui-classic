@@ -141,4 +141,15 @@ describe InfraNetworkingController do
       controller.send(:rebuild_toolbars, true, presenter)
     end
   end
+
+  describe '#update_partials' do
+    let(:presenter) { ExplorerPresenter.new(:active_tree => :infra_networking_tree) }
+
+    before { controller.instance_variable_set(:@sb, :active_tree => :infra_networking_tree) }
+
+    it 'calls replace_search_box' do
+      expect(controller).to receive(:replace_search_box).with(presenter)
+      controller.send(:update_partials, false, presenter)
+    end
+  end
 end

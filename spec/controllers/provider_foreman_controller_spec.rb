@@ -2,6 +2,7 @@ describe ProviderForemanController do
   render_views
 
   let(:tags) { ["/managed/quota_max_memory/2048"] }
+
   before do
     allow(controller).to receive(:data_for_breadcrumbs).and_return({})
     @zone = EvmSpecHelper.local_miq_server.zone
@@ -735,6 +736,30 @@ describe ProviderForemanController do
       controller.send(:show)
       expect(controller.instance_variable_get(:@explorer)).to be(true)
       expect(controller.params[:action]).to eq('tree-select')
+    end
+  end
+
+  describe '#load_or_clear_adv_search' do
+    before do
+      allow(controller).to receive(:model_from_active_tree)
+      controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_providers_tree)
+    end
+
+    it 'checks if being in a Configuration Manager Providers tree' do
+      expect(controller).to receive(:provider_active_tree?).and_return(true)
+      controller.send(:load_or_clear_adv_search)
+    end
+  end
+
+  describe '#default_node' do
+    before do
+      allow(controller).to receive(:x_node).and_return('root')
+      controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_providers_tree)
+    end
+
+    it 'checks if being in a Configuration Manager Providers tree' do
+      expect(controller).to receive(:provider_active_tree?).and_return(true)
+      controller.send(:default_node)
     end
   end
 
