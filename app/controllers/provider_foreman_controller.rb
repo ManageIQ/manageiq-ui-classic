@@ -96,7 +96,7 @@ class ProviderForemanController < ApplicationController
         self.x_node = params[:id]
         quick_search_show # User will input the value
       end
-    elsif x_active_tree == :configuration_manager_providers_tree && x_node != 'root' # Providers accordion, without Advanced Search
+    elsif provider_active_tree? && x_node != 'root' # Providers accordion, without Advanced Search
       listnav_search_selected(0)
     end
   end
@@ -320,7 +320,7 @@ class ProviderForemanController < ApplicationController
 
   def default_node
     return unless x_node == "root"
-    if x_active_tree == :configuration_manager_providers_tree
+    if provider_active_tree?
       options = {:model => "ManageIQ::Providers::ConfigurationManager"}
       @show_list ? process_show_list(options) : options.merge!(update_options)
       @right_cell_text = _("All Configuration Management Providers")

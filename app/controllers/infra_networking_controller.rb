@@ -418,6 +418,7 @@ class InfraNetworkingController < ApplicationController
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
+    replace_search_box(presenter)
   end
 
   def action_type(type, amount)

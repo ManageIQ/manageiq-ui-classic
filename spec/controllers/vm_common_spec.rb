@@ -193,7 +193,7 @@ describe VmOrTemplateController do
                                                             :locals  => {:controller => "vm"}).exactly(1).times
       expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_adv_searchbox",
                                                             :locals  => {:nameonly => true}).exactly(1).times
-      expect(controller).to receive(:render_to_string).with(:partial => "layouts/adv_search").exactly(1).times
+      expect(controller).not_to receive(:render_to_string).with(:partial => "layouts/adv_search")
       expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_edit_buttons",
                                                             :locals  => {:action_url      => "prov_edit",
                                                                          :record_id       => vm.id,

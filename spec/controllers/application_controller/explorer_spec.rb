@@ -1,6 +1,6 @@
 describe VmInfraController do
   describe "ApplicationController::Explorer concern" do
-    context "#valid_active_node" do
+    describe "#valid_active_node" do
       let(:active_tree) { :stcat_tree }
 
       it "root node" do
@@ -33,7 +33,7 @@ describe VmInfraController do
       end
     end
 
-    context "#rbac_filtered_objects" do
+    describe "#rbac_filtered_objects" do
       let(:ems_folder) { FactoryBot.create(:ems_folder) }
       let!(:ems) { FactoryBot.create(:ems_vmware, :ems_folders => [ems_folder]) }
       let(:user)       { FactoryBot.create(:user_admin) }
@@ -104,7 +104,7 @@ describe VmInfraController do
 end
 
 describe ReportController do
-  context '#tree_add_child_nodes' do
+  describe '#tree_add_child_nodes' do
     it 'calls tree_add_child_nodes TreeBuilder method' do
       widget = FactoryBot.create(:miq_widget)
       controller.instance_variable_set(:@sb,
@@ -122,6 +122,24 @@ describe ReportController do
                    :selectable => true,
                    :class      => ""}]
       expect(nodes).to eq(expected)
+    end
+  end
+end
+
+describe ProviderForemanController do
+  describe '#replace_search_box' do
+    let(:presenter) { ExplorerPresenter.new(:active_tree => :configuration_manager_providers_tree) }
+
+    it 'replaces advsearchModal' do
+      expect(presenter).to receive(:replace).with(:adv_searchbox_div, '')
+      expect(presenter).not_to receive(:replace).with(:advsearchModal, '')
+      controller.send(:replace_search_box, presenter, :nameonly => true)
+    end
+
+    it 'does not replace advsearchModal' do
+      expect(presenter).to receive(:replace).with(:adv_searchbox_div, '')
+      expect(presenter).to receive(:replace).with(:advsearchModal, '')
+      controller.send(:replace_search_box, presenter)
     end
   end
 end
