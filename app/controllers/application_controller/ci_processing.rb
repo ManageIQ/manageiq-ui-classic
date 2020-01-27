@@ -43,7 +43,7 @@ module ApplicationController::CiProcessing
       @redirect_controller = "vm"
     when "host_edit"
       @redirect_controller = "host"
-      session[:host_items] = obj if obj.length > 1
+      session[:host_items] = obj.length > 1 ? obj : nil
     end
     @redirect_id = obj[0] if obj.length == 1 # not redirecting to an id if multi host are selected for credential edit
 
