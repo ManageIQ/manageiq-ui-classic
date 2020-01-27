@@ -3,6 +3,7 @@ module Mixins
     def show
       return if perfmenu_click?
       return unless init_show
+
       @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
 
       case @display
@@ -84,7 +85,7 @@ module Mixins
           :controller => controller_name,
           :id         => record.id,
           :action     => :show,
-          :only_path  => true,
+          :only_path  => true
         )
         url_for_only_path(opts)
       end
@@ -107,6 +108,7 @@ module Mixins
     def init_show(model_class = self.class.model)
       @record = identify_record(params[:id], model_class)
       return false if record_no_longer_exists?(@record)
+
       @lastaction = 'show'
       @gtl_url = gtl_url
 
