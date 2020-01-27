@@ -552,9 +552,11 @@ class ApplicationController < ActionController::Base
   end
 
   def adv_search_text_clear
+    @search_text = @sb[:search_text] = nil
     if params[:in_explorer] == "true"
-      @search_text = @sb[:search_text] = nil
       reload
+    else
+      javascript_redirect(last_screen_url)
     end
   end
 
