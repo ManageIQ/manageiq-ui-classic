@@ -213,7 +213,6 @@ class UtilizationController < ApplicationController
     presenter[:clear_selection] = x_node == ''
 
     presenter.reload_toolbars(:view => v_tb)
-    presenter.set_visibility(@sb[:active_tab] == 'report', :toolbar)
 
     presenter.update(:main_div, r[:partial => 'utilization_tabs'])
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
