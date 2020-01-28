@@ -4,7 +4,7 @@ module Mixins
       if params[:action] == "show_list"
         "show_list"
       elsif params[:action] == "show"
-        self.controller_name
+        controller_name
       end
     end
   end
