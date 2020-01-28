@@ -480,7 +480,7 @@ module ApplicationController::Performance
     # Set the perf options in the selected controller's sandbox
     cont = data_row["resource_type"].underscore.downcase.to_sym
     session[:sandboxes][cont] ||= {}
-    session[:sandboxes][cont][:perf_options] ||= Options.new
+    session[:sandboxes][cont][:perf_options] ||= {}
 
     # Copy general items from the current perf_options
     session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]

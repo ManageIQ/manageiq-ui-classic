@@ -32,6 +32,10 @@ module ApplicationController::Performance
     :tz,
     :tz_daily
   ) do
+    def self.load_from_hash(hash)
+      new(*(hash || {}).values)
+    end
+
     def update_from_params(params)
       self.typ         = params[:perf_typ]          if params[:perf_typ]
       self.days        = params[:perf_days]         if params[:perf_days]
