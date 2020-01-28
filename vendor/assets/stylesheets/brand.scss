@@ -1,3 +1,14 @@
+/*
+ * TL;DR: DO NOT MOVE THIS FILE !!!;
+ *
+ * The branding information needs to be stored outside the folder where the main
+ * application.scss lives. The SassC::Rails::Importer always prefers the folder
+ * from which the @import is called over the order set in the SASS load path.
+ *
+ * https://github.com/sass/sassc-rails/blob/master/lib/sassc/rails/importer.rb#L99
+ *
+ */
+
 // Product overrides of Boostrap & Patternfly variables
 $screen-lg:                                 1400px;  // add 200px to account for vertical nav
 $navbar-pf-navbar-navbar-brand-min-width:   270px;
@@ -46,13 +57,3 @@ body.login.whitelabel {
   background: url($img-bg-login-whitelabel) !important;
   background-size: 100% auto !important;
 }
-
-@import "font-fabulous-sprockets";
-@import "font-fabulous";
-@import "patternfly-sprockets";
-@import "patternfly";
-@import "patternfly_overrides";
-@import "icon_customizations";
-@import "header_background"; // sets a custom background image in the header
-@import "about_modal_background"; // sets a custom background image in the 'About' modal
-@import "alerts";

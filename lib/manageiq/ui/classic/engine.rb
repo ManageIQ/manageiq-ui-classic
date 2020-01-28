@@ -41,6 +41,11 @@ module ManageIQ
         config.autoload_paths << root.join('app', 'controllers', 'mixins').to_s
         config.autoload_paths << root.join('lib').to_s
 
+        # The branding information needs to be stored outside the folder where the main
+        # application.scss lives. The SassC::Rails::Importer always prefers the folder
+        # from which the @import is called over the order set in the SASS load path.
+        config.assets.paths << root.join('vendor', 'assets', 'stylesheets').to_s
+
         if Rails.env.production? || Rails.env.test?
           require 'uglifier'
           config.assets.js_compressor = Uglifier.new(
