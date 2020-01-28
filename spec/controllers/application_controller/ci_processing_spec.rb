@@ -814,6 +814,28 @@ describe ApplicationController do
       end
     end
   end
+
+  describe '#edit_record' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:session).and_return(:host_items => [1, 2])
+      controller.params = {:pressed => 'host_edit', :miq_grid_checks => '1'}
+    end
+
+    it 'sets session[:host_items] to nil' do
+      controller.send(:edit_record)
+      expect(controller.session[:host_items]).to be_nil
+    end
+
+    context 'multiple Hosts selected in a nested list for editing' do
+      before { controller.params = {:pressed => 'host_edit', :miq_grid_checks => '1, 2, 3'} }
+
+      it 'sets session[:host_items]' do
+        controller.send(:edit_record)
+        expect(controller.session[:host_items]).to eq([1, 2, 3])
+      end
+    end
+  end
 end
 
 describe HostController do
