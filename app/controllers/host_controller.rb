@@ -322,8 +322,8 @@ class HostController < ApplicationController
     if single_delete_test
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") ||
-          ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
-          params[:pressed] == 'vm_rename' && @flash_array.nil?
+          ["#{pfx}_miq_request_new", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
+          ["#{pfx}_clone", 'vm_rename'].include?(params[:pressed]) && @flash_array.nil?
       if @flash_array
         show_list
         replace_gtl_main_div
