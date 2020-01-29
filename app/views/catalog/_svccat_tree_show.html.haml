@@ -44,11 +44,7 @@
     .form-group
       .col-md-1{:align => "center"}
         #buttons
-          = button_tag(_("Order"),
-                       :class   => "btn btn-primary",
-                       :alt     => t = _("Order this Service"),
-                       :title   => t,
-                       :onclick => "miqOrderService(#{@record.id})")
+          = button_tag(_("Order"), @record.decorate.gtl_button_cell.merge(:class => "btn btn-primary"))
 
 :javascript
   miq_bootstrap('#long_description');

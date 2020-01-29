@@ -883,14 +883,9 @@ class ApplicationController < ActionController::Base
                           :icon2 => icon2}.compact
       new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
 
-      next unless @row_button # Show a button in the last col
-
-      new_row[:cells] << {
-        :is_button => true,
-        :text      => @row_button[:label],
-        :title     => @row_button[:title],
-        :onclick   => "#{@row_button[:function]}(\"#{row['id']}\");"
-      }
+      # Append a button if @row_button is set and the button is defined in the related decorator
+      button = item.decorate.try(:gtl_button_cell) if @row_button
+      new_row[:cells] << button if button
     end
 
     root

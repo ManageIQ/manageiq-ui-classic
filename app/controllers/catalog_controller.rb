@@ -320,6 +320,7 @@ class CatalogController < ApplicationController
     kls = TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate" ? VmOrTemplate : ServiceTemplate
     @record = identify_record(id || params[:id], kls)
     @tenants_tree = build_tenants_tree if kls == ServiceTemplate # Build the tree with available tenants for the Catalog Item/Bundle
+    add_flash(_("This item is invalid"), :warning) unless @flash_array || @record.try(:template_valid?)
   end
 
   # ST clicked on in the explorer right cell
@@ -954,11 +955,7 @@ class CatalogController < ApplicationController
     if x_active_tree == :svccat_tree
       @gtl_buttons = %w[view_list view_tile]
       @gtl_small_tiles = true
-      if role_allows?(:feature => 'svc_catalog_provision')
-        @row_button = {:label    => _("Order"),
-                       :function => "miqOrderService",
-                       :title    => _("Order this Service")} # Show a button instead of the checkbox
-      end
+      @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
       options[:gtl_dbname] = :catalog
     end
     options[:named_scope] = scope

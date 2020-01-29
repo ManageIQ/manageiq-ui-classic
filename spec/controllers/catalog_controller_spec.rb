@@ -67,9 +67,7 @@ describe CatalogController do
     end
 
     describe '#x_button' do
-      before do
-        ApplicationController.handle_exceptions = true
-      end
+      before { ApplicationController.handle_exceptions = true }
 
       context 'corresponding methods are called for allowed actions' do
         CatalogController::CATALOG_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, actual_method|
@@ -476,6 +474,7 @@ describe CatalogController do
 
     describe "#ot_rendering" do
       render_views
+
       before do
         EvmSpecHelper.create_guid_miq_server_zone
         session[:settings] = {
@@ -964,6 +963,7 @@ describe CatalogController do
 
       describe '#replace_right_cell' do
         let(:dialog) { FactoryBot.create(:dialog) }
+
         before do
           allow(controller).to receive(:params).and_return(:action => 'dialog_provision')
           controller.instance_variable_set(:@in_a_form, true)
@@ -984,14 +984,8 @@ describe CatalogController do
     end
 
     describe '#service_template_list' do
-      let(:sandbox) { {:active_tree => tree} }
-
-      before do
-        controller.instance_variable_set(:@sb, sandbox)
-      end
-
       context 'Service Catalogs accordion' do
-        let(:tree) { :svccat_tree }
+        before { controller.instance_variable_set(:@sb, :active_tree => :svccat_tree) }
 
         it 'sets options for rendering proper type of view' do
           expect(controller).to receive(:process_show_list).with(:gtl_dbname => :catalog, :named_scope => {})
@@ -1001,7 +995,7 @@ describe CatalogController do
     end
 
     describe '#available_job_templates' do
-      it "" do
+      it "sets new available templates" do
         ems = FactoryBot.create(:automation_manager_ansible_tower)
         cs = FactoryBot.create(:configuration_script,
                                :type => 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript')
@@ -1259,6 +1253,20 @@ describe CatalogController do
     it 'sets @tenants_tree' do
       controller.send(:identify_catalog, record.id)
       expect(controller.instance_variable_get(:@tenants_tree).name).to eq(:tenants_tree)
+    end
+
+    it 'does not add warning flash message for valid Catalog Item or Bundle' do
+      controller.send(:identify_catalog, record.id)
+      expect(controller.instance_variable_get(:@flash_array)).to be_nil
+    end
+
+    context 'invalid Catalog Item or Bundle' do
+      let(:record) { FactoryBot.create(:service_template, :service_resources => [FactoryBot.create(:service_resource)]) }
+
+      it 'adds warning flash message' do
+        controller.send(:identify_catalog, record.id)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'This item is invalid', :level => :warning}])
+      end
     end
   end
 
