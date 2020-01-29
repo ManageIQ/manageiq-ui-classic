@@ -40,6 +40,38 @@ describe ApplicationController::Filter do
     end
   end
 
+  context 'selected and last loaded filter' do
+    let(:expression) { ApplicationController::Filter::Expression.new }
+    let(:search) { FactoryBot.create(:miq_search) }
+
+    describe '#filter_info' do
+      it 'returns id, name, description and type of the search' do
+        expect(expression.filter_info(search)).to eq(:id => search.id, :name => search.name, :description => search.description, :typ => search.search_type)
+      end
+    end
+
+    describe '#last_loaded_filter' do
+      it 'sets expression.exp_last_loaded' do
+        expression.last_loaded_filter(search)
+        expect(expression.exp_last_loaded).to eq(:id => search.id, :name => search.name, :description => search.description, :typ => search.search_type)
+      end
+    end
+
+    describe '#select_filter' do
+      it 'sets expression.selected and expression.exp_last_loaded' do
+        expression.select_filter(search, true)
+        expect(expression.selected).to eq(:id => search.id, :name => search.name, :description => search.description, :typ => search.search_type)
+        expect(expression.exp_last_loaded).to eq(expression.selected)
+      end
+
+      it 'sets only expression.selected' do
+        expression.select_filter(search)
+        expect(expression.selected).to eq(:id => search.id, :name => search.name, :description => search.description, :typ => search.search_type)
+        expect(expression.exp_last_loaded).to be_nil
+      end
+    end
+  end
+
   describe ReportController do
     let(:expression) do
       ApplicationController::Filter::Expression.new.tap do |e|
@@ -50,7 +82,7 @@ describe ApplicationController::Filter do
       end
     end
 
-    context '#update_from_expression_editor' do
+    describe '#update_from_expression_editor' do
       it "resets value of exp_key based upon type of field selected" do
         edit = {:record_filter => expression}
         edit[:new] = {:record_filter => {:test => "foo", :token => 1}}

@@ -54,7 +54,7 @@ module ApplicationController::AdvancedSearch
         add_flash(_("%{model} search \"%{name}\" was saved") %
           {:model => ui_lookup(:model => @edit[@expkey][:exp_model]),
            :name  => @edit[:new_search_name]})
-        @edit[@expkey].select_filter(s)
+        @edit[@expkey].last_loaded_filter(s) # Save the last search loaded
         @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded][:description] unless @edit[@expkey][:exp_last_loaded].nil?
         @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
         # Build the expression table
@@ -331,7 +331,7 @@ module ApplicationController::AdvancedSearch
         @edit = session[:edit]
         @view = session[:view]
         @edit[:adv_search_applied] = nil
-        @edit[:expression][:exp_last_loaded] = nil
+        @edit[:expression][:exp_last_loaded] = @edit[:expression][:selected] = nil
         session[:adv_search] ||= {}                                         # Create/reuse the adv search hash
         session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
         default_search = settings(:default_search, @view.db.to_s.to_sym)
