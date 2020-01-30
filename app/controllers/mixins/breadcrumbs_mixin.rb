@@ -4,10 +4,10 @@ module Mixins
       ActiveSupport::SafeBuffer === @right_cell_text ? @title_for_breadcrumbs : @right_cell_text
     end
 
-    def self.included(c)
-      c.helper_method(:data_for_breadcrumbs)
-      c.before_action(:x_node_text_from_session)
-      c.after_action(:x_node_text_save_to_session)
+    def self.included(controller)
+      controller.helper_method(:data_for_breadcrumbs)
+      controller.before_action(:x_node_text_from_session)
+      controller.after_action(:x_node_text_save_to_session)
     end
 
     # These actions won't generate additional breadcrumb with their right_cell_text
@@ -124,14 +124,14 @@ module Mixins
       # EMS has key instead of name
       return if !variable || variable.count != 1
 
-      if variable.first[:key]
-        title = variable.first[:key]
-      # FloatingIps do not have name
-      elsif floating_ip_address?(variable.first)
-        title = variable.first[:address]
-      else
-        title = variable.first[:name]
-      end
+      title = if variable.first[:key]
+                variable.first[:key]
+              # FloatingIps do not have name
+              elsif floating_ip_address?(variable.first)
+                variable.first[:address]
+              else
+                variable.first[:name]
+              end
       {:title => title, :key => (explorer ? x_node : nil)}.compact if title
     end
 
