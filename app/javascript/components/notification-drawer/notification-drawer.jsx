@@ -13,14 +13,18 @@ import {
 
 const NotificationDrawer = () => {
   const dispatch = useDispatch();
-  const isDrawerVisible = useSelector(({ notificationReducer: { isDrawerVisible } }) => isDrawerVisible);
   const drawerTitle = __('Notifications');
   const [isDrawerExpanded, setDrawerExpanded] = useState(false);
   const [isPanelExpanded, setPanelExpanded] = useState(true);
-  const unreadCount = useSelector(({ notificationReducer: { unreadCount } }) => unreadCount);
-  const notifications = useSelector(({ notificationReducer: { notifications } }) => notifications);
-  const totalNotificationsCount = useSelector(({ notificationReducer: { totalNotificationsCount } }) => totalNotificationsCount);
-  const maxNotifications = useSelector(({ notificationReducer: { maxNotifications } }) => maxNotifications);
+  const {
+    isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
+  } = useSelector(({
+    notificationReducer: {
+      isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
+    },
+  }) => ({
+    isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
+  }));
 
   return (
     isDrawerVisible ? (
