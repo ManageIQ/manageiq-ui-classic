@@ -802,6 +802,57 @@ module ApplicationHelper
        vm].include?(@layout)
   end
 
+  def default_search?(search_name)
+    @default_search.present? && @default_search.name == search_name
+  end
+
+  def no_default_search?(search_id)
+    @default_search.blank? && search_id.to_i.zero?
+  end
+
+  def expression_selected_id_or_name(id_or_name, search)
+    @edit[:expression][:selected] && @edit[:expression][:selected][id_or_name] == search && !@edit[:custom_search]
+  end
+
+  def expression_selected_nil_or_id(search_id)
+    @edit[:expression][:selected].nil? && @edit[:selected].nil? || expression_selected_id_or_name(:id, search_id.to_i)
+  end
+
+  # Returns description of a filter, for default filter also with "(Default)"
+  def search_description(search)
+    if default_search?(search.name) ||
+       @edit && no_default_search?(search.id) &&
+       settings_default('0', :default_search, @edit&.dig(@expkey, :exp_model).to_s.to_sym).to_s == '0'
+      _("%{description} (Default)") % {:description => search.description}
+    else
+      _("%{description}") % {:description => search.description}
+    end
+  end
+
+  # Returns class for a filter from Global filters to highlight it
+  def def_searches_active_filter?(search)
+    if @edit && @edit[:expression] &&
+       ((default_search?(search.name) || no_default_search?(search.id)) && expression_selected_nil_or_id(search.id) ||
+        (@edit[:expression][:selected] && @edit[:expression][:selected][:id].zero? && search.id.to_i.zero? ||
+         expression_selected_id_or_name(:name, search.name)))
+      'active'
+    else
+      ''
+    end
+  end
+
+  # Returns class for a filter from My filters to highlight it
+  def my_searches_active_filter?(search)
+    if @edit && @edit[:expression] &&
+       (default_search?(search.name) && expression_selected_nil_or_id(search.id) ||
+        (@edit[:expression][:selected].nil? && search.id.to_i.zero? ||
+         expression_selected_id_or_name(:name, search.name)))
+      'active'
+    else
+      ''
+    end
+  end
+
   # Do we show or hide the clear_search link in the list view title
   def clear_search_status
     !!(@edit&.fetch_path(:adv_search_applied, :text))
