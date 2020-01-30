@@ -22,7 +22,7 @@ module Mixins
 
       @lastaction = action
 
-      id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
       if id.present?
         @item = send_nested(@record, method).find(id)
 
@@ -184,8 +184,8 @@ module Mixins
     def show_details(db, options = {})
       association = options[:association]
       scopes = options[:scopes]
-      @showtype      = "details"
-      @display       = "main"
+      @showtype = "details"
+      @display = "main"
       @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
       @showlinks     = true
       @view, @pages = get_view(db,
