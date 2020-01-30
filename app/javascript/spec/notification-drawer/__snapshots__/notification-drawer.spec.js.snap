@@ -414,28 +414,28 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                   </NotificationMessage>
                                   <NotificationInfo
                                     className=""
-                                    leftText="01/16/2020"
-                                    rightText="11:15:19 AM"
+                                    leftText="Invalid date"
+                                    rightText="Invalid date"
                                   >
                                     <div
                                       className="drawer-pf-notification-info"
                                     >
                                       <NotificationInfoLeft
-                                        text="01/16/2020"
+                                        text="Invalid date"
                                       >
                                         <span
                                           className="date"
                                         >
-                                          01/16/2020
+                                          Invalid date
                                         </span>
                                       </NotificationInfoLeft>
                                       <NotificationInfoRight
-                                        text="11:15:19 AM"
+                                        text="Invalid date"
                                       >
                                         <span
                                           className="time"
                                         >
-                                          11:15:19 AM
+                                          Invalid date
                                         </span>
                                       </NotificationInfoRight>
                                     </div>
@@ -728,28 +728,28 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                   </NotificationMessage>
                                   <NotificationInfo
                                     className=""
-                                    leftText="01/16/2020"
-                                    rightText="11:15:19 AM"
+                                    leftText="Invalid date"
+                                    rightText="Invalid date"
                                   >
                                     <div
                                       className="drawer-pf-notification-info"
                                     >
                                       <NotificationInfoLeft
-                                        text="01/16/2020"
+                                        text="Invalid date"
                                       >
                                         <span
                                           className="date"
                                         >
-                                          01/16/2020
+                                          Invalid date
                                         </span>
                                       </NotificationInfoLeft>
                                       <NotificationInfoRight
-                                        text="11:15:19 AM"
+                                        text="Invalid date"
                                       >
                                         <span
                                           className="time"
                                         >
-                                          11:15:19 AM
+                                          Invalid date
                                         </span>
                                       </NotificationInfoRight>
                                     </div>

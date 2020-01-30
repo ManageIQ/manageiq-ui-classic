@@ -5,7 +5,7 @@
     "id": "10000000003625",
     "message": "Plan has completed with errors",
     "notificationType": "event",
-    "timeStamp": "2020-01-16T10:15:19Z",
+    "timeStamp": "",
     "type": "error",
     "unread": true
   },
@@ -15,7 +15,7 @@
     "id": "10000000003624",
     "message": "Plan has completed successfully",
     "notificationType": "event",
-    "timeStamp": "2020-01-16T10:15:19Z",
+    "timeStamp": "",
     "type": "success",
     "unread": true
   }
