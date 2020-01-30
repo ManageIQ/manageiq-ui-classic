@@ -10,6 +10,7 @@ module Mixins
 
         process_emss(emss, "#{action}_ems") unless emss.empty?
         return if @flash_array.present?
+
         add_flash(n_("%{action} initiated for %{count} %{model} from the %{product} Database",
                      "%{action} initiated for %{count} %{models} from the %{product} Database", emss.length) %
                     {:count   => emss.length,
