@@ -22,12 +22,6 @@ describe('Notification reducer tests', () => {
     maxNotifications,
   };
 
-  beforeEach(() => {
-  });
-
-  afterEach(() => {
-  });
-
   it('should initNotifications correctly', () => {
     const action = {
       type: INIT_NOTIFICATIONS,

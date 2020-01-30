@@ -18,13 +18,7 @@ const NotificationDrawer = () => {
   const [isPanelExpanded, setPanelExpanded] = useState(true);
   const {
     isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
-  } = useSelector(({
-    notificationReducer: {
-      isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
-    },
-  }) => ({
-    isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
-  }));
+  } = useSelector(({ notificationReducer }) => notificationReducer);
 
   return (
     isDrawerVisible ? (
@@ -33,7 +27,7 @@ const NotificationDrawer = () => {
           <Drawer.Title
             title={drawerTitle}
             onCloseClick={() => dispatch(toggleDrawerVisibility())}
-            onExpandClick={() => { setDrawerExpanded(!isDrawerExpanded); }}
+            onExpandClick={() => setDrawerExpanded(!isDrawerExpanded)}
           />
           {notifications && (
             <Drawer.Accordion>
@@ -43,7 +37,7 @@ const NotificationDrawer = () => {
                     <a
                       id="eventsExpander"
                       className={classnames({ collapsed: !isPanelExpanded })}
-                      onClick={() => { setPanelExpanded(!isPanelExpanded); }}
+                      onClick={() => setPanelExpanded(!isPanelExpanded)}
                     >
                       {__('Events')}
                     </a>
@@ -129,7 +123,7 @@ const NotificationDrawer = () => {
                             <NotificationMessage
                               title="title"
                             >
-                              { maxNotifications ? __(`Showing ${maxNotifications} items out of ${totalNotificationsCount} total.`) : __(`Showing all ${notifications.length} items.`) }
+                              { maxNotifications ? sprintf(__('Showing %s items out of %s total.'), maxNotifications, totalNotificationsCount) : sprintf(__('Showing all %s items.'), notifications.length) }
                             </NotificationMessage>
                             <a
                               id="toggleMaxNotifications"
@@ -138,7 +132,7 @@ const NotificationDrawer = () => {
                                 dispatch(toggleMaxNotifications())
                               }
                             >
-                              { maxNotifications ? __('Show all (may take a while)') : __(`Show only the first ${maxNotificationsConstant}`)}
+                              { maxNotifications ? __('Show all (may take a while)') : sprintf(__('Show only the first %s'), maxNotificationsConstant)}
                             </a>
                           </NotificationContent>
                         </Notification>)

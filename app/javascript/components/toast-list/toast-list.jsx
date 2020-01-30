@@ -5,10 +5,11 @@ import {
 } from 'patternfly-react';
 import { markNotificationRead, removeToastNotification } from '../../miq-redux/actions/notifications-actions';
 
+const notificationTimerDelay = 8000;
+
 const ToastList = () => {
   const dispatch = useDispatch();
   const toastNotifications = useSelector(({ notificationReducer: { toastNotifications } }) => toastNotifications);
-  const notificationTimerDelay = 8000;
 
   return (
     toastNotifications.length > 0 ? (

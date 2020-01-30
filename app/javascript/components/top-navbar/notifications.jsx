@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Icon } from 'patternfly-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveNotificationDrawerVisibility } from '../notification-drawer/helpers';
+import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 
 const Notifications = () => {
   const dispatch = useDispatch();
-  const isDrawerVisible = useSelector(({ notificationReducer: { isDrawerVisible } }) => isDrawerVisible);
-  const unreadCount = useSelector(({ notificationReducer: { unreadCount } }) => unreadCount);
+  const { isDrawerVisible, unreadCount } = useSelector(({ notificationReducer }) => notificationReducer);
 
   useEffect(() => {
     saveNotificationDrawerVisibility(isDrawerVisible);
@@ -19,7 +19,7 @@ const Notifications = () => {
         className="nav-item-iconic drawer-pf-trigger-icon"
         title={`${unreadCount} ${__('unread notifications')}`}
         onClick={() => {
-          dispatch({ type: '@@notifications/toggleDrawerVisibility' });
+          dispatch({ type: TOGGLE_DRAWER_VISIBILITY });
         }}
       >
         <Icon type="fa" name="bell" />
@@ -29,4 +29,4 @@ const Notifications = () => {
   );
 };
 
-export default (Notifications);
+export default Notifications;
