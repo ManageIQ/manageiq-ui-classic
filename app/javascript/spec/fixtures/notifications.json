@@ -1,0 +1,22 @@
+[
+  {
+    "data": { "link": "http://localhost:3000/api/notifications/10000000003624" },
+    "href": "http://localhost:3000/api/notifications/10000000003625",
+    "id": "10000000003625",
+    "message": "Plan has completed with errors",
+    "notificationType": "event",
+    "timeStamp": "2020-01-16T10:15:19Z",
+    "type": "error",
+    "unread": true
+  },
+  {
+    "data": {},
+    "href": "http://localhost:3000/api/notifications/10000000003624",
+    "id": "10000000003624",
+    "message": "Plan has completed successfully",
+    "notificationType": "event",
+    "timeStamp": "2020-01-16T10:15:19Z",
+    "type": "success",
+    "unread": true
+  }
+]

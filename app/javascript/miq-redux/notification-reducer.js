@@ -1,4 +1,15 @@
 import { maxNotifications } from '../packs/notification-drawer-common';
+import {
+  INIT_NOTIFICATIONS,
+  TOGGLE_DRAWER_VISIBILITY,
+  ADD_NOTIFICATION,
+  MARK_NOTIFICATION_READ,
+  REMOVE_TOAST_NOTIFICATION,
+  MARK_ALL_READ,
+  CLEAR_NOTIFICATION,
+  CLEAR_ALL,
+  TOGGLE_MAX_NOTIFICATIONS,
+} from './actions/notifications-actions';
 
 const notificationInitialState = {
   unreadCount: 0,
@@ -9,11 +20,9 @@ const notificationInitialState = {
   maxNotifications,
 };
 
-const nPrefix = '@@notifications/';
-
 export const notificationReducer = (state = notificationInitialState, action) => {
   switch (action.type) {
-    case `${nPrefix}initNotifications`:
+    case INIT_NOTIFICATIONS:
       return {
         ...state,
         notifications: action.payload.notifications,
@@ -21,10 +30,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         totalNotificationsCount: action.payload.count,
       };
 
-    case `${nPrefix}setTotalNotificatonsCount`:
-      return { ...state, totalNotificationsCount: action.payload };
-
-    case `${nPrefix}addNotification`:
+    case ADD_NOTIFICATION:
       const notifications = [action.payload, ...state.notifications].slice(0, 100);
       return {
         ...state,
@@ -34,10 +40,10 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: [action.payload, ...state.toastNotifications].slice(0, 3),
       };
 
-    case `${nPrefix}toggleDrawerVisibility`:
+    case TOGGLE_DRAWER_VISIBILITY:
       return { ...state, isDrawerVisible: !state.isDrawerVisible };
 
-    case `${nPrefix}markNotificationRead`:
+    case MARK_NOTIFICATION_READ:
       return {
         ...state,
         notifications: state.notifications.map(notification => (notification.id === action.payload ? ({
@@ -48,13 +54,13 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload)),
       };
 
-    case `${nPrefix}removeToastNotification`:
+    case REMOVE_TOAST_NOTIFICATION:
       return {
         ...state,
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload)),
       };
 
-    case `${nPrefix}markAllRead`:
+    case MARK_ALL_READ:
       return {
         ...state,
         notifications: state.notifications.map(notification => ({ ...notification, unread: false })),
@@ -62,7 +68,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: [],
       };
 
-    case `${nPrefix}clearNotification`:
+    case CLEAR_NOTIFICATION:
       return {
         ...state,
         notifications: state.notifications.filter(notification => notification.id !== action.payload.id),
@@ -70,7 +76,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: state.toastNotifications.filter(item => (item.id !== action.payload.id)),
       };
 
-    case `${nPrefix}clearAll`:
+    case CLEAR_ALL:
       return {
         ...state,
         notifications: [],
@@ -78,7 +84,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         toastNotifications: [],
       };
 
-    case `${nPrefix}toggleMaxNotifications`:
+    case TOGGLE_MAX_NOTIFICATIONS:
       return { ...state, maxNotifications: state.maxNotifications ? undefined : maxNotifications };
 
     default:

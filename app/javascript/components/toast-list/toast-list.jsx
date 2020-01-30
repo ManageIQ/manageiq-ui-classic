@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   ToastNotificationList, TimedToastNotification,
 } from 'patternfly-react';
-import { API } from '../../http_api';
+import { markNotificationRead, removeToastNotification } from '../../miq-redux/actions/notifications-actions';
 
 const ToastList = () => {
   const dispatch = useDispatch();
@@ -20,17 +20,9 @@ const ToastList = () => {
             persistent={toastNotification.type === 'error'}
             onDismiss={(event) => {
               if (event) {
-                return API.post(`/api/notifications/${toastNotification.id}`, { action: 'mark_as_seen' })
-                  .then(() =>
-                    dispatch({
-                      type: '@@notifications/markNotificationRead',
-                      payload: toastNotification.id,
-                    }));
+                return dispatch(markNotificationRead(toastNotification.id));
               }
-              return dispatch({
-                type: '@@notifications/removeToastNotification',
-                payload: toastNotification.id,
-              });
+              return dispatch(removeToastNotification(toastNotification.id));
             }}
             timerdelay={notificationTimerDelay}
           >

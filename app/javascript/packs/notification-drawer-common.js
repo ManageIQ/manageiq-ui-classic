@@ -1,29 +1,9 @@
+import { get } from 'lodash';
 import { listenToRx } from '../miq_observable';
-import { viewDetails } from '../components/notification-drawer/helpers';
 import { API } from '../http_api';
+import { addNotification } from '../miq-redux/actions/notifications-actions';
 
 export const maxNotifications = 100;
-
-function addNotification(data) {
-  if (data.notification) {
-    const msg = window.miqFormatNotification(data.notification.text, data.notification.bindings);
-    const notificationData = { link: _.get(data.notification, 'bindings.link') };
-    const { id } = data.notification;
-    const newNotification = {
-      id,
-      notificationType: 'event',
-      unread: true,
-      type: data.notification.level === 'danger' ? 'error' : data.notification.level,
-      message: msg,
-      data: notificationData,
-      actionTitle: notificationData.link ? __('View details') : undefined,
-      actionCallback: notificationData.link ? viewDetails : undefined,
-      href: id ? `${window.location.origin}/api/notifications/${id}` : undefined,
-      timeStamp: moment(new Date()).utc().format(),
-    };
-    ManageIQ.redux.store.dispatch({ type: '@@notifications/addNotification', payload: newNotification });
-  }
-}
 
 export function notificationsInit(useLimit) {
   const notifications = [];
@@ -40,7 +20,7 @@ export function notificationsInit(useLimit) {
           type: resource.details.level,
           message,
           data: {
-            link: _.get(resource.details, 'bindings.link'),
+            link: get(resource.details, 'bindings.link'),
           },
           href: resource.href,
           timeStamp: resource.details.created_at,
@@ -54,9 +34,17 @@ export function notificationsInit(useLimit) {
   if (useLimit) {
     promises.push(API.get('/api/notifications'));
   }
-  return Promise.all(promises).then(([{ notifications, subcount }, meta]) => {
-    ManageIQ.redux.store.dispatch({ type: '@@notifications/initNotifications', payload: { notifications, count: meta ? meta.subcount : subcount } });
-  });
+  return Promise.all(promises).then(([{ notifications, subcount }, meta]) => ({
+    notifications,
+    subcount,
+    meta,
+  }));
 }
 
-listenToRx(addNotification);
+function notificationListener(data) {
+  if (data.notification) {
+    ManageIQ.redux.store.dispatch(addNotification(data));
+  }
+}
+
+listenToRx(notificationListener);

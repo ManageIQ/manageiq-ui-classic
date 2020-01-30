@@ -6,8 +6,10 @@ import {
 } from 'patternfly-react';
 import classnames from 'classnames';
 import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
-import { maxNotifications as maxNotificationsConstant, notificationsInit } from '../../packs/notification-drawer-common';
-import { API } from '../../http_api';
+import { maxNotifications as maxNotificationsConstant } from '../../packs/notification-drawer-common';
+import {
+  toggleDrawerVisibility, markNotificationRead, markAllRead, clearNotification, clearAll, toggleMaxNotifications,
+} from '../../miq-redux/actions/notifications-actions';
 
 const NotificationDrawer = () => {
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const NotificationDrawer = () => {
         <Drawer expanded={isDrawerExpanded}>
           <Drawer.Title
             title={drawerTitle}
-            onCloseClick={() => { dispatch({ type: '@@notifications/toggleDrawerVisibility' }); }}
+            onCloseClick={() => dispatch(toggleDrawerVisibility())}
             onExpandClick={() => { setDrawerExpanded(!isDrawerExpanded); }}
           />
           {notifications && (
@@ -76,13 +78,7 @@ const NotificationDrawer = () => {
                               eventKey="2"
                               header={false}
                               onClick={
-                                () => notification.unread
-                                && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
-                                  .then(() =>
-                                    dispatch({
-                                      type: '@@notifications/markNotificationRead',
-                                      payload: notification.id,
-                                    }))
+                                () => notification.unread && dispatch(markNotificationRead(notification.id))
                               }
                             >
                               {__('Mark as read')}
@@ -93,14 +89,7 @@ const NotificationDrawer = () => {
                               eventKey="3"
                               header={false}
                               onClick={
-                                () => API.delete(`/api/notifications/${notification.id}`)
-                                  .then(() => {
-                                    dispatch({
-                                      type: '@@notifications/clearNotification',
-                                      payload: notification,
-                                    });
-                                    notificationsInit(maxNotifications !== undefined);
-                                  })
+                                () => dispatch(clearNotification(notification, Boolean(maxNotifications)))
                               }
                             >
                               {__('Remove')}
@@ -111,26 +100,14 @@ const NotificationDrawer = () => {
                             name={getNotficationStatusIconName(notification)}
                             type="pf"
                             onClick={
-                              () => notification.unread
-                              && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
-                                .then(() =>
-                                  dispatch({
-                                    type: '@@notifications/markNotificationRead',
-                                    payload: notification.id,
-                                  }))
+                              () => notification.unread && dispatch(markNotificationRead(notification.id))
                             }
                           />
                           <NotificationContent>
                             <NotificationMessage
                               title={notification.message}
                               onClick={
-                                () => notification.unread
-                                && API.post(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' })
-                                  .then(() =>
-                                    dispatch({
-                                      type: '@@notifications/markNotificationRead',
-                                      payload: notification.id,
-                                    }))
+                                () => notification.unread && dispatch(markNotificationRead(notification.id))
                               }
                             >
                               {notification.message}
@@ -153,10 +130,8 @@ const NotificationDrawer = () => {
                             <a
                               id="toggleMaxNotifications"
                               className="btn btn-link"
-                              onClick={() => {
-                                notificationsInit(!maxNotifications);
-                                dispatch({ type: '@@notifications/toggleMaxNotifications' });
-                              }
+                              onClick={() =>
+                                dispatch(toggleMaxNotifications())
                               }
                             >
                               { maxNotifications ? __('Show all (may take a while)') : __(`Show only the first ${maxNotificationsConstant}`)}
@@ -176,10 +151,7 @@ const NotificationDrawer = () => {
                           disabled={unreadCount === 0}
                           onClick={
                             () => {
-                              const resources = notifications.map(notification => ({ id: notification.id }));
-                              API.post('/api/notifications/', { action: 'mark_as_seen', resources })
-                                .then(() =>
-                                  dispatch({ type: '@@notifications/markAllRead' }));
+                              dispatch(markAllRead(notifications));
                             }
                           }
                         >
@@ -195,11 +167,7 @@ const NotificationDrawer = () => {
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={
-                            () => {
-                              const resources = notifications.map(notification => ({ id: notification.id }));
-                              API.post('/api/notifications/', { action: 'delete', resources })
-                                .then(() => notificationsInit(Boolean(maxNotifications)));
-                            }
+                            () => dispatch(clearAll(notifications, Boolean(maxNotifications)))
                           }
                         >
                           {__('Clear All')}
