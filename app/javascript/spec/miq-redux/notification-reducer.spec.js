@@ -1,11 +1,16 @@
-// import React from 'react';
-// import { mount, shallow } from 'enzyme';
-// import toJson from 'enzyme-to-json';
 import { notificationReducer } from '../../miq-redux/notification-reducer';
 import { maxNotifications } from '../../packs/notification-drawer-common';
-// import { Provider } from 'react-redux';
-// import '../helpers/sprintf';
-// import NotificationDrawer from '../../components/notification-drawer/notification-drawer';
+import {
+  ADD_NOTIFICATION,
+  TOGGLE_DRAWER_VISIBILITY,
+  MARK_NOTIFICATION_READ,
+  REMOVE_TOAST_NOTIFICATION,
+  MARK_ALL_READ,
+  CLEAR_NOTIFICATION,
+  CLEAR_ALL,
+  TOGGLE_MAX_NOTIFICATIONS,
+  INIT_NOTIFICATIONS,
+} from '../../miq-redux/actions/notifications-actions';
 
 describe('Notification reducer tests', () => {
   const initialState = {
@@ -25,7 +30,7 @@ describe('Notification reducer tests', () => {
 
   it('should initNotifications correctly', () => {
     const action = {
-      type: '@@notifications/initNotifications',
+      type: INIT_NOTIFICATIONS,
       payload: {
         notifications: [
           {
@@ -41,18 +46,9 @@ describe('Notification reducer tests', () => {
     expect(newState.unreadCount).toEqual(1);
   });
 
-  it('should setTotalNotificatonsCount correctly', () => {
-    const action = {
-      type: '@@notifications/setTotalNotificatonsCount',
-      payload: 300,
-    };
-    const newState = notificationReducer(initialState, action);
-    expect(newState.totalNotificationsCount).toEqual(300);
-  });
-
   it('should addNotification correctly', () => {
     const action = {
-      type: '@@notifications/addNotification',
+      type: ADD_NOTIFICATION,
       payload: {
         id: '10000000003626',
         unread: true,
@@ -66,7 +62,7 @@ describe('Notification reducer tests', () => {
 
   it('should toggleDrawervisibility correctly', () => {
     const action = {
-      type: '@@notifications/toggleDrawerVisibility',
+      type: TOGGLE_DRAWER_VISIBILITY,
     };
     const newState = notificationReducer(initialState, action);
     expect(newState.isDrawerVisible).toEqual(!initialState.isDrawerVisible);
@@ -74,7 +70,7 @@ describe('Notification reducer tests', () => {
 
   it('should markNotificationRead correctly', () => {
     const action = {
-      type: '@@notifications/markNotificationRead',
+      type: MARK_NOTIFICATION_READ,
       payload: '10000000003625',
     };
     const newState = notificationReducer({
@@ -104,7 +100,7 @@ describe('Notification reducer tests', () => {
 
   it('should removeToastNotification correctly', () => {
     const action = {
-      type: '@@notifications/removeToastNotification',
+      type: REMOVE_TOAST_NOTIFICATION,
       payload: '10000000003625',
     };
     const newState = notificationReducer({
@@ -120,7 +116,7 @@ describe('Notification reducer tests', () => {
 
   it('should markAllRead correctly', () => {
     const action = {
-      type: '@@notifications/markAllRead',
+      type: MARK_ALL_READ,
     };
     const newState = notificationReducer({
       ...initialState,
@@ -149,7 +145,7 @@ describe('Notification reducer tests', () => {
 
   it('should clearNotification correctly', () => {
     const action = {
-      type: '@@notifications/clearNotification',
+      type: CLEAR_NOTIFICATION,
       payload: {
         id: '10000000003625',
         unread: true,
@@ -178,7 +174,7 @@ describe('Notification reducer tests', () => {
 
   it('should clearAll correctly', () => {
     const action = {
-      type: '@@notifications/clearAll',
+      type: CLEAR_ALL,
     };
     const newState = notificationReducer({
       ...initialState,
@@ -203,7 +199,7 @@ describe('Notification reducer tests', () => {
 
   it('should toggleMaxNotifications correctly', () => {
     const action = {
-      type: '@@notifications/toggleMaxNotifications',
+      type: TOGGLE_MAX_NOTIFICATIONS,
     };
     let newState = notificationReducer(initialState, action);
     expect(newState.maxNotifications).toEqual(undefined);

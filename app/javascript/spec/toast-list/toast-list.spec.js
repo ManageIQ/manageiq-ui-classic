@@ -5,42 +5,23 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import ToastList from '../../components/toast-list/toast-list';
+import { MARK_NOTIFICATION_READ, REMOVE_TOAST_NOTIFICATION } from '../../miq-redux/actions/notifications-actions';
+import notifications from '../fixtures/notifications.json';
 
 describe('Toast list tests', () => {
   const initialState = {
     notificationReducer: {
       unreadCount: 1,
       isDrawerVisible: 'false',
-      notifications: [
-        {
-          data: { link: 'http://localhost:3000/api/notifications/10000000003624' },
-          href: 'http://localhost:3000/api/notifications/10000000003625',
-          id: '10000000003625',
-          message: 'Plan has completed with errors',
-          notificationType: 'event',
-          timeStamp: '2020-01-16T10:15:19Z',
-          type: 'error',
-          unread: true,
-        },
-      ],
+      notifications,
       totalNotificationsCount: 0,
-      toastNotifications: [
-        {
-          data: { link: 'http://localhost:3000/api/notifications/10000000003624' },
-          href: 'http://localhost:3000/api/notifications/10000000003625',
-          id: '10000000003625',
-          message: 'Plan has completed with errors',
-          notificationType: 'event',
-          timeStamp: '2020-01-16T10:15:19Z',
-          type: 'error',
-          unread: true,
-        },
-      ],
+      toastNotifications: notifications,
       maxNotifications: 100,
     },
   };
-  const mockStore = configureStore();
+  const mockStore = configureStore([thunk]);
 
   beforeEach(() => {
 
@@ -81,11 +62,11 @@ describe('Toast list tests', () => {
       </Provider>,
     );
     await act(async() => {
-      wrapper.find('button.close.close-default').simulate('click');
+      wrapper.find('button.close.close-default').first().simulate('click');
     });
     const expectedPayload = {
       payload: '10000000003625',
-      type: '@@notifications/markNotificationRead',
+      type: MARK_NOTIFICATION_READ,
     };
     expect(store.getActions()).toEqual([expectedPayload]);
     done();
@@ -112,7 +93,7 @@ describe('Toast list tests', () => {
     );
     const expectedPayload = {
       payload: '10000000003625',
-      type: '@@notifications/removeToastNotification',
+      type: REMOVE_TOAST_NOTIFICATION,
     };
     jest.runAllTimers();
     expect(store.getActions()).toEqual([expectedPayload]);

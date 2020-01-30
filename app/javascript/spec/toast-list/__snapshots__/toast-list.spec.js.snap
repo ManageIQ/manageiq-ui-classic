@@ -108,6 +108,87 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
             </Alert>
           </ToastNotification>
         </TimedToastNotification>
+        <TimedToastNotification
+          className=""
+          key=".$10000000003624"
+          onDismiss={[Function]}
+          paused={false}
+          persistent={false}
+          timerdelay={8000}
+          type="success"
+        >
+          <ToastNotification
+            className=""
+            onDismiss={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            type="success"
+          >
+            <Alert
+              className="toast-pf"
+              onDismiss={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              type="success"
+            >
+              <div
+                className="alert toast-pf alert-success alert-dismissable"
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                <Button
+                  active={false}
+                  aria-hidden="true"
+                  block={false}
+                  bsClass="close"
+                  bsStyle="default"
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <button
+                    aria-hidden="true"
+                    className="close close-default"
+                    disabled={false}
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <Icon
+                      name="close"
+                      type="pf"
+                    >
+                      <PatternflyIcon
+                        className=""
+                        name="close"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="pficon pficon-close"
+                        />
+                      </PatternflyIcon>
+                    </Icon>
+                  </button>
+                </Button>
+                <Icon
+                  name="ok"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="ok"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-ok"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+                <span>
+                  Plan has completed successfully
+                </span>
+              </div>
+            </Alert>
+          </ToastNotification>
+        </TimedToastNotification>
       </div>
     </ToastNotificationList>
   </ToastList>
