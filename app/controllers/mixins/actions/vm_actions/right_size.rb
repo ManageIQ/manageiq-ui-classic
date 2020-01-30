@@ -30,7 +30,7 @@ module Mixins
           end
         end
 
-        alias_method :instance_right_size, :vm_right_size
+        alias instance_right_size vm_right_size
       end
     end
   end
