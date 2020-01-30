@@ -14,6 +14,7 @@ Rails.application.config.assets.precompile += %w(
   remote_console.js
 
   print.scss
+  report_colors.scss
 
   jasmine-jquery/lib/jasmine-jquery.js
   angular-mocks/angular-mocks.js
