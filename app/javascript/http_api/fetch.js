@@ -22,6 +22,7 @@ function processOptions(options) {
   delete o.type;
   delete o.url;
   delete o.transformResponse;
+  delete o.skipJsonParsing;
 
   o.headers = o.headers || {};
 
@@ -62,7 +63,7 @@ function processData(o) {
   return null;
 }
 
-function processResponse(response) {
+function processResponse(response, options = {}) {
   if (response.status === 204) {
     // No content
     return Promise.resolve(null);
@@ -76,12 +77,17 @@ function processResponse(response) {
       .then(rejectWithData(response));
   }
 
+  if (options.skipJsonParsing) {
+    // For reading headers and parsing non-JSON responses
+    return Promise.resolve(response);
+  }
+
   return response.json();
 }
 
 function responseAndError(options = {}) {
   return (response) => {
-    let ret = processResponse(response);
+    let ret = processResponse(response, options);
 
     if ((response.status === 401) && !options.skipLoginRedirect) {
       // Unauthorized - always redirect to dashboard#login
