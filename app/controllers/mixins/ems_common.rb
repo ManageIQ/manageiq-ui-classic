@@ -133,7 +133,6 @@ module Mixins
       end
     end
 
-
     def new
       assert_privileges("#{permission_prefix}_new")
       @ems = model.new
@@ -195,15 +194,16 @@ module Mixins
       manager = find_record_with_rbac(ExtManagementSystem, provider_id)
       return nil unless manager
       return manager.id unless manager.respond_to?(:storage_managers)
+
       manager.storage_managers.detect(&:supports_block_storage?)&.id
     end
 
     # handle buttons pressed on the button bar
     def button
-      @edit = session[:edit]                                  # Restore @edit for adv search box
+      @edit = session[:edit] # Restore @edit for adv search box
 
-      params[:display] = @display if ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"].include?(@display)  # Were we displaying vms/hosts/storages
-      params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
+      params[:display] = @display if ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"].include?(@display) # Were we displaying vms/hosts/storages
+      params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
       # Handle buttons from sub-items screen
       if params[:pressed].starts_with?("availability_zone_",
@@ -282,6 +282,7 @@ module Mixins
         end
 
         return if params[:pressed].include?("tag") && !%w[host_tag vm_tag miq_template_tag instance_tag image_tag].include?(params[:pressed])
+
         if params[:pressed].include?("orchestration_stack_delete")
           flash_to_session
           javascript_redirect(polymorphic_path(EmsCloud.find(params[:id]), :display => 'orchestration_stacks'))
@@ -306,7 +307,7 @@ module Mixins
                   "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish", 'vm_rename', 'flavor_create', 'flavor_delete'].include?(params[:pressed])
             @refresh_div = "main_div"
             @refresh_partial = "layouts/gtl"
-            show                                                        # Handle EMS buttons
+            show # Handle EMS buttons
           end
         end
       elsif params[:pressed].starts_with?("cloud_object_store_")
@@ -351,7 +352,7 @@ module Mixins
           ad_hoc_metrics_pressed
           return
         when 'refresh_server_summary'
-          javascript_redirect :back
+          javascript_redirect(:back)
           return
         end
 
@@ -378,17 +379,21 @@ module Mixins
           if params[:id]
             table_key = :table
             _result, details = recheck_authentication
-            add_flash(_("Re-checking Authentication status for this %{controller_name} was not successful: %{details}") %
-                          {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error) if details
+            if details
+              add_flash(_("Re-checking Authentication status for this %{controller_name} was not successful: %{details}") %
+                            {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error)
+            end
           else
             table_key = :tables
             ems_ids = find_checked_items
             ems_ids.each do |ems_id|
               _result, details = recheck_authentication(ems_id)
+              next unless details
+
               add_flash(_("Re-checking Authentication status for the selected %{controller_name} %{name} was not successful: %{details}") %
                             {:controller_name => ui_lookup(:table => controller_name),
                              :name            => @record.name,
-                             :details         => details}, :error) if details
+                             :details         => details}, :error)
             end
           end
           add_flash(_("Authentication status will be saved and workers will be restarted for the selected %{controller_name}") %
@@ -399,7 +404,7 @@ module Mixins
 
         custom_buttons if params[:pressed] == "custom_button"
 
-        return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
+        return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
         return if ["#{table_name}_tag", "#{display_s}_tag", "#{table_name}_protect", "#{display_s}_protect", "#{table_name}_timeline"].include?(params[:pressed]) &&
                   @flash_array.nil? # Screen for Edit Tags or Manage Policies action showing, so return
 
@@ -409,60 +414,58 @@ module Mixins
       if single_delete_test
         single_delete_redirect
       elsif params[:pressed] == "cloud_tenant_edit"
-        javascript_redirect :controller => "cloud_tenant",
+        javascript_redirect(:controller => "cloud_tenant",
                             :action     => "edit",
-                            :id         => find_record_with_rbac(CloudTenant, checked_or_params)
+                            :id         => find_record_with_rbac(CloudTenant, checked_or_params))
       elsif params[:pressed] == "cloud_volume_new"
-        javascript_redirect :controller         => "cloud_volume",
+        javascript_redirect(:controller         => "cloud_volume",
                             :action             => "new",
-                            :storage_manager_id => block_storage_manager_id(params[:id])
+                            :storage_manager_id => block_storage_manager_id(params[:id]))
       elsif params[:pressed] == "cloud_volume_snapshot_create"
-        javascript_redirect :controller => "cloud_volume",
+        javascript_redirect(:controller => "cloud_volume",
                             :action     => "snapshot_new",
-                            :id         => find_record_with_rbac(CloudVolume, checked_or_params)
+                            :id         => find_record_with_rbac(CloudVolume, checked_or_params))
       elsif params[:pressed] == "cloud_volume_attach"
-        javascript_redirect :controller => "cloud_volume",
+        javascript_redirect(:controller => "cloud_volume",
                             :action     => "attach",
-                            :id         => find_record_with_rbac(CloudVolume, checked_or_params)
+                            :id         => find_record_with_rbac(CloudVolume, checked_or_params))
       elsif params[:pressed] == "cloud_volume_detach"
-        javascript_redirect :controller => "cloud_volume",
+        javascript_redirect(:controller => "cloud_volume",
                             :action     => "detach",
-                            :id         => find_record_with_rbac(CloudVolume, checked_or_params)
+                            :id         => find_record_with_rbac(CloudVolume, checked_or_params))
       elsif params[:pressed] == "cloud_volume_edit"
-        javascript_redirect :controller => "cloud_volume",
+        javascript_redirect(:controller => "cloud_volume",
                             :action     => "edit",
-                            :id         => find_record_with_rbac(CloudVolume, checked_or_params)
+                            :id         => find_record_with_rbac(CloudVolume, checked_or_params))
       elsif params[:pressed] == "cloud_volume_delete"
         # Clear CloudVolumeController's lastaction, since we are calling the delete_volumes from
         # an external controller. This will ensure that the final redirect is properly handled.
         session["#{CloudVolumeController.session_key_prefix}_lastaction".to_sym] = nil
-        javascript_redirect :controller      => "cloud_volume",
+        javascript_redirect(:controller      => "cloud_volume",
                             :action          => "delete_volumes",
-                            :miq_grid_checks => params[:miq_grid_checks]
+                            :miq_grid_checks => params[:miq_grid_checks])
       elsif params[:pressed] == "network_router_edit"
-        javascript_redirect :controller => "network_router",
+        javascript_redirect(:controller => "network_router",
                             :action     => "edit",
-                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
+                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params))
       elsif params[:pressed] == "network_router_add_interface"
-        javascript_redirect :controller => "network_router",
+        javascript_redirect(:controller => "network_router",
                             :action     => "add_interface_select",
-                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
+                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params))
       elsif params[:pressed] == "network_router_remove_interface"
-        javascript_redirect :controller => "network_router",
+        javascript_redirect(:controller => "network_router",
                             :action     => "remove_interface_select",
-                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
+                            :id         => find_record_with_rbac(NetworkRouter, checked_or_params))
       elsif params[:pressed] == 'ems_infra_change_password'
         javascript_redirect(change_password_ems_physical_infra_path(checked_or_params.first))
       elsif params[:pressed].ends_with?("_edit") ||
             ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
             params[:pressed] == 'vm_rename' && @flash_array.nil?
         render_or_redirect_partial(pfx) unless performed?
+      elsif @refresh_div == "main_div" && @lastaction == "show_list"
+        replace_gtl_main_div
       else
-        if @refresh_div == "main_div" && @lastaction == "show_list"
-          replace_gtl_main_div
-        else
-          render_flash unless performed?
-        end
+        render_flash unless performed?
       end
     end
 
@@ -477,6 +480,7 @@ module Mixins
       process_emss(ids, "check_compliance")
       params[:display] = "main"
       return if @display == 'dashboard'
+
       showlist ? show_list : show
     end
 
@@ -493,17 +497,15 @@ module Mixins
 
     def process_check_compliance(model, ids)
       model.where(:id => ids).order("lower(name)").each do |entity|
-        begin
-          entity.check_compliance
-        rescue StandardError => bang
-          add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
-                     {:model => ui_lookup(:model => model.to_s),
-                      :name  => entity.name,
-                      :error => bang.message},
-                    :error) # Push msg and error flag
-        else
-          add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
-        end
+        entity.check_compliance
+      rescue => bang
+        add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
+                   {:model => ui_lookup(:model => model.to_s),
+                    :name  => entity.name,
+                    :error => bang.message},
+                  :error) # Push msg and error flag
+      else
+        add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
       end
       javascript_flash
     end
@@ -611,12 +613,14 @@ module Mixins
           add_flash(_("No %{record} were selected for deletion") % {:record => ui_lookup(:table => table_name)}, :error)
         end
         process_emss(emss, "destroy") unless emss.empty?
-        add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
-                     "Delete initiated for %{count} %{models} from the %{product} Database", emss.length) %
-          {:count   => emss.length,
-           :product => Vmdb::Appliance.PRODUCT_NAME,
-           :model   => ui_lookup(:table => table_name),
-           :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
+        if @flash_array.nil?
+          add_flash(n_("Delete initiated for %{count} %{model} from the %{product} Database",
+                       "Delete initiated for %{count} %{models} from the %{product} Database", emss.length) %
+            {:count   => emss.length,
+             :product => Vmdb::Appliance.PRODUCT_NAME,
+             :model   => ui_lookup(:table => table_name),
+             :models  => ui_lookup(:tables => table_name)})
+        end
       else # showing 1 ems, scan it
         if params[:id].nil? || model.find_by_id(params[:id]).nil?
           add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
@@ -625,8 +629,10 @@ module Mixins
         end
         process_emss(emss, "destroy") unless emss.empty?
         @single_delete = true unless flash_errors?
-        add_flash(_("The selected %{record} was deleted") %
-          {:record => ui_lookup(:tables => table_name)}) if @flash_array.nil?
+        if @flash_array.nil?
+          add_flash(_("The selected %{record} was deleted") %
+            {:record => ui_lookup(:tables => table_name)})
+        end
       end
       if @lastaction == "show_list"
         show_list
