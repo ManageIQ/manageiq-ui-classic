@@ -13,24 +13,21 @@ if [ "$TEST_SUITE" = "spec:javascript" ]; then
   echo "travis_fold:end:YARN_LOCK"
 fi
 
-OLD=`mktemp`
-NEW=`mktemp`
+if [ "$TEST_SUITE" = "spec" ]; then
+  OLD=`mktemp`
+  NEW=`mktemp`
 
-echo "Debride run"
-bundle exec debride --version
-bundle exec debride --rails app/controllers/ | cut -d ":" -f1 > "$NEW"
-echo "Debride done new"
+  bundle exec debride --rails app/controllers/ | cut -d ":" -f1 > "$NEW"
 
-git checkout  master
+  git checkout  master
 
-# remove once it's merged
-gem install debride
+  # remove once it's merged
+  gem install debride
 
-debride --rails app/controllers/ | cut -d ":" -f1 > "$OLD"
-echo "Debride done old"
+  debride --rails app/controllers/ | cut -d ":" -f1 > "$OLD"
 
+  echo "New possibly dead methods"
 
-echo "New possibly dead methods"
-
-diff -Naur "$OLD" "$NEW"
+  diff -Naur "$OLD" "$NEW"
+fi
 
