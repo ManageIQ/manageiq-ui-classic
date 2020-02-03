@@ -78,6 +78,44 @@ namespace :spec do
       system('node --inspect-brk node_modules/.bin/jest --runInBand')
     end
   end
+
+  desc "Run integration tests"
+  task :integration do
+    begin
+      pid = nil
+      Bundler.with_original_env do
+        pid = spawn("bundle exec rails server", [:out, :err] => "/dev/null")
+        Process.detach(pid)
+        puts "Rails server started with pid #{pid}..."
+      end
+
+      print "Waiting on Rails server to start..."
+      ready = false
+      30.times do
+        print "."
+        ready = Socket.tcp("localhost", 3000) { true } rescue false
+        ready ? break : sleep(1)
+      end
+      puts
+
+      if ready
+        system("yarn cypress:run")
+        exit $CHILD_STATUS.exitstatus
+      else
+        STDERR.puts "Unable to detect Rails server start after 30 seconds...aborting."
+        exit 1
+      end
+    ensure
+      if pid
+        puts "Terminating Rails process with pid #{pid}..."
+        begin
+          Process.kill("INT", pid)
+        rescue Errno::ESRCH
+          # Ignore
+        end
+      end
+    end
+  end
 end
 
 task :default => :spec
