@@ -199,6 +199,37 @@ describe Mixins::BreadcrumbsMixin do
           )
         end
       end
+
+      context "disable_tree set" do
+        before do
+          breadcrumbs_options[:disable_tree] = true
+          subject.instance_variable_set(:@trees, [tree])
+        end
+
+        it "creates breadcrumbs with no tree links" do
+          expect(subject.data_for_breadcrumbs).to eq(
+            [
+              {:title => "First Layer"},
+              {:title => "Second Layer"},
+              {:title => "Utilization"},
+              {:title => "Item 1"},
+            ]
+          )
+        end
+
+        it "creates breadcrumbs with link to explorer" do
+          breadcrumbs_options[:to_explorer] = 'explorer'
+
+          expect(subject.data_for_breadcrumbs).to eq(
+            [
+              {:title => "First Layer"},
+              {:title => "Second Layer"},
+              {:title => "Utilization", :to_explorer => 'explorer'},
+              {:title => "Item 1"},
+            ]
+          )
+        end
+      end
     end
   end
 

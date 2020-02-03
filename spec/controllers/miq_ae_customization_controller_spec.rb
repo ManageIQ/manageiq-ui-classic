@@ -558,4 +558,18 @@ describe MiqAeCustomizationController do
       expect(controller.instance_variable_get(:@title)).to include(dialog.name)
     end
   end
+
+  describe "breadcrumbs" do
+    before { get :editor }
+
+    it "editor returns breadcrumbs with link to explorer" do
+      expect(controller.data_for_breadcrumbs[-2][:to_explorer]).to eq('explorer')
+    end
+
+    it "editor edit returns title as the last item" do
+      controller.instance_variable_set(:@sb, "action" => "dialog_new_create")
+
+      expect(controller.data_for_breadcrumbs[-1][:title]).to eq(controller.instance_variable_get(:@title))
+    end
+  end
 end

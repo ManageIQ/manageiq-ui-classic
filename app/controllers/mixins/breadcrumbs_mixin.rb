@@ -27,6 +27,7 @@ module Mixins
       options[:record_title] ||= :name
       options[:not_tree] ||= false
       options[:hide_title] ||= false
+      options[:disable_tree] ||= false
 
       breadcrumbs = options[:breadcrumbs] || []
 
@@ -99,6 +100,16 @@ module Mixins
           # i.e. editing, copying, adding, etc.
           extra_title = right_cell_text || @title
           breadcrumbs.push(:title => extra_title) if action_breadcrumb? && extra_title && title != extra_title
+        end
+
+        # disable_tree allows to remove all links from the tree
+        if options[:disable_tree]
+          filtered_breadcrumbs = breadcrumbs.compact.map { |item| {:title => item[:title]} }
+
+          # replace last clickable breadcrumb with link to explorer
+          filtered_breadcrumbs[-2][:to_explorer] = options[:to_explorer] if options[:to_explorer]
+
+          return filtered_breadcrumbs
         end
       end
       breadcrumbs << @tail_breadcrumb

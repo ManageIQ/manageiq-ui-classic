@@ -3,23 +3,25 @@ import PropTypes from 'prop-types';
 import { Breadcrumb } from 'patternfly-react';
 import { unescape } from 'lodash';
 
-import { onClickTree, onClick } from './on-click-functions';
+import { onClickTree, onClick, onClickToExplorer } from './on-click-functions';
 
 const parsedText = text => unescape(text).replace(/<[/]{0,1}strong>/g, '');
 
 class Breadcrumbs extends Component {
   renderItems = () => {
-    const {
-      items, controllerName,
-    } = this.props;
+    const { items, controllerName } = this.props;
     return items.filter((_item, index) => index !== (items.length - 1)).map((item, index) => {
       const text = parsedText(item.title);
-      if ((item.url || item.key) && !item.action) {
-        if (item.key) {
+      if ((item.url || item.key || item.to_explorer) && !item.action) {
+        if (item.key || item.to_explorer) {
           return (
             <Breadcrumb.Item
               key={`${item.key}-${index}`} // eslint-disable-line react/no-array-index-key
-              onClick={() => onClickTree(controllerName, item)}
+              onClick={e =>
+                (item.to_explorer
+                  ? onClickToExplorer(e, controllerName, item.to_explorer)
+                  : onClickTree(e, controllerName, item))
+                }
             >
               {text}
             </Breadcrumb.Item>

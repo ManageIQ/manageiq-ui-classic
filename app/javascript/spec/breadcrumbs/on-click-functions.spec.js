@@ -1,52 +1,86 @@
-import { onClickTree, onClick } from '../../components/breadcrumbs/on-click-functions';
+import { onClickTree, onClick, onClickToExplorer } from '../../components/breadcrumbs/on-click-functions';
+
+import '../helpers/miqAjax';
+import '../helpers/miqSparkle';
 
 describe('Breadcrumbs onClick functions', () => {
+  let preventDefaultMock;
+  let event;
+  let spyMiqAjax;
+
+  beforeEach(() => {
+    preventDefaultMock = jest.fn();
+    event = {
+      preventDefault: preventDefaultMock,
+    };
+    spyMiqAjax = jest.spyOn(window, 'miqAjax');
+  });
+
+  afterEach(() => {
+    preventDefaultMock.mockRestore();
+    spyMiqAjax.mockRestore();
+  });
+
   describe('onClick', () => {
     it('calls e.prevent default', () => {
-      const mockFn = jest.fn();
       window.miqCheckForChanges = jest.fn(() => false);
 
-      onClick({ preventDefault: mockFn }, '/url');
+      onClick(event, 'url');
 
-      expect(mockFn).toHaveBeenCalled();
+      expect(preventDefaultMock).toHaveBeenCalled();
       expect(window.miqCheckForChanges).toHaveBeenCalled();
 
       window.miqCheckForChanges.mockClear();
     });
 
     it('change location', () => {
-      const mockFn = jest.fn();
       window.miqCheckForChanges = () => true;
 
-      onClick({ preventDefault: mockFn }, '/url');
+      onClick(event, 'url');
 
-      expect(mockFn).not.toHaveBeenCalled();
+      expect(preventDefaultMock).not.toHaveBeenCalled();
     });
   });
 
   describe('onClickTree', () => {
-    it('returns null if no changes', () => {
+    const item = { key: 'xx-11', title: 'VM11' };
+
+    it('not call miqAjax', () => {
       window.miqCheckForChanges = () => false;
-      jest.spyOn(window, 'sendDataWithRx');
 
-      const result = onClickTree();
+      onClickTree(event, 'pxe', item);
 
-      expect(result).toEqual(null);
-      expect(window.sendDataWithRx).not.toHaveBeenCalled();
+      expect(preventDefaultMock).toHaveBeenCalled();
+      expect(spyMiqAjax).not.toHaveBeenCalled();
     });
 
-    it('calls rxjs', () => {
+    it('calls tree_select', () => {
       window.miqCheckForChanges = () => true;
-      jest.spyOn(window, 'sendDataWithRx');
 
-      onClickTree('pxe', { key: 'xx-11', title: 'My PXE Thing' });
+      onClickTree(event, 'pxe', item);
 
-      expect(window.sendDataWithRx).toHaveBeenCalledWith({
-        breadcrumbSelect: {
-          item: { key: 'xx-11', title: 'My PXE Thing' },
-          path: '/pxe/tree_select',
-        },
-      });
+      expect(spyMiqAjax).toHaveBeenCalledWith(`/pxe/tree_select?id=${item.key}&text=${item.title}`, null, { beforeSend: true });
+      expect(preventDefaultMock).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onClickToExplorer', () => {
+    it('calls prevent default', () => {
+      window.miqCheckForChanges = () => false;
+
+      onClickToExplorer(event, 'pxe', 'explorer');
+
+      expect(preventDefaultMock).toHaveBeenCalled();
+    });
+
+    it('calls location assign', () => {
+      window.miqCheckForChanges = () => true;
+      window.location.assign = jest.fn();
+
+      onClickToExplorer(event, 'pxe', 'explorer');
+
+      expect(preventDefaultMock).not.toHaveBeenCalled();
+      expect(window.location.assign).toHaveBeenCalledWith('/pxe/explorer');
     });
   });
 });
