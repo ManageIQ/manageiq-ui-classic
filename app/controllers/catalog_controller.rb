@@ -1993,12 +1993,14 @@ class CatalogController < ApplicationController
     @lastaction = session[:svc_lastaction]
     @options    = session[:prov_options]
     @resolve    = session[:resolve] if session[:resolve]
+    @edit       = session[:edit]
   end
 
   def set_session_data
     session[:svc_lastaction] = @lastaction
     session[:prov_options]   = @options if @options
     session[:resolve]        = @resolve if @resolve
+    session[:edit]           = @edit
   end
 
   def dialog_catalog_check
