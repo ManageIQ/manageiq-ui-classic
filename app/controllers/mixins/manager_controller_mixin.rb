@@ -34,6 +34,7 @@ module Mixins
 
     def build_credentials
       return {} unless params[:default_userid]
+
       {
         :default => {
           :userid   => params[:default_userid],
@@ -145,6 +146,7 @@ module Mixins
     def cs_form_field_changed
       id = params[:id]
       return unless load_edit("cs_edit__#{id}", "replace_cell__explorer")
+
       cs_edit_get_form_vars
       render :update do |page|
         page << javascript_prologue
@@ -297,6 +299,7 @@ module Mixins
       end
       replace_trees = options[:replace_trees]
       return if @in_a_form
+
       @explorer = true
       @in_a_form = false
       @sb[:action] = nil
@@ -336,6 +339,7 @@ module Mixins
 
     def provider_list(id, model)
       return provider_node(id, model) if id
+
       options = {:model => model.to_s}
       @right_cell_text = _("All %{title} Providers") % {:title => self.class.model_to_name(model)}
       process_show_list(options)
@@ -343,6 +347,7 @@ module Mixins
 
     def configured_system_list(id, model)
       return configured_system_node(id, model) if id
+
       if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
         options = {:model => model.to_s}
         @right_cell_text = _("All %{title} Configured Systems") % {:title => self.class.model_to_name(model)}
@@ -384,6 +389,7 @@ module Mixins
 
     def render_tagging_form
       return if %w[cancel save].include?(params[:button])
+
       @in_a_form = true
       @right_cell_text = _("Edit Tags")
       clear_flash_msg
