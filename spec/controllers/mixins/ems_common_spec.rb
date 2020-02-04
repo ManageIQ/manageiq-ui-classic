@@ -90,6 +90,18 @@ describe EmsCloudController do
         before do
           allow(controller).to receive(:performed?).and_return(true)
           controller.params = {:pressed => pressed, :miq_grid_checks => aggregate.id.to_s}
+          controller.instance_variable_set(:@display, 'host_aggregates')
+        end
+
+        context 'setting params[:display] because of a nested list' do
+          let(:pressed) { 'host_aggregate_edit' }
+
+          before { allow(controller).to receive(:render) }
+
+          it 'sets params[:display]' do
+            controller.send(:button)
+            expect(controller.params[:display]).to eq('host_aggregates')
+          end
         end
 
         context 'editing Host Aggregate' do
