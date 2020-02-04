@@ -1,4 +1,4 @@
-//= require jquery
+//= require jquery/dist/jquery.js
 //= require spice-html5-bower/spice-html5-rails
 //= require_tree ../locale
 //= require gettext/all

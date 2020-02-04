@@ -1,4 +1,4 @@
-//= require jquery
+//= require jquery/dist/jquery.js
 //= require novnc-rails
 //= require_tree ../locale
 //= require gettext/all
