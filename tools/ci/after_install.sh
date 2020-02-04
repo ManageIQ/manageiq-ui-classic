@@ -13,7 +13,8 @@ if [ "$TEST_SUITE" = "spec:javascript" ]; then
   echo "travis_fold:end:YARN_LOCK"
 fi
 
-if [ "$TEST_SUITE" = "spec" -a "$TRAVIS_PULL_REQUEST" ]; then
+# Run only against PR that is based on master
+if [ "$TEST_SUITE" = "spec" -a "$TRAVIS_PULL_REQUEST" != "false" -a "$TRAVIS_BRANCH" = "master" ]; then
   OLD=`mktemp`
   NEW=`mktemp`
 
