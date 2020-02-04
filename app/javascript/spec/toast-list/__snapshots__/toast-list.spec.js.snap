@@ -101,6 +101,16 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
                     />
                   </PatternflyIcon>
                 </Icon>
+                <div
+                  className="pull-right toast-pf-action"
+                >
+                  <a
+                    href="#"
+                    onClick={[Function]}
+                  >
+                    View details
+                  </a>
+                </div>
                 <span>
                   Plan has completed with errors
                 </span>

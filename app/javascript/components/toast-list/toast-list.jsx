@@ -4,6 +4,7 @@ import {
   ToastNotificationList, TimedToastNotification,
 } from 'patternfly-react';
 import { markNotificationRead, removeToastNotification } from '../../miq-redux/actions/notifications-actions';
+import { viewDetails } from '../notification-drawer/helpers';
 
 const notificationTimerDelay = 8000;
 
@@ -27,6 +28,11 @@ const ToastList = () => {
             }}
             timerdelay={notificationTimerDelay}
           >
+            {toastNotification.data.link && (
+              <div className="pull-right toast-pf-action">
+                <a href="#" onClick={() => viewDetails(toastNotification)}>{__('View details')}</a>
+              </div>
+            )}
             <span>{toastNotification.message}</span>
           </TimedToastNotification>))}
       </ToastNotificationList>

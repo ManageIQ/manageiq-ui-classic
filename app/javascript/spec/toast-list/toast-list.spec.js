@@ -78,12 +78,7 @@ describe('Toast list tests', () => {
       ...initialState,
       notificationReducer: {
         ...initialState.notificationReducer,
-        toastNotifications: [
-          {
-            id: '10000000003625',
-            type: 'success',
-          },
-        ],
+        toastNotifications: notifications,
       },
     });
     mount(
@@ -92,7 +87,7 @@ describe('Toast list tests', () => {
       </Provider>,
     );
     const expectedPayload = {
-      payload: '10000000003625',
+      payload: '10000000003624',
       type: REMOVE_TOAST_NOTIFICATION,
     };
     jest.runAllTimers();

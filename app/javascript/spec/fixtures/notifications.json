@@ -10,7 +10,7 @@
     "unread": true
   },
   {
-    "data": {},
+    "data": { "link": null },
     "href": "http://localhost:3000/api/notifications/10000000003624",
     "id": "10000000003624",
     "message": "Plan has completed successfully",
