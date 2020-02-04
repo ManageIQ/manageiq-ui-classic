@@ -19,12 +19,9 @@ if [ "$TEST_SUITE" = "spec" ]; then
 
   bundle exec debride --rails app/controllers/ | cut -d ":" -f1 > "$NEW"
 
-  git checkout  master
+  git checkout  master -- app/
 
-  # remove once it's merged
-  gem install debride
-
-  debride --rails app/controllers/ | cut -d ":" -f1 > "$OLD"
+  bundle exec debride --rails app/controllers/ | cut -d ":" -f1 > "$OLD"
 
   echo "New possibly dead methods"
 
