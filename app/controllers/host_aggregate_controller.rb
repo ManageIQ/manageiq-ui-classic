@@ -380,11 +380,9 @@ class HostAggregateController < ApplicationController
 
   def cancel_action(message)
     session[:edit] = nil
-    @breadcrumbs&.pop
-    javascript_redirect(:action    => @lastaction,
-                        :id        => @host_aggregate.id,
-                        :display   => session[:host_aggregate_display],
-                        :flash_msg => message)
+    add_flash(message)
+    flash_to_session
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   private
