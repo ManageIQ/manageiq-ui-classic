@@ -148,11 +148,9 @@ class HostAggregateController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs&.pop
     session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect(:action => "show", :id => host_aggregate_id)
+    flash_to_session
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   def delete_host_aggregates
