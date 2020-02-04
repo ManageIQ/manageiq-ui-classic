@@ -13,7 +13,7 @@ if [ "$TEST_SUITE" = "spec:javascript" ]; then
   echo "travis_fold:end:YARN_LOCK"
 fi
 
-if [ "$TEST_SUITE" = "spec"  && "$TRAVIS_PULL_REQUEST"]; then
+if [ "$TEST_SUITE" = "spec" -a "$TRAVIS_PULL_REQUEST" ]; then
   OLD=`mktemp`
   NEW=`mktemp`
 
