@@ -26,6 +26,6 @@ if [ "$TEST_SUITE" = "spec" -a "$TRAVIS_PULL_REQUEST" != "false" -a "$TRAVIS_BRA
 
   echo "New possibly dead methods"
 
-  diff -Naur "$OLD" "$NEW" | grep '^+'
+  diff -Naur "$OLD" "$NEW" | grep '^+ '
 fi
 
