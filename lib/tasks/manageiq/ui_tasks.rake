@@ -34,21 +34,7 @@ namespace :update do
     puts
   end
 
-  task :actual_ui => ['update:clean', 'update:yarn', 'webpack:compile', 'update:print_engines']
-
-  task :ui do
-    # when running update:ui from ui-classic, asset_engines won't see the other engines
-    # the same goes for Rake::Task#invoke
-    if defined?(ENGINE_ROOT) && !ENV["TRAVIS"]
-      Dir.chdir Rails.root do
-        Bundler.with_clean_env do
-          system("bundle exec rake update:actual_ui")
-        end
-      end
-    else
-      Rake::Task['update:actual_ui'].invoke
-    end
-  end
+  task :ui => ['update:clean', 'update:yarn', 'webpack:compile', 'update:print_engines']
 end
 
 namespace :webpack do
