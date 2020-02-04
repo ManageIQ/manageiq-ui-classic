@@ -359,6 +359,46 @@ describe OpsController do
       end
     end
 
+    describe "#update_server_zone" do
+      let(:server) { FactoryBot.create(:miq_server) }
+
+      it "returns true when no zone is set" do
+        original_zone = server.zone
+        new_data = {:server => {:zone => nil}}
+        controller.instance_variable_set(:@edit, :new => new_data)
+
+        expect(controller.send(:update_server_zone, server)).to be_truthy
+        expect(server.reload.zone).to eq(original_zone)
+      end
+
+      it "returns true when the zone is unchanged" do
+        original_zone = server.zone
+        new_data = {:server => {:zone => original_zone.name}}
+        controller.instance_variable_set(:@edit, :new => new_data)
+
+        expect(controller.send(:update_server_zone, server)).to be_truthy
+        expect(server.reload.zone).to eq(original_zone)
+      end
+
+      it "returns true when the zone is updated successfully" do
+        new_zone = FactoryBot.create(:zone)
+        new_data = {:server => {:zone => new_zone.name}}
+        controller.instance_variable_set(:@edit, :new => new_data)
+
+        expect(controller.send(:update_server_zone, server)).to be_truthy
+        expect(server.reload.zone).to eq(new_zone)
+      end
+
+      it "returns false when the zone update fails" do
+        original_zone = server.zone
+        new_data = {:server => {:zone => Zone.maintenance_zone.name}}
+        controller.instance_variable_set(:@edit, :new => new_data)
+
+        expect(controller.send(:update_server_zone, server)).to be_falsey
+        expect(server.reload.zone).to eq(original_zone)
+      end
+    end
+
     describe '#settings_update_save' do
       context "save config settings" do
         it 'for selected server' do
