@@ -18,6 +18,7 @@ env:
   - TEST_SUITE=spec:javascript
   - TEST_SUITE=spec:compile
   - TEST_SUITE=spec:jest
+  - TEST_SUITE=spec:debride
 matrix:
   exclude:
   - rvm: 2.5.7
