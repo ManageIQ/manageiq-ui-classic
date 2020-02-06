@@ -120,7 +120,7 @@ module OpsController::OpsRbac
     @tenant_parent = Tenant.find(x_node.split('-').last).id
     rbac_tenant_edit
   end
-  alias_method :rbac_project_add, :rbac_tenant_add
+  alias rbac_project_add rbac_tenant_add
 
   def rbac_tenant_edit_reset
     @tenant = params[:typ] == "new" ? Tenant.new : find_record_with_rbac(Tenant, checked_or_params)
@@ -352,6 +352,7 @@ module OpsController::OpsRbac
       replace_right_cell(:nodetype => x_node)
     when "save"
       return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
+
       err = false
       @edit[:new][:ldap_groups_list].each_with_index do |grp, i|
         group = MiqGroup.find_by(:description => grp)
@@ -406,6 +407,7 @@ module OpsController::OpsRbac
 
   def move_cols_up
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
+
     if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       return
@@ -428,6 +430,7 @@ module OpsController::OpsRbac
 
   def move_cols_down
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
+
     if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       return
@@ -465,6 +468,7 @@ module OpsController::OpsRbac
 
   def rbac_group_user_lookup_field_changed
     return unless load_edit("rbac_group_edit__#{params[:id]}", "replace_cell__explorer")
+
     @edit[:new][:user]     = params[:user]     if params[:user]
     @edit[:new][:user_id]  = params[:user_id]  if params[:user_id]
     @edit[:new][:user_pwd] = params[:password] if params[:password]
@@ -544,6 +548,7 @@ module OpsController::OpsRbac
     if params[:button] == "reset"
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
+
       @object_ids = @edit[:object_ids]
       session[:tag_db] = @tagging = @edit[:tagging]
     else
@@ -564,6 +569,7 @@ module OpsController::OpsRbac
   def rbac_edit_tags_cancel
     id = params[:id]
     return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
+
     add_flash(_("Tag Edit was cancelled by the user"))
     self.x_node = @sb[:pre_edit_node]
     get_node_info(x_node)
@@ -577,8 +583,9 @@ module OpsController::OpsRbac
 
   def rbac_edit_cancel(what)
     key = what.to_sym
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
+
     case key
     when :role
       record_id = @edit[:role_id]
@@ -846,9 +853,9 @@ module OpsController::OpsRbac
     else # Root node
       @right_cell_text = _("Access Control Region \"%{name}\"") %
                          {:name => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]"}
-      @users_count   = Rbac.filtered(User.in_my_region).count
-      @groups_count  = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).count
-      @roles_count   = Rbac.filtered(MiqUserRole).count
+      @users_count = Rbac.filtered(User.in_my_region).count
+      @groups_count = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).count
+      @roles_count = Rbac.filtered(MiqUserRole).count
       @tenants_count = Rbac.filtered(Tenant.in_my_region).count
     end
   end
@@ -1160,7 +1167,7 @@ module OpsController::OpsRbac
       @edit[:roles][r.name] = r.id
     end
     @edit[:new][:role] = if @group.miq_user_role.nil? # If adding, set to first role
-                           @edit[:roles][@edit[:roles].keys.sort[0]]
+                           @edit[:roles][@edit[:roles].keys.min]
                          else
                            @group.miq_user_role.id
                          end
@@ -1297,6 +1304,7 @@ module OpsController::OpsRbac
   def rbac_compact_features(selected, node = nil)
     node ||= MiqProductFeature.feature_root
     return [node] if selected.include?(node)
+
     MiqProductFeature.feature_children(node, false).flat_map do |n|
       rbac_compact_features(selected, n)
     end
@@ -1313,12 +1321,12 @@ module OpsController::OpsRbac
   #   return nested features recursively
   #
   def recurse_sections_and_features(node)
-    if node =~ /_tab_all_vm_rules$/
+    if /_tab_all_vm_rules$/.match?(node)
       MiqProductFeature.feature_children('all_vm_rules').each do |feature|
         kids = MiqProductFeature.feature_all_children(feature)
         yield feature, [feature] + kids
       end
-    elsif node =~ /^_tab_/
+    elsif /^_tab_/.match?(node)
       section_id = node.split('_tab_').last.to_sym
       Menu::Manager.section(section_id).features_recursive.each do |f|
         kids = MiqProductFeature.feature_all_children(f)
@@ -1365,6 +1373,7 @@ module OpsController::OpsRbac
   # Walk the features tree, adding features up to the top
   def rbac_role_add_parent(node)
     return unless (parent = MiqProductFeature.feature_parent(node)) # Intentional single =, using parent var below
+
     if MiqProductFeature.feature_children(parent, false) - @edit[:new][:features] == [] # All siblings of node are selected
       @edit[:new][:features] += [parent]  # Add the parent to the features array
       rbac_role_add_parent(parent)        # See if this nodes parent needs to be added
@@ -1401,6 +1410,7 @@ module OpsController::OpsRbac
   # Validate some of the role fields
   def rbac_group_validate?
     return false if @edit[:new][:description].nil?
+
     @assigned_filters = [] if @edit[:new][:filters].empty? || @edit[:new][:use_filter_expression]
     @filter_expression = [] if @edit[:new][:filter_expression].empty? || @edit[:new][:use_filter_expression] == false
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
