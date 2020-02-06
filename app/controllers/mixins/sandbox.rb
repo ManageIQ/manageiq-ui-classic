@@ -172,6 +172,7 @@ module Sandbox
     return if tree.nil?
 
     raise ActionController::RoutingError, 'invalid tree' unless TREE_WHITELIST.key?(tree.to_s)
+
     sandbox[:active_tree] = TREE_WHITELIST[tree.to_s]
   end
 
@@ -179,6 +180,7 @@ module Sandbox
     sandbox[:active_accord] = nil
 
     raise ActionController::RoutingError, 'invalid accordion' unless ACCORD_WHITELIST.key?(tree)
+
     sandbox[:active_accord] = ACCORD_WHITELIST[tree]
   end
 
