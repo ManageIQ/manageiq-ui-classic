@@ -79,20 +79,21 @@ describe HostAggregateController do
   describe "#delete_host_aggregates" do
     let(:params) { {:id => aggregate.id.to_s} }
 
-    before { controller.params = params }
-
-    context 'deleting Host Aggregate' do
-      before { allow(controller).to receive(:redirect_to) }
-
-      it 'calls process_host_aggregates with selected Host Aggregates' do
-        expect(controller).to receive(:process_host_aggregates).with([aggregate], 'destroy')
-        controller.send(:delete_host_aggregates)
-      end
+    before do
+      allow(controller).to receive(:redirect_to)
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'some_url'}])
+      controller.instance_variable_set(:@lastaction, 'show_list')
+      controller.params = params
     end
 
-    it 'sets flash message and redirects to show_list' do
+    it 'calls process_host_aggregates with selected Host Aggregates' do
+      expect(controller).to receive(:process_host_aggregates).with([aggregate], 'destroy')
+      controller.send(:delete_host_aggregates)
+    end
+
+    it 'sets flash message and redirects properly' do
       expect(controller).to receive(:flash_to_session)
-      expect(controller).to receive(:redirect_to).with(:action => 'show_list')
+      expect(controller).to receive(:redirect_to).with('some_url')
       controller.send(:delete_host_aggregates)
       expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => "Delete initiated for 1 Host Aggregate.", :level => :success}])
     end
@@ -100,18 +101,25 @@ describe HostAggregateController do
     context 'Host Aggregates displayed in a nested list' do
       let(:params) { {:miq_grid_checks => aggregate.id.to_s} }
 
-      context 'deleting selected Host Aggregates' do
-        before { allow(controller).to receive(:redirect_to) }
+      before { controller.instance_variable_set(:@lastaction, nil) }
 
-        it 'calls process_host_aggregates with selected Host Aggregates' do
-          expect(controller).to receive(:process_host_aggregates).with([aggregate], 'destroy')
-          controller.send(:delete_host_aggregates)
-        end
+      it 'sets flash message and redirects to last url' do
+        expect(controller).to receive(:flash_to_session)
+        expect(controller).to receive(:redirect_to).with('some_url')
+        controller.send(:delete_host_aggregates)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => "Delete initiated for 1 Host Aggregate.", :level => :success}])
+      end
+    end
+
+    context 'textual summary of Host Aggregate' do
+      before do
+        controller.instance_variable_set(:@breadcrumbs, [{:url => 'some_previous_url'}, {:url => 'some_url'}])
+        controller.instance_variable_set(:@lastaction, 'show')
+        controller.instance_variable_set(:@layout, 'host_aggregate')
       end
 
-      it 'sets flash message and redirects to show_list' do
-        expect(controller).to receive(:flash_to_session)
-        expect(controller).to receive(:redirect_to).with(:action => 'show_list')
+      it 'sets flash message and redirects to previous url' do
+        expect(controller).to receive(:redirect_to).with('some_previous_url')
         controller.send(:delete_host_aggregates)
         expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => "Delete initiated for 1 Host Aggregate.", :level => :success}])
       end

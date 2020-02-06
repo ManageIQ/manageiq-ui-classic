@@ -175,14 +175,15 @@ class HostAggregateController < ApplicationController
     end
     process_host_aggregates(host_aggregates_to_delete, "destroy") unless host_aggregates_to_delete.empty?
 
-    # refresh the list if applicable
-    if @lastaction == "show_list"
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "host_aggregate"
-      @single_delete = true unless flash_errors?
-    end
     flash_to_session
-    redirect_to(:action => 'show_list')
+    # refresh the list
+    if @lastaction == "show" && @layout == "host_aggregate" # Textual Summary of Host Aggregate
+      @single_delete = true unless flash_errors?
+      redirect_to(previous_breadcrumb_url)
+    else # list of Host Aggregates
+      @refresh_partial = "layouts/gtl" if @lastaction == "show_list"
+      redirect_to(@breadcrumbs[-1][:url])
+    end
   end
 
   def add_host_select
