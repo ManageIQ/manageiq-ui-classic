@@ -36,6 +36,7 @@ module StartUrl
 
   def start_page_allowed?(start_page)
     return false if STORAGE_START_PAGES.include?(start_page)
+
     role_allows?(:feature => start_page, :any => true)
   end
 end
