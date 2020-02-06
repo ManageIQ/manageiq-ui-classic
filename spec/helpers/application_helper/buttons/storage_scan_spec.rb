@@ -1,12 +1,10 @@
 describe ApplicationHelper::Button::StorageScan do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryBot.create(:storage) }
+  let(:record) { FactoryBot.create(:storage, :ext_management_system => ems) }
   let(:feature) { :smartstate_analysis }
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
   let(:ems) { nil }
-
-  before { allow(record).to receive(:ext_management_system).and_return(ems) }
 
   it_behaves_like 'a generic feature button after initialization'
 
