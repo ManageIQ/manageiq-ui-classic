@@ -16,11 +16,12 @@ class CatalogItemForm extends Component {
   }
 
   componentDidMount() {
+    miqSparkleOn();
     const { catalogItemId } = this.props;
     http.get(`/catalog/catalog_item_data/` + catalogItemId)
       .then((data) => {
         this.data = data;
-        this.setState({ isLoaded: true, schema: createSchema(this.data), item: data.item});
+        this.setState({ isLoaded: true, schema: createSchema(this.data), item: data.item}, miqSparkleOff);
       });
   }
 
