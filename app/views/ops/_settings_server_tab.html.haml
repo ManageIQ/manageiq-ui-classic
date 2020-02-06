@@ -49,12 +49,13 @@
       %label.col-md-2.control-label
         = _("Zone*")
       .col-md-8
-        - if server_zones.length == 1
+        - if !MiqServer.zone_is_modifiable?
           = text_field_tag("server_zone",
                             @edit[:new][:server][:zone],
                             :maxlength => 15,
                             :disabled => true,
                             :class => "form-control",
+                            :title => server_zone_title_text,
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         - else
           = select_tag('server_zone',

@@ -74,4 +74,8 @@ module OpsHelper
   def server_zones
     @server_zones ||= Zone.visible.in_my_region.pluck(:name)
   end
+
+  def server_zone_title_text
+    _("The server zone cannot be changed when running in containers") if server_zones.length > 1 && !MiqServer.zone_is_modifiable?
+  end
 end

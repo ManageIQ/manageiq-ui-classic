@@ -355,6 +355,14 @@ module OpsController::Settings::Common
     javascript_flash
   end
 
+  def update_server_zone(server)
+    zone = Zone.find_by(:name => @edit[:new][:server][:zone])
+    return true if zone.nil? || server.zone == zone
+
+    server.zone = zone
+    server.save
+  end
+
   def settings_update_save
     settings_get_form_vars
     return unless @edit
@@ -378,10 +386,10 @@ module OpsController::Settings::Common
       @edit[:new][:authentication][:ldaphost].reject!(&:blank?) if @edit[:new][:authentication][:ldaphost]
       @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
-      zone = Zone.find_by(:name => @edit[:new][:server][:zone])
-      unless zone.nil? || server.zone == zone
-        server.zone = zone
-        server.save
+      if !update_server_zone(server)
+        server.errors.full_messages.each { |message| add_flash(message, :error) }
+        render_flash
+        return
       end
       @update = server.settings
     when "settings_custom_logos" # Custom Logo tab
