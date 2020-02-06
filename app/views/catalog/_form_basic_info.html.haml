@@ -3,7 +3,7 @@
 #basic_info_div
   = hidden_div_if(@edit && @edit[:ae_tree_select] != true, :id => "ae_tree_select_div") do
     = render(:partial => 'layouts/ae_tree_select')
-  = react('CatalogItemForm', {catalogItemId: @record.id.to_s})
+  = react('CatalogItemForm', {catalogItemId: "#{@edit[:rec_id] || "new"}"})
   .container-fluid
     .form-group{:style => "width: 50%"}
       %label.control-label

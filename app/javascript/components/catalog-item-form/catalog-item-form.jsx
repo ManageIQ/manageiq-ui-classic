@@ -30,14 +30,7 @@ class CatalogItemForm extends Component {
   };
 
   handleStateUpdate = (values) => {
-    if (!values.dirty || values.active !== "catalog_item_type") {
-      return;
-    }
-    if (values.active === "catalog_item_type") {
-      this.formType = values.values.catalog_item_type;
-      console.log("this.formType: ", this.formType);
-      this.setState({ schema: createSchema(this.formType, this.data) });
-    };
+    http.post(`/catalog/st_form_field_changed/` + values.values.id, values.values);
   };
 
   render() {
