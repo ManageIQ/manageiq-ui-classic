@@ -4,12 +4,9 @@ describe ApplicationHelper::Button::StorageScan do
   let(:feature) { :smartstate_analysis }
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
-  let(:ems)                  { FactoryBot.create(:ems_vmware) }
-  let(:emss)                 { [ems] }
-  let(:emss_with_valid_auth) { [ems] }
+  let(:ems) { nil }
 
-  before { allow(record).to receive(:ext_management_systems).and_return(emss) }
-  before { allow(record).to receive(:ext_management_systems_with_authentication_status_ok).and_return(emss_with_valid_auth) }
+  before { allow(record).to receive(:ext_management_system).and_return(ems) }
 
   it_behaves_like 'a generic feature button after initialization'
 
@@ -24,14 +21,14 @@ describe ApplicationHelper::Button::StorageScan do
       end
 
       context 'but no EMSs are present' do
-        let(:emss) { [] }
         it_behaves_like 'a disabled button', 'Smartstate Analysis cannot be performed on selected Datastore'
       end
       context 'but no EMS has valid credentials for the Datastore' do
-        let(:emss_with_valid_auth) { [] }
+        let(:ems) { FactoryBot.create(:ems_vmware) }
         it_behaves_like 'a disabled button', 'There are no EMSs with valid credentials for this Datastore'
       end
       context 'with valid credentials for this Datastore' do
+        let(:ems) { FactoryBot.create(:ems_vmware_with_authentication) }
         it_behaves_like 'an enabled button'
       end
     end
