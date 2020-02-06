@@ -61,7 +61,7 @@ module OpsController::Diagnostics
     pm_get_workers
     replace_right_cell(:nodetype => x_node)
   end
-  alias_method :restart_workers, :pm_restart_workers
+  alias restart_workers pm_restart_workers
 
   def pm_refresh_workers
     assert_privileges("refresh_workers")
@@ -70,7 +70,7 @@ module OpsController::Diagnostics
     pm_get_workers
     replace_right_cell(:nodetype => x_node)
   end
-  alias_method :refresh_workers, :pm_refresh_workers
+  alias refresh_workers pm_refresh_workers
 
   def log_depot_edit
     assert_privileges("#{@sb[:selected_typ] == "miq_server" ? "" : "zone_"}log_depot_edit")
@@ -207,6 +207,7 @@ module OpsController::Diagnostics
 
   def cu_repair_field_changed
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
+
     @selected_server = Zone.find(@sb[:selected_server_id])
     cu_repair_get_form_vars
     render :update do |page|
@@ -227,6 +228,7 @@ module OpsController::Diagnostics
 
   def cu_repair
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
+
     if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
       add_flash(_("End Date cannot be earlier than Start Date"), :error)
     else
@@ -264,7 +266,7 @@ module OpsController::Diagnostics
     depot = schedule.file_depot
     full_uri, _query = depot.try(:uri)&.split('?')
     uri_prefix, uri = full_uri.to_s.split('://')
-    port         = URI(depot.try(:uri)).port
+    port = URI(depot.try(:uri)).port
     render :json => {
       :depot_name           => depot.try(:name),
       :uri                  => uri,
@@ -274,7 +276,7 @@ module OpsController::Diagnostics
       :openstack_region     => depot.try(:openstack_region),
       :keystone_api_version => depot.try(:keystone_api_version),
       :v3_domain_ident      => depot.try(:v3_domain_ident),
-      :swift_api_port       => port ? port : 5000,
+      :swift_api_port       => port || 5000,
       :security_protocol    => depot.try(:security_protocol)
     }
   end
@@ -418,7 +420,7 @@ module OpsController::Diagnostics
   # Build the Utilization screen for a server
   def diagnostics_build_perf
     @record = MiqServer.find(@sb[:selected_server_id])
-    if @record && @record.vm
+    if @record&.vm
       s, e = @record.vm.first_and_last_capture
       unless s.nil? || e.nil?
         @sb[:record_class] = @record.class.to_s
@@ -431,7 +433,7 @@ module OpsController::Diagnostics
   # Build the Timeline screen for a server
   def diagnostics_build_timeline
     @record = MiqServer.find(@sb[:selected_server_id])
-    if @record && @record.vm
+    if @record&.vm
       @sb[:record_class] = @record.class.to_s
       @sb[:record_id] = @record.id
       session[:tl_record_id] = @record.vm.id
@@ -867,7 +869,7 @@ module OpsController::Diagnostics
   def set_credentials
     creds = {}
     if params[:log_userid]
-      log_password = params[:log_password] ? params[:log_password] : @record.log_file_depot.authentication_password
+      log_password = params[:log_password] || @record.log_file_depot.authentication_password
       creds[:default] = {:userid => params[:log_userid], :password => log_password}
     end
     creds
