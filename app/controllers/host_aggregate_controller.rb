@@ -102,7 +102,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -140,17 +140,13 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
+      flash_and_redirect(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   def delete_host_aggregates
@@ -225,7 +221,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -318,7 +314,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -377,9 +373,10 @@ class HostAggregateController < ApplicationController
     javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
-  def cancel_action(message)
+  # Set flash message, add it to session, redirect to proper screen and render the flash message
+  def flash_and_redirect(message, level = :success)
     session[:edit] = nil
-    add_flash(message)
+    add_flash(message, level)
     flash_to_session
     javascript_redirect(previous_breadcrumb_url)
   end

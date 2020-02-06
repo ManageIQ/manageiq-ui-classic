@@ -74,6 +74,42 @@ describe HostAggregateController do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :update, :params => { :button => "save", :format => :js, :id => aggregate.id, :name => "foo" }
     end
+
+    context 'canceling the action' do
+      before { controller.params = {:button => 'cancel', :id => aggregate.id} }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {:name => aggregate.name})
+        controller.send(:update)
+      end
+    end
+  end
+
+  describe '#update_finished' do
+    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:status) { 'Error' }
+
+    before do
+      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
+      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name}})
+    end
+
+    it 'calls flash_and_redirect with appropriate arguments' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+        :name    => aggregate.name,
+        :details => miq_task.message
+      }, :error)
+      controller.send(:update_finished)
+    end
+
+    context 'succesful update of Host Aggregate' do
+      let(:status) { 'ok' }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Host Aggregate \"%{name}\" updated") % {:name => aggregate.name})
+        controller.send(:update_finished)
+      end
+    end
   end
 
   describe "#delete_host_aggregates" do
@@ -151,6 +187,15 @@ describe HostAggregateController do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
       post :add_host, :params => { :button => "addHost", :format => :js, :id => aggregate.id, :host_id => host.id }
     end
+
+    context 'canceling the action' do
+      before { controller.params = {:button => 'cancel', :id => aggregate.id} }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {:name => aggregate.name})
+        controller.send(:add_host)
+      end
+    end
   end
 
   describe "#remove_host" do
@@ -182,6 +227,50 @@ describe HostAggregateController do
         :id      => aggregate.id,
         :host_id => host.id
       }
+    end
+
+    context 'canceling the action' do
+      before { controller.params = {:button => 'cancel', :id => aggregate.id} }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {:name => aggregate.name})
+        controller.send(:remove_host)
+      end
+    end
+  end
+
+  describe '#flash_and_redirect' do
+    let(:message) { 'Edit Host Aggregate' }
+
+    before do
+      allow(controller).to receive(:render)
+      allow(controller).to receive(:session).and_return(:edit => {:expression => {}})
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous_url'}, {:url => 'last_url'}])
+    end
+
+    it 'adds message to flash array' do
+      controller.send(:flash_and_redirect, message)
+      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => message, :level => :success}])
+    end
+
+    it 'adds error flash message to flash array' do
+      controller.send(:flash_and_redirect, message, :error)
+      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => message, :level => :error}])
+    end
+
+    it 'sets session[:edit] to nil' do
+      controller.send(:flash_and_redirect, message)
+      expect(controller.session[:edit]).to be_nil
+    end
+
+    it 'adds flash message to session' do
+      controller.send(:flash_and_redirect, message)
+      expect(controller.session[:flash_msgs]).to eq([{:message => message, :level => :success}])
+    end
+
+    it 'calls javascript_redirect' do
+      expect(controller).to receive(:javascript_redirect).with('previous_url')
+      controller.send(:flash_and_redirect, message)
     end
   end
 
