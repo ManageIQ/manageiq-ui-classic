@@ -31,7 +31,7 @@ module OpsController::Db
       # @workers = MiqWorker.all.sort_by(&:type).collect { |w| [w.friendly_name, w.id] }
     end
 
-    @view, @pages = get_view(model, :filter => exp ? exp : nil) # Get the records (into a view) and the paginator
+    @view, @pages = get_view(model, :filter => exp || nil) # Get the records (into a view) and the paginator
 
     @no_checkboxes = true
     @showlinks = true # Need to set @showlinks if @no_checkboxes is set to true
@@ -136,6 +136,7 @@ module OpsController::Db
 
   def get_indexes(tb)
     return [] unless tb.kind_of?(VmdbTableEvm)
+
     tb.vmdb_indexes.sort_by(&:name)
   end
 
