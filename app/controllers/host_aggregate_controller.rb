@@ -72,18 +72,13 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
+      flash_and_redirect(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show_list")
   end
 
   def edit

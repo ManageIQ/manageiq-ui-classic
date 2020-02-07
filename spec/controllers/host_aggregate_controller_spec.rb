@@ -49,6 +49,33 @@ describe HostAggregateController do
     end
   end
 
+  describe '#create_finished' do
+    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:status) { 'Error' }
+
+    before do
+      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
+      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => aggregate.name}})
+    end
+
+    it 'calls flash_and_redirect with appropriate arguments' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
+        :name    => aggregate.name,
+        :details => miq_task.message
+      }, :error)
+      controller.send(:create_finished)
+    end
+
+    context 'succesful creating of new Host Aggregate' do
+      let(:status) { 'ok' }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Host Aggregate \"%{name}\" created") % {:name => aggregate.name})
+        controller.send(:create_finished)
+      end
+    end
+  end
+
   describe "#update" do
     let(:task_options) do
       {
