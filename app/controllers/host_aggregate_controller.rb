@@ -286,11 +286,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      if @lastaction == "show_list"
-        redirect_to(:action => "show_list")
-      else
-        redirect_to(:action => "show", :id => params[:id])
-      end
+      redirect_to(@breadcrumbs[-1][:url])
     else
       drop_breadcrumb(
         :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -347,21 +343,16 @@ class HostAggregateController < ApplicationController
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
+      flash_and_redirect(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
         :hostname => host.name,
         :name     => host_aggregate_name
       })
     else
-      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   # Set flash message, add it to session, redirect to proper screen and render the flash message

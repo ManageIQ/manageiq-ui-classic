@@ -281,6 +281,48 @@ describe HostAggregateController do
     end
   end
 
+  describe '#remove_host_select' do
+    before do
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous_url'}, {:url => 'last_url'}])
+      controller.params = {:id => aggregate.id}
+    end
+
+    it 'calls redirect_to with last url' do
+      expect(controller).to receive(:redirect_to).with('last_url')
+      controller.send(:remove_host_select)
+    end
+  end
+
+  describe '#remove_host_finished' do
+    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:status) { 'Error' }
+
+    before do
+      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
+      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name, :host_id => host.id}})
+    end
+
+    it 'calls flash_and_redirect with appropriate arguments' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+        :name    => aggregate.name,
+        :details => miq_task.message
+      }, :error)
+      controller.send(:remove_host_finished)
+    end
+
+    context 'succesful removing Host from Host Aggregate' do
+      let(:status) { 'ok' }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
+          :hostname => host.name,
+          :name     => aggregate.name
+        })
+        controller.send(:remove_host_finished)
+      end
+    end
+  end
+
   describe '#flash_and_redirect' do
     let(:message) { 'Edit Host Aggregate' }
 
