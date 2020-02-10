@@ -1382,7 +1382,7 @@ class MiqAeClassController < ApplicationController
     add_ae_ns = if @edit[:typ] == "MiqAeDomain"
                   current_tenant.ae_domains.new
                 else
-                  MiqAeNamespace.new(:parent_id => x_node.split('-')[1])
+                  MiqAeNamespace.children_of(x_node.split('-')[1]).new
                 end
     namespace_set_record_vars(add_ae_ns) # Set the record variables, but don't save
     if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
@@ -2572,7 +2572,7 @@ class MiqAeClassController < ApplicationController
 
   def new_domain_or_namespace(klass)
     parent_id = x_node == "root" ? nil : x_node.split("-").last
-    @ae_ns = klass.new(:parent_id => parent_id)
+    @ae_ns = klass.new(:parent => parent_id)
     ns_set_form_vars
     @in_a_form = true
     @angular_form = true
