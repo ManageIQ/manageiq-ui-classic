@@ -69,7 +69,8 @@ module Mixins
       end
 
       def update_ems_button_validate
-        result, details = realtime_authentication_check
+        ems_type = find_record_with_rbac(model, params[:id])&.class
+        result, details = authentication_check(ems_type)
         render_validation_result(result, details)
       end
 
@@ -80,14 +81,18 @@ module Mixins
         verify_ems.authentication_check(params[:cred_type], :save => false, :database => params[:metrics_database_name])
       end
 
+      def authentication_check(ems_type)
+        if %w[ems_cloud ems_infra].include?(params[:controller])
+          ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
+        else
+          realtime_authentication_check(ems_type.new)
+        end
+      end
+
       def create_ems_button_validate
         @in_a_form = true
         ems_type = model.model_from_emstype(params[:emstype])
-        result, details = if %w[ems_cloud ems_infra].include?(params[:controller])
-                            ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
-                          else
-                            realtime_authentication_check(ems_type.new)
-                          end
+        result, details = authentication_check(ems_type)
         render_validation_result(result, details)
       end
 

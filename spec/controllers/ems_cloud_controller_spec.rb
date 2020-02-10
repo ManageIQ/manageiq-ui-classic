@@ -302,9 +302,9 @@ describe EmsCloudController do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
       allow(controller).to receive(:find_record_with_rbac).and_return(mocked_ems)
-      controller.params = {:button => "validate", :id => mocked_ems.id, :cred_type => "default"}
+      controller.params = {:button => "validate", :id => mocked_ems.id, :cred_type => "default", :controller => "ems_cloud"}
 
-      expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
+      expect(mocked_ems.class).to receive(:validate_credentials_task)
       controller.send(:update_ems_button_validate)
     end
   end
