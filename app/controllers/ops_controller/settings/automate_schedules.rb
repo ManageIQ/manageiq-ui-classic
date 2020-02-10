@@ -59,7 +59,7 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def prebuild_automate_schedule(schedule)
-    if schedule.filter && schedule.filter.kind_of?(Hash)
+    if schedule.filter&.kind_of?(Hash)
       schedule.filter
     else
       {:uri_parts  => {},
