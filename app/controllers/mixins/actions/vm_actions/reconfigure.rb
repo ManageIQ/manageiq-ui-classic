@@ -19,7 +19,8 @@ module Mixins
 
           if @reconfigitems.size == 1
             vm = @reconfigitems.first
-            @vlan_options = get_vlan_options(vm.host_id)
+            @vlan_options = vm.try(:available_vlans) || get_vlan_options(vm.host_id)
+
             @avail_adapter_names = vm.try(:available_adapter_names) || []
             @iso_options = get_iso_options(vm)
           end
