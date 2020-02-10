@@ -84,7 +84,7 @@ module Mixins
         @in_a_form = true
         ems_type = model.model_from_emstype(params[:emstype])
         result, details = if %w[ems_cloud ems_infra].include?(params[:controller])
-                            ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
+                            ems_type.verify_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                           else
                             realtime_authentication_check(ems_type.new)
                           end
