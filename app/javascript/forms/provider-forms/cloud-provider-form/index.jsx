@@ -6,30 +6,38 @@ import MiqFormRenderer from '../../data-driven-form';
 
 const loadProviderServerZones = () =>
   API.get('/api/zones?expand=resources&attributes=id,name,visible&filter[]=visible!=false&sort_by=name')
-    .then(({ resources }) => resources.map(({ name, id }) => ({ value: id, label: name })));
+    .then(({ resources }) => resources.map(({ name }) => ({ value: name, label: name })));
 
 const initialSchema = emsTypes => ({
   fields: [{
     component: componentTypes.TEXT_FIELD,
     name: 'name',
     label: __('Name'),
-    options: emsTypes,
+    isRequired: true,
+    validate: [{
+      type: validatorTypes.REQUIRED,
+    }],
   }, {
     component: componentTypes.SELECT,
     name: 'type',
     label: __('Type'),
     placeholder: `<${__('Choose')}>`,
     options: emsTypes,
+    isRequired: true,
     validate: [{
       type: validatorTypes.REQUIRED,
     }],
   }, {
     component: componentTypes.SELECT,
-    name: 'zone',
+    name: 'zone_name',
     label: __('Zone'),
     placeholder: `<${__('Choose')}>`,
     loadOptions: loadProviderServerZones,
-    initialValue: '1',
+    initialValue: 'default',
+    isRequired: true,
+    validate: [{
+      type: validatorTypes.REQUIRED,
+    }],
   }],
 });
 
@@ -43,6 +51,7 @@ const loadProviderTypes = () =>
 const loadProviderTabs = type => API.options(`/api/providers?type=${type}`).then(({ data }) => ({
   providerType: type,
   field: {
+    name: type,
     component: componentTypes.SUB_FORM,
     condition: {
       when: 'type',
@@ -57,7 +66,6 @@ const CloudProviderForm = (props) => {
   useEffect(() => {
     loadProviderTypes().then(({ emsTypes }) => {
       Promise.all(emsTypes
-        .filter(({ value }) => value !== 'ManageIQ::Providers::Openstack::CloudManager')
         .map(({ value }) => loadProviderTabs(value)))
         .then((schemas) => {
           const fields = schemas.map(({ field }) => field);
@@ -70,13 +78,22 @@ const CloudProviderForm = (props) => {
         });
     });
   }, []);
-  console.log(props);
+
+  const onSubmit = (data) => {
+    // Omit validator results from each endpoint
+    const endpoints = Object.keys(data.endpoints).reduce((obj, key) => {
+      const { valid, ...endpoint } = data.endpoints[key]; // eslint-disable-line no-unused-vars
+      return { ...obj, [key]: endpoint };
+    }, {});
+
+    API.post('/api/providers', { ...data, endpoints, ddf: true });
+  };
   return (
     <div>
       There will be dragons
       <MiqFormRenderer
         schema={schema}
-        onSubmit={console.log}
+        onSubmit={onSubmit}
       />
     </div>
   );
