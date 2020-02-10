@@ -76,7 +76,7 @@ describe EmsCloudController do
     end
 
     it "validates credentials for a new record" do
-      expect(ManageIQ::Providers::Amazon::CloudManager).to receive(:verify_credentials_task).with(
+      expect(ManageIQ::Providers::Amazon::CloudManager).to receive(:validate_credentials_task).with(
         match_array([
           'foo',
           'v2:{SRpWIJC0Y1AOrUrKC0KDiw==}',
@@ -324,7 +324,7 @@ describe EmsCloudController do
       let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default", :default_url => ""} }
 
       it "queues the authentication type if it is a cloud provider" do
-        expect(mocked_class).to receive(:verify_credentials_task)
+        expect(mocked_class).to receive(:validate_credentials_task)
         controller.send(:create_ems_button_validate)
       end
 
@@ -332,7 +332,7 @@ describe EmsCloudController do
         session[:selected_roles] = ['user_interface']
 
         expect(mocked_class).not_to receive(:raw_connect)
-        expect(mocked_class).to receive(:verify_credentials_task)
+        expect(mocked_class).to receive(:validate_credentials_task)
         controller.send(:create_ems_button_validate)
       end
 
@@ -345,7 +345,7 @@ describe EmsCloudController do
 
         it "queues the correct number of arguments" do
           expected_validate_args = [project, ManageIQ::Password.encrypt(service_account), compute_service, nil, true]
-          expect(mocked_class).to receive(:verify_credentials_task).with(expected_validate_args, nil, nil)
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
           controller.send(:create_ems_button_validate)
         end
       end
@@ -356,7 +356,7 @@ describe EmsCloudController do
       let(:mocked_class_controller) { "ems_infra" }
 
       it "queues the authentication check" do
-        expect(mocked_class).to receive(:verify_credentials_task)
+        expect(mocked_class).to receive(:validate_credentials_task)
         controller.send(:create_ems_button_validate)
       end
 
@@ -366,7 +366,7 @@ describe EmsCloudController do
 
         it "disables the broker" do
           expected_validate_args = [{:pass => nil, :user => nil, :ip => nil, :use_broker => false}]
-          expect(mocked_class).to receive(:verify_credentials_task).with(expected_validate_args, nil, nil)
+          expect(mocked_class).to receive(:validate_credentials_task).with(expected_validate_args, nil, nil)
           controller.send(:create_ems_button_validate)
         end
       end
