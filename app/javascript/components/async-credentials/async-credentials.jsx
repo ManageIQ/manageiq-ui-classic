@@ -90,7 +90,7 @@ const AsyncCredentials = ({
                   <Button
                     bsSize="small"
                     bsStyle="primary"
-                    onClick={() => handleAsyncValidation(formOptions, name, asyncFields)}
+                    onClick={() => handleAsyncValidation(formOptions, name, [...asyncFields, ...validationDependencies])}
                     disabled={valid.includes(false) || validating}
                   >
                     {validating ? validationProgressLabel : validateLabel}
