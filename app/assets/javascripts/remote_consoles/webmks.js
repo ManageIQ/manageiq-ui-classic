@@ -1,4 +1,4 @@
-//= require jquery
+//= require jquery/dist/jquery.js
 //= require jquery-ui/ui/unique-id.js
 //= require jquery-ui/ui/widget.js
 //= require jquery-ui/ui/widgets/dialog.js
