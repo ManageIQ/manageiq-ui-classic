@@ -89,13 +89,9 @@ Cypress.Commands.add("menuItems", () => {
 // assertions
 
 Cypress.Commands.add("expect_explorer_title", (text) => {
-  return cy.get('#explorer_title_text').should((elem) => {
-    expect(elem.text().trim()).to.equal(text);
-  });
+  return cy.get('#explorer_title_text').contains(text);
 });
 
 Cypress.Commands.add("expect_show_list_title", (text) => {
-  return cy.get('#main-content h1').should((elem) => {
-    expect(elem.text().trim()).to.equal(text);
-  });
+  return cy.get('#main-content h1').contains(text);
 });
