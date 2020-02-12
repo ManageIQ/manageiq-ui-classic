@@ -33,4 +33,33 @@ describe('Menu', () => {
     cy.menu('Overview')
       .expect_explorer_title('All Saved Reports');
   });
+
+  it.skip("all menu items lead to non-error screens", () => {
+    //FIXME: remove .skip once graphql_explorer stops erroring
+    //FIXME: ignore custom items
+
+    const check = (item) => {
+      //if (Math.random() > 0.2)
+      //  return;
+
+      cy.log('check', item);
+
+      cy.visit(item.href)
+        .get('[class*=miq-layout]');
+    };
+
+    const recurse = (items) => {
+      items.forEach((item) => {
+        recurse(item.items);
+
+        if (! item.items.length) {
+          // leaf node
+          check(item);
+        }
+      });
+    };
+
+    cy.menuItems()
+      .then((menu) => recurse(menu));
+  });
 });
