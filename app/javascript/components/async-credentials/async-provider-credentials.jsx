@@ -1,12 +1,11 @@
+import { pick } from 'lodash';
 import React from 'react';
 import AsyncCredentials from './async-credentials';
 
 const AsyncProviderCredentials = ({ ...props }) => {
-  const asyncValidate = fields => new Promise((resolve, reject) => {
-    API.post('/api/providers', {
-      action: 'verify_credentials',
-      resource: fields,
-    }).then(({ results: [result] }) => {
+  const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
+    const resource = pick(fields, fieldNames);
+    API.post('/api/providers', { action: 'verify_credentials', resource }).then(({ results: [result] }) => {
       const { task_id, success } = result; // eslint-disable-line camelcase
       // The request here can either create a background task or fail
       return success ? API.wait_for_task(task_id) : Promise.reject(result);
