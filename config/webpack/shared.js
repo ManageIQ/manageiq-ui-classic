@@ -21,7 +21,6 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
 const sharedPackages = [
   'angular',
-  'graphql', // TODO remove once this gets added in manageiq-graphql
   'jquery',
   'lodash',
   'moment',
@@ -55,12 +54,6 @@ let plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
   }),
-
-  // Workaround for graphql/graphql-language-service#128
-  new webpack.ContextReplacementPlugin(
-    /graphql-language-service-interface[\\\/]dist$/,
-    /\.js$/
-  ),
 
   new ManifestPlugin({
     publicPath: output.publicPath,
