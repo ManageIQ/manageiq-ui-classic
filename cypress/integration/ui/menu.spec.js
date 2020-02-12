@@ -28,5 +28,9 @@ describe('Menu', () => {
 
     cy.menu('Compute', 'Infrastructure', 'Virtual Machines')
       .expect_explorer_title('All VMs & Templates');
+
+    // test it remembers the last Overview > * screen used
+    cy.menu('Overview')
+      .expect_explorer_title('All Saved Reports');
   });
 });
