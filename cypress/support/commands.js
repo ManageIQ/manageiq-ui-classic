@@ -32,3 +32,30 @@ Cypress.Commands.add("login", (user = 'admin', password = 'smartvm') => {
   cy.get('#user_password').type(password);
   return cy.get('#login').click();
 });
+
+// cy.menu('Compute', 'Infrastructure', 'VMs') - navigate the main menu
+Cypress.Commands.add("menu", (...items) => {
+  expect(items.length > 0).to.equal(true);
+  expect(items.length < 4).to.equal(true);
+
+  const selectors = [
+    '#main-menu',
+    '.nav-pf-secondary-nav',
+    '.nav-pf-tertiary-nav',
+  ];
+
+  let ret = cy;
+
+  items.forEach((item, index) => {
+    if (index > 0) {
+      ret = ret.trigger('mouseover');
+    }
+
+    ret = ret
+      .get(`${selectors[index]} > ul > li`)
+      .contains('a', item);
+  });
+
+  return ret.click();
+  // TODO support by id: cy.get('li[id=menu_item_provider_foreman]').click({ force: true });
+});
