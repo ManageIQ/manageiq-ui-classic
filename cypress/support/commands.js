@@ -85,3 +85,17 @@ Cypress.Commands.add("menuItems", () => {
   return cy.get('#maintab')
     .then((maintab) => children(maintab[0], '#maintab', 0, '.nav-pf-secondary-nav', '.nav-pf-tertiary-nav'));
 });
+
+// assertions
+
+Cypress.Commands.add("expect_explorer_title", (text) => {
+  return cy.get('#explorer_title_text').should((elem) => {
+    expect(elem.text().trim()).to.equal(text);
+  });
+});
+
+Cypress.Commands.add("expect_show_list_title", (text) => {
+  return cy.get('#main-content h1').should((elem) => {
+    expect(elem.text().trim()).to.equal(text);
+  });
+});
