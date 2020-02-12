@@ -59,3 +59,29 @@ Cypress.Commands.add("menu", (...items) => {
   return ret.click();
   // TODO support by id: cy.get('li[id=menu_item_provider_foreman]').click({ force: true });
 });
+
+// returns an array of top level menu items with {title, href, items (array of children), selector, click() method}
+Cypress.Commands.add("menuItems", () => {
+  const children = (parent, parentSelector, level, ...selectors) => {
+    if (! parent)
+      return [];
+
+    const [selector, ...rest] = selectors;
+    const items = [];
+    parent.querySelectorAll(':scope > li > a').forEach((el, i) => {
+      const itemSelector = `${parentSelector} > li:nth-child(${i + 1}) > a`;
+      items.push({
+        title: el.innerText.trim(),
+        href: el.href,
+        items: children(el.parentElement.querySelector(`${selector} > ul`), `${itemSelector.replace(/ > a$/, '')} > div > ul`, level + 1, ...rest),
+        selector: itemSelector,
+        click: () => cy.get(itemSelector).click({ force: true }),
+      });
+    });
+
+    return items;
+  };
+
+  return cy.get('#maintab')
+    .then((maintab) => children(maintab[0], '#maintab', 0, '.nav-pf-secondary-nav', '.nav-pf-tertiary-nav'));
+});
