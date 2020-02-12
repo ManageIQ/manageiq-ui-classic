@@ -71,7 +71,7 @@ Cypress.Commands.add("menuItems", () => {
     parent.querySelectorAll(':scope > li > a').forEach((el, i) => {
       const itemSelector = `${parentSelector} > li:nth-child(${i + 1}) > a`;
       items.push({
-        title: el.innerText.trim(),
+        title: el.text.trim(),
         href: el.href,
         items: children(el.parentElement.querySelector(`${selector} > ul`), `${itemSelector.replace(/ > a$/, '')} > div > ul`, level + 1, ...rest),
         selector: itemSelector,
