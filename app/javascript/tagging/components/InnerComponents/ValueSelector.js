@@ -48,6 +48,7 @@ class ValueSelector extends React.Component {
       multi={this.props.multiValue}
       simpleValue
       clearable
+      searchable={values.length > 0}
       placeholder={__('Select tag value')}
     />
   );

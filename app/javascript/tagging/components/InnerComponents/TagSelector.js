@@ -55,6 +55,7 @@ class TagSelector extends React.Component {
         id="tag_cat"
         // clearable={false}
         simpleValue={false}
+        searchable
       />
     );
   }

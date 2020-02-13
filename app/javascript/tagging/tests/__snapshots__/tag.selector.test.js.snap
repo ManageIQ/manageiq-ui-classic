@@ -30,6 +30,7 @@ exports[`Tagging modifier match snapshot 1`] = `
     ]
   }
   placeholder="Select tag category"
+  searchable={true}
   simpleValue={false}
 />
 `;

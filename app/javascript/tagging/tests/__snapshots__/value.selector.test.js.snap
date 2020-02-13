@@ -25,6 +25,7 @@ exports[`match snapshot 1`] = `
     ]
   }
   placeholder="Select tag value"
+  searchable={true}
   simpleValue={true}
 />
 `;
@@ -54,6 +55,7 @@ exports[`match snapshot without multiple values 1`] = `
     ]
   }
   placeholder="Select tag value"
+  searchable={true}
   simpleValue={true}
 />
 `;
