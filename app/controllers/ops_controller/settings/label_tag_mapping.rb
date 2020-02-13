@@ -55,8 +55,9 @@ module OpsController::Settings::LabelTagMapping
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("label_tag_mapping_edit__#{id}", "replace_cell__explorer")
+
       @lt_map = @edit[:lt_map] if @edit && @edit[:lt_map]
       if @edit[:new][:label_name].blank?
         add_flash(_("Label is required"), :error)
@@ -152,6 +153,7 @@ module OpsController::Settings::LabelTagMapping
   # AJAX driven routine to check for changes in ANY field on the user form
   def label_tag_mapping_field_changed
     return unless load_edit("label_tag_mapping_edit__#{params[:id]}", "replace_cell__explorer")
+
     lt_map_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
