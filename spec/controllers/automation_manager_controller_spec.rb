@@ -310,59 +310,6 @@ describe AutomationManagerController do
       controller.send(:build_accordions_and_trees)
     end
 
-    # FIXME: This needs to be splin into separate tests.
-    # Also: we cannot directly test data rendered in the grid as this goes
-    # throught the GTL component and the /report_data JSON endpoint.
-    pending "renders the list view based on the nodetype(root,provider) and the search associated with it" do
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.params = {:id => "root"}
-      controller.instance_variable_set(:@search_text, "manager")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(3)
-
-      ems_id = ems_key_for_provider(automation_provider1)
-      controller.params = {:id => ems_id}
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("testinvgroup")
-
-      controller.params = {:id => "at"}
-      controller.instance_variable_set(:@search_text, "2")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("ansibletest2 Automation Manager")
-
-      invgroup_id2 = inventory_group_key(@inventory_group2)
-      controller.params = {:id => invgroup_id2}
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].hostname).to eq("test2b_ans_configured_system")
-
-      controller.instance_variable_set(:@search_text, "2b")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].hostname).to eq("test2b_ans_configured_system")
-
-      allow(controller).to receive(:x_node).and_return("root")
-      allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.params = {:id => "automation_manager_cs_filter"}
-      controller.send(:accordion_select)
-      controller.instance_variable_set(:@search_text, "brew")
-      allow(controller).to receive(:x_tree).and_return(:type => :providers)
-      controller.params = {:id => "automation_manager_providers"}
-      controller.send(:accordion_select)
-
-      controller.params = {:id => "root"}
-      controller.send(:tree_select)
-      search_text = controller.instance_variable_get(:@search_text)
-      expect(search_text).to eq("manager")
-      view = controller.instance_variable_get(:@view)
-      show_adv_search = controller.instance_variable_get(:@show_adv_search)
-      expect(view.table.data.size).to eq(3)
-      expect(show_adv_search).to eq(true)
-    end
-
     it "renders tree_select for ansible tower job templates tree node" do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       controller.instance_variable_set(:@in_report_data, true)

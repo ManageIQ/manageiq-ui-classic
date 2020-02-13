@@ -1276,22 +1276,6 @@ describe ReportController do
           @rpt = create_and_generate_report_for_user("Vendor and Guest OS", @user2)
         end
 
-        pending "is allowed to see report created under Group1 for User 1(with current group Group2)" do
-          controller.instance_variable_set(:@in_report_data, true)
-          controller.params = {:controller => "report", :action => "explorer"}
-          seed_session_trees('report', :saved_reports)
-          allow(controller).to receive(:get_view_calculate_gtl_type).and_return("list")
-          allow(controller).to receive(:get_view_pages_perpage).and_return(20)
-
-          controller.send(:get_all_saved_reports)
-
-          displayed_items = controller.instance_variable_get(:@pages)[:items]
-          expect(displayed_items).to eq(1)
-
-          expected_report_id = controller.instance_variable_get(:@view).table.data.last.miq_report_id
-          expect(expected_report_id).to eq(@rpt.id)
-        end
-
         it "is allowed to see miq report result for User1(with current group Group2)" do
           report_result_id = @rpt.miq_report_results.first.id
           controller.params = {:id => report_result_id,

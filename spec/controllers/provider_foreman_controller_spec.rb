@@ -314,110 +314,6 @@ describe ProviderForemanController do
       controller.send(:build_accordions_and_trees)
     end
 
-    pending "renders the list view based on the nodetype(root,provider,config_profile) and the search associated with it" do
-      controller.params = {:id => "root"}
-      controller.instance_variable_set(:@search_text, "manager")
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(2)
-
-      controller.params = {:id => "xx-fr"}
-      controller.instance_variable_set(:@search_text, "manager")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(2)
-
-      ems_id = ems_key_for_provider(@provider)
-      controller.params = {:id => ems_id}
-      controller.send(:tree_select)
-      gtl_init_data = controller.init_report_data('reportDataController')
-      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
-      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
-      expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
-      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].description).to eq("testprofile")
-
-      controller.instance_variable_set(:@search_text, "2")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].description).to eq("testprofile2")
-      config_profile_id2 = config_profile_key(@config_profile2)
-      controller.params = {:id => config_profile_id2}
-      controller.send(:tree_select)
-      gtl_init_data = controller.init_report_data('reportDataController')
-      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
-      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
-      expect(gtl_init_data[:data][:parentId]).to eq(config_profile_id2)
-      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].hostname).to eq("test2a_configured_system")
-
-      controller.instance_variable_set(:@search_text, "2b")
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].hostname).to eq("test2b_configured_system")
-
-      allow(controller).to receive(:x_node).and_return("root")
-      allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.params = {:id => "configuration_manager_cs_filter"}
-      controller.send(:accordion_select)
-      controller.instance_variable_set(:@search_text, "brew")
-      allow(controller).to receive(:x_tree).and_return(:type => :providers)
-      controller.params = {:id => "configuration_manager_providers"}
-      controller.send(:accordion_select)
-
-      controller.params = {:id => "root"}
-      controller.send(:tree_select)
-      search_text = controller.instance_variable_get(:@search_text)
-      expect(search_text).to eq("manager")
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(2)
-    end
-
-    pending "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
-      ems_id = ems_key_for_provider(@provider)
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.params = {:id => ems_id}
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      gtl_init_data = controller.init_report_data('reportDataController')
-      expect(gtl_init_data[:data][:model_name]).to eq("manageiq/providers/configuration_managers")
-      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
-      expect(gtl_init_data[:data][:parentId]).to eq(ems_id)
-      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
-      expect(view.table.data[0].data).to include('description' => "testprofile")
-      expect(view.table.data[2]).to include('description' => "Unassigned Profiles Group",
-                                            'name'        => "Unassigned Profiles Group")
-    end
-
-    pending "renders tree_select for a ConfigurationManagerForeman node that contains only an unassigned profile" do
-      ems_id = ems_key_for_provider(@provider2)
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.params = {:id => ems_id}
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0]).to include('description' => "Unassigned Profiles Group",
-                                            'name'        => "Unassigned Profiles Group")
-    end
-
-    pending "renders tree_select for an 'Unassigned Profiles Group' node for the first provider" do
-      controller.params = {:id => "-#{ems_id_for_provider(@provider)}-unassigned"}
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned")
-    end
-
-    pending "renders tree_select for an 'Unassigned Profiles Group' node for the second provider" do
-      controller.instance_variable_set(:@in_report_data, true)
-      controller.params = {:id => "-#{ems_id_for_provider(@provider2)}-unassigned"}
-      controller.send(:tree_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].data).to include('hostname' => "configured_system_unprovisioned2")
-    end
-
     it "calls get_view with the associated dbname for the Configuration Management Providers accordion" do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_providers_tree)
@@ -455,19 +351,6 @@ describe ProviderForemanController do
                                                     :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
-    end
-
-    pending "does not display an automation manger configured system in the Configured Systems accordion" do
-      controller.instance_variable_set(:@in_report_data, true)
-      stub_user(:features => :all)
-      FactoryBot.create(:configured_system_ansible_tower)
-      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
-      allow(controller).to receive(:build_listnav_search_list)
-      controller.params = {:id => "configuration_manager_cs_filter_accord"}
-      controller.send(:accordion_select)
-      view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(5)
     end
   end
 
