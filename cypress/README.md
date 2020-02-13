@@ -2,6 +2,11 @@
 
 #### Run
 
+Please note that the rails server has to be running first:
+
+    bin/rails s
+
+
 Run without interaction:
 
     yarn cypress:run
@@ -10,7 +15,7 @@ Will run the tests in console, and output a screengrab and screenshot in `cypres
 
 Run interactively:
 
-    yarn cupress:open
+    yarn cypress:open
 
 Opens a chrome instance for debugging.
 
