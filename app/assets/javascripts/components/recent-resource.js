@@ -32,6 +32,7 @@ function resentResourceController(miqService, $q, $http, chartsMixin) {
     $q.all([resourcesDataPromise]).then(function() {
       if (vm.data.recentResources.dataAvailable === false) {
         vm.data.dataAvailable = false;
+        vm.data.config = Object.assign({}, vm.data.recentResources.config);
       } else {
         vm.data = chartsMixin.processData(vm.data.recentResources, 'dates', vm.data.recentResources.config.label);
       }
