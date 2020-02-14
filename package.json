@@ -50,8 +50,6 @@
     "create-react-context": "~0.2.3",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "es6-shim": "~0.35.3",
-    "graphiql": "~0.13.0",
-    "graphql": "~14.2.1",
     "history": "^4.7.2",
     "jquery": "~2.2.4",
     "jquery-ui": "~1.12.1",

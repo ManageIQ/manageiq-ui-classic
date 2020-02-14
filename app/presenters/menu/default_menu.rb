@@ -2,16 +2,6 @@
 module Menu
   class DefaultMenu
     class << self
-      def graphql_menu_section
-        return nil unless Rails.env.development?
-        Menu::Section.new(
-          :graphql_explorer,
-          N_("GraphQL"),
-          'fa fa-lightbulb-o',
-          [Menu::Item.new('graphql_explorer', N_('Explorer'), 'product', {:feature => 'product'}, '/graphql_explorer')]
-        )
-      end
-
       def compute_menu_section
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
@@ -292,7 +282,7 @@ module Menu
       def default_menu
         [overview_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
-         monitor_menu_section, settings_menu_section, graphql_menu_section, help_menu_section].compact
+         monitor_menu_section, settings_menu_section, help_menu_section].compact
       end
 
       private
