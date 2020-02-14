@@ -81,7 +81,7 @@ module OpsController::Settings::RHN
         :updates_available => server.updates_available ? 'Yes' : 'No',
         :color             => server.cfme_available_update ? 'red' : 'black',
         :checked           => !!@edit[:new][:servers][server.id],
-        :last_message      => server.upgrade_message,
+        :last_message      => server.upgrade_message
       )
     end
   end
@@ -150,21 +150,24 @@ module OpsController::Settings::RHN
 
   # prepare credentials from @edit into a hash for async call
   def rhn_credentials_from_edit
-    {
-      :registration_type   => @edit[:new][:register_to],
-      :userid              => @edit[:new][:customer_userid],
-      :password            => @edit[:new][:customer_password],
-      :registration_server => @edit[:new][:server_url],
-      :update_repo_name    => @edit[:new][:repo_name],
-    }.update(@edit[:new][:use_proxy].to_i == 1 ? {
-               :registration_http_proxy_server   => @edit[:new][:proxy_address],
-               :registration_http_proxy_username => @edit[:new][:proxy_userid],
-               :registration_http_proxy_password => @edit[:new][:proxy_password]
-             } : {
-               :registration_http_proxy_server   => nil,
-               :registration_http_proxy_username => nil,
-               :registration_http_proxy_password => nil
-             })
+    credentials = {
+      :registration_type                => @edit[:new][:register_to],
+      :userid                           => @edit[:new][:customer_userid],
+      :password                         => @edit[:new][:customer_password],
+      :registration_server              => @edit[:new][:server_url],
+      :update_repo_name                 => @edit[:new][:repo_name],
+      :registration_http_proxy_server   => nil,
+      :registration_http_proxy_username => nil,
+      :registration_http_proxy_password => nil
+    }
+
+    if @edit[:new][:use_proxy].to_i == 1
+      credentials.update(:registration_http_proxy_server   => @edit[:new][:proxy_address],
+                         :registration_http_proxy_username => @edit[:new][:proxy_userid],
+                         :registration_http_proxy_password => @edit[:new][:proxy_password])
+    else
+      credentials
+    end
   end
 
   def rhn_fire_available_organizations
@@ -195,6 +198,7 @@ module OpsController::Settings::RHN
 
     params.each do |key, value|
       next if key !~ /^check_server_(\d+)$/
+
       server_id = $1.to_i
       if MiqServer.find(server_id) && (value == '1')
         @edit[:new][:servers][server_id] = true
@@ -358,6 +362,7 @@ module OpsController::Settings::RHN
 
   def rhn_save_enabled?
     return @changed if @edit[:new][:register_to] != 'rhn_satellite6'
+
     # @edit[:organizations] gets set when validate button is pressed
     @edit[:new][:register_to] == 'rhn_satellite6' && @edit[:organizations]
   end
