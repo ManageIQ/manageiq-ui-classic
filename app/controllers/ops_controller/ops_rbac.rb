@@ -1058,7 +1058,7 @@ module OpsController::OpsRbac
       move_cols_up   if params[:button] == "up"
       move_cols_down if params[:button] == "down"
     else
-      copy_params_if_present(@edit[:new], params, %i[ldap_groups_user description user user_id])
+      copy_params_if_present(@edit[:new], params, %i[ldap_groups_user description detailed_description user user_id])
 
       if params[:group_role]
         if valid_role?(new_role_id = params[:group_role].to_i)
@@ -1125,10 +1125,11 @@ module OpsController::OpsRbac
     @group = @record
     @edit = {
       :new                 => {
-        :filters           => {},
-        :filter_expression => {},
-        :belongsto         => {},
-        :description       => @group.description,
+        :filters              => {},
+        :filter_expression    => {},
+        :belongsto            => {},
+        :description          => @group.description,
+        :detailed_description => @group.detailed_description,
       },
       :ldap_groups_by_user => [],
       :projects_tenants    => [],
@@ -1229,6 +1230,7 @@ module OpsController::OpsRbac
   # Set group record variables such as Description, Role and Tenant to new values
   def rbac_group_set_record_description_role(group)
     group.description = @edit[:new][:description]
+    group.detailed_description = @edit[:new][:detailed_description]
     group.miq_user_role = MiqUserRole.find(@edit[:new][:role]) if @edit[:new][:role]
     group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
   end
