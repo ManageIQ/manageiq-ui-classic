@@ -117,11 +117,15 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
           count: isDifferent('smart_proxy_worker.count'),
         },
         ems_metrics_collector_worker: {
-          memory_threshold: toRubyMethod(isDifferent('ems_metrics_collector_worker.defaults.memory_threshold')),
-          count: isDifferent('ems_metrics_collector_worker.defaults.count'),
+          defaults: {
+            memory_threshold: toRubyMethod(isDifferent('ems_metrics_collector_worker.defaults.memory_threshold')),
+            count: isDifferent('ems_metrics_collector_worker.defaults.count'),
+          },
         },
         ems_refresh_worker: {
-          memory_threshold: toRubyMethod(isDifferent('ems_refresh_worker.defaults.memory_threshold')),
+          defaults: {
+            memory_threshold: toRubyMethod(isDifferent('ems_refresh_worker.defaults.memory_threshold')),
+          },
         },
         reporting_worker: {
           memory_threshold: toRubyMethod(isDifferent('reporting_worker.memory_threshold')),
