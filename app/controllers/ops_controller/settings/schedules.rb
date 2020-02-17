@@ -386,7 +386,6 @@ module OpsController::Settings::Schedules
 
   def determine_filter_type_and_value(schedule)
     if schedule.sched_action && schedule.sched_action[:method] && !schedule_db_backup_or_automate(schedule)
-      !%w[db_backup automation_request].include?(schedule.sched_action[:method])
       if schedule.miq_search # See if a search filter is attached
         filter_type = schedule.miq_search.search_type == "user" ? "my" : "global"
         filter_value = schedule.miq_search.id
