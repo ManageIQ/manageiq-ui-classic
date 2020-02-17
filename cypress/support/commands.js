@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+// cy.login() - log in
 // FIXME: use cy.request and inject cookie and localStorage.miqToken
 Cypress.Commands.add("login", (user = 'admin', password = 'smartvm') => {
   cy.visit('/');
@@ -35,8 +36,7 @@ Cypress.Commands.add("login", (user = 'admin', password = 'smartvm') => {
 
 // cy.menu('Compute', 'Infrastructure', 'VMs') - navigate the main menu
 Cypress.Commands.add("menu", (...items) => {
-  expect(items.length > 0).to.equal(true);
-  expect(items.length < 4).to.equal(true);
+  expect(items.length).to.be.within(1, 3);
 
   const selectors = [
     '#main-menu',
@@ -44,23 +44,26 @@ Cypress.Commands.add("menu", (...items) => {
     '.nav-pf-tertiary-nav',
   ];
 
-  let ret = cy;
+  let ret = cy.get(`${selectors[0]} > ul > li`)
+    .contains('a', items[0])
+    .parent();
 
   items.forEach((item, index) => {
-    if (index > 0) {
-      ret = ret.trigger('mouseover');
+    if (index === 0) {
+      return;
     }
 
-    ret = ret
-      .get(`${selectors[index]} > ul > li`)
-      .contains('a', item);
+    ret = ret.trigger('mouseover')
+      .find(`${selectors[index]} > ul > li`)
+      .contains('a', item)
+      .parent();
   });
 
   return ret.click();
   // TODO support by id: cy.get('li[id=menu_item_provider_foreman]').click({ force: true });
 });
 
-// returns an array of top level menu items with {title, href, items (array of children), selector, click() method}
+// cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children), selector, click() method}
 Cypress.Commands.add("menuItems", () => {
   const children = (parent, parentSelector, level, ...selectors) => {
     if (! parent)
