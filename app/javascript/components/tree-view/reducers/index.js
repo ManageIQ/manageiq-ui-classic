@@ -1,6 +1,12 @@
 import Tree, { ActionTypes } from '@manageiq/react-ui-components/dist/wooden-tree';
+import { checkAll } from './others';
 
-export const ACTIONS = { ...ActionTypes, EMPTY_TREE: 'WOODEN_TREE_EMPTY' };
+
+export const ACTIONS = {
+  ...ActionTypes,
+  EMPTY_TREE: 'tree.empty',
+  CHECK_ALL: 'tree.checkAll',
+};
 
 const reducers = (oncheck, onclick) => (state = {}, action) => {
   const node = action.nodeId !== undefined ? Tree.nodeSelector(state, action.nodeId) : undefined;
@@ -13,6 +19,7 @@ const reducers = (oncheck, onclick) => (state = {}, action) => {
       window[onclick](node.attr.key);
       return state;
     case ACTIONS.EMPTY_TREE: return {};
+    case ACTIONS.CHECK_ALL: return checkAll(state, action.value);
     default: return state;
   }
 };

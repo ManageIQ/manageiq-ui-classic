@@ -68,6 +68,6 @@ describe('Tree View component', () => {
 
   it('should mount to the correct redux store', () => {
     mount(<HierarchicalTreeView {...props} />);
-    expect(ManageIQ.redux.store.getState().tree_object_tree).toBeTruthy();
+    expect(ManageIQ.redux.store.getState().object_tree).toBeTruthy();
   });
 });

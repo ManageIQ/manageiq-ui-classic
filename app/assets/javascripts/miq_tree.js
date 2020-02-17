@@ -1,5 +1,11 @@
 /* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetToolbarCount miqSparkle */
 
+
+function isReduxTree(treeName) {
+  var store = ManageIQ.redux.store.getState();
+  return store.hasOwnProperty(treeName);
+}
+
 function miqTreeObject(tree) {
   var obj;
   try {
@@ -62,20 +68,32 @@ function miqTreeSelect(key) {
 // Activate and focus on a node within a tree given the node's key
 function miqTreeActivateNode(tree, key) {
   miqSparkle(true);
-  var node = miqTreeFindNodeByKey(tree, key);
-  if (node) {
-    miqTreeObject(tree).selectNode(node);
-    miqTreeScrollToNode(tree, key);
+  if (isReduxTree(tree)) {
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/expandNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/scrollToNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(tree, key);
+    if (node) {
+      miqTreeObject(tree).selectNode(node);
+      miqTreeScrollToNode(tree, key);
+    }
   }
 }
 
 // Activate silently (no onActivate event) and focus on a node within a tree given the node's key
 function miqTreeActivateNodeSilently(tree, key) {
-  var node = miqTreeFindNodeByKey(tree, key);
-  if (node) {
-    miqTreeObject(tree).selectNode(node, {silent: true });
-    miqTreeObject(tree).expandNode(node);
-    miqTreeScrollToNode(tree, key);
+  if (isReduxTree(tree)) {
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNodeSilent', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/expandNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/scrollToNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(tree, key);
+    if (node) {
+      miqTreeObject(tree).selectNode(node, {silent: true });
+      miqTreeObject(tree).expandNode(node);
+      miqTreeScrollToNode(tree, key);
+    }
   }
 }
 
@@ -120,7 +138,11 @@ function miqDeleteTreeCookies(tree_prefix) {
 
 // toggle expand/collapse all nodes in tree
 function miqTreeToggleExpand(treename, expand_mode) {
-  expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
+  if (isReduxTree(treename)) {
+    ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandAll', value: expand_mode});
+  } else {
+    expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
+  }
 }
 
 /**
@@ -167,18 +189,20 @@ function miqOnCheckTenantTree(node) {
   })
 }
 
-function miqCheckAll(cb, treename) {
-  var tree = miqTreeObject(treename);
+function miqCheckAll(cb, treeName) {
   // Set the checkboxes according to the master checkbox
-  if (cb.checked) {
-    tree.checkAll({silent: true});
-  } else {
-    tree.uncheckAll({silent: true});
-  }
+  ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});
+
   // Map the selected nodes into an array of keys
-  var selectedKeys = tree.getChecked().map(function(item) {
-    return encodeURIComponent(item.key);
-  });
+  var selectedKeys = [];
+  var tree = ManageIQ.redux.store.getState()[treeName];
+
+  for (var property in tree) {
+    if (tree.hasOwnProperty(property) && property !== '') {
+      selectedKeys.push(encodeURIComponent(tree[property].attr.key));
+    }
+  }
+
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
@@ -242,8 +266,12 @@ function miqOnClickIncludeDomainPrefix() {
 }
 
 function miqTreeExpandNode(treename, key) {
-  var node = miqTreeFindNodeByKey(treename, key);
-  miqTreeObject(treename).expandNode(node);
+  if (isReduxTree(treename)) {
+    ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(treename, key);
+    miqTreeObject(treename).expandNode(node);
+  }
 }
 
 function miqTreeExpandRecursive(treeId, fullNodeId) {
@@ -369,7 +397,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckGenealogy', // Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
     'miqOnCheckGeneric',
     'miqOnCheckSections', // Compute -> Infra -> VMs -> Compare VM's
-    'miqOnCheckTenantTree', // Still angular component
+    'miqOnCheckTenantTree', // Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
     'miqOnClickAutomate', // Automate -> Expoler -> Select a class -> Copy -> Uncheck Copy to same path -> Namespace selection uses thath tree
     'miqOnClickAutomateCatalog', // Services -> Catalogs -> Catalog Items -> add a new item -> select Generic -> three entry point fields open it.
     'miqOnClickDiagnostics', // Settings -> Diagnostics -> Roles By servers tab
