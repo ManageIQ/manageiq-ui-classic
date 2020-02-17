@@ -13,6 +13,7 @@ module OpsController::Settings::Common
   def settings_form_field_changed
     settings_get_form_vars
     return unless @edit
+
     @assigned_filters = []
     case @sb[:active_tab] # Server, DB edit forms
     when 'settings_server', 'settings_authentication',
@@ -181,7 +182,7 @@ module OpsController::Settings::Common
     case params[:replication_type]
     when "global"
       subscriptions_to_save, subsciptions_to_remove = prepare_subscriptions_for_saving
-      task_opts  = {:action => "Save subscriptions for global region", :userid => session[:userid]}
+      task_opts = {:action => "Save subscriptions for global region", :userid => session[:userid]}
       queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
                     :args       => [subscriptions_to_save, subsciptions_to_remove]}
     when "remote"
@@ -216,13 +217,14 @@ module OpsController::Settings::Common
   def update_server_name(server)
     return unless @sb[:active_tab] == 'settings_server'
     return if @edit[:new][:server][:name] == server.name # appliance name was modified
+
     begin
       server.name = @edit[:new][:server][:name]
       server.save!
     rescue => bang
       add_flash(_("Error when saving new server name: %{message}") % {:message => bang.message}, :error)
       javascript_flash
-      return
+      nil
     end
   end
 
@@ -304,6 +306,7 @@ module OpsController::Settings::Common
   def settings_update_ldap_verify
     settings_get_form_vars
     return unless @edit
+
     server_config = MiqServer.find(@sb[:selected_server_id]).settings
     server_config.each_key do |category|
       server_config[category] = @edit[:new][category].dup
@@ -324,6 +327,7 @@ module OpsController::Settings::Common
   def settings_update_amazon_verify
     settings_get_form_vars
     return unless @edit
+
     server_config = MiqServer.find(@sb[:selected_server_id]).settings
     server_config.each_key do |category|
       server_config[category] = @edit[:new][category].dup
@@ -343,6 +347,7 @@ module OpsController::Settings::Common
   def settings_update_email_verify
     settings_get_form_vars
     return unless @edit
+
     begin
       GenericMailer.test_email(@sb[:new_to], @edit[:new][:smtp]).deliver
     rescue Exception => err
@@ -366,6 +371,7 @@ module OpsController::Settings::Common
   def settings_update_save
     settings_get_form_vars
     return unless @edit
+
     case @sb[:active_tab]
     when 'settings_rhn_edit'
       if rhn_allow_save?
@@ -383,10 +389,10 @@ module OpsController::Settings::Common
         render_flash
         return
       end
-      @edit[:new][:authentication][:ldaphost].reject!(&:blank?) if @edit[:new][:authentication][:ldaphost]
+      @edit[:new][:authentication][:ldaphost]&.reject!(&:blank?)
       @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
-      if !update_server_zone(server)
+      unless update_server_zone(server)
         server.errors.full_messages.each { |message| add_flash(message, :error) }
         render_flash
         return
@@ -447,7 +453,7 @@ module OpsController::Settings::Common
         elsif @sb[:active_tab] == "settings_custom_logos"
           flash_to_session
           javascript_redirect(:action => 'explorer', :escape => false) # redirect to build the server screen
-          return
+          nil
         else
           replace_right_cell(:nodetype => @nodetype)
         end
@@ -542,6 +548,7 @@ module OpsController::Settings::Common
 
   def settings_server_validate
     return unless @sb[:active_tab] == "settings_server" && @edit[:new][:server]
+
     if @edit[:new][:server][:name].blank?
       add_flash(_("Appliance name must be entered."), :error)
     end
@@ -594,6 +601,7 @@ module OpsController::Settings::Common
     servers = @edit[:current][:servers] = {}
     @selected_zone.miq_servers.each do |server|
       next unless server.is_a_proxy?
+
       servers[server.id] = {
         :hosts    => Set.new(server.vm_scan_host_affinity.collect(&:id)),
         :storages => Set.new(server.vm_scan_storage_affinity.collect(&:id))
@@ -630,6 +638,7 @@ module OpsController::Settings::Common
   def settings_get_form_vars
     settings_load_edit
     return unless @edit
+
     @in_a_form = true
     nodes = x_node.downcase.split("-")
     cls = nodes.first.split('__').last == "z" ? Zone : MiqServer
@@ -813,6 +822,7 @@ module OpsController::Settings::Common
     [1, 2, 3].each do |field_num|
       field = "ntp_server_#{field_num}"
       next unless params.key?(field)
+
       @edit[:new][:ntp][field] = params[field]
       # remove unnecessary key from @edit[:new][:ntp] if there is no change
       @edit[:new][:ntp].except!(field) if params[field] == @edit[:new][:ntp][:server][field_num - 1]
@@ -824,6 +834,7 @@ module OpsController::Settings::Common
     if selected?(x_node, "z") && @sb[:active_tab] != "settings_advanced"
       # if zone node is selected
       return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_zone_id]}", "replace_cell__explorer")
+
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif @sb[:active_tab] == 'settings_rhn_edit'
       return unless load_edit("#{@sb[:active_tab]}__#{params[:id]}", "replace_cell__explorer")
@@ -918,23 +929,21 @@ module OpsController::Settings::Common
   end
 
   def settings_set_form_vars
-    if x_node.split("-").first == "z"
-      @right_cell_text = if my_zone_name == @selected_zone.name
+    @right_cell_text = if x_node.split("-").first == "z"
+                         if my_zone_name == @selected_zone.name
                            _("Settings %{model} \"%{name}\" (current)") % {:name  => @selected_zone.description,
                                                                            :model => ui_lookup(:model => @selected_zone.class.to_s)}
                          else
                            _("Settings %{model} \"%{name}\"") % {:name  => @selected_zone.description,
                                                                  :model => ui_lookup(:model => @selected_zone.class.to_s)}
                          end
-    else
-      @right_cell_text = if my_server.id == @sb[:selected_server_id]
-                           _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                                                           :model => ui_lookup(:model => @selected_server.class.to_s)}
-                         else
-                           _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
-                                                                 :model => ui_lookup(:model => @selected_server.class.to_s)}
-                         end
-    end
+                       elsif my_server.id == @sb[:selected_server_id]
+                         _("Settings %{model} \"%{name}\" (current)") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                                         :model => ui_lookup(:model => @selected_server.class.to_s)}
+                       else
+                         _("Settings %{model} \"%{name}\"") % {:name  => "#{@selected_server.name} [#{@selected_server.id}]",
+                                                               :model => ui_lookup(:model => @selected_server.class.to_s)}
+                       end
     case @sb[:active_tab]
     when 'settings_server' # Server Settings tab
       settings_set_form_vars_server
