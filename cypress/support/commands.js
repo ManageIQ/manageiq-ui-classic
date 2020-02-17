@@ -146,13 +146,13 @@ Cypress.Commands.add('toolbar', (...items) => {
     // by-id: #id on button instead of .contains
 
   ret = ret.then((el) => {
-    // FIXME: better message
-    expect(!!el.prop('disabled')).to.be.false;
+    assert.equal(!!el.prop('disabled'), false, "Parent toolbar button disabled");
     return el;
   });
 
   if (items[1]) {
     ret.click();
+
     // a doesn't react to click here, have to click the span
     ret = ret.siblings('.dropdown-menu')
       .find('a > span')
@@ -161,8 +161,7 @@ Cypress.Commands.add('toolbar', (...items) => {
       // by-id: #id on the same span
 
     ret = ret.then((el) => {
-      // FIXME: better message
-      expect(el.parents('li').hasClass('disabled')).to.be.false;
+      assert.equal(el.parents('li').hasClass('disabled'), false, "Child toolbar button disabled");
       return el;
     });
   }
