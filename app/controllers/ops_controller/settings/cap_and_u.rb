@@ -3,6 +3,7 @@ module OpsController::Settings::CapAndU
 
   def cu_collection_update
     return unless load_edit("cu_edit__collection", "replace_cell__explorer")
+
     if params[:button] == "save"
       # C & U collection settings
       if @edit[:new][:all_clusters] != @edit[:current][:all_clusters]
@@ -60,6 +61,7 @@ module OpsController::Settings::CapAndU
 
   def cu_collection_field_changed
     return unless load_edit("cu_edit__collection", "replace_cell__explorer")
+
     cu_collection_get_form_vars
     @changed = (@edit[:new] != @edit[:current]) # UI edit form, C&U collection form
     # C&U tab
@@ -208,6 +210,7 @@ module OpsController::Settings::CapAndU
           end
         end
         next unless node_type[0] == "Host"
+
         flg = true
         count = 0
         @edit[:new][c[:id]].each do |h|
