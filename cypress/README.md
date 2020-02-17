@@ -36,7 +36,6 @@ ManageIQ implements the following cypress extensions:
 * `cy.accordion('Service Dialogs')` - expand accordion
 * TODO `cy.treeSelect('All VMs & Templates', 'HyperV', 'SCVMM')` - switch tree items
 * `cy.toolbar('Configuration', 'Edit this VM')` - trigger toolbar buttons
-* TODO `cy.gtlClick('RHEL72_1')` - trigger gtl items
 * TODO `cy.tab('Report Info')` - switch miq tabs
 
 TODO allow using {id:...} instead of string label for menu items, gtl items, tree nodes, accordions, toolbar items
@@ -51,3 +50,15 @@ TODO allow using {id:...} instead of string label for menu items, gtl items, tre
 * `cy.expect_explorer_title('Active Services')` - check the title on an explorer screen
 * `cy.expect_show_list_title('Cloud Providers')` - check the title on a show\_list screen
 * TODO `cy.expect_layout('miq-layout-center_div_with_listnav')` - check current layout
+
+#### GTL
+
+* `cy.gtl()` - return GTL
+* `cy.gtl_error` - check that error message is present
+* `cy.gtl_no_record` - check that `No data` message is present
+* `cy.gtl_click('Name')` - click on a GTL
+
+#### searchbox
+
+* `cy.search_box()` - check that searchbox is present 
+* `cy.no_search_box()` - check that searchbox is not present

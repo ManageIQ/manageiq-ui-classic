@@ -190,11 +190,11 @@ Cypress.Commands.add("gtl_no_record", () => {
 });
 
 Cypress.Commands.add("gtl_grid_click", (name) => {
-  return cy.get('div.miq-tile-head > a').contains(name).click();
+  return cy.get('div[pf-card-view] > .card-view-pf > .card').contains(name).click();
 });
 
 Cypress.Commands.add("gtl_tile_click", (name) => {
-  return cy.get('div.card-content > div > div > ng-switch-when > a').contains(name).click();
+  return cy.get('div[pf-card-view] > .card-view-pf > .card').contains(name).click();
 });
 
 Cypress.Commands.add("gtl_list_click", (name) => {
@@ -202,13 +202,26 @@ Cypress.Commands.add("gtl_list_click", (name) => {
 });
 
 Cypress.Commands.add("gtl_click", (name) => {
-  return cy.get('span[class="ng-binding ng-scope"]').contains(name).click();
+  cy.get('#miq-gtl-view').then($gtlTile => {
+    if ($gtlTile.find("miq-tile-view").length > 0) {
+      return cy.get('div[pf-card-view] > .card-view-pf > .card').contains(name).click();
+    }  else {
+      return cy.get('#miq-gtl-view > miq-data-table > div > table').contains(name).click();
+    };
+  });
 });
 
 Cypress.Commands.add("gtl", () => {
-  return cy.get('[ng-controller="reportDataController as dataCtrl"]').find('div.no-record').should('not.exist');
+  cy.get('#miq-gtl-view').then($gtlTile => {
+    if ($gtlTile.find("miq-tile-view").length > 0) {
+      return cy.get("div[pf-card-view] > .card-view-pf > .card");
+    }  else {
+      return cy.get('#miq-gtl-view > miq-data-table > div > table');
+    };
+  });
 });
 
+// Searchbox related helpers
 Cypress.Commands.add("search_box", () => {
   return cy.get('#search_text').should('be.visible');
 });
