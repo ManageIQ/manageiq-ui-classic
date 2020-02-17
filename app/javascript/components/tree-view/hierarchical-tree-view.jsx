@@ -1,14 +1,14 @@
-/* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check"]}] */
+/* eslint camelcase: ["warn", {allow: ["bs_tree", "tree_name", "click_url", "check_url", "allow_reselect", "hierarchical_check", "silent_activate", "select_node"]}] */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Tree, {
   Node,
-  defaultStore,
 } from '@manageiq/react-ui-components/dist/wooden-tree';
 import { http } from '../../http_api';
 import { combineReducers } from '../../helpers/redux';
 import reducers, { ACTIONS } from './reducers/index';
+import basicStore from './reducers/basicStore';
 import './style.scss';
 
 const flatten = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(data));
@@ -49,6 +49,23 @@ const convert = tree => tree.map((n) => {
   return node;
 });
 
+/**
+ * Helper
+ * Activates the first active node in the tree, which is passed trought the props.
+ *
+ * FIXME Delete this function when bakcend is sending data where the initial node is activated,
+ * or when all the trees calling a reducer if they want to have an activated node at the start.
+ */
+const activateNode = (tree, doActivate, key) => {
+  if (!doActivate) {
+    return tree;
+  }
+
+  let node = Tree.nodeSelector(tree, Tree.nodeSearch(tree, null, 'key', key)[0]);
+  node = { ...node, state: { ...node.state, selected: true } };
+  return { ...tree, [node.nodeId]: node };
+};
+
 const HierarchicalTreeView = (props) => {
   const {
     tree_name,
@@ -61,12 +78,13 @@ const HierarchicalTreeView = (props) => {
     allow_reselect,
     hierarchical_check,
     callBack,
+    silent_activate,
+    select_node,
   } = props;
 
   const namespace = tree_name;
   const ConnectedNode = connect((store, ownProps) => ({ ...store[namespace][ownProps.nodeId] }))(Node);
   const ReduxTree = connect(store => ({ data: { ...store[namespace] } }))(Tree);
-
 
   /**
    * After the component mounts adds a tree specific reducer to the store
@@ -78,7 +96,7 @@ const HierarchicalTreeView = (props) => {
 
     ManageIQ.redux.addReducer({
       [namespace]: combineReducers([
-        defaultStore,
+        basicStore,
         reducers(oncheck, onclick),
       ], namespace),
     });
@@ -90,10 +108,10 @@ const HierarchicalTreeView = (props) => {
    */
   useEffect(() => {
     // FIXME - When the conversion wont be needed hopefuly in the future
-    const tree = convert(JSON.parse(bs_tree));
+    const tree = activateNode(flatten(convert(JSON.parse(bs_tree))), silent_activate, select_node);
 
     callBack(null, ACTIONS.EMPTY_TREE, null, namespace);
-    callBack(null, ACTIONS.ADD_NODES, flatten(tree), namespace);
+    callBack(null, ACTIONS.ADD_NODES, tree, namespace);
   }, [bs_tree]);
 
   const onDataChange = commands => commands.forEach(command => callBack(command.nodeId, `@@tree/${command.type}`, command.value, namespace));

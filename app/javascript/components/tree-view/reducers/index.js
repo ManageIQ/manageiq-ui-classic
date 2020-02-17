@@ -1,11 +1,28 @@
 import Tree, { ActionTypes } from '@manageiq/react-ui-components/dist/wooden-tree';
-import { checkAll } from './others';
+import {
+  checkAll,
+  select,
+  scrollToNode,
+  expand,
+} from './others';
+
+const actionsPrefix = (prefix) => {
+  const newObject = {};
+  Object.entries(ActionTypes).forEach(([key, obj]) => {
+    newObject[key] = prefix + obj;
+  });
+  return newObject;
+};
 
 
 export const ACTIONS = {
-  ...ActionTypes,
-  EMPTY_TREE: 'tree.empty',
-  CHECK_ALL: 'tree.checkAll',
+  ...actionsPrefix('@@tree/'),
+  EMPTY_TREE: '@@tree/clearNodes',
+  CHECK_ALL: '@@tree/checkAll',
+  SELECT: '@@tree/selectNode',
+  SELECT_SILENT: '@@tree/selectNodeSilent',
+  SCROLL_TO_NODE: '@@tree/scrollToNode',
+  EXPAND: '@@tree/expandNode',
 };
 
 const reducers = (oncheck, onclick) => (state = {}, action) => {
@@ -20,6 +37,12 @@ const reducers = (oncheck, onclick) => (state = {}, action) => {
       return state;
     case ACTIONS.EMPTY_TREE: return {};
     case ACTIONS.CHECK_ALL: return checkAll(state, action.value);
+    case ACTIONS.SELECT:
+      window[onclick](action.key);
+      return select(state, action);
+    case ACTIONS.SELECT_SILENT: return select(state, action);
+    case ACTIONS.SCROLL_TO_NODE: return scrollToNode(state, action);
+    case ACTIONS.EXPAND: return expand(state, action);
     default: return state;
   }
 };
