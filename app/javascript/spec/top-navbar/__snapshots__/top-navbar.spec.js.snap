@@ -104,42 +104,37 @@ exports[`Top navbar tests should render correctly 1`] = `
         className="dropdown brand-white-label whitelabeled"
       />
     </CustomLogo>
-    <Connect(Notifications)>
-      <Notifications
-        dispatch={[Function]}
-        unreadCount={8}
+    <Notifications>
+      <li
+        className="dropdown"
       >
-        <li
-          className="dropdown"
+        <a
+          className="nav-item-iconic drawer-pf-trigger-icon"
+          id="notifications-btn"
+          onClick={[Function]}
+          title="1 unread notifications"
         >
-          <a
-            className="nav-item-iconic drawer-pf-trigger-icon"
-            id="notifications-btn"
-            onClick={[Function]}
-            title="8 unread notifications"
+          <Icon
+            name="bell"
+            type="fa"
           >
-            <Icon
+            <FontAwesome
               name="bell"
-              type="fa"
             >
-              <FontAwesome
-                name="bell"
-              >
-                <span
-                  aria-hidden={true}
-                  className="fa fa-bell"
-                />
-              </FontAwesome>
-            </Icon>
-            <span
-              className="badge badge-pf-bordered"
-            >
-               
-            </span>
-          </a>
-        </li>
-      </Notifications>
-    </Connect(Notifications)>
+              <span
+                aria-hidden={true}
+                className="fa fa-bell"
+              />
+            </FontAwesome>
+          </Icon>
+          <span
+            className="badge badge-pf-bordered"
+          >
+             
+          </span>
+        </a>
+      </li>
+    </Notifications>
     <Help
       helpMenu={
         Array [

@@ -1,21 +1,54 @@
-.toast-notifications-list-pf {
-  top: 65px;
+.footer-button-left {
+  text-align: right;
+  margin: 10px;
+  border: none;
 }
 
-.drawer-pf-action.footer-actions {
-  width: 100%;
+.footer-button-right {
+  text-align: left;
+  margin: 10px;
+  border: none;
+}
 
-  .footer-button-left {
-    display: inline-block;
-    width: calc(50% - 25px);
-    text-align: right;
-    margin: 0 10px;
+.drawer-pf {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  .panel-group {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    .panel.panel-default {
+      &.expanded {
+        min-height: 175px;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        overflow-y: hidden;
+      }
+      .panel-collapse {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0px;
+        .panel-body {
+          padding: 0;
+          flex: 1 1 auto;
+          overflow-y: auto;
+        }
+      }
+    }
   }
+}
 
-  .footer-button-right {
-    display: inline-block;
-    width: calc(50% - 35px);
-    text-align: left;
-    margin: 0 10px;
+.drawer-pf-notification {
+  .dropdown-menu-right.dropdown-menu {
+    li.disabled {
+      cursor: not-allowed;
+      * {
+        pointer-events: none;
+      }
+    }
   }
 }

@@ -1,0 +1,879 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification drawer tests should render correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <NotificationDrawer>
+    <div
+      id="miq-notifications-drawer-container"
+    >
+      <NotificationDrawer
+        className=""
+        expanded={false}
+        hide={false}
+      >
+        <div
+          className="drawer-pf drawer-alt-pf drawer-pf-notifications"
+        >
+          <NotificationDrawerTitle
+            className=""
+            expandable={true}
+            onCloseClick={[Function]}
+            onExpandClick={[Function]}
+            title="Notifications"
+          >
+            <div
+              className="drawer-pf-title"
+            >
+              <a
+                className="drawer-pf-toggle-expand"
+                onClick={[Function]}
+              />
+              <a
+                className="drawer-pf-close"
+                onClick={[Function]}
+              >
+                <Icon
+                  name="close"
+                  type="fa"
+                >
+                  <FontAwesome
+                    name="close"
+                  >
+                    <span
+                      aria-hidden={true}
+                      className="fa fa-close"
+                    />
+                  </FontAwesome>
+                </Icon>
+              </a>
+              <h3
+                className="text-center"
+              >
+                Notifications
+              </h3>
+            </div>
+          </NotificationDrawerTitle>
+          <NotificationDrawerAccordion
+            className=""
+          >
+            <div
+              className="panel-group"
+              id="notification-drawer-accordion"
+            >
+              <NotificationDrawerPanel
+                className=""
+                expanded={true}
+              >
+                <div
+                  className="panel panel-default expanded"
+                >
+                  <NotificationDrawerPanelHeading
+                    className=""
+                  >
+                    <div
+                      className="panel-heading"
+                    >
+                      <NotificationDrawerPanelTitle
+                        className=""
+                      >
+                        <h4
+                          className="panel-title"
+                        >
+                          <a
+                            className=""
+                            id="eventsExpander"
+                            onClick={[Function]}
+                          >
+                            Events
+                          </a>
+                        </h4>
+                      </NotificationDrawerPanelTitle>
+                      <NotificationDrawerPanelCounter
+                        className=""
+                        text="2 New"
+                      >
+                        <span
+                          className="panel-counter"
+                        >
+                          2 New
+                        </span>
+                      </NotificationDrawerPanelCounter>
+                    </div>
+                  </NotificationDrawerPanelHeading>
+                  <NotificationDrawerPanelCollapse
+                    className=""
+                    collapseIn={false}
+                  >
+                    <div
+                      className="panel-collapse"
+                    >
+                      <NotificationDrawerPanelBody
+                        className=""
+                        maxHeight={null}
+                      >
+                        <div
+                          className="panel-body"
+                          style={
+                            Object {
+                              "maxHeight": null,
+                            }
+                          }
+                        >
+                          <Notification
+                            className=""
+                            key="10000000003625"
+                            seen={false}
+                            type="notification"
+                          >
+                            <div
+                              className="drawer-pf-notification unread"
+                            >
+                              <NotificationDrawerDropDown
+                                className=""
+                                id="dropdownKebabRight 10000000003625"
+                                pullRight={true}
+                              >
+                                <ForwardRef
+                                  className="dropdown pull-right dropdown-kebab-pf"
+                                  id="dropdownKebabRight 10000000003625"
+                                >
+                                  <Uncontrolled(Dropdown)
+                                    className="dropdown pull-right dropdown-kebab-pf"
+                                    id="dropdownKebabRight 10000000003625"
+                                    innerRef={null}
+                                  >
+                                    <Dropdown
+                                      bsClass="dropdown"
+                                      className="dropdown pull-right dropdown-kebab-pf"
+                                      componentClass={[Function]}
+                                      id="dropdownKebabRight 10000000003625"
+                                      onToggle={[Function]}
+                                    >
+                                      <ButtonGroup
+                                        block={false}
+                                        bsClass="btn-group"
+                                        className="dropdown pull-right dropdown-kebab-pf dropdown"
+                                        justified={false}
+                                        vertical={false}
+                                      >
+                                        <div
+                                          className="dropdown pull-right dropdown-kebab-pf dropdown btn-group"
+                                        >
+                                          <DropdownToggle
+                                            bsClass="dropdown-toggle"
+                                            bsRole="toggle"
+                                            bsStyle="link"
+                                            id="dropdownKebabRight 10000000003625"
+                                            key=".0"
+                                            noCaret={true}
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            open={false}
+                                            useAnchor={false}
+                                          >
+                                            <Button
+                                              active={false}
+                                              aria-expanded={false}
+                                              aria-haspopup={true}
+                                              block={false}
+                                              bsClass="btn"
+                                              bsStyle="link"
+                                              className="dropdown-toggle"
+                                              disabled={false}
+                                              id="dropdownKebabRight 10000000003625"
+                                              onClick={[Function]}
+                                              onKeyDown={[Function]}
+                                              role="button"
+                                            >
+                                              <button
+                                                aria-expanded={false}
+                                                aria-haspopup={true}
+                                                className="dropdown-toggle btn btn-link"
+                                                disabled={false}
+                                                id="dropdownKebabRight 10000000003625"
+                                                onClick={[Function]}
+                                                onKeyDown={[Function]}
+                                                role="button"
+                                                type="button"
+                                              >
+                                                <Icon
+                                                  name="ellipsis-v"
+                                                  type="fa"
+                                                >
+                                                  <FontAwesome
+                                                    name="ellipsis-v"
+                                                  >
+                                                    <span
+                                                      aria-hidden={true}
+                                                      className="fa fa-ellipsis-v"
+                                                    />
+                                                  </FontAwesome>
+                                                </Icon>
+                                              </button>
+                                            </Button>
+                                          </DropdownToggle>
+                                          <DropdownMenu
+                                            bsClass="dropdown-menu"
+                                            bsRole="menu"
+                                            className="dropdown-menu-right"
+                                            key=".1"
+                                            labelledBy="dropdownKebabRight 10000000003625"
+                                            onClose={[Function]}
+                                            onSelect={[Function]}
+                                            pullRight={false}
+                                          >
+                                            <RootCloseWrapper
+                                              disabled={true}
+                                              event="click"
+                                              onRootClose={[Function]}
+                                            >
+                                              <ul
+                                                aria-labelledby="dropdownKebabRight 10000000003625"
+                                                className="dropdown-menu-right dropdown-menu"
+                                                role="menu"
+                                              >
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={false}
+                                                  eventKey="1"
+                                                  header={false}
+                                                  key=".0"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className=""
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        View details
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={true}
+                                                  header={false}
+                                                  key=".1"
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className="divider"
+                                                    onKeyDown={[Function]}
+                                                    role="separator"
+                                                  />
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={false}
+                                                  eventKey="2"
+                                                  header={false}
+                                                  id="dropdownMarkRead-10000000003625"
+                                                  key=".2"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className=""
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      id="dropdownMarkRead-10000000003625"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        id="dropdownMarkRead-10000000003625"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        Mark as read
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={false}
+                                                  eventKey="3"
+                                                  header={false}
+                                                  id="dropdownRemove-10000000003625"
+                                                  key=".3"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className=""
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      id="dropdownRemove-10000000003625"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        id="dropdownRemove-10000000003625"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        Remove
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                              </ul>
+                                            </RootCloseWrapper>
+                                          </DropdownMenu>
+                                        </div>
+                                      </ButtonGroup>
+                                    </Dropdown>
+                                  </Uncontrolled(Dropdown)>
+                                </ForwardRef>
+                              </NotificationDrawerDropDown>
+                              <Icon
+                                className="pull-left"
+                                name="error-circle-o"
+                                onClick={[Function]}
+                                type="pf"
+                              >
+                                <PatternflyIcon
+                                  className="pull-left"
+                                  name="error-circle-o"
+                                  onClick={[Function]}
+                                >
+                                  <span
+                                    aria-hidden="true"
+                                    className="pficon pficon-error-circle-o pull-left"
+                                    onClick={[Function]}
+                                  />
+                                </PatternflyIcon>
+                              </Icon>
+                              <NotificationContent
+                                className=""
+                              >
+                                <div
+                                  className="drawer-pf-notification-content"
+                                >
+                                  <NotificationMessage
+                                    className=""
+                                    onClick={[Function]}
+                                    title="Plan has completed with errors"
+                                  >
+                                    <span
+                                      className="drawer-pf-notification-message"
+                                      onClick={[Function]}
+                                      title="Plan has completed with errors"
+                                    >
+                                      Plan has completed with errors
+                                    </span>
+                                  </NotificationMessage>
+                                  <NotificationInfo
+                                    className=""
+                                    leftText="Invalid date"
+                                    rightText="Invalid date"
+                                  >
+                                    <div
+                                      className="drawer-pf-notification-info"
+                                    >
+                                      <NotificationInfoLeft
+                                        text="Invalid date"
+                                      >
+                                        <span
+                                          className="date"
+                                        >
+                                          Invalid date
+                                        </span>
+                                      </NotificationInfoLeft>
+                                      <NotificationInfoRight
+                                        text="Invalid date"
+                                      >
+                                        <span
+                                          className="time"
+                                        >
+                                          Invalid date
+                                        </span>
+                                      </NotificationInfoRight>
+                                    </div>
+                                  </NotificationInfo>
+                                </div>
+                              </NotificationContent>
+                            </div>
+                          </Notification>
+                          <Notification
+                            className=""
+                            key="10000000003624"
+                            seen={false}
+                            type="notification"
+                          >
+                            <div
+                              className="drawer-pf-notification unread"
+                            >
+                              <NotificationDrawerDropDown
+                                className=""
+                                id="dropdownKebabRight 10000000003624"
+                                pullRight={true}
+                              >
+                                <ForwardRef
+                                  className="dropdown pull-right dropdown-kebab-pf"
+                                  id="dropdownKebabRight 10000000003624"
+                                >
+                                  <Uncontrolled(Dropdown)
+                                    className="dropdown pull-right dropdown-kebab-pf"
+                                    id="dropdownKebabRight 10000000003624"
+                                    innerRef={null}
+                                  >
+                                    <Dropdown
+                                      bsClass="dropdown"
+                                      className="dropdown pull-right dropdown-kebab-pf"
+                                      componentClass={[Function]}
+                                      id="dropdownKebabRight 10000000003624"
+                                      onToggle={[Function]}
+                                    >
+                                      <ButtonGroup
+                                        block={false}
+                                        bsClass="btn-group"
+                                        className="dropdown pull-right dropdown-kebab-pf dropdown"
+                                        justified={false}
+                                        vertical={false}
+                                      >
+                                        <div
+                                          className="dropdown pull-right dropdown-kebab-pf dropdown btn-group"
+                                        >
+                                          <DropdownToggle
+                                            bsClass="dropdown-toggle"
+                                            bsRole="toggle"
+                                            bsStyle="link"
+                                            id="dropdownKebabRight 10000000003624"
+                                            key=".0"
+                                            noCaret={true}
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            open={false}
+                                            useAnchor={false}
+                                          >
+                                            <Button
+                                              active={false}
+                                              aria-expanded={false}
+                                              aria-haspopup={true}
+                                              block={false}
+                                              bsClass="btn"
+                                              bsStyle="link"
+                                              className="dropdown-toggle"
+                                              disabled={false}
+                                              id="dropdownKebabRight 10000000003624"
+                                              onClick={[Function]}
+                                              onKeyDown={[Function]}
+                                              role="button"
+                                            >
+                                              <button
+                                                aria-expanded={false}
+                                                aria-haspopup={true}
+                                                className="dropdown-toggle btn btn-link"
+                                                disabled={false}
+                                                id="dropdownKebabRight 10000000003624"
+                                                onClick={[Function]}
+                                                onKeyDown={[Function]}
+                                                role="button"
+                                                type="button"
+                                              >
+                                                <Icon
+                                                  name="ellipsis-v"
+                                                  type="fa"
+                                                >
+                                                  <FontAwesome
+                                                    name="ellipsis-v"
+                                                  >
+                                                    <span
+                                                      aria-hidden={true}
+                                                      className="fa fa-ellipsis-v"
+                                                    />
+                                                  </FontAwesome>
+                                                </Icon>
+                                              </button>
+                                            </Button>
+                                          </DropdownToggle>
+                                          <DropdownMenu
+                                            bsClass="dropdown-menu"
+                                            bsRole="menu"
+                                            className="dropdown-menu-right"
+                                            key=".1"
+                                            labelledBy="dropdownKebabRight 10000000003624"
+                                            onClose={[Function]}
+                                            onSelect={[Function]}
+                                            pullRight={false}
+                                          >
+                                            <RootCloseWrapper
+                                              disabled={true}
+                                              event="click"
+                                              onRootClose={[Function]}
+                                            >
+                                              <ul
+                                                aria-labelledby="dropdownKebabRight 10000000003624"
+                                                className="dropdown-menu-right dropdown-menu"
+                                                role="menu"
+                                              >
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={true}
+                                                  divider={false}
+                                                  eventKey="1"
+                                                  header={false}
+                                                  key=".0"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className="disabled"
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        View details
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={true}
+                                                  header={false}
+                                                  key=".1"
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className="divider"
+                                                    onKeyDown={[Function]}
+                                                    role="separator"
+                                                  />
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={false}
+                                                  eventKey="2"
+                                                  header={false}
+                                                  id="dropdownMarkRead-10000000003624"
+                                                  key=".2"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className=""
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      id="dropdownMarkRead-10000000003624"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        id="dropdownMarkRead-10000000003624"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        Mark as read
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                                <MenuItem
+                                                  bsClass="dropdown"
+                                                  disabled={false}
+                                                  divider={false}
+                                                  eventKey="3"
+                                                  header={false}
+                                                  id="dropdownRemove-10000000003624"
+                                                  key=".3"
+                                                  onClick={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onSelect={[Function]}
+                                                >
+                                                  <li
+                                                    className=""
+                                                    role="presentation"
+                                                  >
+                                                    <SafeAnchor
+                                                      componentClass="a"
+                                                      id="dropdownRemove-10000000003624"
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      role="menuitem"
+                                                      tabIndex="-1"
+                                                    >
+                                                      <a
+                                                        href="#"
+                                                        id="dropdownRemove-10000000003624"
+                                                        onClick={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                      >
+                                                        Remove
+                                                      </a>
+                                                    </SafeAnchor>
+                                                  </li>
+                                                </MenuItem>
+                                              </ul>
+                                            </RootCloseWrapper>
+                                          </DropdownMenu>
+                                        </div>
+                                      </ButtonGroup>
+                                    </Dropdown>
+                                  </Uncontrolled(Dropdown)>
+                                </ForwardRef>
+                              </NotificationDrawerDropDown>
+                              <Icon
+                                className="pull-left"
+                                name="ok"
+                                onClick={[Function]}
+                                type="pf"
+                              >
+                                <PatternflyIcon
+                                  className="pull-left"
+                                  name="ok"
+                                  onClick={[Function]}
+                                >
+                                  <span
+                                    aria-hidden="true"
+                                    className="pficon pficon-ok pull-left"
+                                    onClick={[Function]}
+                                  />
+                                </PatternflyIcon>
+                              </Icon>
+                              <NotificationContent
+                                className=""
+                              >
+                                <div
+                                  className="drawer-pf-notification-content"
+                                >
+                                  <NotificationMessage
+                                    className=""
+                                    onClick={[Function]}
+                                    title="Plan has completed successfully"
+                                  >
+                                    <span
+                                      className="drawer-pf-notification-message"
+                                      onClick={[Function]}
+                                      title="Plan has completed successfully"
+                                    >
+                                      Plan has completed successfully
+                                    </span>
+                                  </NotificationMessage>
+                                  <NotificationInfo
+                                    className=""
+                                    leftText="Invalid date"
+                                    rightText="Invalid date"
+                                  >
+                                    <div
+                                      className="drawer-pf-notification-info"
+                                    >
+                                      <NotificationInfoLeft
+                                        text="Invalid date"
+                                      >
+                                        <span
+                                          className="date"
+                                        >
+                                          Invalid date
+                                        </span>
+                                      </NotificationInfoLeft>
+                                      <NotificationInfoRight
+                                        text="Invalid date"
+                                      >
+                                        <span
+                                          className="time"
+                                        >
+                                          Invalid date
+                                        </span>
+                                      </NotificationInfoRight>
+                                    </div>
+                                  </NotificationInfo>
+                                </div>
+                              </NotificationContent>
+                            </div>
+                          </Notification>
+                          <Notification
+                            className="text-center"
+                            id="notificationLimitBar"
+                            key="notificationLimit"
+                            seen={true}
+                            type="notification"
+                          >
+                            <div
+                              className="drawer-pf-notification text-center"
+                              id="notificationLimitBar"
+                            >
+                              <NotificationContent
+                                className=""
+                              >
+                                <div
+                                  className="drawer-pf-notification-content"
+                                >
+                                  <NotificationMessage
+                                    className=""
+                                    title="title"
+                                  >
+                                    <span
+                                      className="drawer-pf-notification-message"
+                                      title="title"
+                                    >
+                                      Showing 100 items out of 2 total.
+                                    </span>
+                                  </NotificationMessage>
+                                  <a
+                                    className="btn btn-link"
+                                    id="toggleMaxNotifications"
+                                    onClick={[Function]}
+                                  >
+                                    Show all (may take a while)
+                                  </a>
+                                </div>
+                              </NotificationContent>
+                            </div>
+                          </Notification>
+                        </div>
+                      </NotificationDrawerPanelBody>
+                      <NotificationDrawerPanelAction
+                        className=""
+                      >
+                        <div
+                          className="drawer-pf-action"
+                        >
+                          <NotificationDrawerPanelActionLink
+                            className="footer-button-left"
+                            data-toggle="mark-all-read"
+                          >
+                            <div
+                              className="drawer-pf-action-link footer-button-left"
+                              data-toggle="mark-all-read"
+                            >
+                              <Button
+                                active={false}
+                                block={false}
+                                bsClass="btn"
+                                bsStyle="link"
+                                disabled={false}
+                                id="markAllReadBtn"
+                                onClick={[Function]}
+                              >
+                                <button
+                                  className="btn btn-link"
+                                  disabled={false}
+                                  id="markAllReadBtn"
+                                  onClick={[Function]}
+                                  type="button"
+                                >
+                                  Mark All Read
+                                </button>
+                              </Button>
+                            </div>
+                          </NotificationDrawerPanelActionLink>
+                          <NotificationDrawerPanelActionLink
+                            className="footer-button-right"
+                            data-toggle="clear-all"
+                          >
+                            <div
+                              className="drawer-pf-action-link footer-button-right"
+                              data-toggle="clear-all"
+                            >
+                              <Button
+                                active={false}
+                                block={false}
+                                bsClass="btn"
+                                bsStyle="link"
+                                disabled={false}
+                                id="clearAllBtn"
+                                onClick={[Function]}
+                              >
+                                <button
+                                  className="btn btn-link"
+                                  disabled={false}
+                                  id="clearAllBtn"
+                                  onClick={[Function]}
+                                  type="button"
+                                >
+                                  Clear All
+                                </button>
+                              </Button>
+                            </div>
+                          </NotificationDrawerPanelActionLink>
+                        </div>
+                      </NotificationDrawerPanelAction>
+                    </div>
+                  </NotificationDrawerPanelCollapse>
+                </div>
+              </NotificationDrawerPanel>
+            </div>
+          </NotificationDrawerAccordion>
+        </div>
+      </NotificationDrawer>
+    </div>
+  </NotificationDrawer>
+</Provider>
+`;

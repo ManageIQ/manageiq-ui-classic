@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast list tests should render correctly with notifications 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <ToastList>
+    <ToastNotificationList
+      className=""
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+    >
+      <div
+        className="toast-notifications-list-pf"
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+      >
+        <TimedToastNotification
+          className=""
+          key=".$10000000003625"
+          onDismiss={[Function]}
+          paused={false}
+          persistent={true}
+          timerdelay={8000}
+          type="error"
+        >
+          <ToastNotification
+            className=""
+            onDismiss={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            type="error"
+          >
+            <Alert
+              className="toast-pf"
+              onDismiss={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              type="error"
+            >
+              <div
+                className="alert toast-pf alert-danger alert-dismissable"
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                <Button
+                  active={false}
+                  aria-hidden="true"
+                  block={false}
+                  bsClass="close"
+                  bsStyle="default"
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <button
+                    aria-hidden="true"
+                    className="close close-default"
+                    disabled={false}
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <Icon
+                      name="close"
+                      type="pf"
+                    >
+                      <PatternflyIcon
+                        className=""
+                        name="close"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="pficon pficon-close"
+                        />
+                      </PatternflyIcon>
+                    </Icon>
+                  </button>
+                </Button>
+                <Icon
+                  name="error-circle-o"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="error-circle-o"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-error-circle-o"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+                <div
+                  className="pull-right toast-pf-action"
+                >
+                  <a
+                    href="#"
+                    onClick={[Function]}
+                  >
+                    View details
+                  </a>
+                </div>
+                <span>
+                  Plan has completed with errors
+                </span>
+              </div>
+            </Alert>
+          </ToastNotification>
+        </TimedToastNotification>
+        <TimedToastNotification
+          className=""
+          key=".$10000000003624"
+          onDismiss={[Function]}
+          paused={false}
+          persistent={false}
+          timerdelay={8000}
+          type="success"
+        >
+          <ToastNotification
+            className=""
+            onDismiss={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            type="success"
+          >
+            <Alert
+              className="toast-pf"
+              onDismiss={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              type="success"
+            >
+              <div
+                className="alert toast-pf alert-success alert-dismissable"
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+              >
+                <Button
+                  active={false}
+                  aria-hidden="true"
+                  block={false}
+                  bsClass="close"
+                  bsStyle="default"
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <button
+                    aria-hidden="true"
+                    className="close close-default"
+                    disabled={false}
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <Icon
+                      name="close"
+                      type="pf"
+                    >
+                      <PatternflyIcon
+                        className=""
+                        name="close"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="pficon pficon-close"
+                        />
+                      </PatternflyIcon>
+                    </Icon>
+                  </button>
+                </Button>
+                <Icon
+                  name="ok"
+                  type="pf"
+                >
+                  <PatternflyIcon
+                    className=""
+                    name="ok"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pficon pficon-ok"
+                    />
+                  </PatternflyIcon>
+                </Icon>
+                <span>
+                  Plan has completed successfully
+                </span>
+              </div>
+            </Alert>
+          </ToastNotification>
+        </TimedToastNotification>
+      </div>
+    </ToastNotificationList>
+  </ToastList>
+</Provider>
+`;

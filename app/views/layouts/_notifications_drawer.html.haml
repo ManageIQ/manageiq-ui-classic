@@ -1,8 +1,1 @@
-#miq-notifications-drawer-container{'ng-controller' => "notificationsDrawerController as vm"}
-  %div{"miq-notification-drawer" => "",
-       "id" => "miq-notifications-drawer",
-       "drawer-hidden" => "!vm.notificationsDrawerShown",
-       "drawer-title" => _("Notifications"),
-       "allow-expand" => "true",
-       "notification-groups" => "vm.notificationGroups",
-       "custom-scope" => "vm.customScope"}
+= react('NotificationDrawer')

@@ -1,31 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { Icon } from 'patternfly-react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveNotificationDrawerVisibility } from '../notification-drawer/helpers';
+import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 
-const Notifications = ({
-  unreadCount,
-}) => (
-  <li className="dropdown">
-    <a
-      id="notifications-btn"
-      className="nav-item-iconic drawer-pf-trigger-icon"
-      title={`${unreadCount} ${__('unread notifications')}`}
-      onClick={(event) => {
-        sendDataWithRx({ type: 'toggleNotificationsList' });
-        event.preventDefault();
-      }}
-    >
-      <Icon type="fa" name="bell" />
-      <span className="badge badge-pf-bordered">{unreadCount > 0 ? ' ' : ''}</span>
-    </a>
-  </li>
-);
+const Notifications = () => {
+  const dispatch = useDispatch();
+  const { isDrawerVisible, unreadCount } = useSelector(({ notificationReducer }) => notificationReducer);
 
-const mapStateToProps = ({ notificationReducer: { unreadCount } }) => ({ unreadCount });
+  useEffect(() => {
+    saveNotificationDrawerVisibility(isDrawerVisible);
+  }, [isDrawerVisible]);
 
-Notifications.propTypes = {
-  unreadCount: PropTypes.number.isRequired,
+  return (
+    <li className="dropdown">
+      <a
+        id="notifications-btn"
+        className="nav-item-iconic drawer-pf-trigger-icon"
+        title={`${unreadCount} ${__('unread notifications')}`}
+        onClick={() => {
+          dispatch({ type: TOGGLE_DRAWER_VISIBILITY });
+        }}
+      >
+        <Icon type="fa" name="bell" />
+        <span className="badge badge-pf-bordered">{unreadCount > 0 ? ' ' : ''}</span>
+      </a>
+    </li>
+  );
 };
 
-export default connect(mapStateToProps)(Notifications);
+export default Notifications;
