@@ -202,7 +202,7 @@ module Mixins
     def button
       @edit = session[:edit] # Restore @edit for adv search box
 
-      params[:display] = @display if ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"].include?(@display) # Were we displaying vms/hosts/storages
+      params[:display] = @display if ["vms", "hosts", 'host_aggregates', "storages", "instances", "images", "orchestration_stacks"].include?(@display) # Were we displaying vms/hosts/storages
       params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
       # Handle buttons from sub-items screen

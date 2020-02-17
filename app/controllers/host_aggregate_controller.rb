@@ -72,18 +72,13 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
+      flash_and_redirect(_("Host Aggregate \"%{name}\" created") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to create Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show_list")
   end
 
   def edit
@@ -102,7 +97,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Edit of Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -140,19 +135,13 @@ class HostAggregateController < ApplicationController
     host_aggregate_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
+      flash_and_redirect(_("Host Aggregate \"%{name}\" updated") % {:name => host_aggregate_name})
     else
-      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   def delete_host_aggregates
@@ -177,14 +166,15 @@ class HostAggregateController < ApplicationController
     end
     process_host_aggregates(host_aggregates_to_delete, "destroy") unless host_aggregates_to_delete.empty?
 
-    # refresh the list if applicable
-    if @lastaction == "show_list"
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "host_aggregate"
-      @single_delete = true unless flash_errors?
-    end
     flash_to_session
-    redirect_to(:action => 'show_list')
+    # refresh the list
+    if @lastaction == "show" && @layout == "host_aggregate" # Textual Summary of Host Aggregate
+      @single_delete = true unless flash_errors?
+      redirect_to(previous_breadcrumb_url)
+    else # list of Host Aggregates
+      @refresh_partial = "layouts/gtl" if @lastaction == "show_list"
+      redirect_to(@breadcrumbs[-1][:url])
+    end
   end
 
   def add_host_select
@@ -207,11 +197,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      if @lastaction == "show_list"
-        redirect_to(:action => "show_list")
-      else
-        redirect_to(:action => "show", :id => params[:id])
-      end
+      redirect_to(@breadcrumbs[-1][:url])
     else
       drop_breadcrumb(
         :name => _("Add Host to Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -226,7 +212,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Add Host to Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -268,21 +254,16 @@ class HostAggregateController < ApplicationController
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host \"%{hostname}\" added to Host Aggregate \"%{name}\"") % {
+      flash_and_redirect(_("Host \"%{hostname}\" added to Host Aggregate \"%{name}\"") % {
         :hostname => host.name,
         :name     => host_aggregate_name
       })
     else
-      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
   def remove_host_select
@@ -300,11 +281,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      if @lastaction == "show_list"
-        redirect_to(:action => "show_list")
-      else
-        redirect_to(:action => "show", :id => params[:id])
-      end
+      redirect_to(@breadcrumbs[-1][:url])
     else
       drop_breadcrumb(
         :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -319,7 +296,7 @@ class HostAggregateController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Remove Host from Host Aggregate \"%{name}\" was cancelled by the user") % {
         :name => @host_aggregate.name
       })
 
@@ -361,30 +338,24 @@ class HostAggregateController < ApplicationController
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
+      flash_and_redirect(_("Host \"%{hostname}\" removed from Host Aggregate \"%{name}\"") % {
         :hostname => host.name,
         :name     => host_aggregate_name
       })
     else
-      add_flash(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Host Aggregate \"%{name}\": %{details}") % {
         :name    => host_aggregate_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => host_aggregate_id)
   end
 
-  def cancel_action(message)
+  # Set flash message, add it to session, redirect to proper screen and render the flash message
+  def flash_and_redirect(message, level = :success)
     session[:edit] = nil
-    @breadcrumbs&.pop
-    javascript_redirect(:action    => @lastaction,
-                        :id        => @host_aggregate.id,
-                        :display   => session[:host_aggregate_display],
-                        :flash_msg => message)
+    add_flash(message, level)
+    flash_to_session
+    javascript_redirect(previous_breadcrumb_url)
   end
 
   private
