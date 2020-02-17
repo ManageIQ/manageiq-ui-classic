@@ -32,24 +32,24 @@ module OpsController::Settings::AnalysisProfiles
       case a.item_type
       when "category"
         @category = [] if @category.nil?
-        for i in 0...a[:definition]["content"].length
+        (0...a[:definition]["content"].length).each do |i|
           @category.push(_(CATEGORY_CHOICES[a[:definition]["content"][i]["target"]])) if a[:definition]["content"][i]["target"] != "vmevents"
         end
       when "file"
         @file = [] if @file.nil?
         @file_stats = {}
-        for i in 0...a[:definition]["stats"].length
-          @file_stats[a[:definition]["stats"][i]["target"].to_s] = a[:definition]["stats"][i]["content"] ? a[:definition]["stats"][i]["content"] : false
+        (0...a[:definition]["stats"].length).each do |i|
+          @file_stats[a[:definition]["stats"][i]["target"].to_s] = a[:definition]["stats"][i]["content"] || false
           @file.push(a[:definition]["stats"][i]["target"])
         end
       when "registry"
         @registry = [] if @registry.nil?
-        for i in 0...a[:definition]["content"].length
+        (0...a[:definition]["content"].length).each do |i|
           @registry.push(a[:definition]["content"][i])
         end
       when "nteventlog"
         @nteventlog = [] if @nteventlog.nil?
-        for i in 0...a[:definition]["content"].length
+        (0...a[:definition]["content"].length).each do |i|
           @nteventlog.push(a[:definition]["content"][i])
         end
       end
@@ -58,6 +58,7 @@ module OpsController::Settings::AnalysisProfiles
 
   def ap_ce_select
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
+
     ap_get_form_vars
     if params[:edit_entry] == "edit_file"
       session[:edit_filename] = params[:file_name]
@@ -83,6 +84,7 @@ module OpsController::Settings::AnalysisProfiles
       session[:nteventlog_data] = {}
       session[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |nteventlog, i|
         next unless i == params[:entry_id].to_i
+
         session[:nteventlog_data][:selected] = i
         session[:nteventlog_data][:name] = nteventlog[:name]
         session[:nteventlog_data][:message] = nteventlog[:filter][:message]
@@ -115,6 +117,7 @@ module OpsController::Settings::AnalysisProfiles
   # AJAX driven routine to delete a classification entry
   def ap_ce_delete
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
+
     ap_get_form_vars
     if params[:item2] == "registry"
       session[:reg_entries].each do |reg|
@@ -187,6 +190,7 @@ module OpsController::Settings::AnalysisProfiles
     i = 0
     @edit[:new].each_key do |k|
       next if @edit[:new][k] == @edit[:current][k]
+
       msg += ", " if i.positive?
       i += 1
       msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
@@ -234,6 +238,7 @@ module OpsController::Settings::AnalysisProfiles
       when "save", "add"
         id = params[:button] == "add" ? "new" : params[:id]
         return unless load_edit("ap_edit__#{id}", "replace_cell__explorer")
+
         @scan = ScanItemSet.find_by_id(@edit[:scan_id])
         ap_get_form_vars
 
@@ -361,6 +366,7 @@ module OpsController::Settings::AnalysisProfiles
   # AJAX driven routine to check for changes in ANY field on the form
   def ap_form_field_changed
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
+
     ap_get_form_vars
     @edit[:new] = ap_sort_array(@edit[:new])
     @edit[:current] = ap_sort_array(@edit[:current])
@@ -400,6 +406,7 @@ module OpsController::Settings::AnalysisProfiles
 
   def ap_accept_line_changes
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
+
     ap_get_form_vars
     @edit[:new] = ap_sort_array(@edit[:new])
     @edit[:current] = ap_sort_array(@edit[:current])
@@ -468,12 +475,14 @@ module OpsController::Settings::AnalysisProfiles
       %w[nteventlog content]
     ].each do |key, definition_key|
       next if @edit[:new][key].blank?
+
       scanitem             = ScanItem.new
       scanitem.name        = "#{scanitemset.name}_#{@edit[:new][key][:type]}"
       scanitem.description = "#{scanitemset.description} #{@edit[:new][key][:type]} Scan"
       scanitem.item_type   = @edit[:new][key][:type]
       scanitem.definition  = copy_hash(@edit[:new][key][:definition])
       next if scanitem.definition[definition_key].empty?
+
       begin
         scanitem.save
         scanitemset.add_member(scanitem)
@@ -601,7 +610,7 @@ module OpsController::Settings::AnalysisProfiles
           'depth' => 0,
           'hive'  => 'HKLM',
           'value' => params[:entry]['value'],
-          'key'   => params[:entry]['kname'],
+          'key'   => params[:entry]['kname']
         )
         found = true
       end
@@ -612,7 +621,7 @@ module OpsController::Settings::AnalysisProfiles
         'depth' => 0,
         'hive'  => 'HKLM',
         'value' => params[:entry]['value'],
-        'key'   => params[:entry]['kname'],
+        'key'   => params[:entry]['kname']
       )
     end
 
@@ -648,6 +657,7 @@ module OpsController::Settings::AnalysisProfiles
       if params[:item]["id"]
         @edit[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |_nteventlog, i|
           next unless i == params[:item]["id"].to_i
+
           @edit[:nteventlog_entries][i][:name] = params[:entry]["name"]
           @edit[:nteventlog_entries][i][:filter][:message] = params[:entry]["message"]
           @edit[:nteventlog_entries][i][:filter][:level] = params[:entry]["level"]
