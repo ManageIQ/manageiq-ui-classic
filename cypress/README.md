@@ -33,17 +33,18 @@ ManageIQ implements the following cypress extensions:
 ##### navigation
 
 * `cy.menu('Compute', 'Infrastructure', 'VMs')` - navigates the main menu
-* TODO `cy.accordion('Service Dialogs')` - switch accordions
+* `cy.accordion('Service Dialogs')` - expand accordion
 * TODO `cy.treeSelect('All VMs & Templates', 'HyperV', 'SCVMM')` - switch tree items
-* TODO `cy.toolbar('Configuration', 'Edit this VM')` - trigger toolbar buttons
+* `cy.toolbar('Configuration', 'Edit this VM')` - trigger toolbar buttons
 * TODO `cy.gtlClick('RHEL72_1')` - trigger gtl items
+* TODO `cy.tab('Report Info')` - switch miq tabs
 
 TODO allow using {id:...} instead of string label for menu items, gtl items, tree nodes, accordions, toolbar items
 
 ##### inspection
 
 * `cy.menuItems()` - parse the main menu and yield an object tree
-* TODO `cy.toolbarItem(...)` - yields an object describing a toolbar button state, or null
+* `cy.toolbarItem(...)` - yields an object describing a toolbar button state, or null
 
 #### assertions
 
