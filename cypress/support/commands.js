@@ -95,3 +95,24 @@ Cypress.Commands.add("expect_explorer_title", (text) => {
 Cypress.Commands.add("expect_show_list_title", (text) => {
   return cy.get('#main-content h1').contains(text);
 });
+
+// GTL related helpers
+Cypress.Commands.add("gtl_error", () => {
+  return cy.get('#miq-gtl-view > #flash_msg_div').should('be.visible');
+});
+
+Cypress.Commands.add("gtl_no_record", () => {
+  return cy.get('#miq-gtl-view > div.no-record').should('be.visible');
+});
+
+Cypress.Commands.add("gtl", () => {
+  return cy.get('[ng-controller="reportDataController as dataCtrl"]').find('div.no-record').should('not.exist');
+});
+
+Cypress.Commands.add("search_box", () => {
+  return cy.get('#search_text').should('be.visible');
+});
+
+Cypress.Commands.add("no_search_box", () => {
+  return cy.get('#search_text').should('not.be.visible');
+});
