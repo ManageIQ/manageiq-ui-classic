@@ -63,7 +63,7 @@
         .form-group
           = format_form_group(_('Max TTL'), @playbook_details[:execution_ttl])
 
-        - if @ae_method.location == 'playbook'
+        - if %w[playbook ansible_job_template].include?(@ae_method.location)
           .form-group
             = format_form_group(_('Hosts'), @playbook_details[:hosts])
         .form-group
