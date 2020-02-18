@@ -17,7 +17,7 @@ const Notifications = () => {
       <a
         id="notifications-btn"
         className="nav-item-iconic drawer-pf-trigger-icon"
-        title={`${unreadCount} ${__('unread notifications')}`}
+        title={sprintf(__('%d unread notifications'), unreadCount)}
         onClick={() => {
           dispatch({ type: TOGGLE_DRAWER_VISIBILITY });
         }}
