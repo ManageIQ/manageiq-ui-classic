@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { listenToRx } from '../miq_observable';
 import { API } from '../http_api';
-import { addNotification } from '../miq-redux/actions/notifications-actions';
+import { addNotification, initNotifications } from '../miq-redux/actions/notifications-actions';
 
 export const maxNotifications = 100;
 
@@ -47,4 +47,5 @@ function notificationListener(data) {
   }
 }
 
+ManageIQ.redux.store.dispatch(initNotifications(true));
 listenToRx(notificationListener);
