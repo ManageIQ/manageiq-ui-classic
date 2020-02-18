@@ -1053,7 +1053,8 @@ class MiqAeClassController < ApplicationController
                                 :execution_ttl         => method.options[:execution_ttl] || '',
                                 :hosts                 => method.options[:hosts] || 'localhost',
                                 :log_output            => method.options[:log_output] || 'on_error',
-                                :extra_vars            => location == 'playbook' && method.inputs }
+                                :extra_vars            => playbook_style_location?(location) &&
+                                                          method.inputs }
     }
     render :json => method_hash
   end
