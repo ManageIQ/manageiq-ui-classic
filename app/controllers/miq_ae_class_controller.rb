@@ -1041,20 +1041,21 @@ class MiqAeClassController < ApplicationController
       :managers            => list_of_managers,
       :manager_id          => manager_id,
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
-      :config_info         => { :repository_id         => method.options[:repository_id] || '',
-                                :ansible_template_id   => method.options[:ansible_template_id] || '',
-                                :playbook_id           => method.options[:playbook_id] || '',
-                                :credential_id         => method.options[:credential_id] || '',
-                                :vault_credential_id   => method.options[:vault_credential_id] || '',
-                                :network_credential_id => method.options[:network_credential_id] || '',
-                                :cloud_credential_id   => method.options[:cloud_credential_id] || '',
-                                :verbosity             => method.options[:verbosity],
-                                :become_enabled        => method.options[:become_enabled] || false,
-                                :execution_ttl         => method.options[:execution_ttl] || '',
-                                :hosts                 => method.options[:hosts] || 'localhost',
-                                :log_output            => method.options[:log_output] || 'on_error',
-                                :extra_vars            => playbook_style_location?(location) &&
-                                                          method.inputs }
+      :config_info         => {
+        :repository_id         => method.options[:repository_id] || '',
+        :ansible_template_id   => method.options[:ansible_template_id] || '',
+        :playbook_id           => method.options[:playbook_id] || '',
+        :credential_id         => method.options[:credential_id] || '',
+        :vault_credential_id   => method.options[:vault_credential_id] || '',
+        :network_credential_id => method.options[:network_credential_id] || '',
+        :cloud_credential_id   => method.options[:cloud_credential_id] || '',
+        :verbosity             => method.options[:verbosity],
+        :become_enabled        => method.options[:become_enabled] || false,
+        :execution_ttl         => method.options[:execution_ttl] || '',
+        :hosts                 => method.options[:hosts] || 'localhost',
+        :log_output            => method.options[:log_output] || 'on_error',
+        :extra_vars            => playbook_style_location?(location) && method.inputs
+      }
     }
     render :json => method_hash
   end
