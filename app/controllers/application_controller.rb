@@ -1971,6 +1971,11 @@ class ApplicationController < ActionController::Base
     raise _("Unauthorized object or action") unless ids.length == filtered.length
   end
 
+  def last_screen_url
+    @breadcrumbs.last[:url]
+  end
+  helper_method(:last_screen_url)
+
   def previous_breadcrumb_url
     @breadcrumbs[-2][:url]
   end

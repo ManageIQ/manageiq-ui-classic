@@ -173,7 +173,7 @@ class HostAggregateController < ApplicationController
       redirect_to(previous_breadcrumb_url)
     else # list of Host Aggregates
       @refresh_partial = "layouts/gtl" if @lastaction == "show_list"
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     end
   end
 
@@ -197,7 +197,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     else
       drop_breadcrumb(
         :name => _("Add Host to Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -281,7 +281,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     else
       drop_breadcrumb(
         :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},

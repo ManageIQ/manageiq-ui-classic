@@ -360,7 +360,7 @@ class CloudVolumeController < ApplicationController
     delete_cloud_volumes(volumes_to_delete) unless volumes_to_delete.empty?
 
     # refresh the list if applicable
-    if @lastaction == "show_list" && @breadcrumbs.last[:url].include?(@lastaction)
+    if @lastaction == "show_list" && last_screen_url.include?(@lastaction)
       show_list
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_volume"
