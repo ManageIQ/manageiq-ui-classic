@@ -130,7 +130,7 @@ class EmsInfraDashboardService < EmsDashboardService
 
     @daily_metrics ||= begin
       metric_rollup_scope = MetricRollup.where(:capture_interval_name => 'daily', :time_profile => tp)
-      metric_rollup_scope = metric_rollup_scope.where(:resource => (@ems || ManageIQ::Providers::InfraManager.all))
+      metric_rollup_scope = metric_rollup_scope.where(:resource => @ems)
       metric_rollup_scope.where('timestamp > ?', 30.days.ago.utc).order('timestamp')
     end
   end
