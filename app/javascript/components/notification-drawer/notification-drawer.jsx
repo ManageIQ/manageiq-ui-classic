@@ -87,7 +87,7 @@ const NotificationDrawer = () => {
                               eventKey="3"
                               header={false}
                               onClick={
-                                () => dispatch(clearNotification(notification, Boolean(maxNotifications)))
+                                () => dispatch(clearNotification(notification, !!maxNotifications))
                               }
                             >
                               {__('Remove')}
@@ -165,7 +165,7 @@ const NotificationDrawer = () => {
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={
-                            () => dispatch(clearAll(notifications, Boolean(maxNotifications)))
+                            () => dispatch(clearAll(notifications, !!maxNotifications)))
                           }
                         >
                           {__('Clear All')}
