@@ -8,7 +8,7 @@ export const maxNotifications = 100;
 export function notificationsInit(useLimit) {
   const notifications = [];
   const promises = [];
-  const limitFragment = useLimit ? `&limit=${maxNotifications.toString()}` : '';
+  const limitFragment = useLimit ? `&limit=${maxNotifications}` : '';
   promises.push(API.get(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`)
     .then((data) => {
       data.resources.forEach((resource) => {
@@ -32,12 +32,12 @@ export function notificationsInit(useLimit) {
       };
     }));
   if (useLimit) {
+    // get real subcount
     promises.push(API.get('/api/notifications'));
   }
   return Promise.all(promises).then(([{ notifications, subcount }, meta]) => ({
     notifications,
-    subcount,
-    meta,
+    subcount: meta ? meta.subcount : subcount,
   }));
 }
 

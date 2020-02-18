@@ -17,8 +17,8 @@ export const TOGGLE_MAX_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/toggleM
 
 export const initNotifications = useLimit => dispatch =>
   notificationsInit(useLimit)
-    .then(({ notifications, subcount, meta }) =>
-      dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: meta ? meta.subcount : subcount } }));
+    .then(({ notifications, subcount }) =>
+      dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: subcount } }));
 
 export const addNotification = data => (dispatch) => {
   const msg = window.miqFormatNotification(data.notification.text, data.notification.bindings);
