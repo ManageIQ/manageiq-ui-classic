@@ -4,6 +4,7 @@ class HostAggregateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
@@ -348,14 +349,6 @@ class HostAggregateController < ApplicationController
         :details => task.message
       }, :error)
     end
-  end
-
-  # Set flash message, add it to session, redirect to proper screen and render the flash message
-  def flash_and_redirect(message, level = :success)
-    session[:edit] = nil
-    add_flash(message, level)
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   private

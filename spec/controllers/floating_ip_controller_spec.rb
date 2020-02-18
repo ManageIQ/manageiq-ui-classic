@@ -10,7 +10,7 @@ describe FloatingIpController do
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
-  describe "#tags_edit" do
+  describe "#tagging_edit" do
     before do
       @ct = FactoryBot.create(:floating_ip)
       allow(@ct).to receive(:tagged_with).with(:cat => admin_user.userid).and_return("my tags")
@@ -35,19 +35,6 @@ describe FloatingIpController do
 
     after(:each) do
       expect(response.status).to eq(200)
-    end
-
-    describe "#delete_floating_ips" do
-      before do
-        allow(controller).to receive(:assert_privileges)
-        allow(controller).to receive(:performed?)
-        controller.params = {:id => floating_ip.id, :pressed => 'host_NECO'}
-      end
-
-      it "delete floating ips" do
-        expect(controller).to receive(:process_floating_ips).with([floating_ip], "destroy")
-        controller.send(:delete_floating_ips)
-      end
     end
 
     it "builds tagging screen" do
@@ -137,25 +124,16 @@ describe FloatingIpController do
     end
   end
 
-  describe "#delete" do
-    let(:task_options) do
-      {
-        :action => "deleting Floating IP for user %{user}" % {:user => controller.current_user.userid},
-        :userid => controller.current_user.userid
-      }
-    end
-    let(:queue_options) do
-      {
-        :class_name  => floating_ip.class.name,
-        :method_name => 'raw_delete_floating_ip',
-        :instance_id => floating_ip.id,
-        :args        => []
-      }
+  describe "#delete_floating_ips" do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:performed?)
+      controller.params = {:id => floating_ip.id, :pressed => 'host_NECO'}
     end
 
-    it "queues the delete action" do
-      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :button, :params => { :id => floating_ip.id, :pressed => "floating_ip_delete", :format => :js }
+    it 'calls process_floating_ips' do
+      expect(controller).to receive(:process_floating_ips).with([floating_ip], "destroy")
+      controller.send(:delete_floating_ips)
     end
   end
 
@@ -164,10 +142,29 @@ describe FloatingIpController do
 
     context 'deleting selected Floating IP' do
       let(:params) { {:pressed => 'floating_ip_delete'} }
+      let(:task_options) do
+        {
+          :action => "deleting Floating IP for user %{user}" % {:user => controller.current_user.userid},
+          :userid => controller.current_user.userid
+        }
+      end
+      let(:queue_options) do
+        {
+          :class_name  => floating_ip.class.name,
+          :method_name => 'raw_delete_floating_ip',
+          :instance_id => floating_ip.id,
+          :args        => []
+        }
+      end
 
       it 'calls delete_floating_ips' do
         expect(controller).to receive(:delete_floating_ips)
         controller.send(:button)
+      end
+
+      it "queues the delete action" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
+        post :button, :params => {:id => floating_ip.id, :pressed => "floating_ip_delete", :format => :js}
       end
     end
 

@@ -1,9 +1,10 @@
 describe CloudVolumeBackupController do
+  let(:backup) { FactoryBot.create(:cloud_volume_backup) }
+
   describe "#tags_edit" do
     let(:classification) { FactoryBot.create(:classification) }
     let(:tag1) { FactoryBot.create(:classification_tag, :parent => classification) }
     let(:tag2) { FactoryBot.create(:classification_tag, :parent => classification) }
-    let(:backup) { FactoryBot.create(:cloud_volume_backup) }
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -41,6 +42,18 @@ describe CloudVolumeBackupController do
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
+    end
+  end
+
+  describe '#backup_restore' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => backup.id}
+    end
+
+    it 'calls flash_and_redirect for canceling restoring Cloud Volume Backup' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Restore to Cloud Volume \"%{name}\" was cancelled by the user") % {:name => backup.name})
+      controller.send(:backup_restore)
     end
   end
 end

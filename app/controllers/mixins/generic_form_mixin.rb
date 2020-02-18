@@ -1,8 +1,9 @@
 module Mixins
   module GenericFormMixin
-    def cancel_action(message)
+    # Set flash message, add it to session, redirect to proper screen and render the flash message
+    def flash_and_redirect(*args)
       session[:edit] = nil
-      flash_to_session(message, :warning)
+      flash_to_session(*args)
       javascript_redirect(previous_breadcrumb_url)
     end
 

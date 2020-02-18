@@ -134,7 +134,7 @@ class CloudTenantController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => @tenant.name})
+      flash_and_redirect(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => @tenant.name})
 
     when "save"
       options = form_params
