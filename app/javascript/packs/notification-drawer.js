@@ -2,8 +2,7 @@ import { get } from 'lodash';
 import { listenToRx } from '../miq_observable';
 import { API } from '../http_api';
 import { addNotification, initNotifications } from '../miq-redux/actions/notifications-actions';
-
-export const maxNotifications = 100;
+import { maxNotifications } from '../notifications/backend.js';
 
 export function notificationsInit(useLimit) {
   const notifications = [];

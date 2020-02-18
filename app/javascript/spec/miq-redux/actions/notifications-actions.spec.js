@@ -25,7 +25,7 @@ import {
 } from '../../../miq-redux/actions/notifications-actions';
 import notifications from '../../fixtures/notifications.json';
 import initResources from '../../fixtures/resources.json';
-import { maxNotifications } from '../../../packs/notification-drawer-common';
+import { maxNotifications } from '../../../notifications/backend.js';
 
 describe('Notifications actions tests', () => {
   const initialState = {

@@ -6,7 +6,7 @@ import {
 } from 'patternfly-react';
 import classnames from 'classnames';
 import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
-import { maxNotifications as maxNotificationsConstant } from '../../packs/notification-drawer-common';
+import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend.js';
 import {
   toggleDrawerVisibility, markNotificationRead, markAllRead, clearNotification, clearAll, toggleMaxNotifications,
 } from '../../miq-redux/actions/notifications-actions';

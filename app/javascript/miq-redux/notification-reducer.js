@@ -1,4 +1,4 @@
-import { maxNotifications } from '../packs/notification-drawer-common';
+import { maxNotifications } from '../notifications/backend.js';
 import {
   INIT_NOTIFICATIONS,
   TOGGLE_DRAWER_VISIBILITY,

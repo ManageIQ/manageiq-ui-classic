@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import moment from 'moment';
-import { notificationsInit } from '../../packs/notification-drawer-common';
+import { notificationsInit } from '../../notifications/backend.js';
 import { viewDetails } from '../../components/notification-drawer/helpers';
 import { API } from '../../http_api';
 
