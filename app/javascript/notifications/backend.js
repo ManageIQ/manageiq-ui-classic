@@ -7,14 +7,15 @@ export function convert(resource) {
 
   const message = window.miqFormatNotification(details.text, details.bindings);
   const data = { link: details.bindings && details.bindings.link };
+  const type = details.level === 'danger' : 'error' : details.level;
 
   return {
     id: resource.id,
     notificationType: 'event',
     unread: !resource.seen,
-    type: details.level,
+    type,
     message,
     data,
-    timeStamp: details.created_at,
+    timeStamp: details.created_at || moment(new Date()).utc().format(),
   };
 }

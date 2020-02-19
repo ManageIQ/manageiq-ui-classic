@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import moment from 'moment';
-import { notificationsInit } from '../../notifications/backend.js';
+import { notificationsInit, convert } from '../../notifications/backend.js';
 import { API } from '../../http_api';
 
 export const NOTIFICATIONS_ACTIONS_PREFIX = '@@notifications';
@@ -20,18 +20,7 @@ export const initNotifications = useLimit => dispatch =>
       dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: subcount } }));
 
 export const addNotification = data => (dispatch) => {
-  const msg = window.miqFormatNotification(data.notification.text, data.notification.bindings);
-  const notificationData = { link: get(data.notification, 'bindings.link') };
-  const { id } = data.notification;
-  const newNotification = {
-    id,
-    notificationType: 'event',
-    unread: true,
-    type: data.notification.level === 'danger' ? 'error' : data.notification.level,
-    message: msg,
-    data: notificationData,
-    timeStamp: moment(new Date()).utc().format(),
-  };
+  const newNotification = convert(data.notification);
   dispatch({ type: ADD_NOTIFICATION, payload: newNotification });
 };
 
