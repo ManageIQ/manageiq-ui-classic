@@ -97,7 +97,10 @@ describe('Notification drawer tests', () => {
   });
 
   it('should dispatch markNotificationRead after click on Mark read dropdown item', async(done) => {
-    fetchMock.postOnce('/api/notifications/10000000003624', {});
+    fetchMock.postOnce('/api/notifications/', {
+      action: 'mark_all_seen',
+      resources: [{ id: '10000000003624' }],
+    });
     const store = mockStore({ ...initialState });
     const wrapper = mount(
       <Provider store={store}>
@@ -117,7 +120,10 @@ describe('Notification drawer tests', () => {
 
   it('should dispatch clearNotification after click on Remove dropdown item', async(done) => {
     const store = mockStore({ ...initialState });
-    fetchMock.deleteOnce('/api/notifications/10000000003624', {});
+    fetchMock.postOnce('/api/notifications/', {
+      action: 'delete',
+      resources: [{ id: '10000000003624' }],
+    });
     const { maxNotifications } = store.getState().notificationReducer;
     const limitFragment = !!maxNotifications ? `&limit=${maxNotifications}` : '';
     fetchMock.getOnce(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`, resources);
@@ -143,7 +149,10 @@ describe('Notification drawer tests', () => {
   });
 
   it('should dispatch markNotificationRead after click on notification content', async(done) => {
-    fetchMock.post('/api/notifications/10000000003625', {});
+    fetchMock.post('/api/notifications/', {
+      action: 'mark_all_seen',
+      resources: [{ id: '10000000003625' }],
+    });
     const store = mockStore({ ...initialState });
     const wrapper = mount(
       <Provider store={store}>
