@@ -5,6 +5,7 @@ class SecurityGroupController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericButtonMixin
+  include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
@@ -33,15 +34,6 @@ class SecurityGroupController < ApplicationController
     else
       super
     end
-  end
-
-  def cancel_action(message)
-    session[:edit] = nil
-    @breadcrumbs.pop if @breadcrumbs
-    javascript_redirect(:action    => @lastaction,
-                        :id        => @security_group.id,
-                        :display   => session[:security_group_display],
-                        :flash_msg => message)
   end
 
   def create
@@ -79,18 +71,13 @@ class SecurityGroupController < ApplicationController
     security_group_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Security Group \"%{name}\" created") % { :name => security_group_name })
+      flash_and_redirect(_("Security Group \"%{name}\" created") % {:name => security_group_name})
     else
-      add_flash(_("Unable to create Security Group \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to create Security Group \"%{name}\": %{details}") % {
         :name    => security_group_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show_list")
   end
 
   def delete_security_groups
@@ -113,18 +100,14 @@ class SecurityGroupController < ApplicationController
     end
     process_security_groups(security_groups_to_delete, "destroy") unless security_groups_to_delete.empty?
 
+    flash_to_session
     # refresh the list if applicable
-    if @lastaction == "show_list"
-      show_list
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "security_group"
+    if @lastaction == "show" && @layout == "security_group" # Textual Summary of Security Group
       @single_delete = true unless flash_errors?
-      if @flash_array.nil?
-        add_flash(_("The selected Security Group was deleted"))
-      else # or (if we deleted what we were showing) we redirect to the listing
-        flash_to_session
-        javascript_redirect(:action => 'show_list')
-      end
+      javascript_redirect(previous_breadcrumb_url)
+    else # list of Security Groups - we probably don't need this because deleting is actually not available from the list
+      @refresh_partial = "layouts/gtl" if @lastaction == "show_list"
+      javascript_redirect(last_screen_url)
     end
   end
 
@@ -149,7 +132,7 @@ class SecurityGroupController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Security Group \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Edit of Security Group \"%{name}\" was cancelled by the user") % {
         :name => @security_group.name
       })
 
@@ -190,11 +173,6 @@ class SecurityGroupController < ApplicationController
 
   def update_finished
     security_group_id = session[:async][:params][:id]
-
-    if session[:flash_msgs]
-      @flash_array = session[:flash_msgs].dup
-      session[:flash_msgs] = nil
-    end
 
     td = session[:security_group][:task]
     task = MiqTask.find(td[:id])
