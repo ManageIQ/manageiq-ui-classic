@@ -33,7 +33,6 @@ export const addNotification = data => (dispatch) => {
     data: notificationData,
     actionTitle: notificationData.link ? __('View details') : undefined,
     actionCallback: notificationData.link ? viewDetails : undefined,
-    href: id ? `${window.location.origin}/api/notifications/${id}` : undefined,
     timeStamp: moment(new Date()).utc().format(),
   };
   dispatch({ type: ADD_NOTIFICATION, payload: newNotification });

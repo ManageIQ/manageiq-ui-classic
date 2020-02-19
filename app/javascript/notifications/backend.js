@@ -15,7 +15,6 @@ export function convert(resource) {
     type: details.level,
     message,
     data,
-    href: resource.href,
     timeStamp: details.created_at,
   };
 }
