@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TaggingPropTypes from '../TaggingPropTypes';
-import Select from '../../../forms/pf-select';
+import { PfSelect } from '../../../pf-select/pf-select';
 
 class ValueSelector extends React.Component {
   getValues = values =>
@@ -40,7 +40,7 @@ class ValueSelector extends React.Component {
   };
 
   selector = (value, values) => (
-    <Select
+    <PfSelect
       meta={{}}
       options={values}
       input={{ onChange: this.handleChange, name: 'ValueSelector', value }}

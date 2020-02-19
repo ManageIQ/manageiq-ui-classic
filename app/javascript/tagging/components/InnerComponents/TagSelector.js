@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TaggingPropTypes from '../TaggingPropTypes';
-import Select from '../../../forms/pf-select';
+import { PfSelect } from '../../../pf-select/pf-select';
 
 class TagSelector extends React.Component {
   handleChange = (selectedOption) => {
@@ -43,7 +43,7 @@ class TagSelector extends React.Component {
   render() {
     const value = this.props.selectedOption.id ? { label: this.props.selectedOption.description, value: this.props.selectedOption.id } : null;
     return (
-      <Select
+      <PfSelect
         meta={{}}
         options={this.tagCategories}
         input={{ onChange: this.handleChange, name: 'form-field-name', value }}
