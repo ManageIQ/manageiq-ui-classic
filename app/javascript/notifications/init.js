@@ -1,4 +1,4 @@
-import { addNotification, initNotifications } from './miq-redux/actions/notifications-actions';
+import { addNotification, initNotifications } from '../miq-redux/actions/notifications-actions';
 import { listenToRx } from '../miq_observable.js';
 
 export function init() {

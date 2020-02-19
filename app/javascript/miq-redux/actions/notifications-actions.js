@@ -68,7 +68,9 @@ export const clearAll = (notifications, useLimit) => (dispatch) => {
     .then(() => {
       dispatch({
         type: CLEAR_ALL,
-        payload: notifications.map((notification) => ({id: notification.id})),
+        payload: notifications.map((notification) => ({
+          id: notification.id,
+        })),
       });
       dispatch(initNotifications(useLimit));
     });
@@ -78,5 +80,7 @@ export const toggleMaxNotifications = () => (dispatch, getState) => {
   const { maxNotifications } = getState().notificationReducer;
 
   return dispatch(initNotifications(!maxNotifications))
-    .then(() => dispatch({ type: TOGGLE_MAX_NOTIFICATIONS }));
+    .then(() => dispatch({
+      type: TOGGLE_MAX_NOTIFICATIONS,
+    }));
 };

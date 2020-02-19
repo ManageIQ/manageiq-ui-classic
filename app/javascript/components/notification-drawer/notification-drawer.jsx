@@ -165,7 +165,7 @@ const NotificationDrawer = () => {
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={
-                            () => dispatch(clearAll(notifications, !!maxNotifications)))
+                            () => dispatch(clearAll(notifications, !!maxNotifications))
                           }
                         >
                           {__('Clear All')}
