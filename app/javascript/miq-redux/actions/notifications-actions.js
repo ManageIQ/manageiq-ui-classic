@@ -1,7 +1,4 @@
-import { get } from 'lodash';
-import moment from 'moment';
 import * as backend from '../../notifications/backend.js';
-import { API } from '../../http_api';
 
 export const NOTIFICATIONS_ACTIONS_PREFIX = '@@notifications';
 export const INIT_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/initNotifications`;
@@ -14,10 +11,16 @@ export const CLEAR_NOTIFICATION = `${NOTIFICATIONS_ACTIONS_PREFIX}/clearNotifica
 export const CLEAR_ALL = `${NOTIFICATIONS_ACTIONS_PREFIX}/clearAll`;
 export const TOGGLE_MAX_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/toggleMaxNotifications`;
 
-export const initNotifications = useLimit => dispatch =>
-  backend.load(useLimit)
-    .then(({ notifications, subcount }) =>
-      dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: subcount } }));
+export const initNotifications = (useLimit) => (dispatch) => {
+  return backend.load(useLimit)
+    .then(({ notifications, subcount }) => dispatch({
+      type: INIT_NOTIFICATIONS,
+      payload: {
+        notifications,
+        count: subcount,
+      },
+    }));
+};
 
 export const addNotification = (notification) => (dispatch) => {
   const newNotification = backend.convert(notification);
@@ -26,21 +29,19 @@ export const addNotification = (notification) => (dispatch) => {
 
 export const toggleDrawerVisibility = () => ({ type: TOGGLE_DRAWER_VISIBILITY });
 
-export const markNotificationRead = notificationId => dispatch => API.post(`/api/notifications/${notificationId}`, { action: 'mark_as_seen' })
+export const markNotificationRead = notificationId => dispatch => backend.markRead([{id: notificationId}])
   .then(() =>
     dispatch({ type: MARK_NOTIFICATION_READ, payload: notificationId }));
 
 export const removeToastNotification = notificationId => ({ type: REMOVE_TOAST_NOTIFICATION, payload: notificationId });
 
-export const markAllRead = notifications => (dispatch) => {
-  const resources = notifications.map(notification => ({ id: notification.id }));
-  return API.post('/api/notifications/', { action: 'mark_as_seen', resources })
-    .then(() =>
-      dispatch({ type: MARK_ALL_READ }));
+export const markAllRead = (notifications) => (dispatch) => {
+  return backend.markRead(notifications)
+    .then(() => dispatch({ type: MARK_ALL_READ }));
 };
 
 export const clearNotification = (notification, useLimit) => (dispatch) => {
-  return API.delete(`/api/notifications/${notification.id}`)
+  return backend.clear([notification])
     .then(() => {
       dispatch({
         type: CLEAR_NOTIFICATION,
@@ -51,8 +52,7 @@ export const clearNotification = (notification, useLimit) => (dispatch) => {
 };
 
 export const clearAll = (notifications, useLimit) => (dispatch) => {
-  const resources = notifications.map(notification => ({ id: notification.id }));
-  return API.post('/api/notifications/', { action: 'delete', resources })
+  return backend.clear(notifications)
     .then(() => {
       dispatch({
         type: CLEAR_ALL,
@@ -64,6 +64,7 @@ export const clearAll = (notifications, useLimit) => (dispatch) => {
 
 export const toggleMaxNotifications = () => (dispatch, getState) => {
   const { maxNotifications } = getState().notificationReducer;
-  return dispatch(initNotifications(!maxNotifications)).then(() =>
-    dispatch({ type: TOGGLE_MAX_NOTIFICATIONS }));
+
+  return dispatch(initNotifications(!maxNotifications))
+    .then(() => dispatch({ type: TOGGLE_MAX_NOTIFICATIONS }));
 };

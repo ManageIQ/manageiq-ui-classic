@@ -1,4 +1,5 @@
 import { API } from '../http_api';
+import moment from 'moment';
 
 export const maxNotifications = 100;
 
@@ -46,3 +47,11 @@ export function load(useLimit) {
     subcount: meta ? meta.subcount : subcount,
   }));
 }
+
+const bulkAction = (action) => (notifications) => API.post(`/api/notifications/`, {
+  action,
+  resources: notifications.map(notification => ({ id: notification.id })),
+});
+
+export const markRead = bulkAction('mark_as_seen');
+export const clear = bulkAction('delete');
