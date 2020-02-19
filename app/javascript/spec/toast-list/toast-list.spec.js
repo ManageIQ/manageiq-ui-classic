@@ -23,13 +23,6 @@ describe('Toast list tests', () => {
   };
   const mockStore = configureStore([thunk]);
 
-  beforeEach(() => {
-
-  });
-
-  afterEach(() => {
-  });
-
   it('should render correctly with notifications', () => {
     const store = mockStore({ ...initialState });
     const wrapper = mount(
