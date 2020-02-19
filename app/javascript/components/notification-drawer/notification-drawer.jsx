@@ -5,7 +5,7 @@ import {
   Button, NotificationDrawer as Drawer, Notification, MenuItem, NotificationContent, NotificationInfo, NotificationMessage, Icon,
 } from 'patternfly-react';
 import classnames from 'classnames';
-import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
+import { getNotficationStatusIconName, newCountText, viewDetails } from './helpers';
 import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend.js';
 import {
   toggleDrawerVisibility, markNotificationRead, markAllRead, clearNotification, clearAll, toggleMaxNotifications,
@@ -42,7 +42,7 @@ const NotificationDrawer = () => {
                       {__('Events')}
                     </a>
                   </Drawer.PanelTitle>
-                  <Drawer.PanelCounter text={unreadCountText(unreadCount)} />
+                  <Drawer.PanelCounter text={newCountText(unreadCount)} />
                 </Drawer.PanelHeading>
                 { isPanelExpanded && (
                   <Drawer.PanelCollapse>
