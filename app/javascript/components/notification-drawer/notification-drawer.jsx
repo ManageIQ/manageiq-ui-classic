@@ -76,7 +76,7 @@ const NotificationDrawer = () => {
                               eventKey="2"
                               header={false}
                               onClick={
-                                () => notification.unread && dispatch(markNotificationRead(notification.id))
+                                () => notification.unread && dispatch(markNotificationRead(notification))
                               }
                             >
                               {__('Mark as read')}
@@ -98,14 +98,14 @@ const NotificationDrawer = () => {
                             name={getNotficationStatusIconName(notification)}
                             type="pf"
                             onClick={
-                              () => notification.unread && dispatch(markNotificationRead(notification.id))
+                              () => notification.unread && dispatch(markNotificationRead(notification))
                             }
                           />
                           <NotificationContent>
                             <NotificationMessage
                               title={notification.message}
                               onClick={
-                                () => notification.unread && dispatch(markNotificationRead(notification.id))
+                                () => notification.unread && dispatch(markNotificationRead(notification))
                               }
                             >
                               {notification.message}

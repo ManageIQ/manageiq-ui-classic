@@ -22,9 +22,9 @@ const ToastList = () => {
             persistent={toastNotification.type === 'error'}
             onDismiss={(event) => {
               if (event) {
-                return dispatch(markNotificationRead(toastNotification.id));
+                return dispatch(markNotificationRead(toastNotification));
               }
-              return dispatch(removeToastNotification(toastNotification.id));
+              return dispatch(removeToastNotification(toastNotification));
             }}
             timerdelay={notificationTimerDelay}
           >

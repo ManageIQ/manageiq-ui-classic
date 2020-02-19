@@ -85,7 +85,7 @@ describe('Notifications actions tests', () => {
       payload: '10000000003625',
       type: MARK_NOTIFICATION_READ,
     };
-    return store.dispatch(markNotificationRead(notification.id)).then(() => {
+    return store.dispatch(markNotificationRead(notification)).then(() => {
       expect(store.getActions()).toEqual([expectedPayload]);
       done();
     });

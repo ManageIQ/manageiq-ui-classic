@@ -29,11 +29,18 @@ export const addNotification = (notification) => (dispatch) => {
 
 export const toggleDrawerVisibility = () => ({ type: TOGGLE_DRAWER_VISIBILITY });
 
-export const markNotificationRead = notificationId => dispatch => backend.markRead([{id: notificationId}])
-  .then(() =>
-    dispatch({ type: MARK_NOTIFICATION_READ, payload: notificationId }));
+export const markNotificationRead = (notification) => (dispatch) => {
+  return backend.markRead([notification])
+    .then(() => dispatch({
+      type: MARK_NOTIFICATION_READ,
+      payload: notification.id,
+    }));
+};
 
-export const removeToastNotification = notificationId => ({ type: REMOVE_TOAST_NOTIFICATION, payload: notificationId });
+export const removeToastNotification = (notification) => ({
+  type: REMOVE_TOAST_NOTIFICATION,
+  payload: notification.id,
+});
 
 export const markAllRead = (notifications) => (dispatch) => {
   return backend.markRead(notifications)
