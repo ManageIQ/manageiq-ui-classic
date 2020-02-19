@@ -23,8 +23,8 @@ import {
 
 const lowerMaxNotifications = 1;
 
-jest.mock('../../packs/notification-drawer-common', () => ({
-  notificationsInit: () => {},
+jest.mock('../../notifications/backend.js', () => ({
+  load: (_useLimit) => {},
   maxNotifications: 1,
 }));
 

@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import moment from 'moment';
-import { notificationsInit, convert } from '../../notifications/backend.js';
+import * as backend from '../../notifications/backend.js';
 import { API } from '../../http_api';
 
 export const NOTIFICATIONS_ACTIONS_PREFIX = '@@notifications';
@@ -15,12 +15,12 @@ export const CLEAR_ALL = `${NOTIFICATIONS_ACTIONS_PREFIX}/clearAll`;
 export const TOGGLE_MAX_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/toggleMaxNotifications`;
 
 export const initNotifications = useLimit => dispatch =>
-  notificationsInit(useLimit)
+  backend.load(useLimit)
     .then(({ notifications, subcount }) =>
       dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: subcount } }));
 
 export const addNotification = data => (dispatch) => {
-  const newNotification = convert(data.notification);
+  const newNotification = backend.convert(data.notification);
   dispatch({ type: ADD_NOTIFICATION, payload: newNotification });
 };
 
