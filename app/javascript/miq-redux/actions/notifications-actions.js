@@ -1,7 +1,6 @@
 import { get } from 'lodash';
 import moment from 'moment';
 import { notificationsInit } from '../../notifications/backend.js';
-import { viewDetails } from '../../components/notification-drawer/helpers';
 import { API } from '../../http_api';
 
 export const NOTIFICATIONS_ACTIONS_PREFIX = '@@notifications';
@@ -31,8 +30,6 @@ export const addNotification = data => (dispatch) => {
     type: data.notification.level === 'danger' ? 'error' : data.notification.level,
     message: msg,
     data: notificationData,
-    actionTitle: notificationData.link ? __('View details') : undefined,
-    actionCallback: notificationData.link ? viewDetails : undefined,
     timeStamp: moment(new Date()).utc().format(),
   };
   dispatch({ type: ADD_NOTIFICATION, payload: newNotification });
