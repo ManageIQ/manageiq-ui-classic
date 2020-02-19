@@ -1,15 +1,14 @@
 import * as backend from '../../notifications/backend.js';
 
-export const NOTIFICATIONS_ACTIONS_PREFIX = '@@notifications';
-export const INIT_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/initNotifications`;
-export const ADD_NOTIFICATION = `${NOTIFICATIONS_ACTIONS_PREFIX}/addNotification`;
-export const TOGGLE_DRAWER_VISIBILITY = `${NOTIFICATIONS_ACTIONS_PREFIX}/toggleDrawerVisibility`;
-export const MARK_NOTIFICATION_READ = `${NOTIFICATIONS_ACTIONS_PREFIX}/markNotificationRead`;
-export const REMOVE_TOAST_NOTIFICATION = `${NOTIFICATIONS_ACTIONS_PREFIX}/removeToastNotification`;
-export const MARK_ALL_READ = `${NOTIFICATIONS_ACTIONS_PREFIX}/markAllRead`;
-export const CLEAR_NOTIFICATION = `${NOTIFICATIONS_ACTIONS_PREFIX}/clearNotification`;
-export const CLEAR_ALL = `${NOTIFICATIONS_ACTIONS_PREFIX}/clearAll`;
-export const TOGGLE_MAX_NOTIFICATIONS = `${NOTIFICATIONS_ACTIONS_PREFIX}/toggleMaxNotifications`;
+export const INIT_NOTIFICATIONS = '@@notifications/initNotifications';
+export const ADD_NOTIFICATION = '@@notifications/addNotification';
+export const TOGGLE_DRAWER_VISIBILITY = '@@notifications/toggleDrawerVisibility';
+export const MARK_NOTIFICATION_READ = '@@notifications/markNotificationRead';
+export const REMOVE_TOAST_NOTIFICATION = '@@notifications/removeToastNotification';
+export const MARK_ALL_READ = '@@notifications/markAllRead';
+export const CLEAR_NOTIFICATION = '@@notifications/clearNotification';
+export const CLEAR_ALL = '@@notifications/clearAll';
+export const TOGGLE_MAX_NOTIFICATIONS = '@@notifications/toggleMaxNotifications';
 
 export const initNotifications = (useLimit) => (dispatch) => {
   return backend.load(useLimit)
@@ -23,11 +22,15 @@ export const initNotifications = (useLimit) => (dispatch) => {
 };
 
 export const addNotification = (notification) => (dispatch) => {
-  const newNotification = backend.convert(notification);
-  dispatch({ type: ADD_NOTIFICATION, payload: newNotification });
+  dispatch({
+    type: ADD_NOTIFICATION,
+    payload: backend.convert(notification),
+  });
 };
 
-export const toggleDrawerVisibility = () => ({ type: TOGGLE_DRAWER_VISIBILITY });
+export const toggleDrawerVisibility = () => ({
+  type: TOGGLE_DRAWER_VISIBILITY,
+});
 
 export const markNotificationRead = (notification) => (dispatch) => {
   return backend.markRead([notification])
@@ -44,7 +47,9 @@ export const removeToastNotification = (notification) => ({
 
 export const markAllRead = (notifications) => (dispatch) => {
   return backend.markRead(notifications)
-    .then(() => dispatch({ type: MARK_ALL_READ }));
+    .then(() => dispatch({
+      type: MARK_ALL_READ,
+    }));
 };
 
 export const clearNotification = (notification, useLimit) => (dispatch) => {
@@ -63,7 +68,7 @@ export const clearAll = (notifications, useLimit) => (dispatch) => {
     .then(() => {
       dispatch({
         type: CLEAR_ALL,
-        payload: resources,
+        payload: notifications.map((notification) => ({id: notification.id})),
       });
       dispatch(initNotifications(useLimit));
     });
