@@ -128,9 +128,11 @@ class EmsInfraDashboardService < EmsDashboardService
     current_user = @controller.current_user
     tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
 
-    @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
-                                     .where(:resource => (@ems || ManageIQ::Providers::InfraManager.all))
-                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
+    @daily_metrics ||= begin
+      metric_rollup_scope = MetricRollup.where(:capture_interval_name => 'daily', :time_profile => tp)
+      metric_rollup_scope = metric_rollup_scope.where(:resource => @ems)
+      metric_rollup_scope.where('timestamp > ?', 30.days.ago.utc).order('timestamp')
+    end
   end
 
   def openstack?
