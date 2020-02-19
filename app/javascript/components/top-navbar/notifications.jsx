@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Icon } from 'patternfly-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveNotificationDrawerVisibility } from '../notification-drawer/helpers';
+import { saveNotificationDrawerVisibility, unreadCountText } from '../notification-drawer/helpers';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 
 const Notifications = () => {
@@ -17,7 +17,7 @@ const Notifications = () => {
       <a
         id="notifications-btn"
         className="nav-item-iconic drawer-pf-trigger-icon"
-        title={`${unreadCount} ${__('unread notifications')}`}
+        title={unreadCountText(unreadCount)}
         onClick={() => {
           dispatch({ type: TOGGLE_DRAWER_VISIBILITY });
         }}

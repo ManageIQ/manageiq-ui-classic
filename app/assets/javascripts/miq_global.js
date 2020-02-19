@@ -55,6 +55,7 @@ if (!window.ManageIQ) {
     },
     move: { //methods to move elements between Arrays or in an Array
     },
+    notifications: {},  // .init() initializes notifications
     noCollapseEvent: false, // enable/disable events fired after collapsing an accordion
     observe: { // keeping track of data-miq_observe requests
       processing: false, // is a request currently being processed?

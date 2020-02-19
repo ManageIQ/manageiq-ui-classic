@@ -25,7 +25,7 @@ import {
 } from '../../../miq-redux/actions/notifications-actions';
 import notifications from '../../fixtures/notifications.json';
 import initResources from '../../fixtures/resources.json';
-import { maxNotifications } from '../../../packs/notification-drawer-common';
+import { maxNotifications } from '../../../notifications/backend.js';
 
 describe('Notifications actions tests', () => {
   const initialState = {
@@ -80,12 +80,15 @@ describe('Notifications actions tests', () => {
   it('should dispatch markNotificationRead correctly', (done) => {
     const store = mockStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
-    fetchMock.postOnce(`/api/notifications/${notification.id}`, { action: 'mark_as_seen' });
+    fetchMock.postOnce('/api/notifications/', {
+      action: 'mark_as_seen',
+      resources: [{ id: notification.id }],
+    });
     const expectedPayload = {
       payload: '10000000003625',
       type: MARK_NOTIFICATION_READ,
     };
-    return store.dispatch(markNotificationRead(notification.id)).then(() => {
+    return store.dispatch(markNotificationRead(notification)).then(() => {
       expect(store.getActions()).toEqual([expectedPayload]);
       done();
     });
@@ -95,8 +98,9 @@ describe('Notifications actions tests', () => {
     const store = mockStore(initialState);
     const expectedPayload = {
       type: REMOVE_TOAST_NOTIFICATION,
+      payload: '123',
     };
-    store.dispatch(removeToastNotification());
+    store.dispatch(removeToastNotification({ id: '123' }));
     return expect(store.getActions()).toEqual([expectedPayload]);
   });
 
@@ -117,7 +121,10 @@ describe('Notifications actions tests', () => {
   it('should dispatch clearNotification correctly', (done) => {
     const store = mockStore(initialState);
     const notification = store.getState().notificationReducer.notifications[0];
-    fetchMock.deleteOnce(`/api/notifications/${notification.id}`, {});
+    fetchMock.postOnce('/api/notifications/', {
+      action: 'delete',
+      resources: [{ id: notification.id }],
+    });
     fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100', initResources);
     fetchMock.getOnce('/api/notifications', {});
     const expectedPayload = expect.objectContaining({

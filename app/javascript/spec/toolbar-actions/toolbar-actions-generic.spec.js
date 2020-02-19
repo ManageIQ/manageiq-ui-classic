@@ -1,5 +1,6 @@
-import getGridChecks from '../../packs/toolbar-actions-common';
 import { onCustomAction } from '../../toolbar-actions/custom-action';
+import { getGridChecks } from '../../toolbar-actions/util.js';
+import '../../packs/toolbar-actions-common.js'; // subscribeToRx
 
 require('../helpers/angular.js');
 require('../helpers/API.js');

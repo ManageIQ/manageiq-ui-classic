@@ -1,5 +1,5 @@
-import getGridChecks from '../../packs/toolbar-actions-common';
 import * as deleteActions from '../../toolbar-actions/delete';
+import { getGridChecks } from '../../toolbar-actions/util.js';
 
 require('../helpers/angular.js');
 require('../helpers/addFlash.js');

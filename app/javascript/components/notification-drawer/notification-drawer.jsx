@@ -5,8 +5,8 @@ import {
   Button, NotificationDrawer as Drawer, Notification, MenuItem, NotificationContent, NotificationInfo, NotificationMessage, Icon,
 } from 'patternfly-react';
 import classnames from 'classnames';
-import { getNotficationStatusIconName, unreadCountText, viewDetails } from './helpers';
-import { maxNotifications as maxNotificationsConstant } from '../../packs/notification-drawer-common';
+import { getNotficationStatusIconName, newCountText, viewDetails } from './helpers';
+import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend.js';
 import {
   toggleDrawerVisibility, markNotificationRead, markAllRead, clearNotification, clearAll, toggleMaxNotifications,
 } from '../../miq-redux/actions/notifications-actions';
@@ -42,7 +42,7 @@ const NotificationDrawer = () => {
                       {__('Events')}
                     </a>
                   </Drawer.PanelTitle>
-                  <Drawer.PanelCounter text={unreadCountText(unreadCount)} />
+                  <Drawer.PanelCounter text={newCountText(unreadCount)} />
                 </Drawer.PanelHeading>
                 { isPanelExpanded && (
                   <Drawer.PanelCollapse>
@@ -76,7 +76,7 @@ const NotificationDrawer = () => {
                               eventKey="2"
                               header={false}
                               onClick={
-                                () => notification.unread && dispatch(markNotificationRead(notification.id))
+                                () => notification.unread && dispatch(markNotificationRead(notification))
                               }
                             >
                               {__('Mark as read')}
@@ -87,7 +87,7 @@ const NotificationDrawer = () => {
                               eventKey="3"
                               header={false}
                               onClick={
-                                () => dispatch(clearNotification(notification, Boolean(maxNotifications)))
+                                () => dispatch(clearNotification(notification, !!maxNotifications))
                               }
                             >
                               {__('Remove')}
@@ -98,14 +98,14 @@ const NotificationDrawer = () => {
                             name={getNotficationStatusIconName(notification)}
                             type="pf"
                             onClick={
-                              () => notification.unread && dispatch(markNotificationRead(notification.id))
+                              () => notification.unread && dispatch(markNotificationRead(notification))
                             }
                           />
                           <NotificationContent>
                             <NotificationMessage
                               title={notification.message}
                               onClick={
-                                () => notification.unread && dispatch(markNotificationRead(notification.id))
+                                () => notification.unread && dispatch(markNotificationRead(notification))
                               }
                             >
                               {notification.message}
@@ -165,7 +165,7 @@ const NotificationDrawer = () => {
                           bsStyle="link"
                           disabled={notifications.length === 0}
                           onClick={
-                            () => dispatch(clearAll(notifications, Boolean(maxNotifications)))
+                            () => dispatch(clearAll(notifications, !!maxNotifications))
                           }
                         >
                           {__('Clear All')}

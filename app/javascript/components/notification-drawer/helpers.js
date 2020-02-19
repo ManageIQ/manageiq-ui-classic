@@ -3,7 +3,11 @@ export const saveNotificationDrawerVisibility = (isDrawerVisible) => {
 };
 
 export const unreadCountText = function(count) {
-  return sprintf(__('%d New'), count);
+  return sprintf(n__('%d unread notification', '%d unread notifications', count), count);
+};
+
+export const newCountText = function(count) {
+  return sprintf(n__('%d New', '%d New', count), count);
 };
 
 export const getNotficationStatusIconName = notification => (

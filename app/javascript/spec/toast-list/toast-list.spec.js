@@ -23,13 +23,6 @@ describe('Toast list tests', () => {
   };
   const mockStore = configureStore([thunk]);
 
-  beforeEach(() => {
-
-  });
-
-  afterEach(() => {
-  });
-
   it('should render correctly with notifications', () => {
     const store = mockStore({ ...initialState });
     const wrapper = mount(
@@ -54,7 +47,10 @@ describe('Toast list tests', () => {
   });
 
   it('should dispatch markNotificationRead after click on close button', async(done) => {
-    fetchMock.postOnce('/api/notifications/10000000003625', {});
+    fetchMock.postOnce('/api/notifications/', {
+      action: 'mark_all_seen',
+      resources: [{ id: '10000000003625' }],
+    });
     const store = mockStore(initialState);
     const wrapper = mount(
       <Provider store={store}>

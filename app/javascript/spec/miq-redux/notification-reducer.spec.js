@@ -1,5 +1,5 @@
 import { notificationReducer } from '../../miq-redux/notification-reducer';
-import { maxNotifications } from '../../packs/notification-drawer-common';
+import { maxNotifications } from '../../notifications/backend.js';
 import {
   ADD_NOTIFICATION,
   TOGGLE_DRAWER_VISIBILITY,

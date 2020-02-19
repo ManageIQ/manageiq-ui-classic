@@ -112,7 +112,7 @@ exports[`Top navbar tests should render correctly 1`] = `
           className="nav-item-iconic drawer-pf-trigger-icon"
           id="notifications-btn"
           onClick={[Function]}
-          title="1 unread notifications"
+          title="1 unread notification"
         >
           <Icon
             name="bell"
