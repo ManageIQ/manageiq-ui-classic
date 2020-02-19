@@ -1,17 +1,21 @@
 export const maxNotifications = 100;
 
 export function convert(resource) {
-  const message = window.miqFormatNotification(resource.details.text, resource.details.bindings);
+  // API: resource.id, resource.details.text
+  // ActionCable: resource.id, resource.text
+  let details = resource.details || resource;
+
+  const message = window.miqFormatNotification(details.text, details.bindings);
+  const data = { link: details.bindings && details.bindings.link };
+
   return {
     id: resource.id,
     notificationType: 'event',
     unread: !resource.seen,
-    type: resource.details.level,
+    type: details.level,
     message,
-    data: {
-      link: get(resource.details, 'bindings.link'),
-    },
+    data,
     href: resource.href,
-    timeStamp: resource.details.created_at,
+    timeStamp: details.created_at,
   };
 }
