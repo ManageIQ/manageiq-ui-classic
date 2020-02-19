@@ -19,8 +19,8 @@ export const initNotifications = useLimit => dispatch =>
     .then(({ notifications, subcount }) =>
       dispatch({ type: INIT_NOTIFICATIONS, payload: { notifications, count: subcount } }));
 
-export const addNotification = data => (dispatch) => {
-  const newNotification = backend.convert(data.notification);
+export const addNotification = (notification) => (dispatch) => {
+  const newNotification = backend.convert(notification);
   dispatch({ type: ADD_NOTIFICATION, payload: newNotification });
 };
 
