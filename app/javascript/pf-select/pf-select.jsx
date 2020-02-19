@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect, { components } from 'react-select';
-import { __ } from '../global-functions';
 import customStyles from './select-styles';
 
 const selectValue = (option, simpleValue) =>

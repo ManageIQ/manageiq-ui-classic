@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Form } from 'patternfly-react';
-import { __ } from '../../../global-functions';
 
 const TagModifier = ({ header, hideHeader, children }) => (
   <React.Fragment>

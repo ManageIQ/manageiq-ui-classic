@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, ControlLabel, FormGroup } from 'patternfly-react';
-import { __ } from '../../../global-functions';
 import TagSelector from './TagSelector';
 import TaggingPropTypes from '../TaggingPropTypes';
 

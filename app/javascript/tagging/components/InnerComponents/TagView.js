@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'patternfly-react';
 import TagCategory from './TagCategory';
-import { __ } from '../../../global-functions';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagView extends React.Component {

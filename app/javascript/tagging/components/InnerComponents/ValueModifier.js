@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, ControlLabel, FormGroup } from 'patternfly-react';
 import ValueSelector from './ValueSelector';
-import { __ } from '../../../global-functions';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 const ValueModifier = ({

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { __ } from '../../../global-functions';
 import TaggingPropTypes from '../TaggingPropTypes';
 import Select from '../../../forms/pf-select';
 
