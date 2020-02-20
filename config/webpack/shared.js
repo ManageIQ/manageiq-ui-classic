@@ -21,6 +21,7 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
 const sharedPackages = [
   'angular',
+  'connected-react-router',
   'jquery',
   'lodash',
   'moment',
@@ -31,6 +32,8 @@ const sharedPackages = [
   'react-bootstrap',
   'react-dom',
   'react-redux',
+  'react-router',
+  'react-router-dom',
   'redux',
 ];
 

@@ -16,7 +16,8 @@ function rootReducer(state) {
  * Initial reducer
  * @param {Object} asyncReducers - object of reducers
  */
-export default ({ asyncReducers = {}, history }) => connectRouter(history)(combineReducers({
+export default ({ asyncReducers = {}, history }) => (combineReducers({
   rootReducer,
+  router: connectRouter(history),
   ...asyncReducers,
 }));
