@@ -193,6 +193,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.customButtonModel.resource_action.ae_attributes.service_template = vm.customButtonModel.uri_attributes.service_template;
 
     vm.customButtonModel.resource_action = {
+      id : vm.customButtonModel.resource_id,
       dialog_id: vm.customButtonModel.dialog_id,
       ae_namespace: 'SYSTEM',
       ae_class: 'PROCESS',
@@ -258,6 +259,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     vm.customButtonModel.display_for = response.options.display_for;
     vm.customButtonModel.submit_how = response.options.submit_how;
 
+    vm.customButtonModel.resource_id = response.resource_action.id;
     vm.customButtonModel.dialog_id = response.resource_action.dialog_id;
     vm.customButtonModel.ae_instance = response.resource_action.ae_instance;
     vm.customButtonModel.ae_message = response.resource_action.ae_message;
