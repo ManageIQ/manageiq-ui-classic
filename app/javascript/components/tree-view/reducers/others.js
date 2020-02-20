@@ -38,3 +38,13 @@ export const scrollToNode = (state, action) => {
 
   return state;
 };
+
+export const expandAll = (state, action) => {
+  const newState = {};
+
+  Object.entries(state).forEach(([key, obj]) => {
+    newState[key] = Tree.nodeExpanded(obj, action.value);
+  });
+
+  return newState;
+};

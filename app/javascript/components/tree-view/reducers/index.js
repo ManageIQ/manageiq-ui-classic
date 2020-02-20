@@ -4,6 +4,7 @@ import {
   select,
   scrollToNode,
   expand,
+  expandAll,
 } from './others';
 
 const actionsPrefix = (prefix) => {
@@ -22,6 +23,7 @@ export const ACTIONS = {
   SELECT: '@@tree/selectNode',
   SELECT_SILENT: '@@tree/selectNodeSilent',
   SCROLL_TO_NODE: '@@tree/scrollToNode',
+  EXPAND_ALL: '@@tree/expandAll',
   EXPAND: '@@tree/expandNode',
 };
 
@@ -43,6 +45,7 @@ const reducers = (oncheck, onclick) => (state = {}, action) => {
     case ACTIONS.SELECT_SILENT: return select(state, action);
     case ACTIONS.SCROLL_TO_NODE: return scrollToNode(state, action);
     case ACTIONS.EXPAND: return expand(state, action);
+    case ACTIONS.EXPAND_ALL: return expandAll(state, action);
     default: return state;
   }
 };
