@@ -186,11 +186,11 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       submit_how: vm.customButtonModel.submit_how,
     };
 
-    vm.customButtonModel.resource_action.ae_attributes = _.zipObject(
+    vm.customButtonModel.uri_attributes = _.zipObject(
       vm.customButtonModel.attribute_names,
       vm.customButtonModel.attribute_values);
-    vm.customButtonModel.resource_action.ae_attributes.request = vm.customButtonModel.request;
-    vm.customButtonModel.resource_action.ae_attributes.service_template = vm.customButtonModel.uri_attributes.service_template;
+    vm.customButtonModel.uri_attributes.request = vm.customButtonModel.request;
+    vm.customButtonModel.uri_attributes.service_template = vm.customButtonModel.uri_attributes.service_template;
 
     vm.customButtonModel.resource_action = {
       id : vm.customButtonModel.resource_id,
@@ -199,7 +199,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       ae_class: 'PROCESS',
       ae_instance: vm.customButtonModel.ae_instance,
       ae_message: vm.customButtonModel.ae_message,
-      ae_attributes: vm.customButtonModel.resource_action.ae_attributes,
     };
 
     if (vm.customButtonModel.current_visibility === 'role') {
@@ -209,7 +208,7 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     }
     // set uri_attributes to default for non-Ansible button
     if (vm.customButtonModel.button_type === "default") {
-      vm.customButtonModel.uri_attributes = {"request": vm.customButtonModel.request, service_template: null, hosts: null};
+      Object.assign(vm.customButtonModel.uri_attributes, {"request": vm.customButtonModel.request, service_template: null, hosts: null});
     };
 
     vm.customButtonModel.visibility = {
@@ -303,8 +302,8 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       vm.customButtonModel.attribute_values = [];
     }
 
-    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.resource_action.ae_attributes);
-    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.uri_attributes);
+    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.uri_attributes);
     vm.customButtonModel.noOfAttributeValueRows = vm.customButtonModel.attribute_names.length;
 
     vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
