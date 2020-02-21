@@ -186,11 +186,10 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       submit_how: vm.customButtonModel.submit_how,
     };
 
-    vm.customButtonModel.uri_attributes = _.zipObject(
+    Object.assign(vm.customButtonModel.uri_attributes, _.zipObject(
       vm.customButtonModel.attribute_names,
-      vm.customButtonModel.attribute_values);
+      vm.customButtonModel.attribute_values));
     vm.customButtonModel.uri_attributes.request = vm.customButtonModel.request;
-    vm.customButtonModel.uri_attributes.service_template = vm.customButtonModel.uri_attributes.service_template;
 
     vm.customButtonModel.resource_action = {
       id : vm.customButtonModel.resource_id,
