@@ -131,9 +131,13 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
   };
 
   vm.resetClicked = function(angularForm) {
-    vm.customButtonModel = angular.element.extend(true, {}, vm.modelCopy);
+    vm.customButtonModel = angular.extend({}, vm.modelCopy);
 
-    assignAllObjectsToKeyValueArrays(true);
+    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.resource_action.ae_attributes);
+    vm.customButtonModel.noOfAttributeValueRows = vm.customButtonModel.attribute_names.length;
+
+    vm.modelCopy = angular.extend({}, vm.customButtonModel);
 
     angularForm.$setUntouched(true);
     angularForm.$setPristine(true);
@@ -292,19 +296,6 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
     } else {
       vm.inventory = "manual";
     }
-    vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
-  }
-
-  function assignAllObjectsToKeyValueArrays(purge) {
-    if (purge) {
-      vm.customButtonModel.attribute_names = [];
-      vm.customButtonModel.attribute_values = [];
-    }
-
-    vm.customButtonModel.attribute_values = Object.values(vm.customButtonModel.uri_attributes);
-    vm.customButtonModel.attribute_names = Object.keys(vm.customButtonModel.uri_attributes);
-    vm.customButtonModel.noOfAttributeValueRows = vm.customButtonModel.attribute_names.length;
-
     vm.modelCopy = angular.element.extend(true, {}, vm.customButtonModel);
   }
 }
