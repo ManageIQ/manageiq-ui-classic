@@ -10,6 +10,7 @@ class PictureController < ApplicationController
 
     fresh_when(:etag => picture.md5, :public => true)
 
+    extension = 'svg+xml' if extension == 'svg'
     send_data(picture.content, :type => "image/#{extension}", :disposition => 'inline') if stale?
   end
 end
