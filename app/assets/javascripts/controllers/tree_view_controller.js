@@ -21,7 +21,9 @@
       }
 
       if (payload.breadcrumbSelect) {
-        vm.nodeSelect({key: payload.breadcrumbSelect.key}, payload.breadcrumbSelect.path);
+        vm.nodeSelect({
+          key: payload.breadcrumbSelect.item.key, text: payload.breadcrumbSelect.item.title,
+        }, payload.breadcrumbSelect.path);
       }
     });
 
@@ -103,7 +105,7 @@
     };
 
     vm.nodeSelect = function(node, path) {
-      var url = path + '?id=' + encodeURIComponent(node.key.split('__')[0]);
+      var url = path + '?id=' + encodeURIComponent(node.key.split('__')[0]) + '&text=' +  encodeURIComponent(node.text);
       miqJqueryRequest(url, {beforeSend: true});
     };
   };
