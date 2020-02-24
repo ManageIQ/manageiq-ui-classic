@@ -47,8 +47,9 @@ module OpsController::Settings::Tags
       @category = @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("category_edit__#{id}", "replace_cell__explorer")
+
       @ldap_group = @edit[:ldap_group] if @edit && @edit[:ldap_group]
       @category = @edit[:category] if @edit && @edit[:category]
       if @edit[:new][:name].blank?
@@ -124,6 +125,7 @@ module OpsController::Settings::Tags
   # AJAX driven routine to check for changes in ANY field on the user form
   def category_field_changed
     return unless load_edit("category_edit__#{params[:id]}", "replace_cell__explorer")
+
     category_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
@@ -297,6 +299,7 @@ module OpsController::Settings::Tags
     @categories = []                                 # Classifications array for first chooser
     cats.each do |c|
       next if c.read_only? # Show the non-read_only categories
+
       cat = {}
       cat[:id] = c.id
       cat[:description] = c.description
