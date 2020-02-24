@@ -70,7 +70,7 @@ const AsyncCredentials = ({
   };
 
   return (
-    <PasswordContext.Provider value={name}>
+    <PasswordContext.Provider value={{ name, edit }}>
       {formOptions.renderForm(fields.map(field => ({
         ...field,
         isDisabled: field.isDisabled || validating,
