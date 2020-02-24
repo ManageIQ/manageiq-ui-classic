@@ -101,7 +101,6 @@ const createSchema = isEditing => ({
             component: 'password-field',
             name: 'authentication.password',
             label: __('Password'),
-            edit: isEditing,
             isRequired: true,
             validate: [{ type: validatorTypes.REQUIRED }],
           }],

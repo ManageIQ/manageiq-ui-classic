@@ -80,7 +80,6 @@ exports[`PxeServersForm should render correctly 1`] = `
                       },
                       Object {
                         "component": "password-field",
-                        "edit": false,
                         "isRequired": true,
                         "label": "Password",
                         "name": "authentication.password",
