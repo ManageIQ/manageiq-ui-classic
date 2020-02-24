@@ -98,7 +98,7 @@ const createSchema = isEditing => ({
             isRequired: true,
             validate: [{ type: validatorTypes.REQUIRED }],
           }, {
-            component: 'secret-switch-field',
+            component: 'password-field',
             name: 'authentication.password',
             label: __('Password'),
             edit: isEditing,
