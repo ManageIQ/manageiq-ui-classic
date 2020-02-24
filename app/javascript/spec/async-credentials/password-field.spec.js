@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import SecretSwitchField from '../../components/async-credentials/secret-switch-field';
+import PasswordField from '../../components/async-credentials/password-field';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
 const DummyComponent = ({
@@ -41,12 +41,12 @@ describe('Secret switch field component', () => {
   });
 
   it('should render correctly in non edit mode', () => {
-    const wrapper = mount(<SecretSwitchField {...initialProps} />);
+    const wrapper = mount(<PasswordField {...initialProps} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('should render correctly in edit mode', () => {
-    const wrapper = mount(<SecretSwitchField {...initialProps} edit />);
+    const wrapper = mount(<PasswordField {...initialProps} edit />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ describe('Secret switch field component', () => {
    * https://github.com/airbnb/enzyme/issues/2011
    */
   it('should render correctly switch to editing', () => {
-    const wrapper = mount(<SecretSwitchField {...initialProps} edit />);
+    const wrapper = mount(<PasswordField {...initialProps} edit />);
     expect(wrapper.find(DummyComponent)).toHaveLength(0);
     wrapper.find('button').simulate('click');
     wrapper.update();
@@ -65,7 +65,7 @@ describe('Secret switch field component', () => {
   });
 
   it('should render correctly reset sercret field', () => {
-    const wrapper = mount(<SecretSwitchField {...initialProps} edit />);
+    const wrapper = mount(<PasswordField {...initialProps} edit />);
     wrapper.find('button').simulate('click');
     expect(wrapper.find(DummyComponent)).toHaveLength(1);
     wrapper.find('button').simulate('click');

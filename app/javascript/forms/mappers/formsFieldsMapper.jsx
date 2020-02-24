@@ -8,7 +8,7 @@ import DualGroup from '../../components/dual-group';
 import DualListSelect from '../../components/dual-list-select';
 import EditSecretField from '../../components/async-credentials/edit-secret-field';
 import InputWithDynamicPrefix from '../input-with-dynamic-prefix';
-import SecretSwitchField from '../../components/async-credentials/secret-switch-field';
+import PasswordField from '../../components/async-credentials/password-field';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 
 const fieldsMapper = {
@@ -19,7 +19,7 @@ const fieldsMapper = {
   'dual-list-select': DualListSelect,
   'input-with-dynamic-prefix': InputWithDynamicPrefix,
   hr: () => <hr />,
-  'secret-switch-field': SecretSwitchField,
+  'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'validate-provider-credentials': AsyncProviderCredentials,
   [componentTypes.SELECT]: props => <components.SelectField classNamePrefix="miq-ddf-select" {...props} />,

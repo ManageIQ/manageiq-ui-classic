@@ -79,7 +79,7 @@ exports[`PxeServersForm should render correctly 1`] = `
                         ],
                       },
                       Object {
-                        "component": "secret-switch-field",
+                        "component": "password-field",
                         "edit": false,
                         "isRequired": true,
                         "label": "Password",

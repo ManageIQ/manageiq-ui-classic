@@ -12,7 +12,7 @@ import { PasswordContext } from './async-credentials';
 import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 
-const SecretSwitchField = ({
+const PasswordField = ({
   edit,
   formOptions,
   isDisabled,
@@ -73,7 +73,7 @@ const SecretSwitchField = ({
   );
 };
 
-SecretSwitchField.propTypes = {
+PasswordField.propTypes = {
   FieldProvider: PropTypes.func.isRequired,
   edit: PropTypes.bool,
   formOptions: PropTypes.shape({
@@ -85,7 +85,7 @@ SecretSwitchField.propTypes = {
   validate: PropTypes.func,
 };
 
-SecretSwitchField.defaultProps = {
+PasswordField.defaultProps = {
   cancelEditLabel: __('Cancel'),
   changeEditLabel: __('Change'),
   isDisabled: false,
@@ -93,4 +93,4 @@ SecretSwitchField.defaultProps = {
   edit: false,
 };
 
-export default SecretSwitchField;
+export default PasswordField;
