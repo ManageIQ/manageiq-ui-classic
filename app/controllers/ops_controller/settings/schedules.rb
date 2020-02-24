@@ -161,12 +161,10 @@ module OpsController::Settings::Schedules
       automate_request = fetch_automate_request_vars(schedule)
     elsif schedule.towhat.nil?
       action_type = "vm"
+    elsif schedule.resource_type.nil?
+      action_type = "vm"
     else
-      if schedule.resource_type.nil?
-        action_type = "vm"
-      else
-        action_type ||= schedule.resource_type == "EmsCluster" ? "emscluster" : schedule.resource_type.underscore
-      end
+      action_type ||= schedule.resource_type == "EmsCluster" ? "emscluster" : schedule.resource_type.underscore
     end
 
     filter_type, filter_value = determine_filter_type_and_value(schedule)
@@ -179,7 +177,7 @@ module OpsController::Settings::Schedules
       :filter_type          => filter_type,
       :filter_value         => filter_value,
       :filtered_item_list   => filtered_item_list,
-      :log_userid           => log_userid ? log_userid : "",
+      :log_userid           => log_userid || "",
       :protocol             => protocol,
       :schedule_description => schedule.description,
       :schedule_enabled     => schedule.enabled ? "1" : "0",
@@ -192,12 +190,12 @@ module OpsController::Settings::Schedules
       :schedule_timer_value => schedule.run_at[:interval][:value].to_i,
       :uri                  => uri,
       :uri_prefix           => uri_prefix,
-      :log_aws_region       => log_aws_region ? log_aws_region : "",
-      :openstack_region     => openstack_region ? openstack_region : "",
+      :log_aws_region       => log_aws_region || "",
+      :openstack_region     => openstack_region || "",
       :keystone_api_version => keystone_api_version,
-      :v3_domain_ident      => v3_domain_ident ? v3_domain_ident : "",
-      :swift_api_port       => swift_api_port ? swift_api_port : 5000,
-      :security_protocol    => security_protocol ? security_protocol : ""
+      :v3_domain_ident      => v3_domain_ident || "",
+      :swift_api_port       => swift_api_port || 5000,
+      :security_protocol    => security_protocol || ""
     }
 
     if schedule.sched_action[:method] == "automation_request"
@@ -319,8 +317,7 @@ module OpsController::Settings::Schedules
   def schedule_resource_type_from_params_action
     case params[:action_typ]
     when "db_backup"          then "DatabaseBackup"
-    when /check_compliance\z/ then (params[:action_typ].split("_") - params[:action_typ].split("_").last(2)).join("_")
-                                                                                                            .classify
+    when /check_compliance\z/ then (params[:action_typ].split("_") - params[:action_typ].split("_").last(2)).join("_").classify
     when "emscluster"         then "EmsCluster"
     when "automation_request" then "AutomationRequest"
     else                           params[:action_typ].camelcase
@@ -512,6 +509,7 @@ module OpsController::Settings::Schedules
       ui_attrs = []
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         next unless params[:ui_attrs] && params[:ui_attrs][i.to_s]
+
         ui_attrs[i] = []
         ui_attrs[i][0] = params[:ui_attrs][i.to_s][0]
         ui_attrs[i][1] = params[:ui_attrs][i.to_s][1]
@@ -542,6 +540,7 @@ module OpsController::Settings::Schedules
 
   def build_attrs_from_params(params)
     return {} if params[:target_class].empty?
+
     klass = params[:target_class].constantize
     object = klass.find(params[:target_id])
     { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
@@ -613,9 +612,8 @@ module OpsController::Settings::Schedules
         end
       when "ems"          then {"=" => {"field" => "#{model}.ext_management_system-name", "value" => params[:filter_value]}}
       when "host"         then {"=" => {"field" => "#{model}.host-name", "value" => params[:filter_value]}}
-      when "miq_template", "vm", "container_image"
-                          then {"=" => {"field" => "#{model}-name", "value" => params[:filter_value]}}
-      else                     {"IS NOT NULL" => {"field" => "#{model}-name"}}
+      when "miq_template", "vm", "container_image" then {"=" => {"field" => "#{model}-name", "value" => params[:filter_value]}}
+      else {"IS NOT NULL" => {"field" => "#{model}-name"}}
       end
     end
   end
@@ -755,7 +753,7 @@ module OpsController::Settings::Schedules
     uri_settings = {}
     type = FileDepot.depot_description_to_class(params[:log_protocol])
     if type.try(:requires_credentials?)
-      log_password = params[:log_password] ? params[:log_password] : file_depot.try(:authentication_password)
+      log_password = params[:log_password] || file_depot.try(:authentication_password)
       uri_settings = {:username => params[:log_userid], :password => log_password}
     end
     uri_settings[:uri]                  = "#{params[:uri_prefix]}://#{params[:uri]}"
