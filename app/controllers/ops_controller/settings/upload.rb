@@ -21,7 +21,6 @@ module OpsController::Settings::Upload
     upload_logos(logo_file, params[:favicon], _('Custom favicon'), "ico")
   end
 
-
   def upload_logos(file, field, text, type)
     if field && field[:logo] && field[:logo].respond_to?(:read)
       if field[:logo].original_filename.split(".").last.downcase != type
@@ -39,6 +38,7 @@ module OpsController::Settings::Upload
 
   def upload_form_field_changed
     return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
+
     @edit[:new][:upload_type] = !params[:upload_type].nil? && params[:upload_type] != "" ? params[:upload_type] : nil
     msg = if params[:upload_type].present?
             _("Locate and upload a file to start the import process")
@@ -55,6 +55,7 @@ module OpsController::Settings::Upload
 
   def upload_csv
     return unless load_edit("#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
+
     @flash_array = []
     if params[:upload] && params[:upload][:file] && params[:upload][:file].respond_to?(:read)
       begin
