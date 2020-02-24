@@ -71,7 +71,6 @@ const PasswordField = ({
 
 PasswordField.propTypes = {
   FieldProvider: PropTypes.func.isRequired,
-  edit: PropTypes.bool,
   formOptions: PropTypes.shape({
     renderForm: PropTypes.func.isRequired,
   }).isRequired,
@@ -86,7 +85,6 @@ PasswordField.defaultProps = {
   changeEditLabel: __('Change'),
   isDisabled: false,
   validate: undefined,
-  edit: false,
 };
 
 export default PasswordField;
