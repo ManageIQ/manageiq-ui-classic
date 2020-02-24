@@ -50,7 +50,7 @@ function customImageController($timeout) {
       vm.picture.extension = 'png';
     } else if (imageFile.type === 'image/jpg' || imageFile.type === 'image/jpeg') {
       vm.picture.extension = 'jpg';
-    } else if (imageFile.type === 'image/svg') {
+    } else if (imageFile.type === 'image/svg' || imageFile.type === 'image/svg+xml') {
       vm.picture.extension = 'svg';
     } else {
       vm.angularForm.generic_object_definition_image_file_status.$setValidity('incompatibleFileType', false);
