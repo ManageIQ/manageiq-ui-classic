@@ -59,7 +59,7 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def fetch_services(query, retired)
-    services = Rbac.filtered(query.where(:retired => retired, :display => true))
+    services = Rbac.filtered(query.where(:retired => retired, :visible => true))
     Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
   end
 
