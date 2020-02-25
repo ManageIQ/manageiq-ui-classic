@@ -4,6 +4,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Unreleased as of Sprint 130 - 2020-02-17
+
+### Added
+* Added new Detailed Description field to Group edit/details screen  enhancement ivanchuk/yes settings [(#6680)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6680)
+* EMS validation: send only the listed fields to the API  enhancement [(#6674)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6674)
+* Introduce a DDF component for provider credentials validation  enhancement react [(#6657)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6657)
+* Deal with zones when running in pods  enhancement [(#6652)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6652)
+* Add APP_PATH to allow using Rails directly  developer enhancement [(#6647)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6647) 
+* Use cypress for integration tests  cypress dependencies enhancement test [(#6646)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6646) 
+
+### Fixed
+* Fix saving of ems_refresh_worker and ems_metrics_collector_worker [(#6678)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6678)
+* Fixed code to show title on empty line chart in Provider Dashboards [(#6676)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6676)
+* Redirect to proper controller for Edit and other actions on selected Host Aggregate [(#6649)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6649)
+* Send validationDependencies with when validating credentials [(#6673)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6673)
+
+## Unreleased as of Sprint 129 - 2020-02-03
+
+### Added
+* Identify invalid Catalog Items/Bundles in the UI [(#6448)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6448)
+* Allow non-JSON responses in miqFetch (add `options.skipJsonParsing`) [(#6645)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6645)
+
+### Fixed
+* Fix breadcrumb functionality on explorer screens that don’t contain trees [(#6056)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6056)
+* Remove Advanced Search from the  Config Mgmt Providers screen [(#6465)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6465)
+* Remove filter highlighting in accordions when  a filter has  been created and not applied [(#6602)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6602)
+* Display the toolbar for Report downloads on the Utilization ‘Report’ tab when data is available [(#6624)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6624)
+* Add missing dropdowns on the Service Dialog preview screen [(#6630)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6630)
+* Enable importing Tags for VMs using a CSV file [(#6633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6633)
+
+## Unreleased as of Sprint 128 - 2020-01-20
+
+### Added
+* Added Tags for PxeServers and their items [(#6509)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6509)
+* Added support for the Native viewer [(#6574)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6574)
+
+### Fixed
+* Removed a broken Resume button for VMs and Instances [(#6581)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6581)
+* Fixed missing data in PDFs generated from Saved Reports [(#6561)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6561)
+* Fixed Pod information on the Container Build summary screen [(#6575)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6575)
+* Styling improvements on the Container Build summary screen [(#6577)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6577)
+* Fixed VM & Instance retirement from the workflow screen [(#6585)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6585)
+* Enabled reconfiguring of VMs displayed in a nested list [(#6605)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6605)
+* Enabled flash message after managing policies on non-explorer screens [(#6622)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6622)
+
 ## Unreleased as of Sprint 127 - 2020-01-06
 
 ### Added
