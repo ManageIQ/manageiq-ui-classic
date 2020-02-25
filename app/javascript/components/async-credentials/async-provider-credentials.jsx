@@ -6,7 +6,7 @@ const AsyncProviderCredentials = ({ ...props }) => {
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const resource = pick(fields, fieldNames);
     API.post('/api/providers', { action: 'verify_credentials', resource }).then(({ results: [result] }) => {
-      const { task_id, success } = result; // eslint-disable-line camelcase
+      const { task_id, success } = result;
       // The request here can either create a background task or fail
       return success ? API.wait_for_task(task_id) : Promise.reject(result);
       // The wait_for_task request can succeed with valid or invalid credentials

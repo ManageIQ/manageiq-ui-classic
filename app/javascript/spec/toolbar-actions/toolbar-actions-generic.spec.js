@@ -30,7 +30,7 @@ describe('Toolbar actions', () => {
   });
 
   describe('Generic action', () => {
-    let add_flash; // eslint-disable-line camelcase
+    let add_flash;
 
     beforeEach(() => {
       spyOn(window.vanillaJsAPI, 'post').and.returnValue(Promise.resolve({
@@ -38,8 +38,8 @@ describe('Toolbar actions', () => {
           { success: true, message: 'some' },
         ],
       }));
-      add_flash = jasmine.createSpy('add_flash'); // eslint-disable-line camelcase
-      window.add_flash = add_flash; // eslint-disable-line camelcase
+      add_flash = jasmine.createSpy('add_flash');
+      window.add_flash = add_flash;
     });
 
     test('should send correct data', () => {
