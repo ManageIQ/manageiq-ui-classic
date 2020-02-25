@@ -428,7 +428,7 @@
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
-      - elsif [:addr_mode, :disk_format, :sysprep_identification, :schedule_type, :cloud_network_selection_method].include?(field)
+      - elsif [:addr_mode, :disk_format, :sysprep_identification, :schedule_type, :cloud_network_selection_method, :disk_sparsity].include?(field)
         -# Radio Button fields
         .col-md-8
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
