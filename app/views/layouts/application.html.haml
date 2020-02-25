@@ -20,7 +20,7 @@
     = render :partial => 'layouts/i18n_js'
 
     :javascript
-      ManageIQ.charts.provider = "#{Charting.backend}";
+      ManageIQ.charts.provider = "#{ManageIQ::Reporting::Charting.backend}";
       ManageIQ.browser = "#{j browser_info(:name_ui)}";
       ManageIQ.controller = "#{j controller_name}";
       ManageIQ.timezone = '#{j ::ActiveSupport::TimeZone::MAPPING[session[:user_tz]]}';

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   helper GtlHelper
   helper ChartingHelper
-  Charting.load_helpers(self)
+  ManageIQ::Reporting::Charting.load_helpers(self)
 
   include ActionView::Helpers::NumberHelper # bring in the number helpers for number_to_human_size
   include ActionView::Helpers::TextHelper
@@ -330,7 +330,7 @@ class ApplicationController < ActionController::Base
     end
 
     rpt.to_chart(settings(:display, :reporttheme), true, MiqReport.graph_options)
-    render Charting.render_format => rpt.chart
+    render ManageIQ::Reporting::Charting.render_format => rpt.chart
   end
 
   # Private method for processing params.

@@ -68,7 +68,7 @@
         %fieldset
           %h3
             = _('Display Settings')
-          - [[_("Chart Theme"), "display_reporttheme", Charting.chart_themes_for_select, :reporttheme, false],
+          - [[_("Chart Theme"), "display_reporttheme", ManageIQ::Reporting::Charting.chart_themes_for_select, :reporttheme, false],
              [_("Time Zone"), "display_timezone", ViewHelper::ALL_TIMEZONES, :timezone, true],
              [_("Locale"), "display_locale",      [[_("Global Default"), "default"]] + FastGettext.human_available_locales, :locale, false]].each do |display_settings|
             .form-group
