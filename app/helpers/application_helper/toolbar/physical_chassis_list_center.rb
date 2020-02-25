@@ -18,6 +18,8 @@ class ApplicationHelper::Toolbar::PhysicalChassisListCenter < ApplicationHelper:
               :action => 'blink_loc_led',
               :entity => 'physical_chassis'
             },
+            :enabled => false,
+            :onwhen  => "1+",
             :confirm => N_("Blink the Identify LED?"),
             :options => {:feature => :blink_loc_led}
           ),
@@ -31,6 +33,8 @@ class ApplicationHelper::Toolbar::PhysicalChassisListCenter < ApplicationHelper:
               :action => 'turn_on_loc_led',
               :entity => 'physical_chassis'
             },
+            :enabled => false,
+            :onwhen  => "1+",
             :confirm => N_("Turn on the Identify LED?"),
             :options => {:feature => :turn_on_loc_led}
           ),
@@ -44,6 +48,8 @@ class ApplicationHelper::Toolbar::PhysicalChassisListCenter < ApplicationHelper:
               :action => 'turn_off_loc_led',
               :entity => 'physical_chassis'
             },
+            :enabled => false,
+            :onwhen  => "1+",
             :confirm => N_("Turn off the Identify LED?"),
             :options => {:feature => :turn_off_loc_led}
           ),
