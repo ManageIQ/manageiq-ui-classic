@@ -189,10 +189,9 @@ function mainCustomButtonFormController(API, miqService, $q, $http) {
       display_for: vm.customButtonModel.display_for,
       submit_how: vm.customButtonModel.submit_how,
     };
-
-    Object.assign(vm.customButtonModel.uri_attributes, _.zipObject(
+    vm.customButtonModel.uri_attributes = _.zipObject(
       vm.customButtonModel.attribute_names,
-      vm.customButtonModel.attribute_values));
+      vm.customButtonModel.attribute_values);
     vm.customButtonModel.uri_attributes.request = vm.customButtonModel.request;
 
     vm.customButtonModel.resource_action = {
