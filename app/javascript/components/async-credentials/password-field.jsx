@@ -1,4 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
+import { HelpBlock } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -19,6 +20,7 @@ const PasswordField = ({
   validate,
   cancelEditLabel,
   changeEditLabel,
+  helperText,
   ...rest
 }) => {
   const { name: secretKey, edit } = useContext(PasswordContext);
@@ -62,6 +64,7 @@ const PasswordField = ({
               <Button type="button" onClick={() => setEditMode(editMode => !editMode)}>{changeEditLabel}</Button>
             </InputGroup.Button>
           </InputGroup>
+          { helperText && <HelpBlock>{ helperText }</HelpBlock> }
         </FormGroup>
       )}
       {!edit && formOptions.renderForm([secretField], formOptions)}
@@ -78,6 +81,7 @@ PasswordField.propTypes = {
   changeEditLabel: PropTypes.string,
   isDisabled: PropTypes.bool,
   validate: PropTypes.func,
+  helperText: PropTypes.string,
 };
 
 PasswordField.defaultProps = {
@@ -85,6 +89,7 @@ PasswordField.defaultProps = {
   changeEditLabel: __('Change'),
   isDisabled: false,
   validate: undefined,
+  helperText: undefined,
 };
 
 export default PasswordField;
