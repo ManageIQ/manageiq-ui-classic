@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagCategory Component match snapshot 1`] = `
+<FormGroup
+  bsClass="form-group"
+>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    lg={4}
+    md={4}
+    xs={12}
+  >
+    <ControlLabel
+      bsClass="control-label"
+      srOnly={false}
+    >
+      Category
+    </ControlLabel>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    lg={8}
+    md={8}
+    xs={12}
+  >
+    <TagSelector
+      infoText="Only a single value can be assigned from these categories"
+      onTagCategoryChange={[MockFunction]}
+      selectedOption={
+        Object {
+          "description": "animal",
+          "id": 1,
+        }
+      }
+      tagCategories={
+        Array [
+          Object {
+            "description": "Name",
+            "id": 1,
+          },
+          Object {
+            "description": "Number",
+            "id": 2,
+          },
+          Object {
+            "description": "Animal",
+            "id": 3,
+          },
+          Object {
+            "description": "Food",
+            "id": 4,
+          },
+        ]
+      }
+    />
+  </Col>
+</FormGroup>
+`;

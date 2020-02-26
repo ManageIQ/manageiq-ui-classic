@@ -1,10 +1,6 @@
 import React from 'react';
 
-import '@manageiq/react-ui-components/dist/tagging.css';
-import '@manageiq/react-ui-components/dist/quadicon.css';
-import '@manageiq/react-ui-components/dist/wooden-tree.css';
 import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-components/dist/textual_summary';
-import { TagView } from '@manageiq/react-ui-components/dist/tagging';
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
@@ -37,6 +33,7 @@ import ServiceForm from '../components/service-form';
 import SetOwnershipForm from '../components/set-ownership-form';
 import TableListViewWrapper from '../react/table_list_view_wrapper';
 import TaggingWrapperConnected from '../components/taggingWrapper';
+import { TagView } from '../tagging';
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import ToastList from '../components/toast-list/toast-list';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';

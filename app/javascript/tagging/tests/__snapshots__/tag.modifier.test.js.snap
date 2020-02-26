@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tagging modifier match snapshot 1`] = `
+<Fragment>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={12}
+    >
+      <h2>
+        Add/Modify tag
+      </h2>
+    </Col>
+  </Row>
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+  >
+    <CategoryModifier
+      categoryLabel="Category"
+      onTagCategoryChange={[Function]}
+      selectedTagCategory={
+        Object {
+          "description": "animal",
+          "id": 1,
+        }
+      }
+      tagCategories={
+        Array [
+          Object {
+            "description": "Name",
+            "id": 1,
+          },
+          Object {
+            "description": "Number",
+            "id": 2,
+          },
+          Object {
+            "description": "Animal",
+            "id": 3,
+          },
+          Object {
+            "description": "Food",
+            "id": 4,
+          },
+        ]
+      }
+    />
+    <ValueModifier
+      multiValue={false}
+      onTagValueChange={[Function]}
+      selectedTagValue={
+        Object {
+          "description": "duck",
+          "id": 1,
+        }
+      }
+      valueLabel="Value"
+      values={
+        Array [
+          Object {
+            "description": "Duck",
+            "id": 31,
+          },
+          Object {
+            "description": "Cat",
+            "id": 32,
+          },
+          Object {
+            "description": "Dog",
+            "id": 33,
+          },
+        ]
+      }
+    />
+  </Form>
+</Fragment>
+`;

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match snapshot 1`] = `
+<PfSelect
+  clearable={true}
+  input={
+    Object {
+      "name": "ValueSelector",
+      "onChange": [Function],
+      "value": 2,
+    }
+  }
+  meta={Object {}}
+  multi={false}
+  options={
+    Array [
+      Object {
+        "label": "Asterix",
+        "value": 1,
+      },
+      Object {
+        "label": "Obelix",
+        "value": 2,
+      },
+    ]
+  }
+  placeholder="Select tag value"
+  searchable={true}
+  simpleValue={true}
+/>
+`;
+
+exports[`match snapshot without multiple values 1`] = `
+<PfSelect
+  clearable={true}
+  input={
+    Object {
+      "name": "ValueSelector",
+      "onChange": [Function],
+      "value": 2,
+    }
+  }
+  meta={Object {}}
+  multi={false}
+  options={
+    Array [
+      Object {
+        "label": "Asterix",
+        "value": 1,
+      },
+      Object {
+        "label": "Obelix",
+        "value": 2,
+      },
+    ]
+  }
+  placeholder="Select tag value"
+  searchable={true}
+  simpleValue={true}
+/>
+`;

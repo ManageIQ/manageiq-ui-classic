@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
-import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '@manageiq/react-ui-components/dist/tagging';
+import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
 import { http } from '../http_api';
 
 const params = (type = 'default', state, tag = {}) => ({

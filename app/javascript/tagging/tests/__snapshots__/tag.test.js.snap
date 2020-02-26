@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag Component match snapshot 1`] = `
+<li
+  className="tag"
+  key="1"
+>
+  <Label
+    bsStyle="primary"
+    className="tagColor"
+    id="tag_value_1"
+    key="1"
+    onRemoveClick={[Function]}
+    title="duck"
+    type="default"
+  />
+</li>
+`;

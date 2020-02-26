@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag view match snapshot 1`] = `
+<div
+  id="assignments_div"
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={12}
+    >
+      <h2>
+        Assigned tags
+      </h2>
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={12}
+    >
+      <ul
+        className="list-inline"
+      >
+        <li
+          key="1"
+        >
+          <TagCategory
+            categoryTruncate={[Function]}
+            key="1"
+            onTagDeleteClick={[MockFunction]}
+            tagCategory={
+              Object {
+                "description": "Name",
+                "id": 1,
+              }
+            }
+            valueTruncate={[Function]}
+            values={
+              Array [
+                Object {
+                  "description": "Pepa",
+                  "id": 11,
+                },
+              ]
+            }
+          />
+        </li>
+      </ul>
+    </Col>
+  </Row>
+</div>
+`;

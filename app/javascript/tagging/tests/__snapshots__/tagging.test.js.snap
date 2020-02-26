@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tagging component without redux mapping match snapshot 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={6}
+      md={8}
+      xs={12}
+    >
+      <TagModifier
+        header="Add/Modify tag"
+        hideHeader={false}
+      >
+        <CategoryModifier
+          categoryLabel="Category"
+          onTagCategoryChange={[MockFunction]}
+          selectedTagCategory={
+            Object {
+              "description": "animal",
+              "id": 1,
+            }
+          }
+          tagCategories={
+            Array [
+              Object {
+                "description": "Name",
+                "id": 1,
+                "singleValue": undefined,
+              },
+              Object {
+                "description": "Number",
+                "id": 2,
+                "singleValue": undefined,
+              },
+              Object {
+                "description": "Animal",
+                "id": 3,
+                "singleValue": undefined,
+              },
+              Object {
+                "description": "Food",
+                "id": 4,
+                "singleValue": undefined,
+              },
+              Object {
+                "description": "Something",
+                "id": 5,
+                "singleValue": undefined,
+              },
+            ]
+          }
+        />
+        <ValueModifier
+          multiValue={false}
+          onTagValueChange={[Function]}
+          selectedTagValues={
+            Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+            ]
+          }
+          valueLabel="Value"
+          values={
+            Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+              Object {
+                "description": "Franta",
+                "id": 12,
+              },
+            ]
+          }
+        />
+      </TagModifier>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={6}
+      md={4}
+      xs={12}
+    >
+      <TagView
+        assignedTags={
+          Array [
+            Object {
+              "description": "Name",
+              "id": 1,
+              "values": Array [
+                Object {
+                  "description": "Pepa",
+                  "id": 11,
+                },
+              ],
+            },
+          ]
+        }
+        header="Assigned tags"
+        hideHeader={false}
+        onTagDeleteClick={[Function]}
+      />
+    </Col>
+  </Row>
+</Grid>
+`;

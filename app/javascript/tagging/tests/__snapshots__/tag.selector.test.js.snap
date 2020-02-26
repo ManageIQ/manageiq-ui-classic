@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tagging modifier match snapshot 1`] = `
+<PfSelect
+  filterOption={[Function]}
+  id="tag_cat"
+  input={
+    Object {
+      "name": "form-field-name",
+      "onChange": [Function],
+      "value": Object {
+        "label": "Homer",
+        "value": 1,
+      },
+    }
+  }
+  meta={Object {}}
+  options={
+    Array [
+      Object {
+        "keyWord": "name",
+        "label": "Name",
+        "value": 1,
+      },
+      Object {
+        "keyWord": "number",
+        "label": "Number",
+        "value": 2,
+      },
+    ]
+  }
+  placeholder="Select tag category"
+  searchable={true}
+  simpleValue={false}
+/>
+`;
