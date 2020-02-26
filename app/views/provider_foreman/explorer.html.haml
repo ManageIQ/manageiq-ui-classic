@@ -22,10 +22,11 @@
     = render(:partial => 'provider_foreman/configuration_script', :locals => {:controller => "provider_foreman"})
 - else
   #main_div
-    - if ManageIQ::Providers::ConfigurationManager.any?
-      = render(:partial => 'layouts/x_gtl')
-    - else
+    - if ManageIQ::Providers::ConfigurationManager.none? && provider_active_tree?
       = render :partial => 'layouts/empty',
                :locals => {:add_message => _("Add a new Configuration Management Provider"),
                            :documentation => ::Settings.docs.configuration_provider}
+    - else
+      = render(:partial => 'layouts/x_gtl')
+
 

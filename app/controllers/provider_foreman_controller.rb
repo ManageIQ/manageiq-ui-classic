@@ -202,6 +202,7 @@ class ProviderForemanController < ApplicationController
   def provider_active_tree?
     x_active_tree == :configuration_manager_providers_tree
   end
+  helper_method(:provider_active_tree?)
 
   private
 
@@ -389,6 +390,10 @@ class ProviderForemanController < ApplicationController
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_profile",
                                     :locals  => {:controller => controller_name}])
+    elsif ManageIQ::Providers::ConfigurationManager.none? && provider_active_tree?
+      presenter.update(:main_div, r[:partial => "layouts/empty",
+                                    :locals  => {:add_message   => _("Add a new Configuration Management Provider"),
+                                                 :documentation => ::Settings.docs.configuration_provider}])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
