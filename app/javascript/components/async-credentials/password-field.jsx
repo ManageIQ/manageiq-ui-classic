@@ -1,5 +1,4 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { HelpBlock } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -7,6 +6,7 @@ import {
   ControlLabel,
   InputGroup,
   FormControl,
+  HelpBlock,
 } from 'patternfly-react';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { PasswordContext } from './async-credentials';
