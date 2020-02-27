@@ -93,12 +93,12 @@ module ReportController::Reports
 
   # Generating sample chart
   def sample_chart
-    render Charting.render_format => Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
+    render ManageIQ::Reporting::Charting.render_format => ManageIQ::Reporting::Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
   end
 
   # generate preview chart when editing report
   def preview_chart
-    render Charting.render_format => session[:edit][:chart_data]
+    render ManageIQ::Reporting::Charting.render_format => session[:edit][:chart_data]
     session[:edit][:chart_data] = nil
   end
 

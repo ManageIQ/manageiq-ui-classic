@@ -159,7 +159,7 @@ class DashboardController < ApplicationController
     content = nil
     if datum.blank?
       state = 'no_data'
-    elsif Charting.data_ok?(datum)
+    elsif ManageIQ::Reporting::Charting.data_ok?(datum)
       content = r[:partial => "widget_chart", :locals => {:widget => widget}].html_safe
       state = 'valid'
     else

@@ -8,7 +8,7 @@
         = _('Choose a chart type')
       .col-md-8
         = select_tag('chosen_graph',
-          options_for_select([_("<No chart>")] + Charting.chart_names_for_select, @edit[:new][:graph_type]),
+          options_for_select([_("<No chart>")] + ManageIQ::Reporting::Charting.chart_names_for_select, @edit[:new][:graph_type]),
           :multiple              => false,
           :class                 => "selectpicker")
         :javascript

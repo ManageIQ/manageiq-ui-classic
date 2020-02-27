@@ -3,7 +3,7 @@
 -# charts on a dashboard screen
 - WidgetPresenter.chart_data.push(:data => datum)
 - chart_index = WidgetPresenter.chart_data.length - 1
-- chart_data = Charting.deserialized(datum)
+- chart_data = ManageIQ::Reporting::Charting.deserialized(datum)
 
 = chart_local(chart_data, :id => "miq_widgetchart_#{chart_index}".html_safe)
 

@@ -61,7 +61,7 @@ module ApplicationController::Performance
                                        :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
       unless @no_util_data
         page << js_build_calendar(@perf_options.to_calendar)
-        page << Charting.js_load_statement
+        page << ManageIQ::Reporting::Charting.js_load_statement
       end
       page << 'miqSparkle(false);'
 
@@ -104,7 +104,7 @@ module ApplicationController::Performance
         page.replace("candu_charts_div",
                      :partial => "layouts/perf_charts",
                      :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << Charting.js_load_statement
+        page << ManageIQ::Reporting::Charting.js_load_statement
         page << 'miqSparkle(false);'
       end
     else
@@ -436,7 +436,7 @@ module ApplicationController::Performance
       page.replace("perf_options_div", :partial => "layouts/perf_options")
       page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
       page << js_build_calendar(@perf_options.to_calendar)
-      page << Charting.js_load_statement
+      page << ManageIQ::Reporting::Charting.js_load_statement
       page << 'miqSparkle(false);'
     end
     [true, nil]
@@ -466,7 +466,7 @@ module ApplicationController::Performance
       page.replace("perf_options_div", :partial => "layouts/perf_options")
       page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
       page << js_build_calendar(@perf_options.to_calendar)
-      page << Charting.js_load_statement
+      page << ManageIQ::Reporting::Charting.js_load_statement
       page << 'miqSparkle(false);'
     end
     [true, nil]

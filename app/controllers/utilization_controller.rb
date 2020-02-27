@@ -71,7 +71,7 @@ class UtilizationController < ApplicationController
                            :extras    => {},
                            :group     => "y")
     report.db = "MetricRollup"
-    report.table = ReportFormatter::Converter.hashes2table(summ_hashes, :only => report.cols)
+    report.table = ManageIQ::Reporting::Formatter::Converter.hashes2table(summ_hashes, :only => report.cols)
     filename = report.title
     disable_client_cache
     download_file(params[:typ], report, filename)
@@ -96,7 +96,7 @@ class UtilizationController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page << javascript_reload_toolbars
-      page << Charting.js_load_statement
+      page << ManageIQ::Reporting::Charting.js_load_statement
       page << "miqSparkle(false);"
     end
   end

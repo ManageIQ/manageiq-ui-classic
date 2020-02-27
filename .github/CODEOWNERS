@@ -13,10 +13,6 @@ app/helpers/application_helper/toolbar_builder.rb @romanblanco @panspagetka @mar
 # rbac
 app/controllers/mixins/checked_id_mixin.rb        @romanblanco @panspagetka
 # charts
-lib/charting/                                     @panspagetka
-lib/report_formatter/c3.rb                        @panspagetka
-lib/report_formatter/c3_series.rb                 @panspagetka
-lib/report_formatter/chart_common.rb              @panspagetka
 app/assets/javascripts/miq_c3.js                  @panspagetka
 # topology services
 app/services/*topology_service.rb                 @skateman
