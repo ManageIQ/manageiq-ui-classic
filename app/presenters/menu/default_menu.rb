@@ -259,8 +259,8 @@ module Menu
             :href  => '/support/index?support_tab=about'
           },
           :product       => {
-            :title => I18n.t('product.support_website_text'),
-            :href  => I18n.t("product.support_website").html_safe
+            :title => ::Settings.docs.product_support_website_text,
+            :href  => ::Settings.docs.product_support_website
           },
           :about         => {
             :title => N_('About')
