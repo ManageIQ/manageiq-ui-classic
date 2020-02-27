@@ -11,7 +11,7 @@ import {
 
 import RequiredLabel from '../../forms/required-label';
 
-const EditSecretField = ({ FieldProvider, ...props }) => (
+const EditPasswordField = ({ FieldProvider, ...props }) => (
   <FieldProvider {...props}>
     {({
       input,
@@ -25,6 +25,7 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
       isDisabled,
       buttonLabel,
       isRequired,
+      helperText,
       ...rest
     }) => (
       <FormGroup validationState={meta.error ? 'error' : null}>
@@ -45,20 +46,22 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
             <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
           </InputGroup.Button>
         </InputGroup>
-        {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
+        {(meta.error || helperText) && <HelpBlock>{ meta.error || helperText }</HelpBlock>}
       </FormGroup>
     )}
   </FieldProvider>
 );
 
-EditSecretField.propTypes = {
+EditPasswordField.propTypes = {
   label: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
   setEditMode: PropTypes.func.isRequired,
+  helperText: PropTypes.string,
 };
 
-EditSecretField.defaultProps = {
+EditPasswordField.defaultProps = {
   isDisabled: false,
+  helperText: undefined,
 };
 
-export default EditSecretField;
+export default EditPasswordField;
