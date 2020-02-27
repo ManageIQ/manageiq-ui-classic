@@ -21,7 +21,7 @@
           %br
         %br
           = _("For questions or problem reporting, visit ")
-          %a{:href => I18n.t("product.support_website").html_safe, :target => "_new"}
-            = I18n.t("product.support_website_text").html_safe
+          %a{:href => ::Settings.docs.product_support_website, :target => "_new"}
+            = ::Settings.docs.product_support_website_text
 
         %br
