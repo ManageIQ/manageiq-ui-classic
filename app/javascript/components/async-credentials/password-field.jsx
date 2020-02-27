@@ -26,7 +26,7 @@ const PasswordField = ({
   const { name: secretKey, edit } = useContext(PasswordContext);
   const [editMode, setEditMode] = useState(!edit);
   const secretField = {
-    component: edit ? 'credentials-password-edit' : componentTypes.TEXT_FIELD,
+    component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
     type: 'password',
     isDisabled,
     validateOnMount: rest.validateOnMount,

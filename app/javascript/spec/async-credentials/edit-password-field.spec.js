@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { HelpBlock } from 'patternfly-react';
-import EditSecretField from '../../components/async-credentials/edit-secret-field';
+import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
 describe('Edit secret field form component', () => {
@@ -16,13 +16,13 @@ describe('Edit secret field form component', () => {
   });
 
   it('should render correctly', () => {
-    const wrapper = shallow(<EditSecretField {...initialProps} />);
+    const wrapper = shallow(<EditPasswordField {...initialProps} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('should render correctly in error state', () => {
     const wrapper = mount(
-      <EditSecretField
+      <EditPasswordField
         {...initialProps}
         FieldProvider={props => <FieldProvider {...props} meta={{ error: 'Error message' }} />}
       />,
@@ -32,7 +32,7 @@ describe('Edit secret field form component', () => {
 
   it('should call setEditMode on input button click', () => {
     const setEditMode = jest.fn();
-    const wrapper = mount(<EditSecretField {...initialProps} setEditMode={setEditMode} />);
+    const wrapper = mount(<EditPasswordField {...initialProps} setEditMode={setEditMode} />);
     wrapper.find('button').simulate('click');
     expect(setEditMode).toHaveBeenCalled();
   });

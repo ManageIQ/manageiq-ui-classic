@@ -6,7 +6,7 @@ import AsyncCredentials from '../../components/async-credentials/async-credentia
 import AsyncProviderCredentials from '../../components/async-credentials/async-provider-credentials';
 import DualGroup from '../../components/dual-group';
 import DualListSelect from '../../components/dual-list-select';
-import EditSecretField from '../../components/async-credentials/edit-secret-field';
+import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import InputWithDynamicPrefix from '../input-with-dynamic-prefix';
 import PasswordField from '../../components/async-credentials/password-field';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
@@ -14,7 +14,7 @@ import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 const fieldsMapper = {
   ...formFieldsMapper,
   'code-editor': DataDrivenFormCodeEditor,
-  'credentials-password-edit': EditSecretField,
+  'edit-password-field': EditPasswordField,
   'dual-group': DualGroup,
   'dual-list-select': DualListSelect,
   'input-with-dynamic-prefix': InputWithDynamicPrefix,

@@ -11,7 +11,7 @@ import {
 
 import RequiredLabel from '../../forms/required-label';
 
-const EditSecretField = ({ FieldProvider, ...props }) => (
+const EditPasswordField = ({ FieldProvider, ...props }) => (
   <FieldProvider {...props}>
     {({
       input,
@@ -52,16 +52,16 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
   </FieldProvider>
 );
 
-EditSecretField.propTypes = {
+EditPasswordField.propTypes = {
   label: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
   setEditMode: PropTypes.func.isRequired,
   helperText: PropTypes.string,
 };
 
-EditSecretField.defaultProps = {
+EditPasswordField.defaultProps = {
   isDisabled: false,
   helperText: undefined,
 };
 
-export default EditSecretField;
+export default EditPasswordField;
