@@ -25,6 +25,7 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
       isDisabled,
       buttonLabel,
       isRequired,
+      helperText,
       ...rest
     }) => (
       <FormGroup validationState={meta.error ? 'error' : null}>
@@ -45,7 +46,7 @@ const EditSecretField = ({ FieldProvider, ...props }) => (
             <Button type="button" onClick={setEditMode}>{buttonLabel}</Button>
           </InputGroup.Button>
         </InputGroup>
-        {meta.error && <HelpBlock>{ meta.error }</HelpBlock>}
+        {(meta.error || helperText) && <HelpBlock>{ meta.error || helperText }</HelpBlock>}
       </FormGroup>
     )}
   </FieldProvider>
@@ -55,10 +56,12 @@ EditSecretField.propTypes = {
   label: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
   setEditMode: PropTypes.func.isRequired,
+  helperText: PropTypes.string,
 };
 
 EditSecretField.defaultProps = {
   isDisabled: false,
+  helperText: undefined,
 };
 
 export default EditSecretField;

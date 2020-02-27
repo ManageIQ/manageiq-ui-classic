@@ -31,6 +31,7 @@ const PasswordField = ({
     isDisabled,
     validateOnMount: rest.validateOnMount,
     validate: [validate],
+    helperText,
     ...rest,
   };
   return (
