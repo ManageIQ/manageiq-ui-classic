@@ -371,7 +371,7 @@ describe ServiceController do
         let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
 
         before do
-          controller.instance_variable_set(:@edit, edit)
+          allow(controller).to receive(:session).and_return(:edit => edit)
           controller.instance_variable_set(:@right_cell_text, nil)
           controller.instance_variable_set(:@sb, {})
         end
@@ -461,6 +461,20 @@ describe ServiceController do
         expect(controller).to receive(:listnav_search_selected).with(0)
         controller.send(:get_node_info, 'xx-rsrv')
       end
+    end
+  end
+
+  describe '#get_node_info' do
+    let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
+
+    before do
+      allow(controller).to receive(:session).and_return(:edit => edit)
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    it 'sets @edit according to the session[:edit]' do
+      controller.send(:get_node_info, 'xx-rsrv')
+      expect(controller.instance_variable_get(:@edit)).to eq(controller.session[:edit])
     end
   end
 

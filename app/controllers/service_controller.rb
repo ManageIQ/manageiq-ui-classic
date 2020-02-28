@@ -321,6 +321,8 @@ class ServiceController < ApplicationController
     # No need to edit session here again if adv_search_clear was called
     listnav_search_selected(0) if session[:adv_search] && %w[adv_search_button adv_search_clear x_search_by_name].exclude?(params[:action])
 
+    @edit = session[:edit]
+
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"
       show_record(id)
