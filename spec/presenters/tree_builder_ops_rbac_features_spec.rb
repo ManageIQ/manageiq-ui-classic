@@ -3,6 +3,7 @@ describe TreeBuilderOpsRbacFeatures do
     %w(
       all_vm_rules
       api_exclusive
+      common_features
       instance
       instance_view
       instance_show_list

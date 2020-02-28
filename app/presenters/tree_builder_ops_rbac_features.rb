@@ -23,7 +23,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       Vmdb::PermissionStores.instance.can?(section.id) && !section.kind_of?(Menu::Item)
     end
 
-    top_nodes += %w[all_vm_rules api_exclusive sui ops_explorer].collect do |additional_feature|
+    top_nodes += %w[all_vm_rules api_exclusive sui ops_explorer common_features].collect do |additional_feature|
       MiqProductFeature.obj_features[additional_feature] &&
         MiqProductFeature.obj_features[additional_feature][:feature]
     end
