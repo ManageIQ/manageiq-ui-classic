@@ -52,7 +52,7 @@ namespace :spec do
 
   desc "Run Jest tests"
   task :jest do
-    system('yarn test')
+    system('NODE_OPTIONS=--max_old_space_size=4096 yarn test')
     exit $CHILD_STATUS.exitstatus
   end
 
