@@ -116,8 +116,8 @@ describe AutomationManagerController do
   end
 
   it "#automation_manager_save_provider save does not accept a duplicate name" do
-    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1")
-    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2")
+    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1", :zone => zone)
+    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2", :zone => zone)
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
     controller.save_provider
