@@ -342,7 +342,7 @@ class ServiceController < ApplicationController
         @right_cell_text = _("Retired Services")
       end
     when "MiqSearch", nil # nil if applying a filter from Advanced search - and @nodetype is root
-      load_adv_search unless @nodetype == "root" # Select/load filter from Global/My Filters
+      load_adv_search unless @nodetype == "root" || %w[saveit].include?(params[:button]) # Select/load filter from Global/My Filters
       process_show_list
       @right_cell_text = _("All Services")
     end
