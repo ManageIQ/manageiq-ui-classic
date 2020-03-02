@@ -15,7 +15,7 @@ module OpsController::Settings::Zones
       replace_right_cell(:nodetype => @nodetype)
     when "save", "add"
       assert_privileges("zone_#{params[:id] ? "edit" : "new"}")
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("zone_edit__#{id}", "replace_cell__explorer")
 
       @zone = @edit[:zone_id] ? Zone.find(@edit[:zone_id]) : Zone.new
@@ -90,6 +90,7 @@ module OpsController::Settings::Zones
   # AJAX driven routine to check for changes in ANY field on the user form
   def zone_field_changed
     return unless load_edit("zone_edit__#{params[:id]}", "replace_cell__explorer")
+
     zone_get_form_vars
     session[:changed] = @changed = @edit[:new] != @edit[:current]
     render :update do |page|
@@ -112,7 +113,7 @@ module OpsController::Settings::Zones
     zone.settings[:proxy_server_ip] = @edit[:new][:proxy_server_ip]
     zone.settings[:concurrent_vm_scans] = @edit[:new][:concurrent_vm_scans]
 
-    zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, :save => (mode != :validate))
+    zone.update_authentication({:windows_domain => {:userid => @edit[:new][:userid], :password => @edit[:new][:password]}}, {:save => (mode != :validate)})
   end
 
   private def zone_save_ntp_server_settings(zone)
