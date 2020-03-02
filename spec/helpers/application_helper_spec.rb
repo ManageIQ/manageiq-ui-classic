@@ -1251,6 +1251,7 @@ describe ApplicationHelper do
   end
 
   describe '#provider_paused?' do
+    before  { Zone.seed }
     subject { send(:provider_paused?, record) }
 
     context 'record is a provider' do

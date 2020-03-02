@@ -804,7 +804,10 @@ describe EmsInfraController do
   end
 
   context "Kubevirt - update" do
-    before { login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit]) }
+    before do
+      Zone.seed
+      login_as FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit])
+    end
 
     render_views
 
