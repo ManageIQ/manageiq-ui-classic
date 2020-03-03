@@ -19,8 +19,8 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
-          :onwhen       => "1",
-          :klass        => ApplicationHelper::Button::RbacGroupEdit),
+          :onwhen       => "1"
+        ),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
