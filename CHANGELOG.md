@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-3
+
+### Added
+* Automate Method editor has been changed to allow host+input params for playbooks, input params for workflows method types [(#6530)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6530)
+
+
+### Fixed
+* Remove Timelines tab from Report editor [(#6181)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6181)
+* Show name in success catalog form messages [(#6352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6352)
+* Display user info after clicking on Lookup while provisioning VM [(#6391)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6391)
+* Machine Credential: don't access options hash when null [(#6466)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6466)
+* Reimplement token generation for cockpit webconsole proxy [(#6522)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6522)
+* Fixed code to pass in `service_template` in ae_attributes hash [(#6533)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6533)
 
 ## Ivanchuk-2
 
