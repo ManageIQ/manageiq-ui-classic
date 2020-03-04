@@ -317,8 +317,11 @@ class ServiceController < ApplicationController
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
 
-    # Reset session to same values as first time in
-    session[:adv_search]["Service"] = session[:edit] = nil if session[:adv_search] && params[:action] != 'x_search_by_name'
+    # Set session properly - the same as when the filter is cleared
+    # No need to edit session here again if adv_search_clear was called
+    listnav_search_selected(0) if session[:adv_search] && %w[adv_search_button adv_search_clear x_search_by_name].exclude?(params[:action])
+
+    @edit = session[:edit]
 
     case TreeBuilder.get_model_for_prefix(@nodetype)
     when "Service"

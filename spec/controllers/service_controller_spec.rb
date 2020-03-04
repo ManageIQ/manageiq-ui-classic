@@ -371,7 +371,7 @@ describe ServiceController do
         let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
 
         before do
-          controller.instance_variable_set(:@edit, edit)
+          allow(controller).to receive(:session).and_return(:edit => edit)
           controller.instance_variable_set(:@right_cell_text, nil)
           controller.instance_variable_set(:@sb, {})
         end
@@ -408,25 +408,73 @@ describe ServiceController do
 
   context 'clicking on Active/Retired Services node in the tree, after applying a filter' do
     describe '#get_node_info' do
-      let(:s) { {:adv_search => {"Service" => {:expression => {}}}, :edit => {:expression => {}}} }
+      let(:edit) do
+        {
+          :expression         => expression,
+          :new                => {:expression => {'CONTAINS' => {'tag' => 'Some tag', 'value' => 'test'}}},
+          :adv_search_name    => 'Some filter',
+          :new_search_name    => 'Some filter',
+          :adv_search_applied => {:text => " - Filtered by \"Some filter\"",
+                                  :exp  => {'CONTAINS' => {'tag' => 'Some tag', 'value' => 'test'}}}
+        }
+      end
+
+      let(:expression) do
+        ApplicationController::Filter::Expression.new.tap do |e|
+          e.expression = {'CONTAINS' => {'tag' => 'Some tag', 'value' => 'test'}, :token => 2}
+          e.exp_table = [["Service.My Company Tags : Some tag CONTAINS 'Test'", 2]]
+          e.exp_token = nil
+          e.history = ApplicationController::Filter::ExpressionEditHistory.new([{'CONTAINS' => {'tag' => 'Some tag', 'value' => 'test'}, :token => 2}])
+          e.selected = {:id => 123, :name => 'Some filter', :description => 'Some filter', :typ => 'default'}
+        end
+      end
+
+      let(:new_expression) do
+        ApplicationController::Filter::Expression.new.tap do |e|
+          e.expression = {'???' => '???', :token => 3}
+          e.exp_key = '???'
+          e.exp_orig_key = '???'
+          e.exp_table = [['???', 3]]
+          e.exp_token = 3
+          e.history = ApplicationController::Filter::ExpressionEditHistory.new([{'???' => '???'}])
+          e.selected = {:id => 0, :description => 'All'}
+          e.val1 = e.val2 = {:type => nil}
+        end
+      end
 
       before do
-        allow(controller).to receive(:session).and_return(s)
+        allow(controller).to receive(:session).and_return(:adv_search => {"Service" => edit}, :edit => edit)
         controller.params = {:action => 'tree_select'}
+        controller.instance_variable_set(:@edit, edit)
+        controller.instance_variable_set(:@expkey, :expression)
+        controller.instance_variable_set(:@explorer, true)
         controller.instance_variable_set(:@sb, {})
       end
 
-      it 'resets session to same values as first time in, for Active Services' do
+      it 'sets session to default values, for Active Services' do
         controller.send(:get_node_info, 'xx-asrv')
-        expect(controller.session[:edit]).to be_nil
-        expect(controller.session[:adv_search]["Service"]).to be_nil
+        expect(controller.session[:edit][:expression]).to eq(new_expression)
+        expect(controller.session[:edit]).to eq(controller.session[:adv_search]["Service"])
       end
 
-      it 'resets session to same values as first time in, for Retired Services' do
+      it 'calls listnav_search_selected' do
+        expect(controller).to receive(:listnav_search_selected).with(0)
         controller.send(:get_node_info, 'xx-rsrv')
-        expect(controller.session[:edit]).to be_nil
-        expect(controller.session[:adv_search]["Service"]).to be_nil
       end
+    end
+  end
+
+  describe '#get_node_info' do
+    let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
+
+    before do
+      allow(controller).to receive(:session).and_return(:edit => edit)
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    it 'sets @edit according to the session[:edit]' do
+      controller.send(:get_node_info, 'xx-rsrv')
+      expect(controller.instance_variable_get(:@edit)).to eq(controller.session[:edit])
     end
   end
 
