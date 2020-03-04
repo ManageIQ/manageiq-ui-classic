@@ -347,8 +347,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.params = {:id => "configuration_manager_cs_filter_accord"}
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
-                                                    :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ConfiguredSystem", :gtl_dbname => :cm_configured_systems, :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
@@ -504,8 +503,8 @@ describe ProviderForemanController do
       allow_any_instance_of(User).to receive(:get_filters).and_return(user_filters)
       Classification.seed
       quota_2gb_tag = Classification.where("description" => "2GB").first
-      Classification.bulk_reassignment(:model      => "ConfiguredSystem",
-                                       :object_ids => @configured_system.id,
+      Classification.bulk_reassignment(:model      => "ManageIQ::Providers::Foreman::ConfigurationManager",
+                                       :object_ids => @config_mgr.id,
                                        :add_ids    => quota_2gb_tag.id,
                                        :delete_ids => [])
       tree = TreeBuilderConfigurationManager.new(:configuration_manager_providers_tree, controller.instance_variable_get(:@sb))
