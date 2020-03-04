@@ -499,6 +499,66 @@ describe HostController do
     end
   end
 
+  describe '#edit' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:session).and_return(:host_items => [h1.id, h2.id])
+      controller.instance_variable_set(:@breadcrumbs, [])
+    end
+
+    it 'adds breadcrumb to the @breadcrumbs array while editing multiple Hosts' do
+      controller.send(:edit)
+      expect(controller.instance_variable_get(:@breadcrumbs)).to eq([{:name => 'Edit Hosts', :url => '/host/edit/'}])
+    end
+  end
+
+  describe '#update' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:session).and_return(:host_items => nil)
+    end
+
+    context 'canceling editing' do
+      before { controller.params = {:button => 'cancel', :id => h1.id} }
+
+      it 'calls flash_and_redirect' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Edit of Host \"%{name}\" was cancelled by the user") % {:name => h1.name})
+        controller.send(:update)
+      end
+
+      context 'selecting multiple Hosts' do
+        before { allow(controller).to receive(:session).and_return(:host_items => [h1.id, h2.id]) }
+
+        it 'calls flash_and_redirect' do
+          expect(controller).to receive(:flash_and_redirect).with(_('Edit of credentials for selected Hosts was cancelled by the user'))
+          controller.send(:update)
+        end
+      end
+    end
+
+    context 'saving changes' do
+      before do
+        allow(controller).to receive(:set_record_vars).and_return(true)
+        controller.instance_variable_set(:@breadcrumbs, [])
+        controller.params = {:button => 'save', :id => h1.id}
+      end
+
+      it 'calls flash_and_redirect' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Host \"%{name}\" was saved") % {:name => h1.name})
+        controller.send(:update)
+      end
+
+      context 'selecting multiple Hosts' do
+        before { allow(controller).to receive(:session).and_return(:host_items => [h1.id, h2.id]) }
+
+        it 'calls flash_and_redirect' do
+          expect(controller).to receive(:flash_and_redirect).with(_('Credentials/Settings saved successfully'))
+          controller.send(:update)
+        end
+      end
+    end
+  end
+
   describe '#report_data' do
     before do
       stub_user(:features => :all)
