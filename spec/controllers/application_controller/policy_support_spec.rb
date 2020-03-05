@@ -73,7 +73,6 @@ describe ApplicationController do
     before do
       allow(controller).to receive(:drop_breadcrumb)
       allow(controller).to receive(:session).and_return(:tag_db => VmOrTemplate, :tag_items => [vm])
-      allow(controller).to receive(:vm_or_instance).and_return('vm_infra')
       controller.params = {:action => 'policy_sim', :continue => true, :controller => 'vm'}
     end
 

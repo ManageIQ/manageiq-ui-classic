@@ -4,7 +4,7 @@ class ApplicationHelper::Button::CloudNetworkNew < ApplicationHelper::Button::Bu
   end
 
   def role_allows_feature?
-    super && role_allows?(:feature => 'ems_network_show_list') && role_allows?(:feature => 'cloud_tenant_show_list')
+    super && role_allows_all?('ems_network_show_list', 'cloud_tenant_show_list')
   end
 
   def disabled?

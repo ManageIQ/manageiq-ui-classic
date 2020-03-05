@@ -143,24 +143,14 @@ module VmCommon
     unless @explorer
       tree_node_id = TreeBuilder.build_node_id(@record)
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
-      controller_name = controller_for_vm(model_for_vm(@record))
-      # redirect user back to where they came from if they dont have access to any of vm explorers
-      # or redirect them to the one they have access to
-      case controller_name
-      when "vm_infra"
-        redirect_controller = role_allows?(:feature => "vandt_accord") || role_allows?(:feature => "vms_filter_accord") ? "vm_infra" : nil
-      when "vm_cloud"
-        redirect_controller = role_allows?(:feature => "instances_accord") || role_allows?(:feature => "instances_filter_accord") ? "vm_cloud" : nil
-      end
 
-      redirect_controller ||= role_allows?(:feature => "vms_instances_filter_accord") ? "vm_or_template" : nil
+      redirect_controller = allowed_vm_controller(@record, controller_name)
 
       if redirect_controller
         action = "explorer"
       else
         url = request.env['HTTP_REFERER'].split('/')
-        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") %
-          {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
+        flash_to_session(_("User '%{username}' is not authorized to access '%{controller_name}'") % {:username => current_userid, :controller_name => vm_or_instance(@record)}, :warning)
         redirect_controller  = url[3]
         action               = url[4]
       end
@@ -915,14 +905,6 @@ module VmCommon
     {'"no parent"' => -1}.merge(parent_choices(@record.id))
   end
 
-  # Return vm_cloud or vm_infra based on selected record
-  def vm_or_instance(record)
-    if record
-      record_model = model_for_vm(record)
-      controller_for_vm(record_model)
-    end
-  end
-
   private
 
   # if node is VM or Template is true - select parent node in explorer tree but show info of Vm/Template
@@ -1473,7 +1455,7 @@ module VmCommon
       action = nil
     when "policy_sim"
       action = nil
-      header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => vm_or_instance(@record))}
+      header = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => vm_or_instance(@record)}
       partial = params[:action] == "policies" ? "vm_common/policies" : "layouts/policy_sim"
     when "protect"
       partial = "layouts/protect"

@@ -90,13 +90,17 @@ module ApplicationHelper
 
   module_function :role_allows?
   public :role_allows?
-  alias_method :role_allows, :role_allows?
-  Vmdb::Deprecation.deprecate_methods(self, :role_allows => :role_allows?)
 
-  # NB: This differs from controller_for_model; until they're unified,
-  # make sure you have the right one.
-  def model_to_controller(record)
-    record.class.base_model.name.underscore
+  def role_allows_any?(*features)
+    features.each_with_object(false) do |f, acc|
+      acc ||= role_allows?(:feature => f)
+    end
+  end
+
+  def role_allows_all?(*features)
+    features.each_with_object(true) do |f, acc|
+      acc &&= role_allows?(:feature => f)
+    end
   end
 
   def type_has_quadicon(type)
@@ -885,6 +889,7 @@ module ApplicationHelper
 
   def model_for_vm(record)
     raise _("Record is not VmOrTemplate class") unless record.kind_of?(VmOrTemplate)
+
     if record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
       ManageIQ::Providers::CloudManager::Vm
     elsif record.kind_of?(ManageIQ::Providers::InfraManager::Vm)
@@ -893,6 +898,8 @@ module ApplicationHelper
       ManageIQ::Providers::CloudManager::Template
     elsif record.kind_of?(ManageIQ::Providers::InfraManager::Template)
       ManageIQ::Providers::InfraManager::Template
+    else
+      raise _("Unexpected kind of VmOrTemplate: %{klass}") % { :klass => record.class }
     end
   end
 
@@ -905,6 +912,45 @@ module ApplicationHelper
     else
       "vm_or_template"
     end
+  end
+
+  # "Vm", "Instance", "Template", "Image", or nil
+  def vm_or_instance(record)
+    model_for_vm(record)&.display_name if record
+  end
+
+  # "vm_infra" or "vm_cloud"
+  def vm_infra_or_cloud(record)
+    controller_for_vm(model_for_vm(record))
+  end
+
+  # controller for calling "policy_sim" or "x_history" ajax
+  # FIXME: sure?
+  def vm_action_controller(record)
+    vm_infra_or_cloud(record)
+  end
+
+  # controller for calling a show method with display=timeline
+  # FIXME: list
+  def timeline_controller(record)
+    record.class.base_model.name.underscore
+  end
+
+  def allowed_vm_controller(record, current_controller = nil)
+    allowed_controllers = [
+      "vm_infra" if role_allows_any?("vandt_accord", "vms_filter_accord", "templates_filter_accord"),
+      "vm_cloud" if role_allows_any?("instances_accord", "instances_filter_accord", "images_accord", "images_filter_accord"),
+      "vm_or_template" if role_allows_any?("vms_instances_filter_accord", "templates_images_filter_accord"),
+    ].compact
+
+    return current_controller if allowed_controllers.include?(current_controller)
+
+    # vm_infra or vm_cloud
+    redirect_controller = controller_for_vm(model_for_vm(record)) if record
+    return redirect_controller if allowed_controllers.include?(redirect_controller)
+
+    # vm_or_template or nil
+    allowed_controllers.first
   end
 
   def model_from_active_tree(tree)

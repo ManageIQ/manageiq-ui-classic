@@ -9,12 +9,10 @@ module StiRoutingHelper
     end
   end
 
-  # NB: This differs from model_to_controller; until they're unified,
-  # make sure you have the right one.
   def controller_for_model(klass)
     model = ui_base_model(klass)
     if klass <= VmOrTemplate
-      controller_for_vm(klass)
+      controller_for_vm(klass) #TODO suspect, no model_for_vm? ; yup, it always returns vm_or_template without it; use allowed_controller_for_vm?
     elsif model.respond_to?(:db_name)
       model.db_name.underscore
     else

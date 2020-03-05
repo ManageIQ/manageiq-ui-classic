@@ -221,7 +221,7 @@ module ApplicationController::PolicySupport
   # Build the policy simulation screen
   def policy_sim_build_screen(records = [])
     @edit ||= {}
-    @right_cell_text = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => ui_lookup(:table => vm_or_instance(records.first || session[:tag_items].first))}
+    @right_cell_text = _("%{vm_or_template} Policy Simulation") % {:vm_or_template => vm_or_instance(records.first || session[:tag_items].first)}
     @tagitems = records.presence || session[:tag_items] # Get the db records that are being tagged
     @tagitems = @tagitems.sort_by(&:name)
     @edit[:pol_items] = session[:tag_items]

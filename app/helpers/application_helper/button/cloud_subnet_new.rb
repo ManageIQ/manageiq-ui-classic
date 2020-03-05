@@ -7,7 +7,7 @@ class ApplicationHelper::Button::CloudSubnetNew < ApplicationHelper::Button::But
   end
 
   def role_allows_feature?
-    super && role_allows?(:feature => 'ems_network_show_list') && role_allows?(:feature => 'cloud_tenant_show_list') && role_allows?(:feature => 'cloud_network_show_list')
+    super && role_allows_all?('ems_network_show_list', 'cloud_tenant_show_list', 'cloud_network_show_list')
   end
 
   # disable button if no active providers support create action

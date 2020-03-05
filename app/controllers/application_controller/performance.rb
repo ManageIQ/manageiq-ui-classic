@@ -355,7 +355,7 @@ module ApplicationController::Performance
         javascript_redirect(:id         => @perf_record.id,
                             :action     => "show",
                             :display    => "timeline",
-                            :controller => model_to_controller(@perf_record),
+                            :controller => timeline_controller(@perf_record),
                             :refresh    => "n",
                             :escape     => false)
       end

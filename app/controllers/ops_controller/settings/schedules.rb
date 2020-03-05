@@ -632,7 +632,7 @@ module OpsController::Settings::Schedules
       [_("Cluster / Deployment Role Analysis"), "emscluster"],
       [_("Datastore Analysis"), "storage"]
     ]
-    if role_allows?(:feature => "vm_check_compliance") || role_allows?(:feature => "miq_template_check_compliance")
+    if role_allows_any?("vm_check_compliance", "miq_template_check_compliance")
       @action_type_options_for_select.push([_("VM Compliance Check"), "vm_check_compliance"])
     end
     if role_allows?(:feature => "host_check_compliance")
