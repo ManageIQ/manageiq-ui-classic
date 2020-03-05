@@ -1,6 +1,6 @@
 class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilderConfiguredSystems
   def initialize(*args)
-    @root_class = 'ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem'
+    @root_class = 'ConfiguredSystem'
     super(*args)
   end
 

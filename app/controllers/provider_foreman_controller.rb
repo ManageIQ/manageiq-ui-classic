@@ -155,15 +155,15 @@ class ProviderForemanController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root"     then ManageIQ::Providers::ConfigurationManager
-    when "fr"       then ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
-    when "cp", "cs" then ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem
+    when "fr"       then ConfigurationProfile
+    when "cp", "cs" then ConfiguredSystem
     when "xx"       then
       case nodes.second
       when "fr" then ManageIQ::Providers::ConfigurationManager
       when "csf" then ConfiguredSystem
       end
     else
-      nodes.include?("unassigned") ? ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem : ManageIQ::Providers::ConfigurationManager
+      nodes.include?("unassigned") ? ConfiguredSystem : ManageIQ::Providers::ConfigurationManager
     end
   end
 
@@ -332,7 +332,7 @@ class ProviderForemanController < ApplicationController
       @show_list ? process_show_list(options) : options.merge!(update_options)
       @right_cell_text = _("All Configuration Management Providers")
     elsif x_active_tree == :configuration_manager_cs_filter_tree
-      options = {:model => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"}
+      options = {:model => "ConfiguredSystem"}
       @show_list ? process_show_list(options) : options.merge!(update_options)
       @right_cell_text = _("All Configured Systems")
     end
