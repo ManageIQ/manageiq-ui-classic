@@ -1,5 +1,5 @@
 class TreeBuilderConfigurationManager < TreeBuilder
-  has_kids_for ManageIQ::Providers::Foreman::ConfigurationManager, [:x_get_tree_cmf_kids]
+  has_kids_for ManageIQ::Providers::ConfigurationManager, [:x_get_tree_cmf_kids]
   has_kids_for ConfigurationProfile, [:x_get_tree_cpf_kids]
 
   private
@@ -17,7 +17,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots
-    count_only_or_objects_filtered(false, ManageIQ::Providers::Foreman::ConfigurationManager, "name", :match_via_descendants => ConfiguredSystem)
+    count_only_or_objects_filtered(false, ManageIQ::Providers::ConfigurationManager, "name")
   end
 
   def node_by_tree_id(id)
@@ -29,7 +29,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
     assigned_configuration_profile_objs =
       count_only_or_objects_filtered(count_only,
                                      ConfigurationProfile.where(:manager_id => object[:id]),
-                                     "name", :match_via_descendants => ConfiguredSystem)
+                                     "name")
     unassigned_configuration_profile_objs =
       fetch_unassigned_configuration_profile_objects(count_only, object[:id])
 
