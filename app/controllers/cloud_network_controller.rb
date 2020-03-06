@@ -141,7 +141,7 @@ class CloudNetworkController < ApplicationController
     options = edit_form_params
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => @network.name})
+      flash_and_redirect(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => @network.name})
 
     when "save"
       if @network.supports_update?

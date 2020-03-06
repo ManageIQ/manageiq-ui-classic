@@ -108,7 +108,7 @@ class NetworkRouterController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
+      flash_and_redirect(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => @router.name})
 
     when "save"
       options = form_params(params)
@@ -179,7 +179,7 @@ class NetworkRouterController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Add Interface on Subnet to Router \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Add Interface on Subnet to Router \"%{name}\" was cancelled by the user") % {
         :name => @router.name
       })
 
@@ -272,7 +272,7 @@ class NetworkRouterController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Remove Interface on Subnet from Router \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Remove Interface on Subnet from Router \"%{name}\" was cancelled by the user") % {
         :name => @router.name
       })
 

@@ -125,7 +125,7 @@ class FloatingIpController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Floating IP \"%{address}\" was cancelled by the user") % { :address => @floating_ip.address })
+      flash_and_redirect(_("Edit of Floating IP \"%{address}\" was cancelled by the user") % {:address => @floating_ip.address})
 
     when "save"
       if @floating_ip.supports_update?

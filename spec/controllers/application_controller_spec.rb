@@ -104,6 +104,18 @@ describe ApplicationController do
     end
   end
 
+  describe '#last_screen_url' do
+    it 'returns the last url' do
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous_url'}, {:url => 'last_url'}])
+      expect(controller.send(:last_screen_url)).to eq('last_url')
+    end
+
+    it 'raises error' do
+      controller.instance_variable_set(:@breadcrumbs, [])
+      expect { controller.send(:previous_breadcrumb_url) }.to raise_error(NoMethodError)
+    end
+  end
+
   describe "#find_checked_items" do
     it "returns empty array when button is pressed from summary screen with params as symbol" do
       controller.params = {:id => "1"}

@@ -56,7 +56,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
+      flash_and_redirect(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
     when "attach"
       volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:attach_volume)
@@ -108,7 +108,7 @@ class VmCloudController < ApplicationController
     @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
+      flash_and_redirect(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => @vm.name})
 
     when "detach"
       volume = find_record_with_rbac(CloudVolume, params[:volume_id])
@@ -155,9 +155,9 @@ class VmCloudController < ApplicationController
     replace_right_cell
   end
 
-  def cancel_action(message)
+  def flash_and_redirect(message)
     session[:edit] = nil
-    add_flash(message)
+    flash_to_session(message)
     @record = @sb[:action] = nil
     replace_right_cell
   end

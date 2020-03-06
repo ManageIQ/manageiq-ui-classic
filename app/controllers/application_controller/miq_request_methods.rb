@@ -604,10 +604,10 @@ module ApplicationController::MiqRequestMethods
     if @explorer
       @sb[:action] = nil
       replace_right_cell
-    elsif @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
+    elsif @breadcrumbs && (@breadcrumbs.empty? || last_screen_url == "/vm/show_list")
       javascript_redirect(:action => "show_list", :controller => "vm")
     else
-      javascript_redirect(@breadcrumbs.last[:url])
+      javascript_redirect(last_screen_url)
     end
   end
 

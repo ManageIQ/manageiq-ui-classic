@@ -198,6 +198,18 @@ describe CloudTenantController do
     end
   end
 
+  describe '#update' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => tenant.id}
+    end
+
+    it 'calls flash_and_redirect for canceling editing Cloud Tenant' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Cloud Tenant \"%{name}\" was cancelled by the user") % {:name => tenant.name})
+      controller.send(:update)
+    end
+  end
+
   describe "#delete" do
     let(:task_options) do
       {
