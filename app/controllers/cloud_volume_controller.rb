@@ -84,7 +84,7 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Attaching Cloud Volume \"%{name}\" was cancelled by the user") % {
         :name => @volume.name
       })
     when "attach"
@@ -138,7 +138,7 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Detaching Cloud Volume \"%{name}\" was cancelled by the user") % {
         :name => @volume.name
       })
 
@@ -205,7 +205,7 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     case params[:button]
     when "cancel"
-      cancel_action(_("Add of new Cloud Volume was cancelled by the user"))
+      flash_and_redirect(_("Add of new Cloud Volume was cancelled by the user"))
 
     when "add"
       @volume = CloudVolume.new
@@ -282,7 +282,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
+      flash_and_redirect(_("Edit of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "save"
       options = form_params
@@ -360,7 +360,7 @@ class CloudVolumeController < ApplicationController
     delete_cloud_volumes(volumes_to_delete) unless volumes_to_delete.empty?
 
     # refresh the list if applicable
-    if @lastaction == "show_list" && @breadcrumbs.last[:url].include?(@lastaction)
+    if @lastaction == "show_list" && last_screen_url.include?(@lastaction)
       show_list
       @refresh_partial = "layouts/gtl"
     elsif @lastaction == "show" && @layout == "cloud_volume"
@@ -388,7 +388,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
+      flash_and_redirect(_("Backup of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "create"
       options = {}
@@ -451,7 +451,7 @@ class CloudVolumeController < ApplicationController
 
     case params[:button]
     when "cancel"
-      cancel_action(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
+      flash_and_redirect(_("Restore of Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @volume.name})
 
     when "restore"
       @backup = find_record_with_rbac(CloudVolumeBackup, params[:backup_id])
@@ -507,7 +507,7 @@ class CloudVolumeController < ApplicationController
     @volume = find_record_with_rbac(CloudVolume, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {
+      flash_and_redirect(_("Snapshot of Cloud Volume \"%{name}\" was cancelled by the user") % {
         :name => @volume.name
       })
     when "create"

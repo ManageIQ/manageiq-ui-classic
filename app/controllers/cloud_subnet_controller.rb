@@ -152,7 +152,7 @@ class CloudSubnetController < ApplicationController
     @subnet = find_record_with_rbac(CloudSubnet, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name => @subnet.name})
+      flash_and_redirect(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name => @subnet.name})
 
     when "save"
       if @subnet.supports_create?

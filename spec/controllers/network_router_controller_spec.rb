@@ -1,7 +1,7 @@
 describe NetworkRouterController do
   include_examples :shared_examples_for_network_router_controller, %w(openstack azure google amazon)
 
-  describe "#tags_edit" do
+  describe "#tagging_edit" do
     let!(:user) { stub_user(:features => :all) }
 
     before do
@@ -513,6 +513,30 @@ describe NetworkRouterController do
           expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
         end
       end
+    end
+  end
+
+  context 'canceling provided actions on Network Router' do
+    let(:router) { FactoryBot.create(:network_router) }
+
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => router.id}
+    end
+
+    it 'calls flash_and_redirect for canceling editing Network Router' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Router \"%{name}\" was cancelled by the user") % {:name => router.name})
+      controller.send(:update)
+    end
+
+    it 'calls flash_and_redirect for canceling adding Interface on Subnet to Router' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Add Interface on Subnet to Router \"%{name}\" was cancelled by the user") % {:name => router.name})
+      controller.send(:add_interface)
+    end
+
+    it 'calls flash_and_redirect for canceling removing Interface on Subnet from Router' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Remove Interface on Subnet from Router \"%{name}\" was cancelled by the user") % {:name => router.name})
+      controller.send(:remove_interface)
     end
   end
 end

@@ -4,6 +4,7 @@ class HostAggregateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericFormMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
@@ -173,7 +174,7 @@ class HostAggregateController < ApplicationController
       redirect_to(previous_breadcrumb_url)
     else # list of Host Aggregates
       @refresh_partial = "layouts/gtl" if @lastaction == "show_list"
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     end
   end
 
@@ -197,7 +198,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     else
       drop_breadcrumb(
         :name => _("Add Host to Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -281,7 +282,7 @@ class HostAggregateController < ApplicationController
       }, :error)
       session[:flash_msgs] = @flash_array
       @in_a_form = false
-      redirect_to(@breadcrumbs[-1][:url])
+      redirect_to(last_screen_url)
     else
       drop_breadcrumb(
         :name => _("Remove Host from Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
@@ -348,14 +349,6 @@ class HostAggregateController < ApplicationController
         :details => task.message
       }, :error)
     end
-  end
-
-  # Set flash message, add it to session, redirect to proper screen and render the flash message
-  def flash_and_redirect(message, level = :success)
-    session[:edit] = nil
-    add_flash(message, level)
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   private

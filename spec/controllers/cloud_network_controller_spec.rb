@@ -182,6 +182,18 @@ describe CloudNetworkController do
     end
   end
 
+  describe '#update' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => network.id}
+    end
+
+    it 'calls flash_and_redirect for canceling editing Cloud Network' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Cloud Network \"%{name}\" was cancelled by the user") % {:name => network.name})
+      controller.send(:update)
+    end
+  end
+
   describe "#delete" do
     let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems) }
     let(:task_options) do

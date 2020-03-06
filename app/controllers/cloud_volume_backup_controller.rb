@@ -36,7 +36,7 @@ class CloudVolumeBackupController < ApplicationController
     @backup = find_record_with_rbac(CloudVolumeBackup, params[:id])
     case params[:button]
     when "cancel"
-      cancel_action(_("Restore to Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @backup.name})
+      flash_and_redirect(_("Restore to Cloud Volume \"%{name}\" was cancelled by the user") % {:name => @backup.name})
 
     when "restore"
       # volume_id to restore to is optional

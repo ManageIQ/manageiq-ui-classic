@@ -248,6 +248,42 @@ describe VmCloudController do
     end
   end
 
+  context 'canceling actions on Instances' do
+    let(:instance) { FactoryBot.create(:vm_cloud) }
+
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => instance.id}
+    end
+
+    it 'calls flash_and_redirect for canceling attaching Cloud Volume to Instance' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Attaching Cloud Volume to Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
+      controller.send(:attach_volume)
+    end
+
+    it 'calls flash_and_redirect for canceling detaching Cloud Volume from Instance' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Detaching a Cloud Volume from Instance \"%{instance_name}\" was cancelled by the user") % {:instance_name => instance.name})
+      controller.send(:detach_volume)
+    end
+  end
+
+  describe '#flash_and_redirect' do
+    before do
+      allow(controller).to receive(:session).and_return(:edit => {:expression => {}})
+      controller.instance_variable_set(:@record, FactoryBot.create(:vm_cloud))
+      controller.instance_variable_set(:@sb, :action => 'some_action')
+    end
+
+    it 'calls flash_to_session, replace_right_cell and sets session[:edit], @record and @sb[:action] to nil' do
+      expect(controller).to receive(:flash_to_session).with('Message')
+      expect(controller).to receive(:replace_right_cell)
+      controller.send(:flash_and_redirect, 'Message')
+      expect(controller.session[:edit]).to be_nil
+      expect(controller.instance_variable_get(:@record)).to be_nil
+      expect(controller.instance_variable_get(:@sb)[:action]).to be_nil
+    end
+  end
+
   include_examples '#download_summary_pdf', :vm_cloud
   include_examples '#download_summary_pdf', :template_azure
 

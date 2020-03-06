@@ -207,6 +207,18 @@ describe CloudSubnetController do
     end
   end
 
+  describe '#update' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => cloud_subnet.id}
+    end
+
+    it 'calls flash_and_redirect for canceling editing Cloud Subnet' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name => cloud_subnet.name})
+      controller.send(:update)
+    end
+  end
+
   describe "#delete" do
     let(:task_options) do
       {

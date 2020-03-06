@@ -8,7 +8,7 @@ describe SecurityGroupController do
     stub_user(:features => :all)
   end
 
-  describe "#tags_edit" do
+  describe "#tagging_edit" do
     let(:ct) { FactoryBot.create(:security_group, :name => "security-group-01") }
     let(:classification) { FactoryBot.create(:classification, :name => "department", :description => "Department") }
     let(:tag1) { FactoryBot.create(:classification_tag, :name => "tag1", :parent => classification) }
@@ -57,8 +57,11 @@ describe SecurityGroupController do
     before do
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:delete_security_group_queue)
+      allow(controller).to receive(:render)
       controller.instance_variable_set(:@_security_group, security_group)
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous_url'}, {:url => 'last_url'}])
       controller.instance_variable_set(:@lastaction, "show")
+      controller.instance_variable_set(:@layout, 'security_group')
       allow(controller).to receive(:checked_or_params).and_return(SecurityGroup.all.ids)
       allow_any_instance_of(SecurityGroup).to receive(:supports_delete?).and_return(true)
       allow_any_instance_of(SecurityGroup).to receive(:delete_security_group_queue)
@@ -69,6 +72,26 @@ describe SecurityGroupController do
     it "calls method for security groups processing" do
       expect(controller).to receive(:process_security_groups).with([security_group], "destroy")
       controller.send(:delete_security_groups)
+    end
+
+    it 'calls flash_to_session' do
+      expect(controller).to receive(:flash_to_session)
+      controller.send(:delete_security_groups)
+    end
+
+    it 'calls javascript_redirect with previous url' do
+      expect(controller).to receive(:javascript_redirect).with('previous_url')
+      controller.send(:delete_security_groups)
+    end
+
+    context 'list of Security Groups' do
+      before { controller.instance_variable_set(:@lastaction, 'show_list') }
+
+      it 'calls javascript_redirect with previous url' do
+        expect(controller).to receive(:javascript_redirect).with('last_url')
+        controller.send(:delete_security_groups)
+        expect(controller.instance_variable_get(:@refresh_partial)).to eq('layouts/gtl')
+      end
     end
   end
 
@@ -379,6 +402,48 @@ describe SecurityGroupController do
           expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
         end
       end
+    end
+  end
+
+  describe '#create_finished' do
+    let(:group) { FactoryBot.create(:security_group) }
+    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:status) { 'Error' }
+
+    before do
+      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
+      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => group.name}})
+    end
+
+    it 'calls flash_and_redirect with appropriate arguments for unsuccesful creating of a Security Group' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Unable to create Security Group \"%{name}\": %{details}") % {
+        :name    => group.name,
+        :details => miq_task.message
+      }, :error)
+      controller.send(:create_finished)
+    end
+
+    context 'succesful creating of a new Security Group' do
+      let(:status) { 'ok' }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Security Group \"%{name}\" created") % {:name => group.name})
+        controller.send(:create_finished)
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:group) { FactoryBot.create(:security_group) }
+
+    before do
+      allow(controller).to receive(:assert_privileges)
+      controller.params = {:button => 'cancel', :id => group.id}
+    end
+
+    it 'calls flash_and_redirect for canceling editing Security Group' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Edit of Security Group \"%{name}\" was cancelled by the user") % {:name => group.name})
+      controller.send(:update)
     end
   end
 end
