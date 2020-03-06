@@ -6,7 +6,6 @@ shared_examples '#download_summary_pdf' do |object|
     before do
       allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       allow(controller).to receive(:server_timezone).and_return('UTC')
-      allow(controller).to receive(:get_tagdata).and_return(nil)
       login_as FactoryBot.create(:user_admin)
       stub_user(:features => :all)
       get :download_summary_pdf, :params => {:id => record.id}
