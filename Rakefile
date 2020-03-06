@@ -84,7 +84,7 @@ namespace :spec do
     begin
       pid = nil
       Bundler.with_original_env do
-        pid = spawn("bundle exec rails server", [:out, :err] => "/dev/null")
+        pid = spawn({"RAILS_ENV" => "test"}, "bundle exec rails server", [:out, :err] => "spec/manageiq/log/out.log")
         Process.detach(pid)
         puts "Rails server started with pid #{pid}..."
       end
@@ -103,6 +103,7 @@ namespace :spec do
         exit $CHILD_STATUS.exitstatus
       else
         STDERR.puts "Unable to detect Rails server start after 30 seconds...aborting."
+        STDERR.puts `tail -n 200 spec/manageiq/log/evm.log spec/manageiq/log/out.log`
         exit 1
       end
     ensure
