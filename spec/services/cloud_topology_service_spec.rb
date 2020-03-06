@@ -19,11 +19,6 @@ describe CloudTopologyService do
     it "provider has unknown status when no authentication exists" do
       ems = FactoryBot.create(:ems_openstack)
 
-      allow(cloud_topology_service)
-        .to receive(:retrieve_providers)
-        .with(anything, ManageIQ::Providers::CloudManager)
-        .and_return([ems])
-
       cloud_topology_service
         .instance_variable_set(:@providers, ManageIQ::Providers::CloudManager.where(:id => ems.id))
 
@@ -39,7 +34,6 @@ describe CloudTopologyService do
     end
 
     it "topology contains the expected structure and content" do
-      allow(cloud_topology_service).to receive(:retrieve_providers).and_return([ems])
       cloud_topology_service.instance_variable_set(:@entity, ems)
 
       expect(subject[:items]).to eq(
@@ -87,7 +81,6 @@ describe CloudTopologyService do
     it "topology contains the expected structure when vm is off" do
       # vm and host test cross provider correlation to infra provider
       @vm.update(:raw_power_state => "SHUTOFF")
-      allow(cloud_topology_service).to receive(:retrieve_providers).and_return([ems])
       cloud_topology_service.instance_variable_set(:@entity, ems)
 
       expect(subject[:items]).to eq(
