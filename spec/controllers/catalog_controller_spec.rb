@@ -16,7 +16,6 @@ describe CatalogController do
     before do
       stub_user(:features => :all)
       controller.instance_variable_set(:@settings, {})
-      allow_any_instance_of(ApplicationController).to receive(:fetch_path)
     end
 
     it "checks method x_edit_tags_reset when multiple records selected from list view" do
@@ -26,7 +25,6 @@ describe CatalogController do
       controller.instance_variable_set(:@sb, :action => nil)
       allow(controller).to receive(:checked_or_params).and_return(ServiceTemplate.all.ids)
       allow(controller).to receive(:find_checked_items).and_return(ServiceTemplate.all.ids)
-      allow(controller).to receive(:tag_edit_build_entries_pulldown).and_return(nil)
       allow(controller).to receive(:replace_right_cell).with(:action => nil)
       expect(controller).to receive(:x_tags_set_form_vars)
       controller.send(:x_edit_tags_reset, "ServiceTemplate")
@@ -39,7 +37,6 @@ describe CatalogController do
       controller.instance_variable_set(:@sb, :action => nil)
       allow(controller).to receive(:checked_or_params).and_return([])
       allow(controller).to receive(:find_checked_items).and_return([])
-      allow(controller).to receive(:tag_edit_build_entries_pulldown).and_return(nil)
       allow(controller).to receive(:replace_right_cell).with(:action => nil)
       expect(controller).to receive(:x_tags_set_form_vars)
       controller.send(:x_edit_tags_reset, "ServiceTemplate")
