@@ -26,7 +26,7 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
     let(:admin_user) { FactoryBot.create(:user_with_group, :role => 'super_administrator') }
 
     before do
-      @vm = [FactoryBot.create(:template_openstack, :tenant => Tenant.root_tenant)]
+      @vm = FactoryBot.create(:template_openstack, :tenant => Tenant.root_tenant)
       allow(@vm).to receive(:name).and_return('name')
       allow(@vm).to receive(:operating_system).and_return('linux')
       allow(@vm).to receive(:platform).and_return('platform')
