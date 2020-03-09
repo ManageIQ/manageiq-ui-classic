@@ -6,7 +6,7 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
   end
 
   def x_get_tree_roots
-    count_only_or_objects(false, filter_ae_objects(User.current_tenant.visible_domains))
+    count_only_or_objects(false, filter_ae_objects(User.current_tenant.enabled_domains))
   end
 
   def override(node, object)
