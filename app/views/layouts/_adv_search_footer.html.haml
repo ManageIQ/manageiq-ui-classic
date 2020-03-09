@@ -29,7 +29,7 @@
                      :title   => t,
                      :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'adv_search_button', :button => "apply")}');$('#advsearchModal').modal('hide');")
       - if @edit[@expkey][:selected] && @edit[@expkey][:selected][:typ] != "default" && @edit[@expkey][:selected][:id] != 0
-        - if report_admin_user? || @edit[@expkey][:selected][:typ] == "user"
+        - if role_allows?(:feature => 'add_global_filter') || @edit[@expkey][:selected][:typ] == "user"
           - actual_filter = @edit[@expkey][:selected][:description]
           - confirm_msg = _("Delete the %{model} filter named %{filter}?") % {:model  => ui_lookup(:model => @edit[@expkey][:exp_model]),
                                                                               :filter => actual_filter}
