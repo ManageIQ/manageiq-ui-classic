@@ -1,4 +1,4 @@
-import React, { Fragment, useState, createContext } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual, get, set } from 'lodash';
 import {
@@ -9,8 +9,6 @@ import {
 import ButtonSpinner from '../../forms/button-spinner';
 import CheckErrors from './check-errors';
 import { checkValidState } from './helper';
-
-export const PasswordContext = createContext();
 
 const AsyncCredentials = ({
   FieldProvider,
@@ -70,9 +68,10 @@ const AsyncCredentials = ({
   };
 
   return (
-    <PasswordContext.Provider value={{ name, edit }}>
+    <Fragment>
       {formOptions.renderForm(fields.map(field => ({
         ...field,
+        ...(field.component === 'password-field' ? { parent: name, edit } : undefined),
         isDisabled: field.isDisabled || validating,
         onChange: value => enhancedChange(value, field.name, name, formOptions.change),
       })), formOptions)}
@@ -103,7 +102,7 @@ const AsyncCredentials = ({
           </FormGroup>
         )}
       </FieldProvider>
-    </PasswordContext.Provider>
+    </Fragment>
   );
 };
 

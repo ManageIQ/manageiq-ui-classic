@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,7 +9,6 @@ import {
   HelpBlock,
 } from 'patternfly-react';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { PasswordContext } from './async-credentials';
 import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 
@@ -21,9 +20,10 @@ const PasswordField = ({
   cancelEditLabel,
   changeEditLabel,
   helperText,
+  edit,
+  parent,
   ...rest
 }) => {
-  const { name: secretKey, edit } = useContext(PasswordContext);
   const [editMode, setEditMode] = useState(!edit);
   const secretField = {
     component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
@@ -42,8 +42,8 @@ const PasswordField = ({
         buttonLabel: cancelEditLabel,
         setEditMode: () => {
           formOptions.change(rest.name, undefined);
-          if (checkValidState(formOptions, secretKey)) {
-            formOptions.change(secretKey, formOptions.getFieldState(secretKey).initial);
+          if (parent && checkValidState(formOptions, parent)) {
+            formOptions.change(parent, formOptions.getFieldState(parent).initial);
           }
           setEditMode(editMode => !editMode); // reset edit mode
         },
@@ -83,6 +83,8 @@ PasswordField.propTypes = {
   isDisabled: PropTypes.bool,
   validate: PropTypes.func,
   helperText: PropTypes.string,
+  edit: PropTypes.bool,
+  parent: PropTypes.string,
 };
 
 PasswordField.defaultProps = {
@@ -91,6 +93,8 @@ PasswordField.defaultProps = {
   isDisabled: false,
   validate: undefined,
   helperText: undefined,
+  edit: false,
+  parent: undefined,
 };
 
 export default PasswordField;
