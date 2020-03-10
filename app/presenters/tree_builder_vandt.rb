@@ -34,7 +34,7 @@ class TreeBuilderVandt < TreeBuilder
     #   so taking them from the relationship records can cut down on the huge
     #   VM query.
 
-    tree = ems.subtree_arranged(:except_type => "VmOrTemplate")
+    tree = ems.subtree_arranged(:except_type => ["VmOrTemplate", "Switch"])
 
     prune_rbac(ems, tree)
     prune_non_vandt_folders(tree)
