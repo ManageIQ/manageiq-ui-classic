@@ -465,16 +465,34 @@ describe ServiceController do
   end
 
   describe '#get_node_info' do
-    let(:edit) { {:new => {}, :adv_search_applied => {:text => " - Filtered by Filter1"}} }
+    let(:expr_table) { [['Service : Tag = Test', 1]] }
+    let(:miq_expression) { MiqExpression.new("=" => {:tag => "name", :value => "Test"}, :token => 1) }
+    let(:search_filter) { MiqSearch.create(:db => 'Service', :filter => miq_expression) }
+    let(:expression) do
+      ApplicationController::Filter::Expression.new.tap do |e|
+        e.exp_table = expr_table
+        e.history = ApplicationController::Filter::ExpressionEditHistory.new([miq_expression])
+      end
+    end
+    let(:edit) { {:expression => expression} }
 
     before do
       allow(controller).to receive(:session).and_return(:edit => edit)
+      allow(controller).to receive(:valid_active_node).and_return("ms-#{search_filter.id}")
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@right_cell_text, 'All Services')
       controller.instance_variable_set(:@sb, {})
+      controller.params = {:button => 'saveit'}
     end
 
     it 'sets @edit according to the session[:edit]' do
       controller.send(:get_node_info, 'xx-rsrv')
       expect(controller.instance_variable_get(:@edit)).to eq(controller.session[:edit])
+    end
+
+    it 'sets the expression displayed in Advanced Search properly after saving new filter' do
+      controller.send(:get_node_info, "ms-#{search_filter.id}")
+      expect(controller.instance_variable_get(:@edit)[:expression][:exp_table]).to eq(expr_table)
     end
   end
 
