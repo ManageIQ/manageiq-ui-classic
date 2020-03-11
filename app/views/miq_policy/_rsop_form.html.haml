@@ -31,8 +31,8 @@
       = select_tag('filter_typ',
         options_for_select([["<#{_('Choose')}>"],
           [_("By Cloud/Infrastructure Providers"), "ems"],
-          [_("By %{clusters}") % {:clusters => title_for_clusters}, "cluster"],
-          [_("By %{hosts}") % {:hosts => title_for_host}, "host"],
+          [_("By Clusters"), "cluster"],
+          [_("By Host"), "host"],
           [_("Single VM/Instance"), "vm"]], @sb[:rsop][:filter]),
           :class => "selectpicker form-control")
       :javascript

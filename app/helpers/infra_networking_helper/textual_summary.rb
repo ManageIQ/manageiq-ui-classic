@@ -20,9 +20,8 @@ module InfraNetworkingHelper::TextualSummary
   #
   def textual_hosts
     num = @record.number_of(:hosts)
-    h = {:label => title_for_hosts, :icon => "pficon pficon-container-node", :value => num}
+    h = {:label => _("Hosts"), :icon => "pficon pficon-container-node", :value => num}
     if num.positive? && role_allows?(:feature => "host_show_list")
-      h = {:label => title_for_hosts, :icon => "pficon pficon-container-node", :value => num}
       h[:explorer] = true
       h[:link] = url_for_only_path(:action => 'hosts', :id => @record, :db => 'switch')
     end

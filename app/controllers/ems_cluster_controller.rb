@@ -108,7 +108,7 @@ class EmsClusterController < ApplicationController
   helper_method :textual_group_list
 
   def breadcrumb_name(_model)
-    title_for_clusters
+    _("Clusters")
   end
 
   def set_config(db_record)
@@ -140,7 +140,7 @@ class EmsClusterController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => title_for_clusters, :url => controller_url},
+        {:title => _("Clusters"), :url => controller_url},
       ],
       :record_info => @ems,
     }.compact

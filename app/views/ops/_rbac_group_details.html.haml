@@ -16,7 +16,8 @@
         %strong= h('These outdated filters need review as it affects their visibility. We suggest editing and saving the group to delete these outdated filters.')
         %ul
           %li
-            %strong= (_("%{title_for_hosts} & %{title_for_clusters}") % {:title_for_hosts => title_for_hosts, :title_for_clusters => title_for_clusters})
+            %strong
+              = _("Clusters, Datastores, Hosts, Managers & Providers")
             %ul
               - @deleted_belongsto_filters.each do |deleted_filter|
                 %li

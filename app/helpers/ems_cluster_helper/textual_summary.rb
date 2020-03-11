@@ -7,7 +7,7 @@ module EmsClusterHelper::TextualSummary
 
   def textual_group_host_totals
     TextualGroup.new(
-      _("Totals for %{hosts}") % {:hosts => title_for_hosts},
+      _("Totals for Hosts"),
       %i[
         aggregate_cpu_speed aggregate_memory aggregate_physical_cpus aggregate_cpu_total_cores
         aggregate_disk_capacity block_storage_disk_usage object_storage_disk_usage
@@ -110,7 +110,7 @@ module EmsClusterHelper::TextualSummary
   end
 
   def textual_aggregate_cpu_total_cores
-    {:label => _("Total %{title} CPU Cores") % {:title => title_for_host},
+    {:label => _("Total Host CPU Cores"),
      :value => number_with_delimiter(@record.aggregate_cpu_total_cores)}
   end
 
@@ -138,9 +138,9 @@ module EmsClusterHelper::TextualSummary
 
   def textual_total_hosts
     num = @record.total_hosts
-    h = {:label => title_for_hosts, :icon => "pficon pficon-container-node", :value => num}
+    h = {:label => _("Hosts"), :icon => "pficon pficon-container-node", :value => num}
     if num.positive? && role_allows?(:feature => "host_show_list")
-      h[:title] = _("Show all %{title}") % {:title => title_for_hosts}
+      h[:title] = _("Show all Hosts")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'hosts')
     end
     h

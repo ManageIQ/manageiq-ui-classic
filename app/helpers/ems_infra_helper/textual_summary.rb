@@ -81,7 +81,7 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_clusters
-    label = title_for_clusters
+    label = _("Clusters")
     num   = @record.number_of(:ems_clusters)
     h     = {:label => label, :icon => "pficon pficon-cluster", :value => num}
     if num.positive? && role_allows?(:feature => "ems_cluster_show_list")
@@ -92,7 +92,7 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_hosts
-    label = title_for_hosts
+    label = _("Hosts")
     num   = @record.number_of(:hosts)
     h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
     if num.positive? && role_allows?(:feature => "host_show_list")

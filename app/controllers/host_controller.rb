@@ -403,7 +403,7 @@ class HostController < ApplicationController
   helper_method :textual_group_list
 
   def breadcrumb_name(_model)
-    title_for_hosts
+    _("Hosts")
   end
 
   # Validate the host record fields
@@ -475,7 +475,7 @@ class HostController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => title_for_hosts, :url => controller_url},
+        {:title => _("Hosts"), :url => controller_url},
       ],
       :record_info => @host,
     }.compact
