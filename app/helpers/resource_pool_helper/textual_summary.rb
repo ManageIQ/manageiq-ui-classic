@@ -77,11 +77,11 @@ module ResourcePoolHelper::TextualSummary
 
   def textual_parent_cluster
     cluster = @record.parent_cluster
-    h = {:label => _("Parent '%{title}'") % {:title => title_for_cluster},
+    h = {:label => _("Parent Cluster"),
          :icon  => "pficon pficon-cluster",
          :value => (cluster.nil? ? _("None") : cluster.name)}
     if cluster && role_allows?(:feature => "ems_cluster_show")
-      h[:title] = _("Show Parent %{title} %{name}") % {:title => title_for_cluster, :name => cluster.name}
+      h[:title] = _("Show Parent Cluster '%{name}'") % {:name => cluster.name}
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => cluster)
     end
     h
@@ -93,7 +93,7 @@ module ResourcePoolHelper::TextualSummary
          :icon  => "pficon pficon-container-node",
          :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
-      h[:title] = _("Show Parent %{title} '%{name}'") % {:title => title_for_host, :name => host.name}
+      h[:title] = _("Show Parent Host '%{name}'") % {:name => host.name}
       h[:link]  = url_for_only_path(:controller => 'host', :action => 'show', :id => host)
     end
     h

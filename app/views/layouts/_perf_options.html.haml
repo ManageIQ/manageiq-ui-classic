@@ -126,8 +126,8 @@
 
       - if @perf_options[:model] == "VmOrTemplate" && @perf_options[:typ] != "realtime"
         - compare_choices = []
-        - compare_choices.push(["Parent '#{title_for_host}'", "Host"]) if @perf_record.host
-        - compare_choices.push(["Parent '#{title_for_cluster}'", "EmsCluster"]) if @perf_record.ems_cluster
+        - compare_choices.push([_("Parent Host"), "Host"]) if @perf_record.host
+        - compare_choices.push([_("Parent Cluster"), "EmsCluster"]) if @perf_record.ems_cluster
 
         - unless compare_choices.empty?
           .form-group
@@ -135,7 +135,7 @@
               = _("Compare To")
             .col-md-8
               = select_tag("compare_to",
-                             options_for_select([["<Nothing>", nil]] + compare_choices,
+                             options_for_select([[_("<Nothing>"), nil]] + compare_choices,
                              @perf_options[:parent]),
                              "data-miq_sparkle_on" => true,
                              :class    => "selectpicker")

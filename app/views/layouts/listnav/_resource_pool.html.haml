@@ -14,8 +14,7 @@
       %ul.nav.nav-pills.nav-stacked
         - if role_allows?(:feature => "ems_cluster_show")
           = li_link(:if => !@record.parent_cluster.nil?,
-            :text       => _("Parent %{title}: %{name}") % {:title => title_for_cluster,
-              :name       => @record.parent_cluster.try(:name)},
+            :text       => _("Parent Cluster: %{name}") % {:name => @record.parent_cluster.try(:name)},
             :controller => 'ems_cluster',
             :record_id  => @record.parent_cluster.try(:id),
             :title      => _('Show VMs'))
