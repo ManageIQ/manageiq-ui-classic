@@ -4,7 +4,7 @@ describe('Login', () => {
   beforeEach(() => {
     cy.visit('/');
   });
-
+  // do not use cy.login() here
   it("login page", () => {
     cy.get('#user_name')
       .type("admin");
