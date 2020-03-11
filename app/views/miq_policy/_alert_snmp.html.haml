@@ -16,7 +16,7 @@
       - if @edit[:new][:send_snmp]
         .form-group
           %label.control-label.col-md-2
-            = title_for_host
+            = _("Host")
           .col-md-8
             = text_field_tag("host_1", @edit[:new][:snmp][:host][0],
               :maxlength         => ViewHelper::MAX_DESC_LEN,

@@ -221,7 +221,7 @@ module VmHelper::TextualSummary
   def textual_cluster
     cluster = @record.try(:ems_cluster)
     return nil if cluster.nil?
-    h = {:label => title_for_cluster, :icon => "pficon pficon-cluster", :value => (cluster.nil? ? _("None") : cluster.name)}
+    h = {:label => _("Cluster"), :icon => "pficon pficon-cluster", :value => (cluster.nil? ? _("None") : cluster.name)}
     if cluster && role_allows?(:feature => "ems_cluster_show")
       h[:title] = _("Show this VM's %{title}") % {:title => title_for_cluster}
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => cluster)
@@ -232,7 +232,7 @@ module VmHelper::TextualSummary
   def textual_host
     host = @record.host
     return nil if host.nil?
-    h = {:label => title_for_host, :icon => "pficon pficon-cluster", :value => (host.nil? ? _("None") : host.name)}
+    h = {:label => _("Host"), :icon => "pficon pficon-cluster", :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
       h[:title] = _("Show this VM's %{title}") % {:title => title_for_host}
       h[:link]  = url_for_only_path(:controller => 'host', :action => 'show', :id => host)

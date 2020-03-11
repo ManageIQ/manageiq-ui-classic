@@ -223,7 +223,7 @@
           .form-horizontal
             .form-group
               %label.control-label.col-md-2
-                = title_for_host
+                = _("Host")
               .col-md-8
                 - @alert.options[:notifications][:snmp][:host].each do |host|
                   %p.form-control-static
