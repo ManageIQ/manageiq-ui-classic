@@ -68,7 +68,8 @@ module HostHelper::TextualSummary
   end
 
   def textual_group_cloud_services
-    TextualGroup.new(_("Cloud Services"), textual_openstack_nova_scheduler) if @record.openstack_host?
+    return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+    TextualGroup.new(_("Cloud Services"), textual_openstack_nova_scheduler)
   end
 
   def textual_group_openstack_service_status
@@ -182,7 +183,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_storage_adapters
-    return nil if @record.openstack_host?
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:storage_adapters)
     h = {:label => _("Storage Adapters"), :icon => "ff ff-network-card", :value => num}
     if num.positive?
@@ -193,7 +194,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_network
-    return nil if @record.openstack_host?
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     num = @record.number_of(:switches)
     h = {:label => _("Network"), :icon => "pficon pficon-network", :value => (num.zero? ? _("N/A") : _("Available"))}
     if num.positive?
@@ -276,12 +277,12 @@ module HostHelper::TextualSummary
   end
 
   def textual_storages
-    return nil if @record.openstack_host?
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     textual_link(@record.storages)
   end
 
   def textual_resource_pools
-    return nil if @record.openstack_host?
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     textual_link(@record.resource_pools,
                  :as   => ResourcePool,
                  :link => url_for_only_path(:action => 'show', :id => @record, :display => 'resource_pools'))
@@ -300,7 +301,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_availability_zone
-    return nil unless @record.openstack_host?
+    return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     availability_zone = @record.availability_zone
     h = {:label => _('Availability Zone'),
          :icon  => "pficon pficon-zone",
@@ -313,7 +314,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_used_tenants
-    return nil unless @record.openstack_host?
+    return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     textual_link(@record.cloud_tenants,
                  :as   => CloudTenant,
                  :link => url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_tenants'))
@@ -331,7 +332,7 @@ module HostHelper::TextualSummary
   end
 
   def textual_templates
-    return nil if @record.openstack_host?
+    return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
     textual_link(@record.miq_templates, :label => _('Templates'))
   end
 
