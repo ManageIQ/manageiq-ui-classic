@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < Applicati
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_refresh_provider,
+          :configuration_manager_refresh_provider,
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to this Provider'),
           N_('Refresh Relationships and Power states'),
@@ -17,13 +17,13 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < Applicati
           :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
-          :provider_foreman_edit_provider,
+          :configuration_manager_edit_provider,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Provider'),
           t,
           :url => "edit"),
         button(
-          :provider_foreman_delete_provider,
+          :configuration_manager_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
           t,

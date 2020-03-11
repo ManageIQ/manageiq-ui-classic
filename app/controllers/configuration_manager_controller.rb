@@ -1,4 +1,4 @@
-class ProviderForemanController < ApplicationController
+class ConfigurationManagerController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
@@ -17,7 +17,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def self.table_name
-    @table_name ||= "provider_foreman"
+    @table_name ||= "configuration_manager"
   end
 
   def self.model_to_name(provmodel)
@@ -39,11 +39,11 @@ class ProviderForemanController < ApplicationController
   end
 
   def privilege_prefix
-    'provider_foreman'
+    'configuration_manager'
   end
 
   def provision
-    assert_privileges("provider_foreman_configured_system_provision") if x_active_accord == :configuration_manager_providers
+    assert_privileges("configuration_manager_configured_system_provision") if x_active_accord == :configuration_manager_providers
     assert_privileges("configured_system_provision") if x_active_accord == :configuration_manager_cs_filter
     provisioning_ids = find_records_with_rbac(ConfiguredSystem, checked_or_params).ids
 
@@ -206,11 +206,11 @@ class ProviderForemanController < ApplicationController
 
   private
 
-  def provider_foreman_pause
+  def configuration_manager_pause
     pause_or_resume_emss(:pause => true)
   end
 
-  def provider_foreman_resume
+  def configuration_manager_resume
     pause_or_resume_emss(:resume => true)
   end
 

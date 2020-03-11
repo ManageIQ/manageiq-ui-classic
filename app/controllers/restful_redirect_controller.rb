@@ -7,7 +7,7 @@ class RestfulRedirectController < ApplicationController
       record = ExtManagementSystem.find_by(:id => params[:id])
       if record
         if %w[ManageIQ::Providers::ConfigurationManager].include?(record.type) || record.type.starts_with?('ManageIQ::Providers::Foreman')
-          redirect_to(:controller => 'provider_foreman', :action => 'show', :id => params[:id])
+          redirect_to(:controller => 'configuration_manager', :action => 'show', :id => params[:id])
         elsif %w[ManageIQ::Providers::AnsibleTower::AutomationManager].include?(record.type)
           redirect_to(:controller => 'automation_manager', :action => 'show', :id => params[:id])
         elsif %w[ManageIQ::Providers::EmbeddedAnsible::AutomationManager].include?(record.type)

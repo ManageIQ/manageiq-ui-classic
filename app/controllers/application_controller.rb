@@ -1987,7 +1987,7 @@ class ApplicationController < ActionController::Base
       "vm"
     when 'automation_manager'
       "automation_manager_provider"
-    when 'provider_foreman'
+    when 'configuration_manager'
       "configuration_manager_provider"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"

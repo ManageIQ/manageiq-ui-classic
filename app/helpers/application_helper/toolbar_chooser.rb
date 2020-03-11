@@ -17,7 +17,7 @@ class ApplicationHelper::ToolbarChooser
       nil
     elsif @layout == 'report'
       @report ? "report_view_tb" : nil
-    elsif @layout == 'provider_foreman'
+    elsif @layout == 'configuration_manager'
       @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
     elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
@@ -90,7 +90,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_explorer
     if %w[vm_cloud vm_infra vm_or_template].include?(@layout)
       center_toolbar_name_vm_or_template
-    elsif @layout == "provider_foreman" && %i[configuration_manager_providers_tree configuration_manager_cs_filter_tree].include?(x_active_tree)
+    elsif @layout == "configuration_manager" && %i[configuration_manager_providers_tree configuration_manager_cs_filter_tree].include?(x_active_tree)
       center_toolbar_filename_configuration_manager_providers
     elsif @layout == "automation_manager"
       center_toolbar_filename_automation_manager
@@ -634,7 +634,7 @@ class ApplicationHelper::ToolbarChooser
                            miq_policy
                            miq_policy_rsop
                            ops
-                           provider_foreman
+                           configuration_manager
                            pxe
                            report].to_set.freeze
 

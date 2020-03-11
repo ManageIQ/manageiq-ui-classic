@@ -8,18 +8,18 @@
 - if @configuration_profile_record
   #main_div
     - @pages = nil if @sb[:active_tab] == 'summary'
-    = render(:partial => 'provider_foreman/configuration_profile')
+    = render(:partial => 'configuration_manager/configuration_profile')
 - elsif @inventory_group_record
   #main_div
     - @pages = nil if @sb[:active_tab] == 'summary'
-    = render(:partial => 'provider_foreman/inventory_group')
+    = render(:partial => 'configuration_manager/inventory_group')
 
 - elsif @configured_system_record
   #main_div
     = render :partial => "layouts/textual_groups_generic"
 - elsif @configuration_script_record
   #main_div
-    = render(:partial => 'provider_foreman/configuration_script', :locals => {:controller => "provider_foreman"})
+    = render(:partial => 'configuration_manager/configuration_script', :locals => {:controller => "configuration_manager"})
 - else
   #main_div
     - if ManageIQ::Providers::ConfigurationManager.none? && provider_active_tree?

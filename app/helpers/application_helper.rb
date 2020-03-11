@@ -219,7 +219,7 @@ module ApplicationHelper
     elsif @host && %w[Patch GuestApplication].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
     elsif %w[ConfiguredSystem ConfigurationProfile].include?(db)
-      return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
+      return url_for_only_path(:controller => "configuration_manager", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
       return url_for_only_path(:controller => controller, :action => action, :id => @id)
@@ -282,12 +282,12 @@ module ApplicationHelper
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
         elsif %w[ConfigurationProfile].include?(view.db) &&
-              request.parameters[:controller] == "provider_foreman"
+              request.parameters[:controller] == "configuration_manager"
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w[ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder].include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w[ConfiguredSystem].include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
+        elsif %w[ConfiguredSystem].include?(view.db) && (request.parameters[:controller] == "configuration_manager" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w[MiqWidget
                  ConfigurationScript
@@ -791,7 +791,7 @@ module ApplicationHelper
        orchestration_stack
        persistent_volume
        physical_server
-       provider_foreman
+       configuration_manager
        resource_pool
        retired
        security_group

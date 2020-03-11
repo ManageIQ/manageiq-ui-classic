@@ -1,4 +1,4 @@
-module ProviderForemanHelper
+module ConfigurationManagerHelper
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties

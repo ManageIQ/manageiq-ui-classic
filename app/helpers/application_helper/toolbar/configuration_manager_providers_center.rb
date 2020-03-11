@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_refresh_provider,
+          :configuration_manager_refresh_provider,
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to the selected items'),
           N_('Refresh Relationships and Power states'),
@@ -20,14 +20,14 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
           :onwhen       => "1+"),
         separator,
         button(
-          :provider_foreman_add_provider,
+          :configuration_manager_add_provider,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Provider'),
           t,
           :enabled => true,
           :url     => "new"),
         button(
-          :provider_foreman_edit_provider,
+          :configuration_manager_edit_provider,
           'pficon pficon-edit fa-lg',
           N_('Select a single item to edit'),
           N_('Edit Selected item'),
@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :provider_foreman_delete_provider,
+          :configuration_manager_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected items from Inventory'),
           t,

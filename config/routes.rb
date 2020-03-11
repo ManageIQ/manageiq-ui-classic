@@ -2658,7 +2658,7 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
-    :provider_foreman         => {
+    :configuration_manager         => {
       :get  => %w(
         download_data
         download_summary_pdf

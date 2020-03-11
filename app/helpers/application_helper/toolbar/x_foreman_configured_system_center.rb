@@ -1,14 +1,14 @@
 class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHelper::Toolbar::Basic
   button_group('record_summary', [
     select(
-      :provider_foreman_lifecycle_choice,
+      :configuration_manager_lifecycle_choice,
       nil,
       t = N_('Lifecycle'),
       t,
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_configured_system_provision,
+          :configuration_manager_configured_system_provision,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Provision Configured System'),
           t,
@@ -19,7 +19,7 @@ class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHe
       ]
     ),
     select(
-      :provider_foreman_policy_choice,
+      :configuration_manager_policy_choice,
       nil,
       t = N_('Policy'),
       t,

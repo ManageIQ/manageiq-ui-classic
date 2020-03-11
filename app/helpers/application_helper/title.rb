@@ -74,7 +74,7 @@ module ApplicationHelper
         _("Reports")
       when "ops"
         _("Configuration")
-      when "provider_foreman"
+      when "configuration_manager"
         _("Configuration Management")
       when "pxe"
         _("PXE")

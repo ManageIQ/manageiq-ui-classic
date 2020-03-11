@@ -1,8 +1,8 @@
 module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::LifecycleMixin
   def self.included(included_class)
-    included_class.button_group('provider_foreman_lifecycle', [
+    included_class.button_group('configuration_manager_lifecycle', [
       included_class.select(
-        :provider_foreman_lifecycle_choice,
+        :configuration_manager_lifecycle_choice,
         nil,
         N_('Lifecycle'),
         :enabled => true,

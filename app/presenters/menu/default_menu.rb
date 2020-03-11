@@ -13,7 +13,7 @@ module Menu
 
       def configuration_menu_section
         Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog', [
-          Menu::Item.new('provider_foreman',  N_('Management'), 'provider_foreman_explorer', {:feature => 'provider_foreman_explorer', :any => true}, '/provider_foreman/explorer'),
+          Menu::Item.new('configuration_manager',  N_('Management'), 'configuration_manager_explorer', {:feature => 'configuration_manager_explorer', :any => true}, '/configuration_manager/explorer'),
         ])
       end
 

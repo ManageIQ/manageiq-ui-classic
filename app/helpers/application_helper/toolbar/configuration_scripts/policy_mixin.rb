@@ -1,7 +1,7 @@
 module ApplicationHelper::Toolbar::ConfigurationScripts::PolicyMixin
   def self.included(included_class)
-    included_class.button_group('provider_foreman_policy',
-                                [included_class.select(:provider_foreman_policy_choice,
+    included_class.button_group('configuration_manager_policy',
+                                [included_class.select(:configuration_manager_policy_choice,
                                                        nil,
                                                        t = N_('Policy'),
                                                        t,
