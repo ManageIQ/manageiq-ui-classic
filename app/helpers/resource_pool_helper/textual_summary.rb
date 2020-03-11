@@ -44,22 +44,22 @@ module ResourcePoolHelper::TextualSummary
 
   def textual_aggregate_cpu_speed
     # TODO: Why aren't we using mhz_to_human_size here?
-    {:label => _("Total %{title} CPU Resources") % {:title => title_for_host},
+    {:label => _("Total Host CPU Resources"),
      :value => "#{number_with_delimiter(@record.aggregate_cpu_speed)} MHz"}
   end
 
   def textual_aggregate_cpu_memory
-    {:label => _("Total %{title} Memory") % {:title => title_for_host},
+    {:label => _("Total Host Memory"),
      :value => number_to_human_size(@record.aggregate_memory.megabytes, :precision => 0)}
   end
 
   def textual_aggregate_physical_cpus
-    {:label => _("Total %{title} CPUs") % {:title => title_for_host},
+    {:label => _("Total Host CPUs"),
      :value => number_with_delimiter(@record.aggregate_physical_cpus)}
   end
 
   def textual_aggregate_cpu_total_cores
-    {:label => _("Total %{title} CPU Cores") % {:title => title_for_host},
+    {:label => _("Total Host CPU Cores"),
      :value => number_with_delimiter(@record.aggregate_cpu_total_cores)}
   end
 
@@ -89,7 +89,7 @@ module ResourcePoolHelper::TextualSummary
 
   def textual_parent_host
     host = @record.parent_host
-    h = {:label => _("Parent %{title}") % {:title => title_for_host},
+    h = {:label => _("Parent Host"),
          :icon  => "pficon pficon-container-node",
          :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")

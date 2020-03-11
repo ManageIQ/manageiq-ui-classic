@@ -166,7 +166,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_host_platform
-    {:label => _("Parent %{title} Platform") % {:title => title_for_host},
+    {:label => _("Parent Host Platform"),
      :value => (@record.host.nil? ? _("N/A") : @record.v_host_vmm_product)}
   end
 
@@ -223,7 +223,7 @@ module VmHelper::TextualSummary
     return nil if cluster.nil?
     h = {:label => _("Cluster"), :icon => "pficon pficon-cluster", :value => (cluster.nil? ? _("None") : cluster.name)}
     if cluster && role_allows?(:feature => "ems_cluster_show")
-      h[:title] = _("Show this VM's %{title}") % {:title => title_for_cluster}
+      h[:title] = _("Show this VM's Cluster")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => cluster)
     end
     h
@@ -234,7 +234,7 @@ module VmHelper::TextualSummary
     return nil if host.nil?
     h = {:label => _("Host"), :icon => "pficon pficon-cluster", :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
-      h[:title] = _("Show this VM's %{title}") % {:title => title_for_host}
+      h[:title] = _("Show this VM's Host")
       h[:link]  = url_for_only_path(:controller => 'host', :action => 'show', :id => host)
     end
     h
