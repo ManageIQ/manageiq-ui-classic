@@ -157,17 +157,5 @@ module ApplicationHelper
         plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
       end
     end
-
-    def title_for_managers
-      _("Managers")
-    end
-
-    def title_for_providers
-      _("Providers")
-    end
-
-    def title_for_datastores
-      _("Datastores")
-    end
   end
 end
