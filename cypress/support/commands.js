@@ -216,3 +216,7 @@ Cypress.Commands.add("search_box", () => {
 Cypress.Commands.add("no_search_box", () => {
   return cy.get('#search_text').should('not.be.visible');
 });
+
+Cypress.Commands.add("tab", (name) => {
+  return cy.get("li > a[data-toggle=\"tab\"]").contains(name).click();
+});
