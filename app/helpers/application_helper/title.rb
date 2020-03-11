@@ -128,21 +128,5 @@ module ApplicationHelper
       # Assume layout is a table name and look up the plural version
       ui_lookup(:tables => layout)
     end
-
-    def title_for_hosts
-      _("Hosts")
-    end
-
-    def title_for_host
-      _("Host")
-    end
-
-    def title_for_clusters
-      _("Clusters")
-    end
-
-    def title_for_cluster
-      _("Cluster")
-    end
   end
 end
