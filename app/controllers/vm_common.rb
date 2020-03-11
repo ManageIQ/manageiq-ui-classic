@@ -1230,7 +1230,7 @@ module VmCommon
             presenter.update(:form_buttons_div, '')
             presenter.remove_paging.hide(:form_buttons_div)
           end
-        elsif %w[attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
+        elsif %w[attach detach live_migrate resize ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip].include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif %w[reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
@@ -1247,7 +1247,12 @@ module VmCommon
         # evm_relationship_update uses React form and buttons
         presenter.hide(:form_buttons_div) if action == "evm_relationship_update"
       end
-      presenter.show(:paging_div)
+
+      if %w[evacuate].include?(@sb[:action])
+        presenter.hide(:form_buttons_div, :paging_div)
+      else
+        presenter.show(:paging_div)
+      end
     else
       presenter.hide(:paging_div)
     end

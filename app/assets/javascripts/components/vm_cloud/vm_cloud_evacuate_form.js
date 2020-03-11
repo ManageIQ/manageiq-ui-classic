@@ -21,6 +21,8 @@ function vmCloudEvacuateFormController($http, $scope, miqService) {
     vm.hosts = [];
     vm.formId = vm.recordId;
     vm.modelCopy = angular.copy(vm.vmCloudModel);
+    vm.newRecord = true;
+    vm.saveable = miqService.saveable;
 
     ManageIQ.angular.scope = $scope;
     $scope.saveable = miqService.saveable;
