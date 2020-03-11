@@ -1,16 +1,7 @@
 describe Mixins::CheckedIdMixin do
   describe '#find_records_with_rbac' do
-    # create user role and group
-    let(:user_role) { FactoryBot.create(:miq_user_role) }
-    let(:groups) { FactoryBot.create_list(:miq_group, 2, :miq_user_role => user_role) }
-
     # include tested mixin, create user inline
-    let(:mixin) do
-      Object.new.tap do |instance|
-        instance.extend(described_class)
-        instance.define_singleton_method(:current_user) { FactoryBot.create(:user, :miq_groups => groups) }
-      end
-    end
+    let(:mixin) { Object.new.tap { |instance| instance.extend(described_class) } }
 
     # create records
     let!(:vm1) { FactoryBot.create(:vm_or_template) }
