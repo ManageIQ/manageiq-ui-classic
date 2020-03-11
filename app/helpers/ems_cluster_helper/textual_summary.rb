@@ -150,7 +150,7 @@ module EmsClusterHelper::TextualSummary
     num = @record.total_direct_vms
     h = {:label => _("Direct VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
-      h[:title] = _("Show VMs in this %{title}, but not in Resource Pools below") % {:title => cluster_title}
+      h[:title] = _("Show VMs in this Cluster, but not in Resource Pools below")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'vms')
     end
     h
@@ -160,7 +160,7 @@ module EmsClusterHelper::TextualSummary
     num = @record.total_vms
     h = {:label => _("All VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
-      h[:title] = _("Show all VMs in this %{title}") % {:title => cluster_title}
+      h[:title] = _("Show all VMs in this Cluster")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'all_vms')
     end
     h
@@ -172,7 +172,7 @@ module EmsClusterHelper::TextualSummary
     num = @record.total_miq_templates
     h = {:label => _("All Templates"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "miq_template_show_list")
-      h[:title] = _("Show all Templates in this %{title}") % {:title => cluster_title}
+      h[:title] = _("Show all Templates in this Cluster")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'miq_templates')
     end
     h
@@ -191,7 +191,7 @@ module EmsClusterHelper::TextualSummary
     num = @record.number_of(:drift_states)
     h = {:label => _("Drift History"), :icon => "ff ff-drift", :value => (num.zero? ? _("None") : num)}
     if num.positive?
-      h[:title] = _("Show %{title} drift history") % {:title => cluster_title}
+      h[:title] = _("Show Cluster drift history")
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'drift_history', :id => @record)
     end
     h
@@ -239,9 +239,5 @@ module EmsClusterHelper::TextualSummary
   def textual_object_storage_disk_usage
     return nil unless @record.respond_to?(:object_storage?) && @record.object_storage? && !@record.cloud.nil?
     {:value => number_to_human_size(@record.cloud_object_storage_disk_usage.bytes, :precision => 2)}
-  end
-
-  def cluster_title
-    title_for_cluster_record(@record)
   end
 end
