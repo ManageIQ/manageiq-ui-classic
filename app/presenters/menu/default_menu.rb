@@ -59,13 +59,10 @@ module Menu
       end
 
       def infrastructure_menu_section
-        hosts_name    = hybrid_name(Host,       N_("Hosts"),    N_("Nodes"),            N_("Hosts / Nodes"))
-        clusters_name = hybrid_name(EmsCluster, N_("Clusters"), N_("Deployment Roles"), N_("Clusters / Deployment Roles"))
-
         Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus', [
           Menu::Item.new('ems_infra',         N_('Providers'),         'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
-          Menu::Item.new('ems_cluster',       clusters_name,           'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
-          Menu::Item.new('host',              hosts_name,              'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
+          Menu::Item.new('ems_cluster',       N_("Clusters"),          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
+          Menu::Item.new('host',              N_("Hosts"),             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
           Menu::Item.new('vm_infra',          N_('Virtual Machines'),  'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
           Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
@@ -88,17 +85,6 @@ module Menu
           Menu::Item.new('physical_infra_topology', N_('Topology'),  'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology/show'),
         ])
       end
-
-      def hybrid_name(klass, name1, name2, name3)
-        lambda do
-          case klass.node_types
-          when :non_openstack then name1
-          when :openstack     then name2
-          else                     name3
-          end
-        end
-      end
-      private :hybrid_name
 
       def container_menu_section
         Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus', [
