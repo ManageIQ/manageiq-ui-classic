@@ -36,6 +36,7 @@ module HostHelper::TextualSummary
 
   def textual_group_security
     return nil if @record.is_vmware_esxi?
+
     TextualGroup.new(_("Security"), %i[users groups patches firewall_rules ssh_root])
   end
 
@@ -45,6 +46,7 @@ module HostHelper::TextualSummary
 
   def textual_group_diagnostics
     return nil unless ::Settings.product.proto
+
     TextualGroup.new(_("Diagnostics"), %i[esx_logs])
   end
 
@@ -69,16 +71,19 @@ module HostHelper::TextualSummary
 
   def textual_group_cloud_services
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     TextualGroup.new(_("Cloud Services"), textual_openstack_nova_scheduler)
   end
 
   def textual_group_openstack_service_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     TextualMultilink.new(_("OpenStack Service Status"), :items => textual_generate_openstack_status)
   end
 
   def textual_group_openstack_hardware_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     TextualGroup.new(_("Openstack Hardware"), %i[introspected provision_state])
   end
 
@@ -147,6 +152,7 @@ module HostHelper::TextualSummary
 
   def textual_custom_1
     return nil if @record.custom_1.blank?
+
     label = _("Custom Identifier")
     h     = {:label => label, :value => @record.custom_1}
     h
@@ -184,6 +190,7 @@ module HostHelper::TextualSummary
 
   def textual_storage_adapters
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:storage_adapters)
     h = {:label => _("Storage Adapters"), :icon => "ff ff-network-card", :value => num}
     if num.positive?
@@ -195,6 +202,7 @@ module HostHelper::TextualSummary
 
   def textual_network
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     num = @record.number_of(:switches)
     h = {:label => _("Network"), :icon => "pficon pficon-network", :value => (num.zero? ? _("N/A") : _("Available"))}
     if num.positive?
@@ -277,11 +285,13 @@ module HostHelper::TextualSummary
 
   def textual_storages
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     textual_link(@record.storages)
   end
 
   def textual_resource_pools
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     textual_link(@record.resource_pools,
                  :as   => ResourcePool,
                  :link => url_for_only_path(:action => 'show', :id => @record, :display => 'resource_pools'))
@@ -289,6 +299,7 @@ module HostHelper::TextualSummary
 
   def textual_drift_history
     return nil unless role_allows?(:feature => "host_drift")
+
     label = _("Drift History")
     num   = @record.number_of(:drift_states)
     h     = {:label => label, :icon => "ff ff-drift", :value => num}
@@ -301,6 +312,7 @@ module HostHelper::TextualSummary
 
   def textual_availability_zone
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     availability_zone = @record.availability_zone
     h = {:label => _('Availability Zone'),
          :icon  => "pficon pficon-zone",
@@ -314,6 +326,7 @@ module HostHelper::TextualSummary
 
   def textual_used_tenants
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     textual_link(@record.cloud_tenants,
                  :as   => CloudTenant,
                  :link => url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_tenants'))
@@ -332,6 +345,7 @@ module HostHelper::TextualSummary
 
   def textual_templates
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
+
     textual_link(@record.miq_templates, :label => _('Templates'))
   end
 
@@ -341,6 +355,7 @@ module HostHelper::TextualSummary
 
   def textual_users
     return nil if @record.is_vmware_esxi?
+
     num = @record.number_of(:users)
     h = {:label => _("Users"), :icon => "pficon pficon-user", :value => num}
     if num.positive?
@@ -352,6 +367,7 @@ module HostHelper::TextualSummary
 
   def textual_groups
     return nil if @record.is_vmware_esxi?
+
     num = @record.number_of(:groups)
     h = {:label => _("Groups"), :icon => "ff ff-group", :value => num}
     if num.positive?
@@ -363,6 +379,7 @@ module HostHelper::TextualSummary
 
   def textual_firewall_rules
     return nil if @record.is_vmware_esxi?
+
     num = @record.number_of(:firewall_rules)
     h = {:label => _("Firewall Rules"), :icon => "ff ff-firewall", :value => num}
     if num.positive?
@@ -374,11 +391,13 @@ module HostHelper::TextualSummary
 
   def textual_ssh_root
     return nil if @record.is_vmware_esxi?
+
     {:label => _("SSH Root"), :value => @record.ssh_permit_root_login}
   end
 
   def textual_patches
     return nil if @record.is_vmware_esxi?
+
     num = @record.number_of(:patches)
     h = {:label => _("Patches"), :icon => "fa fa-shield", :value => num}
     if num.positive?
@@ -443,12 +462,14 @@ module HostHelper::TextualSummary
   def textual_miq_custom_attributes
     attrs = @record.miq_custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_ems_custom_attributes
     attrs = @record.ems_custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by { |a| a.name.to_s }.collect { |a| {:label => a.name, :value => a.value} }
   end
 
