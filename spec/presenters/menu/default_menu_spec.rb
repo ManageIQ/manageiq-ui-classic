@@ -21,56 +21,9 @@ describe Menu::DefaultMenu do
       @ems_vmware = FactoryBot.create(:ems_vmware)
     end
 
-    it "shows correct title for Hosts submenu item when openstack only records exist" do
-      FactoryBot.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
-      menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Clusters", "Nodes", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
-      expect(menu).to eq(result)
-    end
-
-    it "shows correct title for Hosts submenu item when non-openstack only records exist" do
-      FactoryBot.create(:host_vmware, :ems_id => @ems_vmware.id)
+    it "shows correct titles for Hosts & Clusters" do
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
       result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
-      expect(menu).to eq(result)
-    end
-
-    it "shows correct title for Hosts submenu item when both openstack & non-openstack only records exist" do
-      FactoryBot.create(:host_openstack_infra, :ems_id => @ems_openstack.id)
-      FactoryBot.create(:host_vmware, :ems_id => @ems_vmware.id)
-
-      menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Clusters", "Hosts / Nodes", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
-      expect(menu).to eq(result)
-    end
-
-    it "shows correct title for Clusters submenu item when openstack only records exist" do
-      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
-
-      menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Deployment Roles", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
-      expect(menu).to eq(result)
-    end
-
-    it "shows correct title for Clusters submenu item when non-openstack only records exist" do
-      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
-
-      menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Resource Pools",
-                "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
-      expect(menu).to eq(result)
-    end
-
-    it "shows correct title for Clusters submenu item when both openstack & non-openstack only records exist" do
-      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_openstack.id)
-      FactoryBot.create(:ems_cluster_openstack, :ems_id => @ems_vmware.id)
-
-      menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Clusters / Deployment Roles", "Hosts", "Virtual Machines", "Resource Pools",
                 "Datastores", "PXE", "Firmware Registry", "Networking", "Topology"]
       expect(menu).to eq(result)
     end

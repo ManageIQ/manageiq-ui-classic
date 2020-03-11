@@ -256,7 +256,7 @@ describe MiqPolicyController do
 
         it 'updates right cell text according to search text' do
           controller.send(:replace_right_cell, :nodetype => 'xx')
-          expect(subject).to eq("All Host / Node Conditions (Names with \"#{search}\")")
+          expect(subject).to eq("All Host Conditions (Names with \"#{search}\")")
         end
       end
     end

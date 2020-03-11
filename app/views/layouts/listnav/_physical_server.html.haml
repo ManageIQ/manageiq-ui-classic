@@ -17,6 +17,6 @@
               :title => _("Show this parent Provider"))
         - if @record.host
           %li
-            = link_to(_("Host / Node: %{name}") % {:name => @record.host.name},
+            = link_to(_("Host: %{name}") % {:name => @record.host.name},
               "/host/show/#{@record.host.id}",
               :title => _("Show Host"))

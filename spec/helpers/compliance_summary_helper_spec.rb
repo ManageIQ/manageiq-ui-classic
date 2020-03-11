@@ -63,7 +63,7 @@ describe ComplianceSummaryHelper do
       expect(helper.textual_compliance_history).to eq(:label => "History",
                                                       :icon  => "pficon pficon-history",
                                                       :value => "Available",
-                                                      :title => "Show Compliance History of this Host / Node (Last 10 Checks)",
+                                                      :title => "Show Compliance History of this Host (Last 10 Checks)",
                                                       :link  => "/host/show/#{@record.id}?display=compliance_history")
     end
   end
