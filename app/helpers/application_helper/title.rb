@@ -17,6 +17,7 @@ module ApplicationHelper
     end
 
     # Derive the browser title text based on the layout value
+    # FIXME: don't do that in the first place
     def title_from_layout(layout)
       # no layout, leave title alone
       return nil if layout.blank?
@@ -43,11 +44,11 @@ module ApplicationHelper
       when "about"
         _("About")
       when "ems_cluster"
-        title_for_clusters
+        _("Clusters")
       when "generic_object_definition"
         _("Generic Object Definitions")
       when "host"
-        title_for_hosts
+        _("Hosts")
       when "infra_topology"
         _("Infrastructure Topology")
       when "miq_server"
@@ -129,33 +130,19 @@ module ApplicationHelper
     end
 
     def title_for_hosts
-      title_for_host(true)
+      _("Hosts")
     end
 
-    def title_for_host(plural = false)
-      case Host.node_types
-      when :non_openstack
-        plural ? _("Hosts") : _("Host")
-      when :openstack
-        plural ? _("Nodes") : _("Node")
-      else
-        plural ? _("Hosts / Nodes") : _("Host / Node")
-      end
+    def title_for_host
+      _("Host")
     end
 
     def title_for_clusters
-      title_for_cluster(true)
+      _("Clusters")
     end
 
-    def title_for_cluster(plural = false)
-      case EmsCluster.node_types
-      when :non_openstack
-        plural ? _("Clusters") : _("Cluster")
-      when :openstack
-        plural ? _("Deployment Roles") : _("Deployment Role")
-      else
-        plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
-      end
+    def title_for_cluster
+      _("Cluster")
     end
   end
 end
