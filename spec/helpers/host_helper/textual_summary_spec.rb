@@ -1,4 +1,6 @@
 describe HostHelper::TextualSummary do
+  include TextualSummaryHelper
+
   before do
     instance_variable_set(:@record, FactoryBot.create(:host_openstack_infra,
                                                        :type => ManageIQ::Providers::Openstack::InfraManager::Host))
