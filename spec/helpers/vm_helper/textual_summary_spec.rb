@@ -1,4 +1,6 @@
 describe VmHelper::TextualSummary do
+  include TextualSummaryHelper
+
   it "#textual_server" do
     server  = FactoryBot.build(:miq_server)
     @record = FactoryBot.build(:vm_vmware, :miq_server => server)
