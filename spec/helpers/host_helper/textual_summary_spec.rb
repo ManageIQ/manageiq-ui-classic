@@ -6,7 +6,6 @@ describe HostHelper::TextualSummary do
                                                        :type => ManageIQ::Providers::Openstack::InfraManager::Host))
     allow(self).to receive(:textual_authentications).and_return([])
     allow(::Settings).to receive_message_chain(:product, :proto).and_return("")
-    allow(@record).to receive(:openstack_host?).and_return(true)
     allow(self).to receive(:textual_openstack_nova_scheduler).and_return([])
   end
 
