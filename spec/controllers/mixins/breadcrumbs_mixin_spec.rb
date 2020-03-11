@@ -1,6 +1,12 @@
 describe Mixins::BreadcrumbsMixin do
   class BreadcrumbsTestController < ActionController::Base
     include Mixins::BreadcrumbsMixin
+
+    def gtl_url; end
+    def features; end
+    def x_active_tree; end
+    def x_active_accord; end
+    def x_node; end
   end
 
   subject { BreadcrumbsTestController.new }
