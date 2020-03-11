@@ -8,7 +8,7 @@ describe Mixins::CheckedIdMixin do
     let!(:vm2) { FactoryBot.create(:vm_or_template) }
     let!(:vm3) { FactoryBot.create(:vm_or_template) }
 
-    subject { mixin.send(:find_records_with_rbac, model, id) }
+    subject { mixin.find_records_with_rbac(model, id) }
 
     context 'when single record is checked in show list' do
       let(:model) { VmOrTemplate }
