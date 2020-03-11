@@ -1,15 +1,17 @@
 describe Mixins::CheckedIdMixin do
   describe '#find_records_with_rbac' do
-    # include tested mixin
-    let(:mixin) { Object.new.tap { |s| s.singleton_class.send(:include, described_class) } }
-    # create user, user role and group
+    # create user role and group
     let(:user_role) { FactoryBot.create(:miq_user_role) }
-    let(:group) { FactoryBot.create(:miq_group, :miq_user_role => user_role) }
-    let(:current_user) { FactoryBot.create(:user, :miq_groups => [group]) }
-    before do
-      allow(mixin).to receive(:current_user).and_return(current_user)
-      allow(current_user).to receive(:get_timezone).and_return("Prague")
+    let(:groups) { FactoryBot.create_list(:miq_group, 2, :miq_user_role => user_role) }
+
+    # include tested mixin, create user inline
+    let(:mixin) do
+      Object.new.tap do |instance|
+        instance.extend(described_class)
+        instance.define_singleton_method(:current_user) { FactoryBot.create(:user, :miq_groups => groups) }
+      end
     end
+
     # create records
     let!(:vm1) { FactoryBot.create(:vm_or_template) }
     let!(:vm2) { FactoryBot.create(:vm_or_template) }
