@@ -1,8 +1,18 @@
-import { pick } from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { pick } from 'lodash';
+
 import AsyncCredentials from './async-credentials';
 
-const AsyncProviderCredentials = ({ ...props }) => {
+const AsyncProviderCredentials = ({ validate, ...props }) => {
+  if (!validate) {
+    // Pass down the required `edit` to the password component (if it exists)
+    return props.formOptions.renderForm(props.fields.map(field => ({
+      ...field,
+      ...(field.component === 'password-field' ? { edit: props.edit } : undefined),
+    })), props.formOptions);
+  }
+
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const resource = pick(fields, fieldNames);
     API.post('/api/providers', { action: 'verify_credentials', resource }).then(({ results: [result] }) => {
@@ -21,7 +31,13 @@ const AsyncProviderCredentials = ({ ...props }) => {
   return <AsyncCredentials asyncValidate={asyncValidate} {...props} />;
 };
 
-AsyncProviderCredentials.propTypes = AsyncCredentials.propTypes;
-AsyncProviderCredentials.defaultProps = AsyncCredentials.defaultProps;
+AsyncProviderCredentials.propTypes = {
+  validate: PropTypes.bool,
+  ...AsyncCredentials.propTypes,
+};
+AsyncProviderCredentials.defaultProps = {
+  validate: true,
+  ...AsyncCredentials.defaultProps,
+};
 
 export default AsyncProviderCredentials;
