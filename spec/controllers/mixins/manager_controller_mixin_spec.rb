@@ -1,6 +1,6 @@
 describe Mixins::ManagerControllerMixin do
   describe '#replace_right_cell' do
-    let(:controller) { ProviderForemanController.new }
+    let(:controller) { ConfigurationManagerController.new }
 
     before do
       allow(controller).to receive(:leaf_record)

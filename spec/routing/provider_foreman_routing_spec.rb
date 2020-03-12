@@ -1,7 +1,7 @@
 require 'routing/shared_examples'
 
-describe 'routes for ProviderForeman' do
-  let(:controller_name) { 'provider_foreman' }
+describe 'routes for ConfigurationManager' do
+  let(:controller_name) { 'configuration_manager' }
 
   it_behaves_like 'A controller that has advanced search routes'
   it_behaves_like 'A controller that has download_data routes'

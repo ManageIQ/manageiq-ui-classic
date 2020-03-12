@@ -1,4 +1,4 @@
-describe 'provider_foreman/show.html.haml' do
+describe 'configuration_manager/show.html.haml' do
   helper(GtlHelper)
 
   let(:foreman) { FactoryBot.create(:configuration_manager) }

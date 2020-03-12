@@ -1,4 +1,4 @@
-describe ProviderForemanHelper do
+describe ConfigurationManagerHelper do
   before do
     @record = FactoryBot.create(:ansible_configuration_script,
                                  :name        => "ConfigScript1",

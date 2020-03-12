@@ -3,7 +3,7 @@ describe 'layouts/_explorer.html.haml' do
   let(:accord) { {:title => 'foo', :name => 'tree_1'} }
 
   before do
-    set_controller_for_view('provider_foreman')
+    set_controller_for_view('configuration_manager')
     assign(:sb, {})
     assign(:trees, [tree_1])
     assign(:accords, [accord])

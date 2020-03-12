@@ -44,10 +44,10 @@ describe RestfulRedirectController do
       expect(response).to redirect_to(:controller => "vm_cloud", :action => "show", :id => vm_cloud.id)
     end
 
-    it 'redirects to provider_foreman controller' do
+    it 'redirects to configuration_manager controller' do
       foreman = FactoryBot.create(:configuration_manager)
       get :index, :params => {:model => "ExtManagementSystem/#{foreman.id}"}
-      expect(response).to redirect_to(:controller => 'provider_foreman', :action => 'show', :id => foreman.id)
+      expect(response).to redirect_to(:controller => 'configuration_manager', :action => 'show', :id => foreman.id)
     end
 
     it 'redirects to automation_manager controller' do

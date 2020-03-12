@@ -80,7 +80,7 @@ describe ReportController do
   end
 end
 
-describe ProviderForemanController do
+describe ConfigurationManagerController do
   describe '#replace_search_box' do
     let(:presenter) { ExplorerPresenter.new(:active_tree => :configuration_manager_providers_tree) }
 

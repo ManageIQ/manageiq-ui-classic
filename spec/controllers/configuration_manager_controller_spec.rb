@@ -1,4 +1,4 @@
-describe ProviderForemanController do
+describe ConfigurationManagerController do
   render_views
 
   let(:tags) { ["/managed/quota_max_memory/2048"] }
@@ -57,7 +57,7 @@ describe ProviderForemanController do
     accords = controller.instance_variable_get(:@accords)
     expect(accords.size).to eq(2)
     breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-    expect(breadcrumbs[0]).to include(:url => '/provider_foreman/show_list')
+    expect(breadcrumbs[0]).to include(:url => '/configuration_manager/show_list')
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
   end
@@ -73,7 +73,7 @@ describe ProviderForemanController do
     expect(response.body).to include("activeTree: 'configuration_manager_providers_tree'")
     expect(response.body).to include("gtlType: 'list'")
     expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
-    expect(response.body).to include("showUrl: '/provider_foreman/x_show/'")
+    expect(response.body).to include("showUrl: '/configuration_manager/x_show/'")
   end
 
   context "renders explorer based on RBAC" do
@@ -88,8 +88,8 @@ describe ProviderForemanController do
       expect(response.body).to_not be_empty
     end
 
-    it "renders explorer based on RBAC access to feature 'provider_foreman_add_provider'" do
-      login_as user_with_feature %w(provider_foreman_add_provider)
+    it "renders explorer based on RBAC access to feature 'configuration_manager_add_provider'" do
+      login_as user_with_feature %w(configuration_manager_add_provider)
 
       get :explorer
       accords = controller.instance_variable_get(:@accords)
@@ -108,7 +108,7 @@ describe ProviderForemanController do
     end
 
     it "should raise an error for feature that user has access to" do
-      expect { controller.send(:assert_privileges, "provider_foreman_add_provider") }
+      expect { controller.send(:assert_privileges, "configuration_manager_add_provider") }
         .to raise_error(MiqException::RbacPrivilegeException)
     end
   end
@@ -138,7 +138,7 @@ describe ProviderForemanController do
     end
   end
 
-  it "#save_provider_foreman will not save with a duplicate name" do
+  it "#save_configuration_manager will not save with a duplicate name" do
     ManageIQ::Providers::Foreman::Provider.create(:name => "test2Foreman", :url => "server1", :zone => @zone)
     provider2 = ManageIQ::Providers::Foreman::Provider.new(:name => "test2Foreman", :url => "server2", :zone => @zone)
     controller.instance_variable_set(:@provider, provider2)
@@ -283,7 +283,7 @@ describe ProviderForemanController do
       controller.params = {:id => ems_id}
       controller.send(:tree_select)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq("Configuration Profiles under Foreman Provider \"testForeman Configuration Manager\"")
+      expect(right_cell_text).to eq("Configuration Profiles under Configuration Manager Provider \"testForeman Configuration Manager\"")
     end
   end
 
@@ -334,8 +334,7 @@ describe ProviderForemanController do
       controller.params = {:id => ems_key_for_provider(@provider)}
       allow(controller).to receive(:build_listnav_search_list)
       allow(controller).to receive(:apply_node_search_text)
-      expect(controller).to receive(:get_view).with("ConfigurationProfile", :match_via_descendants => "ConfiguredSystem",
-                                                                            :named_scope           => [[:with_manager, ems_id]],
+      expect(controller).to receive(:get_view).with("ConfigurationProfile", :named_scope           => [[:with_manager, ems_id]],
                                                                             :dbname                => :cm_configuration_profiles,
                                                                             :gtl_dbname            => :cm_configuration_profiles).and_call_original
       controller.send(:tree_select)
@@ -354,7 +353,7 @@ describe ProviderForemanController do
   end
 
   it "singularizes breadcrumb name" do
-    expect(controller.send(:breadcrumb_name, nil)).to eq("#{ui_lookup(:ui_title => "foreman")} Provider")
+    expect(controller.send(:breadcrumb_name, nil)).to eq("#{ui_lookup(:ui_title => "ConfigurationManager")} Provider")
   end
 
   it "renders tagging editor for a configured system" do
@@ -397,9 +396,9 @@ describe ProviderForemanController do
     expect(response.status).to eq(200)
   end
 
-  context "tree_select on provider foreman node" do
+  context "tree_select on configuration manager node" do
     before do
-      login_as user_with_feature %w(provider_foreman_refresh_provider provider_foreman_edit_provider provider_foreman_delete_provider)
+      login_as user_with_feature %w(configuration_manager_refresh_provider configuration_manager_edit_provider configuration_manager_delete_provider)
 
       allow(controller).to receive(:check_privileges)
       allow(controller).to receive(:process_show_list)
@@ -428,7 +427,7 @@ describe ProviderForemanController do
     # then get to explorer renders the data for the active node
     # we test the textual_summary for a configured system
 
-    seed_session_trees('provider_foreman', 'cs_tree', "cs-#{tree_node_id}")
+    seed_session_trees('configuration_manager', 'cs_tree', "cs-#{tree_node_id}")
     get :explorer
 
     expect(response.status).to eq(200)

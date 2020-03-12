@@ -117,6 +117,7 @@ describe ApplicationHelper, "ToolbarChooser" do
 
         %w(
           chargeback
+          configuration_manager
           generic_object_definition
           miq_ae_class
           miq_ae_customization
@@ -125,7 +126,6 @@ describe ApplicationHelper, "ToolbarChooser" do
           miq_policy
           miq_policy_rsop
           ops
-          provider_foreman
           pxe
           report
         ).each do |layout_name|

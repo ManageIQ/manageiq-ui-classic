@@ -1,4 +1,4 @@
-describe ProviderForemanController, "::AdvancedSearch" do
+describe ConfigurationManagerController, "::AdvancedSearch" do
   before do
     stub_user(:features => :all)
     controller.instance_variable_set(:@sb, {})
