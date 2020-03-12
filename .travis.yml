@@ -27,6 +27,8 @@ matrix:
     env: TEST_SUITE=spec:compile
   - rvm: 2.5.7
     env: TEST_SUITE=spec:jest
+  - rvm: 2.5.7
+    env: TEST_SUITE=spec:debride
 bundler_args: "--no-deployment"
 before_install: source tools/ci/before_install.sh
 install: true
