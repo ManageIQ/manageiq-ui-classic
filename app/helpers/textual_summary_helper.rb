@@ -1,4 +1,8 @@
 module TextualSummaryHelper
+  def role_allows?(_options = {})
+    raise NotImplementedError, _("role_allows? must be implemented in including class")
+  end
+
   def textual_link(target, **opts, &blk)
     case target
     when ActiveRecord::Relation, Array
