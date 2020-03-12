@@ -6,7 +6,6 @@ describe EmsPhysicalInfraController do
     before do
       user = FactoryBot.create(:user, :features => "ems_physical_infra_new")
 
-      allow(user).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
       login_as user
