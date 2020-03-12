@@ -912,9 +912,9 @@ module ApplicationHelper
     when :automation_manager_cs_filter_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
     when :configuration_manager_cs_filter_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
+      "ManageIQ::Providers::ConfigurationManager::ConfiguredSystem"
     when :configuration_manager_providers_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager" if x_node.include?("fr")
+      "ManageIQ::Providers::ConfigurationManager" if x_node.include?("fr")
       "ManageIQ::Providers::ConfigurationManager" if x_node == "root"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
@@ -938,7 +938,7 @@ module ApplicationHelper
     when :automation_manager_cs_filter_tree, :automation_manager_providers_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
     when :configuration_manager_cs_filter_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
+      "ManageIQ::Providers::ConfigurationManager::ConfiguredSystem"
     when :configuration_scripts_tree
       "ConfigurationScript"
     end

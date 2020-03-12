@@ -21,8 +21,8 @@ class ConfigurationManagerController < ApplicationController
   end
 
   def self.model_to_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::Foreman")
-      Dictionary.gettext('foreman', :type => :ui_title, :translate => false)
+    if provmodel.include?("ManageIQ::Providers::ConfigurationManager")
+      Dictionary.gettext('ConfigurationManager', :type => :ui_title, :translate => false)
     end
   end
 
@@ -220,7 +220,7 @@ class ConfigurationManagerController < ApplicationController
   helper_method :textual_group_list
 
   def provider_class
-    ManageIQ::Providers::Foreman::Provider
+    ManageIQ::Providers::ConfigurationManager
   end
 
   def features
@@ -252,11 +252,11 @@ class ConfigurationManagerController < ApplicationController
     end
 
     options = case model
-              when "ManageIQ::Providers::Foreman::ConfigurationManager"
+              when "ManageIQ::Providers::ConfigurationManager"
                 provider_list(id, model)
               when "ConfigurationProfile"
                 configuration_profile_node(id, model)
-              when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
+              when "ManageIQ::Providers::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
                 configured_system_list(id, model)
               when "MiqSearch"
                 miq_search_node
@@ -285,8 +285,8 @@ class ConfigurationManagerController < ApplicationController
     else
       @no_checkboxes = true
       case @record.type
-      when "ManageIQ::Providers::Foreman::ConfigurationManager"
-        options = {:model => "ConfigurationProfile", :match_via_descendants => 'ConfiguredSystem', :named_scope => [[:with_manager, provider.id]]}
+      when "ManageIQ::Providers::Foreman::ConfigurationManager", "ManageIQ::Providers::CloudAutomationManager::ConfigurationManager"
+        options = {:model => "ConfigurationProfile", :named_scope => [[:with_manager, provider.id]]}
         @show_list ? process_show_list(options) : options.merge!(update_options)
         unassigned_profiles = add_unassigned_configuration_profile_record(provider.id)
         options.merge!(unassigned_profiles) unless unassigned_profiles.nil?
@@ -355,14 +355,14 @@ class ConfigurationManagerController < ApplicationController
     type && %w[ConfigurationProfile].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
-  def foreman_provider_record?(node = x_node)
+  def configuration_manager_record?(node = x_node)
     node = node.split("-").last if node.split("-").first == 'xx'
     type, _id = node.split("-")
-    type && ["ManageIQ::Providers::Foreman::ConfigurationManager"].include?(TreeBuilder.get_model_for_prefix(type))
+    type && ["ManageIQ::Providers::ConfigurationManager"].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def provider_record?(node = x_node)
-    foreman_provider_record?(node)
+    configuration_manager_record?(node)
   end
 
   def search_text_type(node)

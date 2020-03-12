@@ -43,7 +43,9 @@ module ApplicationController::Explorer
     'start'            => :s1, 'stop'                      => :s1, 'suspend'             => :s1,
     'reset'            => :s1, 'terminate'                 => :s1, 'pause'               => :s1,
     'shelve'           => :s1, 'shelve_offload'            => :s1, 'chargeback'          => :s1,
-    'foreman_pause'    => :s1, 'foreman_resume'            => :s1, 'manager_pause'       => :s1,
+    'configuration_manager_pause'  => :s1,
+    'configuration_manager_resume' => :s1,
+    'manager_pause'    => :s1,
     'manager_resume'   => :s1,
 
     # group 2

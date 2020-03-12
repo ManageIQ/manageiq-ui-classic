@@ -887,7 +887,7 @@ module ApplicationController::MiqRequestMethods
         @edit[:new] = @edit[:new].merge(pre_prov_values.reject { |k| @edit[:new].key?(k) })
       end
 
-      if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow) ||
+      if @edit[:wf].kind_of?(ManageIQ::Providers::ConfigurationManager::ProvisionWorkflow) ||
          @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
         # BD TODO
       else
@@ -984,7 +984,7 @@ module ApplicationController::MiqRequestMethods
     elsif @edit[:org_controller] == "configured_system"
       @edit[:prov_type] = "ConfiguredSystem"
       @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]
-      wf_type = ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow
+      wf_type = ManageIQ::Providers::ConfigurationManager::ProvisionWorkflow
     elsif @edit[:org_controller] == "physical_server"
       @edit[:prov_type] = "PhysicalServer"
       @edit[:new][:src_configured_system_ids] = params[:prov_id].kind_of?(Array) ? params[:prov_id] : [params[:prov_id]]

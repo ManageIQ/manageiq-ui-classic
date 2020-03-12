@@ -1,4 +1,4 @@
-module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::LifecycleMixin
+module ApplicationHelper::Toolbar::ConfiguredSystem::ConfigurationManager::LifecycleMixin
   def self.included(included_class)
     included_class.button_group('configuration_manager_lifecycle', [
       included_class.select(

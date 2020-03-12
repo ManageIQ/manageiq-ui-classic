@@ -1,4 +1,4 @@
-module ApplicationHelper::Toolbar::ConfiguredSystem::Foreman::PolicyMixin
+module ApplicationHelper::Toolbar::ConfiguredSystem::ConfigurationManager::PolicyMixin
   def self.included(included_class)
     included_class.button_group('configuration_manager_policy', [
       included_class.select(

@@ -431,7 +431,7 @@ class ApplicationController < ActionController::Base
       @view.table = filter_parent_name_tenant(@view.table)
     end
 
-    # Foreman has some unassigned rows which needs to be added after view is fetched
+    # Configuration Manager has some unassigned rows which needs to be added after view is fetched
     if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
       options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
       @view.table.data.push(options[:unassigned_profile_row])

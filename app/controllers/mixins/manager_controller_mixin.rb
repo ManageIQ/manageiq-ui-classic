@@ -501,7 +501,7 @@ module Mixins
     end
 
     def breadcrumb_name(_model)
-      "#{ui_lookup(:ui_title => 'foreman')} #{_('Provider')}"
+      "#{ui_lookup(:ui_title => 'ConfigurationManager')} #{_('Provider')}"
     end
 
     def tagging_explorer_controller?
