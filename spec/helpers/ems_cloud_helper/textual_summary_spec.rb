@@ -1,9 +1,10 @@
 describe EmsCloudHelper::TextualSummary do
+  include ApplicationHelper
+
   context "#textual_instances and #textual_images" do
     before do
       @record = FactoryBot.create(:ems_openstack)
       allow(self).to receive(:role_allows?).and_return(true)
-      allow(controller).to receive(:restful?).and_return(true)
       allow(controller).to receive(:controller_name).and_return("ems_cloud")
     end
 
