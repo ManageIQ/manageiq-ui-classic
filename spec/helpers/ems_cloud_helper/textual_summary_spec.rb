@@ -1,5 +1,5 @@
 describe EmsCloudHelper::TextualSummary do
-  include TextualSummaryHelper
+  include ApplicationHelper
 
   context "#textual_instances and #textual_images" do
     before do
