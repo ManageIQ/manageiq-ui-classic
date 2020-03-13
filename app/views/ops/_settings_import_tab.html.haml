@@ -13,7 +13,7 @@
         = _("Type")
       .col-md-8
         = select_tag('upload_type',
-                    options_for_select([["<#{_('Choose')}>", nil], [title_for_host, "host"], [_("Vm"), "vm"]],
+                    options_for_select([["<#{_('Choose')}>", nil], [_("Host"), "host"], [_("Vm"), "vm"]],
                     @edit[:new][:upload_type]),
                     :class    => "selectpicker")
         :javascript

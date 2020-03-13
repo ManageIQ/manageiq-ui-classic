@@ -269,7 +269,7 @@ module MiqPolicyController::MiqActions
 
     # Build arrays for inherit/remove_tags action types
     @edit[:tag_parent_types] =  [["<#{_('Choose')}>", nil],
-                                 [_("Cluster / Deployment Role"), "ems_cluster"],
+                                 [_("Cluster"), "ems_cluster"],
                                  [_("Host"), "host"],
                                  [_("Datastore"), "storage"],
                                  [_("Resource Pool"), "parent_resource_pool"]].sort_by { |x| x.first.downcase }

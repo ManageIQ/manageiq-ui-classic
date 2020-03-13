@@ -597,7 +597,7 @@ describe ApplicationController do
 
   it "should set correct discovery title" do
     res = controller.send(:set_discover_title, "hosts", "host")
-    expect(res).to eq("Hosts / Nodes")
+    expect(res).to eq("Hosts")
 
     res = controller.send(:set_discover_title, "ems", "ems_infra")
     expect(res).to eq("Infrastructure Providers")

@@ -1,6 +1,5 @@
 - if @sb[:active_tab] == "settings_cu_collection"
   - url = url_for_only_path(:action => 'cu_collection_field_changed')
-  - clusters_title = title_for_clusters
   = form_tag({:action => 'cu_collection_update'},
              :id     => "config_form",
              :class  => "form-horizontal",
@@ -8,26 +7,26 @@
     .row
       .col-md-12.col-lg-6
         %fieldset
-          %h3= clusters_title
+          %h3
+            = _("Clusters")
           .form-horizontal
             .form-group
               %label.col-md-4.control-label
-                = _("Collect for All %{clusters}") % {:clusters => clusters_title}
+                = _("Collect for All Clusters")
               .col-md-8
                 = check_box_tag("all_clusters", true, @edit[:new][:all_clusters],
                                 "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :data => {:on_text => _('Yes'), :off_text => _('No')})
               :javascript
                 miqInitBootstrapSwitch('all_clusters', "#{url}")
             .note
-              %b= _("Note: Collect for All %{clusters} must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2") % {:clusters => clusters_title}
+              %b= _("Note: Collect for All Clusters must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2")
             - if @cluster_tree.present?
               #clusters_div{:style => "display:#{@edit[:new][:all_clusters] ? "none" : ""}"}
-                - cluster_title = title_for_cluster
                 - if @edit[:new][:clusters].blank? && @edit[:new][:non_cl_hosts].blank?
-                  = _("No %{clusters} found in the current region.") % {:clusters => clusters_title}
+                  = _("No Clusters found in the current region.")
                 - else
                   %br/
-                  %b= _("Enable Collection by %{clusters}") % {:clusters => cluster_title}
+                  %b= _("Enable Collection by Cluster")
                   %br/
                   %input#cl_toggle{:name => "cl_toggle", :onchange => "miqCheckCUAll(this,'#{@cluster_tree.name}');", :type => "checkbox"}/
                   = _("Check All")
@@ -35,11 +34,11 @@
                     miqTreeResetState('#{j_str @cluster_tree.name}');
                   = render(:partial => 'shared/tree', :locals => {:tree => @cluster_tree, :name => @cluster_tree.name})
                   %br/
-                  .note= _("VM data will be collected for VMs under selected %{hosts} only. Data is collected for a %{cluster} and all of its %{hosts} when at least one %{host} is selected.") % {:hosts => title_for_hosts, :cluster => cluster_title, :host => title_for_host}
+                  .note= _("VM data will be collected for VMs under selected Hosts only. Data is collected for a Cluster and all of its Hosts when at least one Host is selected.")
             - else
               %br/
               .note
-                %b= _("Note: No %{clusters} available.") % {:clusters => clusters_title}
+                %b= _("Note: No Clusters available.")
       .col-md-12.col-lg-6
         %fieldset
           %h3= _("Datastores")

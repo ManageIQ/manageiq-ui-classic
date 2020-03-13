@@ -62,14 +62,14 @@ describe TreeBuilderSmartproxyAffinity do
       expect(kids1.first).to eq(:id              => "#{@svr1[:id]}__host",
                                 :icon            => "pficon pficon-container-node",
                                 :parent          => @svr1,
-                                :text            => "Host / Nodes",
+                                :text            => "Hosts",
                                 :selectable      => false,
                                 :nodes           => @selected_zone.send('host'.pluralize).sort_by(&:name),
                                 :smartproxy_kind => "host")
       expect(kids2.first).to eq(:id              => "#{@svr2[:id]}__host",
                                 :icon            => "pficon pficon-container-node",
                                 :parent          => @svr2,
-                                :text            => "Host / Nodes",
+                                :text            => "Hosts",
                                 :selectable      => false,
                                 :nodes           => @selected_zone.send('host'.pluralize).sort_by(&:name),
                                 :smartproxy_kind => "host")

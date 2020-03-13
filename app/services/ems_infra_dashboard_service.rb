@@ -8,9 +8,7 @@ class EmsInfraDashboardService < EmsDashboardService
   end
 
   def recent_hosts_data
-    title = openstack? ? _('Recent Nodes') : _('Recent Hosts')
-    label = openstack? ? _('Nodes') : _('Hosts')
-    recent_resources(Host, title, label)
+    recent_resources(Host, _('Recent Hosts'), _('Hosts'))
   end
 
   def recent_vms_data
@@ -57,8 +55,8 @@ class EmsInfraDashboardService < EmsDashboardService
     }
 
     attr_hsh = {
-      :ems_clusters  => openstack? ? _('Deployment Roles') : _('Clusters'),
-      :hosts         => openstack? ? _('Nodes') : _('Hosts'),
+      :ems_clusters  => _('Clusters'),
+      :hosts         => _('Hosts'),
       :storages      => _('Datastores'),
       :vms           => _('VMs'),
       :miq_templates => _('Templates'),
@@ -103,7 +101,7 @@ class EmsInfraDashboardService < EmsDashboardService
     {
       :clusterCpuUsage    => cluster_cpu_usage.presence,
       :clusterMemoryUsage => cluster_memory_usage.presence,
-      :title              => openstack? ? _('Deployment Roles Utilization') : _('Cluster Utilization')
+      :title              => _('Cluster Utilization'),
     }
   end
 
@@ -133,9 +131,5 @@ class EmsInfraDashboardService < EmsDashboardService
       metric_rollup_scope = metric_rollup_scope.where(:resource => @ems)
       metric_rollup_scope.where('timestamp > ?', 30.days.ago.utc).order('timestamp')
     end
-  end
-
-  def openstack?
-    @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
   end
 end

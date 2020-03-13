@@ -1,5 +1,4 @@
 - if @record.try(:name)
-  - hosts_title = title_for_hosts
   #accordion.panel-group
     = miq_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
       = render :partial => 'shared/quadicon', :locals => {:record => @record}
@@ -20,10 +19,10 @@
       %ul.nav.nav-pills.nav-stacked
         - if role_allows?(:feature => "host_show_list")
           = li_link(:count => @record.number_of(:hosts),
-            :text          => hosts_title,
+            :text          => _("Hosts"),
             :record_id     => @record.id,
             :display       => 'hosts',
-            :title         => _("Show all registered %{hosts}") % {:hosts => hosts_title})
+            :title         => _("Show all registered Hosts"))
 
         - if role_allows?(:feature => "vm_show_list")
           = li_link(:count => @record.number_of(:all_vms),

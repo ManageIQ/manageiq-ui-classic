@@ -864,41 +864,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe "#title_for_cluster_record" do
-    before do
-      @ems1 = FactoryBot.create(:ems_vmware)
-      @ems2 = FactoryBot.create(:ems_openstack_infra)
-    end
-
-    it "returns 'Cluster' for non-openstack host" do
-      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems1.id)
-
-      result = helper.title_for_cluster_record(cluster)
-      expect(result).to eq("Cluster")
-    end
-
-    it "returns 'Deployment Role' for openstack host" do
-      cluster = FactoryBot.create(:ems_cluster, :ems_id => @ems2.id)
-
-      result = helper.title_for_cluster_record(cluster)
-      expect(result).to eq("Deployment Role")
-    end
-  end
-
-  describe "#title_for_host_record" do
-    it "returns 'Host' for non-openstack host" do
-      host = FactoryBot.create(:host_vmware, :ext_management_system => FactoryBot.create(:ems_vmware))
-
-      expect(helper.title_for_host_record(host)).to eq("Host")
-    end
-
-    it "returns 'Node' for openstack host" do
-      host = FactoryBot.create(:host_openstack_infra, :ext_management_system => FactoryBot.create(:ems_openstack_infra))
-
-      expect(helper.title_for_host_record(host)).to eq("Node")
-    end
-  end
-
   describe "#tree_with_advanced_search?" do
     it 'should return true for explorer trees with advanced search' do
       controller.instance_variable_set(:@sb,

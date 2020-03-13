@@ -58,21 +58,21 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_cpu_resources
-    {:label => _("Aggregate %{title} CPU Resources") % {:title => title_for_host},
+    {:label => _("Aggregate Host CPU Resources"),
      :value => mhz_to_human_size(@record.aggregate_cpu_speed)}
   end
 
   def textual_memory_resources
-    {:label => _("Aggregate %{title} Memory") % {:title => title_for_host},
+    {:label => _("Aggregate Host Memory"),
      :value => number_to_human_size(@record.aggregate_memory * 1.megabyte, :precision => 0)}
   end
 
   def textual_cpus
-    {:label => _("Aggregate %{title} CPUs") % {:title => title_for_host}, :value => @record.aggregate_physical_cpus}
+    {:label => _("Aggregate Host CPUs"), :value => @record.aggregate_physical_cpus}
   end
 
   def textual_cpu_cores
-    {:label => _("Aggregate %{title} CPU Cores") % {:title => title_for_host},
+    {:label => _("Aggregate Host CPU Cores"),
      :value => @record.aggregate_cpu_total_cores}
   end
 
@@ -81,7 +81,7 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_clusters
-    label = title_for_clusters
+    label = _("Clusters")
     num   = @record.number_of(:ems_clusters)
     h     = {:label => label, :icon => "pficon pficon-cluster", :value => num}
     if num.positive? && role_allows?(:feature => "ems_cluster_show_list")
@@ -92,7 +92,7 @@ module EmsInfraHelper::TextualSummary
   end
 
   def textual_hosts
-    label = title_for_hosts
+    label = _("Hosts")
     num   = @record.number_of(:hosts)
     h     = {:label => label, :icon => "pficon pficon-container-node", :value => num}
     if num.positive? && role_allows?(:feature => "host_show_list")
@@ -150,7 +150,7 @@ module EmsInfraHelper::TextualSummary
   def textual_host_default_vnc_port_range
     return nil if @record.host_default_vnc_port_start.blank?
     value = "#{@record.host_default_vnc_port_start} - #{@record.host_default_vnc_port_end}"
-    {:label => _("%{title} Default VNC Port Range") % {:title => title_for_host}, :value => value}
+    {:label => _("Host Default VNC Port Range"), :value => value}
   end
 
   def textual_topology

@@ -1152,14 +1152,6 @@ module ApplicationHelper
     password.present? ? "\u25cf" * 8 : ''
   end
 
-  def title_for_host_record(record)
-    record.openstack_host? ? _("Node") : _("Host")
-  end
-
-  def title_for_cluster_record(record)
-    record.openstack_cluster? ? _("Deployment Role") : _("Cluster")
-  end
-
   def miq_tab_header(id, active = nil, options = {}, &_block)
     tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
                    :id    => "#{id}_tab"}.merge!(options)

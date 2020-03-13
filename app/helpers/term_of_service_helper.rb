@@ -7,12 +7,12 @@ module TermOfServiceHelper
       "ext_management_system-tags" => N_("Tagged Providers")
     },
     "EmsCluster"          => {
-      "ems_cluster"      => N_("Selected Cluster / Deployment Roles"),
-      "ems_cluster-tags" => N_("Tagged Cluster / Deployment Roles")
+      "ems_cluster"      => N_("Selected Clusters"),
+      "ems_cluster-tags" => N_("Tagged Clusters")
     },
     "Host"                => {
-      "host"      => N_("Selected Host / Nodes"),
-      "host-tags" => N_("Tagged Host / Nodes")
+      "host"      => N_("Selected Hosts"),
+      "host-tags" => N_("Tagged Hosts")
     },
     "Vm"                  => {
       "ems_folder"         => N_("Selected Folders"),
@@ -39,7 +39,7 @@ module TermOfServiceHelper
     :chargeback_compute   => {
       "enterprise"             => N_("The Enterprise"),
       "ext_management_system"  => N_("Selected Providers"),
-      "ems_cluster"            => N_("Selected Cluster / Deployment Roles"),
+      "ems_cluster"            => N_("Selected Clusters"),
       "vm-tags"                => N_("Tagged VMs and Instances"),
       "container_image-tags"   => N_("Tagged Container Images"),
       "container_image-labels" => N_("Labeled Container Images"),

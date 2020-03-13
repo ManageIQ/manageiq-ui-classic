@@ -98,7 +98,7 @@
         = render(:partial => "/miq_request/prov_dialog_fieldset",
           :locals         => {:workflow => wf,
             :dialog                     => dialog,
-            :label                      => title_for_cluster,
+            :label                      => _("Cluster"),
             :prefix                     => "/miq_request/",
             :keys                       => keys})
       - if wf.kind_of?(ManageIQ::Providers::Vmware::InfraManager::ProvisionWorkflow)
@@ -120,7 +120,7 @@
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
           :dialog                     => dialog,
-          :label                      => title_for_host,
+          :label                      => _("Host"),
           :prefix                     => "/miq_request/",
           :keys                       => keys})
       - unless wf.kind_of?(ManageIQ::Providers::CloudManager::ProvisionWorkflow)
