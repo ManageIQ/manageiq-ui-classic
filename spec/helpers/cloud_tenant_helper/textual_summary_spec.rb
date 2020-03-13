@@ -1,4 +1,6 @@
 describe CloudTenantHelper::TextualSummary do
+  include TextualSummaryHelper
+
   before do
     instance_variable_set(:@record, FactoryBot.create(:cloud_tenant))
     allow(@record).to receive_message_chain(:cloud_resource_quotas, :order).and_return([])
