@@ -149,7 +149,7 @@ describe EmsClusterController do
 
         it 'initiates SSA for Cluster' do
           controller.send(:button)
-          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Cluster / Deployment Role: scan successfully initiated', :level => :success}])
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Cluster: scan successfully initiated', :level => :success}])
         end
       end
     end

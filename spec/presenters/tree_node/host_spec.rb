@@ -14,7 +14,7 @@ describe TreeNode::Host do
 
       include_examples 'TreeNode::Node#key prefix', 'h-'
       include_examples 'TreeNode::Node#icon', 'pficon pficon-container-node'
-      include_examples 'TreeNode::Node#tooltip prefix', 'Host / Node'
+      include_examples 'TreeNode::Node#tooltip prefix', 'Host'
     end
   end
 end

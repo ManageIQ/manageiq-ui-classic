@@ -7,7 +7,6 @@ describe EmsClusterHelper::TextualSummary do
     allow(@record).to receive(:drs_automation_level).and_return("something")
     allow(@record).to receive(:drs_migration_threshold).and_return("something")
   end
-  let(:title_for_hosts) { '101' }
 
   include_examples "textual_group", "Relationships", %i(
     ems
@@ -21,7 +20,7 @@ describe EmsClusterHelper::TextualSummary do
     custom_button_events
   )
   include_examples "textual_group", "Totals for VMs", %i(aggregate_vm_memory aggregate_vm_cpus), 'vm_totals'
-  include_examples "textual_group", "Totals for 101", %i(
+  include_examples "textual_group", "Totals for Hosts", %i(
     aggregate_cpu_speed
     aggregate_memory
     aggregate_physical_cpus

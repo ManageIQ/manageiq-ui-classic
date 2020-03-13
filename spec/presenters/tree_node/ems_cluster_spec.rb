@@ -7,7 +7,7 @@ describe TreeNode::EmsCluster do
 
       include_examples 'TreeNode::Node#key prefix', 'c-'
       include_examples 'TreeNode::Node#icon', 'pficon pficon-cluster'
-      include_examples 'TreeNode::Node#tooltip prefix', 'Cluster / Deployment Role'
+      include_examples 'TreeNode::Node#tooltip prefix', 'Cluster'
     end
   end
 end

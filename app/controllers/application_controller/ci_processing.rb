@@ -544,12 +544,12 @@ module ApplicationController::CiProcessing
         begin
           cluster.send(task.to_sym) if cluster.respond_to?(task) # Run the task
         rescue StandardError => err
-          add_flash(_("Cluster / Deployment Role \"%{name}\": Error during '%{task}': %{error_message}") %
+          add_flash(_("Cluster \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => cluster_name,
              :task          => task,
              :error_message => err.message}, :error) # Push msg and error flag
         else
-          add_flash(_("Cluster / Deployment Role: %{task} successfully initiated") % {:task => task})
+          add_flash(_("Cluster: %{task} successfully initiated") % {:task => task})
         end
       end
     end

@@ -57,7 +57,7 @@ module Mixins
     end
 
     def display_ems_clusters
-      nested_list(EmsCluster, :breadcrumb_title => title_for_clusters)
+      nested_list(EmsCluster, :breadcrumb_title => _('Clusters'))
     end
 
     def display_persistent_volumes

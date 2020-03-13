@@ -102,7 +102,7 @@ module Mixins
 
         def set_discover_title(type, controller)
           if type == "hosts"
-            _("Hosts / Nodes")
+            _("Hosts")
           else
             ui_lookup(:tables => controller)
           end

@@ -629,7 +629,7 @@ module OpsController::Settings::Schedules
       [_("Template Analysis"), "miq_template"],
       [_("Host Analysis"), "host"],
       [_("Container Image Analysis"), "container_image"],
-      [_("Cluster / Deployment Role Analysis"), "emscluster"],
+      [_("Cluster Analysis"), "emscluster"],
       [_("Datastore Analysis"), "storage"]
     ]
     if role_allows?(:feature => "vm_check_compliance") || role_allows?(:feature => "miq_template_check_compliance")
@@ -650,7 +650,7 @@ module OpsController::Settings::Schedules
     @vm_options_for_select = [
       [_("All VMs"), "all"],
       [_("All VMs for Providers"), "ems"],
-      [_("All VMs for Clusters / Deployment Roles"), "cluster"],
+      [_("All VMs for Clusters"), "cluster"],
       [_("All VMs for Host"), "host"],
       [_("A single VM"), "vm"]
     ] +
@@ -660,7 +660,7 @@ module OpsController::Settings::Schedules
     @template_options_for_select = [
       [_("All Templates"), "all"],
       [_("All Templates for Providers"), "ems"],
-      [_("All Templates for Clusters / Deployment Roles"), "cluster"],
+      [_("All Templates for Clusters"), "cluster"],
       [_("All Templates for Host"), "host"],
       [_("A single Template"), "miq_template"]
     ] +
@@ -670,7 +670,7 @@ module OpsController::Settings::Schedules
     @host_options_for_select = [
       [_("All Hosts"), "all"],
       [_("All Hosts for Infrastructure Provider"), "ems"],
-      [_("All Hosts for Clusters / Deployment Roles"), "cluster"],
+      [_("All Hosts for Clusters"), "cluster"],
       [_("A single Host"), "host"]
     ] +
                                (@host_global_filters.empty? ? [] : [[_("Global Filters"), "global"]]) +
