@@ -37,6 +37,11 @@ describe('Async credentials component', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
+  it('should not render validation if validate=false', () => {
+    const wrapper = shallow(<AsyncCredentials {...initialProps} validate={false} />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
   it('should call async validation function on button click and set valid state to true', async(done) => {
     const asyncValidate = jest.fn().mockReturnValue(new Promise(resolve => resolve('Ok')));
     const change = jest.fn();
