@@ -2754,6 +2754,120 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
+    :configuration_manager  => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        form_fields
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        authentication_validate
+        button
+        change_tab
+        delete
+        edit
+        form_field_changed
+        new
+        provision
+        quick_search
+        refresh
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tag_edit_form_field_changed
+        cs_form_field_changed
+        users
+        wait_for_task
+        button
+      ) +
+        adv_search_post +
+        dialog_runner_post +
+        exp_post +
+        perf_post +
+        save_post
+    },
+
+    :configuration_profile  => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        form_fields
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        authentication_validate
+        button
+        change_tab
+        delete
+        edit
+        form_field_changed
+        new
+        provision
+        quick_search
+        refresh
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tag_edit_form_field_changed
+        cs_form_field_changed
+        users
+        wait_for_task
+        button
+      ) +
+        adv_search_post +
+        dialog_runner_post +
+        exp_post +
+        perf_post +
+        save_post
+    },
+
+    :configured_system  => {
+      :get  => %w(
+        download_data
+        download_summary_pdf
+        form_fields
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        authentication_validate
+        button
+        change_tab
+        delete
+        edit
+        form_field_changed
+        new
+        provision
+        quick_search
+        refresh
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tag_edit_form_field_changed
+        cs_form_field_changed
+        users
+        wait_for_task
+        button
+      ) +
+        adv_search_post +
+        dialog_runner_post +
+        exp_post +
+        perf_post +
+        save_post
+    },
+
     :provider_foreman         => {
       :get  => %w(
         download_data

@@ -9,48 +9,46 @@
 #
 
 # Report title
-title: ConfiguredSystem
+title: ConfigurationProfile
 
 # Menu name
-name: ConfiguredSystems
+name: ConfigurationProfile
 
 # Main DB table report is based on
-db: ConfiguredSystem
+db: ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
 
 # Columns to fetch from the main table
 cols:
-- hostname
-- type
-- last_checkin
-- build_state
-- my_zone
+- description
+- total_configured_systems
 - configuration_environment_name
+- my_zone
+- region_description
 
 # Included tables (joined, has_one, has_many) and columns
-include:
+
+# Included tables and columns for query performance
 
 # Order of columns (from all tables)
 col_order:
-- hostname
-- type
-- last_checkin
-- build_state
-- my_zone
+- description
+- total_configured_systems
 - configuration_environment_name
-- configuration_profile_name
+- my_zone
+- region_description
 
 # Column titles, in order
 headers:
-- Hostname
-- Type
-- Last Checkin
-- Build State
-- Zone
+- Description
+- Total Configured Systems
 - Environment
+- Zone
+- Region
 
 col_formats:
 -
-- :model_name
+-
+-
 -
 -
 
@@ -62,7 +60,7 @@ order: Ascending
 
 # Columns to sort the report on, in order
 sortby:
-- hostname
+- description
 
 # Group rows (y=yes,n=no,c=count)
 group: n

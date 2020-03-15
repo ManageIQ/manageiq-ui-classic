@@ -240,6 +240,9 @@ module ApplicationHelper
       if controller == "ems_cloud" && action == "show"
         return ems_clouds_path
       end
+      # if controller == "ems_configuration" && action == "show"
+      #   return configuration_managers_path
+      # end
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
       end
@@ -422,6 +425,9 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
+        "ManageIQ::Providers::ConfigurationManager",
+        "ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile",
+        "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
       controller = request.parameters[:controller]
     when "ContainerVolume"
@@ -651,6 +657,14 @@ module ApplicationHelper
     end
   end
 
+  def nameonly_search?
+    nameonly_search_layouts = %w[
+      configuration_manager
+      configuration_profile
+    ]
+    nameonly_search_layouts.include?(@layout)
+  end
+
   # checking if any of the toolbar is visible
   def toolbars_visible?
     (@toolbars['history_tb'] || @toolbars['center_tb'] || @toolbars['view_tb']) &&
@@ -755,7 +769,10 @@ module ApplicationHelper
        cloud_volume_snapshot
        cloud_volume_type
        configuration_job
+       configuration_manager
+       configuration_profile
        configuration_scripts
+       configured_system
        container
        container_build
        container_group

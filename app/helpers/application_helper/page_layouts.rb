@@ -189,6 +189,7 @@ module ApplicationHelper::PageLayouts
       cloud_volume_snapshot
       cloud_volume_type
       configuration_job
+      configured_system
       container
       container_build
       container_group
