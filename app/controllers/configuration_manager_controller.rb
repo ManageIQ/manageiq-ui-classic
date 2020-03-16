@@ -34,5 +34,4 @@ class ConfigurationManagerController < ApplicationController
   end
 
   menu_section :conf
-  has_custom_buttons
 end

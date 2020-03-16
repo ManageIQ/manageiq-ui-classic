@@ -33,7 +33,5 @@ class ConfiguredSystemController < ApplicationController
     }
   end
 
-  menu_section :cnt
-
-  has_custom_buttons
+  menu_section :conf
 end
