@@ -70,9 +70,6 @@ describe('Workers form', () => {
           ui_worker: {
             memory_threshold: '1.gigabytes', count: 1,
           },
-          vim_broker_worker: {
-            memory_threshold: 2147483648,
-          },
           web_service_worker: {
             connection_pool_size: 8, memory_threshold: 1073741824,
           },
@@ -94,7 +91,6 @@ describe('Workers form', () => {
       reporting_worker: { count: 2, memory_threshold: 524288000 },
       smart_proxy_worker: { count: 2, memory_threshold: 576716800 },
       ui_worker: { count: 1 },
-      vim_broker_worker: { memory_threshold: 2147483648 },
       web_service_worker: { count: 1, memory_threshold: 1073741824 },
     };
 

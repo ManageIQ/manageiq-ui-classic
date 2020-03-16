@@ -54,9 +54,6 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
               memory_threshold: parseWorker(wb.queue_worker_base.ems_refresh_worker.defaults).bytes || baseMemDefault,
             },
           },
-          vim_broker_worker: {
-            memory_threshold: parseWorker(wb.vim_broker_worker).bytes || memDefault,
-          },
           smart_proxy_worker: {
             memory_threshold: parseWorker(wb.queue_worker_base.smart_proxy_worker).bytes || baseMemDefault,
             count: selectCount(wb.queue_worker_base.smart_proxy_worker.count),
@@ -141,9 +138,6 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
       },
       ui_worker: {
         count: isDifferent('ui_worker.count'),
-      },
-      vim_broker_worker: {
-        memory_threshold: toRubyMethod(isDifferent('vim_broker_worker.memory_threshold')),
       },
       event_catcher: {
         memory_threshold: toRubyMethod(isDifferent('event_catcher.memory_threshold')),

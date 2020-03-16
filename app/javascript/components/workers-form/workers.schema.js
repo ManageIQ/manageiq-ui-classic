@@ -124,17 +124,6 @@ function addSchema(formValues) {
     fields: [
       {
         component: componentTypes.SUB_FORM,
-        name: 'connectionBroker',
-        title: __('Connection Broker'),
-        fields: [{
-          component: componentTypes.SELECT,
-          name: 'vim_broker_worker.memory_threshold',
-          options: injectOption(generateRefreshOptions(false, 100, 500), formValues.vim_broker_worker.memory_threshold),
-          label: __('Memory threshold'),
-        },
-        ],
-      }, {
-        component: componentTypes.SUB_FORM,
         name: 'vmAnalysisCollectors',
         title: __('VM Analysis Collectors'),
         fields: [
