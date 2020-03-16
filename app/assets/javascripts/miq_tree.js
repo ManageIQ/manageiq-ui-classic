@@ -181,12 +181,12 @@ function miqOnCheckGenealogy(key, checked, tree) {
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
 }
 
-function miqOnCheckTenantTree(node) {
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
+// Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
+function miqOnCheckTenantTree(key) {
   sendDataWithRx({
     controller: 'catalogItemFormController',
-    key: node.key,
-  })
+    key: key,
+  });
 }
 
 function miqCheckAll(cb, treeName) {

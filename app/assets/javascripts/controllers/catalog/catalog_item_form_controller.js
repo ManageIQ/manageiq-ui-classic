@@ -95,26 +95,19 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
       return;
     }
 
-    if (data.key) {
-      $timeout(function() {
-        // get ids of checked additional tenants in the tree
-        var new_ids = miqTreeObject('tenants_tree').getChecked().map(getTenantId);
+    $timeout(function() {
+      // get ids of all checked tenants in the tree
+      var new_ids = miqGetSelectedKeys(ManageIQ.redux.store.getState().tenants_tree).map(getTenantId);
 
-        // filter unnecessary root node if present
-        new_ids = new_ids.filter(function(tenant_id) {
-          return tenant_id;
-        });
-
-        if (new_ids) {
-          vm.catalogItemModel.additional_tenant_ids = new_ids.sort();
-        }
-      });
-    }
+      if (new_ids) {
+        vm.catalogItemModel.additional_tenant_ids = new_ids.sort();
+      }
+    });
   });
 
-  function getTenantId(obj) {
-    if (obj.key.startsWith('tn')) {
-      return obj.key.split('-')[1];
+  function getTenantId(key) {
+    if (key.startsWith('tn')) {
+      return key.split('-')[1];
     }
   }
 
