@@ -1,4 +1,4 @@
-- if %w(configuration_profiles).include?(@display)
+- if %w(configuration_profiles configured_systems).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @showtype == "main"
   = render :partial => "layouts/flash_msg"

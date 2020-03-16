@@ -17,6 +17,10 @@ class ConfigurationProfileController < ApplicationController
     @table_name ||= "configuration_profile"
   end
 
+  def self.display_methods
+    %w[configured_systems]
+  end
+
   private
 
   def breadcrumbs_options

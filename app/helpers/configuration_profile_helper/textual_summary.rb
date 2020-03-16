@@ -35,6 +35,31 @@ module ConfigurationProfileHelper::TextualSummary
     {:label => _("Puppet Realm"), :value => @record.configuration_realm_name}
   end
 
+  def textual_configuration_profile_group_relationships
+    %i[configuration_manager
+       configured_systems]
+  end
+
+  def textual_configuration_manager
+    configuration_manager = @record.configuration_manager
+    h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
+    if configuration_manager && role_allows?(:feature => "configuration_manager_show")
+      h[:title] = _("Show this Configuration Profile's Configuration Manager")
+      h[:link]  = url_for_only_path(:controller => 'configuration_manager', :action => 'show', :id => configuration_manager)
+    end
+    h
+  end
+
+  def textual_configured_systems
+    num   = @record.number_of(:configured_systems)
+    h     = {:label => _('Configured Systems'), :icon => "pficon pficon-configured_system", :value => num}
+    if num.positive? && role_allows?(:feature => "configured_system_show_list")
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'configured_systems')
+      h[:title] = _("Show all Configured Systems")
+    end
+    h
+  end
+
   def textual_configuration_profile_group_os
     %i[configuration_profile_compute_profile
        configuration_profile_architecture
