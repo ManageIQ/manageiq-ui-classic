@@ -110,6 +110,7 @@ module OpsController::Settings
       @edit[:new][:authentication][:user_proxies].each do |f|
         # check to make sure ldaphost already doesn't exist and ignore if existing record is being edited.
         next unless f[:ldaphost] == @ldap_info[:ldaphost] && session[:entry] == 'new'
+
         no_changes = false
         add_flash(_("LDAP Host should be unique"), :error)
         break
@@ -144,6 +145,7 @@ module OpsController::Settings
       replace_right_cell(:nodetype => "root")
     when "save"
       return unless load_edit("region_edit__#{params[:id]}", "replace_cell__explorer")
+
       if @edit[:new][:description].nil? || @edit[:new][:description] == ""
         add_flash(_("Region description is required"), :error)
       end
@@ -178,6 +180,7 @@ module OpsController::Settings
 
   def region_form_field_changed
     return unless load_edit("region_edit__#{params[:id]}", "replace_cell__explorer")
+
     region_get_form_vars
     javascript_miq_button_visibility(@edit[:new] != @edit[:current])
   end
