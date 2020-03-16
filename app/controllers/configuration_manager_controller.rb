@@ -17,12 +17,11 @@ class ConfigurationManagerController < ApplicationController
     @table_name ||= "configuration_manager"
   end
 
-  private
+  def self.display_methods
+    %w[configuration_profiles configured_systems]
+  end
 
-  # def textual_group_list
-  #   [%i[properties], %i[relationships smart_management]]
-  # end
-  # helper_method :textual_group_list
+  private
 
   def breadcrumbs_options
     {
