@@ -904,7 +904,7 @@ module OpsController::OpsRbac
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
       cats = Classification.categories.select do |c|
-        c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name) && !(c.read_only? || c.entries.empty)
+        c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name) && !(c.read_only? || c.entries.empty?)
       end
       cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
       tags = cats.map do |cat|
