@@ -31,3 +31,8 @@ Or you can get more detailed instructions in [ManageIQ/guides](https://github.co
 ## License
 
 The gem is available as open source under the terms of the [Apache License 2.0](https://opensource.org/licenses/apache-2.0).
+
+Except where otherwise noted, all ManageIQ source files are covered by
+the following copyright and license notice:
+
+Copyright 2014-2020 ManageIQ Authors.
