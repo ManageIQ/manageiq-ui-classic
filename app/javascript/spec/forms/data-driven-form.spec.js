@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
 
-import formFieldsMapper from '../../forms/mappers/formsFieldsMapper';
+import formFieldsMapper from '../../forms/mappers/formFieldsMapper';
 import DataDrivenForm from '../../forms/data-driven-form';
 
 describe('DataDrivenForm', () => {

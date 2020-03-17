@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setPristine } from '../miq-redux/form-reducer';
-import defaultFormFieldsMapper from './mappers/formsFieldsMapper';
+import defaultFormFieldsMapper from './mappers/formFieldsMapper';
 
 Validators.messages = {
   ...Validators.messages,
