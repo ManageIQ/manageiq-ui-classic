@@ -224,17 +224,17 @@ export const injectOption = (options, initialValue, isCount = false) => {
 
 // parse /api/servers/:id/settings output
 export const parseSettings = ({ workers: { worker_base: wb } }) => {
-  const countDefault = wb.defaults.count;
-
-  const memDefault = toBytes(wb.defaults.memory_threshold);
-  const baseMemDefault = toBytes(wb.queue_worker_base.defaults.memory_threshold);
-  const monitorDefault = toBytes(wb.event_catcher.defaults.memory_threshold);
-
   const workerCount = (worker) => (typeof worker.count === 'number') && worker.count;
   const workerBytes = (worker) => toBytes(worker.memory_threshold);
 
+  const countDefault = wb.defaults.count;
   const count = (path) => (_.get(wb, path) && workerCount(_.get(wb, path)) || countDefault);
-  const bytes = (path, defaultValue) => (_.get(wb, path) && workerBytes(_.get(wb, path)) || defaultValue);
+
+  const memDefault = toBytes(wb.defaults.memory_threshold);
+  const bytes = (path, defaultValue = memDefault) => (_.get(wb, path) && workerBytes(_.get(wb, path)) || defaultValue);
+
+  const baseMemDefault = bytes('queue_worker_base.defaults');
+  const monitorDefault = bytes('event_catcher.defaults');
 
   return {
     generic_worker: {
