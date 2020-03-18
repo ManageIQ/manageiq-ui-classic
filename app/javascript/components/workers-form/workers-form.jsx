@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'patternfly-react';
 import { get } from 'lodash';
-import addSchema from './workers.schema';
+import { addSchema, workers } from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import {
@@ -19,7 +19,7 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
   useEffect(() => {
     miqSparkleOn();
     API.get(`/api/servers/${id}/settings`)
-      .then(parseSettings)
+      .then(parseSettings(workers))
       .then((parsedValues) => {
         setInitialValues(parsedValues);
         setSchema(() => addSchema(parsedValues));

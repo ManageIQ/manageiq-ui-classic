@@ -223,7 +223,7 @@ export const injectOption = (options, initialValue, isCount = false) => {
 };
 
 // parse /api/servers/:id/settings output
-export const parseSettings = ({ workers: { worker_base: wb } }) => {
+export const parseSettings = (workersDef) => ({ workers: { worker_base: wb } }) => {
   const workerCount = (worker) => (typeof worker.count === 'number') && worker.count;
   const workerBytes = (worker) => toBytes(worker.memory_threshold);
 

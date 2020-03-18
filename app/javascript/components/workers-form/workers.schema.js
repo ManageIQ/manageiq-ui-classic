@@ -14,7 +14,7 @@ const mtEventCatcher = generateRefreshOptions(false, 100, 500); // 500M, 600M ..
 const mtEmsRefresh = generateRefreshOptions(); // 200M, 250M ... 600M, 700M ... 3G, 3.5G ... 10G
 const mtSmartProxy = generateRefreshOptions(true); // 200M, 250M ... 600M, 700M ... 1.9G
 
-const workers = [
+export const workers = [
   {
     name: 'generic_worker',
     title: __('Generic Workers'),
@@ -131,7 +131,7 @@ const pairGroup = (fields, groupOptions) => ({
   fields,
 });
 
-function addSchema(formValues) {
+export function addSchema(formValues) {
   const groupOptions = {
     index: 1,
   };
@@ -140,5 +140,3 @@ function addSchema(formValues) {
 
   return { fields: dualGroups };
 }
-
-export default addSchema;

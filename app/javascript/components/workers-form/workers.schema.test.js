@@ -1,4 +1,4 @@
-import addSchema from './workers.schema.js';
+import { addSchema } from './workers.schema.js';
 import { parseSettings } from './helpers.js';
 
 it('schema generates correctly', () => {
