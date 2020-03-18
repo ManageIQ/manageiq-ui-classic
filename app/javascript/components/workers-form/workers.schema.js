@@ -3,91 +3,93 @@ import {
   injectOption, generateBasicOptions, generateRange, generateRefreshOptions,
 } from './helpers';
 
-// worker counts
-const range4 = generateRange(5); // 0..4
-const range5 = generateRange(6); // 0..5
-const range9 = generateRange(10); // 0..9
+const workerCounts = {
+  'range4': generateRange(5), // 0..4
+  'range5': generateRange(6), // 0..5
+  'range9': generateRange(10), // 0..9
+};
 
-// memory thresholds
-const mtBasic = generateBasicOptions(); // 200M, 250M ... 500M, 600M ... 1.5G
-const mtEventCatcher = generateRefreshOptions(false, 100, 500); // 500M, 600M ... 3G, 3.5G ... 10G
-const mtEmsRefresh = generateRefreshOptions(); // 200M, 250M ... 600M, 700M ... 3G, 3.5G ... 10G
-const mtSmartProxy = generateRefreshOptions(true); // 200M, 250M ... 600M, 700M ... 1.9G
+const memoryThresholds = {
+  'basic': generateBasicOptions(), // 200M, 250M ... 500M, 600M ... 1.5G
+  'event_catcher': generateRefreshOptions(false, 100, 500), // 500M, 600M ... 3G, 3.5G ... 10G
+  'ems_refresh': generateRefreshOptions(), // 200M, 250M ... 600M, 700M ... 3G, 3.5G ... 10G
+  'smart_proxy': generateRefreshOptions(true), // 200M, 250M ... 600M, 700M ... 1.9G
+};
 
 export const workers = [
   {
     name: 'generic_worker',
     title: __('Generic Workers'),
     options: {
-      count: range9,
-      memory_threshold: mtBasic,
+      count: 'range9',
+      memory_threshold: 'basic',
     },
   }, {
     name: 'ems_metrics_collector_worker.defaults',  // .defaults?
     title: __('C & U Data Collectors'),
     options: {
-      count: range9,
-      memory_threshold: mtBasic,
+      count: 'range9',
+      memory_threshold: 'basic',
     },
   }, {
     name: 'event_catcher',
     title: __('Event Monitor'),
     options: {
-      memory_threshold: mtEventCatcher,
+      memory_threshold: 'event_catcher',
     },
   }, {
     name: 'smart_proxy_worker',
     title: __('VM Analysis Collectors'),
     options: {
-      count: range5,
-      memory_threshold: mtSmartProxy,
+      count: 'range5',
+      memory_threshold: 'smart_proxy',
     },
   }, {
     name: 'ui_worker',
     title: __('UI Worker'),
     options: {
-      count: range9,
+      count: 'range9',
       countHelperText: __('Changing the UI Workers Count will immediately restart the webserver'),
     },
   }, {
     name: 'reporting_worker',
     title: __('Reporting Workers'),
     options: {
-      count: range9,
-      memory_threshold: mtBasic,
+      count: 'range9',
+      memory_threshold: 'basic',
     },
   }, {
     name: 'priority_worker',
     title: __('Priority Workers'),
     options: {
-      count: range9,
-      memory_threshold: mtBasic,
+      count: 'range9',
+      memory_threshold: 'basic',
     },
   }, {
     name: 'ems_metrics_processor_worker',
     title: __('C & U Data Processors'),
     options: {
-      count: range4,
-      memory_threshold: mtBasic,
+      count: 'range4',
+      memory_threshold: 'basic',
     },
   }, {
     name: 'ems_refresh_worker.defaults',  // .defaults?
     title: __('Refresh'),
     options: {
-      memory_threshold: mtEmsRefresh,
+      memory_threshold: 'ems_refresh',
     },
   }, {
     name: 'remote_console_worker',
     title: __('Remote Console Workers'),
     options: {
-      count: range9,
+      count: 'range9',
     },
   }, {
     name: 'web_service_worker',
     title: __('Web Service Workers'),
     options: {
-      count: range9,
-      memory_threshold: mtBasic,
+      count: 'range9',
+      memory_threshold: 'basic',
     },
   }
 ];
@@ -96,7 +98,7 @@ export const workers = [
 const countField = ({ name, options: { count: range, countHelperText: helperText } }, formValues) => ({
   component: componentTypes.SELECT,
   name: `${name}.count`,
-  options: injectOption(range, _.get(formValues, `${name}.count`), true),
+  options: injectOption(workerCounts[range], _.get(formValues, `${name}.count`), true),
   label: __('Count'),
   ...(helperText ? { helperText } : {}),  // helperText: helperText, but not there if undefined
 });
@@ -104,7 +106,7 @@ const countField = ({ name, options: { count: range, countHelperText: helperText
 const memoryThresholdField = ({ name, options: { memory_threshold: mtOptions } }, formValues) => ({
   component: componentTypes.SELECT,
   name: `${name}.memory_threshold`,
-  options: injectOption(mtOptions, _.get(formValues, `${name}.memory_threshold`)),
+  options: injectOption(memoryThresholds[mtOptions], _.get(formValues, `${name}.memory_threshold`)),
   label: __('Memory threshold'),
 });
 
