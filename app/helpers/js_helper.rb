@@ -91,4 +91,8 @@ EOD
   def js_format_date(value)
     value.nil? ? 'undefined' : "new Date('#{value.iso8601}')"
   end
+
+  def javascript_tree_data(name, json)
+    javascript_tag("ManageIQ.tree.data['#{name}'] = #{json};")
+  end
 end
