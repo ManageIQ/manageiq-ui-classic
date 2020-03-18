@@ -98,7 +98,7 @@ const countField = ({ name, options: { count: range, countHelperText: helperText
   name: `${name}.count`,
   options: injectOption(range, _.get(formValues, `${name}.count`), true),
   label: __('Count'),
-  helperText,
+  ...(helperText ? { helperText } : {}),  // helperText: helperText, but not there if undefined
 });
 
 const memoryThresholdField = ({ name, options: { memory_threshold: mtOptions } }, formValues) => ({
