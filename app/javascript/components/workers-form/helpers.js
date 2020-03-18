@@ -102,20 +102,6 @@ export const buildPatch = (parent) => {
 };
 
 /**
- * Parse worker object.
- *
- * @param {object} parent Worker object obtained from API.
- * @return {object} Object with all values in different formats.
- */
-export const parseWorker = ({ count, memory_threshold }) => ({
-  count,
-  memory_threshold,
-  human_size: toHumanSize(memory_threshold),
-  rubyMethod: toRubyMethod(memory_threshold),
-  bytes: toBytes(memory_threshold),
-});
-
-/**
  * Create number range options.
  *
  * @param {number} length 0 .. lenght.
@@ -239,52 +225,54 @@ export const injectOption = (options, initialValue, isCount = false) => {
 // parse /api/servers/:id/settings output
 export const parseSettings = ({ workers: { worker_base: wb } }) => {
   const countDefault = wb.defaults.count;
+
   const memDefault = toBytes(wb.defaults.memory_threshold);
   const baseMemDefault = toBytes(wb.queue_worker_base.defaults.memory_threshold);
   const monitorDefault = toBytes(wb.event_catcher.defaults.memory_threshold);
 
   const count = (worker) => ((worker && worker.count && (typeof worker.count === 'number')) ? worker.count : countDefault);
+  const bytes = (worker, defaultValue) => (worker && toBytes(worker.memory_threshold) || defaultValue);
 
   return {
     generic_worker: {
-      memory_threshold: parseWorker(wb.queue_worker_base.generic_worker).bytes || baseMemDefault,
+      memory_threshold: bytes(wb.queue_worker_base.generic_worker, baseMemDefault),
       count: count(wb.queue_worker_base.generic_worker),
     },
     priority_worker: {
-      memory_threshold: parseWorker(wb.queue_worker_base.priority_worker).bytes || baseMemDefault,
+      memory_threshold: bytes(wb.queue_worker_base.priority_worker, baseMemDefault),
       count: count(wb.queue_worker_base.priority_worker),
     },
     ems_metrics_collector_worker: {
       defaults: {
-        memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_collector_worker.defaults).bytes || baseMemDefault,
+        memory_threshold: bytes(wb.queue_worker_base.ems_metrics_collector_worker.defaults, baseMemDefault),
         count: count(wb.queue_worker_base.ems_metrics_collector_worker.defaults),
       },
     },
     ems_metrics_processor_worker: {
-      memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_processor_worker).bytes || baseMemDefault,
+      memory_threshold: bytes(wb.queue_worker_base.ems_metrics_processor_worker, baseMemDefault),
       count: count(wb.queue_worker_base.ems_metrics_processor_worker),
     },
     event_catcher: {
-      memory_threshold: parseWorker(wb.event_catcher).bytes || monitorDefault,
+      memory_threshold: bytes(wb.event_catcher, monitorDefault),
     },
     ems_refresh_worker: {
       defaults: {
-        memory_threshold: parseWorker(wb.queue_worker_base.ems_refresh_worker.defaults).bytes || baseMemDefault,
+        memory_threshold: bytes(wb.queue_worker_base.ems_refresh_worker.defaults, baseMemDefault),
       },
     },
     smart_proxy_worker: {
-      memory_threshold: parseWorker(wb.queue_worker_base.smart_proxy_worker).bytes || baseMemDefault,
+      memory_threshold: bytes(wb.queue_worker_base.smart_proxy_worker, baseMemDefault),
       count: count(wb.queue_worker_base.smart_proxy_worker),
     },
     ui_worker: {
       count: count(wb.ui_worker),
     },
     reporting_worker: {
-      memory_threshold: parseWorker(wb.queue_worker_base.reporting_worker).bytes || baseMemDefault,
+      memory_threshold: bytes(wb.queue_worker_base.reporting_worker, baseMemDefault),
       count: count(wb.queue_worker_base.reporting_worker),
     },
     web_service_worker: {
-      memory_threshold: parseWorker(wb.web_service_worker).bytes || memDefault,
+      memory_threshold: bytes(wb.web_service_worker, memDefault),
       count: count(wb.web_service_worker),
     },
     remote_console_worker: {
