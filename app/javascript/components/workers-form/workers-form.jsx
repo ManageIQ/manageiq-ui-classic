@@ -6,7 +6,9 @@ import addSchema from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import {
-  toBytes, parseWorker, buildPatch, toRubyMethod,
+  buildPatch,
+  parseSettings,
+  toRubyMethod,
 } from './helpers';
 
 const WorkersForm = ({ server: { id, name }, product, zone }) => {
@@ -17,69 +19,12 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
   useEffect(() => {
     miqSparkleOn();
     API.get(`/api/servers/${id}/settings`)
-      .then(({ workers: { worker_base } }) => {
-        const wb = worker_base;
-
-        const countDefault = wb.defaults.count;
-        const memDefault = toBytes(wb.defaults.memory_threshold);
-        const baseMemDefault = toBytes(wb.queue_worker_base.defaults.memory_threshold);
-        const monitorDefault = toBytes(wb.event_catcher.defaults.memory_threshold);
-
-        const selectCount = value => (typeof value === 'number' ? value : countDefault);
-
-        const parsedValues = {
-          generic_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.generic_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.generic_worker.count),
-          },
-          priority_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.priority_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.priority_worker.count),
-          },
-          ems_metrics_collector_worker: {
-            defaults: {
-              memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_collector_worker.defaults).bytes || baseMemDefault,
-              count: selectCount(wb.queue_worker_base.ems_metrics_collector_worker.defaults.count),
-            },
-          },
-          ems_metrics_processor_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.ems_metrics_processor_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.ems_metrics_processor_worker.count),
-          },
-          event_catcher: {
-            memory_threshold: parseWorker(wb.event_catcher).bytes || monitorDefault,
-          },
-          ems_refresh_worker: {
-            defaults: {
-              memory_threshold: parseWorker(wb.queue_worker_base.ems_refresh_worker.defaults).bytes || baseMemDefault,
-            },
-          },
-          smart_proxy_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.smart_proxy_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.smart_proxy_worker.count),
-          },
-          ui_worker: {
-            count: selectCount(wb.ui_worker.count),
-          },
-          reporting_worker: {
-            memory_threshold: parseWorker(wb.queue_worker_base.reporting_worker).bytes || baseMemDefault,
-            count: selectCount(wb.queue_worker_base.reporting_worker.count),
-          },
-          web_service_worker: {
-            memory_threshold: parseWorker(wb.web_service_worker).bytes || memDefault,
-            count: selectCount(wb.web_service_worker.count),
-          },
-          remote_console_worker: {
-            count: selectCount(wb.remote_console_worker.count),
-          },
-        };
-
+      .then(parseSettings)
+      .then((parsedValues) => {
         setInitialValues(parsedValues);
-
         setSchema(() => addSchema(parsedValues));
 
         setIsLoading(false);
-
         miqSparkleOff();
       })
       .catch(
