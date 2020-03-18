@@ -1,0 +1,1480 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`schema generates correctly 1`] = `
+Object {
+  "fields": Array [
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "generic_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "generic_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "genericWorkers",
+          "title": "Generic Workers",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "priority_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "priority_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "priorityWorkers",
+          "title": "Priority Workers",
+        },
+      ],
+      "name": "group1",
+    },
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "ems_metrics_collector_worker.defaults.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "ems_metrics_collector_worker.defaults.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "cuCollectors",
+          "title": "C & U Data Collectors",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "ems_metrics_processor_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "ems_metrics_processor_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "cuProccesors",
+          "title": "C & U Data Processors",
+        },
+      ],
+      "name": "group3",
+    },
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "event_catcher.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+                Object {
+                  "label": "1.6 GB",
+                  "value": 1717986918.4,
+                },
+                Object {
+                  "label": "1.7 GB",
+                  "value": 1825361100.8,
+                },
+                Object {
+                  "label": "1.8 GB",
+                  "value": 1932735283.2,
+                },
+                Object {
+                  "label": "1.9 GB",
+                  "value": 2040109465.6,
+                },
+                Object {
+                  "label": "2 GB",
+                  "value": 2147483648,
+                },
+                Object {
+                  "label": "2.1 GB",
+                  "value": 2254857830.4,
+                },
+                Object {
+                  "label": "2.2 GB",
+                  "value": 2362232012.8,
+                },
+                Object {
+                  "label": "2.3 GB",
+                  "value": 2469606195.2,
+                },
+                Object {
+                  "label": "2.4 GB",
+                  "value": 2576980377.6,
+                },
+                Object {
+                  "label": "2.5 GB",
+                  "value": 2684354560,
+                },
+                Object {
+                  "label": "2.6 GB",
+                  "value": 2791728742.4,
+                },
+                Object {
+                  "label": "2.7 GB",
+                  "value": 2899102924.8,
+                },
+                Object {
+                  "label": "2.8 GB",
+                  "value": 3006477107.2,
+                },
+                Object {
+                  "label": "2.9 GB",
+                  "value": 3113851289.6,
+                },
+                Object {
+                  "label": "3 GB",
+                  "value": 3221225472,
+                },
+                Object {
+                  "label": "3.5 GB",
+                  "value": 3758096384,
+                },
+                Object {
+                  "label": "4 GB",
+                  "value": 4294967296,
+                },
+                Object {
+                  "label": "4.5 GB",
+                  "value": 4831838208,
+                },
+                Object {
+                  "label": "5 GB",
+                  "value": 5368709120,
+                },
+                Object {
+                  "label": "5.5 GB",
+                  "value": 5905580032,
+                },
+                Object {
+                  "label": "6 GB",
+                  "value": 6442450944,
+                },
+                Object {
+                  "label": "6.5 GB",
+                  "value": 6979321856,
+                },
+                Object {
+                  "label": "7 GB",
+                  "value": 7516192768,
+                },
+                Object {
+                  "label": "7.5 GB",
+                  "value": 8053063680,
+                },
+                Object {
+                  "label": "8 GB",
+                  "value": 8589934592,
+                },
+                Object {
+                  "label": "8.5 GB",
+                  "value": 9126805504,
+                },
+                Object {
+                  "label": "9 GB",
+                  "value": 9663676416,
+                },
+                Object {
+                  "label": "9.5 GB",
+                  "value": 10200547328,
+                },
+                Object {
+                  "label": "10 GB",
+                  "value": 10737418240,
+                },
+              ],
+            },
+          ],
+          "name": "eventMonitor",
+          "title": "Event Monitor",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "ems_refresh_worker.defaults.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+                Object {
+                  "label": "1.6 GB",
+                  "value": 1717986918.4,
+                },
+                Object {
+                  "label": "1.7 GB",
+                  "value": 1825361100.8,
+                },
+                Object {
+                  "label": "1.8 GB",
+                  "value": 1932735283.2,
+                },
+                Object {
+                  "label": "1.9 GB",
+                  "value": 2040109465.6,
+                },
+                Object {
+                  "label": "2 GB",
+                  "value": 2147483648,
+                },
+                Object {
+                  "label": "2.1 GB",
+                  "value": 2254857830.4,
+                },
+                Object {
+                  "label": "2.2 GB",
+                  "value": 2362232012.8,
+                },
+                Object {
+                  "label": "2.3 GB",
+                  "value": 2469606195.2,
+                },
+                Object {
+                  "label": "2.4 GB",
+                  "value": 2576980377.6,
+                },
+                Object {
+                  "label": "2.5 GB",
+                  "value": 2684354560,
+                },
+                Object {
+                  "label": "2.6 GB",
+                  "value": 2791728742.4,
+                },
+                Object {
+                  "label": "2.7 GB",
+                  "value": 2899102924.8,
+                },
+                Object {
+                  "label": "2.8 GB",
+                  "value": 3006477107.2,
+                },
+                Object {
+                  "label": "2.9 GB",
+                  "value": 3113851289.6,
+                },
+                Object {
+                  "label": "3 GB",
+                  "value": 3221225472,
+                },
+                Object {
+                  "label": "3.5 GB",
+                  "value": 3758096384,
+                },
+                Object {
+                  "label": "4 GB",
+                  "value": 4294967296,
+                },
+                Object {
+                  "label": "4.5 GB",
+                  "value": 4831838208,
+                },
+                Object {
+                  "label": "5 GB",
+                  "value": 5368709120,
+                },
+                Object {
+                  "label": "5.5 GB",
+                  "value": 5905580032,
+                },
+                Object {
+                  "label": "6 GB",
+                  "value": 6442450944,
+                },
+                Object {
+                  "label": "6.5 GB",
+                  "value": 6979321856,
+                },
+                Object {
+                  "label": "7 GB",
+                  "value": 7516192768,
+                },
+                Object {
+                  "label": "7.5 GB",
+                  "value": 8053063680,
+                },
+                Object {
+                  "label": "8 GB",
+                  "value": 8589934592,
+                },
+                Object {
+                  "label": "8.5 GB",
+                  "value": 9126805504,
+                },
+                Object {
+                  "label": "9 GB",
+                  "value": 9663676416,
+                },
+                Object {
+                  "label": "9.5 GB",
+                  "value": 10200547328,
+                },
+                Object {
+                  "label": "10 GB",
+                  "value": 10737418240,
+                },
+              ],
+            },
+          ],
+          "name": "refresh",
+          "title": "Refresh",
+        },
+      ],
+      "name": "group4",
+    },
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "smart_proxy_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "smart_proxy_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+                Object {
+                  "label": "1.6 GB",
+                  "value": 1717986918.4,
+                },
+                Object {
+                  "label": "1.7 GB",
+                  "value": 1825361100.8,
+                },
+                Object {
+                  "label": "1.8 GB",
+                  "value": 1932735283.2,
+                },
+                Object {
+                  "label": "1.9 GB",
+                  "value": 2040109465.6,
+                },
+                Object {
+                  "label": "2 GB",
+                  "value": 2147483648,
+                },
+                Object {
+                  "label": "2.1 GB",
+                  "value": 2254857830.4,
+                },
+                Object {
+                  "label": "2.2 GB",
+                  "value": 2362232012.8,
+                },
+                Object {
+                  "label": "2.3 GB",
+                  "value": 2469606195.2,
+                },
+                Object {
+                  "label": "2.4 GB",
+                  "value": 2576980377.6,
+                },
+                Object {
+                  "label": "2.5 GB",
+                  "value": 2684354560,
+                },
+                Object {
+                  "label": "2.6 GB",
+                  "value": 2791728742.4,
+                },
+                Object {
+                  "label": "2.7 GB",
+                  "value": 2899102924.8,
+                },
+                Object {
+                  "label": "2.8 GB",
+                  "value": 3006477107.2,
+                },
+                Object {
+                  "label": "2.9 GB",
+                  "value": 3113851289.6,
+                },
+              ],
+            },
+          ],
+          "name": "vmAnalysisCollectors",
+          "title": "VM Analysis Collectors",
+        },
+      ],
+      "name": "group5",
+    },
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "helperText": "Changing the UI Workers Count will immediately restart the webserver",
+              "label": "Count",
+              "name": "ui_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+          ],
+          "name": "uiWorker",
+          "title": "UI Worker",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "remote_console_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+          ],
+          "name": "remoteWorkers",
+          "title": "Remote Console Workers",
+        },
+      ],
+      "name": "group6",
+    },
+    Object {
+      "component": "dual-group",
+      "fields": Array [
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "reporting_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "reporting_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "reportingWorkers",
+          "title": "Reporting Workers",
+        },
+        Object {
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "component": "select-field",
+              "label": "Count",
+              "name": "web_service_worker.count",
+              "options": Array [
+                Object {
+                  "label": "0",
+                  "value": 0,
+                },
+                Object {
+                  "label": "1",
+                  "value": 1,
+                },
+                Object {
+                  "label": "2",
+                  "value": 2,
+                },
+                Object {
+                  "label": "3",
+                  "value": 3,
+                },
+                Object {
+                  "label": "4",
+                  "value": 4,
+                },
+                Object {
+                  "label": "5",
+                  "value": 5,
+                },
+                Object {
+                  "label": "6",
+                  "value": 6,
+                },
+                Object {
+                  "label": "7",
+                  "value": 7,
+                },
+                Object {
+                  "label": "8",
+                  "value": 8,
+                },
+                Object {
+                  "label": "9",
+                  "value": 9,
+                },
+              ],
+            },
+            Object {
+              "component": "select-field",
+              "label": "Memory threshold",
+              "name": "web_service_worker.memory_threshold",
+              "options": Array [
+                Object {
+                  "label": "200 MB",
+                  "value": 209715200,
+                },
+                Object {
+                  "label": "250 MB",
+                  "value": 262144000,
+                },
+                Object {
+                  "label": "300 MB",
+                  "value": 314572800,
+                },
+                Object {
+                  "label": "350 MB",
+                  "value": 367001600,
+                },
+                Object {
+                  "label": "400 MB",
+                  "value": 419430400,
+                },
+                Object {
+                  "label": "450 MB",
+                  "value": 471859200,
+                },
+                Object {
+                  "label": "500 MB",
+                  "value": 524288000,
+                },
+                Object {
+                  "label": "550 MB",
+                  "value": 576716800,
+                },
+                Object {
+                  "label": "600 MB",
+                  "value": 629145600,
+                },
+                Object {
+                  "label": "700 MB",
+                  "value": 734003200,
+                },
+                Object {
+                  "label": "800 MB",
+                  "value": 838860800,
+                },
+                Object {
+                  "label": "900 MB",
+                  "value": 943718400,
+                },
+                Object {
+                  "label": "1 GB",
+                  "value": 1073741824,
+                },
+                Object {
+                  "label": "1.1 GB",
+                  "value": 1181116006.4,
+                },
+                Object {
+                  "label": "1.2 GB",
+                  "value": 1288490188.8,
+                },
+                Object {
+                  "label": "1.3 GB",
+                  "value": 1395864371.2,
+                },
+                Object {
+                  "label": "1.4 GB",
+                  "value": 1503238553.6,
+                },
+                Object {
+                  "label": "1.5 GB",
+                  "value": 1610612736,
+                },
+              ],
+            },
+          ],
+          "name": "webServiceWorkers",
+          "title": "Web Service Workers",
+        },
+      ],
+      "name": "group7",
+    },
+  ],
+}
+`;
