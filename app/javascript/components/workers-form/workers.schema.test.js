@@ -11,8 +11,6 @@ it('schema generates correctly', () => {
           },
         },
         queue_worker_base: {
-          ems_metrics_collector_worker: {},
-          ems_refresh_worker: {},
           defaults: {
             memory_threshold: "500.megabytes",
           },

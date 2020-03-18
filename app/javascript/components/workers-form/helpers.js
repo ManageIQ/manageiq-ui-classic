@@ -230,53 +230,56 @@ export const parseSettings = ({ workers: { worker_base: wb } }) => {
   const baseMemDefault = toBytes(wb.queue_worker_base.defaults.memory_threshold);
   const monitorDefault = toBytes(wb.event_catcher.defaults.memory_threshold);
 
-  const count = (worker) => ((worker && worker.count && (typeof worker.count === 'number')) ? worker.count : countDefault);
-  const bytes = (worker, defaultValue) => (worker && toBytes(worker.memory_threshold) || defaultValue);
+  const workerCount = (worker) => (typeof worker.count === 'number') && worker.count;
+  const workerBytes = (worker) => toBytes(worker.memory_threshold);
+
+  const count = (path) => (_.get(wb, path) && workerCount(_.get(wb, path)) || countDefault);
+  const bytes = (path, defaultValue) => (_.get(wb, path) && workerBytes(_.get(wb, path)) || defaultValue);
 
   return {
     generic_worker: {
-      memory_threshold: bytes(wb.queue_worker_base.generic_worker, baseMemDefault),
-      count: count(wb.queue_worker_base.generic_worker),
+      memory_threshold: bytes('queue_worker_base.generic_worker', baseMemDefault),
+      count: count('queue_worker_base.generic_worker'),
     },
     priority_worker: {
-      memory_threshold: bytes(wb.queue_worker_base.priority_worker, baseMemDefault),
-      count: count(wb.queue_worker_base.priority_worker),
+      memory_threshold: bytes('queue_worker_base.priority_worker', baseMemDefault),
+      count: count('queue_worker_base.priority_worker'),
     },
     ems_metrics_collector_worker: {
       defaults: {
-        memory_threshold: bytes(wb.queue_worker_base.ems_metrics_collector_worker.defaults, baseMemDefault),
-        count: count(wb.queue_worker_base.ems_metrics_collector_worker.defaults),
+        memory_threshold: bytes('queue_worker_base.ems_metrics_collector_worker.defaults', baseMemDefault),
+        count: count('queue_worker_base.ems_metrics_collector_worker.defaults'),
       },
     },
     ems_metrics_processor_worker: {
-      memory_threshold: bytes(wb.queue_worker_base.ems_metrics_processor_worker, baseMemDefault),
-      count: count(wb.queue_worker_base.ems_metrics_processor_worker),
+      memory_threshold: bytes('queue_worker_base.ems_metrics_processor_worker', baseMemDefault),
+      count: count('queue_worker_base.ems_metrics_processor_worker'),
     },
     event_catcher: {
-      memory_threshold: bytes(wb.event_catcher, monitorDefault),
+      memory_threshold: bytes('event_catcher', monitorDefault),
     },
     ems_refresh_worker: {
       defaults: {
-        memory_threshold: bytes(wb.queue_worker_base.ems_refresh_worker.defaults, baseMemDefault),
+        memory_threshold: bytes('queue_worker_base.ems_refresh_worker.defaults', baseMemDefault),
       },
     },
     smart_proxy_worker: {
-      memory_threshold: bytes(wb.queue_worker_base.smart_proxy_worker, baseMemDefault),
-      count: count(wb.queue_worker_base.smart_proxy_worker),
+      memory_threshold: bytes('queue_worker_base.smart_proxy_worker', baseMemDefault),
+      count: count('queue_worker_base.smart_proxy_worker'),
     },
     ui_worker: {
-      count: count(wb.ui_worker),
+      count: count('ui_worker'),
     },
     reporting_worker: {
-      memory_threshold: bytes(wb.queue_worker_base.reporting_worker, baseMemDefault),
-      count: count(wb.queue_worker_base.reporting_worker),
+      memory_threshold: bytes('queue_worker_base.reporting_worker', baseMemDefault),
+      count: count('queue_worker_base.reporting_worker'),
     },
     web_service_worker: {
-      memory_threshold: bytes(wb.web_service_worker, memDefault),
-      count: count(wb.web_service_worker),
+      memory_threshold: bytes('web_service_worker', memDefault),
+      count: count('web_service_worker'),
     },
     remote_console_worker: {
-      count: count(wb.remote_console_worker),
+      count: count('remote_console_worker'),
     },
   };
 };
