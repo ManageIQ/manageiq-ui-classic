@@ -236,50 +236,25 @@ export const parseSettings = (workersDef) => ({ workers: { worker_base: wb } }) 
   const baseMemDefault = bytes('queue_worker_base.defaults');
   const monitorDefault = bytes('event_catcher.defaults');
 
-  return {
-    generic_worker: {
-      memory_threshold: bytes('queue_worker_base.generic_worker', baseMemDefault),
-      count: count('queue_worker_base.generic_worker'),
-    },
-    priority_worker: {
-      memory_threshold: bytes('queue_worker_base.priority_worker', baseMemDefault),
-      count: count('queue_worker_base.priority_worker'),
-    },
-    ems_metrics_collector_worker: {
-      defaults: {
-        memory_threshold: bytes('queue_worker_base.ems_metrics_collector_worker.defaults', baseMemDefault),
-        count: count('queue_worker_base.ems_metrics_collector_worker.defaults'),
-      },
-    },
-    ems_metrics_processor_worker: {
-      memory_threshold: bytes('queue_worker_base.ems_metrics_processor_worker', baseMemDefault),
-      count: count('queue_worker_base.ems_metrics_processor_worker'),
-    },
-    event_catcher: {
-      memory_threshold: bytes('event_catcher', monitorDefault),
-    },
-    ems_refresh_worker: {
-      defaults: {
-        memory_threshold: bytes('queue_worker_base.ems_refresh_worker.defaults', baseMemDefault),
-      },
-    },
-    smart_proxy_worker: {
-      memory_threshold: bytes('queue_worker_base.smart_proxy_worker', baseMemDefault),
-      count: count('queue_worker_base.smart_proxy_worker'),
-    },
-    ui_worker: {
-      count: count('ui_worker'),
-    },
-    reporting_worker: {
-      memory_threshold: bytes('queue_worker_base.reporting_worker', baseMemDefault),
-      count: count('queue_worker_base.reporting_worker'),
-    },
-    web_service_worker: {
-      memory_threshold: bytes('web_service_worker', memDefault),
-      count: count('web_service_worker'),
-    },
-    remote_console_worker: {
-      count: count('remote_console_worker'),
-    },
+  const defaultThresholds = {
+    'defaults': memDefault,
+    'queue_worker_base': baseMemDefault,
+    'event_catcher': monitorDefault,
   };
+
+  const out = {};
+  workersDef.forEach((worker) => {
+    const path = _.compact([worker.prefix, worker.name]).join('.');
+
+    const obj = {};
+    if (worker.options.count) {
+      obj.count = count(path);
+    }
+    if (worker.options.memory_threshold) {
+      obj.memory_threshold = bytes(path, defaultThresholds[worker.options.default_threshold]);
+    }
+
+    _.set(out, worker.name, obj); // no prefix
+  });
+  return out;
 };

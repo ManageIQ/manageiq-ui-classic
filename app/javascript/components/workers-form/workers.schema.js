@@ -19,30 +19,37 @@ const memoryThresholds = {
 export const workers = [
   {
     name: 'generic_worker',
+    prefix: 'queue_worker_base',
     title: __('Generic Workers'),
     options: {
       count: 'range9',
       memory_threshold: 'basic',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'ems_metrics_collector_worker.defaults',  // .defaults?
+    prefix: 'queue_worker_base',
     title: __('C & U Data Collectors'),
     options: {
       count: 'range9',
       memory_threshold: 'basic',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'event_catcher',
     title: __('Event Monitor'),
     options: {
       memory_threshold: 'event_catcher',
+      default_threshold: 'event_catcher',
     },
   }, {
     name: 'smart_proxy_worker',
+    prefix: 'queue_worker_base',
     title: __('VM Analysis Collectors'),
     options: {
       count: 'range5',
       memory_threshold: 'smart_proxy',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'ui_worker',
@@ -53,30 +60,38 @@ export const workers = [
     },
   }, {
     name: 'reporting_worker',
+    prefix: 'queue_worker_base',
     title: __('Reporting Workers'),
     options: {
       count: 'range9',
       memory_threshold: 'basic',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'priority_worker',
+    prefix: 'queue_worker_base',
     title: __('Priority Workers'),
     options: {
       count: 'range9',
       memory_threshold: 'basic',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'ems_metrics_processor_worker',
+    prefix: 'queue_worker_base',
     title: __('C & U Data Processors'),
     options: {
       count: 'range4',
       memory_threshold: 'basic',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'ems_refresh_worker.defaults',  // .defaults?
+    prefix: 'queue_worker_base',
     title: __('Refresh'),
     options: {
       memory_threshold: 'ems_refresh',
+      default_threshold: 'queue_worker_base',
     },
   }, {
     name: 'remote_console_worker',
@@ -90,6 +105,7 @@ export const workers = [
     options: {
       count: 'range9',
       memory_threshold: 'basic',
+      default_threshold: 'defaults',
     },
   }
 ];
