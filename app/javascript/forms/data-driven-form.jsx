@@ -48,9 +48,7 @@ MiqFormRenderer.propTypes = {
   className: PropTypes.string,
   onStateUpdate: PropTypes.func,
   setPristine: PropTypes.func.isRequired,
-  formFieldsMapper: PropTypes.shape({
-    [PropTypes.string]: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.element]).isRequired,
-  }),
+  formFieldsMapper: PropTypes.any,
 };
 
 MiqFormRenderer.defaultProps = {
