@@ -4,11 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-4
+
+### Added
+* Automate Method editor has been changed to allow host+input params for playbooks, input params for workflows method types [(#6530)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6530)
+* Allow non-JSON responses in miqFetch (add `options.skipJsonParsing`) [(#6645)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6645)
+
+### Fixed
+* Update gettext invocation and gettext catalog [(#6154)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6154)
+* Select active snapshot instead of the last one in the snapshots [(#6103)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6103)
+* Fix Vm & Instance retirement from workflow screen [(#6585)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6585)
+* Hide Advanced Search in Config Mgmt Providers screen [(#6465)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6465)
+* Fix saving of ems_refresh_worker and ems_metrics_collector_worker [(#6678)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6678)
+* Allow non-JSON responses in miqFetch (add `options.skipJsonParsing`) [(#6645)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6645)
+* Remove tree breadcrumbs [(#6193)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6193)
+* Allow importing Tags for VM using a CSV file [(#6633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6633)
+* Add titles for editor of service dialogs [(#6085)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6085)
+
 ## Ivanchuk-3
 
 ### Added
 * Automate Method editor has been changed to allow host+input params for playbooks, input params for workflows method types [(#6530)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6530)
-
 
 ### Fixed
 * Remove Timelines tab from Report editor [(#6181)](https://github.com/ManageIQ/manageiq-ui-classic/pull/6181)
