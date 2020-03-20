@@ -12,7 +12,7 @@ class TreeBuilderProtect < TreeBuilder
     {
       :full_ids   => false,
       :checkboxes => true,
-      :oncheck    => "miqOnCheckProtect",
+      :oncheck    => "miqOnCheckGeneric",
       :check_url  => "/#{@data[:controller_name]}/protect/"
     }
   end

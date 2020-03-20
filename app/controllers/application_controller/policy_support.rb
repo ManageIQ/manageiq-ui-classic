@@ -3,17 +3,17 @@ module ApplicationController::PolicySupport
 
   # Assign/unassign policies to/from a set of objects
   def protect
-    @gtl_type  = "grid"
-    @display   = nil
-    @edit      = session[:edit]
-    profile_id = params[:id].to_i
+    @gtl_type = "grid"
+    @display  = nil
+    @edit     = session[:edit]
 
     if params[:check] # Item was checked/unchecked
       @in_a_form = true
+      _, _, profile_id = TreeBuilder.extract_node_model_and_id(params[:id])
       if params[:check] == "0"
-        @edit[:new].delete(profile_id) # Unchecked, remove from new hash
+        @edit[:new].delete(profile_id.to_i) # Unchecked, remove from new hash
       else
-        @edit[:new][profile_id] = session[:pol_items].length # Added, set to all checked
+        @edit[:new][profile_id.to_i] = session[:pol_items].length # Added, set to all checked
       end
       changed = (@edit[:new] != @edit[:current])
       render :update do |page|
