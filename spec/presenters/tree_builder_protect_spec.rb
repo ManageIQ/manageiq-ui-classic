@@ -28,13 +28,13 @@ describe TreeBuilderProtect do
         :full_ids   => false,
         :checkboxes => true,
         :check_url  => "/name/protect/",
-        :oncheck    => "miqOnCheckProtect"
+        :oncheck    => "miqOnCheckGeneric"
       )
     end
 
     it 'set locals for render correctly' do
       locals = @protect_tree.send(:set_locals_for_render)
-      expect(locals[:oncheck]).to eq("miqOnCheckProtect")
+      expect(locals[:oncheck]).to eq("miqOnCheckGeneric")
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq("/name/protect/")
     end

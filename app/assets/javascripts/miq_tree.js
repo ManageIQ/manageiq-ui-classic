@@ -171,14 +171,6 @@ function miqTreeToggleExpand(treename, expand_mode) {
   expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
 }
 
-// OnCheck handler for the Protect screen
-function miqOnCheckProtect(node, _treename) {
-  var ppid = node.key.split('_').pop();
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(ppid) + '?check=' + Number(node.state.checked);
-  miqJqueryRequest(url);
-  return true;
-}
-
 // OnClick handler for the VM Snapshot Tree
 function miqOnClickSnapshots(id) {
   var pieces = id.split(/-/);
