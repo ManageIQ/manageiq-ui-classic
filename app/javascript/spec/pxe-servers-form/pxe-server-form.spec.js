@@ -82,7 +82,7 @@ describe('PxeServersForm', () => {
        * wait for submit response
        */
       await act(async() => {
-        wrapper.find('button').first().simulate('click');
+        wrapper.find('form').simulate('submit');
       });
 
       const [_url, payload] = fetchMock.lastCall();

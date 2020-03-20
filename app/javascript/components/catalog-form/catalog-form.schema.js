@@ -20,6 +20,7 @@ function createSchema(options, catalogId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Info'),
+    name: 'basic-info',
     fields: [{
       component: componentTypes.TEXT_FIELD,
       name: 'name',
@@ -42,6 +43,7 @@ function createSchema(options, catalogId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Assign Catalog Items'),
+    name: 'assign-catalog-items',
     fields: [
       {
         component: 'dual-list-select',

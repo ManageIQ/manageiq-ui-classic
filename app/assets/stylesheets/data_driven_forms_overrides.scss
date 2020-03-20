@@ -3,6 +3,6 @@
 * needs higher z-index because of some pf3 default values
 * sometimes it was appearing under non data-driven-forms elements
 */
-.miq-ddf-select__menu {
+.ddorg__pf3-component-mapper__select__menu {
   z-index: 100 !important;
 }

@@ -46,7 +46,7 @@ describe('OrcherstrationTemplate form', () => {
        */
     wrapper.find(CodeEditor).props().onChange(null, null, 'Some random content');
     wrapper.update();
-    wrapper.find('button.btn.btn-primary').simulate('click');
+    wrapper.find('form').simulate('submit');
     expect(fetchMock.lastCall()).toBeTruthy();
     expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual(expect.objectContaining({
       name: 'foo',
@@ -82,7 +82,7 @@ describe('OrcherstrationTemplate form', () => {
     wrapper.find('input#name').simulate('change', { target: { value: 'bar' } });
     wrapper.update();
     await act(async() => {
-      wrapper.find('button.btn.btn-primary').simulate('click');
+      wrapper.find('form').simulate('submit');
     });
 
     expect(fetchMock.lastCall()).toBeTruthy();
@@ -115,7 +115,7 @@ describe('OrcherstrationTemplate form', () => {
     wrapper.find(CodeEditor).props().onChange(null, null, 'updated content');
     wrapper.update();
     await act(async() => {
-      wrapper.find('button.btn.btn-primary').simulate('click');
+      wrapper.find('form').simulate('submit');
     });
 
     expect(fetchMock.lastCall()).toBeTruthy();

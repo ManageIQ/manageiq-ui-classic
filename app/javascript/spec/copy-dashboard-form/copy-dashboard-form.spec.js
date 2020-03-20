@@ -67,7 +67,6 @@ describe('Copy Dashboard form', () => {
     expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
     expect(wrapper.find('input[name="name"]').instance().value).toEqual('Clint');
     expect(wrapper.find('input[name="description"]').instance().value).toEqual('good dashboard');
-    expect(wrapper.find('input[name="group_id"]').instance().value).toEqual('12');
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(1);
     expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(1);
     done();
@@ -137,7 +136,7 @@ describe('Copy Dashboard form', () => {
     });
     setTimeout(async() => {
       wrapper.update();
-      wrapper.find('button').first().simulate('click');
+      wrapper.find('form').simulate('submit');
       setImmediate(() => {
         expect(spyMiqAjaxButton).toHaveBeenCalledWith(
           '/report/dashboard_render',

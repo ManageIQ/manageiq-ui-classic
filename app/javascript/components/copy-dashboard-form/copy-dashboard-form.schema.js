@@ -24,6 +24,7 @@ export default (miqGroups, name, dashboardId) => {
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
+      name: 'basic-info',
       fields: [
         {
           component: componentTypes.TEXT_FIELD,

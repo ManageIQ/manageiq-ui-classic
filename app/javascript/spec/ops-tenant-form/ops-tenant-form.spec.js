@@ -185,7 +185,7 @@ describe('OpstTenantForm', () => {
 
     setTimeout(async() => {
       await act(async() => {
-        wrapper.find('button').first().simulate('click');
+        wrapper.find('form').simulate('submit');
       });
       expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
         name: 'foo',
@@ -224,7 +224,7 @@ describe('OpstTenantForm', () => {
     wrapper.update();
     setTimeout(async() => {
       await act(async() => {
-        wrapper.find('button').first().simulate('click');
+        wrapper.find('form').simulate('submit');
       });
       expect(JSON.parse(fetchMock.calls()[2][1].body)).toEqual({
         name: 'foo',

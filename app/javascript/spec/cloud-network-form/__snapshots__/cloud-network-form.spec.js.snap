@@ -73,6 +73,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "validateOnMount": true,
               },
             ],
+            "name": "network-provider",
             "title": "Network Provider",
           },
           Object {
@@ -104,6 +105,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "validateOnMount": true,
               },
             ],
+            "name": "placement",
             "title": "Placement",
           },
           Object {
@@ -167,7 +169,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-1",
+                "name": "subform-1",
               },
               Object {
                 "component": "sub-form",
@@ -191,7 +193,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-2",
+                "name": "subform-2",
               },
               Object {
                 "component": "sub-form",
@@ -229,7 +231,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-3",
+                "name": "subform-3",
               },
               Object {
                 "component": "sub-form",
@@ -246,9 +248,10 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                     "name": "provider_segmentation_id",
                   },
                 ],
-                "key": "subform-4",
+                "name": "subform-4",
               },
             ],
+            "name": "provider-information",
             "title": "Network Provider Information",
           },
           Object {
@@ -294,6 +297,7 @@ exports[`Cloud Network form component should render edit variant 1`] = `
                 "onText": "Yes",
               },
             ],
+            "name": "network-information",
             "title": "Network Information",
           },
         ],
@@ -377,6 +381,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validateOnMount": true,
               },
             ],
+            "name": "network-provider",
             "title": "Network Provider",
           },
           Object {
@@ -534,6 +539,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "validateOnMount": true,
               },
             ],
+            "name": "placement",
             "title": "Placement",
           },
           Object {
@@ -597,7 +603,7 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-1",
+                "name": "subform-1",
               },
               Object {
                 "component": "sub-form",
@@ -621,7 +627,7 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-2",
+                "name": "subform-2",
               },
               Object {
                 "component": "sub-form",
@@ -659,7 +665,7 @@ exports[`Cloud Network form component should render form 1`] = `
                     "validateOnMount": true,
                   },
                 ],
-                "key": "subform-3",
+                "name": "subform-3",
               },
               Object {
                 "component": "sub-form",
@@ -676,9 +682,10 @@ exports[`Cloud Network form component should render form 1`] = `
                     "name": "provider_segmentation_id",
                   },
                 ],
-                "key": "subform-4",
+                "name": "subform-4",
               },
             ],
+            "name": "provider-information",
             "title": "Network Provider Information",
           },
           Object {
@@ -724,6 +731,7 @@ exports[`Cloud Network form component should render form 1`] = `
                 "onText": "Yes",
               },
             ],
+            "name": "network-information",
             "title": "Network Information",
           },
         ],

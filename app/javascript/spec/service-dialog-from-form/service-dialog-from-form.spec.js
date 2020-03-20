@@ -40,10 +40,10 @@ describe('<ServiceDialogFromOt />', () => {
       // should check if label is unique
       expect(fetchMock.calls()).toHaveLength(1);
       // form is invalid so should not call submit;
-      wrapper.find('button').first().simulate('click');
+      wrapper.find('form').simulate('submit');
       wrapper.find('input').simulate('change', { target: { value: 'Foo' } });
       setTimeout(() => {
-        wrapper.find('button').first().simulate('click');
+        wrapper.find('form').simulate('submit');
         expect(JSON.parse(fetchMock.lastCall()[1].body)).toEqual({
           action: 'template_service_dialog',
           resource: {

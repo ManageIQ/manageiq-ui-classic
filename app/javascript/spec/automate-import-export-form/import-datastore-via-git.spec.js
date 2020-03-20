@@ -32,7 +32,7 @@ describe('Import datastore via git component', () => {
 
     const wrapper = mount(<ImportDatastoreViaGit />);
     wrapper.find('input#git_url').simulate('change', { target: { value: 'http://' } });
-    wrapper.find('button').simulate('click');
+    wrapper.find('form').simulate('submit');
 
     const expectedCall = expect.arrayContaining([
       '/miq_ae_tools/retrieve_git_datastore',

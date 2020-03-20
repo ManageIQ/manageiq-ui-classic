@@ -94,7 +94,7 @@ describe('Set ownership form component', () => {
     Form.instance().form.change('user', 'z');
     wrapper.update();
     await act(async() => {
-      wrapper.find('button').first().simulate('click');
+      wrapper.find('form').simulate('submit');
     });
     expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=save', { objectIds: ['123456'] });
     done();

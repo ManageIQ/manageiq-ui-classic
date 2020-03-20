@@ -1,6 +1,5 @@
 import React from 'react';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
-import { formFieldsMapper, components } from '@data-driven-forms/pf3-component-mapper';
+import { formFieldsMapper } from '@data-driven-forms/pf3-component-mapper';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import AsyncProviderCredentials from '../../components/async-credentials/async-provider-credentials';
@@ -22,7 +21,6 @@ const fieldsMapper = {
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'validate-provider-credentials': AsyncProviderCredentials,
-  [componentTypes.SELECT]: props => <components.SelectField classNamePrefix="miq-ddf-select" {...props} />,
 };
 
 export default fieldsMapper;
