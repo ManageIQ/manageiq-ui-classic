@@ -20,6 +20,8 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   context 'mixin loaded into an explorer controller' do
+    subject { CatalogController.new }
+
     before do
       subject.instance_variable_set(:@sb, :explorer => true)
 
@@ -235,6 +237,7 @@ describe Mixins::BreadcrumbsMixin do
 
   context 'mixin loaded into a non-explorer controller' do
     subject { MiqRequestController.new }
+
     describe '#data_for_breadcrumbs' do
       it "creates breadcrumbs" do
         expect(subject.data_for_breadcrumbs).to eq(
