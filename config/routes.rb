@@ -2664,9 +2664,12 @@ Rails.application.routes.draw do
 
     :configuration_manager  => {
       :get  => %w(
+        button
         download_data
         download_summary_pdf
+        edit
         form_fields
+        new
         show
         show_list
         tagging_edit
