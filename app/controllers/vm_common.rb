@@ -1230,8 +1230,7 @@ module VmCommon
             presenter.update(:form_buttons_div, '')
             presenter.remove_paging.hide(:form_buttons_div)
           end
-        elsif %w[attach detach live_migrate ownership add_security_group remove_security_group
-                 disassociate_floating_ip].include?(@sb[:action])
+        elsif %w[attach detach live_migrate ownership add_security_group remove_security_group].include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif %w[reconfigure_update retire].exclude?(action) && !hide_x_edit_buttons(action)
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
@@ -1248,7 +1247,7 @@ module VmCommon
         presenter.hide(:form_buttons_div) if action == "evm_relationship_update"
       end
 
-      if %w[associate_floating_ip evacuate resize].include?(@sb[:action])
+      if %w[associate_floating_ip disassociate_floating_ip evacuate resize].include?(@sb[:action])
         presenter.hide(:form_buttons_div, :paging_div)
       else
         presenter.show(:paging_div)
