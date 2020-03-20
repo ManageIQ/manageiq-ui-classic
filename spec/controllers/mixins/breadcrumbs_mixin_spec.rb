@@ -1,9 +1,5 @@
 describe Mixins::BreadcrumbsMixin do
-  class BreadcrumbsTestController < ActionController::Base
-    include Mixins::BreadcrumbsMixin
-  end
-
-  subject { BreadcrumbsTestController.new }
+  subject { CatalogController.new }
 
   let(:tree) { TreeBuilderUtilization.new(:utilization_tree, {}, false) }
   let(:breadcrumbs_options) do
@@ -20,8 +16,6 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   context 'mixin loaded into an explorer controller' do
-    subject { CatalogController.new }
-
     before do
       subject.instance_variable_set(:@sb, :explorer => true)
 
@@ -443,7 +437,10 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   describe "#x_node_text" do
+    subject { ReportController.new }
+
     before { allow(subject).to receive(:x_active_tree).and_return(:utilization_tree) }
+
     it "sets text to @x_node_text" do
       subject.send(:x_node_text=, "VM UTIL 1")
 
