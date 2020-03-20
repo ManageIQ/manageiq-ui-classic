@@ -7,6 +7,7 @@ class AutomationManagerController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::AutomationManagerControllerMixin
   include Mixins::ExplorerPresenterMixin
   include Mixins::EmsCommon::Core
   include Mixins::EmsCommon::PauseResume
