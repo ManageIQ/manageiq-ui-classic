@@ -38,12 +38,7 @@ module.exports = [
     test: /\.(scss|sass|css)$/i,
     use: [
       'style-loader',
-      {
-        loader: 'css-loader',
-        options: {
-          minimize: env.NODE_ENV === 'production',
-        },
-      },
+      'css-loader',
       {
         loader: 'postcss-loader',
         options: {
