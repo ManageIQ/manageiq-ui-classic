@@ -19,36 +19,40 @@ class ConfiguredSystemController < ApplicationController
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w[configuration_profiles configured_systems].include?(@display) # Were we displaying nested list
 
     # Handle Toolbar Policy Tag Button
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     model = self.class.model
-    tag(model) if params[:pressed] == "#{params[:controller]}_tag"
-    if [ConfiguredSystem].include?(model)
-      assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
-      check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
-    end
-    if params[:pressed] == 'service_dialog_from_ct'
-      create_service_dialog
-      return
-    end
+    tag(model) if params[:pressed] == "configured_system_tag"
+    provision if params[:pressed] == "configured_system_provision"
 
     return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
-
-    # Handle scan
-    if params[:pressed] == "container_image_scan"
-      scan_images
-
-      if @lastaction == "show"
-        javascript_flash
-      else
-        replace_main_div(:partial => "layouts/gtl")
-      end
-    end
   end
 
   private
+
+  def provision
+    assert_privileges("configured_system_provision")
+    provisioning_ids = find_records_with_rbac(ConfiguredSystem, checked_or_params).ids
+
+    unless ConfiguredSystem.provisionable?(provisioning_ids)
+      add_flash(_("Provisioning is not supported for at least one of the selected systems"), :error)
+      replace_right_cell
+      return
+    end
+
+    if ConfiguredSystem.common_configuration_profiles_for_selected_configured_systems(provisioning_ids)
+      javascript_redirect(:controller     => "miq_request",
+                          :action         => "prov_edit",
+                          :prov_id        => provisioning_ids,
+                          :org_controller => "configured_system",
+                          :escape         => false)
+    else
+      render_flash(n_("No common configuration profiles available for the selected configured system",
+                   "No common configuration profiles available for the selected configured systems",
+                   provisioning_ids.size), :error)
+    end
+  end
 
   def textual_group_list
     [%i[properties environment os], %i[tenancy tags]]
