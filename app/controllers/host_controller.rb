@@ -4,6 +4,7 @@ class HostController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
@@ -134,6 +135,7 @@ class HostController < ApplicationController
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
       @title = _("Info/Settings")
     else # if editing credentials for multi host
+      drop_breadcrumb(:name => _('Edit Hosts'), :url => '/host/edit/')
       @title = _("Credentials/Settings")
       @host = if params[:selected_host]
                 find_record_with_rbac(Host, params[:selected_host])
@@ -158,15 +160,11 @@ class HostController < ApplicationController
     assert_privileges("host_edit")
     case params[:button]
     when "cancel"
-      session[:edit] = nil # clean out the saved info
-      @breadcrumbs&.pop
-      if !session[:host_items].nil?
-        flash_to_session(_("Edit of credentials for selected Hosts was cancelled by the user"))
-        javascript_redirect(:action => @lastaction, :display => session[:host_display])
+      if session[:host_items] # canceling editing credentials for multiple Hosts
+        flash_and_redirect(_("Edit of credentials for selected Hosts was cancelled by the user"))
       else
         @host = find_record_with_rbac(Host, params[:id])
-        flash_to_session(_("Edit of Host \"%{name}\" was cancelled by the user") % {:name => @host.name})
-        javascript_redirect(:action => @lastaction, :id => @host.id, :display => session[:host_display])
+        flash_and_redirect(_("Edit of Host \"%{name}\" was cancelled by the user") % {:name => @host.name})
       end
 
     when "save"
@@ -176,14 +174,8 @@ class HostController < ApplicationController
         valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate) # Set the record variables, but don't save
         if valid_record? && set_record_vars(@host) && @host.save
-          flash_to_session(_("Host \"%{name}\" was saved") % {:name => @host.name})
-          @breadcrumbs&.pop
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
-          if @lastaction == 'show_list'
-            javascript_redirect(:action => "show_list")
-          else
-            javascript_redirect(:action => "show", :id => @host.id.to_s)
-          end
+          flash_and_redirect(_("Host \"%{name}\" was saved") % {:name => @host.name})
           nil
         else
           @errors.each { |msg| add_flash(msg, :error) }
@@ -202,8 +194,7 @@ class HostController < ApplicationController
           @error = Host.batch_update_authentication(session[:host_items], creds)
         end
         if @error || @error.blank?
-          flash_to_session(_("Credentials/Settings saved successfully"))
-          javascript_redirect(:action => 'show_list')
+          flash_and_redirect(_("Credentials/Settings saved successfully"))
         else
           drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
           @in_a_form = true
