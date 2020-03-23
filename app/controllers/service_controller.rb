@@ -454,7 +454,7 @@ class ServiceController < ApplicationController
       elsif action == "ownership"
         locals = {:action_url => action_url}
         locals[:multi_record] = true
-        presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
+        presenter.hide(:form_buttons_div)
       else
         locals = {:record_id => @edit[:rec_id], :action_url => action_url}
         presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
