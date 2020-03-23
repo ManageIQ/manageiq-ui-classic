@@ -1,9 +1,5 @@
 describe Mixins::BreadcrumbsMixin do
-  class BreadcrumbsTestController < ActionController::Base
-    include Mixins::BreadcrumbsMixin
-  end
-
-  subject { BreadcrumbsTestController.new }
+  subject { CatalogController.new }
 
   let(:tree) { TreeBuilderUtilization.new(:utilization_tree, {}, false) }
   let(:breadcrumbs_options) do
@@ -234,6 +230,8 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   context 'mixin loaded into a non-explorer controller' do
+    subject { MiqRequestController.new }
+
     describe '#data_for_breadcrumbs' do
       it "creates breadcrumbs" do
         expect(subject.data_for_breadcrumbs).to eq(
@@ -269,7 +267,7 @@ describe Mixins::BreadcrumbsMixin do
             [
               {:title => "First Layer"},
               {:title => "Second Layer"},
-              {:title => "record_info_title", :url => "/breadcrumbs_test/show/1234"},
+              {:title => "record_info_title", :url => "/#{subject.controller_name}/show/1234"},
               {:title => "Title"}
             ]
           )
@@ -282,7 +280,7 @@ describe Mixins::BreadcrumbsMixin do
             [
               {:title => "First Layer"},
               {:title => "Second Layer"},
-              {:title => "record_info_title", :url => "/breadcrumbs_test/show/1234"}
+              {:title => "record_info_title", :url => "/#{subject.controller_name}/show/1234"}
             ]
           )
         end
@@ -310,7 +308,7 @@ describe Mixins::BreadcrumbsMixin do
               [
                 {:title => "First Layer"},
                 {:title => "Second Layer"},
-                {:title => "record_info_title", :url => "/breadcrumbs_test/show/1234"},
+                {:title => "record_info_title", :url => "/#{subject.controller_name}/show/1234"},
                 {:title => "Title"}
               ]
             )
@@ -439,7 +437,10 @@ describe Mixins::BreadcrumbsMixin do
   end
 
   describe "#x_node_text" do
+    subject { ReportController.new }
+
     before { allow(subject).to receive(:x_active_tree).and_return(:utilization_tree) }
+
     it "sets text to @x_node_text" do
       subject.send(:x_node_text=, "VM UTIL 1")
 
