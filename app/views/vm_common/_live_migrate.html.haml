@@ -50,10 +50,8 @@
                   'ng-model' => 'vm.vmCloudModel.host',
                   'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_state_enabled' => true,
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+  = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Submit'), :button_click => 'vm.submitClicked()'}
+  .clearfix
 
   %hr
   %div
@@ -63,22 +61,6 @@
       - @embedded = true
       - @quadicon_no_url = true
       = render :partial => "layouts/gtl"
-
-- unless @explorer
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = button_tag(t = _('Submit'),
-            :class   => "btn btn-primary",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "submit")}');")
-          = button_tag(t = _('Cancel'),
-            :class   => "btn btn-default",
-            :alt     => t,
-            :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :button => "cancel")}');")
 
 :javascript
   ManageIQ.angular.app.value('vmCloudLiveMigrateFormId', "#{@live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''}");
