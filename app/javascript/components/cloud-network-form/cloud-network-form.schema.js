@@ -39,7 +39,7 @@ function createSchema(ems, cloudNetworkId) {
   const subForm = [
     {
       component: componentTypes.SUB_FORM,
-      key: 'subform-1',
+      name: 'subform-1',
       condition: {
         when: 'provider_network_type',
         is: 'flat',
@@ -60,7 +60,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
-      key: 'subform-2',
+      name: 'subform-2',
       condition: {
         when: 'provider_network_type',
         is: 'gre',
@@ -81,7 +81,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
-      key: 'subform-3',
+      name: 'subform-3',
       condition: {
         when: 'provider_network_type',
         is: 'vlan',
@@ -113,7 +113,7 @@ function createSchema(ems, cloudNetworkId) {
       ],
     }, {
       component: componentTypes.SUB_FORM,
-      key: 'subform-4',
+      name: 'subform-4',
       condition: {
         when: 'provider_network_type',
         is: 'vxlan',
@@ -133,6 +133,7 @@ function createSchema(ems, cloudNetworkId) {
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Network Provider'),
+    name: 'network-provider',
     fields: [{
       component: componentTypes.SELECT,
       name: 'ems_id',
@@ -149,6 +150,7 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Placement'),
+    name: 'placement',
     condition: {
       when: 'ems_id',
       isNotEmpty: true,
@@ -157,6 +159,7 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Network Provider Information'),
+    name: 'provider-information',
     condition: {
       when: 'cloud_tenant',
       isNotEmpty: true,
@@ -172,6 +175,7 @@ function createSchema(ems, cloudNetworkId) {
   }, {
     component: componentTypes.SUB_FORM,
     title: __('Network Information'),
+    name: 'network-information',
     fields: [{
       component: componentTypes.TEXT_FIELD,
       name: 'name',

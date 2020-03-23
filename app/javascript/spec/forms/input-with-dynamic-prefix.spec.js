@@ -111,10 +111,7 @@ describe('DataDrivenInputWithPrefix', () => {
      * select correct option from list
      */
     act(() => {
-      wrapper.find(rawComponents.Select).children().instance().onChange({
-        label: 'Quxx',
-        value: 'https://',
-      });
+      wrapper.find(rawComponents.Select).props().input.onChange('https://');
     });
     expect(onChange).toHaveBeenCalledWith('https://');
     wrapper.update();

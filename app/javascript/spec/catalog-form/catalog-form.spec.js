@@ -141,8 +141,7 @@ describe('Catalog form component', () => {
     setImmediate(() => {
       wrapper.update();
       const spy = jest.spyOn(wrapper.children().instance(), 'submitValues');
-      const button = wrapper.find('button').first();
-      button.simulate('click');
+      wrapper.find('form').simulate('submit');
       expect(spy).toHaveBeenCalledTimes(0);
       done();
     });

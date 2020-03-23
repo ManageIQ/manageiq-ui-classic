@@ -65,7 +65,7 @@ describe('Copy catalog form', () => {
 
       wrapper.update();
       setTimeout(() => {
-        wrapper.find('button').first().simulate('click');
+        wrapper.find('form').simulate('submit');
         setImmediate(() => {
           expect(spyMiqAjaxButton).toHaveBeenCalledWith(copySavedUrl);
           expect(fetchMock.lastOptions().body).toEqual(postData);

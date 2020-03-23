@@ -38,6 +38,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 "name": "description",
               },
             ],
+            "name": "basic-info",
             "title": "Basic Info",
           },
           Object {
@@ -71,6 +72,7 @@ exports[`Catalog form component should render add variant form 1`] = `
                 "size": 8,
               },
             ],
+            "name": "assign-catalog-items",
             "title": "Assign Catalog Items",
           },
         ],
@@ -128,6 +130,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 "name": "description",
               },
             ],
+            "name": "basic-info",
             "title": "Basic Info",
           },
           Object {
@@ -169,6 +172,7 @@ exports[`Catalog form component should render edit variant form 1`] = `
                 "size": 8,
               },
             ],
+            "name": "assign-catalog-items",
             "title": "Assign Catalog Items",
           },
         ],

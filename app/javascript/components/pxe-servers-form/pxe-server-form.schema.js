@@ -37,6 +37,7 @@ const basicInformationCommonFields = [{
 const imageMenusSubForm = [{
   component: componentTypes.SUB_FORM,
   title: __('PXE Image Menus'),
+  name: 'pxe-image-menus-subform',
   fields: [{
     component: componentTypes.TEXT_FIELD,
     name: 'pxe_menus[0].file_name',
@@ -48,6 +49,7 @@ const createSchema = isEditing => ({
   fields: [{
     component: componentTypes.SUB_FORM,
     title: __('Basic Information'),
+    name: 'basic-information',
     fields: [
       {
         component: componentTypes.TEXT_FIELD,

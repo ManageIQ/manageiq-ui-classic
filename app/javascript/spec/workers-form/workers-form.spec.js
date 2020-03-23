@@ -178,7 +178,7 @@ describe('Workers form', () => {
 
     wrapper.update();
     await act(async() => {
-      wrapper.find('button').first().simulate('click');
+      wrapper.find('form').simulate('submit');
     });
     expect(fetchMock.calls()).toHaveLength(2);
     expect(fetchMock.lastCall()[1].body).toEqual(JSON.stringify({

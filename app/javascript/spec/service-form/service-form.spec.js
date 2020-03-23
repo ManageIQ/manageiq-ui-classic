@@ -86,11 +86,11 @@ describe('Service form component', () => {
 
     setImmediate(() => {
       // reset should be disabled
-      wrapper.find('button').at(0).simulate('click');
+      wrapper.find('form').simulate('submit');
       // change form state to enable reset button
       wrapper.find(FormRender).childAt(0).instance().form.change('name', 'foo');
       wrapper.find(FormRender).childAt(0).instance().form.change('description', 'bar');
-      wrapper.find('button').at(0).simulate('click');
+      wrapper.find('form').simulate('submit');
       expect(submitSpy).toHaveBeenCalledWith('/service/service_edit/3?button=save', { name: 'foo', description: 'bar' });
       done();
     });

@@ -108,8 +108,8 @@ describe('Flavor form component', () => {
 
     setImmediate(() => {
       wrapper.update();
-      const button = wrapper.find('button').first();
-      button.simulate('click');
+      const form = wrapper.find('form');
+      form.simulate('submit');
       expect(spy).toHaveBeenCalledTimes(0);
       done();
     });
@@ -159,7 +159,7 @@ describe('Flavor form component', () => {
       });
 
       // Click on submit button
-      wrapper.find('button').first().simulate('click');
+      wrapper.find('form').simulate('submit');
       expect(spySubmit).toHaveBeenCalledTimes(1);
       done();
     });

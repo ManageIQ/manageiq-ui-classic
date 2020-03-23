@@ -119,6 +119,7 @@ exports[`PxeServersForm should render correctly 1`] = `
                 "name": "customization_directory",
               },
             ],
+            "name": "basic-information",
             "title": "Basic Information",
           },
           Object {
@@ -134,6 +135,7 @@ exports[`PxeServersForm should render correctly 1`] = `
                 "name": "pxe_menus[0].file_name",
               },
             ],
+            "name": "pxe-image-menus-subform",
             "title": "PXE Image Menus",
           },
         ],
