@@ -1,7 +1,7 @@
 set -e
 
 if [ "$TEST_SUITE" != "spec" ]; then
-  nvm install 8
+  nvm install 10
 fi
 
 bin/setup
