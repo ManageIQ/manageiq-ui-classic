@@ -1,9 +1,0 @@
-= render :partial => "layouts/flash_msg"
-.row
-  .col-md-12.col-lg-8
-    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Properties'), textual_configuration_script_group_properties), @record)
-  .col-md-12.col-lg-8
-    = react 'TableListViewWrapper', TextualListview.data(textual_configuration_script_variables)
-  .col-md-12.col-lg-8
-    - if @record.survey_spec['spec']
-      = react 'TableListViewWrapper', TextualListview.data(textual_configuration_script_survey)

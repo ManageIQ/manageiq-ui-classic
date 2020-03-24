@@ -59,7 +59,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelpe
         button(
           :configuration_manager_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this Foreman Provider'),
+          N_('Edit Tags for this Configuration Manager Provider'),
           N_('Edit Tags'),
           :url_parms    => "main_div",
           :send_checked => true,

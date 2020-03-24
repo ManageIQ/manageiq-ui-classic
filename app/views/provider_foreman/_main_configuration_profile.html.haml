@@ -1,8 +1,0 @@
-= render :partial => "layouts/flash_msg"
-.row
-  .col-md-12.col-lg-6
-    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Properties'), textual_configuration_profile_group_properties), @record)
-    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Environment'), textual_configuration_profile_group_environment), @record)
-    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Operating System'), textual_configuration_profile_group_os), @record)
-  .col-md-12.col-lg-6
-    = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Tenancy'), textual_configuration_profile_group_tenancy), @record)

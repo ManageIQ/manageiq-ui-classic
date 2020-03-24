@@ -12,7 +12,7 @@
 title: Providers
 
 # Menu name
-name: ConfigurationManagerForeman
+name: ConfigurationManager
 
 # Main DB table report is based on
 db: ManageIQ::Providers::ConfigurationManager

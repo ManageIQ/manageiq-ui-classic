@@ -17,8 +17,6 @@ class ApplicationHelper::ToolbarChooser
       nil
     elsif @layout == 'report'
       @report ? "report_view_tb" : nil
-    elsif @layout == 'provider_foreman'
-      @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
     elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
     elsif @layout == 'automation_manager'
@@ -90,8 +88,6 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_explorer
     if %w[vm_cloud vm_infra vm_or_template].include?(@layout)
       center_toolbar_name_vm_or_template
-    elsif @layout == "provider_foreman" && %i[configuration_manager_providers_tree configuration_manager_cs_filter_tree].include?(x_active_tree)
-      center_toolbar_filename_configuration_manager_providers
     elsif @layout == "automation_manager"
       center_toolbar_filename_automation_manager
     elsif x_active_tree == :ae_tree
@@ -530,16 +526,6 @@ class ApplicationHelper::ToolbarChooser
     x_node.split('-')
   end
 
-  def center_toolbar_filename_configuration_manager_providers
-    if x_active_tree == :configuration_manager_providers_tree
-      configuration_manager_providers_tree_center_tb(x_node_split)
-    elsif x_active_tree == :configuration_manager_cs_filter_tree
-      cs_filter_tree_center_tb(x_node_split)
-    elsif x_active_tree == :configuration_scripts_tree
-      configuration_scripts_tree_center_tb(x_node_split)
-    end
-  end
-
   def center_toolbar_filename_automation_manager
     case x_active_tree
     when :automation_manager_providers_tree
@@ -563,7 +549,6 @@ class ApplicationHelper::ToolbarChooser
       when "cp" then "unassigned_profiles_group_center_tb"
       else "configuration_manager_providers_center_tb"
       end
-    else unassigned_configuration_profile_node(nodes)
     end
   end
 
@@ -622,10 +607,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def unassigned_configuration_profile_node(nodes)
-    configuration_profile_center_tb if nodes[2] == "unassigned"
-  end
-
   NO_GTL_VIEW_BUTTONS = %w[chargeback
                            generic_object
                            generic_object_definition
@@ -636,7 +617,6 @@ class ApplicationHelper::ToolbarChooser
                            miq_policy
                            miq_policy_rsop
                            ops
-                           provider_foreman
                            pxe
                            report].to_set.freeze
 

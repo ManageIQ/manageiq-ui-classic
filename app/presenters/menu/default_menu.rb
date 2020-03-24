@@ -13,7 +13,6 @@ module Menu
 
       def configuration_menu_section
         Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog', [
-          Menu::Item.new('provider_foreman',  N_('Management'), 'provider_foreman_explorer', {:feature => 'provider_foreman_explorer', :any => true}, '/provider_foreman/explorer'),
           Menu::Item.new('configuration_manager',  N_('Providers'), 'configuration_manager', {:feature => 'configuration_manager_show_list'}, '/configuration_manager/show_list'),
           Menu::Item.new('configuration_profile',  N_('Profiles'), 'configuration_profile', {:feature => 'configuration_profile_show_list'}, '/configuration_profile/show_list'),
           Menu::Item.new('configured_system',  N_('Configured Systems'), 'configured_system', {:feature => 'configured_system_show_list'}, '/configured_system/show_list'),
