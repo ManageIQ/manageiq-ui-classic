@@ -117,5 +117,4 @@ module ConfiguredSystemHelper::TextualSummary
       :value => (@record.configuration_profile.try(:configuration_organizations) || []).collect(&:name).join(", ")
     }
   end
-
 end

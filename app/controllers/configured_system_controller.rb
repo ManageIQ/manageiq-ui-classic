@@ -45,8 +45,8 @@ class ConfiguredSystemController < ApplicationController
                           :escape         => false)
     else
       render_flash(n_("No common configuration profiles available for the selected configured system",
-                   "No common configuration profiles available for the selected configured systems",
-                   provisioning_ids.size), :error)
+                      "No common configuration profiles available for the selected configured systems",
+                      provisioning_ids.size), :error)
     end
   end
 

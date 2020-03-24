@@ -8,11 +8,13 @@ module ConfigurationManagerHelper::TextualSummary
 
   def textual_description
     return nil if @record.try(:description).blank?
+
     {:label => _("Description"), :value => @record.description}
   end
 
   def textual_region
     return nil if @record.provider_region.blank?
+
     label_val = _('Region')
     {:label => label_val, :value => @record.provider_region}
   end
@@ -23,6 +25,7 @@ module ConfigurationManagerHelper::TextualSummary
 
   def textual_ipaddress
     return nil if @record.ipaddress.blank?
+
     {:label => _("Discovered IP Address"), :value => @record.ipaddress}
   end
 
@@ -69,5 +72,4 @@ module ConfigurationManagerHelper::TextualSummary
   def textual_group_tags
     %i[tags]
   end
-
 end
