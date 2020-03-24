@@ -1077,7 +1077,10 @@ module ApplicationHelper
                         cloud_volume_type
                         condition
                         configuration_job
+                        configuration_manager
+                        configuration_profile
                         configuration_script_source
+                        configured_system
                         container
                         container_build
                         container_dashboard
