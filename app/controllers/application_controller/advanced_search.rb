@@ -185,10 +185,7 @@ module ApplicationController::AdvancedSearch
   end
 
   def adv_search_redraw_left_div
-    if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
-      build_accordions_and_trees
-      load_or_clear_adv_search
-    elsif @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree svcs_tree].include?(x_active_tree.to_s)
+    if @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree svcs_tree].include?(x_active_tree.to_s)
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, @sb)

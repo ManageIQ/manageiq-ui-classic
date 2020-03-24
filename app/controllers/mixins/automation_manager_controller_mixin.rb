@@ -251,7 +251,7 @@ module Mixins
     def configured_system_list(id, model)
       return configured_system_node(id, model) if id
 
-      if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
+      if x_active_tree == :automation_manager_cs_filter_tree
         options = {:model => model.to_s}
         @right_cell_text = _("All %{title} Configured Systems") % {:title => self.class.model_to_name(model)}
         process_show_list(options)

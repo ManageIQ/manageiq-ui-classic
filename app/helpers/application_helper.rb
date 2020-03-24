@@ -1187,9 +1187,7 @@ module ApplicationHelper
     %i[
       automation_manager_providers_tree
       automation_manager_cs_filter_tree
-      configuration_manager_cs_filter_tree
       configuration_scripts_tree
-      configuration_manager_providers_tree
       images_tree
       images_filter_tree
       instances_tree

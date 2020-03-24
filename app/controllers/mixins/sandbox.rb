@@ -49,8 +49,6 @@ module Sandbox
     condition_tree
     containers_tree
     containers_filter_tree
-    configuration_manager_cs_filter_tree
-    configuration_manager_providers_tree
     customization_templates_tree
     datacenter_tree
     datastore_tree

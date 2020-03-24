@@ -15,6 +15,8 @@ module ApplicationHelper
         cloud_volume_snapshot
         cloud_volume_type
         configuration_job
+        configuration_manager
+        configuration_profile
         configured_system
         container
         container_build
