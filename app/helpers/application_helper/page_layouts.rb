@@ -2,6 +2,8 @@ module ApplicationHelper::PageLayouts
   def layout_uses_listnav?
     return false if show_list_with_no_provider?
 
+    return false if show_list_ansible?
+
     return false if @in_a_form
 
     return false if %w[
@@ -55,6 +57,15 @@ module ApplicationHelper::PageLayouts
     return false if controller.action_name.end_with?("tagging_edit")
 
     true
+  end
+
+  def show_list_ansible?
+    %w[
+      ansible_credential
+      ansible_playbook
+      ansible_repository
+    ].include?(controller_name) &&
+      action_name == 'show_list'
   end
 
   def show_list_with_no_provider?

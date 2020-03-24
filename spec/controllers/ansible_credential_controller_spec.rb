@@ -20,9 +20,9 @@ describe AnsibleCredentialController do
     subject { get :show_list, :params => {} }
     render_views
 
-    it "renders correct template and listnav" do
+    it "renders correct template and does not render listnav" do
       is_expected.to render_template(:partial => "layouts/_gtl")
-      is_expected.to render_template(:partial => "layouts/listnav/_show_list")
+      is_expected.not_to render_template(:partial => "layouts/listnav/_show_list")
       is_expected.to have_http_status 200
     end
 
