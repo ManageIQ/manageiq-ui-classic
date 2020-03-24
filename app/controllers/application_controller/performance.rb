@@ -5,6 +5,7 @@ module ApplicationController::Performance
   CHARTS_LAYOUTS_FOLDER = Rails.root.join("product", "charts", "layouts")
 
   # Process changes to performance charts
+  # Accessible from VM details --> Monitoring/utilization --> Performance
   def perf_chart_chooser
     assert_privileges("perf_reload")
     @record = identify_tl_or_perf_record
@@ -27,6 +28,22 @@ module ApplicationController::Performance
 
     add_flash(_('No Daily data is available'), :warning) if @perf_options[:no_daily] && @perf_options[:typ] == 'Daily'
 
+    button_changes =
+      if %w[host vm vm_or_template].include?(params[:controller])
+        pfx = params[:controller] == "vm_or_template" ? "vm_" : ""
+        if @perf_options[:typ] == "realtime"
+          {
+            "#{pfx}perf_refresh" => {:hidden => false, :enabled => true},
+            "#{pfx}perf_reload"  => {:hidden => false, :enabled => true}
+          }
+        else
+          {
+            "#{pfx}perf_refresh" => {:hidden => true},
+            "#{pfx}perf_reload"  => {:hidden => true}
+          }
+        end
+      end
+
     render :update do |page|
       page << javascript_prologue
       page << if @parent_chart_data
@@ -40,20 +57,8 @@ module ApplicationController::Performance
                 }.to_json + ';'
               end
 
-      # Cannot replace button divs that contain toolbars, use code below to turn on/off individual buttons
-      # Don't need to do view or center buttons, just the perf stuff
-      if %w[host vm vm_or_template].include?(params[:controller])
-        pfx = params[:controller] == "vm_or_template" ? "vm_" : ""
-        if @perf_options[:typ] == "realtime"
-          page << "ManageIQ.toolbars.showItem('#center_tb', '#{pfx}perf_refresh');"
-          page << "ManageIQ.toolbars.showItem('#center_tb', '#{pfx}perf_reload');"
-          page << "ManageIQ.toolbars.enableItem('#center_tb', '#{pfx}perf_refresh');"
-          page << "ManageIQ.toolbars.enableItem('#center_tb', '#{pfx}perf_reload');"
-        else
-          page << "ManageIQ.toolbars.hideItem('#center_tb', '#{pfx}perf_refresh');"
-          page << "ManageIQ.toolbars.hideItem('#center_tb', '#{pfx}perf_reload');"
-        end
-      end
+      # Turn on/off individual buttons.
+      page << "ManageIQ.toolbars.applyChanges(#{button_changes.to_json})" if button_changes.present?
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page.replace("perf_options_div", :partial => "layouts/perf_options")
