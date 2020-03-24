@@ -9,10 +9,6 @@ class ConfigurationProfileController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def self.model
-    ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
-  end
-
   def self.table_name
     @table_name ||= "configuration_profile"
   end

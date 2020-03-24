@@ -227,7 +227,6 @@ module ApplicationHelper::PageLayouts
       orchestration_stack
       persistent_volume
       physical_server
-      provider_foreman
       resource_pool
       retired
       security_group
