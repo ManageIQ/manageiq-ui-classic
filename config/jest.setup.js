@@ -1,6 +1,8 @@
 const babelConfig = require('../.babelrc.js');
 require('@babel/register').default(babelConfig);
-require('@babel/polyfill');
+
+require("core-js/stable");
+require("regenerator-runtime/runtime");
 
 window.Rx = require('rxjs');
 window.$ = require('jquery');
