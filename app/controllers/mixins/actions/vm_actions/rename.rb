@@ -24,7 +24,7 @@ module Mixins
         end
 
         def build_rename_screen
-          drop_breadcrumb(:name => _("Rename VM '%{name}''") % {:name => @record.name}, :url => '/vm/rename') unless @explorer
+          drop_breadcrumb(:name => _("Rename VM '%{name}'") % {:name => @record.name}, :url => '/vm/rename') unless @explorer
           session[:edit] = @edit
           @in_a_form = true
         end

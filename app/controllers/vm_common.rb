@@ -363,7 +363,7 @@ module VmCommon
     @name = @description = ""
     @in_a_form = true
     @show_snapshot_memory_checkbox = show_snapshot_memory_checkbox?(@vm)
-    drop_breadcrumb(:name    => _("Snapshot VM '%{name}''") % {:name => @record.name},
+    drop_breadcrumb(:name    => _("Snapshot VM '%{name}'") % {:name => @record.name},
                     :url     => "/vm_common/snap",
                     :display => "snapshot_info")
     if @explorer
@@ -522,7 +522,7 @@ module VmCommon
       javascript_redirect(previous_breadcrumb_url)
     end
     if !@explorer && params[:button] != "back"
-      drop_breadcrumb(:name => _("Right Size VM '%{name}''") % {:name => @record.name}, :url => "/vm/right_size")
+      drop_breadcrumb(:name => _("Right Size VM '%{name}'") % {:name => @record.name}, :url => "/vm/right_size")
       render :action => "show"
     end
   end
@@ -669,7 +669,7 @@ module VmCommon
   alias_method :miq_template_edit, :edit
 
   def build_edit_screen
-    drop_breadcrumb(:name => _("Edit VM '%{name}''") % {:name => @record.name}, :url => "/vm/edit") unless @explorer
+    drop_breadcrumb(:name => _("Edit VM '%{name}'") % {:name => @record.name}, :url => "/vm/edit") unless @explorer
     session[:edit] = @edit
     @in_a_form = true
     @active_tab = "edit"
