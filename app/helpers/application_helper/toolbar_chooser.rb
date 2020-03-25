@@ -537,21 +537,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def configuration_manager_providers_tree_center_tb(nodes)
-    case nodes.first
-    when "root"     then  "configuration_manager_providers_center_tb"
-    when "fr", "at" then  "configuration_manager_provider_center_tb"
-    when "cp"       then  configuration_profile_center_tb
-    when "f"        then  inventory_group_center_tb
-    when "xx"       then
-      case nodes.last
-      when "f"  then "configured_systems_center_tb"
-      when "cp" then "unassigned_profiles_group_center_tb"
-      else "configuration_manager_providers_center_tb"
-      end
-    end
-  end
-
   def cs_filter_tree_center_tb(nodes)
     case nodes.first
     when "root", "ms", "xx", "csa", "csf" then "configured_systems_center_tb"

@@ -76,7 +76,6 @@ module Sandbox
     protect_tree
     pxe_image_types_tree
     pxe_servers_tree
-    configuration_manager_providers_tree
     rbac_tree
     reports_tree
     roles_by_server_tree
