@@ -94,6 +94,6 @@
 
 :javascript
   ManageIQ.angular.app.value('configurationManagerFormId', '#{@provider_manager.id || "new"}');
-  ManageIQ.angular.app.value('url', '/configuration_manager');
-  ManageIQ.angular.app.value('modelName', 'configurationManagerModel');
+  ManageIQ.angular.app.value('url', '#{url}');
+  ManageIQ.angular.app.value('modelName', '#{model}');
   miq_bootstrap('#form_div');

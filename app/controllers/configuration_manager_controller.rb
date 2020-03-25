@@ -67,57 +67,15 @@ class ConfigurationManagerController < ApplicationController
     end
   end
 
-  def edit
-    @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
-    case params[:button]
-    when "cancel"
-      cancel_provider
-    when "save"
-      add_provider
-      save_provider
-    else
-      assert_privileges("configuration_manager_edit_provider")
-      manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
-      @provider_manager     = find_record(concrete_model, manager_id)
-      @providerdisplay_type = _("Configuration Manager")
-      @sb[:action] = params[:action]
-      @in_a_form = true
-      @redirect_controller = "configuration_manager"
-      @redirect_id = @provider_manager.id
-      @refresh_partial = "edit"
-    end
-  end
-
-  def form_fields
-    assert_privileges("configuration_manager_edit_provider")
-    # set value of read only zone text box, when there is only single zone
-    if params[:id] == "new"
-      return render(:json => {:zone => Zone.visible.in_my_region.size >= 1 ? Zone.visible.in_my_region.first.name : nil})
-    end
-
-    manager = find_record(concrete_model, params[:id])
-    provider = manager.provider
-
-    render :json => {:name                => provider.name,
-                     :zone                => provider.zone.name,
-                     :zone_hidden         => !manager.enabled?,
-                     :url                 => provider.url,
-                     :verify_ssl          => provider.verify_ssl,
-                     :default_userid      => provider.authentications.first.userid,
-                     :default_auth_status => provider.authentication_status_ok?}
-  end
-
-  def new
-    assert_privileges("configuration_manager_add_provider")
-    @provider_manager = concrete_model.new
-    @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
-    @sb[:action] = params[:action]
-    @in_a_form = true
-    @redirect_controller = "configuration_manager"
-    @refresh_partial = "new"
-  end
-
   private
+
+  def self.model_to_name(provmodel)
+    Dictionary.gettext('configuration_manager', :type => :ui_title, :translate => false)
+  end
+
+  def privilege_prefix
+    "configuration_manager"
+  end
 
   def refresh
     assert_privileges("configuration_manager_refresh_provider")
@@ -130,31 +88,6 @@ class ConfigurationManagerController < ApplicationController
 
   def provider_class
     ManageIQ::Providers::Foreman::Provider
-  end
-
-  def delete
-    assert_privileges("configuration_manager_delete_provider")
-    checked_items = find_checked_items
-    checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
-    if providers.empty?
-      add_flash(_("No Providers were selected for deletion"), :error)
-    else
-      providers.each do |provider|
-        AuditEvent.success(
-          :event        => "provider_record_delete_initiated",
-          :message      => "[#{provider.name}] Record delete initiated",
-          :target_id    => provider.id,
-          :target_class => provider.type,
-          :userid       => session[:userid]
-        )
-        provider.destroy_queue
-      end
-
-      add_flash(n_("Delete initiated for %{count} Provider",
-                   "Delete initiated for %{count} Providers",
-                   providers.length) % {:count => providers.length})
-    end
   end
 
   def breadcrumbs_options

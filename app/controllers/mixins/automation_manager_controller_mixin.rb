@@ -130,65 +130,6 @@ module Mixins
       replace_right_cell(:replace_trees => [x_active_accord])
     end
 
-    def new
-      assert_privileges("#{privilege_prefix}_add_provider")
-      @provider_manager = concrete_model.new
-      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
-      @sb[:action] = params[:action]
-      render_form
-    end
-
-    def edit
-      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
-      case params[:button]
-      when "cancel"
-        cancel_provider
-      when "save"
-        add_provider
-        save_provider
-      else
-        assert_privileges("#{privilege_prefix}_edit_provider")
-        manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
-        @provider_manager     = find_record(concrete_model, manager_id)
-        @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
-        @sb[:action] = params[:action]
-        render_form
-      end
-    end
-
-    def delete
-      assert_privileges("#{privilege_prefix}_delete_provider")
-      checked_items = find_checked_items
-      checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-      providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
-      if providers.empty?
-        add_flash(_("No Providers were selected for deletion"), :error)
-      else
-        providers.each do |provider|
-          AuditEvent.success(
-            :event        => "provider_record_delete_initiated",
-            :message      => "[#{provider.name}] Record delete initiated",
-            :target_id    => provider.id,
-            :target_class => provider.type,
-            :userid       => session[:userid]
-          )
-          provider.destroy_queue
-        end
-
-        add_flash(n_("Delete initiated for %{count} Provider",
-                     "Delete initiated for %{count} Providers",
-                     providers.length) % {:count => providers.length})
-      end
-      replace_right_cell
-    end
-
-    def refresh
-      assert_privileges("#{privilege_prefix}_refresh_provider")
-      @explorer = true
-      manager_button_operation('refresh_ems', _('Refresh'))
-      replace_right_cell
-    end
-
     private
 
     def tag_action
