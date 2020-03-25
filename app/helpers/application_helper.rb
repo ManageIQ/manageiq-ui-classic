@@ -648,14 +648,6 @@ module ApplicationHelper
     end
   end
 
-  def nameonly_search?
-    nameonly_search_layouts = %w[
-      configuration_manager
-      configuration_profile
-    ]
-    nameonly_search_layouts.include?(@layout)
-  end
-
   # checking if any of the toolbar is visible
   def toolbars_visible?
     (@toolbars['history_tb'] || @toolbars['center_tb'] || @toolbars['view_tb']) &&
