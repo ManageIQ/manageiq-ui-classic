@@ -4,7 +4,7 @@ module ConfiguredSystemHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipmi_present ipaddress mac_address configuration_profile_desc provider_name zone]
+      %i[hostname ipmi_present ipaddress mac_address zone]
     )
   end
 
@@ -28,27 +28,35 @@ module ConfiguredSystemHelper::TextualSummary
     {:label => _("Mac address"), :value => @record.mac_address}
   end
 
-  def textual_configuration_profile_desc
-    h = {
-      :label    => _("Configuration Profile Description"),
-      :value    => @record.configuration_profile.try(:description),
-      :explorer => true
-    }
-    h[:icon] = "fa fa-list-ul" if @record.configuration_profile
+  def textual_zone
+    {:label => _("Zone"), :value => @record.configuration_manager.my_zone}
+  end
+
+  def textual_group_relationships
+    TextualGroup.new(
+      _("Relationships"),
+      %i[configuration_manager configuration_profile]
+    )
+  end
+
+  def textual_configuration_manager
+    configuration_manager = @record.configuration_manager
+    h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
+    if configuration_manager && role_allows?(:feature => "configuration_manager_show")
+      h[:title] = _("Show this Configured System's Configuration Manager")
+      h[:link]  = url_for_only_path(:controller => 'configuration_manager', :action => 'show', :id => configuration_manager)
+    end
     h
   end
 
-  def textual_provider_name
-    {
-      :label    => _("Provider"),
-      :image    => @record.configuration_manager.decorate.fileicon,
-      :value    => @record.configuration_manager.try(:name),
-      :explorer => true
-    }
-  end
-
-  def textual_zone
-    {:label => _("Zone"), :value => @record.configuration_manager.my_zone}
+  def textual_configuration_profile
+    configuration_profile = @record.configuration_profile
+    h = {:label => "Configuration Profile", :icon => "pficon pficon-configuration_profile", :value => (configuration_profile.nil? ? _("None") : configuration_profile.name)}
+    if configuration_profile && role_allows?(:feature => "configuration_profile_show")
+      h[:title] = _("Show this Configured System's Configuration Profile")
+      h[:link]  = url_for_only_path(:controller => 'configuration_profile', :action => 'show', :id => configuration_profile)
+    end
+    h
   end
 
   def textual_group_environment
