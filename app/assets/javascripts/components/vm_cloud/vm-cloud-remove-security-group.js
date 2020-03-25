@@ -33,7 +33,7 @@ function vmCloudRemoveSecurityGroupFormController(API, miqService) {
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    miqService.redirectBack(sprintf(__('Removal of security group was canceled by the user.')), 'warning', vm.redirectUrl);
+    miqService.redirectBack(sprintf(__('Removal of security group was canceled by the user.')), 'success', vm.redirectUrl);
   };
 
   vm.saveClicked = function() {

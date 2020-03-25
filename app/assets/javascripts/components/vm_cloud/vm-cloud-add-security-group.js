@@ -48,7 +48,7 @@ function vmCloudAddSecurityGroupFormController(API, miqService, $q) {
 
   vm.cancelClicked = function() {
     miqService.sparkleOn();
-    miqService.redirectBack(sprintf(__('Addition of security group was canceled by the user.')), 'warning', vm.redirectUrl);
+    miqService.redirectBack(sprintf(__('Addition of security group was canceled by the user.')), 'success', vm.redirectUrl);
   };
 
   vm.addClicked = function() {
