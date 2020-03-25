@@ -1,5 +1,23 @@
 describe ApplicationHelper, "ToolbarChooser" do
-  describe "generate explorer toolbar file names" do
+  describe "generate non-explorer toolbar file names" do
+    context "#center_toolbar_filename_classic (private)" do
+      before do
+        @layout = "configuration_manager"
+      end
+
+      it "configuration_manager summary screen" do
+        @display = "main"
+        @lastaction = "show"
+        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("configuration_manager_center_tb")
+      end
+
+      it "configuration_manager list screen" do
+        @view   = true
+        @lastaction = "show_list"
+        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("configuration_managers_center_tb")
+      end
+    end
+
     context "#center_toolbar_filename_classic (private)" do
       before do
         @view   = true
@@ -19,7 +37,9 @@ describe ApplicationHelper, "ToolbarChooser" do
         end
       end
     end
+  end
 
+  describe "generate explorer toolbar file names" do
     context "#center_toolbar_filename_automate (private)" do
       before { @sb = {:active_tree => :ae_tree, :trees => {:ae_tree => {:tree => :ae_tree}}} }
 
@@ -125,7 +145,6 @@ describe ApplicationHelper, "ToolbarChooser" do
           miq_policy
           miq_policy_rsop
           ops
-          provider_foreman
           pxe
           report
         ).each do |layout_name|

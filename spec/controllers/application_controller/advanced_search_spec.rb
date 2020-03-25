@@ -1,18 +1,20 @@
-describe ProviderForemanController, "::AdvancedSearch" do
-  before do
-    stub_user(:features => :all)
-    controller.instance_variable_set(:@sb, {})
-  end
+describe ConfigurationManagerController, "::AdvancedSearch" do
+  let(:expr) { ApplicationController::Filter::Expression.new("=" => exp, :token => 1) }
+  let(:exp) { {:field => "Some_field", :value => "123"} }
 
-  describe "#adv_search_redraw_left_div" do
-    before { controller.instance_variable_set(:@sb, :active_tree => :configuration_manager_cs_filter_tree) }
+  describe '#adv_search_button_saveid' do
+    before do
+      stub_user(:features => :all)
+      controller.instance_variable_set(:@edit, :new => {:expression => {"=" => exp}}, :new_search_name => 'filter', :expression => expr)
+      controller.instance_variable_set(:@expkey, :expression)
+    end
 
-    it "calls build_accordions_and_trees method in Config Mgmt Configured Systems when saving a filter" do
-      allow(controller).to receive(:adv_search_redraw_listnav_and_main)
+    subject { controller.instance_variable_get(:@edit)[:expression] }
 
-      expect(controller).to receive(:build_accordions_and_trees).and_call_original.once
-      expect(TreeBuilderConfigurationManagerConfiguredSystems).to receive(:new).and_call_original
-      controller.send(:adv_search_redraw_left_div)
+    it 'sets only @edit[@expkey][:exp_last_loaded]' do
+      controller.send(:adv_search_button_saveid)
+      expect(subject[:selected]).to be_nil
+      expect(subject[:exp_last_loaded]).to include(:name => "user_#{session[:userid]}_filter", :description => 'filter', :typ => 'user')
     end
   end
 end
