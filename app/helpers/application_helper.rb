@@ -238,9 +238,6 @@ module ApplicationHelper
       if controller == "ems_cloud" && action == "show"
         return ems_clouds_path
       end
-      # if controller == "ems_configuration" && action == "show"
-      #   return configuration_managers_path
-      # end
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
       end
