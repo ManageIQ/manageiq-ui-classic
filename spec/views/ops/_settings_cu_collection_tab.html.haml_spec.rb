@@ -1,6 +1,19 @@
 describe "ops/_settings_cu_collection_tab.html.haml" do
+  let(:cluster) { FactoryBot.create(:ems_cluster) }
+  let(:ems) { FactoryBot.create(:ext_management_system) }
+
+  let(:host_1) { FactoryBot.create(:host, :ems_cluster => cluster) }
+  let(:host_2) { FactoryBot.create(:host, :ems_cluster => cluster) }
+  let(:host_3) { FactoryBot.create(:host, :ext_management_system => ems) }
+
   before do
     assign(:sb, :active_tab => "settings_cu_collection")
+
+    MiqRegion.seed
+    allow(host_1).to receive(:perf_capture_enabled?).and_return(true)
+    allow(host_2).to receive(:perf_capture_enabled?).and_return(false)
+    allow(host_3).to receive(:perf_capture_enabled?).and_return(true)
+
 
     @host = FactoryBot.create(:host, :name => 'Host Name')
     FactoryBot.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
@@ -9,18 +22,7 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
                    :location => 'Location',
                    :capture  => false}]
     @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, {}, true, :root => @datastore)
-
-    @ho_enabled = [FactoryBot.create(:host)]
-    @ho_disabled = [FactoryBot.create(:host)]
-    allow(EmsCluster).to receive(:get_perf_collection_object_list).and_return(:'1'.to_i =>
-                                                                                           {:id          => 1,
-                                                                                            :name        => 'Name',
-                                                                                            :capture     => 'unsure',
-                                                                                            :ho_enabled  => @ho_enabled,
-                                                                                            :ho_disabled => @ho_disabled})
-    @non_cluster_hosts = [{:id => 2, :name => 'Non Cluster Host', :capture => true}]
-    @cluster = {:clusters => [{:id => 1, :name => 'Name', :capture => 'unsure'}], :non_cl_hosts => @non_cluster_hosts}
-    @cluster_tree = TreeBuilderClusters.new(:cluster_tree, {}, true, :root => @cluster)
+    @cluster_tree = TreeBuilderClusters.new(:cluster_tree, {}, true)
   end
 
   it "Check All checkbox have unique id for Clusters trees" do

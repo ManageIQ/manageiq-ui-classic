@@ -128,10 +128,7 @@ module OpsController::Settings::CapAndU
       end
     end
     if @edit[:current][:clusters].present?
-      @cluster_tree = TreeBuilderClusters.new(:cluster_tree,
-                                              @sb,
-                                              true,
-                                              :root => @edit[:current])
+      @cluster_tree = TreeBuilderClusters.new(:cluster_tree, @sb, true)
     end
     @edit[:current][:storages] = []
     @st_recs = {}
@@ -155,29 +152,23 @@ module OpsController::Settings::CapAndU
   end
 
   def cu_collection_get_form_vars
-    if params[:id]
-      nodetype = params[:id].split('_')
-      node_type = if params[:tree_name] == 'cluster_tree'
-                    if nodetype[0] == 'xx-NonCluster'
-                      nodetype.size == 2 ? ['NonCluster', nodetype[1]] : ['NonCluster']
-                    else
-                      nodetype.size == 2 ? ["Host", nodetype[1]] : ["Cluster", nodetype[0].split('-')[1]]
-                    end
-                  end
-    end
     @edit[:new][:all_clusters] = params[:all_clusters] == 'true' if params[:all_clusters]
     @edit[:new][:all_storages] = params[:all_storages] == 'true' if params[:all_storages]
-    if params[:tree_name] == 'datastore_tree'
-      datastore_tree_settings
-    elsif params[:tree_name] == 'cluster_tree'
-      cluster_tree_settings(node_type)
+
+    if params[:id]
+      model, id, _ = TreeBuilder.extract_node_model_and_id(params[:id])
+
+      if params[:tree_name] == 'datastore_tree'
+        datastore_tree_settings
+      elsif params[:tree_name] == 'cluster_tree'
+        cluster_tree_settings(model, id)
+      end
     end
   end
 
-  def cluster_tree_settings(node_type)
+  def cluster_tree_settings(model, id)
     if params[:check_all] # to handle check/uncheck cluster all checkbox
       @edit[:new][:clusters].each do |c| # Check each clustered host
-        c[:capture] = params[:check_all] == "true" # if cluster Set C&U flag for all hosts under it as well
         @edit[:new][c[:id]].each do |h|
           h[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
         end
@@ -185,40 +176,21 @@ module OpsController::Settings::CapAndU
       @edit[:new][:non_cl_hosts].each do |c|
         c[:capture] = params[:check_all] == 'true'
       end
-    else
-      if node_type[0] == "NonCluster"
-        if node_type.size == 1
-          @edit[:new][:non_cl_hosts].each do |c|
-            c[:capture] = params[:check] == "true"
-          end
-        else
-          @edit[:new][:non_cl_hosts].find { |x| x[:id] == node_type[1].to_i }[:capture] = params[:check] == "true"
-        end
-      end
-      @edit[:new][:clusters].each do |c| # Check each cluster
-        if node_type[0] == "Cluster" && node_type[1].to_s == c[:id].to_s
-          c[:capture] = params[:check] == "true" # if cluster Set C&U flag for all hosts under it as well
-          @edit[:new][c[:id]].each do |h|
-            h[:capture] = params[:check] == "true" # Set C&U flag depending on if checkbox parm is present
-          end
-        elsif node_type[0] == "Host"
-          @edit[:new][c[:id]].each do |h|
-            if node_type[1].to_i == h[:id].to_i
-              h[:capture] = params[:check] == "true" # Set C&U flag depending on if checkbox parm is present
-              c[:capture] = params[:check] == "true"
-            end
-          end
-        end
-        next unless node_type[0] == "Host"
+    elsif id == "NonCluster" # Clicked on all non-clustered hosts
+      @edit[:new][:non_cl_hosts].each { |c| c[:capture] = params[:check] == "true" }
+    elsif model == "EmsCluster" # Clicked on a cluster
+      @edit[:new][id.to_i].each { |h| h[:capture] = params[:check] == "true" }
+    elsif model == "Host" # Clicked on a host
+      nc_host = @edit[:new][:non_cl_hosts].find { |x| x[:id] == id.to_i }
+      # The host is among the non-clustered ones
+      return nc_host[:capture] = params[:check] == "true" if nc_host
 
-        flg = true
-        count = 0
-        @edit[:new][c[:id]].each do |h|
-          unless h[:capture]
-            count += 1 # checking if all hosts are unchecked then cluster capture will be false else undefined
-            flg = count == @edit[:new][c[:id]].length ? false : "undefined"
-          end
-          c[:capture] = flg
+      # The host is under a cluster, find it and change it
+      @edit[:new][:clusters].find do |cl|
+        @edit[:new][cl[:id]].find do |h|
+          found = h[:id] == id.to_i
+          h[:capture] = params[:check] == "true" if found
+          found
         end
       end
     end

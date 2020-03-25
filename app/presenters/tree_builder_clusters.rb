@@ -1,72 +1,58 @@
 class TreeBuilderClusters < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
+  has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
-  def initialize(name, sandbox, build = true, **params)
-    @root = params[:root]
-    @data = EmsCluster.get_perf_collection_object_list
+  def initialize(name, sandbox, build = true)
+    @clusters = EmsCluster.get_perf_collection_object_list
+    @nc_hosts = ExtManagementSystem.in_my_region.map(&:non_clustered_hosts).flatten
     super(name, sandbox, build)
   end
 
   private
+
+  def override(node, object)
+    case object
+    when EmsCluster
+      node.checkable = @clusters[object.id][:ho_ids].any?
+    when Host
+      parent = @clusters[object.ems_cluster_id]
+      node.checked = parent ? parent[:ho_enabled].include?(object) : object.perf_capture_enabled?
+    end
+    node.selectable = false
+  end
 
   def tree_init_options
     {
       :full_ids     => false,
       :checkboxes   => true,
       :three_checks => true,
+      :post_check   => true,
       :oncheck      => "miqOnCheckCUFilters",
-      :check_url    => "/ops/cu_collection_field_changed/"
+      :check_url    => "/ops/cu_collection_field_changed/",
     }
   end
 
-  def non_cluster_selected
-    checked = @root[:non_cl_hosts].count { |item| item[:capture] }
-    if @root[:non_cl_hosts].size == checked
-      true
-    elsif checked == 0
-      false
-    else
-      'undefined'
-    end
-  end
-
   def x_get_tree_roots
-    nodes = @root[:clusters].map do |node|
-      { :id         => node[:id].to_s,
-        :text       => node[:name],
-        :icon       => 'pficon pficon-cluster',
-        :tip        => node[:name],
-        :checked    => node[:capture],
-        :nodes      => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
-        :selectable => false}
+    nodes = @clusters.map { |_, cl| cl[:cl_rec] }.sort_by(&:name)
+
+    if @nc_hosts.present?
+      nodes.push(
+        :id   => "NonCluster",
+        :text => t = _("Non-clustered Hosts"),
+        :icon => Host.decorate.fonticon,
+        :tip  => t
+      )
     end
-    if @root[:non_cl_hosts].present?
-      node = {:id         => "NonCluster",
-              :text       => _("Non-clustered Hosts"),
-              :icon       => 'pficon pficon-container-node',
-              :tip        => _("Non-clustered Hosts"),
-              :checked    => non_cluster_selected,
-              :nodes      => @root[:non_cl_hosts],
-              :selectable => false}
-      nodes.push(node)
-    end
+
     count_only_or_objects(false, nodes)
   end
 
-  def x_get_tree_hash_kids(parent, count_only)
-    hosts = parent[:nodes]
-    nodes = hosts.map do |node|
-      if @data[parent[:id].to_i]
-        value = @data[parent[:id].to_i][:ho_disabled].include?(node)
-      end
-      {:id         => "#{parent[:id]}_#{node[:id]}",
-       :text       => node[:name],
-       :tip        => _("Host: %{name}") % {:name => node[:name]},
-       :icon       => 'pficon pficon-container-node',
-       :checked    => node.kind_of?(Hash) ? node[:capture] : !value,
-       :selectable => false,
-       :nodes      => []}
-    end
+  def x_get_tree_cluster_kids(parent, count_only)
+    nodes = (@clusters[parent.id][:ho_enabled] + @clusters[parent.id][:ho_disabled]).sort_by(&:name)
     count_only_or_objects(count_only, nodes)
+  end
+
+  def x_get_tree_hash_kids(_parent, count_only)
+    count_only_or_objects(count_only, @nc_hosts)
   end
 end
