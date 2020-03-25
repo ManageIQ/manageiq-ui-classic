@@ -12,3 +12,13 @@
 
     = miq_accordion_panel(_("Relationships"), false, "stack_rel") do
       %ul.nav.nav-pills.nav-stacked
+        - if role_allows?(:feature => "configuration_manager_show") && !@record.configuration_manager.nil?
+          %li
+            = link_to(_("Configuration Manager: %{name}") % {:name => @record.configuration_manager.name},
+              {:controller => "configuration_manager", :action => 'show', :id => @record.configuration_manager.id},
+              :title => _("Show parent Configuration Manager for this Configured System"))
+        - if role_allows?(:feature => "configuration_profile_show") && !@record.configuration_profile.nil?
+          %li
+            = link_to(_("Configuration Profile: %{name}") % {:name => @record.configuration_profile.name},
+              {:controller => "configuration_profile", :action => 'show', :id => @record.configuration_profile.id},
+              :title => _("Show parent Configuration Profile for this Configured System"))

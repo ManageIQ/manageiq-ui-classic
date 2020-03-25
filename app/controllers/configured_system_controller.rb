@@ -51,7 +51,7 @@ class ConfiguredSystemController < ApplicationController
   end
 
   def textual_group_list
-    [%i[properties environment os], %i[tenancy tags]]
+    [%i[properties relationships environment], %i[os tenancy tags]]
   end
   helper_method :textual_group_list
 
