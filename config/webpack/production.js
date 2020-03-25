@@ -11,14 +11,8 @@ module.exports = merge(sharedConfig, {
   devtool: 'source-map',
   stats: 'normal',
 
-  optimization: {
-    minimize: true,
-  },
-
   plugins: [
     new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
       test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/,
     }),
   ],

@@ -9,14 +9,6 @@ module.exports = merge(sharedConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
 
-  stats: {
-    errorDetails: true
-  },
-
-  output: {
-    pathinfo: true
-  },
-
   devServer: {
     clientLogLevel: 'none',
     https: settings.dev_server && settings.dev_server.https,
@@ -36,9 +28,7 @@ module.exports = merge(sharedConfig, {
         secure: false,
       },
       '/ws': {
-        target: `ws://${settings.dev_server.host}:${env.WS_PORT ||
-          env.PORT ||
-          '3000'}`,
+        target: `ws://${settings.dev_server.host}:${env.WS_PORT || env.PORT || '3000'}`,
         secure: false,
         ws: true,
       },
