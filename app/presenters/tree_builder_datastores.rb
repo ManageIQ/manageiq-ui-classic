@@ -33,7 +33,7 @@ class TreeBuilderDatastores < TreeBuilder
     {
       :full_ids   => false,
       :checkboxes => true,
-      :oncheck    => "miqOnCheckCUFilters",
+      :oncheck    => "miqOnCheckGeneric",
       :check_url  => "/ops/cu_collection_field_changed/"
     }
   end

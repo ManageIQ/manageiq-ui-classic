@@ -26,7 +26,7 @@ describe TreeBuilderDatastores do
         :full_ids   => false,
         :checkboxes => true,
         :check_url  => "/ops/cu_collection_field_changed/",
-        :oncheck    => "miqOnCheckCUFilters"
+        :oncheck    => "miqOnCheckGeneric"
       )
     end
 

@@ -27,7 +27,7 @@ class TreeBuilderClusters < TreeBuilder
       :checkboxes   => true,
       :three_checks => true,
       :post_check   => true,
-      :oncheck      => "miqOnCheckCUFilters",
+      :oncheck      => "miqOnCheckGeneric",
       :check_url    => "/ops/cu_collection_field_changed/",
     }
   end

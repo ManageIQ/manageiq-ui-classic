@@ -271,13 +271,6 @@ function miqOnCheckUserFilters(node, tree_name) {
   return true;
 }
 
-// OnCheck handler for the C&U collection trees
-function miqOnCheckCUFilters(node, tree_name) {
-  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + encodeURIComponent(node.state.checked) + '&tree_name=' + encodeURIComponent(tree_name);
-  miqJqueryRequest(url);
-  return true;
-}
-
 function miqMenuChangeRow(action, elem) {
   var grid = $('#folder_grid .panel-group');
   var selected = grid.find('.panel-heading.active').parent();
@@ -379,7 +372,6 @@ function miqSquashToggle(treeName) {
 
 function miqTreeEventSafeEval(func) {
   var whitelist = [
-    'miqOnCheckCUFilters',
     'miqOnCheckGenealogy',
     'miqOnCheckGeneric',
     'miqOnClickMenuRoles',

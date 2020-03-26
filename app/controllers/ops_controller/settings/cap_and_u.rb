@@ -153,30 +153,30 @@ module OpsController::Settings::CapAndU
 
     if params[:id]
       model, id, _ = TreeBuilder.extract_node_model_and_id(params[:id])
-    end
 
-    if params[:tree_name] == 'datastore_tree'
-      @edit[:new][:storages][id.to_i][:capture] = params[:check] == "true"
-    elsif params[:tree_name] == 'cluster_tree'
-      cluster_tree_settings(model, id)
+      if model == 'Storage'
+        @edit[:new][:storages][id.to_i][:capture] = params[:check] == "1"
+      else
+        cluster_tree_settings(model, id)
+      end
     end
   end
 
   def cluster_tree_settings(model, id)
     if id == "NonCluster" # Clicked on all non-clustered hosts
-      @edit[:new][:non_cl_hosts].each { |c| c[:capture] = params[:check] == "true" }
+      @edit[:new][:non_cl_hosts].each { |c| c[:capture] = params[:check] == "1" }
     elsif model == "EmsCluster" # Clicked on a cluster
-      @edit[:new][id.to_i].each { |h| h[:capture] = params[:check] == "true" }
+      @edit[:new][id.to_i].each { |h| h[:capture] = params[:check] == "1" }
     elsif model == "Host" # Clicked on a host
       nc_host = @edit[:new][:non_cl_hosts].find { |x| x[:id] == id.to_i }
       # The host is among the non-clustered ones
-      return nc_host[:capture] = params[:check] == "true" if nc_host
+      return nc_host[:capture] = params[:check] == "1" if nc_host
 
       # The host is under a cluster, find it and change it
       @edit[:new][:clusters].find do |cl|
         @edit[:new][cl[:id]].find do |h|
           found = h[:id] == id.to_i
-          h[:capture] = params[:check] == "true" if found
+          h[:capture] = params[:check] == "1" if found
           found
         end
       end
