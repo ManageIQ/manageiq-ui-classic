@@ -3,6 +3,7 @@ class TreeBuilderDatastores < TreeBuilder
   has_kids_for Storage, [:x_get_tree_storage_kids]
 
   def initialize(name, sandbox, build = true, **params)
+    @storages = Storage.in_my_region.includes(:hosts).select(:id, :name, :location)
     @root = params[:root]
     super(name, sandbox, build)
   end
@@ -11,15 +12,13 @@ class TreeBuilderDatastores < TreeBuilder
 
   def override(node, object)
     if object.kind_of?(Storage)
-      item = @root[object.id]
+      node.checked = @root[object.id][:capture]
 
-      node.checked = item[:capture]
-
-      node.tooltip = "#{item[:name]} [#{item[:location]}]"
+      node.tooltip = "#{object.name} [#{object.location}]"
       node.text = ViewHelper.capture do
-        ViewHelper.concat_tag(:strong, item[:name])
+        ViewHelper.concat_tag(:strong, object.name)
         ViewHelper.concat(' [')
-        ViewHelper.concat(item[:location])
+        ViewHelper.concat(object.location)
         ViewHelper.concat(']')
       end
     else
@@ -39,8 +38,7 @@ class TreeBuilderDatastores < TreeBuilder
   end
 
   def x_get_tree_roots
-    nodes = @root.map { |_, n| n[:st_rec] }
-    count_only_or_objects(false, nodes)
+    count_only_or_objects(false, @storages)
   end
 
   def x_get_tree_storage_kids(parent, count_only)

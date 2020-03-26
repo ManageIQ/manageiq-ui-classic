@@ -2,8 +2,8 @@ class TreeBuilderClusters < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
   has_kids_for EmsCluster, [:x_get_tree_cluster_kids]
 
-  def initialize(name, sandbox, build = true)
-    @clusters = EmsCluster.get_perf_collection_object_list
+  def initialize(name, sandbox, build = true, **params)
+    @clusters = params[:root]
     @nc_hosts = ExtManagementSystem.in_my_region.map(&:non_clustered_hosts).flatten
     super(name, sandbox, build)
   end

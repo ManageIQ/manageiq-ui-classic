@@ -15,7 +15,7 @@ describe TreeBuilderClusters do
       allow(host_2).to receive(:perf_capture_enabled?).and_return(false)
     end
 
-    subject { TreeBuilderClusters.new(:cluster_tree, {}, true) }
+    subject { TreeBuilderClusters.new(:cluster_tree, {}, true, :root => EmsCluster.get_perf_collection_object_list) }
 
     it 'sets tree to have full ids, not lazy and no root' do
       root_options = subject.send(:tree_init_options)

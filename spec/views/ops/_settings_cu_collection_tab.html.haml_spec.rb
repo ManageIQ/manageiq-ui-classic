@@ -26,7 +26,7 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
       }
     }
     @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, {}, true, :root => datastores)
-    @cluster_tree = TreeBuilderClusters.new(:cluster_tree, {}, true)
+    @cluster_tree = TreeBuilderClusters.new(:cluster_tree, {}, true, :root => EmsCluster.get_perf_collection_object_list)
   end
 
   it "Displays note if there are no Clusters" do

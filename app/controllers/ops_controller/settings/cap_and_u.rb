@@ -29,7 +29,8 @@ module OpsController::Settings::CapAndU
 
       unless @edit[:new][:storages] == @edit[:current][:storages] # Check for storage changes
         @edit[:new][:storages].each do |_, s|
-          s[:st_rec].perf_capture_enabled = s[:capture]
+          storage = Storage.find(s[:id])
+          storage.perf_capture_enabled = s[:capture]
         end
       end
 
@@ -90,16 +91,11 @@ module OpsController::Settings::CapAndU
       hosts = (cl_hash[:ho_enabled] + cl_hash[:ho_disabled]).sort_by { |ho| ho.name.downcase }
       cl_enabled = enabled_host_ids.length == hosts.length
       en_flg = cl_enabled && !enabled.empty?
-      cname = c.name
-      @edit[:current][:clusters].push(:name    => cname,
-                                      :id      => c.id,
-                                      :capture => en_flg) # grab name, id, and capture setting
+      @edit[:current][:clusters].push(:id => c.id, :capture => en_flg)
       @edit[:current][c.id] = []
       hosts.each do |host|
         host_capture = enabled_host_ids.include?(host.id.to_i)
-        @edit[:current][c.id].push(:name    => host.name,
-                                   :id      => host.id,
-                                   :capture => host_capture)
+        @edit[:current][c.id].push(:id => host.id, :capture => host_capture)
       end
       flg = true
       count = 0
@@ -118,30 +114,18 @@ module OpsController::Settings::CapAndU
     ExtManagementSystem.in_my_region.each do |e|
       all = e.non_clustered_hosts
       all.each do |h|
-        @edit[:current][:non_cl_hosts] << {:name    => h.name,
-                                           :id      => h.id,
-                                           :capture => h.perf_capture_enabled?}
+        @edit[:current][:non_cl_hosts] << {:id => h.id, :capture => h.perf_capture_enabled?}
       end
     end
     if @edit[:current][:clusters].present?
-      @cluster_tree = TreeBuilderClusters.new(:cluster_tree, @sb, true)
+      @cluster_tree = TreeBuilderClusters.new(:cluster_tree, @sb, true, :root => @cl_hash)
     end
     @edit[:current][:storages] = {}
-    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :store_type, :location).sort_by { |s| s.name.downcase }.each do |s|
-      @edit[:current][:storages][s.id] = {
-        :name       => s.name,
-        :id         => s.id,
-        :capture    => s.perf_capture_enabled?,
-        :st_rec     => s,
-        :store_type => s.store_type,
-        :location   => s.location
-      } # fields we need
+    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :location).sort_by { |s| s.name.downcase }.each do |s|
+      @edit[:current][:storages][s.id] = {:id => s.id, :capture => s.perf_capture_enabled?}
     end
     if @edit[:current][:storages].present?
-      @datastore_tree = TreeBuilderDatastores.new(:datastore_tree,
-                                                  @sb,
-                                                  true,
-                                                  :root => @edit[:current][:storages])
+      @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, @sb, true, :root => @edit[:current][:storages])
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
