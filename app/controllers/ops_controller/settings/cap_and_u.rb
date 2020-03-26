@@ -156,23 +156,14 @@ module OpsController::Settings::CapAndU
     end
 
     if params[:tree_name] == 'datastore_tree'
-      datastore_tree_settings(model, id)
+      @edit[:new][:storages][id.to_i][:capture] = params[:check] == "true"
     elsif params[:tree_name] == 'cluster_tree'
       cluster_tree_settings(model, id)
     end
   end
 
   def cluster_tree_settings(model, id)
-    if params[:check_all] # to handle check/uncheck cluster all checkbox
-      @edit[:new][:clusters].each do |c| # Check each clustered host
-        @edit[:new][c[:id]].each do |h|
-          h[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
-        end
-      end
-      @edit[:new][:non_cl_hosts].each do |c|
-        c[:capture] = params[:check_all] == 'true'
-      end
-    elsif id == "NonCluster" # Clicked on all non-clustered hosts
+    if id == "NonCluster" # Clicked on all non-clustered hosts
       @edit[:new][:non_cl_hosts].each { |c| c[:capture] = params[:check] == "true" }
     elsif model == "EmsCluster" # Clicked on a cluster
       @edit[:new][id.to_i].each { |h| h[:capture] = params[:check] == "true" }
@@ -189,16 +180,6 @@ module OpsController::Settings::CapAndU
           found
         end
       end
-    end
-  end
-
-  def datastore_tree_settings(_model, id)
-    if params[:check_all] # to handle check/uncheck storage all checkbox
-      @edit[:new][:storages].each do |_, s| # Check each storage
-        s[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
-      end
-    else
-      @edit[:new][:storages][id.to_i][:capture] = params[:check] == "true"
     end
   end
 end

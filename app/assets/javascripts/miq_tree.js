@@ -271,13 +271,6 @@ function miqOnCheckUserFilters(node, tree_name) {
   return true;
 }
 
-// OnCheck handler for Check All checkbox on C&U collection trees
-function miqCheckCUAll(cb, treename) {
-  cb.checked ? miqTreeObject(treename).checkAll({silent: true}) : miqTreeObject(treename).uncheckAll({silent: true});
-  var url = ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&tree_name=' + encodeURIComponent(treename);
-  miqJqueryRequest(url);
-}
-
 // OnCheck handler for the C&U collection trees
 function miqOnCheckCUFilters(node, tree_name) {
   var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + encodeURIComponent(node.state.checked) + '&tree_name=' + encodeURIComponent(tree_name);
