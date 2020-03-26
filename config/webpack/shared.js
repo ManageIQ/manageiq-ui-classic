@@ -55,6 +55,7 @@ const notShims = (module) => (!SplitChunksPlugin.checkTest(/shims/, module));
 
 let plugins = [
   new webpack.DefinePlugin({
+    // used only by v2v code now
     'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
   }),
 
