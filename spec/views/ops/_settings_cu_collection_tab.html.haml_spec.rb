@@ -6,6 +6,8 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
   let(:host_2) { FactoryBot.create(:host, :ems_cluster => cluster) }
   let(:host_3) { FactoryBot.create(:host, :ext_management_system => ems) }
 
+  let(:datastore) { FactoryBot.create(:storage, :name => 'Name', :hosts => [host_1]) }
+
   before do
     assign(:sb, :active_tab => "settings_cu_collection")
 
@@ -14,14 +16,16 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
     allow(host_2).to receive(:perf_capture_enabled?).and_return(false)
     allow(host_3).to receive(:perf_capture_enabled?).and_return(true)
 
-
     @host = FactoryBot.create(:host, :name => 'Host Name')
-    FactoryBot.create(:storage, :name => 'Name', :id => 1, :hosts => [@host])
-    @datastore = [{:id       => 1,
-                   :name     => 'Datastore',
-                   :location => 'Location',
-                   :capture  => false}]
-    @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, {}, true, :root => @datastore)
+    datastores = {
+      datastore.id => {
+        :name     => 'Datastore',
+        :location => 'Location',
+        :st_rec   => datastore,
+        :capture  => false,
+      }
+    }
+    @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, {}, true, :root => datastores)
     @cluster_tree = TreeBuilderClusters.new(:cluster_tree, {}, true)
   end
 

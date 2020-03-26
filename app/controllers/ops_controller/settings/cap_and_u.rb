@@ -28,12 +28,8 @@ module OpsController::Settings::CapAndU
       end
 
       unless @edit[:new][:storages] == @edit[:current][:storages] # Check for storage changes
-        @st_recs = Storage.all.each_with_object({}) { |st, h| h[st.id] = st }
-        @edit[:new][:storages].each_with_index do |s, si|
-          if s[:capture] != @edit[:current][:storages][si][:capture]
-            ds = @st_recs[s[:id]]
-            ds.perf_capture_enabled = s[:capture] if ds
-          end
+        @edit[:new][:storages].each do |_, s|
+          s[:st_rec].perf_capture_enabled = s[:capture]
         end
       end
 
@@ -130,16 +126,16 @@ module OpsController::Settings::CapAndU
     if @edit[:current][:clusters].present?
       @cluster_tree = TreeBuilderClusters.new(:cluster_tree, @sb, true)
     end
-    @edit[:current][:storages] = []
-    @st_recs = {}
-    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :store_type, :location)
-           .sort_by { |s| s.name.downcase }.each do |s|
-      @st_recs[s.id] = s
-      @edit[:current][:storages].push(:name       => s.name,
-                                      :id         => s.id,
-                                      :capture    => s.perf_capture_enabled?,
-                                      :store_type => s.store_type,
-                                      :location   => s.location) # fields we need
+    @edit[:current][:storages] = {}
+    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :store_type, :location).sort_by { |s| s.name.downcase }.each do |s|
+      @edit[:current][:storages][s.id] = {
+        :name       => s.name,
+        :id         => s.id,
+        :capture    => s.perf_capture_enabled?,
+        :st_rec     => s,
+        :store_type => s.store_type,
+        :location   => s.location
+      } # fields we need
     end
     if @edit[:current][:storages].present?
       @datastore_tree = TreeBuilderDatastores.new(:datastore_tree,
@@ -157,12 +153,12 @@ module OpsController::Settings::CapAndU
 
     if params[:id]
       model, id, _ = TreeBuilder.extract_node_model_and_id(params[:id])
+    end
 
-      if params[:tree_name] == 'datastore_tree'
-        datastore_tree_settings
-      elsif params[:tree_name] == 'cluster_tree'
-        cluster_tree_settings(model, id)
-      end
+    if params[:tree_name] == 'datastore_tree'
+      datastore_tree_settings(model, id)
+    elsif params[:tree_name] == 'cluster_tree'
+      cluster_tree_settings(model, id)
     end
   end
 
@@ -196,13 +192,13 @@ module OpsController::Settings::CapAndU
     end
   end
 
-  def datastore_tree_settings
+  def datastore_tree_settings(_model, id)
     if params[:check_all] # to handle check/uncheck storage all checkbox
-      @edit[:new][:storages].each do |s| # Check each storage
+      @edit[:new][:storages].each do |_, s| # Check each storage
         s[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
       end
     else
-      @edit[:new][:storages].find { |x| x[:id].to_s == params[:id].split('-').last }[:capture] = params[:check] == "true"
+      @edit[:new][:storages][id.to_i][:capture] = params[:check] == "true"
     end
   end
 end
