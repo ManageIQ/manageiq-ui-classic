@@ -1122,8 +1122,6 @@ module OpsController::OpsRbac
         @edit[:use_filter_expression] = true
       end
     end
-
-    params[:tree_typ] ? params[:tree_typ] + "_tree" : nil
   end
 
   # Set form variables for group add/edit

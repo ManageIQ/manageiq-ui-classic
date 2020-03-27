@@ -262,15 +262,6 @@ function miqOnClickDiagnostics(id) {
   }
 }
 
-// OnCheck handler for the belongsto tagging trees on the user edit screen
-function miqOnCheckUserFilters(node, tree_name) {
-  var tree_typ = tree_name.split('_')[0];
-  var checked = Number(node.state.checked);
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + checked + '&tree_typ=' + encodeURIComponent(tree_typ);
-  miqJqueryRequest(url);
-  return true;
-}
-
 function miqMenuChangeRow(action, elem) {
   var grid = $('#folder_grid .panel-group');
   var selected = grid.find('.panel-heading.active').parent();
@@ -377,7 +368,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckSections',
-    'miqOnCheckUserFilters',
     'miqOnClickAutomate',
     'miqOnClickAutomateCatalog',
     'miqOnClickDiagnostics',
