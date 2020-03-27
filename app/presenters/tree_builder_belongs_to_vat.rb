@@ -8,7 +8,11 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
     else
       node.hide_checkbox = true
     end
-    node.checked = @selected_nodes&.include?("EmsFolder_#{object[:id]}")
+
+    node.checked = @selected_nodes&.one? do |s|
+      prefix, id = s.split('_') # The prefix can be any subclass of EmsFolder
+      prefix.safe_constantize < EmsFolder && id.to_i == object[:id].to_i
+    end
   end
 
   def x_get_tree_datacenter_kids(parent, count_only)
