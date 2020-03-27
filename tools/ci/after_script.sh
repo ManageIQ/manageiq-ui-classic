@@ -1,3 +1,5 @@
+# this is *not* used in cross-repo
+
 (cd spec/manageiq ; git log -1 --oneline)
 
 if [ "$TEST_SUITE" = "spec:compile" ]; then
