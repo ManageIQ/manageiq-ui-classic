@@ -221,7 +221,7 @@ class OrchestrationStackController < ApplicationController
         :description => params[:templateDescription],
         :type        => original_template.type,
         :content     => params[:templateContent],
-        :draft       => params[:templateDraft] == "true",
+        :draft       => params[:templateDraft] == "true"
       )
       begin
         ot.save_as_orderable!
