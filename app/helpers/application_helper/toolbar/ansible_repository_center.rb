@@ -39,9 +39,15 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Repository from Inventory'),
           t,
-          :klass     => ApplicationHelper::Button::EmbeddedAnsible,
-          :url_parms => "&refresh=y",
-          :confirm   => N_("Warning: The selected Repository will be permanently removed!")),
+          :klass => ApplicationHelper::Button::EmbeddedAnsible,
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Repository'),
+                                         :modal_text     => N_('Are you sure you want to delete the following repository?'),
+                                         :api_url        => 'configuration_script_sources',
+                                         :async_delete   => true,
+                                         :redirect_url   => '/ansible_repository/show_list',
+                                         :component_name => 'RemoveGenericItemModal'}}),
       ]
     ),
   ])
