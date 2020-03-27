@@ -1,6 +1,3 @@
-:ui:
-  :custom_menu:
-  :custom_button_count: 3
 :docs:
   :ansible_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#adding-an-ansible-tower-provider
   :cloud_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#cloud_providers
@@ -9,3 +6,6 @@
   :infra_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#infrastructure_providers
   :network_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#network_providers
   :physical_infra_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#infrastructure_providers
+:ui:
+  :custom_button_count: 3
+  :custom_menu:
