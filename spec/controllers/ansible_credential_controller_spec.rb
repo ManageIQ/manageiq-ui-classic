@@ -55,15 +55,6 @@ describe AnsibleCredentialController do
       end
     end
 
-    context 'deleting one or more ansible credentials from inventory' do
-      let(:params) { {:pressed => "embedded_automation_manager_credentials_delete"} }
-
-      it 'calls delete_credentials method' do
-        expect(controller).to receive(:delete_credentials)
-        controller.send(:button)
-      end
-    end
-
     context 'tagging one or more ansible credentials' do
       let(:params) { {:pressed => "ansible_credential_tag"} }
 
