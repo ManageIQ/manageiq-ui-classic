@@ -31,8 +31,6 @@ class AnsibleCredentialController < ApplicationController
       javascript_redirect(:action => 'new')
     when 'embedded_automation_manager_credentials_edit'
       javascript_redirect(:action => 'edit', :id => params[:miq_grid_checks])
-    when 'embedded_automation_manager_credentials_delete'
-      delete_credentials
     when 'ansible_credential_tag'
       tag(self.class.model)
     when "ansible_repository_tag" # repositories from nested list
@@ -68,19 +66,6 @@ class AnsibleCredentialController < ApplicationController
     [%i[properties relationships options smart_management]]
   end
   helper_method :textual_group_list
-
-  def delete_credentials
-    checked = find_checked_items
-    checked[0] = params[:id] if checked.blank? && params[:id]
-    ManageIQ::Providers::EmbeddedAutomationManager::Authentication.where(:id => checked).each do |auth|
-      auth.delete_in_provider_queue
-      add_flash(_("Deletion of Credential \"%{name}\" was successfully initiated.") % {:name => auth.name})
-    rescue StandardError => ex
-      add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name => auth.name, :details => ex}, :error)
-    end
-    session[:flash_msgs] = @flash_array
-    javascript_redirect(:action => 'show_list')
-  end
 
   def breadcrumbs_options
     {

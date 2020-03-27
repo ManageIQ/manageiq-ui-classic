@@ -27,6 +27,7 @@ import OrcherstrationTemplateForm from '../components/orchestration-template/orc
 import PxeServersForm from '../components/pxe-servers-form/pxe-server-form';
 import { Quadicon } from '@manageiq/react-ui-components/dist/quadicon';
 import RemoveCatalogItemModal from '../components/remove-catalog-item-modal';
+import RemoveGenericItemModal from '../components/remove-generic-item-modal';
 import ReportDataTable from '../components/report-data-table';
 import ServiceDialogFromForm from '../components/service-dialog-from-form/service-dialog-from';
 import ServiceForm from '../components/service-form';
@@ -75,6 +76,7 @@ ManageIQ.component.addReact('OrcherstrationTemplateForm', OrcherstrationTemplate
 ManageIQ.component.addReact('PxeServersForm', PxeServersForm);
 ManageIQ.component.addReact('Quadicon', Quadicon);
 ManageIQ.component.addReact('RemoveCatalogItemModal', RemoveCatalogItemModal);
+ManageIQ.component.addReact('RemoveGenericItemModal', RemoveGenericItemModal);
 ManageIQ.component.addReact('ReportDataTable', ReportDataTable);
 ManageIQ.component.addReact('navbar.RightSection', navbar.RightSection);
 ManageIQ.component.addReact('ServiceDialogFromForm', ServiceDialogFromForm);

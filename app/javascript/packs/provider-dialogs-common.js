@@ -49,7 +49,8 @@ ManageIQ.angular.app.component('providerDialogUser', {
 function reactModal(buttonData) {
   const props = {
     recordId: ManageIQ.record.recordId,
-    gridChecks: ManageIQ.gridChecks
+    gridChecks: ManageIQ.gridChecks,
+    modalData: buttonData
   };
 
   const Component = ManageIQ.component.getReact(buttonData.component_name);
