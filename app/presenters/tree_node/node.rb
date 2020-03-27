@@ -1,7 +1,7 @@
 module TreeNode
   class Node
     attr_reader :nodes, :tree
-    attr_writer :icon, :image
+    attr_writer :icon, :image, :text
     attr_accessor :checkable, :checked, :color, :expanded, :hide_checkbox, :icon_background, :lazy, :klass, :selectable, :selected, :tooltip
 
     def initialize(object, parent_id, tree)

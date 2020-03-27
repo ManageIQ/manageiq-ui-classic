@@ -28,12 +28,9 @@ module OpsController::Settings::CapAndU
       end
 
       unless @edit[:new][:storages] == @edit[:current][:storages] # Check for storage changes
-        @st_recs = Storage.all.each_with_object({}) { |st, h| h[st.id] = st }
-        @edit[:new][:storages].each_with_index do |s, si|
-          if s[:capture] != @edit[:current][:storages][si][:capture]
-            ds = @st_recs[s[:id]]
-            ds.perf_capture_enabled = s[:capture] if ds
-          end
+        @edit[:new][:storages].each do |_, s|
+          storage = Storage.find(s[:id])
+          storage.perf_capture_enabled = s[:capture]
         end
       end
 
@@ -94,16 +91,11 @@ module OpsController::Settings::CapAndU
       hosts = (cl_hash[:ho_enabled] + cl_hash[:ho_disabled]).sort_by { |ho| ho.name.downcase }
       cl_enabled = enabled_host_ids.length == hosts.length
       en_flg = cl_enabled && !enabled.empty?
-      cname = c.name
-      @edit[:current][:clusters].push(:name    => cname,
-                                      :id      => c.id,
-                                      :capture => en_flg) # grab name, id, and capture setting
+      @edit[:current][:clusters].push(:id => c.id, :capture => en_flg)
       @edit[:current][c.id] = []
       hosts.each do |host|
         host_capture = enabled_host_ids.include?(host.id.to_i)
-        @edit[:current][c.id].push(:name    => host.name,
-                                   :id      => host.id,
-                                   :capture => host_capture)
+        @edit[:current][c.id].push(:id => host.id, :capture => host_capture)
       end
       flg = true
       count = 0
@@ -122,115 +114,56 @@ module OpsController::Settings::CapAndU
     ExtManagementSystem.in_my_region.each do |e|
       all = e.non_clustered_hosts
       all.each do |h|
-        @edit[:current][:non_cl_hosts] << {:name    => h.name,
-                                           :id      => h.id,
-                                           :capture => h.perf_capture_enabled?}
+        @edit[:current][:non_cl_hosts] << {:id => h.id, :capture => h.perf_capture_enabled?}
       end
     end
     if @edit[:current][:clusters].present?
-      @cluster_tree = TreeBuilderClusters.new(:cluster_tree,
-                                              @sb,
-                                              true,
-                                              :root => @edit[:current])
+      @cluster_tree = TreeBuilderClusters.new(:cluster_tree, @sb, true, :root => @cl_hash)
     end
-    @edit[:current][:storages] = []
-    @st_recs = {}
-    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :store_type, :location)
-           .sort_by { |s| s.name.downcase }.each do |s|
-      @st_recs[s.id] = s
-      @edit[:current][:storages].push(:name       => s.name,
-                                      :id         => s.id,
-                                      :capture    => s.perf_capture_enabled?,
-                                      :store_type => s.store_type,
-                                      :location   => s.location) # fields we need
+    @edit[:current][:storages] = {}
+    Storage.in_my_region.includes(:taggings, :tags, :hosts).select(:id, :name, :location).sort_by { |s| s.name.downcase }.each do |s|
+      @edit[:current][:storages][s.id] = {:id => s.id, :capture => s.perf_capture_enabled?}
     end
     if @edit[:current][:storages].present?
-      @datastore_tree = TreeBuilderDatastores.new(:datastore_tree,
-                                                  @sb,
-                                                  true,
-                                                  :root => @edit[:current][:storages])
+      @datastore_tree = TreeBuilderDatastores.new(:datastore_tree, @sb, true, :root => @edit[:current][:storages])
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
   end
 
   def cu_collection_get_form_vars
-    if params[:id]
-      nodetype = params[:id].split('_')
-      node_type = if params[:tree_name] == 'cluster_tree'
-                    if nodetype[0] == 'xx-NonCluster'
-                      nodetype.size == 2 ? ['NonCluster', nodetype[1]] : ['NonCluster']
-                    else
-                      nodetype.size == 2 ? ["Host", nodetype[1]] : ["Cluster", nodetype[0].split('-')[1]]
-                    end
-                  end
-    end
     @edit[:new][:all_clusters] = params[:all_clusters] == 'true' if params[:all_clusters]
     @edit[:new][:all_storages] = params[:all_storages] == 'true' if params[:all_storages]
-    if params[:tree_name] == 'datastore_tree'
-      datastore_tree_settings
-    elsif params[:tree_name] == 'cluster_tree'
-      cluster_tree_settings(node_type)
-    end
-  end
 
-  def cluster_tree_settings(node_type)
-    if params[:check_all] # to handle check/uncheck cluster all checkbox
-      @edit[:new][:clusters].each do |c| # Check each clustered host
-        c[:capture] = params[:check_all] == "true" # if cluster Set C&U flag for all hosts under it as well
-        @edit[:new][c[:id]].each do |h|
-          h[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
-        end
-      end
-      @edit[:new][:non_cl_hosts].each do |c|
-        c[:capture] = params[:check_all] == 'true'
-      end
-    else
-      if node_type[0] == "NonCluster"
-        if node_type.size == 1
-          @edit[:new][:non_cl_hosts].each do |c|
-            c[:capture] = params[:check] == "true"
-          end
-        else
-          @edit[:new][:non_cl_hosts].find { |x| x[:id] == node_type[1].to_i }[:capture] = params[:check] == "true"
-        end
-      end
-      @edit[:new][:clusters].each do |c| # Check each cluster
-        if node_type[0] == "Cluster" && node_type[1].to_s == c[:id].to_s
-          c[:capture] = params[:check] == "true" # if cluster Set C&U flag for all hosts under it as well
-          @edit[:new][c[:id]].each do |h|
-            h[:capture] = params[:check] == "true" # Set C&U flag depending on if checkbox parm is present
-          end
-        elsif node_type[0] == "Host"
-          @edit[:new][c[:id]].each do |h|
-            if node_type[1].to_i == h[:id].to_i
-              h[:capture] = params[:check] == "true" # Set C&U flag depending on if checkbox parm is present
-              c[:capture] = params[:check] == "true"
-            end
-          end
-        end
-        next unless node_type[0] == "Host"
+    if params[:id]
+      model, id, _ = TreeBuilder.extract_node_model_and_id(params[:id])
 
-        flg = true
-        count = 0
-        @edit[:new][c[:id]].each do |h|
-          unless h[:capture]
-            count += 1 # checking if all hosts are unchecked then cluster capture will be false else undefined
-            flg = count == @edit[:new][c[:id]].length ? false : "undefined"
-          end
-          c[:capture] = flg
-        end
+      if model == 'Storage'
+        @edit[:new][:storages][id.to_i][:capture] = params[:check] == "1"
+      else
+        cluster_tree_settings(model, id)
       end
     end
   end
 
-  def datastore_tree_settings
-    if params[:check_all] # to handle check/uncheck storage all checkbox
-      @edit[:new][:storages].each do |s| # Check each storage
-        s[:capture] = params[:check_all] == "true" # Set C&U flag depending on if checkbox parm is present
+  def cluster_tree_settings(model, id)
+    if id == "NonCluster" # Clicked on all non-clustered hosts
+      @edit[:new][:non_cl_hosts].each { |c| c[:capture] = params[:check] == "1" }
+    elsif model == "EmsCluster" # Clicked on a cluster
+      @edit[:new][id.to_i].each { |h| h[:capture] = params[:check] == "1" }
+    elsif model == "Host" # Clicked on a host
+      nc_host = @edit[:new][:non_cl_hosts].find { |x| x[:id] == id.to_i }
+      # The host is among the non-clustered ones
+      return nc_host[:capture] = params[:check] == "1" if nc_host
+
+      # The host is under a cluster, find it and change it
+      @edit[:new][:clusters].find do |cl|
+        @edit[:new][cl[:id]].find do |h|
+          found = h[:id] == id.to_i
+          h[:capture] = params[:check] == "1" if found
+          found
+        end
       end
-    else
-      @edit[:new][:storages].find { |x| x[:id].to_s == params[:id].split('-').last }[:capture] = params[:check] == "true"
     end
   end
 end
