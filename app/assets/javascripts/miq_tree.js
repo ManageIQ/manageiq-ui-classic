@@ -270,15 +270,6 @@ function miqOnClickDiagnostics(id) {
   }
 }
 
-// OnCheck handler for the belongsto tagging trees on the user edit screen
-function miqOnCheckUserFilters(node, tree_name) {
-  var tree_typ = tree_name.split('_')[0];
-  var checked = Number(node.state.checked);
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + checked + '&tree_typ=' + encodeURIComponent(tree_typ);
-  miqJqueryRequest(url);
-  return true;
-}
-
 // OnCheck handler for Check All checkbox on C&U collection trees
 function miqCheckCUAll(cb, treename) {
   cb.checked ? miqTreeObject(treename).checkAll({silent: true}) : miqTreeObject(treename).uncheckAll({silent: true});
@@ -400,7 +391,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckSections',
-    'miqOnCheckUserFilters',
     'miqOnClickAutomate',
     'miqOnClickAutomateCatalog',
     'miqOnClickDiagnostics',

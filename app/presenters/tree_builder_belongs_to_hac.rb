@@ -27,7 +27,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     {
       :full_ids   => true,
       :checkboxes => true,
-      :oncheck    => @edit ? "miqOnCheckUserFilters" : nil,
+      :oncheck    => @edit ? "miqOnCheckGeneric" : nil,
       :check_url  => "/ops/rbac_group_field_changed/#{group_id}___"
     }
   end
