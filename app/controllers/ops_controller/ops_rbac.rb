@@ -1098,8 +1098,8 @@ module OpsController::OpsRbac
       else # Belongsto tag checked
         class_prefix, id = parse_nodetype_and_id(params[:id])
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
-        # If ExtManagementSystem/Host is returned get specific class
-        if %w[ExtManagementSystem Host].include?(klass)
+        # If ExtManagementSystem/Host/EmsFolder is returned get specific class
+        if %w[ExtManagementSystem Host EmsFolder].include?(klass)
           klass = find_record_with_rbac(klass.constantize, id).class.to_s
         end
         if params[:check] == "0" #   unchecked
