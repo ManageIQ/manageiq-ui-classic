@@ -1,7 +1,7 @@
 :ui:
   :custom_menu:
   :custom_button_count: 3
-docs:
+:docs:
   :ansible_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#adding-an-ansible-tower-provider
   :cloud_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#cloud_providers
   :configuration_provider: http://manageiq.org/docs/reference/latest/doc-Managing_Providers/miq/#configuration_management_providers
