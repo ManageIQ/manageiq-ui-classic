@@ -53,11 +53,17 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           t = N_('Remove selected Repositories from Inventory'),
           t,
           :klass        => ApplicationHelper::Button::EmbeddedAnsible,
-          :url_parms    => "unused_div",
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+",
-          :confirm      => N_("Warning: The selected Repository will be permanently removed!")),
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Repositories'),
+                                         :modal_text     => N_('Are you sure you want to delete the following repositories?'),
+                                         :api_url        => 'configuration_script_sources',
+                                         :async_delete   => true,
+                                         :redirect_url   => '/ansible_repository/show_list',
+                                         :component_name => 'RemoveGenericItemModal'}}),
       ]
     )
   ])

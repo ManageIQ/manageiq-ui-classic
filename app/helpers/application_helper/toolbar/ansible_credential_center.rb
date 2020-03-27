@@ -19,8 +19,14 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
           t = N_('Remove this Credential from Inventory'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
-          :url_parms => "&refresh=y",
-          :confirm   => N_("Warning: The selected Credential will be permanently removed!")),
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Credential'),
+                                         :modal_text     => N_('Are you sure you want to delete the following credential?'),
+                                         :api_url        => 'authentications',
+                                         :async_delete   => true,
+                                         :redirect_url   => '/ansible_credential/show_list',
+                                         :component_name => 'RemoveGenericItemModal'}}),
       ]
     ),
   ])

@@ -34,7 +34,14 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+",
-          :confirm      => N_("Warning: The selected Credentials will be permanently removed!")),
+          :data         => {'function'      => 'sendDataWithRx',
+                            'function-data' => {:controller     => 'provider_dialogs',
+                                                :modal_title    => N_('Delete Credentials'),
+                                                :modal_text     => N_('Are you sure you want to delete the following credentials?'),
+                                                :api_url        => 'authentications',
+                                                :async_delete   => true,
+                                                :redirect_url   => '/ansible_credential/show_list',
+                                                :component_name => 'RemoveGenericItemModal'}}),
       ]
     )
   ])

@@ -36,8 +36,6 @@ class AnsibleRepositoryController < ApplicationController
       javascript_redirect(:action => 'edit', :id => id)
     when "embedded_configuration_script_source_add"
       javascript_redirect(:action => 'new')
-    when "embedded_configuration_script_source_delete"
-      delete_repositories
     when "ansible_repositories_reload"
       show_list
       render :update do |page|
@@ -64,22 +62,6 @@ class AnsibleRepositoryController < ApplicationController
     else
       super
     end
-  end
-
-  def delete_repositories
-    assert_privileges('embedded_configuration_script_source_delete')
-    checked = find_checked_items
-    checked[0] = params[:id] if checked.blank? && params[:id]
-    AnsibleRepositoryController.model.where(:id => checked).each do |repo|
-      repo.delete_in_provider_queue
-      add_flash(_("Delete of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
-    rescue StandardError => ex
-      add_flash(_("Unable to delete Repository \"%{name}\": %{details}") % {:name    => repo.name,
-                                                                            :details => ex},
-                :error)
-    end
-    session[:flash_msgs] = @flash_array
-    javascript_redirect(:action => 'show_list')
   end
 
   def edit

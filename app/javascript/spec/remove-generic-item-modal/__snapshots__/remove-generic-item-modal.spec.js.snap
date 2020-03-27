@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RemoveGenericItemModal should correctly render modal for multiple items 1`] = `
+<ModalBody
+  bsClass="modal-body"
+  className="warning-modal-body"
+  componentClass="div"
+>
+  <div>
+    <h4>
+      TEXT
+    </h4>
+    <ul>
+      <li
+        key="123"
+      >
+        <h4>
+          <strong>
+            name123
+          </strong>
+        </h4>
+      </li>
+      <li
+        key="456"
+      >
+        <h4>
+          <strong>
+            name456
+          </strong>
+        </h4>
+      </li>
+    </ul>
+  </div>
+</ModalBody>
+`;
+
+exports[`RemoveGenericItemModal should correctly render modal for single item 1`] = `
+<ModalBody
+  bsClass="modal-body"
+  className="warning-modal-body"
+  componentClass="div"
+>
+  <div>
+    <h4>
+      TEXT
+    </h4>
+    <ul>
+      <li
+        key="123"
+      >
+        <h4>
+          <strong>
+            name123
+          </strong>
+        </h4>
+      </li>
+    </ul>
+  </div>
+</ModalBody>
+`;

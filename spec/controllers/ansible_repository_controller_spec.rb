@@ -75,15 +75,6 @@ describe AnsibleRepositoryController do
       end
     end
 
-    context 'deleting one or more repositories from inventory' do
-      let(:params) { {:pressed => "embedded_configuration_script_source_delete"} }
-
-      it 'calls delete_repositories method' do
-        expect(controller).to receive(:delete_repositories)
-        controller.send(:button)
-      end
-    end
-
     context 'refreshing selected ansible repositories' do
       let(:params) { {:pressed => "ansible_repositories_reload"} }
 
