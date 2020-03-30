@@ -154,6 +154,29 @@ module Mixins
 
     private
 
+    def provision
+      assert_privileges("configured_system_provision")
+      provisioning_ids = find_records_with_rbac(ConfiguredSystem, checked_or_params).ids
+
+      unless ConfiguredSystem.provisionable?(provisioning_ids)
+        add_flash(_("Provisioning is not supported for at least one of the selected systems"), :error)
+        replace_right_cell if explorer_controller?
+        return
+      end
+
+      if ConfiguredSystem.common_configuration_profiles_for_selected_configured_systems(provisioning_ids)
+        javascript_redirect(:controller     => "miq_request",
+                            :action         => "prov_edit",
+                            :prov_id        => provisioning_ids,
+                            :org_controller => "configured_system",
+                            :escape         => false)
+      else
+        render_flash(n_("No common configuration profiles available for the selected configured system",
+                        "No common configuration profiles available for the selected configured systems",
+                        provisioning_ids.size), :error)
+      end
+    end
+
     def sync_form_to_instance
       @provider.name       = params[:name]
       @provider.url        = params[:url]

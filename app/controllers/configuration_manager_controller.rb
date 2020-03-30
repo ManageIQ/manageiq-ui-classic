@@ -26,16 +26,16 @@ class ConfigurationManagerController < ApplicationController
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w[configuration_profiles configured_systems].include?(@display) # Were we displaying nested list
+    params[:display] = @display if %w[configured_systems].include?(@display) # Were we displaying nested list
 
     # Handle Toolbar Policy Tag Button
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     model = self.class.model
     tag(model) if params[:pressed] == "#{params[:controller]}_tag"
 
-    if [ConfiguredSystem].include?(model)
-      assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
-      check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
+    if params[:pressed].starts_with?("configured_system_") # Handle buttons from sub-items screen
+      tag(ConfiguredSystem) if params[:pressed] == "configured_system_tag"
+      provision if params[:pressed] == "configured_system_provision"
     end
 
     case params[:pressed]
