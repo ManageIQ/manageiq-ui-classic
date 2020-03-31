@@ -163,10 +163,9 @@
                                   "placeholder" => _("Enter Size"),
                                   "validate-multiple" => "1",
                                   :miqmin             => "{{ (disk.orgHdUnit === 'GB') ? (1024 * disk.orgHdSize + 1) : (1 * disk.orgHdSize + 1) }}",
-                                  :miqmax             => "2097152",
                                   :memtype            => "{{disk.hdUnit}}"}
               %span{"style" => "color:red", "ng-show" => "trForm.dvcResize.$invalid"}
-                = _("Disk size between {{1*disk.orgHdSize+1}} {{disk.orgHdUnit}} and 2TB required")
+                = _("Disk size has to be greater than {{1*disk.orgHdSize+1}} {{disk.orgHdUnit}}")
             %td{"ng-if" => "disk.add_remove != 'resizing'"}
               {{disk.hdUnit}}
             %td{"ng-if" => "disk.add_remove == 'resizing'"}
@@ -268,10 +267,9 @@
                                   "placeholder" => _("Enter New Size"),
                                   "validate-multiple" => "1",
                                   :miqmin             => "1",
-                                  :miqmax             => "2097152",
                                   :memtype            => "{{vm.reconfigureModel.hdUnit}}"}
               %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
-                = _("Disk size between 1 MB and 2TB required")
+                = _("Disk size has to be greater than 1 MB")
             %td
               = select_tag('hdUnit',
                        options_for_select(%w(MB GB)),
