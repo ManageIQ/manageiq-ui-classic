@@ -58,7 +58,7 @@ class RemoveCatalogItemModal extends React.Component {
 
   componentDidMount() {
     let apiPromises = [];
-    const catalogItemsIds = this.props.recordId ? [this.props.recordId] : this.props.gridChecks;
+    const catalogItemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
 
     // Load modal data from API
     catalogItemsIds.forEach(item => apiPromises.push(API.get(`/api/service_templates/${item}?attributes=services`)));
