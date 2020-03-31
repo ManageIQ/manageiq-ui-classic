@@ -1,5 +1,5 @@
-- if @lastaction == "show_list" && !session[:menu_click] && display_adv_search? && !@in_a_form
-  = render :partial => 'layouts/quick_search'
+- if @lastaction == 'show_list' && !session[:menu_click] && !@in_a_form
+  = render :partial => 'layouts/quick_search' if display_adv_search?
   #searchbox
     = form_tag({:action => 'show_list'},
                :class  => "search-pf has-button form-group pull-right",
@@ -23,7 +23,7 @@
       .form-group
         %button.btn.btn-default{:type => "submit"}
           %span.fa.fa-search
-        - if @lastaction == "show_list" && !session[:menu_click] && display_adv_search? && !@in_a_form
+        - if display_adv_search?
           %button{"type"          => "button",
                   :class          => "btn btn-default",
                   "data-toggle"   => "modal",
