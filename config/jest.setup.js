@@ -8,6 +8,7 @@ window.Rx = require('rxjs');
 window.$ = require('jquery');
 window.__ = (x) => x;
 window.n__ = (x) => x;
+window._ = require('lodash');
 
 require('whatwg-fetch');
 
