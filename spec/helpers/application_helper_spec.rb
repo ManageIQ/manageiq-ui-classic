@@ -962,7 +962,7 @@ describe ApplicationHelper do
     subject { helper.display_adv_search? }
 
     context 'Advanced search is visible for list views' do
-      %w(cloud_volume_snapshot cloud_volume_backup configuration_manager).each do |layout|
+      %w[cloud_volume_snapshot cloud_volume_backup configuration_manager].each do |layout|
         let(:layout) { layout }
         it 'returns true' do
           expect(subject).to be(true)

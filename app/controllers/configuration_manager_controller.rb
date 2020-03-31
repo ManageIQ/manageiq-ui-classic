@@ -69,7 +69,7 @@ class ConfigurationManagerController < ApplicationController
 
   private
 
-  def self.model_to_name(provmodel)
+  def self.model_to_name(_provmodel)
     Dictionary.gettext('configuration_manager', :type => :ui_title, :translate => false)
   end
 

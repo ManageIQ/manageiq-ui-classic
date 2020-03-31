@@ -2663,7 +2663,7 @@ Rails.application.routes.draw do
     },
 
     :configuration_manager  => {
-      :get  => %w(
+      :get  => %w[
         button
         download_data
         download_summary_pdf
@@ -2673,8 +2673,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         authentication_validate
         button
         change_tab
@@ -2691,37 +2691,37 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         exp_post +
         save_post
     },
 
     :configuration_profile  => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         quick_search
         reload
         show
         show_list
-      )
+      ]
     },
 
     :configured_system  => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         new
         provision
@@ -2733,52 +2733,11 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         dialog_runner_post +
         exp_post +
         save_post
-    },
-
-    :provider_foreman         => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        explorer
-        form_fields
-        show
-        show_list
-        tagging_edit
-      ),
-      :post => %w(
-        accordion_select
-        authentication_validate
-        button
-        change_tab
-        delete
-        edit
-        explorer
-        form_field_changed
-        new
-        provision
-        quick_search
-        refresh
-        reload
-        show
-        show_list
-        tagging
-        tagging_edit
-        tag_edit_form_field_changed
-        tree_autoload
-        tree_select
-        cs_form_field_changed
-        users
-        wait_for_task
-        x_button
-      ) +
-               adv_search_post +
-               exp_post +
-               x_post
     },
 
     :pxe                      => {

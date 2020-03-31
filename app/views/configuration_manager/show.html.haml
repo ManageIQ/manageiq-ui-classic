@@ -1,11 +1,11 @@
-- if %w(configuration_profiles configured_systems).include?(@display)
+- if %w[configuration_profiles configured_systems].include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - elsif @showtype == "main"
   = render :partial => "layouts/flash_msg"
   .row
     .col-md-12.col-lg-6
-      = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Properties'), textual_group_properties), @record)
-      = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Relationships'), textual_group_relationships), @record)
+      = react('GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Properties'), textual_group_properties), @record))
+      = react('GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Relationships'), textual_group_relationships), @record))
     .col-md-12.col-lg-6
-      = react 'GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Status'), textual_group_status), @record)
-      = react 'GenericGroupWrapper', expand_generic_group(TextualTags.new(_('Smart Management'), textual_group_tags), @record)
+      = react('GenericGroupWrapper', expand_generic_group(TextualGroup.new(_('Status'), textual_group_status), @record))
+      = react('GenericGroupWrapper', expand_generic_group(TextualTags.new(_('Smart Management'), textual_group_tags), @record))
