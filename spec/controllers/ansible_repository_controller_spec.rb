@@ -31,10 +31,10 @@ describe AnsibleRepositoryController do
     describe "#show_list" do
       subject { get :show_list, :params => {} }
 
-      it "render list of repositories with a toolbar and listnav" do
+      it "render list of repositories with a toolbar and without listnav" do
         expect(ApplicationHelper::Toolbar::AnsibleRepositoriesCenter).to receive(:definition).and_call_original
         is_expected.to render_template(:partial => "layouts/_gtl")
-        is_expected.to render_template(:partial => "layouts/listnav/_show_list")
+        is_expected.not_to render_template(:partial => "layouts/listnav/_show_list")
         is_expected.to have_http_status 200
       end
     end
