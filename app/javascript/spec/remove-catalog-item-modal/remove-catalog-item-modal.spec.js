@@ -81,6 +81,17 @@ describe('RemoveCatalogItemModal', () => {
     });
   });
 
+  it('should correctly render modal for duplicate catalog items', (done) => {
+    fetchMock.getOnce(url1, apiResponse1).getOnce(url2, apiResponse2);
+    const component = shallow(<RemoveCatalogItemModal store={store} gridChecks={[item1, item1]} />).dive();
+
+    setImmediate(() => {
+      component.update();
+      expect(toJson(component)).toMatchSnapshot();
+      done();
+    });
+  });
+
   it ('correctly initializes buttons', (done) => {
     fetchMock.getOnce(url1, apiResponse1);
     const component = mount(<RemoveCatalogItemModal store={store} recordId={item1} />);
