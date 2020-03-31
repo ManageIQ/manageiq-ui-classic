@@ -49,10 +49,8 @@ exports[`Catalog form component should render add variant form 1`] = `
             "component": "sub-form",
             "fields": Array [
               Object {
-                "allToRight": false,
                 "assignFieldProvider": true,
                 "component": "dual-list-select",
-                "leftId": "available_fields",
                 "leftTitle": "Unassigned:",
                 "moveLeftTitle": "Move Selected buttons left",
                 "moveRightTitle": "Move Selected buttons right",
@@ -67,8 +65,8 @@ exports[`Catalog form component should render add variant form 1`] = `
                     "label": "template 10",
                   },
                 ],
-                "rightId": "selected_fields",
                 "rightTitle": "Selected:",
+                "selectedSide": "right",
                 "size": 8,
               },
             ],
@@ -141,10 +139,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
             "component": "sub-form",
             "fields": Array [
               Object {
-                "allToRight": false,
                 "assignFieldProvider": true,
                 "component": "dual-list-select",
-                "leftId": "available_fields",
                 "leftTitle": "Unassigned:",
                 "moveLeftTitle": "Move Selected buttons left",
                 "moveRightTitle": "Move Selected buttons right",
@@ -167,8 +163,8 @@ exports[`Catalog form component should render edit variant form 1`] = `
                     "label": "template 6",
                   },
                 ],
-                "rightId": "selected_fields",
                 "rightTitle": "Selected:",
+                "selectedSide": "right",
                 "size": 8,
               },
             ],
