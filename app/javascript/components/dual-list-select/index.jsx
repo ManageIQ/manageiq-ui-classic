@@ -7,7 +7,7 @@ import {
   Row,
   Col,
 } from 'patternfly-react';
-import { isEqual } from 'lodash';
+import { groupBy, isEqual, map as pluck } from 'lodash';
 import List from './list';
 
 const getOptionsGroup = (value, lastClicked, options) => {
@@ -26,10 +26,10 @@ class DualList extends Component {
     selectedLeftValues: [],
   };
 
-  handleOptionClicked = (event, options, isRight) => {
+  handleOptionClicked = (event, options, side) => {
     const { target: { value } } = event;
-    const selectedKey = isRight ? 'selectedRightValues' : 'selectedLeftValues';
-    const lastKey = isRight ? 'lastRightClicked' : 'lastLeftClicked';
+    const selectedKey = side === 'right' ? 'selectedRightValues' : 'selectedLeftValues';
+    const lastKey = side === 'right' ? 'lastRightClicked' : 'lastLeftClicked';
     if (event.shiftKey && this.state[lastKey]) {
       this.setState(prevState => ({ [selectedKey]: getOptionsGroup(value, prevState[lastKey], options) }));
     } else if (event.ctrlKey && this.state[lastKey]) {
@@ -45,21 +45,61 @@ class DualList extends Component {
     this.setState({ [lastKey]: value });
   };
 
-  handleMoveRight = () => {
-    this.props.input.onChange([...this.props.input.value, ...this.state.selectedRightValues]);
-    this.setState({ selectedRightValues: [] });
+  handleAll = (targetSide) => {
+    const {
+      input: { onChange },
+      options,
+      selectedSide,
+    } = this.props;
+
+    const sourceKey = targetSide === 'left' ? 'selectedRightValues' : 'selectedLeftValues';
+
+    // all or none
+    onChange(selectedSide === targetSide ? pluck(options, 'key') : []);
+
+    this.setState({ [sourceKey]: [] });
+  }
+
+  handleAllLeft = () => {
+    this.handleAll('left');
+  }
+
+  handleAllRight = () => {
+    this.handleAll('right');
+  }
+
+  handleMove = (targetSide) => {
+    const {
+      input: { value, onChange },
+      selectedSide,
+    } = this.props;
+
+    const sourceKey = targetSide === 'left' ? 'selectedRightValues' : 'selectedLeftValues';
+
+    if (targetSide === selectedSide) {
+      // add item to input
+      onChange([...value, ...this.state[sourceKey]]);
+    } else {
+      // remove item from input
+      onChange(value.filter(value => !this.state[sourceKey].includes(value)));
+    }
+
+    this.setState({ [sourceKey]: [] });
   }
 
   handleMoveLeft = () => {
-    this.props.input.onChange(this.props.input.value.filter(value => !this.state.selectedLeftValues.includes(value)));
-    this.setState({ selectedLeftValues: [] });
+    this.handleMove('left');
+  }
+
+  handleMoveRight = () => {
+    this.handleMove('right');
   }
 
   render() {
     const {
       allToLeft,
       allToRight,
-      input: { value, onChange },
+      input: { value },
       leftTitle,
       moveAllLeftTitle,
       moveAllRightTitle,
@@ -68,16 +108,20 @@ class DualList extends Component {
       options,
       rightTitle,
       size,
+      selectedSide,
     } = this.props;
-    const leftValues = options.filter(option => !value.includes(option.key));
-    const rightValues = options.filter(option => value.includes(option.key));
+
+    const groupedValues = groupBy(options, (option) => !!value.includes(option.key));
+    const leftValues = groupedValues[selectedSide === 'left'] || [];
+    const rightValues = groupedValues[selectedSide === 'right'] || [];
+
     return (
       <div className="dual-list">
         <Grid fluid>
           <Row>
             <Col md={5}>
               {leftTitle}
-              <List size={size} optionClick={event => this.handleOptionClicked(event, leftValues, true)} value={leftValues} />
+              <List size={size} optionClick={event => this.handleOptionClicked(event, leftValues, 'left')} value={leftValues} />
             </Col>
             <Col md={2} className="buttons-block">
               <div className="spacer" />
@@ -96,7 +140,7 @@ class DualList extends Component {
                 <Button
                   disabled={leftValues.length === 0}
                   className="btn-block dual-list-button"
-                  onClick={() => this.setState({ selectedRightValues: [] }, () => onChange(options.map(({ key }) => key)))}
+                  onClick={this.handleAllRight}
                   title={moveAllRightTitle}
                   type="button"
                 >
@@ -109,7 +153,7 @@ class DualList extends Component {
                 <Button
                   disabled={rightValues.length === 0}
                   className="btn-block dual-list-button"
-                  onClick={() => this.setState({ selectedLeftValues: [] }, () => onChange([]))}
+                  onClick={this.handleAllLeft}
                   title={moveAllLeftTitle}
                   type="button"
                 >
@@ -129,7 +173,7 @@ class DualList extends Component {
             </Col>
             <Col md={5}>
               {rightTitle}
-              <List size={size} optionClick={event => this.handleOptionClicked(event, rightValues, false)} value={rightValues} />
+              <List size={size} optionClick={event => this.handleOptionClicked(event, rightValues, 'right')} value={rightValues} />
             </Col>
           </Row>
         </Grid>
@@ -159,6 +203,7 @@ DualList.propTypes = {
   allToRight: PropTypes.bool,
   moveAllLeftTitle: PropTypes.string,
   moveAllRightTitle: PropTypes.string,
+  selectedSide: PropTypes.oneOf(['left', 'right']),
 };
 
 DualList.defaultProps = {
@@ -172,6 +217,7 @@ DualList.defaultProps = {
   options: [],
   allToLeft: false,
   allToRight: false,
+  selectedSide: 'right',
 };
 
 const WrappedDualList = ({ FieldProvider, name, ...rest }) => (

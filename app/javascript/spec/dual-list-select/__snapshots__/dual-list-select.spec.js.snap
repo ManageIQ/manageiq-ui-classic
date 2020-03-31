@@ -110,6 +110,7 @@ exports[`Dual list component is rendered correctly 1`] = `
         ]
       }
       rightTitle="Selected"
+      selectedSide="right"
       size={15}
       subscription={
         Object {
@@ -444,6 +445,7 @@ exports[`Dual list component is rendered correctly with move all buttons 1`] = `
         ]
       }
       rightTitle="Selected"
+      selectedSide="right"
       size={15}
       subscription={
         Object {
