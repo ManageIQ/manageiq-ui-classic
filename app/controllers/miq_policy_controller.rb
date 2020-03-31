@@ -861,7 +861,7 @@ class MiqPolicyController < ApplicationController
       @search_text = params[:search_text].strip
       @sb[:pol_search_text][x_active_tree] = @search_text unless @search_text.nil?
     else
-      @sb[:pol_search_text].delete(x_active_tree) if params[:action] == 'adv_search_text_clear'
+      @sb[:pol_search_text].delete(x_active_tree) if params[:action] == 'search_clear'
       @search_text = @sb[:pol_search_text][x_active_tree]
     end
   end

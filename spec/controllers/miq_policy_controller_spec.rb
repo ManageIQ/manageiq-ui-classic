@@ -268,7 +268,7 @@ describe MiqPolicyController do
       let(:tree) { :any_tree }
 
       before do
-        controller.params = {:action => 'adv_search_text_clear'}
+        controller.params = {:action => 'search_clear'}
         controller.instance_variable_set(:@sb, :active_tree => tree, :pol_search_text => {tree => search})
         controller.instance_variable_set(:@search_text, search)
       end

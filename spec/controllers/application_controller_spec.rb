@@ -473,7 +473,7 @@ describe ApplicationController do
     end
   end
 
-  describe '#adv_search_text_clear' do
+  describe '#search_clear' do
     before do
       controller.instance_variable_set(:@breadcrumbs, [{:url => 'last url'}])
       controller.instance_variable_set(:@sb, :search_text => 'Search text')
@@ -481,14 +481,14 @@ describe ApplicationController do
 
     it 'sets @search_text and @sb[:search_text] to nil' do
       allow(controller).to receive(:javascript_redirect)
-      controller.send(:adv_search_text_clear)
+      controller.send(:search_clear)
       expect(controller.instance_variable_get(:@search_text)).to be_nil
       expect(controller.instance_variable_get(:@sb)[:search_text]).to be_nil
     end
 
     it 'calls javascript_redirect for non-explorer' do
       expect(controller).to receive(:javascript_redirect).with('last url')
-      controller.send(:adv_search_text_clear)
+      controller.send(:search_clear)
     end
 
     context 'explorer screen' do
@@ -496,7 +496,7 @@ describe ApplicationController do
 
       it 'calls reload' do
         expect(controller).to receive(:reload)
-        controller.send(:adv_search_text_clear)
+        controller.send(:search_clear)
       end
     end
   end
