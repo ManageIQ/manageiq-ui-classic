@@ -12,7 +12,7 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
 
       it "configuration_manager list screen" do
-        @view   = true
+        @view = true
         @lastaction = "show_list"
         expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("configuration_managers_center_tb")
       end
