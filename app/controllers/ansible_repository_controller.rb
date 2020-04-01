@@ -25,6 +25,10 @@ class AnsibleRepositoryController < ApplicationController
     ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
 
+  def show_searchbar?
+    true
+  end
+
   def title
     _("Repository")
   end

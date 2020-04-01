@@ -25,6 +25,10 @@ class AnsibleCredentialController < ApplicationController
     nested_list(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
   end
 
+  def show_searchbar?
+    true
+  end
+
   def button
     case params[:pressed]
     when 'embedded_automation_manager_credentials_add'

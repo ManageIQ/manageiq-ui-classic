@@ -2043,6 +2043,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        search_clear
         button
         show_list
         tag_edit_form_field_changed
@@ -2059,6 +2060,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        search_clear
         button
         show_list
         tag_edit_form_field_changed
@@ -2077,6 +2079,7 @@ Rails.application.routes.draw do
         tagging_edit
       ),
       :post => %w(
+        search_clear
         button
         edit
         new
