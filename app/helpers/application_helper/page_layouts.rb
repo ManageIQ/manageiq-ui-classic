@@ -165,6 +165,11 @@ module ApplicationHelper::PageLayouts
     @sb[:pages] && @html && %i[reports_tree savedreports_tree cb_reports_tree].include?(x_active_tree)
   end
 
+  def show_search?
+    # Layouts with Advanced Search have the Search, too
+    controller.try(:show_searchbar?) || display_adv_search?
+  end
+
   def show_advanced_search?
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
