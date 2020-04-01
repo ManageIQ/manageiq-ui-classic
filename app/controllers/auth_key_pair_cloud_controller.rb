@@ -34,9 +34,6 @@ class AuthKeyPairCloudController < ApplicationController
 
   def specific_buttons(pressed)
     case pressed
-    when 'auth_key_pair_cloud_delete'
-      delete_auth_key_pairs
-      false
     when 'auth_key_pair_cloud_new'
       javascript_redirect(:action => 'new')
       true
@@ -162,51 +159,6 @@ class AuthKeyPairCloudController < ApplicationController
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show_list")
-  end
-
-  # delete selected auth key pairs
-  def delete_auth_key_pairs
-    assert_privileges("auth_key_pair_cloud_delete")
-    key_pairs = find_records_with_rbac(ManageIQ::Providers::CloudManager::AuthKeyPair, checked_or_params)
-    add_flash(_("No Key Pairs were selected for deletion"), :error) if key_pairs.empty?
-
-    key_pairs_to_delete = []
-    key_pairs.each do |key_pair|
-      if key_pair.is_available?(:delete_key_pair)
-        key_pairs_to_delete.push(key_pair.id)
-      else
-        add_flash(_("Couldn't initiate deletion of Key Pair \"%{name}\": %{details}") % {
-          :name    => key_pair.name,
-          :details => key_pair.is_available_now_error_message(:delete_key_pair)
-        }, :error)
-      end
-    end
-    process_deletions(key_pairs_to_delete) unless key_pairs_to_delete.empty?
-
-    # refresh the list if applicable
-    if @lastaction == "show_list"
-      show_list
-      @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "auth_key_pair_cloud"
-      @single_delete = true unless flash_errors?
-      add_flash(_("The selected Key Pair was deleted")) if @flash_array.nil?
-    end
-  end
-
-  def process_deletions(key_pairs)
-    ManageIQ::Providers::CloudManager::AuthKeyPair.where(:id => key_pairs).order('lower(name)').each do |kp|
-      audit = {
-        :event        => "auth_key_pair_cloud_record_delete_initiateed",
-        :message      => "[#{kp.name}] Record delete initiated",
-        :target_id    => kp.id,
-        :target_class => "ManageIQ::Providers::CloudManager::AuthKeyPair",
-        :userid       => session[:userid]
-      }
-      AuditEvent.success(audit)
-      kp.delete_key_pair_queue(session[:userid])
-    end
-    add_flash(n_("Delete initiated for %{number} Key Pair",
-                 "Delete initiated for %{number} Key Pairs", key_pairs.length) % {:number => key_pairs.length})
   end
 
   private
