@@ -15,7 +15,6 @@ module VmCommon
   included do
     private :textual_group_list
     helper_method :textual_group_list
-    helper_method :parent_choices_with_no_parent_choice
     helper_method :select_check?
     helper_method :disable_check?
   end
@@ -652,49 +651,27 @@ module VmCommon
 
   def edit
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    set_form_vars
-    build_edit_screen
-    session[:changed] = false
 
-    @active_tab = "edit"
-    @tab_id = @record.id.to_s
-    @tabs = [['edit', _('Information')]]
+    # reset @explorer if coming from explorer views
+    @edit ||= {}
+    @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
+    @explorer = true if @edit[:explorer]
+
+    drop_breadcrumb(:name => _("Edit VM '%{name}'") % {:name => @record.name}, :url => "/vm/edit") unless @explorer
 
     @refresh_partial = "vm_common/form"
   end
 
+  # FIXME: these match toolbar button names/features
   alias_method :image_edit, :edit
   alias_method :instance_edit, :edit
   alias_method :vm_edit, :edit
   alias_method :miq_template_edit, :edit
 
-  def build_edit_screen
-    drop_breadcrumb(:name => _("Edit VM '%{name}'") % {:name => @record.name}, :url => "/vm/edit") unless @explorer
-    session[:edit] = @edit
-    @in_a_form = true
-    @active_tab = "edit"
-    @tab_id = @record.id.to_s
-    @tabs = [['edit', _('Information')]]
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_field_changed
-    return unless load_edit("vm_edit__#{params[:id]}")
-    get_form_vars
-    changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html("main_div", :partial => "vm_common/form") if %w[allright left right].include?(params[:button])
-      page << javascript_for_miq_button_visibility(changed)
-      page << "miqSparkle(false);"
-    end
-  end
-
   def edit_vm
-    return unless load_edit("vm_edit__#{params[:id]}")
-    # reset @explorer if coming from explorer views
-    @explorer = true if @edit[:explorer]
-    get_form_vars
+    # TODO remove except for a "save position" and redirect
+    # if coming from explorer
+    get_vm_child_selection if %w[allright left right].include?(params[:button])
     case params[:button]
     when "cancel"
       if @edit[:explorer]
@@ -899,21 +876,6 @@ module VmCommon
     replace_right_cell
   end
 
-  def parent_choices(ids)
-    @parent_choices = {}
-    @parent_choices[Digest::MD5.hexdigest(ids.inspect)] ||= begin
-      ems_ids = VmOrTemplate.where(:id => ids).distinct.pluck(:ems_id).compact
-      parent_item_scope = Rbac.filtered(VmOrTemplate.where(:ems_id => ems_ids).where.not(:id => ids).order(:name))
-
-      parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
-        memo[vm[0] + " -- #{vm[1]}"] = vm[2]
-      end
-    end
-  end
-
-  def parent_choices_with_no_parent_choice
-    {'"no parent"' => -1}.merge(parent_choices(@record.id))
-  end
 
   # Return vm_cloud or vm_infra based on selected record
   def vm_or_instance(record)
@@ -1287,33 +1249,6 @@ module VmCommon
     end
   end
 
-  # Set form variables for edit
-  def set_form_vars
-    @edit = {}
-    @edit[:vm_id] = @record.id
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "vm_edit__#{@record.id || "new"}"
-    @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
-
-    @edit[:current][:custom_1] = @edit[:new][:custom_1] = @record.custom_1.to_s
-    @edit[:current][:description] = @edit[:new][:description] = @record.description.to_s
-    @edit[:new][:parent] = @record.parents.empty? ? -1 : @record.parents.first.id # Set the currently selected parent
-
-    vms = @record.children # Get the child VMs
-    @edit[:new][:kids] = {}
-    vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id } # Build a hash for the kids list box
-
-    @edit[:choices] = {}
-
-    # Build a hash for the VMs to choose from, only if they have no parent
-    @edit[:choices] = parent_choices([@record.id] + vms.pluck(:id))
-
-    @edit[:current][:parent] = @edit[:new][:parent]
-    @edit[:current][:kids] = @edit[:new][:kids].dup
-    session[:edit] = @edit
-  end
-
   def action_type(type, amount)
     case type
     when "advanced_settings"
@@ -1435,8 +1370,8 @@ module VmCommon
       locals = options[:dialog_locals]
     when "edit"
       partial = "vm_common/form"
-      header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => ui_lookup(:table => table)}
-      action = "edit_vm"
+      header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => model_for_vm(@record).display_name}
+      action = "edit_vm" # unused
     when 'chargeback'
       partial = @refresh_partial
       header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
@@ -1542,53 +1477,8 @@ module VmCommon
     return partial, action, header, locals
   end
 
-  def get_vm_child_selection
-    if params["right.x"] || params[:button] == "right"
-      if params[:kids_chosen].nil?
-        add_flash(_("No VMs were selected to move right"), :error)
-      else
-        kids = @edit[:new][:kids].invert
-        params[:kids_chosen].each do |kc|
-          if @edit[:new][:kids].value?(kc.to_i)
-            @edit[:choices][kids[kc.to_i]] = kc.to_i
-            @edit[:new][:kids].delete(kids[kc.to_i])
-          end
-        end
-      end
-    elsif params["left.x"] || params[:button] == "left"
-      if params[:choices_chosen].nil?
-        add_flash(_("No VMs were selected to move left"), :error)
-      else
-        kids = @edit[:choices].invert
-        params[:choices_chosen].each do |cc|
-          if @edit[:choices].value?(cc.to_i)
-            @edit[:new][:kids][kids[cc.to_i]] = cc.to_i
-            @edit[:choices].delete(kids[cc.to_i])
-          end
-        end
-      end
-    elsif params["allright.x"] || params[:button] == "allright"
-      if @edit[:new][:kids].empty?
-        add_flash(_("No child VMs to move right, no action taken"), :error)
-      else
-        @edit[:new][:kids].each do |key, value|
-          @edit[:choices][key] = value
-        end
-        @edit[:new][:kids].clear
-      end
-    end
-  end
-
-  # Get variables from edit form
-  def get_form_vars
-    @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
-    copy_params_if_present(@edit[:new], params, %i[custom_1 description name])
-    @edit[:new][:parent] = params[:chosen_parent].to_i if params[:chosen_parent]
-    # if coming from explorer
-    get_vm_child_selection if %w[allright left right].include?(params[:button])
-  end
-
   # Build the audit object when a record is saved, including all of the changed fields
+  # FIXME
   def build_saved_vm_audit(vm)
     msg = "[#{vm.name} -- #{vm.location}] Record saved ("
     event = "vm_genealogy_change"

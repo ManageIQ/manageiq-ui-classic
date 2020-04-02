@@ -15,7 +15,7 @@ const handleFailure = (e) => {
   console.error(message);
   miqFlash('error', message);
 
-  return e.reject(e);
+  return Promise.reject(e);
 };
 
 export default handleFailure;

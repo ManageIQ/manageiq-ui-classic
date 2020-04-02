@@ -13,47 +13,70 @@ class VmEditForm extends Component {
     this.state = {
       isLoaded: false,
     };
-    console.log(this.props.kind);
   }
 
   componentDidMount() {
     miqSparkleOn();
-    const { choices } = this.props;
-    const options = Object.keys(choices).map(vm => ({
-      label: vm, value: String(choices[vm]),
-    }));
-    const optionsDualSelect = Object.keys(choices).map(vm => ({
-      label: vm, key: String(choices[vm]),
-    }));
-    if (this.props.vmId === 'new') {
-      this.setState({ isLoaded: true });
-    } else {
-      API.get(`/api/vms/${this.props.vmId}?attributes=child_resources,parent_resource,custom_attributes`).then((data) => {
-        const x = data.custom_attributes.find(attribute => (attribute.name === 'custom_1'));
-        this.setState(
-          {
-            initialValues: {
-              description: data.description,
-              custom_1: x ? x.serialized_value : null,
-              parent_vm: data.parent_resource.id,
-              service_templates: data.child_resources.map(resource => resource.id),
-            },
-            instanceName: data.name,
-            isLoaded: true,
 
-            schema: createSchema(
-              options,
-              [
-                ...optionsDualSelect,
-                ...data.child_resources.map(resource => ({ label: `${resource.name} -- ${resource.location}`, key: resource.id })),
-              ],
-            ),
-          },
-        );
+    const {
+      emsId,
+      recordId,
+      isTemplate, // TODO API request cutoffs, endpoint change
+    } = this.props;
+
+    const vmOption = (vm) => ({
+      key: vm.id, // dual-list
+      label: `${vm.name} -- ${vm.location}`,
+      value: vm.id, // select
+    });
+
+    const vmPick = ({ id, name, location }) => ({ id, name, location });
+
+    const customAttribute = (custom_attributes, name) => {
+      let attr = _.find(custom_attributes, { name: 'custom_1' });
+      return attr && attr.serialized_value || null;
+    };
+
+    const vmsUnderEms = API.get(`/api/vms/?filter[]=ems_id=${emsId}&expand=resources`)
+      .then(({ resources = [] }) => resources.map(vmPick));
+
+    const vmDetail = recordId ? (API.get(`/api/vms/${recordId}?attributes=child_resources,parent_resource,custom_attributes`)
+      .then(({ name, description, child_resources = [], parent_resource, custom_attributes = [] }) => ({
+        child_vms: child_resources.map(vmPick),
+        custom_1: customAttribute(custom_attributes, 'custom_1'),
+        description,
+        name,
+        parent_vm: parent_resource && parent_resource.id,
+      }))) : Promise.resolve({
+        child_vms: [],
+        custom_1: null,
+        description: '',
+        name: '',
+        parent_vm: null,
+      });
+
+    Promise.all([vmDetail, vmsUnderEms])
+      .then(([record, allVms]) => {
+        const childrenIds = _.map(record.child_vms, 'id');
+
+        const parentOptions = allVms
+          .filter((vm) => vm.id !== recordId)
+          .map(vmOption);
+
+        // child options are everything except record and its children
+        // but the whole list is candidates + actual children
+        const childOptions = parentOptions;
+
+        this.setState({
+          initialValues: record,
+          instanceName: record.name,
+          isLoaded: true,
+          schema: createSchema(parentOptions, childOptions, !isTemplate),
+        });
 
         miqSparkleOff();
-      });
-    }
+      })
+      .catch(handleFailure);
   }
 
   submitValues = (values) => {
@@ -62,14 +85,15 @@ class VmEditForm extends Component {
       resource: {
         description: values.description,
         custom_1: values.custom_1,
-        parent_resource: { href: `/api/vms/${values.parent_vm}` },
-        child_resources: values.service_templates.map(vm => ({ href: `/api/vms/${vm}` })),
+        parent_resource: values.parent_vm ? { href: `/api/vms/${values.parent_vm}` } : null,
+        child_resources: values.child_vms.map((vm) => ({ href: `/api/vms/${vm}` })),
       },
     };
-    return API.post(`/api/vms/${this.props.vmId}`, val)
+    return API.post(`/api/vms/${this.props.recordId}`, val)
       .then(() => {
         miqSparkleOn();
-        const message = sprintf(__('VM and Instance "%s" was saved'), this.state.instanceName);
+        const message = sprintf(__('%s "%s" was saved'), this.props.displayName, this.state.instanceName);
+        // FIXME bad
         miqRedirectBack(message, 'success', '/vm_infra/explorer/');
       })
       .catch(handleFailure);
@@ -77,52 +101,63 @@ class VmEditForm extends Component {
 
   cancelClicked = () => {
     miqSparkleOn();
-    const message = sprintf(__('Edit of VM and Instance "%s" was cancelled by the user'), this.state.instanceName);
+    const message = sprintf(__('Edit of %s "%s" was cancelled by the user'), this.props.displayName, this.state.instanceName);
+    // FIXME bad
     miqRedirectBack(message, 'success', '/vm_infra/explorer/');
   }
 
   validation = (values) => {
     const errors = {};
-    if (values.service_templates.includes(values.parent_vm)) {
+    if (values.child_vms.includes(values.parent_vm)) {
       errors.parent_vm = __('Child VM cannot be the same as Parent VM');
     }
     return errors;
   }
 
   render() {
-    const { vmId } = this.props;
-    const { isLoaded, initialValues, schema } = this.state;
-    if (!isLoaded) return null;
+    const { recordId, showTitle, displayName } = this.props;
+    const { isLoaded, initialValues, schema, instanceName } = this.state;
+    if (! isLoaded)
+      return null;
+
+    const titleText = showTitle && sprintf(__('Editing %s "%s"'), displayName, instanceName);
 
     return (
-      <Grid fluid>
-        <MiqFormRenderer
-          initialValues={initialValues}
-          validate={this.validation}
-          schema={schema}
-          onSubmit={this.submitValues}
-          onReset={() => add_flash(__('All changes have been reset'), 'warn')}
-          onCancel={this.cancelClicked}
-          canReset={vmId !== 'new'}
-          buttonsLabels={{
-            submitLabel: vmId ? __('Save') : __('Add'),
-          }}
-        />
-      </Grid>
+      <>
+        {showTitle && (
+          <h1>{titleText}</h1>
+        )}
+        <Grid fluid>
+          <MiqFormRenderer
+            className={'form-react-fullwidth'}
+            initialValues={initialValues}
+            validate={this.validation}
+            schema={schema}
+            onSubmit={this.submitValues}
+            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
+            onCancel={this.cancelClicked}
+            canReset={!!recordId}
+            buttonsLabels={{
+              submitLabel: recordId ? __('Save') : __('Add'),
+            }}
+          />
+        </Grid>
+      </>
     );
   }
 }
 
 VmEditForm.propTypes = {
-  vmId: PropTypes.string,
-  choices: PropTypes.shape({
-    [PropTypes.string]: PropTypes.number,
-  }),
+  recordId: PropTypes.string,
+  emsId: PropTypes.string,
+  showTitle: PropTypes.bool,
+  displayName: PropTypes.string.isRequired,
+  isTemplate: PropTypes.bool.isRequired,
 };
 
 VmEditForm.defaultProps = {
-  vmId: undefined,
-  choices: [],
+  recordId: undefined,
+  showTitle: true,
 };
 
 export default VmEditForm;

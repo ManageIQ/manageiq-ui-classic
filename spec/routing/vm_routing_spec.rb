@@ -23,7 +23,6 @@ describe VmOrTemplateController do
   end
 
   %w(
-    edit_vm
     form_field_changed
     ownership
     ownership_field_changed

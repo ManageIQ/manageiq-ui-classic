@@ -17,7 +17,6 @@ describe "routes for MiqTemplateController" do
 
   %w(
     edit
-    edit_vm
     form_field_changed
     show
   ).each do |task|

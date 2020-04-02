@@ -59,7 +59,6 @@ describe VmOrTemplateController do
     drift_history
     drift_mode
     drift_same
-    edit_vm
     event_logs
     evm_relationship_field_changed
     evm_relationship_update

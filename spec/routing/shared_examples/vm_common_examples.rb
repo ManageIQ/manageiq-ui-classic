@@ -71,12 +71,6 @@ shared_examples_for 'A controller that has vm_common routes' do
     end
   end
 
-  describe '#edit_vm' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/edit_vm")).to route_to("#{controller_name}#edit_vm")
-    end
-  end
-
   describe '#evm_relationship_field_changed' do
     it 'routes with POST' do
       expect(
