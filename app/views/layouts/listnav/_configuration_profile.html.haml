@@ -12,10 +12,10 @@
 
     = miq_accordion_panel(_("Relationships"), false, "stack_rel") do
       %ul.nav.nav-pills.nav-stacked
-        - if role_allows?(:feature => "configuration_manager_show") && !@record.configuration_manager.nil?
+        - if role_allows?(:feature => "ems_configuration_show") && !@record.configuration_manager.nil?
           %li
             = link_to(_("Configuration Manager: %{name}") % {:name => @record.configuration_manager.name},
-              {:controller => "configuration_manager", :action => 'show', :id => @record.configuration_manager.id},
+              {:controller => "ems_configuration", :action => 'show', :id => @record.configuration_manager.id},
               :title => _("Show parent Configuration Manager for this Configuration Profile"))
         - if role_allows?(:feature => "configured_system_show_list")
           = li_link(:count => @record.number_of(:configured_systems),

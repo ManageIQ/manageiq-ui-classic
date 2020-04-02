@@ -1,4 +1,4 @@
-module ConfigurationManagerHelper::TextualSummary
+module EmsConfigurationHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualZone
 

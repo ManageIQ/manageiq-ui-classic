@@ -451,7 +451,6 @@ class ApplicationHelper::ToolbarChooser
             cloud_volume_snapshot
             cloud_volume_type
             configuration_job
-            configuration_manager
             configured_system
             container
             container_group
@@ -460,6 +459,7 @@ class ApplicationHelper::ToolbarChooser
             persistent_volume
             ems_cloud
             ems_cluster
+            ems_configuration
             ems_container
             ems_middleware
             container_project

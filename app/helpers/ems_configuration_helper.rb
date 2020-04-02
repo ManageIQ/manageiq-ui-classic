@@ -1,3 +1,3 @@
-module ConfigurationManagerHelper
+module EmsConfigurationHelper
   include_concern 'TextualSummary'
 end

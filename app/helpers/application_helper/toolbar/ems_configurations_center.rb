@@ -1,14 +1,14 @@
-class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelper::Toolbar::Basic
-  button_group('configuration_manager_vmdb', [
+class ApplicationHelper::Toolbar::EmsConfigurationsCenter < ApplicationHelper::Toolbar::Basic
+  button_group('ems_configuration_vmdb', [
     select(
-      :configuration_manager__vmdb_choice,
+      :ems_configuration__vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :enabled => true,
       :items   => [
         button(
-          :configuration_manager_refresh_provider,
+          :ems_configuration_refresh_provider,
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to the selected items'),
           N_('Refresh Relationships and Power states'),
@@ -19,13 +19,13 @@ class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelpe
           :onwhen       => "1+"),
         separator,
         button(
-          :configuration_manager_add_provider,
+          :ems_configuration_add_provider,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Provider'),
           t,
           :enabled => true),
         button(
-          :configuration_manager_edit_provider,
+          :ems_configuration_edit_provider,
           'pficon pficon-edit fa-lg',
           N_('Select a single item to edit'),
           N_('Edit Selected item'),
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelpe
           :enabled      => false,
           :onwhen       => "1"),
         button(
-          :configuration_manager_delete_provider,
+          :ems_configuration_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected items from Inventory'),
           t,
@@ -47,9 +47,9 @@ class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelpe
       ]
     ),
   ])
-  button_group('configuration_manager_policy', [
+  button_group('ems_configuration_policy', [
     select(
-      :configuration_manager_policy_choice,
+      :ems_configuration_policy_choice,
       nil,
       t = N_('Policy'),
       t,
@@ -57,7 +57,7 @@ class ApplicationHelper::Toolbar::ConfigurationManagersCenter < ApplicationHelpe
       :onwhen  => "1+",
       :items   => [
         button(
-          :configuration_manager_tag,
+          :ems_configuration_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Configuration Manager Provider'),
           N_('Edit Tags'),

@@ -43,9 +43,9 @@ module ConfigurationProfileHelper::TextualSummary
   def textual_configuration_manager
     configuration_manager = @record.configuration_manager
     h = {:label => "Configuration Manager", :icon => "pficon pficon-configuration_manager", :value => (configuration_manager.nil? ? _("None") : configuration_manager.name)}
-    if configuration_manager && role_allows?(:feature => "configuration_manager_show")
+    if configuration_manager && role_allows?(:feature => "ems_configuration_show")
       h[:title] = _("Show this Configuration Profile's Configuration Manager")
-      h[:link]  = url_for_only_path(:controller => 'configuration_manager', :action => 'show', :id => configuration_manager)
+      h[:link]  = url_for_only_path(:controller => 'ems_configuration', :action => 'show', :id => configuration_manager)
     end
     h
   end

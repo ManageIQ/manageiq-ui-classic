@@ -189,7 +189,6 @@ module ApplicationHelper::PageLayouts
       cloud_volume_snapshot
       cloud_volume_type
       configuration_job
-      configuration_manager
       configured_system
       container
       container_build
@@ -204,6 +203,7 @@ module ApplicationHelper::PageLayouts
       container_template
       ems_cloud
       ems_cluster
+      ems_configuration
       ems_container
       ems_infra
       ems_middleware

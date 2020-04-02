@@ -749,7 +749,6 @@ module ApplicationHelper
        cloud_volume_snapshot
        cloud_volume_type
        configuration_job
-       configuration_manager
        configuration_profile
        configuration_scripts
        configured_system
@@ -766,6 +765,7 @@ module ApplicationHelper
        container_template
        ems_cloud
        ems_cluster
+       ems_configuration
        ems_container
        ems_infra
        ems_middleware
@@ -876,7 +876,7 @@ module ApplicationHelper
   end
 
   def pressed2model_action(pressed)
-    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider|configuration_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
+    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
   def model_for_vm(record)
@@ -1061,7 +1061,6 @@ module ApplicationHelper
                         cloud_volume_type
                         condition
                         configuration_job
-                        configuration_manager
                         configuration_profile
                         configuration_script_source
                         configured_system
@@ -1081,6 +1080,7 @@ module ApplicationHelper
                         ems_block_storage
                         ems_cloud
                         ems_cluster
+                        ems_configuration
                         ems_container
                         ems_infra
                         ems_infra_dashboard
