@@ -2,19 +2,19 @@ describe ApplicationHelper, "ToolbarChooser" do
   describe "generate non-explorer toolbar file names" do
     context "#center_toolbar_filename_classic (private)" do
       before do
-        @layout = "configuration_manager"
+        @layout = "ems_configuration"
       end
 
-      it "configuration_manager summary screen" do
+      it "ems_configuration summary screen" do
         @display = "main"
         @lastaction = "show"
-        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("configuration_manager_center_tb")
+        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("ems_configuration_center_tb")
       end
 
-      it "configuration_manager list screen" do
+      it "ems_configuration list screen" do
         @view = true
         @lastaction = "show_list"
-        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("configuration_managers_center_tb")
+        expect(_toolbar_chooser.send(:center_toolbar_filename_classic)).to eq("ems_configurations_center_tb")
       end
     end
 
