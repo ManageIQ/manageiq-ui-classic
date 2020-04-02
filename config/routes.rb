@@ -2754,7 +2754,7 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
-    :configuration_manager  => {
+    :ems_configuration => {
       :get  => %w[
         button
         download_data

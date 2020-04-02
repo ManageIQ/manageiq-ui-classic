@@ -15,7 +15,6 @@ module ApplicationHelper
         cloud_volume_snapshot
         cloud_volume_type
         configuration_job
-        configuration_manager
         configuration_profile
         configured_system
         container
@@ -31,6 +30,7 @@ module ApplicationHelper
         container_template
         ems_cloud
         ems_cluster
+        ems_configuration
         ems_container
         ems_infra
         ems_middleware

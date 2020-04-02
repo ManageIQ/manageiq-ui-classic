@@ -1,14 +1,14 @@
-class ApplicationHelper::Toolbar::ConfigurationManagerCenter < ApplicationHelper::Toolbar::Basic
-  button_group('configuration_manager_vmdb', [
+class ApplicationHelper::Toolbar::EmsConfigurationCenter < ApplicationHelper::Toolbar::Basic
+  button_group('ems_configuration_vmdb', [
     select(
-      :configuration_manager_vmdb_choice,
+      :ems_configuration_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :enabled => true,
       :items   => [
         button(
-          :configuration_manager_refresh_provider,
+          :ems_configuration_refresh_provider,
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to this Provider'),
           N_('Refresh Relationships and Power states'),
@@ -16,12 +16,12 @@ class ApplicationHelper::Toolbar::ConfigurationManagerCenter < ApplicationHelper
           :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
-          :configuration_manager_edit_provider,
+          :ems_configuration_edit_provider,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Provider'),
           t),
         button(
-          :configuration_manager_delete_provider,
+          :ems_configuration_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
           t,
@@ -29,15 +29,15 @@ class ApplicationHelper::Toolbar::ConfigurationManagerCenter < ApplicationHelper
       ]
     ),
   ])
-  button_group('configuration_manager_policy', [
+  button_group('ems_configuration_policy', [
     select(
-      :configuration_manager_policy_choice,
+      :ems_configuration_policy_choice,
       nil,
       t = N_('Policy'),
       t,
       :items => [
         button(
-          :configuration_manager_tag,
+          :ems_configuration_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Configuration Manager'),
           N_('Edit Tags')),

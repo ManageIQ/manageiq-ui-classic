@@ -1,4 +1,4 @@
-class ConfigurationManagerController < ApplicationController
+class EmsConfigurationController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
@@ -17,7 +17,7 @@ class ConfigurationManagerController < ApplicationController
   end
 
   def self.table_name
-    @table_name ||= "configuration_manager"
+    @table_name ||= "ems_configuration"
   end
 
   def self.display_methods
@@ -39,13 +39,13 @@ class ConfigurationManagerController < ApplicationController
     end
 
     case params[:pressed]
-    when 'configuration_manager_edit_provider'
+    when 'ems_configuration_edit_provider'
       edit
-    when 'configuration_manager_add_provider'
+    when 'ems_configuration_add_provider'
       new
-    when "configuration_manager_refresh_provider"
+    when "ems_configuration_refresh_provider"
       refresh
-    when "configuration_manager_delete_provider"
+    when "ems_configuration_delete_provider"
       delete
     end
 
@@ -53,7 +53,7 @@ class ConfigurationManagerController < ApplicationController
 
     if single_delete_test
       single_delete_redirect
-    elsif (params[:pressed].ends_with?("_edit_provider") || params[:pressed] == "configuration_manager_add_provider") && @flash_array.nil?
+    elsif (params[:pressed].ends_with?("_edit_provider") || params[:pressed] == "ems_configuration_add_provider") && @flash_array.nil?
       if @flash_array
         show_list
         replace_gtl_main_div
@@ -70,15 +70,15 @@ class ConfigurationManagerController < ApplicationController
   private
 
   def self.model_to_name(_provmodel)
-    Dictionary.gettext('configuration_manager', :type => :ui_title, :translate => false)
+    Dictionary.gettext('ems_configuration', :type => :ui_title, :translate => false)
   end
 
   def privilege_prefix
-    "configuration_manager"
+    "ems_configuration"
   end
 
   def refresh
-    assert_privileges("configuration_manager_refresh_provider")
+    assert_privileges("ems_configuration_refresh_provider")
     manager_button_operation('refresh_ems', _('Refresh'))
   end
 

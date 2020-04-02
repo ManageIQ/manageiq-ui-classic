@@ -94,7 +94,7 @@ module Mixins
         render_form
       else
         @in_a_form = true
-        @redirect_controller = "configuration_manager"
+        @redirect_controller = "ems_configuration"
         @refresh_partial = "new"
       end
     end
@@ -119,7 +119,7 @@ module Mixins
           render_form
         else
           @in_a_form = true
-          @redirect_controller = "configuration_manager"
+          @redirect_controller = "ems_configuration"
           @redirect_id = @provider_manager.id
           @refresh_partial = "edit"
         end
