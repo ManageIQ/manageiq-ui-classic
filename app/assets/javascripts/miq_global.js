@@ -9,6 +9,7 @@ if (!window.ManageIQ) {
       rxSubject: null,  // an observable
       scope: null,  // a scope which will have .angularForm after loading, for miqCheckForChanges
     },
+    asynchronous_notifications: false, // disabled by default, server overrides it in application.html.haml
     browser: null, // browser name
     calendar: { // TODO about to be removed
       calDateFrom: null, // to limit calendar starting
@@ -55,7 +56,6 @@ if (!window.ManageIQ) {
     },
     move: { //methods to move elements between Arrays or in an Array
     },
-    notifications: {},  // .init() initializes notifications
     noCollapseEvent: false, // enable/disable events fired after collapsing an accordion
     observe: { // keeping track of data-miq_observe requests
       processing: false, // is a request currently being processed?

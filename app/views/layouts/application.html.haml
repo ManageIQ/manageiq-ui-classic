@@ -24,6 +24,7 @@
       ManageIQ.browser = "#{j browser_info(:name_ui)}";
       ManageIQ.controller = "#{j controller_name}";
       ManageIQ.timezone = '#{j ::ActiveSupport::TimeZone::MAPPING[session[:user_tz]]}';
+      ManageIQ.asynchronous_notifications = #{!!::Settings.server.asynchronous_notifications};
 
   %body{:onload => 'miqOnLoad();', 'data-controller' => controller_name}
     = render :partial => "layouts/header"

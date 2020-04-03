@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,10 +6,12 @@ import {
 } from 'patternfly-react';
 import classnames from 'classnames';
 import { getNotficationStatusIconName, newCountText, viewDetails } from './helpers';
-import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend.js';
+import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend';
 import {
   toggleDrawerVisibility, markNotificationRead, markAllRead, clearNotification, clearAll, toggleMaxNotifications,
 } from '../../miq-redux/actions/notifications-actions';
+
+import initNotifications from '../../notifications/init';
 
 const NotificationDrawer = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ const NotificationDrawer = () => {
   const {
     isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
   } = useSelector(({ notificationReducer }) => notificationReducer);
+
+  useEffect(() => { initNotifications(); }, []);
 
   return (
     isDrawerVisible ? (

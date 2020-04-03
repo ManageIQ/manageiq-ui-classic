@@ -7,6 +7,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import NotificationDrawer from '../../components/notification-drawer/notification-drawer';
+import * as initNotifications from '../../notifications/init';
 import '../helpers/miqFormatNotification';
 import '../helpers/sprintf';
 import notifications from '../fixtures/notifications.json';
@@ -43,6 +44,8 @@ describe('Notification drawer tests', () => {
   const miqFormatNotificationSpy = jest.spyOn(window, 'miqFormatNotification');
 
   beforeEach(() => {
+    jest.spyOn(initNotifications, 'default');
+    initNotifications.default = () => {};
   });
 
   afterEach(() => {
