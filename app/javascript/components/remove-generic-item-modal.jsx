@@ -12,8 +12,9 @@ const parseApiError = (error) => {
   }
 };
 
-export const removeItems = (items, apiUrl, asyncDelete, redirectUrl) => {
+export const removeItems = (items, apiUrl, asyncDelete, redirectUrl, treeSelect) => {
   let apiPromises = [];
+  let flashArray = [];
   const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfuly initiated') : __('The item "%s" has been successfully deleted');
 
   miqSparkleOn();
@@ -29,19 +30,26 @@ export const removeItems = (items, apiUrl, asyncDelete, redirectUrl) => {
         miqSparkleOff();
       } else {
         apiData.forEach(item => {
+          let flash = {};
           if (item.result === 'success') {
-            miqFlashLater({message: sprintf(deleteMessage, item.name)});
+            flash = {message: sprintf(deleteMessage, item.name), level: 'success'};
           } else if (item.result === 'error' && items.length > 1) {
-            miqFlashLater({message: sprintf(__('Error deleting item "%s": %s'), item.name, parseApiError(item.data)), level: 'error'});
+            flash = {message: sprintf(__('Error deleting item "%s": %s'), item.name, parseApiError(item.data)), level: 'error'};
           }
+          miqFlashLater(flash);
         });
       }
       return apiData;
     })
     .then((apiData) => {
       if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
-        window.location.href = redirectUrl; // '/catalog/explorer?report_deleted=true';
-        miqSparkleOff();
+        if (typeof(treeSelect) == undefined) {
+          window.location.href = redirectUrl;
+          miqSparkleOff();
+        } else {
+          sendDataWithRx({ controller: 'reportDataController', type: 'gtlUnselectAll' });
+          miqAjax(`tree_select?id=${treeSelect}`).then(() => miqFlashSaved());
+        }
       }
     });
 };
@@ -77,7 +85,11 @@ class RemoveGenericItemModal extends React.Component {
       payload: {
         newRecord: true,
         pristine: true,
-        addClicked: () => removeItems(this.state.data, this.props.modalData.api_url, this.props.modalData.async_delete, this.props.modalData.redirect_url)
+        addClicked: () => removeItems(this.state.data,
+                                      this.props.modalData.api_url,
+                                      this.props.modalData.async_delete,
+                                      this.props.modalData.redirect_url,
+                                      this.props.modalData.tree_select)
       }
     });
     this.props.dispatch({
