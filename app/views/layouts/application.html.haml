@@ -25,10 +25,6 @@
       ManageIQ.controller = "#{j controller_name}";
       ManageIQ.timezone = '#{j ::ActiveSupport::TimeZone::MAPPING[session[:user_tz]]}';
 
-    - if ::Settings.server.asynchronous_notifications
-      :javascript
-        miqInitNotifications();
-
   %body{:onload => 'miqOnLoad();', 'data-controller' => controller_name}
     = render :partial => "layouts/header"
     = render :partial => "layouts/content"

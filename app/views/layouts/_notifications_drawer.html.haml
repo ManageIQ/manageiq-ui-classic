@@ -1,4 +1,4 @@
-:javascript
-  ManageIQ.notifications.init();
-
-= react('NotificationDrawer')
+- if ::Settings.server.asynchronous_notifications
+  :javascript
+    ManageIQ.notifications.init();
+  = react('NotificationDrawer')
