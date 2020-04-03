@@ -69,7 +69,7 @@ class GtlFormatter
   end
 
   def self.service_template_format(value)
-    [value ? _(ServiceTemplate::CATALOG_ITEM_TYPES[value]) : '', nil]
+    [value ? _(ServiceTemplate.all_catalog_item_types[value]) : '', nil]
   end
 
   def self.timezone(view, row, col)

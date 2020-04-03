@@ -59,7 +59,7 @@
             %label.col-md-3.control-label
               = _('Item Type')
             .col-md-9
-              = h(_(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type]))
+              = h(_(ServiceTemplate.all_catalog_item_types[@record.prov_type]))
         - if @record.prov_type == "generic"
           .form-group
             %label.col-md-3.control-label
