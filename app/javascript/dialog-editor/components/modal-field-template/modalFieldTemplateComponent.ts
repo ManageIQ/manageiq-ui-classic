@@ -2,8 +2,6 @@
  * Controller for the Dialog Editor Modal Field Template component
  */
 class ModalFieldController {
-  modalData;
-  sortableOptionsValues;
   readonly DROPDOWN_ENTRY_VALUE = 0;
   readonly DROPDOWN_ENTRY_DESCRIPTION = 1;
 

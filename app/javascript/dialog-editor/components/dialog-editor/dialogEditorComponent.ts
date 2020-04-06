@@ -1,8 +1,4 @@
 export class DialogEditorController {
-  modalOptions;
-  elementInfo;
-  treeOptions;
-
   setupModalOptions(type, tab, box, field) {
     const components = {
       tab: 'dialog-editor-modal-tab',

@@ -1,7 +1,4 @@
 export class ModalController {
-  uibModalInstance;
-  saveModal;
-
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }

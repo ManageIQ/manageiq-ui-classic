@@ -2,10 +2,6 @@
  * Controller for the Dialog Editor tab list component
  */
 class TabListController {
-  tabList;
-  sortableOptions;
-  setupModalOptions;
-
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }

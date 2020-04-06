@@ -2,10 +2,6 @@
  * Controller for the Dialog Editor field component
  */
 class FieldController {
-  service;
-  fieldData;
-  boxPosition;
-
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }

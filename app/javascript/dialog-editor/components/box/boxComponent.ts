@@ -2,12 +2,6 @@
  * Controller for the Dialog Editor box component
  */
 class BoxController {
-  sortableOptionsBox;
-  sortableOptionsFields;
-  service;
-  dialogTabs;
-  setupModalOptions;
-
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }

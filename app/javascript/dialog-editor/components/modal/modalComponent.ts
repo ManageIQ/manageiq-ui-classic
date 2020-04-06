@@ -3,13 +3,6 @@
  */
 class ModalController {
   modalTab = 'element_information';
-  modalData;
-  dynamicFieldList;
-  categories;
-  modalTitle;
-  modalOptions;
-  elementInfo;
-  uibModalInstance;
 
   constructor($uibModal, DialogEditor, DialogEditorHttp) {
     this.$uibModal = $uibModal;

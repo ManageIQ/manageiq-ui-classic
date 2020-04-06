@@ -1,8 +1,4 @@
 class DialogField {
-  icon;
-  label;
-  placeholders;
-
   constructor(type, icon, label, name, options = {}) {
     this.icon = icon;
     this.label = label;
