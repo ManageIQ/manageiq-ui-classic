@@ -57,7 +57,7 @@ class RemoveGenericItemModal extends React.Component {
 
   componentDidMount() {
     let apiPromises = [];
-    const itemsIds = this.props.recordId ? [this.props.recordId] : this.props.gridChecks;
+    const itemsIds = this.props.recordId ? [this.props.recordId] : _.uniq(this.props.gridChecks);
 
     // Load modal data from API
     itemsIds.forEach(item => apiPromises.push(API.get(`/api/${this.props.modalData.api_url}/${item}`)));
