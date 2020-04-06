@@ -5,11 +5,11 @@
  * @name BoxController
  */
 class BoxController {
-  public sortableOptionsBox: any;
-  public sortableOptionsFields: any;
-  public service: any;
-  public dialogTabs: any;
-  public setupModalOptions: any;
+  public sortableOptionsBox;
+  public sortableOptionsFields;
+  public service;
+  public dialogTabs;
+  public setupModalOptions;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
@@ -35,7 +35,7 @@ class BoxController {
       cursor: 'move',
       opacity: 0.5,
       revert: 50,
-      stop: (e: any, ui: any) => {
+      stop: (e, ui) => {
         let sortedBox = ui.item.scope().$parent.tab.dialog_groups;
         // update indexes of other boxes after changing their order
         this.DialogEditor.updatePositions(sortedBox);
@@ -47,7 +47,7 @@ class BoxController {
       cancel: '.nosort',
       cursor: 'move',
       revert: 50,
-      stop: (e: any, ui: any) => {
+      stop: (e, ui) => {
         let sortedField = ui.item.scope().$parent.box.dialog_fields;
         // update indexes of other fields after changing their order
         this.DialogEditor.updatePositions(sortedField);
@@ -84,10 +84,10 @@ class BoxController {
    * @function removeBox
    * @param {number} id as index of removed box
    */
-  public removeBox(id: number) {
+  public removeBox(id) {
     _.remove(
       this.dialogTabs[this.DialogEditor.activeTab].dialog_groups,
-      (box: any) => box.position === id
+      (box) => box.position === id
     );
     // update indexes of other boxes after removing
     this.DialogEditor.updatePositions(
@@ -102,10 +102,10 @@ class BoxController {
    * @param {number} event jQuery object
    * @param {number} ui jQuery object
    */
-  public droppableOptions(e: any, ui: any) {
-    const elementScope: any = angular.element(e.target).scope();
-    let droppedItem: any = elementScope.dndDragItem;
-    let droppedPlace: any = elementScope.box;
+  public droppableOptions(e, ui) {
+    const elementScope = angular.element(e.target).scope();
+    let droppedItem = elementScope.dndDragItem;
+    let droppedPlace = elementScope.box;
     // update name for the dropped field
     if (!_.isEmpty(droppedItem)) {
       this.updateFieldName(droppedItem);
@@ -117,7 +117,7 @@ class BoxController {
   }
 
   private updateFieldName(field) {
-    let nameWithIndex: string = this.DialogEditor.newFieldName(
+    let nameWithIndex = this.DialogEditor.newFieldName(
       field.name);
     field.name = nameWithIndex;
   }
@@ -138,8 +138,8 @@ BoxController.$inject = ['DialogEditor'];
  */
 export default class Box {
   public template = require('./box.html');
-  public controller: any = BoxController;
-  public controllerAs: string = 'vm';
+  public controller = BoxController;
+  public controllerAs = 'vm';
   public bindings = {
     setupModalOptions: '&'
   };

@@ -5,13 +5,13 @@
  * @name ModalController
  */
 class ModalController {
-  public modalTab: string = 'element_information';
-  public modalData: any;
-  public dynamicFieldList: any;
-  public categories: any;
-  public modalTitle: string;
-  public modalOptions: any;
-  public elementInfo: any;
+  public modalTab = 'element_information';
+  public modalData;
+  public dynamicFieldList;
+  public categories;
+  public modalTitle;
+  public modalOptions;
+  public elementInfo;
   private uibModalInstance;
 
   constructor($uibModal, DialogEditor, DialogEditorHttp) {
@@ -20,7 +20,7 @@ class ModalController {
     this.DialogEditorHttp = DialogEditorHttp;
   }
 
-  public loadModalData(elem: any) {
+  public loadModalData(elem) {
     if (elem !== undefined) {
       // clone data from service
       let elements = {
@@ -37,7 +37,7 @@ class ModalController {
         // load categories from API, if the field is Tag Control
         if (this.modalData.type === 'DialogFieldTagControl') {
           this.resolveCategories().then(
-            (categories: any) => { this.categories = categories; }
+            (categories) => { this.categories = categories; }
           );
         }
         // set modal title
@@ -60,14 +60,14 @@ class ModalController {
     }
   }
 
-  public loadModalTabData(tab: number) {
+  public loadModalTabData(tab) {
     if (typeof tab !== 'undefined') {
       let tabList = this.DialogEditor.getDialogTabs();
       return tabList[tab];
     }
   }
 
-  public loadModalBoxData(tab: number, box: number) {
+  public loadModalBoxData(tab, box) {
     if (typeof tab !== 'undefined' &&
         typeof box !== 'undefined') {
       let tabList = this.DialogEditor.getDialogTabs();
@@ -76,7 +76,7 @@ class ModalController {
     }
   }
 
-  public loadModalFieldData(tab: number, box: number, field: number) {
+  public loadModalFieldData(tab, box, field) {
     if (typeof tab !== 'undefined' &&
         typeof box !== 'undefined' &&
         typeof field !== 'undefined') {
@@ -102,7 +102,7 @@ class ModalController {
    * @function modalTabSet
    * @param tab is a name of the tab in the modal
    */
-  public modalTabSet(tab: string) {
+  public modalTabSet(tab) {
     this.modalTab = tab;
   }
 
@@ -112,7 +112,7 @@ class ModalController {
    * @memberof ModalController
    * @function $onChanges
    */
-  public $onChanges(changesObj: any) {
+  public $onChanges(changesObj) {
     if (changesObj.modalOptions && this.modalOptions) {
       this.showModal(this.modalOptions);
     }
@@ -124,7 +124,7 @@ class ModalController {
    * @memberof ModalController
    * @function modalTabIsSet
    */
-  public modalTabIsSet(tab: string) {
+  public modalTabIsSet(tab) {
     return this.modalTab === tab;
   }
 
@@ -199,7 +199,7 @@ class ModalController {
       ].dialog_groups[
         this.elementInfo.boxId
       ].dialog_fields,
-      (field: any) => field.position === this.elementInfo.fieldId
+      (field) => field.position === this.elementInfo.fieldId
     );
     this.DialogEditor.backupSessionStorage(
       this.DialogEditor.getDialogId(),
@@ -224,7 +224,7 @@ class ModalController {
    * @function removeEntry
    * @param entry to remove from array
    */
-  public removeEntry(entry: any) {
+  public removeEntry(entry) {
     _.pull(this.modalData.values, entry);
   }
 
@@ -286,7 +286,7 @@ class ModalController {
    * @memberof ModalController
    * @function showModal
    */
-  public showModal(options: any) {
+  public showModal(options) {
     options.controller = ['parent', function(parent) { this.parent = parent; }];
     options.resolve = {
       parent: () => this
@@ -306,7 +306,7 @@ class ModalController {
    * @memberof ModalController
    * @function buildTemplate
    */
-  private static buildTemplate(component: string) {
+  private static buildTemplate(component) {
     return `<${component}
       modal-data="modalCtrl.parent.modalData"
       element-info="modalCtrl.parent.elementInfo"
@@ -347,8 +347,8 @@ ModalController.$inject = [
 export default class Modal {
   public template = '';
   public transclude = true;
-  public controller: any = ModalController;
-  public bindings: any = {
+  public controller = ModalController;
+  public bindings = {
     modalOptions: '<',
     elementInfo: '<',
     treeOptions: '<',

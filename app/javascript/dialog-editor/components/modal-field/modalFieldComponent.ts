@@ -16,8 +16,8 @@ export default class ModalField extends AbstractModal {
 }
 
 class ModalFieldController extends ModalController {
-  public treeOptions: any;
-  public modalData: any;
+  public treeOptions;
+  public modalData;
 
   public $onInit() {
     this.treeOptions = {

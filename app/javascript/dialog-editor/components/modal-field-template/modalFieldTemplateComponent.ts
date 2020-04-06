@@ -4,10 +4,10 @@
  * @name ModalFieldController
  */
 class ModalFieldController {
-  public modalData: any;
-  public sortableOptionsValues: any;
-  public readonly DROPDOWN_ENTRY_VALUE: number = 0;
-  public readonly DROPDOWN_ENTRY_DESCRIPTION: number = 1;
+  public modalData;
+  public sortableOptionsValues;
+  public readonly DROPDOWN_ENTRY_VALUE = 0;
+  public readonly DROPDOWN_ENTRY_DESCRIPTION = 1;
 
   constructor($element) {
     this.$element = $element;
@@ -20,7 +20,7 @@ class ModalFieldController {
       cursor: 'move',
       opacity: 0.5,
       revert: 50,
-      stop: (e: any, ui: any) => {
+      stop: (e, ui) => {
         this.$element.find('select').selectpicker('refresh');
       },
     };
@@ -53,10 +53,10 @@ ModalFieldController.$inject = ['$element'];
  */
 export default class ModalFieldTemplate {
   public template = ['$attrs', ($attrs) => require(`./${$attrs.template}`)];
-  public scope: boolean = true;
+  public scope = true;
   public controller = ModalFieldController;
-  public controllerAs: string = 'vm';
-  public bindings: any = {
+  public controllerAs = 'vm';
+  public bindings = {
     modalData: '=',
     categories: '=?',
     addEntry: '=?',

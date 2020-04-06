@@ -1,6 +1,6 @@
 export default class DialogEditorService {
-  public data: any = {};
-  public activeTab: number = 0;
+  public data = {};
+  public activeTab = 0;
 
   /**
    * Store data passed in parameter.
@@ -8,11 +8,11 @@ export default class DialogEditorService {
    * @function setData
    * @param {any} nested object containing data of the dialog
    */
-  public setData(data: any) {
+  public setData(data) {
     this.data = data;
     this.undefinedAttrsToBoolean();
     // FIXME: Compensation of default values until it is been resolved in the API
-    this.forEachDialogField((field: any) => {
+    this.forEachDialogField((field) => {
       if (field.hasOwnProperty('values') && _.isArray(field.values)) {
         field.values = field.values.filter(value => value[0] && value[1]);
       }
@@ -75,7 +75,7 @@ export default class DialogEditorService {
    * @function updatePositions
    * @param {any[]} array of elements to sort
    */
-  public updatePositions(elements: any[]) {
+  public updatePositions(elements) {
     elements.forEach((value, key) => value.position = key);
     this.backupSessionStorage(this.getDialogId(), this.data);
   }
@@ -86,7 +86,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function newFieldName
    */
-  public newFieldName(fieldType: string) {
+  public newFieldName(fieldType) {
     let dialogFieldNames = [];
     let newOrdinalNumber = 1;
     this.forEachDialogField((field) => {
@@ -98,15 +98,15 @@ export default class DialogEditorService {
     return fieldType + '_' + newOrdinalNumber;
   }
 
-  public clearSessionStorage(id: string) {
+  public clearSessionStorage(id) {
     sessionStorage.removeItem(this.sessionStorageKey(id));
   }
 
-  public backupSessionStorage(id: string, dialog: any) {
+  public backupSessionStorage(id, dialog) {
     sessionStorage.setItem(this.sessionStorageKey(id), JSON.stringify(dialog));
   }
 
-  public restoreSessionStorage(id: string) {
+  public restoreSessionStorage(id) {
     return JSON.parse(sessionStorage.getItem(this.sessionStorageKey(id)));
   }
 
@@ -117,9 +117,9 @@ export default class DialogEditorService {
    * @function forEachDialogField
    */
   private forEachDialogField(callback) {
-    _.forEach(this.data.content[0].dialog_tabs, (tab: any) => {
-      _.forEach(tab.dialog_groups, (group: any) => {
-        _.forEach(group.dialog_fields, (field: any) => {
+    _.forEach(this.data.content[0].dialog_tabs, (tab) => {
+      _.forEach(tab.dialog_groups, (group) => {
+        _.forEach(group.dialog_fields, (field) => {
           callback(field);
         });
       });
@@ -134,8 +134,8 @@ export default class DialogEditorService {
    */
   private anyDialogFields() {
     let ret = false;
-    _.forEach(this.data.content[0].dialog_tabs, (tab: any) => {
-      _.forEach(tab.dialog_groups, (group: any) => {
+    _.forEach(this.data.content[0].dialog_tabs, (tab) => {
+      _.forEach(tab.dialog_groups, (group) => {
         if (!_.isEmpty(group.dialog_fields)) {
           ret = true;
         }
@@ -179,7 +179,7 @@ export default class DialogEditorService {
     });
   }
 
-  private sessionStorageKey(id: string) {
+  private sessionStorageKey(id) {
     return 'service_dialog-' + id;
   }
 }

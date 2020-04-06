@@ -1,7 +1,7 @@
 export class DialogEditorController {
-  public modalOptions: any;
-  public elementInfo: any;
-  public treeOptions: any;
+  public modalOptions;
+  public elementInfo;
+  public treeOptions;
 
   public setupModalOptions(type, tab, box, field) {
     const components = {

@@ -1,12 +1,12 @@
 export class ModalController {
-  private uibModalInstance: any;
-  private saveModal: any;
+  private uibModalInstance;
+  private saveModal;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
 
-  public closeModal(save: boolean) {
+  public closeModal(save) {
     if (save) {
       this.saveModal();
     }
@@ -18,8 +18,8 @@ ModalController.$inject = ['DialogEditor'];
 
 export class AbstractModal {
   public controller = ModalController;
-  public controllerAs: string = 'vm';
-  public bindings: any = {
+  public controllerAs = 'vm';
+  public bindings = {
     modalData: '=',
     elementInfo: '<',
     categories: '=?',

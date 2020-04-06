@@ -5,9 +5,9 @@
  * @name TabListController
  */
 class TabListController {
-  public tabList: any;
-  public sortableOptions: any;
-  public setupModalOptions: any;
+  public tabList;
+  public sortableOptions;
+  public setupModalOptions;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
@@ -32,11 +32,11 @@ class TabListController {
       cursor: 'move',
       helper: 'clone',
       revert: 50,
-      stop: (e: any, ui: any) => {
-        let sortedTab: any = angular.element(ui.item).scope().$parent;
+      stop: (e, ui) => {
+        let sortedTab = angular.element(ui.item).scope().$parent;
         let tabList = sortedTab.vm.tabList;
         this.DialogEditor.updatePositions(tabList);
-        let activeTab: any = _.find(tabList, {active: true});
+        let activeTab = _.find(tabList, {active: true});
         this.DialogEditor.activeTab = activeTab.position;
       },
     };
@@ -81,7 +81,7 @@ class TabListController {
    * @function removeTab
    * @param {number} id is an index of remove tab
    */
-  public removeTab(id: number) {
+  public removeTab(id) {
     // pass the activity to other tab, if the deleted is active
     if (this.tabList[id].active) {
       if ((this.tabList.length - 1) === this.tabList[id].position &&
@@ -94,7 +94,7 @@ class TabListController {
       }
     }
     // remove tab with matching id
-    _.remove(this.tabList, (tab: any) => tab.position === id);
+    _.remove(this.tabList, (tab) => tab.position === id);
     this.DialogEditor.backupSessionStorage(
       this.DialogEditor.getDialogId(),
       this.DialogEditor.data);
@@ -105,7 +105,7 @@ class TabListController {
       return;
     }
     // set activity in the service
-    let activeTabData: any = _.find(
+    let activeTabData = _.find(
       this.tabList,
       {active: true}
     );
@@ -120,7 +120,7 @@ class TabListController {
    * @function selectTab
    * @param {number} id is an index of remove tab
    */
-  public selectTab(id: number) {
+  public selectTab(id) {
     // deactivate currently active
     let deselectedTab = _.find(
       this.tabList,
@@ -149,8 +149,8 @@ TabListController.$inject = ['DialogEditor'];
  */
 export default class TabList {
   public template = require('./tab-list.html');
-  public controller: any = TabListController;
-  public controllerAs: string = 'vm';
+  public controller = TabListController;
+  public controllerAs = 'vm';
   public bindings = {
     setupModalOptions: '&'
   };
