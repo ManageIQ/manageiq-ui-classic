@@ -10,23 +10,25 @@ exports[`RemoveCatalogItemModal should correctly render modal for multiple catal
     <h4>
       Are you sure you want to permanently delete the following catalog item?
     </h4>
-    <ul
-      key="123"
-    >
-      <h4>
-        <strong>
-          name123
-        </strong>
-      </h4>
-    </ul>
-    <ul
-      key="456"
-    >
-      <h4>
-        <strong>
-          name456
-        </strong>
-      </h4>
+    <ul>
+      <li
+        key="123"
+      >
+        <h4>
+          <strong>
+            name123
+          </strong>
+        </h4>
+      </li>
+      <li
+        key="456"
+      >
+        <h4>
+          <strong>
+            name456
+          </strong>
+        </h4>
+      </li>
     </ul>
   </div>
 </ModalBody>
@@ -42,14 +44,16 @@ exports[`RemoveCatalogItemModal should correctly render modal for single catalog
     <h4>
       Are you sure you want to permanently delete the following catalog item?
     </h4>
-    <ul
-      key="123"
-    >
-      <h4>
-        <strong>
-          name123
-        </strong>
-      </h4>
+    <ul>
+      <li
+        key="123"
+      >
+        <h4>
+          <strong>
+            name123
+          </strong>
+        </h4>
+      </li>
     </ul>
   </div>
 </ModalBody>
