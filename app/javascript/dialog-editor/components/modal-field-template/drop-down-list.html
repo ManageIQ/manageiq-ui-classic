@@ -1,0 +1,188 @@
+<div ng-if="vm.modalTabIsSet('options') && !vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Required'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.required"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Default value'|translate}}"
+         ng-if="!vm.modalData.options.force_multi_value">
+      <select class="form-control" miq-select ng-attr-title="{{'Nothing Selected'|translate}}"
+              ng-model="vm.modalData.default_value">
+        <option value="" translate>None</option>
+        <option ng-repeat="value in vm.modalData.values" value="{{value[0]}}">{{value[1]}}</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Default value'|translate}}"
+         ng-if="vm.modalData.options.force_multi_value">
+      <select class="form-control" multiple miq-select
+              ng-model="vm.modalData.default_value">
+        <option ng-repeat="value in vm.modalData.values" value="{{value[0]}}">{{value[1]}}</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Value type'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.data_type">
+        <option value="integer" translate>Integer</option>
+        <option selected="selected" value="string" translate>String</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Sort by'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.options.sort_by">
+        <option value="none" translate>None</option>
+        <option value="description" translate>Description</option>
+        <option value="value" translate>Value</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Sort order'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.options.sort_order">
+        <option selected="selected" value="ascending" translate>Ascending</option>
+        <option value="descending" translate>Descending</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Multiselect'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.options.force_multi_value"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-input-class="col-sm-6" class="form-inline" pf-label="{{'Entries'|translate}}" required>
+      <div ng-if='vm.modalData.options.sort_by !== "none"'>
+        <div ng-attr-class="static-field" ng-repeat="entry in vm.modalData.values">
+          <input ng-attr-id="description-{{$index}}"
+                 ng-blur="vm.entriesChange()"
+                 name="description"
+                 ng-model="entry[vm.DROPDOWN_ENTRY_DESCRIPTION]"
+                 type="text"
+                 placeholder="{{'Description'|translate}}"
+                 required/>
+          <input ng-attr-id="value-{{$index}}"
+                 ng-blur="vm.entriesChange()"
+                 name="value"
+                 ng-model="entry[vm.DROPDOWN_ENTRY_VALUE]"
+                 type="text"
+                 placeholder="{{'Value'|translate}}"
+                 required/>
+          <a ng-click='vm.removeEntry(entry); vm.entriesChange()'><i class='pficon-close'></i></a>
+        </div>
+      </div>
+      <div ng-if='vm.modalData.options.sort_by === "none"'>
+        <div ui-sortable='vm.sortableOptionsValues'
+             ng-model='vm.modalData.values'>
+          <div ng-attr-class="draggable-field" ng-repeat="entry in vm.modalData.values">
+            <input ng-attr-id="description-{{$index}}"
+                   ng-blur="vm.entriesChange()"
+                   name="description"
+                   ng-model="entry[vm.DROPDOWN_ENTRY_DESCRIPTION]"
+                   type="text"
+                   placeholder="{{'Description'|translate}}"
+                   required/>
+            <input ng-attr-id="value-{{$index}}"
+                   ng-blur="vm.entriesChange()"
+                   name="value"
+                   ng-model="entry[vm.DROPDOWN_ENTRY_VALUE]"
+                   type="text"
+                   placeholder="{{'Value'|translate}}"
+                   required/>
+            <a ng-click='vm.removeEntry(entry); vm.entriesChange()'><i class='pficon-close'></i></a>
+          </div>
+        </div>
+      </div>
+      <a ng-click='vm.addEntry()'><i class='pficon-add-circle-o'></i></a>
+    </div>
+    <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                        modal-data="vm.modalData">
+    </dialog-editor-modal-field-template>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('options') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div ng-show="!vm.treeOptions.show">
+      <div pf-form-group pf-label="{{'Entry Point'|translate}}">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-value="vm.showFullyQualifiedName(vm.modalData.resource_action)" disabled>
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="vm.treeOptions.toggle();"><i class="ff ff-load-balancer"></i></button>
+          </span>
+        </div>
+      </div>
+      <dialog-editor-modal-field-template template="dynamic-values.html"
+                                          modal-data="vm.modalData">
+      </dialog-editor-modal-field-template>
+      <div pf-form-group pf-label="{{'Required'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.required"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate}}">
+      </div>
+      <div pf-form-group pf-label="{{'Value type'|translate}}">
+        <select class="form-control" miq-select ng-model="vm.modalData.data_type">
+          <option value="integer" translate>Integer</option>
+          <option selected="selected" value="string" translate>String</option>
+        </select>
+      </div>
+      <div pf-form-group pf-label="{{'Multiselect'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.options.force_multi_value"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate}}">
+      </div>
+      <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                          modal-data="vm.modalData">
+      </dialog-editor-modal-field-template>
+    </div>
+
+    <dialog-editor-tree-selector ng-if="vm.treeOptions.show"
+                                 tree-options="vm.treeOptions">
+    </dialog-editor-tree-selector>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('overridable') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Sort by'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.options.sort_by">
+        <option value="none" translate>None</option>
+        <option value="description" translate>Description</option>
+        <option value="value" translate>Value</option>
+      </select>
+    </div>
+    <div pf-form-group pf-label="{{'Sort order'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.options.sort_order">
+        <option selected="selected" value="ascending" translate>Ascending</option>
+        <option value="descending" translate>Descending</option>
+      </select>
+    </div>
+  </form>
+</div>

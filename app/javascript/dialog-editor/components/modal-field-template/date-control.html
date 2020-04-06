@@ -1,0 +1,115 @@
+<div ng-if="vm.modalTabIsSet('options') && !vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Required'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.required"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Default value'|translate}}">
+      <div class="dateTimePadding">
+        <p class="input-group">
+          <input uib-datepicker-popup="MM/dd/yyyy"
+                 type="text"
+                 class="form-control"
+                 ng-model="vm.modalData.default_value"
+                 is-open="open"
+                 close-text="{{'Close'|translate}}"/>
+          <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open = !open">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+    </div>
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Show Past Dates'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.options.show_past_dates"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                        modal-data="vm.modalData">
+    </dialog-editor-modal-field-template>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('options') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div ng-show="!vm.treeOptions.show">
+      <div pf-form-group pf-label="{{'Entry Point'|translate}}">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-value="vm.showFullyQualifiedName(vm.modalData.resource_action)" disabled>
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="vm.treeOptions.toggle();"><i class="ff ff-load-balancer"></i></button>
+          </span>
+        </div>
+      </div>
+      <div pf-form-group pf-label="{{'Show Refresh Button'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.show_refresh_button"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate }}"/>
+      </div>
+      <div pf-form-group pf-label="{{'Show Past Dates'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.options.show_past_dates"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate}}">
+      </div>
+      <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                          modal-data="vm.modalData">
+      </dialog-editor-modal-field-template>
+    </div>
+
+    <div pf-form-group pf-label="{{'Required'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.required"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+
+    <dialog-editor-tree-selector ng-if="vm.treeOptions.show"
+                                 tree-options="vm.treeOptions">
+    </dialog-editor-tree-selector>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('overridable') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+  </form>
+</div>

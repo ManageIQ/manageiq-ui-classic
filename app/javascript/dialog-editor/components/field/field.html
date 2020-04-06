@@ -1,0 +1,129 @@
+<div ng-switch on="vm.fieldData.type" class="form-group">
+  <label class="control-label col-sm-2">{{ vm.fieldData.label }}</label>
+  <div class="col-sm-5">
+
+    <!-- text box -->
+    <input ng-switch-when="DialogFieldTextBox"
+           ng-model="vm.fieldData.default_value"
+           class="form-control"
+           type="{{ vm.fieldData.options.protected ? 'password' : 'text' }}"
+           placeholder="{{'Default value'|translate}}">
+
+    <!-- text area -->
+    <textarea ng-switch-when="DialogFieldTextAreaBox"
+              ng-model="vm.fieldData.default_value"
+              class="form-control"
+              rows="4">
+      {{ vm.fieldData.default_value }}
+    </textarea>
+
+    <!-- check box -->
+    <input ng-switch-when="DialogFieldCheckBox"
+           ng-model="vm.fieldData.default_value"
+           ng-true-value="'t'"
+           type="checkbox">
+
+    <!-- date control -->
+    <p class="input-group" ng-switch-when="DialogFieldDateControl">
+      <input uib-datepicker-popup="MM/dd/yyyy"
+             type="text"
+             class="form-control"
+             ng-model="vm.fieldData.default_value"
+             is-open="open"
+             close-text="{{'Close'|translate}}"/>
+      <span class="input-group-btn">
+        <button type="button"
+                class="btn btn-default"
+                ng-click="open = !open">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </span>
+    </p>
+    <!-- date time control -->
+    <div ng-switch-when="DialogFieldDateTimeControl">
+      <div class="col-sm-6 dateTimePadding">
+        <p class="input-group">
+          <input uib-datepicker-popup="MM/dd/yyyy"
+                 type="text"
+                 class="form-control"
+                 ng-model="vm.fieldData.default_value"
+                 is-open="open"
+                 close-text="{{'Close'|translate}}"/>
+          <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open = !open">
+              <i class="fa fa-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div class="col-sm-6">
+        <uib-timepicker ng-model="vm.fieldData.default_value"></uib-timepicker>
+      </div>
+    </div>
+
+    <!-- drop down list -->
+    <div ng-switch-when="DialogFieldDropDownList">
+      <div ng-if="!vm.fieldData.options.force_multi_value">
+        <select class="form-control" miq-select
+                ng-model="vm.fieldData.default_value">
+          <option value="" translate>None</option>
+          <option ng-repeat="value in vm.fieldData.values" value="{{value[0]}}">{{value[1]}}</option>
+        </select>
+      </div>
+      <div ng-if="vm.fieldData.options.force_multi_value">
+        <select class="form-control" multiple miq-select
+                ng-init="vm.convertValuesToArray()"
+                ng-model="vm.fieldData.default_value">
+          <option ng-repeat="value in vm.fieldData.values" value="{{value[0]}}">{{value[1]}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- radio button -->
+    <span ng-switch-when="DialogFieldRadioButton">
+      <label ng-repeat="option in vm.fieldData.values"
+             class="radio-inline">
+        <input type="radio"
+               name="{{vm.fieldData.name}}"
+               ng-model="vm.fieldData.default_value"
+               ng-value="option[0]">
+        {{ option[1] }}
+      </label>
+    </span>
+
+    <!-- tag control -->
+    <select ng-switch-when="DialogFieldTagControl"
+            miq-select
+            class="form-control">
+      <option ng-repeat="option in vm.fieldData.values"
+              value="{{ option[0] }}">
+        {{ option[1] }}
+      </option>
+    </select>
+
+  </div>
+  <div class="col-sm-5 editor-field-actions">
+    <button type="button" class="close hide"
+            ng-click="vm.removeField(
+              vm.service.activeTab,
+              vm.boxPosition,
+              vm.fieldData.position
+            )">
+            <span aria-hidden="true">
+              <i class="fa fa-times"></i>
+            </span>
+    </button>
+    <button type="button" class="close hide"
+            ng-click="vm.setupModalOptions({
+              type: 'field',
+              tab: vm.service.activeTab,
+              box: vm.boxPosition,
+              field: vm.fieldData.position
+            })">
+      <span aria-hidden="true">
+        <i class="pf pficon-edit"></i>
+      </span>
+    </button>
+  </div>
+</div>

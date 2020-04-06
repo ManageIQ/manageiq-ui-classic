@@ -1,0 +1,61 @@
+.dialog-designer-container {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+
+  .toolbox-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    .editable-fields-container {
+      padding-top: 10px;
+      padding-left: 120px;
+      width: 80%;
+    }
+
+    a {
+      color: #000;
+    }
+  }
+}
+
+.create-tab {
+  cursor: pointer !important;
+}
+
+.select-tab {
+  cursor: pointer !important;
+
+  &:hover {
+    i {
+      display: initial !important;
+    }
+  }
+}
+
+.tab-icon {
+  opacity: .6;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.pficon-edit.tab-icon {
+  padding-left: 6px;
+}
+
+.editor-field-actions {
+  .fa {
+    float: right;
+    font-size: 22px;
+  }
+
+  .pf {
+    float: right;
+    font-size: 16px;
+    padding-top: 3px;
+    padding-right: 8px;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="pull-right">
+  <button type="button" class="close" ng-click="$ctrl.treeOptions.toggle()" aria-hidden="true">
+    <span class="pficon pficon-close"></span>
+  </button>
+</div>
+
+<div ng-if="!$ctrl.treeOptions.data" class="spinner spinner-lg"></div>
+<div ng-if="$ctrl.treeOptions.data">
+  <miq-tree-selector
+    name="tree-selector"
+    data="$ctrl.treeOptions.data"
+    selectable="{key: '^aei-'}"
+    on-select="$ctrl.treeOptions.onSelect(node)"
+    lazy-load="$ctrl.treeOptions.lazyLoad(node)"
+    selected="$ctrl.treeOptions.selected"
+  ></miq-tree-selector>
+</div>
+
+<div class="col-sm-4">
+  <div class="form-group pull-right">
+    <label class="control-label" translate>Include domain prefix in the path:</label>
+    <input bs-switch
+           type="checkbox"
+           ng-model="$ctrl.treeOptions.includeDomain"
+           switch-on-text="{{'Yes'|translate}}"
+           switch-off-text="{{'No'|translate}}"/>
+  </div>
+</div>

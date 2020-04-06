@@ -1,0 +1,11 @@
+<ul class="static-field-list">
+  <li class="static-field-item"
+      ng-repeat='dialogField in vm.fields'
+      data-drag="true"
+      jqyoui-draggable="{animate:true, placeholder: 'keep', deepCopy: true}"
+      data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"
+      ng-model="dialogField.placeholders">
+      <i class="static-field-icon {{dialogField.icon}}"></i>
+      <div>{{dialogField.label}}</div>
+  </li>
+</ul>

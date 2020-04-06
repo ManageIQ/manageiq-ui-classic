@@ -1,0 +1,115 @@
+<div ng-if="vm.modalTabIsSet('options') && !vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Default value'|translate}}">
+      <input id="default_value" name="default_value"
+             ng-model="vm.modalData.default_value"
+             type="{{vm.modalData.options.protected ? 'password' : 'text'}}"/>
+    </div>
+    <div pf-form-group pf-label="{{'Protected'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.options.protected"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate }}"/>
+    </div>
+    <div pf-form-group pf-label="{{'Required'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.required"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}"/>
+    </div>
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}"/>
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Value type'|translate}}">
+      <select class="form-control" miq-select ng-model="vm.modalData.data_type">
+        <option value="integer" translate>Integer</option>
+        <option selected="selected" value="string" translate>String</option>
+      </select>
+    </div>
+    <dialog-editor-validation modal-data="vm.modalData"></dialog-editor-validation>
+    <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                        modal-data="vm.modalData">
+    </dialog-editor-modal-field-template>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('options') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div ng-show="!vm.treeOptions.show">
+      <div pf-form-group pf-label="{{'Entry Point'|translate}}">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-value="vm.showFullyQualifiedName(vm.modalData.resource_action)" disabled>
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="vm.treeOptions.toggle();"><i class="ff ff-load-balancer"></i></button>
+          </span>
+        </div>
+      </div>
+      <dialog-editor-modal-field-template template="dynamic-values.html"
+                                          modal-data="vm.modalData">
+      </dialog-editor-modal-field-template>
+      <div pf-form-group pf-label="{{'Required'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.required"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate}}">
+      </div>
+      <div pf-form-group pf-label="{{'Protected'|translate}}">
+        <input bs-switch
+               ng-model="vm.modalData.options.protected"
+               type="checkbox"
+               switch-on-text="{{'Yes'|translate}}"
+               switch-off-text="{{'No'|translate }}"/>
+      </div>
+      <div pf-form-group pf-label="{{'Value type'|translate}}">
+        <select class="form-control" miq-select ng-model="vm.modalData.data_type">
+          <option value="integer" translate>Integer</option>
+          <option selected="selected" value="string" translate>String</option>
+        </select>
+      </div>
+      <dialog-editor-validation modal-data="vm.modalData"></dialog-editor-validation>
+      <dialog-editor-modal-field-template template="fields-to-refresh.html"
+                                          modal-data="vm.modalData">
+      </dialog-editor-modal-field-template>
+    </div>
+
+    <dialog-editor-tree-selector ng-if="vm.treeOptions.show"
+                                 tree-options="vm.treeOptions">
+    </dialog-editor-tree-selector>
+  </form>
+</div>
+<div ng-if="vm.modalTabIsSet('overridable') && vm.modalData.dynamic">
+  <form class="form-horizontal">
+    <div pf-form-group pf-label="{{'Read only'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.read_only"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Visible'|translate}}">
+      <input bs-switch
+             ng-model="vm.modalData.visible"
+             type="checkbox"
+             switch-on-text="{{'Yes'|translate}}"
+             switch-off-text="{{'No'|translate}}">
+    </div>
+    <div pf-form-group pf-label="{{'Default value'|translate}}">
+      <input id="default_value" name="default_value"
+             ng-model="vm.modalData.default_value"
+             type="{{vm.modalData.options.protected ? 'password' : 'text'}}"/>
+    </div>
+  </form>
+</div>

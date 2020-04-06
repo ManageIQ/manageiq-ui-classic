@@ -1,0 +1,25 @@
+@import 'dialog-editor';
+@import 'dialog-editor-toolbox';
+@import 'dialog-editor-boxes';
+
+/* Begin Patternfly Tab overrides used in the Dialog Editor */
+
+.dialog-editor-tab-list {
+  margin-bottom: 20px;
+}
+
+.delete-tab {
+  opacity: .3;
+  visibility: visible;
+}
+
+.select-tab {
+  &:hover {
+    .delete-tab {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/* End Patternfly Tab overrides */
