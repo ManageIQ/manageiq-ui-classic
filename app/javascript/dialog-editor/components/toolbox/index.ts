@@ -1,5 +1,5 @@
 import Toolbox from './toolboxComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorFieldStatic', new Toolbox);
 };

@@ -1,5 +1,5 @@
 import Box from './boxComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorBoxes', new Box);
 };

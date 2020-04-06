@@ -1,5 +1,5 @@
 import DialogEditor from './dialogEditorComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditor', new DialogEditor);
 };

@@ -1,5 +1,5 @@
 import ModalTab from './modalTabComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorModalTab', new ModalTab);
 };

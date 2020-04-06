@@ -1,5 +1,5 @@
 import ModalBox from './modalBoxComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorModalBox', new ModalBox);
 };

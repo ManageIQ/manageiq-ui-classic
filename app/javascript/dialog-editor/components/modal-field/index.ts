@@ -1,5 +1,5 @@
 import ModalField from './modalFieldComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorModalField', new ModalField);
 };

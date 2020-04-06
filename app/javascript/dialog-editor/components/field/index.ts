@@ -1,5 +1,5 @@
 import Field from './fieldComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorField', new Field);
 };

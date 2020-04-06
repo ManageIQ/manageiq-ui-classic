@@ -1,5 +1,5 @@
 import Validation from './validation';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorValidation', Validation);
 };

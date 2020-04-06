@@ -1,5 +1,5 @@
 import TreeSelector from './treeSelector';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorTreeSelector', TreeSelector);
 };

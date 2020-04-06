@@ -1,5 +1,5 @@
 import Modal from './modalComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorModal', new Modal);
 };

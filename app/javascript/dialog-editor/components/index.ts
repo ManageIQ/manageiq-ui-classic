@@ -11,7 +11,7 @@ import toolbox from './toolbox';
 import treeSelector from './tree-selector';
 import validation from './validation';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   box(module);
   dialogEditor(module);
   field(module);

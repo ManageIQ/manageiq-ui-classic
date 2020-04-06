@@ -1,5 +1,5 @@
 import TabList from './tabListComponent';
 
-export default (module: ng.IModule) => {
+export default (module) => {
   module.component('dialogEditorTabs', new TabList);
 };
