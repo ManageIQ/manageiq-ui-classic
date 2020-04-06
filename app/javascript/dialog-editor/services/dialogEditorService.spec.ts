@@ -1,5 +1,4 @@
 import DialogEditor from './dialogEditorService';
-import * as angular from 'angular';
 
 describe('DialogEditor test', () => {
   let dialogEditor;

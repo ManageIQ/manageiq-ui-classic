@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 /**
  * Controller for the Dialog Editor Modal Field Template component
  * @ngdoc controller

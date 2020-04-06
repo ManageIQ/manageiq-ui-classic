@@ -1,5 +1,3 @@
-import * as angular from 'angular';
-
 describe('modalFieldTemplateSpec', () => {
   describe('component', () => {
     let scope, compile, template, compiledTemplate;

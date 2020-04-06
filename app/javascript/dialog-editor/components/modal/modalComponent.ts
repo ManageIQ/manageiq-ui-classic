@@ -1,8 +1,3 @@
-import * as _ from 'lodash';
-import * as ng from 'angular';
-import {sprintf} from 'sprintf-js';
-import {__} from '../../../common/translateFunction';
-
 /**
  * Controller for the Dialog Editor modal service
  * @memberof miqStaticAssets

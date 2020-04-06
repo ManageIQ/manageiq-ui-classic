@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 export class ModalController {
   private uibModalInstance: any;
   private saveModal: any;

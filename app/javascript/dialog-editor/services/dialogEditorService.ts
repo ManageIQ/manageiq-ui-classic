@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 export default class DialogEditorService {
   public data: any = {};
   public activeTab: number = 0;

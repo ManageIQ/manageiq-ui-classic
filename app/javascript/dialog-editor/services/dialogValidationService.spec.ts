@@ -1,5 +1,4 @@
 import DialogValidation from './dialogValidationService';
-import * as angular from 'angular';
 
 describe('DialogValidation test', () => {
   let dialogValidation;

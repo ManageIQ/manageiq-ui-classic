@@ -1,7 +1,3 @@
-import {__} from '../../common/translateFunction';
-import {sprintf} from 'sprintf-js';
-import * as _ from 'lodash';
-
 const tagHasCategory = (field) => field.options && field.options.category_id;
 
 export default class DialogValidationService {

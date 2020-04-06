@@ -1,5 +1,3 @@
-import * as ng from 'angular';
-
 export class DialogEditorController {
   public modalOptions: any;
   public elementInfo: any;
