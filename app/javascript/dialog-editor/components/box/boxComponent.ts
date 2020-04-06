@@ -103,7 +103,7 @@ class BoxController {
    * @param {number} ui jQuery object
    */
   public droppableOptions(e: any, ui: any) {
-    const elementScope: any = ng.element(e.target).scope();
+    const elementScope: any = angular.element(e.target).scope();
     let droppedItem: any = elementScope.dndDragItem;
     let droppedPlace: any = elementScope.box;
     // update name for the dropped field

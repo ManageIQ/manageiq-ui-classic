@@ -234,7 +234,7 @@ class ModalController {
    * @function currentCategoryEntries
    */
   public currentCategoryEntries() {
-    if (ng.isDefined(this.categories)) {
+    if (angular.isDefined(this.categories)) {
       return _.find(
         this.categories.resources,
         {
