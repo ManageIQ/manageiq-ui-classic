@@ -4,8 +4,6 @@ export default class DialogEditorService {
 
   /**
    * Store data passed in parameter.
-   * @memberof DialogEditorService
-   * @function setData
    * @param {any} nested object containing data of the dialog
    */
   setData(data) {
@@ -21,8 +19,6 @@ export default class DialogEditorService {
 
   /**
    * Return dialog id loaded at service.
-   * @memberof DialogEditorService
-   * @function getDialogId
    */
   getDialogId() {
     return String(this.data.content[0].id || 'new');
@@ -30,8 +26,6 @@ export default class DialogEditorService {
 
   /**
    * Return dialog label loaded at service.
-   * @memberof DialogEditorService
-   * @function getDialogLabel
    */
   getDialogLabel() {
     return this.data.content[0].label;
@@ -39,8 +33,6 @@ export default class DialogEditorService {
 
   /**
    * Return dialog description loaded at service.
-   * @memberof DialogEditorService
-   * @function getDialogDescription
    */
   getDialogDescription() {
     return this.data.content[0].description;
@@ -48,8 +40,6 @@ export default class DialogEditorService {
 
   /**
    * Return dialog tabs loaded at service.
-   * @memberof DialogEditorService
-   * @function getDialogTabs
    */
   getDialogTabs() {
     return this.data.content[0].dialog_tabs;
@@ -71,8 +61,6 @@ export default class DialogEditorService {
 
   /**
    * Update positions for elements in array.
-   * @memberof DialogEditorService
-   * @function updatePositions
    * @param {any[]} array of elements to sort
    */
   updatePositions(elements) {
@@ -83,8 +71,6 @@ export default class DialogEditorService {
   /**
    * Iterates through the list of dialog field names and creates a new
    * unique name for the added element
-   * @memberof DialogEditorService
-   * @function newFieldName
    */
   newFieldName(fieldType) {
     let dialogFieldNames = [];
@@ -113,8 +99,6 @@ export default class DialogEditorService {
   /**
    * Iterates through all the dialog fields and calls callback method
    * sent through parameter
-   * @memberof DialogEditorService
-   * @function forEachDialogField
    */
   forEachDialogField(callback) {
     _.forEach(this.data.content[0].dialog_tabs, (tab) => {
@@ -129,8 +113,6 @@ export default class DialogEditorService {
   /**
    * Function iterates through all the groups in the dialog editor
    * and returns true if any dialog fields are present
-   * @memberof DialogEditorService
-   * @function anyDialogFields
    */
   anyDialogFields() {
     let ret = false;
@@ -148,8 +130,6 @@ export default class DialogEditorService {
    * Function is used to replace undefined values in dialogs
    * with boolean, so the bootstrap switch is not initialized with
    * undefined state
-   * @memberof DialogEditorService
-   * @function undefinedAttrsToBoolean
    */
   undefinedAttrsToBoolean() {
     if (!this.anyDialogFields()) {

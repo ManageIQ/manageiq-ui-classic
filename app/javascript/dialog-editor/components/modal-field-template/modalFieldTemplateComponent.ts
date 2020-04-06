@@ -1,7 +1,5 @@
 /**
  * Controller for the Dialog Editor Modal Field Template component
- * @ngdoc controller
- * @name ModalFieldController
  */
 class ModalFieldController {
   modalData;
@@ -40,9 +38,6 @@ class ModalFieldController {
 ModalFieldController.$inject = ['$element'];
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorModalFieldTemplate
  * @description
  *    Component contains templates for the modal for each field type
  * @example

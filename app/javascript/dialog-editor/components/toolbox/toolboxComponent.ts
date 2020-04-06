@@ -39,9 +39,6 @@ class DialogField {
 
 /**
  * Controller for the Dialog Editor toolbox component
- * @memberof miqStaticAssets
- * @ngdoc controller
- * @name ToolboxController
  */
 export class ToolboxController {
   fields = {
@@ -141,9 +138,6 @@ export class ToolboxController {
 }
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorFieldStatic
  * @description
  *    Component is used as a toolbox for the Dialog Editor.
  * @example

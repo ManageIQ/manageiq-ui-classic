@@ -1,8 +1,5 @@
 /**
  * Controller for the Dialog Editor tab list component
- * @memberof miqStaticAssets
- * @ngdoc controller
- * @name TabListController
  */
 class TabListController {
   tabList;
@@ -15,8 +12,6 @@ class TabListController {
 
   /**
    * Activate the first tab in tab list, if there is any.
-   * @memberof TabListController
-   * @function onInit
    */
   $onInit() {
     // load tabs data from the service
@@ -46,8 +41,6 @@ class TabListController {
    * Add a new tab to the list.
    * New tab is automatically appended to the last position of the list and
    * set as active.
-   * @memberof TabListController
-   * @function addTab
    */
   addTab() {
     // deactivate currently active tab
@@ -77,8 +70,6 @@ class TabListController {
    * After removing tab, position attributes needs to be updated.
    * If the tab to delete is active in the moment of the deletion, the
    * activity goes to the other tab.
-   * @memberof TabListController
-   * @function removeTab
    * @param {number} id is an index of remove tab
    */
   removeTab(id) {
@@ -116,8 +107,6 @@ class TabListController {
 
   /**
    * Assign activity to the selected tab.
-   * @memberof TabListController
-   * @function selectTab
    * @param {number} id is an index of remove tab
    */
   selectTab(id) {
@@ -137,9 +126,6 @@ class TabListController {
 TabListController.$inject = ['DialogEditor'];
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorTabs
  * @description
  *    Component implementing behaviour for the tabs inside of
  *    the dialogs.

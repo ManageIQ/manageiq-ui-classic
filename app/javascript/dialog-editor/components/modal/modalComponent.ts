@@ -1,8 +1,5 @@
 /**
  * Controller for the Dialog Editor modal service
- * @memberof miqStaticAssets
- * @ngdoc controller
- * @name ModalController
  */
 class ModalController {
   modalTab = 'element_information';
@@ -89,8 +86,6 @@ class ModalController {
 
   /**
    * Load categories data from API.
-   * @memberof ModalController
-   * @function resolveCategories
    */
   resolveCategories() {
     return this.DialogEditorHttp.loadCategories();
@@ -98,8 +93,6 @@ class ModalController {
 
   /**
    * Store the name of the tab, that is currently selected.
-   * @memberof ModalController
-   * @function modalTabSet
    * @param tab is a name of the tab in the modal
    */
   modalTabSet(tab) {
@@ -109,8 +102,6 @@ class ModalController {
   /**
    * Watches attribute 'modalOptions', and if it changes,
    * calls method to display the modal.
-   * @memberof ModalController
-   * @function $onChanges
    */
   $onChanges(changesObj) {
     if (changesObj.modalOptions && this.modalOptions) {
@@ -121,8 +112,6 @@ class ModalController {
   /**
    * Returns true/false according to which tab is currently
    * selected in the modal.
-   * @memberof ModalController
-   * @function modalTabIsSet
    */
   modalTabIsSet(tab) {
     return this.modalTab === tab;
@@ -130,8 +119,6 @@ class ModalController {
 
   /**
    * Check for changes in the modal.
-   * @memberof ModalController
-   * @function modalUnchanged
    */
   modalUnchanged() {
     let elements = {
@@ -151,8 +138,6 @@ class ModalController {
 
   /**
    * Store modified data back to the service.
-   * @memberof ModalController
-   * @function saveDialogFieldDetails
    */
   saveDialogFieldDetails() {
     switch (this.elementInfo.type) {
@@ -189,8 +174,6 @@ class ModalController {
 
   /**
    * Delete dialog field selected in modal.
-   * @memberof ModalController
-   * @function deleteField
    */
   deleteField() {
     _.remove(
@@ -208,8 +191,6 @@ class ModalController {
 
   /**
    * Add entry for radio button / dropdown select.
-   * @memberof ModalFieldController
-   * @function addEntry
    */
   addEntry() {
     if (this.modalData.values == null) {
@@ -220,8 +201,6 @@ class ModalController {
 
   /**
    * Remove entry for radio button / dropdown select
-   * @memberof ModalFieldController
-   * @function removeEntry
    * @param entry to remove from array
    */
   removeEntry(entry) {
@@ -230,8 +209,6 @@ class ModalController {
 
   /**
    * Finds entries for the selected category.
-   * @memberof ModalController
-   * @function currentCategoryEntries
    */
   currentCategoryEntries() {
     if (angular.isDefined(this.categories)) {
@@ -247,8 +224,6 @@ class ModalController {
   /**
    * Updates fields associated with dynamic fields after
    * changing the dynamic field to static
-   * @memberof ModalController
-   * @function updateDialogFieldResponders
    */
   updateDialogFieldResponders(changedFieldName) {
     this.DialogEditor.forEachDialogField((field) => {
@@ -264,8 +239,6 @@ class ModalController {
 
   /**
    * Finds entries for the selected TagControl and sets them.
-   * @memberof ModalController
-   * @function setupCategoryOptions
    */
   setupCategoryOptions() {
     let vm = this;
@@ -283,8 +256,6 @@ class ModalController {
    * Receives specification of which modal should be created and it's
    * parameters, sets default tab, loads the data of the element edited in modal
    * and displays the modal.
-   * @memberof ModalController
-   * @function showModal
    */
   showModal(options) {
     options.controller = ['parent', function(parent) { this.parent = parent; }];
@@ -303,8 +274,6 @@ class ModalController {
    * Building of component template.
    * New component automatically has access to any of these bindings
    * and if a new one is needed, it should be added here to be available.
-   * @memberof ModalController
-   * @function buildTemplate
    */
   static buildTemplate(component) {
     return `<${component}
@@ -334,9 +303,6 @@ ModalController.$inject = [
 ];
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorModal
  * @description
  *    Component implementing behaviour for the boxes inside of
  *    the dialogs tabs.

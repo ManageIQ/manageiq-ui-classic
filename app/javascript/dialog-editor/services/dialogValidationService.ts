@@ -50,8 +50,6 @@ export default class DialogValidationService {
 
   /**
    * Run validations across each dialog elements.
-   * @memberof DialogValidationService
-   * @function dialogIsValid
    */
   dialogIsValid(dialogData) {
     this.invalid.message = null;

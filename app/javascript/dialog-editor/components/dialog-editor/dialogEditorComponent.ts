@@ -25,9 +25,6 @@ export class DialogEditorController {
 }
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditor
  * @description
  *    Top-level dialog editor component.
  * @example

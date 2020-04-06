@@ -1,9 +1,6 @@
 import { AbstractModal, ModalController } from '../abstractModal';
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorModalField
  * @description
  *    Component contains templates for the modal for editing dialog editors
  *    field (group) details

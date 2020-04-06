@@ -1,8 +1,5 @@
 /**
  * Controller for the Dialog Editor box component
- * @memberof miqStaticAssets
- * @ngdoc controller
- * @name BoxController
  */
 class BoxController {
   sortableOptionsBox;
@@ -22,8 +19,6 @@ class BoxController {
   /**
    * Load service to be able to access it form the template.
    * Load status of tabs.
-   * @memberof BoxController
-   * @function $onInit
    */
   $onInit() {
     this.service = this.DialogEditor;
@@ -58,8 +53,6 @@ class BoxController {
   /**
    * Add a new box to the list.
    * The new box is automatically appended to the last position of the list
-   * @memberof BoxController
-   * @function addBox
    */
   addBox() {
     this.dialogTabs[this.DialogEditor.activeTab].dialog_groups
@@ -80,8 +73,6 @@ class BoxController {
 
   /**
    * Remove box and all its content from the dialog.
-   * @memberof BoxController
-   * @function removeBox
    * @param {number} id as index of removed box
    */
   removeBox(id) {
@@ -97,8 +88,6 @@ class BoxController {
 
   /**
    * Handle Drag&Drop event.
-   * @memberof BoxController
-   * @function droppableOptions
    * @param {number} event jQuery object
    * @param {number} ui jQuery object
    */
@@ -126,9 +115,6 @@ class BoxController {
 BoxController.$inject = ['DialogEditor'];
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorBoxes
  * @description
  *    Component implementing behaviour for the boxes inside of
  *    the dialogs tabs.

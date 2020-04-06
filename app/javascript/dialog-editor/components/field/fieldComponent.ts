@@ -1,8 +1,5 @@
 /**
  * Controller for the Dialog Editor field component
- * @memberof miqStaticAssets
- * @ngdoc controller
- * @name FieldController
  */
 class FieldController {
   service;
@@ -15,8 +12,6 @@ class FieldController {
 
   /**
    * Load service to be able to access it form the template.
-   * @memberof FieldController
-   * @function $onInit
    */
   $onInit() {
     this.service = this.DialogEditor;
@@ -24,8 +19,6 @@ class FieldController {
 
   /**
    * Remove Field
-   * @memberof FieldController
-   * @function remmoveField
    * @param {number} tabId is an index of tab, where the box is placed
    * @param {number} boxId is an index of box, where the field is placed
    * @param {number} fieldId is an index of field
@@ -37,8 +30,6 @@ class FieldController {
 
   /**
    * Convert default value for multiple select fields to an array
-   * @memberof FieldController
-   * @function convertValuesToArray
    */
   convertValuesToArray() {
     this.fieldData.default_value = angular.fromJson(this.fieldData.default_value);
@@ -46,8 +37,6 @@ class FieldController {
 
   /**
    * Find fields at tabId and boxId.
-   * @memberof FieldController
-   * @function getFields
    * @param {number} tabId is an index of tab, where the box is placed
    * @param {number} boxId is an index of box, where the field is placed
    * @returns {Array} of fields.
@@ -61,9 +50,6 @@ class FieldController {
 FieldController.$inject = ['DialogEditor'];
 
 /**
- * @memberof miqStaticAssets
- * @ngdoc component
- * @name dialogEditorField
  * @description
  *    Component implementing behaviour for the fields inside of
  *    the dialogs boxes.
