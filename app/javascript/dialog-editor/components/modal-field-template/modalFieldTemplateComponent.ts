@@ -2,9 +2,6 @@
  * Controller for the Dialog Editor Modal Field Template component
  */
 class ModalFieldController {
-  readonly DROPDOWN_ENTRY_VALUE = 0;
-  readonly DROPDOWN_ENTRY_DESCRIPTION = 1;
-
   constructor($element) {
     this.$element = $element;
 
