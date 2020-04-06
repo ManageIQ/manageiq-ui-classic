@@ -140,9 +140,11 @@ class RemoveCatalogItemModal extends React.Component {
         {this.state.loaded &&
           <div>
              <h4>{confirmationMessage(this.state.data)}</h4>
-             {this.state.data.map(item => (
-               <ul key={item.id}><h4><strong>{item.name}</strong></h4></ul>
-             ))}
+             <ul>
+               {this.state.data.map(item => (
+                 <li key={item.id}><h4><strong>{item.name}</strong></h4></li>
+               ))}
+             </ul>
           </div>
         }
       </Modal.Body>
