@@ -56,6 +56,12 @@ namespace :spec do
     exit $CHILD_STATUS.exitstatus
   end
 
+  desc "Run Debride"
+  task :debride do
+    system('bash tools/ci/dead_method_check.sh')
+    exit 0
+  end
+
   namespace :jest do
     desc 'Run Jest tests with node debugger'
     task :debug do

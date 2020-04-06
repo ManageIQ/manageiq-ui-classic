@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "rails-controller-testing", '~> 1.0.2'
   s.add_development_dependency "simplecov"
+  s.add_development_dependency "debride"
 
   # core because jasmine gem depends on major version only, meaning breakages when not the latest
   s.add_development_dependency "jasmine", "~> 3.4.0"
