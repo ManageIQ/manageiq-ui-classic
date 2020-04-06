@@ -7,7 +7,7 @@ describe('modalComponentSpec', () => {
       bindings = {
         modalData: { options: { category_id: '10' } }
       };
-      angular.mock.module('miqStaticAssets.dialogEditor');
+      angular.mock.module('miq.dialogEditor');
       angular.mock.module('ui.bootstrap');
       angular.mock.inject($componentController => {
       modalComponent = $componentController('dialogEditorModal', {DialogEditorHttp: {} }, bindings);

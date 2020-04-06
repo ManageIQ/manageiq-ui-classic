@@ -5,7 +5,7 @@ describe('DialogEditor test', () => {
   let dialogEditor;
 
   beforeEach(() => {
-    angular.mock.module('miqStaticAssets.dialogEditor');
+    angular.mock.module('miq.dialogEditor');
     angular.mock.module('miqStaticAssets.common');
     angular.mock.inject(() => {
       dialogEditor = new DialogEditor();

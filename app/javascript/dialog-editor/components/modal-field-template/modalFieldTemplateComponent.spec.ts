@@ -5,7 +5,7 @@ describe('modalFieldTemplateSpec', () => {
     let scope, compile, template, compiledTemplate;
 
     beforeEach(() => {
-      angular.mock.module('miqStaticAssets.dialogEditor', ($filterProvider) => {
+      angular.mock.module('miq.dialogEditor', ($filterProvider) => {
         $filterProvider.register('translate', () => (value) => value);
       });
       angular.mock.inject(($rootScope, $compile: ng.ICompileService) => {

@@ -3,7 +3,7 @@ import components from './components';
 import * as angular from 'angular';
 
 module dialogEditor {
-  export const app = angular.module('miqStaticAssets.dialogEditor', [
+  export const app = angular.module('miq.dialogEditor', [
     'ui.sortable',
     'ngDragDrop',
     'frapontillo.bootstrap-switch',

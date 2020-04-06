@@ -7,7 +7,7 @@ describe('fieldComponentSpec', () => {
       bindings = {
         fieldData: {default_value: '["one", "two"]'}
       };
-      angular.mock.module('miqStaticAssets.dialogEditor');
+      angular.mock.module('miq.dialogEditor');
       angular.mock.inject($componentController => {
         fieldComponent = $componentController('dialogEditorField', null, bindings);
         fieldComponent.$onInit();
