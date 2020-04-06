@@ -193,28 +193,6 @@ describe AutomationManagerController do
     end
   end
 
-  describe "#delete" do
-    before { stub_user(:features => :all) }
-
-    it "deletes the provider when the manager id is supplied" do
-      allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { :id => @automation_manager1.id }
-      expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
-    end
-
-    it "it deletes a provider when the manager id is selected from a list view" do
-      allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { :miq_grid_checks => "#{@automation_manager1.id}, #{@automation_manager2.id}"}
-      expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 2 Providers")
-    end
-
-    it "it deletes a provider when the manager id is selected from a grid/tile" do
-      allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { "check_#{@automation_manager1.id}" => "1" }
-      expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
-    end
-  end
-
   context "renders right cell text" do
     before do
       right_cell_text = nil
