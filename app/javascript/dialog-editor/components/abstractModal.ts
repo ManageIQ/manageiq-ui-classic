@@ -2,8 +2,8 @@ export class ModalController {
   private uibModalInstance: any;
   private saveModal: any;
 
-  /*@ngInject*/
-  constructor(private DialogEditor: any) {
+  constructor(DialogEditor) {
+    this.DialogEditor = DialogEditor;
   }
 
   public closeModal(save: boolean) {
@@ -13,6 +13,8 @@ export class ModalController {
     this.uibModalInstance.close();
   }
 }
+
+ModalController.$inject = ['DialogEditor'];
 
 export class AbstractModal {
   public controller = ModalController;

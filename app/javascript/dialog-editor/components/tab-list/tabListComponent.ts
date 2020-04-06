@@ -9,8 +9,8 @@ class TabListController {
   public sortableOptions: any;
   public setupModalOptions: any;
 
-  /*@ngInject*/
-  constructor(private DialogEditor: any) {
+  constructor(DialogEditor) {
+    this.DialogEditor = DialogEditor;
   }
 
   /**
@@ -133,6 +133,8 @@ class TabListController {
     this.DialogEditor.activeTab = id;
   }
 }
+
+TabListController.$inject = ['DialogEditor'];
 
 /**
  * @memberof miqStaticAssets

@@ -3,12 +3,7 @@ class DialogField {
   public label: string;
   public placeholders: any;
 
-  constructor(type: string,
-              icon: string,
-              label: string,
-              name: string,
-              options: any = {}
-             ) {
+  constructor(type, icon, label, name, options = {}) {
     this.icon = icon;
     this.label = label;
     this.placeholders = Object.assign({
@@ -34,7 +29,10 @@ class DialogField {
       options: {
         protected: false,
       },
-      resource_action: {resource_type: 'DialogField', ae_attributes: {}},
+      resource_action: {
+        resource_type: 'DialogField',
+        ae_attributes: {},
+      },
     }, options);
   }
 }

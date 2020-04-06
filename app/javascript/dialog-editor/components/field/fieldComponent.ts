@@ -9,8 +9,8 @@ class FieldController {
   public fieldData: any;
   public boxPosition: any;
 
-  /*@ngInject*/
-  constructor(private DialogEditor: any) {
+  constructor(DialogEditor) {
+    this.DialogEditor = DialogEditor;
   }
 
   /**
@@ -57,6 +57,8 @@ class FieldController {
     return tabs[tabId].dialog_groups[boxId].dialog_fields;
   }
 }
+
+FieldController.$inject = ['DialogEditor'];
 
 /**
  * @memberof miqStaticAssets

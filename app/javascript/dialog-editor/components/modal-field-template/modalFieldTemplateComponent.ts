@@ -9,9 +9,9 @@ class ModalFieldController {
   public readonly DROPDOWN_ENTRY_VALUE: number = 0;
   public readonly DROPDOWN_ENTRY_DESCRIPTION: number = 1;
 
-  /*@ngInject*/
-  constructor(private $scope,
-              private $element: any) {
+  constructor($element) {
+    this.$element = $element;
+
     // Rules for Drag&Drop sorting of values in a Dropdown element
     this.sortableOptionsValues = {
       axis: 'y',
@@ -37,6 +37,8 @@ class ModalFieldController {
   }
 }
 
+ModalFieldController.$inject = ['$element'];
+
 /**
  * @memberof miqStaticAssets
  * @ngdoc component
@@ -50,8 +52,7 @@ class ModalFieldController {
  * </dialog-editor-modal-field-template>
  */
 export default class ModalFieldTemplate {
-  /*@ngInject*/
-  public template = ($element: any, $attrs: any) => require(`./${$attrs.template}`);
+  public template = ['$attrs', ($attrs) => require(`./${$attrs.template}`)];
   public scope: boolean = true;
   public controller = ModalFieldController;
   public controllerAs: string = 'vm';

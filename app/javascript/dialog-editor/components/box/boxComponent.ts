@@ -11,8 +11,8 @@ class BoxController {
   public dialogTabs: any;
   public setupModalOptions: any;
 
-  /*@ngInject*/
-  constructor(private DialogEditor: any) {
+  constructor(DialogEditor) {
+    this.DialogEditor = DialogEditor;
   }
 
   public onFieldEdit(type, tab, box, field) {
@@ -122,6 +122,8 @@ class BoxController {
     field.name = nameWithIndex;
   }
 }
+
+BoxController.$inject = ['DialogEditor'];
 
 /**
  * @memberof miqStaticAssets

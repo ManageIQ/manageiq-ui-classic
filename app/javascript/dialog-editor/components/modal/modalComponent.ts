@@ -14,10 +14,10 @@ class ModalController {
   public elementInfo: any;
   private uibModalInstance;
 
-  /*@ngInject*/
-  constructor(private $uibModal: any,
-              private DialogEditorHttp: any,
-              private DialogEditor: any) {
+  constructor($uibModal, DialogEditor, DialogEditorHttp) {
+    this.$uibModal = $uibModal;
+    this.DialogEditor = DialogEditor;
+    this.DialogEditorHttp = DialogEditorHttp;
   }
 
   public loadModalData(elem: any) {
@@ -326,6 +326,12 @@ class ModalController {
       ></${component}>`;
   }
 }
+
+ModalController.$inject = [
+  '$uibModal',
+  'DialogEditor',
+  'DialogEditorHttp',
+];
 
 /**
  * @memberof miqStaticAssets
