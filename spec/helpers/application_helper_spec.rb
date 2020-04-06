@@ -44,32 +44,18 @@ describe ApplicationHelper do
 
     context "permission store" do
       it 'consults the permission store' do
-        begin
-          current_store = Vmdb::PermissionStores.instance
-          Tempfile.open('foo') do |tf|
-            menu = Menu::DefaultMenu.services_menu_section
+        menu = Menu::DefaultMenu.services_menu_section
+        allow(Vmdb::PermissionStores.instance).to receive(:can?).and_return(true)
+        allow(Vmdb::PermissionStores.instance).to receive(:can?).with(menu.id).and_return(false)
 
-            tf.write Psych.dump [menu.id]
-            tf.close
+        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
+        expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_truthy
 
-            Vmdb::PermissionStores.configure do |config|
-              config.backend = 'yaml'
-              config.options[:filename] = tf.path
-            end
-            Vmdb::PermissionStores.initialize!
-
-            expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
-            expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_truthy
-
-            # TODO: Fix this assert, it's bad.  We need to create the right feature
-            # for this user so it's allowed using normal permissions but not with
-            # the permission store.
-            allow(User).to receive_message_chain(:current_user, :role_allows_any?).and_return(true)
-            expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
-          end
-        ensure
-          Vmdb::PermissionStores.instance = current_store
-        end
+        # TODO: Fix this assert, it's bad.  We need to create the right feature
+        # for this user so it's allowed using normal permissions but not with
+        # the permission store.
+        allow(User).to receive_message_chain(:current_user, :role_allows_any?).and_return(true)
+        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
       end
     end
 
