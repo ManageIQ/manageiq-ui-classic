@@ -1,22 +1,6 @@
-export class ModalController {
-  constructor(DialogEditor) {
-    this.DialogEditor = DialogEditor;
-  }
-
-  closeModal(save) {
-    if (save) {
-      this.saveModal();
-    }
-    this.uibModalInstance.close();
-  }
-}
-
-ModalController.$inject = ['DialogEditor'];
-
-export class AbstractModal {
-  controller = ModalController;
-  controllerAs = 'vm';
-  bindings = {
+export const ModalShared = {
+  controllerAs: 'vm',
+  bindings: {
     modalData: '=',
     elementInfo: '<',
     categories: '=?',
@@ -32,5 +16,5 @@ export class AbstractModal {
     saveModal: '<',
     uibModalInstance: '<',
     treeOptions: '<',
-  };
-}
+  },
+};

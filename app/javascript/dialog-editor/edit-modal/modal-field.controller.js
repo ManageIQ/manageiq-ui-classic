@@ -1,18 +1,6 @@
-import { AbstractModal, ModalController } from '../abstractModal';
+import { ModalSharedController } from './modal-shared.controller.js';
 
-/**
- * @description
- *    Component contains templates for the modal for editing dialog editors
- *    field (group) details
- * @example
- * <dialog-editor-modal-field></dialog-editor-modal-field>
- */
-export default class ModalField extends AbstractModal {
-  template = require('./field.html');
-  controller = ModalFieldController;
-}
-
-class ModalFieldController extends ModalController {
+export class ModalFieldController extends ModalSharedController {
   $onInit() {
     this.treeOptions = {
       ...this.treeOptions,
@@ -36,7 +24,7 @@ class ModalFieldController extends ModalController {
 
       onSelect: (node) => {
         this.treeSelectorSelect(node, this.modalData);
-      }
+      },
     };
   }
 
