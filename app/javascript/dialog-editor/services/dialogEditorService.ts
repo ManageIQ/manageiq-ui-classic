@@ -1,6 +1,6 @@
 export default class DialogEditorService {
-  public data = {};
-  public activeTab = 0;
+  data = {};
+  activeTab = 0;
 
   /**
    * Store data passed in parameter.
@@ -8,7 +8,7 @@ export default class DialogEditorService {
    * @function setData
    * @param {any} nested object containing data of the dialog
    */
-  public setData(data) {
+  setData(data) {
     this.data = data;
     this.undefinedAttrsToBoolean();
     // FIXME: Compensation of default values until it is been resolved in the API
@@ -24,7 +24,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function getDialogId
    */
-  public getDialogId() {
+  getDialogId() {
     return String(this.data.content[0].id || 'new');
   }
 
@@ -33,7 +33,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function getDialogLabel
    */
-  public getDialogLabel() {
+  getDialogLabel() {
     return this.data.content[0].label;
   }
 
@@ -42,7 +42,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function getDialogDescription
    */
-  public getDialogDescription() {
+  getDialogDescription() {
     return this.data.content[0].description;
   }
 
@@ -51,11 +51,11 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function getDialogTabs
    */
-  public getDialogTabs() {
+  getDialogTabs() {
     return this.data.content[0].dialog_tabs;
   }
 
-  public getDynamicFields(nameToExclude) {
+  getDynamicFields(nameToExclude) {
     let dynamicFields = [];
     this.forEachDialogField((field) => {
       if (nameToExclude && (field.name === nameToExclude)) {
@@ -75,7 +75,7 @@ export default class DialogEditorService {
    * @function updatePositions
    * @param {any[]} array of elements to sort
    */
-  public updatePositions(elements) {
+  updatePositions(elements) {
     elements.forEach((value, key) => value.position = key);
     this.backupSessionStorage(this.getDialogId(), this.data);
   }
@@ -86,7 +86,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function newFieldName
    */
-  public newFieldName(fieldType) {
+  newFieldName(fieldType) {
     let dialogFieldNames = [];
     let newOrdinalNumber = 1;
     this.forEachDialogField((field) => {
@@ -98,15 +98,15 @@ export default class DialogEditorService {
     return fieldType + '_' + newOrdinalNumber;
   }
 
-  public clearSessionStorage(id) {
+  clearSessionStorage(id) {
     sessionStorage.removeItem(this.sessionStorageKey(id));
   }
 
-  public backupSessionStorage(id, dialog) {
+  backupSessionStorage(id, dialog) {
     sessionStorage.setItem(this.sessionStorageKey(id), JSON.stringify(dialog));
   }
 
-  public restoreSessionStorage(id) {
+  restoreSessionStorage(id) {
     return JSON.parse(sessionStorage.getItem(this.sessionStorageKey(id)));
   }
 
@@ -116,7 +116,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function forEachDialogField
    */
-  private forEachDialogField(callback) {
+  forEachDialogField(callback) {
     _.forEach(this.data.content[0].dialog_tabs, (tab) => {
       _.forEach(tab.dialog_groups, (group) => {
         _.forEach(group.dialog_fields, (field) => {
@@ -132,7 +132,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function anyDialogFields
    */
-  private anyDialogFields() {
+  anyDialogFields() {
     let ret = false;
     _.forEach(this.data.content[0].dialog_tabs, (tab) => {
       _.forEach(tab.dialog_groups, (group) => {
@@ -151,7 +151,7 @@ export default class DialogEditorService {
    * @memberof DialogEditorService
    * @function undefinedAttrsToBoolean
    */
-  private undefinedAttrsToBoolean() {
+  undefinedAttrsToBoolean() {
     if (!this.anyDialogFields()) {
       return;
     }
@@ -179,7 +179,7 @@ export default class DialogEditorService {
     });
   }
 
-  private sessionStorageKey(id) {
+  sessionStorageKey(id) {
     return 'service_dialog-' + id;
   }
 }

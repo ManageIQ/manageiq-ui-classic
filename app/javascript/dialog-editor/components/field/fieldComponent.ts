@@ -5,9 +5,9 @@
  * @name FieldController
  */
 class FieldController {
-  public service;
-  public fieldData;
-  public boxPosition;
+  service;
+  fieldData;
+  boxPosition;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
@@ -18,7 +18,7 @@ class FieldController {
    * @memberof FieldController
    * @function $onInit
    */
-  public $onInit() {
+  $onInit() {
     this.service = this.DialogEditor;
   }
 
@@ -30,7 +30,7 @@ class FieldController {
    * @param {number} boxId is an index of box, where the field is placed
    * @param {number} fieldId is an index of field
    */
-  public removeField(tabId, boxId, fieldId) {
+  removeField(tabId, boxId, fieldId) {
     _.remove(this.getFields(tabId, boxId), (field) => field.position === fieldId);
     this.DialogEditor.updatePositions(this.getFields(tabId, boxId));
   }
@@ -40,7 +40,7 @@ class FieldController {
    * @memberof FieldController
    * @function convertValuesToArray
    */
-  public convertValuesToArray() {
+  convertValuesToArray() {
     this.fieldData.default_value = angular.fromJson(this.fieldData.default_value);
   }
 
@@ -52,7 +52,7 @@ class FieldController {
    * @param {number} boxId is an index of box, where the field is placed
    * @returns {Array} of fields.
    */
-  private getFields(tabId, boxId) {
+  getFields(tabId, boxId) {
     const tabs = this.DialogEditor.getDialogTabs();
     return tabs[tabId].dialog_groups[boxId].dialog_fields;
   }
@@ -73,10 +73,10 @@ FieldController.$inject = ['DialogEditor'];
  * </dialog-editor-field>
  */
 export default class Field {
-  public template = require('./field.html');
-  public controller = FieldController;
-  public controllerAs = 'vm';
-  public bindings = {
+  template = require('./field.html');
+  controller = FieldController;
+  controllerAs = 'vm';
+  bindings = {
     fieldData: '<',
     boxPosition: '<',
     setupModalOptions: '&'

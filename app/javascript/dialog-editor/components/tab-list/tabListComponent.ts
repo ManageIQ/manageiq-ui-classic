@@ -5,9 +5,9 @@
  * @name TabListController
  */
 class TabListController {
-  public tabList;
-  public sortableOptions;
-  public setupModalOptions;
+  tabList;
+  sortableOptions;
+  setupModalOptions;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
@@ -18,7 +18,7 @@ class TabListController {
    * @memberof TabListController
    * @function onInit
    */
-  public $onInit() {
+  $onInit() {
     // load tabs data from the service
     this.tabList = this.DialogEditor.getDialogTabs();
     // set active tab
@@ -49,7 +49,7 @@ class TabListController {
    * @memberof TabListController
    * @function addTab
    */
-  public addTab() {
+  addTab() {
     // deactivate currently active tab
     this.tabList.forEach((tab) =>  tab.active = false);
     // create a new tab
@@ -81,7 +81,7 @@ class TabListController {
    * @function removeTab
    * @param {number} id is an index of remove tab
    */
-  public removeTab(id) {
+  removeTab(id) {
     // pass the activity to other tab, if the deleted is active
     if (this.tabList[id].active) {
       if ((this.tabList.length - 1) === this.tabList[id].position &&
@@ -120,7 +120,7 @@ class TabListController {
    * @function selectTab
    * @param {number} id is an index of remove tab
    */
-  public selectTab(id) {
+  selectTab(id) {
     // deactivate currently active
     let deselectedTab = _.find(
       this.tabList,
@@ -148,10 +148,10 @@ TabListController.$inject = ['DialogEditor'];
  * </dialog-editor-tabs>
  */
 export default class TabList {
-  public template = require('./tab-list.html');
-  public controller = TabListController;
-  public controllerAs = 'vm';
-  public bindings = {
+  template = require('./tab-list.html');
+  controller = TabListController;
+  controllerAs = 'vm';
+  bindings = {
     setupModalOptions: '&'
   };
 }

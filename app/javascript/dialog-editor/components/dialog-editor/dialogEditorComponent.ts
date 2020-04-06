@@ -1,9 +1,9 @@
 export class DialogEditorController {
-  public modalOptions;
-  public elementInfo;
-  public treeOptions;
+  modalOptions;
+  elementInfo;
+  treeOptions;
 
-  public setupModalOptions(type, tab, box, field) {
+  setupModalOptions(type, tab, box, field) {
     const components = {
       tab: 'dialog-editor-modal-tab',
       box: 'dialog-editor-modal-box',
@@ -36,9 +36,9 @@ export class DialogEditorController {
  */
 
 export default class DialogEditor implements ng.IComponentOptions {
-  public controller = DialogEditorController;
-  public template = require('./dialog-editor.html');
-  public bindings = {
+  controller = DialogEditorController;
+  template = require('./dialog-editor.html');
+  bindings = {
     treeOptions: '<',
   };
 }

@@ -5,17 +5,17 @@
  * @name BoxController
  */
 class BoxController {
-  public sortableOptionsBox;
-  public sortableOptionsFields;
-  public service;
-  public dialogTabs;
-  public setupModalOptions;
+  sortableOptionsBox;
+  sortableOptionsFields;
+  service;
+  dialogTabs;
+  setupModalOptions;
 
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
 
-  public onFieldEdit(type, tab, box, field) {
+  onFieldEdit(type, tab, box, field) {
     this.setupModalOptions({type, tab, box, field});
   }
 
@@ -25,7 +25,7 @@ class BoxController {
    * @memberof BoxController
    * @function $onInit
    */
-  public $onInit() {
+  $onInit() {
     this.service = this.DialogEditor;
     this.dialogTabs = this.DialogEditor.getDialogTabs();
     // Rules for Drag&Drop sorting of boxes
@@ -61,7 +61,7 @@ class BoxController {
    * @memberof BoxController
    * @function addBox
    */
-  public addBox() {
+  addBox() {
     this.dialogTabs[this.DialogEditor.activeTab].dialog_groups
       .push(
         {
@@ -84,7 +84,7 @@ class BoxController {
    * @function removeBox
    * @param {number} id as index of removed box
    */
-  public removeBox(id) {
+  removeBox(id) {
     _.remove(
       this.dialogTabs[this.DialogEditor.activeTab].dialog_groups,
       (box) => box.position === id
@@ -102,7 +102,7 @@ class BoxController {
    * @param {number} event jQuery object
    * @param {number} ui jQuery object
    */
-  public droppableOptions(e, ui) {
+  droppableOptions(e, ui) {
     const elementScope = angular.element(e.target).scope();
     let droppedItem = elementScope.dndDragItem;
     let droppedPlace = elementScope.box;
@@ -116,7 +116,7 @@ class BoxController {
     );
   }
 
-  private updateFieldName(field) {
+  updateFieldName(field) {
     let nameWithIndex = this.DialogEditor.newFieldName(
       field.name);
     field.name = nameWithIndex;
@@ -137,10 +137,10 @@ BoxController.$inject = ['DialogEditor'];
  * </dialog-editor-boxes>
  */
 export default class Box {
-  public template = require('./box.html');
-  public controller = BoxController;
-  public controllerAs = 'vm';
-  public bindings = {
+  template = require('./box.html');
+  controller = BoxController;
+  controllerAs = 'vm';
+  bindings = {
     setupModalOptions: '&'
   };
 }

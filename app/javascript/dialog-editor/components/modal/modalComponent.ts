@@ -5,14 +5,14 @@
  * @name ModalController
  */
 class ModalController {
-  public modalTab = 'element_information';
-  public modalData;
-  public dynamicFieldList;
-  public categories;
-  public modalTitle;
-  public modalOptions;
-  public elementInfo;
-  private uibModalInstance;
+  modalTab = 'element_information';
+  modalData;
+  dynamicFieldList;
+  categories;
+  modalTitle;
+  modalOptions;
+  elementInfo;
+  uibModalInstance;
 
   constructor($uibModal, DialogEditor, DialogEditorHttp) {
     this.$uibModal = $uibModal;
@@ -20,7 +20,7 @@ class ModalController {
     this.DialogEditorHttp = DialogEditorHttp;
   }
 
-  public loadModalData(elem) {
+  loadModalData(elem) {
     if (elem !== undefined) {
       // clone data from service
       let elements = {
@@ -60,14 +60,14 @@ class ModalController {
     }
   }
 
-  public loadModalTabData(tab) {
+  loadModalTabData(tab) {
     if (typeof tab !== 'undefined') {
       let tabList = this.DialogEditor.getDialogTabs();
       return tabList[tab];
     }
   }
 
-  public loadModalBoxData(tab, box) {
+  loadModalBoxData(tab, box) {
     if (typeof tab !== 'undefined' &&
         typeof box !== 'undefined') {
       let tabList = this.DialogEditor.getDialogTabs();
@@ -76,7 +76,7 @@ class ModalController {
     }
   }
 
-  public loadModalFieldData(tab, box, field) {
+  loadModalFieldData(tab, box, field) {
     if (typeof tab !== 'undefined' &&
         typeof box !== 'undefined' &&
         typeof field !== 'undefined') {
@@ -92,7 +92,7 @@ class ModalController {
    * @memberof ModalController
    * @function resolveCategories
    */
-  public resolveCategories() {
+  resolveCategories() {
     return this.DialogEditorHttp.loadCategories();
   }
 
@@ -102,7 +102,7 @@ class ModalController {
    * @function modalTabSet
    * @param tab is a name of the tab in the modal
    */
-  public modalTabSet(tab) {
+  modalTabSet(tab) {
     this.modalTab = tab;
   }
 
@@ -112,7 +112,7 @@ class ModalController {
    * @memberof ModalController
    * @function $onChanges
    */
-  public $onChanges(changesObj) {
+  $onChanges(changesObj) {
     if (changesObj.modalOptions && this.modalOptions) {
       this.showModal(this.modalOptions);
     }
@@ -124,7 +124,7 @@ class ModalController {
    * @memberof ModalController
    * @function modalTabIsSet
    */
-  public modalTabIsSet(tab) {
+  modalTabIsSet(tab) {
     return this.modalTab === tab;
   }
 
@@ -133,7 +133,7 @@ class ModalController {
    * @memberof ModalController
    * @function modalUnchanged
    */
-  public modalUnchanged() {
+  modalUnchanged() {
     let elements = {
       tab: this.DialogEditor.getDialogTabs()[
         this.DialogEditor.activeTab],
@@ -154,7 +154,7 @@ class ModalController {
    * @memberof ModalController
    * @function saveDialogFieldDetails
    */
-  public saveDialogFieldDetails() {
+  saveDialogFieldDetails() {
     switch (this.elementInfo.type) {
       case 'tab':
         _.extend(
@@ -192,7 +192,7 @@ class ModalController {
    * @memberof ModalController
    * @function deleteField
    */
-  public deleteField() {
+  deleteField() {
     _.remove(
       this.DialogEditor.getDialogTabs()[
         this.DialogEditor.activeTab
@@ -211,7 +211,7 @@ class ModalController {
    * @memberof ModalFieldController
    * @function addEntry
    */
-  public addEntry() {
+  addEntry() {
     if (this.modalData.values == null) {
       this.modalData.values = [];
     }
@@ -224,7 +224,7 @@ class ModalController {
    * @function removeEntry
    * @param entry to remove from array
    */
-  public removeEntry(entry) {
+  removeEntry(entry) {
     _.pull(this.modalData.values, entry);
   }
 
@@ -233,7 +233,7 @@ class ModalController {
    * @memberof ModalController
    * @function currentCategoryEntries
    */
-  public currentCategoryEntries() {
+  currentCategoryEntries() {
     if (angular.isDefined(this.categories)) {
       return _.find(
         this.categories.resources,
@@ -250,7 +250,7 @@ class ModalController {
    * @memberof ModalController
    * @function updateDialogFieldResponders
    */
-  public updateDialogFieldResponders(changedFieldName) {
+  updateDialogFieldResponders(changedFieldName) {
     this.DialogEditor.forEachDialogField((field) => {
       if (!field.dialog_field_responders ||
           !field.dialog_field_responders.includes(changedFieldName)) {
@@ -267,7 +267,7 @@ class ModalController {
    * @memberof ModalController
    * @function setupCategoryOptions
    */
-  public setupCategoryOptions() {
+  setupCategoryOptions() {
     let vm = this;
     let item = this.modalData.options.category_id;
     _.forEach(this.categories.resources, function (name) {
@@ -286,7 +286,7 @@ class ModalController {
    * @memberof ModalController
    * @function showModal
    */
-  public showModal(options) {
+  showModal(options) {
     options.controller = ['parent', function(parent) { this.parent = parent; }];
     options.resolve = {
       parent: () => this
@@ -306,7 +306,7 @@ class ModalController {
    * @memberof ModalController
    * @function buildTemplate
    */
-  private static buildTemplate(component) {
+  static buildTemplate(component) {
     return `<${component}
       modal-data="modalCtrl.parent.modalData"
       element-info="modalCtrl.parent.elementInfo"
@@ -345,10 +345,10 @@ ModalController.$inject = [
  * </dialog-editor-modal>
  */
 export default class Modal {
-  public template = '';
-  public transclude = true;
-  public controller = ModalController;
-  public bindings = {
+  template = '';
+  transclude = true;
+  controller = ModalController;
+  bindings = {
     modalOptions: '<',
     elementInfo: '<',
     treeOptions: '<',

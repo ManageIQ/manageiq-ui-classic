@@ -1,7 +1,7 @@
 class DialogField {
-  public icon;
-  public label;
-  public placeholders;
+  icon;
+  label;
+  placeholders;
 
   constructor(type, icon, label, name, options = {}) {
     this.icon = icon;
@@ -44,7 +44,7 @@ class DialogField {
  * @name ToolboxController
  */
 export class ToolboxController {
-  public fields = {
+  fields = {
     dialogFieldTextBox:
       new DialogField(
         'DialogFieldTextBox',
@@ -151,7 +151,7 @@ export class ToolboxController {
  * </dialog-editor-field-static>
  */
 export default class Toolbox {
-  public template = require('./toolbox.html');
-  public controller = ToolboxController;
-  public controllerAs = 'vm';
+  template = require('./toolbox.html');
+  controller = ToolboxController;
+  controllerAs = 'vm';
 }

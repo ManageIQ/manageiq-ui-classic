@@ -11,15 +11,15 @@ import { AbstractModal, ModalController } from '../abstractModal';
  * <dialog-editor-modal-field></dialog-editor-modal-field>
  */
 export default class ModalField extends AbstractModal {
-  public template = require('./field.html');
-  public controller = ModalFieldController;
+  template = require('./field.html');
+  controller = ModalFieldController;
 }
 
 class ModalFieldController extends ModalController {
-  public treeOptions;
-  public modalData;
+  treeOptions;
+  modalData;
 
-  public $onInit() {
+  $onInit() {
     this.treeOptions = {
       ...this.treeOptions,
 
@@ -46,7 +46,7 @@ class ModalFieldController extends ModalController {
     };
   }
 
-  public showFullyQualifiedName(resourceAction) {
+  showFullyQualifiedName(resourceAction) {
     if (resourceAction.ae_namespace && resourceAction.ae_class && resourceAction.ae_instance) {
       return `${resourceAction.ae_namespace}/${resourceAction.ae_class}/${resourceAction.ae_instance}`;
     } else {
@@ -54,7 +54,7 @@ class ModalFieldController extends ModalController {
     }
   }
 
-  public treeSelectorSelect(node, elementData) {
+  treeSelectorSelect(node, elementData) {
     const fqname = node.fqname.split('/');
 
     if (this.treeOptions.includeDomain === false) {

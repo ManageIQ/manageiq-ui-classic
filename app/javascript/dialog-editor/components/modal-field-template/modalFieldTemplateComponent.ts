@@ -4,10 +4,10 @@
  * @name ModalFieldController
  */
 class ModalFieldController {
-  public modalData;
-  public sortableOptionsValues;
-  public readonly DROPDOWN_ENTRY_VALUE = 0;
-  public readonly DROPDOWN_ENTRY_DESCRIPTION = 1;
+  modalData;
+  sortableOptionsValues;
+  readonly DROPDOWN_ENTRY_VALUE = 0;
+  readonly DROPDOWN_ENTRY_DESCRIPTION = 1;
 
   constructor($element) {
     this.$element = $element;
@@ -26,13 +26,13 @@ class ModalFieldController {
     };
   }
 
-  public $onChanges(changesObj) {
+  $onChanges(changesObj) {
     if (changesObj.modalData && changesObj.modalData.default_value === []) {
       this.modalData.default_value = '';
     }
   }
 
-  public entriesChange() {
+  entriesChange() {
     setTimeout(() => this.$element.find('select').selectpicker('refresh'));
   }
 }
@@ -52,11 +52,11 @@ ModalFieldController.$inject = ['$element'];
  * </dialog-editor-modal-field-template>
  */
 export default class ModalFieldTemplate {
-  public template = ['$attrs', ($attrs) => require(`./${$attrs.template}`)];
-  public scope = true;
-  public controller = ModalFieldController;
-  public controllerAs = 'vm';
-  public bindings = {
+  template = ['$attrs', ($attrs) => require(`./${$attrs.template}`)];
+  scope = true;
+  controller = ModalFieldController;
+  controllerAs = 'vm';
+  bindings = {
     modalData: '=',
     categories: '=?',
     addEntry: '=?',

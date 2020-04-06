@@ -11,5 +11,5 @@ import { AbstractModal } from '../abstractModal';
  * <dialog-editor-modal-tab></dialog-editor-modal-tab>
  */
 export default class ModalTabTemplate extends AbstractModal {
-  public template = require('./tab.html');
+  template = require('./tab.html');
 }

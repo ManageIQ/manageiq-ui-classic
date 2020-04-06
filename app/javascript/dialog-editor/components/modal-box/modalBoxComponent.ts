@@ -11,5 +11,5 @@ import { AbstractModal } from '../abstractModal';
  * <dialog-editor-modal-box></dialog-editor-modal-box>
  */
 export default class ModalBoxTemplate extends AbstractModal {
-  public template = require('./box.html');
+  template = require('./box.html');
 }

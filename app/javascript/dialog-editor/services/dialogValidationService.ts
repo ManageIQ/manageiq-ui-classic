@@ -1,8 +1,8 @@
 const tagHasCategory = (field) => field.options && field.options.category_id;
 
 export default class DialogValidationService {
-  public invalid = {};
-  private validators = {};
+  invalid = {};
+  validators = {};
 
   constructor() {
     this.validators = {
@@ -53,7 +53,7 @@ export default class DialogValidationService {
    * @memberof DialogValidationService
    * @function dialogIsValid
    */
-  public dialogIsValid(dialogData) {
+  dialogIsValid(dialogData) {
     this.invalid.message = null;
 
     const validate = (item, description) => ((fn) => {
