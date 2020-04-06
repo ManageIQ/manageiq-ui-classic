@@ -4,8 +4,8 @@
   = render :partial => "layouts/navbar-header"
   %nav.collapse.navbar-collapse
     = render :partial => "layouts/right_section"
-  = render :partial => "layouts/notifications_drawer"
-  = render :partial => "layouts/toast_list"
+  = react('NotificationDrawer')
+  = react('ToastList')
 
 = render :partial => "layouts/spinner"
 = render :partial => "layouts/lightbox_panel"

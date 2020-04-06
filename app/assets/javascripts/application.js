@@ -1,7 +1,6 @@
 //= require ./miq_global
 //= require ./jquery_overrides
 //= require ./i18n
-//= require ./cable
 //= require ./gettextCatalog
 //= require ./miq_api
 //= require ./miq_angular_application
