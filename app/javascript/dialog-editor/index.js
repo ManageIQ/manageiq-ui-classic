@@ -1,8 +1,10 @@
 import { Boxes } from './boxes.component.js';
 import { DialogEditor } from './dialog-editor.component.js';
+import { DialogEditorHttpService } from './dialog-editor-http.service.js';
 import { DialogEditorService } from './dialog-editor.service.js';
 import { DialogValidationService } from './dialog-validation.service.js';
 import { Field } from './field.component.js';
+import { MiqDialogEditor } from './miq-dialog-editor.component.js';
 import { Modal } from './modal.component.js';
 import { ModalBox } from './modal-box.component.js';
 import { ModalField } from './modal-field.component.js';
@@ -33,6 +35,8 @@ angular.module('miq.dialogEditor', [
   .component('dialogEditorToolbox', Toolbox)
   .component('dialogEditorTreeSelector', TreeSelector)
   .component('dialogEditorValidation', Validation)
+  .component('miqDialogEditor', MiqDialogEditor)
   .service('DialogEditor', DialogEditorService)
+  .service('DialogEditorHttp', DialogEditorHttpService)
   .service('DialogValidation', DialogValidationService)
 ;

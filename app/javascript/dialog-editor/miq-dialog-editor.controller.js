@@ -1,5 +1,5 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation', 'dialogIdAction', function($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation, dialogIdAction) {
-  var vm = this;
+export function MiqDialogEditorController($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation) {
+  const vm = this;
 
   vm.saveButtonDisabled = false;
   vm.saveDialogDetails = saveDialogDetails;
@@ -12,23 +12,23 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   };
 
   function requestDialogId() {
-    return JSON.parse(dialogIdAction).id;
+    return vm.dialogId;
   }
 
   function requestDialogAction() {
-    return JSON.parse(dialogIdAction).action;
+    return vm.dialogAction;
   }
 
   if (requestDialogAction() === 'new') {
-    var dialogInitContent = {
-      'content': [{
-        'dialog_tabs': [{
-          'label': __('New tab'),
-          'position': 0,
-          'dialog_groups': [{
-            'label': __('New section'),
-            'position': 0,
-            'dialog_fields': [],
+    const dialogInitContent = {
+      content: [{
+        dialog_tabs: [{
+          label: __('New tab'),
+          position: 0,
+          dialog_groups: [{
+            label: __('New section'),
+            position: 0,
+            dialog_fields: [],
           }],
         }],
       }],
@@ -39,46 +39,40 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function init(dialog) {
+    const sessionStorageId = requestDialogAction() === 'edit' ? String(requestDialogId()) : 'new';
+    const restoredDialog = DialogEditor.restoreSessionStorage(sessionStorageId);
 
-    var sessionStorageId = requestDialogAction() === 'edit' ?
-      String(requestDialogId()) : 'new'
-    var restoredDialog = DialogEditor.restoreSessionStorage(sessionStorageId);
-    if (restoredDialog !== null ) {
+    if (restoredDialog !== null) {
+      // eslint-disable-next-line no-alert, no-restricted-globals
       if (confirm(__('Restore previous changes?'))) {
+        // eslint-disable-next-line no-param-reassign
         dialog = _.cloneDeepWith(restoredDialog, customizer);
-        dialog.id = restoredDialog.id
-        dialog.content[0].id = restoredDialog.content[0].id
+        dialog.id = restoredDialog.id;
+        dialog.content[0].id = restoredDialog.content[0].id;
       } else {
         DialogEditor.clearSessionStorage(sessionStorageId);
       }
     }
 
     function translateResponderNamesToIds(dialog) {
-      var dynamicFields = [];
-      var allFields = [];
-
-      _.forEach(dialog.dialog_tabs, function(tab) {
-        _.forEach(tab.dialog_groups, function(group) {
-          _.forEach(group.dialog_fields, function(field) {
-            if (field.dynamic === true) {
-              dynamicFields.push(field);
-            }
-            _.forEach(field.values, function(value) {
+      dialog.dialog_tabs.forEach((tab) => {
+        tab.dialog_groups.forEach((group) => {
+          group.dialog_fields.forEach((field) => {
+            // try to translate default value label
+            field.values.forEach((value) => {
               if (value[0] === null) {
                 value[1] = __(value[1]);
               }
             });
-
-            allFields.push(field);
           });
         });
       });
     }
 
     function clearOriginalIds(dialog) {
-      _.forEach(dialog.dialog_tabs, function(tab) {
-        _.forEach(tab.dialog_groups, function(group) {
-          _.forEach(group.dialog_fields, function(field) {
+      dialog.dialog_tabs.forEach((tab) => {
+        tab.dialog_groups.forEach((group) => {
+          group.dialog_fields.forEach((field) => {
             delete field.dialog_group_id;
           });
           delete group.dialog_tab_id;
@@ -93,7 +87,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     if (requestDialogAction() === 'copy') {
       // gettext left out intentionally
       // the label will be rendered to all users in all locales as it was saved
-      dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+      const label = `Copy of ${dialog.label}`;
+      dialog.label = label;
+      dialog.content[0].label = label;
 
       // otherwise we attempt to create tabs referencing the original dialog, etc.
       clearOriginalIds(dialog.content[0]);
@@ -106,42 +102,35 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     DialogEditor.backupSessionStorage(sessionStorageId, vm.dialog);
   }
 
-  var beingCloned = null; // hack that solves recursion problem for cloneDeepWith
+  let beingCloned = null; // hack that solves recursion problem for cloneDeepWith
   function customizer(value) {
-    var keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList', 'id'];
-    var useCustomizer =
-      (value !== beingCloned) &&
-      _.isObject(value) &&
-      keysToDelete.some(function(key) {
-        return key in value;
-      });
+    const keysToDelete = ['active', '$$hashKey', 'href', 'dynamicFieldList', 'id'];
+    const useCustomizer = (value !== beingCloned) && _.isObject(value) && keysToDelete.some((key) => key in value);
 
     if (!useCustomizer) {
       return undefined;
     }
 
     beingCloned = value;
-    var copy = _.cloneDeepWith(value, customizer);
+    const copy = _.cloneDeepWith(value, customizer);
     beingCloned = null;
 
     // remove unnecessary attributes
-    keysToDelete.forEach(function(key) {
-      delete copy[key];
-    });
+    keysToDelete.forEach((key) => delete copy[key]);
     return copy;
   }
 
   function saveDialogDetails() {
-    var action;
-    var dialogData;
-    var dialogId;
+    let action;
+    let dialogData;
+    let dialogId;
 
     vm.saveButtonDisabled = true;
 
     // load dialog data
     if (requestDialogAction() === 'edit') {
       action = 'edit';
-      dialogId = '/' + DialogEditor.getDialogId();
+      dialogId = DialogEditor.getDialogId();
       dialogData = {
         description: DialogEditor.getDialogDescription(),
         label: DialogEditor.getDialogLabel(),
@@ -166,6 +155,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function dismissChanges() {
+    // eslint-disable-next-line no-alert, no-restricted-globals
     if (confirm(__('Abandon changes?'))) {
       DialogEditor.clearSessionStorage(DialogEditor.getDialogId());
     } else {
@@ -181,16 +171,13 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
 
   function saveFailure(response) {
     vm.saveButtonDisabled = false;
-    miqService.miqFlash(
-      'error',
-      __('There was an error editing this dialog: ') + response.data.error.message
-    );
+    miqService.miqFlash('error', __('There was an error editing this dialog: ') + response.data.error.message);
   }
 
   // FIXME: @himdel: method copied from other place -> maybe extract somewhere?
   function getBack(message, warning, error) {
-    var url = '/miq_ae_customization/explorer';
-    var flash = { message: message };
+    const url = '/miq_ae_customization/explorer';
+    const flash = { message };
 
     if (warning) {
       flash.level = 'warning';
@@ -201,4 +188,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     miqService.miqFlashLater(flash);
     $window.location.href = url;
   }
-}]);
+}
+
+MiqDialogEditorController.$inject = ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation'];
