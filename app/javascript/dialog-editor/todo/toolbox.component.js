@@ -33,10 +33,7 @@ class DialogField {
   }
 }
 
-/**
- * Controller for the Dialog Editor toolbox component
- */
-export class ToolboxController {
+class ToolboxController {
   fields = {
     dialogFieldTextBox:
       new DialogField('DialogFieldTextBox', 'fa fa-font', __('Text Box'), 'text_box', {

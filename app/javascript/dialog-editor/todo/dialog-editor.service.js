@@ -2,10 +2,7 @@ export class DialogEditorService {
   data = {};
   activeTab = 0;
 
-  /**
-   * Store data passed in parameter.
-   * @param {any} nested object containing data of the dialog
-   */
+  // store dialog data
   setData(data) {
     this.data = data;
     this.undefinedAttrsToBoolean();
@@ -18,30 +15,18 @@ export class DialogEditorService {
     });
   }
 
-  /**
-   * Return dialog id loaded at service.
-   */
   getDialogId() {
     return String(this.data.content[0].id || 'new');
   }
 
-  /**
-   * Return dialog label loaded at service.
-   */
   getDialogLabel() {
     return this.data.content[0].label;
   }
 
-  /**
-   * Return dialog description loaded at service.
-   */
   getDialogDescription() {
     return this.data.content[0].description;
   }
 
-  /**
-   * Return dialog tabs loaded at service.
-   */
   getDialogTabs() {
     return this.data.content[0].dialog_tabs;
   }
@@ -60,19 +45,13 @@ export class DialogEditorService {
     return dynamicFields;
   }
 
-  /**
-   * Update positions for elements in array.
-   * @param {any[]} array of elements to sort
-   */
+  // Update each element's .position to match array index
   updatePositions(elements) {
     elements.forEach((value, key) => value.position = key);
     this.backupSessionStorage(this.getDialogId(), this.data);
   }
 
-  /**
-   * Iterates through the list of dialog field names and creates a new
-   * unique name for the added element
-   */
+  // creates a new unique name for the added element
   newFieldName(fieldType) {
     let dialogFieldNames = [];
     let newOrdinalNumber = 1;
@@ -97,10 +76,7 @@ export class DialogEditorService {
     return JSON.parse(sessionStorage.getItem(this.sessionStorageKey(id)));
   }
 
-  /**
-   * Iterates through all the dialog fields and calls callback method
-   * sent through parameter
-   */
+  // Iterates through all the dialog fields and calls callback for each
   forEachDialogField(callback) {
     _.forEach(this.data.content[0].dialog_tabs, (tab) => {
       _.forEach(tab.dialog_groups, (group) => {
@@ -111,10 +87,7 @@ export class DialogEditorService {
     });
   }
 
-  /**
-   * Function iterates through all the groups in the dialog editor
-   * and returns true if any dialog fields are present
-   */
+  // returns true if any dialog fields are present
   anyDialogFields() {
     let ret = false;
     _.forEach(this.data.content[0].dialog_tabs, (tab) => {
@@ -127,11 +100,8 @@ export class DialogEditorService {
     return ret;
   }
 
-  /**
-   * Function is used to replace undefined values in dialogs
-   * with boolean, so the bootstrap switch is not initialized with
-   * undefined state
-   */
+  // used to replace undefined values in dialogs with booleans,
+  // so that bootstrap switch is not initialized with undefined state
   undefinedAttrsToBoolean() {
     if (!this.anyDialogFields()) {
       return;

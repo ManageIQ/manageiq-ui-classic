@@ -1,14 +1,9 @@
-/**
- * Controller for the Dialog Editor tab list component
- */
 class TabListController {
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
 
-  /**
-   * Activate the first tab in tab list, if there is any.
-   */
+  // Activate the first tab in tab list, if there is any.
   $onInit() {
     // load tabs data from the service
     this.tabList = this.DialogEditor.getDialogTabs();
@@ -35,11 +30,7 @@ class TabListController {
     };
   }
 
-  /**
-   * Add a new tab to the list.
-   * New tab is automatically appended to the last position of the list and
-   * set as active.
-   */
+  // Append a new tab to the list and set active.
   addTab() {
     // deactivate currently active tab
     this.tabList.forEach((tab) =>  tab.active = false);
@@ -63,13 +54,11 @@ class TabListController {
     this.DialogEditor.updatePositions(this.tabList);
   }
 
-  /**
-   * Delete tab and all its content from the dialog.
-   * After removing tab, position attributes needs to be updated.
-   * If the tab to delete is active in the moment of the deletion, the
-   * activity goes to the other tab.
-   * @param {number} id is an index of remove tab
-   */
+  // Delete tab and all its content from the dialog.
+  // After removing tab, position attributes needs to be updated.
+  // If the tab to delete is active in the moment of the deletion, the
+  // activity goes to the other tab.
+  // @param {number} index of the tab
   removeTab(id) {
     // pass the activity to other tab, if the deleted is active
     if (this.tabList[id].active) {
@@ -101,10 +90,7 @@ class TabListController {
     }
   }
 
-  /**
-   * Assign activity to the selected tab.
-   * @param {number} id is an index of remove tab
-   */
+  // set tab as active, by index
   selectTab(id) {
     // deactivate currently active
     let deselectedTab = _.find(this.tabList, { active: true });
@@ -119,14 +105,7 @@ class TabListController {
 
 TabListController.$inject = ['DialogEditor'];
 
-/**
- * @description
- *    Component implementing behaviour for the tabs inside of
- *    the dialogs.
- * @example
- * <dialog-editor-tabs>
- * </dialog-editor-tabs>
- */
+// behaviour for the tabs inside of the dialogs.
 export const TabList = {
   bindings: {
     setupModalOptions: '&',

@@ -48,9 +48,7 @@ export class DialogValidationService {
     };
   }
 
-  /**
-   * Run validations across each dialog elements.
-   */
+  // Run validations across each dialog elements.
   dialogIsValid(dialogData) {
     this.invalid.message = null;
 

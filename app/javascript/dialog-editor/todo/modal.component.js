@@ -1,6 +1,3 @@
-/**
- * Controller for the Dialog Editor modal service
- */
 class ModalController {
   modalTab = 'element_information';
 
@@ -75,42 +72,29 @@ class ModalController {
     }
   }
 
-  /**
-   * Load categories data from API.
-   */
+  // Load categories data from API.
   resolveCategories() {
     return this.DialogEditorHttp.loadCategories();
   }
 
-  /**
-   * Store the name of the tab, that is currently selected.
-   * @param tab is a name of the tab in the modal
-   */
+  // Store the name of the tab, that is currently selected.
   modalTabSet(tab) {
     this.modalTab = tab;
   }
 
-  /**
-   * Watches attribute 'modalOptions', and if it changes,
-   * calls method to display the modal.
-   */
+  // Watches 'modalOptions' for changes, displays modal when it does
   $onChanges(changesObj) {
     if (changesObj.modalOptions && this.modalOptions) {
       this.showModal(this.modalOptions);
     }
   }
 
-  /**
-   * Returns true/false according to which tab is currently
-   * selected in the modal.
-   */
+  // true/false according to which tab is currently selected in the modal.
   modalTabIsSet(tab) {
     return this.modalTab === tab;
   }
 
-  /**
-   * Check for changes in the modal.
-   */
+  // Check for changes in the modal.
   modalUnchanged() {
     let elements = {
       tab: this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab],
@@ -123,9 +107,7 @@ class ModalController {
     return this.elementInfo.type in elements && _.isMatch(elements[this.elementInfo.type], this.modalData);
   }
 
-  /**
-   * Store modified data back to the service.
-   */
+  // Store modified data back to the service.
   saveDialogFieldDetails() {
     switch (this.elementInfo.type) {
       case 'tab':
@@ -150,18 +132,14 @@ class ModalController {
     this.DialogEditor.backupSessionStorage(this.DialogEditor.getDialogId(), this.DialogEditor.data);
   }
 
-  /**
-   * Delete dialog field selected in modal.
-   */
+  // Delete dialog field selected in modal.
   deleteField() {
     _.remove(this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab].dialog_groups[this.elementInfo.boxId].dialog_fields, (field) => field.position === this.elementInfo.fieldId);
 
     this.DialogEditor.backupSessionStorage(this.DialogEditor.getDialogId(), this.DialogEditor.data);
   }
 
-  /**
-   * Add entry for radio button / dropdown select.
-   */
+  // Add entry for radio button / dropdown select.
   addEntry() {
     if (this.modalData.values == null) {
       this.modalData.values = [];
@@ -170,17 +148,12 @@ class ModalController {
     this.modalData.values.push(['', '']);
   }
 
-  /**
-   * Remove entry for radio button / dropdown select
-   * @param entry to remove from array
-   */
+  // Remove entry for radio button / dropdown select
   removeEntry(entry) {
     _.pull(this.modalData.values, entry);
   }
 
-  /**
-   * Finds entries for the selected category.
-   */
+  // Finds entries for the selected category.
   currentCategoryEntries() {
     if (angular.isDefined(this.categories)) {
       return _.find(this.categories.resources, {
@@ -189,10 +162,7 @@ class ModalController {
     }
   }
 
-  /**
-   * Updates fields associated with dynamic fields after
-   * changing the dynamic field to static
-   */
+  // Updates fields associated with dynamic fields after changing the dynamic field to static
   updateDialogFieldResponders(changedFieldName) {
     this.DialogEditor.forEachDialogField((field) => {
       if (!field.dialog_field_responders ||
@@ -205,9 +175,7 @@ class ModalController {
     });
   }
 
-  /**
-   * Finds entries for the selected TagControl and sets them.
-   */
+  // Finds entries for the selected TagControl and sets them.
   setupCategoryOptions() {
     let vm = this;
     let item = this.modalData.options.category_id;
@@ -220,11 +188,7 @@ class ModalController {
     });
   }
 
-  /**
-   * Receives specification of which modal should be created and it's
-   * parameters, sets default tab, loads the data of the element edited in modal
-   * and displays the modal.
-   */
+  // display the right modal
   showModal(options) {
     options.controller = ['parent', function(parent) { this.parent = parent; }];
     options.resolve = {
@@ -238,11 +202,9 @@ class ModalController {
     return this.uibModalInstance.result.catch(() => undefined);
   }
 
-  /**
-   * Building of component template.
-   * New component automatically has access to any of these bindings
-   * and if a new one is needed, it should be added here to be available.
-   */
+  // Building the modal component template.
+  // New component automatically has access to any of these bindings
+  // and if a new one is needed, it should be added here to be available.
   static buildTemplate(component) {
     return `<${component}
       modal-data="modalCtrl.parent.modalData"
@@ -270,14 +232,7 @@ ModalController.$inject = [
   'DialogEditorHttp',
 ];
 
-/**
- * @description
- *    Component implementing behaviour for the boxes inside of
- *    the dialogs tabs.
- * @example
- * <dialog-editor-modal>
- * </dialog-editor-modal>
- */
+// behaviour for the boxes inside of the dialogs tabs.
 export const Modal = {
   bindings: {
     elementInfo: '<',
