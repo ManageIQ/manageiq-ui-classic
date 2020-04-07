@@ -234,32 +234,6 @@ module Mixins
       end
     end
 
-    def delete
-      assert_privileges("#{privilege_prefix}_delete_provider")
-      checked_items = find_checked_items
-      checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-      providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
-      if providers.empty?
-        add_flash(_("No Providers were selected for deletion"), :error)
-      else
-        providers.each do |provider|
-          AuditEvent.success(
-            :event        => "provider_record_delete_initiated",
-            :message      => "[#{provider.name}] Record delete initiated",
-            :target_id    => provider.id,
-            :target_class => provider.type,
-            :userid       => session[:userid]
-          )
-          provider.destroy_queue
-        end
-
-        add_flash(n_("Delete initiated for %{count} Provider",
-                     "Delete initiated for %{count} Providers",
-                     providers.length) % {:count => providers.length})
-      end
-      replace_right_cell
-    end
-
     def refresh
       assert_privileges("#{privilege_prefix}_refresh_provider")
       @explorer = true
