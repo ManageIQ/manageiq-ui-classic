@@ -57,7 +57,7 @@
       </div>
       <a ng-click='vm.addEntry()'><i class='pficon-add-circle-o'></i></a>
     </div>
-    <dialog-editor-modal-field-template template="fields-to-refresh.html"
+    <dialog-editor-modal-field-template template="_fields-to-refresh.html"
                                         modal-data="vm.modalData">
     </dialog-editor-modal-field-template>
   </form>
@@ -73,7 +73,7 @@
           </span>
         </div>
       </div>
-      <dialog-editor-modal-field-template template="dynamic-values.html"
+      <dialog-editor-modal-field-template template="_dynamic-values.html"
                                           modal-data="vm.modalData">
       </dialog-editor-modal-field-template>
       <div pf-form-group pf-label="{{'Required'|translate}}">
@@ -89,7 +89,7 @@
           <option selected="selected" value="string" translate>String</option>
         </select>
       </div>
-      <dialog-editor-modal-field-template template="fields-to-refresh.html"
+      <dialog-editor-modal-field-template template="_fields-to-refresh.html"
                                           modal-data="vm.modalData">
       </dialog-editor-modal-field-template>
     </div>

@@ -6,7 +6,7 @@ The dialog editor hierarchy:
         %dialog-editor-modal-field-template - per field type
           %dialog-editor-tree-selector - method selector for dynamic fields
           %dialog-editor-validation - regex validation on & off, for text-box & text-area-box
-          %dialog-editor-modal-field-template - also nested within itself for shared partials (fields-to-refresh, dynamic-values)
+          %dialog-editor-modal-field-template - also nested within itself for shared partials (_fields-to-refresh, _dynamic-values)
 
     | %dialog-editor-modal-tab - edit tab properties
     | %dialog-editor-modal-box - edit box properties
