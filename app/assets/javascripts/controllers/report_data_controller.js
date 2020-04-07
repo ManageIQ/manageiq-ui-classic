@@ -91,6 +91,8 @@
         this.setScope(event.data);
       } else if (event.type === 'gtlSetOneRowActive') {
         this.gtlSetOneRowActive(event.item);
+      } else if (event.controller === CONTROLLER_NAME && event.type === 'gtlUnselectAll') {
+        this.gtlUnselectAll();
       }
 
       if (event.controller === CONTROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
@@ -214,6 +216,18 @@
 
     ManageIQ.gridChecks = [];
     ManageIQ.gridChecks.push(item.long_id);
+  };
+
+  ReportDataController.prototype.gtlUnselectAll = function() {
+    var self = this;
+    this.$timeout(function() {
+      self.gtlData.rows.forEach(function(row) {
+        row.checked = false;
+        row.selected = false;
+      });
+    });
+
+    ManageIQ.gridChecks = [];
   };
 
   /**

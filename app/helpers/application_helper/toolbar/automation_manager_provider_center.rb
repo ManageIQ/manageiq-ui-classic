@@ -29,8 +29,14 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
           t,
-          :url     => "delete",
-          :confirm => N_("Warning: The selected Provider and ALL of their components will be permanently removed!")
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Ansible Tower Provider'),
+                                         :modal_text     => N_('Are you sure you want to delete the following Ansible Tower Provider?'),
+                                         :api_url        => 'providers',
+                                         :async_delete   => true,
+                                         :tree_select    => 'root',
+                                         :component_name => 'RemoveGenericItemModal'}}
         )
       ]
     ),
