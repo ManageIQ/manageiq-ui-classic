@@ -1,4 +1,4 @@
-class ModalController {
+export class ModalController {
   modalTab = 'element_information';
 
   constructor($uibModal, DialogEditor, DialogEditorHttp) {
@@ -231,15 +231,3 @@ ModalController.$inject = [
   'DialogEditor',
   'DialogEditorHttp',
 ];
-
-// behaviour for the boxes inside of the dialogs tabs.
-export const Modal = {
-  bindings: {
-    elementInfo: '<',
-    modalOptions: '<',
-    treeOptions: '<',
-  },
-  controller: ModalController,
-  template: '',
-  transclude: true,
-};

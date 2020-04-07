@@ -1,3 +1,4 @@
+// TODO simplify
 class DialogField {
   constructor(type, icon, label, name, options = {}) {
     this.icon = icon;
@@ -33,7 +34,7 @@ class DialogField {
   }
 }
 
-class ToolboxController {
+export class ToolboxController {
   fields = {
     dialogFieldTextBox:
       new DialogField('DialogFieldTextBox', 'fa fa-font', __('Text Box'), 'text_box', {
@@ -82,10 +83,3 @@ class ToolboxController {
       }),
   };
 }
-
-// used as a toolbox for the Dialog Editor
-export const Toolbox = {
-  controller: ToolboxController,
-  controllerAs: 'vm',
-  template: require('./toolbox.html'),
-};

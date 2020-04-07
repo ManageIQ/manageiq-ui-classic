@@ -1,4 +1,4 @@
-class TabListController {
+export class TabListController {
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
@@ -104,13 +104,3 @@ class TabListController {
 }
 
 TabListController.$inject = ['DialogEditor'];
-
-// behaviour for the tabs inside of the dialogs.
-export const TabList = {
-  bindings: {
-    setupModalOptions: '&',
-  },
-  controller: TabListController,
-  controllerAs: 'vm',
-  template: require('./tab-list.html'),
-};

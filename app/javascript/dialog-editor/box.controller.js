@@ -1,4 +1,4 @@
-class BoxController {
+export class BoxController {
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
@@ -87,13 +87,3 @@ class BoxController {
 }
 
 BoxController.$inject = ['DialogEditor'];
-
-// behaviour for the boxes inside of the dialogs tabs.
-export const Box = {
-  bindings: {
-    setupModalOptions: '&',
-  },
-  controller: BoxController,
-  controllerAs: 'vm',
-  template: require('./box.html'),
-};

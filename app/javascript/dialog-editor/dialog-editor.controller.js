@@ -1,4 +1,4 @@
-class DialogEditorController {
+export class DialogEditorController {
   setupModalOptions(type, tab, box, field) {
     const components = {
       tab: 'dialog-editor-modal-tab',
@@ -19,12 +19,3 @@ class DialogEditorController {
     };
   }
 }
-
-// Top-level dialog editor component.
-export const DialogEditor = {
-  bindings: {
-    treeOptions: '<',
-  },
-  controller: DialogEditorController,
-  template: require('./dialog-editor.html'),
-};
