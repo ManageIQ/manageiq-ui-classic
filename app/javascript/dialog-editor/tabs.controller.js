@@ -21,10 +21,11 @@ export class TabsController {
       helper: 'clone',
       revert: 50,
       stop: (e, ui) => {
-        let sortedTab = angular.element(ui.item).scope().$parent;
-        let tabList = sortedTab.vm.tabList;
+        const sortedTab = angular.element(ui.item).scope().$parent;
+        const { tabList } = sortedTab.vm;
         this.DialogEditor.updatePositions(tabList);
-        let activeTab = _.find(tabList, {active: true});
+
+        const activeTab = _.find(tabList, { active: true });
         this.DialogEditor.activeTab = activeTab.position;
       },
     };
@@ -33,10 +34,10 @@ export class TabsController {
   // Append a new tab to the list and set active.
   addTab() {
     // deactivate currently active tab
-    this.tabList.forEach((tab) =>  tab.active = false);
+    this.tabList.forEach((tab) => (tab.active = false));
 
     // create a new tab
-    let nextIndex = this.tabList.length;
+    const nextIndex = this.tabList.length;
     this.tabList.push({
       description: __('New tab ') + nextIndex,
       display: 'edit',
@@ -44,9 +45,9 @@ export class TabsController {
       position: nextIndex,
       active: true,
       dialog_groups: [{
-        'label': __('New section'),
-        'position': 0,
-        'dialog_fields': [],
+        label: __('New section'),
+        position: 0,
+        dialog_fields: [],
       }],
     });
 
@@ -62,8 +63,8 @@ export class TabsController {
   removeTab(id) {
     // pass the activity to other tab, if the deleted is active
     if (this.tabList[id].active) {
-      if ((this.tabList.length - 1) === this.tabList[id].position &&
-          (this.tabList.length - 1) !== 0) {
+      if ((this.tabList.length - 1) === this.tabList[id].position
+        && (this.tabList.length - 1) !== 0) {
         // active tab was at the end => new active tab is on previous index
         this.tabList[id - 1].active = true;
       } else if ((this.tabList.length - 1) > this.tabList[id].position) {
@@ -84,7 +85,7 @@ export class TabsController {
     }
 
     // set activity in the service
-    let activeTabData = _.find(this.tabList, { active: true });
+    const activeTabData = _.find(this.tabList, { active: true });
     if (angular.isDefined(activeTabData)) {
       this.DialogEditor.activeTab = activeTabData.position;
     }
@@ -93,12 +94,13 @@ export class TabsController {
   // set tab as active, by index
   selectTab(id) {
     // deactivate currently active
-    let deselectedTab = _.find(this.tabList, { active: true });
+    const deselectedTab = _.find(this.tabList, { active: true });
     deselectedTab.active = false;
 
     // activate selected
-    let selectedTab = this.tabList[id];
+    const selectedTab = this.tabList[id];
     selectedTab.active = true;
+
     this.DialogEditor.activeTab = id;
   }
 }

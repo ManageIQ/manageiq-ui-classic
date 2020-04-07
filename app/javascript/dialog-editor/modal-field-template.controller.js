@@ -10,7 +10,7 @@ export class ModalFieldTemplateController {
       cursor: 'move',
       opacity: 0.5,
       revert: 50,
-      stop: (e, ui) => {
+      stop: (_e, _ui) => {
         this.$element.find('select').selectpicker('refresh');
       },
     };

@@ -19,8 +19,12 @@
   "extends": ["airbnb", "plugin:jest/recommended"],
   "plugins": ["jest", "react"],
   "rules": {
+    "arrow-parens": [1, "always"],
+    "class-methods-use-this": 0,
+    "camelcase": 0,
     "func-names": 0,
     "implicit-arrow-linebreak": "off",
+    "import/extensions": [0, "always"],
     "import/prefer-default-export": "off",
     "indent": [ "error", 2, {
       "SwitchCase": 1,
@@ -30,11 +34,16 @@
       "beforeColon": false,
       "afterColon": true
     }],
+    "lines-between-class-members": ["error", "always", {
+      "exceptAfterSingleLine": true
+    }],
     "max-len": ["error", {
       "code": 150,
       "ignoreComments": true
     }],
     "no-extra-boolean-cast": "off",
+    "no-param-reassign": ["error", {"props": false }],
+    "no-return-assign": [1, "except-parens"],
     "no-shadow": "off",
     "no-underscore-dangle": "off",
     "no-unused-vars": ["error", {
@@ -48,7 +57,11 @@
       "functions": false,
       "classes": false
     }],
-    "quotes": [ "warn", "single", {
+    "object-curly-newline": ["error", {
+      "consistent": true,
+      "multiline": true
+    }],
+    "quotes": ["warn", "single", {
       "avoidEscape": true,
       "allowTemplateLiterals": true
     }],

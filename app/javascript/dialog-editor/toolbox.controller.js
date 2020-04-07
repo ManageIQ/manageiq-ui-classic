@@ -4,9 +4,9 @@ class DialogField {
     this.icon = icon;
     this.label = label;
     this.placeholders = Object.assign({
-      name: name,
+      name,
       description: '',
-      type: type,
+      type,
       display: 'edit',
       display_method_options: {},
       read_only: false,
@@ -14,7 +14,7 @@ class DialogField {
       required_method_options: {},
       default_value: '',
       values_method_options: {},
-      label: label,
+      label,
       position: 0,
       dynamic: false,
       show_refresh_button: false,
@@ -60,7 +60,10 @@ export class ToolboxController {
       new DialogField('DialogFieldRadioButton', 'fa fa-circle-o', __('Radio Button'), 'radio_button', {
         data_type: 'string',
         values: [['1', __('One')], ['2', __('Two')], ['3', __('Three')]],
-        options: {sort_by: 'description', sort_order: 'ascending'},
+        options: {
+          sort_by: 'description',
+          sort_order: 'ascending',
+        },
       }),
     dialogFieldDateControl:
       new DialogField('DialogFieldDateControl', 'fa fa-calendar', __('Datepicker'), 'date_control', {

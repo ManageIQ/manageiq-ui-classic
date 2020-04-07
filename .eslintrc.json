@@ -158,10 +158,7 @@
     "comma-dangle": [ "warn", "always-multiline" ],
     "space-unary-ops": [ "error", {
       "words": true,
-      "nonwords": false,
-      "overrides": {
-        "!": false
-      }
+      "nonwords": false
     }],
     "no-unused-vars": [ "error", {
       "args": "after-used",

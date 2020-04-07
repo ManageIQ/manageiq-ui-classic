@@ -2,9 +2,9 @@ export const Validation = {
   bindings: {
     modalData: '<',
   },
-  controller: function() {
+  controller() {
     this.$onChanges = () => {
-      if (this.modalData && ! this.modalData.validator_type) {
+      if (this.modalData && !this.modalData.validator_type) {
         // prevent null or undefined being interpreted wrong by the switch
         this.modalData.validator_type = false;
       }

@@ -10,14 +10,14 @@ export class ModalFieldController extends ModalSharedController {
       data: null,
 
       toggle: () => {
-        this.treeOptions.show = ! this.treeOptions.show;
+        this.treeOptions.show = !this.treeOptions.show;
 
         if (this.treeOptions.show) {
           const fqname = this.showFullyQualifiedName(this.modalData.resource_action) || null;
 
           this.treeOptions.load(fqname).then((data) => {
             this.treeOptions.data = data;
-            this.treeOptions.selected = {fqname: '/' + fqname};
+            this.treeOptions.selected = { fqname: `/${fqname}` };
           });
         }
       },
@@ -29,11 +29,11 @@ export class ModalFieldController extends ModalSharedController {
   }
 
   showFullyQualifiedName(resourceAction) {
-    if (resourceAction.ae_namespace && resourceAction.ae_class && resourceAction.ae_instance) {
-      return `${resourceAction.ae_namespace}/${resourceAction.ae_class}/${resourceAction.ae_instance}`;
-    } else {
+    if (!resourceAction.ae_namespace || !resourceAction.ae_class || !resourceAction.ae_instance) {
       return '';
     }
+
+    return `${resourceAction.ae_namespace}/${resourceAction.ae_class}/${resourceAction.ae_instance}`;
   }
 
   treeSelectorSelect(node, elementData) {

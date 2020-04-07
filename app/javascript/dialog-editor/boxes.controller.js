@@ -4,7 +4,7 @@ export class BoxesController {
   }
 
   onFieldEdit(type, tab, box, field) {
-    this.setupModalOptions({type, tab, box, field});
+    this.setupModalOptions({ type, tab, box, field });
   }
 
   // Load service & tabs to be able to access it from the template.
@@ -20,7 +20,7 @@ export class BoxesController {
       opacity: 0.5,
       revert: 50,
       stop: (e, ui) => {
-        let sortedBox = ui.item.scope().$parent.tab.dialog_groups;
+        const sortedBox = ui.item.scope().$parent.tab.dialog_groups;
 
         // update indexes of other boxes after changing their order
         this.DialogEditor.updatePositions(sortedBox);
@@ -34,7 +34,7 @@ export class BoxesController {
       cursor: 'move',
       revert: 50,
       stop: (e, ui) => {
-        let sortedField = ui.item.scope().$parent.box.dialog_fields;
+        const sortedField = ui.item.scope().$parent.box.dialog_fields;
 
         // update indexes of other fields after changing their order
         this.DialogEditor.updatePositions(sortedField);
@@ -66,10 +66,10 @@ export class BoxesController {
   }
 
   // Handle Drag&Drop event.
-  droppableOptions(e, ui) {
+  droppableOptions(e, _ui) {
     const elementScope = angular.element(e.target).scope();
-    let droppedItem = elementScope.dndDragItem;
-    let droppedPlace = elementScope.box;
+    const droppedItem = elementScope.dndDragItem;
+    const droppedPlace = elementScope.box;
 
     // update name for the dropped field
     if (!_.isEmpty(droppedItem)) {
@@ -81,8 +81,7 @@ export class BoxesController {
   }
 
   updateFieldName(field) {
-    let nameWithIndex = this.DialogEditor.newFieldName(field.name);
-    field.name = nameWithIndex;
+    field.name = this.DialogEditor.newFieldName(field.name);
   }
 }
 
