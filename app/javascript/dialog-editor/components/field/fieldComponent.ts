@@ -61,6 +61,6 @@ export default class Field {
   bindings = {
     fieldData: '<',
     boxPosition: '<',
-    setupModalOptions: '&'
+    setupModalOptions: '&',
   };
 }

@@ -17,6 +17,7 @@ class BoxController {
   $onInit() {
     this.service = this.DialogEditor;
     this.dialogTabs = this.DialogEditor.getDialogTabs();
+
     // Rules for Drag&Drop sorting of boxes
     this.sortableOptionsBox = {
       axis: 'y',
@@ -26,10 +27,12 @@ class BoxController {
       revert: 50,
       stop: (e, ui) => {
         let sortedBox = ui.item.scope().$parent.tab.dialog_groups;
+
         // update indexes of other boxes after changing their order
         this.DialogEditor.updatePositions(sortedBox);
       },
     };
+
     // Rules for Drag&Drop sorting of elements inside of boxes
     this.sortableOptionsFields = {
       axis: 'y',
@@ -38,6 +41,7 @@ class BoxController {
       revert: 50,
       stop: (e, ui) => {
         let sortedField = ui.item.scope().$parent.box.dialog_fields;
+
         // update indexes of other fields after changing their order
         this.DialogEditor.updatePositions(sortedField);
       },
@@ -49,20 +53,16 @@ class BoxController {
    * The new box is automatically appended to the last position of the list
    */
   addBox() {
-    this.dialogTabs[this.DialogEditor.activeTab].dialog_groups
-      .push(
-        {
-          description: __('Description'),
-          label: __('New Section'),
-          display: 'edit',
-          position: 0,
-          dialog_fields: [],
-        }
-      );
+    this.dialogTabs[this.DialogEditor.activeTab].dialog_groups.push({
+      description: __('Description'),
+      label: __('New Section'),
+      display: 'edit',
+      position: 0,
+      dialog_fields: [],
+    });
+
     // update indexes of other boxes after adding a new one
-    this.DialogEditor.updatePositions(
-      this.dialogTabs[this.DialogEditor.activeTab].dialog_groups
-    );
+    this.DialogEditor.updatePositions(this.dialogTabs[this.DialogEditor.activeTab].dialog_groups);
   }
 
   /**
@@ -70,14 +70,10 @@ class BoxController {
    * @param {number} id as index of removed box
    */
   removeBox(id) {
-    _.remove(
-      this.dialogTabs[this.DialogEditor.activeTab].dialog_groups,
-      (box) => box.position === id
-    );
+    _.remove(this.dialogTabs[this.DialogEditor.activeTab].dialog_groups, (box) => box.position === id);
+
     // update indexes of other boxes after removing
-    this.DialogEditor.updatePositions(
-      this.dialogTabs[this.DialogEditor.activeTab].dialog_groups
-    );
+    this.DialogEditor.updatePositions(this.dialogTabs[this.DialogEditor.activeTab].dialog_groups);
   }
 
   /**
@@ -89,19 +85,18 @@ class BoxController {
     const elementScope = angular.element(e.target).scope();
     let droppedItem = elementScope.dndDragItem;
     let droppedPlace = elementScope.box;
+
     // update name for the dropped field
     if (!_.isEmpty(droppedItem)) {
       this.updateFieldName(droppedItem);
     }
+
     // update indexes of other boxes after changing their order
-    this.DialogEditor.updatePositions(
-      droppedPlace.dialog_fields
-    );
+    this.DialogEditor.updatePositions(droppedPlace.dialog_fields);
   }
 
   updateFieldName(field) {
-    let nameWithIndex = this.DialogEditor.newFieldName(
-      field.name);
+    let nameWithIndex = this.DialogEditor.newFieldName(field.name);
     field.name = nameWithIndex;
   }
 }
@@ -121,6 +116,6 @@ export default class Box {
   controller = BoxController;
   controllerAs = 'vm';
   bindings = {
-    setupModalOptions: '&'
+    setupModalOptions: '&',
   };
 }

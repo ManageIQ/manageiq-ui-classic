@@ -105,11 +105,7 @@
   </div>
   <div class="col-sm-5 editor-field-actions">
     <button type="button" class="close hide"
-            ng-click="vm.removeField(
-              vm.service.activeTab,
-              vm.boxPosition,
-              vm.fieldData.position
-            )">
+            ng-click="vm.removeField(vm.service.activeTab, vm.boxPosition, vm.fieldData.position)">
             <span aria-hidden="true">
               <i class="fa fa-times"></i>
             </span>
@@ -119,7 +115,7 @@
               type: 'field',
               tab: vm.service.activeTab,
               box: vm.boxPosition,
-              field: vm.fieldData.position
+              field: vm.fieldData.position,
             })">
       <span aria-hidden="true">
         <i class="pf pficon-edit"></i>

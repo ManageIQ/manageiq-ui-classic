@@ -9,6 +9,7 @@ export default class DialogEditorService {
   setData(data) {
     this.data = data;
     this.undefinedAttrsToBoolean();
+
     // FIXME: Compensation of default values until it is been resolved in the API
     this.forEachDialogField((field) => {
       if (field.hasOwnProperty('values') && _.isArray(field.values)) {
@@ -137,18 +138,26 @@ export default class DialogEditorService {
     }
 
     let attributes = [
-      'required', 'visible', 'read_only', 'show_refresh_button',
-      'load_values_on_init', 'reconfigurable',
+      'load_values_on_init',
+      'read_only',
+      'reconfigurable',
+      'required',
+      'show_refresh_button',
+      'visible',
     ];
     let optionalAttributes = [
-      'show_past_days', 'protected', 'force_multi_value'
+      'force_multi_value',
+      'protected',
+      'show_past_days',
     ];
+
     this.forEachDialogField((field) => {
       attributes.forEach(function(attr) {
         if (field[attr] == null) {
           field[attr] = false;
         }
       });
+
       if (field['options']) {
         optionalAttributes.forEach(function(attr) {
           if (field['options'][attr] == null) {

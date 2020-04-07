@@ -1,11 +1,12 @@
 describe('modalComponentSpec', () => {
   let bindings;
+
   describe('controller', () => {
     let modalComponent;
 
     beforeEach(() => {
       bindings = {
-        modalData: { options: { category_id: '10' } }
+        modalData: { options: { category_id: '10' } },
       };
       angular.mock.module('miq.dialogEditor');
       angular.mock.module('ui.bootstrap');

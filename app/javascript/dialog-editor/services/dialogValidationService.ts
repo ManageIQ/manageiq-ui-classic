@@ -10,19 +10,19 @@ export default class DialogValidationService {
         dialog => ({ status: ! _.isEmpty(dialog.label),
                      errorMessage: __('Dialog needs to have a label') }),
         dialog => ({ status: dialog.dialog_tabs.length > 0,
-                     errorMessage: __('Dialog needs to have at least one tab') })
+                     errorMessage: __('Dialog needs to have at least one tab') }),
       ],
       tabs: [
         tab => ({ status: ! _.isEmpty(tab.label),
                   errorMessage: __('Dialog tab needs to have a label') }),
         tab => ({ status: tab.dialog_groups.length > 0,
-                  errorMessage: __('Dialog tab needs to have at least one section') })
+                  errorMessage: __('Dialog tab needs to have at least one section') }),
       ],
       groups: [
         group => ({ status: ! _.isEmpty(group.label),
                     errorMessage: __('Dialog section needs to have a label') }),
         group => ({ status: group.dialog_fields.length > 0,
-                    errorMessage: __('Dialog section needs to have at least one field') })
+                    errorMessage: __('Dialog section needs to have at least one field') }),
       ],
       fields: [
         field => ({ status: ! _.isEmpty(field.name),

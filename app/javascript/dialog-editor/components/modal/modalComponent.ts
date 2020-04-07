@@ -16,20 +16,18 @@ class ModalController {
       let elements = {
         tab: this.loadModalTabData(elem.tabId),
         box: this.loadModalBoxData(elem.tabId, elem.boxId),
-        field: this.loadModalFieldData(elem.tabId, elem.boxId, elem.fieldId)
+        field: this.loadModalFieldData(elem.tabId, elem.boxId, elem.fieldId),
       };
-      this.modalData = elem.type in elements &&
-        _.cloneDeep(elements[elem.type]);
+      this.modalData = elem.type in elements && _.cloneDeep(elements[elem.type]);
 
       if (elem.type === 'field') {
         this.modalData.dynamicFieldList = this.DialogEditor.getDynamicFields(this.modalData.name);
 
         // load categories from API, if the field is Tag Control
         if (this.modalData.type === 'DialogFieldTagControl') {
-          this.resolveCategories().then(
-            (categories) => { this.categories = categories; }
-          );
+          this.resolveCategories().then((categories) => this.categories = categories);
         }
+
         // set modal title
         if (!this.modalData.dynamic) {
           const titles = {
@@ -40,11 +38,11 @@ class ModalController {
             DialogFieldRadioButton:     __('Radio Button'),
             DialogFieldDateControl:     __('Datepicker'),
             DialogFieldDateTimeControl: __('Timepicker'),
-            DialogFieldTagControl:      __('Tag Control')
+            DialogFieldTagControl:      __('Tag Control'),
           };
-          const titleLabel = this.modalData.type in titles &&
-            titles[this.modalData.type];
-          this.modalTitle =  sprintf(__('Edit %s Field'), titleLabel);
+
+          const titleLabel = this.modalData.type in titles && titles[this.modalData.type];
+          this.modalTitle = sprintf(__('Edit %s Field'), titleLabel);
         }
       }
     }
@@ -115,18 +113,14 @@ class ModalController {
    */
   modalUnchanged() {
     let elements = {
-      tab: this.DialogEditor.getDialogTabs()[
-        this.DialogEditor.activeTab],
-      box: this.DialogEditor.getDialogTabs()[
-        this.DialogEditor.activeTab].dialog_groups[
-          this.elementInfo.boxId],
-      field: this.DialogEditor.getDialogTabs()[
-        this.DialogEditor.activeTab].dialog_groups[
-          this.elementInfo.boxId].dialog_fields[
-            this.elementInfo.fieldId]
+      tab: this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab],
+      box: this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab]
+        .dialog_groups[this.elementInfo.boxId],
+      field: this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab]
+        .dialog_groups[this.elementInfo.boxId]
+        .dialog_fields[this.elementInfo.fieldId],
     };
-    return this.elementInfo.type in elements &&
-      _.isMatch(elements[this.elementInfo.type], this.modalData);
+    return this.elementInfo.type in elements && _.isMatch(elements[this.elementInfo.type], this.modalData);
   }
 
   /**
@@ -135,51 +129,34 @@ class ModalController {
   saveDialogFieldDetails() {
     switch (this.elementInfo.type) {
       case 'tab':
-        _.extend(
-          this.DialogEditor.getDialogTabs()[
-            this.DialogEditor.activeTab],
-          { label: this.modalData.label,
-            description: this.modalData.description }
-        );
+        _.extend(this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab], {
+          label: this.modalData.label,
+          description: this.modalData.description,
+        });
         break;
       case 'box':
-        _.extend(
-          this.DialogEditor.getDialogTabs()[
-            this.DialogEditor.activeTab].dialog_groups[
-              this.elementInfo.boxId],
-          { label: this.modalData.label,
-            description: this.modalData.description }
-        );
+        _.extend(this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab].dialog_groups[this.elementInfo.boxId], {
+          label: this.modalData.label,
+          description: this.modalData.description,
+        });
         break;
       case 'field':
-        this.DialogEditor.getDialogTabs()[
-          this.DialogEditor.activeTab].dialog_groups[
-            this.elementInfo.boxId].dialog_fields[
-              this.elementInfo.fieldId] = this.modalData;
+        this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab].dialog_groups[this.elementInfo.boxId].dialog_fields[this.elementInfo.fieldId] = this.modalData;
         break;
       default:
         break;
     }
-    this.DialogEditor.backupSessionStorage(
-      this.DialogEditor.getDialogId(),
-      this.DialogEditor.data);
+
+    this.DialogEditor.backupSessionStorage(this.DialogEditor.getDialogId(), this.DialogEditor.data);
   }
 
   /**
    * Delete dialog field selected in modal.
    */
   deleteField() {
-    _.remove(
-      this.DialogEditor.getDialogTabs()[
-        this.DialogEditor.activeTab
-      ].dialog_groups[
-        this.elementInfo.boxId
-      ].dialog_fields,
-      (field) => field.position === this.elementInfo.fieldId
-    );
-    this.DialogEditor.backupSessionStorage(
-      this.DialogEditor.getDialogId(),
-      this.DialogEditor.data);
+    _.remove(this.DialogEditor.getDialogTabs()[this.DialogEditor.activeTab].dialog_groups[this.elementInfo.boxId].dialog_fields, (field) => field.position === this.elementInfo.fieldId);
+
+    this.DialogEditor.backupSessionStorage(this.DialogEditor.getDialogId(), this.DialogEditor.data);
   }
 
   /**
@@ -189,6 +166,7 @@ class ModalController {
     if (this.modalData.values == null) {
       this.modalData.values = [];
     }
+
     this.modalData.values.push(['', '']);
   }
 
@@ -205,12 +183,9 @@ class ModalController {
    */
   currentCategoryEntries() {
     if (angular.isDefined(this.categories)) {
-      return _.find(
-        this.categories.resources,
-        {
-          'id': this.modalData.options.category_id
-        }
-      );
+      return _.find(this.categories.resources, {
+        'id': this.modalData.options.category_id
+      });
     }
   }
 
@@ -237,7 +212,7 @@ class ModalController {
     let vm = this;
     let item = this.modalData.options.category_id;
     _.forEach(this.categories.resources, function (name) {
-      if(name['id'] === item) {
+      if (name['id'] === item) {
         vm.modalData.options.category_description = name['description'];
         vm.modalData.options.category_name = name['name'];
         vm.modalData.options.category_single_value = name['single_value'];
@@ -253,7 +228,7 @@ class ModalController {
   showModal(options) {
     options.controller = ['parent', function(parent) { this.parent = parent; }];
     options.resolve = {
-      parent: () => this
+      parent: () => this,
     };
     options.controllerAs = 'modalCtrl';
     options.template = ModalController.buildTemplate(options.component);

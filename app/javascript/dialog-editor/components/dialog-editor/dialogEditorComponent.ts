@@ -3,7 +3,7 @@ export class DialogEditorController {
     const components = {
       tab: 'dialog-editor-modal-tab',
       box: 'dialog-editor-modal-box',
-      field: 'dialog-editor-modal-field'
+      field: 'dialog-editor-modal-field',
     };
 
     this.modalOptions = {

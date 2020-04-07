@@ -14,8 +14,8 @@ describe('DialogEditor test', () => {
   describe('#setData', () => {
     let dialogData = {
       content: [{
-        dialog_tabs: []
-      }]
+        dialog_tabs: [],
+      }],
     };
 
     it('sets data to the data property', () => {
@@ -29,11 +29,11 @@ describe('DialogEditor test', () => {
           dialog_tabs: [{
             dialog_groups: [{
               dialog_fields: [{
-                values: 'nofailure'
-              }]
-            }]
-          }]
-        }]
+                values: 'nofailure',
+              }],
+            }],
+          }],
+        }],
       };
 
       it('sets all of the field values correctly', () => {
@@ -60,10 +60,10 @@ describe('DialogEditor test', () => {
                   protected: null,
                   force_multi_value: null,
                 },
-              }]
-            }]
-          }]
-        }]
+              }],
+            }],
+          }],
+        }],
       };
 
       it('sets all fields with null value  to false', () => {
@@ -92,11 +92,11 @@ describe('DialogEditor test', () => {
           dialog_tabs: [{
             dialog_groups: [{
               dialog_fields: [{
-                values: ['0', 'zero']
-              }]
-            }]
-          }]
-        }]
+                values: ['0', 'zero'],
+              }],
+            }],
+          }],
+        }],
       };
 
       it('sets all of the field values based on a filter', () => {
@@ -184,29 +184,29 @@ describe('DialogEditor test', () => {
     let field1 = {
       id: 1,
       name: 'field_1',
-      dynamic: true
+      dynamic: true,
     };
 
     let field2 = {
       id: 2,
       name: 'field_2',
-      dynamic: true
+      dynamic: true,
     };
 
     let field3 = {
       id: 3,
       name: 'field_3',
-      dynamic: false
+      dynamic: false,
     };
 
     let data = {
       content: [{
         dialog_tabs: [{
           dialog_groups: [{
-            dialog_fields: [field1, field2, field3]
-          }]
-        }]
-      }]
+            dialog_fields: [field1, field2, field3],
+          }],
+        }],
+      }],
     };
 
     beforeEach(() => {
@@ -228,25 +228,25 @@ describe('DialogEditor test', () => {
 
   describe('#newFieldName', () => {
     let field1 = {
-      name: 'textarea_box_1'
+      name: 'textarea_box_1',
     };
 
     let field2 = {
-      name: 'textarea_box_2'
+      name: 'textarea_box_2',
     };
 
     let field3 = {
-      name: 'radio_button_3'
+      name: 'radio_button_3',
     };
 
     let data = {
       content: [{
         dialog_tabs: [{
           dialog_groups: [{
-            dialog_fields: [field1, field2, field3]
-          }]
-        }]
-      }]
+            dialog_fields: [field1, field2, field3],
+          }],
+        }],
+      }],
     };
 
     beforeEach(() => {

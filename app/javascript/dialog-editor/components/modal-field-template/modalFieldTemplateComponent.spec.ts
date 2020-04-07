@@ -16,7 +16,7 @@ describe('modalFieldTemplateSpec', () => {
       scope.modalData = {
         type: 'DialogFieldDropDownList',
         options: {
-          sort_by: 'none'
+          sort_by: 'none',
         },
         values: [
           ['aaa', 'AAA'],
@@ -24,16 +24,16 @@ describe('modalFieldTemplateSpec', () => {
           ['ccc', 'CCC'],
           ['ddd', 'DDD'],
           ['eee', 'EEE'],
-        ]
+        ],
       };
 
-      template = angular.element(
-        `<dialog-editor-modal-field-template modal-data='modalData'
+      template = angular.element(`
+        <dialog-editor-modal-field-template modal-data='modalData'
                                              modal-tab-is-set='modalTabIsSet'
                                              modal-tab='modalTab'
                                              template='drop-down-list.html'>
-        </dialog-editor-modal-field-template>`
-      );
+        </dialog-editor-modal-field-template>
+      `);
     });
 
     it('renders manually sortable fields', () => {

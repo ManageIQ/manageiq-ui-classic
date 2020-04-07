@@ -1,11 +1,12 @@
 describe('fieldComponentSpec', () => {
   let bindings;
+
   describe('controller', () => {
     let fieldComponent;
 
     beforeEach(() => {
       bindings = {
-        fieldData: {default_value: '["one", "two"]'}
+        fieldData: {default_value: '["one", "two"]'},
       };
       angular.mock.module('miq.dialogEditor');
       angular.mock.inject($componentController => {

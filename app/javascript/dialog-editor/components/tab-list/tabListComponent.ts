@@ -12,11 +12,13 @@ class TabListController {
   $onInit() {
     // load tabs data from the service
     this.tabList = this.DialogEditor.getDialogTabs();
+
     // set active tab
     if (this.tabList.length !== 0) {
       this.DialogEditor.activeTab = 0;
       this.tabList[this.DialogEditor.activeTab].active = true;
     }
+
     // set options for sorting tabs in list
     this.sortableOptions = {
       cancel: '.nosort',
@@ -41,22 +43,22 @@ class TabListController {
   addTab() {
     // deactivate currently active tab
     this.tabList.forEach((tab) =>  tab.active = false);
+
     // create a new tab
     let nextIndex = this.tabList.length;
-    this.tabList.push(
-      {
-        description: __('New tab ') + nextIndex,
-        display: 'edit',
-        label: __('New tab ') + nextIndex,
-        position: nextIndex,
-        active: true,
-        dialog_groups: [{
-          'label': __('New section'),
-          'position': 0,
-          'dialog_fields': [],
-        }],
-      }
-    );
+    this.tabList.push({
+      description: __('New tab ') + nextIndex,
+      display: 'edit',
+      label: __('New tab ') + nextIndex,
+      position: nextIndex,
+      active: true,
+      dialog_groups: [{
+        'label': __('New section'),
+        'position': 0,
+        'dialog_fields': [],
+      }],
+    });
+
     this.DialogEditor.activeTab = nextIndex;
     this.DialogEditor.updatePositions(this.tabList);
   }
@@ -73,29 +75,27 @@ class TabListController {
     if (this.tabList[id].active) {
       if ((this.tabList.length - 1) === this.tabList[id].position &&
           (this.tabList.length - 1) !== 0) {
-        // active tab was at the end → new active tab is on previous index
+        // active tab was at the end => new active tab is on previous index
         this.tabList[id - 1].active = true;
       } else if ((this.tabList.length - 1) > this.tabList[id].position) {
-        // active tab was not at the end → new active tab is on following index
+        // active tab was not at the end => new active tab is on following index
         this.tabList[id + 1].active = true;
       }
     }
+
     // remove tab with matching id
     _.remove(this.tabList, (tab) => tab.position === id);
-    this.DialogEditor.backupSessionStorage(
-      this.DialogEditor.getDialogId(),
-      this.DialogEditor.data);
+    this.DialogEditor.backupSessionStorage(this.DialogEditor.getDialogId(), this.DialogEditor.data);
+
     // update indexes of other tabs after removing
     if (this.tabList.length !== 0) {
       this.DialogEditor.updatePositions(this.tabList);
     } else {
       return;
     }
+
     // set activity in the service
-    let activeTabData = _.find(
-      this.tabList,
-      {active: true}
-    );
+    let activeTabData = _.find(this.tabList, { active: true });
     if (angular.isDefined(activeTabData)) {
       this.DialogEditor.activeTab = activeTabData.position;
     }
@@ -107,11 +107,9 @@ class TabListController {
    */
   selectTab(id) {
     // deactivate currently active
-    let deselectedTab = _.find(
-      this.tabList,
-      {active: true}
-    );
+    let deselectedTab = _.find(this.tabList, { active: true });
     deselectedTab.active = false;
+
     // activate selected
     let selectedTab = this.tabList[id];
     selectedTab.active = true;
@@ -134,6 +132,6 @@ export default class TabList {
   controller = TabListController;
   controllerAs = 'vm';
   bindings = {
-    setupModalOptions: '&'
+    setupModalOptions: '&',
   };
 }
