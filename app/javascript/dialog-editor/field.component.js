@@ -1,3 +1,5 @@
+import { FieldController } from './field.controller.js';
+
 // behaviour for the fields inside of the dialogs boxes
 export const Field = {
   bindings: {

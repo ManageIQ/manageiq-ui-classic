@@ -1,3 +1,5 @@
+import { ModalFieldTemplateController } from './modal-field-template.controller.js';
+
 // renders modal templates for each field type
 export const ModalFieldTemplate = {
   bindings: {
@@ -13,7 +15,7 @@ export const ModalFieldTemplate = {
     showFullyQualifiedName: '<',
     treeOptions: '<',
   },
-  controller: ModalFieldController,
+  controller: ModalFieldTemplateController,
   controllerAs: 'vm',
   scope: true,
   template: ['$attrs', ($attrs) => require(`./modal-field-template/${$attrs.template}`)],

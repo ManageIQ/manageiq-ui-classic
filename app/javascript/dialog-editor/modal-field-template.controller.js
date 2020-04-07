@@ -1,4 +1,4 @@
-export class ModalFieldController {
+export class ModalFieldTemplateController {
   constructor($element) {
     this.$element = $element;
 
@@ -27,4 +27,4 @@ export class ModalFieldController {
   }
 }
 
-ModalFieldController.$inject = ['$element'];
+ModalFieldTemplateController.$inject = ['$element'];

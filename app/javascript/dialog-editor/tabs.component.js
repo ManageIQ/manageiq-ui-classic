@@ -1,3 +1,5 @@
+import { TabsController } from './tabs.controller.js';
+
 // behaviour for the tabs inside of the dialogs.
 export const Tabs = {
   bindings: {
