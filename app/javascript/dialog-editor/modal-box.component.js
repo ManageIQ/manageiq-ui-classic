@@ -5,5 +5,5 @@ import { ModalSharedController } from './modal-shared.controller.js';
 export const ModalBox = {
   ...ModalShared,
   controller: ModalSharedController,
-  template: require('./modal-box.html'),
+  templateUrl: '/static/dialog-editor/modal-box.html',
 };

@@ -2,5 +2,5 @@ export const TreeSelector = {
   bindings: {
     treeOptions: '<',
   },
-  template: require('./tree-selector.html'),
+  templateUrl: '/static/dialog-editor/tree-selector.html',
 };

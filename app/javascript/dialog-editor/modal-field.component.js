@@ -5,5 +5,5 @@ import { ModalFieldController } from './modal-field.controller.js';
 export const ModalField = {
   ...ModalShared,
   controller: ModalFieldController,
-  template: require('./modal-field.html'),
+  templateUrl: '/static/dialog-editor/modal-field.html',
 };

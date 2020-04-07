@@ -7,5 +7,5 @@ export const Boxes = {
   },
   controller: BoxesController,
   controllerAs: 'vm',
-  template: require('./boxes.html'),
+  templateUrl: '/static/dialog-editor/boxes.html',
 };

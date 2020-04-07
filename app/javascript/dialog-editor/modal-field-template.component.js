@@ -18,5 +18,5 @@ export const ModalFieldTemplate = {
   controller: ModalFieldTemplateController,
   controllerAs: 'vm',
   scope: true,
-  template: ['$attrs', ($attrs) => require(`./modal-field-template/${$attrs.template}`)],
+  templateUrl: ['$attrs', ($attrs) => `/static/dialog-editor/modal-field-template/${$attrs.template}`],
 };

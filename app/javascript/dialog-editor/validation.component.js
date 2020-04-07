@@ -10,5 +10,5 @@ export const Validation = {
       }
     };
   },
-  template: require('./validation.html'),
+  templateUrl: '/static/dialog-editor/validation.html',
 };

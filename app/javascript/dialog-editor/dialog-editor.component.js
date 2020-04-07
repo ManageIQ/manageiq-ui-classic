@@ -6,5 +6,5 @@ export const DialogEditor = {
     treeOptions: '<',
   },
   controller: DialogEditorController,
-  template: require('./dialog-editor.html'),
+  templateUrl: '/static/dialog-editor/dialog-editor.html',
 };

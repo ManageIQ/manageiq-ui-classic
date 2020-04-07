@@ -7,5 +7,5 @@ export const Tabs = {
   },
   controller: TabsController,
   controllerAs: 'vm',
-  template: require('./tabs.html'),
+  templateUrl: '/static/dialog-editor/tabs.html',
 };

@@ -5,5 +5,5 @@ export const Toolbox = {
   controller() {
     this.fields = fields;
   },
-  template: require('./toolbox.html'),
+  templateUrl: '/static/dialog-editor/toolbox.html',
 };

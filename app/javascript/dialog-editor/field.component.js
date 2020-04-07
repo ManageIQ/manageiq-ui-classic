@@ -9,5 +9,5 @@ export const Field = {
   },
   controller: FieldController,
   controllerAs: 'vm',
-  template: require('./field.html'),
+  templateUrl: '/static/dialog-editor/field.html',
 };

@@ -5,5 +5,5 @@ import { ModalSharedController } from './modal-shared.controller.js';
 export const ModalTab = {
   ...ModalShared,
   controller: ModalSharedController,
-  template: require('./modal-tab.html'),
+  templateUrl: '/static/dialog-editor/modal-tab.html',
 };

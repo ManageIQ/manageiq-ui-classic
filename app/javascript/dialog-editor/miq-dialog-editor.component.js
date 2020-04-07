@@ -8,5 +8,5 @@ export const MiqDialogEditor = {
   },
   controller: MiqDialogEditorController,
   controllerAs: 'vm',
-  template: require('./miq-dialog-editor.html.haml'),
+  templateUrl: '/static/dialog-editor/miq-dialog-editor.html.haml',
 };
