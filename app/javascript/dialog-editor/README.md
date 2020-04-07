@@ -11,7 +11,7 @@ The dialog editor hierarchy:
     | %dialog-editor-modal-tab - edit tab properties
     | %dialog-editor-modal-box - edit box properties
 
-  %dialog-editor-field-static - toolbox to drag items from
+  %dialog-editor-toolbox - toolbox to drag items from
 
   %dialog-editor-tabs - tab switcher
 
@@ -24,7 +24,7 @@ Components:
 dialog-editor
 dialog-editor-boxes
 dialog-editor-field
-dialog-editor-field-static
+dialog-editor-toolbox
 dialog-editor-modal
 dialog-editor-modal-box
 dialog-editor-modal-field

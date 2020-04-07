@@ -86,15 +86,9 @@ export class ToolboxController {
   };
 }
 
-/**
- * @description
- *    Component is used as a toolbox for the Dialog Editor.
- * @example
- * <dialog-editor-field-static>
- * </dialog-editor-field-static>
- */
-export default class Toolbox {
-  template = require('./toolbox.html');
-  controller = ToolboxController;
-  controllerAs = 'vm';
-}
+// used as a toolbox for the Dialog Editor
+export const Toolbox = {
+  template: require('./toolbox.html'),
+  controller: ToolboxController,
+  controllerAs: 'vm',
+};

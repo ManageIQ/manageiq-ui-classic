@@ -14,7 +14,7 @@ angular.module('miq.dialogEditor', [
   .component('dialogEditor', new DialogEditor)
   .component('dialogEditorBoxes', new Box)
   .component('dialogEditorField', new Field)
-  .component('dialogEditorFieldStatic', new Toolbox)
+  .component('dialogEditorToolbox', Toolbox)
   .component('dialogEditorModal', new Modal)
   .component('dialogEditorModalBox', ModalBox)
   .component('dialogEditorModalField', ModalField)
@@ -48,7 +48,7 @@ import ModalFieldTemplate from './modalFieldTemplate.component.js';
 import TabList from './tabList.component.js';
 
 // components/toolbox/index.ts
-import Toolbox from './toolbox.component.js';
+import { Toolbox } from './toolbox.component.js';
 
 // components/tree-selector/index.ts
 import TreeSelector from './treeSelector';
