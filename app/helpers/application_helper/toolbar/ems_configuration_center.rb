@@ -25,7 +25,14 @@ class ApplicationHelper::Toolbar::EmsConfigurationCenter < ApplicationHelper::To
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
           t,
-          :confirm => N_("Warning: The selected Provider and ALL of their components will be permanently removed!")),
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Configuration Management Provider'),
+                                         :modal_text     => N_('Are you sure you want to delete the following Configuration Management Provider?'),
+                                         :api_url        => 'providers',
+                                         :async_delete   => true,
+                                         :redirect_url   => '/ems_configuration/show_list',
+                                         :component_name => 'RemoveGenericItemModal'}})
       ]
     ),
   ])
