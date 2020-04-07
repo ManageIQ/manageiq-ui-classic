@@ -1,4 +1,4 @@
-export default class DialogEditorService {
+export class DialogEditorService {
   data = {};
   activeTab = 0;
 

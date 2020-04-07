@@ -54,13 +54,13 @@ FieldController.$inject = ['DialogEditor'];
  *                      field-data='field'
  * </dialog-editor-field>
  */
-export default class Field {
-  template = require('./field.html');
-  controller = FieldController;
-  controllerAs = 'vm';
-  bindings = {
-    fieldData: '<',
+export const Field = {
+  bindings: {
     boxPosition: '<',
+    fieldData: '<',
     setupModalOptions: '&',
-  };
-}
+  },
+  controller: FieldController,
+  controllerAs: 'vm',
+  template: require('./field.html'),
+};

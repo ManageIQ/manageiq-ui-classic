@@ -127,11 +127,11 @@ TabListController.$inject = ['DialogEditor'];
  * <dialog-editor-tabs>
  * </dialog-editor-tabs>
  */
-export default class TabList {
-  template = require('./tab-list.html');
-  controller = TabListController;
-  controllerAs = 'vm';
-  bindings = {
+export const TabList = {
+  bindings: {
     setupModalOptions: '&',
-  };
-}
+  },
+  controller: TabListController,
+  controllerAs: 'vm',
+  template: require('./tab-list.html'),
+};

@@ -1,6 +1,6 @@
 const tagHasCategory = (field) => field.options && field.options.category_id;
 
-export default class DialogValidationService {
+export class DialogValidationService {
   invalid = {};
   validators = {};
 

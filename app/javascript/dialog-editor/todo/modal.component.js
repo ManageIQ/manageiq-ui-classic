@@ -278,13 +278,13 @@ ModalController.$inject = [
  * <dialog-editor-modal>
  * </dialog-editor-modal>
  */
-export default class Modal {
-  template = '';
-  transclude = true;
-  controller = ModalController;
-  bindings = {
-    modalOptions: '<',
+export const Modal = {
+  bindings: {
     elementInfo: '<',
+    modalOptions: '<',
     treeOptions: '<',
-  };
-}
+  },
+  controller: ModalController,
+  template: '',
+  transclude: true,
+};

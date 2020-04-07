@@ -111,11 +111,11 @@ BoxController.$inject = ['DialogEditor'];
  * <dialog-editor-boxes>
  * </dialog-editor-boxes>
  */
-export default class Box {
-  template = require('./box.html');
-  controller = BoxController;
-  controllerAs = 'vm';
-  bindings = {
+export const Box = {
+  bindings: {
     setupModalOptions: '&',
-  };
-}
+  },
+  controller: BoxController,
+  controllerAs: 'vm',
+  template: require('./box.html'),
+};

@@ -28,10 +28,10 @@ export class DialogEditorController {
  * </dialog-editor>
  */
 
-export default class DialogEditor {
-  controller = DialogEditorController;
-  template = require('./dialog-editor.html');
-  bindings = {
+export const DialogEditor = {
+  bindings: {
     treeOptions: '<',
-  };
-}
+  },
+  controller: DialogEditorController,
+  template: require('./dialog-editor.html'),
+};

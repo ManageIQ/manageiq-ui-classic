@@ -1,6 +1,6 @@
-export default {
-  template: require('./tree-selector.html'),
+export const TreeSelector = {
   bindings: {
     treeOptions: '<',
   },
+  template: require('./tree-selector.html'),
 };

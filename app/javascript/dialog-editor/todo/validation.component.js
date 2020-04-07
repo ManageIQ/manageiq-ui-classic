@@ -1,5 +1,4 @@
-export default {
-  template: require('./validation.html'),
+export const Validation = {
   bindings: {
     modalData: '<',
   },
@@ -11,4 +10,5 @@ export default {
       }
     };
   },
+  template: require('./validation.html'),
 };

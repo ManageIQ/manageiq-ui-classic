@@ -88,7 +88,7 @@ export class ToolboxController {
 
 // used as a toolbox for the Dialog Editor
 export const Toolbox = {
-  template: require('./toolbox.html'),
   controller: ToolboxController,
   controllerAs: 'vm',
+  template: require('./toolbox.html'),
 };
