@@ -1,9 +1,9 @@
 // behaviour for the boxes inside of the dialogs tabs.
-export const Box = {
+export const Boxes = {
   bindings: {
     setupModalOptions: '&',
   },
-  controller: BoxController,
+  controller: BoxesController,
   controllerAs: 'vm',
-  template: require('./box.html'),
+  template: require('./boxes.html'),
 };

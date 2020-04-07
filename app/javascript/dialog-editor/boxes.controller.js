@@ -1,4 +1,4 @@
-export class BoxController {
+export class BoxesController {
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
@@ -86,4 +86,4 @@ export class BoxController {
   }
 }
 
-BoxController.$inject = ['DialogEditor'];
+BoxesController.$inject = ['DialogEditor'];

@@ -1,4 +1,4 @@
-export class TabListController {
+export class TabsController {
   constructor(DialogEditor) {
     this.DialogEditor = DialogEditor;
   }
@@ -103,4 +103,4 @@ export class TabListController {
   }
 }
 
-TabListController.$inject = ['DialogEditor'];
+TabsController.$inject = ['DialogEditor'];

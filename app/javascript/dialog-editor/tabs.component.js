@@ -1,9 +1,9 @@
 // behaviour for the tabs inside of the dialogs.
-export const TabList = {
+export const Tabs = {
   bindings: {
     setupModalOptions: '&',
   },
-  controller: TabListController,
+  controller: TabsController,
   controllerAs: 'vm',
-  template: require('./tab-list.html'),
+  template: require('./tabs.html'),
 };
