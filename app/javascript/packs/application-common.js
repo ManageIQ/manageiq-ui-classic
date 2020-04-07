@@ -25,6 +25,8 @@ import { miqOptimizationInit } from '../optimization/listen.js';
 
 import '../../stylesheet/application-webpack.scss';
 
+import '../dialog-editor/index.js'; // angular
+
 ManageIQ.component = {
   ...newRegistry,
   reactBlueprint,
