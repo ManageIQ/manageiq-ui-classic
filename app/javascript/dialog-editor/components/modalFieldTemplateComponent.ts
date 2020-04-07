@@ -1,6 +1,3 @@
-/**
- * Controller for the Dialog Editor Modal Field Template component
- */
 class ModalFieldController {
   constructor($element) {
     this.$element = $element;
@@ -32,31 +29,23 @@ class ModalFieldController {
 
 ModalFieldController.$inject = ['$element'];
 
-/**
- * @description
- *    Component contains templates for the modal for each field type
- * @example
- * <dialog-editor-modal-field-template ng-switch-when="DialogFieldTextBox"
- *                                     template="text-box.html"
- *                                     modal-data="vm.modalData">
- * </dialog-editor-modal-field-template>
- */
-export default class ModalFieldTemplate {
-  template = ['$attrs', ($attrs) => require(`./${$attrs.template}`)];
-  scope = true;
-  controller = ModalFieldController;
-  controllerAs = 'vm';
-  bindings = {
-    modalData: '=',
-    categories: '=?',
+// renders modal templates for each field type
+export const ModalFieldTemplate = {
+  bindings: {
     addEntry: '=?',
-    removeEntry: '=?',
+    categories: '=?',
     currentCategoryEntries: '=?',
-    setupCategoryOptions: '=?',
-    resolveCategories: '=?',
-    modalTabIsSet: '<',
+    modalData: '=',
     modalTab: '=',
+    modalTabIsSet: '<',
+    removeEntry: '=?',
+    resolveCategories: '=?',
+    setupCategoryOptions: '=?',
     showFullyQualifiedName: '<',
     treeOptions: '<',
-  };
-}
+  },
+  controller: ModalFieldController,
+  controllerAs: 'vm',
+  scope: true,
+  template: ['$attrs', ($attrs) => require(`./modal-field-template/${$attrs.template}`)],
+};
