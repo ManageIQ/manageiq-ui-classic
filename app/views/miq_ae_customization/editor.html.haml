@@ -1,7 +1,7 @@
 #dialog-editor
   = render :partial => "layouts/flash_msg"
-  %miq-dialog-editor{"dialog-id"     => dialog_id_action.id,
-                     "dialog-action" => dialog_id_action.action}
+  %miq-dialog-editor{"dialog-id"     => dialog_id_action[:id],
+                     "dialog-action" => dialog_id_action[:action]}
 
 :javascript
   miq_bootstrap('#dialog-editor');

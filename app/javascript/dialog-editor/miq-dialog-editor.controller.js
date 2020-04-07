@@ -11,35 +11,29 @@ export function MiqDialogEditorController($window, miqService, DialogEditor, Dia
     lazyLoad: DialogEditorHttp.treeSelectorLazyLoadData,
   };
 
-  function requestDialogId() {
-    return vm.dialogId;
-  }
-
-  function requestDialogAction() {
-    return vm.dialogAction;
-  }
-
-  if (requestDialogAction() === 'new') {
-    const dialogInitContent = {
-      content: [{
-        dialog_tabs: [{
-          label: __('New tab'),
-          position: 0,
-          dialog_groups: [{
-            label: __('New section'),
+  vm.$onInit = () => {
+    if (vm.dialogAction === 'new') {
+      const dialogInitContent = {
+        content: [{
+          dialog_tabs: [{
+            label: __('New tab'),
             position: 0,
-            dialog_fields: [],
+            dialog_groups: [{
+              label: __('New section'),
+              position: 0,
+              dialog_fields: [],
+            }],
           }],
         }],
-      }],
-    };
-    init(dialogInitContent);
-  } else {
-    DialogEditorHttp.loadDialog(requestDialogId()).then(init);
-  }
+      };
+      init(dialogInitContent);
+    } else {
+      DialogEditorHttp.loadDialog(vm.dialogId).then(init);
+    }
+  };
 
   function init(dialog) {
-    const sessionStorageId = requestDialogAction() === 'edit' ? String(requestDialogId()) : 'new';
+    const sessionStorageId = vm.dialogAction === 'edit' ? String(vm.dialogId) : 'new';
     const restoredDialog = DialogEditor.restoreSessionStorage(sessionStorageId);
 
     if (restoredDialog !== null) {
@@ -84,7 +78,7 @@ export function MiqDialogEditorController($window, miqService, DialogEditor, Dia
 
     translateResponderNamesToIds(dialog.content[0]);
 
-    if (requestDialogAction() === 'copy') {
+    if (vm.dialogAction === 'copy') {
       // gettext left out intentionally
       // the label will be rendered to all users in all locales as it was saved
       const label = `Copy of ${dialog.label}`;
@@ -128,7 +122,7 @@ export function MiqDialogEditorController($window, miqService, DialogEditor, Dia
     vm.saveButtonDisabled = true;
 
     // load dialog data
-    if (requestDialogAction() === 'edit') {
+    if (vm.dialogAction === 'edit') {
       action = 'edit';
       dialogId = DialogEditor.getDialogId();
       dialogData = {
