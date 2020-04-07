@@ -78,11 +78,11 @@ export default class DialogValidationService {
 
     return _.every(dialogData, dialog =>
       validateDialog(dialog) &&
-      _.every((<any>dialog).dialog_tabs, tab =>
+      _.every(dialog.dialog_tabs, tab =>
         validateTab(tab) &&
-        _.every((<any>tab).dialog_groups, group =>
+        _.every(tab.dialog_groups, group =>
           validateGroup(group) &&
-          _.every((<any>group).dialog_fields, field =>
+          _.every(group.dialog_fields, field =>
             validateField(field)
           )
         )

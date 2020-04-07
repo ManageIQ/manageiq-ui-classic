@@ -28,7 +28,7 @@ export class DialogEditorController {
  * </dialog-editor>
  */
 
-export default class DialogEditor implements ng.IComponentOptions {
+export default class DialogEditor {
   controller = DialogEditorController;
   template = require('./dialog-editor.html');
   bindings = {
