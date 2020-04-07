@@ -97,24 +97,7 @@ class InfraNetworkingController < ApplicationController
     @explorer = true
     @lastaction = "explorer"
 
-    # if AJAX request, replace right cell, and return
-    if request.xml_http_request?
-      replace_right_cell
-      return
-    end
-
-    if params[:accordion]
-      self.x_active_tree   = "#{params[:accordion]}_tree"
-      self.x_active_accord = params[:accordion]
-    end
-    if params[:button]
-      @miq_after_onload = "miqAjax('/#{controller_name}/x_button?pressed=#{params[:button]}');"
-    end
-
     build_accordions_and_trees
-
-    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]
-    session.delete(:exp_parms)
     @in_a_form = false
 
     render :layout => "application"
