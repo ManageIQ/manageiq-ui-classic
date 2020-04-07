@@ -1,8 +1,9 @@
-import { ToolboxController } from './toolbox.controller.js';
+import { fields } from './toolbox.js';
 
 // used as a toolbox for the Dialog Editor
 export const Toolbox = {
-  controller: ToolboxController,
-  controllerAs: 'vm',
+  controller() {
+    this.fields = fields;
+  },
   template: require('./toolbox.html'),
 };
