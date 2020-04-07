@@ -1,32 +1,30 @@
-describe('dialogEditorHttp', function() {
-  var testDialogEditorHttp, API;
+describe('dialogEditorHttp', () => {
+  let DialogEditorHttp, API;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(DialogEditorHttp, _API_) {
-    testDialogEditorHttp = DialogEditorHttp;
+  beforeEach(inject((_DialogEditorHttp_, _API_) => {
+    DialogEditorHttp = _DialogEditorHttp_;
     API = _API_;
 
-    var responseResult = {result: 'the results'};
+    const responseResult = { result: 'the results' };
 
-    spyOn(API, 'get').and.callFake(function() {
-      return {then: function(response) { response(responseResult); }};
-    });
+    spyOn(API, 'get').and.callFake(() => ({
+      then: (response) => response(responseResult),
+    }));
   }));
 
-  describe('#loadCategories', function() {
-    it('calls the API and requests various attributes', function() {
-      testDialogEditorHttp.loadCategories();
-      expect(API.get).toHaveBeenCalledWith('/api/categories' +
-                                                '?expand=resources' +
-                                                '&attributes=id,name,description,single_value,children');
+  describe('#loadCategories', () => {
+    it('calls the API and requests various attributes', () => {
+      DialogEditorHttp.loadCategories();
+      expect(API.get).toHaveBeenCalledWith('/api/categories?expand=resources&attributes=id,name,description,single_value,children');
     });
 
-    it('returns the result', function(done) {
-      var loadedCategories = testDialogEditorHttp.loadCategories();
+    it('returns the result', (done) => {
+      const loadedCategories = DialogEditorHttp.loadCategories();
 
-      loadedCategories.then(function(value) {
-        expect(value).toEqual({result: 'the results'});
+      loadedCategories.then((value) => {
+        expect(value.result).toEqual('the results');
         done();
       });
     });
