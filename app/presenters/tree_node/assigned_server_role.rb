@@ -40,5 +40,7 @@ module TreeNode
 
       [text, icon, bg, klass]
     end
+
+    set_attribute(:color, '#fff')
   end
 end
