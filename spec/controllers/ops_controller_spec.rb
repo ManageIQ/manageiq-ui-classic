@@ -242,7 +242,7 @@ describe OpsController do
     }
 
     skip "https://github.com/rails/rails/issues/23881" if Gem::Requirement.new('< 5.0.0.beta4') === Rails.gem_version
-    expect(response).to be_success
+    expect(response).to have_http_status(204)
 
     audit_event = AuditEvent.where(:target_id => schedule.id).first
     expect(audit_event.attributes['message']).to include("description changed to new_description")
