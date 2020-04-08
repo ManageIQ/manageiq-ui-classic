@@ -21,9 +21,6 @@ module VmShowMixin
       self.x_active_tree   = "#{params[:accordion]}_tree"
       self.x_active_accord = params[:accordion]
     end
-    if params[:button]
-      @miq_after_onload = "miqAjax('/#{controller_name}/x_button?pressed=#{params[:button]}');"
-    end
 
     # Build the Explorer screen from scratch
     allowed_features = build_accordions_and_trees_only
