@@ -208,13 +208,13 @@ module Mixins
     def new
       assert_privileges("#{privilege_prefix}_add_provider")
       @provider_manager = concrete_model.new
-      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
+      @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       @sb[:action] = params[:action]
       render_form
     end
 
     def edit
-      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
+      @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       case params[:button]
       when "cancel"
         cancel_provider

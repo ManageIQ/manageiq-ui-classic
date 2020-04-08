@@ -1079,7 +1079,7 @@ class ApplicationController < ActionController::Base
   def process_saved_reports(saved_reports, task)
     success_count = 0
     failure_count = 0
-    MiqReportResult.for_user(current_user).where(:id => saved_reports).order("lower(name)").each do |rep|
+    MiqReportResult.for_user(current_user).where(:id => saved_reports).order(MiqReportResult.arel_table[:name].lower).each do |rep|
       rep.public_send(task) if rep.respond_to?(task) # Run the task
     rescue StandardError
       failure_count += 1 # Push msg and error flag

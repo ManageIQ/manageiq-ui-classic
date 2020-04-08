@@ -2,7 +2,7 @@ module Mixins
   module EmsCommon
     module Core
       def process_emss_task_destroy(emss)
-        model.where(:id => emss).order("lower(name)").each do |ems|
+        model.where(:id => emss).order(model.arel_table[:name].lower).each do |ems|
           audit = {:event        => "ems_record_delete_initiated",
                    :message      => "[#{ems.name}] Record delete initiated",
                    :target_id    => ems.id,
@@ -23,7 +23,7 @@ module Mixins
 
       def process_emss_task_pause_resume(emss, task)
         action = task.split("_").first
-        model.where(:id => emss).order("lower(name)").each do |ems|
+        model.where(:id => emss).order(model.arel_table[:name].lower).each do |ems|
           audit = {:event        => "ems_record_#{action}_initiated",
                    :message      => "[#{ems.name}] Record #{action} initiated",
                    :target_id    => ems.id,
@@ -37,7 +37,7 @@ module Mixins
       end
 
       def process_emss_task_other(emss, task)
-        model.where(:id => emss).order("lower(name)").each do |ems|
+        model.where(:id => emss).order(model.arel_table[:name].lower).each do |ems|
           ems.send(task.to_sym) if ems.respond_to?(task) # Run the task
         rescue => bang
           add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
