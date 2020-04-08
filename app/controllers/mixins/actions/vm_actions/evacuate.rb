@@ -40,6 +40,7 @@ module Mixins
 
           @sb[:action] = nil
           if @sb[:explorer]
+            @sb[:explorer] = nil
             replace_right_cell
           else
             flash_to_session
