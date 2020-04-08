@@ -5,7 +5,6 @@ class ApplicationHelper::Toolbar::XVmSnapshotCenter < ApplicationHelper::Toolbar
       'pficon pficon-add-circle-o fa-lg',
       N_('Create a new snapshot for this VM'),
       nil,
-      :onwhen => "1",
       :klass  => ApplicationHelper::Button::VmSnapshotAdd),
     select(
       :vm_delete_snap_choice,
