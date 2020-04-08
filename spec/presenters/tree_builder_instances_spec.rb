@@ -44,11 +44,13 @@ describe TreeBuilderInstances do
                               :text            => "<Archived>",
                               :icon            => "fa fa-archive",
                               :icon_background => "#336699",
+                              :color           => '#fff',
                               :tip             => "Archived Instances"},
                              {:id              => "orph",
                               :text            => "<Orphaned>",
                               :icon            => "ff ff-orphaned",
                               :icon_background => "#336699",
+                              :color           => '#fff',
                               :tip             => "Orphaned Instances"}])
   end
 

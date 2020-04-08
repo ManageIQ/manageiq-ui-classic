@@ -39,11 +39,13 @@ describe TreeBuilderImages do
                               :text            => "<Archived>",
                               :icon            => "fa fa-archive",
                               :icon_background => "#336699",
+                              :color           => '#fff',
                               :tip             => "Archived Images"},
                              {:id              => "orph",
                               :text            => "<Orphaned>",
                               :icon            => "ff ff-orphaned",
                               :icon_background => "#336699",
+                              :color           => '#fff',
                               :tip             => "Orphaned Images"}])
   end
 end

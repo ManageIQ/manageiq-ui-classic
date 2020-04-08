@@ -14,11 +14,13 @@ describe TreeBuilderArchived do
                           :text            => "<Archived>",
                           :icon            => "fa fa-archive",
                           :icon_background => "#336699",
+                          :color           => '#fff',
                           :tip             => "Archived VMs/Templates"},
                          {:id              => "orph",
                           :text            => "<Orphaned>",
                           :icon            => "ff ff-orphaned",
                           :icon_background => "#336699",
+                          :color           => '#fff',
                           :tip             => "Orphaned VMs/Templates"}])
   end
 end

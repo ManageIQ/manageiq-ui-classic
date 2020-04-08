@@ -8,6 +8,8 @@ module TreeNode
 
     set_attribute(:icon_background) { @object[:icon_background] }
 
+    set_attribute(:color) { @object[:color] }
+
     set_attribute(:selectable) { @object.key?(:selectable) ? @object[:selectable] : true }
 
     set_attribute(:hide_checkbox) { @object.key?(:hideCheckbox) && @object[:hideCheckbox] ? true : nil }
