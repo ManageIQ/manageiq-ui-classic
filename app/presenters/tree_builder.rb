@@ -113,8 +113,47 @@ class TreeBuilder
 
   private
 
+  # Post-process partial checkbox state
+  def post_check(tree)
+    stack = tree.map(&:itself)
+    nodes = []
+    parents = []
+
+    # Collect nodes in a flat structure
+    while stack.any?
+      node = stack.pop
+      nodes.push(node)
+
+      if node[:nodes]&.any?
+        parents.push(node)
+        node[:nodes].each { |child| stack.push(child) }
+      end
+    end
+
+    # Process nodes top-to-bottom
+    nodes.reverse
+    while nodes.any?
+      parent = nodes.pop
+
+      parent[:nodes]&.each do |child|
+        if parent.try(:[], :state).try(:[], :checked)
+          child[:state] ||= {}
+          child[:state][:checked] = true
+        end
+      end
+    end
+
+    # Process nodes bottom-to-top
+    while parents.any?
+      parent = parents.pop
+      parent[:state] ||= {}
+      parent[:state][:checked] = parent[:nodes].map { |node| node.try(:[], :state).try(:[], :checked) }.reduce { |acc, curr| acc == curr ? acc : 'undefined' }
+    end
+  end
+
   def build_tree
     @tree_nodes = x_build_tree
+    post_check(@tree_nodes) if @options[:post_check] && @options[:three_checks]
     active_node_set(@tree_nodes)
     @bs_tree = @tree_nodes.to_json
     @locals_for_render = set_locals_for_render
@@ -151,7 +190,6 @@ class TreeBuilder
       :autoload        => @options[:lazy],
       :allow_reselect  => @options[:allow_reselect],
       :three_checks    => @options[:three_checks],
-      :post_check      => @options[:post_check],
       :onclick         => @options[:onclick],
       :oncheck         => @options[:oncheck],
       :click_url       => @options[:click_url],

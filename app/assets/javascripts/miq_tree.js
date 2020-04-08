@@ -437,57 +437,6 @@ window.miqInitTree = function(options, tree) {
     miqDeleteTreeCookies();
   }
 
-  // Pre-process partially checkbox state for parent nodes
-  if (options.post_check && options.hierarchical_check) {
-    var nodes = [];
-    var parents = [];
-    var stack = tree.slice(0);
-
-    // Collect nodes
-    while (stack.length > 0) {
-      var node = stack.pop();
-      nodes.push(node);
-
-      if (node.nodes) {
-        parents.push(node);
-        node.nodes.forEach(function(child) {
-          stack.push(child);
-        });
-      }
-    }
-
-
-    // Process nodes top-to-bottom
-    nodes.reverse();
-    while (nodes.length > 0) {
-      var parent = nodes.pop();
-      if (!parent.nodes) {
-        continue;
-      }
-      if (!parent.state) {
-        parent.state = {};
-      }
-      parent.nodes.forEach(function(node) {
-        if (parent.state.checked === true) {
-          if (!node.state) {
-            node.state = {};
-          }
-          node.state.checked = true;
-        }
-      });
-    }
-
-    // Process nodes bottom-to-top
-    while (parents.length > 0) {
-      var node = parents.pop();
-      node.state.checked = node.nodes.map(function(node) {
-        return node.state ? node.state.checked : false;
-      }).reduce(function(acc, curr) {
-        return (acc === curr) ? acc : 'undefined';
-      });
-    }
-  }
-
   $('#' + options.tree_id).treeview({
     data: tree,
     showImage: true,
