@@ -17,7 +17,6 @@ class TreeBuilderTenants < TreeBuilder
       :check_url  => "/catalog/#{cat_item_or_bundle}/",
       :open_all   => false,
       :oncheck    => @selectable ? tenant_tree_or_generic : false,
-      :post_check => true
     }
   end
 
