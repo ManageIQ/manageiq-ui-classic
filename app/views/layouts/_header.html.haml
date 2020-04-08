@@ -19,8 +19,3 @@
 
 = render :partial => "layouts/spinner"
 = render :partial => "layouts/lightbox_panel"
-
--# if set by controller, set up to run as JS after onload is done
-- if @miq_after_onload
-  :javascript
-    ManageIQ.afterOnload = '#{j @miq_after_onload}';
