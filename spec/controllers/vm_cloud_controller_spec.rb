@@ -278,8 +278,8 @@ describe VmCloudController do
       controller.instance_variable_set(:@sb, :action => 'some_action')
     end
 
-    it 'calls flash_to_session, replace_right_cell and sets session[:edit], @record and @sb[:action] to nil' do
-      expect(controller).to receive(:flash_to_session).with('Message')
+    it 'calls add_flash, replace_right_cell and sets session[:edit], @record and @sb[:action] to nil' do
+      expect(controller).to receive(:add_flash).with('Message')
       expect(controller).to receive(:replace_right_cell)
       controller.send(:flash_and_redirect, 'Message')
       expect(controller.session[:edit]).to be_nil
