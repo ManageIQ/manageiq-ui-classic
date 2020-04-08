@@ -99,6 +99,7 @@ module Mixins
             @sb[:action] = nil
           end
           if @sb[:explorer] && !(@breadcrumbs.length >= 2 && previous_breadcrumb_url.include?('miq_request'))
+            @sb[:explorer] = nil
             replace_right_cell
           else
             flash_to_session
