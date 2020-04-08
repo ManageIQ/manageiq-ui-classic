@@ -4,29 +4,5 @@ app/presenters/tree_builder_*                     @skateman
 # styling and images
 app/assets/stylesheets/                           @epwinchell
 app/assets/images/                                @epwinchell
-# dialog editor
-app/assets/javascripts/controllers/dialog_editor  @romanblanco
-app/views/miq_ae_customization/editor.html.haml   @romanblanco
-# toolbar buttons
-app/helpers/application_helper/button/            @romanblanco @panspagetka
-app/helpers/application_helper/toolbar_builder.rb @romanblanco @panspagetka @martinpovolny
-# rbac
-app/controllers/mixins/checked_id_mixin.rb        @romanblanco @panspagetka
-# charts
-app/assets/javascripts/miq_c3.js                  @panspagetka
 # topology services
 app/services/*topology_service.rb                 @skateman
-
-app/controllers/mixins/custom_buttons.rb          @martinpovolny
-app/controllers/mixins/generic_*.rb               @martinpovolny
-app/controllers/mixins/more_show_actions.rb       @martinpovolny
-app/assets/javascripts/miq_explorer.js            @martinpovolny
-app/presenters/explorer_presenter.rb              @martinpovolny
-app/helpers/application_helper/button/basic.rb    @martinpovolny
-app/helpers/application_helper/toolbar/basic.rb   @martinpovolny
-app/presenters/tree_builder.rb                    @martinpovolny
-app/presenters/menu/                              @martinpovolny
-app/helpers/textual_*rb                           @martinpovolny
-
-# decorators
-app/decorators/                                   @skateman
