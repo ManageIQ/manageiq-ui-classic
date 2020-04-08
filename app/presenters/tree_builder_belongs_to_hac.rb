@@ -32,6 +32,10 @@ class TreeBuilderBelongsToHac < TreeBuilder
     }
   end
 
+  def group_id
+    @group.present? && @group.id.present? ? @group.id : 'new'
+  end
+
   def x_get_tree_roots
     count_only_or_objects(false, ExtManagementSystem.assignable)
   end
