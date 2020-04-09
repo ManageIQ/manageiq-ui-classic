@@ -419,6 +419,10 @@ module Mixins
         javascript_redirect(:controller => "cloud_tenant",
                             :action     => "edit",
                             :id         => find_record_with_rbac(CloudTenant, checked_or_params))
+      elsif params[:pressed] == 'cloud_tenant_delete'
+        javascript_redirect(:controller      => "cloud_tenant",
+                            :action          => 'delete_cloud_tenants',
+                            :miq_grid_checks => params[:miq_grid_checks])
       elsif params[:pressed] == "cloud_volume_new"
         javascript_redirect(:controller         => "cloud_volume",
                             :action             => "new",

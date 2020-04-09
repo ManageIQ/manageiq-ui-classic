@@ -236,6 +236,51 @@ describe CloudTenantController do
     end
   end
 
+  describe '#delete_cloud_tenants' do
+    before do
+      controller.params = {:miq_grid_checks => tenant.id.to_s}
+      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous url'}, {:url => 'last url'}])
+    end
+
+    it 'calls flash_to_session and redirect_to with proper url while displaying nested list of Cloud Tenants' do
+      expect(controller).to receive(:flash_to_session)
+      expect(controller).to receive(:redirect_to).with('last url')
+      controller.send(:delete_cloud_tenants)
+    end
+
+    context 'summary or dashboard of a Cloud Tenant' do
+      %w[show show_dashboard].each do |lastaction|
+        before { controller.instance_variable_set(:@lastaction, lastaction) }
+
+        it 'calls flash_to_session and javascript_redirect' do
+          expect(controller).to receive(:flash_to_session)
+          expect(controller).to receive(:javascript_redirect).with('previous url')
+          controller.send(:delete_cloud_tenants)
+        end
+
+        context 'flash errors' do
+          before { allow(controller).to receive(:flash_errors?).and_return(true) }
+
+          it 'calls render_flash' do
+            expect(controller).to receive(:render_flash)
+            controller.send(:delete_cloud_tenants)
+          end
+        end
+      end
+    end
+
+    context 'list of Cloud Tenants' do
+      before { controller.instance_variable_set(:@lastaction, 'show_list') }
+
+      it 'calls show_list and render_flash, sets @refresh_partial' do
+        expect(controller).to receive(:show_list)
+        expect(controller).to receive(:render_flash)
+        controller.send(:delete_cloud_tenants)
+        expect(controller.instance_variable_get(:@refresh_partial)).to eq('layouts/gtl')
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :cloud_tenant
 
   it_behaves_like "controller with custom buttons"
