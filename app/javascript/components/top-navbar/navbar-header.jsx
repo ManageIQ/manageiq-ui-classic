@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveVerticalMenuState } from '../main-menu/helpers';
 import { toggleVerticalMenuCollapsed } from '../../miq-redux/menu-reducer';
 
 const NavbarHeader = ({
@@ -11,7 +10,7 @@ const NavbarHeader = ({
   const dispatch = useDispatch();
   const isVerticalMenuCollapsed = useSelector(({ menuReducer: { isVerticalMenuCollapsed } }) => isVerticalMenuCollapsed);
   useEffect(() => {
-    saveVerticalMenuState(isVerticalMenuCollapsed);
+    window.localStorage.setItem('patternfly-navigation-primary', isVerticalMenuCollapsed ? 'collapsed' : 'expanded');
   }, [isVerticalMenuCollapsed]);
 
   return (
