@@ -195,4 +195,114 @@ describe TreeBuilder do
       expect(TreeBuilder.build_node_id(vm)).to eq("v-#{vm.id}")
     end
   end
+
+  describe '#post_check' do
+    subject { TreeBuilder.new(:test, {}, false) }
+
+    it 'postprocesses checked node parents and children' do
+      nodes = [
+        {
+          :text  => 'Parent unset, children partial',
+          :nodes => [
+            {
+              :state => {
+                :checked => true
+              }
+            },
+            {
+              :state => {
+                :checked => false
+              }
+            }
+          ],
+        },
+        {
+          :text  => 'Parent set, children unset',
+          :state => {
+            :checked => true,
+          },
+          :nodes => [{}, {}],
+        },
+        {
+          :text  => 'Parent set, children partial',
+          :state => {
+            :checked => true,
+          },
+          :nodes => [
+            {
+              :state => {
+                :checked => false
+              }
+            },
+            {
+              :state => {
+                :checked => true
+              }
+            }
+          ],
+        },
+      ]
+
+      subject.send(:post_check, nodes)
+
+      expect(nodes).to eq(
+        [
+          {
+            :text  => 'Parent unset, children partial',
+            :state => {
+              :checked => 'undefined',
+            },
+            :nodes => [
+              {
+                :state => {
+                  :checked => true
+                }
+              },
+              {
+                :state => {
+                  :checked => false
+                }
+              }
+            ],
+          },
+          {
+            :text  => 'Parent set, children unset',
+            :state => {
+              :checked => true,
+            },
+            :nodes => [
+              {
+                :state => {
+                  :checked => true,
+                }
+              },
+              {
+                :state => {
+                  :checked => true,
+                }
+              }
+            ],
+          },
+          {
+            :text  => 'Parent set, children partial',
+            :state => {
+              :checked => true,
+            },
+            :nodes => [
+              {
+                :state => {
+                  :checked => true
+                }
+              },
+              {
+                :state => {
+                  :checked => true
+                }
+              }
+            ],
+          },
+        ]
+      )
+    end
+  end
 end
