@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import {
   SideNav,
   SideNavItems,
-  SideNavLink,
   SideNavMenu,
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
 
 import { itemId, linkProps } from './item-type';
 
+
 const carbonizeIcon = (classname) => (props) => (<i className={classname} {...props} />);
+
+const mapItems = (items) => items.map((item) => (
+  item.items.length
+  ? <MenuSection key={item.id} {...item} />
+  : <MenuItem key={item.id} {...item} />
+));
+
 
 const MenuItem = ({ active, href, id, title, type }) => (
   <SideNavMenuItem
@@ -21,6 +28,15 @@ const MenuItem = ({ active, href, id, title, type }) => (
     {title}
   </SideNavMenuItem>
 );
+
+MenuItem.props = {
+  active: PropTypes.bool,
+  href: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
 
 const MenuSection = ({ active, id, items, title, icon }) => (
   <SideNavMenu
@@ -34,16 +50,19 @@ const MenuSection = ({ active, id, items, title, icon }) => (
   </SideNavMenu>
 );
 
-const mapItems = (items) => items.map((item) => (
-  item.items.length
-  ? <MenuSection key={item.id} {...item} />
-  : <MenuItem key={item.id} {...item} />
-));
+MenuSection.props = {
+  active: PropTypes.bool,
+  icon: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  title: PropTypes.string.isRequired,
+};
 
-const MainMenu = ({ menu }) => {
+
+export const MainMenu = ({ menu }) => {
   return (
     <SideNav
-      aria-label="Side navigation"
+      aria-label={__("Main Menu")}
       isChildOfHeader={true}
       expanded={true}
     >
@@ -54,31 +73,6 @@ const MainMenu = ({ menu }) => {
   );
 };
 
-const menuProps = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.string,
-  href: PropTypes.string.isRequired,
-  visible: PropTypes.bool,
-  active: PropTypes.bool,
-};
-
-const recursiveMenuProps = () => ({
-  ...menuProps,
-  items: PropTypes.arrayOf(PropTypes.shape(menuProps)),
-});
-
 MainMenu.propTypes = {
-  menu: PropTypes.arrayOf(PropTypes.shape({
-    ...menuProps,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      ...menuProps,
-      items: PropTypes.arrayOf(PropTypes.shape({
-        ...menuProps,
-        items: PropTypes.arrayOf(PropTypes.shape(menuProps)),
-      })),
-    })),
-  })).isRequired,
+  menu: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
-
-export default MainMenu;

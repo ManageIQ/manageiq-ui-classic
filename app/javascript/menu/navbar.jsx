@@ -11,7 +11,7 @@ import {
   SkipToContent,
 } from 'carbon-components-react/es/components/UIShell';
 
-import MainMenu from './main-menu';
+import { MainMenu } from './main-menu';
 import NotificationDrawer from '../components/notification-drawer/notification-drawer';
 import ToastList from '../components/toast-list/toast-list';
 import navbar from '../components/top-navbar';
