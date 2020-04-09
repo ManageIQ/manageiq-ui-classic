@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
-import { getSectionId, getItemId } from './helpers';
-import { linkProps } from '../../menu/item-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const TopLevel = ({
   level,
@@ -30,7 +29,7 @@ const TopLevel = ({
             'is-hover': hoveredTopLevelId === id,
           },
         )}
-        id={getSectionId(id)}
+        id={itemId(id, isSection)}
         onMouseEnter={() => handleSetActiveIds({ topLevelId: id })}
         onBlur={() => undefined}
       >
@@ -59,7 +58,7 @@ const TopLevel = ({
 
   return (
     <li
-      id={getItemId(id)}
+      id={itemId(id, isSection)}
       className={ClassNames(
         'menu-list-group-item',
         {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import { menuProps } from './recursive-props';
-import { linkProps } from '../../menu/item-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const ThirdLevel = ({
   id,
@@ -12,7 +12,7 @@ const ThirdLevel = ({
   type,
 }) => (!visible ? null : (
   <li
-    id={`menu_item_${id}`}
+    id={itemId(id)}
     className={ClassNames(
       'menu-list-group-item',
       {

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps } from './recursive-props';
-import { getIdByCategory } from './helpers';
-import { linkProps } from '../../menu/item-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const SecondLevel = ({
   id,
@@ -29,7 +28,7 @@ const SecondLevel = ({
           active,
         },
       )}
-      id={getIdByCategory(hasSubitems, id)}
+      id={itemId(id, hasSubitems)}
       onMouseEnter={() => (handleSetActiveIds(hasSubitems ? { secondLevelId: id } : undefined))}
       onMouseLeave={() => handleSetActiveIds({ secondLevelId: undefined })}
     >

@@ -27,3 +27,5 @@ export const linkProps = ({type, href, id}) => ({
     }
   },
 });
+
+export const itemId = (id, section) => (section ? `menu_section_${id}` : `menu_item_${id}`);
