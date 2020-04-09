@@ -1,23 +1,18 @@
+= react('Navbar', {:customBrand => ::Settings.server.custom_brand,
+                   :imagePath => image_path("layout/brand.svg"),
+                   :rightSection => {:customLogo => ::Settings.server.custom_logo,
+                                     :currentUser => current_user,
+                                     :helpMenu => menu_to_json(:help),
+                                     :opsExplorerAllowed => ApplicationHelper.role_allows?(:feature => 'ops_explorer',:any => true),
+                                     :applianceName => appliance_name,
+                                     :miqGroups => current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } },
+                                     :currentGroup => {:id => current_group.id.to_s,
+                                                       :description => current_group.description},
+                                     :userMenu => menu_to_json(:top_right)},
+                   :notificationDrawer => true,
+                   :toastList => true,
+                   :menu => menu_to_json})
+
 = react('MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : '')
-
-%nav.navbar.navbar-pf-vertical
-  = react('navbar.NavbarHeader', { :customBrand => ::Settings.server.custom_brand, :imagePath => image_path("layout/brand.svg") })
-  %nav.collapse.navbar-collapse
-    = react('navbar.RightSection',
-        {:customLogo        => ::Settings.server.custom_logo,
-        :currentUser        => current_user,
-        :helpMenu           => menu_to_json(:help),
-        :opsExplorerAllowed => ApplicationHelper.role_allows?(:feature => 'ops_explorer',:any => true),
-        :applianceName      => appliance_name,
-        :miqGroups          => current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } },
-        :currentGroup       => { :id => current_group.id.to_s, :description => current_group.description },
-        :userMenu           => menu_to_json(:top_right)},
-        {:class => "nav navbar-nav navbar-right navbar-iconic"},
-        'ul')
-  = react('NotificationDrawer')
-  = react('ToastList')
-
 = render :partial => "layouts/spinner"
 = render :partial => "layouts/lightbox_panel"
-
-= react('MainMenu', { :menu => menu_to_json })

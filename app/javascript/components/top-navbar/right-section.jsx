@@ -12,7 +12,7 @@ import {
 const RightSection = ({
   customLogo, currentUser, helpMenu, opsExplorerAllowed, applianceName, miqGroups, currentGroup, userMenu,
 }) => (
-  <React.Fragment>
+  <ul className="nav navbar-nav navbar-right navbar-iconic">
     <CustomLogo customLogo={customLogo} />
     <Notifications />
     <Help helpMenu={helpMenu} />
@@ -22,7 +22,7 @@ const RightSection = ({
         <UserOptions currentUser={currentUser} applianceName={applianceName} miqGroups={miqGroups} currentGroup={currentGroup} userMenu={userMenu} />
       </React.Fragment>
     )}
-  </React.Fragment>
+  </ul>
 );
 
 RightSection.propTypes = {
