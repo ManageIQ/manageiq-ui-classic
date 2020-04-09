@@ -9,10 +9,11 @@
                                      :currentGroup => {:id => current_group.id.to_s,
                                                        :description => current_group.description},
                                      :userMenu => menu_to_json(:top_right)},
-                   :notificationDrawer => true,
-                   :toastList => true,
                    :menu => menu_to_json})
 
-= react('MiqAboutModal', :dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : '')
+= react('NotificationDrawer')
+= react('ToastList')
+= react('MiqAboutModal', {:dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : ''})
+
 = render :partial => "layouts/spinner"
 = render :partial => "layouts/lightbox_panel"

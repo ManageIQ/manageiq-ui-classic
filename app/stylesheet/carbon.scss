@@ -24,12 +24,17 @@ html {
   font-size: 100%;
 }
 
-// FIXME distinguish subsections
+// distinguish subsections
 .bx--side-nav__item .bx--side-nav__item .bx--side-nav__submenu-title {
   padding-left: 8px;
 }
 
-// FIXME hack for size differences from original menu
+// hack for size differences from original menu
 .container-pf-nav-pf-vertical {
   margin-left: 256px !important;
+}
+
+// fix notification drawer 0 height
+.drawer-pf.drawer-alt-pf.drawer-pf-notifications {
+  height: 100%;
 }

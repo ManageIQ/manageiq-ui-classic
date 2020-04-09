@@ -12,8 +12,6 @@ import {
 } from 'carbon-components-react/es/components/UIShell';
 
 import { MainMenu } from './main-menu';
-import NotificationDrawer from '../components/notification-drawer/notification-drawer';
-import ToastList from '../components/toast-list/toast-list';
 import navbar from '../components/top-navbar';
 
 export const Navbar = (props) => {
@@ -45,9 +43,6 @@ export const Navbar = (props) => {
         <HeaderNavigation aria-label="Carbon Tutorial">
           <HeaderMenuItem href="/repos">Repositories</HeaderMenuItem>
         </HeaderNavigation>
-
-        { notificationDrawer && (<NotificationDrawer />) }
-        { toastList && (<ToastList />) }
 
         <HeaderGlobalBar />
       </Header>
