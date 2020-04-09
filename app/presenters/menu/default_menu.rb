@@ -23,7 +23,7 @@ module Menu
           clouds_menu_section,
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
-          container_menu_section
+          container_menu_section,
         ].compact)
       end
 
@@ -48,7 +48,7 @@ module Menu
       end
 
       def consumption_menu_section
-        Menu::Section.new(:cons, N_("Consumption"), 'fa fa-plus', [
+        Menu::Section.new(:cons, N_("Consumption"), nil, [
           Menu::Item.new('consumption', N_('Dashboard'), 'consumption', {:feature => 'consumption', :any => true}, '/consumption/show')
         ])
       end
@@ -63,7 +63,7 @@ module Menu
       end
 
       def chargeback_menu_section
-        Menu::Section.new(:chargeback, N_("Chargeback"), 'fa fa-plus', [
+        Menu::Section.new(:chargeback, N_("Chargeback"), nil, [
           Menu::Item.new('chargeback_report',     N_('Reports'),     'chargeback_reports',     {:feature => 'chargeback_reports',         :any => true}, '/chargeback_report/explorer'),
           Menu::Item.new('chargeback_rate',       N_('Rates'),       'chargeback_rates',       {:feature => 'chargeback_rates_show_list', :any => true}, '/chargeback_rate/show_list'),
           Menu::Item.new('chargeback_assignment', N_('Assignments'), 'chargeback_assignments', {:feature => 'chargeback_assignments'},                   '/chargeback_assignment/explorer'),
@@ -71,7 +71,7 @@ module Menu
       end
 
       def clouds_menu_section
-        Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [
+        Menu::Section.new(:clo, N_("Clouds"), nil, [
           Menu::Item.new('ems_cloud',           N_('Providers'),          'ems_cloud',           {:feature => 'ems_cloud_show_list'},             '/ems_cloud/show_list'),
           Menu::Item.new('availability_zone',   N_('Availability Zones'), 'availability_zone',   {:feature => 'availability_zone_show_list'},     '/availability_zone/show_list'),
           Menu::Item.new('host_aggregate',      N_('Host Aggregates'),    'host_aggregate',      {:feature => 'host_aggregate_show_list'},        '/host_aggregate/show_list'),
@@ -85,7 +85,7 @@ module Menu
       end
 
       def infrastructure_menu_section
-        Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus', [
+        Menu::Section.new(:inf, N_("Infrastructure"), nil, [
           Menu::Item.new('ems_infra',         N_('Providers'),         'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra/show_list'),
           Menu::Item.new('ems_cluster',       N_("Clusters"),          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
           Menu::Item.new('host',              N_("Hosts"),             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
@@ -100,7 +100,7 @@ module Menu
       end
 
       def physical_infrastructure_menu_section
-        Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:phy, N_("Physical Infrastructure"), nil, [
           Menu::Item.new('physical_infra_overview', N_('Overview'),  'physical_infra_overview', {:feature => 'physical_infra_overview'},               '/physical_infra_overview/show'),
           Menu::Item.new('ems_physical_infra',      N_('Providers'), 'ems_physical_infra',      {:feature => 'ems_physical_infra_show_list'},          '/ems_physical_infra/show_list'),
           Menu::Item.new('physical_chassis',        N_('Chassis'),   'physical_chassis',        {:feature => 'physical_chassis_show_list'},            '/physical_chassis/show_list'),
@@ -113,7 +113,7 @@ module Menu
       end
 
       def container_menu_section
-        Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus', [
+        Menu::Section.new(:cnt, N_("Containers"), nil, [
           Menu::Item.new('container_dashboard',      N_('Overview'),            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard/show'),
           Menu::Item.new('ems_container',            N_('Providers'),           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container/show_list'),
           Menu::Item.new('container_project',        N_('Projects'),            'container_project',        {:feature => 'container_project_show_list'},               '/container_project/show_list'),
@@ -147,13 +147,13 @@ module Menu
 
       def storage_menu_section
         Menu::Section.new(:sto, N_("Storage"), 'fa fa-database', [
-                            block_storage_menu_section,
-                            object_storage_menu_section,
-                          ])
+          block_storage_menu_section,
+          object_storage_menu_section,
+        ])
       end
 
       def block_storage_menu_section
-        Menu::Section.new(:bst, N_("Block Storage"), 'fa fa-database', [
+        Menu::Section.new(:bst, N_("Block Storage"), nil, [
                             Menu::Item.new('ems_block_storage',
                                            N_('Managers'),
                                            'ems_block_storage',
@@ -183,7 +183,7 @@ module Menu
       end
 
       def object_storage_menu_section
-        Menu::Section.new(:ost, N_("Object Storage"), 'fa fa-database', [
+        Menu::Section.new(:ost, N_("Object Storage"), nil, [
                             Menu::Item.new('ems_object_storage',
                                            N_('Managers'),
                                            'ems_object_storage',
@@ -215,19 +215,19 @@ module Menu
         Menu::Section.new(:aut, N_("Automation"), 'pficon pficon-automation', [
           ansible_menu_section,
           automation_manager_menu_section,
-          automate_menu_section
+          automate_menu_section,
         ])
       end
 
       def automation_manager_menu_section
-        Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog', [
+        Menu::Section.new(:at, N_("Ansible Tower"), nil, [
           Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
           Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job/show_list')
         ])
       end
 
       def ansible_menu_section
-        Menu::Section.new(:ansible, N_("Ansible"), 'pficon pficon-automation', [
+        Menu::Section.new(:ansible, N_("Ansible"), nil, [
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload', :any => true}, '/ansible_playbook/show_list'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source', :any => true}, '/ansible_repository/show_list'),
           Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential/show_list'),
@@ -235,7 +235,7 @@ module Menu
       end
 
       def automate_menu_section
-        Menu::Section.new(:automate, N_("Automate"), 'pficon pficon-automation', [
+        Menu::Section.new(:automate, N_("Automate"), nil, [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('generic_object_definition', N_('Generic Objects'), 'generic_object_definition', {:feature => 'generic_object_definition'},   '/generic_object_definition/show_list'),
@@ -247,14 +247,16 @@ module Menu
       end
 
       def alerts_menu_section
-        Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
+        Menu::Section.new(:monitor_alerts, N_("Alerts"), nil, [
                             Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview/show'),
                             Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list/show'),
                           ])
       end
 
       def monitor_menu_section
-        Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
+        Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat', [
+          alerts_menu_section,
+        ])
       end
 
       def settings_menu_section
