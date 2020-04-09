@@ -10,6 +10,8 @@ import {
 
 import { itemId, linkProps } from './item-type';
 
+const carbonizeIcon = (classname) => (props) => (<i className={classname} {...props} />);
+
 const MenuItem = ({ active, href, id, title, type }) => (
   <SideNavMenuItem
     id={itemId(id)}
@@ -20,11 +22,12 @@ const MenuItem = ({ active, href, id, title, type }) => (
   </SideNavMenuItem>
 );
 
-const MenuSection = ({ active, id, items, title }) => (
+const MenuSection = ({ active, id, items, title, icon }) => (
   <SideNavMenu
     id={itemId(id, true)}
     isActive={active}
     defaultExpanded={active} // autoexpand active section
+    renderIcon={carbonizeIcon(icon)} // only first level sections have it, but all need the prop for consistent padding
     title={title}
   >
     {mapItems(items)}
