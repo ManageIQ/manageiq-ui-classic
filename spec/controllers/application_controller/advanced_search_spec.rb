@@ -1,4 +1,4 @@
-describe ConfigurationManagerController, "::AdvancedSearch" do
+describe EmsConfigurationController, "::AdvancedSearch" do
   let(:expr) { ApplicationController::Filter::Expression.new("=" => exp, :token => 1) }
   let(:exp) { {:field => "Some_field", :value => "123"} }
 
