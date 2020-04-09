@@ -1,9 +1,8 @@
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import PropTypes from 'prop-types';
-import { showAboutModal } from './helpers';
 import { helpMenuProps, recursiveHelpMenuProps } from './recursive-props';
-import getTargetByType from '../../helpers/get-target-by-type';
+import { linkProps } from '../../menu/item-type';
 
 const Help = ({
   helpMenu,
@@ -47,9 +46,7 @@ const Help = ({
               <MenuItem
                 id={`help-menu-${item.title.toLowerCase()}`}
                 key={item.id}
-                href={item.type === 'modal' ? '' : item.href}
-                onClick={e => (item.type === 'modal' ? showAboutModal(e) : !miqCheckForChanges() && e.preventDefault())}
-                target={getTargetByType(item.type)}
+                {...linkProps(item)}
               >
                 {item.title}
               </MenuItem>
