@@ -34,7 +34,8 @@ html {
   margin-left: 256px !important;
 }
 
-// fix notification drawer 0 height
+// fix notification drawer 0 height, hide "padding" under header
 .drawer-pf.drawer-alt-pf.drawer-pf-notifications {
-  height: 100%;
+  top: 48px;
+  height: calc(100% - 48px);
 }
