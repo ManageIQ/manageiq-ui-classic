@@ -156,20 +156,15 @@ class CloudTenantController < ApplicationController
     tenant_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Tenant \"%{name}\" updated") % {
+      flash_and_redirect(_("Cloud Tenant \"%{name}\" updated") % {
         :name => tenant_name
       })
     else
-      add_flash(_("Unable to update Cloud Tenant \"%{name}\": %{details}") % {
+      flash_and_redirect(_("Unable to update Cloud Tenant \"%{name}\": %{details}") % {
         :name    => tenant_name,
         :details => task.message
       }, :error)
     end
-
-    @breadcrumbs&.pop
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(:action => "show", :id => tenant_id)
   end
 
   def cloud_tenant_form_fields

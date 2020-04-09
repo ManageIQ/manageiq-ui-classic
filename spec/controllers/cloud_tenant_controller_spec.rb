@@ -210,6 +210,32 @@ describe CloudTenantController do
     end
   end
 
+  describe '#update_finished' do
+    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'ok', :message => 'some message') }
+
+    before do
+      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
+      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => tenant.name}})
+    end
+
+    it 'calls flash_and_redirect with appropriate arguments for succesful updating of a Cloud Tenant' do
+      expect(controller).to receive(:flash_and_redirect).with(_("Cloud Tenant \"%{name}\" updated") % {:name => tenant.name})
+      controller.send(:update_finished)
+    end
+
+    context 'unsuccesful updating of a Cloud Tenant' do
+      let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'Error', :message => 'some message') }
+
+      it 'calls flash_and_redirect with appropriate arguments' do
+        expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Cloud Tenant \"%{name}\": %{details}") % {
+          :name    => tenant.name,
+          :details => miq_task.message
+        }, :error)
+        controller.send(:update_finished)
+      end
+    end
+  end
+
   describe "#delete" do
     let(:task_options) do
       {
