@@ -23,3 +23,13 @@ $carbon--theme: $carbon--theme--g90;
 html {
   font-size: 100%;
 }
+
+// FIXME distinguish subsections
+.bx--side-nav__item .bx--side-nav__item .bx--side-nav__submenu-title {
+  padding-left: 8px;
+}
+
+// FIXME hack for size differences from original menu
+.container-pf-nav-pf-vertical {
+  margin-left: 256px !important;
+}
