@@ -25,10 +25,16 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Button Group'),
           t,
-          :klass        => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :confirm      => N_("Warning: The selected Button Group will be permanently removed!")),
+          :klass => ApplicationHelper::Button::CatalogItemButton,
+          :data  => {'function'      => 'sendDataWithRx',
+                     'function-data' => {:controller     => 'provider_dialogs',
+                                         :modal_title    => N_('Delete Button Group'),
+                                         :modal_text     => N_('Are you sure you want to delete the following Button Group?'),
+                                         :api_url        => 'custom_button_sets',
+                                         :async_delete   => false,
+                                         :redirect_url   => '/catalog/explorer?report_deleted=true',
+                                         :transform_fn   => 'buttonGroup',
+                                         :component_name => 'RemoveGenericItemModal'}})
       ]
     ),
   ])
