@@ -1394,7 +1394,7 @@ describe ReportController do
       post :form_field_changed, :params => {:id => 'new', :name => 'test'}
       post :form_field_changed, :params => {:button => "right", :available_fields => ["ChargebackVm-cpu_cost"]}
       resp = post :form_field_changed, :params => {:button => "left", :selected_fields => ["ChargebackVm-cpu_cost"]}
-      expect(resp.error?).to be_falsey
+      expect(resp.server_error?).to be_falsey
     end
   end
 
