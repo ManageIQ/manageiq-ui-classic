@@ -54,6 +54,7 @@ module ApplicationController::Explorer
     'tag'          => :s2, 'timeline'         => :s2, 'resize'          => :s2,
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
     'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
+    'manager_configuration_script_service_dialog' => :s2,
     'transform_mass'           => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
@@ -70,8 +71,7 @@ module ApplicationController::Explorer
 
   def x_button
     model, action = pressed2model_action(params[:pressed])
-
-    allowed_models = %w[common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider]
+    allowed_models = %w[common image instance vm miq_template provider automation storage infra_networking automation_manager_provider]
     raise ActionController::RoutingError, 'invalid button action' unless
       allowed_models.include?(model)
 
