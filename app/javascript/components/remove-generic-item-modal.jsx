@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { Modal, Spinner } from 'patternfly-react';
 import { API } from '../http_api';
 
+const apiTransformFunctions = {
+  buttonGroup: (item) => ({id: item.id, name: item.name.split('|')[0]}),
+  default: (item) => ({id: item.id, name: item.name}),
+};
+
 const parseApiError = (error) => {
   if (error.hasOwnProperty('data')) {
     return error.data.error.message;
@@ -75,8 +80,14 @@ class RemoveGenericItemModal extends React.Component {
       tree_select,
     } = this.props.modalData;
 
+    let transformFn = apiTransformFunctions['default'];
+
+    if (this.props.modalData.transform_fn) {
+      transformFn = apiTransformFunctions[this.props.modalData.transform_fn];
+    }
     // Load modal data from API
     Promise.all(itemsIds.map((item) => API.get(`/api/${api_url}/${item}`)))
+      .then(apiData => apiData.map(transformFn))
       .then((apiData) => apiData.map((item) => ({
         id: item.id,
         name: item[display_field],
