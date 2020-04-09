@@ -76,7 +76,6 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Create a new snapshot for this VM'),
           t,
-          :onwhen => "1",
           :klass  => ApplicationHelper::Button::VmSnapshotAdd
         ),
       ]

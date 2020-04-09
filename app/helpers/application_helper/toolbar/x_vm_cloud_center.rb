@@ -112,7 +112,6 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Create a new snapshot for this Instance'),
           t,
-          :onwhen => "1",
           :klass  => ApplicationHelper::Button::VmSnapshotAdd
         ),
       ]
