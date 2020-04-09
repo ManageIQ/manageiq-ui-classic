@@ -496,7 +496,7 @@ module Mixins
     end
 
     def process_check_compliance(model, ids)
-      model.where(:id => ids).order("lower(name)").each do |entity|
+      model.where(:id => ids).order(model.arel_table[:name].lower).each do |entity|
         entity.check_compliance
       rescue => bang
         add_flash(_("%{model} \"%{name}\": Error during 'Check Compliance': %{error}") %
@@ -517,7 +517,7 @@ module Mixins
 
     def form_instance_vars
       @server_zones = []
-      zones = Zone.visible.order('lower(description)')
+      zones = Zone.visible.order(Zone.arel_table[:name].lower)
       zones.each do |zone|
         @server_zones.push([zone.description, zone.name])
       end

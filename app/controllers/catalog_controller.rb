@@ -1150,7 +1150,7 @@ class CatalogController < ApplicationController
   end
 
   def fetch_zones
-    @zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :id)
+    @zones = Zone.visible.in_my_region.order(Zone.arel_table[:description].lower).pluck(:description, :id)
   end
 
   def st_set_form_vars

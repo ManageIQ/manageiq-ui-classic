@@ -5,7 +5,7 @@ module Mixins
         # Common handling of misc Host buttons
 
         def each_host(host_ids, task_name)
-          Host.where(:id => host_ids).order('lower(name)').each do |host|
+          Host.where(:id => host_ids).order(Host.arel_table[:name].lower).each do |host|
             yield host
           rescue StandardError => err
             add_flash(

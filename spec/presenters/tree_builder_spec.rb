@@ -162,7 +162,7 @@ describe TreeBuilder do
     end
 
     it 'counts collections with order' do
-      expect(builder.count_only_or_objects(true, VmOrTemplate.distinct.order("lower(vms.name)"))).to eq(0)
+      expect(builder.count_only_or_objects(true, VmOrTemplate.distinct.order(VmOrTemplate.arel_table[:name].lower))).to eq(0)
     end
   end
 

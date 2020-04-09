@@ -17,8 +17,10 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots
-    objects = []
-    templates = Rbac.filtered(ManageIQ::Providers::AnsibleTower::AutomationManager.order("lower(name)"), :match_via_descendants => ConfigurationScript)
+    objects    = []
+    model      = ManageIQ::Providers::AnsibleTower::AutomationManager
+    rbac_scope = model.order(model.arel_table[:name].lower)
+    templates  = Rbac.filtered(rbac_scope, :match_via_descendants => ConfigurationScript)
 
     templates.each do |temp|
       objects.push(temp)
