@@ -58,6 +58,7 @@ describe TreeBuilderSections do
         :full_ids     => true,
         :checkboxes   => true,
         :three_checks => true,
+        :post_check   => true,
         :oncheck      => "miqOnCheckSections",
         :check_url    => "/controller_name/sections_field_changed/"
       )
@@ -74,7 +75,6 @@ describe TreeBuilderSections do
                             :text       => "Properties",
                             :tip        => "Properties",
                             :image      => false,
-                            :checked    => true,
                             :selectable => false,
                             :nodes      => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
     end
