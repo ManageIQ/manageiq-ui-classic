@@ -16,6 +16,7 @@ class TreeBuilderSections < TreeBuilder
       :full_ids     => true,
       :checkboxes   => true,
       :three_checks => true,
+      :post_check   => true,
       :oncheck      => "miqOnCheckSections",
       :check_url    => "/#{@controller_name}/sections_field_changed/"
     }
@@ -31,22 +32,11 @@ class TreeBuilderSections < TreeBuilder
                    :text       => section[:group] == "Categories" ? _("%{current_tenant} Tags") % {:current_tenant => @current_tenant} : _(section[:group]),
                    :tip        => _(section[:group]),
                    :image      => false,
-                   :checked    => true,
                    :selectable => false,
                    :nodes      => [section])
       else
         nodes.last[:nodes].push(section)
       end
-    end
-    nodes.each do |node|
-      checked = node[:nodes].count { |kid| @data.include[kid[:name]][:checked] } # number of checked kids
-      node[:checked] = if checked.zero?
-                         false
-                       elsif checked < node[:nodes].size
-                         'undefined'
-                       else
-                         true
-                       end
     end
     count_only_or_objects(false, nodes)
   end
