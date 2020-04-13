@@ -240,7 +240,7 @@ class CloudTenantController < ApplicationController
     if task == "destroy"
       tenants.each do |tenant|
         audit = {
-          :event        => "cloud_tenant_record_delete_initiateed",
+          :event        => "cloud_tenant_record_delete_initiated",
           :message      => "[#{tenant.name}] Record delete initiated",
           :target_id    => tenant.id,
           :target_class => "CloudTenant",
