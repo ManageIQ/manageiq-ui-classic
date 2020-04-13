@@ -6,7 +6,7 @@
       %label.control-label.col-md-2
         = _(@view.headers[@view.col_order.index(item)])
       .col-md-8
-        - item_data = @item.send(item)
+        - item_data = item.split('.').inject(@item) { |obj, met| obj.send(met) }
         - if %w(data name).include?(@view.headers[i].downcase)
           - if item_data.respond_to?(:scan)
             - item_data.scan(/.{1,125}/).each do |data_part|
