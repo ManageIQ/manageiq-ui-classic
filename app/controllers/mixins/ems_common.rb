@@ -354,6 +354,9 @@ module Mixins
         when 'refresh_server_summary'
           javascript_redirect(:back)
           return
+        when 'custom_button'
+          custom_buttons
+          return
         end
 
         if @display && @display != 'main'
@@ -371,11 +374,13 @@ module Mixins
           end
         end
 
-        if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
-           params[:pressed] == "ems_infra_recheck_auth_status"          ||
-           params[:pressed] == "ems_physical_infra_recheck_auth_status" ||
-           params[:pressed] == "ems_middleware_recheck_auth_status"     ||
-           params[:pressed] == "ems_container_recheck_auth_status"
+        if %w[
+          ems_cloud_recheck_auth_status
+          ems_container_recheck_auth_status
+          ems_infra_recheck_auth_status
+          ems_middleware_recheck_auth_status
+          ems_physical_infra_recheck_auth_status
+        ].include?(params[:pressed])
           if params[:id]
             table_key = :table
             _result, details = recheck_authentication
@@ -402,9 +407,6 @@ module Mixins
           return
         end
 
-        custom_buttons if params[:pressed] == "custom_button"
-
-        return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
         return if ["#{table_name}_tag", "#{display_s}_tag", "#{table_name}_protect", "#{display_s}_protect", "#{table_name}_timeline"].include?(params[:pressed]) &&
                   @flash_array.nil? # Screen for Edit Tags or Manage Policies action showing, so return
 
@@ -417,6 +419,10 @@ module Mixins
         javascript_redirect(:controller => "cloud_tenant",
                             :action     => "edit",
                             :id         => find_record_with_rbac(CloudTenant, checked_or_params))
+      elsif params[:pressed] == 'cloud_tenant_delete'
+        javascript_redirect(:controller      => "cloud_tenant",
+                            :action          => 'delete_cloud_tenants',
+                            :miq_grid_checks => params[:miq_grid_checks])
       elsif params[:pressed] == "cloud_volume_new"
         javascript_redirect(:controller         => "cloud_volume",
                             :action             => "new",

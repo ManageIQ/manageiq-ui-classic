@@ -190,18 +190,20 @@ class CloudTenantController < ApplicationController
     process_cloud_tenants(tenants_to_delete, "destroy") unless tenants_to_delete.empty?
 
     # refresh the list if applicable
-    if @lastaction == "show_list"
+    if @lastaction == "show_list" # list of Cloud Tenants
       show_list
       render_flash
       @refresh_partial = "layouts/gtl"
-    elsif @lastaction == "show" && @layout == "cloud_tenant"
-      # deleting from 'show' so we:
+    elsif %w[show show_dashboard].include?(@lastaction)
       if flash_errors? # either show the errors and stay on the 'show'
         render_flash
       else             # or (if we deleted what we were showing) we redirect to the listing
         flash_to_session
-        javascript_redirect(:action => 'show_list')
+        javascript_redirect(previous_breadcrumb_url)
       end
+    else # nested list of Cloud Tenants
+      flash_to_session
+      redirect_to(last_screen_url)
     end
   end
 
@@ -233,7 +235,7 @@ class CloudTenantController < ApplicationController
     if task == "destroy"
       tenants.each do |tenant|
         audit = {
-          :event        => "cloud_tenant_record_delete_initiateed",
+          :event        => "cloud_tenant_record_delete_initiated",
           :message      => "[#{tenant.name}] Record delete initiated",
           :target_id    => tenant.id,
           :target_class => "CloudTenant",
