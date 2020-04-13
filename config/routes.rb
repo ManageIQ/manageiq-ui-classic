@@ -452,6 +452,7 @@ Rails.application.routes.draw do
     :cloud_tenant             => {
       :get => %w(
         cloud_tenant_form_fields
+        delete_cloud_tenants
         dialog_load
         download_data
         download_summary_pdf

@@ -84,6 +84,23 @@ describe EmsCloudController do
         end
       end
 
+      context 'deleting Cloud Tenants' do
+        let(:ems) { FactoryBot.create(:ems_openstack) }
+        let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+
+        before do
+          allow(controller).to receive(:show)
+          controller.params = {:pressed => 'cloud_tenant_delete', :miq_grid_checks => tenant.id.to_s}
+        end
+
+        it 'calls javascript_redirect with appropriate arguments to delete selected Cloud Tenants' do
+          expect(controller).to receive(:javascript_redirect).with(:controller      => "cloud_tenant",
+                                                                   :action          => 'delete_cloud_tenants',
+                                                                   :miq_grid_checks => tenant.id.to_s)
+          controller.send(:button)
+        end
+      end
+
       context 'actions on Host Aggregates displayed through Cloud Provider' do
         let(:aggregate) { FactoryBot.create(:host_aggregate) }
 
