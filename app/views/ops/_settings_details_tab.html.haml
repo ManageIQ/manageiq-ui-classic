@@ -2,7 +2,7 @@
   - if super_admin_user?
     - region = MiqRegion.my_region
     - if @edit
-      = react('RegionForm', :maxDescLen => ViewHelper::MAX_LEN_SMALL_TEXT_FIELD, :id => region.id)
+      = react('RegionForm', :maxDescLen => ViewHelper::MAX_LEN_SMALL_TEXT_FIELD, :id => region.id.to_s)
     .spacer
 
     %table.table.table-striped.table-bordered.table-hover
