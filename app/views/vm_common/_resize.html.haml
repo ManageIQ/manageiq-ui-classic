@@ -21,23 +21,7 @@
                 'ng-model'   => 'vm.vmCloudModel.flavor_id',
                 'ng-options' => 'flavor.id as flavor.name for flavor in vm.flavors',
                 :miqrequired => true}
-
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
-
-  - unless @explorer
-    %table{:width => '100%'}
-      %tr
-        %td{:align => 'right'}
-          = button_tag(_("Submit"),
-                       :class        => "btn btn-primary",
-                       "ng-click"    => "submitClicked()",
-                       "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
-                       "ng-class"    => "{'btn-disabled': angularForm.$pristine || angularForm.$invalid}")
-          = button_tag(_("Cancel"),
-                        :class     => "btn btn-default",
-                        "ng-click" => "cancelClicked()")
+  = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Submit'), :button_click => 'vm.submitClicked()'}
 
 :javascript
   ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@request_id || "new"}');

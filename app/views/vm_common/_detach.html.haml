@@ -18,9 +18,7 @@
                       :required                     => true,
                       "selectpicker-for-select-tag" => "")
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+  = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Detach'), :button_click => 'vm.submitClicked()'}
 
 :javascript
   ManageIQ.angular.app.value('vmCloudDetachFormId', '#{@vm.id}');

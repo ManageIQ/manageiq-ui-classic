@@ -26,9 +26,7 @@
                             'ng-model'     => "vm.vmCloudModel.device_path",
                             :maxlength     => 128}
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+  = render :partial => 'layouts/angular/custom_form_buttons_controller_as', :locals => {:button_label => _('Attach'), :button_click => 'vm.submitClicked()'}
 
 :javascript
   ManageIQ.angular.app.value('vmCloudAttachFormId', '#{@vm.id}');

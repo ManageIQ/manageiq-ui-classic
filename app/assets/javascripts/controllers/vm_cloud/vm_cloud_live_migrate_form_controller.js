@@ -13,6 +13,8 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
   vm.filtered_hosts = [];
   vm.formId = vmCloudLiveMigrateFormId;
   vm.modelCopy = angular.copy(vm.vmCloudModel);
+  vm.newRecord = true;
+  vm.saveable = miqService.saveable;
 
   ManageIQ.angular.scope = $scope;
 
@@ -22,7 +24,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
       .catch(miqService.handleFailure);
   }
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm/?button=cancel';
     if (vmCloudLiveMigrateFormId) {
@@ -32,7 +34,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
     miqService.miqAjaxButton(url);
   };
 
-  $scope.submitClicked = function() {
+  vm.submitClicked = $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm?button=submit';
     if (vmCloudLiveMigrateFormId) {
