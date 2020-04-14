@@ -99,7 +99,7 @@ module ApplicationController::Explorer
           send(method, Storage)
         when 'infra_networking'
           send(method, Switch)
-        when 'automation_manager_provider',
+        when 'automation_manager_provider'
           send(method)
         else
           send(method, VmOrTemplate)

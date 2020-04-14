@@ -26,12 +26,13 @@ class EmsConfigurationController < ApplicationController
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w[configured_systems].include?(@display) # Were we displaying nested list
+    params[:display] = @display if display_methods.include?(@display) # Were we displaying nested list
 
     # Handle Toolbar Policy Tag Button
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     model = self.class.model
     tag(model) if params[:pressed] == "#{params[:controller]}_tag"
+    return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
 
     if params[:pressed].starts_with?("configured_system_") # Handle buttons from sub-items screen
       tag(ConfiguredSystem) if params[:pressed] == "configured_system_tag"
@@ -48,8 +49,6 @@ class EmsConfigurationController < ApplicationController
     when "ems_configuration_delete_provider"
       delete
     end
-
-    return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
 
     if single_delete_test
       single_delete_redirect

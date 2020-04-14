@@ -9,17 +9,13 @@ class ConfigurationProfileController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  def self.table_name
-    @table_name ||= "configuration_profile"
-  end
-
   def self.display_methods
     %w[configured_systems]
   end
 
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w[configured_systems].include?(@display) # Were we displaying nested list
+    params[:display] = @display if display_methods.include?(@display) # Were we displaying nested list
 
     # Handle Toolbar Policy Tag Button
     @refresh_div = "main_div" # Default div for button.rjs to refresh
@@ -34,6 +30,11 @@ class ConfigurationProfileController < ApplicationController
     else
       render_flash unless performed?
     end
+  end
+
+  def show_list
+    opts = {:no_checkboxes => true}
+    process_show_list(opts)
   end
 
   private
