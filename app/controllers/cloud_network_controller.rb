@@ -168,15 +168,11 @@ class CloudNetworkController < ApplicationController
     cloud_network_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Network \"%{name}\" updated") % {:name => cloud_network_name})
+      flash_and_redirect(_("Cloud Network \"%{name}\" updated") % {:name => cloud_network_name})
     else
-      add_flash(_("Unable to update Cloud Network \"%{name}\": %{details}") % {:name    => cloud_network_name,
-                                                                               :details => task.message}, :error)
+      flash_and_redirect(_("Unable to update Cloud Network \"%{name}\": %{details}") % {:name    => cloud_network_name,
+                                                                                        :details => task.message}, :error)
     end
-
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   private

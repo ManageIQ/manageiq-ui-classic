@@ -350,41 +350,6 @@ describe HostAggregateController do
     end
   end
 
-  describe '#flash_and_redirect' do
-    let(:message) { 'Edit Host Aggregate' }
-
-    before do
-      allow(controller).to receive(:render)
-      allow(controller).to receive(:session).and_return(:edit => {:expression => {}})
-      controller.instance_variable_set(:@breadcrumbs, [{:url => 'previous_url'}, {:url => 'last_url'}])
-    end
-
-    it 'adds message to flash array' do
-      controller.send(:flash_and_redirect, message)
-      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => message, :level => :success}])
-    end
-
-    it 'adds error flash message to flash array' do
-      controller.send(:flash_and_redirect, message, :error)
-      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => message, :level => :error}])
-    end
-
-    it 'sets session[:edit] to nil' do
-      controller.send(:flash_and_redirect, message)
-      expect(controller.session[:edit]).to be_nil
-    end
-
-    it 'adds flash message to session' do
-      controller.send(:flash_and_redirect, message)
-      expect(controller.session[:flash_msgs]).to eq([{:message => message, :level => :success}])
-    end
-
-    it 'calls javascript_redirect' do
-      expect(controller).to receive(:javascript_redirect).with('previous_url')
-      controller.send(:flash_and_redirect, message)
-    end
-  end
-
   describe '#button' do
     context 'Check Compliance of Last Known Configuration on Instances' do
       let(:vm_instance) { FactoryBot.create(:vm_or_template) }
