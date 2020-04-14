@@ -190,15 +190,11 @@ class CloudSubnetController < ApplicationController
     subnet_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Subnet \"%{name}\" updated") % {:name => subnet_name })
+      flash_and_redirect(_("Cloud Subnet \"%{name}\" updated") % {:name => subnet_name})
     else
-      add_flash(_("Unable to update Cloud Subnet \"%{name}\": %{details}") % {:name    => subnet_name,
-                                                                              :details => task.message}, :error)
+      flash_and_redirect(_("Unable to update Cloud Subnet \"%{name}\": %{details}") % {:name    => subnet_name,
+                                                                                       :details => task.message}, :error)
     end
-
-    session[:edit] = nil
-    flash_to_session
-    javascript_redirect(previous_breadcrumb_url)
   end
 
   private

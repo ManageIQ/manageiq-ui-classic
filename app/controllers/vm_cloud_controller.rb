@@ -157,7 +157,7 @@ class VmCloudController < ApplicationController
 
   def flash_and_redirect(message)
     session[:edit] = nil
-    flash_to_session(message)
+    add_flash(message)
     @record = @sb[:action] = nil
     replace_right_cell
   end
