@@ -131,7 +131,7 @@ class TreeBuilder
     end
 
     # Process nodes top-to-bottom
-    nodes.reverse
+    nodes.reverse!
     while nodes.any?
       parent = nodes.pop
 
