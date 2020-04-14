@@ -136,70 +136,11 @@ module OpsController::Settings
 
   def region_edit
     settings_set_view_vars
-    @right_cell_text = _("%{product} Region \"%{name}\"") %
-                       {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
-                        :product => Vmdb::Appliance.PRODUCT_NAME}
-    case params[:button]
-    when "cancel"
-      session[:edit] = @edit = nil
-      replace_right_cell(:nodetype => "root")
-    when "save"
-      return unless load_edit("region_edit__#{params[:id]}", "replace_cell__explorer")
-
-      if @edit[:new][:description].nil? || @edit[:new][:description] == ""
-        add_flash(_("Region description is required"), :error)
-      end
-      unless @flash_array.nil?
-        session[:changed] = @changed = true
-        javascript_flash
-        return
-      end
-      @edit[:region].description = @edit[:new][:description]
-      begin
-        @edit[:region].save!
-      rescue
-        @edit[:region].errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        @changed = true
-        javascript_flash
-      else
-        add_flash(_("Region \"%{name}\" was saved") % {:name => @edit[:region].description})
-        AuditEvent.success(build_saved_audit(@edit[:region], params[:button] == "edit"))
-        @edit = session[:edit] = nil # clean out the saved info
-        replace_right_cell(:nodetype => "root", :replace_trees => [:settings])
-      end
-    when "reset", nil # Reset or first time in
-      region_set_form_vars
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "root")
-    end
-  end
-
-  def region_form_field_changed
-    return unless load_edit("region_edit__#{params[:id]}", "replace_cell__explorer")
-
-    region_get_form_vars
-    javascript_miq_button_visibility(@edit[:new] != @edit[:current])
+    @edit = {}
+    replace_right_cell(:nodetype => "root")
   end
 
   private ############################
-
-  def region_set_form_vars
-    @edit = {}
-    @edit[:region] = MiqRegion.my_region
-    @edit[:key] = "region_edit__#{@edit[:region].id}"
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:new][:description] = @edit[:region].description
-    @edit[:current] = copy_hash(@edit[:new])
-  end
-
-  def region_get_form_vars
-    @edit[:new][:description] = params[:region_description] if params[:region_description]
-  end
 
   def set_verify_status
     @edit[:default_verify_status] = (@edit[:new][:password] == @edit[:new][:verify])
