@@ -22,8 +22,6 @@ class ConfiguredSystemController < ApplicationController
     model = self.class.model
     tag(model) if params[:pressed] == "configured_system_tag"
     provision if params[:pressed] == "configured_system_provision"
-
-    return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
   end
 
   private

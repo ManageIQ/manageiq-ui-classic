@@ -2795,6 +2795,7 @@ Rails.application.routes.draw do
         download_summary_pdf
         show
         show_list
+        tagging_edit
       ],
       :post => %w[
         button
@@ -2802,6 +2803,8 @@ Rails.application.routes.draw do
         reload
         show
         show_list
+        tagging_edit
+        tag_edit_form_field_changed
       ]
     },
 
