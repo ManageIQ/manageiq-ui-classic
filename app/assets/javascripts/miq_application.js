@@ -1358,7 +1358,7 @@ function miqHideSearchClearButton(explorer) {
     $(this).prev('.form-control').val('').focus();
     $(this).hide();
     // Clear Search text values as well
-    var url = '/' + ManageIQ.controller + '/adv_search_text_clear' + '?in_explorer=' + explorer;
+    var url = '/' + ManageIQ.controller + '/search_clear' + '?in_explorer=' + explorer;
     miqJqueryRequest(url);
   });
 }

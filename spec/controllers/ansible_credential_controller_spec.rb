@@ -82,9 +82,7 @@ describe AnsibleCredentialController do
     let(:action) { 'show' }
     subject { controller.send(:toolbar) }
 
-    before do
-      controller.instance_variable_set(:@lastaction, action)
-    end
+    before { controller.instance_variable_set(:@lastaction, action) }
 
     context 'displaying list of credentials' do
       let(:action) { 'show_list' }
@@ -101,13 +99,17 @@ describe AnsibleCredentialController do
     end
 
     context 'displaying nested list of repositories' do
-      before do
-        controller.instance_variable_set(:@display, 'repositories')
-      end
+      before { controller.instance_variable_set(:@display, 'repositories') }
 
       it 'returns proper toolbar filename' do
         expect(subject).to eq('ansible_repositories_center')
       end
+    end
+  end
+
+  describe '#show_searchbar?' do
+    it 'renders true to allow displaying Search bar' do
+      expect(controller.send(:show_searchbar?)).to eq(true)
     end
   end
 end

@@ -17,6 +17,10 @@ class AnsiblePlaybookController < ApplicationController
     ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
   end
 
+  def show_searchbar?
+    true
+  end
+
   def button
     if params[:pressed] == "embedded_configuration_script_payload_tag"
       tag(self.class.model)

@@ -9,4 +9,16 @@ describe ApplicationHelper::PageLayouts do
       end
     end
   end
+
+  describe '#show_search?' do
+    it 'returns true if displaying Advanced Search' do
+      allow(helper).to receive(:display_adv_search?).and_return(true)
+      expect(helper.show_search?).to eq(true)
+    end
+
+    it 'returns true if displaying Search for appropriate controller' do
+      allow(controller).to receive(:show_searchbar?).and_return(true)
+      expect(helper.show_search?).to eq(true)
+    end
+  end
 end

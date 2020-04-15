@@ -551,11 +551,12 @@ class ApplicationController < ActionController::Base
     send_data(fs.contents, :filename => fs.name)
   end
 
-  def adv_search_text_clear
+  # Clear the Search and display original list of items
+  def search_clear
     @search_text = @sb[:search_text] = nil
     if params[:in_explorer] == "true"
       reload
-    else
+    else # non-explorer screens
       javascript_redirect(last_screen_url)
     end
   end
