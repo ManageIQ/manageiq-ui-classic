@@ -398,7 +398,7 @@ class HostController < ApplicationController
     elsif @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
     else
-      render_flash
+      render_flash unless performed?
     end
   end
 
