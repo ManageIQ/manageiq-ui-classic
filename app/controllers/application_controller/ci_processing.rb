@@ -410,7 +410,7 @@ module ApplicationController::CiProcessing
   def check_compliance_vms
     assert_privileges(params[:pressed])
 
-    records = find_records_with_rbac(record_class, checked_or_params)
+    records = find_records_with_rbac(get_rec_cls, checked_or_params)
     # Check each record if there is any compliance policy assigned to it
     if records.any? { |record| !record.has_compliance_policies? }
       javascript_flash(
