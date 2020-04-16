@@ -342,6 +342,7 @@ describe StorageController do
 
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       @ds = FactoryBot.create(:storage, :name => "Datastore-01")
@@ -419,14 +420,10 @@ describe StorageController do
     end
 
     context 'setting right cell text' do
-      before do
-        controller.instance_variable_set(:@right_cell_text, 'All Datastores')
-      end
+      before { controller.instance_variable_set(:@right_cell_text, 'All Datastores') }
 
       context 'searching text' do
-        before do
-          controller.instance_variable_set(:@search_text, 'Datastore')
-        end
+        before { controller.instance_variable_set(:@search_text, 'Datastore') }
 
         it 'updates right cell text according to search text' do
           controller.send(:get_node_info, 'root')
@@ -444,6 +441,37 @@ describe StorageController do
         it 'updates right cell text according to chosen filter' do
           controller.send(:get_node_info, 'ms-1')
           expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Datastores - Filtered by \"Filter1\"")
+        end
+      end
+    end
+
+    context 'Check Compliance action on VMs of a Datastore' do
+      let(:vm) { FactoryBot.create(:vm_vmware) }
+
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@display, 'vms')
+        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => storage.id.to_s, :controller => 'storage'}
+      end
+
+      it 'does not initiate Check Compliance because of missing Compliance policies' do
+        controller.send(:button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+      end
+
+      context 'VM Compliance policy set' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          EvmSpecHelper.create_guid_miq_server_zone
+          vm.add_policy(policy)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
         end
       end
     end

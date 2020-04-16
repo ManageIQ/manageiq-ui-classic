@@ -25,10 +25,8 @@ describe VmCloudController do
   #
   # So we need a test for each possible value of 'presses' until all this is
   # converted into proper routes and test is changed to test the new routes.
-  describe 'x_button' do
-    before do
-      ApplicationController.handle_exceptions = true
-    end
+  describe '#x_button' do
+    before { ApplicationController.handle_exceptions = true }
 
     context 'for allowed actions' do
       ApplicationController::Explorer::X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
@@ -48,6 +46,34 @@ describe VmCloudController do
             controller.instance_variable_set(:@sb, {})
             controller.send(:x_button)
           end
+        end
+      end
+    end
+
+    context 'Check Compliance of Last Known Configuration' do
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:performed?)
+        allow(controller).to receive(:render)
+        controller.params = {:pressed => 'instance_check_compliance', :miq_grid_checks => vm_openstack.id.to_s, :controller => 'vm_cloud'}
+      end
+
+      it 'does not initiate Check Compliance because of missing Compliance policies' do
+        controller.send(:x_button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+      end
+
+      context 'VM Compliance policy set' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          vm_openstack.add_policy(policy)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:x_button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
         end
       end
     end
@@ -190,9 +216,7 @@ describe VmCloudController do
     end
 
     context "skip or drop breadcrumb" do
-      before do
-        get :explorer
-      end
+      before { get :explorer }
 
       subject { controller.instance_variable_get(:@breadcrumbs) }
 
@@ -210,7 +234,7 @@ describe VmCloudController do
     end
   end
 
-  context "#parse error messages" do
+  describe "#parse error messages" do
     it "simplifies fog error message" do
       raw_msg = "Expected(200) <=> Actual(400 Bad Request)\nexcon.error.response\n  :body          => "\
                 "\"{\\\"badRequest\\\": {\\\"message\\\": \\\"Keypair data is invalid: failed to generate "\

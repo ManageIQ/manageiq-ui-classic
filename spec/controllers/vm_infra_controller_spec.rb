@@ -413,6 +413,34 @@ describe VmInfraController do
     expect(response.status).to eq(200)
   end
 
+  context 'Check Compliance action on VMs' do
+    before do
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:performed?)
+      allow(controller).to receive(:render)
+      controller.params = {:miq_grid_checks => vm_vmware.id.to_s, :pressed => 'vm_check_compliance', :controller => 'vm_infra'}
+    end
+
+    it 'does not initiate Check Compliance because of missing Compliance policies' do
+      controller.send(:x_button)
+      expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+    end
+
+    context 'VM Compliance policy set' do
+      let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+      before do
+        vm_vmware.add_policy(policy)
+        allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+      end
+
+      it 'initiates Check Compliance action' do
+        controller.send(:x_button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+      end
+    end
+  end
+
   context 'Mixins::Actions::VmActions::Ownership' do
     let(:vm) { FactoryBot.create(:vm_vmware) }
 

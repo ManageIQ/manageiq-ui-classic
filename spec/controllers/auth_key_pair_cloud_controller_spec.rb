@@ -99,4 +99,38 @@ describe AuthKeyPairCloudController do
       end
     end
   end
+
+  describe '#button' do
+    context 'Check Compliance of Last Known Configuration on Instances' do
+      let(:vm_instance) { FactoryBot.create(:vm_or_template) }
+
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:drop_breadcrumb)
+        allow(controller).to receive(:performed?).and_return(true)
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@display, 'instances')
+        controller.params = {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => kp.id.to_s, :controller => 'auth_key_pair_cloud'}
+      end
+
+      it 'does not initiate Check Compliance because of missing Compliance policies' do
+        controller.send(:button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+      end
+
+      context 'VM Compliance policy set' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          vm_instance.add_policy(policy)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
+    end
+  end
 end

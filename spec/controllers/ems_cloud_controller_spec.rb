@@ -1,6 +1,7 @@
 describe EmsCloudController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryBot.build(:zone) }
+
   describe "#create" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
@@ -264,7 +265,7 @@ describe EmsCloudController do
     end
   end
 
-  context "#build_credentials only contains credentials that it supports and has a username for in params" do
+  describe "#build_credentials only contains credentials that it supports and has a username for in params" do
     let(:mocked_ems)    { double(ManageIQ::Providers::Openstack::CloudManager) }
     let(:default_creds) { {:userid => "default_userid", :password => "default_password"} }
     let(:amqp_creds)    { {:userid => "amqp_userid",    :password => "amqp_password"} }
@@ -294,7 +295,7 @@ describe EmsCloudController do
     end
   end
 
-  context "#update_ems_button_validate" do
+  describe "#update_ems_button_validate" do
     let(:mocked_ems) { FactoryBot.create(:ems_openstack) }
 
     it "calls authentication_check with save = false" do
@@ -308,8 +309,9 @@ describe EmsCloudController do
     end
   end
 
-  context "#create_ems_button_validate" do
+  describe "#create_ems_button_validate" do
     let(:mocked_params) { {:controller => mocked_class_controller, :cred_type => "default"} }
+
     before do
       allow(controller).to receive(:render)
       controller.params = mocked_params
@@ -668,9 +670,8 @@ describe EmsCloudController do
 
   describe "#sync_users" do
     let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
-    before do
-      stub_user(:features => :all)
-    end
+
+    before { stub_user(:features => :all) }
 
     it "redirects when request is successful" do
       expect(controller).to receive(:find_record_with_rbac).and_return(ems)
@@ -717,6 +718,7 @@ describe EmsCloudController do
 
   context "'Set Default' button rendering in listnav" do
     render_views
+
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -817,6 +819,40 @@ describe EmsCloudController do
 
       first_row_values = view_hash[:rows][0][:cells].map { |x| x[:text] }.compact
       expect(first_row_values).to match_array([ems_cloud.name, ems_cloud.emstype_description, ems_cloud.tenant.name])
+    end
+  end
+
+  describe '#button' do
+    context 'Check Compliance of Last Known Configuration on Instances' do
+      let(:vm_instance) { FactoryBot.create(:vm_or_template) }
+      let(:ems) { FactoryBot.create(:ems_openstack) }
+
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:performed?).and_return(true)
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@display, 'instances')
+        controller.params = {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => ems.id.to_s, :controller => 'ems_cloud'}
+      end
+
+      it 'does not initiate Check Compliance because of missing Compliance policies' do
+        controller.send(:button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+      end
+
+      context 'VM Compliance policy set' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          vm_instance.add_policy(policy)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
     end
   end
 end

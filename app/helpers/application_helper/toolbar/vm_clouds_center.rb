@@ -122,7 +122,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :url_parms    => "main_div",
           :send_checked => true,
           :confirm      => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
-          :enabled      => false,
+          :enabled      => true,
           :onwhen       => "1+",
           :klass        => ApplicationHelper::Button::InstanceCheckCompare),
       ]

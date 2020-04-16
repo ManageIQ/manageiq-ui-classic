@@ -185,6 +185,38 @@ describe HostController do
       controller.send(:create)
       expect(response.status).to eq(200)
     end
+
+    context 'Check Compliance of Last Known Configuration on VMs' do
+      let(:vm) { FactoryBot.create(:vm_vmware) }
+
+      before do
+        allow(controller).to receive(:assert_privileges)
+        allow(controller).to receive(:drop_breadcrumb)
+        allow(controller).to receive(:performed?)
+        allow(controller).to receive(:render)
+        controller.instance_variable_set(:@display, 'vms')
+        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => h1.id.to_s, :controller => 'host'}
+      end
+
+      it 'does not initiate Check Compliance because of missing Compliance policies' do
+        controller.send(:button)
+        expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'No Compliance Policies assigned to one or more of the selected items', :level => :error}])
+      end
+
+      context 'VM Compliance policy set' do
+        let(:policy) { FactoryBot.create(:miq_policy, :mode => 'compliance', :towhat => 'Vm', :active => true) }
+
+        before do
+          vm.add_policy(policy)
+          allow(MiqPolicy).to receive(:policy_for_event?).and_return(true)
+        end
+
+        it 'initiates Check Compliance action' do
+          controller.send(:button)
+          expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
+        end
+      end
+    end
   end
 
   describe "#set_record_vars" do
@@ -347,6 +379,7 @@ describe HostController do
 
     context "render" do
       render_views
+
       it "show and listnav correctly for summary page" do
         is_expected.to have_http_status 200
         is_expected.to render_template('host/show')
@@ -365,6 +398,7 @@ describe HostController do
 
   describe "#set_credentials" do
     let(:mocked_host) { double(Host) }
+
     it "uses params[:default_password] for validation if one exists" do
       controller.params = {:default_userid   => "default_userid",
                            :default_password => "default_password2"}
