@@ -154,6 +154,16 @@ module Mixins
 
     private
 
+    def construct_edit_for_audit
+      @edit ||= {}
+      @edit[:current] = {:name       => @provider.name,
+                         :url        => @provider.url,
+                         :verify_ssl => @provider.verify_ssl}
+      @edit[:new] = {:name       => params[:name],
+                     :url        => params[:url],
+                     :verify_ssl => params[:verify_ssl]}
+    end
+
     def provision
       assert_privileges("configured_system_provision")
       provisioning_ids = find_records_with_rbac(ConfiguredSystem, checked_or_params).ids
