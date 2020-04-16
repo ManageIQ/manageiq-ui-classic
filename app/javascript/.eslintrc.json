@@ -55,6 +55,9 @@
     "react/jsx-filename-extension": "off",
     "react/destructuring-assignment": [1, "always"],
     "semi": [2, "always"],
-    "space-before-function-paren": [2, "never"]
+    "space-before-function-paren": [2, "never"],
+    "valid-typeof": [2, {
+      "requireStringLiterals": true
+    }]
   }
 }
