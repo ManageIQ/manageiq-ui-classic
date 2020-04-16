@@ -221,6 +221,9 @@ describe HostAggregateController do
   describe '#button' do
     context 'Check Compliance of Last Known Configuration on Instances' do
       let(:vm_instance) { FactoryBot.create(:vm_or_template) }
+      ems = FactoryBot.create(:ems_openstack)
+      let(:aggregate) { FactoryBot.create(:host_aggregate_openstack,
+                                     :ext_management_system => ems)}
 
       before do
         allow(controller).to receive(:assert_privileges)

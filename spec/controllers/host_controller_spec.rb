@@ -190,6 +190,7 @@ describe HostController do
       let(:vm) { FactoryBot.create(:vm_vmware) }
 
       before do
+        EvmSpecHelper.create_guid_miq_server_zone
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:drop_breadcrumb)
         allow(controller).to receive(:performed?)

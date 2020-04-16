@@ -4,6 +4,7 @@ describe EmsClusterController do
     it "when VM Right Size Recommendations is pressed" do
       controller.params = {:pressed => "vm_right_size"}
       expect(controller).to receive(:vm_right_size)
+      controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
