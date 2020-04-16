@@ -1,6 +1,6 @@
 module ApplicationHelper::Toolbar::ConfigurationScripts::PolicyMixin
   def self.included(included_class)
-    included_class.button_group('provider_foreman_policy',
+    included_class.button_group('automation_manager_policy',
                                 [included_class.select(:automation_manager_configuration_script_policy_choice,
                                                        nil,
                                                        t = N_('Policy'),
