@@ -65,7 +65,9 @@
     "no-unreachable": 2,
     "use-isnan": 2,
     "valid-jsdoc": 2,
-    "valid-typeof": 2,
+    "valid-typeof": [2, {
+      "requireStringLiterals": true
+    }],
     "dot-notation": [2, {
       "allowKeywords": true
     }],
