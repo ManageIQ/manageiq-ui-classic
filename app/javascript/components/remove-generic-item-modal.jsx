@@ -43,7 +43,7 @@ export const removeItems = (items, apiUrl, asyncDelete, redirectUrl, treeSelect)
     })
     .then((apiData) => {
       if (items.length > 1 || (items.length === 1 && apiData[0].result === 'success')) {
-        if (typeof(treeSelect) == undefined) {
+        if (!treeSelect) {
           window.location.href = redirectUrl;
           miqSparkleOff();
         } else {
