@@ -25,6 +25,11 @@ class ConfiguredSystemController < ApplicationController
     render_flash unless performed?
   end
 
+  def show_list
+    options = {:named_scope => :not_ansible}
+    process_show_list(options)
+  end
+
   private
 
   def textual_group_list
