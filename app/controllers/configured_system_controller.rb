@@ -22,6 +22,7 @@ class ConfiguredSystemController < ApplicationController
     model = self.class.model
     tag(model) if params[:pressed] == "configured_system_tag"
     provision if params[:pressed] == "configured_system_provision"
+    render_flash unless performed?
   end
 
   private
