@@ -102,20 +102,6 @@ export const buildPatch = (parent) => {
 };
 
 /**
- * Parse worker object.
- *
- * @param {object} parent Worker object obtained from API.
- * @return {object} Object with all values in different formats.
- */
-export const parseWorker = ({ count, memory_threshold }) => ({
-  count,
-  memory_threshold,
-  human_size: toHumanSize(memory_threshold),
-  rubyMethod: toRubyMethod(memory_threshold),
-  bytes: toBytes(memory_threshold),
-});
-
-/**
  * Create number range options.
  *
  * @param {number} length 0 .. lenght.
@@ -234,4 +220,41 @@ export const injectOption = (options, initialValue, isCount = false) => {
     });
   }
   return options;
+};
+
+// parse /api/servers/:id/settings output
+export const parseSettings = (workersDef) => ({ workers: { worker_base: wb } }) => {
+  const workerCount = (worker) => (typeof worker.count === 'number') && worker.count;
+  const workerBytes = (worker) => toBytes(worker.memory_threshold);
+
+  const countDefault = wb.defaults.count;
+  const count = (path) => (_.get(wb, path) && workerCount(_.get(wb, path)) || countDefault);
+
+  const memDefault = toBytes(wb.defaults.memory_threshold);
+  const bytes = (path, defaultValue = memDefault) => (_.get(wb, path) && workerBytes(_.get(wb, path)) || defaultValue);
+
+  const baseMemDefault = bytes('queue_worker_base.defaults');
+  const monitorDefault = bytes('event_catcher.defaults');
+
+  const defaultThresholds = {
+    'defaults': memDefault,
+    'queue_worker_base': baseMemDefault,
+    'event_catcher': monitorDefault,
+  };
+
+  const out = {};
+  workersDef.forEach((worker) => {
+    const path = _.compact([worker.prefix, worker.name]).join('.');
+
+    const obj = {};
+    if (worker.options.count) {
+      obj.count = count(path);
+    }
+    if (worker.options.memory_threshold) {
+      obj.memory_threshold = bytes(path, defaultThresholds[worker.options.default_threshold]);
+    }
+
+    _.set(out, worker.name, obj); // no prefix
+  });
+  return out;
 };

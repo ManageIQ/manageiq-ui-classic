@@ -6,6 +6,7 @@ require("regenerator-runtime/runtime");
 
 window.Rx = require('rxjs');
 window.$ = require('jquery');
+window._ = require('lodash');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 window._ = require('lodash');
