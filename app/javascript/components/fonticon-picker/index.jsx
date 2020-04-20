@@ -77,10 +77,10 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
             onClick={onModalApply}
             disabled={selectedIcon === activeIcon || activeIcon === undefined}
           >
-            Apply
+            { __('Apply') }
           </Button>
           <Button id="cancel-icon-picker-modal" bsStyle="default" className="btn-cancel" onClick={hideModal}>
-            Cancel
+            { __('Cancel') }
           </Button>
         </Modal.Footer>
       </Modal>

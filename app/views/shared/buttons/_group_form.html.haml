@@ -31,11 +31,8 @@
     .form-group
       %label.control-label.col-md-2
         = _('Icon')
-      .col-md-8#button-icon-picker{'ng-controller' => 'fonticonPickerController as vm'}
-        %miq-fonticon-picker{'input-name' => 'button_icon', :selected => @edit[:new][:button_icon], 'icon-changed' => 'vm.select(selected);'}
-          %miq-fonticon-family{:selector => 'ff', :title => 'Font Fabulous'}
-          %miq-fonticon-family{:selector => 'pficon', :title => 'PatternFly'}
-          %miq-fonticon-family{:selector => 'fa', :title => 'Font Awesome'}
+      .col-md-8#button-icon-picker
+        = react 'FonticonPicker', :selected => @edit[:new][:button_icon], :onChangeURL => url
     .form-group
       %label.control-label.col-md-2
         = _('Icon Color')
@@ -51,16 +48,3 @@
     %h3
       = _('Assign Buttons')
     = render :partial => "shared/buttons/column_lists"
-
-:javascript
-  miq_bootstrap('#button-icon-picker');
-  // This is an ugly hack to be able to use this component in a non-angular context with miq-observe
-  // FIXME: Remove this when the form is converted to angular
-  $(function() {
-    $('#button-icon-picker input[type="hidden"]').on('change', _.debounce(function() {
-      miqObserveRequest('#{url}', {
-        no_encoding: true,
-        data: 'button_icon' + '=' + $(this).val(),
-      });
-    }, 700, {leading: true, trailing: true}));
-  });
