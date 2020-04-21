@@ -72,6 +72,10 @@ class EmsConfigurationController < ApplicationController
     Dictionary.gettext('ems_configuration', :type => :ui_title, :translate => false)
   end
 
+  def manager_prefix
+    "configuration_manager"
+  end
+
   def privilege_prefix
     "ems_configuration"
   end
