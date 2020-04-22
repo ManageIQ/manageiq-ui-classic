@@ -56,16 +56,23 @@ const reducers = (oncheck, onclick) => (state = {}, action) => {
     case ACTIONS.SELECTED:
       callIfAllowed(onclick, node.attr.key);
       return state;
-    case ACTIONS.EMPTY_TREE: return {};
-    case ACTIONS.CHECK_ALL: return checkAll(state, action.value);
+    case ACTIONS.EMPTY_TREE:
+      return {};
+    case ACTIONS.CHECK_ALL:
+      return checkAll(state, action.value);
     case ACTIONS.SELECT:
       callIfAllowed(onclick, action.key);
       return select(state, action);
-    case ACTIONS.SELECT_SILENT: return select(state, action);
-    case ACTIONS.SCROLL_TO_NODE: return scrollToNode(state, action);
-    case ACTIONS.EXPAND: return expand(state, action);
-    case ACTIONS.EXPAND_ALL: return expandAll(state, action);
-    default: return state;
+    case ACTIONS.SELECT_SILENT:
+      return select(state, action);
+    case ACTIONS.SCROLL_TO_NODE:
+      return scrollToNode(state, action);
+    case ACTIONS.EXPAND:
+      return expand(state, action);
+    case ACTIONS.EXPAND_ALL:
+      return expandAll(state, action);
+    default:
+      return state;
   }
 };
 
