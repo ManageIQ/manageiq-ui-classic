@@ -1,4 +1,3 @@
-= react('HierarchicalTreeView', tree.locals_for_render.merge({}))
-- session[:group_changed] = false
-
-
+.treeview{:id => "#{tree.name}box"}
+  = react('HierarchicalTreeView', tree.locals_for_render)
+  - session[:group_changed] = false
