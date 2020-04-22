@@ -9,7 +9,6 @@ import { http } from '../../http_api';
 import { combineReducers } from '../../helpers/redux';
 import reducers, { ACTIONS } from './reducers/index';
 import basicStore from './reducers/basicStore';
-import './style.scss';
 
 const flatten = data => Tree.convertHierarchicalTree(Tree.initHierarchicalTree(data));
 
