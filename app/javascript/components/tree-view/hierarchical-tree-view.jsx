@@ -94,12 +94,17 @@ const HierarchicalTreeView = (props) => {
     ManageIQ.tree.checkUrl = check_url;
     ManageIQ.tree.clickUrl = click_url;
 
-    ManageIQ.redux.addReducer({
-      [namespace]: combineReducers([
-        basicStore,
-        reducers(oncheck, onclick),
-      ], namespace),
-    });
+    // FIXME: This check if the reducer exists is not ideal, but it is needed
+    // when the tree is rerendered without page change (Edit Report Menu's).
+    // When fixed the useEffect should remove the created reducer on unmount.
+    if (!ManageIQ.redux.store.getState()[namespace]) {
+      ManageIQ.redux.addReducer({
+        [namespace]: combineReducers([
+          basicStore,
+          reducers(oncheck, onclick),
+        ], namespace),
+      });
+    }
   }, []);
 
   /**
