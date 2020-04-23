@@ -1,7 +1,6 @@
 module ApplicationHelper
   module Listnav
     def render_listnav_filename
-      return controller.listnav_filename if controller.respond_to?(:listnav_filename, true)
       common_layouts = %w[
         auth_key_pair_cloud
         availability_zone
@@ -72,10 +71,6 @@ module ApplicationHelper
         "compare_sections"
       elsif @explorer
         "explorer"
-      elsif @layout == "timeline"
-        controller.controller_name
-      elsif common_layouts.include?(@layout)
-        @layout
       end
     end
 
