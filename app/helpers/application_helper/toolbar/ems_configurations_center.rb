@@ -1,7 +1,7 @@
 class ApplicationHelper::Toolbar::EmsConfigurationsCenter < ApplicationHelper::Toolbar::Basic
   button_group('ems_configuration_vmdb', [
     select(
-      :ems_configuration__vmdb_choice,
+      :ems_configuration_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,

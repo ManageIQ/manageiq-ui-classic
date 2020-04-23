@@ -28,7 +28,6 @@ describe TreeNode::ExtManagementSystem do
     :ems_vmware_cloud                 => { :tip_prefix => 'Ems Cloud' },
     # Other remaining providers
     :automation_manager_ansible_tower => { :key_prefix => 'at-' },
-    :provisioning_manager_foreman     => {},
     :ems_physical_infra               => {},
     :ems_openshift                    => {},
     :ems_azure_network                => {},

@@ -26,7 +26,7 @@ class ConfiguredSystemController < ApplicationController
   end
 
   def show_list
-    options = {:named_scope => :not_ansible}
+    options = {:named_scope => :under_configuration_managers}
     process_show_list(options)
   end
 
