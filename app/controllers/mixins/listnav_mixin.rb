@@ -1,11 +1,7 @@
 module Mixins
   module ListnavMixin
     def listnav_filename
-      if params[:action] == "show_list"
-        "show_list"
-      elsif params[:action] == "show"
-        controller_name
-      end
+      "show_list" if params[:action] == "show_list"
     end
   end
 end
