@@ -102,5 +102,12 @@ class EmsConfigurationController < ApplicationController
     }
   end
 
+  def set_redirect_vars
+    @in_a_form = true
+    @redirect_controller = "ems_configuration"
+    @redirect_id = @provider_manager.id if @provider_manager.try(:id)
+    @refresh_partial = @provider_manager.try(:id) ? "edit" : "new"
+  end
+
   menu_section :conf
 end

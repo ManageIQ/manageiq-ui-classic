@@ -93,9 +93,7 @@ module Mixins
       if @explorer
         render_form
       else
-        @in_a_form = true
-        @redirect_controller = "ems_configuration"
-        @refresh_partial = "new"
+        set_redirect_vars
       end
     end
 
@@ -118,10 +116,7 @@ module Mixins
         if @explorer
           render_form
         else
-          @in_a_form = true
-          @redirect_controller = "ems_configuration"
-          @redirect_id = @provider_manager.id
-          @refresh_partial = "edit"
+          set_redirect_vars
         end
       end
     end
