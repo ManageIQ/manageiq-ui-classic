@@ -189,14 +189,11 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def cb_send_checked_list
-    @display.present? && custom_button_appliable_class?(@display.camelize.singularize)
+    @display.present? && custom_button_appliable_class?(@display.camelize.singularize) && @view_context.params[:id] == @record.id.to_s
   end
 
   def cb_enabled_value_for_nested
-    if @display == 'generic_objects'
-      return false if @lastaction == 'generic_objects'
-      return true if @lastaction == 'generic_object'
-    end
+    @display == 'generic_objects' && @view_context.params[:id] == @record.id.to_s
   end
 
   def create_custom_button(input, model, record)
