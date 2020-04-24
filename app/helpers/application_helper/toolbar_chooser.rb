@@ -292,12 +292,6 @@ class ApplicationHelper::ToolbarChooser
       elsif node.first == "tn" && @record
         return "tenant_center_tb"
       end
-    elsif x_active_tree == :vmdb_tree
-      if x_node
-        return "vmdb_tables_center_tb"
-      else
-        return "vmdb_table_center_tb"
-      end
     end
     nil
   end

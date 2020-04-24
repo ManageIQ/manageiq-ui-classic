@@ -56,26 +56,6 @@ describe OpsController do
     end
   end
 
-  it 'can view the db_settings tab' do
-    ApplicationController.handle_exceptions = true
-
-    session[:sandboxes] = {"ops" => {:active_tree => :vmdb_tree,
-                                     :active_tab  => 'db_settings',
-                                     :trees       => {:vmdb_tree => {:active_node => 'root'}}}}
-    post :change_tab, :params => {:tab_id => 'db_settings', :format => :json}
-  end
-
-  it 'can view the db_connections tab' do
-    ApplicationController.handle_exceptions = true
-
-    session[:sandboxes] = {"ops" => {:active_tree => :vmdb_tree,
-                                     :active_tab  => 'db_connections',
-                                     :trees       => {:vmdb_tree => {:active_node => 'root'}}}}
-    expect(controller).to receive(:head)
-    post :change_tab, :params => {:tab_id => 'db_connections', :format => :json}
-    expect(response.status).to eq(200)
-  end
-
   describe 'rbac_user_edit' do
     let(:group) { user.miq_groups.first }
     before do
