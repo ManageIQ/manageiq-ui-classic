@@ -107,7 +107,7 @@ module Menu
       end
 
       def network_menu_section
-        Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network', [
+        Menu::Section.new(:net, N_("Network"), 'pficon pficon-network', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network/show_list'),
           Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network/show_list'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet/show_list'),
@@ -266,9 +266,19 @@ module Menu
       end
 
       def default_menu
-        [overview_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
-         network_menu_section, storage_menu_section, control_menu_section, automation_menu_section,
-         monitor_menu_section, settings_menu_section, help_menu_section].compact
+        [
+          overview_menu_section,
+          services_menu_section,
+          compute_menu_section,
+          network_menu_section,
+          storage_menu_section,
+          configuration_menu_section,
+          automation_menu_section,
+          control_menu_section,
+          monitor_menu_section,
+          settings_menu_section,
+          help_menu_section,
+        ].compact
       end
 
       private
