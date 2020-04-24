@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_cloud_subnet_controller do |providers|
                                                 :url  => "/cloud_subnet/show_list?page=&refresh=y"},
                                                {:name => "Cloud Subnet (Summary)",
                                                 :url  => "/cloud_subnet/show/#{@cloud_subnet.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_cloud_subnet")
         end
 
         it "show associated cloud_subnets" do

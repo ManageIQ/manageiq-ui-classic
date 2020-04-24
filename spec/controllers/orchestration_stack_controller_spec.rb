@@ -20,9 +20,8 @@ describe OrchestrationStackController do
         expect(response.body).not_to include('instance_check_compliance')
       end
 
-      it "renders the listnav" do
+      it "renders show" do
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_orchestration_stack")
       end
     end
 
@@ -39,11 +38,6 @@ describe OrchestrationStackController do
       it 'infra does not show deleted error' do
         expect(assigns(:flash_array)).to be_nil
       end
-
-      it "renders the listnav" do
-        expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_orchestration_stack")
-      end
     end
 
     context "orchestration templates" do
@@ -55,11 +49,6 @@ describe OrchestrationStackController do
           :views => {:manageiq_providers_cloudmanager_vm => "grid"}
         }
         get :show, :params => {:id => record.id, :display => "stack_orchestration_template"}
-      end
-
-      it "renders the listnav" do
-        expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_orchestration_stack")
       end
 
       it "renders the orchestration template details" do

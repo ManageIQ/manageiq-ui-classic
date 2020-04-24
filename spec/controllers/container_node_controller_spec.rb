@@ -38,7 +38,6 @@ describe ContainerNodeController do
         get :show, :params => {:id => @node.id}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
         expect(response).to render_template('layouts/_textual_groups_generic')
       end
 
@@ -46,7 +45,6 @@ describe ContainerNodeController do
         get :show, :params => {:id => @node.id, :display => 'timeline'}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_node")
       end
     end
   end

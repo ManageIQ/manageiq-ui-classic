@@ -55,11 +55,10 @@ describe CloudSubnetController do
 
     render_views
 
-    it "renders listnav partial" do
+    it "renders show" do
       get :show, :params => {:id => subnet.id}
 
       expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => "layouts/listnav/_cloud_subnet")
     end
   end
 

@@ -401,18 +401,16 @@ describe EmsInfraController do
       end
     end
 
-    context "render listnav partial" do
+    context "renders views" do
       render_views
 
-      it "listnav correctly for summary page" do
+      it "renders show" do
         is_expected.to have_http_status 200
-        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_infra")
       end
 
       it "listnav correctly for timeline" do
         get :show, :params => { :id => @ems.id, :display => 'timeline' }
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_ems_infra")
       end
     end
 
@@ -451,10 +449,6 @@ describe EmsInfraController do
 
       it 'never render template show' do
         is_expected.not_to render_template('shared/views/ems_common/show')
-      end
-
-      it 'never render listnav' do
-        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_container")
       end
 
       it 'uses its own template' do

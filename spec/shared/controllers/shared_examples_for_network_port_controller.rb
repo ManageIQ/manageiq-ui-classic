@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_network_port_controller do |providers|
                                                 :url  => "/network_port/show_list?page=&refresh=y"},
                                                {:name => "eth0 (Summary)",
                                                 :url  => "/network_port/show/#{@network_port.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_network_port")
         end
 
         it "show associated cloud_subnets" do
