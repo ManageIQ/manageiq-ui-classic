@@ -47,7 +47,6 @@ describe "routing for OpsController" do
     db_backup
     db_backup_form_field_changed
     db_gc_collection
-    db_list
     diagnostics_server_list
     diagnostics_tree_select
     edit_rhn

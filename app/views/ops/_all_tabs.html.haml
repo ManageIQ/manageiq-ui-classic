@@ -208,46 +208,5 @@
   - when :rbac_tree
     #rbac_details
       = render :partial => "rbac_details_tab"
-  - when :vmdb_tree
-    %ul.nav.nav-tabs
-      - tree_node = x_node
-      - if tree_node == "root"
-        = miq_tab_header("db_summary", @sb[:active_tab]) do
-          = _("Summary")
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
-        = miq_tab_header("db_details", @sb[:active_tab]) do
-          = @tab_text
-      - if tree_node == "root"
-        = miq_tab_header("db_indexes", @sb[:active_tab]) do
-          = _("Indexes")
-        = miq_tab_header("db_settings", @sb[:active_tab]) do
-          = _("Settings")
-        = miq_tab_header("db_connections", @sb[:active_tab]) do
-          = _("Client Connections")
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
-        = miq_tab_header("db_utilization", @sb[:active_tab]) do
-          = _("Utilization")
-    .tab-content
-      - if tree_node == "root"
-        = miq_tab_content("db_summary", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_summary"
-            = render :partial => "db_summary"
-      = miq_tab_content("db_details", "db_details") do
-        - if @sb[:active_tab] == "db_details" || (@sb[:active_tab] == "db_indexes" && (@vmdb_index) || @indexes)
-          = render :partial => "db_details_tab"
-      - if tree_node == "root"
-        = miq_tab_content("db_indexes", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_indexes"
-            = render :partial => "db_details_tab"
-        = miq_tab_content("db_settings", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_settings"
-            = render :partial => "db_details_tab"
-        = miq_tab_content("db_connections", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_connections"
-            = render :partial => "db_details_tab"
-      - if tree_node == "root" || tree_node.split("-").first == TreeBuilder.get_prefix_for_model("VmdbTable")
-        = miq_tab_content("db_utilization", @sb[:active_tab]) do
-          - if @sb[:active_tab] == "db_utilization" && @record
-            = render(:partial => "layouts/performance")
 :javascript
   miq_tabs_init("#ops_tabs", "/ops/change_tab");

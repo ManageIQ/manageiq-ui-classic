@@ -436,8 +436,6 @@ class TreeBuilder
     :rbac                            => "TreeBuilderOpsRbac",
     ## Diagnostics
     :diagnostics                     => "TreeBuilderOpsDiagnostics",
-    ## Database
-    :vmdb                            => "TreeBuilderOpsVmdb",
   }.freeze
 
   # Tree node prefixes for generic explorers
@@ -517,8 +515,6 @@ class TreeBuilder
     "sr"   => "ServiceResource",
     "sw"   => "Switch",
     "t"    => "MiqTemplate",
-    "tb"   => "VmdbTable",
-    "ti"   => "VmdbIndex",
     "tn"   => "Tenant",
     "u"    => "User",
     "v"    => "Vm",

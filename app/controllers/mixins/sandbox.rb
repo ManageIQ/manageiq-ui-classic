@@ -101,7 +101,6 @@ module Sandbox
     utilization_tree
     vandt_tree
     vat_tree
-    vmdb_tree
     vms_filter_tree
     vms_instances_filter_tree
     widgets_tree
