@@ -41,7 +41,6 @@ describe ContainerReplicatorController do
         get :show, :params => {:id => @replicator.id}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
         expect(response).to render_template('layouts/_textual_groups_generic')
       end
 
@@ -49,7 +48,6 @@ describe ContainerReplicatorController do
         get :show, :params => {:id => @replicator.id, :display => 'timeline'}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_replicator")
       end
     end
   end

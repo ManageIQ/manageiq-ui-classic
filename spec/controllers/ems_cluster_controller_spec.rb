@@ -169,7 +169,6 @@ describe EmsClusterController do
         get :show, :params => {:id => @cluster.id}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_ems_cluster")
         expect(response).to render_template('layouts/_textual_groups_generic')
       end
 
@@ -177,7 +176,6 @@ describe EmsClusterController do
         get :show, :params => {:id => @cluster.id, :display => 'timeline'}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_ems_cluster")
       end
     end
   end

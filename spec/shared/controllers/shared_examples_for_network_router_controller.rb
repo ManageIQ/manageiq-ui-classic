@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_network_router_controller do |providers|
                                                 :url  => "/network_router/show_list?page=&refresh=y"},
                                                {:name => "Network Router (Summary)",
                                                 :url  => "/network_router/show/#{@network_router.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_network_router")
         end
 
         it "show associated instances" do

@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_security_group_controller do |providers|
                                                 :url  => "/security_group/show_list?page=&refresh=y"},
                                                {:name => "Security Group (Summary)",
                                                 :url  => "/security_group/show/#{@security_group.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_security_group")
         end
 
         it "show associated instances" do

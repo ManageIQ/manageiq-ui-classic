@@ -57,7 +57,6 @@ module Spec
         get :show, :params => {:id => parent.id, :display => relation}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template("layouts/listnav/_#{controller.class.table_name}")
 
         # Breadcrumbs of nested table contains the right link to itself, which will surface by clicking on the table item
         expect(assigns(:breadcrumbs)).to include(:name => "#{parent.name} (#{label})",

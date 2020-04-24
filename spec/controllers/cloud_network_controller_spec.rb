@@ -58,11 +58,10 @@ describe CloudNetworkController do
 
     render_views
 
-    it "render listnav partial" do
+    it "render show" do
       get(:show, :params => {:id => network.id})
 
       expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => "layouts/listnav/_cloud_network")
     end
 
     it "render breadcrumb partial" do

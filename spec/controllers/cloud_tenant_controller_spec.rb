@@ -126,11 +126,10 @@ describe CloudTenantController do
       expect(response).to render_template(:partial => "cloud_tenant/_show_dashboard")
     end
 
-    it "renders listnav partial" do
+    it "renders show" do
       get :show, :params => {:id => tenant.id, :display => 'main'}
 
       expect(response.status).to eq(200)
-      expect(response).to render_template(:partial => "layouts/listnav/_cloud_tenant")
     end
   end
 

@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_floating_ip_controller do |providers|
                                                 :url  => "/floating_ip/show_list?page=&refresh=y"},
                                                {:name => "192.0.2.1 (Summary)",
                                                 :url  => "/floating_ip/show/#{@floating_ip.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_floating_ip")
         end
       end
 

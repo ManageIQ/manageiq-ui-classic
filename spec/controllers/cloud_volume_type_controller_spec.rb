@@ -59,11 +59,10 @@ describe CloudVolumeTypeController do
       get :show, :params => {:id => @volume_type.id}
     end
 
-    context "render listnav partial" do
+    context "render show" do
       render_views
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_cloud_volume_type")
       end
     end
   end

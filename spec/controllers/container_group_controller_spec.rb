@@ -51,7 +51,6 @@ describe ContainerGroupController do
         get :show, :params => {:id => @container_group.id}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_group")
         expect(response).to render_template('layouts/_textual_groups_generic')
       end
 
@@ -59,7 +58,6 @@ describe ContainerGroupController do
         get :show, :params => {:id => @container_group.id, :display => 'timeline'}
 
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_container_group")
       end
     end
   end
