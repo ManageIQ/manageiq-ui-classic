@@ -1,3 +1,5 @@
 .treeview{:id => "#{tree.name}box"}
   = react('HierarchicalTreeView', tree.locals_for_render)
+
+- if session[:group_changed]
   - session[:group_changed] = false
