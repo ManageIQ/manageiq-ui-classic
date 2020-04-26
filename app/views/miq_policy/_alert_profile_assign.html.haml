@@ -35,5 +35,4 @@
     %h3
       = _('Selections')
     - if @assign[:obj_tree]
-      = react('HierarchicalTreeView', @assign[:obj_tree].locals_for_render)
-
+      = render(:partial => 'shared/tree', :locals => {:tree => @assign[:obj_tree], :name => @assign[:obj_tree].name})
