@@ -31,23 +31,26 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
     setState(state => ({ ...state, showModal: false, selectedIcon: activeIcon }));
   };
 
-  const hideModal = () => setState(state => ({ ...state, showModal: false }));
+  const hide = () => setState(state => ({ ...state, showModal: false }));
+  const show = () => setState(state => ({ ...state, showModal: true }));
 
   return (
     <div className="fonticon-picker">
       <ButtonGroup>
-        <Button className="icon-picker-btn">
+        <Button className="icon-picker-btn" onClick={show}>
           { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
         </Button>
-        <Button onClick={() => setState(state => ({ ...state, showModal: true }))}><Icon type="fa" name="angle-down" /></Button>
+        <Button onClick={show}>
+          <Icon type="fa" name="angle-down" />
+        </Button>
       </ButtonGroup>
-      <Modal show={showModal} onHide={hideModal} bsSize="large">
+      <Modal show={showModal} onHide={hide} bsSize="large">
         <Modal.Header>
           <button
             id="close-icon-picker-modal"
             type="button"
             className="close"
-            onClick={hideModal}
+            onClick={hide}
             aria-label={__('Close')}
           >
             <Icon type="pf" name="close" />
@@ -79,7 +82,7 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
           >
             { __('Apply') }
           </Button>
-          <Button id="cancel-icon-picker-modal" bsStyle="default" className="btn-cancel" onClick={hideModal}>
+          <Button id="cancel-icon-picker-modal" bsStyle="default" className="btn-cancel" onClick={hide}>
             { __('Cancel') }
           </Button>
         </Modal.Footer>
