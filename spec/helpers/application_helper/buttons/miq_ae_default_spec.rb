@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::MiqAeDefault do
   let(:session) { {} }
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => domain) }
+  let(:record) { FactoryBot.create(:miq_ae_class, :domain => domain) }
   let(:subject) { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_class_edit'}) }
 
   before { login_as FactoryBot.create(:user, :with_miq_edit_features) }
