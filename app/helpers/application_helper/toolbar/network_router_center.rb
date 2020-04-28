@@ -1,5 +1,18 @@
 class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolbar::Basic
   button_group(
+    'network_router_refreshing', [
+      button(
+        :network_router_refresh,
+        'fa fa-refresh fa-lg',
+        N_('Refresh this page'),
+        nil,
+        :url_parms    => "main_div",
+        :send_checked => true,
+        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
+      )
+    ]
+  )  
+  button_group(
     'network_router_vmdb',
     [
       select(

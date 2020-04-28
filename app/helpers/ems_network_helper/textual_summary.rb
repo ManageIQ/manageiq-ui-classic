@@ -14,8 +14,8 @@ module EmsNetworkHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i[
-        parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups floating_ips
-        network_ports custom_button_events
+        parent_ems_cloud cloud_tenants cloud_networks cloud_subnets network_routers security_groups
+        security_policies floating_ips network_ports network_services custom_button_events
       ]
     )
   end
@@ -72,6 +72,10 @@ module EmsNetworkHelper::TextualSummary
     textual_link(@record.security_groups, :label => _("Security Groups"))
   end
 
+  def textual_security_policies
+    textual_link(@record.security_policies, :label => _("Security Policies"))
+  end
+
   def textual_floating_ips
     textual_link(@record.floating_ips, :label => _("Floating IPs"))
   end
@@ -82,6 +86,10 @@ module EmsNetworkHelper::TextualSummary
 
   def textual_network_ports
     textual_link(@record.network_ports, :label => _("Network Ports"))
+  end
+
+  def textual_network_services
+    textual_link(@record.network_services, :label => _("Network Services"))
   end
 
   def textual_cloud_networks

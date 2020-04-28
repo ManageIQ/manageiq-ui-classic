@@ -1,5 +1,18 @@
 class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolbar::Basic
   button_group(
+    'cloud_network_refreshing', [
+      button(
+        :cloud_networks_refresh,
+        'fa fa-refresh fa-lg',
+        N_('Refresh this page'),
+        nil,
+        :url_parms    => "main_div",
+        :send_checked => true,
+        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
+      )
+    ]
+  )
+  button_group(
     'cloud_network_vmdb',
     [
       select(

@@ -16,8 +16,8 @@ module CloudTenantHelper::TextualSummary
       %i[
         ems_cloud instances images cloud_object_store_containers
         cloud_volumes cloud_volume_snapshots cloud_networks cloud_subnets
-        network_routers security_groups floating_ips network_ports
-        custom_button_events
+        network_routers network_routers network_services security_groups security_policies
+        floating_ips network_ports custom_button_events
       ]
     )
   end
@@ -107,6 +107,10 @@ module CloudTenantHelper::TextualSummary
     textual_link(@record.security_groups, :label => _('Security Groups'))
   end
 
+  def textual_security_policies
+    textual_link(@record.security_policies, :label => _('Security Policies'))
+  end
+
   def textual_floating_ips
     textual_link(@record.floating_ips, :label => _('Floating IPs'))
   end
@@ -121,6 +125,10 @@ module CloudTenantHelper::TextualSummary
 
   def textual_cloud_networks
     textual_link(@record.cloud_networks, :label => _('Cloud Networks'))
+  end
+
+  def textual_network_services
+    textual_link(@record.network_services, :label => _('Network Services'))
   end
 
   def textual_cloud_subnets

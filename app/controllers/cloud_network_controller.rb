@@ -30,6 +30,29 @@ class CloudNetworkController < ApplicationController
       javascript_redirect(:action => "edit", :id => checked_item_id)
     when "cloud_network_new"
       javascript_redirect(:action => "new")
+    when "cloud_networks_refresh"
+      show_list
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("gtl_div", :partial => "layouts/gtl")
+      end
+    when "cloud_network_refresh"
+      javascript_redirect(:action => 'show', :id => params[:id])
+    when "cloud_subnets_refresh"
+      show_list
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("gtl_div", :partial => "layouts/gtl")
+      end
+    else
+      super
+    end
+  end
+
+  def check_button_rbac
+    # Allow refresh to skip RBAC check
+    if %w[cloud_networks_refresh cloud_network_refresh cloud_subnets_refresh].include?(params[:pressed])
+      true
     else
       super
     end

@@ -1,0 +1,94 @@
+#
+# This is an MIQ Report configuration file
+#   Single value parameters are specified as:
+#     single_value_parm: value
+#   Multiple value parameters are specified as:
+#     multi_value_parm:
+#       - value 1
+#       - value 2
+#
+
+# Report title
+title: Security Policy Rule
+
+# Menu name
+name: SecurityPolicyRule
+
+# Main DB table report is based on
+db: SecurityPolicyRule
+
+# Columns to fetch from the main table
+cols:
+- sequence_number  
+- name
+- source_security_groups_count
+- destination_security_groups_count
+- network_services_count
+
+# Included tables (joined, has_one, has_many) and columns
+include:
+  ext_management_system:
+    columns:
+    - name
+  cloud_tenant:
+    columns:
+    - name
+  security_policy:
+    columns:
+    - name
+  
+# Included tables and columns for query performance
+include_for_find:
+
+# Order of columns (from all tables)
+col_order:
+- name
+- source_security_groups_count
+- destination_security_groups_count
+- network_services_count
+- security_policy.name
+- sequence_number
+- cloud_tenant.name
+- ext_management_system.name
+
+# Column titles, in order
+headers:
+- Name
+- Source Groups
+- Destination Groups
+- Network Services
+- Security Policy
+- Sequence Number
+- Cloud Tenant
+- Network Provider
+
+# Condition(s) string for the SQL query
+conditions:
+
+# Order string for the SQL query
+order: Descending
+
+# Columns to sort the report on, in order
+sortby:
+- security_policy.name
+- sequence_number
+
+# Group rows (y=yes,n=no,c=count)
+group: n
+
+# Graph type
+#   Bar
+#   Column
+#   ColumnThreed
+#   ParallelThreedColumn
+#   Pie
+#   PieThreed
+#   StackedBar
+#   StackedColumn
+#   StackedThreedColumn
+
+graph:
+
+# Dimensions of graph (1 or 2)
+#   Note: specifying 2 for a single dimension graph may not return expected results
+dims:

@@ -787,6 +787,8 @@ module ApplicationHelper
        miq_template
        network_port
        network_router
+       network_service
+       network_service_entry
        offline
        orchestration_stack
        persistent_volume
@@ -795,6 +797,8 @@ module ApplicationHelper
        resource_pool
        retired
        security_group
+       security_policy
+       security_policy_rule
        service
        services
        storage
@@ -1121,6 +1125,8 @@ module ApplicationHelper
                         monitor_alerts_most_recent
                         network_port
                         network_router
+                        network_service
+                        network_service_entry
                         network_topology
                         offline
                         orchestration_stack
@@ -1138,6 +1144,8 @@ module ApplicationHelper
                         retired
                         scan_profile
                         security_group
+                        security_policy
+                        security_policy_rule
                         services
                         storage
                         templates].freeze

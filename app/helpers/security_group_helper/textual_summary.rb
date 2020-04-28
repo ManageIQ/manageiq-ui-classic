@@ -78,6 +78,24 @@ module SecurityGroupHelper::TextualSummary
     @record.network_router
   end
 
+  def textual_group_security_policy_rules
+    return nil if @record.security_policy_rules_as_source.empty? and @record.security_policy_rules_as_destination.empty? 
+    TextualGroup.new(
+      _("Security Policy Rules"),
+      %i[
+        security_policy_rules_as_source security_policy_rules_as_destination
+      ]
+    )
+  end
+
+  def textual_security_policy_rules_as_source
+    textual_link(@record.security_policy_rules_as_source, :label => _("Used as source"))
+  end
+
+  def textual_security_policy_rules_as_destination
+    textual_link(@record.security_policy_rules_as_destination, :label => _("Used as destination"))
+  end
+
   def textual_cloud_subnet
     @record.cloud_subnet
   end

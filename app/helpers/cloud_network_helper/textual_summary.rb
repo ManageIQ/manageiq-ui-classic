@@ -1,4 +1,5 @@
 module CloudNetworkHelper::TextualSummary
+  include TextualMixins::TextualDescription
   include TextualMixins::TextualEmsNetwork
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
@@ -8,7 +9,7 @@ module CloudNetworkHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[name type status ems_ref])
+    TextualGroup.new(_("Properties"), %i[description type status ems_ref])
   end
 
   def textual_group_relationships
