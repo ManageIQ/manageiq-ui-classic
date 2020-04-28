@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'patternfly-react';
-import FormRender, { Validators, layoutComponents, componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
-import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
+import FormRender, { Validators, componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { FormTemplate } from '@data-driven-forms/pf3-component-mapper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -14,30 +13,32 @@ Validators.messages = {
   required: __('Required'),
 };
 
+const defaultLabels = {
+  submitLabel: __('Save'),
+  resetLabel: __('Reset'),
+  cancelLabel: __('Cancel'),
+};
+
 const MiqFormRenderer = ({
-  className, setPristine, onStateUpdate, componentMapper, buttonsLabels, ...props
+  className, setPristine, onStateUpdate, componentMapper, buttonsLabels, disableSubmit, canReset, showFormControls, ...props
 }) => (
   <FormRender
     componentMapper={componentMapper}
-    layoutMapper={{
-      ...layoutMapper,
-      [layoutComponents.FORM_WRAPPER]: props => <Form {...props} className={className} />,
-    }}
-    disableSubmit={[
-      'pristine',
-      'invalid',
-    ]}
+    FormTemplate={props => (
+      <FormTemplate
+        {...props}
+        className={className}
+        buttonsLabels={{ ...defaultLabels, ...buttonsLabels }}
+        disableSubmit={disableSubmit}
+        canReset={canReset}
+        showFormControls={showFormControls}
+      />
+    )}
     onStateUpdate={(formOptions) => {
       setPristine(formOptions.pristine);
       if (onStateUpdate) {
         onStateUpdate(formOptions);
       }
-    }}
-    buttonsLabels={{
-      submitLabel: __('Save'),
-      resetLabel: __('Reset'),
-      cancelLabel: __('Cancel'),
-      ...buttonsLabels,
     }}
     {...props}
   />
@@ -49,6 +50,10 @@ MiqFormRenderer.propTypes = {
   setPristine: PropTypes.func.isRequired,
   buttonsLabels: PropTypes.any,
   componentMapper: PropTypes.any,
+  buttonsLabels: PropTypes.any,
+  disableSubmit: PropTypes.arrayOf(PropTypes.string),
+  canReset: PropTypes.bool,
+  showFormControls: PropTypes.bool,
 };
 
 MiqFormRenderer.defaultProps = {
@@ -56,6 +61,10 @@ MiqFormRenderer.defaultProps = {
   onStateUpdate: undefined,
   buttonsLabels: {},
   componentMapper: defaultComponentMapper,
+  buttonsLabels: {},
+  disableSubmit: ['pristine', 'invalid'],
+  canReset: false,
+  showFormControls: true,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);

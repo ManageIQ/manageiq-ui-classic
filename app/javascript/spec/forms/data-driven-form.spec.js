@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { componentTypes } from '@@ddf';
-import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
+import { FormTemplate } from '@data-driven-forms/pf3-component-mapper';
 
 import componentMapper from '../../forms/mappers/componentMapper';
 import DataDrivenForm from '../../forms/data-driven-form';
@@ -20,7 +20,7 @@ describe('DataDrivenForm', () => {
       }],
     };
     initialProps = {
-      layoutMapper,
+      FormTemplate,
       componentMapper,
       schema,
       onSubmit,
