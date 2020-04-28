@@ -14,14 +14,8 @@ Validators.messages = {
   required: __('Required'),
 };
 
-const buttonLabels = {
-  submitLabel: __('Save'),
-  resetLabel: __('Reset'),
-  cancelLabel: __('Cancel'),
-};
-
 const MiqFormRenderer = ({
-  className, setPristine, onStateUpdate, formFieldsMapper, ...props
+  className, setPristine, onStateUpdate, formFieldsMapper, buttonsLabels, ...props
 }) => (
   <FormRender
     formFieldsMapper={formFieldsMapper}
@@ -39,7 +33,12 @@ const MiqFormRenderer = ({
         onStateUpdate(formOptions);
       }
     }}
-    {...buttonLabels}
+    buttonsLabels={{
+      submitLabel: __('Save'),
+      resetLabel: __('Reset'),
+      cancelLabel: __('Cancel'),
+      ...buttonsLabels,
+    }}
     {...props}
   />
 );
@@ -49,12 +48,14 @@ MiqFormRenderer.propTypes = {
   onStateUpdate: PropTypes.func,
   setPristine: PropTypes.func.isRequired,
   formFieldsMapper: PropTypes.any,
+  buttonsLabels: PropTypes.any,
 };
 
 MiqFormRenderer.defaultProps = {
   className: 'form-react',
   onStateUpdate: undefined,
   formFieldsMapper: defaultFormFieldsMapper,
+  buttonsLabels: {},
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
