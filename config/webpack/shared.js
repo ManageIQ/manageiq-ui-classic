@@ -136,6 +136,7 @@ module.exports = {
       'bootstrap-select': '@pf3/select', // never use vanilla bootstrap-select
       '@patternfly/patternfly': resolveModule('NONEXISTENT'),
       '@patternfly/patternfly-next': resolveModule('NONEXISTENT'),
+      '@@ddf': resolve(dirname(__filename), '../../app/javascript/forms/data-driven-form'),
     },
     extensions: settings.extensions,
     modules: [],
