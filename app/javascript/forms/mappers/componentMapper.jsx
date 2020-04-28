@@ -1,5 +1,5 @@
 import React from 'react';
-import { formFieldsMapper, components } from '@data-driven-forms/pf3-component-mapper';
+import { componentMapper, components } from '@data-driven-forms/pf3-component-mapper';
 import { componentTypes } from '@@ddf';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
@@ -10,8 +10,8 @@ import PasswordField from '../../components/async-credentials/password-field';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
 import FieldArray from '../../components/field-array';
 
-const fieldsMapper = {
-  ...formFieldsMapper,
+const mapper = {
+  ...componentMapper,
   'code-editor': DataDrivenFormCodeEditor,
   'edit-password-field': EditPasswordField,
   'field-array': FieldArray,
@@ -21,7 +21,7 @@ const fieldsMapper = {
   note: props => <div className={props.className} role="alert">{props.label}</div>,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
-  [componentTypes.SELECT]: props => <components.SelectField placeholder={`<${__('Choose')}>`} {...props} />,
+  [componentTypes.SELECT]: props => <components.Select placeholder={`<${__('Choose')}>`} {...props} />,
 };
 
-export default fieldsMapper;
+export default mapper;

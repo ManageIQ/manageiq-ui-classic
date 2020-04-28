@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
+import componentMapper from '../../forms/mappers/componentMapper';
 import { componentTypes } from '@@ddf';
 
-const Component = fieldsMapper[componentTypes.BUTTON];
+const Component = componentMapper[componentTypes.BUTTON];
 
 const DetectButton = ({ formOptions, dependencies, target, FormSpyProvider, ...props }) => {
   return <span/>;

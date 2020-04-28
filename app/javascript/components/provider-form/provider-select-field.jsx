@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { set } from 'lodash';
 
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
+import { components } from '@data-driven-forms/pf3-component-mapper';
 import { EditingContext, loadProviderFields } from './index';
 
 const extractInitialValues = ({ name, initialValue, fields }) => {
@@ -14,7 +14,6 @@ const ProviderSelectField = ({ kind, FieldProvider, formOptions, ...props }) => 
   const { isDisabled: edit } = props;
 
   const { setState } = useContext(EditingContext);
-  const Component = fieldsMapper['select-field'];
 
   const enhancedChange = onChange => (type) => {
     if (!edit && type) {
@@ -35,7 +34,7 @@ const ProviderSelectField = ({ kind, FieldProvider, formOptions, ...props }) => 
       {...props}
       formOptions={formOptions}
       render={({ input: { onChange, ...input }, ...props }) => (
-        <Component input={{ ...input, onChange: enhancedChange(onChange) }} formOptions={formOptions} {...props} />
+        <components.SelectField input={{ ...input, onChange: enhancedChange(onChange) }} formOptions={formOptions} {...props} />
       )}
     />
   );

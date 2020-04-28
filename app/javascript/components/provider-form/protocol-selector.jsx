@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import fieldsMapper from '../../forms/mappers/formFieldsMapper';
+import { components } from '@data-driven-forms/pf3-component-mapper';
 import { EditingContext } from './index';
-
-const Component = fieldsMapper['select-field'];
 
 const filter = (items, toDelete) => Object.keys(items).filter(key => !toDelete.includes(key)).reduce((obj, key) => ({
   ...obj,
@@ -81,7 +79,7 @@ const ProtocolSelector = ({
           return onChange(value);
         };
 
-        return <Component input={{ name, ...input, onChange: enhancedChange(onChange) }} options={options} {...rest} />;
+        return <components.SelectField input={{ name, ...input, onChange: enhancedChange(onChange) }} options={options} {...rest} />;
       }}
       {...props}
     />

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setPristine } from '../miq-redux/form-reducer';
-import defaultFormFieldsMapper from './mappers/formFieldsMapper';
+import defaultComponentMapper from './mappers/componentMapper';
 
 Validators.messages = {
   ...Validators.messages,
@@ -15,10 +15,10 @@ Validators.messages = {
 };
 
 const MiqFormRenderer = ({
-  className, setPristine, onStateUpdate, formFieldsMapper, buttonsLabels, ...props
+  className, setPristine, onStateUpdate, componentMapper, buttonsLabels, ...props
 }) => (
   <FormRender
-    formFieldsMapper={formFieldsMapper}
+    componentMapper={componentMapper}
     layoutMapper={{
       ...layoutMapper,
       [layoutComponents.FORM_WRAPPER]: props => <Form {...props} className={className} />,
@@ -47,15 +47,15 @@ MiqFormRenderer.propTypes = {
   className: PropTypes.string,
   onStateUpdate: PropTypes.func,
   setPristine: PropTypes.func.isRequired,
-  formFieldsMapper: PropTypes.any,
   buttonsLabels: PropTypes.any,
+  componentMapper: PropTypes.any,
 };
 
 MiqFormRenderer.defaultProps = {
   className: 'form-react',
   onStateUpdate: undefined,
-  formFieldsMapper: defaultFormFieldsMapper,
   buttonsLabels: {},
+  componentMapper: defaultComponentMapper,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
