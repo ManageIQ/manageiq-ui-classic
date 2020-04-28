@@ -184,7 +184,7 @@
         :keys                       => keys})
   - when :customize
     - if select_check?(wf)
-      - edit_or_options = (@edit && @edit[:new] && @edit[:new][:sysprep_enabled]) || (@options && @options[:sysprep_enabled])
+      - edit_or_options = (@edit && @edit[:new] && @edit[:new][:sysprep_enabled]) || (@options && @options[:sysprep_enabled]) || []
       - keys = [:sysprep_enabled]
       = render(:partial => "/miq_request/prov_dialog_fieldset",
         :locals         => {:workflow => wf,
