@@ -14,8 +14,8 @@
       %ul.nav.nav-pills.nav-stacked
         = single_relationship_link(@record, :ems_network, "ext_management_system")
         = single_relationship_link(@record, :cloud_tenant, "cloud_tenant")
-        = li_link(:count => @record.number_of(:security_policy_rules),
-                  :text => _("Rules"),
+        = li_link(:count     => @record.number_of(:security_policy_rules),
+                  :text      => _("Rules"),
                   :record_id => @record.id,
-                  :display => 'Rules',
-                  :title => _("Show all Rules"))
+                  :display   => 'Rules',
+                  :title     => _("Show all Rules"))

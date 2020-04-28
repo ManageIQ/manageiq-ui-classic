@@ -26,10 +26,10 @@ module SecurityPolicyHelper::TextualSummary
     items = @record.security_policy_rules.collect do |rule|
       link = url_for_only_path(:controller => 'security_policy_rule', :action => 'show', :id => rule)
       [
-        {:link => link, :value => rule.name},
-        {:link => link, :value => rule.source_security_groups.count.to_s},
-        {:link => link, :value => rule.destination_security_groups.count.to_s},
-        {:link => link, :value => rule.network_services.count.to_s}
+        { :link => link, :value => rule.name },
+        { :link => link, :value => rule.source_security_groups.count.to_s },
+        { :link => link, :value => rule.destination_security_groups.count.to_s },
+        { :link => link, :value => rule.network_services.count.to_s }
       ]
     end
 
@@ -49,7 +49,6 @@ module SecurityPolicyHelper::TextualSummary
 
   def textual_ems_ref
     return nil if @record.ems_ref.blank?
-
     {:label => _("ID within Provider"), :value => @record.ems_ref}
   end
 

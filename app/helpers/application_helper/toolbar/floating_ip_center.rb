@@ -1,5 +1,18 @@
 class ApplicationHelper::Toolbar::FloatingIpCenter < ApplicationHelper::Toolbar::Basic
   button_group(
+    'floating_ip_refreshing', [
+      button(
+        :floating_ip_refresh,
+        'fa fa-refresh fa-lg',
+        N_('Refresh this page'),
+        nil,
+        :url_parms    => "main_div",
+        :send_checked => true,
+        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
+      )
+    ]
+  )  
+  button_group(
     'floating_ip_vmdb',
     [
       select(
