@@ -40,7 +40,7 @@ import { TagView } from '../tagging';
 import TextualSummaryWrapper from '../react/textual_summary_wrapper';
 import ToastList from '../components/toast-list/toast-list';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
-import VmSnapshotFormComponent from '../components/vm-snapshot-form-component';
+import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
 import WorkersForm from '../components/workers-form/workers-form';
 
 /**
@@ -96,5 +96,5 @@ ManageIQ.component.addReact('ToastList', ToastList);
 ManageIQ.component.addReact('Toolbar', Toolbar);
 ManageIQ.component.addReact('navbar.UserOptions', navbar.UserOptions);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
-ManageIQ.component.addReact('VmSnapshotFormComponent', VmSnapshotFormComponent);
+ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
 ManageIQ.component.addReact('WorkersForm', WorkersForm);
