@@ -112,35 +112,6 @@ class DashboardController < ApplicationController
     head :ok
   end
 
-  # Redirect to remembered last item clicked under this menu section.
-  def redirect_to_remembered(section_id)
-    return false unless session[:tab_url].key?(section_id)
-
-    redirect_to(session[:tab_url][section_id])
-    true
-  end
-
-  # Main menu section was clicked
-  def maintab
-    @breadcrumbs.clear
-
-    section = Menu::Manager.section(params[:tab])
-    if section.nil?
-      render :action => "login"
-      return
-    end
-
-    return if redirect_to_remembered(section.id)
-
-    target_url = section.default_redirect_url
-
-    if target_url
-      redirect_to(target_url)
-    else
-      redirect_to(start_url_for_user(nil))
-    end
-  end
-
   # New tab was pressed
   def change_tab
     show

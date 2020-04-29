@@ -44,15 +44,6 @@ module Menu
       @subsection ||= Array(items).detect { |el| el.kind_of?(Section) }
     end
 
-    def href
-      case type
-      when :big_iframe
-        "/dashboard/iframe?sid=#{id}"
-      else
-        "/dashboard/maintab/?tab=#{id}"
-      end
-    end
-
     def leaf?
       false
     end
@@ -70,19 +61,6 @@ module Menu
         return child_match if child_match.present?
       end
       nil
-    end
-
-    def default_redirect_url
-      items.each do |item|
-        next unless item.visible?
-        if item.kind_of?(Item)
-          return item.href
-        else
-          section_result = item.default_redirect_url
-          return section_result if section_result
-        end
-      end
-      false
     end
 
     def preprocess_sections(section_hash)
