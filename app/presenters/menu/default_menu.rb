@@ -4,18 +4,23 @@ module Menu
     class << self
       def default_menu
         [
+          # user, group switcher & find are NOT part of the menu
           overview_menu_section,
           services_menu_section,
+
+          # items with Providers
           compute_menu_section,
           network_menu_section,
           storage_menu_section,
           configuration_menu_section,
           automation_menu_section,
+
           control_menu_section,
           monitor_menu_section,
+
           settings_menu_section,
           help_menu_section,
-        ].compact
+        ]
       end
 
       def compute_menu_section
@@ -24,7 +29,7 @@ module Menu
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
           container_menu_section,
-        ].compact)
+        ])
       end
 
       def configuration_menu_section
@@ -44,7 +49,7 @@ module Menu
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
           chargeback_menu_section,
           Menu::Item.new('optimization', N_('Optimization'), 'optimization', {:feature => 'optimization'}, '/optimization'),
-        ].compact)
+        ])
       end
 
       def consumption_menu_section
@@ -243,7 +248,7 @@ module Menu
           Menu::Item.new('miq_ae_export',        N_('Import / Export'), 'miq_ae_class_import_export',    {:feature => 'miq_ae_class_import_export'},    '/miq_ae_tools/import_export'),
           Menu::Item.new('miq_ae_logs',          N_('Log'),             'miq_ae_class_log',              {:feature => 'miq_ae_class_log'},              '/miq_ae_tools/log'),
           Menu::Item.new('miq_request_ae',       N_('Requests'),        'ae_miq_request',                {:feature => 'ae_miq_request_show_list'},      '/miq_request/show_list?typ=ae')
-        ].compact)
+        ])
       end
 
       def alerts_menu_section
