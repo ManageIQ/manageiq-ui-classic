@@ -33,6 +33,8 @@ module Menu
     end
 
     def visible?
+      return true if rbac_feature.nil?
+
       ApplicationHelper.role_allows?(rbac_feature)
     end
 
