@@ -2,7 +2,6 @@
                    :imagePath => image_path("layout/brand.svg"),
                    :rightSection => {:customLogo => ::Settings.server.custom_logo,
                                      :currentUser => current_user,
-                                     :opsExplorerAllowed => ApplicationHelper.role_allows?(:feature => 'ops_explorer',:any => true),
                                      :applianceName => appliance_name,
                                      :miqGroups => current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } },
                                      :currentGroup => {:id => current_group.id.to_s,

@@ -19,7 +19,7 @@ module Menu
           monitor_menu_section,
 
           settings_menu_section,
-          help_menu_section,
+          logout_item,
         ]
       end
 
@@ -265,10 +265,14 @@ module Menu
       end
 
       def settings_menu_section
-        Menu::Section.new(:set, N_("User Settings"), 'pficon pficon-settings', [
-          Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
-          Menu::Item.new('my_tasks',      N_('Tasks'),         'tasks',        {:feature => 'tasks', :any => true},        '/miq_task/index?jobs_tab=tasks')
-        ], :top_right)
+        Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings', [
+          Menu::Item.new('configuration', N_('My Settings'), 'my_settings', {:feature => 'my_settings', :any => true}, '/configuration/index'),
+          Menu::Item.new('my_tasks', N_('Tasks'), 'tasks', {:feature => 'tasks', :any => true}, '/miq_task/index?jobs_tab=tasks'),
+          help_documentation,
+          Menu::Item.new('ops_explorer', N_('Application Settings'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer'),
+          help_product,
+          help_about,
+        ])
       end
 
       def help_documentation
@@ -293,8 +297,12 @@ module Menu
         ]
       end
 
-      def help_menu_section
-        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', help_menu_items, :help)
+      def logout_item
+        Menu::Item.new(:logout,
+                       N_("Logout"),
+                       'logout',
+                       nil,
+                       '/dashboard/logout')
       end
 
       private
