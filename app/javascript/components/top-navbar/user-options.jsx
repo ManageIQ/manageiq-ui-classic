@@ -1,13 +1,9 @@
 import React from 'react';
 import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import PropTypes from 'prop-types';
-import {
-  groupProps, recursiveUserMenuProps, userMenuProps,
-} from './recursive-props';
-
 
 const UserOptions = ({
-  currentUser, applianceName, miqGroups, currentGroup, userMenu,
+  currentUser, applianceName, miqGroups, currentGroup,
 }) => (
   <Dropdown
     id="dropdownMenu2"
@@ -81,25 +77,6 @@ const UserOptions = ({
         <MenuItem id="single-group-item" disabled>{(currentGroup).description}</MenuItem>
       )
       }
-      {userMenu.map(section => (
-        section.visible && (
-          <React.Fragment key={section.id}>
-            <MenuItem divider />
-            { section.items.map(item => (
-              item.visible && (
-                <MenuItem
-                  id={`user-menu-${item.title.toLowerCase()}`}
-                  key={item.id}
-                  href={item.href}
-                  onClick={event => !miqCheckForChanges() && event.preventDefault()}
-                >
-                  {item.title}
-                </MenuItem>
-              )
-            ))}
-          </React.Fragment>
-        )
-      ))}
       <MenuItem divider />
       <MenuItem
         id="logout-btn"
@@ -119,6 +96,11 @@ const UserOptions = ({
   </Dropdown>
 );
 
+const groupProps = {
+  description: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
 UserOptions.propTypes = {
   currentUser: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -133,10 +115,6 @@ UserOptions.propTypes = {
   currentGroup: PropTypes.shape({
     ...groupProps,
   }).isRequired,
-  userMenu: PropTypes.arrayOf(PropTypes.shape({
-    ...userMenuProps,
-    items: PropTypes.arrayOf(PropTypes.shape(recursiveUserMenuProps)),
-  })).isRequired,
 };
 
 export default UserOptions;

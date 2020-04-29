@@ -18,7 +18,6 @@ import navbar from '../components/top-navbar';
 export const Navbar = (props) => {
   const { customBrand, imagePath } = props;
   const { rightSection } = props;
-  const { notificationDrawer, toastList } = props;
   const { menu } = props;
 
   return (
