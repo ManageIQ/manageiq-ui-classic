@@ -355,7 +355,38 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
-    :chargeback               => {
+    :chargeback_assignment => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        explorer
+        cb_assign_field_changed
+        cb_assign_update
+        tree_select
+      )
+    },
+    :chargeback_rate => {
+      :get  => %w(
+        explorer
+      ),
+      :post => %w(
+        explorer
+        cb_rate_edit
+        cb_rate_form_field_changed
+        cb_rate_show
+        cb_rates_delete
+        cb_rates_list
+        cb_tier_add
+        cb_tier_remove
+        tree_autoload
+        tree_select
+        x_button
+        x_show
+      )
+    },
+
+    :chargeback_report => {
       :get  => %w(
         explorer
         render_csv
@@ -364,21 +395,10 @@ Rails.application.routes.draw do
         report_only
       ),
       :post => %w(
-        accordion_select
         explorer
-        cb_assign_field_changed
-        cb_assign_update
-        cb_rate_edit
-        cb_rate_form_field_changed
-        cb_rate_show
-        cb_rates_delete
-        cb_rates_list
-        cb_tier_add
-        cb_tier_remove
         saved_report_paging
         tree_autoload
         tree_select
-        x_button
         x_show
       )
     },

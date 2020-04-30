@@ -136,7 +136,9 @@ describe ApplicationHelper, "ToolbarChooser" do
         let(:explorer) { true }
 
         %w(
-          chargeback
+          chargeback_assignment
+          chargeback_rate
+          chargeback_report
           generic_object_definition
           miq_ae_class
           miq_ae_customization
