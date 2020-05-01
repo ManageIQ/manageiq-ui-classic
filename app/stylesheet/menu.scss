@@ -1,0 +1,17 @@
+#main-menu {
+  .bx--side-nav--expanded {
+    width: 225px;
+    max-width: 225px;
+  }
+
+  .bx--side-nav {
+    background-color: #262626; // Gray 90
+  }
+
+  .bx--side-nav,
+  .bx--side-nav__icon,
+  .bx--side-nav__link-text,
+  .bx--side-nav__submenu-title {
+    color: #f4f4f4; // Gray 10
+  }
+}
