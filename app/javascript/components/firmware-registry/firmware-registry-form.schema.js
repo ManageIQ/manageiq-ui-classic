@@ -5,6 +5,7 @@ export default (TYPES) => {
     {
       component: componentTypes.SUB_FORM,
       title: __('Basic Info'),
+      name: 'basic-info',
       fields: [
         {
           component: componentTypes.SELECT_COMPONENT,
