@@ -13,3 +13,8 @@ $css--reset: false;
 $css--default-type: false;
 
 @import '~carbon-components/scss/globals/scss/styles.scss';
+
+// ignored by patternfly, but sets the right base for carbon rem units
+html {
+  font-size: 100%;
+}
