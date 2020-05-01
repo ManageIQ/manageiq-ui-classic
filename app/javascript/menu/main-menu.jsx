@@ -7,6 +7,8 @@ import {
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
 
+import { MiqLogo } from './miq-logo';
+import { UserOptions } from './user-options';
 import { itemId, linkProps } from './item-type';
 
 
@@ -59,20 +61,66 @@ MenuSection.props = {
 };
 
 
-export const MainMenu = ({ menu }) => {
+const MenuFind = () => (
+  //TODO
+  <input type="search" placeholder={__("Find")} />
+);
+
+const MenuCollapse = ({ collapsed }) => (
+  // TODO
+  <div style={{height: '48px'}}>{collapsed ? '>' : '<'}</div>
+);
+
+
+export const MainMenu = (props) => {
+  const { applianceName, currentGroup, currentUser, customBrand, customLogo, imagePath, menu, miqGroups } = props;
+
   return (
     <SideNav
       aria-label={__("Main Menu")}
-      isChildOfHeader={true}
+      isChildOfHeader={false}
       expanded={true}
     >
+      <MiqLogo
+        customBrand={customBrand}
+        imagePath={imagePath}
+      />
+      <UserOptions
+        applianceName={applianceName}
+        currentUser={currentUser}
+        currentGroup={currentGroup}
+        miqGroups={miqGroups}
+      />
+      <MenuFind />
+
+      <hr />
+
       <SideNavItems>
         {mapItems(menu)}
       </SideNavItems>
+
+      <MenuCollapse />
     </SideNav>
   );
 };
 
+const propGroup = PropTypes.shape({
+  description: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+});
+
+const propUser = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  userid: PropTypes.string.isRequired,
+});
+
 MainMenu.propTypes = {
+  applianceName: PropTypes.string.isRequired,
+  currentGroup: propGroup.isRequired,
+  currentUser: propUser.isRequired,
+  customBrand: PropTypes.bool.isRequired,
+  customLogo: PropTypes.bool.isRequired,
+  imagePath: PropTypes.string.isRequired,
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
+  miqGroups: PropTypes.arrayOf(propGroup).isRequired,
 };

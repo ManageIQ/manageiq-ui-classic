@@ -1,16 +1,22 @@
-= react('Navbar', {:customBrand => ::Settings.server.custom_brand,
-                   :imagePath => image_path("layout/brand.svg"),
-                   :rightSection => {:customLogo => ::Settings.server.custom_logo,
-                                     :currentUser => current_user,
-                                     :applianceName => appliance_name,
-                                     :miqGroups => current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } },
-                                     :currentGroup => {:id => current_group.id.to_s,
-                                                       :description => current_group.description}},
-                   :menu => menu_to_json})
+- user = {:name => current_user.name,
+          :userid => current_user.userid}
+- group = {:id => current_group.id.to_s,
+           :description => current_group.description}
+- groups = current_user.miq_groups.map { |group| { :id => group.id.to_s, :description => group.description } }
+
+= react('menu.Navbar')
+= react('menu.MainMenu', {:applianceName => appliance_name,
+                          :currentGroup => group,
+                          :currentUser => user,
+                          :customBrand => ::Settings.server.custom_brand,
+                          :customLogo => ::Settings.server.custom_logo,
+                          :imagePath => image_path("layout/brand.svg"),
+                          :menu => menu_to_json,
+                          :miqGroups => groups}, :id => 'main-menu')
 
 = react('NotificationDrawer')
 = react('ToastList')
-= react('MiqAboutModal', {:dialogClassName => Settings.server.custom_login_logo ? 'whitelabel' : ''})
+= react('MiqAboutModal', {:dialogClassName => ::Settings.server.custom_login_logo ? 'whitelabel' : ''})
 
 = render :partial => "layouts/spinner"
 = render :partial => "layouts/lightbox_panel"
