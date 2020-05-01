@@ -64,8 +64,10 @@
   // FIXME flex?
   width: 140px;
 
-  .unread {
-    color: #39a5dc;
+  &.unread {
+    svg {
+      fill: #39a5dc;
+    }
   }
 }
 

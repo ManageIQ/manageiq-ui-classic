@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
+import { MiqIcon } from '../../menu/icon';
 
 export const NotificationsToggle = () => {
   const dispatch = useDispatch();
@@ -21,13 +22,13 @@ export const NotificationsToggle = () => {
   return (
     <a
       id="notifications-toggle"
-      className={`btn btn-default ${isDrawerVisible && 'active'}`}
+      className={`btn btn-default ${isDrawerVisible && 'active'} ${unreadCount && 'unread'}`}
       title={unreadCountText(unreadCount)}
       onClick={toggle}
     >
       {__("Notifications")}
       &nbsp;
-      <i className={`fa fa-bell ${unreadCount && 'unread'}`} />
+      <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
     </a>
   );
 };
