@@ -1,25 +1,48 @@
 #main-menu {
-  .bx--side-nav {
-    width: 48px;
-    max-width: 48px;
-  }
-  .bx--side-nav--expanded {
-    width: 256px;
-    max-width: 256px;
+  list-style: none;
+
+  svg {
+    fill: $gray-10;
   }
 
   .bx--side-nav {
-    background-color: #262626; // Gray 90
+    background-color: $gray-90;
   }
 
   .bx--side-nav,
   .bx--side-nav__icon,
   .bx--side-nav__link-text,
   .bx--side-nav__submenu-title {
-    color: #f4f4f4; // Gray 10
+    color: $gray-10;
+  }
+
+  .bx--side-nav__link,
+  .bx--side-nav__submenu,
+  .menu-collapse,
+  .menu-collapse-button {
+    height: 48px;
+  }
+
+  .bx--side-nav__hr {
+    color: $gray-60;
+    margin: 16px 0 0 0;
+  }
+  .bx--side-nav__expanded {
+    .bx--side-nav__hr {
+      margin: 16px 16px 0 16px;
+    }
+  }
+
+  .menu-collapse {
+    border-top: solid 1px #3d3d3d;
+
+    .menu-collapse-button {
+      margin-left: auto;
+      padding: 14px;
+      width: 48px;
+    }
   }
 }
-
 
 .layout-pf.layout-pf-fixed {
   .miq-main-menu-collapsed {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   SideNav,
+  SideNavHeader,
+  SideNavItem,
   SideNavItems,
   SideNavMenu,
   SideNavMenuItem,
@@ -84,16 +86,14 @@ const MenuFind = () => (
 );
 
 const MenuCollapse = ({ expanded, toggle }) => (
-  // TODO
-  <div
-    style={{
-      height: '48px',
-      borderTop: 'solid 1px #3d3d3d',
-    }}
-    onClick={toggle}
-  >
-    {expanded ? '<' : '>'}
-  </div>
+  <SideNavItem className="menu-collapse">
+    <div
+      className="menu-collapse-button"
+      onClick={toggle}
+    >
+      {expanded ? <ChevronLeft20 /> : <ChevronRight20 />}
+    </div>
+  </SideNavItem>
 );
 
 
@@ -114,25 +114,33 @@ export const MainMenu = (props) => {
     document.body.classList.add(classNames[expanded]);
   }, [expanded]);
 
+  const renderIcon = () => (
+    <MiqLogo
+      customBrand={customBrand}
+      imagePath={imagePath}
+    />
+  );
+
   return (
     <SideNav
       aria-label={__("Main Menu")}
       isChildOfHeader={false}
       expanded={expanded}
     >
-      <MiqLogo
-        customBrand={customBrand}
-        imagePath={imagePath}
+      <SideNavHeader
+        renderIcon={renderIcon}
       />
+
       <UserOptions
         applianceName={applianceName}
         currentUser={currentUser}
         currentGroup={currentGroup}
         miqGroups={miqGroups}
       />
+
       <MenuFind />
 
-      <hr />
+      <hr className="bx--side-nav__hr" />
 
       <SideNavItems>
         {mapItems(menu)}
