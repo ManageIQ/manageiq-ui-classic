@@ -1,0 +1,15 @@
+// enable carbon UI shell
+$feature-flags: (
+  ui-shell: true,
+);
+
+// disable IBM fonts until we can override patternfly
+$css--font-face: false;
+$css--plex: false;
+
+// don't break patternfly styling
+$css--body: false;
+$css--reset: false;
+$css--default-type: false;
+
+@import '~carbon-components/scss/globals/scss/styles.scss';
