@@ -7,12 +7,29 @@ import {
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
 
+import ChevronLeft20 from '@carbon/icons-react/es/chevron--left/20';
+import ChevronRight20 from '@carbon/icons-react/es/chevron--right/20';
+import * as icons from '@carbon/icons-react';
+
+
 import { MiqLogo } from './miq-logo';
 import { UserOptions } from './user-options';
 import { itemId, linkProps } from './item-type';
 
 
-const carbonizeIcon = (classname) => (props) => (<i className={classname} {...props} />);
+const carbonizeIcon = (classname, size = 20) => {
+  if (!classname) {
+    return null;
+  }
+
+  if (!classname.startsWith('carbon--')) {
+    return (props) => (<i className={classname} {...props} />);
+  }
+
+  let name = classname.replace(/^carbon--/, '');
+  let key = `${name}${size}`;
+  return icons[key];
+};
 
 const mapItems = (items) => items.map((item) => (
   item.items.length
