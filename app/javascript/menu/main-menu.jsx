@@ -6,8 +6,9 @@ import {
   SideNavItem,
   SideNavItems,
   SideNavMenu,
-  SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
+
+import SideNavMenuItem from './SideNavMenuItem';
 
 import ChevronLeft20 from '@carbon/icons-react/es/chevron--left/20';
 import ChevronRight20 from '@carbon/icons-react/es/chevron--right/20';
@@ -40,10 +41,11 @@ const mapItems = (items) => items.map((item) => (
 ));
 
 
-const MenuItem = ({ active, href, id, title, type }) => (
+const MenuItem = ({ active, href, icon, id, title, type }) => (
   <SideNavMenuItem
     id={itemId(id)}
     isActive={active}
+    renderIcon={carbonizeIcon(icon)}
     {...linkProps({ type, href, id })}
   >
     {title}
@@ -53,6 +55,7 @@ const MenuItem = ({ active, href, id, title, type }) => (
 MenuItem.props = {
   active: PropTypes.bool,
   href: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
