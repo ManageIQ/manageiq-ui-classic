@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Breadcrumb } from 'patternfly-react';
 import { unescape } from 'lodash';
 
+import { NotificationsToggle } from './notifications-toggle';
 import { onClickTree, onClick, onClickToExplorer } from './on-click-functions';
 
 // FIXME: don't parse html here
@@ -45,14 +46,17 @@ const renderItems = ({ items, controllerName }) => {
 };
 
 const Breadcrumbs = ({ items, title, controllerName }) => (
-  <Breadcrumb style={{ marginBottom: 0 }}>
-    {items && renderItems({ items, controllerName })}
-    <Breadcrumb.Item active>
-      <strong>
-        {items && items.length > 0 ? parsedText(items[items.length - 1].title) : parsedText(title)}
-      </strong>
-    </Breadcrumb.Item>
-  </Breadcrumb>
+  <>
+    <Breadcrumb style={{ marginBottom: 0 }}>
+      {items && renderItems({ items, controllerName })}
+      <Breadcrumb.Item active>
+        <strong>
+          {items && items.length > 0 ? parsedText(items[items.length - 1].title) : parsedText(title)}
+        </strong>
+      </Breadcrumb.Item>
+    </Breadcrumb>
+    <NotificationsToggle />
+  </>
 );
 
 Breadcrumbs.propTypes = {
