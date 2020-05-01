@@ -1,7 +1,11 @@
 #main-menu {
+  .bx--side-nav {
+    width: 48px;
+    max-width: 48px;
+  }
   .bx--side-nav--expanded {
-    width: 225px;
-    max-width: 225px;
+    width: 256px;
+    max-width: 256px;
   }
 
   .bx--side-nav {
@@ -13,5 +17,19 @@
   .bx--side-nav__link-text,
   .bx--side-nav__submenu-title {
     color: #f4f4f4; // Gray 10
+  }
+}
+
+
+.layout-pf.layout-pf-fixed {
+  .miq-main-menu-collapsed {
+    .container-pf-nav-pf-vertical {
+      margin-left: 48px;
+    }
+  }
+  .miq-main-menu-expanded {
+    .container-pf-nav-pf-vertical {
+      margin-left: 256px;
+    }
   }
 }

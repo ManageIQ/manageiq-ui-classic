@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   SideNav,
@@ -66,20 +66,42 @@ const MenuFind = () => (
   <input type="search" placeholder={__("Find")} />
 );
 
-const MenuCollapse = ({ collapsed }) => (
+const MenuCollapse = ({ expanded, toggle }) => (
   // TODO
-  <div style={{height: '48px'}}>{collapsed ? '>' : '<'}</div>
+  <div
+    style={{
+      height: '48px',
+      borderTop: 'solid 1px #3d3d3d',
+    }}
+    onClick={toggle}
+  >
+    {expanded ? '<' : '>'}
+  </div>
 );
 
 
+const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
+
 export const MainMenu = (props) => {
   const { applianceName, currentGroup, currentUser, customBrand, customLogo, imagePath, menu, miqGroups } = props;
+  const [expanded, setExpanded] = useState(initialExpanded);
+
+  useEffect(() => {
+    window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
+
+    const classNames = {
+      true: 'miq-main-menu-expanded',
+      false: 'miq-main-menu-collapsed',
+    };
+    document.body.classList.remove(classNames[!expanded]);
+    document.body.classList.add(classNames[expanded]);
+  }, [expanded]);
 
   return (
     <SideNav
       aria-label={__("Main Menu")}
       isChildOfHeader={false}
-      expanded={true}
+      expanded={expanded}
     >
       <MiqLogo
         customBrand={customBrand}
@@ -99,7 +121,10 @@ export const MainMenu = (props) => {
         {mapItems(menu)}
       </SideNavItems>
 
-      <MenuCollapse />
+      <MenuCollapse
+        expanded={expanded}
+        toggle={() => setExpanded(!expanded)}
+      />
     </SideNav>
   );
 };
