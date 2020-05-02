@@ -5,10 +5,10 @@ import {
   SideNavHeader,
   SideNavItem,
   SideNavItems,
+  SideNavLink,
   SideNavMenu,
+  SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
-
-import SideNavMenuItem from './SideNavMenuItem';
 
 import ChevronLeft20 from '@carbon/icons-react/es/chevron--left/20';
 import ChevronRight20 from '@carbon/icons-react/es/chevron--right/20';
@@ -19,18 +19,47 @@ import { UserOptions } from './user-options';
 import { itemId, linkProps } from './item-type';
 
 
-const mapItems = (items) => items.map((item) => (
+const mapItems = (items, root = true) => items.map((item) => (
   item.items.length
   ? <MenuSection key={item.id} {...item} />
-  : <MenuItem key={item.id} {...item} />
+  : (
+    root
+    ? <FirstLevelItem key={item.id} {...item} />
+    : <MenuItem key={item.id} {...item} />
+  )
 ));
 
 
-const MenuItem = ({ active, href, icon, id, title, type }) => (
-  <SideNavMenuItem
+const menuItemProps = {
+  active: PropTypes.bool,
+  href: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
+// SideNavLink for first level - needed for icon
+const FirstLevelItem = ({ active, href, icon, id, title, type }) => (
+  <SideNavLink
     id={itemId(id)}
     isActive={active}
     renderIcon={carbonizeIcon(icon)}
+    {...linkProps({ type, href, id })}
+  >
+    {title}
+  </SideNavLink>
+);
+
+FirstLevelItem.props = {
+  ...menuItemProps,
+  icon: PropTypes.string,
+};
+
+// SideNavMenuItem can't render icon, but we only have first level icons
+const MenuItem = ({ active, href, id, title, type }) => (
+  <SideNavMenuItem
+    id={itemId(id)}
+    isActive={active}
     {...linkProps({ type, href, id })}
   >
     {title}
@@ -38,12 +67,7 @@ const MenuItem = ({ active, href, icon, id, title, type }) => (
 );
 
 MenuItem.props = {
-  active: PropTypes.bool,
-  href: PropTypes.string.isRequired,
-  icon: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  ...menuItemProps,
 };
 
 
@@ -55,7 +79,7 @@ const MenuSection = ({ active, id, items, title, icon }) => (
     renderIcon={carbonizeIcon(icon)} // only first level sections have it, but all need the prop for consistent padding
     title={title}
   >
-    {mapItems(items)}
+    {mapItems(items, false)}
   </SideNavMenu>
 );
 
