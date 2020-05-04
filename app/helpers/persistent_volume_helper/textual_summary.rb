@@ -176,7 +176,8 @@ module PersistentVolumeHelper::TextualSummary
   end
 
   def textual_volume_path
-    @record.common_path
+    {:label => _("Volume path"),
+     :value => @record.common_path}
   end
 
   def textual_fs_type
@@ -222,6 +223,7 @@ module PersistentVolumeHelper::TextualSummary
   end
 
   def textual_desired_access_modes
-    @claim.desired_access_modes.join(',')
+    {:label => _("Desired access modes"),
+     :value => @claim.desired_access_modes.join(',')}
   end
 end
