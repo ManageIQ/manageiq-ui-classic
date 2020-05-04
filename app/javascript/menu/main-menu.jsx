@@ -9,13 +9,11 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
+import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
 
-import ChevronLeft20 from '@carbon/icons-react/es/chevron--left/20';
-import ChevronRight20 from '@carbon/icons-react/es/chevron--right/20';
-
-import { carbonizeIcon } from './icon';
+import { GroupSwitcher } from './group-switcher';
 import { MiqLogo } from './miq-logo';
-import { UserOptions } from './user-options';
+import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
 
 
@@ -133,6 +131,7 @@ export const MainMenu = (props) => {
     />
   );
 
+
   return (
     <SideNav
       aria-label={__("Main Menu")}
@@ -143,10 +142,20 @@ export const MainMenu = (props) => {
         renderIcon={renderIcon}
       />
 
-      <UserOptions
-        applianceName={applianceName}
-        currentUser={currentUser}
+      {/* FIXME initials, collapsed.. */}
+      <SideNavItem>
+        <p
+          data-userid={currentUser.userid}
+          id="username_display"
+          title={`${currentUser.name} | ${currentUser.userid} | ${applianceName}`}
+        >
+          {currentUser.name}
+        </p>
+      </SideNavItem>
+
+      <GroupSwitcher
         currentGroup={currentGroup}
+        expanded={expanded}
         miqGroups={miqGroups}
       />
 
