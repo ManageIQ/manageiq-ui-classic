@@ -1,8 +1,8 @@
 import * as registry from './registry.js';
 import reactBlueprint from './react-blueprint.jsx';
 
-export function addReact(name, component) {
-  return registry.define(name, reactBlueprint(component));
+export function addReact(name, component, options = {}) {
+  return registry.define(name, reactBlueprint(component), options);
 }
 
 export function componentFactory(blueprintName, selector, props) {

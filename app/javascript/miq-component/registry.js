@@ -46,10 +46,13 @@ export function validateInstance(instance, definition) {
 /**
  * Implementation of the `ComponentApi.define` method.
  */
-export function define(name, blueprint = {}, instances = null) {
+export function define(name, blueprint = {}, options = {}) {
   // validate inputs
-  if (typeof name !== 'string' || isDefined(name)) {
-    return;
+  if (typeof name !== 'string') {
+    throw `Registry.define: non-string name: ${name}`;
+  }
+  if (isDefined(name) && !options.override) {
+    throw `Registry.define: component already exists: ${name} (use { override: true } ?)`;
   }
 
   // add new definition to the registry
@@ -57,8 +60,8 @@ export function define(name, blueprint = {}, instances = null) {
   registry.set(newDefinition, new Set());
 
   // add existing instances to the registry
-  if (Array.isArray(instances)) {
-    instances.filter((instance) => !!instance)
+  if (Array.isArray(options.instances)) {
+    options.instances.filter((instance) => !!instance)
       .forEach((instance) => {
         sanitizeAndFreezeInstanceId(instance, newDefinition);
         validateInstance(instance, newDefinition);
