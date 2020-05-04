@@ -155,7 +155,7 @@ module OpsController::OpsRbac
       if !params[:quotas]
         tenant.set_quotas({})
       else
-        tenant.set_quotas(params.require(:quotas).permit!.to_h.deep_symbolize_keys)
+        tenant.set_quotas(params.require(:quotas).permit(:quotas).to_h.deep_symbolize_keys)
       end
     rescue => bang
       add_flash(_("Error when saving tenant quota: %{message}") % {:message => bang.message}, :error)
