@@ -9,6 +9,7 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
+import Search from 'carbon-components-react/es/components/Search';
 import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
 
 import { GroupSwitcher } from './group-switcher';
@@ -89,10 +90,13 @@ MenuSection.props = {
   title: PropTypes.string.isRequired,
 };
 
-
 const MenuFind = () => (
-  //TODO
-  <input type="search" placeholder={__("Find")} />
+  <SideNavItem>
+    <Search
+      size="sm"
+      placeHolderText={__("Find")}
+    />
+  </SideNavItem>
 );
 
 const MenuCollapse = ({ expanded, toggle }) => (
