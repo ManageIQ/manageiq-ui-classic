@@ -9,6 +9,13 @@
     background-color: $gray-90;
   }
 
+  .bx--side-nav.second {
+    background-color: $gray-80;
+    left: 16rem;
+    max-width: 14rem;
+    width: 14rem;
+  }
+
   .bx--side-nav,
   .bx--side-nav__icon,
   .bx--side-nav__link-text,

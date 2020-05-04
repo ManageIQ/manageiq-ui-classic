@@ -18,9 +18,13 @@ import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
 
 
-const mapItems = (items, root = true) => items.map((item) => (
+const mapItems = (items, level = 0, root = true, setSection = null) => items.map((item) => (
   item.items.length
-  ? <MenuSection key={item.id} {...item} />
+  ? (
+    level
+    ? <MenuSection key={item.id} level={level} {...item} />
+    : <FirstLevelSection key={item.id} setSection={setSection} {...item} />
+  )
   : (
     root
     ? <FirstLevelItem key={item.id} {...item} />
@@ -70,7 +74,31 @@ MenuItem.props = {
 };
 
 
-const MenuSection = ({ active, id, items, title, icon }) => (
+const menuSectionProps = {
+  active: PropTypes.bool,
+  icon: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+// TODO items chevron
+const FirstLevelSection = ({ active, id, items, title, icon, setSection }) => (
+  <SideNavLink
+    id={itemId(id, true)}
+    isActive={active}
+    renderIcon={carbonizeIcon(icon)}
+    onClick={() => setSection(items)}
+  >
+    {title}
+  </SideNavLink>
+);
+
+FirstLevelSection.props = {
+  ...menuSectionProps,
+};
+
+const MenuSection = ({ active, id, items, title, icon, level }) => (
   <SideNavMenu
     id={itemId(id, true)}
     isActive={active}
@@ -78,17 +106,14 @@ const MenuSection = ({ active, id, items, title, icon }) => (
     renderIcon={carbonizeIcon(icon)} // only first level sections have it, but all need the prop for consistent padding
     title={title}
   >
-    {mapItems(items, false)}
+    {mapItems(items, level + 1, false)}
   </SideNavMenu>
 );
 
 MenuSection.props = {
-  active: PropTypes.bool,
-  icon: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.any).isRequired,
-  title: PropTypes.string.isRequired,
+  ...menuSectionProps,
 };
+
 
 const MenuFind = () => (
   <SideNavItem>
@@ -135,8 +160,11 @@ export const MainMenu = (props) => {
     />
   );
 
+  const [activeSectionItems, setSection] = useState(null);
+
 
   return (
+  <>
     <SideNav
       aria-label={__("Main Menu")}
       isChildOfHeader={false}
@@ -168,7 +196,7 @@ export const MainMenu = (props) => {
       <hr className="bx--side-nav__hr" />
 
       <SideNavItems>
-        {mapItems(menu)}
+        {mapItems(menu, 0, true, setSection)}
       </SideNavItems>
 
       <MenuCollapse
@@ -176,6 +204,19 @@ export const MainMenu = (props) => {
         toggle={() => setExpanded(!expanded)}
       />
     </SideNav>
+    { activeSectionItems && (
+      <SideNav
+        aria-label={__("Main Menu 2")}
+        className="second"
+        expanded={true}
+        isChildOfHeader={false}
+      >
+        <SideNavItems>
+          {mapItems(activeSectionItems, 1, true, setSection)}
+        </SideNavItems>
+      </SideNav>
+    )}
+  </>
   );
 };
 
