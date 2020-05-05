@@ -46,18 +46,16 @@ function createSchema(options, catalogId) {
     name: 'assign-catalog-items',
     fields: [
       {
+        assignFieldProvider: true,
         component: 'dual-list-select',
         leftTitle: __('Unassigned:'),
         rightTitle: __('Selected:'),
-        leftId: 'available_fields',
-        rightId: 'selected_fields',
-        allToRight: false,
         moveLeftTitle: __('Move Selected buttons left'),
         moveRightTitle: __('Move Selected buttons right'),
-        size: 8,
-        assignFieldProvider: true,
-        options,
         name: 'service_templates',
+        options,
+        selectedSide: 'right',
+        size: 8,
       },
     ],
   }];

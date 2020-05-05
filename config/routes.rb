@@ -2346,7 +2346,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         edit
-        edit_vm
         form_field_changed
         ownership_form_fields
         show
@@ -2981,7 +2980,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        edit_vm
         form_field_changed
         name_changed
         policy_sim
@@ -3051,7 +3049,6 @@ Rails.application.routes.draw do
         advanced_settings
         accordion_select
         button
-        edit_vm
         resize_vm
         resize_field_changed
         event_logs
@@ -3148,7 +3145,6 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
-        edit_vm
         event_logs
         explorer
         filesystems
@@ -3247,7 +3243,6 @@ Rails.application.routes.draw do
         drift_history
         drift_mode
         drift_same
-        edit_vm
         event_logs
         explorer
         filesystem_drivers

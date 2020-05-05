@@ -1,5 +1,3 @@
-require "rexml/document"
-
 class MiqTemplateController < ApplicationController
   include VmCommon
   include Mixins::GenericListMixin

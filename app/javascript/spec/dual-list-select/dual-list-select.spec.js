@@ -63,6 +63,35 @@ describe('Dual list component', () => {
     expect(onChangeSpy).toHaveBeenCalledWith([]);
   });
 
+  it('correctly moves items to right for selectedSide=left', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} selectedSide={"left"} />);
+    const button = wrapper.find('button').first(); // find toRight button
+    wrapper
+      .find('select')
+      .first()
+      .find('option')
+      .first()
+      .simulate('click');
+    wrapper.update();
+    button.simulate('click');
+
+    expect(onChangeSpy).toHaveBeenCalledWith([]);
+  });
+
+  it('correctly moves items to left for selectedSide=left', () => {
+    const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} selectedSide={"left"} />);
+    wrapper
+      .find('select')
+      .last()
+      .find('option')
+      .first()
+      .simulate('click');
+    const button = wrapper.find('button').last(); // find toLeft button
+    button.simulate('click');
+
+    expect(onChangeSpy).toHaveBeenCalledWith(['key3', 'key1']);
+  });
+
   it('correctly move all items to right', () => {
     const wrapper = mount(<DualList FieldProvider={FieldProvider} {...props} allToRight />);
     const button = wrapper.find('button').at(1); // find allRoLeft button
