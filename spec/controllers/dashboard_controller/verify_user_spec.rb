@@ -66,14 +66,14 @@ describe DashboardController do
     it 'fails for an existing user with wrong password' do
       validation = controller.send(:validate_user, invalid_password, nil)
       expect(validation.result).to eq(:fail)
-      expect(validation.flash_msg).to eq("Sorry, the username or password you entered is incorrect.")
+      expect(validation.flash_msg).to eq("The username or password you entered is incorrect.")
       expect(validation.url).to be_nil
     end
 
     it 'fails for an invalid user' do
       validation = controller.send(:validate_user, invalid_user, nil)
       expect(validation.result).to eq(:fail)
-      expect(validation.flash_msg).to eq("Sorry, the username or password you entered is incorrect.")
+      expect(validation.flash_msg).to eq("The username or password you entered is incorrect.")
       expect(validation.url).to be_nil
     end
 
