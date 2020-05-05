@@ -4,84 +4,97 @@
     .col-xs-12.col-sm-6.col-md-7.my-tile
       .row.row-tile-pf
         .col-xs-6.col-sm-6.col-md-4
-          %div{:layout                    => "mini",
+          %div{:layout                   => "mini",
               "pf-aggregate-status-card" => "",
               "show-top-border"          => "true",
               :status                    => "objectStatus.containers",
               :url                       => "navigation"}
         .col-xs-6.col-sm-6.col-md-4
-          %div{:layout                    => "mini",
+          %div{:layout                   => "mini",
               "pf-aggregate-status-card" => "",
               "show-top-border"          => "true",
               :status                    => "objectStatus.images",
               :url                       => "navigation"}
         .col-xs-6.col-sm-6.col-md-4
-          %div{:layout                    => "mini",
+          %div{:layout                   => "mini",
               "pf-aggregate-status-card" => "",
               "show-top-border"          => "true",
               :status                    => "objectStatus.services",
               :url                       => "navigation"}
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
-          %div{"pf-card"    => ""}
+          %div{"pf-card"         => "",
+               "show-top-border" => "true",
+               "head-title"      => "{{cpuUsageConfig.title}}"}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-            %div{"chart-data" => "cpuUsageData",
-                "chart-height" => "chartHeight",
-                :config => "cpuUsageConfig",
-                "ng-if" => "loadingDone",
+            %pf-empty-chart{"ng-if" => "loadingDone && cpuUsageData.dataAvailable === false"}
+            %div{"chart-data"     => "cpuUsageData",
+                "chart-height"    => "chartHeight",
+                :config           => "cpuUsageConfig",
+                "ng-if"           => "loadingDone && cpuUsageData.dataAvailable",
                 "pf-trends-chart" => ""}
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
-          %div{"pf-card"    => ""}
+          %div{"pf-card"         => "",
+               "head-title"      => "{{memoryUsageConfig.title}}",
+               "show-top-border" => "true",}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-            %div{"chart-data" => "memoryUsageData",
-                "chart-height" => "chartHeight",
-                :config => "memoryUsageConfig",
-                "ng-if" => "loadingDone",
+            %pf-empty-chart{"ng-if" => "loadingDone && memoryUsageData.dataAvailable === false"}
+            %div{"chart-data"     => "memoryUsageData",
+                "chart-height"    => "chartHeight",
+                :config           => "memoryUsageConfig",
+                "ng-if"           => "loadingDone && memoryUsageData.dataAvailable",
                 "pf-trends-chart" => ""}
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
-          %div{"pf-card"    => ""}
+          %div{"pf-card"         => "",
+               "head-title"      => "{{networkUtilizationConfig.headTitle}}",
+               "show-top-border" => "true",}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-            %div{"chart-data" => "networkUtilization",
-                "chart-height" => "chartHeight",
-                :config => "networkUtilizationConfig",
-                "ng-if" => "loadingDone",
+            %pf-empty-chart{"ng-if" => "loadingDone && networkUtilization.dataAvailable === false"}
+            %div{"chart-data"     => "networkUtilization",
+                "chart-height"    => "chartHeight",
+                :config           => "networkUtilizationConfig",
+                "ng-if"           => "loadingDone  && networkUtilization.dataAvailable",
                 "pf-trends-chart" => ""}
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
-          %div{"head-title" => "{{podEntityTrendConfig.headTitle}}",
-               "pf-card" => ""}
+          %div{"head-title"      => "{{podEntityTrendConfig.headTitle}}",
+               "show-top-border" => "true",
+               "pf-card"         => ""}
             .spinner.spinner-lg.loading{"ng-if" => "!podEntityTrendConfig"}
-            %div{"chart-data" => "podEntityTrend",
-                 "chart-height" => "chartHeight",
-                 :config => "podEntityTrendConfig",
-                 "ng-if" => "loadingDone",
+            %pf-empty-chart{"ng-if" => "loadingDone && podEntityTrend.dataAvailable === false"}
+            %div{"chart-data"    => "podEntityTrend",
+                 "chart-height"  => "chartHeight",
+                 :config         => "podEntityTrendConfig",
+                 "ng-if"         => "loadingDone && podEntityTrend.dataAvailable",
                  "pf-line-chart" => ""}
 
-            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !podEntityTrendConfig }"}
+            %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !podEntityTrendConfig }", "ng-if" => "loadingDone && podEntityTrend.dataAvailable"}
               {{podEntityTrendConfig.timeFrame}}
 
     .col-xs-12.col-sm-6.col-md-5
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
-          %div{"pf-card" => "",
-           "head-title" => _('Quotas'),
-           "show-top-border" =>"true"}
+          %div{"pf-card"         => "",
+               "head-title"      => _('Quotas'),
+               "show-top-border" =>"true"}
+            %pf-empty-chart{"ng-if" => "loadingDone && !quotas[0].data.dataAvailable"}
             %div{"ng-repeat"                => "item in quotas",
                  "pf-utilization-bar-chart" => "",
                  "layout"                   => "barChartLayoutInline",
                  "chart-data"               => "item.data",
                  "chart-title"              => "item.title",
+                 "ng-if"                    => "loadingDone && quotas[0].data.dataAvailable",
                  "units"                    => "item.units"}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
 
         .col-xs-12.col-sm-6.col-md-12
-          %div{"pf-card" => "",
-               "head-title" => _('Pods'),
-               "show-top-border" =>"true"}
+          %div{"pf-card"         => "",
+               "head-title"      => _('Pods'),
+               "show-top-border" => "true"}
             .spinner.spinner-lg.loading{"ng-if" => "!loadingDone"}
-            .empty-chart-content{"pf-empty-chart" => "", "ng-if" => "loadingDone && pods.length == 0"}
+            %pf-empty-chart{"ng-if" => "loadingDone && pods.length == 0"}
             %table#table.table.table-striped.table-bordered.table-hover{"ng-if" => "loadingDone && pods.length > 0"}
               %thead
                 %tr
