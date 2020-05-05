@@ -25,6 +25,10 @@ export const linkProps = ({type, href, id}) => ({
       event.preventDefault();
       return;
     }
+
+    if (href === '/dashboard/logout') {
+      ManageIQ.logoutInProgress = true;
+    }
   },
 });
 
