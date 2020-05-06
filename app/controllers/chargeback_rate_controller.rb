@@ -25,13 +25,14 @@ class ChargebackRateController < ApplicationController
     params[:id] = "xx-#{@record.rate_type}_#{nodeid}"
     params[:tree] = x_active_tree.to_s
     tree_select
+    redirect_to :action => 'explorer' unless request.xml_http_request? # Ajax request means in explorer
   end
 
   def tree_select
-    self.x_active_tree = params[:tree] if params[:tree]
+    self.x_active_tree = :cb_rates_tree
     self.x_node = params[:id]
     get_node_info(x_node)
-    replace_right_cell
+    replace_right_cell if request.xml_http_request? # Ajax request means in explorer
   end
 
   def explorer
@@ -39,7 +40,7 @@ class ChargebackRateController < ApplicationController
     @explorer    = true
     build_accordions_and_trees
 
-    @right_cell_text = _("All Chargeback Rates")
+    @right_cell_text ||= _("All Chargeback Rates")
     set_form_locals if @in_a_form
     session[:changed] = false
 
