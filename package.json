@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
+    "@carbon/themes": "~10.12.0",
     "@data-driven-forms/pf3-component-mapper": "~1.30.0",
     "@data-driven-forms/react-form-renderer": "~1.30.0",
     "@manageiq/react-ui-components": "~0.11.68",
