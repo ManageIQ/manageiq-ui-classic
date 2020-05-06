@@ -26,9 +26,9 @@ const mapItems = (items, level = 0, root = true, setSection = null) => items.map
     : <FirstLevelSection key={item.id} setSection={setSection} {...item} />
   )
   : (
-    root
-    ? <FirstLevelItem key={item.id} {...item} />
-    : <MenuItem key={item.id} {...item} />
+    level
+    ? <MenuItem key={item.id} {...item} />
+    : <FirstLevelItem key={item.id} {...item} />
   )
 ));
 
