@@ -1,26 +1,42 @@
 #main-menu {
   list-style: none;
 
-  svg {
-    fill: $gray-10;
+  ul ul {
+    list-style: none;
+    padding: 0;
   }
 
+  // colors
   .bx--side-nav {
-    background-color: $gray-90;
+    background-color: $ui-background;
+
+    &.second {
+      background-color: $ui-01;
+    }
   }
 
+  .bx--side-nav__link-text,
+  .bx--side-nav__submenu-title {
+    color: $text-01;
+  }
+
+  .bx--side-nav__icon > svg,
+  .menu-collapse-button > svg {
+    fill: $icon-01;
+  }
+  .bx--side-nav__icon > i {
+    color: $icon-01;
+  }
+
+  .bx--side-nav__hr {
+    color: $text-03;
+  }
+
+  // sizing
   .bx--side-nav.second {
-    background-color: $gray-80;
     left: 16rem;
     max-width: 14rem;
     width: 14rem;
-  }
-
-  .bx--side-nav,
-  .bx--side-nav__icon,
-  .bx--side-nav__link-text,
-  .bx--side-nav__submenu-title {
-    color: $gray-10;
   }
 
   .bx--side-nav__header,
@@ -32,7 +48,6 @@
   }
 
   .bx--side-nav__hr {
-    color: $gray-60;
     margin: 16px 0 0 0;
   }
   .bx--side-nav__expanded {
