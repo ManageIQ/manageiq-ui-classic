@@ -369,6 +369,7 @@ Rails.application.routes.draw do
     :chargeback_rate => {
       :get  => %w(
         explorer
+        x_show
       ),
       :post => %w(
         explorer
