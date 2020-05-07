@@ -1,18 +1,5 @@
 class ApplicationHelper::Toolbar::SecurityPolicyRulesCenter < ApplicationHelper::Toolbar::Basic
   button_group(
-    'security_policy_rule_refreshing', [
-      button(
-        :security_policy_rules_refresh,
-        'fa fa-refresh fa-lg',
-        N_('Refresh this page'),
-        nil,
-        :url_parms    => "main_div",
-        :send_checked => true,
-        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
-      )
-    ]
-  )
-  button_group(
     'security_policy_rule_vmdb',
     [
       select(
@@ -24,7 +11,7 @@ class ApplicationHelper::Toolbar::SecurityPolicyRulesCenter < ApplicationHelper:
         ]
       )
     ]
-  )  
+  )
   button_group(
     'security_policy_rule_policy',
     [

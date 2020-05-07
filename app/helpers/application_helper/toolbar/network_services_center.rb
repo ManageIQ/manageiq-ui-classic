@@ -1,18 +1,5 @@
 class ApplicationHelper::Toolbar::NetworkServicesCenter < ApplicationHelper::Toolbar::Basic
   button_group(
-    'network_service_refreshing', [
-      button(
-        :network_services_refresh,
-        'fa fa-refresh fa-lg',
-        N_('Refresh this page'),
-        nil,
-        :url_parms    => "main_div",
-        :send_checked => true,
-        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
-      )
-    ]
-  )
-  button_group(
     'network_service_policy',
     [
       select(

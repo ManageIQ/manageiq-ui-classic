@@ -31,23 +31,6 @@ class FloatingIpController < ApplicationController
       javascript_redirect(:action => "edit", :id => checked_item_id(params))
     when "floating_ip_new"
       javascript_redirect(:action => "new")
-    when "floating_ips_refresh"
-      show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl")
-      end
-    when "floating_ip_refresh"
-      javascript_redirect(:action => 'show', :id => params[:id])
-    else
-      super
-    end
-  end
-
-  def check_button_rbac
-    # Allow refresh to skip RBAC check
-    if %w[floating_ips_refresh floating_ip_refresh].include?(params[:pressed])
-      true
     else
       super
     end

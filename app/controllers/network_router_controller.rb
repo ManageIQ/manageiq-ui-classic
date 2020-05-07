@@ -31,23 +31,6 @@ class NetworkRouterController < ApplicationController
       javascript_redirect(:action => "new")
     when "network_router_remove_interface"
       javascript_redirect(:action => "remove_interface_select", :id => checked_item_id)
-    when "network_routers_refresh"
-      show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl")
-      end
-    when "network_router_refresh"
-      javascript_redirect(:action => 'show', :id => params[:id])
-    else
-      super
-    end
-  end
-
-  def check_button_rbac
-    # Allow refresh to skip RBAC check
-    if %w[network_routers_refresh network_router_refresh].include?(params[:pressed])
-      true
     else
       super
     end

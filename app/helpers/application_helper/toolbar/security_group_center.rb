@@ -1,18 +1,5 @@
 class ApplicationHelper::Toolbar::SecurityGroupCenter < ApplicationHelper::Toolbar::Basic
   button_group(
-    'security_group_refreshing', [
-      button(
-        :security_group_refresh,
-        'fa fa-refresh fa-lg',
-        N_('Refresh this page'),
-        nil,
-        :url_parms    => "main_div",
-        :send_checked => true,
-        :klass        => ApplicationHelper::Button::ButtonWithoutRbacCheck
-      )
-    ]
-  )  
-  button_group(
     'security_group_vmdb',
     [
       select(

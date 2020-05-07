@@ -13,23 +13,23 @@ class SecurityGroupController < ApplicationController
 
   def self.display_methods
     %w[
-      instances network_ports network_routers cloud_subnets custom_button_events 
+      instances network_ports network_routers cloud_subnets custom_button_events
       security_policy_rules_as_source security_policy_rules_as_destination
     ]
   end
 
   def display_security_policy_rules_as_source
     nested_list(
-      SecurityPolicyRule, 
-      :association => :security_policy_rules_as_source, 
+      SecurityPolicyRule,
+      :association => :security_policy_rules_as_source,
       :breadcrumb_title => _("Source of Security Policy Rules")
     )
   end
 
   def display_security_policy_rules_as_destination
     nested_list(
-      SecurityPolicyRule, 
-      :association => :security_policy_rules_as_destination, 
+      SecurityPolicyRule,
+      :association => :security_policy_rules_as_destination,
       :breadcrumb_title => _("Destination of Security Policy Rules")
     )
   end
@@ -50,23 +50,6 @@ class SecurityGroupController < ApplicationController
       javascript_redirect(:action => "edit", :id => checked_item_id(params))
     when 'security_group_new'
       javascript_redirect(:action => "new")
-    when "security_groups_refresh"
-      show_list
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/gtl")
-      end
-    when "security_group_refresh"
-      javascript_redirect(:action => 'show', :id => params[:id])
-    else
-      super
-    end
-  end
-
-  def check_button_rbac
-    # Allow refresh to skip RBAC check
-    if %w[security_groups_refresh security_group_refresh].include?(params[:pressed])
-      true
     else
       super
     end
@@ -236,8 +219,8 @@ class SecurityGroupController < ApplicationController
 
   def display_instances
     nested_list(
-      VmOrTemplate, 
-      :association => :vms, 
+      VmOrTemplate,
+      :association => :vms,
       :breadcrumb_title => _("Instances")
     )
   end
