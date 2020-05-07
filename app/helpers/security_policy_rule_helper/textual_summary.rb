@@ -75,6 +75,7 @@ module SecurityPolicyRuleHelper::TextualSummary
 
   def textual_ems_ref
     return nil if @record.ems_ref.blank?
+
     {:label => _("ID within Provider"), :value => @record.ems_ref}
   end
 

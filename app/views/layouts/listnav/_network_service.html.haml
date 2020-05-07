@@ -14,3 +14,9 @@
       %ul.nav.nav-pills.nav-stacked
         = single_relationship_link(@record, :ems_network, "ext_management_system")
         = single_relationship_link(@record, :cloud_tenant, "cloud_tenant")
+        - if role_allows?(:feature => "vm_show_list")
+          = li_link(:count => @record.number_of(:vms),
+                    :text => _("Instances"),
+                    :record_id => @record.id,
+                    :display => 'instances',
+                    :title => _("Show all Instances"))
