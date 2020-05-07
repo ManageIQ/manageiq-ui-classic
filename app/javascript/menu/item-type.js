@@ -10,7 +10,7 @@ export const linkProps = ({type, href, id}) => ({
     default: href,
     modal: undefined,
     new_window: href,
-  }[type],
+  }[type || 'default'],
 
   target: (type === 'new_window' ? '_blank' : '_self'),
 
