@@ -141,34 +141,36 @@ const initialExpanded = window.localStorage.getItem('patternfly-navigation-prima
 export const MainMenu = (props) => {
   const { applianceName, currentGroup, currentUser, customBrand, customLogo, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
   const [expanded, setExpanded] = useState(initialExpanded);
+  const [activeSectionItems, setSection] = useState(null);
+
+  let appearExpanded = expanded || !!activeSectionItems;
 
   useEffect(() => {
     window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
+  }, [expanded]);
 
+  useEffect(() => {
     const classNames = {
       true: 'miq-main-menu-expanded',
       false: 'miq-main-menu-collapsed',
     };
-    document.body.classList.remove(classNames[!expanded]);
-    document.body.classList.add(classNames[expanded]);
-  }, [expanded]);
+    document.body.classList.remove(classNames[!appearExpanded]);
+    document.body.classList.add(classNames[appearExpanded]);
+  }, [appearExpanded]);
 
   const miqLogo = () => (
     <MiqLogo
       customBrand={customBrand}
-      imagePath={expanded ? logoLarge : logoSmall}
+      imagePath={appearExpanded ? logoLarge : logoSmall}
     />
   );
-
-  const [activeSectionItems, setSection] = useState(null);
-
 
   return (
   <>
     <SideNav
       aria-label={__("Main Menu")}
       isChildOfHeader={false}
-      expanded={expanded}
+      expanded={appearExpanded}
     >
       {showLogo && <SideNavHeader
         renderIcon={miqLogo}
@@ -187,7 +189,7 @@ export const MainMenu = (props) => {
 
       <GroupSwitcher
         currentGroup={currentGroup}
-        expanded={expanded}
+        expanded={appearExpanded}
         miqGroups={miqGroups}
       />
 
@@ -200,7 +202,7 @@ export const MainMenu = (props) => {
       </SideNavItems>
 
       <MenuCollapse
-        expanded={expanded}
+        expanded={expanded /* not appearExpanded */}
         toggle={() => setExpanded(!expanded)}
       />
     </SideNav>
