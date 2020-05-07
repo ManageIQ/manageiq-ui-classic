@@ -139,7 +139,7 @@ const MenuCollapse = ({ expanded, toggle }) => (
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
 export const MainMenu = (props) => {
-  const { applianceName, currentGroup, currentUser, customBrand, customLogo, imagePath, menu, miqGroups } = props;
+  const { applianceName, currentGroup, currentUser, customBrand, customLogo, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
   const [expanded, setExpanded] = useState(initialExpanded);
 
   useEffect(() => {
@@ -153,10 +153,10 @@ export const MainMenu = (props) => {
     document.body.classList.add(classNames[expanded]);
   }, [expanded]);
 
-  const renderIcon = () => (
+  const miqLogo = () => (
     <MiqLogo
       customBrand={customBrand}
-      imagePath={imagePath}
+      imagePath={expanded ? logoLarge : logoSmall}
     />
   );
 
@@ -170,12 +170,12 @@ export const MainMenu = (props) => {
       isChildOfHeader={false}
       expanded={expanded}
     >
-      <SideNavHeader
-        renderIcon={renderIcon}
-      />
+      {showLogo && <SideNavHeader
+        renderIcon={miqLogo}
+      />}
 
       {/* FIXME initials, collapsed.. */}
-      <SideNavItem>
+      {showUser && <SideNavItem>
         <p
           data-userid={currentUser.userid}
           id="username_display"
@@ -183,7 +183,7 @@ export const MainMenu = (props) => {
         >
           {currentUser.name}
         </p>
-      </SideNavItem>
+      </SideNavItem>}
 
       <GroupSwitcher
         currentGroup={currentGroup}
@@ -236,7 +236,15 @@ MainMenu.propTypes = {
   currentUser: propUser.isRequired,
   customBrand: PropTypes.bool.isRequired,
   customLogo: PropTypes.bool.isRequired,
-  imagePath: PropTypes.string.isRequired,
+  logoLarge: PropTypes.string,
+  logoSmall: PropTypes.string,
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
   miqGroups: PropTypes.arrayOf(propGroup).isRequired,
+  showLogo: PropTypes.bool,
+  showUser: PropTypes.bool,
+};
+
+MainMenu.defaultProps = {
+  showLogo: true,
+  showUser: true,
 };

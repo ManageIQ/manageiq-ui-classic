@@ -10,7 +10,8 @@
                           :currentUser => user,
                           :customBrand => ::Settings.server.custom_brand,
                           :customLogo => ::Settings.server.custom_logo,
-                          :imagePath => image_path("layout/brand.svg"),
+                          :logoLarge => image_path("layout/manageiq-logo-inverse.svg"),
+                          :logoSmall => image_path("layout/manageiq-logo-glyph-inverse.svg"),
                           :menu => menu_to_json,
                           :miqGroups => groups}, :id => 'main-menu')
 
