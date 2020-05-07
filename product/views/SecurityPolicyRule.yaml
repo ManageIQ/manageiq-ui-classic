@@ -19,7 +19,7 @@ db: SecurityPolicyRule
 
 # Columns to fetch from the main table
 cols:
-- sequence_number  
+- sequence_number
 - name
 - source_security_groups_count
 - destination_security_groups_count
@@ -36,7 +36,7 @@ include:
   security_policy:
     columns:
     - name
-  
+
 # Included tables and columns for query performance
 include_for_find:
 

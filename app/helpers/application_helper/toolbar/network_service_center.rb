@@ -12,7 +12,7 @@ class ApplicationHelper::Toolbar::NetworkServiceCenter < ApplicationHelper::Tool
             :network_service_tag,
             'pficon pficon-edit fa-lg',
             N_('Edit Tags for this Network Service'),
-            N_('Edit Tags'),
+            N_('Edit Tags')
           )
         ]
       )

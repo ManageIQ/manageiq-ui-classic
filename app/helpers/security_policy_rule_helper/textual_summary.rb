@@ -11,15 +11,15 @@ module SecurityPolicyRuleHelper::TextualSummary
 
   def textual_group_properties
     TextualGroup.new(
-      _("Properties"), 
+      _("Properties"),
       %i[
-        description 
-        type 
-        ems_ref 
-        sequence_number 
-        status 
-        action 
-        direction 
+        description
+        type
+        ems_ref
+        sequence_number
+        status
+        action
+        direction
         ip_protocol
       ]
     )
@@ -29,9 +29,9 @@ module SecurityPolicyRuleHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i[
-        ems_network 
-        cloud_tenant 
-        security_policy 
+        ems_network
+        cloud_tenant
+        security_policy
         custom_button_events
       ]
     )
@@ -75,6 +75,7 @@ module SecurityPolicyRuleHelper::TextualSummary
 
   def textual_ems_ref
     return nil if @record.ems_ref.blank?
+
     {:label => _("ID within Provider"), :value => @record.ems_ref}
   end
 

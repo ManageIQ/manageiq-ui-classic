@@ -19,19 +19,11 @@ class SecurityGroupController < ApplicationController
   end
 
   def display_security_policy_rules_as_source
-    nested_list(
-      SecurityPolicyRule,
-      :association => :security_policy_rules_as_source,
-      :breadcrumb_title => _("Source of Security Policy Rules")
-    )
+    nested_list(SecurityPolicyRule, :association => :security_policy_rules_as_source, :breadcrumb_title => _("Source of Security Policy Rules"))
   end
 
   def display_security_policy_rules_as_destination
-    nested_list(
-      SecurityPolicyRule,
-      :association => :security_policy_rules_as_destination,
-      :breadcrumb_title => _("Destination of Security Policy Rules")
-    )
+    nested_list(SecurityPolicyRule, :association => :security_policy_rules_as_destination, :breadcrumb_title => _("Destination of Security Policy Rules"))
   end
 
   menu_section :net
@@ -218,11 +210,7 @@ class SecurityGroupController < ApplicationController
   end
 
   def display_instances
-    nested_list(
-      VmOrTemplate,
-      :association => :vms,
-      :breadcrumb_title => _("Instances")
-    )
+    nested_list(VmOrTemplate, :association => :vms, :breadcrumb_title => _("Instances"))
   end
 
   private

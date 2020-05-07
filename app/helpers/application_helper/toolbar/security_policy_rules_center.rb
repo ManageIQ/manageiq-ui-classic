@@ -7,8 +7,7 @@ class ApplicationHelper::Toolbar::SecurityPolicyRulesCenter < ApplicationHelper:
         'fa fa-cog fa-lg',
         t = N_('Configuration'),
         t,
-        :items => [
-        ]
+        :items => []
       )
     ]
   )
@@ -31,7 +30,8 @@ class ApplicationHelper::Toolbar::SecurityPolicyRulesCenter < ApplicationHelper:
             :url_parms    => "main_div",
             :send_checked => true,
             :enabled      => false,
-            :onwhen       => "1+"),
+            :onwhen       => "1+"
+          )
         ]
       )
     ]

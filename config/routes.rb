@@ -1654,7 +1654,7 @@ Rails.application.routes.draw do
     },
 
     :security_policy          => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         edit
         download_data
@@ -1664,8 +1664,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         create
         form_field_changed
@@ -1678,7 +1678,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         save_post +
         exp_post +
@@ -1686,7 +1686,7 @@ Rails.application.routes.draw do
     },
 
     :security_policy_rule     => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         edit
         download_data
@@ -1696,8 +1696,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         create
         form_field_changed
@@ -1710,7 +1710,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         save_post +
         exp_post +
@@ -1896,15 +1896,15 @@ Rails.application.routes.draw do
     },
 
     :network_service          => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         create
         form_field_changed
@@ -1917,7 +1917,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         save_post +
         exp_post

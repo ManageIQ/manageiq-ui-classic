@@ -7,8 +7,7 @@ class ApplicationHelper::Toolbar::SecurityPolicyRuleCenter < ApplicationHelper::
         'fa fa-shield fa-lg',
         t = N_('Configuration'),
         t,
-        :items => [
-        ]
+        :items => []
       )
     ]
   )
@@ -25,7 +24,7 @@ class ApplicationHelper::Toolbar::SecurityPolicyRuleCenter < ApplicationHelper::
             :security_policy_rule_tag,
             'pficon pficon-edit fa-lg',
             N_('Edit Tags for this Security Policy Rule'),
-            N_('Edit Tags'),
+            N_('Edit Tags')
           )
         ]
       )
