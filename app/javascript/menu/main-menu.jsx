@@ -9,10 +9,11 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
-import Search from 'carbon-components-react/es/components/Search';
 import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
 
 import { GroupSwitcher } from './group-switcher';
+import { MenuSearch } from './search';
+import { SearchResults } from './search-results';
 import { MiqLogo } from './miq-logo';
 import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
@@ -115,15 +116,6 @@ MenuSection.props = {
 };
 
 
-const MenuFind = () => (
-  <SideNavItem>
-    <Search
-      size="sm"
-      placeHolderText={__("Find")}
-    />
-  </SideNavItem>
-);
-
 const MenuCollapse = ({ expanded, toggle }) => (
   <SideNavItem className="menu-collapse">
     <div
@@ -142,8 +134,9 @@ export const MainMenu = (props) => {
   const { applianceName, currentGroup, currentUser, customBrand, customLogo, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
   const [expanded, setExpanded] = useState(initialExpanded);
   const [activeSectionItems, setSection] = useState(null);
+  const [searchResults, setSearch] = useState(null);
 
-  let appearExpanded = expanded || !!activeSectionItems;
+  let appearExpanded = expanded || !!activeSectionItems || !!searchResults;
 
   useEffect(() => {
     window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
@@ -193,13 +186,22 @@ export const MainMenu = (props) => {
         miqGroups={miqGroups}
       />
 
-      <MenuFind />
+      <MenuSearch
+        menu={menu}
+        expanded={appearExpanded}
+        onSearch={setSearch}
+      />
 
       <hr className="bx--side-nav__hr" />
 
-      <SideNavItems>
-        {mapItems(menu, 0, true, setSection)}
-      </SideNavItems>
+      { searchResults && (
+        <SearchResults results={searchResults} />
+      )}
+      { !searchResults && (
+        <SideNavItems>
+          {mapItems(menu, 0, true, setSection)}
+        </SideNavItems>
+      )}
 
       <MenuCollapse
         expanded={expanded /* not appearExpanded */}
