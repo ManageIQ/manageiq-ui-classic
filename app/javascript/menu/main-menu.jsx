@@ -127,6 +127,23 @@ const MenuCollapse = ({ expanded, toggle }) => (
   </SideNavItem>
 );
 
+const Username = ({ applianceName, currentUser, expanded }) => {
+  const title = `${currentUser.name} | ${currentUser.userid} | ${applianceName}`;
+  const initials = Array.from(currentUser.name).filter((x) => x.match(/\p{Upper}/u)).join('').substr(0, 3) || currentUser.name[0];
+
+  return (
+    <SideNavItem>
+      <p
+        data-userid={currentUser.userid}
+        id="username_display"
+        title={title}
+      >
+        { expanded ? currentUser.name : initials }
+      </p>
+    </SideNavItem>
+  );
+};
+
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
@@ -169,16 +186,11 @@ export const MainMenu = (props) => {
         renderIcon={miqLogo}
       />}
 
-      {/* FIXME initials, collapsed.. */}
-      {showUser && <SideNavItem>
-        <p
-          data-userid={currentUser.userid}
-          id="username_display"
-          title={`${currentUser.name} | ${currentUser.userid} | ${applianceName}`}
-        >
-          {currentUser.name}
-        </p>
-      </SideNavItem>}
+      {showUser && <Username
+        applianceName={applianceName}
+        currentUser={currentUser}
+        expanded={appearExpanded}
+      />}
 
       <GroupSwitcher
         currentGroup={currentGroup}
