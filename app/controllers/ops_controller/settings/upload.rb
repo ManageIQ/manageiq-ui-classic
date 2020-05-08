@@ -24,7 +24,7 @@ module OpsController::Settings::Upload
   def upload_logos(file, field, text, type)
     if field && field[:logo] && field[:logo].respond_to?(:read)
       if field[:logo].original_filename.split(".").last.downcase != type
-        add_flash("%{image} must be a .#{type} file" % {:image => text}, :error)
+        add_flash(_("%{image} must be a .%{type} file") % {:image => text, :type => type}, :error)
       else
         File.open(file, "wb") { |f| f.write(field[:logo].read) }
         add_flash(_("%{image} \"%{name}\" uploaded") % {:image => text, :name => field[:logo].original_filename})
