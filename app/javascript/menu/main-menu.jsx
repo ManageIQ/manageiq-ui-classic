@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import {
   SideNav,
   SideNavHeader,
+  SideNavIcon,
   SideNavItem,
   SideNavItems,
   SideNavLink,
   SideNavMenu,
   SideNavMenuItem,
 } from 'carbon-components-react/es/components/UIShell';
+import Link from 'carbon-components-react/es/components/UIShell/Link';
 import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
 
 import { GroupSwitcher } from './group-switcher';
@@ -83,17 +86,37 @@ const menuSectionProps = {
   title: PropTypes.string.isRequired,
 };
 
-// TODO items chevron
-const FirstLevelSection = ({ active, id, items, title, icon, setSection }) => (
-  <SideNavLink
-    id={itemId(id, true)}
-    isActive={active}
-    renderIcon={carbonizeIcon(icon)}
-    onClick={() => setSection(items)}
-  >
-    {title}
-  </SideNavLink>
-);
+// really a SideNavLink with a chevron from SideNavMenu instead of SideNavLinkText
+const FirstLevelSection = ({ active, id, items, title, icon, setSection }) => {
+  const className = cx({
+    'bx--side-nav__link': true,
+    'bx--side-nav__link--current': active,
+  });
+  const IconElement = carbonizeIcon(icon);
+
+  return (
+    <SideNavItem id={itemId(id, true)}>
+      <Link
+        className={className}
+        onClick={() => setSection(items)}
+      >
+        {IconElement && (
+          <SideNavIcon small>
+            <IconElement />
+          </SideNavIcon>
+        )}
+
+        <span className="bx--side-nav__submenu-title">
+          {title}
+        </span>
+
+        <SideNavIcon className="bx--side-nav__submenu-chevron" small>
+          <ChevronRight20 />
+        </SideNavIcon>
+      </Link>
+    </SideNavItem>
+  );
+};
 
 FirstLevelSection.props = {
   ...menuSectionProps,
