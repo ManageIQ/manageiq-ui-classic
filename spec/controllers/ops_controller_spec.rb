@@ -288,7 +288,6 @@ describe OpsController do
     it "build trees that are passed in and met other conditions" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_build_dyna_tree)
-      allow(VmdbDatabase).to receive_message_chain(:my_database, :evm_tables) { [] }
       replace_trees = %i(settings diagnostics rbac vmdb)
       presenter = ExplorerPresenter.new
       expect(controller).to receive(:reload_trees_by_presenter).with(

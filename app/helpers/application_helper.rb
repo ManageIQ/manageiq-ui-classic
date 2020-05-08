@@ -259,11 +259,6 @@ module ApplicationHelper
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
-      # If we do not want to use redirect or any kind of click action
-      if %w[Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex].include?(view.db) &&
-         %w[ops].include?(params[:controller])
-        return false
-      end
       if %w[MiqTask].include?(view.db) && %w[miq_task].include?(params[:controller])
         return true
       end
@@ -305,7 +300,7 @@ module ApplicationHelper
           else
             return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
           end
-        elsif %w[VmdbTableEvm MiqServer].include?(view.db) &&
+        elsif view.db == "MiqServer" &&
               %w[ops report].include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         elsif %w[MiqAction

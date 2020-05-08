@@ -576,7 +576,6 @@ class OpsController < ApplicationController
     build_supported_depots_for_select
 
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
-    presenter[:add_nodes] = add_nodes if add_nodes
 
     replace_explorer_trees(replace_trees, presenter)
     rebuild_toolbars(presenter)
