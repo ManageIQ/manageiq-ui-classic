@@ -79,21 +79,3 @@ describe ReportController do
     end
   end
 end
-
-describe ProviderForemanController do
-  describe '#replace_search_box' do
-    let(:presenter) { ExplorerPresenter.new(:active_tree => :configuration_manager_providers_tree) }
-
-    it 'replaces advsearchModal' do
-      expect(presenter).to receive(:replace).with(:adv_searchbox_div, '')
-      expect(presenter).not_to receive(:replace).with(:advsearchModal, '')
-      controller.send(:replace_search_box, presenter, :nameonly => true)
-    end
-
-    it 'does not replace advsearchModal' do
-      expect(presenter).to receive(:replace).with(:adv_searchbox_div, '')
-      expect(presenter).to receive(:replace).with(:advsearchModal, '')
-      controller.send(:replace_search_box, presenter)
-    end
-  end
-end

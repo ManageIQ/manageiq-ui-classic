@@ -877,19 +877,6 @@ describe ApplicationHelper do
       expect(result).to be_truthy
     end
 
-    it 'should return true for the configuration providers tree' do
-      controller.instance_variable_set(:@sb,
-                                       :active_tree => :configuration_manager_providers_tree,
-                                       :trees       => {
-                                         :configuration_manager_providers_tree => {
-                                           :tree => :configuration_manager_providers_tree,
-                                           :type => :configuration_manager_providers
-                                         }
-                                       })
-      result = helper.tree_with_advanced_search?
-      expect(result).to be_truthy
-    end
-
     it 'should return false for tree w/o advanced search' do
       controller.instance_variable_set(:@sb,
                                        :active_tree => :reports_tree,
@@ -974,19 +961,12 @@ describe ApplicationHelper do
 
     subject { helper.display_adv_search? }
 
-    context 'Volume Snapshots page' do
-      let(:layout) { "cloud_volume_snapshot" }
-
-      it 'returns true' do
-        expect(subject).to be(true)
-      end
-    end
-
-    context 'Volume Backups page' do
-      let(:layout) { "cloud_volume_backup" }
-
-      it 'returns true' do
-        expect(subject).to be(true)
+    context 'Advanced search is visible for list views' do
+      %w[cloud_volume_snapshot cloud_volume_backup ems_configuration].each do |layout|
+        let(:layout) { layout }
+        it 'returns true' do
+          expect(subject).to be(true)
+        end
       end
     end
   end

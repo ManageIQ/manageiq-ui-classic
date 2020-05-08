@@ -218,8 +218,6 @@ module ApplicationHelper
                                :show       => @id)
     elsif @host && %w[Patch GuestApplication].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif %w[ConfiguredSystem ConfigurationProfile].include?(db)
-      return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
       return url_for_only_path(:controller => controller, :action => action, :id => @id)
@@ -281,13 +279,8 @@ module ApplicationHelper
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
-        elsif %w[ConfigurationProfile].include?(view.db) &&
-              request.parameters[:controller] == "provider_foreman"
-          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w[ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder].include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
-          return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w[ConfiguredSystem].include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w[MiqWidget
                  ConfigurationScript
@@ -422,6 +415,7 @@ module ApplicationHelper
       controller = request.parameters[:controller]
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
+        "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
       controller = request.parameters[:controller]
     when "ContainerVolume"
@@ -755,7 +749,9 @@ module ApplicationHelper
        cloud_volume_snapshot
        cloud_volume_type
        configuration_job
+       configuration_profile
        configuration_scripts
+       configured_system
        container
        container_build
        container_group
@@ -769,6 +765,7 @@ module ApplicationHelper
        container_template
        ems_cloud
        ems_cluster
+       ems_configuration
        ems_container
        ems_infra
        ems_middleware
@@ -791,7 +788,6 @@ module ApplicationHelper
        orchestration_stack
        persistent_volume
        physical_server
-       provider_foreman
        resource_pool
        retired
        security_group
@@ -880,7 +876,7 @@ module ApplicationHelper
   end
 
   def pressed2model_action(pressed)
-    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider|configuration_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
+    pressed =~ /^(ems_cluster|miq_template|infra_networking|automation_manager_provider)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
 
   def model_for_vm(record)
@@ -911,11 +907,6 @@ module ApplicationHelper
     case tree
     when :automation_manager_cs_filter_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
-    when :configuration_manager_cs_filter_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
-    when :configuration_manager_providers_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager" if x_node.include?("fr")
-      "ManageIQ::Providers::ConfigurationManager" if x_node == "root"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
@@ -937,8 +928,6 @@ module ApplicationHelper
     case tree
     when :automation_manager_cs_filter_tree, :automation_manager_providers_tree
       "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"
-    when :configuration_manager_cs_filter_tree
-      "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"
     when :configuration_scripts_tree
       "ConfigurationScript"
     end
@@ -1072,7 +1061,9 @@ module ApplicationHelper
                         cloud_volume_type
                         condition
                         configuration_job
+                        configuration_profile
                         configuration_script_source
+                        configured_system
                         container
                         container_build
                         container_dashboard
@@ -1089,6 +1080,7 @@ module ApplicationHelper
                         ems_block_storage
                         ems_cloud
                         ems_cluster
+                        ems_configuration
                         ems_container
                         ems_infra
                         ems_infra_dashboard
@@ -1183,9 +1175,7 @@ module ApplicationHelper
     %i[
       automation_manager_providers_tree
       automation_manager_cs_filter_tree
-      configuration_manager_cs_filter_tree
       configuration_scripts_tree
-      configuration_manager_providers_tree
       images_tree
       images_filter_tree
       instances_tree

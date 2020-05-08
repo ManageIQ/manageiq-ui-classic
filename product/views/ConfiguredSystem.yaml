@@ -37,6 +37,7 @@ col_order:
 - build_state
 - my_zone
 - configuration_environment_name
+- configuration_profile_name
 
 # Column titles, in order
 headers:

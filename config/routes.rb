@@ -2662,27 +2662,26 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
-    :provider_foreman         => {
-      :get  => %w(
+    :ems_configuration => {
+      :get  => %w[
+        button
         download_data
         download_summary_pdf
-        explorer
+        edit
         form_fields
+        new
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
-        accordion_select
+      ],
+      :post => %w[
         authentication_validate
         button
         change_tab
         delete
         edit
-        explorer
         form_field_changed
         new
-        provision
         quick_search
         refresh
         reload
@@ -2691,16 +2690,57 @@ Rails.application.routes.draw do
         tagging
         tagging_edit
         tag_edit_form_field_changed
-        tree_autoload
-        tree_select
-        cs_form_field_changed
-        users
         wait_for_task
-        x_button
-      ) +
-               adv_search_post +
-               exp_post +
-               x_post
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
+    },
+
+    :configuration_profile  => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        button
+        quick_search
+        reload
+        show
+        show_list
+        tagging_edit
+        tag_edit_form_field_changed
+      ]
+    },
+
+    :configured_system  => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        show
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        button
+        new
+        provision
+        quick_search
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tag_edit_form_field_changed
+        wait_for_task
+      ] +
+        adv_search_post +
+        dialog_runner_post +
+        exp_post +
+        save_post
     },
 
     :pxe                      => {

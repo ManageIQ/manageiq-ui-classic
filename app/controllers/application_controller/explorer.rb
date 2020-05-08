@@ -43,8 +43,7 @@ module ApplicationController::Explorer
     'start'            => :s1, 'stop'                      => :s1, 'suspend'             => :s1,
     'reset'            => :s1, 'terminate'                 => :s1, 'pause'               => :s1,
     'shelve'           => :s1, 'shelve_offload'            => :s1, 'chargeback'          => :s1,
-    'foreman_pause'    => :s1, 'foreman_resume'            => :s1, 'manager_pause'       => :s1,
-    'manager_resume'   => :s1,
+    'manager_pause'    => :s1, 'manager_resume'            => :s1,
 
     # group 2
     'clone'        => :s2, 'compare'          => :s2, 'drift'           => :s2,
@@ -55,6 +54,7 @@ module ApplicationController::Explorer
     'tag'          => :s2, 'timeline'         => :s2, 'resize'          => :s2,
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
     'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
+    'manager_configuration_script_service_dialog' => :s2,
     'transform_mass'           => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
@@ -71,8 +71,7 @@ module ApplicationController::Explorer
 
   def x_button
     model, action = pressed2model_action(params[:pressed])
-
-    allowed_models = %w[common image instance vm miq_template provider automation storage configscript infra_networking automation_manager_provider configuration_manager_provider]
+    allowed_models = %w[common image instance vm miq_template provider automation storage infra_networking automation_manager_provider]
     raise ActionController::RoutingError, 'invalid button action' unless
       allowed_models.include?(model)
 
@@ -100,7 +99,7 @@ module ApplicationController::Explorer
           send(method, Storage)
         when 'infra_networking'
           send(method, Switch)
-        when 'automation_manager_provider', 'configuration_manager_provider'
+        when 'automation_manager_provider'
           send(method)
         else
           send(method, VmOrTemplate)

@@ -49,8 +49,6 @@ module Sandbox
     condition_tree
     containers_tree
     containers_filter_tree
-    configuration_manager_cs_filter_tree
-    configuration_manager_providers_tree
     customization_templates_tree
     datacenter_tree
     datastore_tree
@@ -78,7 +76,6 @@ module Sandbox
     protect_tree
     pxe_image_types_tree
     pxe_servers_tree
-    configuration_manager_providers_tree
     rbac_tree
     reports_tree
     roles_by_server_tree
