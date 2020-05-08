@@ -1,0 +1,8 @@
+#main_div
+  - if EmsConfiguration.any?
+    = render :partial => 'layouts/gtl'
+  - else
+    = render :partial => 'layouts/empty',
+             :locals => {:add_message => _("Add a new Configuration Manager"),
+                         :documentation => ::Settings.docs.configuration_provider}
+

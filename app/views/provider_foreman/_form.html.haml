@@ -1,7 +1,0 @@
-= render :partial => 'configuration_manager/shared_form'
-
-:javascript
-  ManageIQ.angular.app.value('configurationManagerFormId', '#{@provider_manager.id || "new"}');
-  ManageIQ.angular.app.value('url', '/provider_foreman');
-  ManageIQ.angular.app.value('modelName', 'providerForemanModel');
-  miq_bootstrap('#form_div');

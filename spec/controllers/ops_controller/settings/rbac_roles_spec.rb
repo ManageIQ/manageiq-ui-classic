@@ -2,7 +2,7 @@ describe OpsController do
   before do
     EvmSpecHelper.seed_specific_product_features(
       %w(vm vm_compare vm_delete instance instance_delete image image_delete miq_template
-         miq_template_delete provider_foreman_explorer provider_foreman_view)
+         miq_template_delete ems_configuration_show_list)
     )
   end
 
@@ -41,10 +41,10 @@ describe OpsController do
       end
     end
     context '"_tab_conf" feature node' do
-      it 'yields features including "provider_foreman_view"' do
+      it 'yields features including "ems_configuration_show_list"' do
         expect do |b|
-          controller.send(:recurse_sections_and_features, '_tab_conf', &b)
-        end.to yield_successive_args(["provider_foreman_explorer", include("provider_foreman_view")])
+          controller.send(:recurse_sections_and_features, 'ems_configuration', &b)
+        end.to yield_successive_args(["ems_configuration", include("ems_configuration_show_list")])
       end
     end
     context '"vm" feature node' do

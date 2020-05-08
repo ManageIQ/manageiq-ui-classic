@@ -7,6 +7,7 @@ class AutomationManagerController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::AutomationManagerControllerMixin
   include Mixins::ExplorerPresenterMixin
   include Mixins::EmsCommon::Core
   include Mixins::EmsCommon::PauseResume
@@ -446,7 +447,7 @@ class AutomationManagerController < ApplicationController
     configuration_script_record.try(:id)
   end
 
-  def configscript_service_dialog
+  def automation_manager_configuration_script_service_dialog
     assert_privileges("automation_manager_configuration_script_service_dialog")
     cs = ConfigurationScript.find_by(:id => params[:miq_grid_checks] || params[:id])
     @edit = {:rec_id => cs.id}

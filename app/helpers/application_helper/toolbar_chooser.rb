@@ -17,8 +17,6 @@ class ApplicationHelper::ToolbarChooser
       nil
     elsif @layout == 'report'
       @report ? "report_view_tb" : nil
-    elsif @layout == 'provider_foreman'
-      @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
     elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
     elsif @layout == 'automation_manager'
@@ -90,8 +88,6 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_explorer
     if %w[vm_cloud vm_infra vm_or_template].include?(@layout)
       center_toolbar_name_vm_or_template
-    elsif @layout == "provider_foreman" && %i[configuration_manager_providers_tree configuration_manager_cs_filter_tree].include?(x_active_tree)
-      center_toolbar_filename_configuration_manager_providers
     elsif @layout == "automation_manager"
       center_toolbar_filename_automation_manager
     elsif x_active_tree == :ae_tree
@@ -404,7 +400,7 @@ class ApplicationHelper::ToolbarChooser
   def center_toolbar_filename_classic
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
-    to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets
+    to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
                     cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts
                     network_ports network_routers orchestration_stacks resource_pools
                     security_groups storages middleware_deployments
@@ -456,6 +452,7 @@ class ApplicationHelper::ToolbarChooser
             cloud_volume_snapshot
             cloud_volume_type
             configuration_job
+            configured_system
             container
             container_group
             container_node
@@ -463,6 +460,7 @@ class ApplicationHelper::ToolbarChooser
             persistent_volume
             ems_cloud
             ems_cluster
+            ems_configuration
             ems_container
             ems_middleware
             container_project
@@ -529,16 +527,6 @@ class ApplicationHelper::ToolbarChooser
     x_node.split('-')
   end
 
-  def center_toolbar_filename_configuration_manager_providers
-    if x_active_tree == :configuration_manager_providers_tree
-      configuration_manager_providers_tree_center_tb(x_node_split)
-    elsif x_active_tree == :configuration_manager_cs_filter_tree
-      cs_filter_tree_center_tb(x_node_split)
-    elsif x_active_tree == :configuration_scripts_tree
-      configuration_scripts_tree_center_tb(x_node_split)
-    end
-  end
-
   def center_toolbar_filename_automation_manager
     case x_active_tree
     when :automation_manager_providers_tree
@@ -547,22 +535,6 @@ class ApplicationHelper::ToolbarChooser
       automation_manager_cs_filter_tree_center_tb(x_node_split)
     when :configuration_scripts_tree
       automation_manager_configuration_scripts_tree_center_tb(x_node_split)
-    end
-  end
-
-  def configuration_manager_providers_tree_center_tb(nodes)
-    case nodes.first
-    when "root"     then  "configuration_manager_providers_center_tb"
-    when "fr", "at" then  "configuration_manager_provider_center_tb"
-    when "cp"       then  configuration_profile_center_tb
-    when "f"        then  inventory_group_center_tb
-    when "xx"       then
-      case nodes.last
-      when "f"  then "configured_systems_center_tb"
-      when "cp" then "unassigned_profiles_group_center_tb"
-      else "configuration_manager_providers_center_tb"
-      end
-    else unassigned_configuration_profile_node(nodes)
     end
   end
 
@@ -621,10 +593,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def unassigned_configuration_profile_node(nodes)
-    configuration_profile_center_tb if nodes[2] == "unassigned"
-  end
-
   NO_GTL_VIEW_BUTTONS = %w[chargeback_assignment
                            chargeback_rate
                            chargeback_report
@@ -637,7 +605,6 @@ class ApplicationHelper::ToolbarChooser
                            miq_policy
                            miq_policy_rsop
                            ops
-                           provider_foreman
                            pxe
                            report].to_set.freeze
 

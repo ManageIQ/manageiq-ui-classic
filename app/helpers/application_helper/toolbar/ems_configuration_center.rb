@@ -1,29 +1,27 @@
-class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < ApplicationHelper::Toolbar::Basic
-  button_group('provider_vmdb', [
+class ApplicationHelper::Toolbar::EmsConfigurationCenter < ApplicationHelper::Toolbar::Basic
+  button_group('ems_configuration_vmdb', [
     select(
-      :provider_vmdb_choice,
+      :ems_configuration_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,
       :enabled => true,
       :items   => [
         button(
-          :provider_foreman_refresh_provider,
+          :ems_configuration_refresh_provider,
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to this Provider'),
           N_('Refresh Relationships and Power states'),
-          :url     => "refresh",
           :confirm => N_("Refresh relationships for all items related to this Provider?"),
           :klass   => ApplicationHelper::Button::EmsRefresh),
         separator,
         button(
-          :provider_foreman_edit_provider,
+          :ems_configuration_edit_provider,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Provider'),
-          t,
-          :url => "edit"),
+          t),
         button(
-          :provider_foreman_delete_provider,
+          :ems_configuration_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Provider from Inventory'),
           t,
@@ -33,8 +31,23 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < Applicati
                                          :modal_text     => N_('Are you sure you want to delete the following Configuration Management Provider?'),
                                          :api_url        => 'providers',
                                          :async_delete   => true,
-                                         :tree_select    => 'root',
+                                         :redirect_url   => '/ems_configuration/show_list',
                                          :component_name => 'RemoveGenericItemModal'}})
+      ]
+    ),
+  ])
+  button_group('ems_configuration_policy', [
+    select(
+      :ems_configuration_policy_choice,
+      nil,
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :ems_configuration_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Configuration Manager'),
+          N_('Edit Tags')),
       ]
     ),
   ])

@@ -143,7 +143,7 @@ module ApplicationController::CiProcessing
   end
 
   def explorer_controller?
-    %w[vm_cloud vm_infra vm_or_template infra_networking].include?(controller_name)
+    %w[vm_cloud vm_infra vm_or_template infra_networking automation_manager].include?(controller_name)
   end
 
   def process_element_destroy(element, klass, name)
@@ -306,7 +306,7 @@ module ApplicationController::CiProcessing
   def process_managers(managers, task)
     controller_class = request.parameters[:controller]
     provider_class = case controller_class
-                     when 'provider_foreman' then ManageIQ::Providers::ConfigurationManager
+                     when 'ems_configuration'  then ManageIQ::Providers::ConfigurationManager
                      when 'automation_manager' then ManageIQ::Providers::AutomationManager
                      end
 

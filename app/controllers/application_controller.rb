@@ -431,12 +431,6 @@ class ApplicationController < ActionController::Base
       @view.table = filter_parent_name_tenant(@view.table)
     end
 
-    # Foreman has some unassigned rows which needs to be added after view is fetched
-    if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
-      options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
-      @view.table.data.push(options[:unassigned_profile_row])
-      @targets_hash[options[:unassigned_profile_row]['id']] = options[:unassigned_configuration_profile]
-    end
     render :json => {
       :settings => settings,
       :data     => view_to_hash(@view, true),
@@ -1987,8 +1981,6 @@ class ApplicationController < ActionController::Base
       "vm"
     when 'automation_manager'
       "automation_manager_provider"
-    when 'provider_foreman'
-      "configuration_manager_provider"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"
     when "ansible_playbook"
