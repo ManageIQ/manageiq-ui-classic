@@ -1,14 +1,13 @@
 describe ChargebackRateController do
   before { stub_user(:features => :all) }
 
-  describe "#explorer" do
+  describe "#show_list" do
     render_views
 
-    it "can be rendered" do
-      EvmSpecHelper.create_guid_miq_server_zone
-      get :explorer
-      expect(response.status).to eq(200)
-      expect(response.body).to_not be_empty
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
     end
   end
 
@@ -70,7 +69,6 @@ describe ChargebackRateController do
     before do
       EvmSpecHelper.local_miq_server
       allow_any_instance_of(described_class).to receive(:center_toolbar_filename).and_return("chargeback_center_tb")
-      seed_session_trees('chargeback_rate', :cb_rates_tree, "xx-Compute")
       [ChargebackRateDetailMeasure, ChargeableField].each(&:seed)
     end
 
@@ -91,23 +89,17 @@ describe ChargebackRateController do
       post :cb_rate_form_field_changed, :params => {:id => resource_action, field => value}
     end
 
-    it "renders edit form with correct values" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
-      expect(response).to render_template(:partial => 'chargeback_rate/_cb_rate_edit')
-      expect(response).to render_template(:partial => 'chargeback_rate/_cb_rate_edit_table')
-
-      main_content = JSON.parse(response.body)['updatePartials']['main_div']
-      expect_input(main_content, "description", "foo")
-
-      expect_rendered_tiers(main_content, [{:start => "0.0", :finish => "20.0"},
-                                           {:start => "20.0", :finish => "40.0"},
-                                           {:start => "40.0", :finish => Float::INFINITY}])
-
-      expect_rendered_tiers(main_content, [{:start => "0.0", :finish => Float::INFINITY}], 1)
+    it "renders edit form" do
+      post :button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      expect(response.status).to eq(200)
+      expect(response.body).to_not be_empty
+      expect(response.body).to include("window.location.href")
+      expect(response.body).to include("/chargeback_rate/edit")
     end
 
     it "removes requested tier line from edit from" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
       post :cb_tier_remove, :params => {:button => "remove", :index => "0-1"}
 
       response_body = response.body.delete('\\').gsub('u003e', ">").gsub('u003c', "<")
@@ -122,7 +114,8 @@ describe ChargebackRateController do
 
     it "removes requested tier line and add 2 new tiers line from edit from" do
       count_of_tiers = chargeback_rate.chargeback_rate_details[index_to_rate_type.to_i].chargeback_tiers.count
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
       post :cb_tier_remove, :params => {:button => "remove", :index => "#{index_to_rate_type}-1"}
       post :cb_tier_add, :params => {:button => "add", :detail_index => index_to_rate_type}
       post :cb_tier_add, :params => {:button => "add", :detail_index => index_to_rate_type}
@@ -136,7 +129,8 @@ describe ChargebackRateController do
     end
 
     it "saves edited chargeback rate" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       # remove second tier for rate detail; (values  {:start => "20.0", :finish => "40.0"})
       post :cb_tier_remove, :params => {:button => "remove", :index => "#{index_to_rate_type}-1"}
@@ -166,7 +160,7 @@ describe ChargebackRateController do
       # 0-2 :start => 50.0, :finish => 70.0
       # 0-3 :start => 70.0, :finish => Infinity
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       rate_detail = ChargebackRate.find(chargeback_rate.id).chargeback_rate_details[index_to_rate_type.to_i]
       expect(rate_detail.chargeback_tiers[0]).to have_attributes(:start => 0.0, :finish => 20.0)
@@ -176,29 +170,32 @@ describe ChargebackRateController do
     end
 
     it "saves edited chargeback rate when 'per unit' is changed" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       change_form_value(:per_time_0, "monthly")
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       rate_detail = ChargebackRate.find(chargeback_rate.id).chargeback_rate_details[index_to_rate_type.to_i]
       expect(rate_detail.per_time).to eq("monthly")
     end
 
     it "saves edited chargeback rate when 'per time' is changed" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       change_form_value(:per_unit_1, "teraherts")
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       rate_detail = ChargebackRate.find(chargeback_rate.id).chargeback_rate_details[1]
       expect(rate_detail.per_unit).to eq("teraherts")
     end
 
     it "saves edited chargeback rate when value in finish column is changed to infinity (infinity is blank string)" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
       # chargeback_rate[index_to_rate_type.to_i].chargeback_tiers contains
       # 0-0 :start => 0.0, :finish => 20.0
       # 0-1 :start => 20.0, :finish => 40.0  <- this value will be changed to Infinity
@@ -210,7 +207,7 @@ describe ChargebackRateController do
 
       rate_detail = ChargebackRate.find(chargeback_rate.id).chargeback_rate_details[index_to_rate_type.to_i]
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       expect(rate_detail.chargeback_tiers[1].finish).to eq(Float::INFINITY)
     end
@@ -261,9 +258,9 @@ describe ChargebackRateController do
 
         count_of_chargeback_rates = ChargebackRate.count
 
-        post :x_button, :params => {:pressed => "chargeback_rates_new"}
+        controller.send(:edit)
         post :cb_rate_form_field_changed, :params => {:id => "new", :description => "chargeback rate 1"}
-        post :cb_rate_edit, :params => {:button => "add"}
+        post :edit, :params => {:button => "add"}
 
         expect(ChargebackRate.count).to eq(count_of_chargeback_rates + 1)
 
@@ -277,7 +274,7 @@ describe ChargebackRateController do
       it "adds new chargeback rate and user adds and removes some tiers" do
         allow(controller).to receive(:load_edit).and_return(true)
 
-        post :x_button, :params => {:pressed => "chargeback_rates_new"}
+        controller.send(:edit)
         post :cb_rate_form_field_changed, :params => {:id => "new", :description => "chargeback rate 1"}
 
         post :cb_tier_add, :params => {:button => "add", :detail_index => index_to_rate_type}
@@ -291,7 +288,7 @@ describe ChargebackRateController do
         change_form_value(:finish_0_1, "50.0", "new")
         change_form_value(:start_0_2, "50.0", "new")
 
-        post :cb_rate_edit, :params => {:button => "add"}
+        post :edit, :params => {:button => "add"}
 
         # change expected values from yaml
         compute_chargeback_rate_hash_from_yaml[:rates].sort_by! { |rd| [ChargeableField.find_by(:metric => rd[:metric]).group, rd[:description]] }
@@ -307,7 +304,7 @@ describe ChargebackRateController do
       it "doesn't add new chargeback rate because some of tier has start value bigger than finish value" do
         allow(controller).to receive(:load_edit).and_return(true)
 
-        post :x_button, :params => {:pressed => "chargeback_rates_new"}
+        controller.send(:edit)
         post :cb_rate_form_field_changed, :params => {:id => "new", :description => "chargeback rate 1"}
 
         post :cb_tier_add, :params => {:button => "add", :detail_index => index_to_rate_type}
@@ -321,7 +318,7 @@ describe ChargebackRateController do
         change_form_value(:finish_0_1, "50.0", "new")
         change_form_value(:start_0_2, "50.0", "new")
 
-        post :cb_rate_edit, :params => {:button => "add"}
+        post :edit, :params => {:button => "add"}
 
         flash_messages = assigns(:flash_array)
 
@@ -355,9 +352,10 @@ describe ChargebackRateController do
     let(:origin_chargeback_rate_hash) { convert_chargeback_rate_to_hash(chargeback_rate) }
 
     it "copy existing chargeback rate" do
-      post :x_button, :params => {:pressed => "chargeback_rates_copy", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s, :pressed => "chargeback_rates_copy"}
+      controller.send(:edit)
 
-      post :cb_rate_edit, :params => {:button => "add"}
+      post :edit, :params => {:button => "add"}
 
       new_charge_back_rate = ChargebackRate.last
 
@@ -366,7 +364,8 @@ describe ChargebackRateController do
     end
 
     it "copy existing chargeback rate and user adds and removes some tiers" do
-      post :x_button, :params => {:pressed => "chargeback_rates_copy", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s, :pressed => "chargeback_rates_copy"}
+      controller.send(:edit)
 
       # remove and add some tier
       post :cb_tier_add, :params => {:button => "add", :detail_index => index_to_rate_type}
@@ -385,7 +384,7 @@ describe ChargebackRateController do
       change_form_value(:fixed_rate_0_2, "0.5", "new")
       change_form_value(:variable_rate_0_2, "0.6", "new")
 
-      post :cb_rate_edit, :params => {:button => "add"}
+      post :edit, :params => {:button => "add"}
 
       new_charge_back_rate = ChargebackRate.last
 
@@ -394,14 +393,15 @@ describe ChargebackRateController do
     end
 
     it "doesn't store rate and displays validation message with invalid input of tiers(uncontiguous tiers)" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       change_form_value(:start_0_1, "20.0")
       change_form_value(:finish_0_1, "40.0")
       change_form_value(:start_0_2, "60.0")
       change_form_value(:finish_0_2, "80.0")
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       flash_messages = assigns(:flash_array)
 
@@ -411,12 +411,13 @@ describe ChargebackRateController do
       expect(flash_messages[0][:message]).to eq(expected_message)
     end
 
-    it "doesn't store rate and displays validation message with invalid input of tiers(non-numberic tiers)" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+    it "doesn't store rate and displays validation message with invalid input of tiers(non-numeric tiers)" do
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       change_form_value(:start_0_1, "20.0typo")
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       flash_messages = assigns(:flash_array)
 
@@ -425,14 +426,15 @@ describe ChargebackRateController do
     end
 
     it "doesn't store rate and displays validation message with invalid input of tiers(ambiguous tiers)" do
-      post :x_button, :params => {:pressed => "chargeback_rates_edit", :id => chargeback_rate.id}
+      controller.params = {:id => chargeback_rate.id.to_s}
+      controller.send(:edit)
 
       change_form_value(:finish_0_1, "20.0")
       change_form_value(:start_0_1, "20.0")
       change_form_value(:finish_0_1, "20.0")
       change_form_value(:start_0_2, "20.0")
 
-      post :cb_rate_edit, :params => {:button => "save", :id => chargeback_rate.id}
+      post :edit, :params => {:button => "save", :id => chargeback_rate.id}
 
       flash_messages = assigns(:flash_array)
 
@@ -442,88 +444,53 @@ describe ChargebackRateController do
     end
   end
 
-  describe "#replace_right_cell" do
-    it "Can build the :cb_rates tree" do
-      seed_session_trees('chargeback_rate', :cb_rates, 'root')
-      session_to_sb
-
-      expect(controller).to receive(:render)
-      expect(controller).to receive(:reload_trees_by_presenter).with(
-        instance_of(ExplorerPresenter),
-        array_including(
-          instance_of(TreeBuilderChargebackRates),
-        )
-      )
-      controller.send(:replace_right_cell, :replace_trees => %i(cb_rates))
-    end
-  end
-
   describe '#cb_rates_delete' do
     let(:params) { {:id => rate.id} }
     let(:rate) { FactoryBot.create(:chargeback_rate, :rate_type => "Compute") }
     let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => "xx-#{rate.rate_type}_cr-#{rate.id}"}}} }
 
     before do
-      allow(controller).to receive(:x_node).and_call_original
       allow(controller).to receive(:render).and_return(true)
-
       controller.params = params
-      controller.instance_variable_set(:@sb, sandbox)
     end
 
     it 'sets right cell text properly' do
-      controller.send(:cb_rates_delete)
-      expect(controller.instance_variable_get(:@right_cell_text)).to eq("#{rate.rate_type} Chargeback Rates")
+      post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+      flash_array = assigns(:flash_array)
+      expect(flash_array.first[:message]).to include("Delete successful")
     end
 
     context 'deleting a list of rates' do
       let(:params) { {:miq_grid_checks => rate.id.to_s} }
 
-      it 'calls cb_rates_list method when there are no errors' do
-        expect(controller).to receive(:cb_rates_list)
-        controller.send(:cb_rates_delete)
+      it 'calls show_list method when there are no errors' do
+        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+        post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
       end
 
       context 'no checked item found' do
         let(:params) { nil }
 
-        it 'calls cb_rates_list method when there is an error' do
-          expect(controller).to receive(:cb_rates_list)
-          controller.send(:cb_rates_delete)
+        it 'calls show_list method when there is an error' do
+          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+          post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
         end
       end
     end
 
     context 'deleting a rate from its details page' do
-      it 'calls cb_rates_list method when there are no errors' do
-        expect(controller).to receive(:cb_rates_list)
-        controller.send(:cb_rates_delete)
+      it 'calls show_list method when there are no errors' do
+        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+        post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
       end
 
       context 'rate not found by id' do
         let(:params) { {:id => 123} }
 
-        it 'calls cb_rates_list method when there is an error' do
-          expect(controller).to receive(:cb_rates_list)
-          controller.send(:cb_rates_delete)
+        it 'calls show_list method when there is an error' do
+          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+          post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
         end
-      end
-    end
-  end
-
-  describe '#get_node_info' do
-    let(:sandbox) { {:active_tree => :cb_rates_tree, :trees => {:cb_rates_tree => {:active_node => node}}} }
-
-    before do
-      controller.instance_variable_set(:@sb, sandbox)
-    end
-
-    context 'root node' do
-      let(:node) { "root" }
-
-      it 'sets right cell text properly' do
-        controller.send(:get_node_info, node)
-        expect(controller.instance_variable_get(:@right_cell_text)).to eq("All Chargeback Rates")
       end
     end
   end

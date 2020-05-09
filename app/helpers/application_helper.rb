@@ -1048,6 +1048,7 @@ module ApplicationHelper
                         alerts_overview
                         alerts_list
                         alerts_most_recent
+                        chargeback_rate
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object

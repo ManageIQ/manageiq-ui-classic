@@ -1,9 +1,9 @@
 describe 'routes for ChargebackRateController' do
   let(:controller_name) { 'chargeback_rate' }
 
-  describe '#cb_rate_edit' do
+  describe '#edit' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rate_edit")).to route_to("#{controller_name}#cb_rate_edit")
+      expect(post("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
     end
   end
 
@@ -35,11 +35,11 @@ describe 'routes for ChargebackRateController' do
 
   describe '#explorer' do
     it 'routes with GET' do
-      expect(get("/#{controller_name}/explorer")).to route_to("#{controller_name}#explorer")
+      expect(get("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
 
     it 'routes with POST' do
-      expect(post("/#{controller_name}/explorer")).to route_to("#{controller_name}#explorer")
+      expect(post("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
   end
 
@@ -51,7 +51,7 @@ describe 'routes for ChargebackRateController' do
 
   describe '#x_show' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/x_show")).to route_to("#{controller_name}#x_show")
+      expect(post("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
   end
 end
