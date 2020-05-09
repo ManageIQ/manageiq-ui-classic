@@ -395,7 +395,7 @@ class ApplicationHelper::ToolbarBuilder
   def url_for_button(name, url_tpl, controller_restful)
     url = safer_eval(url_tpl)
 
-    if %w[view_grid view_tile view_list].include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
+    if %w[view_grid view_tile view_list view_tree].include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
       # handle restful routes - we want just / if the url is just an id
       url = '/'
     end

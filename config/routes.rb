@@ -368,21 +368,24 @@ Rails.application.routes.draw do
     },
     :chargeback_rate => {
       :get  => %w(
-        explorer
-        x_show
+        download_data
+        download_summary_pdf
+        edit
+        show_list
+        show
       ),
       :post => %w(
-        explorer
-        cb_rate_edit
+        button
         cb_rate_form_field_changed
         cb_rate_show
         cb_rates_delete
         cb_rates_list
         cb_tier_add
         cb_tier_remove
+        edit
+        show_list
+        show
         tree_select
-        x_button
-        x_show
       )
     },
 
@@ -2546,6 +2549,7 @@ Rails.application.routes.draw do
         db_backup
         db_backup_form_field_changed
         db_gc_collection
+        db_list
         diagnostics_server_list
         diagnostics_tree_select
         edit_rhn

@@ -1,0 +1,72 @@
+- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
+- currency = Currency.currencies_for_select
+= render :partial => "layouts/flash_msg"
+#form_div
+  %h3
+    = _('Basic Info')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Description')
+      .col-md-8
+        = text_field_tag("description", @edit[:new][:description],
+                        :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                        :class => "form-control")
+        = javascript_tag(javascript_focus('description'))
+    .form-group
+      %label.col-md-2.control-label
+        = _('Type')
+      .col-md-8
+        - unless @edit[:rec_id]
+          = select_tag("rate_type",
+            options_for_select(["Compute", "Storage"], @edit[:new][:rate_type]),
+            "class" => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("rate_type", "#{url}");
+        - else
+          = _(@edit[:new][:rate_type])
+
+
+  %hr
+
+  /Add a new selector for the currencies
+  %h3
+    = _('Currencies')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Select currency: ')
+      .col-md-8
+        = select_tag("currency",
+          options_for_select(currency, @edit[:new][:currency]),
+          "data-live-search" => "true",
+          "class"            => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent("currency", "#{url}");
+
+  %h3
+    = _('Rate Details')
+  %strong
+    = _('* Caution: The value Range end will not be included in the tier.')
+  = render "cb_rate_edit_table"
+  - unless @edit[:rec_id]
+    %table{:width => "100%"}
+      %tr
+        %td{:align => 'right'}
+          = button_tag(t = _("Add"),
+                         :class   => 'btn btn-primary',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "add")}');")
+          = button_tag(t = _("Cancel"),
+                         :class   => 'btn btn-default',
+                         :alt     => t,
+                         :title   => t,
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit',
+                                                               :button => "cancel")}');")
+  -	else
+    = render :partial => '/layouts/edit_form_buttons',
+             :locals  => {:action_url => "edit", :record_id => @edit[:rec_id], :ajax_buttons => true}

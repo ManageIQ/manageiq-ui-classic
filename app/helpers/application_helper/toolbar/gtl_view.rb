@@ -24,6 +24,14 @@ class ApplicationHelper::Toolbar::GtlView < ApplicationHelper::Toolbar::Basic
       :klass     => ApplicationHelper::Button::View,
       :url       => "\#{@gtl_url}",
       :url_parms => "?type=list"),
+    twostate(
+      :view_tree,
+      'fa fa-sitemap',
+      N_('Tree View'),
+      nil,
+      :klass     => ApplicationHelper::Button::View,
+      :url       => "\#{@gtl_url}",
+      :url_parms => "?type=tree"),
   ])
   button_group('download_main', [
     select(

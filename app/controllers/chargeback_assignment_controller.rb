@@ -368,7 +368,7 @@ class ChargebackAssignmentController < ApplicationController
         presenter.show(:paging_div, :form_buttons_div).remove_paging
         locals = {:record_id => @edit[:rec_id]}
         if x_active_tree == :cb_rates_tree
-          locals[:action_url] = 'cb_rate_edit'
+          locals[:action_url] = 'edit'
         else
           locals.update(
             :action_url   => 'cb_assign_update',

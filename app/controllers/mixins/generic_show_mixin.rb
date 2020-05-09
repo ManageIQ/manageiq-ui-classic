@@ -72,7 +72,7 @@ module Mixins
                        :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                       true)
 
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
+      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.respond_to?(:name) ? @record.name : @record.description},
                       :url  => show_link(@record))
       @showtype = "main"
     end
