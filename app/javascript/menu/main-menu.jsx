@@ -22,7 +22,7 @@ import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';
 
 
-const mapItems = (items, level = 0, root = true, setSection = null) => items.map((item) => (
+const mapItems = (items, level = 0, setSection = null) => items.map((item) => (
   item.items.length
   ? (
     level
@@ -98,7 +98,7 @@ const FirstLevelSection = ({ active, id, items, title, icon, setSection }) => {
     <SideNavItem id={itemId(id, true)}>
       <Link
         className={className}
-        onClick={() => setSection(items)}
+        onClick={(e) => {setSection(items); e.stopPropagation();}}
       >
         {IconElement && (
           <SideNavIcon small>
@@ -130,7 +130,7 @@ const MenuSection = ({ active, id, items, title, icon, level }) => (
     renderIcon={carbonizeIcon(icon)} // only first level sections have it, but all need the prop for consistent padding
     title={title}
   >
-    {mapItems(items, level + 1, false)}
+    {mapItems(items, level + 1)}
   </SideNavMenu>
 );
 
@@ -167,6 +167,10 @@ const Username = ({ applianceName, currentUser, expanded }) => {
   );
 };
 
+const MiqOverlay = ({onClick}) => (
+  <div onClick={onClick} className="miq-main-menu-overlay"></div>
+);
+
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
@@ -175,6 +179,8 @@ export const MainMenu = (props) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const [activeSectionItems, setSection] = useState(null);
   const [searchResults, setSearch] = useState(null);
+
+  const hideSecondary = (e) => setSection(null);
 
   let appearExpanded = expanded || !!activeSectionItems || !!searchResults;
 
@@ -200,60 +206,65 @@ export const MainMenu = (props) => {
 
   return (
   <>
-    <SideNav
-      aria-label={__("Main Menu")}
-      isChildOfHeader={false}
-      expanded={appearExpanded}
-    >
-      {showLogo && <SideNavHeader
-        renderIcon={miqLogo}
-      />}
-
-      {showUser && <Username
-        applianceName={applianceName}
-        currentUser={currentUser}
-        expanded={appearExpanded}
-      />}
-
-      <GroupSwitcher
-        currentGroup={currentGroup}
-        expanded={appearExpanded}
-        miqGroups={miqGroups}
-      />
-
-      <MenuSearch
-        menu={menu}
-        expanded={appearExpanded}
-        onSearch={setSearch}
-      />
-
-      <hr className="bx--side-nav__hr" />
-
-      { searchResults && (
-        <SearchResults results={searchResults} />
-      )}
-      { !searchResults && (
-        <SideNavItems>
-          {mapItems(menu, 0, true, setSection)}
-        </SideNavItems>
-      )}
-
-      <MenuCollapse
-        expanded={expanded /* not appearExpanded */}
-        toggle={() => setExpanded(!expanded)}
-      />
-    </SideNav>
-    { activeSectionItems && (
+    <div onClick={hideSecondary}>
       <SideNav
-        aria-label={__("Main Menu 2")}
-        className="second"
-        expanded={true}
+        aria-label={__("Main Menu")}
+        expanded={appearExpanded}
         isChildOfHeader={false}
       >
-        <SideNavItems>
-          {mapItems(activeSectionItems, 1, true, setSection)}
-        </SideNavItems>
+        {showLogo && <SideNavHeader
+          renderIcon={miqLogo}
+        />}
+
+        {showUser && <Username
+          applianceName={applianceName}
+          currentUser={currentUser}
+          expanded={appearExpanded}
+        />}
+
+        <GroupSwitcher
+          currentGroup={currentGroup}
+          expanded={appearExpanded}
+          miqGroups={miqGroups}
+        />
+
+        <MenuSearch
+          menu={menu}
+          expanded={appearExpanded}
+          onSearch={setSearch}
+        />
+
+        <hr className="bx--side-nav__hr" />
+
+        { searchResults && (
+          <SearchResults results={searchResults} />
+        )}
+        { !searchResults && (
+          <SideNavItems>
+            {mapItems(menu, 0, setSection)}
+          </SideNavItems>
+        )}
+
+        <MenuCollapse
+          expanded={expanded /* not appearExpanded */}
+          toggle={() => setExpanded(!expanded)}
+        />
       </SideNav>
+    </div>
+    { activeSectionItems && (
+      <>
+        <SideNav
+          aria-label={__("Secondary Menu")}
+          className="second"
+          expanded={true}
+          isChildOfHeader={false}
+        >
+          <SideNavItems>
+            {mapItems(activeSectionItems, 1)}
+          </SideNavItems>
+        </SideNav>
+        <MiqOverlay onClick={hideSecondary} />
+      </>
     )}
   </>
   );
