@@ -55,6 +55,7 @@
     }
   }
 
+  .bx--side-nav__header.padded,
   .bx--side-nav__item.padded {
     padding: 0 1rem;
   }
@@ -117,4 +118,10 @@
   position: fixed;
   right: 0;
   z-index: 10000;
+}
+
+.navbar-brand-name {
+  height: 32px;
+  // compensate for in-image padding
+  margin: -4px 0 0 -8px;
 }
