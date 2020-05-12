@@ -370,13 +370,11 @@ describe HostController do
       it "show and listnav correctly for summary page" do
         is_expected.to have_http_status 200
         is_expected.to render_template('host/show')
-        is_expected.to render_template(:partial => "layouts/listnav/_host")
       end
 
-      it "show and listnav correctly for timeline page" do
+      it "renders show correctly for timeline page" do
         get :show, :params => {:id => @host.id, :display => 'timeline'}
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_host")
       end
     end
   end

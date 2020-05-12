@@ -11,7 +11,6 @@ describe AnsibleCredentialController do
 
     it "renders correct template and listnav" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
-      is_expected.to render_template(:partial => "layouts/listnav/_ansible_credential")
       is_expected.to have_http_status 200
     end
   end

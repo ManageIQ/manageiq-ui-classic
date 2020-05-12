@@ -37,14 +37,12 @@ describe ContainerProjectController do
 
       it "correct listnav" do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_project")
         is_expected.to render_template('layouts/_textual_groups_generic')
       end
 
       it "correct listnav for timeline page" do
         get :show, :params => { :id => @project.id, :display => 'timeline' }
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_container_project")
       end
 
       it "renders topology view" do

@@ -14,7 +14,6 @@ describe FlavorController do
 
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_flavor")
       end
     end
 

@@ -39,8 +39,6 @@ shared_examples :shared_examples_for_ems_storage_controller do |providers|
                                                 :url  => "/ems_storage/show_list?page=&refresh=y"},
                                                {:name => "Test Cloud Manager Cinder Manager (Summary)",
                                                 :url  => "/ems_storage/show/#{@ems.id}"}])
-
-          is_expected.to render_template(:partial => "layouts/listnav/_ems_storage")
         end
       end
 

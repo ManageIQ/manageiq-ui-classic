@@ -105,7 +105,6 @@ describe SecurityGroupController do
 
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
-      expect(response).to render_template(:partial => "layouts/listnav/_security_group")
     end
   end
 

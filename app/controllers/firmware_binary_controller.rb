@@ -8,7 +8,6 @@ class FirmwareBinaryController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::ListnavMixin
   include Mixins::BreadcrumbsMixin
 
   def self.display_methods

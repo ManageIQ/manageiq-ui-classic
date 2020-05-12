@@ -1,5 +1,6 @@
 module ApplicationHelper::PageLayouts
   def layout_uses_listnav?
+    return false if action_name == "show"
     return false if show_list_with_no_provider?
 
     return false if show_list_ansible?

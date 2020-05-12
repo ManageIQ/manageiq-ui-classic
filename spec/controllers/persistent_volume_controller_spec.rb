@@ -60,7 +60,6 @@ describe PersistentVolumeController do
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
-        is_expected.to render_template(:partial => 'layouts/listnav/_persistent_volume')
       end
     end
   end

@@ -17,9 +17,8 @@ describe ConfigurationJobController do
         get :show, :params => {:id => record.id}
       end
 
-      it "renders the listnav" do
+      it "renders show" do
         expect(response.status).to eq(200)
-        expect(response).to render_template(:partial => "layouts/listnav/_configuration_job")
       end
 
       it "links to ConfigurationJobController" do # instead of OrchestrationStackController

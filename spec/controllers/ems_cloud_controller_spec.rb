@@ -460,13 +460,11 @@ describe EmsCloudController do
 
       it "correctly for summary page" do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
       end
 
       it "correctly for timeline page" do
         get :show, :params => {:id => @ems.id, :display => 'timeline'}
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_cloud")
       end
     end
 
