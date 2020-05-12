@@ -13,12 +13,6 @@ class EmsContainerController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  OPENSHIFT_ROUTES = {
-    "hawkular"          => %w[hawkular-metrics openshift-infra],
-    "prometheus"        => %w[prometheus openshift-metrics],
-    "prometheus_alerts" => %w[alerts openshift-metrics]
-  }.freeze
-
   def self.model
     ManageIQ::Providers::ContainerManager
   end
@@ -79,16 +73,18 @@ class EmsContainerController < ApplicationController
                    params[:metrics_selection]
                  end
 
-    route, project = OPENSHIFT_ROUTES[route_type]
     verify_ems ||= find_record_with_rbac(model, params[:id])
     set_ems_record_vars(verify_ems, :validate)
     @in_a_form = true
 
-    result, details = get_hostname_from_routes(verify_ems, route, project)
-    if result
+    begin
+      raise "Route detection not applicable for provider type" unless verify_ems.respond_to?(:hostname_for_service)
+
+      result = verify_ems.hostname_for_service(route_type)
       add_flash(_("Route Detection: success"))
-    else
-      add_flash(_("Route Detection: failure [%{details}]") % {:details => details}, :error)
+    rescue StandardError => e
+      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e.message}")
+      add_flash(_("Route Detection: failure [%{details}]") % {:details => e.message}, :error)
     end
 
     render :json => {
@@ -96,19 +92,6 @@ class EmsContainerController < ApplicationController
       :level    => @flash_array.last[:level],
       :hostname => result
     }
-  end
-
-  # TODO: move to backend
-  def get_hostname_from_routes(ems, route, project)
-    return nil, "Route detection not applicable for provider type" unless ems.class.respond_to?(:openshift_connect)
-
-    [
-      ems.connect(:service => :openshift).get_route(route, project).try(:spec).try(:host),
-      nil
-    ]
-  rescue StandardError => e
-    $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e.message}")
-    [nil, e.message]
   end
 
   def retrieve_metrics_selection
