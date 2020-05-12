@@ -8,7 +8,6 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::ListnavMixin
   include Mixins::BreadcrumbsMixin
 
   menu_section :ansible_repositories
