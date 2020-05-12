@@ -24,7 +24,7 @@ module Menu
           # Menu::Item.new('usage',    N_('Usage'),      'usage',      {:feature => 'usage'},                    '/report/usage/'), #  / Hiding usage for now - release 5.2
           Settings.product.consumption ? consumption_menu_section : nil,
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
-          Menu::Item.new('chargeback', N_('Chargeback'), 'chargeback', {:feature => 'chargeback', :any => true}, '/chargeback/explorer'),
+          chargeback_menu_section,
           Menu::Item.new('optimization', N_('Optimization'), 'optimization', {:feature => 'optimization'}, '/optimization'),
         ].compact)
       end
@@ -41,6 +41,14 @@ module Menu
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
           Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request/show_list?typ=service')
+        ])
+      end
+
+      def chargeback_menu_section
+        Menu::Section.new(:chargeback, N_("Chargeback"), 'fa fa-plus', [
+          Menu::Item.new('chargeback_report',     N_('Reports'),     'chargeback_reports',     {:feature => 'chargeback_reports', :any => true}, '/chargeback_report/explorer'),
+          Menu::Item.new('chargeback_rate',       N_('Rates'),       'chargeback_rates',       {:feature => 'chargeback_rates', :any => true}, '/chargeback_rate/explorer'),
+          Menu::Item.new('chargeback_assignment', N_('Assignments'), 'chargeback_assignments', {:feature => 'chargeback_assignments'}, '/chargeback_assignment/explorer'),
         ])
       end
 
