@@ -31,7 +31,6 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
   def filter_ae_objects(objects)
     return objects unless @sb[:cached_waypoint_ids]
     klass_name = objects.first.class.name
-    prefix = klass_name == "MiqAeDomain" ? "MiqAeNamespace" : klass_name
-    objects.select { |obj| @sb[:cached_waypoint_ids].include?("#{prefix}::#{obj.id}") }
+    objects.select { |obj| @sb[:cached_waypoint_ids].include?("#{klass_name}::#{obj.id}") }
   end
 end

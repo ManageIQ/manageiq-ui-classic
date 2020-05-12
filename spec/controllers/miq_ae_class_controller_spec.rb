@@ -667,10 +667,10 @@ describe MiqAeClassController do
 
   describe "#copy_objects_edit_screen" do
     it "sets only current tenant's domains to be displayed in To Domain pull down" do
-      FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
+      dom1 = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
       FactoryBot.create(:miq_ae_domain, :tenant => FactoryBot.create(:tenant))
       controller.instance_variable_set(:@sb, {})
-      ns = FactoryBot.create(:miq_ae_namespace)
+      ns = FactoryBot.create(:miq_ae_namespace, :domain => dom1)
       controller.send(:copy_objects_edit_screen, MiqAeNamespace, [ns.id], "miq_ae_namespace_copy")
       expect(assigns(:edit)[:domains].count).to eq(1)
     end
@@ -681,7 +681,7 @@ describe MiqAeClassController do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
       @namespace = FactoryBot.create(:miq_ae_namespace, :name => "foo_namespace", :parent => domain)
-      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :namespace_id => 1)
+      @ae_class = FactoryBot.create(:miq_ae_class, :name => "foo_class", :domain => domain)
       controller.instance_variable_set(:@sb,
                                        :trees       => {},
                                        :active_tree => :ae_tree)
@@ -875,10 +875,9 @@ describe MiqAeClassController do
   context "method data edit" do
     before do
       stub_user(:features => :all)
-      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
-                                   :language => "ruby", :class_id => "someid", :data => "exit MIQ_OK", :location => "inline")
+      @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class", :data => "exit MIQ_OK")
       controller.instance_variable_set(:@sb,
-                                       :trees       => {:ae_tree => {:active_node => "aec-someid"}},
+                                       :trees       => {:ae_tree => {:active_node => "aec-#{@method.class_id}"}},
                                        :active_tree => :ae_tree)
     end
 
@@ -894,7 +893,7 @@ describe MiqAeClassController do
       session[:edit] = {
         :key              => "aemethod_edit__#{@method.id}",
         :fields_to_delete => [],
-        :ae_class_id      => "someid",
+        :ae_class_id      => @method.class_id.to_s,
         :new_field        => {},
         :new              => new,
         :current          => new
@@ -917,6 +916,7 @@ describe MiqAeClassController do
                                   :class_id => cls.id,
                                   :data     => "exit MIQ_OK",
                                   :location => "inline")
+      dom = cls.domain
       controller.instance_variable_set(:@record, cls)
       controller.instance_variable_set(
         :@sb,
@@ -931,17 +931,28 @@ describe MiqAeClassController do
       )
       tree_node = controller.send(:open_parent_nodes, method)
       node_to_add = {
-        :key   => "aen-#{ns.id}",
+        :key   => "aen-#{dom.id}",
         :nodes => [
           {
-            :key        => "aec-#{cls.id}",
-            :text       => "foo_cls",
-            :tooltip    => "Automate Class: foo_cls",
-            :icon       => "ff ff-class",
+            :key        => "aen-#{ns.id}",
+            :text       => ns.name,
+            :tooltip    => "Automate Namespace: #{ns.name}",
+            :icon       => "pficon pficon-folder-close",
             :selectable => true,
-            :lazyLoad   => true,
-            :fqname     => cls.fqname,
-            :state      => {:expanded => false},
+            :fqname     => ns.fqname,
+            :state      => {:expanded => true},
+            :nodes      => [
+              {
+                :key        => "aec-#{cls.id}",
+                :text       => cls.name,
+                :tooltip    => "Automate Class: #{cls.name}",
+                :icon       => "ff ff-class",
+                :selectable => true,
+                :lazyLoad   => true,
+                :fqname     => cls.fqname,
+                :state      => {:expanded => false},
+              }
+            ]
           }
         ]
       }

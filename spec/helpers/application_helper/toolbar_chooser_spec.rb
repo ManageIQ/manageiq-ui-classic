@@ -29,7 +29,7 @@ describe ApplicationHelper, "ToolbarChooser" do
       end
 
       it "should return namespaces toolbar on domain node" do
-        n1 = FactoryBot.create(:miq_ae_namespace, :name => 'ns1', :priority => 10)
+        n1 = FactoryBot.create(:miq_ae_domain, :name => 'ns1', :priority => 10)
         x_node_set("aen-#{n1.id}", :ae_tree)
         expect(_toolbar_chooser.send(:center_toolbar_filename_automate)).to eq("miq_ae_domain_center_tb")
       end
