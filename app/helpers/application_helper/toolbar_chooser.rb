@@ -98,8 +98,10 @@ class ApplicationHelper::ToolbarChooser
       center_toolbar_filename_containers
     elsif %i[sandt_tree svccat_tree stcat_tree svcs_tree ot_tree].include?(x_active_tree)
       center_toolbar_filename_services
-    elsif @layout == "chargeback"
-      center_toolbar_filename_chargeback
+    elsif @layout == "chargeback_rate"
+      center_toolbar_filename_chargeback_rate
+    elsif @layout == "chargeback_report"
+      center_toolbar_filename_chargeback_report
     elsif @layout == "miq_ae_tools"
       super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
     elsif @layout == "miq_policy"
@@ -210,15 +212,14 @@ class ApplicationHelper::ToolbarChooser
     x_node == 'root' ? 'containers_center_tb' : 'container_center_tb'
   end
 
-  def center_toolbar_filename_chargeback
-    if @report && x_active_tree == :cb_reports_tree
-      return "chargeback_center_tb"
-    elsif x_active_tree == :cb_rates_tree && x_node != "root"
-      if %w[Compute Storage].include?(x_node.split('-').last)
-        return "chargebacks_center_tb"
-      else
-        return "chargeback_center_tb"
-      end
+  def center_toolbar_filename_chargeback_report
+    return "chargeback_center_tb" if @report
+    nil
+  end
+
+  def center_toolbar_filename_chargeback_rate
+    if x_node != "root"
+      return %w[Compute Storage].include?(x_node.split('-').last) ? "chargebacks_center_tb" : "chargeback_center_tb"
     end
     nil
   end
@@ -592,7 +593,9 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  NO_GTL_VIEW_BUTTONS = %w[chargeback
+  NO_GTL_VIEW_BUTTONS = %w[chargeback_assignment
+                           chargeback_rate
+                           chargeback_report
                            generic_object
                            generic_object_definition
                            miq_ae_class

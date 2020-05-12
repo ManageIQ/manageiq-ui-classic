@@ -1,4 +1,4 @@
-module ChargebackHelper
+module ChargebackRateHelper
   def rate_detail_group(rd_group)
     rd_groups = {
       'cpu'       => _('CPU'),
