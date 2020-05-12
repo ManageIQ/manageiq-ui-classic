@@ -9,8 +9,8 @@ describe Sandbox do
     end
 
     it "converts known trees to symbols and returns them when asked" do
-      sb.x_active_tree = 'vmdb_tree'
-      expect(sb.x_active_tree).to be(:vmdb_tree)
+      sb.x_active_tree = 'settings_tree'
+      expect(sb.x_active_tree).to be(:settings_tree)
     end
 
     it "accepts nil tree and returns it when asked" do

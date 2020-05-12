@@ -645,33 +645,18 @@ module ApplicationController::Performance
       end
 
       # Get the report definition (yaml) and set the where clause based on the record type
-      if @perf_record.kind_of?(VmdbDatabase)
-        rpt = perf_get_chart_rpt(@perf_options[:model].underscore)
-        rpt.where_clause = ["vmdb_database_id = ? and timestamp >= ? and timestamp <= ? and capture_interval_name = ?",
-                            @perf_record.id,
-                            from_dt,
-                            to_dt,
-                            interval_type]
-      elsif @perf_record.kind_of?(VmdbTable)
-        rpt = perf_get_chart_rpt(@perf_options[:model].underscore)
-        rpt.where_clause = ["resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? and capture_interval_name = ?",
-                            @perf_options[:model],
-                            @perf_record.id,
-                            from_dt,
-                            to_dt,
-                            interval_type]
-      else # Doing VIM performance on a normal CI
-        suffix = @perf_record.kind_of?(AvailabilityZone) || @perf_record.kind_of?(HostAggregate) ? "_cloud" : "" # Get special cloud version with 'Instances' headers
-        rpt = perf_get_chart_rpt("vim_perf_#{interval_type}#{suffix}")
-        rpt.where_clause = [
-          "resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? and capture_interval_name = ?",
-          @perf_options[:model],
-          @perf_record.id,
-          from_dt,
-          to_dt,
-          interval_type
-        ]
-      end
+      # Doing VIM performance on a normal CI
+      suffix = @perf_record.kind_of?(AvailabilityZone) || @perf_record.kind_of?(HostAggregate) ? "_cloud" : "" # Get special cloud version with 'Instances' headers
+      rpt = perf_get_chart_rpt("vim_perf_#{interval_type}#{suffix}")
+      rpt.where_clause = [
+        "resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ? and capture_interval_name = ?",
+        @perf_options[:model],
+        @perf_record.id,
+        from_dt,
+        to_dt,
+        interval_type
+      ]
+
       rpt.tz = @perf_options[:tz]
       rpt.time_profile_id = @perf_options[:time_profile]
 

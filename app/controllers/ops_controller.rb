@@ -1,6 +1,5 @@
 class OpsController < ApplicationController
   # Methods for accordions
-  include_concern 'Db'
   include_concern 'Diagnostics'
   include_concern 'OpsRbac'
   include_concern 'Settings'
@@ -63,7 +62,6 @@ class OpsController < ApplicationController
     'collect_logs'              => :logs_collect,
     'collect_current_logs'      => :collect_current_logs,
     'custom_button'             => :custom_buttons,
-    'db_refresh'                => :db_refresh,
     'delete_server'             => :delete_server,
     'demote_server'             => :demote_server,
     'fetch_audit_log'           => :fetch_audit_log,
@@ -214,7 +212,7 @@ class OpsController < ApplicationController
     tree_selected_model
     set_active_tab(params[:id])
     session[:changed] = false
-    self.x_node = params[:id] # if x_active_tree == :vmdb_tree #params[:action] == "x_show"
+    self.x_node = params[:id] #params[:action] == "x_show"
     get_node_info(params[:id])
     replace_right_cell(:nodetype => @nodetype)
   end
@@ -250,9 +248,6 @@ class OpsController < ApplicationController
       @flash_array = nil if MiqServer.my_server(true).logon_status == :ready # don't reset if flash array
       if x_active_tree == :settings_tree
         settings_get_info
-        replace_right_cell(:nodetype => "root")
-      elsif x_active_tree == :vmdb_tree
-        db_get_info
         replace_right_cell(:nodetype => "root")
       elsif x_active_tree == :diagnostics_tree
         diagnostics_get_info
@@ -321,8 +316,6 @@ class OpsController < ApplicationController
       }
     ]
 
-    features.push(:role => "ops_db", :name => :vmdb, :title => _("Database")) if ::Settings.ui.display_ops_database
-
     features.map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
   end
 
@@ -365,11 +358,6 @@ class OpsController < ApplicationController
     if x_active_tree == :diagnostics_tree
       x_node_set("svr-#{my_server.id}", :diagnostics_tree) unless x_node(:diagnostics_tree)
       @sb[:active_tab] ||= "diagnostics_summary"
-    end
-
-    if x_active_tree == :vmdb_tree
-      x_node_set("root", :vmdb_tree) unless x_node(:vmdb_tree)
-      @sb[:active_tab] ||= "db_summary"
     end
 
     @sb[:active_node] ||= {}
@@ -447,9 +435,6 @@ class OpsController < ApplicationController
       when "svr"
         @sb[:active_tab] = "diagnostics_summary"
       end
-    when :vmdb_tree
-      nodes = x_node.split('-')
-      @sb[:active_tab] = %w[ti xx].include?(nodes[0]) ? "db_indexes" : "db_summary"
     end
   end
 
@@ -562,7 +547,6 @@ class OpsController < ApplicationController
     when :diagnostics_tree then diagnostics_get_info
     when :rbac_tree        then rbac_get_info
     when :settings_tree    then settings_get_info
-    when :vmdb_tree        then db_get_info
     end
 
     region_text = _("[Region: %{description} [%{region}]]") % {:description => MiqRegion.my_region.description,
@@ -571,28 +555,8 @@ class OpsController < ApplicationController
                          when :diagnostics_tree then _("Diagnostics %{text}") % {:text => region_text}
                          when :settings_tree    then _("Settings %{text}") % {:text => region_text}
                          when :rbac_tree        then _("Access Control %{text}") % {:text => region_text}
-                         when :vmdb_tree        then _("Database []")
                          end
     {:view => @view, :pages => @pages}
-  end
-
-  def open_parent_nodes
-    existing_node = nil # Init var
-
-    parent_rec = VmdbTableEvm.find(@record.vmdb_table_id)
-    parents = [parent_rec, {:id => @record.vmdb_table_id.to_s}]
-    # Go up thru the parents and find the highest level unopened, mark all as opened along the way
-    # Skip if no parents or parent already open
-    unless parents.empty? || x_tree[:open_nodes].include?(x_build_node_id(parents.last))
-      parents.reverse_each do |p|
-        p_node = x_build_node_id(p)
-        unless x_tree[:open_nodes].include?(p_node)
-          x_tree[:open_nodes].push(p_node)
-          existing_node = p_node
-        end
-      end
-      tree_add_child_nodes(existing_node) # Build the new nodes hash
-    end
   end
 
   # replace_trees can be an array of tree symbols to be replaced
@@ -608,15 +572,10 @@ class OpsController < ApplicationController
     @explorer = true
     tree_selected_model if @tree_selected_model.nil?
 
-    # Clicked on right cell record, open the tree enough to show the node,
-    # if not already showing a record
-    # Not in a form
-    add_nodes = open_parent_nodes if params[:action] == "x_show" && @record && !@in_a_form
     locals = set_form_locals if @in_a_form
     build_supported_depots_for_select
 
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
-    presenter[:add_nodes] = add_nodes if add_nodes
 
     replace_explorer_trees(replace_trees, presenter)
     rebuild_toolbars(presenter)
@@ -638,9 +597,6 @@ class OpsController < ApplicationController
       settings_replace_right_cell(nodetype, presenter)
     when :diagnostics_tree
       diagnostics_replace_right_cell(nodetype, presenter)
-    when :vmdb_tree # "root","tb", "ti","xx" # Check if vmdb root or table is selected
-      # Need to replace all_tabs to show table name as tab label
-      presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     end
   end
 
