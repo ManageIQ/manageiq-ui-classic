@@ -216,32 +216,20 @@ module ApplicationHelper
       id
     end
 
-    NO_ACCORDION = %w[chargeback_assignment
-                       chargeback_rate
-                       chargeback_report].to_set.freeze
-
     # Create a collapsed panel based on a condition
     def miq_accordion_panel(title, condition, id, &block)
       id = valid_html_id(id)
-      if NO_ACCORDION.include?(@layout)
-        content_tag(:div, :class => "panel panel-default") do
-          content_tag(:div, :id => id, :class => "panel-collapse collapse in") do
-            content_tag(:div, :class => "panel-body", &block)
+      content_tag(:div, :class => "panel panel-default") do
+        out = content_tag(:div, :class => "panel-heading") do
+          content_tag(:h4, :class => "panel-title") do
+            link_to(title, "##{id}",
+                    'data-parent' => '#accordion',
+                    'data-toggle' => 'collapse',
+                    :class        => condition ? '' : 'collapsed')
           end
         end
-      else
-        content_tag(:div, :class => "panel panel-default") do
-          out = content_tag(:div, :class => "panel-heading") do
-            content_tag(:h4, :class => "panel-title") do
-              link_to(title, "##{id}",
-                      'data-parent' => '#accordion',
-                      'data-toggle' => 'collapse',
-                      :class        => condition ? '' : 'collapsed')
-            end
-          end
-          out << content_tag(:div, :id => id, :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
-            content_tag(:div, :class => "panel-body", &block)
-          end
+        out << content_tag(:div, :id => id, :class => "panel-collapse collapse #{condition ? 'in' : ''}") do
+          content_tag(:div, :class => "panel-body", &block)
         end
       end
     end
