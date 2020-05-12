@@ -18,7 +18,7 @@ describe ApplicationHelper::Button::MiqAe do
         it { expect(subject.visible?).to be_falsey }
       end
       context 'when editable domains available' do
-        let(:record) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => FactoryBot.create(:miq_ae_domain)) }
+        let(:record) { FactoryBot.create(:miq_ae_class) }
         it { expect(subject.visible?).to be_truthy }
       end
     end

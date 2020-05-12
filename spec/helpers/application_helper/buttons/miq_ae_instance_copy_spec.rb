@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::MiqAeInstanceCopy do
   let(:session) { {} }
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => domain) }
+  let(:record) { FactoryBot.create(:miq_ae_class, :domain => domain) }
   let(:domain) { FactoryBot.create(:miq_ae_domain_disabled) }
   subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => child_id}) }
 
@@ -21,7 +21,7 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
       end
       context 'and button is miq_ae_method_copy with method record' do
         let(:child_id) { 'miq_ae_method_copy' }
-        let(:klass) { FactoryBot.create(:miq_ae_class, :of_domain, :domain => domain) }
+        let(:klass) { FactoryBot.create(:miq_ae_class, :domain => domain) }
         let(:record) do
           FactoryBot.create(:miq_ae_method, :scope => 'class', :language => 'ruby',
                                           :location => 'builtin', :ae_class => klass)

@@ -378,7 +378,7 @@ class MiqAeClassController < ApplicationController
     when "MiqAeClass"
       cls = "aec"
       glyphicon = "ff ff-class"
-    when "MiqAeNamespace"
+    when "MiqAeNamespace", "MiqAeDomain"
       cls = "aen"
       glyphicon = "pficon pficon-folder-open"
     when "MiqAeInstance"
