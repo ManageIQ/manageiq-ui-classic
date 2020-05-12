@@ -380,7 +380,6 @@ Rails.application.routes.draw do
         cb_rates_list
         cb_tier_add
         cb_tier_remove
-        tree_autoload
         tree_select
         x_button
         x_show
