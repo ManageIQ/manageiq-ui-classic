@@ -31,7 +31,7 @@ class OptimizationController < ApplicationController
     }
   end
 
-  def data_for_breadcrumbs
+  def data_for_breadcrumbs(*)
     breadcrumbs_options[:breadcrumbs].compact
   end
   helper_method :data_for_breadcrumbs
