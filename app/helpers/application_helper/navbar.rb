@@ -19,7 +19,7 @@ module ApplicationHelper
         :type    => item.type,
         :visible => item.visible?,
         :active  => item_active?(item),
-        :items   => item.items.to_a.map(&method(:item_to_hash))
+        :items   => item.items.to_a.select(&:visible?).map(&method(:item_to_hash))
       }
     end
 
