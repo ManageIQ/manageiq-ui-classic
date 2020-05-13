@@ -37,7 +37,7 @@ module Mixins
         end
       else
         options[:x_node] ||= x_node
-        right_cell_text = controller_options[:right_cell_text] || title_for_breadcrumbs
+        right_cell_text = controller_options[:right_cell_text] || @right_cell_text
 
         self.x_node_text = params[:text] if action_name == "tree_select" # get text of the active node
 
