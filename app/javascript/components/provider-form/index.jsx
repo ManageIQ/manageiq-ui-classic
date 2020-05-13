@@ -23,7 +23,6 @@ const typeSelectField = (edit, filter) => ({
   name: 'type',
   label: __('Type'),
   kind: filter,
-  placeholder: `<${__('Choose')}>`,
   isDisabled: edit,
   loadOptions: () =>
     API.options('/api/providers').then(({ data: { supported_providers } }) => supported_providers // eslint-disable-line camelcase
@@ -45,7 +44,6 @@ const commonFields = [
     component: componentTypes.SELECT,
     name: 'zone_id',
     label: __('Zone'),
-    placeholder: `<${__('Choose')}>`,
     loadOptions: () =>
       API.get('/api/zones?expand=resources&attributes=id,name,visible&filter[]=visible!=false&sort_by=name')
         .then(({ resources }) => resources.map(({ id: value, name: label }) => ({ value, label }))),
@@ -72,6 +70,8 @@ export const EditingContext = React.createContext({});
 const ProviderForm = ({ providerId, kind, title, redirect }) => {
   const edit = !!providerId;
   const [{ fields, initialValues }, setState] = useState({ fields: edit ? undefined : [typeSelectField(false, kind)] });
+
+  const submitLabel = edit ? __('Save') : __('Add');
 
   useEffect(() => {
     if (providerId) {
@@ -157,9 +157,11 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
             schema={{ fields }}
             onSubmit={onSubmit}
             onCancel={onCancel}
+            onReset={() => add_flash(__('All changes have been reset'), 'warn')}
             initialValues={initialValues}
             clearedValue={null}
-            canReset
+            buttonsLabels={{ submitLabel }}
+            canReset={edit}
             clearOnUnmount
           />
         </EditingContext.Provider>
@@ -169,7 +171,7 @@ const ProviderForm = ({ providerId, kind, title, redirect }) => {
 };
 
 ProviderForm.propTypes = {
-  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  providerId: PropTypes.string,
   kind: PropTypes.string,
   title: PropTypes.string,
   redirect: PropTypes.string,
