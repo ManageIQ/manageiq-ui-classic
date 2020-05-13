@@ -67,6 +67,11 @@ class ChargebackRateController < ApplicationController
 
   def cb_rate_edit
     @_params[:id] ||= find_checked_items[0]
+    rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
+    if params[:pressed] == 'chargeback_rates_edit' && rate.default?
+      add_flash(_("Default Chargeback Rate \"%{name}\" cannot be edited.") % {:name => rate.description}, :error)
+      return
+    end
     @redirect_id = params[:id] if params[:id]
     @refresh_partial = "edit"
   end
@@ -134,16 +139,8 @@ class ChargebackRateController < ApplicationController
       end
     when "reset", nil # displaying edit from for actions: new, edit or copy
       @in_a_form = true
-      @_params[:id] ||= find_checked_items[0]
       session[:changed] = params[:pressed] == 'chargeback_rates_copy'
       @rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
-      @record = @rate
-
-      if params[:pressed] == 'chargeback_rates_edit' && @rate.default?
-        render_flash(_("Default Chargeback Rate \"%{name}\" cannot be edited.") % {:name => @rate.description}, :error)
-        return
-      end
-
       cb_rate_set_form_vars
       if params[:button] == "reset"
         add_flash(_("All changes have been reset"), :warning)
