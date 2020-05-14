@@ -7,13 +7,14 @@ export const Username = ({ applianceName, currentUser, expanded }) => {
 
   return (
     <SideNavItem className="padded">
-      <p
+      <span
+        className={expanded ? 'expanded' : 'collapsed'}
         data-userid={currentUser.userid}
         id="username_display"
         title={title}
       >
         { expanded ? currentUser.name : initials }
-      </p>
+      </span>
     </SideNavItem>
   );
 };

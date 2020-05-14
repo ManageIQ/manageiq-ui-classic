@@ -125,3 +125,15 @@
   // compensate for in-image padding
   margin: -4px 0 0 -8px;
 }
+
+#username_display.collapsed {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-left: -8px;
+  text-align: center;
+  border-radius: 24px;
+  line-height: 24px;
+  background-color: $ui-02;
+  margin-top: 8px;
+}

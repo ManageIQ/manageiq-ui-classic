@@ -37,13 +37,13 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
               onChange={groupChange}
             />
           ) : (
-            <SideNavItem>
+            <SideNavItem className="padded">
               {currentOption.label}
             </SideNavItem>
           )}
         </>
       ) : (
-        <SideNavItem>
+        <SideNavItem className="padded">
           <Collaborate20 />
         </SideNavItem>
       )}
