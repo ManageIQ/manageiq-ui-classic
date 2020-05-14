@@ -7,6 +7,10 @@ class ChargebackAssignmentController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
+  def self.table_name
+    @table_name ||= "chargeback_assignment"
+  end
+
   def index
     @breadcrumbs = []
     title
