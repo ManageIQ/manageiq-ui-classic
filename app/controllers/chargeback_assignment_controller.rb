@@ -7,35 +7,53 @@ class ChargebackAssignmentController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
+  def index
+    @breadcrumbs = []
+    title
+    set_form_locals if @in_a_form
+    session[:changed] = false
+    @edit = {:new => {}}
+  end
+
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_assign_field_changed
-    return unless load_edit("cbassign_edit__#{x_node}")
+    cb_assign_set_form_vars if params[:type]
+    return unless load_edit("cbassign_edit__#{params[:type] || params[:id]}")
 
     cb_assign_get_form_vars
     render :update do |page|
       page << javascript_prologue
       except = %i[cbshow_typ cbtag_cat cblabel_key]
       changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
-      page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
+      page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:type] || params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
     end
   end
 
   def cb_assign_update
+    session[:flash_msgs] = @flash_array = nil
+    return unless load_edit("cbassign_edit__#{params[:id]}") unless params[:button] == 'cancel'
     if params[:button] == "reset"
-      add_flash(_("All changes have been reset"), :warning)
-    else
-      return unless load_edit("cbassign_edit__#{x_node}",)
-
+      @_params[:type] = params[:id]
+      cb_assign_set_form_vars
+      flash_to_session(_("All changes have been reset"), :warning)
+    elsif params[:button] == "save"
       cb_assign_set_record_vars
-      rate_type = x_node.split('-').last
+      rate_type = params[:id]
       begin
         ChargebackRate.set_assignments(rate_type, @edit[:set_assignments])
       rescue StandardError => bang
         render_flash(_("Error during 'Rate assignments': %{error_message}") % {:error_message => bang.message}, :error)
       else
-        add_flash(_("Rate Assignments saved"))
+        flash_to_session(_("Rate Assignments saved"))
       end
+    else
+      show_indexlist
+      flash_to_session("Rate Assignment has been cancelled")
+    end
+    render :update do |page|
+      page << javascript_prologue
+      page.replace_html("cb_assignment_div", :partial => "cb_assignments")
     end
   end
 
@@ -99,15 +117,17 @@ class ChargebackAssignmentController < ApplicationController
       :cb_rates  => {},
       :cb_assign => {},
     }
+    @edit[:new]     = HashWithIndifferentAccess.new
+    @edit[:current] = HashWithIndifferentAccess.new
+    @edit[:new][:type] = params[:type] if params[:type]
+    @edit[:key] = "cbassign_edit__#{@edit[:new][:type]}"
+
     ChargebackRate.all.each do |cbr|
-      if cbr.rate_type == x_node.split('-').last
+      if cbr.rate_type == @edit[:new][:type]
         @edit[:cb_rates][cbr.id.to_s] = cbr.description
       end
     end
-    @edit[:key] = "cbassign_edit__#{x_node}"
-    @edit[:new]     = HashWithIndifferentAccess.new
-    @edit[:current] = HashWithIndifferentAccess.new
-    @edit[:current_assignment] = ChargebackRate.get_assignments(x_node.split('-').last)
+    @edit[:current_assignment] = ChargebackRate.get_assignments(@edit[:new][:type])
     unless @edit[:current_assignment].empty?
       @edit[:new][:cbshow_typ] = case @edit[:current_assignment][0][:object]
                                  when EmsCluster
@@ -299,6 +319,7 @@ class ChargebackAssignmentController < ApplicationController
       :breadcrumbs => [
         {:title => _("Overview")},
         {:title => _("Chargeback")},
+        {:title => _("Assignments"), :url => controller_url},
       ],
     }
   end

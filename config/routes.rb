@@ -357,13 +357,11 @@ Rails.application.routes.draw do
 
     :chargeback_assignment => {
       :get  => %w(
-        explorer
+        index
       ),
       :post => %w(
-        explorer
         cb_assign_field_changed
         cb_assign_update
-        tree_select
       )
     },
     :chargeback_rate => {
