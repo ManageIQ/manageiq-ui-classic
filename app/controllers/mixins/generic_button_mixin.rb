@@ -89,5 +89,14 @@ module Mixins
         render_flash unless performed?
       end
     end
+
+    def evaluate_button(action, allowed_actions)
+      unless allowed_actions.key?(action)
+        raise ActionController::RoutingError, _('invalid button action')
+      end
+
+      send_action = allowed_actions[action]
+      send(send_action)
+    end
   end
 end

@@ -4,13 +4,14 @@ class ChargebackRateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  CB_X_BUTTON_ALLOWED_ACTIONS = {
+  BUTTON_ALLOWED_ACTIONS = {
     'chargeback_rates_copy'   => :cb_rate_edit,
     'chargeback_rates_delete' => :cb_rates_delete,
     'chargeback_rates_edit'   => :cb_rate_edit,
@@ -22,31 +23,18 @@ class ChargebackRateController < ApplicationController
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     action = params[:pressed]
 
-    unless CB_X_BUTTON_ALLOWED_ACTIONS.key?(action)
-      raise ActionController::RoutingError, _('invalid button action')
-    end
-
-    send_action = CB_X_BUTTON_ALLOWED_ACTIONS[action]
-    send(send_action)
+    evaluate_button(action, BUTTON_ALLOWED_ACTIONS)
 
     return if performed?
 
-    if params[:pressed].ends_with?("_copy", "_edit", "_new") && @flash_array.nil?
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      else
-        render :update do |page|
-          page << javascript_prologue
-          page.redirect_to :action => @refresh_partial, :id => @redirect_id, :pressed => params[:pressed]
-        end
-      end
-    elsif params[:pressed].ends_with?("_delete")
-      javascript_redirect(:action => 'show_list', :flash_msg  => @flash_array[0][:message])
+    if action.ends_with?("_copy", "_edit", "_new") && @flash_array.nil?
+      javascript_redirect(:action => @refresh_partial,  :id => @redirect_id, :pressed => action)
+    elsif action.ends_with?("_delete")
+      javascript_redirect(:action => 'show_list')
     elsif @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
     else
-      render_flash unless performed?
+      super
     end
   end
 
@@ -57,6 +45,7 @@ class ChargebackRateController < ApplicationController
     cb_rates_build_tree if @gtl_type == 'tree'
   end
 
+  #TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
   def tree_select
     id = parse_nodetype_and_id(params[:id]).last
     render :update do |page|
@@ -184,6 +173,7 @@ class ChargebackRateController < ApplicationController
       end
     end
     process_cb_rates(rates, 'destroy') if rates.present?
+    flash_to_session
   end
 
   # Add a new tier at the end
