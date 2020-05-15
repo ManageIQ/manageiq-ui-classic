@@ -14,7 +14,6 @@ class ChargebackAssignmentController < ApplicationController
   def index
     @breadcrumbs = []
     title
-    set_form_locals if @in_a_form
     session[:changed] = false
     @edit = {:new => {}}
   end
@@ -22,7 +21,7 @@ class ChargebackAssignmentController < ApplicationController
   # AJAX driven routine to check for changes in ANY field on the form
   def cb_assign_field_changed
     cb_assign_set_form_vars if params[:type]
-    return unless load_edit("cbassign_edit__#{params[:type] || params[:id]}")
+    return unless load_edit("cbassign_edit__#{params[:type] || params[:id]}", "index")
 
     cb_assign_get_form_vars
     render :update do |page|
@@ -36,7 +35,7 @@ class ChargebackAssignmentController < ApplicationController
 
   def cb_assign_update
     session[:flash_msgs] = @flash_array = nil
-    return unless load_edit("cbassign_edit__#{params[:id]}") unless params[:button] == 'cancel'
+    return unless load_edit("cbassign_edit__#{params[:id]}", "index") unless params[:button] == 'cancel'
     if params[:button] == "reset"
       @_params[:type] = params[:id]
       cb_assign_set_form_vars
@@ -52,7 +51,7 @@ class ChargebackAssignmentController < ApplicationController
         flash_to_session(_("Rate Assignments saved"))
       end
     else
-      show_indexlist
+      index
       flash_to_session("Rate Assignment has been cancelled")
     end
     render :update do |page|
@@ -62,7 +61,7 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def title
-    @title = _("Chargeback Assignment")
+    @title = _("Chargeback Assignments")
   end
 
   private ############################
