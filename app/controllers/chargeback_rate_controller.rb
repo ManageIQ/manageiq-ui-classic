@@ -70,13 +70,13 @@ class ChargebackRateController < ApplicationController
     case params[:button]
     when "cancel"
       if params[:id]
-        add_flash(_("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]})
+        flash_msg = _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
       else
-        add_flash(_("Add of new Chargeback Rate was cancelled by the user"))
+        flash_msg = _("Add of new Chargeback Rate was cancelled by the user")
       end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = false
-      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => @flash_array[0][:message])
+      javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => flash_msg)
     when "save", "add"
       id = params[:button] == "save" ? params[:id] : "new"
       return unless load_edit("cbrate_edit__#{id}")
@@ -103,14 +103,14 @@ class ChargebackRateController < ApplicationController
       if tiers_valid && @rate.save
         if params[:button] == "add"
           AuditEvent.success(build_created_audit(@rate, @edit))
-          add_flash(_("Chargeback Rate \"%{name}\" was added") % {:name => @rate.description})
+          flash_msg = _("Chargeback Rate \"%{name}\" was added") % {:name => @rate.description}
         else
           AuditEvent.success(build_saved_audit(@rate, @edit))
-          add_flash(_("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description})
+          flash_msg = _("Chargeback Rate \"%{name}\" was saved") % {:name => @rate.description}
         end
         @edit = session[:edit] = nil # clean out the saved info
         session[:changed] = @changed = false
-        javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => @flash_array[0][:message])
+        javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg  => flash_msg)
       else
         @rate.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
@@ -131,14 +131,11 @@ class ChargebackRateController < ApplicationController
       session[:changed] = params[:pressed] == 'chargeback_rates_copy'
       @rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
       cb_rate_set_form_vars
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("form_div", :partial => "edit")
-          page << "miqSparkle(false);"
-        end
-      end
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true) if params[:button] == "reset"
+
     end
   end
 
