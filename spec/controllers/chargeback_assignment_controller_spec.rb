@@ -23,8 +23,7 @@ describe ChargebackAssignmentController do
       before do
         cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage")
         ChargebackRate.set_assignments(:Storage, [{:cb_rate => cbr, :tag => [tag, "vm"]}])
-        sandbox = {:active_tree => :cb_assignments_tree, :trees => {:cb_assignments_tree => {:active_node => 'xx-Storage'}}}
-        controller.instance_variable_set(:@sb, sandbox)
+        controller.params = {:type => "Storage"}
       end
 
       it "returns tag for current assignments" do
@@ -64,14 +63,14 @@ describe ChargebackAssignmentController do
     end
   end
 
-  describe "#explorer" do
+  describe "#index" do
     render_views
 
     it "can be rendered" do
       EvmSpecHelper.create_guid_miq_server_zone
-      get :explorer
+      get :index
       expect(response.status).to eq(200)
-      expect(response.body).to_not be_empty
+      expect(response).to render_template('index')
     end
   end
 
