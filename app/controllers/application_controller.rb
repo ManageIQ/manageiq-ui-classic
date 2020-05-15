@@ -1974,7 +1974,6 @@ class ApplicationController < ActionController::Base
   helper_method(:last_screen_url)
 
   def previous_breadcrumb_url
-    p "CCCCCCC #{@breadcrumbs.inspect}"
     @breadcrumbs[-2][:url]
   end
   helper_method(:previous_breadcrumb_url)
