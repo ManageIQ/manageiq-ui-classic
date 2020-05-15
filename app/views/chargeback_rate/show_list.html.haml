@@ -1,3 +1,5 @@
 #main_div
-  = render :partial => 'layouts/gtl'
-  = render :partial => 'tree' if @tree.present?
+  - if @tree.present?
+    = render(:partial => "shared/tree", :locals => {:tree => @tree, :name => @tree.name})
+  - else
+    = render :partial => 'layouts/gtl'
