@@ -42,7 +42,6 @@ class ChargebackRateController < ApplicationController
     super
     # only need these gtl type buttons on the screen
     @gtl_buttons = %w[view_list view_tree]
-    cb_rates_build_tree if @gtl_type == 'tree'
   end
 
   #TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
@@ -223,8 +222,8 @@ class ChargebackRateController < ApplicationController
 
   private ############################
 
-  def cb_rates_build_tree
-    @tree = TreeBuilderChargebackRates.new("tree", @sb)
+  def build_view_tree
+    TreeBuilderChargebackRates.new("tree", @sb)
   end
 
   # Common Schedule button handler routines
