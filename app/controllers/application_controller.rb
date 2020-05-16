@@ -555,6 +555,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  helper_method :show_tree_button?
+  def show_tree_button?
+    false
+  end
+
+  helper_method :gtl_buttons
+  def gtl_buttons
+    %w[view_grid view_list view_tile]
+  end
+
   protected
 
   def render_flash(add_flash_text = nil, severity = nil)

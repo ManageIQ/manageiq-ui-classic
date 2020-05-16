@@ -38,12 +38,6 @@ class ChargebackRateController < ApplicationController
     end
   end
 
-  def show_list
-    super
-    # only need these gtl type buttons on the screen
-    @gtl_buttons = %w[view_list view_tree]
-  end
-
   #TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
   def tree_select
     id = parse_nodetype_and_id(params[:id]).last
@@ -218,6 +212,14 @@ class ChargebackRateController < ApplicationController
 
   def title
     @title = _("Chargeback Rates")
+  end
+
+  def show_tree_button?
+    true
+  end
+
+  def gtl_buttons
+    %w[view_list view_tree]
   end
 
   private ############################
