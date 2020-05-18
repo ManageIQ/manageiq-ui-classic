@@ -30,7 +30,7 @@
 
   %hr
 
-  /Add a new selector for the currencies
+  -# Add a new selector for the currencies
   %h3
     = _('Currencies')
   .form-horizontal
@@ -50,7 +50,7 @@
     = _('Rate Details')
   %strong
     = _('* Caution: The value Range end will not be included in the tier.')
-  = render "cb_rate_edit_table"
+  = render :partial => "cb_rate_edit_table"
   - unless @edit[:rec_id]
     %table{:width => "100%"}
       %tr

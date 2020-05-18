@@ -438,7 +438,6 @@ class ApplicationHelper::ToolbarChooser
       if %w[auth_key_pair_cloud
             availability_zone
             host_aggregate
-            chargeback_rate
             cloud_object_store_object
             cloud_object_store_container
             cloud_tenant
