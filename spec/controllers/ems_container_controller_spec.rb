@@ -71,7 +71,7 @@ describe EmsContainerController do
         EvmSpecHelper.create_guid_miq_server_zone
         # set kubeclient to return a mock route.
         allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-        expect(mock_client).to receive(:discover).at_least(:once)
+        allow(mock_client).to receive(:discover)
       end
 
       it "detects openshift hawkular metric route" do
