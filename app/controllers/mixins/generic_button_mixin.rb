@@ -96,7 +96,7 @@ module Mixins
 
     def evaluate_button(action, allowed_actions)
       unless allowed_actions.key?(action)
-        raise ActionController::RoutingError, _('invalid button action')
+        raise ActionController::RoutingError, _('Invalid button action')
       end
 
       send_action = allowed_actions[action]

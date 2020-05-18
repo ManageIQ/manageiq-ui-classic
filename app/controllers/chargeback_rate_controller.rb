@@ -38,13 +38,21 @@ class ChargebackRateController < ApplicationController
     end
   end
 
-  #TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
+  def show_list
+    super
+    @center_toolbar = 'chargeback_rates'
+  end
+
+  def show
+    super
+    @center_toolbar = 'chargeback_rate'
+  end
+
+
+  # TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
   def tree_select
     id = parse_nodetype_and_id(params[:id]).last
-    render :update do |page|
-      page << javascript_prologue
-      page.redirect_to :action => 'show', :id => id
-    end
+    javascript_redirect(:action => 'show', :id => id)
   end
 
   def cb_rate_edit
