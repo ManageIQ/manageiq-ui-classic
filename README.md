@@ -1,7 +1,7 @@
 # ManageIQ::UI::Classic
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-ui-classic.svg)](http://badge.fury.io/rb/manageiq-ui-classic)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-ui-classic.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-ui-classic)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-ui-classic.svg?branch=master)](https://travis-ci.com/ManageIQ/manageiq-ui-classic)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-ui-classic/coverage)
 [![Coverage Status](https://coveralls.io/repos/github/ManageIQ/manageiq-ui-classic/badge.svg?branch=master)](https://coveralls.io/github/ManageIQ/manageiq-ui-classic?branch=master)
