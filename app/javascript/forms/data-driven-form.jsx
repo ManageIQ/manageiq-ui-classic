@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'patternfly-react';
-import FormRender, { Validators, layoutComponents } from '@data-driven-forms/react-form-renderer';
+import FormRender, { Validators, layoutComponents, componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
 import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -60,4 +60,5 @@ MiqFormRenderer.defaultProps = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
 
+export { componentTypes, validatorTypes };
 export default connect(null, mapDispatchToProps)(MiqFormRenderer);

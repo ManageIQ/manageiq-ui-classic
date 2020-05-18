@@ -23,5 +23,6 @@ module.exports = {
     "\\.(css|scss)$": 'identity-obj-proxy',
     '^react$': '<rootDir>/node_modules/react/',
     '^moment$': resolveModule('moment'), // fix moment-strftime peerDependency issue
+    '@@ddf': '<rootDir>/app/javascript/forms/data-driven-form',
   },
 };
