@@ -48,13 +48,6 @@ class ChargebackRateController < ApplicationController
     @center_toolbar = 'chargeback_rate'
   end
 
-
-  # TODO clean this up after the new trees are in and do the redirect in the TreeBuilder directly instead
-  def tree_select
-    id = parse_nodetype_and_id(params[:id]).last
-    javascript_redirect(:action => 'show', :id => id)
-  end
-
   def cb_rate_edit
     @_params[:id] ||= find_checked_items[0]
     rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
@@ -220,14 +213,6 @@ class ChargebackRateController < ApplicationController
 
   def title
     @title = _("Chargeback Rates")
-  end
-
-  def show_tree_button?
-    true
-  end
-
-  def gtl_buttons
-    %w[view_list view_tree]
   end
 
   private ############################

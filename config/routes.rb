@@ -368,8 +368,6 @@ Rails.application.routes.draw do
     },
     :chargeback_rate => {
       :get  => %w(
-        download_data
-        download_summary_pdf
         edit
         show_list
         show
@@ -385,7 +383,6 @@ Rails.application.routes.draw do
         edit
         show_list
         show
-        tree_select
       )
     },
 

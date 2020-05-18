@@ -448,7 +448,7 @@ module ApplicationHelper
       :edit             => @edit,
       :explorer         => @explorer,
       :ght_type         => @ght_type,
-      :gtl_buttons      => gtl_buttons,
+      :gtl_buttons      => @gtl_buttons,
       :gtl_type         => @gtl_type,
       :html             => @html,
       :lastaction       => @lastaction,
@@ -467,7 +467,6 @@ module ApplicationHelper
       :settings         => @settings,
       :showtype         => @showtype,
       :tabform          => @tabform,
-      :show_tree_button => show_tree_button?,
       :widget_running   => @widget_running,
       :widgetsets       => @widgetsets,
       :render_chart     => @render_chart,
@@ -1045,7 +1044,6 @@ module ApplicationHelper
                         alerts_overview
                         alerts_list
                         alerts_most_recent
-                        chargeback_rate
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object

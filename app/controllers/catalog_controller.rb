@@ -743,12 +743,6 @@ class CatalogController < ApplicationController
     explorer
   end
 
-  def gtl_buttons
-    # used @gtl_buttons, service catalog list does not need to show view_grid button
-    # other accordions in this explorer show all three buttons
-    @gtl_buttons ||= %w[view_grid view_list view_tile]
-  end
-
   private
 
   def build_tenants_tree
