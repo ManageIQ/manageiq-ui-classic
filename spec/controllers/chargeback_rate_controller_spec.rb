@@ -464,32 +464,40 @@ describe ChargebackRateController do
       let(:params) { {:miq_grid_checks => rate.id.to_s} }
 
       it 'calls show_list method when there are no errors' do
-        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
         post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+        flash_messages = assigns(:flash_array)
+        expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
       end
 
       context 'no checked item found' do
         let(:params) { nil }
 
         it 'calls show_list method when there is an error' do
-          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
           post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+          flash_messages = assigns(:flash_array)
+          expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
         end
       end
     end
 
     context 'deleting a rate from its details page' do
       it 'calls show_list method when there are no errors' do
-        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+        expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
         post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+        flash_messages = assigns(:flash_array)
+        expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
       end
 
       context 'rate not found by id' do
         let(:params) { {:id => 123} }
 
         it 'calls show_list method when there is an error' do
-          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list', :flash_msg => "Chargeback Rate \"#{rate.description}\": Delete successful"})
+          expect(controller).to receive(:javascript_redirect).with({:action => 'show_list'})
           post :button, :params => {:pressed => "chargeback_rates_delete", :id => rate.id}
+          flash_messages = assigns(:flash_array)
+          expect(flash_messages.first[:message]).to include("Chargeback Rate \"#{rate.description}\": Delete successful")
         end
       end
     end
