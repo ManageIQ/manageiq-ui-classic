@@ -1,45 +1,33 @@
 describe 'routes for ChargebackRateController' do
   let(:controller_name) { 'chargeback_rate' }
 
-  describe '#cb_rate_edit' do
+  describe '#edit' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rate_edit")).to route_to("#{controller_name}#cb_rate_edit")
+      expect(post("/#{controller_name}/edit")).to route_to("#{controller_name}#edit")
     end
   end
 
-  describe '#cb_rate_form_field_changed' do
+  describe '#form_field_changed' do
     it 'routes with POST' do
       expect(
-        post("/#{controller_name}/cb_rate_form_field_changed")
-      ).to route_to("#{controller_name}#cb_rate_form_field_changed")
+        post("/#{controller_name}/form_field_changed")
+      ).to route_to("#{controller_name}#form_field_changed")
     end
   end
 
-  describe '#cb_rate_show' do
+  describe '#delete' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rate_show")).to route_to("#{controller_name}#cb_rate_show")
+      expect(post("/#{controller_name}/delete")).to route_to("#{controller_name}#delete")
     end
   end
 
-  describe '#cb_rates_delete' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rates_delete")).to route_to("#{controller_name}#cb_rates_delete")
-    end
-  end
-
-  describe '#cb_rates_list' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rates_list")).to route_to("#{controller_name}#cb_rates_list")
-    end
-  end
-
-  describe '#explorer' do
+  describe '#show_list' do
     it 'routes with GET' do
-      expect(get("/#{controller_name}/explorer")).to route_to("#{controller_name}#explorer")
+      expect(get("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
 
     it 'routes with POST' do
-      expect(post("/#{controller_name}/explorer")).to route_to("#{controller_name}#explorer")
+      expect(post("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
   end
 
@@ -49,9 +37,9 @@ describe 'routes for ChargebackRateController' do
     end
   end
 
-  describe '#x_show' do
+  describe '#show' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/x_show")).to route_to("#{controller_name}#x_show")
+      expect(post("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
   end
 end

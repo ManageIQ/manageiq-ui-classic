@@ -1,7 +1,7 @@
-class ApplicationHelper::Toolbar::ChargebacksCenter < ApplicationHelper::Toolbar::Basic
-  button_group('chargeback_vmdb', [
+class ApplicationHelper::Toolbar::ChargebackRatesCenter < ApplicationHelper::Toolbar::Basic
+  button_group('chargeback_rates_vmdb', [
     select(
-      :chargeback_vmdb_choice,
+      :chargeback_rates_vmdb_choice,
       nil,
       t = N_('Configuration'),
       t,

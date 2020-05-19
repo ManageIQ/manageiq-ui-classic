@@ -8,6 +8,7 @@ module ApplicationHelper::PageLayouts
       about
       all_tasks
       chargeback
+      chargeback_rate
       configuration
       container_dashboard
       container_topology
