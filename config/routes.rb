@@ -375,9 +375,7 @@ Rails.application.routes.draw do
       :post => %w(
         button
         cb_rate_form_field_changed
-        cb_rate_show
         cb_rates_delete
-        cb_rates_list
         cb_tier_add
         cb_tier_remove
         edit
@@ -2638,7 +2636,6 @@ Rails.application.routes.draw do
         db_backup
         db_backup_form_field_changed
         db_gc_collection
-        db_list
         diagnostics_server_list
         diagnostics_tree_select
         edit_rhn

@@ -24,16 +24,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  NO_SUMMARY_VIEW_TB = [
-    'all_tasks',
-    'chargeback_rate',
-    'diagnostics',
-    'miq_server',
-    'my_tasks',
-    'timeline',
-    'usage'
-  ]
-
   def view_toolbar_filename
     if render_gtl_view_tb?
       'gtl_view_tb'
@@ -45,8 +35,9 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
-    elsif !NO_SUMMARY_VIEW_TB.include?(@layout) && !@layout.starts_with?("miq_request") &&
-      @display == "main" && @showtype == "main" && !@in_a_form
+    elsif !%w[all_tasks timeline diagnostics my_tasks miq_server usage].include?(@layout) &&
+      !@layout.starts_with?("miq_request") && @display == "main" &&
+      @showtype == "main" && !@in_a_form
       'summary_view_tb'
     end
   end

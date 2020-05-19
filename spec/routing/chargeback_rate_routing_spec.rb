@@ -15,25 +15,13 @@ describe 'routes for ChargebackRateController' do
     end
   end
 
-  describe '#cb_rate_show' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rate_show")).to route_to("#{controller_name}#cb_rate_show")
-    end
-  end
-
   describe '#cb_rates_delete' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/cb_rates_delete")).to route_to("#{controller_name}#cb_rates_delete")
     end
   end
 
-  describe '#cb_rates_list' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rates_list")).to route_to("#{controller_name}#cb_rates_list")
-    end
-  end
-
-  describe '#explorer' do
+  describe '#show_list' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/show_list")).to route_to("#{controller_name}#show_list")
     end
@@ -49,7 +37,7 @@ describe 'routes for ChargebackRateController' do
     end
   end
 
-  describe '#x_show' do
+  describe '#show' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/show")).to route_to("#{controller_name}#show")
     end
