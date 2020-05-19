@@ -211,7 +211,7 @@ module ApplicationController::ReportDownloads
       :page_layout => "portrait",
       :page_size   => "us-letter",
       :run_date    => run_time.strftime("%m/%d/%y %l:%m %p %z"),
-      :title       => "#{klass} \"#{@record.name}\"".html_safe,
+      :title       => "#{klass} \"#{get_record_display_name(@record)}\"".html_safe,
       :quadicon    => true
     }
 

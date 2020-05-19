@@ -2,7 +2,7 @@
   - if x_node == "root"
     = render :partial => "rates_list"
   - elsif @edit && @edit[:new] && ((params[:pressed] && params[:pressed] != "chargeback_rates_delete") || params[:button] == "reset")
-    = render :partial => "cb_rate_edit"
+    = render :partial => "edit"
   - elsif %w(Compute Storage).include?(x_node.split('-').last)
     = render :partial => 'layouts/x_gtl', :locals => {:action_url => "cb_rates_list"}
   - else

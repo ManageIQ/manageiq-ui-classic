@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
+- url = url_for_only_path(:action => 'form_field_changed', :id => @edit[:rec_id] || "new")
 - breakdown_present = @edit[:new][:details].any? { |d| d[:sub_metric].present? }
 %table.table.table-bordered{:id => "chargeback_rate_edit_form"}
   %thead
@@ -59,7 +59,7 @@
         = render :partial => 'cb_tier_edit_values', :locals => {:detail_index => detail_index, :url => url, :row_within_rate => 0}
         %td.action-cell
           = button_tag(_("Add"), :class => "btn btn-default", :alt => t = _("Add a new tier"), :title => t,
-                                 :onclick => "miqAjaxButton('#{url_for_only_path(:action => "cb_tier_add",
+                                 :onclick => "miqAjaxButton('#{url_for_only_path(:action => "tier_add",
                                                                        :detail_index => detail_index,
                                                                        :button => "add")}');")
       - (1..num_tiers.to_i - 1).each do |tier_index|
@@ -68,7 +68,7 @@
           = render :partial => 'cb_tier_edit_values', :locals => {:detail_index => detail_index, :url => url, :row_within_rate => tier_index}
           %td.action-cell
             = button_tag(_("Delete"), :class => "btn btn-default", :alt => t = _("Remove the tier"), :title => t,
-                                      :onclick => "miqAjaxButton('#{url_for_only_path(:action => "cb_tier_remove",
+                                      :onclick => "miqAjaxButton('#{url_for_only_path(:action => "tier_remove",
                                                                             :index => "#{detail_index}-#{tier_index}",
                                                                             :button => "remove")}');")
 

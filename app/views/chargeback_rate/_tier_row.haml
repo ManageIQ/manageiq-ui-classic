@@ -1,5 +1,5 @@
 - i = params[:detail_index]
-- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => (@edit[:rec_id] || "new"))
+- url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rec_id] || "new"))
 - n = @edit[:new][:num_tiers][i.to_i]
 - n = params[:tier_row] if params[:tier_row]
 
@@ -10,7 +10,7 @@
                  :class   => "btn btn-default",
                  :alt     => t = _("Remove the tier"),
                  :title   => t,
-                 :onclick => "miqAjaxButton('#{url_for_only_path(:action => "cb_tier_remove",
+                 :onclick => "miqAjaxButton('#{url_for_only_path(:action => "tier_remove",
                                                        :index  => i + "-#{n - 1}",
                                                        :button => "remove")}');")
   :javascript

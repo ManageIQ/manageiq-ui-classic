@@ -8,6 +8,12 @@
     .col-md-8
       %p.form-control-static
         = h(@record.description)
+  .form-group
+    %label.col-md-2.control-label
+      = _('Type')
+    .col-md-8
+      %p.form-control-static
+        = h(@record.rate_type)
 %hr
 %h3= _('Rate Details')
 %table.table.table-bordered
