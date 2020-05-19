@@ -13,7 +13,7 @@ class ChargebackRateController < ApplicationController
 
   BUTTON_ALLOWED_ACTIONS = {
     'chargeback_rates_copy'   => :cb_rate_edit,
-    'chargeback_rates_delete' => :cb_rates_delete,
+    'chargeback_rates_delete' => :delete,
     'chargeback_rates_edit'   => :cb_rate_edit,
     'chargeback_rates_new'    => :cb_rate_edit
   }.freeze
@@ -124,7 +124,7 @@ class ChargebackRateController < ApplicationController
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
-  def cb_rate_form_field_changed
+  def form_field_changed
     return unless load_edit("cbrate_edit__#{params[:id]}")
     cb_rate_get_form_vars
     render :update do |page|
@@ -137,7 +137,7 @@ class ChargebackRateController < ApplicationController
   end
 
   # Delete all selected or single displayed action(s)
-  def cb_rates_delete
+  def delete
     assert_privileges("chargeback_rates_delete")
     rates = []
     if !params[:id] # showing a list
@@ -158,7 +158,7 @@ class ChargebackRateController < ApplicationController
   end
 
   # Add a new tier at the end
-  def cb_tier_add
+  def tier_add
     detail_index = params[:detail_index]
     ii = detail_index.to_i
 
@@ -184,7 +184,7 @@ class ChargebackRateController < ApplicationController
   end
 
   # Remove the selected tier
-  def cb_tier_remove
+  def tier_remove
     @edit = session[:edit]
     index = params[:index]
     detail_index, tier_to_remove_index = index.split("-")
