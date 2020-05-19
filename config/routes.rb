@@ -385,18 +385,17 @@ Rails.application.routes.draw do
 
     :chargeback_report => {
       :get  => %w(
-        explorer
+        show_list
         render_csv
         render_pdf
         render_txt
         report_only
       ),
       :post => %w(
-        explorer
         saved_report_paging
         tree_autoload
         tree_select
-        x_show
+        show
       )
     },
 
