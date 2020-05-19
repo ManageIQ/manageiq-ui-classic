@@ -38,16 +38,6 @@ class ChargebackRateController < ApplicationController
     end
   end
 
-  def show_list
-    super
-    @center_toolbar = 'chargeback_rates'
-  end
-
-  def show
-    super
-    @center_toolbar = 'chargeback_rate'
-  end
-
   def cb_rate_edit
     @_params[:id] ||= find_checked_items[0]
     rate = new_rate_edit? ? ChargebackRate.new : ChargebackRate.find(params[:id])
@@ -217,10 +207,6 @@ class ChargebackRateController < ApplicationController
 
   private ############################
 
-  def build_view_tree
-    TreeBuilderChargebackRates.new("tree", @sb)
-  end
-
   # Common Schedule button handler routines
   def process_cb_rates(rates, task)
     process_elements(rates, ChargebackRate, task)
@@ -382,5 +368,6 @@ class ChargebackRateController < ApplicationController
     }
   end
 
+  toolbar :chargeback_rate, :chargeback_rates
   menu_section :chargeback
 end
