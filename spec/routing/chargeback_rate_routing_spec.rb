@@ -7,17 +7,17 @@ describe 'routes for ChargebackRateController' do
     end
   end
 
-  describe '#cb_rate_form_field_changed' do
+  describe '#form_field_changed' do
     it 'routes with POST' do
       expect(
-        post("/#{controller_name}/cb_rate_form_field_changed")
-      ).to route_to("#{controller_name}#cb_rate_form_field_changed")
+        post("/#{controller_name}/form_field_changed")
+      ).to route_to("#{controller_name}#form_field_changed")
     end
   end
 
-  describe '#cb_rates_delete' do
+  describe '#delete' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_rates_delete")).to route_to("#{controller_name}#cb_rates_delete")
+      expect(post("/#{controller_name}/delete")).to route_to("#{controller_name}#delete")
     end
   end
 

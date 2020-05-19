@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
+- url = url_for_only_path(:action => 'form_field_changed', :id => @edit[:rec_id] || "new")
 - currency = Currency.currencies_for_select
 = render :partial => "layouts/flash_msg"
 #form_div

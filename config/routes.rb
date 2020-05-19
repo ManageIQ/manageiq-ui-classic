@@ -374,13 +374,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        cb_rate_form_field_changed
-        cb_rates_delete
-        cb_tier_add
-        cb_tier_remove
+        delete
         edit
+        form_field_changed
         show_list
         show
+        tier_add
+        tier_remove
       )
     },
 
