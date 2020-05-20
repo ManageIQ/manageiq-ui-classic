@@ -381,8 +381,8 @@ module ApplicationHelper
       controller = "infra_networking"
       action = @lastaction
     when "MiqReportResult"
-      controller = "report"
-      action = "show_saved"
+      controller = params[:controller]
+      action = "show"
     when "MiqSchedule"
       if request.parameters["controller"] == "report"
         controller = "report"

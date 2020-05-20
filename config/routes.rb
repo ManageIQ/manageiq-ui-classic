@@ -385,6 +385,7 @@ Rails.application.routes.draw do
 
     :chargeback_report => {
       :get  => %w(
+        show
         show_list
         render_csv
         render_pdf
@@ -393,8 +394,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         saved_report_paging
-        tree_autoload
-        tree_select
         show
       )
     },

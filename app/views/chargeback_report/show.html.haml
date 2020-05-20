@@ -1,0 +1,4 @@
+#report_div
+  = render :partial => 'layouts/flash_msg'
+  - if @report && @html
+    = render :partial => 'layouts/report_html'
