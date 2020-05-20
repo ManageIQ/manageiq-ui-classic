@@ -1,5 +1,10 @@
 /* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetToolbarCount miqSparkle */
 
+function isReduxTree(treeName) {
+  var store = ManageIQ.redux.store.getState();
+  return store.hasOwnProperty(treeName);
+}
+
 function miqTreeObject(tree) {
   var obj;
   try {
@@ -22,25 +27,6 @@ window.miqTreeFindNodeByKey = function(tree, key) {
   return tree.getNodes().find(function(node) {
     return (node.key === key);
   });
-}
-
-// Generic OnCheck handler for the checkboxes in tree
-function miqOnCheckGeneric(node) {
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
-  miqJqueryRequest(url);
-}
-
-function miqOnCheckTenantTree(node) {
-  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
-  sendDataWithRx({
-    controller: 'catalogItemFormController',
-    key: node.key,
-  })
-}
-
-// Generic OnClick handler for selecting nodes in tree
-function miqOnClickGeneric(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
 }
 
 function miqAddNodeChildren(treename, key, selected_node, children) {
@@ -73,14 +59,6 @@ function miqRemoveNodeChildren(treename, key) {
   }
 }
 
-function miqOnClickMenuRoles(id) {
-  var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
-  miqJqueryRequest(url, {beforeSend: true,
-    complete: true,
-    no_encoding: true,
-  });
-}
-
 function miqTreeSelect(key) {
   var url = '/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(key.split('__')[0]);
   miqJqueryRequest(url, {beforeSend: true});
@@ -89,20 +67,32 @@ function miqTreeSelect(key) {
 // Activate and focus on a node within a tree given the node's key
 function miqTreeActivateNode(tree, key) {
   miqSparkle(true);
-  var node = miqTreeFindNodeByKey(tree, key);
-  if (node) {
-    miqTreeObject(tree).selectNode(node);
-    miqTreeScrollToNode(tree, key);
+  if (isReduxTree(tree)) {
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/expandNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/scrollToNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(tree, key);
+    if (node) {
+      miqTreeObject(tree).selectNode(node);
+      miqTreeScrollToNode(tree, key);
+    }
   }
 }
 
 // Activate silently (no onActivate event) and focus on a node within a tree given the node's key
 function miqTreeActivateNodeSilently(tree, key) {
-  var node = miqTreeFindNodeByKey(tree, key);
-  if (node) {
-    miqTreeObject(tree).selectNode(node, {silent: true });
-    miqTreeObject(tree).expandNode(node);
-    miqTreeScrollToNode(tree, key);
+  if (isReduxTree(tree)) {
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/selectNodeSilent', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/expandNode', key: key});
+    ManageIQ.redux.store.dispatch({namespace: tree, type: '@@tree/scrollToNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(tree, key);
+    if (node) {
+      miqTreeObject(tree).selectNode(node, {silent: true });
+      miqTreeObject(tree).expandNode(node);
+      miqTreeScrollToNode(tree, key);
+    }
   }
 }
 
@@ -118,13 +108,6 @@ function miqExpandParentNodes(treename, selected_node) {
   if (node) {
     miqTreeObject(treename).revealNode(node, {silent: true});
   }
-}
-
-function miqOnClickSelectRbacTreeNode(id) {
-  var tree = 'rbac_tree';
-  miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
-  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
-  miqTreeScrollToNode(tree, id);
 }
 
 function miqTreeScrollToNode(tree, id) {
@@ -147,20 +130,6 @@ function miqTreeScrollToNode(tree, id) {
   }
 }
 
-function miqOnClickAutomate(id) {
-  miqTreeExpandNode('automate_tree', id);
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
-}
-
-function miqOnClickAutomateCatalog(id) {
-  miqTreeExpandNode('automate_catalog_tree', id);
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
-}
-
-function miqOnClickIncludeDomainPrefix() {
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
-}
-
 // delete specific tree cookies
 function miqDeleteTreeCookies(tree_prefix) {
   miqTreeClearState(tree_prefix);
@@ -168,67 +137,143 @@ function miqDeleteTreeCookies(tree_prefix) {
 
 // toggle expand/collapse all nodes in tree
 function miqTreeToggleExpand(treename, expand_mode) {
-  expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
+  if (isReduxTree(treename)) {
+    ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandAll', value: expand_mode});
+  } else {
+    expand_mode ? miqTreeObject(treename).expandAll() : miqTreeObject(treename).collapseAll();
+  }
 }
 
-// OnClick handler for the VM Snapshot Tree
-function miqOnClickSnapshots(id) {
-  var pieces = id.split(/-/);
-  var shortId = pieces[pieces.length - 1];
-  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
+/**
+ * Function for the react tree to select checked keys.
+ * @param  {Object} tree  The tree object itself.
+ * @return {Array}        Array of keys.
+ */
+function miqGetSelectedKeys(tree) {
+  return Object.values(tree).filter(function(entry) {
+    return (entry.state && entry.state.checked);
+  }).map(function(entry) {
+    return entry.attr.key;
+  });
 }
 
-// OnClick handler for Host Network Tree
-function miqOnClickHostNet(id) {
-  var ids = id.split('|')[0].split('_'); // Break apart the node ids
-  var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
-  DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
+// Generic OnCheck handler for the checkboxes in tree
+function miqOnCheckGeneric(key, checked) {
+  miqJqueryRequest(ManageIQ.tree.checkUrl + encodeURIComponent(key) + '?check=' + (checked ? '1' : '0'));
 }
 
 // OnCheck handler for the belongs to drift/compare sections tree
-function miqOnCheckSections(node, tree_name) {
-  var selectedKeys = miqTreeObject(tree_name).getChecked().map(function(n) {
-    return n.key;
-  });
+// Compute -> Infra -> VMs -> Compare VM's
+function miqOnCheckSections(key, checked, tree) {
+  var selectedKeys = miqGetSelectedKeys(tree);
 
-  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(node.key) + '&check=' + node.state.checked;
+  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + checked;
   miqJqueryRequest(url, {data: {all_checked: selectedKeys}});
   return true;
 }
 
-function miqOnCheckGenealogy(node, treename) {
-  var tree = miqTreeObject(treename);
-  // Map the selected nodes into an array of keys
-  var selectedKeys = tree.getChecked().map(function(item) {
-    return encodeURIComponent(item.key);
-  });
+// Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
+function miqOnCheckGenealogy(key, checked, tree) {
+  var selectedKeys = getSelectedKeys(tree);
+
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
 }
 
-function miqCheckAll(cb, treename) {
-  var tree = miqTreeObject(treename);
-  // Set the checkboxes according to the master checkbox
-  if (cb.checked) {
-    tree.checkAll({silent: true});
-  } else {
-    tree.uncheckAll({silent: true});
-  }
-  // Map the selected nodes into an array of keys
-  var selectedKeys = tree.getChecked().map(function(item) {
-    return encodeURIComponent(item.key);
+// Services -> Catalogs -> Catalog Items -> Edit item -> Tenants tree
+function miqOnCheckTenantTree(key) {
+  sendDataWithRx({
+    controller: 'catalogItemFormController',
+    key: key,
   });
+}
+
+function miqCheckAll(cb, treeName) {
+  // Set the checkboxes according to the master checkbox
+  ManageIQ.redux.store.dispatch({namespace: treeName, type: '@@tree/checkAll', value: cb.checked});
+
+  // Map the selected nodes into an array of keys
+  var selectedKeys = [];
+  var tree = ManageIQ.redux.store.getState()[treeName];
+
+  for (var property in tree) {
+    if (tree.hasOwnProperty(property) && property !== '') {
+      selectedKeys.push(encodeURIComponent(tree[property].attr.key));
+    }
+  }
+
   // Activate toolbar items according to the selection
   miqSetToolbarCount(selectedKeys.length);
   // Inform the backend about the checkbox changes
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&all_checked=' + selectedKeys);
 }
 
+// Compute -> Infrastructure -> VMs -> Select one vm and click on genealogy
+function miqOnClickGeneric(id) {
+  miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
+}
+
+// Settings -> Diagnostics -> Roles By servers tab
+function miqOnClickDiagnostics(id) {
+  var typ = id.split('-')[0]; // Break apart the node ids
+  if (['svr', 'role', 'asr'].includes(typ)) {
+    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
+  }
+}
+
+// Compute -> Infra -> VMs -> Select one -> Snapshot button
+function miqOnClickSnapshots(id) {
+  var pieces = id.split(/-/);
+  var shortId = pieces[pieces.length - 1];
+  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
+}
+
+// Compute -> Infra -> Networking
+function miqOnClickHostNet(id) {
+  var ids = id.split('|')[0].split('_'); // Break apart the node ids
+  var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
+  DoNav('/vm_or_template/show/' + encodeURIComponent(nid[1]));
+}
+
+function miqOnClickSelectRbacTreeNode(id) {
+  var tree = 'rbac_tree';
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
+  miqTreeScrollToNode(tree, id);
+}
+
+// Settings -> Access Control -> Roles/Edit Roles // Seems like not doing anything
+function miqOnClickMenuRoles(id) {
+  var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
+  miqJqueryRequest(url, {
+    beforeSend: true,
+    complete: true,
+    no_encoding: true,
+  });
+}
+
+// Automate -> Expoler -> Select a class -> Copy -> Uncheck Copy to same path -> Namespace selection uses thath tree
+function miqOnClickAutomate(id) {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
+}
+
+// Services -> Catalogs -> Catalog Items -> add a new item -> select Generic -> three entry point fields open it.
+function miqOnClickAutomateCatalog(id) {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_catalog_tree');
+}
+
+function miqOnClickIncludeDomainPrefix() {
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
+}
+
 function miqTreeExpandNode(treename, key) {
-  var node = miqTreeFindNodeByKey(treename, key);
-  miqTreeObject(treename).expandNode(node);
+  if (isReduxTree(treename)) {
+    ManageIQ.redux.store.dispatch({namespace: treename, type: '@@tree/expandNode', key: key});
+  } else {
+    var node = miqTreeFindNodeByKey(treename, key);
+    miqTreeObject(treename).expandNode(node);
+  }
 }
 
 function miqTreeExpandRecursive(treeId, fullNodeId) {
@@ -248,18 +293,6 @@ function miqTreeExpandRecursive(treeId, fullNodeId) {
       miqTreeExpandNode(treeId, currId);
     }
   });
-}
-
-// OnClick handler for Server Roles Tree
-function miqOnClickDiagnostics(id) {
-  var typ = id.split('-')[0]; // Break apart the node ids
-  switch (typ) {
-    case 'svr':
-    case 'role':
-    case 'asr':
-      miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
-      break;
-  }
 }
 
 function miqMenuChangeRow(action, elem) {
@@ -361,51 +394,6 @@ function miqSquashToggle(treeName) {
   }
 }
 
-function miqTreeEventSafeEval(func) {
-  var whitelist = [
-    'miqOnCheckGenealogy',
-    'miqOnCheckGeneric',
-    'miqOnClickMenuRoles',
-    'miqOnCheckProtect',
-    'miqOnCheckSections',
-    'miqOnClickAutomate',
-    'miqOnClickAutomateCatalog',
-    'miqOnClickDiagnostics',
-    'miqOnClickGeneric',
-    'miqOnClickHostNet',
-    'miqOnClickSnapshots',
-    'miqOnClickUtilization',
-    'miqOnCheckTenantTree',
-  ];
-
-  if (whitelist.includes(func)) {
-    return window[func];
-  }
-  throw new Error('Function not in whitelist: ' + func);
-}
-
-function miqTreeOnNodeChecked(options, node) {
-  if (options.oncheck) {
-    miqTreeEventSafeEval(options.oncheck)(node, options.tree_name);
-  }
-}
-
-function miqTreeState(tree, node, state) {
-  // Initialize the session storage object
-  var persist = JSON.parse(sessionStorage.getItem('tree_state_' + tree));
-  if (!persist) {
-    persist = {};
-  }
-
-  if (state === undefined) {
-    // No third argument, return the stored value or undefined
-    return persist[node];
-  }
-  // Save the third argument as the new node state
-  persist[node] = state;
-  sessionStorage.setItem('tree_state_' + tree, JSON.stringify(persist));
-}
-
 function miqTreeClearState(tree) {
   if (tree === undefined) {
     // Clear all tree state objects
@@ -422,87 +410,4 @@ function miqTreeClearState(tree) {
     // Clear the state of one specific tree
     sessionStorage.removeItem('tree_state_' + tree);
   }
-}
-
-window.miqInitTree = function(options, tree) {
-  if (options.check_url) {
-    ManageIQ.tree.checkUrl = options.check_url;
-  }
-
-  if (options.click_url) {
-    ManageIQ.tree.clickUrl = options.click_url;
-  }
-
-  if (options.group_changed) {
-    miqDeleteTreeCookies();
-  }
-
-  $('#' + options.tree_id).treeview({
-    data: tree,
-    showImage: true,
-    preventUnselect: true,
-    showCheckbox: options.checkboxes,
-    hierarchicalCheck: options.hierarchical_check,
-    highlightChanges: options.highlight_changes,
-    levels: 1,
-    allowReselect: options.allow_reselect,
-    expandIcon: 'fa fa-fw fa-angle-right',
-    collapseIcon: 'fa fa-fw fa-angle-down',
-    loadingIcon: 'fa fa-fw fa-spinner fa-pulse',
-    checkedIcon: 'fa fa-fw fa-check-square-o',
-    uncheckedIcon: 'fa fa-fw fa-square-o',
-    partiallyCheckedIcon: 'fa fa-fw fa-check-square',
-    checkboxFirst: true,
-    showBorders: false,
-    onNodeSelected: function(event, node) {
-      if (options.onclick) {
-        if (options.click_url) {
-          miqTreeEventSafeEval(options.onclick)(node.key);
-        } else if (miqCheckForChanges() === false) {
-          node.$el.focus();
-        } else {
-          miqTreeEventSafeEval(options.onclick)(node.key);
-        }
-      }
-    },
-    onNodeChecked: function(event, node) {
-      miqTreeOnNodeChecked(options, node);
-    },
-    onNodeUnchecked: function(event, node) {
-      miqTreeOnNodeChecked(options, node);
-    },
-    onNodeExpanded: function(event, node) {
-      miqTreeState(options.tree_name, node.key, true);
-    },
-    onNodeCollapsed: function(event, node) {
-      miqTreeState(options.tree_name, node.key, false);
-    },
-    lazyLoad: function(node, display) {
-      if (options.autoload) {
-        $.ajax({
-          url: '/' + options.controller + '/tree_autoload',
-          type: 'post',
-          data: {
-            id: node.key,
-            tree: options.tree_name,
-            mode: 'all',
-          },
-        }).success(display).error(function(data) {
-          console.log(data);
-        });
-      }
-    },
-  });
-
-  if (options.silent_activate) {
-    miqExpandParentNodes(options.tree_name, options.select_node);
-    miqTreeActivateNodeSilently(options.tree_name, options.select_node);
-  }
-
-  // Tree state persistence correction after the tree is completely loaded
-  miqTreeObject(options.tree_name).getNodes().forEach(function(node) {
-    if (miqTreeState(options.tree_name, node.key) === !node.state.expanded) {
-      miqTreeObject(options.tree_name).toggleNodeExpanded(node);
-    }
-  });
 }

@@ -48,7 +48,7 @@ describe TreeBuilderSmartproxyAffinity do
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq('/ops/smartproxy_affinity_field_changed/')
       expect(locals[:oncheck]).to eq('miqOnCheckGeneric')
-      expect(locals[:three_checks]).to eq(true)
+      expect(locals[:hierarchical_check]).to eq(true)
     end
     it 'sets roots correctly' do
       roots = @smartproxy_affinity_tree.send(:x_get_tree_roots)

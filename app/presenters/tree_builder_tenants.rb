@@ -16,8 +16,9 @@ class TreeBuilderTenants < TreeBuilder
       :checkboxes => true,
       :check_url  => "/catalog/#{cat_item_or_bundle}/",
       :open_all   => false,
-      :oncheck    => @selectable ? tenant_tree_or_generic : false,
-    }
+      :oncheck    => @selectable ? tenant_tree_or_generic : nil,
+      :post_check => true
+    }.compact
   end
 
   def tenant_tree_or_generic

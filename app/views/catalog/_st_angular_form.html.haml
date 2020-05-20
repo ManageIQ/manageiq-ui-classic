@@ -66,7 +66,7 @@
                   "data-live-search" => "true",
                   'miq-select'        => true}
       - if role_allows?(:feature => 'rbac_tenant_view')
-        = render(:partial => "tenants_tree_show", :locals => {:angular => true})
+        = render(:partial => "tenants_tree_show")
 
       .form-group
         %label.col-md-2.control-label{"for" => "zone_id"}
