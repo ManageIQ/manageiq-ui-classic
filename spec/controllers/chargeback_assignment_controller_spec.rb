@@ -19,44 +19,44 @@ describe ChargebackAssignmentController do
       end
     end
 
-    describe "#cb_assign_set_form_vars" do
+    describe "#set_form_vars" do
       before do
         cbr = FactoryBot.create(:chargeback_rate, :rate_type => "Storage")
         ChargebackRate.set_assignments(:Storage, [{:cb_rate => cbr, :tag => [tag, "vm"]}])
-        controller.params = {:type => "Storage"}
+        controller.params = {:id => "Storage"}
       end
 
       it "returns tag for current assignments" do
-        controller.send(:cb_assign_set_form_vars)
+        controller.send(:set_form_vars)
         expect(assigns(:edit)[:current_assignment][0][:tag][0]['parent_id']).to eq(category.id)
       end
 
       it "returns empty array for current_assignment when tag/category is not found" do
         tag.destroy
-        controller.send(:cb_assign_set_form_vars)
+        controller.send(:set_form_vars)
         expect(assigns(:edit)[:current_assignment]).to eq([])
       end
     end
 
-    describe '#cb_assign_get_form_vars' do
+    describe '#get_form_vars' do
       before do
         controller.params = {:cblabel_key => 'null'}
         controller.instance_variable_set(:@edit, :new => {:cbshow_typ => '-labels'}, :cb_assign => {})
       end
 
       it "returns tag for current assignments" do
-        expect { controller.send(:cb_assign_get_form_vars) }.not_to raise_error
+        expect { controller.send(:get_form_vars) }.not_to raise_error
       end
 
       it "initializes hash when data are no available(params[:cblabel_key] == null)" do
-        controller.send(:cb_assign_get_form_vars)
+        controller.send(:get_form_vars)
         docker_label_values = controller.instance_variable_get(:@edit)[:cb_assign][:docker_label_values]
         expect(docker_label_values).to eq({})
       end
 
       it "initializes hash when data are no available (params[:cblabel_key] == nil)" do
         controller.params = {:cblabel_key => nil}
-        controller.send(:cb_assign_get_form_vars)
+        controller.send(:get_form_vars)
         docker_label_values = controller.instance_variable_get(:@edit)[:cb_assign][:docker_label_values]
         expect(docker_label_values).to eq({})
       end
@@ -70,7 +70,7 @@ describe ChargebackAssignmentController do
       EvmSpecHelper.create_guid_miq_server_zone
       get :index
       expect(response.status).to eq(200)
-      expect(response).to render_template('index')
+      expect(response).to render_template('show')
     end
   end
 
@@ -112,7 +112,7 @@ describe ChargebackAssignmentController do
     end
   end
 
-  describe '#cb_assign_field_changed' do
+  describe '#form_field_changed' do
     let(:edit) do
       {
         :cb_assign => {
@@ -132,12 +132,14 @@ describe ChargebackAssignmentController do
         :current   => {
           :cbshow_typ       => 'storage-tags',
           :cbtag_cat        => '1',
-          'storage-tags__2' => '3'
+          'storage-tags__2' => '3',
+          :type             => 'Storage'
         },
         :new       => {
           :cbshow_typ       => 'storage-tags',
           :cbtag_cat        => '1',
-          'storage-tags__2' => '3'
+          'storage-tags__2' => '3',
+          :type             => 'Storage'
         }
       }
     end
@@ -149,21 +151,21 @@ describe ChargebackAssignmentController do
 
     context 'changing Tag Category for assignments' do
       it 'hides buttons as no change has been made' do
-        post :cb_assign_field_changed, :params => {:cbtag_cat => '2'}
+        post :form_field_changed, :params => {:cbtag_cat => '2'}
         expect(response.body).to include("miqButtons('hide');")
       end
     end
 
     context 'changing Assigned To, for assignments' do
       it 'hides buttons as no change has been made' do
-        post :cb_assign_field_changed, :params => {:cbshow_typ => 'storage'}
+        post :form_field_changed, :params => {:cbshow_typ => 'storage'}
         expect(response.body).to include("miqButtons('hide');")
       end
     end
 
     context 'changing item under Selections, for assignments' do
       it 'shows buttons as a change in Selections has been made' do
-        post :cb_assign_field_changed, :params => {'storage-tags__3' => '4'}
+        post :form_field_changed, :params => {'storage-tags__3' => '4'}
         expect(response.body).to include("miqButtons('show');")
       end
     end
