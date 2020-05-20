@@ -12,7 +12,7 @@ module ApplicationController::ReportDownloads
   # Send the current report in csv format
   def render_csv
     report = report_for_rendering
-    filename = filename_timestamp(@report.title)
+    filename = filename_timestamp(report.title)
     disable_client_cache
     send_data(report.to_csv, :filename => "#{filename}.csv")
   end
