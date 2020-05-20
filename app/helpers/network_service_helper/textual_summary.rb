@@ -9,7 +9,7 @@ module NetworkServiceHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[description type ems_ref])
+    TextualGroup.new(_("Properties"), %i[name description type ems_ref])
   end
 
   def textual_group_relationships

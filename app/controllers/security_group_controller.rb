@@ -226,10 +226,6 @@ class SecurityGroupController < ApplicationController
     end
   end
 
-  def display_instances
-    nested_list(VmOrTemplate, :association => :vms, :breadcrumb_title => _("Instances"))
-  end
-
   private
 
   def create_rule(rule)

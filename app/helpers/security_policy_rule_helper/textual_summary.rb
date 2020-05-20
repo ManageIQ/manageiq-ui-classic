@@ -13,6 +13,7 @@ module SecurityPolicyRuleHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i[
+        name
         description
         type
         ems_ref

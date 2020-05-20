@@ -8,7 +8,7 @@ module SecurityPolicyHelper::TextualSummary
   # Groups
   #
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i[description type ems_ref sequence_number])
+    TextualGroup.new(_("Properties"), %i[name description type ems_ref sequence_number])
   end
 
   def textual_group_relationships

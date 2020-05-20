@@ -20,7 +20,15 @@ class ApplicationHelper::Toolbar::SecurityPoliciesCenter < ApplicationHelper::To
         'fa fa-cog fa-lg',
         t = N_('Configuration'),
         t,
-        :items => []
+        :items => [
+          button(
+            :security_security_new,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Add a new Security Policy Rule'),
+            t,
+            :klass => ApplicationHelper::Button::SecurityPolicyNew
+          )
+        ]
       )
     ]
   )
