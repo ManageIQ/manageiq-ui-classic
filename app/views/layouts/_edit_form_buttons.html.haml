@@ -8,8 +8,8 @@
 - serialize            ||= false
 - continue_button      ||= nil
 - restful              ||= false
-- show_cancel_button = %w(user_edit user_update menu_tree zone_edit zone_update ldap_seq_edit rbac_group_edit rbac_group_update rbac_group_field_changed category_edit category_update label_tag_mapping_edit label_tag_mapping_update timeprofile_edit timeprofile_update timeprofile_copy)
-- force_cancel_button ||= false
+- no_cancel_button     ||= false
+
 &nbsp;
 %table{:width => "100%"}
   %tr
@@ -103,7 +103,7 @@
                         :alt    => t = _("Reset Changes"),
                         :title  => t,
                         :method => :post)
-        - unless ((@layout == "ops" && !force_cancel_button) || (@layout == "configuration" && !show_cancel_button.include?(controller.action_name)) || (@layout == "report" && !@sb[:menu_buttons] && !%w(edit update schedule_edit schedule_update widget_edit widget_update db_seq_edit db_form_field_changed db_edit db_update db_widget_remove).include?(controller.action_name) && @lastaction != "edit"))
+        - unless no_cancel_button
           - if @layout == "miq_ae_class" || ajax_buttons
             = button_tag(_("Cancel"),
                            :class   => 'btn btn-default',
@@ -135,7 +135,7 @@
                          :title   => t,
                          :onclick => "miqAjaxButton('#{url_for_only_path(:action => "menu_update",
                                                                :button => "default")}');")
-        - unless ((@layout == "ops" && !force_cancel_button) || (@layout == "configuration" && !show_cancel_button.include?(controller.action_name)) || (@layout == "report" && !@sb[:menu_buttons] && !%w(edit update schedule_edit schedule_update widget_edit widget_update db_seq_edit db_form_field_changed db_edit db_update db_widget_remove).include?(controller.action_name) && "edit" != @lastaction))
+        - unless no_cancel_button
           - if @layout == "miq_ae_class" || ajax_buttons
             = button_tag(t = _("Cancel"),
                          :class   => 'btn btn-default',
