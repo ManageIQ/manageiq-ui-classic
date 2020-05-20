@@ -69,9 +69,9 @@ module Menu
 
       def chargeback_menu_section
         Menu::Section.new(:chargeback, N_("Chargeback"), nil, [
-          Menu::Item.new('chargeback_report',     N_('Reports'),     'chargeback_reports',     {:feature => 'chargeback_reports',         :any => true}, '/chargeback_report/show_list'),
-          Menu::Item.new('chargeback_rate',       N_('Rates'),       'chargeback_rates',       {:feature => 'chargeback_rates_show_list', :any => true}, '/chargeback_rate/show_list'),
-          Menu::Item.new('chargeback_assignment', N_('Assignments'), 'chargeback_assignments', {:feature => 'chargeback_assignments'},                   '/chargeback_assignment'),
+          Menu::Item.new('chargeback_report',     N_('Reports'),     'chargeback_reports',     {:feature => 'chargeback_reports_show_list', :any => true}, '/chargeback_report/show_list'),
+          Menu::Item.new('chargeback_rate',       N_('Rates'),       'chargeback_rates',       {:feature => 'chargeback_rates_show_list',   :any => true}, '/chargeback_rate/show_list'),
+          Menu::Item.new('chargeback_assignment', N_('Assignments'), 'chargeback_assignments', {:feature => 'chargeback_assignments'},                     '/chargeback_assignment'),
         ])
       end
 

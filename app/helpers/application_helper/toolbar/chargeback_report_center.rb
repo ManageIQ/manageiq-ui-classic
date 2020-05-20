@@ -1,28 +1,28 @@
 class ApplicationHelper::Toolbar::ChargebackReportCenter < ApplicationHelper::Toolbar::Basic
-  button_group('chargeback_download_main', [
+  button_group('chargeback_reports_download_main', [
     select(
-      :chargeback_download_choice,
+      :chargeback_reports_download_choice,
       'fa fa-download fa-lg',
       N_('Download'),
       nil,
-      :klass => ApplicationHelper::Button::ChargebackDownloadChoice,
+      :klass => ApplicationHelper::Button::ChargebackReportDownloadChoice,
       :items => [
         button(
-          :chargeback_download_text,
+          :chargeback_reports_download_text,
           'fa fa-file-text-o fa-lg',
           N_('Download this report in text format'),
           N_('Download as Text'),
-          :klass => ApplicationHelper::Button::ChargebackDownload,
+          :klass => ApplicationHelper::Button::ChargebackReportDownload,
           :url   => "/render_txt"),
         button(
-          :chargeback_download_csv,
+          :chargeback_reports_download_csv,
           'fa fa-file-text-o fa-lg',
           N_('Download this report in CSV format'),
           N_('Download as CSV'),
-          :klass => ApplicationHelper::Button::ChargebackDownload,
+          :klass => ApplicationHelper::Button::ChargebackReportDownload,
           :url   => "/render_csv"),
         button(
-          :chargeback_download_pdf,
+          :chargeback_reports_download_pdf,
           'pficon pficon-print fa-lg',
           N_('Print or export this report in PDF format'),
           N_('Print or export as PDF'),
@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::ChargebackReportCenter < ApplicationHelper::To
       ]
     ),
     button(
-      :chargeback_report_only,
+      :chargeback_reports_report_only,
       'fa fa-file-text-o fa-lg',
       N_('Show full screen report'),
       nil,
