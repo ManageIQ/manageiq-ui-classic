@@ -357,6 +357,7 @@ Rails.application.routes.draw do
 
     :chargeback_assignment => {
       :get  => %w(
+        change_tab
         index
       ),
       :post => %w(

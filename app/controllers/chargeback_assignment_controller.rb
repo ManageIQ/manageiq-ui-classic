@@ -12,32 +12,40 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def index
-    @breadcrumbs = []
     @title = _("Chargeback Assignments")
-    session[:changed] = false
-    @edit = {:new => {}}
+    @tabform = "Compute"
+    session[:changed] = @changed = false
+    build_tabs
+    set_form_vars
+    render :action => "show"
+  end
+
+  def change_tab
+    clear_flash_msg
+    @tabform = params['uib-tab']
+    build_tabs
+    set_form_vars
+    render :action => "show"
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
-    set_form_vars if params[:type]
-    return unless load_edit("cbassign_edit__#{params[:type] || params[:id]}", "index")
-
+    return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     get_form_vars
     render :update do |page|
       page << javascript_prologue
       except = %i[cbshow_typ cbtag_cat cblabel_key]
       changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
-      page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:type] || params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
+      prefix = @edit[:new][:type].downcase
+      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
     end
   end
 
   def update
-    session[:flash_msgs] = @flash_array = nil
-    return unless load_edit("cbassign_edit__#{params[:id]}", "index") unless params[:button] == 'cancel'
+    clear_flash_msg
+    return unless load_edit("cbassign_edit__#{params[:id]}", "index")
     if params[:button] == "reset"
-      @_params[:type] = params[:id]
       set_form_vars
       flash_to_session(_("All changes have been reset"), :warning)
     elsif params[:button] == "save"
@@ -51,16 +59,25 @@ class ChargebackAssignmentController < ApplicationController
         flash_to_session(_("Rate Assignments saved"))
       end
     else
-      index
       flash_to_session("Rate Assignment has been cancelled")
     end
+    set_form_vars unless params[:button] == 'reset'
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("cb_assignment_div", :partial => "cb_assignments")
+      prefix = @edit[:new][:type].downcase
+      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments")
     end
   end
 
   private ############################
+
+  def build_tabs
+    @breadcrumbs = []
+    @active_tab = @tabform
+    @tabs = []
+    @tabs.push(["Compute", _("Compute")])
+    @tabs.push(["Storage", _("Storage")])
+  end
 
   # Set record vars for save
   def set_record_vars
@@ -110,7 +127,7 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  # Set form variables for edit
+  # Set form variables for edit, once user has made type selection
   def set_form_vars
     @edit = {
       :cb_rates  => {},
@@ -118,9 +135,8 @@ class ChargebackAssignmentController < ApplicationController
     }
     @edit[:new]     = HashWithIndifferentAccess.new
     @edit[:current] = HashWithIndifferentAccess.new
-    @edit[:new][:type] = params[:type] if params[:type]
+    @edit[:new][:type] = params[:id] || @tabform
     @edit[:key] = "cbassign_edit__#{@edit[:new][:type]}"
-
     ChargebackRate.all.each do |cbr|
       if cbr.rate_type == @edit[:new][:type]
         @edit[:cb_rates][cbr.id.to_s] = cbr.description
