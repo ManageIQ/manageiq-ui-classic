@@ -1,17 +1,17 @@
 describe 'routes for ChargebackAssignmentController' do
   let(:controller_name) { 'chargeback_assignment' }
 
-  describe '#cb_assign_field_changed' do
+  describe '#form_field_changed' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_assign_field_changed")).to route_to(
-        "#{controller_name}#cb_assign_field_changed"
+      expect(post("/#{controller_name}/form_field_changed")).to route_to(
+        "#{controller_name}#form_field_changed"
       )
     end
   end
 
-  describe '#cb_assign_update' do
+  describe '#update' do
     it 'routes with POST' do
-      expect(post("/#{controller_name}/cb_assign_update")).to route_to("#{controller_name}#cb_assign_update")
+      expect(post("/#{controller_name}/update")).to route_to("#{controller_name}#update")
     end
   end
 

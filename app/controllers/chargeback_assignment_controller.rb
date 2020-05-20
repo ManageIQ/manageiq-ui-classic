@@ -13,17 +13,17 @@ class ChargebackAssignmentController < ApplicationController
 
   def index
     @breadcrumbs = []
-    title
+    @title = _("Chargeback Assignments")
     session[:changed] = false
     @edit = {:new => {}}
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
-  def cb_assign_field_changed
-    cb_assign_set_form_vars if params[:type]
+  def form_field_changed
+    set_form_vars if params[:type]
     return unless load_edit("cbassign_edit__#{params[:type] || params[:id]}", "index")
 
-    cb_assign_get_form_vars
+    get_form_vars
     render :update do |page|
       page << javascript_prologue
       except = %i[cbshow_typ cbtag_cat cblabel_key]
@@ -33,15 +33,15 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  def cb_assign_update
+  def update
     session[:flash_msgs] = @flash_array = nil
     return unless load_edit("cbassign_edit__#{params[:id]}", "index") unless params[:button] == 'cancel'
     if params[:button] == "reset"
       @_params[:type] = params[:id]
-      cb_assign_set_form_vars
+      set_form_vars
       flash_to_session(_("All changes have been reset"), :warning)
     elsif params[:button] == "save"
-      cb_assign_set_record_vars
+      set_record_vars
       rate_type = params[:id]
       begin
         ChargebackRate.set_assignments(rate_type, @edit[:set_assignments])
@@ -60,14 +60,10 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  def title
-    @title = _("Chargeback Assignments")
-  end
-
   private ############################
 
   # Set record vars for save
-  def cb_assign_set_record_vars
+  def set_record_vars
     @edit[:set_assignments] = []
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       assigned_rates_from_all_categories = @edit[:cb_assign][:tags].values.reduce({}, :merge)
@@ -115,7 +111,7 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   # Set form variables for edit
-  def cb_assign_set_form_vars
+  def set_form_vars
     @edit = {
       :cb_rates  => {},
       :cb_assign => {},
@@ -275,7 +271,7 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  def cb_assign_params_to_edit(cb_assign_key, tag_category_id = nil)
+  def params_to_edit(cb_assign_key, tag_category_id = nil)
     current_assingments = cb_assign_key == :tags ? @edit[:cb_assign][cb_assign_key].try(:[], tag_category_id) : @edit[:cb_assign][cb_assign_key]
 
     return unless current_assingments
@@ -287,7 +283,7 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   # Get variables from edit form
-  def cb_assign_get_form_vars
+  def get_form_vars
     @edit[:new][:cbshow_typ] = params[:cbshow_typ] if params[:cbshow_typ]
     @edit[:new][:cbtag_cat] = nil if params[:cbshow_typ] # Reset categories pull down if assign to selection is changed
     @edit[:new][:cbtag_cat] = params[:cbtag_cat].to_s if params[:cbtag_cat]
@@ -304,17 +300,9 @@ class ChargebackAssignmentController < ApplicationController
       get_cis_all
     end
 
-    cb_assign_params_to_edit(:cis)
-    cb_assign_params_to_edit(:tags, @edit[:new][:cbtag_cat].try(:to_i))
-    cb_assign_params_to_edit(:docker_label_values)
-  end
-
-  def get_session_data
-    super
-  end
-
-  def set_session_data
-    super
+    params_to_edit(:cis)
+    params_to_edit(:tags, @edit[:new][:cbtag_cat].try(:to_i))
+    params_to_edit(:docker_label_values)
   end
 
   def breadcrumbs_options

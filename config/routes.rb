@@ -360,8 +360,8 @@ Rails.application.routes.draw do
         index
       ),
       :post => %w(
-        cb_assign_field_changed
-        cb_assign_update
+        form_field_changed
+        update
       )
     },
     :chargeback_rate => {

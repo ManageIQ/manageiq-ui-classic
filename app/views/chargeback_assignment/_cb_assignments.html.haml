@@ -1,5 +1,5 @@
 - nothing = "<#{_('Nothing')}>"
-- url = url_for_only_path(:action => 'cb_assign_field_changed', :id => @edit[:new][:type].to_s)
+- url = url_for_only_path(:action => 'form_field_changed', :id => @edit[:new][:type].to_s)
 #cb_assignment_div
   = render :partial => "layouts/flash_msg"
   %h1
@@ -199,4 +199,4 @@
                     miqInitSelectPicker();
                     miqSelectPickerEvent("#{@edit[:new][:cbshow_typ]}__#{id}", "#{url}")
       = render :partial => '/layouts/edit_form_buttons',
-               :locals  => {:action_url => "cb_assign_update", :record_id => @edit[:new][:type], :ajax_buttons => true }
+               :locals  => {:action_url => "update", :record_id => @edit[:new][:type], :ajax_buttons => true }
