@@ -1,0 +1,36 @@
+.react-tree-view {
+  ul {
+    padding-left: 0;
+  }
+
+  li > :first-child {
+    display: inline-block;
+  }
+
+  i.icon {
+    width: calc(1em + 3px);
+    padding: 2px;
+    padding-right: 1px;
+    margin-right: 4px;
+  }
+
+  .dirty {
+    color: #39A5DC;
+  }
+
+  .selected {
+    background-color: #349ad3;
+    color: #FFFFFF;
+  }
+
+  $indentSize: "1em";
+  $chevronSize: "1em + 7px";
+  @for $i from 0 through 5 {
+    .indent-#{$i} {
+      padding-left: calc(#{$indentSize} * #{$i}) !important;
+      &.no-open-button {
+        padding-left: calc(#{$indentSize} * #{$i} + #{$chevronSize}) !important;
+      }
+    }
+  }
+}
