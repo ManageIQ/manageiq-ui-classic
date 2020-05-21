@@ -315,8 +315,6 @@ class TreeBuilder
     ## Chargeback
     ### Reports
     :cb_reports                      => "TreeBuilderChargebackReports",
-    ### Rates
-    :cb_rates                        => "TreeBuilderChargebackRates",
     ### Assignments
     :cb_assignments                  => "TreeBuilderChargebackAssignments",
 
