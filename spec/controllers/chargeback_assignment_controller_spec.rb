@@ -70,7 +70,7 @@ describe ChargebackAssignmentController do
       EvmSpecHelper.create_guid_miq_server_zone
       get :index
       expect(response.status).to eq(200)
-      expect(response).to render_template('show')
+      expect(response).to render_template('index')
     end
   end
 

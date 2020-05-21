@@ -17,7 +17,6 @@ class ChargebackAssignmentController < ApplicationController
     session[:changed] = @changed = false
     build_tabs
     set_form_vars
-    render :action => "show"
   end
 
   def change_tab
@@ -25,7 +24,7 @@ class ChargebackAssignmentController < ApplicationController
     @tabform = params['uib-tab']
     build_tabs
     set_form_vars
-    render :action => "show"
+    render :action => "index"
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -45,10 +44,11 @@ class ChargebackAssignmentController < ApplicationController
   def update
     clear_flash_msg
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
-    if params[:button] == "reset"
+    case params[:button]
+    when "reset"
       set_form_vars
       flash_to_session(_("All changes have been reset"), :warning)
-    elsif params[:button] == "save"
+    when "save"
       set_record_vars
       rate_type = params[:id]
       begin
@@ -58,10 +58,7 @@ class ChargebackAssignmentController < ApplicationController
       else
         flash_to_session(_("Rate Assignments saved"))
       end
-    else
-      flash_to_session("Rate Assignment has been cancelled")
     end
-    set_form_vars unless params[:button] == 'reset'
     render :update do |page|
       page << javascript_prologue
       prefix = @edit[:new][:type].downcase
@@ -74,9 +71,7 @@ class ChargebackAssignmentController < ApplicationController
   def build_tabs
     @breadcrumbs = []
     @active_tab = @tabform
-    @tabs = []
-    @tabs.push(["Compute", _("Compute")])
-    @tabs.push(["Storage", _("Storage")])
+    @tabs = [["Compute", _("Compute")], ["Storage", _("Storage")]]
   end
 
   # Set record vars for save
@@ -135,7 +130,7 @@ class ChargebackAssignmentController < ApplicationController
     }
     @edit[:new]     = HashWithIndifferentAccess.new
     @edit[:current] = HashWithIndifferentAccess.new
-    @edit[:new][:type] = params[:id] || @tabform
+    @edit[:new][:type] = params[:id] && ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:id]) ? params[:id] : @tabform
     @edit[:key] = "cbassign_edit__#{@edit[:new][:type]}"
     ChargebackRate.all.each do |cbr|
       if cbr.rate_type == @edit[:new][:type]
