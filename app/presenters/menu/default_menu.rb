@@ -266,34 +266,44 @@ module Menu
         ], :top_right)
       end
 
-      def help_menu_section
-        menu = {
-          :documentation => {
-            :title => N_('Documentation'),
-            :href  => '/support/index?support_tab=about'
-          },
-          :product       => {
-            :title => ::Settings.docs.product_support_website_text,
-            :href  => ::Settings.docs.product_support_website
-          },
-          :about         => {
-            :title => N_('About')
-          }
-        }.map do |key, value|
-          Menu::Item.new(key,
-                         help_menu_field(key, :title, value[:title]),
-                         key.to_s,
-                         {:feature => key.to_s},
-                         help_menu_field(key, :href, value[:href]),
-                         help_menu_field(key, :type, value[:type]),
-                         nil,
-                         value)
-        end
+      def help_documentation
+        help_menu_item(:documentation, :title => N_('Documentation'),
+                                       :href  => '/support/index?support_tab=about')
+      end
 
-        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', menu, :help)
+      def help_product
+        help_menu_item(:product, :title => ::Settings.docs.product_support_website_text,
+                                 :href  => ::Settings.docs.product_support_website)
+      end
+
+      def help_about
+        help_menu_item(:about, :title => N_('About'))
+      end
+
+      def help_menu_items
+        [
+          help_documentation,
+          help_product,
+          help_about,
+        ]
+      end
+
+      def help_menu_section
+        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', help_menu_items, :help)
       end
 
       private
+
+      def help_menu_item(key, value)
+        Menu::Item.new(key,
+                       help_menu_field(key, :title, value[:title]),
+                       key.to_s,
+                       {:feature => key.to_s},
+                       help_menu_field(key, :href, value[:href]),
+                       help_menu_field(key, :type, value[:type]),
+                       nil,
+                       value)
+      end
 
       def help_menu_field(key, item, default)
         lambda do
