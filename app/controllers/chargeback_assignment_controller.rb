@@ -184,7 +184,11 @@ class ChargebackAssignmentController < ApplicationController
                                      "#{@edit[:current_assignment][0][:label][1]}-labels"
                                    end
                                  else
-                                   @edit[:current_assignment][0][:object].class.name.downcase
+                                   if @edit[:current_assignment][0][:object].class.name.split("::").last.downcase == "storage"
+                                     "storage"
+                                   else
+                                     @edit[:current_assignment][0][:object].class.name.downcase
+                                   end
                                  end
     end
     if @edit[:new][:cbshow_typ]&.ends_with?("-tags")
