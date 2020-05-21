@@ -260,6 +260,7 @@ module ReportController::Widgets
       @right_cell_text = _(RIGHT_CELL_TEXTS[@sb[:nodes][1]].first)
     else
       @record = @widget = MiqWidget.find(@sb[:nodes].last)
+      params[:text] = @widget.name unless params[:text].present?
       @widget_running = true if %w[running queued].include?(@widget.status.downcase)
       @right_cell_text = _(RIGHT_CELL_TEXTS[WIDGET_CONTENT_TYPE.invert[@widget.content_type]].second) % {:name => @widget.title}
       @right_cell_div  = "widget_list"
