@@ -19,9 +19,9 @@ class ChargebackReportController < ApplicationController
   end
 
   def show_list
-    options = {:named_scope => :chargeback_reports, :no_checkboxes => true}
+    options = {:named_scope => :with_saved_chargeback_reports, :no_checkboxes => true}
     process_show_list(options)
-    title
+    @title = _("Chargeback Saved Reports")
   end
 
   def show
@@ -30,10 +30,6 @@ class ChargebackReportController < ApplicationController
   end
 
   private ############################
-
-  def title
-    @title = _("Chargeback Saved Reports")
-  end
 
   def self.session_key_prefix
     'chargeback_report'
