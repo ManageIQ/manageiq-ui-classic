@@ -9,6 +9,7 @@ import EditPasswordField from '../../components/async-credentials/edit-password-
 import InputWithDynamicPrefix from '../input-with-dynamic-prefix';
 import PasswordField from '../../components/async-credentials/password-field';
 import { DataDrivenFormCodeEditor } from '../../components/code-editor';
+import FieldArray from '../../components/field-array';
 
 const fieldsMapper = {
   ...formFieldsMapper,
@@ -21,6 +22,7 @@ const fieldsMapper = {
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'validate-provider-credentials': AsyncProviderCredentials,
+  'field-array': FieldArray,
 };
 
 export default fieldsMapper;
