@@ -749,7 +749,7 @@ class ReportController < ApplicationController
           img_title_discard = _("Discard folder management changes")
         end
         presenter.update(:main_div, r[:partial => partial])
-        presenter[:element_updates][:menu1_legend] = {:legend => fieldset_title}
+        presenter[:element_updates][:menu1_legend] = {:legend => ERB::Util.html_escape(fieldset_title)}
         presenter.show(:menu_div1).hide(:menu_div2, :flash_msg_div)
         presenter[:element_updates][:menu_roles_treebox] = {:class => 'disabled', :add => true}
         presenter[:element_updates][:folder_top]      = {:title => img_title_top}
