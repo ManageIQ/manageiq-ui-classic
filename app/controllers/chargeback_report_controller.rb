@@ -16,12 +16,16 @@ class ChargebackReportController < ApplicationController
 
   def show_list
     process_show_list({:named_scope => :with_saved_chargeback_reports, :no_checkboxes => true})
-    @title = _("Chargeback Saved Reports")
+    @title = title
   end
 
   def show
     @center_toolbar = 'chargeback_report'
     fetch_saved_report(params[:id])
+  end
+
+  def title
+    _("Chargeback Saved Reports")
   end
 
   private ############################
