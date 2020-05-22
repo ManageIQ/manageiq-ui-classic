@@ -66,6 +66,11 @@ class ChargebackReportController < ApplicationController
     end
   end
 
+  def saved_report_paging?
+    @sb[:pages] && @html
+  end
+  helper_method :saved_report_paging?
+
   def breadcrumbs_options
     {
       :breadcrumbs => [

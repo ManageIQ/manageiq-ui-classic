@@ -162,9 +162,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def saved_report_paging?
-    # saved report doesn't use miq_report object,
-    # need to use a different paging view to page thru a saved report
-    @sb[:pages] && @html && (%i[reports_tree savedreports_tree cb_reports_tree].include?(x_active_tree) || @layout == "chargeback_report")
+    false
   end
 
   def show_search?
