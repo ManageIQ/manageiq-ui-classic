@@ -1,6 +1,6 @@
 module ApplicationHelper
   module Navbar
-    def menu_to_json(placement = :default)
+    def menu_to_json(placement = :_all)
       Menu::Manager.menu(placement).map do |menu_section|
         item_to_hash(menu_section) if menu_section.visible?
       end.compact
