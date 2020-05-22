@@ -10,17 +10,12 @@ class ChargebackReportController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  def self.table_name
-    @table_name ||= "miq_report_result"
-  end
-
   def self.model
     MiqReportResult
   end
 
   def show_list
-    options = {:named_scope => :with_saved_chargeback_reports, :no_checkboxes => true}
-    process_show_list(options)
+    process_show_list({:named_scope => :with_saved_chargeback_reports, :no_checkboxes => true})
     @title = _("Chargeback Saved Reports")
   end
 
@@ -36,7 +31,7 @@ class ChargebackReportController < ApplicationController
   end
 
   def fetch_saved_report(id)
-    rr = MiqReportResult.for_user(current_user).find_by(:id => id.to_s.split('-').last)
+    rr = MiqReportResult.for_user(current_user).find_by(:id => id)
     if rr.nil? # Saved report no longer exists
       @report = nil
       add_flash(_("Error: Report no longer exists in the database"), :error)
