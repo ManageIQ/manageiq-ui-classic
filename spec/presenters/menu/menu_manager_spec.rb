@@ -15,7 +15,7 @@ describe Menu::Manager do
 
     it "loads custom menu items" do
       expect(Menu::YamlLoader).to receive(:load).and_call_original
-      Menu::Manager.menu {}
+      Menu::Manager.menu
     end
   end
 
@@ -27,7 +27,7 @@ describe Menu::Manager do
         expect(Dir).to receive(:glob).and_return([temp_file2.path, temp_file.path])
 
         section = nil
-        Menu::Manager.menu do |a_section|
+        Menu::Manager.menu.each do |a_section|
           section = a_section if a_section.name == 'Red Hat'
         end
         expect(section).to be_truthy
@@ -43,7 +43,7 @@ describe Menu::Manager do
     it "knows about custom items from settings" do
       ::Settings.ui.custom_menu = settings_custom_items
       count = 0
-      Menu::Manager.menu do |item|
+      Menu::Manager.menu.each do |item|
         count += 1 if item.kind_of?(Menu::Item) && item.name =~ /^Custom Item/
       end
       expect(count).to eq(2)

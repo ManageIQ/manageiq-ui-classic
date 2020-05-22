@@ -35,13 +35,14 @@ module OpsController::Settings::HelpMenu
   def help_menu_form_field_changed
     return unless load_edit('customize_help_menu')
 
-    help_menu_items.each do |item|
+    Menu::DefaultMenu.help_menu_items.each do |item|
+      id = item.id.to_sym
       %i[title href type].map do |field|
-        param = params["#{item}_#{field}"]
+        param = params["#{id}_#{field}"]
         next if param.nil?
 
-        @edit[:new][item][field] = param
-        @edit[:new][item].delete(field) if param.empty?
+        @edit[:new][id][field] = param
+        @edit[:new][id].delete(field) if param.empty?
       end
     end
 

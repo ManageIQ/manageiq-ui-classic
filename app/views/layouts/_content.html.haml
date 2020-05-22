@@ -1,10 +1,8 @@
 - if big_iframe
-  = render :partial => "layouts/vertical_navbar"
   .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
     .row.max-height
       = yield
 - elsif inner_layout_present?
-  = render :partial => "layouts/vertical_navbar"
   .container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus.max-height{:style => "overflow: hidden !important"}
     #breadcrumbs
       = render :partial => "layouts/breadcrumbs"
@@ -58,7 +56,6 @@
           #custom_left_cell
 
 - elsif layout_full_center
-  = render :partial => "layouts/vertical_navbar"
   = render :partial => layout_full_center
 - else
   #center_div{:style => "height: 100%;"}

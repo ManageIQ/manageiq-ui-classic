@@ -33,7 +33,9 @@ module Menu
     end
 
     def visible?
-      ApplicationHelper.role_allows?(rbac_feature)
+      return true if rbac_feature.nil?
+
+      rbac_feature.nil? || ApplicationHelper.role_allows?(rbac_feature)
     end
 
     def link_params

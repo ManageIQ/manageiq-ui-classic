@@ -16,6 +16,8 @@ module Menu
       self.placement ||= :default
       self.type ||= :default
 
+      self.items.compact!
+
       @parent = nil
       items.each { |el| el.parent = self }
     end

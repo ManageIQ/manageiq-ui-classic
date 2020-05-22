@@ -15,9 +15,9 @@ module Menu
     end
 
     def menu(placement = :default)
-      @menu.each do |menu_section|
-        yield menu_section if menu_section.placement == placement
-      end
+      @menu.select do |menu_section|
+        menu_section.placement == placement
+      end.compact
     end
 
     def items
