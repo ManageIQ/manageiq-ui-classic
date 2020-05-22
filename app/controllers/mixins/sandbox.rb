@@ -41,7 +41,6 @@ module Sandbox
     automate_catalog_tree
     automation_manager_providers_tree
     automation_manager_cs_filter_tree
-    cb_assignments_tree
     cb_reports_tree
     cluster_tree
     configuration_scripts_tree
@@ -112,7 +111,6 @@ module Sandbox
     automation_manager_providers
     automation_manager_cs_filter
     automation_manager_configuration_scripts
-    cb_assignments
     cb_reports
     configuration_scripts
     condition

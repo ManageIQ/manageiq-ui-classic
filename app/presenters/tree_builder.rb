@@ -281,8 +281,6 @@ class TreeBuilder
     ## Chargeback
     ### Reports
     :cb_reports                      => "TreeBuilderChargebackReports",
-    ### Assignments
-    :cb_assignments                  => "TreeBuilderChargebackAssignments",
 
     # Services
     ## My services
