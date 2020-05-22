@@ -45,7 +45,7 @@ const renderItems = ({ items, controllerName }) => {
 };
 
 const Breadcrumbs = ({ items, title, controllerName }) => (
-  <Breadcrumb>
+  <Breadcrumb style={{ marginBottom: 0 }}>
     {items && renderItems({ items, controllerName })}
     <Breadcrumb.Item active>
       <strong>
