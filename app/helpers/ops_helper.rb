@@ -63,14 +63,6 @@ module OpsHelper
     end
   end
 
-  def help_menu_items
-    items = []
-    Menu::Manager.menu(:help) do |menu|
-      items = menu.items.map { |item| item.id.to_sym }
-    end
-    items
-  end
-
   def server_zones
     @server_zones ||= Zone.visible.in_my_region.pluck(:name)
   end

@@ -16,31 +16,29 @@
         %th
           = _('Open in')
 
-      - Menu::Manager.menu(:help) do |menu|
-        - menu.items.each do |item|
-          %tr
-            - val = @edit[:new][item.id.to_sym].try(:[], :type) || item.defaults[:type]
-            %td
-              = text_field_tag("#{item.id}_title", @edit[:new][item.id.to_sym].try(:[], :title),
-                               :placeholder       => item.defaults[:title],
-                               :class             => 'form-control',
-                               'data-miq_observe' => {:interval => '.5', :url => url}.to_json)
-            %td
-              = text_field_tag("#{item.id}_href", @edit[:new][item.id.to_sym].try(:[], :href),
-                               :placeholder => item.defaults[:href],
-                               :class => 'form-control',
-                               'data-miq_observe' => {:interval => '.5', :url => url}.to_json,
-                               :disabled => val.to_s == 'modal')
-            %td
-              = select_tag("#{item.id}_type", options_for_select([[_("Current Window"), 'default'],
-                                                                 [_("New Window"), "new_window"],
-                                                                 [_("About Modal"),  "modal"]], val.to_s),
-                          :class             => 'selectpicker')
+      - Menu::DefaultMenu.help_menu_items.each do |item|
+        %tr
+          - val = @edit[:new][item.id.to_sym].try(:[], :type) || item.defaults[:type]
+          %td
+            = text_field_tag("#{item.id}_title", @edit[:new][item.id.to_sym].try(:[], :title),
+                             :placeholder => item.defaults[:title],
+                             :class => 'form-control',
+                             'data-miq_observe' => {:interval => '.5', :url => url}.to_json)
+          %td
+            = text_field_tag("#{item.id}_href", @edit[:new][item.id.to_sym].try(:[], :href),
+                             :placeholder => item.defaults[:href],
+                             :class => 'form-control',
+                             'data-miq_observe' => {:interval => '.5', :url => url}.to_json,
+                             :disabled => val.to_s == 'modal')
+          %td
+            = select_tag("#{item.id}_type", options_for_select([[_("Current Window"), 'default'],
+                                                                [_("New Window"), 'new_window'],
+                                                                [_("About Modal"), 'modal']], val.to_s),
+                         :class => 'selectpicker')
 
-          - Settings.help_menu.try(item.id.to_s).try(:title).nil?
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("#{item.id}_type", '#{url}')
-            $("##{item.id}_type").on('change', function() {
-              $("##{item.id}_href").prop('disabled', $(this).val() == 'modal');
-            });
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent("#{item.id}_type", '#{url}')
+          $("##{item.id}_type").on('change', function() {
+            $("##{item.id}_href").prop('disabled', $(this).val() == 'modal');
+          });

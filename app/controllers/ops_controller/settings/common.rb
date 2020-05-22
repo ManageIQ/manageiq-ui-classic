@@ -1029,8 +1029,9 @@ module OpsController::Settings::Common
         @in_a_form = true
         @edit = {:new => {}, :key => 'customize_help_menu'}
         @edit[:new] = Settings.help_menu.to_h
-        help_menu_items.each do |item|
-          @edit[:new][item] = Settings.help_menu.try(item).try(:to_h) || {}
+        Menu::DefaultMenu.help_menu_items.each do |item|
+          id = item.id.to_sym
+          @edit[:new][id] = Settings.help_menu.try(id).try(:to_h) || {}
         end
         @edit[:current] = copy_hash(@edit[:new])
         session[:edit] = @edit
