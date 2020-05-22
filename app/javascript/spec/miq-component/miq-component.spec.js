@@ -43,14 +43,24 @@ describe('Component API', () => {
     expect(getComponentNames()).toEqual(['FooComponent', 'BarComponent']);
   });
 
-  it('define method does nothing if the component name is already taken', () => {
+  it('define method throws if the component name is already taken', () => {
     define('FooComponent', {});
+    expect(() => {
+      define('FooComponent', {});
+    }).toThrow();
+    expect(getComponentNames()).toEqual(['FooComponent']);
+  });
+
+  it('define method passes twice with override option', () => {
     define('FooComponent', {});
+    define('FooComponent', {}, { override: true });
     expect(getComponentNames()).toEqual(['FooComponent']);
   });
 
   it('define method does nothing if the component name is not a string', () => {
-    define(123, {});
+    expect(() => {
+      define(123, {});
+    }).toThrow();
     expect(isDefined(123)).toBe(false);
     expect(getComponentNames()).toEqual([]);
   });
@@ -60,17 +70,17 @@ describe('Component API', () => {
       { id: 'first' }, { id: 'second' },
     ];
 
-    define('FooComponent', {}, testInstances);
+    define('FooComponent', {}, { instances: testInstances });
     expect(getInstance('FooComponent', 'first')).toBe(testInstances[0]);
     expect(getInstance('FooComponent', 'second')).toBe(testInstances[1]);
   });
 
   it('when passing existing instances, define method ensures a sane instance id', () => {
     const testInstances = [
-      { id: 'first' }, { id: 123 }, {},
+      { id: 'first' }, {}, {},
     ];
 
-    define('FooComponent', {}, testInstances);
+    define('FooComponent', {}, { instances: testInstances });
 
     const registeredInstances = getComponentInstances('FooComponent');
     expect(registeredInstances).toHaveLength(3);
@@ -84,7 +94,7 @@ describe('Component API', () => {
       { id: 'first' },
     ];
 
-    define('FooComponent', {}, testInstances);
+    define('FooComponent', {}, { instances: testInstances });
     expect(() => {
       testInstances[0].id = 'second';
     }).toThrow();
@@ -95,7 +105,7 @@ describe('Component API', () => {
       false, '', null, undefined, {},
     ];
 
-    define('FooComponent', {}, testInstances);
+    define('FooComponent', {}, { instances: testInstances });
 
     const registeredInstances = getComponentInstances('FooComponent');
     expect(registeredInstances).toHaveLength(1);
@@ -106,7 +116,7 @@ describe('Component API', () => {
     const testInstance = { id: 'first' };
 
     expect(() => {
-      define('FooComponent', {}, [testInstance, testInstance]);
+      define('FooComponent', {}, { instances: [testInstance, testInstance] });
     }).toThrow();
   });
 
@@ -116,7 +126,7 @@ describe('Component API', () => {
     ];
 
     expect(() => {
-      define('FooComponent', {}, testInstances);
+      define('FooComponent', {}, { instances: testInstances });
     }).toThrow();
   });
 
@@ -193,7 +203,7 @@ describe('Component API', () => {
     define('FooComponent', {
       create: jest.fn().mockName('testBlueprint.create')
         .mockImplementationOnce(() => ({ id: 'first', elementId: mountId }))
-        .mockImplementationOnce(() => ({ id: 123, elementId: mountId }))
+        .mockImplementationOnce(() => ({ elementId: mountId }))
         .mockImplementationOnce(() => ({ elementId: mountId })),
     });
 
@@ -424,7 +434,7 @@ describe('Component API', () => {
 
   it('sanitizeAndFreezeInstanceId ensures the instance id is sane and cannot be changed', () => {
     const testInstances = [
-      { id: 'first' }, { id: 123 }, {},
+      { id: 'first' }, {}, {},
     ];
 
     define('FooComponent', {});

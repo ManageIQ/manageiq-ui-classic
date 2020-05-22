@@ -24,7 +24,7 @@ describe('Helpers', () => {
       },
     ];
 
-    define('FooComponent', {}, testInstances);
+    define('FooComponent', {}, { instances: testInstances });
 
     cleanVirtualDom();
     expect(destroy1).not.toHaveBeenCalled();
