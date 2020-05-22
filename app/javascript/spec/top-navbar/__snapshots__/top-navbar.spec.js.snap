@@ -325,7 +325,6 @@ exports[`Top navbar tests should render correctly 1`] = `
                         disabled={false}
                         divider={false}
                         header={false}
-                        href=""
                         id="help-menu-about"
                         key=".$about"
                         onClick={[Function]}
@@ -339,7 +338,6 @@ exports[`Top navbar tests should render correctly 1`] = `
                         >
                           <SafeAnchor
                             componentClass="a"
-                            href=""
                             id="help-menu-about"
                             onClick={[Function]}
                             onKeyDown={[Function]}
