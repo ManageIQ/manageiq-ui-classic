@@ -1,0 +1,6 @@
+#main_div
+  - case @tabform
+    - when 'Compute'
+      = render :partial => 'compute_assignments'
+    - when 'Storage'
+      = render :partial => 'storage_assignments'

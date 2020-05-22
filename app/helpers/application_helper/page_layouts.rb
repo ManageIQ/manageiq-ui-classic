@@ -10,7 +10,7 @@ module ApplicationHelper::PageLayouts
     return false if %w[
       about
       all_tasks
-      chargeback
+      chargeback_assignment
       chargeback_rate
       configuration
       container_dashboard

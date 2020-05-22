@@ -4,7 +4,6 @@ class ChargebackAssignmentController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::SavedReportPaging
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
@@ -12,102 +11,71 @@ class ChargebackAssignmentController < ApplicationController
     @table_name ||= "chargeback_assignment"
   end
 
-  def tree_select
-    self.x_active_tree = params[:tree] if params[:tree]
-    self.x_node = params[:id]
-    get_node_info(x_node)
-    replace_right_cell
+  def index
+    @title = _("Chargeback Assignments")
+    @tabform = "Compute"
+    session[:changed] = @changed = false
+    build_tabs
+    set_form_vars
   end
 
-  def explorer
-    @breadcrumbs = []
-    @explorer    = true
-    build_accordions_and_trees
-
-    @right_cell_text = _("All Assignments")
-    set_form_locals if @in_a_form
-    session[:changed] = false
-
-    render :layout => "application" unless request.xml_http_request?
-  end
-
-  def set_form_locals
-    @x_edit_buttons_locals = {
-      :action_url   => 'cb_assign_update',
-      :no_cancel    => true,
-      :multi_record => true
-    }
+  def change_tab
+    clear_flash_msg
+    @tabform = params['uib-tab']
+    build_tabs
+    set_form_vars
+    render :action => "index"
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
-  def cb_assign_field_changed
-    return unless load_edit("cbassign_edit__#{x_node}", "replace_cell__chargeback")
-
-    cb_assign_get_form_vars
+  def form_field_changed
+    return unless load_edit("cbassign_edit__#{params[:id]}", "index")
+    get_form_vars
     render :update do |page|
       page << javascript_prologue
       except = %i[cbshow_typ cbtag_cat cblabel_key]
       changed = (@edit[:new].except(*except) != @edit[:current].except(*except))
-      page.replace("cb_assignment_div", :partial => "cb_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
+      prefix = @edit[:new][:type].downcase
+      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments") if params[:cbshow_typ] || params[:cbtag_cat] || params[:cblabel_key]
       page << javascript_for_miq_button_visibility(changed)
     end
   end
 
-  def cb_assign_update
-    if params[:button] == "reset"
-      get_node_info(x_node)
-      add_flash(_("All changes have been reset"), :warning)
-      replace_right_cell
-    else
-      return unless load_edit("cbassign_edit__#{x_node}", "replace_cell__chargeback")
-
-      cb_assign_set_record_vars
-      rate_type = x_node.split('-').last
+  def update
+    clear_flash_msg
+    return unless load_edit("cbassign_edit__#{params[:id]}", "index")
+    case params[:button]
+    when "reset"
+      set_form_vars
+      flash_to_session(_("All changes have been reset"), :warning)
+    when "save"
+      set_record_vars
+      rate_type = params[:id]
       begin
         ChargebackRate.set_assignments(rate_type, @edit[:set_assignments])
       rescue StandardError => bang
         render_flash(_("Error during 'Rate assignments': %{error_message}") % {:error_message => bang.message}, :error)
       else
-        add_flash(_("Rate Assignments saved"))
-        get_node_info(x_node)
-        replace_right_cell
+        flash_to_session(_("Rate Assignments saved"))
       end
     end
-  end
-
-  def title
-    @title = _("Chargeback Assignment")
+    render :update do |page|
+      page << javascript_prologue
+      prefix = @edit[:new][:type].downcase
+      page.replace("#{prefix}_assignments_div", :partial => "#{prefix}_assignments")
+    end
   end
 
   private ############################
 
-  def features
-    [
-      {
-        :role  => "chargeback_assignments",
-        :name  => :cb_assignments,
-        :title => _("Assignments")
-      }
-    ].map { |hsh| ApplicationController::Feature.new_with_hash(hsh) }
-  end
-
-  def get_node_info(node, show_list = true)
-    @show_list = show_list
-    node = valid_active_node(node)
-    if ["xx-Compute", "xx-Storage"].include?(node)
-      cb_assign_set_form_vars
-      @right_cell_text = case node
-                         when "xx-Compute" then _("Compute Rate Assignments")
-                         when "xx-Storage" then _("Storage Rate Assignments")
-                         end
-    else
-      @right_cell_text = _("All Assignments")
-    end
-    {:view => @view, :pages => @pages}
+  def build_tabs
+    @breadcrumbs = []
+    @active_tab = @tabform
+    @tabs = [["Compute", _("Compute")], ["Storage", _("Storage")]]
   end
 
   # Set record vars for save
-  def cb_assign_set_record_vars
+  def set_record_vars
     @edit[:set_assignments] = []
     if @edit[:new][:cbshow_typ].ends_with?("-tags")
       assigned_rates_from_all_categories = @edit[:cb_assign][:tags].values.reduce({}, :merge)
@@ -154,21 +122,22 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  # Set form variables for edit
-  def cb_assign_set_form_vars
+  # Set form variables for edit, once user has made type selection
+  def set_form_vars
     @edit = {
       :cb_rates  => {},
       :cb_assign => {},
     }
+    @edit[:new]     = HashWithIndifferentAccess.new
+    @edit[:current] = HashWithIndifferentAccess.new
+    @edit[:new][:type] = params[:id] && ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:id]) ? params[:id] : @tabform
+    @edit[:key] = "cbassign_edit__#{@edit[:new][:type]}"
     ChargebackRate.all.each do |cbr|
-      if cbr.rate_type == x_node.split('-').last
+      if cbr.rate_type == @edit[:new][:type]
         @edit[:cb_rates][cbr.id.to_s] = cbr.description
       end
     end
-    @edit[:key] = "cbassign_edit__#{x_node}"
-    @edit[:new]     = HashWithIndifferentAccess.new
-    @edit[:current] = HashWithIndifferentAccess.new
-    @edit[:current_assignment] = ChargebackRate.get_assignments(x_node.split('-').last)
+    @edit[:current_assignment] = ChargebackRate.get_assignments(@edit[:new][:type])
     unless @edit[:current_assignment].empty?
       @edit[:new][:cbshow_typ] = case @edit[:current_assignment][0][:object]
                                  when EmsCluster
@@ -313,7 +282,7 @@ class ChargebackAssignmentController < ApplicationController
     end
   end
 
-  def cb_assign_params_to_edit(cb_assign_key, tag_category_id = nil)
+  def params_to_edit(cb_assign_key, tag_category_id = nil)
     current_assingments = cb_assign_key == :tags ? @edit[:cb_assign][cb_assign_key].try(:[], tag_category_id) : @edit[:cb_assign][cb_assign_key]
 
     return unless current_assingments
@@ -325,7 +294,7 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   # Get variables from edit form
-  def cb_assign_get_form_vars
+  def get_form_vars
     @edit[:new][:cbshow_typ] = params[:cbshow_typ] if params[:cbshow_typ]
     @edit[:new][:cbtag_cat] = nil if params[:cbshow_typ] # Reset categories pull down if assign to selection is changed
     @edit[:new][:cbtag_cat] = params[:cbtag_cat].to_s if params[:cbtag_cat]
@@ -342,74 +311,9 @@ class ChargebackAssignmentController < ApplicationController
       get_cis_all
     end
 
-    cb_assign_params_to_edit(:cis)
-    cb_assign_params_to_edit(:tags, @edit[:new][:cbtag_cat].try(:to_i))
-    cb_assign_params_to_edit(:docker_label_values)
-  end
-
-  def replace_right_cell(options = {})
-    @explorer = true
-    c_tb = build_toolbar(center_toolbar_filename)
-
-    # Build a presenter to render the JS
-    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
-
-    # FIXME
-    #  if params[:action].ends_with?("_delete")
-    #    page << "miqTreeActivateNodeSilently('#{x_active_tree.to_s}', '<%= x_node %>');"
-    #  end
-    # presenter[:select_node] = x_node if params[:action].ends_with?("_delete")
-    presenter[:osf_node] = x_node
-
-    # Assignments accordion
-    presenter.update(:main_div, r[:partial => "assignments_tabs"])
-
-    if @record || @in_a_form ||
-       (@pages && (@items_per_page == ONE_MILLION || @pages[:items] == 0))
-      if %w[Compute Storage].include?(x_node.split('-').last)
-        presenter.hide(:toolbar)
-        # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:paging_div, :form_buttons_div).remove_paging
-        locals = {:record_id => @edit[:rec_id]}
-        if x_active_tree == :cb_rates_tree
-          locals[:action_url] = 'edit'
-        else
-          locals.update(
-            :action_url   => 'cb_assign_update',
-            :no_cancel    => true,
-            :multi_record => true
-          )
-        end
-        presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
-      else
-        # Added so buttons can be turned off even tho div is not being displayed it still pops up Abandon changes box when trying to change a node on tree after saving a record
-        presenter.hide(:buttons_on).show(:toolbar).hide(:paging_div)
-        presenter.hide(:form_buttons_div) if params[:button]
-      end
-    else
-      presenter.hide(:form_buttons_div)
-      if x_node == "root"
-        presenter.hide(:toolbar).remove_paging
-      end
-      presenter.show(:paging_div)
-    end
-
-    presenter[:record_id] = determine_record_id_for_presenter
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
-
-    presenter[:right_cell_text]     = @right_cell_text
-    presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
-
-    render :json => presenter.for_render
-  end
-
-  def get_session_data
-    super
-  end
-
-  def set_session_data
-    super
+    params_to_edit(:cis)
+    params_to_edit(:tags, @edit[:new][:cbtag_cat].try(:to_i))
+    params_to_edit(:docker_label_values)
   end
 
   def breadcrumbs_options
@@ -417,6 +321,7 @@ class ChargebackAssignmentController < ApplicationController
       :breadcrumbs => [
         {:title => _("Overview")},
         {:title => _("Chargeback")},
+        {:title => _("Assignments"), :url => controller_url},
       ],
     }
   end
