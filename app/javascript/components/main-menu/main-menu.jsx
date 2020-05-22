@@ -8,7 +8,6 @@ import TopLevel from './top-level';
 import SecondLevel from './second-level';
 import ThirdLevel from './third-level';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
-import { adaptContentWidth } from './helpers';
 
 const Fallback = props => <ThirdLevel level={2} {...props} />;
 
@@ -26,7 +25,16 @@ const MainMenu = ({ menu }) => {
   const isVerticalMenuCollapsed = useSelector(({ menuReducer: { isVerticalMenuCollapsed } }) => isVerticalMenuCollapsed);
 
   useEffect(() => {
-    adaptContentWidth(isVerticalMenuCollapsed);
+    const content = document.querySelector('.container-pf-nav-pf-vertical-with-sub-menus');
+    if (! content) {
+      return;
+    }
+
+    if (isVerticalMenuCollapsed) {
+      content.classList.add('collapsed-nav');
+    } else {
+      content.classList.remove('collapsed-nav');
+    }
   }, [isVerticalMenuCollapsed]);
 
   const handleSetActiveIds = (value) => {

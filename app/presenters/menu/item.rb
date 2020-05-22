@@ -38,17 +38,6 @@ module Menu
       rbac_feature.nil? || ApplicationHelper.role_allows?(rbac_feature)
     end
 
-    def link_params
-      params = case type.try(:to_sym)
-               when :big_iframe then {:href => "/dashboard/iframe?id=#{id}"}
-               when :new_window then {:href => href, :target => '_new'}
-               when :modal      then {:onclick => "sendDataWithRx({type: 'showAboutModal'});", :href => 'javascript:void(0);'}
-               else                  {:href => href}
-               end
-      params[:onclick] = 'return miqCheckForChanges();' unless type.try(:to_sym) == :modal
-      params
-    end
-
     def leaf?
       true
     end

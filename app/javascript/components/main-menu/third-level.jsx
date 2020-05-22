@@ -1,8 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import { menuProps } from './recursive-props';
-import { getHrefByType, handleUnsavedChanges } from './helpers';
-import getTargetByType from '../../helpers/get-target-by-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const ThirdLevel = ({
   id,
@@ -13,7 +12,7 @@ const ThirdLevel = ({
   type,
 }) => (!visible ? null : (
   <li
-    id={`menu_item_${id}`}
+    id={itemId(id)}
     className={ClassNames(
       'menu-list-group-item',
       {
@@ -21,16 +20,7 @@ const ThirdLevel = ({
       },
     )}
   >
-    <a
-      href={getHrefByType(type, href, id)}
-      onClick={(event) => {
-        if (handleUnsavedChanges(type) === false) {
-          event.preventDefault();
-        }
-        return false;
-      }}
-      target={getTargetByType(type)}
-    >
+    <a {...linkProps({ type, href, id })}>
       <span className="list-group-item-value">{title}</span>
     </a>
   </li>

@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps } from './recursive-props';
-import {
-  getHrefByType, getIdByCategory, handleUnsavedChanges,
-} from './helpers';
-import getTargetByType from '../../helpers/get-target-by-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const SecondLevel = ({
   id,
@@ -31,20 +28,11 @@ const SecondLevel = ({
           active,
         },
       )}
-      id={getIdByCategory(hasSubitems, id)}
+      id={itemId(id, hasSubitems)}
       onMouseEnter={() => (handleSetActiveIds(hasSubitems ? { secondLevelId: id } : undefined))}
       onMouseLeave={() => handleSetActiveIds({ secondLevelId: undefined })}
     >
-      <a
-        href={getHrefByType(type, href, id)}
-        onClick={(event) => {
-          if (handleUnsavedChanges(type) === false) {
-            event.preventDefault();
-          }
-          return false;
-        }}
-        target={getTargetByType(type)}
-      >
+      <a {...linkProps({ type, href, id })}>
         <span className="list-group-item-value">{title}</span>
       </a>
       <div className="nav-pf-tertiary-nav">

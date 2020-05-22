@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import { MenuItem, HoverContext } from './main-menu';
 import { menuProps, RecursiveMenuProps } from './recursive-props';
-import {
-  getHrefByType, getSectionId, handleUnsavedChanges, getItemId,
-} from './helpers';
-import getTargetByType from '../../helpers/get-target-by-type';
+import { itemId, linkProps } from '../../menu/item-type';
 
 const TopLevel = ({
   level,
@@ -32,20 +29,13 @@ const TopLevel = ({
             'is-hover': hoveredTopLevelId === id,
           },
         )}
-        id={getSectionId(id)}
+        id={itemId(id, isSection)}
         onMouseEnter={() => handleSetActiveIds({ topLevelId: id })}
         onBlur={() => undefined}
       >
         <a
           className="top-level-item"
-          href={getHrefByType(type, href, id)}
-          onClick={(event) => {
-            if (handleUnsavedChanges(type) === false) {
-              event.preventDefault();
-            }
-            return false;
-          }}
-          target={getTargetByType(type)}
+          {...linkProps({ type, href, id })}
         >
           <span className={icon} />
           <span className="list-group-item-value">{title}</span>
@@ -68,7 +58,7 @@ const TopLevel = ({
 
   return (
     <li
-      id={getItemId(id)}
+      id={itemId(id, isSection)}
       className={ClassNames(
         'menu-list-group-item',
         {
@@ -81,14 +71,7 @@ const TopLevel = ({
     >
       <a
         className="top-level-item"
-        href={getHrefByType(type, href, id)}
-        onClick={(event) => {
-          if (handleUnsavedChanges(type) === false) {
-            event.preventDefault();
-          }
-          return false;
-        }}
-        target={getTargetByType(type)}
+        {...linkProps({ type, href, id })}
       >
         <span className={icon} />
         <span className="list-group-item-value">{title}</span>
