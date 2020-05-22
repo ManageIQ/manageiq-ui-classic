@@ -24,7 +24,10 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
   };
 
   return (
-    <div title={`${__("Current group:")} ${currentOption.label}`}>
+    <div
+      className="menu-group"
+      title={`${__("Current group:")} ${currentOption.label}`}
+    >
       { expanded ? (
         <>
           { options.length > 1 ? (
@@ -37,13 +40,13 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
               onChange={groupChange}
             />
           ) : (
-            <SideNavItem className="padded">
+            <SideNavItem className="padded vertical-center">
               {currentOption.label}
             </SideNavItem>
           )}
         </>
       ) : (
-        <SideNavItem className="padded">
+        <SideNavItem className="padded vertical-center">
           <Collaborate20 />
         </SideNavItem>
       )}

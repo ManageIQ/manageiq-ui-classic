@@ -29,7 +29,7 @@ export const MiqLogo = ({
 
   return (
     <SideNavHeader
-      className="padded"
+      className="padded menu-logo"
       renderIcon={miqLogo}
     />
   );

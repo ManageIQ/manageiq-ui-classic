@@ -21,14 +21,19 @@ const ResultItem = ({ item, titles }) => (
   </SideNavMenuItem>
 );
 
+// can't use raw p as a descendant of items
+const Count = ({ length }) => (
+  <p>
+    {__("Results")}
+    &nbsp;
+    ({length})
+  </p>
+);
+
 // always expanded, or null
 export const SearchResults = ({ results }) => (
-  <SideNavItems>
-    <p>
-      {__("Results")}
-      &nbsp;
-      ({results.length})
-    </p>
+  <SideNavItems className="menu-results">
+    <Count length={results.length} />
 
     {results.map(({ item, titles }) => (
       <ResultItem

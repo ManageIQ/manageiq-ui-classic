@@ -44,6 +44,19 @@
     color: $text-03;
   }
 
+  .menu-user {
+    color: $carbon--gray-50;
+  }
+
+  li.menu-group {
+    color: $carbon--gray-10;
+  }
+
+  .menu-group svg,
+  .menu-search svg {
+    fill: $carbon--gray-10;
+  }
+
   // sizing
   .bx--side-nav.second {
     left: 16rem;
@@ -89,10 +102,43 @@
 
   .menu-search-title {
     font-size: small;
+    margin-bottom: 0;
+    margin-top: 5px;
   }
   .menu-search-parent {
     font-size: smaller;
     font-weight: 400;
+    margin-bottom: 5px;
+  }
+
+  .menu-user,
+  .menu-group li {
+    @include carbon--type-style('helper-text-01');
+  }
+
+  .vertical-center {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-user {
+    height: 40px;
+  }
+
+  .menu-group {
+    height: 32px;
+    margin-bottom: 8px;
+    & .bx--dropdown,
+    & > li {
+      height: 32px;
+    }
+    & .bx--dropdown__wrapper {
+      padding: 0 1rem;
+    }
+  }
+
+  .menu-search {
+    height: 32px;
   }
 }
 
@@ -130,10 +176,9 @@
   display: block;
   width: 32px;
   height: 32px;
-  margin-left: -8px;
+  margin: 0 -8px;
   text-align: center;
   border-radius: 24px;
-  line-height: 24px;
+  line-height: 32px;
   background-color: $ui-02;
-  margin-top: 8px;
 }

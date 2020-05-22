@@ -6,7 +6,7 @@ export const Username = ({ applianceName, currentUser, expanded }) => {
   const initials = Array.from(currentUser.name).filter((x) => x.match(/\p{Upper}/u)).join('').substr(0, 3) || currentUser.name[0];
 
   return (
-    <SideNavItem className="padded">
+    <SideNavItem className="padded menu-user vertical-center">
       <span
         className={expanded ? 'expanded' : 'collapsed'}
         data-userid={currentUser.userid}

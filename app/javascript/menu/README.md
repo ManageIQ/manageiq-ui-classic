@@ -20,13 +20,13 @@ Expanded state is persisted in `localStorage`, by setting `patternfly-navigation
 
 **Components** (in order):
 
-* `MiqLogo` - manageiq logo, uses `logoLarge` and `logoSmall` for the URLs, and is hidden when `showLogo` is false
-* `Username` - username, appliance name; collapses to initials; uses `applianceName`, `currentUser`, is hidden when `showUser` is false
-* `GroupSwitcher` - display or switch current group; uses `currentGroup`, `miqGroups`
-* `MenuSearch` - search in menu component, `onSearch` provides an array of results or null
-* when searching: `SearchResults` - list of menu items
-* when not searching: `FirstLevel` - the actual menu
-* `MenuCollapse` - bottom expand/collapse button
+* `MiqLogo` (`.menu-logo`) - manageiq logo, uses `logoLarge` and `logoSmall` for the URLs, and is hidden when `showLogo` is false
+* `Username` (`.menu-user`) - username, appliance name; collapses to initials; uses `applianceName`, `currentUser`, is hidden when `showUser` is false
+* `GroupSwitcher` (`.menu-group`) - display or switch current group; uses `currentGroup`, `miqGroups`
+* `MenuSearch` (`.menu-search`) - search in menu component, `onSearch` provides an array of results or null
+* when searching: `SearchResults` (`.menu-results`) - list of menu items
+* when not searching: `FirstLevel` (`.menu-items`) - the actual menu
+* `MenuCollapse` (`.menu-collapse`) - bottom expand/collapse button
 
 Second level SideNav only contains `SecondLevel` which is a simple `SideNavItems` with `SideNavMenu` and `SideNavMenuItem` items.
 

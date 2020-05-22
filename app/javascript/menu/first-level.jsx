@@ -55,7 +55,7 @@ MenuSection.props = {
 
 
 export const FirstLevel = ({ menu, setSection }) => (
-  <SideNavItems>
+  <SideNavItems className="menu-items">
     {mapItems(menu, setSection)}
   </SideNavItems>
 );

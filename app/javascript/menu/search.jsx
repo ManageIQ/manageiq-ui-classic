@@ -36,7 +36,7 @@ const flatten = (menuItems = []) => {
 export const MenuSearch = ({ expanded, menu, onSearch }) => {
   if (! expanded) {
     return (
-      <SideNavItem className="padded">
+      <SideNavItem className="padded menu-search vertical-center">
         <Search20 />
       </SideNavItem>
     );
@@ -57,7 +57,7 @@ export const MenuSearch = ({ expanded, menu, onSearch }) => {
   };
 
   return (
-    <SideNavItem className="padded">
+    <SideNavItem className="padded menu-search">
       <Search
         size="sm"
         placeHolderText={__("Find")}
