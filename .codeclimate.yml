@@ -1,5 +1,4 @@
----
-version: "2"
+version: '2'
 exclude_patterns:
 - ".git/"
 - "**.gif"
@@ -10,48 +9,46 @@ exclude_patterns:
 - "**.xml"
 - "**.yaml"
 - "**.yml"
-- "app/assets/javascripts/dhtmlx*/"
-- "config/dictionary_strings.rb"
-- "config/model_attributes.rb"
-- "config/yaml_strings.rb"
-- "db/schema.rb"
-- "db/schema.yml"
-- "db/fixtures/**/*.yml"
-- "db/migrate/20130923182042_collapsed_initial_migration.rb"
-- "locale/"
-- "public/javascripts/timeline/"
-- "spec/"
-- "test/"
-- "tmp/"
-- "vendor/assets/"
+- app/assets/javascripts/dhtmlx*/
+- config/dictionary_strings.rb
+- config/model_attributes.rb
+- config/yaml_strings.rb
+- db/schema.rb
+- db/schema.yml
+- db/fixtures/**/*.yml
+- db/migrate/20130923182042_collapsed_initial_migration.rb
+- locale/
+- public/javascripts/timeline/
+- spec/
+- test/
+- tmp/
+- vendor/assets/
 checks:
   file-lines:
     config:
       threshold: 400
 plugins:
   brakeman:
-    # very slow :sad_panda:
     enabled: false
   bundler-audit:
-    # requires Gemfile.lock
     enabled: false
   csslint:
     enabled: false
   duplication:
     enabled: true
     exclude_patterns:
-    - "app/decorators/"
-    - "app/javascript/**/*.spec.js"
-    - "app/javascript/**/*.schema.js"
+    - app/decorators/
+    - app/javascript/**/*.spec.js
+    - app/javascript/**/*.schema.js
     config:
       concurrency: 1
       languages:
         ruby:
           mass_threshold: 30
-        javascript:
+        javascript: 
   eslint:
     enabled: true
-    channel: "eslint-5"
+    channel: eslint-5
     checks:
       key-spacing:
         enabled: false
@@ -62,25 +59,23 @@ plugins:
     config:
       ignore_warnings: true
       extensions:
-      - .js
-      - .jsx
+      - ".js"
+      - ".jsx"
   fixme:
-    # let's enable later
     enabled: false
   markdownlint:
-    # let's enable later
     enabled: false
   rubocop:
     enabled: true
-    config: '.rubocop_cc.yml'
-    channel: rubocop-0-69
+    config: ".rubocop_cc.yml"
+    channel: rubocop-0-82
   stylelint:
     enabled: true
 prepare:
   fetch:
-  - url: "https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_base.yml"
+  - url: https://raw.githubusercontent.com/ManageIQ/manageiq-style/master/.rubocop_base.yml
     path: ".rubocop_base.yml"
-  - url: "https://raw.githubusercontent.com/ManageIQ/guides/master/.rubocop_cc_base.yml"
+  - url: https://raw.githubusercontent.com/ManageIQ/manageiq-style/master/.rubocop_cc_base.yml
     path: ".rubocop_cc_base.yml"
 ratings:
   paths:
