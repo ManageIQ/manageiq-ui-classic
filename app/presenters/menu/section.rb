@@ -42,12 +42,13 @@ module Menu
       @subsection ||= Array(items).detect { |el| el.kind_of?(Section) }
     end
 
-    def link_params
-      params = case type
-               when :big_iframe then {:href => "/dashboard/iframe?sid=#{id}"}
-               else                  {:href => "/dashboard/maintab/?tab=#{id}"}
-               end
-      params.merge(:onclick => 'return miqCheckForChanges();')
+    def href
+      case type
+      when :big_iframe
+        "/dashboard/iframe?sid=#{id}"
+      else
+        "/dashboard/maintab/?tab=#{id}"
+      end
     end
 
     def leaf?
@@ -73,7 +74,7 @@ module Menu
       items.each do |item|
         next unless item.visible?
         if item.kind_of?(Item)
-          return item.link_params[:href]
+          return item.href
         else
           section_result = item.default_redirect_url
           return section_result if section_result

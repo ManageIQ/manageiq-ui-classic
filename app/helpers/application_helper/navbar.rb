@@ -15,7 +15,7 @@ module ApplicationHelper
         :id      => item.id.to_s,
         :title   => item.name,
         :icon    => item.icon,
-        :href    => item.link_params[:href],
+        :href    => item.href,
         :type    => item.type,
         :visible => item.visible?,
         :active  => item_active?(item),
