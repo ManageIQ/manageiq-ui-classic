@@ -1,29 +1,27 @@
 import { writeProxy, lockInstanceProperties } from './utils';
 import { cleanVirtualDom } from './helpers';
 
-const registry = new Map(); // Map<definition, Set<instance>>
+const registry = {}; // Map<name, {name, blueprint, instances: Set}>
 
 /**
  * Get definition of a component with the given `name`.
  */
 export function getDefinition(name) {
-  return Array.from(registry.keys()).find(definition => definition.name === name);
+  return registry[name];
 }
 
 /**
  * Make sure the instance `id` is sane and cannot be changed.
  */
 export function sanitizeAndFreezeInstanceId(instance, definition) {
-  const id = typeof instance.id === 'string'
-    ? instance.id
-    : `${definition.name}-${registry.get(definition).size}`;
+  const id = instance.id || `${definition.name}-${definition.instances.size}`;
 
   Object.defineProperty(instance, 'id', {
     get() {
       return id;
     },
     set() {
-      throw new Error(`Attempt to modify id of instance ${instance.id}`);
+      throw new Error(`Attempt to modify id of instance ${id}`);
     },
     enumerable: true,
   });
@@ -35,7 +33,7 @@ export function sanitizeAndFreezeInstanceId(instance, definition) {
  * - the given instance `id` isn't already taken
  */
 export function validateInstance(instance, definition) {
-  if (Array.from(registry.get(definition)).find(existingInstance => existingInstance === instance)) {
+  if (Array.from(definition.instances).find(existingInstance => existingInstance === instance)) {
     throw new Error('Instance already present, check your blueprint.create implementation');
   }
   if (getInstance(definition.name, instance.id)) {
@@ -49,15 +47,16 @@ export function validateInstance(instance, definition) {
 export function define(name, blueprint = {}, options = {}) {
   // validate inputs
   if (typeof name !== 'string') {
-    throw `Registry.define: non-string name: ${name}`;
+    throw new Error(`Registry.define: non-string name: ${name}`);
   }
   if (isDefined(name) && !options.override) {
-    throw `Registry.define: component already exists: ${name} (use { override: true } ?)`;
+    throw new Error(`Registry.define: component already exists: ${name} (use { override: true } ?)`);
   }
 
   // add new definition to the registry
-  const newDefinition = { name, blueprint };
-  registry.set(newDefinition, new Set());
+  const instances = new Set();
+  const newDefinition = { name, blueprint, instances };
+  registry[name] = newDefinition;
 
   // add existing instances to the registry
   if (Array.isArray(options.instances)) {
@@ -65,7 +64,8 @@ export function define(name, blueprint = {}, options = {}) {
       .forEach((instance) => {
         sanitizeAndFreezeInstanceId(instance, newDefinition);
         validateInstance(instance, newDefinition);
-        registry.get(newDefinition).add(instance);
+
+        newDefinition.instances.add(instance);
       });
   }
 }
@@ -150,7 +150,7 @@ export function newInstance(name, initialProps = {}, mountTo = undefined) {
     }
 
     // remove instance from the registry
-    registry.get(definition).delete(newInstance);
+    definition.instances.delete(newInstance);
 
     // prevent access to existing instance properties except for id
     lockInstanceProperties(newInstance);
@@ -160,7 +160,7 @@ export function newInstance(name, initialProps = {}, mountTo = undefined) {
   };
 
   // add instance to the registry
-  registry.get(definition).add(newInstance);
+  definition.instances.add(newInstance);
 
   return newInstance;
 }
@@ -170,7 +170,7 @@ export function newInstance(name, initialProps = {}, mountTo = undefined) {
  */
 export function getInstance(name, id) {
   const definition = getDefinition(name);
-  return definition && Array.from(registry.get(definition)).find(instance => instance.id === id);
+  return definition && Array.from(definition.instances).find(instance => instance.id === id);
 }
 
 /**
@@ -184,7 +184,7 @@ export function isDefined(name) {
  * Test helper: get names of all components.
  */
 export function getComponentNames() {
-  return Array.from(registry.keys()).map(definition => definition.name);
+  return Object.keys(registry);
 }
 
 /**
@@ -192,12 +192,12 @@ export function getComponentNames() {
  */
 export function getComponentInstances(name) {
   const definition = getDefinition(name);
-  return definition ? Array.from(registry.get(definition).values()) : [];
+  return definition ? Array.from(definition.instances) : [];
 }
 
 /**
  * Test helper: remove all component data.
  */
 export function clearRegistry() {
-  registry.clear();
+  Object.keys(registry).forEach((k) => (delete registry[k]));
 }

@@ -77,7 +77,7 @@ describe('Component API', () => {
 
   it('when passing existing instances, define method ensures a sane instance id', () => {
     const testInstances = [
-      { id: 'first' }, { id: 123 }, {},
+      { id: 'first' }, {}, {},
     ];
 
     define('FooComponent', {}, { instances: testInstances });
@@ -203,7 +203,7 @@ describe('Component API', () => {
     define('FooComponent', {
       create: jest.fn().mockName('testBlueprint.create')
         .mockImplementationOnce(() => ({ id: 'first', elementId: mountId }))
-        .mockImplementationOnce(() => ({ id: 123, elementId: mountId }))
+        .mockImplementationOnce(() => ({ elementId: mountId }))
         .mockImplementationOnce(() => ({ elementId: mountId })),
     });
 
@@ -434,7 +434,7 @@ describe('Component API', () => {
 
   it('sanitizeAndFreezeInstanceId ensures the instance id is sane and cannot be changed', () => {
     const testInstances = [
-      { id: 'first' }, { id: 123 }, {},
+      { id: 'first' }, {}, {},
     ];
 
     define('FooComponent', {});
