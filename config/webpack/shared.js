@@ -63,6 +63,16 @@ let plugins = [
     publicPath: output.publicPath,
     writeToFileEmit: true,
   }),
+
+  // plugin to output timestamp after compilation (useful for --watch)
+  {
+    apply(compiler) {
+      compiler.hooks.done.tap('done timestamp', () => {
+        // setTimeout to append instead of prepend the date
+        setTimeout(() => console.log('webpack: done', new Date()));
+      });
+    },
+  },
 ];
 
 if (env.WEBPACK_VERBOSE) {
