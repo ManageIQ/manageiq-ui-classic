@@ -100,7 +100,6 @@ module Mixins
     def edit
       assert_privileges("#{privilege_prefix}_edit_provider")
       @explorer = true if explorer_controller?
-      @server_zones = Zone.visible.in_my_region.order('lower(description)').pluck(:description, :name)
       @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       case params[:button]
       when "cancel"
