@@ -813,7 +813,7 @@ module OpsController::Diagnostics
   end
 
   def database_details
-    @database_details = Rails.configuration.database_configuration[Rails.env]
+    @database_details = ActiveRecord::Base.configurations[Rails.env]
     @database_display_name =
       if @database_details["host"].in?([nil, "", "localhost", "127.0.0.1"])
         _("Internal Database")
