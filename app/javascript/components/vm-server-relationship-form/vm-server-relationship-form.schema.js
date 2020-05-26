@@ -1,4 +1,4 @@
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes } from '@@ddf';
 
 const createSchema = (options = []) => ({
   fields: [{

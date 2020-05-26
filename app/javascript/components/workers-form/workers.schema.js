@@ -1,4 +1,4 @@
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes } from '@@ddf';
 import {
   injectOption, generateBasicOptions, generateRange, generateRefreshOptions,
 } from './helpers';

@@ -1,4 +1,4 @@
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 
 const createSchema = () => ({
   fields: [{

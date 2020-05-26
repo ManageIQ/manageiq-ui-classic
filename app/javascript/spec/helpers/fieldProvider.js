@@ -1,5 +1,4 @@
 import React, { createElement } from 'react';
-import { composeValidators } from '@data-driven-forms/react-form-renderer';
 /**
  * Mocks FieldProvider for custom data driven form fields
  */

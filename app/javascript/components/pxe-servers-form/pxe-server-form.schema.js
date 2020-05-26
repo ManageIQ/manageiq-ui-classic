@@ -1,4 +1,4 @@
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 import debouncePromise from '../../helpers/promise-debounce';
 import { http, API } from '../../http_api';
 
