@@ -8,7 +8,7 @@ import {
   FormControl,
   HelpBlock,
 } from 'patternfly-react';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes } from '@@ddf';
 import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 

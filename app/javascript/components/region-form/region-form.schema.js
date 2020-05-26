@@ -1,4 +1,4 @@
-import { validatorTypes } from "@data-driven-forms/react-form-renderer";
+import { validatorTypes } from "@@ddf";
 
 function createSchema(maxDescLen) {
   return {

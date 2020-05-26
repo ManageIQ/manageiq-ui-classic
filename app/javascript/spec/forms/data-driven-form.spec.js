@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { componentTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes } from '@@ddf';
 import { layoutMapper } from '@data-driven-forms/pf3-component-mapper';
 
 import formFieldsMapper from '../../forms/mappers/formFieldsMapper';

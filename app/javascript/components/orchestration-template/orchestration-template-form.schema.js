@@ -1,4 +1,4 @@
-import { componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import { componentTypes, validatorTypes } from '@@ddf';
 import { http } from '../../http_api';
 
 const getManagers = () => http.get('/catalog/ot_orchestration_managers?template_type=ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate')
