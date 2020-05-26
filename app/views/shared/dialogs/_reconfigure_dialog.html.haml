@@ -3,7 +3,7 @@
     .spinner{'ng-show' => "!vm.dialogLoaded"}
 
     .col-md-12.col-lg-12{'ng-if' => 'vm.dialog'}
-      %dialog-user{"dialog" =>"vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)"}
+      %dialog-user{"dialog" => "vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)", "reconfigure-mode" => true}
 
       .clearfix
       .pull-right.button-group{'ng-show' => "vm.dialogLoaded"}
