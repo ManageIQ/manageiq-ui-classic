@@ -1,62 +1,11 @@
 #main-menu {
+  @import './menu-colors.scss';
+
   list-style: none;
 
   ul ul {
     list-style: none;
     padding: 0;
-  }
-
-  // colors
-  .bx--side-nav {
-    background-color: $ui-background;
-
-    &.second {
-      background-color: $ui-01;
-
-      .bx--side-nav__item--active > .bx--side-nav__submenu,
-      .bx--side-nav__link.bx--side-nav__link--current,
-      .bx--side-nav__link:hover,
-      .bx--side-nav__link.force-hover,
-      .bx--side-nav__submenu[aria-expanded=false]:hover {
-        background-color: $active-ui;
-      }
-    }
-  }
-
-  .bx--side-nav__link:hover,
-  .bx--side-nav__link.force-hover,
-  .bx--side-nav__link.bx--side-nav__link--current {
-    background-color: $active-secondary;
-  }
-
-  .bx--side-nav__link-text,
-  .bx--side-nav__submenu-title {
-    color: $text-01;
-  }
-
-  .bx--side-nav__icon > svg,
-  .menu-collapse-button > svg {
-    fill: $icon-01;
-  }
-  .bx--side-nav__icon > i {
-    color: $icon-01;
-  }
-
-  .bx--side-nav__hr {
-    color: $text-03;
-  }
-
-  .menu-user {
-    color: $carbon--gray-50;
-  }
-
-  li.menu-group {
-    color: $carbon--gray-10;
-  }
-
-  .menu-group svg,
-  .menu-search svg {
-    fill: $carbon--gray-10;
   }
 
   // sizing

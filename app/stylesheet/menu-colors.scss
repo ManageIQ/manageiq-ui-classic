@@ -1,0 +1,64 @@
+$rail-primary-bg: $ui-background; // carbon--gray-90
+$rail-secondary-bg: $ui-01; // carbon--gray-80
+
+$row-active-primary-bg: $hover-row; // carbon--gray-80
+$row-active-secondary-bg: $hover-secondary; // carbon--gray-60
+
+$row-fg-text: $text-01; // carbon--gray-10
+$row-fg-icon: $icon-01; // carbon--gray-10
+
+$user-fg: $text-05; // $carbon--gray-50
+
+$divider-fg: $disabled-02; // $carbon--gray-60;
+
+// unused, theme default
+// $find-placeholder-fg: $carbon--gray-50;
+// $find-bg: $carbon--gray-80;
+// $row-selected-border: $carbon--blue-60;
+
+
+.bx--side-nav {
+  background-color: $rail-primary-bg;
+
+  .bx--side-nav__link.force-hover,
+  .bx--side-nav__link:hover,
+  .bx--side-nav__link.bx--side-nav__link--current {
+    background-color: $row-active-primary-bg;
+  }
+}
+
+.bx--side-nav.second {
+  background-color: $rail-secondary-bg;
+
+  .bx--side-nav__item--active > .bx--side-nav__submenu,
+  .bx--side-nav__link.bx--side-nav__link--current,
+  .bx--side-nav__link.force-hover,
+  .bx--side-nav__link:hover,
+  .bx--side-nav__submenu[aria-expanded=false]:hover {
+    background-color: $row-active-secondary-bg;
+  }
+}
+
+.bx--side-nav__link-text,
+.bx--side-nav__submenu-title,
+li.menu-group {
+  color: $row-fg-text;
+}
+
+.bx--side-nav__icon > svg,
+.menu-collapse-button > svg,
+.menu-group > svg,
+.menu-search > svg {
+  fill: $row-fg-icon;
+}
+.bx--side-nav__icon > i {
+  color: $row-fg-icon;
+}
+
+.bx--side-nav__hr {
+  color: $divider-fg;
+}
+
+.menu-user {
+  color: $user-fg;
+}
