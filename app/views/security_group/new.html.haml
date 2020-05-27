@@ -22,6 +22,7 @@
                 'ng-model'   => "vm.securityGroupModel.ems_id",
                 'ng-options' => 'ems.id as ems.name for ems in vm.ems',
                 'miq-select' => true,
+                "selectpicker-for-select-tag" => "",
                 'required'   => ''}
           %option{:value => ""}
             = "<#{_('Choose')}>"
