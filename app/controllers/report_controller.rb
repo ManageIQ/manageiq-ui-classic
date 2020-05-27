@@ -164,6 +164,8 @@ class ReportController < ApplicationController
       self.x_active_accord = params[:id].sub(/_accord$/, '')
       self.x_active_tree   = "#{x_active_accord}_tree"
 
+      assert_accordion_and_tree_privileges(x_active_tree)
+
       # reset menu editor to show All Roles if nothing has been changed
       x_node_set("root", :roles_tree) if !@changed && tree_exists?(:roles_tree)
 
@@ -195,6 +197,9 @@ class ReportController < ApplicationController
     self.x_active_tree   = "#{params[:accord]}_tree" if params[:accord]
     self.x_active_tree   = params[:tree]             if params[:tree]
     self.x_node = params[:id]
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     @sb[:active_tab] = "report_info" if x_active_tree == :reports_tree && params[:action] != "reload"
     if params[:action] == "reload" && @sb[:active_tab] == "saved_reports"
       replace_right_cell(:replace_trees => %i[reports savedreports])

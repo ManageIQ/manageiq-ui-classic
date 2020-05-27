@@ -178,6 +178,9 @@ module Mixins
       @flash_array = nil
       self.x_active_tree = params[:tree] if params[:tree]
       self.x_node = params[:id]
+
+      assert_accordion_and_tree_privileges(x_active_tree)
+
       load_or_clear_adv_search
       apply_node_search_text if x_active_tree == "#{manager_prefix}_providers_tree".to_sym
 

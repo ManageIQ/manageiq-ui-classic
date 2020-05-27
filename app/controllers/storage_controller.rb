@@ -180,6 +180,9 @@ class StorageController < ApplicationController
 
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     get_node_info(x_node)
 
     @search_text = @sb[:storage_search_text]["#{x_active_accord}_search_text"]
@@ -221,6 +224,8 @@ class StorageController < ApplicationController
     @lastaction = "explorer"
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node        = params[:id]
+
+    assert_accordion_and_tree_privileges(x_active_tree)
 
     load_or_clear_adv_search
     replace_right_cell(:nodetype => x_node)

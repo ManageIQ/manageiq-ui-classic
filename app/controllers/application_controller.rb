@@ -2069,6 +2069,13 @@ class ApplicationController < ActionController::Base
     set_active_elements(allowed_features.first, x_node_to_set)
   end
 
+  def assert_accordion_and_tree_privileges(tree_name)
+    feature = features.find { |feat| feat.tree_name.to_sym == tree_name.to_sym }
+    unless ApplicationHelper.role_allows?(:feature => feature.role, :any => feature.role_any)
+      raise MiqException::RbacPrivilegeException, _("The user is not authorized for this task or item.")
+    end
+  end
+
   def fetch_name_from_object(klass, id)
     klass.find_by(:id => id).try(:name)
   end
