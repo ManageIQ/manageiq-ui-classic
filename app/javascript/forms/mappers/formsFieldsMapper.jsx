@@ -22,7 +22,7 @@ const fieldsMapper = {
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'validate-provider-credentials': AsyncProviderCredentials,
-  [componentTypes.SELECT]: props => <components.SelectField classNamePrefix="miq-ddf-select" {...props} />,
+  [componentTypes.SELECT]: props => <components.SelectField classNamePrefix="miq-ddf-select" placeholder={`<${__('Choose')}>`} {...props} />,
 };
 
 export default fieldsMapper;
