@@ -1,5 +1,6 @@
 import React from 'react';
-import { formFieldsMapper } from '@data-driven-forms/pf3-component-mapper';
+import { formFieldsMapper, components } from '@data-driven-forms/pf3-component-mapper';
+import { componentTypes } from '@@ddf';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import AsyncProviderCredentials from '../../components/async-credentials/async-provider-credentials';
@@ -23,6 +24,7 @@ const fieldsMapper = {
   'validate-credentials': AsyncCredentials,
   'validate-provider-credentials': AsyncProviderCredentials,
   'field-array': FieldArray,
+  [componentTypes.SELECT]: props => <components.SelectField placeholder={`<${__('Choose')}>`} {...props} />,
 };
 
 export default fieldsMapper;
