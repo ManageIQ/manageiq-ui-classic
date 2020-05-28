@@ -87,7 +87,7 @@ module Mixins
     def new
       assert_privileges("#{privilege_prefix}_add_provider")
       @explorer = true if explorer_controller?
-      @provider_manager = concrete_model.new
+      @ems = @provider_manager = concrete_model.new
       @server_zones = Zone.visible.in_my_region.order(Zone.arel_table[:name].lower).pluck(:description, :name)
       @sb[:action] = params[:action]
       if @explorer
@@ -108,8 +108,8 @@ module Mixins
         add_provider
         save_provider
       else
-        manager_id            = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
-        @provider_manager     = find_record(concrete_model, manager_id)
+        manager_id               = params[:miq_grid_checks] || params[:id] || find_checked_items[0]
+        @ems = @provider_manager = find_record(concrete_model, manager_id)
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
         @sb[:action] = params[:action]
         if @explorer

@@ -1,2 +1,1 @@
-= render :partial => 'configuration_manager/shared_form', :locals => {:url => "/ems_configuration", :model => "configurationManagerModel"}
-
+= react('ProviderForm', :providerId => @ems.id.to_s, :redirect => edit_redirect_path(@lastaction, @ems), :kind => 'configuration', :title => ui_lookup(:model => 'ManageIQ::Providers::ConfigurationManager'))
