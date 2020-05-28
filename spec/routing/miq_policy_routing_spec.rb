@@ -18,18 +18,6 @@ describe 'routes for MiqPolicyController' do
     end
   end
 
-  describe '#action_get_all' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/action_get_all")).to route_to("#{controller_name}#action_get_all")
-    end
-  end
-
-  describe '#action_tag_pressed' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/action_tag_pressed")).to route_to("#{controller_name}#action_tag_pressed")
-    end
-  end
-
   describe '#alert_edit' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/alert_edit")).to route_to("#{controller_name}#alert_edit")
@@ -39,12 +27,6 @@ describe 'routes for MiqPolicyController' do
   describe '#alert_field_changed' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/alert_field_changed")).to route_to("#{controller_name}#alert_field_changed")
-    end
-  end
-
-  describe '#alert_get_all' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/alert_get_all")).to route_to("#{controller_name}#alert_get_all")
     end
   end
 
@@ -169,12 +151,6 @@ describe 'routes for MiqPolicyController' do
   describe '#policy_field_changed' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/policy_field_changed")).to route_to("#{controller_name}#policy_field_changed")
-    end
-  end
-
-  describe '#policy_get_all' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/policy_get_all")).to route_to("#{controller_name}#policy_get_all")
     end
   end
 
