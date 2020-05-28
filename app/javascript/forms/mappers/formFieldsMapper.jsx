@@ -3,7 +3,6 @@ import { formFieldsMapper, components } from '@data-driven-forms/pf3-component-m
 import { componentTypes } from '@@ddf';
 
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
-import AsyncProviderCredentials from '../../components/async-credentials/async-provider-credentials';
 import DualGroup from '../../components/dual-group';
 import DualListSelect from '../../components/dual-list-select';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
@@ -16,13 +15,13 @@ const fieldsMapper = {
   ...formFieldsMapper,
   'code-editor': DataDrivenFormCodeEditor,
   'edit-password-field': EditPasswordField,
+  'field-array': FieldArray,
   'dual-group': DualGroup,
   'dual-list-select': DualListSelect,
   'input-with-dynamic-prefix': InputWithDynamicPrefix,
   hr: () => <hr />,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
-  'validate-provider-credentials': AsyncProviderCredentials,
   'field-array': FieldArray,
   [componentTypes.SELECT]: props => <components.SelectField placeholder={`<${__('Choose')}>`} {...props} />,
 };
