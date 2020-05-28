@@ -7,7 +7,9 @@ import cx from 'classnames';
 
 // SideNavLink with a chevron from SideNavMenu instead of SideNavLinkText
 // has an onClick, not items like SideNavMenu
+
 export const SideNavMenuLink = ({
+  forceHover,
   id,
   isActive,
   onClick,
@@ -17,6 +19,7 @@ export const SideNavMenuLink = ({
   const className = cx({
     'bx--side-nav__link': true,
     'bx--side-nav__link--current': isActive,
+    'force-hover': forceHover,
   });
 
   return (
@@ -44,6 +47,7 @@ export const SideNavMenuLink = ({
 };
 
 SideNavMenuLink.propTypes = {
+  forceHover: PropTypes.bool,
   id: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   onClick: PropTypes.func.isRequired,

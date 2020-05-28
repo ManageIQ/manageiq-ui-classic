@@ -16,6 +16,7 @@
       .bx--side-nav__item--active > .bx--side-nav__submenu,
       .bx--side-nav__link.bx--side-nav__link--current,
       .bx--side-nav__link:hover,
+      .bx--side-nav__link.force-hover,
       .bx--side-nav__submenu[aria-expanded=false]:hover {
         background-color: $active-ui;
       }
@@ -23,6 +24,7 @@
   }
 
   .bx--side-nav__link:hover,
+  .bx--side-nav__link.force-hover,
   .bx--side-nav__link.bx--side-nav__link--current {
     background-color: $active-secondary;
   }

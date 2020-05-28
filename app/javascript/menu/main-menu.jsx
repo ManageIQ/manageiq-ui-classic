@@ -17,12 +17,12 @@ const initialExpanded = window.localStorage.getItem('patternfly-navigation-prima
 export const MainMenu = (props) => {
   const { applianceName, currentGroup, currentUser, customBrand, customLogo, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
   const [expanded, setExpanded] = useState(initialExpanded);
-  const [activeSectionItems, setSection] = useState(null);
+  const [activeSection, setSection] = useState(null);
   const [searchResults, setSearch] = useState(null);
 
   const hideSecondary = (e) => setSection(null);
 
-  let appearExpanded = expanded || !!activeSectionItems || !!searchResults;
+  let appearExpanded = expanded || !!activeSection || !!searchResults;
 
   useEffect(() => {
     window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
@@ -80,6 +80,7 @@ export const MainMenu = (props) => {
           {!searchResults && <FirstLevel
             menu={menu}
             setSection={setSection}
+            activeSection={activeSection && activeSection.id}
           />}
 
           <MenuCollapse
@@ -88,7 +89,7 @@ export const MainMenu = (props) => {
           />
         </SideNav>
       </div>
-      { activeSectionItems && (
+      { activeSection && (
         <>
           <SideNav
             aria-label={__("Secondary Menu")}
@@ -97,7 +98,7 @@ export const MainMenu = (props) => {
             isChildOfHeader={false}
           >
             <SecondLevel
-              menu={activeSectionItems}
+              menu={activeSection.items}
             />
           </SideNav>
           <div
