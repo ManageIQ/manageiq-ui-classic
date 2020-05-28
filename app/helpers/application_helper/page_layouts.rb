@@ -58,6 +58,8 @@ module ApplicationHelper::PageLayouts
 
     return false if controller.action_name.end_with?("tagging_edit")
 
+    return false if controller.kind_of?(GenericObjectDefinitionController) && x_node != "root"
+
     true
   end
 
