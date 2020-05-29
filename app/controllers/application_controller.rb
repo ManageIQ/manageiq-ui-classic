@@ -181,8 +181,6 @@ class ApplicationController < ActionController::Base
       :vmcompare                                                              => "compressed"
     },
     :perpage  => { # Items per page, by view setting
-      :grid    => 20,
-      :tile    => 20,
       :list    => 20,
       :reports => 20
     },

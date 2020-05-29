@@ -24,9 +24,7 @@
         %fieldset
           %h3
             = _('Default Items Per Page')
-          - [[_("Grid View"), "perpage_grid",    :grid],
-             [_("Tile View"), "perpage_tile",    :tile],
-             [_("List View"), "perpage_list",    :list],
+          - [[_("List View"), "perpage_list",    :list],
              [_("Reports"),   "perpage_reports", :reports]].each do |item_per_page|
             .form-group
               %label.col-md-3.control-label
