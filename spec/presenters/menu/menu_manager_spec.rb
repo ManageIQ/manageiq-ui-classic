@@ -38,15 +38,4 @@ describe Menu::Manager do
       end
     end
   end
-
-  context "menu" do
-    it "knows about custom items from settings" do
-      ::Settings.ui.custom_menu = settings_custom_items
-      count = 0
-      Menu::Manager.menu.each do |item|
-        count += 1 if item.kind_of?(Menu::Item) && item.name =~ /^Custom Item/
-      end
-      expect(count).to eq(2)
-    end
-  end
 end
