@@ -50,6 +50,7 @@ if (!window.ManageIQ) {
       mark_translated_strings: false,
     },
     logoutInProgress: false,  // prevent redirectLogin *during* logout and group change
+    menu: [],
     mouse: {
       x: null, // mouse X coordinate for popup menu
       y: null, // mouse Y coordinate for popup menu

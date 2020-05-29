@@ -37,6 +37,11 @@ export const MainMenu = (props) => {
     document.body.classList.add(classNames[appearExpanded]);
   }, [appearExpanded]);
 
+  useEffect(() => {
+    // cypress, debugging
+    ManageIQ.menu = menu;
+  }, [menu]);
+
   return (
     <>
       <div
@@ -44,6 +49,7 @@ export const MainMenu = (props) => {
       >
         <SideNav
           aria-label={__("Main Menu")}
+          className="primary"
           expanded={appearExpanded}
           isChildOfHeader={false}
         >
@@ -93,7 +99,7 @@ export const MainMenu = (props) => {
         <>
           <SideNav
             aria-label={__("Secondary Menu")}
-            className="second"
+            className="secondary"
             expanded={true}
             isChildOfHeader={false}
           >
