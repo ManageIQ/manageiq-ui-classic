@@ -13,6 +13,7 @@ export const linkProps = ({type, href, id}) => ({
   }[type || 'default'],
 
   target: (type === 'new_window' ? '_blank' : '_self'),
+  rel: (type === 'new_window' ? 'noreferrer noopener' : undefined),
 
   onClick: (event) => {
     if (type === 'modal') {
