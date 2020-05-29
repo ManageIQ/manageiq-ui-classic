@@ -15,7 +15,7 @@ import { Username } from './username';
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
 export const MainMenu = (props) => {
-  const { applianceName, currentGroup, currentUser, customBrand, customLogo, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
+  const { applianceName, currentGroup, currentUser, customBrand, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
   const [expanded, setExpanded] = useState(initialExpanded);
   const [activeSection, setSection] = useState(null);
   const [searchResults, setSearch] = useState(null);
@@ -126,7 +126,6 @@ MainMenu.propTypes = {
   currentGroup: propGroup.isRequired,
   currentUser: propUser.isRequired,
   customBrand: PropTypes.bool,
-  customLogo: PropTypes.bool.isRequired,
   logoLarge: PropTypes.string,
   logoSmall: PropTypes.string,
   menu: PropTypes.arrayOf(PropTypes.any).isRequired,
