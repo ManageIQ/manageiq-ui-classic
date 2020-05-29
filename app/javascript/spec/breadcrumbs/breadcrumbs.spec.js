@@ -1,6 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
 import toJson from 'enzyme-to-json';
+import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
 
 import * as clickFunctions from '../../components/breadcrumbs/on-click-functions';
 import Breadcrumbs from '../../components/breadcrumbs';
@@ -17,8 +19,25 @@ describe('Breadcrumbs component', () => {
     controllerName: 'provider',
   };
 
+  const store = configureStore()({
+    notificationReducer: {
+      unreadCount: 0,
+      isDrawerVisible: false,
+    },
+  });
+
+  const reduxMount = (data) => {
+    const Component = () => data;
+
+    return mount(
+      <Provider store={store}>
+        <Component />
+      </Provider>
+    );
+  };
+
   it('is correctly rendered', () => {
-    const wrapper = mount(<Breadcrumbs {...props} />);
+    const wrapper = reduxMount(<Breadcrumbs {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
@@ -32,7 +51,7 @@ describe('Breadcrumbs component', () => {
         { title: 'Header' },
       ],
     };
-    const wrapper = mount(<Breadcrumbs {...initialProps} />);
+    const wrapper = reduxMount(<Breadcrumbs {...initialProps} />);
 
     wrapper.find('a').first().simulate('click');
 
@@ -49,7 +68,7 @@ describe('Breadcrumbs component', () => {
         { title: 'Header' },
       ],
     };
-    const wrapper = mount(<Breadcrumbs {...initialProps} />);
+    const wrapper = reduxMount(<Breadcrumbs {...initialProps} />);
 
     wrapper.find('a').first().simulate('click');
 

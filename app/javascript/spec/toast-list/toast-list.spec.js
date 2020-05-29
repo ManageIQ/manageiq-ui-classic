@@ -14,7 +14,7 @@ describe('Toast list tests', () => {
   const initialState = {
     notificationReducer: {
       unreadCount: 1,
-      isDrawerVisible: 'false',
+      isDrawerVisible: false,
       notifications,
       totalNotificationsCount: 0,
       toastNotifications: notifications,
