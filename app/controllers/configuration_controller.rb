@@ -557,7 +557,6 @@ class ConfigurationController < ApplicationController
       @edit[:new][:display][:dashboards] = params[:display_dashboards] unless params[:display_dashboards].nil?
       @edit[:new][:display][:timezone] = params[:display_timezone] unless params[:display_timezone].nil?
       @edit[:new][:display][:startpage] = params[:start_page] unless params[:start_page].nil?
-      @edit[:new][:display][:quad_truncate] = params[:quad_truncate] unless params[:quad_truncate].nil?
       @edit[:new][:display][:locale] = params[:display_locale] if params[:display_locale]
     when "ui_2" # Visual Settings tab
       @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?

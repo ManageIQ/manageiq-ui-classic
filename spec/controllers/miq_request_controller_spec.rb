@@ -387,7 +387,6 @@ describe MiqRequestController do
     end
 
     it "when the edit button is pressed the request is displayed" do
-      session[:settings] = {:display => {:quad_truncate => 'f'}}
       get :show, :params => { :id => @miq_request.id }
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
@@ -398,8 +397,7 @@ describe MiqRequestController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      session[:settings] = {:display => {:quad_truncate => 'f'},
-                            :views   => {:miq_request => 'grid'}}
+      session[:settings] = {:views   => {:miq_request => 'grid'}}
     end
 
     it "miq_request/show_list sets @layout='miq_request_vm' when redirected via foreman provisioning" do

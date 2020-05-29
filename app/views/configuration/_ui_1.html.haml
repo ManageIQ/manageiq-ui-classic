@@ -10,20 +10,6 @@
       .col-md-12.col-lg-6
         %fieldset
           %h3
-            = _('Grid/Tile View')
-          .form-group
-            %label.col-md-3.control-label
-              = _('Truncate Long Text')
-            .col-md-8
-              = select_tag("quad_truncate",
-                           options_for_select([[_("Front (...1234)"), "f"],
-                                               [_("Middle (AB...34)"), "m"],
-                                               [_("Back (ABCD...)"), "b"]], @edit[:new][:display][:quad_truncate]),
-                           :class => "selectpicker")
-              :javascript
-                miqSelectPickerEvent('quad_truncate', '#{url}');
-        %fieldset
-          %h3
             = _('Start Page')
           .form-group
             %label.col-md-3.control-label

@@ -51,8 +51,7 @@ describe HostController do
 
     it 'edit renders GTL grid with selected Host records' do
       session[:host_items] = [h1.id, h2.id]
-      session[:settings] = {:views   => {:host => 'grid'},
-                            :display => {:quad_truncate => 'f'}}
+      session[:settings] = {:views   => {:host => 'grid'}}
 
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name       => 'Host',
