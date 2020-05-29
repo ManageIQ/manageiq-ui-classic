@@ -2252,12 +2252,9 @@ Rails.application.routes.draw do
         accordion_select
         action_edit
         action_field_changed
-        action_get_all
-        action_tag_pressed
         alert_delete
         alert_edit
         alert_field_changed
-        alert_get_all
         alert_profile_assign
         alert_profile_assign_changed
         alert_profile_delete
@@ -2271,7 +2268,6 @@ Rails.application.routes.draw do
         export_field_changed
         import
         policy_edit
-        policy_get_all
         policy_field_changed
         profile_edit
         profile_field_changed
