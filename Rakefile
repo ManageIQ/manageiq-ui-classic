@@ -81,41 +81,8 @@ namespace :spec do
 
   desc "Run integration tests"
   task :integration do
-    begin
-      pid = nil
-      Bundler.with_original_env do
-        pid = spawn({"RAILS_ENV" => "test"}, "bundle exec rails server", [:out, :err] => "spec/manageiq/log/out.log")
-        Process.detach(pid)
-        puts "Rails server started with pid #{pid}..."
-      end
-
-      print "Waiting on Rails server to start..."
-      ready = false
-      30.times do
-        print "."
-        ready = Socket.tcp("localhost", 3000) { true } rescue false
-        ready ? break : sleep(1)
-      end
-      puts
-
-      if ready
-        system("yarn cypress:run")
-        exit $CHILD_STATUS.exitstatus
-      else
-        STDERR.puts "Unable to detect Rails server start after 30 seconds...aborting."
-        STDERR.puts `tail -n 200 spec/manageiq/log/evm.log spec/manageiq/log/out.log`
-        exit 1
-      end
-    ensure
-      if pid
-        puts "Terminating Rails process with pid #{pid}..."
-        begin
-          Process.kill("INT", pid)
-        rescue Errno::ESRCH
-          # Ignore
-        end
-      end
-    end
+    system('yarn cypress:run --config video=false')
+    exit $CHILD_STATUS.exitstatus
   end
 end
 
