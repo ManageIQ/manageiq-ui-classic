@@ -98,9 +98,6 @@ class DashboardController < ApplicationController
     if params[:id].present?
       item = Menu::Manager.item(params[:id])
       @layout = item.id if item.present?
-    elsif params[:sid].present?
-      item = Menu::Manager.section(params[:sid])
-      @layout = (item.items[0].id rescue nil)
     end
     @big_iframe = true
     render :locals => {:iframe_src => item.href}

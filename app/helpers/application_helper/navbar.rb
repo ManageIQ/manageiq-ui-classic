@@ -52,8 +52,7 @@ module ApplicationHelper
 
     # special handling for custom menu sections and items
     def section_nav_class_iframe(section)
-      params[:sid].present? && section.id.to_s == params[:sid] ||
-        params[:id].present? && section.contains_item_id?(params[:id])
+      params[:id].present? && section.contains_item_id?(params[:id])
     end
   end
 end
