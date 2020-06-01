@@ -22,7 +22,6 @@ const fieldsMapper = {
   hr: () => <hr />,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
-  'field-array': FieldArray,
   [componentTypes.SELECT]: props => <components.SelectField placeholder={`<${__('Choose')}>`} {...props} />,
 };
 
