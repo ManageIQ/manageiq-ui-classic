@@ -21,6 +21,7 @@ class GenericObjectDefinitionController < ApplicationController
   end
 
   def show_list
+    self.x_node = params[:id] if params[:id].present?
     self.x_active_tree ||= :generic_object_definitions_tree
     self.x_node ||= 'root'
     build_tree
@@ -290,7 +291,9 @@ class GenericObjectDefinitionController < ApplicationController
       :breadcrumbs  => [
         {:title => _("Automation")},
         {:title => _("Automate")},
-        {:title => _("Generic Objects")},
+        {:title => _("Generic Objects"), :url => url_for_only_path(:controller => 'generic_object_definition',
+                                                                   :action => 'show_list',
+                                                                   :id => 'root')},
       ],
       :record_info  => @generic_object_definition,
       :disable_tree => %w[new edit].include?(action_name),
