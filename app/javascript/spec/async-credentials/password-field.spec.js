@@ -4,6 +4,17 @@ import { shallowToJson } from 'enzyme-to-json';
 import PasswordField from '../../components/async-credentials/password-field';
 import { FieldProviderComponent as FieldProvider } from '../helpers/fieldProvider';
 
+let changeSpy;
+let getStateSpy;
+
+jest.mock('@@ddf', () => ({
+  useFormApi: () => ({
+    renderForm: ([secret]) => <DummyComponent {...secret} />,
+    change: changeSpy,
+    getState: getStateSpy,
+  }),
+}));
+
 const DummyComponent = ({
   isDisabled,
   validateOnMount, // eslint-disable-line
@@ -17,8 +28,7 @@ const DummyComponent = ({
 
 describe('Secret switch field component', () => {
   let initialProps;
-  let changeSpy;
-  let getStateSpy;
+
   beforeEach(() => {
     changeSpy = jest.fn();
     getStateSpy = jest.fn().mockReturnValue({
@@ -29,11 +39,6 @@ describe('Secret switch field component', () => {
       FieldProvider,
       edit: false,
       name: 'foo',
-      formOptions: {
-        renderForm: ([secret]) => <DummyComponent {...secret} />,
-        change: changeSpy,
-        getState: getStateSpy,
-      },
     };
   });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, FormGroup } from 'patternfly-react';
 
+import { useFormApi } from '@@ddf';
 import FieldArrayItem from './field-array-item';
 
 const FieldArray = ({
@@ -11,12 +12,12 @@ const FieldArray = ({
   label,
   fields,
   itemDefault,
-  formOptions,
   addText,
   ...rest
 }) => {
   const { name } = rest.input;
   const colsize = Math.floor(10 / fields.length);
+  const formOptions = useFormApi();
 
   const header = (
     <Row>
@@ -70,11 +71,6 @@ FieldArray.propTypes = {
   label: PropTypes.string,
   fields: PropTypes.any.isRequired,
   itemDefault: PropTypes.any,
-  formOptions: PropTypes.shape({
-    getState: PropTypes.func.isRequired,
-    change: PropTypes.func.isRequired,
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   addText: PropTypes.string,
 };
 

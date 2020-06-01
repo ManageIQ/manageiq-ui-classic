@@ -8,12 +8,11 @@ import {
   FormControl,
   HelpBlock,
 } from 'patternfly-react';
-import { componentTypes } from '@@ddf';
+import { componentTypes, useFormApi } from '@@ddf';
 import { checkValidState } from './helper';
 import RequiredLabel from '../../forms/required-label';
 
 const PasswordField = ({
-  formOptions,
   isDisabled,
   FieldProvider, // eslint-disable-line no-unused-vars
   validate,
@@ -24,6 +23,7 @@ const PasswordField = ({
   parent,
   ...rest
 }) => {
+  const formOptions = useFormApi();
   const [editMode, setEditMode] = useState(!edit);
   const secretField = {
     component: edit ? 'edit-password-field' : componentTypes.TEXT_FIELD,
@@ -77,9 +77,6 @@ const PasswordField = ({
 
 PasswordField.propTypes = {
   FieldProvider: PropTypes.func.isRequired,
-  formOptions: PropTypes.shape({
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   cancelEditLabel: PropTypes.string,
   changeEditLabel: PropTypes.string,
   isDisabled: PropTypes.bool,

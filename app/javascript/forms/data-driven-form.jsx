@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormRender, { Validators, componentTypes, validatorTypes } from '@data-driven-forms/react-form-renderer';
+import FormRender, { Validators, componentTypes, validatorTypes, useFormApi } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/pf3-component-mapper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -69,5 +69,5 @@ MiqFormRenderer.defaultProps = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setPristine }, dispatch);
 
-export { componentTypes, validatorTypes };
+export { componentTypes, validatorTypes, useFormApi };
 export default connect(null, mapDispatchToProps)(MiqFormRenderer);

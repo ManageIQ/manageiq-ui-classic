@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual, get, set } from 'lodash';
+import { useFormApi } from '@@ddf';
 import {
   Button,
   FormGroup,
@@ -12,7 +13,6 @@ import { checkValidState } from './helper';
 
 const AsyncCredentials = ({
   FieldProvider,
-  formOptions,
   validateLabel,
   validationProgressLabel,
   validationSuccessLabel,
@@ -23,6 +23,7 @@ const AsyncCredentials = ({
   validationDependencies,
   edit,
 }) => {
+  const formOptions = useFormApi();
   const [asyncError, setAsyncError] = useState(validateDefaultError);
   const [validating, setValidating] = useState(false);
   const [lastValid, setLastValid] = useState({});
@@ -110,11 +111,6 @@ const AsyncCredentials = ({
 
 AsyncCredentials.propTypes = {
   FieldProvider: PropTypes.oneOfType([PropTypes.element.isRequired, PropTypes.func]).isRequired,
-  formOptions: PropTypes.shape({
-    getState: PropTypes.func.isRequired,
-    change: PropTypes.func.isRequired,
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   validateLabel: PropTypes.string,
   validationProgressLabel: PropTypes.string,
   validationSuccessLabel: PropTypes.string,

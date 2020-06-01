@@ -86,7 +86,6 @@ CodeEditor.defaultProps = {
 const CodeGroup = ({
   input: { value, onChange, name },
   meta: { error },
-  formOptions: _formOptions,
   label,
   isRequired,
   ...props

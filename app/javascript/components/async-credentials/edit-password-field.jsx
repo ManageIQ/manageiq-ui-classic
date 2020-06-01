@@ -20,7 +20,6 @@ const EditPasswordField = ({ FieldProvider, ...props }) => (
       setEditMode,
       dataType, // eslint-disable-line no-unused-vars
       validateOnMount, // eslint-disable-line no-unused-vars
-      formOptions, // eslint-disable-line no-unused-vars
       editMode,
       isDisabled,
       buttonLabel,

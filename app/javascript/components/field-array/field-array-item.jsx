@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Col, Button } from 'patternfly-react';
+import { useFormApi } from '@@ddf';
 
 const FieldArrayItem = ({
   FieldProvider,
@@ -9,10 +10,11 @@ const FieldArrayItem = ({
   fieldIndex,
   name,
   value,
-  formOptions,
   remove,
   colsize,
 }) => {
+  const formOptions = useFormApi();
+
   return (
     <div className="field-array-item">
       { fields.map(({ label: _label, ...field }, index) => (
@@ -33,11 +35,6 @@ FieldArrayItem.propTypes = {
   fieldIndex: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.any,
-  formOptions: PropTypes.shape({
-    getState: PropTypes.func.isRequired,
-    change: PropTypes.func.isRequired,
-    renderForm: PropTypes.func.isRequired,
-  }).isRequired,
   remove: PropTypes.func.isRequired,
   colsize: PropTypes.number.isRequired,
 };

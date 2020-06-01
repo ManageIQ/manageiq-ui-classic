@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { set } from 'lodash';
 
+import { useFormApi } from '@@ddf';
 import { components } from '@data-driven-forms/pf3-component-mapper';
 import { EditingContext, loadProviderFields } from './index';
 
@@ -10,9 +11,10 @@ const extractInitialValues = ({ name, initialValue, fields }) => {
   return { ...item, ...children };
 };
 
-const ProviderSelectField = ({ kind, FieldProvider, formOptions, ...props }) => {
-  const { isDisabled: edit } = props;
+const ProviderSelectField = ({ kind, FieldProvider, ...props }) => {
+  const formOptions = useFormApi();
 
+  const { isDisabled: edit } = props;
   const { setState } = useContext(EditingContext);
 
   const enhancedChange = onChange => (type) => {
