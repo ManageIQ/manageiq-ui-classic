@@ -19,4 +19,7 @@
                 = render :partial => 'layouts/searchbar'
         .col-md-12
           = yield
-      .row#paging_div{:style => (layout_uses_paging? && !@in_a_form) ? '' : 'display: none'}
+      .row#paging_div{:style => (layout_uses_paging? && !@in_a_form) || saved_report_paging? ? '' : 'display: none'}
+        - if saved_report_paging?
+          = render(:partial => 'layouts/saved_report_paging_bar',
+                     :locals  => {:pages => @sb[:pages]})

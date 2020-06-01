@@ -12,6 +12,7 @@ module ApplicationHelper::PageLayouts
       all_tasks
       chargeback_assignment
       chargeback_rate
+      chargeback_report
       configuration
       container_dashboard
       container_topology
@@ -145,7 +146,6 @@ module ApplicationHelper::PageLayouts
     @inner_layout_present ||=
       begin
         @explorer || params[:action] == "explorer" ||
-          (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
           (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
           (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
           params[:controller] == "utilization"
@@ -162,9 +162,7 @@ module ApplicationHelper::PageLayouts
   end
 
   def saved_report_paging?
-    # saved report doesn't use miq_report object,
-    # need to use a different paging view to page thru a saved report
-    @sb[:pages] && @html && %i[reports_tree savedreports_tree cb_reports_tree].include?(x_active_tree)
+    false
   end
 
   def show_search?
