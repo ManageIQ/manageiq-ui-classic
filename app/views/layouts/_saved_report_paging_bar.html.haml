@@ -16,6 +16,6 @@
       :javascript
         miqSelectPickerEvent("ppsetting", "#{url}", {beforeSend: true, complete: true})
       = render :partial => '/layouts/paging_bar',
-               :locals => {:pages => pages, :action_url => action_url, :action_id => ''}
+               :locals => {:pages => pages, :action_url => "/#{params[:controller]}/#{action_url}", :action_id => ''}
     :javascript
       miqInitSelectPicker();
