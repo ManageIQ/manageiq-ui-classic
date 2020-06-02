@@ -31,7 +31,7 @@ export const NotificationsToggle = () => {
       onClick={toggle}
     >
       {__("Notifications")}
-      &nbsp;
+      {' '}
       <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
     </a>
   );

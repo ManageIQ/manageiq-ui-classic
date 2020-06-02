@@ -25,7 +25,7 @@ const ResultItem = ({ item, titles }) => (
 const Count = ({ length }) => (
   <p>
     {__("Results")}
-    &nbsp;
+    {' '}
     ({length})
   </p>
 );
