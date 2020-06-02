@@ -45,9 +45,7 @@ export const MainMenu = (props) => {
 
   return (
     <>
-      <div
-        onClick={hideSecondary}
-      >
+      <div onClick={hideSecondary}>
         <SideNav
           aria-label={__("Main Menu")}
           className="primary"
@@ -81,9 +79,7 @@ export const MainMenu = (props) => {
 
           <hr className="bx--side-nav__hr" />
 
-          {searchResults && <SearchResults
-            results={searchResults}
-          />}
+          {searchResults && <SearchResults results={searchResults} />}
           {!searchResults && <FirstLevel
             menu={menu}
             setSection={setSection}
@@ -104,9 +100,7 @@ export const MainMenu = (props) => {
             expanded={true}
             isChildOfHeader={false}
           >
-            <SecondLevel
-              menu={activeSection.items}
-            />
+            <SecondLevel menu={activeSection.items} />
           </SideNav>
           <div
             className="miq-main-menu-overlay"
