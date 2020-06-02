@@ -5,7 +5,7 @@ import { Collaborate20 } from '@carbon/icons-react';
 
 const { miqChangeGroup } = window;
 
-export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
+export const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
   const options = miqGroups.map(({ id, description }) => ({
     label: description,
     value: id,
@@ -22,33 +22,37 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
     }
   };
 
+  const collapsed = (
+    <SideNavItem className="padded vertical-center">
+      <Collaborate20 />
+    </SideNavItem>
+  );
+
+  const singleGroup = (
+    <SideNavItem className="padded vertical-center">
+      {currentOption.label}
+    </SideNavItem>
+  );
+
+  const multiGroup = (
+    <Dropdown
+      ariaLabel={__("Change current group")}
+      id='miq-nav-group-switch-dropdown'
+      initialSelectedItem={currentOption}
+      items={options}
+      label={__("Change current group")}
+      onChange={groupChange}
+    />
+  );
+
+  const expanded = options.length > 1 ? multiGroup : singleGroup;
+
   return (
     <div
       className="menu-group"
       title={`${__("Current group:")} ${currentOption.label}`}
     >
-      { expanded ? (
-        <>
-          { options.length > 1 ? (
-            <Dropdown
-              ariaLabel={__("Change current group")}
-              id='miq-nav-group-switch-dropdown'
-              initialSelectedItem={currentOption}
-              items={options}
-              label={__("Change current group")}
-              onChange={groupChange}
-            />
-          ) : (
-            <SideNavItem className="padded vertical-center">
-              {currentOption.label}
-            </SideNavItem>
-          )}
-        </>
-      ) : (
-        <SideNavItem className="padded vertical-center">
-          <Collaborate20 />
-        </SideNavItem>
-      )}
+      { isExpanded ? expanded : collapsed }
     </div>
   );
 };
