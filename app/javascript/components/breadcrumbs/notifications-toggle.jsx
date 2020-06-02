@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
@@ -22,7 +23,10 @@ export const NotificationsToggle = () => {
   return (
     <a
       id="notifications-toggle"
-      className={`btn btn-default ${isDrawerVisible && 'active'} ${unreadCount && 'unread'}`}
+      className={cx('btn', 'btn-default', {
+        'active': isDrawerVisible,
+        'unread': unreadCount,
+      })}
       title={unreadCountText(unreadCount)}
       onClick={toggle}
     >
