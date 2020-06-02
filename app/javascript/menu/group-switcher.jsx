@@ -6,9 +6,9 @@ import { Collaborate20 } from '@carbon/icons-react';
 const { miqChangeGroup } = window;
 
 export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
-  const options = miqGroups.map((g) => ({
-    label: g.description,
-    value: g.id,
+  const options = miqGroups.map(({ id, description }) => ({
+    label: description,
+    value: id,
   }));
 
   const currentOption = {
@@ -16,8 +16,7 @@ export const GroupSwitcher = ({ miqGroups, currentGroup, expanded }) => {
     value: currentGroup.id,
   };
 
-  const groupChange = ({ selectedItem }) => {
-    const group_id = selectedItem.value;
+  const groupChange = ({ selectedItem: { value: group_id } }) => {
     if (group_id && group_id !== currentGroup.id) {
       miqChangeGroup(group_id);
     }
