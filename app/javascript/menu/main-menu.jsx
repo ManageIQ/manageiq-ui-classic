@@ -29,6 +29,7 @@ export const MainMenu = (props) => {
   }, [expanded]);
 
   useEffect(() => {
+    // set body class
     const classNames = {
       true: 'miq-main-menu-expanded',
       false: 'miq-main-menu-collapsed',
