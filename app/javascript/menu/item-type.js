@@ -4,7 +4,7 @@
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
 
-export const linkProps = ({type, href, id}) => ({
+export const linkProps = ({ type, href, id }) => ({
   href: {
     big_iframe: `/dashboard/iframe?id=${id}`,
     default: href,
