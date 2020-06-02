@@ -4,7 +4,7 @@
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
 
-export const linkProps = ({ type, href, id }) => ({
+export const linkProps = ({ type, href, id, hideSecondary = () => null }) => ({
   href: {
     big_iframe: `/dashboard/iframe?id=${id}`,
     default: href,
@@ -18,11 +18,14 @@ export const linkProps = ({ type, href, id }) => ({
   onClick: (event) => {
     if (type === 'modal') {
       sendDataWithRx({ type: 'showAboutModal' });
+      hideSecondary();
+
       event.preventDefault();
       return;
     }
 
     if (['default', 'big_iframe'].includes(type) && miqCheckForChanges() === false) {
+      // cancelled
       event.preventDefault();
       return;
     }
@@ -30,6 +33,8 @@ export const linkProps = ({ type, href, id }) => ({
     if (href === '/dashboard/logout') {
       ManageIQ.logoutInProgress = true;
     }
+
+    hideSecondary();
   },
 });
 

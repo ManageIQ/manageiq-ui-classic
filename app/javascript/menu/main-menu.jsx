@@ -100,7 +100,10 @@ export const MainMenu = (props) => {
             expanded={true}
             isChildOfHeader={false}
           >
-            <SecondLevel menu={activeSection.items} />
+            <SecondLevel
+              menu={activeSection.items}
+              hideSecondary={hideSecondary}
+            />
           </SideNav>
           <div
             className="miq-main-menu-overlay"
