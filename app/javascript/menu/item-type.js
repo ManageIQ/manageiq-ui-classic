@@ -4,6 +4,16 @@
 // * modal () - open the About Modal (extend for any modals)
 // * new_window (href) - opens href in new window (for external links)
 
+import { history } from '../miq-component/react-history.js';
+const { miqSparkleOn, miqSparkleOff } = window;
+
+const onNextRouteChange = (callback) => {
+  const unlisten = history.listen(() => {
+    unlisten();
+    callback();
+  });
+};
+
 export const linkProps = ({ type, href, id, hideSecondary = () => null }) => ({
   href: {
     big_iframe: `/dashboard/iframe?id=${id}`,
@@ -35,6 +45,10 @@ export const linkProps = ({ type, href, id, hideSecondary = () => null }) => ({
     }
 
     hideSecondary();
+    miqSparkleOn();
+
+    // react router support
+    onNextRouteChange(() => miqSparkleOff());
   },
 });
 
