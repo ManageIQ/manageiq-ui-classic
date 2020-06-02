@@ -5,6 +5,10 @@ module Menu
         @cache ||= sections_items
       end
 
+      def unload
+        @cache = nil
+      end
+
       def engines
         Vmdb::Plugins.all
       end
