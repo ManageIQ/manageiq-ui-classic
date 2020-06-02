@@ -14,12 +14,12 @@ addons:
   chrome: beta
 env:
   matrix:
-  # - TEST_SUITE=spec
-  # - TEST_SUITE=spec:routes
-  # - TEST_SUITE=spec:javascript
-  # - TEST_SUITE=spec:compile
-  # - TEST_SUITE=spec:jest
-  # - TEST_SUITE=spec:debride
+  - TEST_SUITE=spec
+  - TEST_SUITE=spec:routes
+  - TEST_SUITE=spec:javascript
+  - TEST_SUITE=spec:compile
+  - TEST_SUITE=spec:jest
+  - TEST_SUITE=spec:debride
   - TEST_SUITE=spec:integration
 matrix:
   exclude:
