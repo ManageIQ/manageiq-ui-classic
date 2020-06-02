@@ -4,7 +4,7 @@ import { TagGroup, TableListView, GenericGroup } from '@manageiq/react-ui-compon
 import { Toolbar } from '@manageiq/react-ui-components/dist/toolbar';
 
 import AggregateStatusCard from '../components/aggregate_status_card';
-import Breadcrumbs from '../components/breadcrumbs';
+import { BreadcrumbsBar } from '../components/breadcrumbs';
 import CatalogForm from '../components/catalog-form/catalog-form';
 import CloudNetworkForm from '../components/cloud-network-form/cloud-network-form';
 import CloudTenantForm from '../components/cloud-tenant-form/cloud-tenant-form';
@@ -50,7 +50,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 */
 
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
-ManageIQ.component.addReact('Breadcrumbs', Breadcrumbs);
+ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);
 ManageIQ.component.addReact('CatalogForm', CatalogForm);
 ManageIQ.component.addReact('CloudNetworkForm', CloudNetworkForm);
 ManageIQ.component.addReact('CloudTenantForm', CloudTenantForm);
