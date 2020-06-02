@@ -14,7 +14,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
   }
 >
   <Component>
-    <Breadcrumbs
+    <BreadcrumbsBar
       controllerName="provider"
       items={
         Array [
@@ -37,95 +37,119 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
       }
       title="Title"
     >
-      <Breadcrumb
-        title={false}
+      <Breadcrumbs
+        controllerName="provider"
+        items={
+          Array [
+            Object {
+              "title": "Providers",
+              "url": "/providers",
+            },
+            Object {
+              "key": "in tree",
+              "title": "Google",
+            },
+            Object {
+              "action": "accordion-select",
+              "title": "All",
+            },
+            Object {
+              "title": "This",
+            },
+          ]
+        }
+        title="Title"
       >
         <Breadcrumb
-          bsClass="breadcrumb"
-          className=""
+          title={false}
         >
-          <ol
-            aria-label="breadcrumbs"
-            className="breadcrumb"
-            role="navigation"
+          <Breadcrumb
+            bsClass="breadcrumb"
+            className=""
           >
-            <BreadcrumbItem
-              active={false}
-              href="/providers"
-              key="/providers"
-              onClick={[Function]}
+            <ol
+              aria-label="breadcrumbs"
+              className="breadcrumb"
+              role="navigation"
             >
-              <li
-                className=""
+              <BreadcrumbItem
+                active={false}
+                href="/providers"
+                key="/providers"
+                onClick={[Function]}
               >
-                <SafeAnchor
-                  componentClass="a"
-                  href="/providers"
-                  onClick={[Function]}
+                <li
+                  className=""
                 >
-                  <a
+                  <SafeAnchor
+                    componentClass="a"
                     href="/providers"
                     onClick={[Function]}
-                    onKeyDown={[Function]}
                   >
-                    Providers
-                  </a>
-                </SafeAnchor>
-              </li>
-            </BreadcrumbItem>
-            <BreadcrumbItem
-              active={false}
-              key="in tree-1"
-              onClick={[Function]}
-            >
-              <li
-                className=""
+                    <a
+                      href="/providers"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                    >
+                      Providers
+                    </a>
+                  </SafeAnchor>
+                </li>
+              </BreadcrumbItem>
+              <BreadcrumbItem
+                active={false}
+                key="in tree-1"
+                onClick={[Function]}
               >
-                <SafeAnchor
-                  componentClass="a"
-                  onClick={[Function]}
+                <li
+                  className=""
                 >
-                  <a
-                    href="#"
+                  <SafeAnchor
+                    componentClass="a"
                     onClick={[Function]}
-                    onKeyDown={[Function]}
-                    role="button"
                   >
-                    Google
-                  </a>
-                </SafeAnchor>
-              </li>
-            </BreadcrumbItem>
-            <li
-              key="2"
-            >
-              All
-            </li>
-            <BreadcrumbItem
-              active={true}
-            >
+                    <a
+                      href="#"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      role="button"
+                    >
+                      Google
+                    </a>
+                  </SafeAnchor>
+                </li>
+              </BreadcrumbItem>
               <li
-                className="active"
+                key="2"
               >
-                <span>
-                  <strong>
-                    This
-                  </strong>
-                </span>
+                All
               </li>
-            </BreadcrumbItem>
-          </ol>
+              <BreadcrumbItem
+                active={true}
+              >
+                <li
+                  className="active"
+                >
+                  <span>
+                    <strong>
+                      This
+                    </strong>
+                  </span>
+                </li>
+              </BreadcrumbItem>
+            </ol>
+          </Breadcrumb>
         </Breadcrumb>
-      </Breadcrumb>
+      </Breadcrumbs>
       <NotificationsToggle>
         <a
-          className="btn btn-default false 0"
+          className="btn btn-default"
           id="notifications-toggle"
           onClick={[Function]}
           title="0 unread notification"
         >
           Notifications
-           
+           
           <MiqIcon
             icon="carbon--Notification"
           >
@@ -171,7 +195,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
           </MiqIcon>
         </a>
       </NotificationsToggle>
-    </Breadcrumbs>
+    </BreadcrumbsBar>
   </Component>
 </Provider>
 `;

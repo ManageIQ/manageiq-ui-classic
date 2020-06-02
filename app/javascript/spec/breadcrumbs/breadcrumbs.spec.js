@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 
 import * as clickFunctions from '../../components/breadcrumbs/on-click-functions';
-import Breadcrumbs from '../../components/breadcrumbs';
+import { BreadcrumbsBar as Breadcrumbs } from '../../components/breadcrumbs';
 
 describe('Breadcrumbs component', () => {
   const props = {
