@@ -184,7 +184,7 @@
                 'ng-options'  => 'v as k for (v, k) in vm.log_output_types',
                 "checkchange" => "",
                 'miq-select'  => true}
-    #escalate_privilege{"ng-if" => "(#{ng_model}.location === 'playbook' && #{ng_model}.#{prefix}_become_enabled!=null || vm.retirement_playbook_selected('#{prefix}'))"}
+    #escalate_privilege{"ng-if" => "(#{ng_model}.location === 'playbook' && #{ng_model}.#{prefix}_become_enabled!=null || vm.retirement_playbook_selected('#{prefix}')) && vm._#{prefix}_machine_credential && vm.enablePrivilegeEscalation(vm._#{prefix}_machine_credential)"}
       .form-group
         %label.col-md-3.control-label
           = _("Escalate Privilege")
