@@ -521,6 +521,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', '$timeou
     angular.element('#confirmationModal').modal('hide');
   };
 
+  vm.enablePrivilegeEscalation = function(credential) {
+    return (credential.options && credential.options.become_method && credential.options.become_method !== "");
+  };
+
   $scope.dialogNameValidation = function() {
     miqService.miqFlashClear();
     $scope.angularForm.$setValidity('unchanged', true);
