@@ -1,20 +1,34 @@
 module Menu
   module CustomLoader
-    @sections = []
-    @items = []
-
     class << self
       def load
-        [@sections, @items]
+        @cache ||= sections_items
       end
 
-      def register(item)
-        case item
-        when Menu::Section
-          @sections << item
-        when Menu::Item
-          @items << item
+      def unload
+        @cache = nil
+      end
+
+      def engines
+        Vmdb::Plugins.all
+      end
+
+      def sections_items
+        sections = []
+        items = []
+
+        engines.map do |engine|
+          engine.try(:menu)
+        end.compact.flatten.each do |item|
+          case item
+          when Menu::Section
+            sections << item
+          when Menu::Item
+            items << item
+          end
         end
+
+        [sections, items]
       end
     end
   end
