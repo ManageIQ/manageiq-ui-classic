@@ -183,7 +183,7 @@ function playbookReusableCodeMixin(API, $q, miqService) {
     );
 
     // list of machine credentials
-    getCredentialsForType('machine', '/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name', vm);
+    getCredentialsForType('machine', '/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name,options', vm);
 
     // list of vault credentials
     getCredentialsForType('vault', '/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential&expand=resources&attributes=id,name', vm);
