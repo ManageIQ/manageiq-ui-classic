@@ -342,7 +342,9 @@ Rails.application.routes.draw do
     },
     :chargeback_rate => {
       :get  => %w(
+        copy
         edit
+        new
         show_list
         show
       ),
