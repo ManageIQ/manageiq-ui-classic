@@ -4,13 +4,19 @@ describe Menu::CustomLoader do
     Singleton.__init__(Menu::CustomLoader)
   end
 
+  after do
+    clean
+  end
+
   def register(item)
-    engine = Object.new.tap do |engine|
-      allow(engine).to receive(:menu).and_return([ item ])
-    end
+    engine = double("Rails Engine")
+    allow(engine).to receive(:menu).and_return([item])
+    allow(Vmdb::Plugins).to receive(:all).and_return([engine])
 
-    allow(Vmdb::Plugins).to receive(:all).and_return([ engine ])
+    clean
+  end
 
+  def clean
     Menu::CustomLoader.unload
     Menu::Manager.instance.send(:initialize)
   end
@@ -72,6 +78,15 @@ describe Menu::CustomLoader do
       spike_index = compute_section.items.find_index { |i| i.id == :spike3 }
       clo_index   = compute_section.items.find_index { |i| i.id == :clo }
       expect(spike_index).to eq(clo_index - 1)
+    end
+
+    it 'survives plugins without menus' do
+      engine = double("Rails Engine")
+      allow(Vmdb::Plugins).to receive(:all).and_return([engine])
+
+      clean
+
+      expect(Menu::Manager.items).to be
     end
   end
 end
