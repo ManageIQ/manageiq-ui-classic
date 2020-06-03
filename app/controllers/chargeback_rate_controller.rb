@@ -11,8 +11,53 @@ class ChargebackRateController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
+  # TODO: feature `chargeback_rates_show_list' needs to be renamed to chargeback_rate_show_list
+  #       and then this method can be removed
+  def index
+    assert_privileges("chargeback_rates_show_list")
+
+    super
+  end
+
+  # TODO: feature `chargeback_rates_show_list' needs to be renamed to chargeback_rate_show_list
+  def show_list
+    assert_privileges("chargeback_rates_show_list")
+
+    super
+  end
+
+  # TODO: feature `chargeback_rates_show' needs to be renamed to chargeback_rate_show
+  def show
+    assert_privileges("chargeback_rates_show")
+
+    super
+  end
+
+  # TODO: this will be unnecessary after
+  #       `chargeback_rates_new`  gets renamed to `chargeback_rate_new`,
+  #       `chargeback_rates_copy` gets renamed to `chargeback_rate_copy` and
+  #       `chargeback_rates_edit` gets renamed to `chargeback_rate_edit`
+  #
+  EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST = %w[
+    chargeback_rates_new
+    chargeback_rates_copy
+    chargeback_rates_edit
+  ]
+
+  def assert_privileges_for_edit
+    feature = if params[:pressed] && EDIT_CHARGEBACK_RATE_FEATURES_WHITELIST.include?(params[:pressed])
+                params[:pressed]
+              elsif params[:button] == "add"
+                "chargeback_rates_new"
+              end
+
+    assert_privileges(feature)
+  end
+
   def edit
+    assert_privileges_for_edit
     @_params[:pressed] ||= 'chargeback_rates_edit'
+
     case params[:button]
     when "cancel"
       rate_cancel
@@ -31,6 +76,9 @@ class ChargebackRateController < ApplicationController
   end
 
   def copy
+    # TODO: this will be unnecessary after `chargeback_rates_copy` gets renamed to `chargeback_rate_copy`
+    assert_privileges("chargeback_rates_copy")
+
     @_params[:id] ||= find_checked_items[0]
     @_params[:pressed] = "chargeback_rates_copy"
     rate_reset_or_set
@@ -38,6 +86,9 @@ class ChargebackRateController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_field_changed
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     return unless load_edit("cbrate_edit__#{params[:id]}")
     cb_rate_get_form_vars
     render :update do |page|
@@ -52,6 +103,7 @@ class ChargebackRateController < ApplicationController
 
   # Delete all selected or single displayed action(s)
   def delete
+    # TODO: this will be unnecessary after `chargeback_rates_delete` gets renamed to `chargeback_rate_delete`
     assert_privileges("chargeback_rates_delete")
     rates = []
     if !params[:id] # showing a list
@@ -74,6 +126,9 @@ class ChargebackRateController < ApplicationController
 
   # Add a new tier at the end
   def tier_add
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     detail_index = params[:detail_index]
     ii = detail_index.to_i
 
@@ -100,6 +155,9 @@ class ChargebackRateController < ApplicationController
 
   # Remove the selected tier
   def tier_remove
+    # TODO: rename feature `chargeback_rates_edit` to `chargeback_rate_edit`
+    assert_privileges("chargeback_rates_edit")
+
     @edit = session[:edit]
     index = params[:index]
     detail_index, tier_to_remove_index = index.split("-")
