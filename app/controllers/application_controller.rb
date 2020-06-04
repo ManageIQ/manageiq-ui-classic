@@ -1185,10 +1185,6 @@ class ApplicationController < ActionController::Base
     sort_prefix = association || (dbname == "miqreportresult" && x_active_tree ? x_active_tree.to_s : dbname)
     sortcol_sym = "#{sort_prefix}_sortcol".to_sym
     sortdir_sym = "#{sort_prefix}_sortdir".to_sym
-
-    # Set up the list view type (grid/tile/list)
-    @settings.store_path(:views, db_sym, params[:type]) if params[:type] # Change the list view type, if it's sent in
-
     @gtl_type = 'list'
 
     # Get the view for this db or use the existing one in the session

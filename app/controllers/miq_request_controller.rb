@@ -71,8 +71,6 @@ class MiqRequestController < ApplicationController
     @lastaction = "show_list"
     @gtl_url = "/show_list"
 
-    @settings.store_path(:views, :miqrequest, params[:type]) if params[:type]
-
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, PERPAGE_TYPES['list'], @items_per_page) # Set the per page setting for this gtl type
