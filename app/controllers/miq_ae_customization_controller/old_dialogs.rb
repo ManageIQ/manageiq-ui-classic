@@ -137,7 +137,6 @@ module MiqAeCustomizationController::OldDialogs
   def old_dialogs_list
     @lastaction = "old_dialogs_list"
     @force_no_grid_xml   = true
-    @gtl_type            = "list"
     @dialog = nil
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value

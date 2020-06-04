@@ -143,7 +143,6 @@ ManageIQ.qe.gtl = {
           acc[colName] = value.text;
           return acc;
         }.bind(this), {}),
-        gtlType: this.gtlType,
         id: item.id,
         long_id: item.long_id,
         quadicon: item.quadicon,

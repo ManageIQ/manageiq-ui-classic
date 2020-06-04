@@ -8,7 +8,6 @@ module MiqAeCustomizationController::Dialogs
 
   def dialog_list
     @lastaction = "dialog_list"
-    @gtl_type = "list"
     @explorer = true
 
     if params[:ppsetting]                                             # User selected new per page value

@@ -57,7 +57,6 @@ module VmCommon
     elsif @lastaction == "show" && ["config"].include?(@showtype)
       @refresh_partial = @showtype
     elsif @lastaction == "show_list"
-      # default to the gtl_type already set
     else
       @refresh_partial = "layouts/flash_msg"
       @refresh_div = "flash_msg_div"
@@ -1213,7 +1212,6 @@ module VmCommon
 
     replace_search_box(presenter, :nameonly => %i[images_tree instances_tree vandt_tree].include?(x_active_tree))
 
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     if @sb[:action] == "policy_sim"
       presenter[:clear_tree_cookies] = "edit_treeOpenStatex"
       presenter[:tree_expand_all] = false

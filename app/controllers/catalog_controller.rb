@@ -1887,8 +1887,6 @@ class CatalogController < ApplicationController
               end
     presenter.update(:main_div, content)
 
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
-
     # have to make Catalog Items accordion active incase link on Catalog show screen was pressed
 
     # Decide whether to show paging controls
@@ -2022,7 +2020,6 @@ class CatalogController < ApplicationController
       session[:tag_db] = @tagging = params[:tagging] if params[:tagging]
     end
 
-    @gtl_type = 'list' # No quad icons for user/group list views
     session[:assigned_filters] = assigned_filters
     x_tags_set_form_vars
     @in_a_form = true

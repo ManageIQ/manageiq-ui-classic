@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
 
   ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
-  PERPAGE_TYPES = %w[grid tile list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+  PERPAGE_TYPES = %w[list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
   TREND_MODEL = "VimPerformanceTrend".freeze # Performance trend model name requiring special processing
 
@@ -774,15 +774,11 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if fetch_data && defined?(@gtl_type) && @gtl_type != "list" && !target.nil? && type_has_quadicon(target.class.name)
-        quadicon = view_context.quadicon_hash(target)
-      end
 
       new_row = {
         :id      => list_row_id(row),
         :long_id => row['id'].to_s,
-        :cells   => [],
-        :quad    => quadicon
+        :cells   => []
       }
 
       if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
@@ -1066,14 +1062,6 @@ class ApplicationController < ActionController::Base
     {:class => object.class.name, :id => object.id}
   end
 
-  def get_view_calculate_gtl_type(db_sym)
-    gtl_type = settings(:views, db_sym) unless %w[scanitemset miqschedule pxeserver customizationtemplate].include?(db_sym.to_s)
-    gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
-    gtl_type ||= 'grid' if params[:records]&.kind_of?(Array)
-    gtl_type ||= 'list' # return a sane default
-    gtl_type
-  end
-
   def dashboard_view
     false
   end
@@ -1201,7 +1189,7 @@ class ApplicationController < ActionController::Base
     # Set up the list view type (grid/tile/list)
     @settings.store_path(:views, db_sym, params[:type]) if params[:type] # Change the list view type, if it's sent in
 
-    @gtl_type = get_view_calculate_gtl_type(db_sym) unless fetch_data
+    @gtl_type = 'list'
 
     # Get the view for this db or use the existing one in the session
     view =

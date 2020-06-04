@@ -378,7 +378,6 @@ class ApplicationHelper::ToolbarBuilder
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
     return true if id.starts_with?("view_") && id.ends_with?("textual") # Summary view buttons
-    return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
     return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare).to_s)
     return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift).to_s)

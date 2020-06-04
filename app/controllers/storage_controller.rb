@@ -368,7 +368,6 @@ class StorageController < ApplicationController
       presenter.update(:main_div, r[:partial => "storage_pod_list"])
     end
     presenter[:right_cell_text] = @right_cell_text
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     presenter[:osf_node] = x_node # Open, select, and focus on this node
 
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs'])
@@ -397,8 +396,6 @@ class StorageController < ApplicationController
 
   def replace_search_box(presenter, locals = {})
     super(presenter, locals)
-
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
 
   def handle_bottom_cell(presenter)

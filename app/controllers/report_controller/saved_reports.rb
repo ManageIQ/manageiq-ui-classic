@@ -136,7 +136,6 @@ module ReportController::SavedReports
   # get all saved reports for list view
   def get_all_saved_reports
     @force_no_grid_xml   = true
-    @gtl_type            = "list"
     #   @embedded = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value

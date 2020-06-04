@@ -83,8 +83,6 @@
         this.onUnsubscribe();
       } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         this.setExtraClasses();
-      } else if (event.type === TOOLBAR_CLICK_FINISH && (tileViewSelector() || tableViewSelector())) {
-        this.setExtraClasses(this.initObject.gtlType);
       } else if (event.refreshData && event.refreshData.name === CONTROLLER_NAME) {
         this.refreshData(event.data);
       } else if (event.setScope && event.setScope.name === CONTROLLER_NAME) {
@@ -328,7 +326,6 @@
     } else if (this.initObject.showUrl === 'false') {
       this.initObject.showUrl = false;
     }
-    this.gtlType = initObject.gtlType || DEFAULT_VIEW;
     this.setLoading(true);
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});
@@ -348,7 +345,6 @@
   * ```
   *   initObject: {
   *     modelName: string,
-  *     gtlType: string,
   *     activeTree: string,
   *     parentId: string,
   *     isExplorer: Boolean
@@ -360,7 +356,6 @@
     this.setLoading(true);
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
-    this.setExtraClasses(initObject.gtlType);
     return this.getData(initObject.modelName,
       initObject.activeTree,
       initObject.parentId,

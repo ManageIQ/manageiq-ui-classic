@@ -20,7 +20,6 @@ class ApplicationController
     :in_a_form,
     :lastaction,
     :display,
-    :gtl_type,
     :supported_features_filter,
     :clickable,
     :no_checkboxes,
@@ -56,10 +55,6 @@ class ApplicationController
 
     def with_row_button(row_button)
       self.row_button = row_button
-    end
-
-    def with_gtl_type(gtl_type)
-      self.gtl_type = gtl_type
     end
 
     def with_menu_click(menu_click)

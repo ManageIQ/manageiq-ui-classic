@@ -3,5 +3,4 @@
     = _("Affected Physical Servers")
   - if @view
     - @embedded = true
-    - @gtl_type = "list"
     = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}

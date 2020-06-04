@@ -194,7 +194,6 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition'
     @record = GenericObjectDefinition.find(node.split('-').last)
     @right_cell_text = _("Generic Object Definition %{record_name}") % {:record_name => @record.name}
-    @gtl_type = nil
   end
 
   def custom_button_group_node_info(node)
@@ -202,7 +201,6 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition_button_group'
     @record = CustomButtonSet.find(node.split("-").last)
     @right_cell_text = _("Custom Button Set %{record_name}") % {:record_name => @record.name}
-    @gtl_type = nil
   end
 
   def custom_button_node_info(node)
@@ -210,7 +208,6 @@ class GenericObjectDefinitionController < ApplicationController
     @center_toolbar = 'generic_object_definition_button'
     @record = CustomButton.find(node.split("-").last)
     @right_cell_text = _("Custom Button %{record_name}") % {:record_name => @record.name}
-    @gtl_type = nil
   end
 
   def render_form(title, form_partial)

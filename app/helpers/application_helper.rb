@@ -453,7 +453,6 @@ module ApplicationHelper
       :edit             => @edit,
       :explorer         => @explorer,
       :ght_type         => @ght_type,
-      :gtl_type         => @gtl_type,
       :html             => @html,
       :lastaction       => @lastaction,
       :layout           => @layout,
@@ -944,9 +943,8 @@ module ApplicationHelper
   end
 
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
-  # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    %i[ppsetting searchtag entry sortby sort_choice type page].find { |k| params[k] }
+    %i[ppsetting searchtag entry sortby sort_choice page].find { |k| params[k] }
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
@@ -1223,7 +1221,7 @@ module ApplicationHelper
     @report_data_additional_options.with_no_checkboxes(@no_checkboxes || options[:no_checkboxes])
     # FIXME: we would like to freeze here, but the @gtl_type is calculated no sooner than in view templates.
     # So until that if fixed we cannot freeze.
-    # @report_data_additional_options.freeze
+    @report_data_additional_options.freeze
   end
 
   def from_additional_options(additional_options)
@@ -1261,9 +1259,6 @@ module ApplicationHelper
     # need to pass @in_a_form so get_view does not set advanced search options
     # in the forms that render gtl that mess up @edit
     @in_a_form = quadicon_options[:in_a_form]
-
-    # take GTL type from the component
-    @gtl_type = quadicon_options[:gtl_type]
   end
 
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()

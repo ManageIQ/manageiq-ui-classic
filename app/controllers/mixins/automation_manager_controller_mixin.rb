@@ -287,8 +287,6 @@ module Mixins
 
     def replace_search_box(presenter, locals = {})
       super(presenter, locals)
-
-      presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     end
 
     def handle_bottom_cell(presenter, hide_form_buttons = false)

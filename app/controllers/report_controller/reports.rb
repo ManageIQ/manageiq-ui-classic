@@ -110,7 +110,6 @@ module ReportController::Reports
     @record = @miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
     if @sb[:active_tab] == "saved_reports" || x_active_tree == :savedreports_tree
       @force_no_grid_xml   = true
-      @gtl_type            = "list"
       @no_checkboxes = !role_allows?(:feature => "miq_report_saved_reports_admin", :any => true)
 
       if params[:ppsetting]                                             # User selected new per page value

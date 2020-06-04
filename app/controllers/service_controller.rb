@@ -331,7 +331,6 @@ class ServiceController < ApplicationController
       drop_breadcrumb(:name => _('Services'), :url => '/service/explorer') if @breadcrumbs.empty?
       @right_cell_text = _("Service \"%{name}\"") % {:name => @record.name}
       @no_checkboxes = true
-      @gtl_type = "grid"
       @items_per_page = ONE_MILLION
       @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true) # Get the records (into a view) and the paginator
     when "Hash"
@@ -469,9 +468,6 @@ class ServiceController < ApplicationController
     else
       presenter.hide(:form_buttons_div).show(:toolbar, :paging_div)
     end
-
-    # Clear the JS gtl_list_grid var if changing to a type other than list
-    presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
 
     presenter.reload_toolbars(:center => c_tb, :view => v_tb, :custom => cb_tb)
 

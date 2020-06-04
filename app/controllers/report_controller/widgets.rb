@@ -213,7 +213,6 @@ module ReportController::Widgets
 
   def get_all_widgets(nodeid = nil, rep_id = nil)
     @force_no_grid_xml   = true
-    @gtl_type            = "list"
     @no_checkboxes = @showlinks = true if x_active_tree != "report"
     #   @embedded = true
     if params[:ppsetting]                                             # User selected new per page value
