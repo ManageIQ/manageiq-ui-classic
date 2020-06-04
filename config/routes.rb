@@ -86,7 +86,6 @@ Rails.application.routes.draw do
 
   ownership_post = %w(
     ownership
-    ownership_field_changed
     ownership_update
   )
 
@@ -147,7 +146,6 @@ Rails.application.routes.draw do
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
-        ownership_form_fields
         ownership_update
         protect
         quick_search
@@ -319,7 +317,6 @@ Rails.application.routes.draw do
         orchestration_template_edit
         ot_add_form_field_changed
         ot_tags_edit
-        ownership_form_fields
         ownership_update
         prov_field_changed
         reload
@@ -2359,7 +2356,6 @@ Rails.application.routes.draw do
         edit
         edit_vm
         form_field_changed
-        ownership_form_fields
         show
       ) +
                ownership_post
@@ -2910,7 +2906,6 @@ Rails.application.routes.draw do
         button
         explorer
         listnav_search_selected
-        ownership_field_changed
         ownership_update
         quick_search
         reload
@@ -2927,7 +2922,6 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-        ownership_form_fields
         wait_for_task
       ) +
                dialog_runner_post +
@@ -3056,7 +3050,6 @@ Rails.application.routes.draw do
         genealogy_tree_selected
         ownership_update
         wait_for_task
-        ownership_form_fields
       ) +
                ownership_post +
                pre_prov_post
@@ -3116,7 +3109,6 @@ Rails.application.routes.draw do
         html5_console
         kernel_drivers
         linux_initprocesses
-        ownership_field_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3157,7 +3149,6 @@ Rails.application.routes.draw do
         ownership_update
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3209,7 +3200,6 @@ Rails.application.routes.draw do
         kernel_drivers
         linux_initprocesses
         name_changed
-        ownership_field_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3251,7 +3241,6 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
-        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3308,7 +3297,6 @@ Rails.application.routes.draw do
         kernel_drivers
         linux_initprocesses
         name_changed
-        ownership_field_changed
         ownership_update
         patches
         perf_chart_chooser
@@ -3355,7 +3343,6 @@ Rails.application.routes.draw do
         x_search_by_name
         x_show
         ownership_update
-        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
