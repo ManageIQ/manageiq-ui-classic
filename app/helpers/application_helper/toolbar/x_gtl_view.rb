@@ -1,30 +1,4 @@
 class ApplicationHelper::Toolbar::XGtlView < ApplicationHelper::Toolbar::Basic
-  button_group('gtl_main', [
-    twostate(
-      :view_grid,
-      'fa fa-th',
-      N_('Grid View'),
-      nil,
-      :klass     => ApplicationHelper::Button::View,
-      :url       => "explorer",
-      :url_parms => "?type=grid"),
-    twostate(
-      :view_tile,
-      'fa fa-th-large',
-      N_('Tile View'),
-      nil,
-      :klass     => ApplicationHelper::Button::View,
-      :url       => "explorer",
-      :url_parms => "?type=tile"),
-    twostate(
-      :view_list,
-      'fa fa-th-list',
-      N_('List View'),
-      nil,
-      :klass     => ApplicationHelper::Button::View,
-      :url       => "explorer",
-      :url_parms => "?type=list"),
-  ])
   button_group('download_main', [
     select(
       :download_choice,
