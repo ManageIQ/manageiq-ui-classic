@@ -70,7 +70,6 @@ describe VmOrTemplateController do
     guest_applications
     kernel_drivers
     linux_initprocesses
-    ownership_field_changed
     ownership_update
     patches
     perf_chart_chooser
