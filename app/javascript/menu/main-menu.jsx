@@ -10,26 +10,27 @@ import { MiqLogo } from './miq-logo';
 import { SearchResults } from './search-results';
 import { SecondLevel } from './second-level';
 import { Username } from './username';
+import { updateActiveItem } from './history';
 
 
 const initialExpanded = window.localStorage.getItem('patternfly-navigation-primary') !== 'collapsed';
 
-export const MainMenu = (props) => {
-  const { applianceName, currentGroup, currentUser, customBrand, logoLarge, logoSmall, menu, miqGroups, showLogo, showUser } = props;
+export const MainMenu = ({ applianceName, currentGroup, currentUser, customBrand, logoLarge, logoSmall, menu: initialMenu, miqGroups, showLogo, showUser }) => {
   const [expanded, setExpanded] = useState(initialExpanded);
-  const [activeSection, setSection] = useState(null);
+  const [menu, setMenu] = useState(initialMenu);
   const [searchResults, setSearch] = useState(null);
+  const [activeSection, setSection] = useState(null);
 
-  const hideSecondary = (e) => setSection(null);
-
-  let appearExpanded = expanded || !!activeSection || !!searchResults;
+  const appearExpanded = expanded || !!activeSection || !!searchResults;
+  const hideSecondary = (_e) => setSection(null);
 
   useEffect(() => {
+    // persist expanded state
     window.localStorage.setItem('patternfly-navigation-primary', expanded ? 'expanded' : 'collapsed');
   }, [expanded]);
 
   useEffect(() => {
-    // set body class
+    // set body class - for content offset
     const classNames = {
       true: 'miq-main-menu-expanded',
       false: 'miq-main-menu-collapsed',
@@ -40,8 +41,14 @@ export const MainMenu = (props) => {
 
   useEffect(() => {
     // cypress, debugging
-    ManageIQ.menu = menu;
+    window.ManageIQ.menu = menu;
   }, [menu]);
+
+  useEffect(() => {
+    // react router support - allow history changes to update the menu .. and try on load
+    updateActiveItem.setMenu = setMenu;
+    updateActiveItem(ManageIQ.redux.store.getState().router.location);
+  }, []);
 
   return (
     <>

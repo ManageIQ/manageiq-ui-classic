@@ -5,7 +5,7 @@ import Search from 'carbon-components-react/es/components/Search';
 import { Search20 } from '@carbon/icons-react';
 import { SideNavItem } from 'carbon-components-react/es/components/UIShell';
 
-const flatten = (menuItems = []) => {
+export const flatten = (menuItems = []) => {
   const flat = [];
 
   const process = (items, parents = []) => {
@@ -17,13 +17,9 @@ const flatten = (menuItems = []) => {
         process(item.items, newParents);
       } else {
         // item
-        const titles = newParents.map((p) => p.title);
-        const haystack = titles.join(' ').toLocaleLowerCase();
-
         flat.push({
-          haystack,
           item,
-          titles,
+          parents,
         });
       }
     });
@@ -42,7 +38,18 @@ export const MenuSearch = ({ expanded, menu, onSearch }) => {
     );
   }
 
-  const flatMenu = flatten(menu);
+  const flatMenu = flatten(menu)
+    .map(({item, parents}) => {
+      const titles = [...parents, item].map((p) => p.title);
+      const haystack = titles.join(' ').toLocaleLowerCase();
+
+      return {
+        haystack,
+        item,
+        parents,
+        titles,
+      };
+    });
 
   const searchResults = (string) => {
     if (!string || string.match(/^\s*$/)) {
