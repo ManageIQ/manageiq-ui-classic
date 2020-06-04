@@ -2,11 +2,6 @@ module Mixins
   module Actions
     module VmActions
       module Ownership
-        # Assign/unassign ownership to a set of objects
-        def ownership_form_fields
-          render :json => build_ownership_hash(params[:object_ids])
-        end
-
         # Set Ownership selected db records
         def set_ownership
           assert_privileges(params[:pressed])
@@ -105,20 +100,6 @@ module Mixins
           @edit[:object_ids] = @ownershipitems
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass, :clickable => false) # Instantiate the MIQ Report view object
           session[:edit] = @edit
-        end
-
-        # Build the ownership assignment screen
-        def build_ownership_hash(ownership_ids)
-          klass = get_class_from_controller_param(params[:controller])
-          @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
-          load_user_group_items(ownership_ids, klass)
-
-          @groups = {}
-          Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
-          raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_ids.map(&:to_i).to_set
-
-          {:user  => @user,
-           :group => @group}
         end
 
         def valid_items_for(klass, param_ids)
