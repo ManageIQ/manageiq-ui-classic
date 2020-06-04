@@ -958,7 +958,6 @@ class CatalogController < ApplicationController
   def service_template_list(scope, options = {})
     @no_checkboxes = x_active_tree == :svccat_tree
     if x_active_tree == :svccat_tree
-      @gtl_buttons = %w[view_list view_tile]
       @gtl_small_tiles = true
       @row_button = true if role_allows?(:feature => 'svc_catalog_provision') # Show a button instead of the checkbox
       options[:gtl_dbname] = :catalog

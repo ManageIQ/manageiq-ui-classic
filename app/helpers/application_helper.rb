@@ -453,7 +453,6 @@ module ApplicationHelper
       :edit             => @edit,
       :explorer         => @explorer,
       :ght_type         => @ght_type,
-      :gtl_buttons      => @gtl_buttons,
       :gtl_type         => @gtl_type,
       :html             => @html,
       :lastaction       => @lastaction,
