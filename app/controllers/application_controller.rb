@@ -99,12 +99,12 @@ class ApplicationController < ActionController::Base
   # Default UI settings
   DEFAULT_SETTINGS = {
     :views    => { # List view setting, by resource type
-      :compare                                                                => "expanded",
-      :compare_mode                                                           => "details",
-      :drift                                                                  => "expanded",
-      :drift_mode                                                             => "details",
-      :summary_mode                                                           => "dashboard",
-      :vmcompare                                                              => "compressed"
+      :compare      => "expanded",
+      :compare_mode => "details",
+      :drift        => "expanded",
+      :drift_mode   => "details",
+      :summary_mode => "dashboard",
+      :vmcompare    => "compressed"
     },
     :perpage  => { # Items per page, by view setting
       :list    => 20,
