@@ -26,7 +26,6 @@ describe VmOrTemplateController do
     edit_vm
     form_field_changed
     ownership
-    ownership_field_changed
     ownership_update
     policy_sim
     policy_sim_add
