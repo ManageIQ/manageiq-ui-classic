@@ -9,8 +9,8 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def x_view_toolbar_filename
-    if x_gtl_view_tb_render?
-      'x_gtl_view_tb'
+    if x_download_view_tb_render?
+      'download_view_tb'
     elsif %w[miq_capacity_utilization].include?(@layout)
       'miq_capacity_view_tb'
     elsif @record && @explorer && (%w[services catalogs].include?(@layout) || %w[performance timeline].include?(@display))
@@ -20,13 +20,13 @@ class ApplicationHelper::ToolbarChooser
     elsif %w[vm_infra vm_cloud].include?(@layout)
       @showtype == 'main' ? 'x_summary_view_tb' : nil
     elsif @layout == 'automation_manager'
-      @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "x_gtl_view_tb"
+      @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "download_view_tb"
     end
   end
 
   def view_toolbar_filename
-    if render_gtl_view_tb?
-      'gtl_view_tb'
+    if render_download_view_tb?
+      'download_view_tb'
     elsif @lastaction == "compare_miq" || @lastaction == "compare_compress"
       'compare_view_tb'
     elsif @lastaction == "drift"
@@ -44,7 +44,7 @@ class ApplicationHelper::ToolbarChooser
 
   private
 
-  delegate :session, :x_node, :x_active_tree, :super_admin_user?, :render_gtl_view_tb?,
+  delegate :session, :x_node, :x_active_tree, :super_admin_user?, :render_download_view_tb?,
            :parse_nodetype_and_id, :to => :@view_context
 
   def initialize(view_context, view_binding, instance_data)
@@ -574,7 +574,7 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  NO_GTL_VIEW_BUTTONS = %w[chargeback_assignment
+  NO_DOWNLOAD_VIEW_BUTTONS = %w[chargeback_assignment
                            chargeback_rate
                            chargeback_report
                            generic_object
@@ -589,7 +589,7 @@ class ApplicationHelper::ToolbarChooser
                            pxe
                            report].to_set.freeze
 
-  def x_gtl_view_tb_render?
-    @record.nil? && @explorer && !NO_GTL_VIEW_BUTTONS.include?(@layout)
+  def x_download_view_tb_render?
+    @record.nil? && @explorer && !NO_DOWNLOAD_VIEW_BUTTONS.include?(@layout)
   end
 end

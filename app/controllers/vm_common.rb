@@ -1115,7 +1115,7 @@ module VmCommon
         v_tb = build_toolbar("x_summary_view_tb")
       else
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
-        v_tb = build_toolbar("x_gtl_view_tb")
+        v_tb = build_toolbar("download_view_tb")
       end
     elsif %w[compare drift].include?(@sb[:action])
       @in_a_form = true # Turn on Cancel button

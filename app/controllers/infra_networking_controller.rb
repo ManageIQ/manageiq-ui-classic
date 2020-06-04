@@ -486,7 +486,7 @@ class InfraNetworkingController < ApplicationController
       v_tb = if record_showing
                build_toolbar("x_summary_view_tb")
              else
-               build_toolbar("x_gtl_view_tb")
+               build_toolbar("download_view_tb")
              end
     end
 

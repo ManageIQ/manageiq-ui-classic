@@ -1835,10 +1835,10 @@ class CatalogController < ApplicationController
             build_toolbar("summary_view_tb")
           end
         elsif !%w[xx csb cbg cb].include?(@nodetype) && !@in_a_form
-          build_toolbar("x_gtl_view_tb")
+          build_toolbar("download_view_tb")
         end
       when :svccat_tree, :stcat_tree, :ot_tree
-        build_toolbar("x_gtl_view_tb") unless record_showing || @in_a_form
+        build_toolbar("download_view_tb") unless record_showing || @in_a_form
       end
 
     c_tb = build_toolbar(center_toolbar_filename) unless x_active_tree == :svccat_tree && @in_a_form

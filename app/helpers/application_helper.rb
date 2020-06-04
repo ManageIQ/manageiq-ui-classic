@@ -1043,7 +1043,7 @@ module ApplicationHelper
     "#{@options[:page_size].sub(/^US-/i, '') || "legal"} #{@options[:page_layout]}"
   end
 
-  GTL_VIEW_LAYOUTS = %w[action
+  DOWNLOAD_VIEW_LAYOUTS = %w[action
                         auth_key_pair_cloud
                         availability_zone
                         alerts_overview
@@ -1133,8 +1133,8 @@ module ApplicationHelper
                         storage
                         templates].freeze
 
-  def render_gtl_view_tb?
-    GTL_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
+  def render_download_view_tb?
+    DOWNLOAD_VIEW_LAYOUTS.include?(@layout) && @gtl_type && !@tagitems &&
       !@ownershipitems && !@retireitems && !@politems && !@in_a_form &&
       %w[show show_list].include?(params[:action]) && @display != "custom_button_events"
   end

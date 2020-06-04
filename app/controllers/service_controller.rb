@@ -421,7 +421,7 @@ class ServiceController < ApplicationController
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
       else
         cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
-        v_tb = build_toolbar("x_gtl_view_tb")
+        v_tb = build_toolbar("download_view_tb")
       end
       c_tb = build_toolbar(center_toolbar_filename)
     end

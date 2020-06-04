@@ -314,7 +314,7 @@ module Mixins
       if !@in_a_form && !@sb[:action]
         center_tb ||= center_toolbar_filename
         c_tb = build_toolbar(center_tb)
-        v_tb = build_toolbar(record_showing ? "x_summary_view_tb" : "x_gtl_view_tb")
+        v_tb = build_toolbar(record_showing ? "x_summary_view_tb" : "download_view_tb")
       end
 
       presenter.reload_toolbars(:center => c_tb, :view => v_tb)
