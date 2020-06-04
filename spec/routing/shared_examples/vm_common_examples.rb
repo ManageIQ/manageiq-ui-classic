@@ -141,14 +141,6 @@ shared_examples_for 'A controller that has vm_common routes' do
     end
   end
 
-  describe '#ownership_field_changed' do
-    it 'routes with POST' do
-      expect(
-        post("/#{controller_name}/ownership_field_changed")
-      ).to route_to("#{controller_name}#ownership_field_changed")
-    end
-  end
-
   describe '#ownership_update' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/ownership_update")).to route_to("#{controller_name}#ownership_update")
