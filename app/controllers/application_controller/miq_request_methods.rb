@@ -6,11 +6,14 @@ module ApplicationController::MiqRequestMethods
 
   # AJAX driven routine to check for changes on the provision form
   def prov_field_changed
+    assert_privileges("miq_request_edit")
+
     if params[:tab_id]
       @edit = session[:edit]
     else
       return unless load_edit("prov_edit__#{params[:id]}", "show_list")
     end
+
     if @edit.nil? || @edit.try(:[], :stamp_typ) # load tab for show screen
       if params[:tab_id]
         @options[:current_tab_key] = params[:tab_id].split('_')[0].to_sym
@@ -69,6 +72,7 @@ module ApplicationController::MiqRequestMethods
   end
 
   def pre_prov_continue
+    assert_privileges("miq_request_edit")
     if params[:button] == "submit"
       prov_edit
     else
@@ -78,6 +82,7 @@ module ApplicationController::MiqRequestMethods
 
   # Pre provisioning, select a template
   def pre_prov
+    assert_privileges("miq_request_edit")
     if params[:button] == "cancel"
       flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
       @explorer = session[:edit][:explorer] || false
@@ -199,6 +204,7 @@ module ApplicationController::MiqRequestMethods
 
   # Add/edit a provision request
   def prov_edit
+    assert_privileges("miq_request_edit")
     if params[:button] == "cancel"
       req = MiqRequest.find(session[:edit][:req_id]) if session[:edit] && session[:edit][:req_id]
       flash_to_session(
@@ -249,6 +255,7 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_ds_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     field = %w[miq_template vm service_template].include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
@@ -257,6 +264,7 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_vm_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('vm', @edit[:wf].get_field(:src_vm_id, :service)[:values])
@@ -264,6 +272,7 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_host_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
@@ -271,6 +280,7 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_configured_system_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('configured_system', @edit[:wf].get_field(:src_configured_system_ids, :service)[:values])
@@ -278,6 +288,7 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_pxe_img_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('pxe_img', @edit[:wf].get_field(:pxe_image_id, :service)[:values])
@@ -285,12 +296,14 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_iso_img_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('iso_img', @edit[:wf].get_field(:iso_image_id, :service)[:values])
   end
 
   def sort_windows_image_grid
+    assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
 
     sort_grid('windows_image', @edit[:wf].get_field(:windows_image_id, :service)[:values])
@@ -298,12 +311,14 @@ module ApplicationController::MiqRequestMethods
 
   # get the sort column that was clicked on, else use the current one
   def sort_vc_grid
+    assert_privileges("miq_request_edit")
     @edit = session[:edit]
     sort_grid('vc', @edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values])
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_template_grid
+    assert_privileges("miq_request_edit")
     @edit = session[:edit]
     sort_grid('template', @edit[:wf].get_field(:customization_template_id, :customize)[:values])
   end
