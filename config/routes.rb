@@ -349,7 +349,6 @@ Rails.application.routes.draw do
         show
       ),
       :post => %w(
-        button
         delete
         edit
         form_field_changed

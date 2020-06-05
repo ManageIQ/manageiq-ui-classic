@@ -11,33 +11,6 @@ class ChargebackRateController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::BreadcrumbsMixin
 
-  BUTTON_ALLOWED_ACTIONS = {
-    'chargeback_rates_copy'   => :copy,
-    'chargeback_rates_delete' => :delete,
-    'chargeback_rates_edit'   => :edit,
-    'chargeback_rates_new'    => :new
-  }.freeze
-
-  def button
-    @edit = session[:edit]    # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    action = params[:pressed]
-
-    evaluate_button(action, BUTTON_ALLOWED_ACTIONS)
-
-    return if performed?
-
-    if action.ends_with?("_copy", "_edit", "_new") && @flash_array.nil?
-      javascript_redirect(:action => @refresh_partial,  :id => @redirect_id, :pressed => action)
-    elsif action.ends_with?("_delete")
-      javascript_redirect(:action => 'show_list')
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      super
-    end
-  end
-
   def edit
     @_params[:pressed] ||= 'chargeback_rates_edit'
     case params[:button]
@@ -54,18 +27,12 @@ class ChargebackRateController < ApplicationController
   end
 
   def new
-    @_params[:pressed] = "chargeback_rates_new"
-    @_params[:id] ||= find_checked_items[0]
-    @redirect_id = params[:id] if params[:id]
-    @refresh_partial = "new"
     rate_reset_or_set
   end
 
   def copy
-    @_params[:pressed] = "chargeback_rates_copy"
     @_params[:id] ||= find_checked_items[0]
-    @redirect_id = params[:id] if params[:id]
-    @refresh_partial = "copy"
+    @_params[:pressed] = "chargeback_rates_copy"
     rate_reset_or_set
   end
 
@@ -101,6 +68,7 @@ class ChargebackRateController < ApplicationController
     end
     process_cb_rates(rates, 'destroy') if rates.present?
     flash_to_session
+    javascript_redirect(:action => 'show_list')
   end
 
   # Add a new tier at the end
