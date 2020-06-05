@@ -184,10 +184,10 @@ describe EmsCloudController do
 end
 
 describe EmsContainerController do
-  let(:myhawkularroute) { double(:spec => double(:host => "myhawkularroute.com")) }
+  let(:myprometheusroute) { double(:spec => double(:host => "myprometheusroute.com")) }
 
   context "::EmsCommon" do
-    context "adding new provider without hawkular endpoint" do
+    context "adding new provider without prometheus endpoint" do
       def test_creating(emstype)
         raise ArgumentError, "Unsupported type [#{emstype}]" unless %w[kubernetes openshift].include?(emstype)
 
@@ -204,12 +204,12 @@ describe EmsContainerController do
 
       it "doesn't probe routes for kubernetes" do
         test_creating('kubernetes')
-        expect(@ems.connection_configurations.hawkular).to eq(nil)
+        expect(@ems.connection_configurations.prometheus).to eq(nil)
       end
 
       it "doesn't probe openshift for kubernetes" do
         test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular).to eq(nil)
+        expect(@ems.connection_configurations.prometheus).to eq(nil)
       end
     end
 
@@ -228,7 +228,7 @@ describe EmsContainerController do
                                :default_security_protocol => 'ssl-with-validation-custom-ca',
                                :default_tls_ca_certs      => '-----BEGIN DUMMY...',
                                :default_password          => 'valid-token',
-                               :metrics_selection         => 'hawkular',
+                               :metrics_selection         => 'prometheus',
                                :metrics_hostname          => '10.10.10.10',
                                :metrics_api_port          => '8443',
                                :metrics_security_protocol => 'ssl-with-validation',
@@ -241,11 +241,11 @@ describe EmsContainerController do
           expect(cc.default.endpoint.security_protocol).to eq('ssl-with-validation-custom-ca')
           expect(cc.default.endpoint.verify_ssl?).to eq(true)
           expect(cc.default.endpoint.certificate_authority).to eq('-----BEGIN DUMMY...')
-          expect(cc.hawkular.endpoint.hostname).to eq('10.10.10.10')
-          expect(cc.hawkular.endpoint.port).to eq(8443)
-          expect(cc.hawkular.endpoint.security_protocol).to eq('ssl-with-validation')
-          expect(cc.hawkular.endpoint.verify_ssl?).to eq(true)
-          expect(cc.hawkular.endpoint.certificate_authority).to eq(nil)
+          expect(cc.prometheus.endpoint.hostname).to eq('10.10.10.10')
+          expect(cc.prometheus.endpoint.port).to eq(8443)
+          expect(cc.prometheus.endpoint.security_protocol).to eq('ssl-with-validation')
+          expect(cc.prometheus.endpoint.verify_ssl?).to eq(true)
+          expect(cc.prometheus.endpoint.certificate_authority).to eq(nil)
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
           expect(@ems.authentication_type("default")).to be_nil
           expect(@ems.hostname).to eq('10.10.10.11')
@@ -266,7 +266,7 @@ describe EmsContainerController do
           test_setting_many_fields
 
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
+          expect(@ems.connection_configurations.prometheus.endpoint.hostname).to eq('10.10.10.10')
         end
 
         it "when editing openshift EMS" do
@@ -275,7 +275,7 @@ describe EmsContainerController do
           test_setting_many_fields
 
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
+          expect(@ems.connection_configurations.prometheus.endpoint.hostname).to eq('10.10.10.10')
         end
 
         it 'updates provider options' do
