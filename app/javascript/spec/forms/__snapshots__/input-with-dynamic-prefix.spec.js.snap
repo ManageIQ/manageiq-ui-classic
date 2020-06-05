@@ -16,6 +16,7 @@ exports[`DataDrivenInputWithPrefix should render correctly 1`] = `
     className="dynamic-prefix-input"
   >
     <Select
+      classNamePrefix="ddorg__pf3-component-mapper__select"
       id="dynamic-prefix-select-foo"
       input={
         Object {

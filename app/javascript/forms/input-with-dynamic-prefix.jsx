@@ -62,6 +62,7 @@ const DataDrivenInputWithPrefix = ({
           </div>
           <div className="dynamic-prefix-input">
             <rawComponents.Select
+              classNamePrefix="ddorg__pf3-component-mapper__select"
               invalid={isRequired && !prefix}
               id={`dynamic-prefix-select-${rest.name}`}
               input={{
