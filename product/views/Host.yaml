@@ -28,6 +28,8 @@ cols:
 - vmm_product
 - vmm_version
 - vmm_buildnumber
+- policies_applied
+- normalized_state
 - last_compliance_status
 - ipmi_enabled
 - last_scan_on
@@ -57,6 +59,8 @@ col_order:
 - vmm_product
 - vmm_version
 - vmm_buildnumber
+- policies_applied
+- normalized_state
 - last_compliance_status
 - ipmi_enabled
 - last_scan_on
@@ -75,6 +79,8 @@ headers:
 - Platform
 - Version
 - Build
+- Protected
+- Power
 - Compliant
 - IPMI Enabled
 - Last Analysis Time

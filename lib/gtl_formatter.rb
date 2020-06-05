@@ -1,4 +1,39 @@
 class GtlFormatter
+  COLUMN_WITH_ICON = {
+    'policies_applied'          => 'policies_applied_image',
+    'authentication_status'     => 'authentication_status_image',
+    'last_compliance_status'    => 'last_compliance_status_image',
+    'normalized_state'          => 'normalized_state_image'
+  }.freeze
+
+  COLUMN_WITH_IMAGE = {
+    'ext_management_system.name' => 'fonticon_or_fileicon'
+  }.freeze
+
+  NORMALIZED_STATE_ICON = {
+    'archived'                  => 'fa fa-archive',
+    'orphaned'                  => 'ff ff-orphaned',
+    'retired'                   => 'fa fa-clock-o',
+    'suspended'                 => 'pficon pficon-asleep',
+    'standby'                   => 'pficon pficon-asleep',
+    'paused'                    => 'pficon pficon-asleep',
+    'disconnecting'             => 'pficon pficon-unplugged',
+    'image_locked'              => 'pficon pficon-locked',
+    'migrating'                 => 'pficon pficon-migration',
+    'shelved'                   => 'pficon pficon-pending',
+    'shelved_offloaded'         => 'pficon pficon-pending',
+    'reboot_in_progress'        => 'pficon pficon-on',
+    'wait_for_launch'           => 'pficon pficon-asleep',
+    'on'                        => 'pficon pficon-on',
+    'never'                     => 'pficon pficon-off',
+    'terminated'                => 'pficon pficon-off',
+    'off'                       => 'pficon pficon-off',
+    'template'                  => 'pficon pficon-template',
+    'powering_up'               => 'pficon pficon-on',
+    'powering_down'             => 'pficon pficon-off',
+    'unknown'                   => 'pficon pficon-unknown',
+  }.freeze
+
   def self.format_cols(view, row, controller)
     cols = []
 
@@ -41,15 +76,102 @@ class GtlFormatter
         celltext = send(special_cases[view.extras[:filename]], view, row, col)
       elsif special_cases[view.extras[:filename]].kind_of?(Hash) && special_cases[view.extras[:filename]][view.col_order[col_idx]].present?
         celltext, span = send(special_cases[view.extras[:filename]][view.col_order[col_idx]], row[col])
+      elsif COLUMN_WITH_IMAGE.keys.include?(col)
+        # Generate html for the list icon
+        record = listicon_item(view, row['id'])
+        icon, icon2, image = send(COLUMN_WITH_IMAGE[col], record)
+        text = format_col_for_display(view, row, col)
+        item = {:title => text,
+                :image => ActionController::Base.helpers.image_path(image.to_s),
+                :icon  => icon,
+                :icon2 => icon2,
+                :text  => text}.compact
+      elsif COLUMN_WITH_ICON.keys.include?(col)
+        # Generate html for the list icon
+        record = listicon_item(view, row['id'])
+        icon = send(COLUMN_WITH_ICON[col], record)
+        text = format_col_for_display(view, row, col)
+        item = {:title => text,
+                :icon  => icon,
+                :text => text}.compact
       else
         celltext = format_col_for_display(view, row, col)
       end
 
-      item = {:text => celltext}
+      item ||= {:text => celltext}
       item[:span] = span if span.present?
       cols.push(item)
     end
     cols
+  end
+
+  def self.format_icon_column
+    item = listicon_item(view, row['id'])
+    icon, icon2, image = fonticon_or_fileicon(item)
+
+    # Clickable should be false only when it's explicitly set to false
+    not_clickable = if params
+                      (params.fetch_path(:additional_options, :clickable) == false)
+                    else
+                      false
+                    end
+    {:title => not_clickable ? nil : _('View this item'),
+     :image => ActionController::Base.helpers.image_path(image.to_s),
+     :icon  => icon,
+     :icon2 => icon2}.compact
+  end
+
+  def self.listicon_item(view, id = nil)
+    id = @id if id.nil?
+
+    if @targets_hash
+      @targets_hash[id] # Get the record from the view
+    else
+      klass = view.db.constantize
+      klass.find(id)    # Read the record from the db
+    end
+  end
+
+  def self.fonticon_or_fileicon(item)
+    return nil unless item
+    decorated = item.decorate
+    [
+      decorated.try(:fonticon),
+      decorated.try(:secondary_icon),
+      decorated.try(:fileicon)
+    ]
+  end
+
+  def self.last_compliance_status_image(item)
+    case item.last_compliance_status
+    when true
+      "pficon pficon-ok"
+    when false
+      "pficon pficon-error-circle-o"
+    else
+      "pficon pficon-unknown"
+    end
+  end
+
+  def self.authentication_status_image(item)
+    case item.authentication_status
+    when "Error", "Invalid"
+      "pficon pficon-error-circle-o"
+    when "Valid"
+      "pficon pficon-ok"
+    when "None"
+      "pficon pficon-unknown"
+    else
+      "pficon pficon-warning-triangle-o"
+    end
+  end
+
+  def self.normalized_state_image(item)
+    NORMALIZED_STATE_ICON[item.normalized_state]
+  end
+
+  def self.policies_applied_image(item)
+    item.policies_applied ? "fa fa-shield" : "pficon pficon-pending-2"
   end
 
   def self.cloud_manager_template_format(value)

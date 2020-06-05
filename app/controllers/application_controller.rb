@@ -750,8 +750,8 @@ class ApplicationController < ActionController::Base
       root[:head] << {:is_narrow => true}
     end
 
-    # Icon column
-    root[:head] << {:is_narrow => true}
+    # Icon column, only for list with special icons
+    root[:head] << {:is_narrow => true} if %w(Service ServiceTemplate).include?(view.db)
 
     view.headers.each_with_index do |h, i|
       col = view.col_order[i]
@@ -797,20 +797,9 @@ class ApplicationController < ActionController::Base
         new_row[:cells] << {:is_checkbox => true}
       end
 
-      # Generate html for the list icon
-      item = listicon_item(view, row['id'])
-      icon, icon2, image = fonticon_or_fileicon(item)
+      # # Generate html for the list icon
+      new_row[:cells].concat(::GtlFormatter.format_icon_column(view, row, self)) if %w(Service ServiceTemplate).include?(view.db) || @row_button
 
-      # Clickable should be false only when it's explicitly set to false
-      not_clickable = if params
-                        (params.fetch_path(:additional_options, :clickable) == false)
-                      else
-                        false
-                      end
-      new_row[:cells] << {:title => not_clickable ? nil : _('View this item'),
-                          :image => ActionController::Base.helpers.image_path(image.to_s),
-                          :icon  => icon,
-                          :icon2 => icon2}.compact
       new_row[:cells].concat(::GtlFormatter.format_cols(view, row, self))
 
       # Append a button if @row_button is set and the button is defined in the related decorator
@@ -819,17 +808,6 @@ class ApplicationController < ActionController::Base
     end
 
     root
-  end
-
-  def listicon_item(view, id = nil)
-    id = @id if id.nil?
-
-    if @targets_hash
-      @targets_hash[id] # Get the record from the view
-    else
-      klass = view.db.constantize
-      klass.find(id)    # Read the record from the db
-    end
   end
 
   def get_host_for_vm(vm)

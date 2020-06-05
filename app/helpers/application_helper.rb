@@ -1187,17 +1187,6 @@ module ApplicationHelper
     ].include?(x_tree[:tree])
   end
 
-  def fonticon_or_fileicon(item)
-    return nil unless item
-    decorated = item.decorate
-    [
-      decorated.try(:fonticon),
-      decorated.try(:secondary_icon),
-      decorated.try(:fileicon)
-    ]
-  end
-  private :fonticon_or_fileicon
-
   CONTENT_TYPE_ID = {
     "report" => "r",
     "menu"   => "m",
