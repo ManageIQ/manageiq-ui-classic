@@ -52,3 +52,27 @@
     }
   }
 }
+
+// display under button
+.drawer-pf.drawer-alt-pf.drawer-pf-notifications {
+  top: 38px;
+  height: calc(100% - 44px);
+}
+
+#notifications-toggle {
+  display: inline-block;
+  // FIXME flex?
+  width: 140px;
+
+  &.unread {
+    svg {
+      fill: #39a5dc;
+    }
+  }
+}
+
+#breadcrumbs .breadcrumb {
+  display: inline-block;
+  margin-bottom: 0;
+  width: calc(100% - 140px);
+}

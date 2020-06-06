@@ -1,0 +1,135 @@
+#main-menu {
+  @import './menu-colors.scss';
+
+  list-style: none;
+
+  ul ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  // sizing
+  .bx--side-nav.secondary {
+    left: 16rem;
+    max-width: 14rem;
+    width: 14rem;
+
+    .bx--side-nav__link-text {
+      font-weight: 400;
+    }
+  }
+
+  .bx--side-nav__header.padded,
+  .bx--side-nav__item.padded {
+    padding: 0 1rem;
+  }
+
+  .bx--side-nav__header,
+  .bx--side-nav__link,
+  .bx--side-nav__submenu,
+  .menu-collapse,
+  .menu-collapse-button {
+    height: 48px;
+  }
+
+  .bx--side-nav__hr {
+    margin: 16px 0 0 0;
+  }
+  .bx--side-nav--expanded {
+    .bx--side-nav__hr {
+      margin: 16px 16px 0 16px;
+    }
+  }
+
+  .menu-collapse {
+    border-top: solid 1px #3d3d3d;
+
+    .menu-collapse-button {
+      margin-left: auto;
+      padding: 14px;
+      width: 48px;
+    }
+  }
+
+  .menu-search-title {
+    font-size: small;
+    margin-bottom: 0;
+    margin-top: 5px;
+  }
+  .menu-search-parent {
+    font-size: smaller;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+
+  .menu-user,
+  .menu-group li {
+    @include carbon--type-style('helper-text-01');
+  }
+
+  .vertical-center {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-user {
+    height: 40px;
+  }
+
+  .menu-group {
+    height: 32px;
+    margin-bottom: 8px;
+    & .bx--dropdown,
+    & > li {
+      height: 32px;
+    }
+    & .bx--dropdown__wrapper {
+      padding: 0 1rem;
+    }
+  }
+
+  .menu-search {
+    height: 32px;
+  }
+}
+
+.layout-pf.layout-pf-fixed {
+  .miq-main-menu-collapsed {
+    .container-pf-nav-pf-vertical {
+      margin-left: 48px;
+    }
+  }
+  .miq-main-menu-expanded {
+    .container-pf-nav-pf-vertical {
+      margin-left: 256px;
+    }
+  }
+}
+
+// only appears when secondary menu is expanded
+.miq-main-menu-overlay {
+  background-color: #000;
+  bottom: 0;
+  left: 30rem;
+  opacity: 0.5;
+  position: fixed;
+  right: 0;
+  z-index: 10000;
+}
+
+.navbar-brand-name {
+  height: 32px;
+  // compensate for in-image padding
+  margin: -4px 0 0 -8px;
+}
+
+#username_display.collapsed {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 -8px;
+  text-align: center;
+  border-radius: 24px;
+  line-height: 32px;
+  background-color: $ui-02;
+}

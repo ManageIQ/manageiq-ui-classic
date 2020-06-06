@@ -19,12 +19,12 @@ module Menu
           monitor_menu_section,
 
           settings_menu_section,
-          help_menu_section,
+          logout_item,
         ]
       end
 
       def compute_menu_section
-        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
+        Menu::Section.new(:compute, N_("Compute"), 'carbon--Chip', [
           clouds_menu_section,
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
@@ -33,7 +33,7 @@ module Menu
       end
 
       def configuration_menu_section
-        Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog', [
+        Menu::Section.new(:conf, N_("Configuration"), 'carbon--InventoryManagement', [
           Menu::Item.new('ems_configuration',     N_('Providers'),          'ems_configuration',     {:feature => 'ems_configuration_show_list'},     '/ems_configuration/show_list'),
           Menu::Item.new('configuration_profile', N_('Profiles'),           'configuration_profile', {:feature => 'configuration_profile_show_list'}, '/configuration_profile/show_list'),
           Menu::Item.new('configured_system',     N_('Configured Systems'), 'configured_system',     {:feature => 'configured_system_show_list'},     '/configured_system/show_list'),
@@ -41,7 +41,7 @@ module Menu
       end
 
       def overview_menu_section
-        Menu::Section.new(:vi, N_("Overview"), 'fa fa-dashboard', [
+        Menu::Section.new(:vi, N_("Overview"), 'carbon--Cloud', [
           Menu::Item.new('dashboard',  N_('Dashboard'),  'dashboard',  {:feature => 'dashboard_view'},           '/dashboard/show'),
           Menu::Item.new('report',     N_('Reports'),    'miq_report', {:feature => 'miq_report', :any => true}, '/report/explorer'),
           # Menu::Item.new('usage',    N_('Usage'),      'usage',      {:feature => 'usage'},                    '/report/usage/'), #  / Hiding usage for now - release 5.2
@@ -52,6 +52,7 @@ module Menu
         ])
       end
 
+      # FIXME: remove?
       def consumption_menu_section
         Menu::Section.new(:cons, N_("Consumption"), nil, [
           Menu::Item.new('consumption', N_('Dashboard'), 'consumption', {:feature => 'consumption', :any => true}, '/consumption/show')
@@ -59,7 +60,7 @@ module Menu
       end
 
       def services_menu_section
-        Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service', [
+        Menu::Section.new(:svc, N_("Services"), 'carbon--ToolBox', [
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
@@ -138,7 +139,7 @@ module Menu
       end
 
       def network_menu_section
-        Menu::Section.new(:net, N_("Network"), 'pficon pficon-network', [
+        Menu::Section.new(:net, N_("Network"), 'carbon--Network_2', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network/show_list'),
           Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network/show_list'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet/show_list'),
@@ -151,7 +152,7 @@ module Menu
       end
 
       def storage_menu_section
-        Menu::Section.new(:sto, N_("Storage"), 'fa fa-database', [
+        Menu::Section.new(:sto, N_("Storage"), 'carbon--Table', [
           block_storage_menu_section,
           object_storage_menu_section,
         ])
@@ -208,7 +209,7 @@ module Menu
       end
 
       def control_menu_section
-        Menu::Section.new(:con, N_("Control"), 'fa fa-shield', [
+        Menu::Section.new(:con, N_("Control"), 'carbon--IbmSecurity', [
           Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),
           Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},     '/miq_policy/rsop'),
           Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},  '/miq_policy/export'),
@@ -217,7 +218,7 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'pficon pficon-automation', [
+        Menu::Section.new(:aut, N_("Automation"), 'carbon--FlowData', [
           ansible_menu_section,
           automation_manager_menu_section,
           automate_menu_section,
@@ -259,16 +260,20 @@ module Menu
       end
 
       def monitor_menu_section
-        Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat', [
+        Menu::Section.new(:monitor, N_("Monitor"), 'carbon--Activity', [
           alerts_menu_section,
         ])
       end
 
       def settings_menu_section
-        Menu::Section.new(:set, N_("User Settings"), 'pficon pficon-settings', [
-          Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
-          Menu::Item.new('my_tasks',      N_('Tasks'),         'tasks',        {:feature => 'tasks', :any => true},        '/miq_task/index?jobs_tab=tasks')
-        ], :top_right)
+        Menu::Section.new(:set, N_("Settings"), 'carbon--Settings', [
+          Menu::Item.new('configuration', N_('My Settings'), 'my_settings', {:feature => 'my_settings', :any => true}, '/configuration/index'),
+          Menu::Item.new('my_tasks', N_('Tasks'), 'tasks', {:feature => 'tasks', :any => true}, '/miq_task/index?jobs_tab=tasks'),
+          help_documentation,
+          Menu::Item.new('ops_explorer', N_('Application Settings'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer'),
+          help_product,
+          help_about,
+        ])
       end
 
       def help_documentation
@@ -293,8 +298,16 @@ module Menu
         ]
       end
 
-      def help_menu_section
-        Menu::Section.new(:help, N_('Help'), 'pficon pficon-help', help_menu_items, :help)
+      def logout_item
+        Menu::Item.new(:logout,
+                       N_("Logout"),
+                       'logout',
+                       nil,
+                       '/dashboard/logout',
+                       nil,
+                       nil,
+                       nil,
+                       'carbon--Logout')
       end
 
       private

@@ -1,123 +1,201 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumbs component is correctly rendered 1`] = `
-<Breadcrumbs
-  controllerName="provider"
-  items={
-    Array [
-      Object {
-        "title": "Providers",
-        "url": "/providers",
-      },
-      Object {
-        "key": "in tree",
-        "title": "Google",
-      },
-      Object {
-        "action": "accordion-select",
-        "title": "All",
-      },
-      Object {
-        "title": "This",
-      },
-    ]
-  }
-  title="Title"
->
-  <Breadcrumb
-    style={
-      Object {
-        "marginBottom": 0,
-      }
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
     }
-    title={false}
-  >
-    <Breadcrumb
-      bsClass="breadcrumb"
-      className=""
-      style={
-        Object {
-          "marginBottom": 0,
-        }
-      }
-    >
-      <ol
-        aria-label="breadcrumbs"
-        className="breadcrumb"
-        role="navigation"
-        style={
+  }
+>
+  <Component>
+    <BreadcrumbsBar
+      controllerName="provider"
+      items={
+        Array [
           Object {
-            "marginBottom": 0,
-          }
+            "title": "Providers",
+            "url": "/providers",
+          },
+          Object {
+            "key": "in tree",
+            "title": "Google",
+          },
+          Object {
+            "action": "accordion-select",
+            "title": "All",
+          },
+          Object {
+            "title": "This",
+          },
+        ]
+      }
+      title="Title"
+    >
+      <Breadcrumbs
+        controllerName="provider"
+        items={
+          Array [
+            Object {
+              "title": "Providers",
+              "url": "/providers",
+            },
+            Object {
+              "key": "in tree",
+              "title": "Google",
+            },
+            Object {
+              "action": "accordion-select",
+              "title": "All",
+            },
+            Object {
+              "title": "This",
+            },
+          ]
         }
+        title="Title"
       >
-        <BreadcrumbItem
-          active={false}
-          href="/providers"
-          key="/providers"
-          onClick={[Function]}
+        <Breadcrumb
+          title={false}
         >
-          <li
+          <Breadcrumb
+            bsClass="breadcrumb"
             className=""
           >
-            <SafeAnchor
-              componentClass="a"
-              href="/providers"
-              onClick={[Function]}
+            <ol
+              aria-label="breadcrumbs"
+              className="breadcrumb"
+              role="navigation"
             >
-              <a
+              <BreadcrumbItem
+                active={false}
                 href="/providers"
+                key="/providers"
                 onClick={[Function]}
-                onKeyDown={[Function]}
               >
-                Providers
-              </a>
-            </SafeAnchor>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          active={false}
-          key="in tree-1"
+                <li
+                  className=""
+                >
+                  <SafeAnchor
+                    componentClass="a"
+                    href="/providers"
+                    onClick={[Function]}
+                  >
+                    <a
+                      href="/providers"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                    >
+                      Providers
+                    </a>
+                  </SafeAnchor>
+                </li>
+              </BreadcrumbItem>
+              <BreadcrumbItem
+                active={false}
+                key="in tree-1"
+                onClick={[Function]}
+              >
+                <li
+                  className=""
+                >
+                  <SafeAnchor
+                    componentClass="a"
+                    onClick={[Function]}
+                  >
+                    <a
+                      href="#"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      role="button"
+                    >
+                      Google
+                    </a>
+                  </SafeAnchor>
+                </li>
+              </BreadcrumbItem>
+              <li
+                key="2"
+              >
+                All
+              </li>
+              <BreadcrumbItem
+                active={true}
+              >
+                <li
+                  className="active"
+                >
+                  <span>
+                    <strong>
+                      This
+                    </strong>
+                  </span>
+                </li>
+              </BreadcrumbItem>
+            </ol>
+          </Breadcrumb>
+        </Breadcrumb>
+      </Breadcrumbs>
+      <NotificationsToggle>
+        <a
+          className="btn btn-default"
+          id="notifications-toggle"
           onClick={[Function]}
+          title="0 unread notification"
         >
-          <li
-            className=""
+          Notifications
+           
+          <MiqIcon
+            icon="carbon--Notification"
           >
-            <SafeAnchor
-              componentClass="a"
-              onClick={[Function]}
+            <ForwardRef(Notification16)
+              style={
+                Object {
+                  "marginBottom": "-4px",
+                }
+              }
             >
-              <a
-                href="#"
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                role="button"
+              <Icon
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                style={
+                  Object {
+                    "marginBottom": "-4px",
+                  }
+                }
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Google
-              </a>
-            </SafeAnchor>
-          </li>
-        </BreadcrumbItem>
-        <li
-          key="2"
-        >
-          All
-        </li>
-        <BreadcrumbItem
-          active={true}
-        >
-          <li
-            className="active"
-          >
-            <span>
-              <strong>
-                This
-              </strong>
-            </span>
-          </li>
-        </BreadcrumbItem>
-      </ol>
-    </Breadcrumb>
-  </Breadcrumb>
-</Breadcrumbs>
+                <svg
+                  aria-hidden={true}
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  style={
+                    Object {
+                      "marginBottom": "-4px",
+                    }
+                  }
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.4,10.1L13,8.8V6.5c0-2.6-1.9-4.7-4.5-5v-1h-1v1C5,1.8,3,3.9,3,6.5v2.3l-1.4,1.3c-0.1,0.1-0.2,0.2-0.1,0.4V12	c0,0.3,0.2,0.5,0.4,0.5c0,0,0,0,0.1,0h3.5C5.5,13.9,6.6,15,8,15s2.5-1.1,2.5-2.5H14c0.3,0,0.5-0.2,0.5-0.4c0,0,0,0,0-0.1v-1.5	C14.5,10.4,14.4,10.2,14.4,10.1z M8,14c-0.8,0-1.5-0.7-1.5-1.5h3C9.5,13.3,8.8,14,8,14z M13.5,11.5h-11v-0.8l1.3-1.4	C3.9,9.3,4,9.1,4,9V6.5c0-2.2,1.8-4,4-4s4,1.8,4,4V9c0,0.1,0.1,0.3,0.1,0.4l1.4,1.3V11.5z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(Notification16)>
+          </MiqIcon>
+        </a>
+      </NotificationsToggle>
+    </BreadcrumbsBar>
+  </Component>
+</Provider>
 `;

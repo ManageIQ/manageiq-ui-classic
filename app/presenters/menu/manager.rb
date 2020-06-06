@@ -14,9 +14,9 @@ module Menu
       @menu.each { |section| yield section }
     end
 
-    def menu(placement = :default)
+    def menu(placement = :_all)
       @menu.select do |menu_section|
-        menu_section.placement == placement
+        placement == :_all || menu_section.placement == placement
       end.compact
     end
 

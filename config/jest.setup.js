@@ -9,6 +9,7 @@ window.$ = require('jquery');
 window.__ = (x) => x;
 window.n__ = (x) => x;
 window._ = require('lodash');
+window.sprintf = require('sprintf-js').sprintf;
 
 require('whatwg-fetch');
 

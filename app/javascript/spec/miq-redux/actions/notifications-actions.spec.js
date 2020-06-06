@@ -31,7 +31,7 @@ describe('Notifications actions tests', () => {
   const initialState = {
     notificationReducer: {
       unreadCount: 0,
-      isDrawerVisible: 'true',
+      isDrawerVisible: true,
       notifications,
       totalNotificationsCount: 0,
       toastNotifications: [],

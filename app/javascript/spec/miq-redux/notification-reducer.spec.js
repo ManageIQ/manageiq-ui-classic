@@ -15,7 +15,7 @@ import {
 describe('Notification reducer tests', () => {
   const initialState = {
     unreadCount: 0,
-    isDrawerVisible: 'true',
+    isDrawerVisible: true,
     notifications: [],
     totalNotificationsCount: 0,
     toastNotifications: [],

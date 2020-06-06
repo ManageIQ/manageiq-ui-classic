@@ -38,55 +38,39 @@ Cypress.Commands.add("login", (user = 'admin', password = 'smartvm') => {
 Cypress.Commands.add("menu", (...items) => {
   expect(items.length).to.be.within(1, 3);
 
-  const selectors = [
-    '#main-menu',
-    '.nav-pf-secondary-nav',
-    '.nav-pf-tertiary-nav',
-  ];
+  const primary = '#main-menu nav.primary';
+  const secondary = '#main-menu nav.secondary';
 
-  let ret = cy.get(`${selectors[0]} > ul > li`)
-    .contains('a', items[0])
-    .parent();
+  let ret = cy.get(`${primary} > ul > li`)
+    .contains('a > span', items[0])
+    .parent().parent()
+    .click();
 
-  items.forEach((item, index) => {
-    if (index === 0) {
-      return;
-    }
+  if (items.length === 2) {
+    ret = cy.get(`${secondary} > ul > li`)
+      .contains('a > span', items[1])
+      .parent().parent()
+      .click();
+  }
 
-    ret = ret.trigger('mouseover')
-      .find(`${selectors[index]} > ul > li`)
-      .contains('a', item)
-      .parent();
-  });
+  if (items.length === 3) {
+    ret = cy.get(`${secondary} > ul > li`)
+      .contains('button > span', items[1])
+      .parent().parent()
+      .click()
+      .find(`ul > li`)
+      .contains('a > span', items[2])
+      .parent().parent()
+      .click();
+  }
 
-  return ret.click();
+  return ret;
   // TODO support by id: cy.get('li[id=menu_item_provider_foreman]').click({ force: true });
 });
 
-// cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children), selector, click() method}
+// cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children)}
 Cypress.Commands.add("menuItems", () => {
-  const children = (parent, parentSelector, level, ...selectors) => {
-    if (! parent)
-      return [];
-
-    const [selector, ...rest] = selectors;
-    const items = [];
-    parent.querySelectorAll(':scope > li > a').forEach((el, i) => {
-      const itemSelector = `${parentSelector} > li:nth-child(${i + 1}) > a`;
-      items.push({
-        title: el.text.trim(),
-        href: el.href,
-        items: children(el.parentElement.querySelector(`${selector} > ul`), `${itemSelector.replace(/ > a$/, '')} > div > ul`, level + 1, ...rest),
-        selector: itemSelector,
-        click: () => cy.get(itemSelector).click({ force: true }),
-      });
-    });
-
-    return items;
-  };
-
-  return cy.get('#maintab')
-    .then((maintab) => children(maintab[0], '#maintab', 0, '.nav-pf-secondary-nav', '.nav-pf-tertiary-nav'));
+  return cy.window().then((window) => window.ManageIQ.menu);
 });
 
 // cy.accordion('Catalog Items') - click accordion, unless already expanded

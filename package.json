@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
+    "@carbon/icons-react": "~10.11.0",
     "@carbon/themes": "~10.12.0",
     "@data-driven-forms/pf3-component-mapper": "~1.30.0",
     "@data-driven-forms/react-form-renderer": "~1.30.0",
@@ -54,6 +55,7 @@
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-switch": "3.3.4",
     "carbon-components": "~10.12.0",
+    "carbon-components-react": "~7.12.0",
     "classnames": "~2.2.6",
     "codemirror": "~5.47.0",
     "connected-react-router": "~6.7.0",

@@ -33,7 +33,7 @@ describe('Notification drawer tests', () => {
   const initialState = {
     notificationReducer: {
       unreadCount: 2,
-      isDrawerVisible: 'true',
+      isDrawerVisible: true,
       notifications,
       totalNotificationsCount: 2,
       toastNotifications: [],
