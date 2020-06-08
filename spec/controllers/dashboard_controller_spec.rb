@@ -281,27 +281,6 @@ describe DashboardController do
     end
   end
 
-  context "#main_tab redirects to correct url when maintab is pressed by limited access user" do
-    before do
-      allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
-    end
-
-    main_tabs = {
-      :clo => ["vm_cloud_explorer", 'vm_cloud/explorer'],
-      :inf => ["vm_infra_explorer", 'vm_infra/explorer'],
-      :svc => ["vm_explorer",       'vm_or_template/explorer'],
-    }
-    main_tabs.each do |tab, (feature, url)|
-      it "for tab ':#{tab}'" do
-        login_as FactoryBot.create(:user, :features => feature)
-        session[:tab_url] = {}
-        post :maintab, :params => { :tab => tab }
-        expect(response.body).to include(url)
-      end
-    end
-  end
-
   describe "#start_url_for_user" do
     before do
       MiqShortcut.seed
@@ -322,23 +301,6 @@ describe DashboardController do
       controller.instance_variable_set(:@settings, :display => {:startpage => "/dashboard/show"})
       url = controller.send(:start_url_for_user, nil)
       expect(url).to eq("/vm_cloud/explorer?accordion=instances")
-    end
-  end
-
-  describe "#maintab" do
-    before do
-      allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
-    end
-
-    it "redirects a restful link correctly" do
-      ems_cloud_amz = FactoryBot.create(:ems_amazon)
-      breadcrumbs = [{:name => "Name", :url => "/controller/action"}]
-      session[:breadcrumbs] = breadcrumbs
-      session[:tab_url] = {:clo => "/ems_cloud/#{ems_cloud_amz.id}"}
-      post :maintab, :params => { :tab => "clo" }
-      expect(response.header['Location']).to include(ems_cloud_path(ems_cloud_amz))
-      expect(controller.instance_variable_get(:@breadcrumbs)).to eq([])
     end
   end
 

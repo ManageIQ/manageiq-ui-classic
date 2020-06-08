@@ -29,12 +29,6 @@ describe 'routes for DashboardController' do
     end
   end
 
-  describe "#maintab" do
-    it "routes with GET" do
-      expect(get("/dashboard/maintab")).to route_to("dashboard#maintab")
-    end
-  end
-
   describe "#render_csv" do
     it "routes with GET" do
       expect(get("/dashboard/render_chart")).to route_to("dashboard#render_chart")

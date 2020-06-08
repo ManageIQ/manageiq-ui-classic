@@ -1671,42 +1671,6 @@ class ApplicationController < ActionController::Base
     prov_redirect("publish")
   end
 
-  def handle_remember_tab
-    return if request.xml_http_request? || !request.get? || request.format != Mime[:html] ||
-              request.headers['X-Angular-Request'].present?
-
-    return if controller_name == 'dashboard' && %(iframe maintab cockpit_redirect).include?(action_name)
-    return if %w[
-      compare_to_csv
-      compare_to_pdf
-      compare_to_txt
-      drift_to_csv
-      drift_to_pdf
-      drift_to_txt
-      download_data
-      download_summary_pdf
-    ].include?(action_name)
-
-    remember_tab
-  end
-
-  def remember_tab
-    section_or_item_id = menu_section_id(params)
-    return if section_or_item_id.nil?
-
-    section = Menu::Manager.section(section_or_item_id) || Menu::Manager.section_for_item_id(section_or_item_id.to_s)
-    return if section.nil?
-
-    url = URI.parse(request.url).path
-
-    # Do not include console popup windows urls. Only urls from the main UI are supported.
-    return if %w[launch_vmrc_console launch_html5_console].any? { |i| url.include?(i) }
-
-    section.parent_path.each do |sid|
-      session[:tab_url][sid] = url
-    end
-  end
-
   def get_global_session_data
     # Set the current userid in the User class for this thread for models to use
     User.current_user = current_user
@@ -1739,9 +1703,6 @@ class ApplicationController < ActionController::Base
     @tl_options = tl_session_data
 
     session[:host_url] = request.host_with_port
-    session[:tab_url] ||= {}
-
-    handle_remember_tab
 
     # Get all of the global variables used by most of the controllers
     @pp_choices = PPCHOICES

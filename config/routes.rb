@@ -1176,7 +1176,6 @@ Rails.application.routes.draw do
         logout
         saml_login
         oidc_login
-        maintab
         render_csv
         render_pdf
         render_txt
