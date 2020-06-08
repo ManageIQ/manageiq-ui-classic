@@ -9,7 +9,8 @@ Please note that the rails server has to be running first:
 
 Run without interaction:
 
-    yarn cypress:run
+    yarn cypress:run:chrome
+    yarn cypress:run:firefox
 
 Will run the tests in console, and output a screengrab and screenshot in `cypress/screenshots` and `cypress/videos`.
 
