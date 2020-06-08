@@ -1253,12 +1253,12 @@ module ApplicationController::Performance
   def perf_util_summary_info
     si = {}
     si[:info] = []
-    si[:info].push(["Utilization Trend Summary for", @sb[:options][:model] == "MiqEnterprise" ? "Enterprise" : "#{ui_lookup(:model => @sb[:options][:model])} [#{@perf_record.name}]"])
-    si[:info].push(["Trend Interval", "#{format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date")} - #{format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date")}"])
-    si[:info].push(["Selected Day", format_timezone(@sb[:options][:chart_date].to_time, "UTC", "date")])
-    si[:info].push(["Time Profile", session[:time_profiles][@sb[:options][:time_profile]]]) if @sb[:options][:time_profile]
-    si[:info].push(["Time Zone", @sb[:options][:time_profile_tz] || @sb[:options][:tz]])
-    si[:info].push(["Classification", @sb[:tags][@sb[:options][:tag]]]) if @sb[:options][:tag]
+    si[:info].push([_("Utilization Trend Summary for"), @sb[:options][:model] == "MiqEnterprise" ? "Enterprise" : "#{ui_lookup(:model => @sb[:options][:model])} [#{@perf_record.name}]"])
+    si[:info].push([_("Trend Interval"), "#{format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date")} - #{format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date")}"])
+    si[:info].push([_("Selected Day"), format_timezone(@sb[:options][:chart_date].to_time, "UTC", "date")])
+    si[:info].push([_("Time Profile"), session[:time_profiles][@sb[:options][:time_profile]]]) if @sb[:options][:time_profile]
+    si[:info].push([_("Time Zone"), @sb[:options][:time_profile_tz] || @sb[:options][:tz]])
+    si[:info].push([_("Classification"), @sb[:tags][@sb[:options][:tag]]]) if @sb[:options][:tag]
 
     if @sb[:trend_charts]
       si[:cpu] = perf_util_summary_section("cpu")         # Get the cpu section
