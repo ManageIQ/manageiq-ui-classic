@@ -72,12 +72,6 @@ describe 'routes for MiqRequestController' do
     end
   end
 
-  describe '#prov_show_option' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/prov_show_option")).to route_to("#{controller_name}#prov_show_option")
-    end
-  end
-
   describe '#request_copy' do
     it 'routes with POST' do
       expect(post("/#{controller_name}/request_copy")).to route_to("#{controller_name}#request_copy")

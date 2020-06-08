@@ -2307,7 +2307,6 @@ Rails.application.routes.draw do
         prov_edit
         prov_field_changed
         prov_load_tab
-        prov_show_option
         request_copy
         request_edit
         retrieve_email
