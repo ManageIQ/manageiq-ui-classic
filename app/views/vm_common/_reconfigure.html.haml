@@ -403,7 +403,7 @@
   %hr
 
   - if supports_reconfigure_cdroms? && role_allows?(:feature => 'vm_reconfigure_drives')
-    %div
+    %div{"ng-if" => "vm.reconfigureModel.vmCDRoms"}
       %h3
         = _('CD/DVD Drives')
       %table.table.table-striped.table-condensed.table-bordered
@@ -448,7 +448,7 @@
                                                      "ng-if"    => "cdRom.connect_disconnect == 'disconnect'",
                                                      "ng-click" => "vm.cancelCDRomConnectDisconnect(cdRom)"}= _('Cancel Disconnect')
 
-    %hr
+    %hr{"ng-if" => "vm.reconfigureModel.vmCDRoms"}
 
 
   %table{:width => "100%", :align => "bottom"}
