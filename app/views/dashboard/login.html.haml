@@ -58,7 +58,6 @@
             = password_field_tag('user_password',
               @user_password,
               :onkeypress => ext_auth? ? "if (miqEnterPressed(event)) miqAjaxExtAuth();" : "if (miqEnterPressed(event)) miqAjaxAuth();",
-              :autocomplete => "off",
               :placeholder => (auth_mode == "httpd" ? _('Password or Password+One-Time-Password') : _('Password')),
               :class => "form-control")
 

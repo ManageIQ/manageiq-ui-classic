@@ -67,6 +67,7 @@
                                   "id"          => "password",
                                   "name"        => "password",
                                   "ng-model"    => "pglogicalReplicationModel.password",
+                                  :autocomplete => "off",
                                   "placeholder" => placeholder_if_present("pglogicalReplicationModel.password"),
                                   "miqrequired" => "",
                                   "checkchange" => ""}
@@ -133,6 +134,7 @@
             %td{"ng-if" => "pglogicalReplicationModel.updateEnabled && $index === pglogicalReplicationModel.s_index",
                 "ng-class"=>"{'active': showChanged($index, 'password')}"}
               %input.form-control{"type"        => "password",
+                                  :autocomplete => "off",
                                   "name"        => "password",
                                   "ng-model"    => "pglogicalReplicationModel.password",
                                   "ng-disabled" => "!subscription.newRecord"}

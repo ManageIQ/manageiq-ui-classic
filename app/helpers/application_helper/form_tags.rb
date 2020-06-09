@@ -1,5 +1,15 @@
 module ApplicationHelper
   module FormTags
+    # override: default password_field_tag doesn't switch off autocomplete
+    def password_field_tag(name, value = nil, options = {})
+      options = {
+        :type => 'password',
+        :autocomplete => 'off',
+      }.merge(options)
+
+     text_field_tag(name, value, options)
+    end
+
     def datepicker_input_tag(name, value = nil, options = {})
       datepicker_options = {
         "data-provide"         => "datepicker",

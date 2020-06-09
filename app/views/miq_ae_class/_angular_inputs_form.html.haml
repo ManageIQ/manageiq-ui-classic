@@ -27,6 +27,7 @@
                  "placeholder" => _("Default value"),
                  "checkchange" => ""}
           %input{"type"        => "password",
+                 :autocomplete => "off",
                  :name         => "#{prefix}_value",
                  'ng-if'       => "#{ng_model}.#{prefix}_type == 'password'",
                  'ng-model'    => "#{ng_model}.#{prefix}_value",
@@ -80,6 +81,7 @@
                                     'ng-model'    => "#{ng_model}.key_value",
                                     "ng-change" => ""}
                 %input.form-control{"type"        => "password",
+                                    :autocomplete => "off",
                                     :name         => "key_value",
                                     'ng-if'       => "#{ng_model}.key_type == 'password'",
                                     'ng-model'    => "#{ng_model}.key_value",
