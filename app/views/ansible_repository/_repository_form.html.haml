@@ -47,7 +47,7 @@
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.required"}
           = _("Required")
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.urlValidation"}
-          = _("URL must include a protocol (http:// or https://) or be a valid SSH path (user@server:path or ssh://user@address:port/path)")
+          = _("URL must include a protocol (http://, https:// or file://) or be a valid SSH path (user@server:path or ssh://user@address:port/path)")
     .form-group
       %label.col-md-2.control-label
         = _('SCM credentials')

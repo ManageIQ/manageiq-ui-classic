@@ -18,7 +18,9 @@ ManageIQ.angular.app.directive('urlValidation', ['nodeValidator', function(nodeV
         allow_protocol_relative_urls: true,
       };
       var validUrl = function(url) {
-        return nodeValidator.isURL(url, options) || url.match(/^[-\w:.]+@.*:/);
+        return nodeValidator.isURL(url, options) ||
+               url.match(/^file:\/\/\/.+/)       ||
+               url.match(/^[-\w:.]+@.*:/);
       };
     },
   };
