@@ -6,7 +6,7 @@ export default function textualSummaryGenericClick(item, event) {
   }
 
   if (item.external) {
-    window.open(item.link, '_blank');
+    window.open(item.link, '_blank', 'noopener,noreferrer');
   } else if (item.explorer) {
     const tokenElement = document.querySelector("meta[name=csrf-token]");
     // FIXME: jQuery is necessary here as it communicates with the old world
