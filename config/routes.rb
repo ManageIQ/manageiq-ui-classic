@@ -135,7 +135,6 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-        tag_edit_form_field_changed
         ems_form_choices
         download_private_key
         ownership
@@ -145,7 +144,6 @@ Rails.application.routes.draw do
         button
         create
         dynamic_checkbox_refresh
-        form_field_changed
         listnav_search_selected
         ownership_form_fields
         ownership_update
