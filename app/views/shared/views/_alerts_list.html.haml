@@ -67,7 +67,10 @@
       %list-expanded-content
         .row
           .col-md-12
-            %a{"ng-href" => '{{$parent.$parent.item.sopLink}}', "target" => "_blank", "ng-if" => "$parent.item.sopLink"}
+            %a{"ng-href" => '{{$parent.$parent.item.sopLink}}',
+               "target" => "_blank",
+               "ng-if" => "$parent.item.sopLink",
+               :rel => 'noopener noreferrer'}
               = _("View SOP")
         .row
           .col-md-12
