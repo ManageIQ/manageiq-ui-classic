@@ -247,9 +247,6 @@ module ApplicationHelper
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
-      if controller == "ems_middleware" && action == "show"
-        return ems_middlewares_path
-      end
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
@@ -768,7 +765,6 @@ module ApplicationHelper
        ems_configuration
        ems_container
        ems_infra
-       ems_middleware
        ems_network
        ems_physical_infra
        ems_storage
@@ -778,9 +774,6 @@ module ApplicationHelper
        host
        host_aggregate
        load_balancer
-       middleware_deployment
-       middleware_domain
-       middleware_server
        miq_template
        network_port
        network_router
@@ -1084,7 +1077,6 @@ module ApplicationHelper
                         ems_container
                         ems_infra
                         ems_infra_dashboard
-                        ems_middleware
                         ems_network
                         ems_object_storage
                         ems_physical_infra
@@ -1102,10 +1094,6 @@ module ApplicationHelper
                         manageiq/providers/embedded_ansible/automation_manager/playbook
                         manageiq/providers/embedded_automation_manager/authentication
                         manageiq/providers/embedded_automation_manager/configuration_script_source
-                        middleware_deployment
-                        middleware_domain
-                        middleware_server
-                        middleware_server_group
                         miq_schedule
                         miq_template
                         monitor_alerts_overview

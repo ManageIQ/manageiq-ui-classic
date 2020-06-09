@@ -372,7 +372,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.metrics_password !== '' && $scope.angularForm.metrics_password.$valid)) {
       return true;
     } else if ($scope.currentTab === 'default' &&
-        ['ems_container', 'ems_middleware', 'ems_physical_infra'].indexOf($scope.emsCommonModel.ems_controller) >= 0 &&
+        ['ems_container', 'ems_physical_infra'].indexOf($scope.emsCommonModel.ems_controller) >= 0 &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.default_hostname !== '' && $scope.emsCommonModel.default_api_port) &&
       ($scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid)) {

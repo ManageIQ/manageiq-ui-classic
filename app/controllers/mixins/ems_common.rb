@@ -101,10 +101,6 @@ module Mixins
           hosts
           images
           instances
-          middleware_deployments
-          middleware_domains
-          middleware_server_groups
-          middleware_servers
           miq_templates
           network_ports
           network_routers
@@ -378,7 +374,6 @@ module Mixins
           ems_cloud_recheck_auth_status
           ems_container_recheck_auth_status
           ems_infra_recheck_auth_status
-          ems_middleware_recheck_auth_status
           ems_physical_infra_recheck_auth_status
         ].include?(params[:pressed])
           if params[:id]
