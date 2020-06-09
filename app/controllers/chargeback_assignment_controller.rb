@@ -13,7 +13,7 @@ class ChargebackAssignmentController < ApplicationController
 
   def index
     @title = _("Chargeback Assignments")
-    @tabform = "Compute"
+    @tabform = ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:tab]) ? params[:tab] : "Compute"
     session[:changed] = @changed = false
     build_tabs
     set_form_vars
