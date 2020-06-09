@@ -20,8 +20,7 @@
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
                             "emsCommonModel.ems_controller == 'ems_container' || " +                   |
                             "emsCommonModel.emstype === 'kubevirt' || " +                              |
-                            "emsCommonModel.emstype === 'azure_stack' || " +                           |
-                            "emsCommonModel.emstype == 'hawkular'"}                                    |
+                            "emsCommonModel.emstype === 'azure_stack'"}                           |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
     .col-md-8{"ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra' || emsCommonModel.emstype == 'vmware_cloud' || emsCommonModel.emstype == 'azure_stack'"}
@@ -59,16 +58,6 @@
                        "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
                        "checkchange"                 => "",
                        "required"                    => "",
-                       "selectpicker-for-select-tag" => "",
-                       "prefix"                      => prefix.to_s,
-                       "reset-validation-status"     => "#{prefix}_auth_status")
-    .col-md-8{"ng-if" => "emsCommonModel.emstype == 'hawkular'"}
-      = select_tag("#{prefix}_security_protocol",
-                       options_for_select([["<#{_('Choose')}>", nil]] + @hawkular_security_protocols, "disabled" => ["<#{_('Choose')}>", nil]),
-                       "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
-                       "checkchange"                 => "",
-                       "required"                    => "",
-                       "ng-change"                   => "hawkularSecurityProtocolChanged()",
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
@@ -236,7 +225,6 @@
                          "emsCommonModel.emstype == 'rhevm'                  || " + |
                          "emsCommonModel.emstype === 'kubevirt'              || " + |
                          "emsCommonModel.emstype == 'vmware_cloud'           || " + |
-                         "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
                          "emsCommonModel.emstype == 'redfish_ph_infra'       || " + |
                          "emsCommonModel.emstype === 'azure_stack'           || " + |
@@ -307,8 +295,6 @@
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
                         "((emsCommonModel.ems_controller == 'ems_container' || " +                            |
                         " emsCommonModel.emstype === 'kubevirt') && " +                                       |
-                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
-                        "(emsCommonModel.emstype == 'hawkular' && " +                                         |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"}    |
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
       = _('Trusted CA Certificates')

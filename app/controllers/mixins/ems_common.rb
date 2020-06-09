@@ -539,7 +539,6 @@ module Mixins
         @ems_region_display = @ems.description
       end
       @nuage_api_versions = retrieve_nuage_api_versions
-      @hawkular_security_protocols = retrieve_hawkular_security_protocols
       @redfish_security_protocols = retrieve_security_protocols
     end
 
@@ -595,13 +594,6 @@ module Mixins
       [[_('SSL'), 'ssl-with-validation'],
        [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
        [_('SSL without validation'), 'ssl-without-validation']]
-    end
-
-    def retrieve_hawkular_security_protocols
-      [[_('SSL'), 'ssl-with-validation'],
-       [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
-       [_('SSL without validation'), 'ssl-without-validation'],
-       [_('Non-SSL'), 'non-ssl']]
     end
 
     # Delete all selected or single displayed ems(s)

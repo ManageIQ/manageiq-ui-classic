@@ -562,21 +562,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
-  $scope.hawkularSecurityProtocolChanged = function() {
-    var defaultNonSSLPort = '8080';
-    var defaultSSLPort = '8443';
-    var defaultPorts = [defaultNonSSLPort, defaultSSLPort];
-    if (typeof $scope.emsCommonModel.default_api_port === 'undefined' ||
-        $scope.emsCommonModel.default_api_port === '' ||
-        defaultPorts.indexOf($scope.emsCommonModel.default_api_port) != -1) {
-      if ($scope.emsCommonModel.default_security_protocol === 'non-ssl') {
-        $scope.emsCommonModel.default_api_port = defaultNonSSLPort;
-      } else {
-        $scope.emsCommonModel.default_api_port = defaultSSLPort;
-      }
-    }
-  };
-
   $scope.getDefaultApiPort = function(emstype) {
     if ( emstype === 'openstack' || emstype === 'openstack_infra') {
       return '5000';
