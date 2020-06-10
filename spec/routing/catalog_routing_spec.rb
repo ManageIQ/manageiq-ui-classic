@@ -31,15 +31,11 @@ describe 'routes for CatalogController' do
     button_create
     button_update
     explorer
-    get_ae_tree_edit_key
     group_create
     group_form_field_changed
     group_reorder_field_changed
     group_update
     identify_catalog
-    orchestration_template_add
-    orchestration_template_copy
-    orchestration_template_edit
     ot_tags_edit
     prov_field_changed
     reload
@@ -53,12 +49,10 @@ describe 'routes for CatalogController' do
     sort_vc_grid
     sort_vm_grid
     st_catalog_edit
-    st_catalog_form_field_changed
     st_edit
     st_form_field_changed
     st_tags_edit
     st_upload_image
-    tag_edit_form_field_changed
     tree_autoload
     tree_select
     x_button
