@@ -79,7 +79,7 @@
               - if @edit[:expression_types].blank?
                 = _('Expression (Custom)')
               - else
-                - opts = @edit[:expression_types].invert.sort + [[_("Expression (Custom)"), nil]]
+                - opts = @edit[:expression_types].each { |k, v | @edit[:expression_types][k] = _(v) }.invert.sort + [[_("Expression (Custom)"), nil]]
                 = select_tag('exp_name',
                   options_for_select(opts, @edit[:new][:expression][:eval_method].to_s),
                   :class => "selectpicker")
@@ -157,7 +157,7 @@
         - else
           - if @edit[:new][:expression][:eval_method] != "nothing"
             %h3
-              = h(MiqAlert.expression_types(@edit[:new][:db])[@edit[:new][:expression][:eval_method]])
+              = h(_(MiqAlert.expression_types(@edit[:new][:db])[@edit[:new][:expression][:eval_method]]))
               = _('Parameters')
             .form-horizontal
               - @edit[:expression_options].each do |eo|
