@@ -32,7 +32,6 @@ describe EmsPhysicalInfraController do
     sections_field_changed
     show
     show_list
-    tag_edit_form_field_changed
     tagging_edit
     tl_chooser
     tree_autoload
