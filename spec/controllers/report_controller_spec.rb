@@ -1097,7 +1097,7 @@ describe ReportController do
     end
   end
 
-  context "#replace_right_cell" do
+  describe "#replace_right_cell" do
     before do
       FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
       login_as FactoryBot.create(:user_admin) # not sure why this needs to be an admin...
@@ -1117,6 +1117,17 @@ describe ReportController do
     end
 
     let(:sb) { controller.instance_variable_get(:@sb) }
+
+    it "sanitizes the title when editing report menus" do
+      sb[:node_clicked] = true
+      presenter = ExplorerPresenter.new(:active_tree => :roles_tree)
+      expect(ExplorerPresenter).to receive(:new).and_return(presenter)
+      allow(controller).to receive(:x_active_tree).and_return(:roles_tree)
+      session[:node_selected] = 'foo__<div><iframe/>bar</div>'
+      controller.send(:replace_right_cell, :menu_edit_action => 'g')
+      legend = presenter.instance_variable_get(:@options)[:element_updates][:menu1_legend][:legend]
+      expect(legend).to eq("Manage Folders in &quot;&lt;div&gt;&lt;iframe/&gt;bar&lt;/div&gt;&quot;")
+    end
 
     it "should rebuild trees when last report result is newer than last tree build time" do
       # report is newer, set build_time first
