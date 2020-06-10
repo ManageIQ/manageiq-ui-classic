@@ -78,6 +78,8 @@ class UtilizationController < ApplicationController
   end
 
   def tree_select
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     if params[:id] # First time thru async method, grab id parm info
       @refresh = (x_node == "")
       self.x_node = params[:id]

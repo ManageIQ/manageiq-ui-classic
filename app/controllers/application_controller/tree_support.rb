@@ -2,6 +2,7 @@ module ApplicationController::TreeSupport
   extend ActiveSupport::Concern
 
   def tree_autoload
+    assert_accordion_and_tree_privileges(x_active_tree)
     @edit ||= session[:edit] # Remember any previous @edit
     render :json => tree_add_child_nodes(params[:id])
   end
