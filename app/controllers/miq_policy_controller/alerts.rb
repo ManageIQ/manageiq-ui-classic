@@ -21,6 +21,8 @@ module MiqPolicyController::Alerts
 
   def alert_edit_save_add
     id = params[:id] && params[:button] != "add" ? params[:id] : "new"
+    assert_privileges(id == 'new' ? 'alert_new' : 'alert_edit')
+
     return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
     alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
     alert_set_record_vars(alert)
@@ -54,7 +56,8 @@ module MiqPolicyController::Alerts
   end
 
   def alert_edit
-    assert_privileges(params[:pressed]) if params[:pressed]
+    assert_privileges(params[:id] ? 'alert_edit' : 'alert_new')
+
     case params[:button]
     when "cancel"
       alert_edit_cancel
@@ -87,6 +90,7 @@ module MiqPolicyController::Alerts
   end
 
   def alert_field_changed
+    assert_privileges(params[:id] == 'new' ? 'alert_new' : 'alert_edit')
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
     @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 

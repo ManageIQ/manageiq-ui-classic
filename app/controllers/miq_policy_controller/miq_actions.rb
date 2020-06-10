@@ -2,7 +2,7 @@ module MiqPolicyController::MiqActions
   extend ActiveSupport::Concern
 
   def action_edit
-    assert_privileges(params[:pressed]) if params[:pressed]
+    assert_privileges(params[:id] ? 'action_edit' : 'action_new')
     case params[:button]
     when "cancel"
       @sb[:action] = @edit = nil
@@ -82,6 +82,7 @@ module MiqPolicyController::MiqActions
   end
 
   def action_field_changed
+    assert_privileges(params[:id] == 'new' ? 'action_new' : 'action_edit')
     return unless load_edit("action_edit__#{params[:id]}", "replace_cell__explorer")
     @action = @edit[:action_id] ? MiqAction.find(@edit[:action_id]) : MiqAction.new
 
