@@ -71,4 +71,18 @@ describe ReportController do
       end
     end
   end
+
+  describe '#widget_validate_entries' do
+    let(:widget) { FactoryBot.create(:miq_widget, :read_only => true, :options => {}) }
+    let(:flash_array) { controller.instance_variable_get(:@flash_array) }
+
+    it 'fails when trying to change a read-only widget' do
+      @controller.instance_variable_set(:@widget, widget)
+      @controller.instance_variable_set(:@sb, {})
+      @controller.instance_variable_set(:@edit, :new => {:options => {}})
+      widget.title = 'foo'
+      controller.send(:widget_validate_entries)
+      expect(flash_array).not_to be_empty
+    end
+  end
 end
