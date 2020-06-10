@@ -868,6 +868,8 @@ module VmCommon
 
   # Tree node selected in explorer
   def tree_select
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     @explorer = true
     @lastaction = "explorer"
     @sb[:action] = nil

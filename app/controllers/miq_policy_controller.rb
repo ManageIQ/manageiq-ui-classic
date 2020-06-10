@@ -241,6 +241,9 @@ class MiqPolicyController < ApplicationController
   def accordion_select
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{self.x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype)
   end
@@ -251,6 +254,8 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree   = "#{params[:accord]}_tree" if params[:accord]
     self.x_active_tree   = params[:tree]             if params[:tree]
     self.x_node          = params[:id]
+
+    assert_accordion_and_tree_privileges(x_active_tree)
 
     @sb[:action] = nil
     get_node_info(x_node)

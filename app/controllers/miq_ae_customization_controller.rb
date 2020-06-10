@@ -104,6 +104,9 @@ class MiqAeCustomizationController < ApplicationController
   def accordion_select
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
+
+    assert_accordion_and_tree_privileges(x_active_tree)
+
     get_node_info
     replace_right_cell(:nodetype => x_node)
   end
@@ -144,6 +147,7 @@ class MiqAeCustomizationController < ApplicationController
 
   def tree_select
     self.x_node = params[:id]
+    assert_accordion_and_tree_privileges(x_active_tree)
     get_node_info
     if @replace_tree
       # record being viewed and saved in @sb[:active_node] has been deleted outside UI from VMDB, need to refresh tree
