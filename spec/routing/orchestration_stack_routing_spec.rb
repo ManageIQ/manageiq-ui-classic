@@ -39,7 +39,6 @@ describe OrchestrationStackController do
     show
     show_list
     tagging_edit
-    tag_edit_form_field_changed
     protect
   ).each do |task|
     describe "##{task}" do
