@@ -22,6 +22,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def export
+    assert_privileges('policy_import_export')
     @breadcrumbs = []
     @layout = "miq_policy_export"
     drop_breadcrumb(:name => _("Import / Export"), :url => "miq_policy/export")
@@ -119,6 +120,7 @@ class MiqPolicyController < ApplicationController
 
   # Send the zipped up logs and zip files
   def fetch_yaml
+    assert_privileges('policy_import_export')
     @lastaction = "fetch_yaml"
     file_name = "#{params[:fname]}_#{format_timezone(Time.now, Time.zone, "export_filename")}.yaml"
     disable_client_cache
@@ -127,6 +129,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def upload
+    assert_privileges('policy_import_export')
     redirect_options = {:action => 'import', :dbtype => params[:dbtype]}
 
     @sb[:conflict] = false
@@ -148,6 +151,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def get_json
+    assert_privileges('policy_import_export')
     import_file_upload = ImportFileUpload.find(params[:import_file_upload_id])
     policy_import_json = import_as_json(import_file_upload.policy_import_data)
 
@@ -157,6 +161,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def import
+    assert_privileges('policy_import_export')
     @breadcrumbs = []
     @layout = "miq_policy_export"
     @import_file_upload_id = params[:import_file_upload_id]
@@ -196,6 +201,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def export_field_changed
+    assert_privileges('policy_import_export')
     prev_dbtype = @sb[:dbtype]
     export_chooser(params[:dbtype], "export") if params[:dbtype]
     @sb[:new][:choices_chosen] = params[:choices_chosen] || []
@@ -208,6 +214,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def explorer
+    assert_privileges('control_explorer')
     @breadcrumbs = []
     @explorer = true
     session[:export_data] = nil
@@ -268,6 +275,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def log
+    assert_privileges('policy_log')
     @breadcrumbs = []
     @log = $policy_log.contents(nil, 1000)
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
@@ -283,6 +291,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def refresh_log
+    assert_privileges('policy_log')
     @log = $policy_log.contents(nil, 1000)
     @server = MiqServer.my_server
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
@@ -291,6 +300,7 @@ class MiqPolicyController < ApplicationController
 
   # Send the log in text format
   def fetch_log
+    assert_privileges('policy_log')
     disable_client_cache
     send_data($policy_log.contents(nil, nil),
               :filename => "policy.log")

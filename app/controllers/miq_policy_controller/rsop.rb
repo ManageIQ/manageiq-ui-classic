@@ -2,6 +2,7 @@ module MiqPolicyController::Rsop
   extend ActiveSupport::Concern
 
   def rsop
+    assert_privileges('policy_simulation')
     @explorer = true
     if params[:button] == "submit"
       unless params[:task_id]                       # First time thru, kick off the report generate task
@@ -61,6 +62,7 @@ module MiqPolicyController::Rsop
   end
 
   def rsop_option_changed
+    assert_privileges('policy_simulation')
     if params[:event_typ]
       @sb[:rsop][:event] = params[:event_typ] == "<Choose>" ? nil : params[:event_typ]
       @sb[:rsop][:event_value] = nil
@@ -92,12 +94,14 @@ module MiqPolicyController::Rsop
   end
 
   def rsop_toggle
+    assert_privileges('policy_simulation')
     @explorer = true
     @sb[:rsop][:open] = @sb[:rsop][:open] != true # set this before creating toolbar
     rsop_button_pressed
   end
 
   def rsop_show_options
+    assert_privileges('policy_simulation')
     @explorer = true
     if params.key?(:passed)
       if params[:passed] == "null" || params[:passed] == ""

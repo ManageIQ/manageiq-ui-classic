@@ -99,6 +99,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_edit
+    assert_privileges(params[:id] ? 'policy_edit' : 'policy_new')
     case params[:button]
     when "cancel"
       policy_edit_cancel
@@ -158,6 +159,7 @@ module MiqPolicyController::Policies
   end
 
   def policy_field_changed
+    assert_privileges(params[:id] == 'new' ? 'policy_new' : 'policy_edit')
     return unless load_edit("policy_edit__#{params[:id]}", "replace_cell__explorer")
     @profile = @edit[:profile]
 

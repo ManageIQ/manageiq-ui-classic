@@ -64,7 +64,7 @@ module MiqPolicyController::AlertProfiles
     replace_right_cell(:nodetype => "ap", :replace_trees => %i(alert_profile), :remove_form_buttons => true)
   end
 
-  def alert_profile_edit_move
+  def alert_profile_edit_move 
     handle_selection_buttons(:alerts)
     session[:changed] = (@edit[:new] != @edit[:current])
     replace_right_cell(:nodetype => "ap")
@@ -79,6 +79,7 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_edit
+    assert_privileges(params[:id] ? 'alert_profile_edit' : 'alert_profile_new')
     case params[:button]
     when 'cancel'
       alert_profile_edit_cancel
@@ -128,6 +129,7 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_delete
+    assert_privileges("alert_profile_delete")
     alert_profiles = []
     # showing 1 alert set, delete it
     if params[:id].nil? || !MiqAlertSet.exists?(params[:id])
@@ -146,6 +148,8 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_field_changed
+    assert_privileges(params[:id] == 'new' ? 'alert_profile_new' : 'alert_profile_edit')
+
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
 
@@ -156,6 +160,7 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_assign_changed
+    assert_privileges("alert_profile_assign")
     @assign = @sb[:assign]
     @alert_profile = @assign[:alert_profile]
 

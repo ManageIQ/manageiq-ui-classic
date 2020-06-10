@@ -2,6 +2,8 @@ module MiqPolicyController::PolicyProfiles
   extend ActiveSupport::Concern
 
   def profile_edit
+    assert_privileges(params[:id] ? 'profile_edit' : 'profile_new')
+
     case params[:button]
     when "cancel"
       @edit = nil
@@ -89,6 +91,8 @@ module MiqPolicyController::PolicyProfiles
   end
 
   def profile_field_changed
+    assert_privileges(params[:id] == 'new' ? 'profile_new' : 'profile_edit')
+
     return unless load_edit("profile_edit__#{params[:id]}", "replace_cell__explorer")
     @profile = @edit[:profile_id] ? MiqPolicySet.find_by_id(@edit[:profile_id]) : MiqPolicySet.new
 
